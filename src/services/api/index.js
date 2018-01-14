@@ -81,7 +81,6 @@ api.create = (settings = {}) => ({
     const aTry = () => api.request(endpoint, merge({}, this.settings, settings))
       .catch(error => {
         if ([401, 403].includes(error.response.status) && tries--) {
-          console.log('unauthorised, trying to auth');
           this.unsetToken();
           return this.requestAuthToken().then(aTry);
         }
