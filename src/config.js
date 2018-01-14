@@ -9,14 +9,15 @@ const config = {
     port: process.env.PORT || 3000,
     isBrowser: typeof window !== 'undefined',
     isServer: typeof window === 'undefined',
-    apiUrl: 'https://jsonplaceholder.typicode.com',
+    apiUrl: 'http://lvh.me/v0',
+    authTokenUrl: 'http://lvh.me/users/auth_token',
   },
   test: {},
   development: {},
   production: {
     host: process.env.HOST || 'localhost',
     port: process.env.PORT || 8080,
-    apiUrl: 'https://jsonplaceholder.typicode.com',
+    apiUrl: 'http://lvh.me/v0',
   },
 }
 

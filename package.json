@@ -89,6 +89,7 @@
     "express": "^4.16.2",
     "history": "^4.6.1",
     "isomorphic-fetch": "^2.2.1",
+    "json-api-normalizer": "^0.4.7",
     "lodash": "^4.17.4",
     "normalizr": "3.2.3",
     "prop-types": "^15.5.8",

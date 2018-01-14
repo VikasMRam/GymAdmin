@@ -1,8 +1,8 @@
 // https://github.com/diegohaz/arc/wiki/API-service
-import 'isomorphic-fetch'
-import { stringify } from 'query-string'
-import merge from 'lodash/merge'
-import { apiUrl } from 'config'
+import 'isomorphic-fetch';
+import { stringify } from 'query-string';
+import merge from 'lodash/merge';
+import { apiUrl, authTokenUrl } from 'config';
 
 export const checkStatus = (response) => {
   if (response.ok) {
@@ -11,9 +11,9 @@ export const checkStatus = (response) => {
   const error = new Error(`${response.status} ${response.statusText}`)
   error.response = response
   throw error
-}
+};
 
-export const parseJSON = response => response.json()
+export const parseJSON = response => response.json();
 
 export const parseSettings = ({
   method = 'get', data, locale, ...otherSettings
@@ -29,28 +29,28 @@ export const parseSettings = ({
     headers,
   }, otherSettings)
   return settings
-}
+};
 
 export const parseEndpoint = (endpoint, params) => {
   const url = endpoint.indexOf('http') === 0 ? endpoint : apiUrl + endpoint
   const querystring = params ? `?${stringify(params)}` : ''
   return `${url}${querystring}`
-}
+};
 
-const api = {}
+const api = {};
 
 api.request = (endpoint, { params, ...settings } = {}) =>
   fetch(parseEndpoint(endpoint, params), parseSettings(settings))
     .then(checkStatus)
-    .then(parseJSON)
+    .then(parseJSON);
 
 ;['delete', 'get'].forEach((method) => {
   api[method] = (endpoint, settings) => api.request(endpoint, { method, ...settings })
-})
+});
 
 ;['post', 'put', 'patch'].forEach((method) => {
   api[method] = (endpoint, data, settings) => api.request(endpoint, { method, data, ...settings })
-})
+});
 
 api.create = (settings = {}) => ({
   settings,
@@ -69,8 +69,25 @@ api.create = (settings = {}) => ({
     }
   },
 
+  requestAuthToken() {
+    return fetch(authTokenUrl, { credentials: 'same-origin' })
+      .then(checkStatus)
+      .then(parseJSON)
+      .then(json => this.setToken(json.jwt_token));
+  },
+
   request(endpoint, settings) {
-    return api.request(endpoint, merge({}, this.settings, settings))
+    let tries = 2;
+    const aTry = () => api.request(endpoint, merge({}, this.settings, settings))
+      .catch(error => {
+        if ([401, 403].includes(error.response.status) && tries--) {
+          this.unsetToken();
+          return this.requestAuthToken().then(aTry);
+        }
+        throw error;
+      });
+
+    return aTry();
   },
 
   post(endpoint, data, settings) {
@@ -92,6 +109,6 @@ api.create = (settings = {}) => ({
   delete(endpoint, settings) {
     return this.request(endpoint, { method: 'delete', ...settings })
   },
-})
+});
 
-export default api
+export default api;
