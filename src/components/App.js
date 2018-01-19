@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { injectGlobal, ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 
-import { FonztestPage } from 'containers';
+import { FonztestPage, PropListPage } from 'containers';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';
@@ -32,6 +32,7 @@ export default class App extends Component {
         <ThemeProvider theme={theme}>
           <Switch>
             <Route path="/fonztest" component={FonztestPage} exact />
+            <Route path="/proplist" component={PropListPage} exact />
           </Switch>
         </ThemeProvider>
       </div>
