@@ -7,8 +7,7 @@ const middleware = store => next => (action) => {
   const { payload, meta } = action
 
   if (meta && meta.entities) {
-    const endpoint = '/properties'
-    const entities = normalize(payload, {endpoint});
+    const entities = normalize(payload);
     store.dispatch(entitiesReceive(entities))
     const result = Object.values(entities[meta.entities]).map(e => e.id);
     return next({ ...action, payload: result });
