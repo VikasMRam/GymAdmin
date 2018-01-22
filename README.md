@@ -4,6 +4,7 @@
   <a href="https://travis-ci.org/diegohaz/arc"><img src="https://img.shields.io/travis/diegohaz/arc/redux-ssr.svg?style=flat-square" alt="Build Status" /></a>
   <a href="https://codecov.io/gh/diegohaz/arc/branch/redux-ssr"><img src="https://img.shields.io/codecov/c/github/diegohaz/arc/redux-ssr.svg?style=flat-square" alt="Coverage Status" /></a>
   <a href="https://gitter.im/diegohaz/arc"><img src="https://img.shields.io/badge/chat-on%20gitter-1dce73.svg?style=flat-square" alt="Gitter chat" /></a>
+[![CircleCI](https://circleci.com/gh/seniorly/SlyReact.svg?style=svg)](https://circleci.com/gh/seniorly/SlyReact)
 </p>
 
 <br />
