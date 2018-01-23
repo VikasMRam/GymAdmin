@@ -98,7 +98,7 @@ describe('api', () => {
 
   describe('create', () => {
     beforeEach(() => {
-      api.request = jest.fn()
+      api.request = jest.fn(() => new Promise(() => {}))
     })
 
     it('creates without arguments', () => {
