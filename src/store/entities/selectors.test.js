@@ -8,14 +8,20 @@ jest.mock('schemas')
 const altState = {
   entity: {
     1: {
-      id: 1,
-      title: 'test',
-      description: 'test',
+      attributes: {
+        id: 1,
+        title: 'test',
+        description: 'test',
+      },
+
     },
     2: {
-      id: 2,
-      title: 'test 2',
-      description: 'test 2',
+      attributes: {
+
+        id: 2,
+        title: 'test 2',
+        description: 'test 2',
+      },
     },
   },
 }
@@ -38,8 +44,8 @@ test('getDetail', () => {
   expect(selectors.getDetail(undefined, 'test', 1)).toBeNull()
   expect(selectors.getDetail({}, 'test')).toBeNull()
   expect(selectors.getDetail({}, 'test', 1)).toBeNull()
-  expect(selectors.getDetail(altState, 'entity')).toEqual([{"id": 1}, {"id": 2}]) //TODO failure Warning
-  expect(selectors.getDetail(altState, 'entity', 1)).toEqual({"id":1}) //TODO Failure need other deails
+  expect(selectors.getDetail(altState, 'entity')).toEqual([{"description": "test", "id": 1, "title": "test"}, {"description": "test 2", "id": 2, "title": "test 2"}]) // TODO failure Warning
+  expect(selectors.getDetail(altState, 'entity', 1)).toEqual(altState.entity[1].attributes) // TODO Failure need other deails
 })
 
 // Redux object returns empty list if no ids are specified
@@ -49,8 +55,8 @@ test('getList', () => {
   expect(selectors.getList({}, 'test')).toEqual([])
   expect(selectors.getList({}, 'test', [1])).toEqual([null])
   expect(selectors.getList(altState, 'entity')).toEqual([])
-  // expect(selectors.getList(altState, 'entity', [1])).toEqual([altState.entity[1]]) //TODO Failure
-  expect(selectors.getList(altState, 'entity', [1])).toEqual([null]) //TODO Failure
+  expect(selectors.getList(altState, 'entity', [1])).toEqual([altState.entity[1].attributes]) //TODO Failure
+  // expect(selectors.getList(altState, 'entity', [1])).toEqual([null]) //TODO Failure
 })
 
 /*
