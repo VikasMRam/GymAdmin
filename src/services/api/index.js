@@ -33,9 +33,13 @@ export const parseSettings = ({
 
 export const parseEndpoint = (endpoint, params) => {
   const url = endpoint.indexOf('http') === 0 ? endpoint : apiUrl + endpoint
-  const querystring = params ? `?${stringify(params)}` : ''
+  const querystring = stringfyParams(params)
   return `${url}${querystring}`
-};
+}
+
+export const stringfyParams = (params) => {
+  return params ? `?${stringify(params)}` : ''
+}
 
 const api = {};
 

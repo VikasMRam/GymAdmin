@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { resourceListReadRequest } from 'store/actions'
 import { connect } from 'react-redux';
-import build from 'store/entities/selectors';
 import { getList } from 'store/entities/selectors';
+import { stringfyParams} from '../services/api/index'
 
 class PropListPage extends Component {
   componentWillMount() {
-    const { readProps } = this.props;
+    const { readProps} = this.props;
     readProps();
   }
 
@@ -24,13 +24,25 @@ class PropListPage extends Component {
   }
 }
 
+const params = { page_number: 1, page_size: 15 }
+
 function mapStateToProps(state) {
-  const list = getList(state, 'properties')
-  return {state, list}
+  // let ids = []
+  // if (state.resource && state.resource['properties'] && state.resource['properties'].list) {
+  //   ids = state.resource['properties'].list;
+  // }
+  const endpoint = stringfyParams(params)
+  let props = []
+  if (state.entities.meta && state.entities.meta.properties) {
+    props = (state.entities.meta.properties[endpoint].data || []).map(object => object.id);
+  }
+  const list = getList(state, 'properties', props);
+  return { state, list }
+
 };
 
 const mapDispatchToProps = dispatch => ({
-  readProps: () => dispatch(resourceListReadRequest('properties')),
+  readProps: () => dispatch(resourceListReadRequest('properties', params))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PropListPage);
