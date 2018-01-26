@@ -3,18 +3,18 @@ import configureStore from 'redux-mock-store'
 import entitiesMiddleware from './middleware'
 import { entitiesReceive } from './actions'
 
-jest.mock('schemas')
+jest.mock('schemas');
 
-const mockStore = configureStore([entitiesMiddleware])
+const mockStore = configureStore([entitiesMiddleware]);
 
 it('dispatches the exactly same action', () => {
-  const store = mockStore({})
-  const action = { type: 'FOO', payload: 1 }
-  expect(store.dispatch(action)).toEqual(action)
-  expect(store.getActions()).toEqual([action])
+  const store = mockStore({});
+  const action = { type: 'FOO', payload: 1 };
+  expect(store.dispatch(action)).toEqual(action);
+  expect(store.getActions()).toEqual([action]);
 })
 // TODO: All Failing Tests
-/*
+/**/
 it('dispatches the exactly same action if there is no schema', () => {
   const store = mockStore({})
   const action = {
@@ -24,7 +24,7 @@ it('dispatches the exactly same action if there is no schema', () => {
   }
   expect(store.dispatch(action)).toEqual(action)
   expect(store.getActions()).toEqual([action])
-})
+});
 
 it('dispatches entities action along with the normalized action', () => {
   const store = mockStore({})
@@ -38,7 +38,7 @@ it('dispatches entities action along with the normalized action', () => {
     entitiesReceive({ entity: { 2: { id: 2, foo: 'bar' } } }),
     { ...action, payload: 2 },
   ])
-})
+});
 
 it('dispatches entities action along with array', () => {
   const store = mockStore({})
@@ -52,6 +52,6 @@ it('dispatches entities action along with array', () => {
     entitiesReceive({ entity: { 2: { id: 2, foo: 'bar' } } }),
     { ...action, payload: [2] },
   ])
-})
+});
 // TODO:All Failing Tests
-*/
+//*/
