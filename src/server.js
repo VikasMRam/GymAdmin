@@ -42,7 +42,7 @@ const renderHtml = ({
   const props = {
     styles, assets, state, content,
   }
-  const html = <Html {...props} />
+  const html = <Html {...props} />;
   return `<!doctype html>\n${renderToStaticMarkup(html)}`
 }
 
@@ -71,7 +71,7 @@ app.use((req, res, next) => {
       }))
     }
   }).catch(next)
-})
+});
 
 app.use((err, req, res, next) => {
   const sheet = new ServerStyleSheet()
