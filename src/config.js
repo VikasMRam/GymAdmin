@@ -1,4 +1,4 @@
-const merge = require('lodash/merge')
+const merge = require('lodash/merge');
 
 const config = {
   all: {
@@ -19,6 +19,6 @@ const config = {
     port: process.env.PORT || 8080,
     apiUrl: 'http://www.lvh.me/v0',
   },
-}
+};
 
-module.exports = merge(config.all, config[config.all.env])
+module.exports = merge(config.all, config[config.all.env]);
