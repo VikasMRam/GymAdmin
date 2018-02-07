@@ -30,8 +30,10 @@ theme.fonts = {
   quote: 'Georgia, serif',
 }
 
+
 theme.sizes = {
   maxWidth: '1100px',
+  fsLg: '34px'
 }
 
 export default theme

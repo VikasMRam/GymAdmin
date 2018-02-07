@@ -33,8 +33,7 @@ const Text = styled.div`
 
 
 const RgsCard = ({ ...attributes }) => {
-  console.log('Saw this as attributes and props',attributes);
-  // console.log('Saw this as attributes and props',props);
+
   return (
     <Wrapper {...attributes}>
       {attributes.mainImage && <StyledThumb src={attributes.mainImage} alt= {attributes.name} width={200} />}

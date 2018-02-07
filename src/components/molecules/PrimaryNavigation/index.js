@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { palette } from 'styled-theme'
+import { palette, size } from 'styled-theme'
+import {UserButton} from "components";
 
-import { Link } from 'components'
+
 
 const Nav = styled.nav`
   display: flex;
@@ -14,18 +15,28 @@ const Nav = styled.nav`
   a {
     font-weight: 300;
     color: ${palette('grayscale', 2)};
-    font-size: 1.25rem;
+    font-size: ${size('fsLg')};
     &.active {
       color: ${palette('grayscale', 0)};
+      
     }
   }
+`
+
+const Logo = styled.a`
+  background-image: url(/assets/footer_logo.png);
+  background-size:cover;
+  width: 120px;
+  height: 60px; 
+  
 `
 
 const PrimaryNavigation = (props) => {
   return (
     <Nav {...props}>
-      <li><Link to="/" exact activeClassName="active">Home</Link></li>
-      <li><Link to="/sample-page" activeClassName="active">Sample page</Link></li>
+      <Logo href="/"/>
+      <li><a href="/">Home</a></li>
+      <UserButton {...props}/>
     </Nav>
   )
 }

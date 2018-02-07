@@ -7,6 +7,7 @@ import { FonztestPage, PropertyListPage,PropertyDetailPage } from 'containers';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';
+import {PrimaryNavigation } from 'components';
 
 injectGlobal`
   body {
@@ -18,8 +19,8 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <Helmet titleTemplate="ARc - %s">
-          <title>Seniorly</title>
+        <Helmet titleTemplate="Seniorly - %s">
+          <title>Home</title>
           <meta name="description" content="The Senior Living Marketplace" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta property="og:site_name" content="ARc" />
@@ -30,11 +31,13 @@ export default class App extends Component {
           <link rel="icon" href="/favicon.ico" />
         </Helmet>
         <ThemeProvider theme={theme}>
+
           <Switch>
             <Route path="/fonztest" component={FonztestPage} exact />
             <Route path="/proplist" component={PropertyListPage} exact />
             <Route path="/community/:slug" component={PropertyDetailPage}  />
           </Switch>
+
         </ThemeProvider>
       </div>
     );
