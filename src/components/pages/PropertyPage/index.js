@@ -1,31 +1,52 @@
 // https://github.com/diegohaz/arc/wiki/Atomic-Design
 import React from 'react'
-import {PrimaryNavigation} from 'components'
+import {PrimaryNavigation,Heading,BreadCrumb,BannerImage} from 'components'
 import styled from 'styled-components'
+import {ConversionForm} from "containers";
 
 const Column = styled.div`
   flex: 1;  
 `;
 
 const Wrapper = styled.div`
-  display:flex;
-  flex-direction:column;
-  @media(min-width:768px){
-   flex-direction:row;
-  }
+  display: grid;
+  width:100%;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 8px;
+  grid-auto-rows: minmax(100px, auto);
+  #main{
+    
+  } 
+`;
+const SummarySection = styled.div`
+  
 `;
 
-const PropertyPage = ({ ...props}) => {
+
+const PropertyPage = (props) => {
+  //TODO Read this from where?
+  //define helper on ui side .. that splits url
+  //
+  let bcs = [{label:'Home',path:''},{label:'Assisted Living',path:'assisted-living'},
+    {label:'California',path:'california'},{label:'San Francisco',path:'san-francisco'},
+  ];
   return (
     <div>
-    <PrimaryNavigation {...props}/><Wrapper>
-      {props.detail && <Column>This is new {props.detail.name}</Column>
-      }
-        <Column>Second new column</Column>
+      <PrimaryNavigation {...props}/>
+      {props.detail && <BreadCrumb bcs={bcs} curr={{label:props.detail.name,path:''}}/>}
+      <Wrapper>
+        {props.detail &&
+        <Column id={'main'}>
+          <BannerImage src={props.detail.mainImage} alt={'Main Image for'+props.detail.name}/>
+          <Heading>{props.detail.name}</Heading>
+          <div>{props.detail.address}</div>
 
-    </Wrapper>
+        </Column>
+        }
+        <Column><ConversionForm {...props}/></Column>
+      </Wrapper>
     </div>
   )
-}
+};
 
 export default PropertyPage

@@ -2,6 +2,7 @@ import isEmail from 'validator/lib/isEmail'
 import isInt from 'validator/lib/isInt'
 import isIn from 'validator/lib/isIn'
 import isURL from 'validator/lib/isURL'
+import isMobilePhone from 'validator/lib/isMobilePhone'
 
 const isEmpty = value => value === undefined || value === null || value === ''
 const join = rules => (value, data) =>
@@ -24,6 +25,9 @@ export const maxLength = max => value => !isEmpty(value) && value.length > max &
 
 export const integer = value => !isInt(value) &&
   'Must be an integer'
+
+export const usPhone = value => !isEmpty(value) && !isMobilePhone(value,'en-US') &&
+  'Invalid phone number'
 
 export const oneOf = values => value => !isIn(value, values) &&
   `Must be one of: ${values.join(', ')}`
