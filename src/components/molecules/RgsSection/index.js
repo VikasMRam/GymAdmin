@@ -1,13 +1,14 @@
-import React from 'react';
+import React,{Component} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
+import { connect } from 'react-redux';
+import { Thumbnail,Paragraph, Heading,Icon} from 'components';
 
-import { Thumbnail,Paragraph, Heading} from 'components';
 
 const Wrapper = styled.div`
   position: relative;
-  display: flex;
+  display: initial;
   padding: 1rem;
   box-sizing: border-box;
   opacity: ${ifProp('soon', 0.4, 1)};
@@ -31,24 +32,56 @@ const Text = styled.div`
   }
 `;
 
+//
+// class RgsSection extends Component  {
+//
+//   render()
+//   {
+//      return (
+//       <Wrapper onClick={this.props.toggleOpen}>
+//         <Heading level={3}>
+//           {this.props.getHeading()}
+//         </Heading>
+//         <Icon icon={"down"} orientation={this.props.isOpen() ? "down" : "up"}/>
+//         <br/>
+//         <Paragraph shown={this.props.isOpen()} {...this.props}>{this.props.getHeading()}</Paragraph>
+//
+//       </Wrapper>
+//     );
+//   }
+// };
 
-const RgsCard = ({ ...attributes }) => {
-
+const RgsSection = ({...props}) => {
+  let isToggled = props.isOpen;
   return (
-    <Wrapper {...attributes}>
-      {attributes.mainImage && <StyledThumb src={attributes.mainImage} alt= {attributes.name} width={200} />}
-      <Text>
-        <Heading level={2}>
-          {attributes.url ? <a href={'/community/'+attributes.id}>{attributes.name}</a> : attributes.name}
+      <Wrapper onClick={props.toggleOpen}>
+        <Heading level={3}>
+          {props.getHeading()}
+          {props.state && props.state.isSectionOpen  && <Icon icon={"down"} orientation={ "down"}/>}
+          {props.state && !props.state.isSectionOpen  && <Icon icon={"down"} orientation={ "up"}/>}
         </Heading>
-        <Paragraph>{attributes.slogan}</Paragraph>
-      </Text>
-    </Wrapper>
-  );
+
+        {props.state && props.state.isSectionOpen && <Paragraph shown={true}>{props.detail && props.detail.name}</Paragraph>}
+        {props.state && !props.state.isSectionOpen  && <Paragraph shown={false}>{props.detail && props.detail.name}</Paragraph>}
+
+      </Wrapper>
+    );
 };
 
-RgsCard.propTypes = {
+
+RgsSection.propTypes = {
   attributes: PropTypes.any,
 };
+// const localState = {isOpen:true};
 
-export default RgsCard;
+const mapStateToProps = (state,props) => ({
+  isOpen:() =>{console.log("********Is open being called*******");return state.isSectionOpen },
+  getHeading:()=>{return props.heading},
+  toggleOpen: (evt) => {
+    // console.log("*** TOGGLE SECTION*****",evt,"**",localState);
+    state.isSectionOpen= !state.isSectionOpen;
+    console.log("*****TOGGLE Seeing state",state,"***TOGGLE PROPS",props);
+  }
+});
+
+export default connect(mapStateToProps)(RgsSection);

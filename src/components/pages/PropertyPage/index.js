@@ -1,6 +1,6 @@
 // https://github.com/diegohaz/arc/wiki/Atomic-Design
 import React from 'react'
-import {PrimaryNavigation,Heading,BreadCrumb,BannerImage} from 'components'
+import {PrimaryNavigation,Heading,BreadCrumb,BannerImage,RgsSection} from 'components'
 import styled from 'styled-components'
 import {ConversionForm} from "containers";
 
@@ -18,9 +18,7 @@ const Wrapper = styled.div`
     
   } 
 `;
-const SummarySection = styled.div`
-  
-`;
+
 
 
 const PropertyPage = (props) => {
@@ -40,7 +38,7 @@ const PropertyPage = (props) => {
           <BannerImage src={props.detail.mainImage} alt={'Main Image for'+props.detail.name}/>
           <Heading>{props.detail.name}</Heading>
           <div>{props.detail.address}</div>
-
+          <RgsSection heading={"Description"} {...props}/>
         </Column>
         }
         <Column><ConversionForm {...props}/></Column>

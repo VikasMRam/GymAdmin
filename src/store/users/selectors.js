@@ -29,7 +29,7 @@ export const getUserModel = (state = initialState,data) => {
 
 export const getUserConverted = (state,profile_slug) => {
   //PROFILE SLUG IS ENTIRE PROPS
-  console.log('********In User selector seeing params',state,'***********Slug',profile_slug);
+  // console.log('********In User selector seeing params',state,'***********Slug',profile_slug);
   return state.users.userDetail && state.users.userDetail.hasOwnProperty('email') &&
     (profile_slug.detail && state.users.userDetail['slug'] === profile_slug.detail.id);
   // state.users && state.users.pc.hasOwnProperty(profile_slug

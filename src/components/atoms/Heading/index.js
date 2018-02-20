@@ -17,7 +17,7 @@ const styles = css`
 
 const Heading = styled(({
   level, children, reverse, palette, theme, ...props
-}) => React.createElement(`h${level}`, props, children))`${styles}`
+}) => React.createElement(`h${level}`, props, children))`${styles}`;
 
 Heading.propTypes = {
   level: PropTypes.number,
