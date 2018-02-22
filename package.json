@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node .",
     "env:dev": "cross-env NODE_ENV=development",
+    "env:staging": "cross-env NODE_ENV=staging",
     "env:prod": "cross-env NODE_ENV=production",
     "env:example": "cross-env SOURCE=src-example",
     "test": "jest",
@@ -21,6 +22,9 @@
     "build:copy": "copyfiles public/* public/**/* dist",
     "prebuild": "npm run build:clean && npm run build:copy",
     "build": "npm run env:prod -- webpack",
+    "stging:clean": "rimraf \"dist/!(.git*|Procfile)**\"",
+    "staging:copy": "copyfiles public/* public/**/* dist",
+    "staging": "npm run env:staging -- webpack",
     "build:example": "npm run env:example -- npm run build"
   },
   "jest": {

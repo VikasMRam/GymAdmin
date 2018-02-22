@@ -23,6 +23,14 @@
         "transform-es2015-modules-commonjs"
       ]
     },
+    "staging": {
+      "plugins": [
+        "transform-react-remove-prop-types",
+        ["styled-components", {
+          "displayName": false
+        }]
+      ]
+    },
     "production": {
       "plugins": [
         "transform-react-remove-prop-types",

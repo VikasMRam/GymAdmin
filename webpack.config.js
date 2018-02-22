@@ -126,6 +126,13 @@ const client = createConfig([
     ]),
   ]),
 
+  env('staging', [
+    splitVendor(),
+    addPlugins([
+      new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
+    ]),
+  ]),
+
   env('production', [
     splitVendor(),
     addPlugins([
