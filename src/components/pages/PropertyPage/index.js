@@ -37,7 +37,6 @@ const PropertyPage = (props) => {
         <Column id={'main'}>
           <BannerImage src={props.detail.mainImage} alt={'Main Image for'+props.detail.name}/>
           <Heading>{props.detail.name}</Heading>
-          <div>{props.detail.address}</div>
           <RgsSection heading={"Description"} {...props}/>
           <RgsSection heading={"Care Services"} {...props}/>
           <RgsSection heading={"Amenities"} {...props}/>
