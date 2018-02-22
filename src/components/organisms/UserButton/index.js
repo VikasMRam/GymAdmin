@@ -28,7 +28,7 @@ const UserButton = ({
         </Button>
       }
       {!user && <Button {...props} onClick={onLogin}>Sign in</Button>}
-      <LoginModal {...props}/>
+      <LoginModal />
     </div>
   )
 }

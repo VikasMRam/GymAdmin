@@ -39,6 +39,11 @@ const PropertyPage = (props) => {
           <Heading>{props.detail.name}</Heading>
           <div>{props.detail.address}</div>
           <RgsSection heading={"Description"} {...props}/>
+          <RgsSection heading={"Care Services"} {...props}/>
+          <RgsSection heading={"Amenities"} {...props}/>
+          <RgsSection heading={"Inspection Report"} {...props}/>
+          <RgsSection heading={"Reviews"} {...props}/>
+          <RgsSection heading={"Questions"} {...props}/>
         </Column>
         }
         <Column><ConversionForm {...props}/></Column>

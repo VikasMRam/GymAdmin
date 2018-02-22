@@ -29,7 +29,7 @@ class LoginModal extends Component {
   render() {
     const { onFacebookLogin, ...props } = this.props
     return (
-      <Modal title="Login" name="login" closeable {...props}>
+      <Modal title="Login" name="login" closeable={true} {...props}>
         <Wrapper>
           <Button onClick={onFacebookLogin} icon="facebook">Connect with Facebook</Button>
         </Wrapper>
