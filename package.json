@@ -4,7 +4,7 @@
   "private": true,
   "main": "dist/server",
   "scripts": {
-    "start": "node .",
+    "start": "node /var/app/current",
     "env:dev": "cross-env NODE_ENV=development",
     "env:prod": "cross-env NODE_ENV=production",
     "env:example": "cross-env SOURCE=src-example",
