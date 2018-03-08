@@ -2,7 +2,7 @@
 import 'isomorphic-fetch';
 import { stringify } from 'query-string';
 import merge from 'lodash/merge';
-import { apiUrl, authTokenUrl } from 'config';
+import { apiUrl, authTokenUrl } from '../../config';
 
 export const checkStatus = (response) => {
   if (response.ok) {
@@ -39,10 +39,25 @@ export const parseEndpoint = (endpoint, params) => {
 
 const api = {};
 
-api.request = (endpoint, { params, ...settings } = {}) =>
-  fetch(parseEndpoint(endpoint, params), parseSettings(settings))
+api.request = (endpoint, { params, ...settings } = {}) => {
+  const parsedSettings = parseSettings(settings);
+
+  // FIXME: this should go whith the homogenization of the API
+  if (endpoint === '/users/me/') {
+    parsedSettings.headers = [];
+    endpoint = 'http://www.lvh.me:3000/users/me';
+  }
+  if (endpoint === '/personalization/useractions/track/') {
+    endpoint = 'http://www.lvh.me:3000/personalization/useractions/track';
+  }
+
+  const parsedEndpoint = parseEndpoint(endpoint, params);
+
+  return fetch(parsedEndpoint, parsedSettings)
     .then(checkStatus)
     .then(parseJSON);
+
+}
 
 ;['delete', 'get'].forEach((method) => {
   api[method] = (endpoint, settings) => api.request(endpoint, { method, ...settings })
@@ -77,6 +92,7 @@ api.create = (settings = {}) => ({
   },
 
   request(endpoint, settings) {
+    // FIXME: More specific way of doing this
     let tries = 2;
     const aTry = () => api.request(endpoint, merge({}, this.settings, settings))
       .catch(error => {

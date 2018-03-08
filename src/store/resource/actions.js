@@ -12,7 +12,7 @@ export const resourceCreateRequest = (resource, data) => ({
     // https://github.com/diegohaz/arc/wiki/Actions#async-actions
     thunk: `${resource}Create`,
   },
-})
+});
 
 export const resourceCreateSuccess = (resource, detail, request, thunk) => ({
   type: RESOURCE_CREATE_SUCCESS,
@@ -77,9 +77,9 @@ export const RESOURCE_DETAIL_READ_REQUEST = 'RESOURCE_DETAIL_READ_REQUEST'
 export const RESOURCE_DETAIL_READ_SUCCESS = 'RESOURCE_DETAIL_READ_SUCCESS'
 export const RESOURCE_DETAIL_READ_FAILURE = 'RESOURCE_DETAIL_READ_FAILURE'
 
-export const resourceDetailReadRequest = (resource, needle) => ({
+export const resourceDetailReadRequest = (resource, needle, params) => ({
   type: RESOURCE_DETAIL_READ_REQUEST,
-  payload: { needle },
+  payload: { needle, params },
   meta: {
     resource,
     thunk: `${resource}DetailRead`,

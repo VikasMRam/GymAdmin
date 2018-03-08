@@ -17,7 +17,9 @@ const config = {
   production: {
     host: process.env.HOST || 'localhost',
     port: process.env.PORT || 8080,
-    apiUrl: 'http://www.lvh.me/v0',
+    apiUrl: process.env.API_URL || 'http://www.teamseniorly.com/v0/',
+    authTokenUrl: 'http://www.teamseniorly.com/users/auth_token',
+
   },
 }
 

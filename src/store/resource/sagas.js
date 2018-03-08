@@ -23,9 +23,9 @@ export function* readResourceList(api, { params }, { resource, thunk }) {
   }
 }
 
-export function* readResourceDetail(api, { needle }, { resource, thunk }) {
+export function* readResourceDetail(api, { needle, params }, { resource, thunk }) {
   try {
-    const detail = yield call([api, api.get], `/${resource}/${needle}/`)
+    const detail = yield call([api, api.get], `/${resource}/${needle}/`, { params })
     yield put(actions.resourceDetailReadSuccess(resource, detail, { needle }, thunk))
   } catch (e) {
     yield put(actions.resourceDetailReadFailure(resource, e, { needle }, thunk))
