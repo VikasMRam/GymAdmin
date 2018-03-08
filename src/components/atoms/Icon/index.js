@@ -1,14 +1,14 @@
 // https://github.com/diegohaz/arc/wiki/Example-components#icon
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { palette } from 'styled-theme'
-import { ifProp } from 'styled-tools'
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { palette } from 'styled-theme';
+import { ifProp } from 'styled-tools';
 
 const fontSize = ({ width, height }) => {
-  const size = width || height
-  return size ? `${size / 16}rem` : '1.25em'
-}
+  const size = width || height;
+  return size ? `${size / 16}rem` : '1.25em';
+};
 
 const Wrapper = styled.span`
   display: inline-block;
@@ -18,7 +18,7 @@ const Wrapper = styled.span`
   height: 1em;
   margin: 0.1em;
   box-sizing: border-box;
-  transform:  ${ifProp({orientation:"up"},"rotate(180deg)","rotate(0deg)")};
+  transform: ${ifProp({ orientation: 'up' }, 'rotate(180deg)', 'rotate(0deg)')};
   transition: transform 2s;
   & > svg {
     width: 100%;
@@ -26,12 +26,12 @@ const Wrapper = styled.span`
     fill: currentcolor;
     stroke: currentcolor;
   }
-`
+`;
 
 const Icon = ({ icon, ...props }) => {
-  const svg = require(`!raw-loader!./icons/${icon}.svg`)
-  return <Wrapper {...props} dangerouslySetInnerHTML={{ __html: svg }} />
-}
+  const svg = require(`!raw-loader!./icons/${icon}.svg`);
+  return <Wrapper {...props} dangerouslySetInnerHTML={{ __html: svg }} />;
+};
 
 Icon.propTypes = {
   icon: PropTypes.string.isRequired,
@@ -39,6 +39,6 @@ Icon.propTypes = {
   height: PropTypes.number,
   palette: PropTypes.string,
   reverse: PropTypes.bool,
-}
+};
 
-export default Icon
+export default Icon;

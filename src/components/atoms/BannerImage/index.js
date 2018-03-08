@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
 const BImage = styled.img`
   width:327px;
@@ -15,10 +15,7 @@ const BImage = styled.img`
 `;
 
 const BannerImage = (props) => {
-  return <BImage src={props.src} alt={props.alt}/>
+  return <BImage src={props.src} alt={props.alt} />;
 };
 
-
-
-
-export default BannerImage ;
+export default BannerImage;

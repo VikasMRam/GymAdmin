@@ -1,6 +1,6 @@
 // https://github.com/diegohaz/arc/wiki/Actions#unit-testing-actions
 // https://github.com/diegohaz/arc/wiki/Example-redux-modules#modal
-import * as actions from './actions'
+import * as actions from './actions';
 
 test('modalShow', () => {
   expect(actions.modalShow('test')).toEqual(expect.objectContaining({
@@ -8,8 +8,8 @@ test('modalShow', () => {
     payload: {
       name: 'test',
     },
-  }))
-})
+  }));
+});
 
 test('modalHide', () => {
   expect(actions.modalHide('test')).toEqual({
@@ -17,5 +17,5 @@ test('modalHide', () => {
     payload: {
       name: 'test',
     },
-  })
-})
+  });
+});

@@ -1,10 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import styled from 'styled-components'
-import { palette, size } from 'styled-theme'
-import {UserButton} from "components";
-
-
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { palette, size } from 'styled-theme';
+import { UserButton } from 'components';
 
 const Nav = styled.nav`
   display: flex;
@@ -18,31 +16,31 @@ const Nav = styled.nav`
     font-size: ${size('fsLg')};
     &.active {
       color: ${palette('grayscale', 0)};
-      
     }
   }
-`
+`;
 
 const Logo = styled.a`
   background-image: url(/assets/footer_logo.png);
-  background-size:cover;
+  background-size: cover;
   width: 120px;
-  height: 60px; 
-  
-`
+  height: 60px;
+`;
 
 const PrimaryNavigation = (props) => {
   return (
     <Nav {...props}>
-      <Logo href="/"/>
-      <li><a href="/">Home</a></li>
-      <UserButton {...props}/>
+      <Logo href="/" />
+      <li>
+        <a href="/">Home</a>
+      </li>
+      <UserButton {...props} />
     </Nav>
-  )
-}
+  );
+};
 
 PrimaryNavigation.propTypes = {
   reverse: PropTypes.bool,
-}
+};
 
-export default PrimaryNavigation
+export default PrimaryNavigation;

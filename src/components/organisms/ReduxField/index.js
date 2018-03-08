@@ -1,16 +1,17 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import { Field } from 'components'
+import { Field } from 'components';
 
 const ReduxField = ({ meta, input, ...props }) => {
   const fieldProps = {
-    ...props, ...input, invalid: meta.touched && !!meta.error, error: meta.error,
-  }
-  return (
-    <Field {...fieldProps} />
-  )
-}
+    ...props,
+    ...input,
+    invalid: meta.touched && !!meta.error,
+    error: meta.error,
+  };
+  return <Field {...fieldProps} />;
+};
 
 ReduxField.propTypes = {
   meta: PropTypes.shape({
@@ -20,6 +21,6 @@ ReduxField.propTypes = {
   input: PropTypes.shape({
     name: PropTypes.string.isRequired,
   }).isRequired,
-}
+};
 
-export default ReduxField
+export default ReduxField;

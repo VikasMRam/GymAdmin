@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { Thumbnail,Paragraph, Heading} from 'components';
+import { Thumbnail, Paragraph, Heading } from 'components';
 
 const Wrapper = styled.div`
   position: relative;
@@ -31,15 +31,23 @@ const Text = styled.div`
   }
 `;
 
-
 const RgsCard = ({ ...attributes }) => {
-
   return (
     <Wrapper {...attributes}>
-      {attributes.mainImage && <StyledThumb src={attributes.mainImage} alt= {attributes.name} width={200} />}
+      {attributes.mainImage && (
+        <StyledThumb
+          src={attributes.mainImage}
+          alt={attributes.name}
+          width={200}
+        />
+      )}
       <Text>
         <Heading level={2}>
-          {attributes.url ? <a href={'/community/'+attributes.id}>{attributes.name}</a> : attributes.name}
+          {attributes.url ? (
+            <a href={`/community/${attributes.id}`}>{attributes.name}</a>
+          ) : (
+            attributes.name
+          )}
         </Heading>
         <Paragraph>{attributes.slogan}</Paragraph>
       </Text>

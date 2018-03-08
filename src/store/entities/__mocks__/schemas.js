@@ -1,8 +1,6 @@
-
 const { schema } = require('normalizr');
-var mys = {
+
+const mys = {
   entity: new schema.Entity('entity'),
 };
 export const schemas = mys;
-
-
