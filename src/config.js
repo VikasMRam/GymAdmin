@@ -1,4 +1,4 @@
-const merge = require('lodash/merge')
+const merge = require('lodash/merge');
 
 const config = {
   all: {
@@ -21,6 +21,6 @@ const config = {
     authTokenUrl: 'http://www.teamseniorly.com/users/auth_token',
 
   },
-}
+};
 
-module.exports = merge(config.all, config[config.all.env])
+module.exports = merge(config.all, config[config.all.env]);

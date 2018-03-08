@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { resourceListReadRequest } from 'store/actions'
+import { resourceListReadRequest } from 'store/actions';
 import { connect } from 'react-redux';
 
 import { getList } from 'store/entities/selectors';
@@ -14,20 +14,14 @@ class FonztestPage extends Component {
     const { list, state } = this.props;
     console.log(state.entities);
     return (
-      <ul>
-        {list.map(item => (
-          <li key={item.id}>
-            { JSON.stringify(item) }
-          </li>
-        ))}
-      </ul> 
+      <ul>{list.map(item => <li key={item.id}>{JSON.stringify(item)}</li>)}</ul>
     );
   }
 }
 
 const mapStateToProps = state => ({
   state,
-  list: getList(state, 'users'), 
+  list: getList(state, 'users'),
 });
 
 const mapDispatchToProps = dispatch => ({
