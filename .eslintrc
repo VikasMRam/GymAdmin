@@ -22,7 +22,6 @@
     }
   },
   "rules": {
-    "comma-dangle": [2, "always-multiline"],
     "max-len": 0,
     "no-shadow": 0,
     "arrow-body-style": 0,

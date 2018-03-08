@@ -1,14 +1,15 @@
 // https://github.com/diegohaz/arc/wiki/Selectors
 // https://github.com/diegohaz/arc/wiki/Example-redux-modules#entities
-import build from 'redux-object'
-import { denormalize } from 'normalizr'
+import build from 'redux-object';
+import { denormalize } from 'normalizr';
 // import * as schemas from './schemas'
 //
-export const initialState = {}
+export const initialState = {};
 //
-export const getEntity = (state = initialState, entity) => state[entity] || {}
+export const getEntity = (state = initialState, entity) => state[entity] || {};
 
-export const getDetail = (state = initialState, entity, id) => build(state, entity, id, { eager: true })//getEntity(state, entity)[id]
+export const getDetail = (state = initialState, entity, id) =>
+  build(state, entity, id, { eager: true }); // getEntity(state, entity)[id]
 
 export const getList = (state = initialState, entity, ids) => {
   if (!ids) {

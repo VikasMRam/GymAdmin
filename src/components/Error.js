@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const ErrorPage = () => {
-  return (
-    <div>Oops! A server error occurred</div>
-  )
-}
+  return <div>Oops! A server error occurred</div>;
+};
 
-export default ErrorPage
+export default ErrorPage;
