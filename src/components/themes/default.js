@@ -34,6 +34,8 @@ theme.sizes = {
   maxWidth: '1100px',
   font: {
     large: '34px',
+    small: '10px',
+
   },
 };
 

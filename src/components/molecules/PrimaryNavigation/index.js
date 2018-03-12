@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { palette, size } from 'styled-theme';
+import { palette, size, key } from 'styled-theme';
 import { UserButton } from 'components';
 
 const Nav = styled.nav`
@@ -13,7 +13,7 @@ const Nav = styled.nav`
   a {
     font-weight: 300;
     color: ${palette('grayscale', 2)};
-    font-size: ${size('font.large')};
+    font-size: ${size('textSmall')};
     &.active {
       color: ${palette('grayscale', 0)};
     }
@@ -21,7 +21,7 @@ const Nav = styled.nav`
 `;
 
 const Logo = styled.a`
-  background-image: url(/assets/footer_logo.png);
+  // background-image: url(/assets/footer_logo.png);
   background-size: cover;
   width: 120px;
   height: 60px;
@@ -32,7 +32,7 @@ const PrimaryNavigation = (props) => {
     <Nav {...props}>
       <Logo href="/" />
       <li>
-        <a href="/">Home</a>
+        <a href="/">Homer</a>
       </li>
       <UserButton {...props} />
     </Nav>

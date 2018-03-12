@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { injectGlobal, ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 
 import { FonztestPage, PropertyListPage } from 'containers';
@@ -8,13 +8,9 @@ import PropertyDetailPage from './pages/PropertyDetailPage';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';
-import { PrimaryNavigation } from 'components';
+import setGlobalStyles from './themes/setGlobalStyles';
 
-injectGlobal`
-  body {
-    margin: 0;
-  }
-`;
+import { PrimaryNavigation } from 'components';
 
 export default class App extends Component {
   render() {

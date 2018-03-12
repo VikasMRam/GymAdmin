@@ -1,7 +1,10 @@
-const baseConfig = require('../../webpack.config')
+const path = require('path');
 
-module.exports = storybookBaseConfig =>
-  Object.assign({}, storybookBaseConfig, {
+const baseConfig = require('../../webpack.config');
+
+module.exports = storybookBaseConfig => {
+  console.log('output path', storybookBaseConfig.output);
+  return Object.assign({}, storybookBaseConfig, {
     entry: Object.assign({}, storybookBaseConfig.entry, {
       preview: ['babel-polyfill'].concat(storybookBaseConfig.entry.preview),
     }),
@@ -11,4 +14,5 @@ module.exports = storybookBaseConfig =>
     module: Object.assign({}, storybookBaseConfig.module, {
       rules: storybookBaseConfig.module.rules.concat(baseConfig.module.rules.slice(1)),
     }),
-  })
+  });
+}

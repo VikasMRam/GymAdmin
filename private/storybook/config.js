@@ -7,11 +7,13 @@ import { ThemeProvider } from 'styled-components'
 import configureStore from 'store/configure'
 import api from 'services/api'
 import theme from 'components/themes/default'
+import setGlobalStyles from 'components/themes/setGlobalStyles';
 
 const store = configureStore({}, { api: api.create() })
 const req = require.context('components', true, /.stories.js$/)
 
 function loadStories() {
+  setGlobalStyles();
   req.keys().forEach(filename => req(filename))
 }
 
