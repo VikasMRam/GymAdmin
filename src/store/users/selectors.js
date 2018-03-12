@@ -1,6 +1,14 @@
 // https://github.com/diegohaz/arc/wiki/Selectors
 // https://github.com/diegohaz/arc/wiki/Example-redux-modules#resource
 export const initialState = {};
+class UserAction {
+  getProfilesViewed(){
+
+  }
+  getBookedTours() {
+
+  }
+}
 // need to keep it in sync with
 export const initialUserState = {
   uuid: '', // User id

@@ -28,16 +28,20 @@ const StyledPrimaryNavigation = styled(PrimaryNavigation)`
   flex: 1
 `
 
-const Header = (props) => {
-  return (
-    <Wrapper opaque reverse {...props}>
-      <InnerWrapper>
-        <IconLink to="/" icon="arc" height={100} />
-        <StyledPrimaryNavigation reverse />
-        <UserButton reverse transparent />
-      </InnerWrapper>
-    </Wrapper>
-  )
+class Header {
+  static propTypes = {};
+  render() {
+    const {opaque, reverse} = this.props;
+    return (
+      <Wrapper opaque reverse>
+        <InnerWrapper>
+          <IconLink to="/" icon="arc" height={100}/>
+          <StyledPrimaryNavigation reverse/>
+          <UserButton reverse transparent/>
+        </InnerWrapper>
+      </Wrapper>
+    );
+  }
 }
 
 export default Header
