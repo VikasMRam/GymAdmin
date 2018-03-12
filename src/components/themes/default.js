@@ -32,11 +32,14 @@ theme.fonts = {
 
 theme.sizes = {
   maxWidth: '1100px',
-  font: {
-    large: '34px',
-    small: '10px',
-
-  },
+  textTitle:        '3.34em',
+  textTitleSmall:   '2.55em',
+  textSubtitle:      '1.5em',
+  textSubtitleSmall: '1.4em',
+  textBody:          '1.5em',
+  textBodySmall:     '1.4em',
+  textMicro:           '1em',
+  textCaption:         '1em',
 };
 
 export default theme;
