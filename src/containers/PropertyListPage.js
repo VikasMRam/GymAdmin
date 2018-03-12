@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { resourceListReadRequest } from 'store/actions';
 import { connect } from 'react-redux';
 import { RgsCard } from 'components';
-import { withDone } from 'react-router-server';
 
 import { getList } from 'store/entities/selectors';
 
@@ -23,9 +22,8 @@ const mapStateToProps = state => ({
   list: getList(state, 'properties'),
 });
 
-const mapDispatchToProps = (dispatch, { done }) => ({
-  readPropList: () =>
-    dispatch(resourceListReadRequest('properties')).then(done, done),
+const mapDispatchToProps = dispatch => ({
+  readPropList: () => dispatch(resourceListReadRequest('properties')),
 });
 
-export default withDone(connect(mapStateToProps, mapDispatchToProps)(PropertyListPage));
+export default connect(mapStateToProps, mapDispatchToProps)(PropertyListPage);

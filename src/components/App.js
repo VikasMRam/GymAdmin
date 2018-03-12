@@ -8,7 +8,7 @@ import PropertyDetailPage from './pages/PropertyDetailPage';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';
-import {PrimaryNavigation } from 'components';
+import { PrimaryNavigation } from 'components';
 
 injectGlobal`
   body {
@@ -18,16 +18,16 @@ injectGlobal`
 
 export default class App extends Component {
   render() {
-    const careTypes = [
-      'assisted-living',
-      'independent-living'
-    ].join('|');
+    const careTypes = ['assisted-living', 'independent-living'].join('|');
     return (
       <div>
         <Helmet titleTemplate="Seniorly - %s">
           <title>Home</title>
           <meta name="description" content="The Senior Living Marketplace" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
           <meta property="og:site_name" content="ARc" />
           <meta property="og:image" content="/thumbnail.png" />
           <meta property="og:image:type" content="image/png" />
@@ -40,12 +40,14 @@ export default class App extends Component {
           <Switch>
             <Route path="/fonztest" component={FonztestPage} exact />
             <Route path="/proplist" component={PropertyListPage} exact />
-            {/*<Route path="/community/:slug" component={PropertyDetailPage}  />*/}
-            <Route path={`/:careType(${careTypes})/:state/:city/:slug`} component={PropertyDetailPage}  />
+            {/* <Route path="/community/:slug" component={PropertyDetailPage}  /> */}
+            <Route
+              path={`/:careType(${careTypes})/:state/:city/:slug`}
+              component={PropertyDetailPage}
+            />
           </Switch>
         </ThemeProvider>
       </div>
     );
   }
 }
-

@@ -20,7 +20,7 @@ test('resourceCreateSuccess', () => {
   expect(actions.resourceCreateSuccess(
     'resources',
     { id: 1, title: 'test' },
-    'request',
+    'request'
   )).toEqual(expect.objectContaining({
     type: actions.RESOURCE_CREATE_SUCCESS,
     payload: { id: 1, title: 'test' },
@@ -96,7 +96,7 @@ test('resourceDetailReadSuccess', () => {
   expect(actions.resourceDetailReadSuccess(
     'resources',
     { id: 1, title: 'test' },
-    'request',
+    'request'
   )).toEqual(expect.objectContaining({
     type: actions.RESOURCE_DETAIL_READ_SUCCESS,
     payload: { id: 1, title: 'test' },
@@ -138,7 +138,7 @@ test('resourceUpdateSuccess', () => {
   expect(actions.resourceUpdateSuccess(
     'resources',
     { id: 1, title: 'test' },
-    'request',
+    'request'
   )).toEqual(expect.objectContaining({
     type: actions.RESOURCE_UPDATE_SUCCESS,
     payload: { id: 1, title: 'test' },

@@ -68,7 +68,7 @@ test('createValidator', () => {
       password: v.required(''),
       passwordRepeat: v.match('a')('c', { a: 'b' }),
     },
-    'Expected to follow the validation order',
+    'Expected to follow the validation order'
   );
 
   expect(Object.keys(validator({

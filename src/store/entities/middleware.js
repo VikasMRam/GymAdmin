@@ -4,20 +4,18 @@ import { env } from 'config';
 import { entitiesReceive } from './actions';
 
 const middleware = store => next => (action) => {
-  const { payload, meta } = action
+  const { payload, meta } = action;
 
   if (meta && meta.entities) {
     const entities = normalize(payload);
-    store.dispatch(entitiesReceive(entities))
+    store.dispatch(entitiesReceive(entities));
 
-    if (entities[meta.entities]){
+    if (entities[meta.entities]) {
       const result = Object.values(entities[meta.entities]).map(e => e.id);
       return next({ ...action, payload: result });
     }
-
-
   }
   return next(action);
 };
 
-export default middleware
+export default middleware;

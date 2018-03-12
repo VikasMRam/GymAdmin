@@ -18,7 +18,7 @@ export const userConversionSuccess = (detail, request, thunk) => {
     '###re',
     request,
     '###thunk',
-    thunk,
+    thunk
   );
   return {
     type: USER_CONVERSION_SUCCESS,

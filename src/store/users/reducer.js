@@ -18,7 +18,7 @@ export default (state = initialState, { type, payload = {} }) => {
         'Payload',
         payload,
         'State',
-        state,
+        state
       );
       // Update the user details part
 

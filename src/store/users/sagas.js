@@ -23,7 +23,7 @@ export function* watchConverUserRequest(api, { payload, meta }) {
     '---USER CONVERT WATCHER-Saw every thing here',
     payload,
     'Meta',
-    meta,
+    meta
   );
   yield call(convertUser, api, payload, meta);
 }

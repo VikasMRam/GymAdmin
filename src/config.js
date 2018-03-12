@@ -23,7 +23,6 @@ const config = {
     port: process.env.PORT || 8080,
     apiUrl: process.env.API_URL || 'http://www.teamseniorly.com/v0/',
     authTokenUrl: 'http://www.teamseniorly.com/users/auth_token',
-
   },
 };
 

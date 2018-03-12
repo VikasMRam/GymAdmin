@@ -38,9 +38,7 @@ const mapStateToProps = (state, props) => ({
     // AND THEN UPDATE USER STATE? (state.user has to be updated with profiles rcb)
     // SAYING PROFILE HAS BEEN UPDATED?
     data.slug = props.detail.id;
-    return dispatch(userConversionRequest(data)).then((r) => {
-      console.log('Reeing', r);
-    });
+    return dispatch(userConversionRequest(data));
   },
 });
 const mapDispatchToProps = dispatch => ({

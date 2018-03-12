@@ -24,4 +24,4 @@ const middleware = store => next => (action) => {
   return next(action);
 };
 
-export default middleware
+export default middleware;

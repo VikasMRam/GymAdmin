@@ -27,7 +27,7 @@ const getStore = (initialState) => {
   const store = createStore(
     reducer,
     initialState,
-    applyMiddleware(sagaMiddleware),
+    applyMiddleware(sagaMiddleware)
   );
   sagaMiddleware.run(sagas, { api });
   return store;

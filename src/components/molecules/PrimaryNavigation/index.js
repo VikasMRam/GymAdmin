@@ -13,7 +13,7 @@ const Nav = styled.nav`
   a {
     font-weight: 300;
     color: ${palette('grayscale', 2)};
-    font-size: ${size('fsLg')};
+    font-size: ${size('font.large')};
     &.active {
       color: ${palette('grayscale', 0)};
     }

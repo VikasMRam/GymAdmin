@@ -2,12 +2,8 @@
 // https://github.com/diegohaz/arc/wiki/Example-redux-modules#resource
 export const initialState = {};
 class UserAction {
-  getProfilesViewed(){
-
-  }
-  getBookedTours() {
-
-  }
+  getProfilesViewed() {}
+  getBookedTours() {}
 }
 // need to keep it in sync with
 export const initialUserState = {

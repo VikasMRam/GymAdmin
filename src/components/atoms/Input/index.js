@@ -16,7 +16,7 @@ const styles = css`
   padding: ${ifProp(
     { type: 'textarea' },
     '0.4444444444em',
-    '0 0.4444444444em',
+    '0 0.4444444444em'
   )};
   height: ${ifProp({ type: 'textarea' }, 'auto', '2.2222222222em')};
   color: ${palette('grayscale', 0)};
