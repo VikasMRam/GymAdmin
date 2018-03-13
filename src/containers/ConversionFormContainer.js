@@ -62,7 +62,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   getUser: () =>
     dispatch(resourceDetailReadRequest('users', 'me', {
-      uuid: 'e2867c96-20b7-4379-b597-d7bd0e49bab8',
+      uuid: 'c07f0ee1-45dd-4f3f-b690-0a27f8db6b49',
     })),
 });
 
