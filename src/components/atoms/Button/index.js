@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import Link from 'react-router-dom/Link';
 import { font, palette } from 'styled-theme';
+import { size } from 'components/themes/default';
 import { ifProp } from 'styled-tools';
-
-const fontSize = ({ height }) => `${height / 40}rem`;
 
 const backgroundColor = ({ transparent, disabled }) =>
   transparent ? 'transparent' : palette(disabled ? 2 : 1);
@@ -20,10 +19,9 @@ const hoverForegroundColor = ({ disabled, transparent }) =>
 
 const styles = css`
   display: inline-flex;
-  font-family: ${font('primary')};
   align-items: center;
   white-space: nowrap;
-  font-size: ${fontSize};
+  font-size: ${size('text', 'body')};
   border: 0.0625em solid ${ifProp('transparent', 'currentcolor', 'transparent')};
   height: 2.5em;
   justify-content: center;

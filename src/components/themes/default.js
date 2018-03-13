@@ -1,45 +1,39 @@
 // https://github.com/diegohaz/arc/wiki/Styling
 import { reversePalette } from 'styled-theme/composer';
+import { key } from 'styled-theme';
 
 const theme = {};
 
 theme.palette = {
-  primary: ['#1976d2', '#2196f3', '#71bcf7', '#c2e2fb'],
-  secondary: ['#c2185b', '#e91e63', '#f06292', '#f8bbd0'],
-  danger: ['#d32f2f', '#f44336', '#f8877f', '#ffcdd2'],
-  alert: ['#ffa000', '#ffc107', '#ffd761', '#ffecb3'],
-  success: ['#388e3c', '#4caf50', '#7cc47f', '#c8e6c9'],
-  white: ['#fff', '#fff', '#eee'],
-  grayscale: [
-    '#212121',
-    '#414141',
-    '#616161',
-    '#9e9e9e',
-    '#bdbdbd',
-    '#e0e0e0',
-    '#eeeeee',
-    '#ffffff',
-  ],
+  primary:   ['#2f8fcb', '#80bae1', '#007fb6'],
+  secondary: ['#7ccdcc', '#aee1e0', '#4fb4b3'],
+  danger:    ['#c54e5b', '#dd939b', '#a92f42'],
+  white:     ['#e7edef', '#f3f5f6', '#ffffff'],
+  grayscale: ['#384c57', '#9ca8af', '#c6d0c5'],
 };
 
 theme.reversePalette = reversePalette(theme.palette);
 
 theme.fonts = {
-  primary: 'Helvetica Neue, Helvetica, Roboto, sans-serif',
+  primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',
   pre: 'Consolas, Liberation Mono, Menlo, Courier, monospace',
   quote: 'Georgia, serif',
 };
 
 theme.sizes = {
-  maxWidth: '1100px',
-  textTitle:        '3.34em',
-  textTitleSmall:   '2.55em',
-  textSubtitle:      '1.5em',
-  textSubtitleSmall: '1.4em',
-  textBody:          '1.5em',
-  textBodySmall:     '1.4em',
-  textMicro:           '1em',
-  textCaption:         '1em',
+  maxWidth:         '1100px',
+
+  text: {
+    hero:          '2.5rem',
+    title:        '1.75rem',
+    subtitle:    '1.125rem',
+    body:            '1rem',
+    caption:      '0.875rem',
+  },
 };
+
+export function size(...args) {
+  return key(['sizes', ...args]);
+}
 
 export default theme;
