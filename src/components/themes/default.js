@@ -21,14 +21,29 @@ theme.fonts = {
 };
 
 theme.sizes = {
-  maxWidth:         '1100px',
+  maxWidth:      '1100px',
+
+  elements: {
+    height: {
+      regular: '2.500rem', 
+      large:   '3.250rem',
+      small:   '2.125rem',
+    },
+
+    border:    '0.063rem',
+    borderRadius: {
+      large:   '0.250rem',
+      regular: '0.125rem',
+    },
+  },
+        
 
   text: {
-    hero:          '2.5rem',
-    title:        '1.75rem',
-    subtitle:    '1.125rem',
-    body:            '1rem',
-    caption:      '0.875rem',
+    hero:      '2.500rem',
+    title:     '1.750rem',
+    subtitle:  '1.125rem',
+    body:      '1.000rem',
+    caption:   '0.875rem',
   },
 };
 

@@ -1,47 +1,102 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import styled, { css } from 'styled-components';
-import Link from 'react-router-dom/Link';
 import { font, palette } from 'styled-theme';
-import { size } from 'components/themes/default';
 import { ifProp } from 'styled-tools';
+import Link from 'react-router-dom/Link';
 
-const backgroundColor = ({ transparent, disabled }) =>
-  transparent ? 'transparent' : palette(disabled ? 2 : 1);
+import {
+  bool,
+  string,
+  oneOf
+} from 'prop-types';
 
-const foregroundColor = ({ transparent, disabled }) =>
-  transparent ? palette(disabled ? 2 : 1) : palette('grayscale', 0, true);
+import { size } from 'components/themes/default';
 
-const hoverBackgroundColor = ({ disabled, transparent }) =>
-  !disabled && !transparent && palette(0);
-const hoverForegroundColor = ({ disabled, transparent }) =>
-  !disabled && transparent && palette(0);
+const backgroundColor = ({ ghost, disabled }) =>
+  disabled
+    ? palette('white', 1)
+    : ghost ? palette('white', 2) : palette(0);
+
+const foregroundColor = ({ ghost, disabled }) =>
+  disabled
+    ? palette('grayscale', 2)
+    : ghost ? palette(0) : palette('white', 2);
+
+const borderColor = ({ ghost, disabled }) =>
+  (ghost || disabled)
+    ? 'currentcolor'
+    : 'transparent';
+
+const hoverBackgroundColor = ({ disabled, ghost }) =>
+  !disabled && !ghost && palette(1);
+
+const hoverForegroundColor = ({ disabled, ghost }) =>
+  !disabled && ghost && palette(1);
+
+const activeBackgroundColor = ({ disabled, ghost }) =>
+  !disabled && !ghost && palette(2);
+
+const activeForegroundColor = ({ disabled, ghost }) =>
+  !disabled && ghost && palette(2);
+
+const height = ({ kind }) => {
+  switch (kind) {
+    case 'jumbo': return size('elements', 'height', 'large');
+    case 'label': return size('elements', 'height', 'small');
+    default: return size('elements', 'height', 'regular');
+  }
+};
+
+const fontSize = ({ kind }) => {
+  switch (kind) {
+    case 'jumbo': return size('text', 'subtitle');
+    case 'label': return size('text', 'caption');
+    default: return size('text', 'body');
+  }
+};
+
+const borderRadius = ({ kind }) => {
+  switch (kind) {
+    case 'jumbo':
+    case 'label':
+      return size('elements', 'borderRadius', 'large');
+    default:
+      return size('elements', 'borderRadius', 'regular');
+  }
+};
+
 
 const styles = css`
   display: inline-flex;
   align-items: center;
-  white-space: nowrap;
-  font-size: ${size('text', 'body')};
-  border: 0.0625em solid ${ifProp('transparent', 'currentcolor', 'transparent')};
-  height: 2.5em;
   justify-content: center;
+  height: ${height};
+  padding: 0 1em;
+  text-transform: ${ifProp({ kind: 'label' }, 'uppercase', 'none')};
   text-decoration: none;
+  white-space: nowrap;
+  font-size: ${fontSize};
+  border: ${size('elements', 'border')} solid ${borderColor};
   cursor: ${ifProp('disabled', 'default', 'pointer')};
   appearance: none;
-  padding: 0 1em;
-  border-radius: 0.125em;
+  border-radius: ${borderRadius};
   box-sizing: border-box;
-  pointer-events: ${ifProp('disabled', 'none', 'auto')};
   transition: background-color 250ms ease-out, color 250ms ease-out,
     border-color 250ms ease-out;
   background-color: ${backgroundColor};
   color: ${foregroundColor};
 
-  &:hover,
-  &:focus,
-  &:active {
+  pointer-events: ${ifProp('disabled', 'none', 'auto')};
+
+  &:hover {
     background-color: ${hoverBackgroundColor};
     color: ${hoverForegroundColor};
+  }
+
+  &:active {
+    background-color: ${activeBackgroundColor};
+    color: ${activeForegroundColor};
   }
 
   &:focus {
@@ -64,30 +119,34 @@ const StyledButton = styled.button`
   ${styles};
 `;
 
-const Button = ({ type, ...props }) => {
+const Button = ({ type, buttonType, ...props }) => {
+  // rename type to kind to avoid collision with html button type
+  const kind = type;
   if (props.to) {
-    return <StyledLink {...props} />;
+    return <StyledLink kind={kind} {...props} />;
   } else if (props.href) {
-    return <Anchor {...props} />;
+    return <Anchor kind={kind} {...props} />;
   }
-  return <StyledButton {...props} type={type} />;
+  return <StyledButton {...props} kind={kind} type={buttonType} />;
 };
 
 Button.propTypes = {
-  disabled: PropTypes.bool,
-  palette: PropTypes.string,
-  transparent: PropTypes.bool,
-  reverse: PropTypes.bool,
-  height: PropTypes.number,
-  type: PropTypes.string,
-  to: PropTypes.string,
-  href: PropTypes.string,
+  disabled: bool,
+  ghost: bool,
+  palette: string,
+  type: oneOf(['jumbo', 'regular', 'label']),
+
+  buttonType: string,
+  to: string,
+  href: string,
 };
 
 Button.defaultProps = {
-  palette: 'primary',
-  type: 'button',
-  height: 40,
+  palette: 'secondary',
+  type: 'regular',
+
+  buttonType: 'button',
 };
 
 export default Button;
+

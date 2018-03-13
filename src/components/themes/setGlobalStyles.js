@@ -38,9 +38,15 @@ export default function setGlobalStyles() {
       font-style: normal;
     }
 
-    html, body {
+    body {
       margin: 0;
-      font: 400 16px Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
+      font-size: 16px;
+    }
+
+    html * {
+      font-weight: 400;
+      font-size: 16px;
+      font-family: Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
     }
   `;
 }
