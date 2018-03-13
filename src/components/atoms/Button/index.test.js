@@ -16,7 +16,7 @@ it('renders children when passed in', () => {
 });
 
 it('renders props when passed in', () => {
-  const wrapper = wrap({ type: 'submit' });
+  const wrapper = wrap({ buttonType: 'submit' });
   expect(wrapper.find({ type: 'submit' })).toHaveLength(1);
 });
 
