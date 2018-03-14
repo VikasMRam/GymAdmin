@@ -5,6 +5,7 @@ module.exports = storybookBaseConfig => Object.assign({}, storybookBaseConfig, {
     preview: ['babel-polyfill'].concat(storybookBaseConfig.entry.preview),
   }),
   resolve: Object.assign({}, storybookBaseConfig.resolve, {
+    alias: baseConfig.resolve.alias,
     modules: baseConfig.resolve.modules,
   }),
   module: Object.assign({}, storybookBaseConfig.module, {

@@ -43,7 +43,10 @@ const assets = () => () => ({
 
 const resolveModules = modules => () => ({
   resolve: {
-    modules: [].concat(modules, ['node_modules']),
+    alias: {
+      sly: modules,
+    },
+    modules: [].concat(modules, 'node_modules'),
   },
 })
 
@@ -64,7 +67,7 @@ const base = () => group([
     babel(),
   ]),
   assets(),
-  resolveModules(sourceDir),
+  resolveModules(sourcePath),
 
   env('development', [
     setOutput({

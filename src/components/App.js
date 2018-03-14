@@ -10,7 +10,7 @@ import PropertyDetailPage from './pages/PropertyDetailPage';
 import theme from './themes/default';
 import setGlobalStyles from './themes/setGlobalStyles';
 
-import { PrimaryNavigation } from 'components';
+import { PrimaryNavigation } from 'sly/components';
 
 export default class App extends Component {
   render() {

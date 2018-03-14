@@ -6,7 +6,7 @@ import {
   BreadCrumb,
   BannerImage,
   RgsSection,
-} from 'components';
+} from 'sly/components';
 import styled from 'styled-components';
 import { ConversionForm } from 'containers';
 

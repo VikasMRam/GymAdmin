@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { getDetail } from 'store/entities/selectors';
 
-import PropertyPage from '../components/pages/PropertyPage';
+import PropertyPage from 'sly/components/pages/PropertyPage';
 
 class PropertyDetailPage extends Component {
   componentWillMount() {

@@ -1,6 +1,6 @@
 // https://github.com/diegohaz/arc/wiki/Example-redux-modules#entities
 import normalize from 'json-api-normalizer';
-import { env } from 'config';
+import { env } from 'sly/config';
 import { entitiesReceive } from './actions';
 
 const middleware = store => next => (action) => {

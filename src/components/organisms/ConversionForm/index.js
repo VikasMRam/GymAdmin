@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { ReduxField, Heading, Button } from 'components';
+import { ReduxField, Heading, Button } from 'sly/components';
 
 const Form = styled.form`
   width: 100%;

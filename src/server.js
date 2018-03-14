@@ -10,12 +10,12 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { renderToString } from 'react-router-server';
 
-import { port, host, basename } from 'config';
-import configureStore from 'store/configure';
-import api from 'services/api';
-import App from 'components/App';
-import Html from 'components/Html';
-import Error from 'components/Error';
+import { port, host, basename } from 'sly/config';
+import configureStore from 'sly/store/configure';
+import api from 'sly/services/api';
+import App from 'sly/components/App';
+import Html from 'sly/components/Html';
+import Error from 'sly/components/Error';
 
 const renderApp = ({
   store, context, location, sheet,

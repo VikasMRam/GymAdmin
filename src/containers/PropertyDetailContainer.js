@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { string } from 'prop-types';
 
-import { resourceDetailReadRequest } from '../store/resource/actions';
-import { getDetail } from '../store/entities/selectors';
+import { resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { getDetail } from 'sly/store/entities/selectors';
 
-import PropertyDetail from '../components/organisms/PropertyDetail';
+import PropertyDetail from 'sly/components/organisms/PropertyDetail';
 
 class PropertyDetailContainer extends Component {
   static propTypes = {

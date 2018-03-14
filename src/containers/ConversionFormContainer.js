@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
-import { getDetail } from '../store/entities/selectors';
-import { createValidator, required, email, usPhone } from 'services/validation';
-import ConversionForm from '../components/organisms/ConversionForm';
+import { getDetail } from 'sly/store/entities/selectors';
+import { createValidator, required, email, usPhone } from 'sly/services/validation';
+import ConversionForm from 'sly/components/organisms/ConversionForm';
 
 import {
   resourceDetailReadRequest,
   resourceCreateRequest,
-} from '../store/resource/actions';
+} from 'sly/store/resource/actions';
 
 class ConversionFormContainer extends Component {
   componentWillMount() {

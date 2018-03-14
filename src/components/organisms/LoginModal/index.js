@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Button } from 'components';
-import { Modal } from 'components';
+import { Button } from 'sly/components';
+import { Modal } from 'sly/components';
 
 const Wrapper = styled.div`
   display: flex;

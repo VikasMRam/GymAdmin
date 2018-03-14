@@ -2,8 +2,8 @@ import React from 'react';
 import { string, bool, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'components/themes/default';
-import { Label, Input, Block } from 'components';
+import { size } from 'sly/components/themes/default';
+import { Label, Input, Block } from 'sly/components';
 
 const Error = styled(Block)`
   margin-top: ${size('spacing.tiny')};

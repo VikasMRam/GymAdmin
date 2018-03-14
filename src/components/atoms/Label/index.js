@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { font, palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'components/themes/default';
+import { size } from 'sly/components/themes/default';
 
 const Label = styled.label`
   display: block;

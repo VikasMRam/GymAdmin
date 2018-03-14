@@ -11,7 +11,7 @@ import {
   oneOf
 } from 'prop-types';
 
-import { size } from 'components/themes/default';
+import { size } from 'sly/components/themes/default';
 
 const backgroundColor = ({ ghost, disabled }) =>
   disabled

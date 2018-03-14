@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-import { userConversionRequest } from 'store/actions';
-import { getUserConverted } from '../store/users/selectors';
-import { createValidator, required, email, usPhone } from 'services/validation';
-
-import { ConversionForm } from 'components';
 import { connect } from 'react-redux';
-import Button from '../components/atoms/Button';
+
+import { userConversionRequest } from 'sly/store/actions';
+import { getUserConverted } from 'sly/store/users/selectors';
+import { createValidator, required, email, usPhone } from 'sly/services/validation';
+import { ConversionForm } from 'sly/components';
+import Button from 'sly/components/atoms/Button';
 
 class ConversionFormContainer extends Component {
   componentWillMount() {

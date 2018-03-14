@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Field } from 'components';
+import { Field } from 'sly/components';
 
 const ReduxField = ({ meta, input, ...props }) => {
   const fieldProps = {

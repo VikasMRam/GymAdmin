@@ -8,10 +8,10 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ServerStateProvider } from 'react-router-server';
 
-import { basename } from 'config';
-import configureStore from 'store/configure';
-import api from 'services/api';
-import App from 'components/App';
+import { basename } from 'sly/config';
+import configureStore from 'sly/store/configure';
+import api from 'sly/services/api';
+import App from 'sly/components/App';
 
 const serverState = window.__SERVER_STATE__;
 const initialState = window.__INITIAL_STATE__;

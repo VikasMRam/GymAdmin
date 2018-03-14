@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Button } from 'components';
-import { LoginModal } from 'components';
+import { Button } from 'sly/components';
+import { LoginModal } from 'sly/components';
 
 const InnerButton = styled.div`
   display: flex;

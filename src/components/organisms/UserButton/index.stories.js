@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import { UserButton } from 'components';
+import { UserButton } from 'sly/components';
 
 storiesOf('UserButton', module)
   .add('default', () => (

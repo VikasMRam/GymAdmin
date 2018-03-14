@@ -2,7 +2,7 @@
 import 'isomorphic-fetch';
 import { stringify } from 'query-string';
 import merge from 'lodash/merge';
-import { apiUrl, authTokenUrl } from '../../config';
+import { apiUrl, authTokenUrl } from 'sly/config';
 
 export const checkStatus = (response) => {
   if (response.ok) {

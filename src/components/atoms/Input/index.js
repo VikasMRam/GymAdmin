@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'components/themes/default';
+import { size } from 'sly/components/themes/default';
 
 const styles = css`
   display: block;

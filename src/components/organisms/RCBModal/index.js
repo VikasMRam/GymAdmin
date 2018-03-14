@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ConversionFormContainer from '../../../containers/ConversionFormContainer';
+import ConversionFormContainer from 'sly/containers/ConversionFormContainer';
 
 export default class RCBModal extends Component {
   render() {

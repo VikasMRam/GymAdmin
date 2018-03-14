@@ -2,7 +2,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { createLogger } from 'redux-logger';
-import { isDev, isBrowser } from 'config';
+import { isDev, isBrowser } from 'sly/config';
 import userMiddleware from './users/middleware';
 import entitiesMiddleware from './entities/middleware';
 import reducer from './reducer';

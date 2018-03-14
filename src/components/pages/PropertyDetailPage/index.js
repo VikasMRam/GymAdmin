@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropertyDetailContainer from '../../../containers/PropertyDetailContainer';
-import RCBModal from '../../organisms/RCBModal';
+import PropertyDetailContainer from 'sly/containers/PropertyDetailContainer';
+import RCBModal from 'sly/components/organisms/RCBModal';
 
 const getPropertySlug = match => match.params.slug;
 
