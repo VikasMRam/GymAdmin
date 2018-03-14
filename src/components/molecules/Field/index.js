@@ -1,18 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string, bool, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
+import { size } from 'components/themes/default';
 import { Label, Input, Block } from 'components';
 
 const Error = styled(Block)`
-  margin: 0.5rem 0 0;
+  margin-top: ${size('spacing.tiny')};
+  font-size: ${size('text.caption')};
 `;
 
 const Wrapper = styled.div`
-  margin-bottom: 1rem;
+  margin-bottom: ${size('spacing.large')};
   input[type='checkbox'],
   input[type='radio'] {
-    margin-right: 0.5rem;
+    margin-right: ${size('spacing.regular')};
   }
   label {
     vertical-align: middle;
@@ -20,13 +22,14 @@ const Wrapper = styled.div`
 `;
 
 const Field = ({
-  error, name, invalid, label, type, ...props
+  error, name, invalid, label, type, placeholder, ...props
 }) => {
   const inputProps = {
     id: name,
     name,
     type,
     invalid,
+    placeholder,
     'aria-describedby': `${name}Error`,
     ...props,
   };
@@ -34,7 +37,13 @@ const Field = ({
   return (
     <Wrapper>
       {renderInputFirst && <Input {...inputProps} />}
-      {label && <Label htmlFor={inputProps.id}>{label}</Label>}
+      {label && (
+        <Label 
+          invalid={invalid} 
+          htmlFor={inputProps.id}>
+          {label}
+        </Label>
+      )}
       {renderInputFirst || <Input {...inputProps} />}
       {invalid &&
         error && (
@@ -47,11 +56,12 @@ const Field = ({
 };
 
 Field.propTypes = {
-  name: PropTypes.string.isRequired,
-  invalid: PropTypes.bool,
-  error: PropTypes.string,
-  label: PropTypes.string,
-  type: PropTypes.string,
+  name: string.isRequired,
+  invalid: bool,
+  error: string,
+  label: string,
+  type: oneOf(['textarea', 'select', 'text', 'checkbox', 'radio']),
+  placeholder: string,
 };
 
 Field.defaultProps = {

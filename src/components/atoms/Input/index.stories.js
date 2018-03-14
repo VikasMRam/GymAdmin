@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import Input from '.';
 
 storiesOf('Input', module)
-  .add('default', () => <Input />)
+  .add('default', () => <Input placeholder='Input some text' />)
   .add('reverse', () => <Input reverse />)
   .add('height', () => <Input height={100} />)
   .add('invalid', () => <Input invalid />)

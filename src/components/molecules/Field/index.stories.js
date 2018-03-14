@@ -3,11 +3,11 @@ import { storiesOf } from '@storybook/react';
 import { Field } from 'components';
 
 storiesOf('Field', module)
-  .add('default', () => <Field name="field" />)
-  .add('with label', () => <Field name="field" label="Label" />)
+  .add('default', () => <Field name="field" placeholder="Input some text" />)
+  .add('with label', () => <Field name="field" placeholder="All your data!" label="Label" />)
   .add('invalid', () => <Field name="field" label="Label" invalid />)
   .add('invalid with error message', () => (
-    <Field name="field" label="Label" error="Invalid" invalid />
+    <Field name="field" label="Label" value="My input" error="Invalid" invalid />
   ))
   .add('type textarea', () => (
     <Field name="field" label="Label" type="textarea" />

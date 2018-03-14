@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled, { css } from 'styled-components';
-import { font, palette } from 'styled-theme';
+import { palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 import Link from 'react-router-dom/Link';
 
@@ -42,9 +42,9 @@ const activeForegroundColor = ({ disabled, ghost }) =>
 
 const height = ({ kind }) => {
   switch (kind) {
-    case 'jumbo': return size('elements', 'height', 'large');
-    case 'label': return size('elements', 'height', 'small');
-    default: return size('elements', 'height', 'regular');
+    case 'jumbo': return size('height', 'large');
+    case 'label': return size('height', 'small');
+    default: return size('height', 'regular');
   }
 };
 
@@ -60,9 +60,9 @@ const borderRadius = ({ kind }) => {
   switch (kind) {
     case 'jumbo':
     case 'label':
-      return size('elements', 'borderRadius', 'large');
+      return size('borderRadius', 'large');
     default:
-      return size('elements', 'borderRadius', 'regular');
+      return size('borderRadius', 'regular');
   }
 };
 
@@ -77,7 +77,7 @@ const styles = css`
   text-decoration: none;
   white-space: nowrap;
   font-size: ${fontSize};
-  border: ${size('elements', 'border')} solid ${borderColor};
+  border: ${size('border')} solid ${borderColor};
   cursor: ${ifProp('disabled', 'default', 'pointer')};
   appearance: none;
   border-radius: ${borderRadius};
@@ -105,7 +105,7 @@ const styles = css`
 `;
 
 const StyledLink = styled(({
-  disabled, transparent, reverse, palette, height, theme, ...props
+  disabled, transparent, palette, height, theme, ...props
 }) => (
   <Link {...props} />
 ))`

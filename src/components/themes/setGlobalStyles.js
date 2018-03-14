@@ -22,7 +22,7 @@ export default function setGlobalStyles() {
            url('/fonts/azo/azosans-regular-webfont.woff') format('woff'),
            url('/fonts/azo/azosans-regular-webfont.ttf') format('truetype'),
            url('/fonts/azo/azosans-regular-webfont.svg#azo_sansbold') format('svg');
-      font-weight: normal;
+      font-weight: 400;
       font-style: normal;
     }
 
@@ -45,7 +45,8 @@ export default function setGlobalStyles() {
 
     html * {
       font-weight: 400;
-      font-size: 16px;
+      font-size: inherit;
+      line-height: 1.5;
       font-family: Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
     }
   `;

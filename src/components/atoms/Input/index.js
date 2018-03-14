@@ -1,29 +1,33 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string, bool, number, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { font, palette } from 'styled-theme';
+import { palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 
-const fontSize = ({ height }) => `${height / 35.5555555556}rem`;
+import { size } from 'components/themes/default';
 
 const styles = css`
-  font-family: ${font('primary')};
   display: block;
   width: 100%;
   margin: 0;
   box-sizing: border-box;
-  font-size: ${fontSize};
-  padding: ${ifProp(
-    { type: 'textarea' },
-    '0.4444444444em',
-    '0 0.4444444444em'
-  )};
-  height: ${ifProp({ type: 'textarea' }, 'auto', '2.2222222222em')};
-  color: ${palette('grayscale', 0)};
-  background-color: ${palette('grayscale', 0, true)};
+  font-size: ${size('text', 'body')};
+  padding: ${size('padding', 'regular')};
+  height: ${ifProp({ type: 'textarea' }, 'auto', size('height', 'regular'))};
+  color: ${ifProp('invalid', palette('danger', 0), palette('grayscale', 0))};
+  background-color: ${palette('whites', 2)};
   border: 1px solid
-    ${ifProp('invalid', palette('danger', 2), palette('grayscale', 3))};
+    ${ifProp('invalid', palette('danger', 2), palette('grayscale', 2))};
   border-radius: 2px;
+
+  &:focus {
+    outline: none;
+    border-color: ${ifProp('invalid', palette('danger', 2), palette('primary', 0))};
+  }
+
+  &::placeholder {
+    color: ${palette(2)};
+  }
 
   &[type='checkbox'],
   &[type='radio'] {
@@ -56,13 +60,13 @@ const Input = ({ ...props }) => {
 };
 
 Input.propTypes = {
-  type: PropTypes.string,
-  reverse: PropTypes.bool,
-  height: PropTypes.number,
-  invalid: PropTypes.bool,
+  type: oneOf(['textarea', 'select', 'text', 'checkbox', 'radio']),
+  height: number,
+  invalid: bool,
 };
 
 Input.defaultProps = {
+  palette: 'grayscale',
   type: 'text',
   height: 40,
 };

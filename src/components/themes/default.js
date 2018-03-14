@@ -23,20 +23,30 @@ theme.fonts = {
 theme.sizes = {
   maxWidth:      '1100px',
 
-  elements: {
-    height: {
-      regular: '2.500rem', 
-      large:   '3.250rem',
-      small:   '2.125rem',
-    },
+  height: {
+    regular: '2.500rem', 
+    large:   '3.250rem',
+    small:   '2.125rem',
+  },
 
-    border:    '0.063rem',
-    borderRadius: {
-      large:   '0.250rem',
-      regular: '0.125rem',
-    },
+  padding: {
+    regular: '0.5rem 1rem',
+  },
+
+  border:    '0.063rem',
+  borderRadius: {
+    large:   '0.250rem',
+    regular: '0.125rem',
   },
         
+  spacing: {
+    tiny:    '0.125rem',
+    small:   '0.250rem',
+    regular: '0.500rem',
+    large:   '1.000rem',
+    xLarge:  '2.000rem',
+    xxLarge: '3.000rem',
+  },
 
   text: {
     hero:      '2.500rem',
@@ -48,7 +58,7 @@ theme.sizes = {
 };
 
 export function size(...args) {
-  return key(['sizes', ...args]);
+  return key(['sizes', ...args].join('.'));
 }
 
 export default theme;

@@ -1,16 +1,25 @@
-import PropTypes from 'prop-types';
+import { string, bool } from 'prop-types';
 import styled from 'styled-components';
 import { font, palette } from 'styled-theme';
+import { ifProp } from 'styled-tools';
+
+import { size } from 'components/themes/default';
 
 const Label = styled.label`
+  display: block;
+  font-size: ${size('text', 'body')};
   font-family: ${font('primary')};
-  color: ${palette('grayscale', 1)};
-  font-size: 1rem;
-  line-height: 2em;
+  color: ${ifProp('invalid', palette('danger', 0), palette(0))};
+  margin-bottom: ${size('spacing.small')}
 `;
 
 Label.propTypes = {
-  reverse: PropTypes.bool,
+  palette: string,
+  reverse: bool,
+};
+
+Label.defaultProps = {
+  palette: 'grayscale',
 };
 
 export default Label;
