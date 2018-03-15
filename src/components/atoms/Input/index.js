@@ -13,7 +13,7 @@ const styles = css`
   box-sizing: border-box;
   font-size: ${size('text', 'body')};
   padding: ${size('padding', 'regular')};
-  height: ${ifProp({ type: 'textarea' }, 'auto', size('height', 'regular'))};
+  height: ${ifProp({ type: 'textarea' }, 'auto', size('element.regular'))};
   color: ${ifProp('invalid', palette('danger', 0), palette('grayscale', 0))};
   background-color: ${palette('whites', 2)};
   border: 1px solid

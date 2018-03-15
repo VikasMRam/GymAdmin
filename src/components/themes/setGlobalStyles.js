@@ -41,12 +41,11 @@ export default function setGlobalStyles() {
     body {
       margin: 0;
       font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
     }
 
     html * {
-      font-weight: 400;
-      font-size: inherit;
-      line-height: 1.5;
       font-family: Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
     }
   `;

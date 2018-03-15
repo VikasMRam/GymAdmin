@@ -21,39 +21,42 @@ theme.fonts = {
 };
 
 theme.sizes = {
-  maxWidth:      '1100px',
+  maxWidth:         '1100px',
 
-  height: {
-    regular: '2.500rem', 
-    large:   '3.250rem',
-    small:   '2.125rem',
+  element: {
+    regular:      '2.500rem', 
+    large:        '3.000rem',
+    xLarge:       '3.250rem',
+    small:        '2.125rem',
   },
 
   padding: {
-    regular: '0.5rem 1rem',
+    regular:   '0.5rem 1rem',
   },
 
-  border:    '0.063rem',
+  border:         '0.063rem',
+
   borderRadius: {
-    large:   '0.250rem',
-    regular: '0.125rem',
+    large:        '0.250rem',
+    regular:      '0.125rem',
+    lgElemRound:  '1.500rem',
   },
         
   spacing: {
-    tiny:    '0.125rem',
-    small:   '0.250rem',
-    regular: '0.500rem',
-    large:   '1.000rem',
-    xLarge:  '2.000rem',
-    xxLarge: '3.000rem',
+    tiny:         '0.125rem',
+    small:        '0.250rem',
+    regular:      '0.500rem',
+    large:        '1.000rem',
+    xLarge:       '2.000rem',
+    xxLarge:      '3.000rem',
   },
 
   text: {
-    hero:      '2.500rem',
-    title:     '1.750rem',
-    subtitle:  '1.125rem',
-    body:      '1.000rem',
-    caption:   '0.875rem',
+    hero:         '2.500rem',
+    title:        '1.750rem',
+    subtitle:     '1.125rem',
+    body:         '1.000rem',
+    caption:      '0.875rem',
   },
 };
 

@@ -42,9 +42,9 @@ const activeForegroundColor = ({ disabled, ghost }) =>
 
 const height = ({ kind }) => {
   switch (kind) {
-    case 'jumbo': return size('height', 'large');
-    case 'label': return size('height', 'small');
-    default: return size('height', 'regular');
+    case 'jumbo': return size('element.xLarge');
+    case 'label': return size('element.small');
+    default: return size('element.regular');
   }
 };
 
