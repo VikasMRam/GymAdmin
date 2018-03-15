@@ -43,12 +43,12 @@ theme.sizes = {
   },
         
   spacing: {
-    tiny:         '0.125rem',
-    small:        '0.250rem',
-    regular:      '0.500rem',
-    large:        '1.000rem',
-    xLarge:       '2.000rem',
-    xxLarge:      '3.000rem',
+    tiny:         '0.125rem', //  2px
+    small:        '0.250rem', //  4px
+    regular:      '0.500rem', //  8px
+    large:        '1.000rem', // 16px
+    xLarge:       '2.000rem', // 32px
+    xxLarge:      '3.000rem', // 48px
   },
 
   text: {

@@ -1,4 +1,8 @@
 import { injectGlobal } from 'styled-components';
+import { palette } from 'styled-theme';
+import styles from './default';
+
+const baseColor = styles.palette.grayscale[0]; 
 
 export default function setGlobalStyles() {
   injectGlobal`
@@ -39,7 +43,7 @@ export default function setGlobalStyles() {
     }
 
     body {
-      margin: 0;
+      color: ${baseColor}; 
       font-size: 16px;
       font-weight: 400;
       line-height: 1.5;
