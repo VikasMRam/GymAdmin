@@ -7,8 +7,8 @@ storiesOf('Input', module)
   .add('reverse', () => <Input reverse />)
   .add('invalid', () => <Input invalid />)
   .add('type textarea', () => <Input type="textarea" />)
-  .add('type checkbox', () => <Input type="checkbox" />)
-  .add('type radio', () => <Input type="radio" />)
+//   .add('type checkbox', () => <Input type="checkbox" />)
+//   .add('type radio', () => <Input type="radio" />)
   .add('type select', () => (
     <Input type="select">
       <option>Option 1</option>
