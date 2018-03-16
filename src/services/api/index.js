@@ -47,16 +47,6 @@ const api = {};
 
 api.request = (endpoint, { params, ...settings } = {}) => {
   const parsedSettings = parseSettings(settings);
-
-  // FIXME: this should go whith the homogenization of the API
-  if (endpoint === '/users/me/') {
-    parsedSettings.headers = [];
-    endpoint = 'http://www.lvh.me:3000/users/me';
-  }
-  if (endpoint === '/personalization/useractions/track/') {
-    endpoint = 'http://www.lvh.me:3000/personalization/useractions/track';
-  }
-
   const parsedEndpoint = parseEndpoint(endpoint, params);
 
   return fetch(parsedEndpoint, parsedSettings)

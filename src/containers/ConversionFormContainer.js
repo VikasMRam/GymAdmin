@@ -56,12 +56,12 @@ const mapStateToProps = (state, ownProps) => ({
     // AND THEN UPDATE USER STATE? (state.user has to be updated with profiles rcb)
     // SAYING PROFILE HAS BEEN UPDATED?
     data.slug = ownProps.propertySlug;
-    return dispatch(resourceCreateRequest('personalization/useractions/track', data));
+    return dispatch(resourceCreateRequest('platform/user_actions', data));
   },
 });
 const mapDispatchToProps = dispatch => ({
   getUser: () =>
-    dispatch(resourceDetailReadRequest('users', 'me', {
+    dispatch(resourceDetailReadRequest('platform', 'user_actions', {
       uuid: 'c07f0ee1-45dd-4f3f-b690-0a27f8db6b49',
     })),
 });
