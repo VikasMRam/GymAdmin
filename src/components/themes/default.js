@@ -24,22 +24,22 @@ theme.sizes = {
   maxWidth:         '1100px',
 
   element: {
-    regular:      '2.500rem', 
-    large:        '3.000rem',
-    xLarge:       '3.250rem',
-    small:        '2.125rem',
+    small:        '2.125rem', // 34px
+    regular:      '2.500rem', // 40px
+    large:        '3.000rem', // 48px
+    xLarge:       '3.250rem', // 52px
   },
 
   padding: {
     regular:   '0.5rem 1rem',
   },
 
-  border:         '0.063rem',
+  border:         '0.063rem', //  1px
 
   borderRadius: {
-    large:        '0.250rem',
-    regular:      '0.125rem',
-    lgElemRound:  '1.500rem',
+    regular:      '0.125rem', //  2px
+    large:        '0.250rem', //  4px
+    lgElemRound:  '1.500rem', // 24px
   },
         
   spacing: {
@@ -51,12 +51,18 @@ theme.sizes = {
     xxLarge:      '3.000rem', // 48px
   },
 
+  icon: {
+    small:        '0.750rem', // 12px
+    regular:      '1.500rem', // 24px
+    large:        '3.000rem', // 48px
+  },
+
   text: {
-    hero:         '2.500rem',
-    title:        '1.750rem',
-    subtitle:     '1.125rem',
-    body:         '1.000rem',
-    caption:      '0.875rem',
+    caption:      '0.875rem', // 14px
+    body:         '1.000rem', // 16px
+    subtitle:     '1.125rem', // 18px
+    title:        '1.750rem', // 28px
+    hero:         '2.500rem', // 40px
   },
 };
 

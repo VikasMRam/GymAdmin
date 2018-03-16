@@ -4,7 +4,8 @@ import { storiesOf } from '@storybook/react';
 import Icon from '.';
 
 storiesOf('Icon', module)
-  .add('default', () => <Icon icon="close" />)
-  .add('palette', () => <Icon icon="close" palette="primary" />)
-  .add('palette reverse', () => <Icon icon="close" palette="primary" reverse />)
-  .add('height', () => <Icon icon="close" height={100} />);
+  .add('default', () => <Icon icon="star" />)
+  .add('palette', () => <Icon icon="star" palette="primary" />)
+  .add('star small', () => <Icon icon="star" size="small" />)
+  .add('star regular', () => <Icon icon="star" />)
+  .add('star large', () => <Icon icon="star" size="large" />);
