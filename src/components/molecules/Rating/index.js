@@ -18,14 +18,14 @@ const getTransform = (i, total) => svg =>
 const Rating = ({ palette, value, size }) => { 
   // tranform hack due to FF not having implemented SVG 2
   // TODO: fix hardcoded stroke size in svg
-  const stars = times(5, i => (
+  const stars = times(5, i => 
     <Icon 
       key={i} 
       icon="star-clip" 
       size={size} 
       palette={palette}
       transform={getTransform(i, value)} />
-  )); 
+  ); 
 
   return (
     <div>

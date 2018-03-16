@@ -31,21 +31,16 @@ const CaptionSpan = styled.span`
   font-size: ${size('text.caption')};
 `;
 
-const StyledLink = styled(({
-  uri, ...props
-}) => <Link to={uri} {...props} />)`
-  
-`;
-
 const Title = ({ name, title, rating, community }) => ( 
   <TitleDiv>
     <span>{name}</span>
     <CaptionSpan>
       { title }
       { title && community && ', '}
-      { community && <StyledLink to={community.uri}>
+      { community && 
+        <Link to={community.uri}>
           {community.name}
-        </StyledLink>}
+        </Link>}
     </CaptionSpan>
     { rating && <Rating size="small" value={rating} /> }
   </TitleDiv>

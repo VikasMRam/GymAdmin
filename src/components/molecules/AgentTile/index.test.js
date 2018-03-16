@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import sinon from 'sinon';
 
 import AgentTile from '.';
@@ -20,5 +20,12 @@ const userNothing = { name };
 const userWithRating = { ...userFull, rating: 5 };
 
 describe('AgentTile', () => {
-  it('pass');
+  it('renders full', () => {
+    const wrapper = wrap({ user: userWithRating }); 
+    expect(wrapper.find('Avatar')).toHaveLength(1);
+    expect(wrapper.find('Title')).toHaveLength(1);
+    const title = wrapper.find('Title').dive();
+    expect(title.dive().find('Link')).toHaveLength(1);
+    expect(title.dive().text()).toEqual('Fonz<styled.span /><Rating />');
+  });
 });
