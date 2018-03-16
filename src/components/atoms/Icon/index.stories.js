@@ -8,4 +8,5 @@ storiesOf('Icon', module)
   .add('palette', () => <Icon icon="star" palette="primary" />)
   .add('star small', () => <Icon icon="star" size="small" />)
   .add('star regular', () => <Icon icon="star" />)
-  .add('star large', () => <Icon icon="star" size="large" />);
+  .add('star large', () => <Icon icon="star" size="large" />)
+  .add('star clip', () => <Icon icon="star-clip" size="large" />);

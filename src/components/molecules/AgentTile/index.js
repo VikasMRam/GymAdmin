@@ -6,6 +6,7 @@ import { palette } from 'styled-theme';
 import Link from 'react-router-dom/Link'
 
 import { size } from 'sly/components/themes/default';
+import Rating from 'sly/components/molecules/Rating';
 import Avatar from 'sly/components/atoms/Avatar';
 
 
@@ -36,7 +37,7 @@ const StyledLink = styled(({
   
 `;
 
-const Title = ({ name, title, community }) => ( 
+const Title = ({ name, title, rating, community }) => ( 
   <TitleDiv>
     <span>{name}</span>
     <CaptionSpan>
@@ -46,6 +47,7 @@ const Title = ({ name, title, community }) => (
           {community.name}
         </StyledLink>}
     </CaptionSpan>
+    { rating && <Rating size="small" value={rating} /> }
   </TitleDiv>
 );
 

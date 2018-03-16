@@ -13,8 +13,11 @@ const community = {
 const userFull = { name, picture, title, community };
 const userNoTitle = { name, picture, community };
 const userNothing = { name };
-const userWithRating = { ...userFull, rating: 5 };
+const userWithRating = { ...userFull, rating: 3.5 };
 
 storiesOf('AgentTile', module)
-  .add('default', () => <AgentTile user={userFull} />);
+  .add('default', () => <AgentTile user={userFull} />)
+  .add('with nothing', () => <AgentTile user={userNothing} />)
+  .add('with rating', () => <AgentTile user={userWithRating} />)
+  .add('with on title', () => <AgentTile user={userNoTitle} />);
 
