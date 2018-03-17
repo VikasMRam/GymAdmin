@@ -1,6 +1,5 @@
 // https://github.com/diegohaz/arc/wiki/Styling
 import { reversePalette } from 'styled-theme/composer';
-import { key } from 'styled-theme';
 
 const theme = {};
 
@@ -30,25 +29,32 @@ theme.sizes = {
     xLarge:       '3.250rem', // 52px
   },
 
+  slider: {
+    knobWidth:    '1.125rem', // 18px
+    knobHeight:   '2.250rem', // 36px
+    knobMarginTop:'-1.125rem',//-18px
+    valueWidth: {
+      small:      '3.000rem', // 48px
+      regular:    '6.000rem', // 96px
+      large:      '9.000rem', // 144px 
+    }
+  },
+
   padding: {
     regular:   '0.5rem 1rem',
   },
 
   border:         '0.063rem', //  1px
-
-  borderRadius: {
-    regular:      '0.125rem', //  2px
-    large:        '0.250rem', //  4px
-    lgElemRound:  '1.500rem', // 24px
-  },
         
   spacing: {
+    nano:         '0.062rem', //  1px
     tiny:         '0.125rem', //  2px
     small:        '0.250rem', //  4px
     regular:      '0.500rem', //  8px
     large:        '1.000rem', // 16px
-    xLarge:       '2.000rem', // 32px
-    xxLarge:      '3.000rem', // 48px
+    xLarge:       '1.500rem', // 24px
+    xxLarge:      '2.000rem', // 32px
+    xxxLarge:     '3.000rem', // 48px
   },
 
   icon: {
@@ -66,8 +72,5 @@ theme.sizes = {
   },
 };
 
-export function size(...args) {
-  return key(['sizes', ...args].join('.'));
-}
-
 export default theme;
+

@@ -4,16 +4,17 @@ import build from 'redux-object';
 import { denormalize } from 'normalizr';
 
 export const entitiesInitialState = { entities: {} };
-export const getEntities = (state=entitiesInitialState) => state.entities || {}; 
+export const getEntities = (state = entitiesInitialState) =>
+  state.entities || {};
 
 export const initialState = {};
-export const getEntity = (state = initialState, entity) => 
+export const getEntity = (state = initialState, entity) =>
   getEntities(state)[entity] || {};
 
 export const getDetail = (state = initialState, entity, id) => {
   const entities = getEntities(state);
-  return build(entities, entity, id, { eager: true }); 
-}
+  return build(entities, entity, id, { eager: true });
+};
 
 export const getList = (state = initialState, entity, ids) => {
   if (!ids) {
@@ -24,4 +25,3 @@ export const getList = (state = initialState, entity, ids) => {
 
   return list;
 };
-

@@ -3,12 +3,11 @@ import { string, shape } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import { palette } from 'styled-theme';
-import Link from 'react-router-dom/Link'
+import Link from 'react-router-dom/Link';
 
-import { size } from 'sly/components/themes/default';
+import { size } from 'sly/components/themes';
 import Rating from 'sly/components/molecules/Rating';
 import Avatar from 'sly/components/atoms/Avatar';
-
 
 const AgentDiv = styled.div`
   display: flex;
@@ -31,24 +30,23 @@ const CaptionSpan = styled.span`
   font-size: ${size('text.caption')};
 `;
 
-const Title = ({ name, title, rating, community }) => ( 
+const Title = ({
+  name, title, rating, community,
+}) => (
   <TitleDiv>
     <span>{name}</span>
     <CaptionSpan>
-      { title }
-      { title && community && ', '}
-      { community && 
-        <Link to={community.uri}>
-          {community.name}
-        </Link>}
+      {title}
+      {title && community && ', '}
+      {community && <Link to={community.uri}>{community.name}</Link>}
     </CaptionSpan>
-    { rating && <Rating size="small" value={rating} /> }
+    {rating && <Rating size="small" value={rating} />}
   </TitleDiv>
 );
 
 const AgentTile = ({ user, palette, ...props }) => (
   <AgentDiv palette={palette}>
-    <Avatar user={user} palette={palette} />        
+    <Avatar user={user} palette={palette} />
     <Title {...user} />
   </AgentDiv>
 );

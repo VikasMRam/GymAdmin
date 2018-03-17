@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { palette } from 'styled-theme';
 import { ifProp, prop } from 'styled-tools';
 
-import { size } from 'sly/components/themes/default';
+import { size } from 'sly/components/themes';
 
 const fontSize = props => size('icon', props.size);
 
@@ -28,7 +28,9 @@ const Wrapper = styled.span`
 
 const Icon = ({ icon, transform, ...props }) => {
   const svg = require(`!raw-loader!./icons/${icon}.svg`);
-  return <Wrapper {...props} dangerouslySetInnerHTML={{ __html: transform(svg) }} />;
+  return (
+    <Wrapper {...props} dangerouslySetInnerHTML={{ __html: transform(svg) }} />
+  );
 };
 
 Icon.propTypes = {

@@ -3,10 +3,10 @@ import { string, shape } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import { palette } from 'styled-theme';
-import { size } from 'sly/components/themes/default';
+import { size } from 'sly/components/themes';
 
 const styles = css`
-  border-radius: ${size('borderRadius.lgElemRound')};
+  border-radius: ${size('spacing.xLarge')};
   width: ${size('element.large')};
   height: ${size('element.large')};
 `;
@@ -27,11 +27,14 @@ const StyledDiv = styled.div`
   font-weight: 700;
 `;
 
-const Avatar = ({ user, ...props }) => user.picture
-  ? <StyledImg src={user.picture} title={user.name} {...props} />
-  : <StyledDiv data-title={user.name} {...props}>
+const Avatar = ({ user, ...props }) =>
+  user.picture ? (
+    <StyledImg src={user.picture} title={user.name} {...props} />
+  ) : (
+    <StyledDiv data-title={user.name} {...props}>
       <span>{user.name[0]}</span>
-    </StyledDiv>;
+    </StyledDiv>
+  );
 
 Avatar.propTypes = {
   palette: string,

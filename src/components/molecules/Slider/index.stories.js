@@ -1,17 +1,22 @@
-import React from 'react'
-import { storiesOf } from '@storybook/react'
-import { Slider } from 'components'
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { Slider } from 'components';
+
+const moneyValue = val => `$${val}K`;
 
 storiesOf('Slider', module)
-  .add('default', () => (
-    <Slider />
-  ))
-  .add('reverse', () => (
-    <Slider reverse min={0} max={10} step={0.05} defaultValue={5} />
-  ))
+  .add('default', () => <Slider />)
   .add('disabled', () => (
-    <Slider disabled min={0} max={10} step={0.05} defaultValue={5} />
+    <Slider disabled min={0} max={11} step={.5} defaultValue={5.5} />
   ))
-  .add('responsive with breakpoint', () => (
-    <Slider responsive min={0} max={10} step={0.05} defaultValue={5} breakpoint={450} />
-  ))
+  .add('money value', () => (
+    <Slider
+      responsive
+      min={0}
+      max={11}
+      step={0.5}
+      defaultValue={5.5}
+      valueWidth="regular"
+      valueParse={moneyValue}
+    />
+  ));

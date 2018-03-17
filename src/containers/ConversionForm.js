@@ -4,7 +4,12 @@ import { connect } from 'react-redux';
 
 import { userConversionRequest } from 'sly/store/actions';
 import { getUserConverted } from 'sly/store/users/selectors';
-import { createValidator, required, email, usPhone } from 'sly/services/validation';
+import {
+  createValidator,
+  required,
+  email,
+  usPhone,
+} from 'sly/services/validation';
 import { ConversionForm } from 'sly/components';
 import Button from 'sly/components/atoms/Button';
 

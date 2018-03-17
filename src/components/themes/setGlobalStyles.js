@@ -2,7 +2,7 @@ import { injectGlobal } from 'styled-components';
 import { palette } from 'styled-theme';
 import styles from './default';
 
-const baseColor = styles.palette.grayscale[0]; 
+const baseColor = styles.palette.grayscale[0];
 
 export default function setGlobalStyles() {
   injectGlobal`
@@ -54,4 +54,3 @@ export default function setGlobalStyles() {
     }
   `;
 }
-

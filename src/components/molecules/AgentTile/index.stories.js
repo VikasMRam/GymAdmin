@@ -10,7 +10,12 @@ const community = {
   uri: '/assisted-living/california/san-francisco/rhoda-goldman-plaza',
 };
 
-const userFull = { name, picture, title, community };
+const userFull = {
+  name,
+  picture,
+  title,
+  community,
+};
 const userNoTitle = { name, picture, community };
 const userNothing = { name };
 const userWithRating = { ...userFull, rating: 3.5 };
@@ -20,4 +25,3 @@ storiesOf('AgentTile', module)
   .add('with nothing', () => <AgentTile user={userNothing} />)
   .add('with rating', () => <AgentTile user={userWithRating} />)
   .add('with on title', () => <AgentTile user={userNoTitle} />);
-

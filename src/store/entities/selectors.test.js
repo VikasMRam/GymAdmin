@@ -42,8 +42,7 @@ test('getDetail', () => {
   expect(selectors.getDetail(undefined, 'test', 1)).toBeNull();
   expect(selectors.getDetail({}, 'test')).toBeNull();
   expect(selectors.getDetail({}, 'test', 1)).toBeNull();
-  expect(selectors.getDetail(altState, 'entity', 1))
-    .toEqual(altState.entities.entity[1].attributes);
+  expect(selectors.getDetail(altState, 'entity', 1)).toEqual(altState.entities.entity[1].attributes);
 });
 
 // Redux object returns empty list if no ids are specified
@@ -58,4 +57,3 @@ test('getList', () => {
   ]); // TODO Failure
   // expect(selectors.getList(altState, 'entity', [1])).toEqual([null]) //TODO Failure
 });
-

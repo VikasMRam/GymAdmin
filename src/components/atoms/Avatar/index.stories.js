@@ -6,6 +6,5 @@ const name = 'Fonz';
 const picture = 'https://avatars.githubusercontent.com/u/113003';
 
 storiesOf('Avatar', module)
-  .add('default', () => <Avatar user={{name, picture}} />)
-  .add('with no picture', () => <Avatar user={{name}} />);
-
+  .add('default', () => <Avatar user={{ name, picture }} />)
+  .add('with no picture', () => <Avatar user={{ name }} />);

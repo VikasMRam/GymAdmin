@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
 import { getDetail } from 'sly/store/entities/selectors';
-import { createValidator, required, email, usPhone } from 'sly/services/validation';
+import {
+  createValidator,
+  required,
+  email,
+  usPhone,
+} from 'sly/services/validation';
 import ConversionForm from 'sly/components/organisms/ConversionForm';
 
 import {

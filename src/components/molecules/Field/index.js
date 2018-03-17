@@ -2,7 +2,7 @@ import React from 'react';
 import { string, bool, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes/default';
+import { size } from 'sly/components/themes';
 import { Label, Input, Block } from 'sly/components';
 
 const Error = styled(Block)`
@@ -22,7 +22,13 @@ const Wrapper = styled.div`
 `;
 
 const Field = ({
-  error, name, invalid, label, type, placeholder, ...props
+  error,
+  name,
+  invalid,
+  label,
+  type,
+  placeholder,
+  ...props
 }) => {
   const inputProps = {
     id: name,
@@ -38,9 +44,7 @@ const Field = ({
     <Wrapper>
       {renderInputFirst && <Input {...inputProps} />}
       {label && (
-        <Label 
-          invalid={invalid} 
-          htmlFor={inputProps.id}>
+        <Label invalid={invalid} htmlFor={inputProps.id}>
           {label}
         </Label>
       )}

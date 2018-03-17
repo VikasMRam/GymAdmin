@@ -14,14 +14,19 @@ const community = {
   uri: '/assisted-living/california/san-francisco/rhoda-goldman-plaza',
 };
 
-const userFull = { name, picture, title, community };
+const userFull = {
+  name,
+  picture,
+  title,
+  community,
+};
 const userNoTitle = { name, picture, community };
 const userNothing = { name };
 const userWithRating = { ...userFull, rating: 5 };
 
 describe('AgentTile', () => {
   it('renders full', () => {
-    const wrapper = wrap({ user: userWithRating }); 
+    const wrapper = wrap({ user: userWithRating });
     expect(wrapper.find('Avatar')).toHaveLength(1);
     expect(wrapper.find('Title')).toHaveLength(1);
     const title = wrapper.find('Title').dive();

@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes/default';
+import { size } from 'sly/components/themes';
 
 const styles = css`
   display: block;
@@ -22,7 +22,11 @@ const styles = css`
 
   &:focus {
     outline: none;
-    border-color: ${ifProp('invalid', palette('danger', 2), palette('primary', 0))};
+    border-color: ${ifProp(
+    'invalid',
+    palette('danger', 2),
+    palette('primary', 0)
+  )};
   }
 
   &::placeholder {

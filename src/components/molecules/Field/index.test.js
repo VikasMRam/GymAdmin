@@ -34,7 +34,7 @@ it('renders error when passed in along with invalid', () => {
 //   expect(wrapper.childAt(0).is('Input')).toBe(true);
 //   expect(wrapper.childAt(1).is('Label')).toBe(true);
 // });
-// 
+//
 // it('renders label after input when type is radio', () => {
 //   const wrapper = wrap({ type: 'radio', label: 'foo label' });
 //   expect(wrapper.childAt(0).is('Input')).toBe(true);

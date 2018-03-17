@@ -5,28 +5,18 @@ import { palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 import Link from 'react-router-dom/Link';
 
-import {
-  bool,
-  string,
-  oneOf
-} from 'prop-types';
+import { bool, string, oneOf } from 'prop-types';
 
-import { size } from 'sly/components/themes/default';
+import { size } from 'sly/components/themes';
 
 const backgroundColor = ({ ghost, disabled }) =>
-  disabled
-    ? palette('white', 1)
-    : ghost ? palette('white', 2) : palette(0);
+  disabled ? palette('white', 1) : ghost ? palette('white', 2) : palette(0);
 
 const foregroundColor = ({ ghost, disabled }) =>
-  disabled
-    ? palette('grayscale', 2)
-    : ghost ? palette(0) : palette('white', 2);
+  disabled ? palette('grayscale', 2) : ghost ? palette(0) : palette('white', 2);
 
 const borderColor = ({ ghost, disabled }) =>
-  (ghost || disabled)
-    ? 'currentcolor'
-    : 'transparent';
+  ghost || disabled ? 'currentcolor' : 'transparent';
 
 const hoverBackgroundColor = ({ disabled, ghost }) =>
   !disabled && !ghost && palette(1);
@@ -42,17 +32,23 @@ const activeForegroundColor = ({ disabled, ghost }) =>
 
 const height = ({ kind }) => {
   switch (kind) {
-    case 'jumbo': return size('element.xLarge');
-    case 'label': return size('element.small');
-    default: return size('element.regular');
+    case 'jumbo':
+      return size('element.xLarge');
+    case 'label':
+      return size('element.small');
+    default:
+      return size('element.regular');
   }
 };
 
 const fontSize = ({ kind }) => {
   switch (kind) {
-    case 'jumbo': return size('text', 'subtitle');
-    case 'label': return size('text', 'caption');
-    default: return size('text', 'body');
+    case 'jumbo':
+      return size('text', 'subtitle');
+    case 'label':
+      return size('text', 'caption');
+    default:
+      return size('text', 'body');
   }
 };
 
@@ -60,12 +56,11 @@ const borderRadius = ({ kind }) => {
   switch (kind) {
     case 'jumbo':
     case 'label':
-      return size('borderRadius', 'large');
+      return size('spacing.small');
     default:
-      return size('borderRadius', 'regular');
+      return size('spacing.tiny');
   }
 };
-
 
 const styles = css`
   display: inline-flex;
@@ -149,4 +144,3 @@ Button.defaultProps = {
 };
 
 export default Button;
-

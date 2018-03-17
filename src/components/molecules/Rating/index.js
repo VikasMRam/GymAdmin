@@ -7,31 +7,28 @@ import Icon from 'sly/components/atoms/Icon';
 const times = (nr, fn) => Array.from(Array(nr).keys()).map((_, i) => fn(i));
 
 const getValue = (current, total) => {
-  if (total > (current + 1)) return 100;
+  if (total > current + 1) return 100;
   else if (total < current) return 0;
   return (total - current) * 100;
 };
 
-const getTransform = (i, total) => svg => 
-  svg.replace('%WIDTH%', `${getValue(i, total)}%`); 
+const getTransform = (i, total) => svg =>
+  svg.replace('%WIDTH%', `${getValue(i, total)}%`);
 
-const Rating = ({ palette, value, size }) => { 
+const Rating = ({ palette, value, size }) => {
   // tranform hack due to FF not having implemented SVG 2
   // TODO: fix hardcoded stroke size in svg
-  const stars = times(5, i => 
-    <Icon 
-      key={i} 
-      icon="star-clip" 
-      size={size} 
+  const stars = times(5, i => (
+    <Icon
+      key={i}
+      icon="star-clip"
+      size={size}
       palette={palette}
-      transform={getTransform(i, value)} />
-  ); 
+      transform={getTransform(i, value)}
+    />
+  ));
 
-  return (
-    <div>
-      {stars}
-    </div>
-  );
+  return <div>{stars}</div>;
 };
 
 Rating.propTypes = {
