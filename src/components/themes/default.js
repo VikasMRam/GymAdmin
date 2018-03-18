@@ -40,6 +40,13 @@ theme.sizes = {
     }
   },
 
+  tile: {
+    small: {
+      width:     '13.500rem',
+      height:     '9.500rem',
+    }
+  },
+
   padding: {
     regular:   '0.5rem 1rem',
   },
