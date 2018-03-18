@@ -26,7 +26,7 @@ const TitleDiv = styled.div`
   }
 `;
 
-const CaptionSpan = styled.span`
+export const CaptionSpan = styled.span`
   font-size: ${size('text.caption')};
 `;
 
@@ -36,7 +36,7 @@ const Title = ({
   <TitleDiv>
     <span>{name}</span>
     <CaptionSpan>
-      {title}
+      {title && title}
       {title && community && ', '}
       {community && <Link to={community.uri}>{community.name}</Link>}
     </CaptionSpan>
@@ -44,10 +44,10 @@ const Title = ({
   </TitleDiv>
 );
 
-const AgentTile = ({ user, palette, ...props }) => (
-  <AgentDiv palette={palette}>
+const AgentTile = ({ user, palette, community, ...props }) => (
+  <AgentDiv>
     <Avatar user={user} palette={palette} />
-    <Title {...user} />
+    <Title {...user} community={community} />
   </AgentDiv>
 );
 
@@ -56,10 +56,10 @@ AgentTile.propTypes = {
   user: shape({
     name: string.isRequired,
     picture: string,
-    community: shape({
-      name: string,
-      uri: string,
-    }),
+  }),
+  community: shape({
+    name: string.isRequired,
+    uri: string.isRequired,
   }),
 };
 

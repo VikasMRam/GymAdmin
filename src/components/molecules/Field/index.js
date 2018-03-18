@@ -3,7 +3,9 @@ import { string, bool, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import { Label, Input, Block } from 'sly/components';
+import Label from 'sly/components/atoms/Label';
+import Input from 'sly/components/atoms/Input';
+import Block from 'sly/components/atoms/Block';
 
 const Error = styled(Block)`
   margin-top: ${size('spacing.tiny')};
