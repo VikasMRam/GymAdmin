@@ -36,7 +36,7 @@ const SliderBar = styled.input`
   -webkit-appearance: none;
   width: 100%;
   margin: 0;
-  height: ${size('element.regular')}; 
+  height: ${size('element.regular')};
   background: transparent;
 
   &:focus {
@@ -126,8 +126,8 @@ const Value = styled.span`
 `;
 
 class Slider extends Component {
-  state = { 
-    value: this.props.defaultValue 
+  state = {
+    value: this.props.defaultValue,
   };
 
   onChange = ({ target }) => {
@@ -136,15 +136,19 @@ class Slider extends Component {
       onChange(target.value);
     }
     this.setState({ value: target.value });
-  }
+  };
 
   render() {
-    const { 
-      id, 
-      min, max, 
-      defaultValue, valueWidth, valueParse, 
-      step, onChange, 
-      ...props 
+    const {
+      id,
+      min,
+      max,
+      defaultValue,
+      valueWidth,
+      valueParse,
+      step,
+      onChange,
+      ...props
     } = this.props;
 
     const { value } = this.state;
@@ -160,9 +164,7 @@ class Slider extends Component {
           onChange={this.onChange}
           {...props}
         />
-        <Value width={valueWidth}>
-          {valueParse(value)}
-        </Value>
+        <Value width={valueWidth}>{valueParse(value)}</Value>
       </Wrapper>
     );
   }

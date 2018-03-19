@@ -13,7 +13,7 @@ const backgroundColor = ({ ghost, disabled }) =>
   disabled ? palette('white', 1) : ghost ? palette('white', 2) : palette(0);
 
 const foregroundColor = ({ ghost, disabled }) =>
-  disabled ? palette('grayscale', 2) : (ghost ? palette(0) : palette('white', 2));
+  disabled ? palette('grayscale', 2) : ghost ? palette(0) : palette('white', 2);
 
 const borderColor = ({ ghost, disabled }) =>
   ghost || disabled ? 'currentcolor' : 'transparent';

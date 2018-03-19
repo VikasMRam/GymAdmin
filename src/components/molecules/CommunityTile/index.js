@@ -8,8 +8,8 @@ import Link from 'react-router-dom/Link';
 import { size } from 'sly/components/themes';
 import Rating from 'sly/components/atoms/Rating';
 
-const width = ({tileSize}) => size('tile', tileSize, 'width');
-const height = ({tileSize}) => size('tile', tileSize, 'height');
+const width = ({ tileSize }) => size('tile', tileSize, 'width');
+const height = ({ tileSize }) => size('tile', tileSize, 'height');
 
 const TileDiv = styled.div`
   position: relative;
@@ -40,8 +40,12 @@ const StyledLink = styled(Link)`
   color: ${palette('white', 0)};
 `;
 
-const CommunityTile = ({ size, palette, community, ...props }) => {
-  const { name, uri, picture, rating } = community;
+const CommunityTile = ({
+  size, palette, community, ...props
+}) => {
+  const {
+    name, uri, picture, rating,
+  } = community;
   return (
     <TileDiv tileSize={size}>
       <StyledImg tileSize={size} src={picture} />
@@ -51,7 +55,7 @@ const CommunityTile = ({ size, palette, community, ...props }) => {
       </CaptionSpan>
     </TileDiv>
   );
-}
+};
 
 CommunityTile.propTypes = {
   selectable: bool,

@@ -25,7 +25,11 @@ const userWithRating = { ...userFull, rating: 5 };
 
 describe('AgentTile', () => {
   it('renders full', () => {
-    const wrapper = wrap({ user: userWithRating, community, palette: 'random' });
+    const wrapper = wrap({
+      user: userWithRating,
+      community,
+      palette: 'random',
+    });
     const avatar = wrapper.find('Avatar');
     const title = wrapper.find('Title').dive();
     const link = title.find('Link');

@@ -44,7 +44,9 @@ const Title = ({
   </TitleDiv>
 );
 
-const AgentTile = ({ user, palette, community, ...props }) => (
+const AgentTile = ({
+  user, palette, community, ...props
+}) => (
   <AgentDiv>
     <Avatar user={user} palette={palette} />
     <Title {...user} community={community} />
