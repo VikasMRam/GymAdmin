@@ -12,11 +12,11 @@ const getValue = (current, total) => {
   return (total - current) * 100;
 };
 
+// tranform hack due to FF not having implemented SVG 2
 const getTransform = (i, total) => svg =>
   svg.replace('%WIDTH%', `${getValue(i, total)}%`);
 
 const Rating = ({ palette, value, size }) => {
-  // tranform hack due to FF not having implemented SVG 2
   // TODO: fix hardcoded stroke size in svg
   const stars = times(5, i => (
     <Icon

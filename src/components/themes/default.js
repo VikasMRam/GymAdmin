@@ -20,6 +20,11 @@ theme.fonts = {
 };
 
 theme.sizes = {
+  breakpoints: {
+    mobile:          '375px',
+    tablet:          '768px',
+  },
+
   maxWidth:         '1100px',
 
   element: {
