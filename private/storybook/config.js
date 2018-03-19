@@ -1,21 +1,25 @@
-// https://github.com/diegohaz/arc/wiki/Storybook
-import React from 'react'
+import React from 'react';
+
 import { configure, addDecorator } from '@storybook/react';
 import { setOptions } from '@storybook/addon-options';
-import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
-import { ThemeProvider } from 'styled-components'
-import configureStore from 'store/configure'
-import api from 'services/api'
-import theme from 'components/themes/default'
-import setGlobalStyles from 'components/themes/setGlobalStyles';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
-const store = configureStore({}, { api: api.create() })
-const req = require.context('components', true, /.stories.js$/)
+import Modal from 'react-modal';
 
-function loadStories() {
+import configureStore from 'sly/store/configure';
+import api from 'sly/services/api';
+import theme from 'sly/components/themes/default';
+import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
+
+const store = configureStore({}, { api: api.create() });
+const req = require.context('sly/components', true, /.stories.js$/);
+
+function configureStorybook() {
+  req.keys().forEach(filename => req(filename));
   setGlobalStyles();
-  req.keys().forEach(filename => req(filename))
+  Modal.setAppElement('#root');
 }
 
 setOptions({
@@ -29,6 +33,6 @@ addDecorator(story => (
       <ThemeProvider theme={theme}>{story()}</ThemeProvider>
     </BrowserRouter>
   </Provider>
-))
+));
 
-configure(loadStories, module)
+configure(configureStorybook, module);
