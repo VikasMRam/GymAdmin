@@ -51,17 +51,18 @@ describe('readResourceList', () => {
 
 describe('readResourceDetail', () => {
   const payload = { needle: 1 };
+  const params = { params: 'params' };
 
   it('calls success', () => {
     const detail = 'foo';
-    const generator = sagas.readResourceDetail(api, payload, meta);
-    expect(generator.next().value).toEqual(call([api, api.get], `/${resource}/1/`));
+    const generator = sagas.readResourceDetail(api, { ...payload, ...params }, meta);
+    expect(generator.next().value).toEqual(call([api, api.get], `/${resource}/1/`, { params: 'params' }));
     expect(generator.next(detail).value).toEqual(put(actions.resourceDetailReadSuccess(resource, detail, payload, thunk)));
   });
 
   it('calls failure', () => {
-    const generator = sagas.readResourceDetail(api, payload, meta);
-    expect(generator.next().value).toEqual(call([api, api.get], `/${resource}/1/`));
+    const generator = sagas.readResourceDetail(api, { ...payload, ...params }, meta);
+    expect(generator.next().value).toEqual(call([api, api.get], `/${resource}/1/`, { params: 'params' }));
     expect(generator.throw('test').value).toEqual(put(actions.resourceDetailReadFailure(resource, 'test', payload, thunk)));
   });
 });
