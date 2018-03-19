@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Heading from '.';
 
-storiesOf('Heading', module)
+storiesOf('Atoms|Heading', module)
   .add('default', () => (
     <Heading>Id tempor duis non esse commodo fugiat excepteur nostrud.</Heading>
   ))

@@ -4,7 +4,7 @@ import { Slider } from 'components';
 
 const moneyValue = val => `$${val}K`;
 
-storiesOf('Slider', module)
+storiesOf('Molecules|Slider', module)
   .add('default', () => <Slider />)
   .add('disabled', () => (
     <Slider disabled min={0} max={11} step={.5} defaultValue={5.5} />

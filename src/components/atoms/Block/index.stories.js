@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Block from '.';
 
-storiesOf('Block', module)
+storiesOf('Atoms|Block', module)
   .add('default', () => (
     <Block>
       Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.

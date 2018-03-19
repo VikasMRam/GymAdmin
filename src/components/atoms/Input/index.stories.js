@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Input from '.';
 
-storiesOf('Input', module)
+storiesOf('Atoms|Input', module)
   .add('default', () => <Input placeholder="Input some text" />)
   .add('reverse', () => <Input reverse />)
   .add('invalid', () => <Input invalid />)

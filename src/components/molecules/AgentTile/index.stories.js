@@ -19,7 +19,7 @@ const userNoTitle = { name, picture };
 const userNothing = { name };
 const userWithRating = { ...userFull, rating: 3.5 };
 
-storiesOf('AgentTile', module)
+storiesOf('Molecules|AgentTile', module)
   .add('default', () => <AgentTile user={userFull} community={community} />)
   .add('with nothing', () => <AgentTile user={userNothing} />)
   .add('with rating', () => <AgentTile user={userWithRating} community={community} />)

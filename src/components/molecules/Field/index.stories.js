@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { Field } from 'sly/components';
 
-storiesOf('Field', module)
+storiesOf('Molecules|Field', module)
   .add('default', () => <Field name="field" placeholder="Input some text" />)
   .add('with label', () => (
     <Field name="field" placeholder="All your data!" label="Label" />

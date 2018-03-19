@@ -10,6 +10,6 @@ const community = {
 
 const communityWithRating = { ...community, rating: 3.5 };
 
-storiesOf('CommunityTile', module)
+    storiesOf('Molecules|CommunityTile', module)
   .add('default', () => <CommunityTile community={communityWithRating} />)
 ;

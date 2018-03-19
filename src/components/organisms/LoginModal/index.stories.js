@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { LoginModal } from 'sly/components';
 
-storiesOf('LoginModal', module).add('default', () => (
+storiesOf('Organisms|LoginModal', module).add('default', () => (
   <LoginModal
     onFacebookLogin={action('facebook')}
     onGoogleLogin={action('google')}

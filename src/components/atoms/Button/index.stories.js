@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Button from '.';
 
-storiesOf('Button', module)
+storiesOf('Atoms|Button', module)
   .add('default', () => <Button>Hello</Button>)
   .add('disabled', () => <Button disabled>Hello</Button>)
   .add('ghost', () => <Button ghost>Hello</Button>)

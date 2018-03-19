@@ -17,6 +17,7 @@ const TileDiv = styled.div`
   height: ${height};
 `;
 
+// TODO: create a img component that understand sly's resampling configurations
 const StyledImg = styled.img`
   object-fit: cover;
   width: ${width};

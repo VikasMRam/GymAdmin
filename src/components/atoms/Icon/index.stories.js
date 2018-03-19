@@ -3,7 +3,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import Icon from '.';
 
-storiesOf('Icon', module)
+storiesOf('Atoms|Icon', module)
   .add('default', () => <Icon icon="star" />)
   .add('palette', () => <Icon icon="star" palette="primary" />)
   .add('star small', () => <Icon icon="star" size="small" />)

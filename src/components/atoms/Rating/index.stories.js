@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import Rating from '.';
 
-storiesOf('Rating', module)
+storiesOf('Atoms|Rating', module)
   .add('default', () => <Rating value={3.5} />)
   .add('small', () => <Rating value={3.5} size="small" />)
   .add('regular palette', () => <Rating value={3.5} palette="primary" />)

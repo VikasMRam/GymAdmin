@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { UserButton } from 'sly/components';
 
-storiesOf('UserButton', module)
+storiesOf('Organisms|UserButton', module)
   .add('default', () => (
     <UserButton onLogin={action('login')} onLogout={action('logout')} />
   ))
