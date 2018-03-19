@@ -12,6 +12,7 @@ const fadeIn = keyframes`
   100% { display: block; opacity: 1; }
 `;
 
+// TODO: measurements from theme
 const StyledButton = styled(Button)`
   max-width: ${props => (props.hasText && !props.collapsed ? '100%' : '2.5em')};
   width: ${ifProp('hasText', 'auto', '2.5em')};
@@ -35,22 +36,12 @@ const StyledButton = styled(Button)`
         }
       }
     `
-  )} ${ifProp(
-  'responsive',
-  css`
-      @media screen and (max-width: ${prop('breakpoint')}px) {
-        width: auto;
-        flex: 0 !important;
-      }
-    `
-)};
+  )} 
 `;
 
+// TODO: measurements from theme
 const Text = styled.span`
   padding: 0.4375em;
-  @media screen and (max-width: ${prop('breakpoint')}px) {
-    display: ${ifProp('responsive', 'none !important')};
-  }
 `;
 
 const Wrapper = styled.div`
@@ -67,7 +58,7 @@ const StyledIcon = styled(Icon)`
 
 const IconButton = ({ icon, children, ...props }) => {
   const {
-    breakpoint, right, responsive, height,
+    right, height,
   } = props;
   const iconElement = (
     <StyledIcon height={height ? height / 2.5 : undefined} icon={icon} />
@@ -78,10 +69,7 @@ const IconButton = ({ icon, children, ...props }) => {
         {right || iconElement}
         {children && (
           <Text
-            className="text"
-            responsive={responsive}
-            breakpoint={breakpoint}
-          >
+            className="text">
             {children}
           </Text>
         )}
@@ -93,16 +81,12 @@ const IconButton = ({ icon, children, ...props }) => {
 
 IconButton.propTypes = {
   icon: PropTypes.string.isRequired,
-  responsive: PropTypes.bool,
-  breakpoint: PropTypes.number,
   collapsed: PropTypes.bool,
   right: PropTypes.bool,
   height: PropTypes.number,
   children: PropTypes.node,
 };
 
-IconButton.defaultProps = {
-  breakpoint: 420,
-};
+IconButton.defaultProps = {};
 
 export default IconButton;

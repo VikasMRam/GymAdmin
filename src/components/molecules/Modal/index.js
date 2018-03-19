@@ -38,7 +38,7 @@ const ModalBox = styled(ReactModal)`
   flex-direction: column;
   font-family: ${font('primary')};
   font-size: 1rem;
-  background-color: ${palette('grayscale', 0, true)};
+  background-color: ${palette('white', 2)};
   border-radius: 0.125em;
   color: ${palette('grayscale', 0)};
   transition: transform 250ms ease-in-out;
@@ -72,7 +72,7 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   padding: 1rem;
-  > *:first-child {
+  > *:last-child {
     flex: 1;
   }
 `;
@@ -109,17 +109,17 @@ const Modal = ({
     >
       {hasHeader && (
         <Header>
-          <StyledHeading level={2} reverse={props.reverse}>
-            {title}
-          </StyledHeading>
           {closeable && (
             <IconButton
               icon="close"
               onClick={onClose}
-              palette="white"
+              palette="grayscale"
               reverse
             />
           )}
+          <StyledHeading level={2} reverse={props.reverse}>
+            {title}
+          </StyledHeading>
         </Header>
       )}
       <Content>{children}</Content>
@@ -136,3 +136,4 @@ Modal.propTypes = {
 };
 
 export default Modal;
+
