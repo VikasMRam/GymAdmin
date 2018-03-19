@@ -4,6 +4,7 @@ import styled, { css, injectGlobal } from 'styled-components';
 import ReactModal from 'react-modal';
 import { font, palette } from 'styled-theme';
 
+import { size } from 'sly/components/themes';
 import Heading from 'sly/components/atoms/Heading';
 import IconButton from 'sly/components/molecules/IconButton';
 
@@ -40,28 +41,30 @@ const ModalBox = styled(ReactModal)`
   background-color: ${palette('grayscale', 0, true)};
   border-radius: 0.125em;
   color: ${palette('grayscale', 0)};
-  top: calc(50% - 1rem);
-  left: calc(50% - 1rem);
-  right: auto;
-  bottom: auto;
-  margin: 1rem calc(-50% + 1rem) 1rem 1rem;
-  transform: translate(-50%, 100%);
   transition: transform 250ms ease-in-out;
   outline: none;
   box-sizing: border-box;
-  min-width: 320px;
-  max-width: calc(640px - 1rem);
-  max-height: calc(100% - 1rem);
   padding-top: ${({ hasHeader }) => (hasHeader ? 0 : '1rem')};
-  @media screen and (max-width: 640px) {
-    width: calc(100% - 1rem);
-    min-width: 0;
-  }
-  &[class*='after-open'] {
-    transform: translate(-50%, -50%);
-  }
-  &[class*='before-close'] {
+  width: 100%;
+  height: 100%;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: unset;
+    height: unset;
+    top: calc(50% - 1rem);
+    left: calc(50% - 1rem);
+    right: auto;
+    bottom: auto;
+    margin: 1rem calc(-50% + 1rem) 1rem 1rem;
     transform: translate(-50%, 100%);
+    min-width: 320px;
+    max-width: calc(640px - 1rem);
+    max-height: calc(100% - 1rem);
+    &[class*='after-open'] {
+      transform: translate(-50%, -50%);
+    }
+    &[class*='before-close'] {
+      transform: translate(-50%, 100%);
+    }
   }
 `;
 
