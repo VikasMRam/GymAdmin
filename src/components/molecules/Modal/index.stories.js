@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { Modal } from 'components';
 
-storiesOf('Modal', module)
+storiesOf('Molecules|Modal', module)
   .add('default', () => (
     <Modal onClose={action('closed')} isOpen>
       Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
