@@ -5,7 +5,7 @@ import ReactModal from 'react-modal';
 import { font, palette } from 'styled-theme';
 
 import Heading from 'sly/components/atoms/Heading';
-import Icon from 'sly/components/atoms/Icon';
+import IconButton from 'sly/components/molecules/IconButton';
 
 injectGlobal`
   body.ReactModal__Body--open {
