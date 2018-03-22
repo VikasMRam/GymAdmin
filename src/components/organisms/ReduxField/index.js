@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Field } from 'sly/components';
+import { Field } from 'sly/components/molecules';
 
 const ReduxField = ({ meta, input, ...props }) => {
   const fieldProps = {

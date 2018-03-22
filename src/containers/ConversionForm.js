@@ -10,8 +10,8 @@ import {
   email,
   usPhone,
 } from 'sly/services/validation';
-import { ConversionForm } from 'sly/components';
-import Button from 'sly/components/atoms/Button';
+import ConversionForm from 'sly/components/organisms/ConversionForm';
+import { Button } from 'sly/components/atoms';
 
 class ConversionFormContainer extends Component {
   componentWillMount() {

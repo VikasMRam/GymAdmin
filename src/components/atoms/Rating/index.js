@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { number, string, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
-import Icon from 'sly/components/atoms/Icon';
+import { Icon } from 'sly/components/atoms';
 
 const times = (nr, fn) => Array.from(Array(nr).keys()).map((_, i) => fn(i));
 

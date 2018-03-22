@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { Slider } from 'components';
+import Slider from './';
 
 const moneyValue = val => `$${val}K`;
 

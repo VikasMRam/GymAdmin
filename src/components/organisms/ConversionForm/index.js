@@ -3,10 +3,10 @@ import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
+import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import Heading from 'sly/components/atoms/Heading';
-import Button from 'sly/components/atoms/Button';
-import Block from 'sly/components/atoms/Block';
+
+import { Heading, Button, Block } from 'sly/components/atoms';
 
 const Form = styled.form`
   width: 100%;
@@ -14,25 +14,27 @@ const Form = styled.form`
   padding: 1rem;
 `;
 
+const StyledButton = styled(Button)`
+  margin-bottom: ${size('spacing.regular')};
+`;
+
 const ConversionForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
-    <div>
-      <Field name="full_name" label="Full Name" component={ReduxField} />
-      <Field
-        name="email"
-        label="Email"
-        type="email"
-        component={ReduxField}
-      />
-      <Field name="phone" label="Phone" component={ReduxField} />
-      <Button type="submit" disabled={submitting}>
-        Contact
-      </Button>
-      <Block size="caption">
-        By continuing, you agree to Seniorly's Terms of Use and Privacy
-        Policy
-      </Block>
-    </div>
+    <Field name="full_name" label="Full Name" component={ReduxField} />
+    <Field
+      name="email"
+      label="Email"
+      type="email"
+      component={ReduxField}
+    />
+    <Field name="phone" label="Phone" component={ReduxField} />
+    <StyledButton type="submit" disabled={submitting}>
+      Contact
+    </StyledButton>
+    <Block size="caption">
+      By continuing, you agree to Seniorly's Terms of Use and Privacy
+      Policy
+    </Block>
   </Form>
 );
 

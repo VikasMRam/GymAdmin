@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { ReduxField } from 'sly/components';
+import ReduxField from '.';
 
 storiesOf('Organisms|ReduxField', module)
   .add('default', () => <ReduxField input={{ name: 'name' }} meta={{}} />)

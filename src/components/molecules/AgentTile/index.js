@@ -6,8 +6,7 @@ import { palette } from 'styled-theme';
 import Link from 'react-router-dom/Link';
 
 import { size } from 'sly/components/themes';
-import Rating from 'sly/components/atoms/Rating';
-import Avatar from 'sly/components/atoms/Avatar';
+import { Rating, Avatar } from 'sly/components/atoms';
 
 const AgentDiv = styled.div`
   display: flex;

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { palette, size, key } from 'styled-theme';
-import { UserButton } from 'sly/components';
+import { UserButton } from 'sly/components/molecules';
 
 const Nav = styled.nav`
   display: flex;

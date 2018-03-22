@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 import { connect } from 'react-redux';
-import { Thumbnail, Paragraph, Heading, Icon } from 'sly/components';
+import { Thumbnail, Paragraph, Heading, Icon } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   position: relative;

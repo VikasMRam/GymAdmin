@@ -3,8 +3,7 @@ import { string, bool, number, node } from 'prop-types';
 import styled, { css, keyframes } from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
 
-import Icon from 'sly/components/atoms/Icon';
-import Button from 'sly/components/atoms/Button';
+import { Icon, Button } from 'sly/components/atoms';
 
 const fadeIn = keyframes`
   0% { display: none; opacity: 0; }
