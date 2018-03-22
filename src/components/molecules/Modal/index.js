@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { node, string, bool, func } from 'prop-types';
 import styled, { css, injectGlobal } from 'styled-components';
 import ReactModal from 'react-modal';
 import { font, palette } from 'styled-theme';
@@ -112,6 +112,7 @@ const Modal = ({
           {closeable && (
             <IconButton
               icon="close"
+              iconOnly={true}
               onClick={onClose}
               palette="grayscale"
               reverse
@@ -128,11 +129,11 @@ const Modal = ({
 };
 
 Modal.propTypes = {
-  children: PropTypes.node,
-  title: PropTypes.string,
-  closeable: PropTypes.bool,
-  reverse: PropTypes.bool,
-  onClose: PropTypes.func.isRequired,
+  children: node,
+  title: string,
+  closeable: bool,
+  reverse: bool,
+  onClose: func.isRequired,
 };
 
 export default Modal;

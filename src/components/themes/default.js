@@ -81,6 +81,14 @@ theme.sizes = {
     title:        '1.750rem', // 28px
     hero:         '2.500rem', // 40px
   },
+
+  lineHeight: {
+    caption:           '1.4',
+    body:              '1.5',
+    subtitle:          '1.3',
+    title:            '1.28',
+    hero:              '1.2',
+  },
 };
 
 export default theme;

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string, bool, number, node } from 'prop-types';
 import styled, { css, keyframes } from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
 
@@ -56,15 +56,15 @@ const StyledIcon = styled(Icon)`
   flex: none;
 `;
 
-const IconButton = ({ icon, children, ...props }) => {
+const IconButton = ({ icon, iconOnly, fill, children, ...props }) => {
   const {
-    right, height,
+    right, height, palette,
   } = props;
   const iconElement = (
-    <StyledIcon height={height ? height / 2.5 : undefined} icon={icon} />
+    <StyledIcon height={height ? height / 2.5 : undefined} fill={fill} icon={icon} palette={palette} />
   );
   return (
-    <StyledButton hasText={!!children} {...props}>
+    <StyledButton hasText={!!children} transparent={iconOnly} {...props}>
       <Wrapper>
         {right || iconElement}
         {children && (
@@ -80,13 +80,17 @@ const IconButton = ({ icon, children, ...props }) => {
 };
 
 IconButton.propTypes = {
-  icon: PropTypes.string.isRequired,
-  collapsed: PropTypes.bool,
-  right: PropTypes.bool,
-  height: PropTypes.number,
-  children: PropTypes.node,
+  fill: string,
+  icon: string.isRequired,
+  iconOnly: bool,
+  collapsed: bool,
+  right: bool,
+  height: number,
+  children: node,
 };
 
-IconButton.defaultProps = {};
+IconButton.defaultProps = {
+  iconOnly: false
+};
 
 export default IconButton;

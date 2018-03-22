@@ -9,23 +9,23 @@ import { bool, string, oneOf } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 
-const backgroundColor = ({ ghost, disabled }) =>
-  disabled ? palette('white', 1) : ghost ? palette('white', 2) : palette(0);
+const backgroundColor = ({ ghost, disabled, transparent }) =>
+  disabled ? palette('white', 1) : ghost ? palette('white', 2) : transparent ? 'none' : palette(0);
 
-const foregroundColor = ({ ghost, disabled }) =>
-  disabled ? palette('grayscale', 2) : ghost ? palette(0) : palette('white', 2);
+const foregroundColor = ({ ghost, disabled, transparent }) =>
+  disabled ? palette('grayscale', 2) : ghost ? palette(0) : transparent ? 'none' : palette('white', 2);
 
 const borderColor = ({ ghost, disabled }) =>
   ghost || disabled ? 'currentcolor' : 'transparent';
 
-const hoverBackgroundColor = ({ disabled, ghost }) =>
-  !disabled && !ghost && palette(1);
+const hoverBackgroundColor = ({ disabled, ghost, transparent }) =>
+  !disabled && !ghost && !transparent && palette(1);
 
 const hoverForegroundColor = ({ disabled, ghost }) =>
   !disabled && ghost && palette(1);
 
-const activeBackgroundColor = ({ disabled, ghost }) =>
-  !disabled && !ghost && palette(2);
+const activeBackgroundColor = ({ disabled, ghost, transparent }) =>
+  !disabled && !ghost && !transparent && palette(2);
 
 const activeForegroundColor = ({ disabled, ghost }) =>
   !disabled && ghost && palette(2);
@@ -114,33 +114,32 @@ const StyledButton = styled.button`
   ${styles};
 `;
 
-const Button = ({ type, buttonType, ...props }) => {
+const Button = ({ type, kind, ...props }) => {
   // rename type to kind to avoid collision with html button type
-  const kind = type;
   if (props.to) {
     return <StyledLink kind={kind} {...props} />;
   } else if (props.href) {
     return <Anchor kind={kind} {...props} />;
   }
-  return <StyledButton {...props} kind={kind} type={buttonType} />;
+  return <StyledButton {...props} kind={kind} type={type} />;
 };
 
 Button.propTypes = {
   disabled: bool,
   ghost: bool,
+  transparent: bool,
   palette: string,
-  type: oneOf(['jumbo', 'regular', 'label']),
+  kind: oneOf(['jumbo', 'regular', 'label']),
 
-  buttonType: string,
+  type: string,
   to: string,
   href: string,
 };
 
 Button.defaultProps = {
   palette: 'secondary',
-  type: 'regular',
-
-  buttonType: 'button',
+  kind: 'regular',
+  type: 'button',
 };
 
 export default Button;
