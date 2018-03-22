@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { size } from 'sly/components/themes';
 import { Label, Input, Block } from 'sly/components/atoms';
 
+const getInputType = type => type === 'email' ? 'text' : type;
+
 const Error = styled(Block)`
   margin-top: ${size('spacing.tiny')};
   font-size: ${size('text.caption')};
@@ -33,7 +35,7 @@ const Field = ({
   const inputProps = {
     id: name,
     name,
-    type,
+    type: getInputType(type),
     invalid,
     placeholder,
     'aria-describedby': `${name}Error`,
@@ -64,7 +66,7 @@ Field.propTypes = {
   invalid: bool,
   error: string,
   label: string,
-  type: oneOf(['textarea', 'select', 'text', 'checkbox', 'radio']),
+  type: oneOf(['textarea', 'select', 'text', 'email', 'checkbox', 'radio']),
   placeholder: string,
 };
 

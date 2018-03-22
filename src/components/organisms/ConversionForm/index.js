@@ -11,7 +11,6 @@ import { Heading, Button, Block } from 'sly/components/atoms';
 const Form = styled.form`
   width: 100%;
   box-sizing: border-box;
-  padding: 1rem;
 `;
 
 const StyledButton = styled(Button)`
@@ -25,9 +24,10 @@ const ConversionForm = ({ handleSubmit, submitting }) => (
       name="email"
       label="Email"
       type="email"
+      placeholder="jdoe@gmail.com"
       component={ReduxField}
     />
-    <Field name="phone" label="Phone" component={ReduxField} />
+    <Field name="phone" label="Phone" placeholder="925-555-5555" component={ReduxField} />
     <StyledButton type="submit" disabled={submitting}>
       Contact
     </StyledButton>

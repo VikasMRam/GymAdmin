@@ -17,6 +17,9 @@ storiesOf('Molecules|Field', module)
       invalid
     />
   ))
+  .add('type email', () => (
+    <Field name="field" label="Email" type="email" />
+  ))
   .add('type textarea', () => (
     <Field name="field" label="Label" type="textarea" />
   ))
