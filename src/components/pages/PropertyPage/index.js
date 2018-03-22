@@ -1,12 +1,15 @@
 // https://github.com/diegohaz/arc/wiki/Atomic-Design
 import React from 'react';
 import {
-  PrimaryNavigation,
   Heading,
-  BreadCrumb,
-  BannerImage,
+} from 'sly/components/atoms';
+
+import {
   RgsSection,
-} from 'sly/components';
+  PrimaryNavigation,
+  BreadCrumb,
+} from 'sly/components/molecules';
+
 import styled from 'styled-components';
 import { ConversionForm } from 'containers';
 
@@ -43,10 +46,6 @@ const PropertyPage = (props) => {
       <Wrapper>
         {props.detail && (
           <Column id="main">
-            <BannerImage
-              src={props.detail.mainImage}
-              alt={`Main Image for${props.detail.name}`}
-            />
             <Heading>{props.detail.name}</Heading>
             <RgsSection heading="Description" {...props} />
             <RgsSection heading="Care Services" {...props} />

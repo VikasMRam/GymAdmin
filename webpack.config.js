@@ -22,6 +22,7 @@ const sourcePath = path.join(process.cwd(), sourceDir)
 const outputPath = path.join(process.cwd(), 'dist/public')
 const assetsPath = path.join(process.cwd(), 'dist/assets.json')
 const clientEntryPath = path.join(sourcePath, 'client.js')
+const clientRailsEntryPath = path.join(sourcePath, 'client-rails.js')
 const serverEntryPath = path.join(sourcePath, 'server.js')
 const devDomain = `http://${host}:${port}/`
 
@@ -108,7 +109,10 @@ const server = createConfig([
 
 const client = createConfig([
   base(),
-  entryPoint({ client: clientEntryPath }),
+  entryPoint({ 
+    client: clientEntryPath,
+    'client-rails': clientRailsEntryPath,
+  }),
   addPlugins([
     new AssetsByTypePlugin({ path: assetsPath }),
     new ChildConfigPlugin(server),

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { resourceListReadRequest } from 'store/actions';
 import { connect } from 'react-redux';
-import { RgsCard } from 'sly/components';
+import { RgsCard } from 'sly/components/molecules';
 
 import { getList } from 'store/entities/selectors';
 
