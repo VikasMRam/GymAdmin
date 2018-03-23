@@ -8,6 +8,7 @@ const ConversionFormContainer = reduxForm({
   form: 'ConversionForm',
   destroyOnUnmount: false,
 })(ConversionForm);
+
 storiesOf('Organisms|ConversionForm', module).add('default', () => (
   <ConversionFormContainer
     handleSubmit={action('facebook')}

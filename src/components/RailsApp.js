@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
+import { reduxForm } from 'redux-form';
 
 import { ConversionForm } from 'sly/components/organisms';
 
@@ -12,12 +13,17 @@ const StyledDiv = styled.div`
   width: 336px;
 `;
 
+const ConversionFormContainer = reduxForm({
+  form: 'ConversionForm',
+  destroyOnUnmount: false,
+})(ConversionForm);
+
 export default class RailsApp extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
         <StyledDiv>
-          <ConversionForm /> 
+          <ConversionFormContainer />
         </StyledDiv>
       </ThemeProvider>
     );
