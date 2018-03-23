@@ -23,30 +23,32 @@ export default class MultipleChoice extends Component {
       value: string.isRequired,
       label: string,
     })).isRequired,
-    values: arrayOf(string).isRequired,
+    value: arrayOf(string).isRequired,
   };
 
   static defaultProps = {
-    values: [],
+    value: [],
   };
 
-  onClick(value) {
-    const { values, onChange } = this.props;
-    const index = values.indexOf(value);
+  onClick(option) {
+    const { value, onChange } = this.props;
+    const index = value.indexOf(option);
     if (index === -1) {
-      onChange([...values, value]);
+      onChange([...value, option]);
     } else {
-      onChange(values.splice(index, 1));
+      const copy = [...value];
+      copy.splice(index, 1)
+      onChange(copy);
     }
   }
 
   render() {
-    const { options, values } = this.props;
+    const { options, value } = this.props;
     return (
       <StyledDiv>
         {options && options
-            .map(({ value, label }) => (
-              <StyledButton reverse={values.includes(value)} key={value} onClick={() => this.onClick(value)}>
+            .map(({ value: option, label }) => (
+              <StyledButton reverse={value.includes(option)} key={option} onClick={() => this.onClick(option)}>
                 {label}
               </StyledButton>
             ))}

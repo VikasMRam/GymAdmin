@@ -11,5 +11,5 @@ const options = [
 
 storiesOf('Molecules|MultipleChoice', module)
   .add('default', () => (
-    <MultipleChoice options={options} values={['third']} />
+    <MultipleChoice options={options} value={['third']} />
   ));
