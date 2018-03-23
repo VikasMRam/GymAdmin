@@ -7,8 +7,7 @@ import { ifProp, prop } from 'styled-tools';
 import { size } from 'sly/components/themes';
 import { Button } from 'sly/components/atoms';
 
-const StyledDiv = styled.div`
-`;
+const StyledDiv = styled.div``;
 
 const StyledButton = styled(Button)`
   margin-right: ${size('spacing.small')};
@@ -37,7 +36,7 @@ export default class MultipleChoice extends Component {
       onChange([...value, option]);
     } else {
       const copy = [...value];
-      copy.splice(index, 1)
+      copy.splice(index, 1);
       onChange(copy);
     }
   }
@@ -46,14 +45,17 @@ export default class MultipleChoice extends Component {
     const { options, value } = this.props;
     return (
       <StyledDiv>
-        {options && options
-            .map(({ value: option, label }) => (
-              <StyledButton reverse={value.includes(option)} key={option} onClick={() => this.onClick(option)}>
-                {label}
-              </StyledButton>
-            ))}
+        {options &&
+          options.map(({ value: option, label }) => (
+            <StyledButton
+              reverse={value.includes(option)}
+              key={option}
+              onClick={() => this.onClick(option)}
+            >
+              {label}
+            </StyledButton>
+          ))}
       </StyledDiv>
     );
   }
 }
-

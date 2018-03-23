@@ -10,10 +10,14 @@ import { bool, string, oneOf } from 'prop-types';
 import { size } from 'sly/components/themes';
 
 const backgroundColor = ({ ghost, disabled, transparent }) =>
-  disabled ? palette('white', 1) : ghost ? palette('white', 2) : transparent ? 'none' : palette(0);
+  disabled
+    ? palette('white', 1)
+    : ghost ? palette('white', 2) : transparent ? 'none' : palette(0);
 
 const foregroundColor = ({ ghost, disabled, transparent }) =>
-  disabled ? palette('grayscale', 2) : ghost ? palette(0) : transparent ? 'none' : palette('white', 2);
+  disabled
+    ? palette('grayscale', 2)
+    : ghost ? palette(0) : transparent ? 'none' : palette('white', 2);
 
 const borderColor = ({ ghost, disabled }) =>
   ghost || disabled ? 'currentcolor' : 'transparent';

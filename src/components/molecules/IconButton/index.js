@@ -35,7 +35,7 @@ const StyledButton = styled(Button)`
         }
       }
     `
-  )} 
+  )};
 `;
 
 // TODO: measurements from theme
@@ -55,23 +55,23 @@ const StyledIcon = styled(Icon)`
   flex: none;
 `;
 
-const IconButton = ({ icon, iconOnly, fill, children, ...props }) => {
-  const {
-    right, height, palette,
-  } = props;
+const IconButton = ({
+  icon, iconOnly, fill, children, ...props
+}) => {
+  const { right, height, palette } = props;
   const iconElement = (
-    <StyledIcon height={height ? height / 2.5 : undefined} fill={fill} icon={icon} palette={palette} />
+    <StyledIcon
+      height={height ? height / 2.5 : undefined}
+      fill={fill}
+      icon={icon}
+      palette={palette}
+    />
   );
   return (
     <StyledButton hasText={!!children} transparent={iconOnly} {...props}>
       <Wrapper>
         {right || iconElement}
-        {children && (
-          <Text
-            className="text">
-            {children}
-          </Text>
-        )}
+        {children && <Text className="text">{children}</Text>}
         {right && iconElement}
       </Wrapper>
     </StyledButton>
@@ -89,7 +89,7 @@ IconButton.propTypes = {
 };
 
 IconButton.defaultProps = {
-  iconOnly: false
+  iconOnly: false,
 };
 
 export default IconButton;

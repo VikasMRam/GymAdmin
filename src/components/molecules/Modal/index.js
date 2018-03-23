@@ -112,7 +112,7 @@ const Modal = ({
           {closeable && (
             <IconButton
               icon="close"
-              iconOnly={true}
+              iconOnly
               onClick={onClose}
               palette="grayscale"
               reverse
@@ -137,4 +137,3 @@ Modal.propTypes = {
 };
 
 export default Modal;
-

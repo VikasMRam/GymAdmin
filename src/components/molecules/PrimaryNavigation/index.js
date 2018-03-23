@@ -34,7 +34,7 @@ const PrimaryNavigation = (props) => {
       <li>
         <a href="/">Homer</a>
       </li>
-      { /* <UserButton {...props} /> */ }
+      {/* <UserButton {...props} /> */}
     </Nav>
   );
 };

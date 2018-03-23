@@ -27,13 +27,17 @@ const ConversionForm = ({ handleSubmit, submitting }) => (
       placeholder="jdoe@gmail.com"
       component={ReduxField}
     />
-    <Field name="phone" label="Phone" placeholder="925-555-5555" component={ReduxField} />
+    <Field
+      name="phone"
+      label="Phone"
+      placeholder="925-555-5555"
+      component={ReduxField}
+    />
     <StyledButton type="submit" disabled={submitting}>
       Contact
     </StyledButton>
     <Block size="caption">
-      By continuing, you agree to Seniorly's Terms of Use and Privacy
-      Policy
+      By continuing, you agree to Seniorly's Terms of Use and Privacy Policy
     </Block>
   </Form>
 );

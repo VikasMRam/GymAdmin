@@ -34,7 +34,7 @@ const renderHtml = ({
   const styles = sheet.getStyleElement();
   const { assets } = global;
   // TODO: REMOVE this!
-  for (let [i, v] of assets.js.entries()) {
+  for (const [i, v] of assets.js.entries()) {
     if (v.match(/client-rails\.js/)) {
       assets.js.splice(i, 1);
       break;

@@ -9,7 +9,6 @@ const options = [
   { value: 'third', label: 'Third' },
 ];
 
-storiesOf('Molecules|MultipleChoice', module)
-  .add('default', () => (
-    <MultipleChoice options={options} value={['third']} />
-  ));
+storiesOf('Molecules|MultipleChoice', module).add('default', () => (
+  <MultipleChoice options={options} value={['third']} />
+));

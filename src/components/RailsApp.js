@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import { ConversionForm } from 'sly/components/organisms';
-import  { reduxForm } from 'redux-form';
+import { reduxForm } from 'redux-form';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';

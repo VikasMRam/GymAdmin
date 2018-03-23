@@ -5,7 +5,11 @@ import styled from 'styled-components';
 import { size } from 'sly/components/themes';
 import { Label, Input, Block } from 'sly/components/atoms';
 
-const getInputType = type => type === 'email' ? 'text' : type;
+// leave as it is: cyclic dependency
+import MultipleChoice from 'sly/components/molecules/MultipleChoice';
+
+const getInputType = type => (type === 'email' ? 'text' : type);
+//const getInputComponent = type => (type === 'multiplechoice' ? MultipleChoice : Input);
 
 const Error = styled(Block)`
   margin-top: ${size('spacing.tiny')};
@@ -41,6 +45,7 @@ const Field = ({
     'aria-describedby': `${name}Error`,
     ...props,
   };
+  //const InputComponent = getInputComponent(type);
   const renderInputFirst = type === 'checkbox' || type === 'radio';
   return (
     <Wrapper>
@@ -66,7 +71,7 @@ Field.propTypes = {
   invalid: bool,
   error: string,
   label: string,
-  type: oneOf(['textarea', 'select', 'text', 'email', 'checkbox', 'radio']),
+  type: oneOf(['textarea', 'select', 'multiplechoice', 'text', 'email', 'checkbox', 'radio']),
   placeholder: string,
 };
 
@@ -75,3 +80,4 @@ Field.defaultProps = {
 };
 
 export default Field;
+

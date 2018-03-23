@@ -1,8 +1,6 @@
 // https://github.com/diegohaz/arc/wiki/Atomic-Design
 import React from 'react';
-import {
-  Heading,
-} from 'sly/components/atoms';
+import { Heading } from 'sly/components/atoms';
 
 import {
   RgsSection,
