@@ -6,12 +6,12 @@ import AdvandedInfoForm from '.';
 
 const AdvandedInfoFormContainer = reduxForm({
   form: 'AdvandedInfoForm',
-  destroyOnUnmount: false,
+  values: {
+    type_of_care: [],
+  },
 })(AdvandedInfoForm);
 
 storiesOf('Organisms|AdvancedInfoForm', module).add('default', () => (
-  <AdvandedInfoFormContainer
-    handleSubmit={action('facebook')}
-    submittin={false}
-  />
+  <AdvandedInfoFormContainer handleSubmit={action('submit!')} />
 ));
+

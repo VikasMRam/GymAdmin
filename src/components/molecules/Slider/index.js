@@ -148,6 +148,7 @@ class Slider extends Component {
       valueParse,
       step,
       onChange,
+      type,
       ...props
     } = this.props;
 
@@ -157,6 +158,7 @@ class Slider extends Component {
       <Wrapper {...props}>
         <SliderBar
           id={id}
+          type="range"
           min={min}
           max={max}
           defaultValue={defaultValue}
@@ -188,7 +190,6 @@ Slider.defaultProps = {
   defaultValue: 1,
   step: 1,
   palette: 'secondary',
-  type: 'range',
   valueParse: val => val,
   valueWidth: 'regular',
 };

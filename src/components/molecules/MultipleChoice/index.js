@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, number, bool, func, oneOf, arrayOf, shape } from 'prop-types';
+import { oneOf, oneOfType, arrayOf, shape, string, number, func } from 'prop-types';
 import styled from 'styled-components';
 import { font, palette } from 'styled-theme';
 import { ifProp, prop } from 'styled-tools';
@@ -19,7 +19,7 @@ const StyledButton = styled(Button)`
 export default class MultipleChoice extends Component {
   static propTypes = {
     options: arrayOf(shape({
-      value: string.isRequired,
+      value: oneOfType([string, number]).isRequired,
       label: string,
     })).isRequired,
     value: arrayOf(string).isRequired,
@@ -48,7 +48,7 @@ export default class MultipleChoice extends Component {
         {options &&
           options.map(({ value: option, label }) => (
             <StyledButton
-              reverse={value.includes(option)}
+              ghost={!value.includes(option)}
               key={option}
               onClick={() => this.onClick(option)}
             >
