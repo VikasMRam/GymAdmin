@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, bool } from 'prop-types';
+import { func, bool, string, shape } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -38,8 +38,12 @@ const timeToMoveOptions = [
 ];
 
 const moneyValue = val => `$${val}K`;
+const messageRecipient = (user, community) => [
+  user && user.name || 'the agent',
+  community && community.name,
+].join(' of ');
 
-const AdvandedInfoForm = ({ handleSubmit, submitting }) => (
+const AdvandedInfoForm = ({ handleSubmit, submitting, user, community }) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="type_of_care"
@@ -77,7 +81,7 @@ const AdvandedInfoForm = ({ handleSubmit, submitting }) => (
     />
     <Field
       name="message"
-      label="Message NAME! of COMMUNITY!"
+      label={`Message ${messageRecipient(user, community)}`}
       type="textarea"
       component={ReduxField}
     />
@@ -90,6 +94,8 @@ const AdvandedInfoForm = ({ handleSubmit, submitting }) => (
 AdvandedInfoForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
+  user: shape({ name: string.isRequired, }),
+  community: shape({ name: string.isRequired }).isRequired,
 };
 
 export default AdvandedInfoForm;

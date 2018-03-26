@@ -11,7 +11,15 @@ const AdvandedInfoFormContainer = reduxForm({
   },
 })(AdvandedInfoForm);
 
+const community = {
+  name: 'Rhoda Goldman Plaza',
+};
+
+const user = {
+  name: 'Ashley Clark',
+};
+
 storiesOf('Organisms|AdvancedInfoForm', module).add('default', () => (
-  <AdvandedInfoFormContainer handleSubmit={action('submit!')} />
+  <AdvandedInfoFormContainer handleSubmit={action('submit!')} community={community} user={user} />
 ));
 
