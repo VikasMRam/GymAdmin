@@ -19,31 +19,31 @@ const StyledButton = styled(Button)`
 `;
 
 const typeOfCareOptions = [
-  { value: 'low', label: 'Low', },
-  { value: 'med', label: 'Med', },
-  { value: 'high', label: 'High', },
+  { value: 'low', label: 'Low' },
+  { value: 'med', label: 'Med' },
+  { value: 'high', label: 'High' },
 ];
 
 const typeOfRoomOptions = [
   { value: 'studio', label: 'Studio' },
   { value: 'shared', label: 'Shared' },
-  { value: 'bedroom', label: '1 bedroom', },
+  { value: 'bedroom', label: '1 bedroom' },
 ];
 
 const timeToMoveOptions = [
-  { value: 0, label: 'Now', },
-  { value: 3, label: '1-3 Months', },
-  { value: 6, label: '3-6 Months', },
-  { value: 12, label: '12+ Months', },
+  { value: 0, label: 'Now' },
+  { value: 3, label: '1-3 Months' },
+  { value: 6, label: '3-6 Months' },
+  { value: 12, label: '12+ Months' },
 ];
 
 const moneyValue = val => `$${val}K`;
-const messageRecipient = (user, community) => [
-  user && user.name || 'the agent',
-  community && community.name,
-].join(' of ');
+const messageRecipient = (user, community) =>
+  [(user && user.name) || 'the agent', community && community.name].join(' of ');
 
-const AdvandedInfoForm = ({ handleSubmit, submitting, user, community }) => (
+const AdvancedInfoForm = ({
+  handleSubmit, submitting, user, community,
+}) => (
   <Form onSubmit={handleSubmit}>
     <Field
       name="type_of_care"
@@ -74,7 +74,6 @@ const AdvandedInfoForm = ({ handleSubmit, submitting, user, community }) => (
       min={0}
       max={11}
       step={0.5}
-      defaultValue={5.5}
       valueWidth="regular"
       valueParse={moneyValue}
       component={ReduxField}
@@ -86,16 +85,16 @@ const AdvandedInfoForm = ({ handleSubmit, submitting, user, community }) => (
       component={ReduxField}
     />
     <StyledButton type="submit" disabled={submitting}>
-      Send Message 
+      Send Message
     </StyledButton>
   </Form>
 );
 
-AdvandedInfoForm.propTypes = {
+AdvancedInfoForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
-  user: shape({ name: string.isRequired, }),
+  user: shape({ name: string.isRequired }),
   community: shape({ name: string.isRequired }).isRequired,
 };
 
-export default AdvandedInfoForm;
+export default AdvancedInfoForm;

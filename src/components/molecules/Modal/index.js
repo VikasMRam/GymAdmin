@@ -6,7 +6,7 @@ import { font, palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
-import { IconButton } from 'sly/components/molecules';
+import IconButton from 'sly/components/molecules/IconButton';
 
 injectGlobal`
   body.ReactModal__Body--open {

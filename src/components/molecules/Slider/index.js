@@ -143,7 +143,6 @@ class Slider extends Component {
       id,
       min,
       max,
-      defaultValue,
       valueWidth,
       valueParse,
       step,
@@ -161,7 +160,6 @@ class Slider extends Component {
           type="range"
           min={min}
           max={max}
-          defaultValue={defaultValue}
           step={step}
           onChange={this.onChange}
           {...props}
@@ -176,8 +174,8 @@ Slider.propTypes = {
   id: string,
   min: number,
   max: number,
-  defaultValue: number,
   step: number,
+  value: number,
   reverse: bool,
   disabled: bool,
   valueParse: func,
@@ -187,7 +185,6 @@ Slider.propTypes = {
 Slider.defaultProps = {
   min: 0,
   max: 2,
-  defaultValue: 1,
   step: 1,
   palette: 'secondary',
   valueParse: val => val,

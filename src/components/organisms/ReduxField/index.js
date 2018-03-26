@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { shape, string, bool } from 'prop-types';
 
 import Field from 'sly/components/molecules/Field';
 
@@ -14,12 +14,12 @@ const ReduxField = ({ meta, input, ...props }) => {
 };
 
 ReduxField.propTypes = {
-  meta: PropTypes.shape({
-    touched: PropTypes.bool,
-    error: PropTypes.string,
+  meta: shape({
+    touched: bool,
+    error: string,
   }).isRequired,
-  input: PropTypes.shape({
-    name: PropTypes.string.isRequired,
+  input: shape({
+    name: string.isRequired,
   }).isRequired,
 };
 

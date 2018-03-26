@@ -6,12 +6,13 @@ import { palette } from 'styled-theme';
 import Link from 'react-router-dom/Link';
 
 import { size } from 'sly/components/themes';
-import { Rating } from 'sly/components/atoms';
+import Rating from 'sly/components/atoms/Rating';
+import Input from 'sly/components/atoms/Input';
 
 const width = ({ tileSize }) => size('tile', tileSize, 'width');
 const height = ({ tileSize }) => size('tile', tileSize, 'height');
 
-const TileDiv = styled.div`
+const Wrapper = styled.div`
   position: relative;
   width: ${width};
   height: ${height};
@@ -22,6 +23,16 @@ const StyledImg = styled.img`
   object-fit: cover;
   width: ${width};
   height: ${height};
+
+  input[type="checkbox"] {
+    margin: 0px;
+  }
+`;
+
+const Checkbox = styled(Input)`
+  position: absolute;
+  top: ${size('spacing.small')};
+  right: ${size('spacing.small')};
 `;
 
 export const CaptionSpan = styled.span`
@@ -41,19 +52,20 @@ const StyledLink = styled(Link)`
 `;
 
 const CommunityTile = ({
-  size, palette, community, ...props
+  size, palette, community, selectable, ...props
 }) => {
   const {
     name, uri, picture, rating,
   } = community;
   return (
-    <TileDiv tileSize={size}>
+    <Wrapper tileSize={size} {...props}>
       <StyledImg tileSize={size} src={picture} />
+      {selectable && <Checkbox type="checkbox" />}
       <CaptionSpan>
         <StyledLink to={community.uri}>{name}</StyledLink>
         {rating && <Rating size="small" palette={palette} value={rating} />}
       </CaptionSpan>
-    </TileDiv>
+    </Wrapper>
   );
 };
 

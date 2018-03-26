@@ -6,8 +6,11 @@ import AdvandedInfoForm from '.';
 
 const AdvandedInfoFormContainer = reduxForm({
   form: 'AdvandedInfoForm',
-  values: {
+  initialValues: {
     type_of_care: [],
+    type_of_room: [],
+    time_to_move: [],
+    budget: 5.5,
   },
 })(AdvandedInfoForm);
 
@@ -20,6 +23,9 @@ const user = {
 };
 
 storiesOf('Organisms|AdvancedInfoForm', module).add('default', () => (
-  <AdvandedInfoFormContainer handleSubmit={action('submit!')} community={community} user={user} />
+  <AdvandedInfoFormContainer
+    handleSubmit={action('submit!')}
+    community={community}
+    user={user}
+  />
 ));
-

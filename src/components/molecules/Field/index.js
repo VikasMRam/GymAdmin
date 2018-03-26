@@ -10,11 +10,15 @@ import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 import Slider from 'sly/components/molecules/Slider';
 
 const getInputType = type => (type === 'email' ? 'text' : type);
-const getInputComponent = type => {
+const getInputComponent = (type) => {
   switch (type) {
-    case 'multiplechoice': return MultipleChoice;
-    case 'slider': return Slider; 
-    default: return Input;
+    case 'multiplechoice':
+    case 'communitychoice':
+      return MultipleChoice;
+    case 'slider':
+      return Slider;
+    default:
+      return Input;
   }
 };
 
@@ -25,8 +29,8 @@ const Error = styled(Block)`
 
 const Wrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
-  input[type='checkbox'],
-  input[type='radio'] {
+  > input[type='checkbox'],
+  > input[type='radio'] {
     margin-right: ${size('spacing.regular')};
   }
   label {
@@ -78,7 +82,17 @@ Field.propTypes = {
   invalid: bool,
   error: string,
   label: string,
-  type: oneOf(['textarea', 'select', 'multiplechoice', 'slider', 'text', 'email', 'checkbox', 'radio']),
+  type: oneOf([
+    'textarea',
+    'select',
+    'communitychoice',
+    'multiplechoice',
+    'slider',
+    'text',
+    'email',
+    'checkbox',
+    'radio',
+  ]),
   placeholder: string,
 };
 
@@ -87,4 +101,3 @@ Field.defaultProps = {
 };
 
 export default Field;
-
