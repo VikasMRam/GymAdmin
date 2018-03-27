@@ -14,25 +14,21 @@ import { font, palette } from 'styled-theme';
 import { ifProp, prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Button } from 'sly/components/atoms';
+import CommunityTile from 'sly/components/molecules/CommunityTile';
 
-const kind = type => {
-  switch(type) {
-    case 'multipletags': return 'label';
-    default: return 'regular';
-  }
-};
-
-const StyledButton = styled(Button)`
-  margin-right: ${size('spacing.small')};
-  &:last-child {
-    margin-right: none;
-  }
+const StyledCommunityTile = styled(CommunityTile)`
+  margin-right: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.large')};
 `;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -${size('spacing.large')};
+  margin-bottom: -${size('spacing.large')};
+`;
 
-export default class MultipleChoice extends Component {
+export default class CommunityChoice extends Component {
   static propTypes = {
     options: arrayOf(shape({
       value: oneOfType([string, number]).isRequired,
@@ -63,16 +59,15 @@ export default class MultipleChoice extends Component {
       <Wrapper type={type} {...props}>
         {options &&
           options.map(({ value: option, label, ...props }, i) => (
-            <StyledButton
+            <StyledCommunityTile
               selectable
-              selected={!value.includes(option)}
+              ghost={!value.includes(option)}
               key={option+i}
-              kind={kind(type)}
               onClick={() => this.onClick(option)}
               {...props}
             >
               {label}
-            </StyledButton>
+            </StyledCommunityTile>
           ))}
       </Wrapper>
     );

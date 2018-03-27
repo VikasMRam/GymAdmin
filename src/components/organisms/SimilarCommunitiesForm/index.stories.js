@@ -22,9 +22,12 @@ const community = {
 
 const communities = [community, community, community, community];
 
+const tags = ['shared room', 'alzheirmer\'s', 'san francisco'];
+
 storiesOf('Organisms|SimilarCommunitiesForm', module).add('default', () => (
   <SimilarCommunitiesFormContainer
     handleSubmit={action('submit!')}
+    tags={tags}
     communities={communities}
   />
 ));

@@ -8,6 +8,12 @@ import ReduxField from 'sly/components/organisms/ReduxField';
 
 import { Heading, Button, Block } from 'sly/components/atoms';
 
+const makeTags = tags => tags
+  .map(tag => ({
+    value: tag,
+    label: `#${tag}`,
+  }));
+
 const makeOptions = communities => communities
   .map(community => ({
     value: community.id,
@@ -25,8 +31,16 @@ const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const SimilarCommunitiesForm = ({ handleSubmit, submitting, communities }) => (
+const SimilarCommunitiesForm = ({ handleSubmit, submitting, communities, tags }) => (
   <Form onSubmit={handleSubmit}>
+    <Heading>Send your message to similar communities</Heading>
+    <Block>We found that these communities have similar features that you are looking for.</Block>
+    <Field
+      name="similar_tags"
+      type="multipletags"
+      options={makeTags(tags)}
+      component={ReduxField}
+    />
     <Field
       name="similar_communities"
       type="communitychoice"
@@ -43,6 +57,7 @@ SimilarCommunitiesForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
   communities: arrayOf(shape({ id: string.isRequired, name: string.isRequired, rating: number })).isRequired,
+  tags: arrayOf(string).isRequired,
 };
 
 export default SimilarCommunitiesForm;

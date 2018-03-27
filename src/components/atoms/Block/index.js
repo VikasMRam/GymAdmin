@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { font, palette } from 'styled-theme';
 import { ifProp, prop } from 'styled-tools';
 
-import { size as sz } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 
-const getSize = type => props => sz(type, prop('size')(props))(props);
+const getSize = type => p => size(type, prop('size')(p))(p);
 
 const Block = styled.div`
   background-color: ${ifProp('opaque', palette(0, true), 'transparent')};

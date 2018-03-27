@@ -1,14 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string, node, bool, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { font, palette } from 'styled-theme';
+import { prop } from 'styled-tools';
 
-const fontSize = ({ level }) => `${0.75 + 1 * (1 / level)}rem`;
+import { size } from 'sly/components/themes';
+
+const fontSize = p => size('text', prop('size')(p))(p);
+const lineHeight = p => size('lineHeight', prop('size')(p))(p);
+
+const level = size => {
+  switch(size) {
+    case 'hero': return 1;
+    case 'title': return 1;
+    case 'subtitle': return 2;
+  }
+};
 
 const styles = css`
   font-family: ${font('primary')};
-  font-weight: 500;
+  font-weight: 700;
   font-size: ${fontSize};
+  line-height: ${lineHeight};
   margin: 0;
   margin-top: 0.85714em;
   margin-bottom: 0.57142em;
@@ -16,21 +29,21 @@ const styles = css`
 `;
 
 const Heading = styled(({
-  level, children, reverse, palette, theme, ...props
+  size, children, reverse, palette, theme, ...props
 }) =>
-  React.createElement(`h${level}`, props, children))`
+  React.createElement(`h${level(size)}`, props, children))`
   ${styles};
 `;
 
 Heading.propTypes = {
-  level: PropTypes.number,
-  children: PropTypes.node,
-  palette: PropTypes.string,
-  reverse: PropTypes.bool,
+  size: oneOf(['hero', 'title', 'subtitle']),
+  children: node,
+  palette: string,
+  reverse: bool,
 };
 
 Heading.defaultProps = {
-  level: 1,
+  size: 'title',
   palette: 'grayscale',
 };
 

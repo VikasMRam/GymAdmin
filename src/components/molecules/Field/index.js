@@ -7,14 +7,17 @@ import { Label, Input, Block } from 'sly/components/atoms';
 
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
+import CommunityChoice from 'sly/components/molecules/CommunityChoice';
 import Slider from 'sly/components/molecules/Slider';
 
 const getInputType = type => (type === 'email' ? 'text' : type);
 const getInputComponent = (type) => {
   switch (type) {
     case 'multiplechoice':
-    case 'communitychoice':
+    case 'multipletags':
       return MultipleChoice;
+    case 'communitychoice':
+      return CommunityChoice;
     case 'slider':
       return Slider;
     default:

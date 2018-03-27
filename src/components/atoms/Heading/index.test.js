@@ -19,7 +19,7 @@ it('renders h1 by default', () => {
   expect(wrapper.find('h1')).toHaveLength(1);
 });
 
-it('renders hLevel when level is passed in', () => {
-  const wrapper = wrap({ level: 2 });
+it('renders hLevel when size is passed in', () => {
+  const wrapper = wrap({ size: 'subtitle' });
   expect(wrapper.find('h2')).toHaveLength(1);
 });
