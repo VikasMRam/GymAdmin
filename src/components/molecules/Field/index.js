@@ -90,6 +90,7 @@ Field.propTypes = {
     'select',
     'communitychoice',
     'multiplechoice',
+    'multipletags',
     'slider',
     'text',
     'email',

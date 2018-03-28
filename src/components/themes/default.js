@@ -72,6 +72,7 @@ theme.sizes = {
     small:        '0.750rem', // 12px
     regular:      '1.500rem', // 24px
     large:        '3.000rem', // 48px
+    xLarge:       '6.000rem', // 96px
   },
 
   text: {
