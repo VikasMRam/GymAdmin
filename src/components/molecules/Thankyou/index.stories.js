@@ -3,7 +3,11 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import Thankyou from '.';
 
-storiesOf('Organisms|Thankyou', module)
+const community = {
+  name: 'Rhoda Goldman Plaza',
+};
+
+storiesOf('Molecules|Thankyou', module)
   .add('default', () => (
-    <Thankyou />
+    <Thankyou community={community} onClose={action('close')} />
   ));

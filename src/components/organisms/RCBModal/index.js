@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { oneOf } from 'prop-types';
 
 import Modal from 'sly/components/molecules/Modal';
-import Thankyou from 'sly/components/organisms/Thankyou';
+import Thankyou from 'sly/components/molecules/Thankyou';
 import AdvancedInfoContainer from 'sly/containers/AdvancedInfoContainer';
 import SimilarCommunitiesContainer from 'sly/containers/SimilarCommunitiesContainer';
 
 const steps = { 
-  advancedInfo: AdvancedInfoContainer,
-  similarCommunities: SimilarCommunitiesContainer,
-  thankyou: Thankyou,
+  advancedInfo: { component: AdvancedInfoContainer, layout: 'double' },
+  similarCommunities: { component: SimilarCommunitiesContainer, layout: 'double' },
+  thankyou: { component: Thankyou },
 };
 
 export default class RCBModal extends Component {
@@ -40,10 +40,11 @@ export default class RCBModal extends Component {
     const { currentStep, onClose, isOpen, ...props } = this.props;
     console.log('currentStep', currentStep);
 
-    const StepComponent = steps[currentStep];
+    const layout = steps[currentStep].layout;
+    const StepComponent = steps[currentStep].component;
 
     return (
-      <Modal onClose={onClose} isOpen={isOpen}>
+      <Modal onClose={onClose} isOpen={isOpen} layout={layout}>
         <StepComponent {...props} />
       </Modal>
     );

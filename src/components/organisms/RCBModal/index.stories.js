@@ -41,6 +41,7 @@ storiesOf('Organisms|RCBModal', module)
   ))
   .add('thankyou', () => ( 
     <RCBModal
+      community={community}
       currentStep="thankyou"
       onClose={action('close')}
       onSubmit={action('submit')}

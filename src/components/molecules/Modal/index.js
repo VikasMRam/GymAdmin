@@ -1,5 +1,5 @@
 import React from 'react';
-import { node, string, bool, func } from 'prop-types';
+import { node, string, bool, func, oneOf } from 'prop-types';
 import styled, { css, injectGlobal } from 'styled-components';
 import ReactModal from 'react-modal';
 import { font, palette } from 'styled-theme';
@@ -129,11 +129,16 @@ const Modal = ({
 };
 
 Modal.propTypes = {
+  layout: oneOf(['single', 'double']).isRequired,
   children: node,
   title: string,
   closeable: bool,
   reverse: bool,
   onClose: func.isRequired,
+};
+
+Modal.defaultProps = {
+  layout: 'double',
 };
 
 export default Modal;
