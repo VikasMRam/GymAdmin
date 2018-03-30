@@ -22,9 +22,15 @@ theme.sizes = {
   breakpoint: {
     mobile:          '375px',
     tablet:          '768px',
+    doubleModal:    '1200px',
   },
 
-  maxWidth:         '1100px',
+  maxWidth:         '1200px',
+
+  modal: {
+    single:       '35.25rem', // 564px
+    double:       '70.50rem', // 1128px
+  },
 
   element: {
     small:        '2.125rem', // 34px
@@ -40,7 +46,7 @@ theme.sizes = {
     valueWidth: {
       small:      '3.000rem', // 48px
       regular:    '6.000rem', // 96px
-      large:      '9.000rem', // 144px 
+      large:      '9.000rem', // 144px
     }
   },
 
@@ -56,7 +62,7 @@ theme.sizes = {
   },
 
   border:         '0.063rem', //  1px
-        
+
   spacing: {
     nano:         '0.062rem', //  1px
     tiny:         '0.125rem', //  2px
@@ -71,6 +77,7 @@ theme.sizes = {
   icon: {
     small:        '0.750rem', // 12px
     regular:      '1.500rem', // 24px
+    button:       '2.500rem', // 32px
     large:        '3.000rem', // 48px
     xLarge:       '6.000rem', // 96px
   },

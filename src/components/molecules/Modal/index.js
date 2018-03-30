@@ -35,7 +35,7 @@ const overlayStyles = css`
 const ModalBox = styled(ReactModal)`
   position: absolute;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   font-family: ${font('primary')};
   font-size: 1rem;
   background-color: ${palette('white', 2)};
@@ -48,7 +48,6 @@ const ModalBox = styled(ReactModal)`
   width: 100%;
   height: 100%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: unset;
     height: unset;
     top: calc(50% - 1rem);
     left: calc(50% - 1rem);
@@ -56,8 +55,7 @@ const ModalBox = styled(ReactModal)`
     bottom: auto;
     margin: 1rem calc(-50% + 1rem) 1rem 1rem;
     transform: translate(-50%, 100%);
-    min-width: 320px;
-    max-width: calc(640px - 1rem);
+    width: ${size('modal.single')};
     max-height: calc(100% - 1rem);
     &[class*='after-open'] {
       transform: translate(-50%, -50%);
@@ -65,6 +63,9 @@ const ModalBox = styled(ReactModal)`
     &[class*='before-close'] {
       transform: translate(-50%, 100%);
     }
+  }
+  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+    width: ${size('modal.double')};
   }
 `;
 
@@ -84,22 +85,51 @@ const StyledHeading = styled(Heading)`
   white-space: nowrap;
 `;
 
-const Content = styled.div`
-  overflow: auto;
-  padding: 0 1rem;
-  margin-bottom: 1rem;
-`;
-
 const StyledReactModal = styled(({ className, ...props }) => (
   <ModalBox overlayClassName={className} closeTimeoutMS={250} {...props} />
 ))`
   ${overlayStyles};
 `;
 
+const Content = styled.div`
+  overflow: auto;
+  padding: ${size('spacing.xxxLarge')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('modal.single')};
+  }
+  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+    .closeButton {
+      display: none;
+    }
+  }
+`;
+
+const LeftPane = styled.div`
+  display: none;
+  padding: ${size('spacing.xxxLarge')};
+  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+    display: block;
+    width: ${size('modal.single')};
+  }
+`;
+
+const Body = styled.div``;
+
 const Modal = ({
-  children, title, closeable, onClose, ...props
+  children, title, closeable, layout, onClose, ...props
 }) => {
   const hasHeader = title || closeable;
+  const double = layout === 'double';
+  const iconClose = (
+    <IconButton
+      className="closeButton"
+      icon="close"
+      iconOnly
+      onClick={onClose}
+      palette="grayscale"
+      reverse
+    />
+  );
   return (
     <StyledReactModal
       contentLabel={title || 'Modal'}
@@ -107,23 +137,17 @@ const Modal = ({
       hasHeader={hasHeader}
       {...props}
     >
-      {hasHeader && (
-        <Header>
-          {closeable && (
-            <IconButton
-              icon="close"
-              iconOnly
-              onClick={onClose}
-              palette="grayscale"
-              reverse
-            />
-          )}
-          <StyledHeading level={2} reverse={props.reverse}>
-            {title}
-          </StyledHeading>
-        </Header>
+      {double && (
+        <LeftPane>
+          {closeable && iconClose}
+        </LeftPane>
       )}
-      <Content>{children}</Content>
+      <Content>
+        {closeable && iconClose}
+        <Body>
+          {children}
+        </Body>
+      </Content>
     </StyledReactModal>
   );
 };
@@ -138,7 +162,7 @@ Modal.propTypes = {
 };
 
 Modal.defaultProps = {
-  layout: 'double',
+  layout: 'single',
 };
 
 export default Modal;

@@ -3,6 +3,7 @@ import { string, bool, number, node } from 'prop-types';
 import styled, { css, keyframes } from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
 
+import { size } from 'sly/components/themes';
 import { Icon, Button } from 'sly/components/atoms';
 
 const fadeIn = keyframes`
@@ -11,10 +12,18 @@ const fadeIn = keyframes`
   100% { display: block; opacity: 1; }
 `;
 
+const iconWidth = p => p.hasText
+  ? 'auto'
+  : p.iconOnly
+    ? size('icon.regular')
+    : size('icon.button');
+
+const iconHeight = p => p.iconOnly ? size('icon.regular') : size('icon.button');
+
 // TODO: measurements from theme
 const StyledButton = styled(Button)`
-  max-width: ${props => (props.hasText && !props.collapsed ? '100%' : '2.5em')};
-  width: ${ifProp('hasText', 'auto', '2.5em')};
+  width: ${iconWidth};
+  height: ${iconHeight};
   padding: ${ifProp('hasText', '0 0.4375em', 0)};
   flex: 0 0 2.5em;
   box-sizing: border-box;
@@ -68,7 +77,7 @@ const IconButton = ({
     />
   );
   return (
-    <StyledButton hasText={!!children} transparent={iconOnly} {...props}>
+    <StyledButton hasText={!!children} iconOnly transparent={iconOnly} {...props}>
       <Wrapper>
         {right || iconElement}
         {children && <Text className="text">{children}</Text>}

@@ -10,19 +10,19 @@ import { bool, string, oneOf } from 'prop-types';
 import { size } from 'sly/components/themes';
 
 const backgroundColor = ({ ghost, disabled, transparent, selectable, selected }) =>
-  disabled    
+  disabled
     ? palette('white', 1)
     : ghost || (selectable && !selected)
-      ? palette('white', 2) 
-      : transparent ? 'none' : palette(0);
+      ? palette('white', 2)
+      : transparent ? 'transparent' : palette(0);
 
 const foregroundColor = ({ ghost, disabled, transparent, selectable, selected }) =>
   disabled
     ? palette('grayscale', 2)
     : ghost
-      ? palette(0) 
+      ? palette(0)
       : (selectable && !selected)
-        ? palette('grayscale', 1)  
+        ? palette('grayscale', 1)
         : transparent ? 'none' : palette('white', 2);
 
 const borderColor = ({ ghost, disabled, selectable, selected }) => {
@@ -38,7 +38,7 @@ const hoverBackgroundColor = ({ disabled, ghost, transparent }) =>
 
 const hoverForegroundColor = ({ disabled, ghost, selectable, selected }) =>
   (selectable && !selected)
-    ? palette('white', 2) 
+    ? palette('white', 2)
     : !disabled && ghost && palette(1);
 
 const activeBackgroundColor = ({ disabled, ghost, transparent }) =>
