@@ -3,10 +3,16 @@ import { node, string, bool, func, oneOf } from 'prop-types';
 import styled, { css, injectGlobal } from 'styled-components';
 import ReactModal from 'react-modal';
 import { font, palette } from 'styled-theme';
+import { ifProp, withProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
 import IconButton from 'sly/components/molecules/IconButton';
+
+const doubleModalWidth = withProp('layout', layout => {
+  console.log(layout);  
+  return size('modal', layout);
+}); 
 
 injectGlobal`
   body.ReactModal__Body--open {
@@ -35,18 +41,17 @@ const overlayStyles = css`
 const ModalBox = styled(ReactModal)`
   position: absolute;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   font-family: ${font('primary')};
-  font-size: 1rem;
   background-color: ${palette('white', 2)};
-  border-radius: 0.125em;
+  border-radius: ${size('spacing.tiny')};
   color: ${palette('grayscale', 0)};
   transition: transform 250ms ease-in-out;
   outline: none;
   box-sizing: border-box;
-  padding-top: ${({ hasHeader }) => (hasHeader ? 0 : '1rem')};
   width: 100%;
   height: 100%;
+  padding: ${size('spacing.xxxLarge')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     height: unset;
     top: calc(50% - 1rem);
@@ -65,24 +70,8 @@ const ModalBox = styled(ReactModal)`
     }
   }
   @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-    width: ${size('modal.double')};
+    width: ${doubleModalWidth};
   }
-`;
-
-const Header = styled.header`
-  display: flex;
-  align-items: center;
-  padding: 1rem;
-  > *:last-child {
-    flex: 1;
-  }
-`;
-
-const StyledHeading = styled(Heading)`
-  margin: 0 1rem 0 0;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
 `;
 
 const StyledReactModal = styled(({ className, ...props }) => (
@@ -93,33 +82,14 @@ const StyledReactModal = styled(({ className, ...props }) => (
 
 const Content = styled.div`
   overflow: auto;
-  padding: ${size('spacing.xxxLarge')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('modal.single')};
-  }
   @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-    .closeButton {
-      display: none;
-    }
+    margin-left: ${ifProp({ layout: 'double' }, size('modal.single'), 0)};
   }
 `;
-
-const LeftPane = styled.div`
-  display: none;
-  padding: ${size('spacing.xxxLarge')};
-  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-    display: block;
-    width: ${size('modal.single')};
-  }
-`;
-
-const Body = styled.div``;
 
 const Modal = ({
-  children, title, closeable, layout, onClose, ...props
+  children, closeable, layout, onClose, ...props
 }) => {
-  const hasHeader = title || closeable;
-  const double = layout === 'double';
   const iconClose = (
     <IconButton
       className="closeButton"
@@ -132,21 +102,13 @@ const Modal = ({
   );
   return (
     <StyledReactModal
-      contentLabel={title || 'Modal'}
       onRequestClose={onClose}
-      hasHeader={hasHeader}
+      layout={layout}
       {...props}
     >
-      {double && (
-        <LeftPane>
-          {closeable && iconClose}
-        </LeftPane>
-      )}
-      <Content>
-        {closeable && iconClose}
-        <Body>
-          {children}
-        </Body>
+      {closeable && iconClose}
+      <Content layout={layout}>
+        {children}
       </Content>
     </StyledReactModal>
   );

@@ -26,8 +26,4 @@ describe('Modal', () => {
     const wrapper = wrap({ closeable: true });
     expect(wrapper.find({ onClick: onClose })).toHaveLength(1);
   });
-
-  it('renders double modal', () => {
-    expect(false).toEqual(true);
-  });
 });
