@@ -6,13 +6,9 @@ import { font, palette } from 'styled-theme';
 import { ifProp, withProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Heading } from 'sly/components/atoms';
 import IconButton from 'sly/components/molecules/IconButton';
 
-const doubleModalWidth = withProp('layout', layout => {
-  console.log(layout);  
-  return size('modal', layout);
-}); 
+const doubleModalWidth = withProp('layout', layout => size('modal', layout));
 
 injectGlobal`
   body.ReactModal__Body--open {
@@ -48,10 +44,11 @@ const ModalBox = styled(ReactModal)`
   color: ${palette('grayscale', 0)};
   transition: transform 250ms ease-in-out;
   outline: none;
+  padding: ${size('spacing.xxxLarge')};
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  padding: ${size('spacing.xxxLarge')};
+  overflow: auto;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     height: unset;
     top: calc(50% - 1rem);
@@ -70,7 +67,10 @@ const ModalBox = styled(ReactModal)`
     }
   }
   @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+    padding-bottom: 0;
+    flex-direction: row;
     width: ${doubleModalWidth};
+    overflow: unset;
   }
 `;
 
@@ -80,19 +80,36 @@ const StyledReactModal = styled(({ className, ...props }) => (
   ${overlayStyles};
 `;
 
-const Content = styled.div`
-  overflow: auto;
+const CloseButton = styled(IconButton)`
   @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-    margin-left: ${ifProp({ layout: 'double' }, size('modal.single'), 0)};
+    margin-bottom: ${size('spacing.xLarge')};
+  }
+`;
+
+const Heading = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: ${size('spacing.xLarge')};
+  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+    padding: ${size('spacing.xxxLarge')};
+    width: ${size('modal.single')};
+  }
+`;
+
+const Content = styled.div`
+  box-sizing: border-box;
+  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+    padding: ${size('spacing.xxxLarge')};
+    width: ${size('modal.single')};
+    overflow: auto;
   }
 `;
 
 const Modal = ({
-  children, closeable, layout, onClose, ...props
+  heading, children, closeable, layout, onClose, ...props
 }) => {
   const iconClose = (
-    <IconButton
-      className="closeButton"
+    <CloseButton
       icon="close"
       iconOnly
       onClick={onClose}
@@ -106,7 +123,12 @@ const Modal = ({
       layout={layout}
       {...props}
     >
-      {closeable && iconClose}
+      {(closeable || heading) && (
+        <Heading>
+          {closeable && iconClose}
+          {heading}
+        </Heading>
+      )}
       <Content layout={layout}>
         {children}
       </Content>

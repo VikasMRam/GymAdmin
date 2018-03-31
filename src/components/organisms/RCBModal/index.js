@@ -1,15 +1,37 @@
 import React, { Component } from 'react';
 import { oneOf } from 'prop-types';
+import styled from 'styled-components';
 
+import { Heading, Block } from 'sly/components/atoms';
 import Modal from 'sly/components/molecules/Modal';
-import Thankyou from 'sly/components/molecules/Thankyou';
 import AdvancedInfoContainer from 'sly/containers/AdvancedInfoContainer';
 import SimilarCommunitiesContainer from 'sly/containers/SimilarCommunitiesContainer';
+import Thankyou from 'sly/components/molecules/Thankyou';
 
-const steps = { 
-  advancedInfo: { component: AdvancedInfoContainer, layout: 'double' },
-  similarCommunities: { component: SimilarCommunitiesContainer, layout: 'double' },
-  thankyou: { component: Thankyou },
+const CommunityHeading = ({ community }) => [ 
+  <Heading>Send a message to {community.name}</Heading>,
+  <Block>{community.description}</Block>
+];
+
+const SimilarHeading = () => [ 
+  <Heading>Send your message to similar communities</Heading>,
+  <Block>We found that this communities have similar features that you are looking for</Block>
+];
+
+const steps = {
+  advancedInfo: { 
+    heading: CommunityHeading,
+    content: AdvancedInfoContainer,
+    layout: 'double' 
+  },
+  similarCommunities: { 
+    heading: SimilarHeading,
+    content: SimilarCommunitiesContainer, 
+    layout: 'single'
+  },
+  thankyou: { 
+    content: Thankyou
+  },
 };
 
 export default class RCBModal extends Component {
@@ -37,15 +59,18 @@ export default class RCBModal extends Component {
   };
 
   render() {
-    const { currentStep, onClose, isOpen, ...props } = this.props;
-    console.log('currentStep', currentStep);
+    const { currentStep, onClose, isOpen, community, ...props } = this.props;
 
     const layout = steps[currentStep].layout;
-    const StepComponent = steps[currentStep].component;
+    const HeadingComponent = steps[currentStep].heading;
+    const StepComponent = steps[currentStep].content;
+
+    const heading = HeadingComponent && <HeadingComponent community={community} />
+    console.log('heading', heading);
 
     return (
-      <Modal onClose={onClose} isOpen={isOpen} layout={layout}>
-        <StepComponent {...props} />
+      <Modal onClose={onClose} isOpen={isOpen} layout={layout} closeable heading={heading} {...props}>
+        <StepComponent community={community} {...props} />
       </Modal>
     );
   }
