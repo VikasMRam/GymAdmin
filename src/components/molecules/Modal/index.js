@@ -67,7 +67,7 @@ const ModalBox = styled(ReactModal)`
     }
   }
   @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-    padding-bottom: 0;
+    padding: 0;
     flex-direction: row;
     width: ${doubleModalWidth};
     overflow: unset;
