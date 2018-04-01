@@ -6,3 +6,4 @@ module.exports = req
   .keys()
   .map(key => req(key).default)
   .concat([thunkMiddleware]);
+

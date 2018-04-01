@@ -17,16 +17,12 @@ const community = {
   rating: 3.5,
 };
 
-const title = ({community}) => `Send a message to ${community.title}`;
-const subtitle = ({community}) => community.description;
 const communities = [community, community, community, community];
 const tags = ['shared room', 'alzheirmer\'s', 'san francisco'];
 
 storiesOf('Organisms|RCBModal', module)
   .add('default', () => (
     <RCBModal
-      title={({community}) => `Send a message to ${community.title}`}
-      subtitle={({community}) => community.description}
       user={user}
       community={community}
       onClose={action('close')}
@@ -36,8 +32,6 @@ storiesOf('Organisms|RCBModal', module)
   ))
   .add('similarCommunities', () => (
     <RCBModal
-      title={'Send your message to similar communities'}
-      subtitle={subtitle}
       tags={tags}
       communities={communities}
       currentStep="similarCommunities"
