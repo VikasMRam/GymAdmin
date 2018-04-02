@@ -1,6 +1,7 @@
 // https://github.com/diegohaz/arc/wiki/Redux-modules
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import { middleware as thunkMiddleware } from 'redux-saga-thunk';
 import { createLogger } from 'redux-logger';
 import { isDev, isBrowser } from 'sly/config';
 import entitiesMiddleware from './entities/middleware';
@@ -18,7 +19,7 @@ const configureStore = (initialState, services = {}) => {
   const sagaMiddleware = createSagaMiddleware();
 
   const enhancers = [
-    applyMiddleware(entitiesMiddleware, sagaMiddleware, loggerMiddleware),
+    applyMiddleware(entitiesMiddleware, sagaMiddleware, thunkMiddleware, loggerMiddleware),
     devtools(),
   ];
 

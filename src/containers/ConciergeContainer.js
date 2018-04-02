@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
+import { string } from 'prop-types';
 
 import { getDetail } from 'sly/store/entities/selectors';
 
@@ -20,16 +21,18 @@ import {
 } from 'sly/store/resource/actions';
 
 class ConciergeContainer extends Component {
+  static propTypes = {
+    propertySlug: string.isRequired,
+  };
+
   componentWillMount() {
     const { getUser } = this.props;
     getUser();
   }
 
-  submit(data) {
+  submit = data => {
     const { submit } = this.props;
-    this.setState({
-      sent: true,
-    });
+    submit(data);
   }
 
   render() {
@@ -39,7 +42,7 @@ class ConciergeContainer extends Component {
     if (!userRequestedCB) {
       return [
         <ConversionFormContainer
-          handleSubmit={data => this.submit(data)} />,
+          onSubmit={this.submit} />,
         <RCBModalContainer />
       ];
     }
@@ -59,16 +62,13 @@ const userSelector = (state, ownProps) => {
 
 const mapStateToProps = (state, ownProps) => ({
   ...userSelector(state, ownProps),
-  submit: (data, dispatch) => {
-    // POST TO USER ACTIONS
-    // AND THEN UPDATE USER STATE? (state.user has to be updated with profiles rcb)
-    // SAYING PROFILE HAS BEEN UPDATED?
-    data.slug = ownProps.propertySlug;
-    return dispatch(resourceCreateRequest('platform/user_actions', data));
-  },
 });
 
 const mapDispatchToProps = dispatch => ({
+  submit: (data) => {
+    data.slug = ownProps.propertySlug;
+    return dispatch(resourceCreateRequest('platform/user_actions', data));
+  },
   getUser: () => {
     // TODO: FIXME: hardcoded uuid
     console.error('fetching the data with hardcoded uuid from ConciergeContainer');
