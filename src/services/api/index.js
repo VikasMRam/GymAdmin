@@ -3,6 +3,15 @@ import 'isomorphic-fetch';
 import { stringify } from 'query-string';
 import merge from 'lodash/merge';
 import { apiUrl, authTokenUrl } from 'sly/config';
+import * as resourceUris from './resourceUris';
+
+const resourceUri = resource => {
+  const uri = resourceUris[resource];
+  if (!uri) {
+    throw new Error(`Unknown resource: ${resource}`);
+  }
+  return uri;
+};
 
 export const checkStatus = (response) => {
   if (response.ok) {
@@ -63,6 +72,8 @@ api.request = (endpoint, { params, ...settings } = {}) => {
     api.request(endpoint, { method, data, ...settings });
 });
 
+api.uri = (resource, id) => `/${resourceUri(resource)}${id ? `/${id}` : ''}`;
+
 api.create = (settings = {}) => ({
   settings,
 
@@ -120,6 +131,10 @@ api.create = (settings = {}) => ({
 
   delete(endpoint, settings) {
     return this.request(endpoint, { method: 'delete', ...settings });
+  },
+
+  uri(resource, id) {
+    return api.uri(resource, id);   
   },
 });
 

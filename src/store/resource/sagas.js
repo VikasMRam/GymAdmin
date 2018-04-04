@@ -6,7 +6,7 @@ import * as actions from './actions';
 export function* createResource(api, { data }, { resource, thunk }) {
   try {
     // https://github.com/diegohaz/arc/wiki/API-service
-    const detail = yield call([api, api.post], `/${resource}`, data);
+    const detail = yield call([api, api.post], api.uri(resource), data);
     // https://github.com/diegohaz/arc/wiki/Actions#async-actions
     yield put(actions.resourceCreateSuccess(resource, detail, { data }, thunk));
   } catch (e) {
@@ -16,7 +16,7 @@ export function* createResource(api, { data }, { resource, thunk }) {
 
 export function* readResourceList(api, { params }, { resource, thunk }) {
   try {
-    const list = yield call([api, api.get], `/${resource}/`, { params });
+    const list = yield call([api, api.get], api.uri(resource), { params });
     yield put(actions.resourceListReadSuccess(resource, list, { params }, thunk));
   } catch (e) {
     yield put(actions.resourceListReadFailure(resource, e, { params }, thunk));
@@ -29,7 +29,7 @@ export function* readResourceDetail(
   { resource, thunk }
 ) {
   try {
-    const detail = yield call([api, api.get], `/${resource}/${needle}/`, {
+    const detail = yield call([api, api.get], api.uri(resource, needle), {
       params,
     });
     yield put(actions.resourceDetailReadSuccess(resource, detail, { needle }, thunk));
@@ -40,7 +40,7 @@ export function* readResourceDetail(
 
 export function* updateResource(api, { needle, data }, { resource, thunk }) {
   try {
-    const detail = yield call([api, api.put], `/${resource}/${needle}/`, data);
+    const detail = yield call([api, api.put], api.uri(resource,needle), data);
     yield put(actions.resourceUpdateSuccess(resource, detail, { needle, data }, thunk));
   } catch (e) {
     yield put(actions.resourceUpdateFailure(resource, e, { needle, data }, thunk));
@@ -49,7 +49,7 @@ export function* updateResource(api, { needle, data }, { resource, thunk }) {
 
 export function* deleteResource(api, { needle }, { resource, thunk }) {
   try {
-    yield call([api, api.delete], `/${resource}/${needle}/`);
+    yield call([api, api.delete], api.uri(resource, needle));
     yield put(actions.resourceDeleteSuccess(resource, { needle }, thunk));
   } catch (e) {
     yield put(actions.resourceDeleteFailure(resource, e, { needle }, thunk));
