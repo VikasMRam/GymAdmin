@@ -5,6 +5,7 @@
   "main": "dist/server",
   "scripts": {
     "start": "node .",
+    "start-staging": "npm run staging && node dist/server",
     "env:dev": "cross-env NODE_ENV=development",
     "env:staging": "cross-env NODE_ENV=staging",
     "env:prod": "cross-env NODE_ENV=production",
