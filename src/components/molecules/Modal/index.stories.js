@@ -19,6 +19,11 @@ storiesOf('Molecules|Modal', module)
       Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
     </Modal>
   ))
+  .add('closeable double', () => (
+    <Modal onClose={action('closed')} layout="double" closeable isOpen>
+      Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
+    </Modal>
+  ))
   .add('reverse', () => (
     <Modal onClose={action('closed')} reverse isOpen>
       Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.

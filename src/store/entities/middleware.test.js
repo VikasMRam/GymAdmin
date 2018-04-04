@@ -3,8 +3,6 @@ import configureStore from 'redux-mock-store';
 import entitiesMiddleware from './middleware';
 import { entitiesReceive } from './actions';
 
-jest.mock('schemas');
-
 const mockStore = configureStore([entitiesMiddleware]);
 
 describe.skip('entities middleware', () => {

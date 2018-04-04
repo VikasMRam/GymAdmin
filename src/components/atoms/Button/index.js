@@ -9,24 +9,37 @@ import { bool, string, oneOf } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 
-const backgroundColor = ({ ghost, disabled, transparent }) =>
+const backgroundColor = ({ ghost, disabled, transparent, selectable, selected }) =>
   disabled
     ? palette('white', 1)
-    : ghost ? palette('white', 2) : transparent ? 'none' : palette(0);
+    : ghost || (selectable && !selected)
+      ? palette('white', 2)
+      : transparent ? 'transparent' : palette(0);
 
-const foregroundColor = ({ ghost, disabled, transparent }) =>
+const foregroundColor = ({ ghost, disabled, transparent, selectable, selected }) =>
   disabled
     ? palette('grayscale', 2)
-    : ghost ? palette(0) : transparent ? 'none' : palette('white', 2);
+    : ghost
+      ? palette(0)
+      : (selectable && !selected)
+        ? palette('grayscale', 1)
+        : transparent ? 'none' : palette('white', 2);
 
-const borderColor = ({ ghost, disabled }) =>
-  ghost || disabled ? 'currentcolor' : 'transparent';
+const borderColor = ({ ghost, disabled, selectable, selected }) => {
+  if (selectable && !selected) {
+    return palette('grayscale', 2);
+  } else {
+    return ghost || disabled ? 'currentcolor' : 'transparent';
+  }
+};
 
 const hoverBackgroundColor = ({ disabled, ghost, transparent }) =>
   !disabled && !ghost && !transparent && palette(1);
 
-const hoverForegroundColor = ({ disabled, ghost }) =>
-  !disabled && ghost && palette(1);
+const hoverForegroundColor = ({ disabled, ghost, selectable, selected }) =>
+  (selectable && !selected)
+    ? palette('white', 2)
+    : !disabled && ghost && palette(1);
 
 const activeBackgroundColor = ({ disabled, ghost, transparent }) =>
   !disabled && !ghost && !transparent && palette(2);
@@ -134,6 +147,8 @@ Button.propTypes = {
   transparent: bool,
   palette: string,
   kind: oneOf(['jumbo', 'regular', 'label']),
+  selectable: bool,
+  selected: bool,
 
   type: string,
   to: string,
@@ -141,6 +156,8 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
+  selectable: false,
+  selected: true,
   palette: 'secondary',
   kind: 'regular',
   type: 'button',

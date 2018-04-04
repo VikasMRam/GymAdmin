@@ -65,7 +65,7 @@ export default class MultipleChoice extends Component {
           options.map(({ value: option, label, ...props }, i) => (
             <StyledButton
               selectable
-              selected={!value.includes(option)}
+              selected={value.includes(option)}
               key={option+i}
               kind={kind(type)}
               onClick={() => this.onClick(option)}
