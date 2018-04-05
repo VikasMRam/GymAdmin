@@ -15,7 +15,7 @@ import RailsApp from 'sly/components/RailsApp';
 
 const serverState = window.__SERVER_STATE__;
 const initialState = window.__INITIAL_STATE__;
-const store = configureStore(initialState, { api: api.create() });
+const store = configureStore(initialState, { api: api.create({ credentials: 'include' }) });
 
 const renderApp = () => (
   <ServerStateProvider state={serverState}>
