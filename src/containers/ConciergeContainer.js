@@ -72,7 +72,7 @@ const mapDispatchToProps = dispatch => ({
   getUser: () => {
     // TODO: FIXME: hardcoded uuid
     console.error('fetching the data with hardcoded uuid from ConciergeContainer');
-    dispatch(resourceDetailReadRequest('platform', 'user_actions', {
+    dispatch(resourceDetailReadRequest('userActions', null, {
       uuid: '3fd36c8b-1cda-4381-aac0-9d937edd1037',
     }));
   },
