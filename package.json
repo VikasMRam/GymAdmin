@@ -4,7 +4,8 @@
   "private": true,
   "main": "dist/server",
   "scripts": {
-    "start": "npm run staging && node .",
+    "start": "node .",
+    "start-stage": "npm run staging && node .",
     "env:dev": "cross-env NODE_ENV=development",
     "env:staging": "cross-env NODE_ENV=staging",
     "env:prod": "cross-env NODE_ENV=production",
