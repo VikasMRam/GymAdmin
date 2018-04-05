@@ -46,17 +46,15 @@ export const parseSettings = ({
   return settings;
 };
 
-export const parseEndpoint = (endpoint, params) => {
-  const url = endpoint.indexOf('http') === 0 ? endpoint : apiUrl + endpoint;
-  const querystring = params ? `?${stringify(params)}` : '';
-  return `${url}${querystring}`;
-};
+export const parseEndpoint = (endpoint) => endpoint.indexOf('http') === 0 
+  ? endpoint 
+  : apiUrl + endpoint;
 
 const api = {};
 
-api.request = (endpoint, { params, ...settings } = {}) => {
+api.request = (endpoint, settings = {}) => {
   const parsedSettings = parseSettings(settings);
-  const parsedEndpoint = parseEndpoint(endpoint, params);
+  const parsedEndpoint = parseEndpoint(endpoint);
 
   return fetch(parsedEndpoint, parsedSettings)
     .then(checkStatus)
@@ -72,7 +70,11 @@ api.request = (endpoint, { params, ...settings } = {}) => {
     api.request(endpoint, { method, data, ...settings });
 });
 
-api.uri = (resource, id) => `/${resourceUri(resource)}${id ? `/${id}` : ''}`;
+api.uri = (resource, id, params) => {
+  let idString = id ? `/${id}` : '';
+  let queryString = params ? `?${stringify(params)}` : '';
+  return `/${resourceUri(resource)}${idString}${queryString}`;
+};
 
 api.create = (settings = {}) => ({
   settings,
@@ -133,8 +135,12 @@ api.create = (settings = {}) => ({
     return this.request(endpoint, { method: 'delete', ...settings });
   },
 
-  uri(resource, id) {
-    return api.uri(resource, id);   
+  uri(resource, id, params) {
+    if (typeof id === 'object') {
+      params = id;
+      id = null;
+    }
+    return api.uri(resource, id, params);   
   },
 });
 
