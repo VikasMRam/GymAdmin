@@ -13,12 +13,10 @@ const ParaWrapper = styled.p`
   font-size: 1rem;
   line-height: 1.3;
   margin: 1rem 0 0;
-  display: ${ifProp({ shown: true }, 'inherit', 'none')};
 `;
 
 Paragraph.propTypes = {
   reverse: PropTypes.bool,
-  shown: PropTypes.bool,
 };
 
 export default Paragraph;

@@ -149,7 +149,6 @@ Button.propTypes = {
   kind: oneOf(['jumbo', 'regular', 'label']),
   selectable: bool,
   selected: bool,
-
   type: string,
   to: string,
   href: string,

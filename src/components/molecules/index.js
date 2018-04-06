@@ -8,3 +8,4 @@ export MultipleChoice from './MultipleChoice';
 export PrimaryNavigation from './PrimaryNavigation';
 export Slider from './Slider';
 export Thankyou from './Thankyou';
+export CollapsibleBlock from './CollapsibleBlock';
