@@ -16,10 +16,11 @@ export function* createResource(api, { data }, { resource, thunk }) {
 
 export function* readResourceList(api, { params }, { resource, thunk }) {
   try {
-    const list = yield call([api, api.get], api.uri(resource), { params });
-    yield put(actions.resourceListReadSuccess(resource, list, { params }, thunk));
+    const uri = api.uri(resource, params);
+    const list = yield call([api, api.get], uri);
+    yield put(actions.resourceListReadSuccess(resource, list, { uri }, thunk));
   } catch (e) {
-    yield put(actions.resourceListReadFailure(resource, e, { params }, thunk));
+    yield put(actions.resourceListReadFailure(resource, e, { uri }, thunk));
   }
 }
 
@@ -29,12 +30,11 @@ export function* readResourceDetail(
   { resource, thunk }
 ) {
   try {
-    const detail = yield call([api, api.get], api.uri(resource, needle), {
-      params,
-    });
-    yield put(actions.resourceDetailReadSuccess(resource, detail, { needle }, thunk));
+    const uri = api.uri(resource, needle, params);
+    const detail = yield call([api, api.get], uri);
+    yield put(actions.resourceDetailReadSuccess(resource, detail, { needle, uri }, thunk));
   } catch (e) {
-    yield put(actions.resourceDetailReadFailure(resource, e, { needle }, thunk));
+    yield put(actions.resourceDetailReadFailure(resource, e, { needle, uri }, thunk));
   }
 }
 
