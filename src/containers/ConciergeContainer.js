@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { string } from 'prop-types';
+import { string, func, bool } from 'prop-types';
 
-import { getDetail } from 'sly/store/entities/selectors';
+import { getDetail } from 'sly/store/selectors';
 
 import {
   createValidator,
@@ -22,12 +22,18 @@ import {
 
 class ConciergeContainer extends Component {
   static propTypes = {
+    getUserActions: func.isRequired,
     propertySlug: string.isRequired,
+    userRequestedCB: bool.isRequired,
+  };
+
+  static defaultProps = {
+    userRequestedCB: false,
   };
 
   componentWillMount() {
-    const { getUser } = this.props;
-    getUser();
+    const { getUserActions } = this.props;
+    getUserActions();
   }
 
   submit = data => {
@@ -36,13 +42,11 @@ class ConciergeContainer extends Component {
   }
 
   render() {
-    const { propertySlug, userRequestedCB } = this.props;
-    if (!propertySlug) return null;
+    const { userRequestedCB } = this.props;
 
     if (!userRequestedCB) {
       return [
-        <ConversionFormContainer
-          onSubmit={this.submit} />,
+        <ConversionFormContainer onSubmit={this.submit} />,
         <RCBModalContainer />
       ];
     }
@@ -50,29 +54,23 @@ class ConciergeContainer extends Component {
   }
 }
 
-const userSelector = (state, ownProps) => {
-  const user = getDetail(state.entities, 'me', 'info');
-  if (!user) return {};
-  const userRequestedCB = user.profilesContacted.requestCallback.includes(ownProps.propertySlug);
+const mapStateToProps = (state, { propertySlug }) => {
+  debugger;
+  const userActions = getDetail(state, 'userAction'); 
   return {
-    user,
-    userRequestedCB,
-  };
+    propertySlug,
+  }
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  ...userSelector(state, ownProps),
-});
-
 const mapDispatchToProps = dispatch => ({
-  submit: (data) => {
+  submit: data => {
     data.slug = ownProps.propertySlug;
     return dispatch(resourceCreateRequest('platform/user_actions', data));
   },
-  getUser: () => {
+  getUserActions: () => {
     // TODO: FIXME: hardcoded uuid
     console.error('fetching the data with hardcoded uuid from ConciergeContainer');
-    dispatch(resourceDetailReadRequest('userActions', null, {
+    dispatch(resourceDetailReadRequest('userAction', {
       uuid: 'e2867c96-20b7-4379-b597-d7bd0e49bab8',
     }));
   },

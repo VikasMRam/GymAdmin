@@ -1,17 +1,8 @@
 // https://github.com/diegohaz/arc/wiki/API-service
 import 'isomorphic-fetch';
-import { stringify } from 'query-string';
 import merge from 'lodash/merge';
 import { apiUrl, authTokenUrl } from 'sly/config';
-import * as resourceUris from './resourceUris';
-
-const resourceUri = resource => {
-  const uri = resourceUris[resource];
-  if (!uri) {
-    throw new Error(`Unknown resource: ${resource}`);
-  }
-  return uri;
-};
+import genUri from './genUri';
 
 export const checkStatus = (response) => {
   if (response.ok) {
@@ -69,12 +60,6 @@ api.request = (endpoint, settings = {}) => {
   api[method] = (endpoint, data, settings) =>
     api.request(endpoint, { method, data, ...settings });
 });
-
-api.uri = (resource, id, params) => {
-  let idString = id ? `/${id}` : '';
-  let queryString = params ? `?${stringify(params)}` : '';
-  return `/${resourceUri(resource)}${idString}${queryString}`;
-};
 
 api.create = (settings = {}) => ({
   settings,
@@ -136,11 +121,7 @@ api.create = (settings = {}) => ({
   },
 
   uri(resource, id, params) {
-    if (typeof id === 'object') {
-      params = id;
-      id = null;
-    }
-    return api.uri(resource, id, params);   
+    return genUri(resource, id, params);   
   },
 });
 

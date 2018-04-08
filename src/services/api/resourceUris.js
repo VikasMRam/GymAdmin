@@ -1,2 +1,2 @@
-export const userActions = 'platform/user-actions';
-export const properties = 'marketplace/properties';
+export const userAction = 'platform/user-actions';
+export const property = 'marketplace/properties';
