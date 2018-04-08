@@ -2,12 +2,14 @@
 // https://github.com/diegohaz/arc/wiki/Example-redux-modules#resource
 import findIndex from 'lodash/findIndex';
 import get from 'lodash/get';
+
 import {
   initialState,
   getResourceState,
   getList,
   getDetail,
 } from './selectors';
+
 import {
   RESOURCE_CREATE_SUCCESS,
   RESOURCE_LIST_READ_REQUEST,
@@ -74,6 +76,7 @@ export default (state = initialState, { type, payload, meta }) => {
       };
 
     case RESOURCE_LIST_READ_REQUEST:
+      console.log('list request', { type, payload, meta });
       return {
         ...state,
         [resource]: {
@@ -82,15 +85,17 @@ export default (state = initialState, { type, payload, meta }) => {
         },
       };
     case RESOURCE_LIST_READ_SUCCESS:
+      console.log('list success', { type, payload, meta });
       return {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          list: payload,
+          list: payload.map(item => item.id),
         },
       };
 
     case RESOURCE_DETAIL_READ_REQUEST:
+      console.log('detail request', { type, payload, meta });
       return {
         ...state,
         [resource]: {
@@ -99,11 +104,12 @@ export default (state = initialState, { type, payload, meta }) => {
         },
       };
     case RESOURCE_DETAIL_READ_SUCCESS:
+      console.log('detail success', resource, { type, payload, meta });
       return {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          detail: payload,
+          detail: payload[0].id,
         },
       };
 
