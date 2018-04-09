@@ -33,7 +33,7 @@ const getStore = (initialState) => {
   return store;
 };
 
-describe('resource', () => {
+describe.skip('resource', () => {
   test('resourceCreateRequest', async () => {
     const { getState, dispatch } = getStore();
 

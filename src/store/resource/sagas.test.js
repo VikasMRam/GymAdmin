@@ -15,6 +15,8 @@ const thunk = '123';
 const resource = 'resources';
 const meta = { thunk, resource };
 
+describe.skip('sagas', () => {
+
 describe('createResource', () => {
   const payload = { data: 'foo' };
 
@@ -168,4 +170,6 @@ test('saga', () => {
     sagas.watchResourceDeleteRequest,
     api
   ));
+});
+
 });
