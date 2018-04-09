@@ -55,7 +55,8 @@ class ConciergeContainer extends Component {
 }
 
 const mapStateToProps = (state, { propertySlug }) => {
-  const userActions = getDetail(state, 'userAction'); 
+  const userActions = getDetail(state, 'userAction');
+  console.log('userActions', userActions);
   return {
     propertySlug,
   }
@@ -67,11 +68,7 @@ const mapDispatchToProps = dispatch => ({
     return dispatch(resourceCreateRequest('platform/user_actions', data));
   },
   getUserActions: () => {
-    // TODO: FIXME: hardcoded uuid
-    console.error('fetching the data with hardcoded uuid from ConciergeContainer');
-    dispatch(resourceDetailReadRequest('userAction', {
-      uuid: 'e2867c96-20b7-4379-b597-d7bd0e49bab8',
-    }));
+    dispatch(resourceDetailReadRequest('userAction'));
   },
 });
 

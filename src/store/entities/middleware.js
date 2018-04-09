@@ -18,7 +18,7 @@ const middleware = store => next => (action) => {
 
     if (entities[meta.entities]) {
       store.dispatch(entitiesReceive(entities));
-      return next({ ...action, payload: result[key] });
+      return next({ ...action, payload: result[key].data });
     } else {
       throw new Error(`Posibly malformed response with type: ${meta.entities}`); 
     }
