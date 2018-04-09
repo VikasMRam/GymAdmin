@@ -4,27 +4,25 @@ import values from 'lodash/values';
 import * as selectors from './selectors';
 
 const altState = {
-  entities: {
-    entity: {
-      1: {
-        attributes: {
-          id: 1,
-          title: 'test',
-          description: 'test',
-        },
+  entity: {
+    1: {
+      attributes: {
+        id: 1,
+        title: 'test',
+        description: 'test',
       },
-      2: {
-        attributes: {
-          id: 2,
-          title: 'test 2',
-          description: 'test 2',
-        },
+    },
+    2: {
+      attributes: {
+        id: 2,
+        title: 'test 2',
+        description: 'test 2',
       },
     },
   },
 };
 
-describe.skip('entities selectors', () => {
+describe('entities selectors', () => {
   test('initialState', () => {
     expect(selectors.initialState).toEqual({});
   });
@@ -33,7 +31,7 @@ describe.skip('entities selectors', () => {
     expect(selectors.getEntity(undefined, 'test')).toEqual({});
     expect(selectors.getEntity({}, 'test')).toEqual({});
     expect(selectors.getEntity(altState, 'test')).toEqual({});
-    expect(selectors.getEntity(altState, 'entity')).toEqual(altState.entities.entity);
+    expect(selectors.getEntity(altState, 'entity')).toEqual(altState.entity);
   });
 
   // Redux object returns explicit null objects instead of undefined
@@ -43,7 +41,7 @@ describe.skip('entities selectors', () => {
     expect(selectors.getDetail(undefined, 'test', 1)).toBeNull();
     expect(selectors.getDetail({}, 'test')).toBeNull();
     expect(selectors.getDetail({}, 'test', 1)).toBeNull();
-    expect(selectors.getDetail(altState, 'entity', 1)).toEqual(altState.entities.entity[1].attributes);
+    expect(selectors.getDetail(altState, 'entity', 1)).toEqual(altState.entity[1].attributes);
   });
 
   // Redux object returns empty list if no ids are specified
@@ -54,8 +52,7 @@ describe.skip('entities selectors', () => {
     expect(selectors.getList({}, 'test', [1])).toEqual([null]);
     expect(selectors.getList(altState, 'entity')).toEqual([]);
     expect(selectors.getList(altState, 'entity', [1])).toEqual([
-      altState.entities.entity[1].attributes,
-    ]); // TODO Failure
-    // expect(selectors.getList(altState, 'entity', [1])).toEqual([null]) //TODO Failure
+      altState.entity[1].attributes,
+    ]);
   });
 });

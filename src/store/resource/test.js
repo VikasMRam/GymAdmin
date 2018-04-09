@@ -33,14 +33,13 @@ const getStore = (initialState) => {
   return store;
 };
 
-describe.skip('resource', () => {
+describe.skip('resource integration tests', () => {
   test('resourceCreateRequest', async () => {
     const { getState, dispatch } = getStore();
 
     expect(getList(getState(), 'resources')).toEqual([]);
 
-    dispatch(resourceCreateRequest('resources', { title: 'foo' }));
-    await delay();
+    await dispatch(resourceCreateRequest('resources', { title: 'foo' }));
     expect(getList(getState(), 'resources')).toEqual([{ title: 'foo' }]);
 
     dispatch(resourceCreateRequest('resources', { title: 'bar' }));
