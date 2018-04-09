@@ -16,6 +16,7 @@ const middleware = store => next => (action) => {
       endpoint: key,
     }); 
 
+    console.log(entities);
     if (entities[meta.entities]) {
       store.dispatch(entitiesReceive(entities));
       return next({ ...action, payload: result[key].data });
