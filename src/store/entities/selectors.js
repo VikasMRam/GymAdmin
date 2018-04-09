@@ -14,3 +14,4 @@ export const getDetail = (state = initialState, entity, id) => {
 export const getList = (state = initialState, entity, ids) => {
   return ids.map(id => getDetail(state, entity, id));
 };
+
