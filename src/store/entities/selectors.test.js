@@ -27,15 +27,6 @@ describe('entities selectors', () => {
     expect(selectors.initialState).toEqual({});
   });
 
-  test('getEntity', () => {
-    expect(selectors.getEntity(undefined, 'test')).toEqual({});
-    expect(selectors.getEntity({}, 'test')).toEqual({});
-    expect(selectors.getEntity(altState, 'test')).toEqual({});
-    expect(selectors.getEntity(altState, 'entity')).toEqual(altState.entity);
-  });
-
-  // Redux object returns explicit null objects instead of undefined
-  // Check redux-object https://github.com/yury-dymov/redux-object/blob/master/test/redux-object.spec.js
   test('getDetail', () => {
     expect(selectors.getDetail(undefined, 'test')).toBeNull();
     expect(selectors.getDetail(undefined, 'test', 1)).toBeNull();

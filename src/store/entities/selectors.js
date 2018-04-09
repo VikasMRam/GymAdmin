@@ -4,10 +4,9 @@ import build from 'redux-object';
 import { denormalize } from 'normalizr';
 
 export const initialState = {};
-export const getEntity = (state = initialState, entity) =>
-  state[entity] || {};
 
 export const getDetail = (state = initialState, entity, id) => {
+  if (!id) return null;
   return build(state, entity, id, { eager: true });
 };
 
