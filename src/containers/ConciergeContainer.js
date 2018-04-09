@@ -55,7 +55,6 @@ class ConciergeContainer extends Component {
 }
 
 const mapStateToProps = (state, { propertySlug }) => {
-  debugger;
   const userActions = getDetail(state, 'userAction'); 
   return {
     propertySlug,
