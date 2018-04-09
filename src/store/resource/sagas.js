@@ -15,8 +15,8 @@ export function* createResource(api, { data }, { resource, thunk }) {
 }
 
 export function* readResourceList(api, { params }, { resource, thunk }) {
+  const uri = api.uri(resource, params);
   try {
-    const uri = api.uri(resource, params);
     const list = yield call([api, api.get], uri);
     yield put(actions.resourceListReadSuccess(resource, list, { uri }, thunk));
   } catch (e) {
@@ -29,8 +29,8 @@ export function* readResourceDetail(
   { needle, params },
   { resource, thunk }
 ) {
+  const uri = api.uri(resource, needle, params);
   try {
-    const uri = api.uri(resource, needle, params);
     const detail = yield call([api, api.get], uri);
     yield put(actions.resourceDetailReadSuccess(resource, detail, { needle, uri }, thunk));
   } catch (e) {

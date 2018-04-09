@@ -9,7 +9,7 @@ const resourceUri = resource => {
   return uri;
 };
 
-export default function(resource, id, params={}) {
+export default function(resource, id, params) {
   if (typeof id === 'object') {
     params = id;
     id = null;
