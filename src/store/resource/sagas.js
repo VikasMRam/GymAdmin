@@ -48,8 +48,9 @@ export function* updateResource(api, { needle, data }, { resource, thunk }) {
 }
 
 export function* deleteResource(api, { needle }, { resource, thunk }) {
+  const uri = api.uri(resource, needle);
   try {
-    yield call([api, api.delete], api.uri(resource, needle));
+    yield call([api, api.delete], uri);
     yield put(actions.resourceDeleteSuccess(resource, { needle }, thunk));
   } catch (e) {
     yield put(actions.resourceDeleteFailure(resource, e, { needle }, thunk));

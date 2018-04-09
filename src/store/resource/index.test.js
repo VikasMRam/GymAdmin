@@ -16,10 +16,12 @@ import { getList, getDetail } from './selectors';
 
 const sagaMiddleware = createSagaMiddleware();
 
+const items = list => list.map(id => ({id}));
 const api = {
   post: (path, data) => Promise.resolve(data),
-  get: () => Promise.resolve([1, 2, 3]),
+  get: () => Promise.resolve(items([1, 2, 3])),
   put: (path, data) => Promise.resolve(data),
+  uri: () => 'uri', 
   delete: () => Promise.resolve(),
 };
 
@@ -33,13 +35,14 @@ const getStore = (initialState) => {
   return store;
 };
 
-describe.skip('resource integration tests', () => {
+describe('resource integration tests', () => {
   test('resourceCreateRequest', async () => {
     const { getState, dispatch } = getStore();
 
     expect(getList(getState(), 'resources')).toEqual([]);
 
-    await dispatch(resourceCreateRequest('resources', { title: 'foo' }));
+    dispatch(resourceCreateRequest('resources', { title: 'foo' }));
+    await delay();
     expect(getList(getState(), 'resources')).toEqual([{ title: 'foo' }]);
 
     dispatch(resourceCreateRequest('resources', { title: 'bar' }));
@@ -64,18 +67,18 @@ describe.skip('resource integration tests', () => {
     expect(getList(getState(), 'resources')).toEqual([1, 2, 3]);
   });
 
-  test('resourceDetailReadRequest', async () => {
+  it('resourceDetailReadRequest', async () => {
     const { getState, dispatch } = getStore();
 
     expect(getDetail(getState(), 'resources')).toBeNull();
 
-    dispatch(resourceDetailReadRequest('resources'));
+    dispatch(resourceDetailReadRequest('resources', '1'));
     await delay();
-    expect(getDetail(getState(), 'resources')).toEqual([1, 2, 3]);
+    expect(getDetail(getState(), 'resources')).toEqual(1);
 
     dispatch(resourceDetailReadRequest('resources'));
     await delay();
-    expect(getDetail(getState(), 'resources')).toEqual([1, 2, 3]);
+    expect(getDetail(getState(), 'resources')).toEqual(1);
   });
 
   test('resourceUpdateRequest', async () => {
@@ -100,7 +103,7 @@ describe.skip('resource integration tests', () => {
     ]);
   });
 
-  test('resourceDeleteRequest', async () => {
+  it('resourceDeleteRequest', async () => {
     const { getState, dispatch } = getStore({
       resources: { list: [1, 2, { foo: 'bar' }] },
     });
@@ -110,9 +113,5 @@ describe.skip('resource integration tests', () => {
     dispatch(resourceDeleteRequest('resources', 1));
     await delay();
     expect(getList(getState(), 'resources')).toEqual([2, { foo: 'bar' }]);
-
-    dispatch(resourceDeleteRequest('resources', { foo: 'bar' }));
-    await delay();
-    expect(getList(getState(), 'resources')).toEqual([2]);
   });
 });

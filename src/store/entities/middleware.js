@@ -11,16 +11,16 @@ const middleware = store => next => (action) => {
     const qsPos = uri.indexOf('?');
     const key =  qsPos !== -1
       ? uri.substring(0, qsPos)
-      : uri; 
-    const { meta: result, ...entities } = normalize(rawEntities, { 
+      : uri;
+    const { meta: result, ...entities } = normalize(rawEntities, {
       endpoint: key,
-    }); 
+    });
 
     if (entities[meta.entities]) {
       store.dispatch(entitiesReceive(entities));
       return next({ ...action, payload: result[key].data });
     } else {
-      throw new Error(`Posibly malformed response with type: ${meta.entities}`); 
+      throw new Error(`Posibly malformed response with type: ${meta.entities}`);
     }
   }
 
@@ -28,3 +28,4 @@ const middleware = store => next => (action) => {
 };
 
 export default middleware;
+

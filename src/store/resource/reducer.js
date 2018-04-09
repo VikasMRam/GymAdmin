@@ -110,9 +110,9 @@ export default (state = initialState, { type, payload, meta }) => {
       };
 
     case RESOURCE_UPDATE_SUCCESS:
-    case RESOURCE_DELETE_SUCCESS:
+    case RESOURCE_DELETE_SUCCESS: {
       return updateOrDeleteReducer(state, { type, payload, meta });
-
+    }
     default:
       return state;
   }
