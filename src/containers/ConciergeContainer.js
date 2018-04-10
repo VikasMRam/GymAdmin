@@ -46,7 +46,7 @@ class ConciergeContainer extends Component {
   render() {
     const { userRequestedCB, property } = this.props;
 
-    if (!property) return null;
+    if (!property) return '...';
 
     if (!userRequestedCB) {
       return [
