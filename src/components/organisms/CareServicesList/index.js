@@ -13,16 +13,14 @@ const CareServiceTextDiv = styled.div`
 `;
 
 const TwoColumnListItemDiv = styled.div`
-  @media screen and (max-width: ${size('breakpoint.doubleModal')}) {
-    column-count: 2;
-  }
-
-  @media screen and (max-width: ${size('breakpoint.tablet')}) {
-    column-count: 2;
-  }
-
-  @media screen and (max-width: ${size('breakpoint.mobile')}) {
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
     column-count: 1;
+  }
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    column-count: 2;
+  }
+  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+    column-count: 2;
   }
 `;
 
