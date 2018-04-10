@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { string, func, bool } from 'prop-types';
+import { string, func, bool, object } from 'prop-types';
 
 import { getDetail } from 'sly/store/selectors';
 
@@ -12,6 +12,7 @@ import {
   usPhone,
 } from 'sly/services/validation';
 
+import Thankyou from 'sly/components/molecules/Thankyou';
 import ConversionFormContainer from 'sly/containers/ConversionFormContainer';
 import RCBModalContainer from 'sly/containers/RCBModalContainer';
 
@@ -22,9 +23,10 @@ import {
 
 class ConciergeContainer extends Component {
   static propTypes = {
-    getUserActions: func.isRequired,
-    propertySlug: string.isRequired,
-    userRequestedCB: bool.isRequired,
+    fetchData: func.isRequired,
+    // TODO: shape
+    property: object,
+    userRequestedCB: bool,
   };
 
   static defaultProps = {
@@ -32,8 +34,8 @@ class ConciergeContainer extends Component {
   };
 
   componentWillMount() {
-    const { getUserActions } = this.props;
-    getUserActions();
+    const { fetchData } = this.props;
+    fetchData();
   }
 
   submit = data => {
@@ -42,7 +44,9 @@ class ConciergeContainer extends Component {
   }
 
   render() {
-    const { userRequestedCB } = this.props;
+    const { userRequestedCB, property } = this.props;
+
+    if (!property) return null;
 
     if (!userRequestedCB) {
       return [
@@ -50,29 +54,26 @@ class ConciergeContainer extends Component {
         <RCBModalContainer />
       ];
     }
-    return <div> Thank you </div>;
+    return <Thankyou community={property} />;
   }
 }
 
 const mapStateToProps = (state, { propertySlug }) => {
-  debugger;
-  const userActions = getDetail(state, 'userAction'); 
-  return {
-    propertySlug,
-  }
+  const userActions = getDetail(state, 'userAction');
+  const userRequestedCB = userActions && (userActions.profilesContacted || [])
+    .some(property => property.slug === propertySlug);
+  const property = getDetail(state, 'property', propertySlug);
+  return { userRequestedCB, property };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch, { propertySlug }) => ({
   submit: data => {
-    data.slug = ownProps.propertySlug;
+    data.slug = propertySlug;
     return dispatch(resourceCreateRequest('platform/user_actions', data));
   },
-  getUserActions: () => {
-    // TODO: FIXME: hardcoded uuid
-    console.error('fetching the data with hardcoded uuid from ConciergeContainer');
-    dispatch(resourceDetailReadRequest('userAction', {
-      uuid: 'e2867c96-20b7-4379-b597-d7bd0e49bab8',
-    }));
+  fetchData: () => {
+    dispatch(resourceDetailReadRequest('property', propertySlug));
+    dispatch(resourceDetailReadRequest('userAction'));
   },
 });
 
