@@ -1,14 +1,14 @@
 /* eslint-disable react/no-danger */
-import React from 'react'
-import PropTypes from 'prop-types'
-import Helmet from 'react-helmet'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
 
 const Html = ({
   styles, assets, state, content,
 }) => {
-  const helmet = Helmet.renderStatic()
-  const htmlAttrs = helmet.htmlAttributes.toComponent()
-  const bodyAttrs = helmet.bodyAttributes.toComponent()
+  const helmet = Helmet.renderStatic();
+  const htmlAttrs = helmet.htmlAttributes.toComponent();
+  const bodyAttrs = helmet.bodyAttributes.toComponent();
 
   return (
     <html lang="en" {...htmlAttrs}>
@@ -16,7 +16,9 @@ const Html = ({
         {helmet.title.toComponent()}
         {helmet.meta.toComponent()}
         {helmet.link.toComponent()}
-        {assets.css.map(path => <link rel="stylesheet" type="text/css" key={path} href={path} />)}
+        {assets.css.map(path => (
+          <link rel="stylesheet" type="text/css" key={path} href={path} />
+        ))}
         {styles}
       </head>
       <body {...bodyAttrs}>
@@ -25,8 +27,8 @@ const Html = ({
         {assets.js.map(path => <script key={path} src={path} />)}
       </body>
     </html>
-  )
-}
+  );
+};
 
 Html.propTypes = {
   styles: PropTypes.node.isRequired,
@@ -36,6 +38,6 @@ Html.propTypes = {
   }).isRequired,
   state: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
-}
+};
 
-export default Html
+export default Html;

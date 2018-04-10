@@ -48,7 +48,7 @@ it('dispatches entities action along with array', () => {
   const store = mockStore({})
   const action = {
     type: 'FOO',
-    payload: [{ id: 2, foo: 'bar' }],
+    payload: [2],
     meta: { entities: 'entity' },
   }
   expect(store.dispatch(action)).toEqual({ ...action, payload: [2] })

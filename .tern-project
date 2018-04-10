@@ -1,0 +1,12 @@
+{
+  "plugins": {
+    "webpack": {},
+    "es_modules": {},
+    "node": {}
+  },
+  "libs": [
+    "browser",
+    "react",
+    "ecmascript"
+  ]
+}

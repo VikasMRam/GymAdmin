@@ -1,27 +1,16 @@
 // https://github.com/diegohaz/arc/wiki/Selectors
 // https://github.com/diegohaz/arc/wiki/Example-redux-modules#entities
-import build from 'redux-object'
-import { denormalize } from 'normalizr'
-// import * as schemas from './schemas'
-//
-export const initialState = {}
-//
-export const getEntity = (state = initialState, entity) => state[entity] || {}
+import build from 'redux-object';
+import { denormalize } from 'normalizr';
 
-export const getDetail = (state = initialState, entity, id) => build(state, entity, id, { eager: true })
+export const initialState = {};
 
-export const getList = (state = initialState, entity, ids) => {
-  if (!ids) {
-    ids = Object.keys(getEntity(state.entities, entity));
-  }
-
-  const list = ids.map(id => getDetail(state.entities, entity, id));
-
-  return list;
+export const getDetail = (state = initialState, entity, id) => {
+  if (!id) return null;
+  return build(state, entity, id, { eager: true });
 };
 
-// export const getDenormalizedDetail = (state = initialState, entity, id) =>
-//   denormalize(getDetail(state, entity, id), schemas[entity], state)
+export const getList = (state = initialState, entity, ids=[]) => {
+  return ids.map(id => getDetail(state, entity, id));
+};
 
-// export const getDenormalizedList = (state = initialState, entity, ids) =>
-//   denormalize(getList(state, entity, ids), [schemas[entity]], state)

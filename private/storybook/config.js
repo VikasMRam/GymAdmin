@@ -1,19 +1,31 @@
-// https://github.com/diegohaz/arc/wiki/Storybook
-import React from 'react'
-import { configure, addDecorator } from '@storybook/react'
-import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
-import { ThemeProvider } from 'styled-components'
-import configureStore from 'store/configure'
-import api from 'services/api'
-import theme from 'components/themes/default'
+import React from 'react';
 
-const store = configureStore({}, { api: api.create() })
-const req = require.context('components', true, /.stories.js$/)
+import { configure, addDecorator } from '@storybook/react';
+import { setOptions } from '@storybook/addon-options';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 
-function loadStories() {
-  req.keys().forEach(filename => req(filename))
+import Modal from 'react-modal';
+
+import configureStore from 'sly/store/configure';
+import api from 'sly/services/api';
+import theme from 'sly/components/themes/default';
+import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
+
+const store = configureStore({}, { api: api.create() });
+const req = require.context('sly/components', true, /.stories.js$/);
+
+function configureStorybook() {
+  req.keys().forEach(filename => req(filename));
+  setGlobalStyles();
+  Modal.setAppElement('#root');
 }
+
+setOptions({
+  hierarchySeparator: /\/|\./,
+  hierarchyRootSeparator: /\|/,
+});
 
 addDecorator(story => (
   <Provider store={store}>
@@ -21,6 +33,6 @@ addDecorator(story => (
       <ThemeProvider theme={theme}>{story()}</ThemeProvider>
     </BrowserRouter>
   </Provider>
-))
+));
 
-configure(loadStories, module)
+configure(configureStorybook, module);

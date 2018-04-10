@@ -22,8 +22,6 @@
     }
   },
   "rules": {
-    "semi": [2, "never"],
-    "semi-style": [2, "first"],
     "comma-dangle": [2, "always-multiline"],
     "max-len": 0,
     "no-shadow": 0,

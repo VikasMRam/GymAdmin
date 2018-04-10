@@ -1,22 +1,33 @@
 // https://github.com/diegohaz/arc/wiki/Example-redux-modules#entities
-import normalize from 'json-api-normalizer'
-import { env } from 'config'
-import { stringfyParams } from '../../services/api/index'
-import { entitiesReceive } from './actions'
+
+import normalize from 'json-api-normalizer';
+import { env } from 'sly/config';
+import { entitiesReceive } from './actions';
 
 const middleware = store => next => (action) => {
-  const { payload, meta } = action
+  const { payload: rawEntities, meta } = action;
 
   if (meta && meta.entities) {
-    // endpoint to save payload, presently it saves it in state.entities.meta
-    const endpoint = meta.entities + ((meta.request && meta.request.params) ? stringfyParams(meta.request.params) : '')
-    // pass endpoint to save api payload in endpoint
-    const entities = normalize(payload, { endpoint, filterEndpoint: false })
-    store.dispatch(entitiesReceive(entities))
-    const result = Object.values(entities[meta.entities]).map(e => e.id)
-    return next({ ...action, payload: result })
+    const { uri } = meta.request;
+    const qsPos = uri.indexOf('?');
+    const key =  qsPos !== -1
+      ? uri.substring(0, qsPos)
+      : uri;
+    const { meta: result, ...entities } = normalize(rawEntities, {
+      endpoint: key,
+    });
+
+    if (entities[meta.entities]) {
+      store.dispatch(entitiesReceive(entities));
+      const ids = result[key].data.map(({id})=>id);
+      return next({ ...action, payload: ids });
+    } else {
+      throw new Error(`Posibly malformed response with type: ${meta.entities}`);
+    }
   }
-  return next(action)
+
+  return next(action);
 };
 
-export default middleware
+export default middleware;
+
