@@ -16,6 +16,10 @@ const Wrapper = styled.div`
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
         width: auto;
     }
+    &:hover {
+        cursor: default;
+        box-shadow: ${size('spacing.nano')} ${size('spacing.nano')} ${size('spacing.regular')} ${size('spacing.nano')} ${palette('shadow', 0, true)};
+    }
 `;
 // TODO: create a img component that understand sly's resampling configurations
 const StyledImg = styled.img`

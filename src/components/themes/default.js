@@ -8,6 +8,7 @@ theme.palette = {
   danger:    ['#c54e5b', '#dd939b', '#a92f42'],
   white:     ['#e7edef', '#f3f5f6', '#ffffff'],
   grayscale: ['#384c57', '#9ca8af', '#c6d0c5'],
+  shadow:    ['#b3b2b2']
 };
 
 theme.reversePalette = reversePalette(theme.palette);
