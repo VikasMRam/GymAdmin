@@ -5,22 +5,10 @@ import { entitiesReceive } from './actions';
 
 const mockStore = configureStore([entitiesMiddleware]);
 
-describe.skip('entities middleware', () => {
+describe('entities middleware', () => {
   it('dispatches the exactly same action', () => {
     const store = mockStore({});
     const action = { type: 'FOO', payload: 1 };
-    expect(store.dispatch(action)).toEqual(action);
-    expect(store.getActions()).toEqual([action]);
-  });
-  // TODO: All Failing Tests
-  /**/
-  it('dispatches the exactly same action if there is no schema', () => {
-    const store = mockStore({});
-    const action = {
-      type: 'FOO',
-      payload: { id: 2, foo: 'bar' },
-      meta: { entities: 'noentity' },
-    };
     expect(store.dispatch(action)).toEqual(action);
     expect(store.getActions()).toEqual([action]);
   });
@@ -29,13 +17,13 @@ describe.skip('entities middleware', () => {
     const store = mockStore({});
     const action = {
       type: 'FOO',
-      payload: { id: 2, foo: 'bar' },
-      meta: { entities: 'entity' },
+      payload: { data: { id: 2, type: 'entity' } },
+      meta: { entities: 'entity', request: { uri: '/foo' } },
     };
-    expect(store.dispatch(action)).toEqual({ ...action, payload: 2 });
+    expect(store.dispatch(action)).toEqual({ ...action, payload: [{ id: 2, type: 'entity' }] });
     expect(store.getActions()).toEqual([
-      entitiesReceive({ entity: { 2: { id: 2, foo: 'bar' } } }),
-      { ...action, payload: 2 },
+      entitiesReceive({ entity: { 2: { id: 2, attributes: {}, type: 'entity' } } }),
+      { ...action, payload: [{ id: 2, type: 'entity' }] },
     ]);
   });
 
@@ -43,15 +31,13 @@ describe.skip('entities middleware', () => {
     const store = mockStore({});
     const action = {
       type: 'FOO',
-      payload: [{ id: 2, foo: 'bar' }],
-      meta: { entities: 'entity' },
+      payload: { data: [{ id: 2, type: 'entity' }] },
+      meta: { entities: 'entity', request: { uri: '/foo' } },
     };
-    expect(store.dispatch(action)).toEqual({ ...action, payload: [2] });
+    expect(store.dispatch(action)).toEqual({ ...action, payload: [{ id: 2, type: 'entity' }] });
     expect(store.getActions()).toEqual([
-      entitiesReceive({ entity: { 2: { id: 2, foo: 'bar' } } }),
-      { ...action, payload: [2] },
+      entitiesReceive({ entity: { 2: { id: 2, attributes: {}, type: 'entity' } } }),
+      { ...action, payload: [{ id: 2, type: 'entity' }] },
     ]);
   });
-  // TODO:All Failing Tests
-  //* /
 });

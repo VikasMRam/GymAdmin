@@ -55,10 +55,6 @@ describe('parseEndpoint', () => {
     expect(parseEndpoint('/foo')).toBe('https://api.foo.com/foo');
   });
 
-  it('parses params', () => {
-    expect(parseEndpoint('/foo', { bar: 'baz' })).toBe('https://api.foo.com/foo?bar=baz');
-  });
-
   it('parses url other than apiUrl', () => {
     expect(parseEndpoint('https://foo.bar/baz')).toBe('https://foo.bar/baz');
   });
@@ -165,5 +161,6 @@ describe('api', () => {
         });
       });
     });
+    // TODO: test uri()
   });
 });

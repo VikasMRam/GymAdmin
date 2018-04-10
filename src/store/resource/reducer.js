@@ -76,7 +76,6 @@ export default (state = initialState, { type, payload, meta }) => {
       };
 
     case RESOURCE_LIST_READ_REQUEST:
-      console.log('list request', { type, payload, meta });
       return {
         ...state,
         [resource]: {
@@ -85,7 +84,6 @@ export default (state = initialState, { type, payload, meta }) => {
         },
       };
     case RESOURCE_LIST_READ_SUCCESS:
-      console.log('list success', { type, payload, meta });
       return {
         ...state,
         [resource]: {
@@ -95,7 +93,6 @@ export default (state = initialState, { type, payload, meta }) => {
       };
 
     case RESOURCE_DETAIL_READ_REQUEST:
-      console.log('detail request', { type, payload, meta });
       return {
         ...state,
         [resource]: {
@@ -104,7 +101,6 @@ export default (state = initialState, { type, payload, meta }) => {
         },
       };
     case RESOURCE_DETAIL_READ_SUCCESS:
-      console.log('detail success', resource, { type, payload, meta });
       return {
         ...state,
         [resource]: {
@@ -114,9 +110,9 @@ export default (state = initialState, { type, payload, meta }) => {
       };
 
     case RESOURCE_UPDATE_SUCCESS:
-    case RESOURCE_DELETE_SUCCESS:
+    case RESOURCE_DELETE_SUCCESS: {
       return updateOrDeleteReducer(state, { type, payload, meta });
-
+    }
     default:
       return state;
   }

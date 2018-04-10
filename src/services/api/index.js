@@ -37,8 +37,8 @@ export const parseSettings = ({
   return settings;
 };
 
-export const parseEndpoint = (endpoint) => endpoint.indexOf('http') === 0 
-  ? endpoint 
+export const parseEndpoint = (endpoint) => endpoint.indexOf('http') === 0
+  ? endpoint
   : apiUrl + endpoint;
 
 const api = {};
