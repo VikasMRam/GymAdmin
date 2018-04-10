@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { string } from 'prop-types';
+import { string, object } from 'prop-types';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { getDetail } from 'sly/store/entities/selectors';
+import { getDetail } from 'sly/store/selectors';
 
 import PropertyDetail from 'sly/components/organisms/PropertyDetail';
 
 class PropertyDetailContainer extends Component {
   static propTypes = {
-    name: string,
+    // TODO: shape
+    property: object,
+    propertySlug: string.isRequired,
   };
 
   componentWillMount() {
-    const { slug, readProperty } = this.props;
-    readProperty(slug);
+    const { readProperty } = this.props;
+    readProperty();
   }
 
   render() {
@@ -23,12 +25,12 @@ class PropertyDetailContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, { slug }) => ({
-  detail: getDetail(state.entities, 'properties', slug) || {},
+const mapStateToProps = (state, { propertySlug }) => ({
+  detail: getDetail(state, 'property', propertySlug),
 });
 
-const mapDispatchToProps = dispatch => ({
-  readProperty: slug => dispatch(resourceDetailReadRequest('properties', slug)),
+const mapDispatchToProps = (dispatch, { propertySlug }) => ({
+  readProperty: () => dispatch(resourceDetailReadRequest('property', propertySlug)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PropertyDetailContainer);

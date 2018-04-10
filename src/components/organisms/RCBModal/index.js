@@ -66,7 +66,6 @@ export default class RCBModal extends Component {
     const StepComponent = steps[currentStep].content;
 
     const heading = HeadingComponent && <HeadingComponent community={community} />
-    console.log('heading', heading);
 
     return (
       <Modal onClose={onClose} isOpen={isOpen} layout={layout} closeable heading={heading} {...props}>

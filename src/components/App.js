@@ -36,11 +36,11 @@ export default class App extends Component {
           <Switch>
             <Route path="/fonztest" component={FonztestPage} exact />
             <Route path="/proplist" component={PropertyListPage} exact />
-            {/* <Route path="/community/:slug" component={PropertyDetailPage}  /> */}
-            <Route
+            <Route path="/community/:propertySlug" component={PropertyDetailPage}  />
+            { /*<Route
               path={`/:careType(${careTypes})/:state/:city/:slug`}
               component={PropertyDetailPage}
-            />
+            /> */ }
           </Switch>
         </ThemeProvider>
       </div>
