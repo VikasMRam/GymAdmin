@@ -16,12 +16,11 @@ import { getList, getDetail } from './selectors';
 
 const sagaMiddleware = createSagaMiddleware();
 
-const items = list => list.map(id => ({id}));
 const api = {
   post: (path, data) => Promise.resolve(data),
-  get: () => Promise.resolve(items([1, 2, 3])),
+  get: () => Promise.resolve([1, 2, 3]),
   put: (path, data) => Promise.resolve(data),
-  uri: () => 'uri', 
+  uri: () => 'uri',
   delete: () => Promise.resolve(),
 };
 
