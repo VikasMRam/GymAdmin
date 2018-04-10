@@ -13,7 +13,6 @@ const CareServiceTextDiv = styled.div`
 `;
 
 const TwoColumnListItemDiv = styled.div`
-  column-count: 1;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     column-count: 2;
   }
