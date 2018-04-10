@@ -24,13 +24,15 @@ const ItemDescription = styled.div`
 `;
 const TwoColumnWrapper = styled.div`
   display: flex;
-  @media screen and (max-width: ${size('breakpoint.tablet')}) {
-    flex-direction: ${ifProp('breakOnSmallScreen', 'column', 'initial')};
+  flex-direction: ${ifProp('breakOnSmallScreen', 'column', 'initial')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    flex-direction: initial;
   }
 `;
 const SmallScreenMarginTopWrapper = styled.div`
-    @media screen and (max-width: ${size('breakpoint.tablet')}) {
-        margin-top: ${size('spacing.large')};
+    margin-top: ${size('spacing.large')};
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+        margin-top: 0;
     }
 `;
 const LocalitiesWrapper = styled.div`
@@ -91,9 +93,7 @@ export default class PricingAndAvailability extends Component {
             ...props
         } = this.props;
         if (priceComparison) {
-            priceComparison.sort((a, b) => {
-                return a.price - b.price;
-            });
+            priceComparison.sort((a, b) => a.price - b.price);
             this.maxPrice = priceComparison[priceComparison.length - 1].price;
         }
 

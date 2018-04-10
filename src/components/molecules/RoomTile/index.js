@@ -25,11 +25,11 @@ const Wrapper = styled.div`
 // TODO: create a img component that understand sly's resampling configurations
 const StyledImg = styled.img`
   object-fit: cover;
-  width: ${width};
-  height: ${height};
-  @media screen and (max-width: ${size('breakpoint.tablet')}) {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${width};
+    height: ${height};
   }
 `;
 const ItemDescription = styled.div`
