@@ -8,3 +8,4 @@ export Label from './Label';
 export Paragraph from './Paragraph';
 export Rating from './Rating';
 export Thumbnail from './Thumbnail';
+export Hr from './Hr';
