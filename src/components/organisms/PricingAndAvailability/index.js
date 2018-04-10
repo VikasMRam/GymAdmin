@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { font, palette } from 'styled-theme';
 import { ifProp } from 'styled-tools'
+import numeral from 'numeral';
 
-import { Heading, Bar, Block, FormattedPrice, Box, Button } from 'sly/components/atoms';
+import { Heading, Bar, Block, Box, Button } from 'sly/components/atoms';
 import { RoomTile } from 'sly/components/molecules';
 import { size } from 'sly/components/themes';
 
@@ -103,7 +104,7 @@ export default class PricingAndAvailability extends Component {
                         <Box>
                             <TwoColumnWrapper breakOnSmallScreen={true}>
                                 <div>
-                                    Estimated cost from $<FormattedPrice price={estimatedCost.from} /> to $<FormattedPrice price={estimatedCost.to} /> per month*
+                                    Estimated cost from ${numeral(estimatedCost.from).format('0,0')} to ${numeral(estimatedCost.to).format('0,0')} per month*
                                     <SpacingTopRegularWrapper>
                                         <Block size="caption">
                                             *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area, and the amenities and care services provided at {communityName}.
@@ -143,7 +144,7 @@ export default class PricingAndAvailability extends Component {
                                         <Bar width={this.findPercentage(object.price, this.maxPrice) + '%'} />
                                         <PriceWrapper>
                                             <Block size="caption">
-                                                $<FormattedPrice price={object.price} />
+                                                ${numeral(object.price).format('0,0')}
                                             </Block>
                                         </PriceWrapper>
                                     </TwoColumnWrapper>

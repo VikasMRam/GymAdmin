@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
+import numeral from 'numeral';
 
 import { size } from 'sly/components/themes';
-import { FormattedPrice } from 'sly/components/atoms';
 
 const width = ({ tileSize }) => size('tile', tileSize, 'width');
 const height = ({ tileSize }) => size('tile', tileSize, 'height');
@@ -13,6 +13,7 @@ const Wrapper = styled.div`
     display: inline-block;
     border: ${size('border')} solid ${palette('grayscale', 0, true)};
     width: 100%;
+    transition: box-shadow .4s ease-out;
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
         width: auto;
     }
@@ -47,7 +48,7 @@ const RoomTile = ({
         <Wrapper>
             <StyledImg tileSize='small' src={img} />
             <ItemDescription>
-                {typeText[type]}<br />$<FormattedPrice price={price} /> per month
+                {typeText[type]}<br />${numeral(price).format('0,0')} per month
             </ItemDescription>
         </Wrapper>
   );

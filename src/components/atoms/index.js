@@ -10,5 +10,4 @@ export Rating from './Rating';
 export Thumbnail from './Thumbnail';
 export Hr from './Hr';
 export Bar from './Bar';
-export FormattedPrice from './FormattedPrice';
 export Box from './Box';
