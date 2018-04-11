@@ -75,6 +75,7 @@ export default class PricingAndAvailability extends Component {
             to: PropTypes.number.isRequired,
         }),
         onGetDetailedPricingClicked: PropTypes.func,
+        onInquireOrBookClicked: PropTypes.func,
     };
 
     findPercentage(price, maxPrice) {
@@ -90,6 +91,7 @@ export default class PricingAndAvailability extends Component {
             priceComparison,
             estimatedCost,
             onGetDetailedPricingClicked,
+            onInquireOrBookClicked,
             ...props
         } = this.props;
         if (priceComparison) {
@@ -119,17 +121,17 @@ export default class PricingAndAvailability extends Component {
                     }
                     {!estimatedCost && sharedRoom &&
                         <Item>
-                            <RoomTile img={sharedRoom.img} price={sharedRoom.price} type="shared" />
+                            <RoomTile onInquireOrBookClicked={onInquireOrBookClicked} img={sharedRoom.img} price={sharedRoom.price} type="shared" />
                         </Item>
                     }
                     {!estimatedCost && privateRoom &&
                         <Item>
-                            <RoomTile img={privateRoom.img} price={privateRoom.price} type="private" />
+                            <RoomTile onInquireOrBookClicked={onInquireOrBookClicked} img={privateRoom.img} price={privateRoom.price} type="private" />
                         </Item>
                     }
                     {!estimatedCost && oneBedRoom &&
                         <Item>
-                            <RoomTile img={oneBedRoom.img} price={oneBedRoom.price} type="1bedroom" />
+                            <RoomTile onInquireOrBookClicked={onInquireOrBookClicked} img={oneBedRoom.img} price={oneBedRoom.price} type="1bedroom" />
                         </Item>
                     }
                 </article>

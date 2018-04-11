@@ -40,11 +40,14 @@ const estimatedCost = {
 const communityName = 'Rhoda Golman Plaza';
 const onGetDetailedPricingClicked = () => {
   alert('open modal');
-}
+};
+const onInquireOrBookClicked = () => {
+  alert('open book modal');
+};
 
 storiesOf('Organisms|PricingAndAvailability', module)
-  .add('default', () => <PricingAndAvailability communityName={communityName} sharedRoom={sharedRoom} privateRoom={privateRoom} oneBedRoom={oneBedRoom} priceComparison={priceComparison} />)
-  .add('onlyPrivateRoom', () => <PricingAndAvailability communityName={communityName} privateRoom={privateRoom} priceComparison={priceComparison} />)
-  .add('onlyPrivateRoomAndOneBedroom', () => <PricingAndAvailability communityName={communityName} privateRoom={privateRoom} oneBedRoom={oneBedRoom} priceComparison={priceComparison} />)
-  .add('noPriceComparison', () => <PricingAndAvailability communityName={communityName} sharedRoom={sharedRoom} privateRoom={privateRoom} oneBedRoom={oneBedRoom} />)
-  .add('estimatedPricing', () => <PricingAndAvailability communityName={communityName} priceComparison={priceComparison} estimatedCost={estimatedCost} onGetDetailedPricingClicked={onGetDetailedPricingClicked} />);
+  .add('default', () => <PricingAndAvailability communityName={communityName} sharedRoom={sharedRoom} privateRoom={privateRoom} oneBedRoom={oneBedRoom} priceComparison={priceComparison} onInquireOrBookClicked={onInquireOrBookClicked} />)
+  .add('onlyPrivateRoom', () => <PricingAndAvailability communityName={communityName} privateRoom={privateRoom} priceComparison={priceComparison} onInquireOrBookClicked={onInquireOrBookClicked} />)
+  .add('onlyPrivateRoomAndOneBedroom', () => <PricingAndAvailability communityName={communityName} privateRoom={privateRoom} oneBedRoom={oneBedRoom} priceComparison={priceComparison} onInquireOrBookClicked={onInquireOrBookClicked} />)
+  .add('noPriceComparison', () => <PricingAndAvailability communityName={communityName} sharedRoom={sharedRoom} privateRoom={privateRoom} oneBedRoom={oneBedRoom} onInquireOrBookClicked={onInquireOrBookClicked} />)
+  .add('estimatedPricing', () => <PricingAndAvailability communityName={communityName} priceComparison={priceComparison} estimatedCost={estimatedCost} onGetDetailedPricingClicked={onGetDetailedPricingClicked} onInquireOrBookClicked={onInquireOrBookClicked} />);
