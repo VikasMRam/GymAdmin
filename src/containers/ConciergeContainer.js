@@ -46,15 +46,17 @@ class ConciergeContainer extends Component {
   render() {
     const { userRequestedCB, property } = this.props;
 
-    if (!property) return '...';
+    if (!property) return null;
 
     if (!userRequestedCB) {
-      return [
-        <ConversionFormContainer onSubmit={this.submit} />,
-        <RCBModalContainer />
-      ];
+      return (
+        <div>
+          <ConversionFormContainer onSubmit={this.submit} />
+          <RCBModalContainer onClose={()=>{}} />
+        </div>
+      );
     }
-    return <Thankyou community={property} />;
+    return <Thankyou community={property} onClose={() => {}} />;
   }
 }
 

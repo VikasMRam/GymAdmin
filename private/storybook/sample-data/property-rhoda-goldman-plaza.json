@@ -1,0 +1,310 @@
+{
+   "data":{
+      "type":"Property",
+      "id":"rhoda-goldman-plaza",
+      "attributes":{
+         "attributeArray":[
+            905,
+            1003,
+            302,
+            304,
+            1202,
+            1205,
+            1301,
+            1604,
+            1402,
+            1501,
+            401,
+            402,
+            406,
+            407,
+            410,
+            411,
+            412,
+            501,
+            502,
+            503,
+            504,
+            506,
+            510,
+            511,
+            512,
+            515,
+            516,
+            517,
+            518,
+            601,
+            602,
+            603,
+            604,
+            605,
+            606,
+            607,
+            612,
+            614,
+            615,
+            616,
+            618,
+            619,
+            620,
+            703,
+            704,
+            705,
+            706,
+            707,
+            708,
+            201,
+            106,
+            803,
+            805,
+            809,
+            811,
+            814,
+            1007
+         ],
+         "createdAt":"2015-04-10T22:38:59Z",
+         "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_sd.jpg",
+         "name":"Rhoda Goldman Plaza",
+         "phoneNumber":"",
+         "propInfo":{
+            "ownerImage":[
+               {
+                  "name":"len and tablet.jpg",
+                  "hd":"https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%2520and%2520tablet_hd.jpg",
+                  "sd":"https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%2520and%2520tablet_sd.jpg"
+               }
+            ],
+            "ratesText":"$6,027",
+            "licenseNumber":"385600125",
+            "ownerName":"Scott Street Senior Housing",
+            "ownerYears":"2000",
+            "personalSpace":[
+               "2-Bedroom Apartments",
+               "1-Bedroom Apartments",
+               "Kitchenettes",
+               "Private Bathrooms",
+               "Internet",
+               "Cable",
+               "Wifi"
+            ],
+            "typeCare":[
+               "Assisted Living",
+               "Memory Care"
+            ],
+            "careServices":[
+               "Activities of Daily Living Assistance",
+               "Meal Preparation and Service",
+               "Coordination with Health Care Providers",
+               "Medication Management",
+               "Transportation to Doctors Appointments",
+               "Transportation Arrangement",
+               "24-Hour Call System",
+               "Respite Program",
+               "Diabetes Diet",
+               "Diabetes Care",
+               "Parkinsons Care",
+               "Mild Cognitive Impairment",
+               "Hospice Waiver",
+               "Dementia Waiver"
+            ],
+            "nonCareServices":[
+               "Housekeeping & Linen Services",
+               "Scheduled Transportation (non-medical related)",
+               "Fitness Programs",
+               "Continuing Learning Programs",
+               "Resident-Run Activities",
+               "Community-Sponsored Activities"
+            ],
+            "staffDescription":"Our Department of Health Services is headed by a Registered Nurse. Our care staff is made up of LVN's, Med Tech's and CNA's and is located in offices on each residential floor. We have a dedicated Memory Care Floor called the Terrace, where all needed levels of care are included. In assisted living we offer Medication Management, Dressing and Bathing, Escort/Transfer service and Toileting or Incontinence Care. We also have a Hospice Care Waiver.",
+            "communityDescription":"Dine in our elegant and sunny dining room or light-filled cafe, enjoy our large outdoor patio, exercise in our Fitness Center or pamper yourself in our Hair Salon. Relax or read the newspaper in our living room/library. Catch our exercise classes, lectures and discussions, concerts, outings, art classes, games, shopping trips and daily movies. Walk or use our shuttle for doctor visits; we are very close to many renowned medical offices and facilities. Life at Rhoda Goldman Plaza awaits.",
+            "residentFaith":[
+               "Jewish"
+            ],
+            "residentLanguages":[
+               "English"
+            ],
+            "managementCompany":"Scott Street Senior Housing, a Non-Profit Organization",
+            "parentCompany":"Not Applicable",
+            "websiteUrl":"www.rgplaza.org",
+            "capacity":"195",
+            "minAge":"60 unless care needed due to condition or illness",
+            "secured":"Yes",
+            "communitySize":"51 +",
+            "communityFee":"$4,950",
+            "ccrcFee":"N/A",
+            "snfDailyRate":"N/A",
+            "alPrivateRate":"$6,027",
+            "alSharedRate":"N/A",
+            "mcPrivateRate":"$8,066",
+            "mcSharedRate":"N/A",
+            "privateSuiteRate":"N/A",
+            "studioApartmentRate":"$6,027",
+            "oneBedroomApartmentRate":"$6,824",
+            "twoBedroomApartmentRate":"$8,868",
+            "alCareRate":"$475",
+            "mcCareRate":"Included",
+            "serviceHighlights":[
+               "End of life care",
+               "Lifelong learning",
+               "Community operated transportation"
+            ],
+            "communityHighlights":[
+               "Cultural",
+               "Alzheimer’s / Dementia",
+               "Outdoor space"
+            ],
+            "admin":[
+               "Visited By Seniorly"
+            ],
+            "respiteAllowed":{
+               "checked":true,
+               "minlength":14,
+               "label":"Respite Care"
+            },
+            "caringUrl":"https://www.caring.com/local/assisted-living-facilities-in-san-francisco-california/rhoda-goldman-plaza",
+            "senioradvisorsUrl":"https://www.senioradvisor.com/local/rhoda-goldman-plaza-san-francisco-ca",
+            "yelpUrl":"http://www.yelp.com/biz/rhoda-goldman-plaza-san-francisco"
+         },
+         "propRatings":{
+            "hasWebReviews":false,
+            "hasSlyReviews":false,
+            "ratingsArray":null,
+            "reviewsValue":0,
+            "numReviews":0
+         },
+         "slyPhoneNumber":"",
+         "slyScore":96.4873417721519,
+         "status":2,
+         "updatedAt":"2018-04-06T08:18:45Z",
+         "url":"/assisted-living/california/san-francisco/rhoda-goldman-plaza"
+      },
+      "relationships":{
+         "address":{
+            "data":{
+               "type":"Address",
+               "id":"2707e29ff183af005487e959a086dea0"
+            }
+         },
+         "communityListings":{
+            "data":[
+
+            ]
+         },
+         "contacts":{
+            "data":[
+
+            ]
+         },
+         "floorPlans":{
+            "data":[
+
+            ]
+         },
+         "gallery":{
+            "data":null
+         },
+         "organization":{
+            "data":{
+               "type":"Organization",
+               "id":"bee877af68c08ce8502fcee0da9567f4"
+            }
+         },
+         "rgsAux":{
+            "data":null
+         },
+         "similarProperties":{
+            "data":[
+
+            ]
+         },
+         "twilioNumber":{
+            "data":{
+               "type":"twilioNumbers"
+            }
+         },
+         "user":{
+            "data":{
+               "type":"User",
+               "id":"a2c9987ae9a50a52a199145df1061b10"
+            }
+         },
+         "videoGallery":{
+            "data":null
+         }
+      }
+   },
+   "included":[
+      {
+         "type":"Address",
+         "id":"2707e29ff183af005487e959a086dea0",
+         "attributes":{
+            "city":"San Francisco",
+            "county":"San Francisco",
+            "latitude":37.78479069999999,
+            "line1":"2180 Post Street",
+            "line2":"",
+            "longitude":-122.4376589,
+            "state":"CA",
+            "zip":"94115"
+         }
+      },
+      {
+         "type":"Organization",
+         "id":"bee877af68c08ce8502fcee0da9567f4",
+         "attributes":{
+            "created_at":"2014-08-07T22:48:57Z",
+            "name":"Seniorly",
+            "updated_at":"2015-05-21T23:51:57Z"
+         },
+         "relationships":{
+            "users":{
+               "data":[
+
+               ]
+            }
+         }
+      },
+      {
+         "type":"User",
+         "id":"a2c9987ae9a50a52a199145df1061b10",
+         "attributes":{
+            "admin":true,
+            "createdAt":"2015-11-21T01:20:30Z",
+            "email":"sushanth@seniorly.com",
+            "name":"Sushanth Sly",
+            "roleID":2,
+            "updatedAt":"2018-03-20T19:21:10Z"
+         },
+         "relationships":{
+            "address:omitempty":{
+               "data":null
+            },
+            "contact":{
+               "data":null
+            },
+            "organization":{
+               "data":{
+                  "type":"Organization",
+                  "id":"bee877af68c08ce8502fcee0da9567f4"
+               }
+            }
+         }
+      },
+      {
+         "type":"twilioNumbers",
+         "attributes":{
+            "areaCode":415,
+            "cityID":2597,
+            "createdAt":"2017-03-15T18:39:24Z",
+            "numbers":[
+               4152639703
+            ],
+            "updatedAt":"2017-03-15T18:39:24Z"
+         }
+      }
+   ],
+   "meta":{
+      "copyright":"Copyright 2018 Seniorly Inc.",
+      "version":"v0"
+   }
+}

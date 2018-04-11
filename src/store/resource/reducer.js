@@ -88,7 +88,7 @@ export default (state = initialState, { type, payload, meta }) => {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          list: payload.map(item => item.id),
+          list: payload,
         },
       };
 
@@ -105,7 +105,7 @@ export default (state = initialState, { type, payload, meta }) => {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          detail: payload[0].id,
+          detail: payload[0],
         },
       };
 

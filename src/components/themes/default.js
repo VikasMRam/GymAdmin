@@ -32,6 +32,12 @@ theme.sizes = {
     double:       '70.50rem', // 1128px
   },
 
+  collapsible: {
+    small:        '10.00rem', // 160px
+    regular:      '20.00rem', // 320px
+    large:        '30.00rem', // 480px
+  },
+
   element: {
     small:        '2.125rem', // 34px
     regular:      '2.500rem', // 40px
@@ -97,6 +103,10 @@ theme.sizes = {
     title:            '1.28',
     hero:              '1.2',
   },
+};
+
+theme.transitions = {
+  default: '0.2s ease-out',
 };
 
 export default theme;
