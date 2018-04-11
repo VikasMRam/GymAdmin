@@ -11,3 +11,4 @@ export Thumbnail from './Thumbnail';
 export Hr from './Hr';
 export Bar from './Bar';
 export Box from './Box';
+export TileImage from './TileImage';

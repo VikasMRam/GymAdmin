@@ -1,39 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { font, palette } from 'styled-theme';
-import { ifProp } from 'styled-tools'
-import numeral from 'numeral';
 
-import { Heading, Bar, Block, Box, Button } from 'sly/components/atoms';
-import { RoomTile } from 'sly/components/molecules';
+import { Heading } from 'sly/components/atoms';
+import RoomTile from 'sly/components/molecules/RoomTile';
+import PriceBar from 'sly/components/molecules/PriceBar';
+import EstimatedCost from 'sly/components/molecules/EstimatedCost';
 import { size } from 'sly/components/themes';
 
 const Item = styled.div`
   display: inline-block;
   margin-bottom: ${size('spacing.large')};
   width: 100%;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    margin-bottom: 0;
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
     margin-right: ${size('spacing.large')};
     width: auto;
   }
-`;
-const ItemDescription = styled.div`
-  padding: ${size('spacing.large')};
-`;
-const TwoColumnWrapper = styled.div`
-  display: flex;
-  flex-direction: ${ifProp('breakOnSmallScreen', 'column', 'initial')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    flex-direction: initial;
-  }
-`;
-const SmallScreenMarginTopWrapper = styled.div`
-    margin-top: ${size('spacing.large')};
-    @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        margin-top: 0;
-    }
 `;
 const LocalitiesWrapper = styled.div`
   width: 95%;
@@ -41,121 +23,128 @@ const LocalitiesWrapper = styled.div`
     width: 70%;
   }
   @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-    width: 50%;
+    width: 85%;
   }
 `;
-const SpacingTopRegularWrapper = styled.div`
-  margin-top: ${size('spacing.regular')};
+const SpacingBottomRegularWrapper = styled.div`
+  margin-bottom: ${size('spacing.regular')};
 `;
-const PriceWrapper = styled.span`
-  margin-left: ${size('spacing.regular')};
+const ArticleWrapper = styled.article`
+  margin-bottom: ${size('spacing.large')};
 `;
 
 export default class PricingAndAvailability extends Component {
     static propTypes = {
-        communityName: PropTypes.string.isRequired,
-        sharedRoom: PropTypes.shape({
-            price: PropTypes.number.isRequired,
-            img: PropTypes.string.isRequired,
-        }),
-        privateRoom: PropTypes.shape({
-            price: PropTypes.number.isRequired,
-            img: PropTypes.string.isRequired,
-        }),
-        oneBedRoom: PropTypes.shape({
-            price: PropTypes.number.isRequired,
-            img: PropTypes.string.isRequired,
-        }),
-        priceComparison: PropTypes.arrayOf(PropTypes.shape({
-            locality: PropTypes.string.isRequired,
-            price: PropTypes.number.isRequired,
-        })),
-        estimatedCost: PropTypes.shape({
-            from: PropTypes.number.isRequired,
-            to: PropTypes.number.isRequired,
-        }),
-        onGetDetailedPricingClicked: PropTypes.func,
-        onInquireOrBookClicked: PropTypes.func,
+      propertyName: PropTypes.string.isRequired,
+      roomPrices: PropTypes.arrayOf(PropTypes.shape({
+        roomType: PropTypes.string.isRequired,
+        image: PropTypes.string,
+        shareType: PropTypes.string.isRequired,
+        price: PropTypes.number,
+        priceShared: PropTypes.number,
+        priceType: PropTypes.string.isRequired,
+      })),
+      address: PropTypes.shape({
+        country: PropTypes.string.isRequired,
+        city: PropTypes.string.isRequired,
+        state: PropTypes.string.isRequired,
+      }).isRequired,
+      estimatedPrice: PropTypes.shape({
+        providedAverage: PropTypes.number.isRequired,
+        estimatedAverage: PropTypes.number.isRequired,
+        cityAverage: PropTypes.number.isRequired,
+        stateAverage: PropTypes.number.isRequired,
+        nationalAverage: PropTypes.number.isRequired,
+      }),
+      onGetDetailedPricingClicked: PropTypes.func,
+      onInquireOrBookClicked: PropTypes.func,
     };
 
-    findPercentage(price, maxPrice) {
-        return (price/maxPrice) * 100;
+    static defaultProps = {
+      roomPrices: [],
+    };
+
+    static findPercentage(price, maxPrice) {
+      return (price / maxPrice) * 100;
+    }
+
+    static sortProperties(obj) {
+      const sortable = [];
+      Object.keys(obj).forEach((key) => {
+        // each item is an array in format [key, value]
+        sortable.push([key, obj[key]]);
+      });
+
+      // sort items by value
+      sortable.sort((a, b) => a[1] - b[1]);
+      // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
+      return sortable;
     }
 
     render() {
-        const {
-            communityName,
-            sharedRoom,
-            privateRoom,
-            oneBedRoom,
-            priceComparison,
-            estimatedCost,
-            onGetDetailedPricingClicked,
-            onInquireOrBookClicked,
-            ...props
-        } = this.props;
-        if (priceComparison) {
-            priceComparison.sort((a, b) => a.price - b.price);
-            this.maxPrice = priceComparison[priceComparison.length - 1].price;
-        }
+      const {
+        propertyName,
+        roomPrices,
+        address,
+        estimatedPrice,
+        onGetDetailedPricingClicked,
+        onInquireOrBookClicked,
+      } = this.props;
+      const estimatedPriceLabelMap = {
+        providedAverage: propertyName,
+        estimatedAverage: propertyName, // TODO: figure out correct label
+        cityAverage: address.city,
+        stateAverage: address.state,
+        nationalAverage: address.country,
+      };
+      let sortedEstimatedPrice = null;
+      let maxPrice = 0;
+      let estimatedPriceBase = 0;
+      if (estimatedPrice) {
+        sortedEstimatedPrice = this.constructor.sortProperties(estimatedPrice);
+        [, maxPrice] = sortedEstimatedPrice[sortedEstimatedPrice.length - 1];
+        estimatedPriceBase = estimatedPrice.providedAverage || estimatedPrice.estimatedAverage;
+      }
+      roomPrices.sort((a, b) => a.price - b.price);
 
-        return (
-            <section id="pricing-and-floor-plans">
-                <article>
-                    {estimatedCost &&
-                        <Box>
-                            <TwoColumnWrapper breakOnSmallScreen={true}>
-                                <div>
-                                    Estimated cost from ${numeral(estimatedCost.from).format('0,0')} to ${numeral(estimatedCost.to).format('0,0')} per month*
-                                    <SpacingTopRegularWrapper>
-                                        <Block size="caption">
-                                            *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area, and the amenities and care services provided at {communityName}.
-                                        </Block>
-                                    </SpacingTopRegularWrapper>
-                                </div>
-                                <SmallScreenMarginTopWrapper>
-                                    <Button onClick={onGetDetailedPricingClicked}>Get Detailed Pricing</Button>
-                                </SmallScreenMarginTopWrapper>
-                            </TwoColumnWrapper>
-                        </Box>
-                    }
-                    {!estimatedCost && sharedRoom &&
-                        <Item>
-                            <RoomTile onInquireOrBookClicked={onInquireOrBookClicked} img={sharedRoom.img} price={sharedRoom.price} type="shared" />
-                        </Item>
-                    }
-                    {!estimatedCost && privateRoom &&
-                        <Item>
-                            <RoomTile onInquireOrBookClicked={onInquireOrBookClicked} img={privateRoom.img} price={privateRoom.price} type="private" />
-                        </Item>
-                    }
-                    {!estimatedCost && oneBedRoom &&
-                        <Item>
-                            <RoomTile onInquireOrBookClicked={onInquireOrBookClicked} img={oneBedRoom.img} price={oneBedRoom.price} type="1bedroom" />
-                        </Item>
-                    }
-                </article>
-                {priceComparison &&
-                    <article>
-                        <Heading size="subtitle">Compare to Local Assisted Living Costs</Heading>
-                        <LocalitiesWrapper>
-                            {priceComparison.map((object, i) => {
-                                return <SpacingTopRegularWrapper key={i}>
-                                    {object.locality}
-                                    <TwoColumnWrapper>
-                                        <Bar width={this.findPercentage(object.price, this.maxPrice) + '%'} />
-                                        <PriceWrapper>
-                                            <Block size="caption">
-                                                ${numeral(object.price).format('0,0')}
-                                            </Block>
-                                        </PriceWrapper>
-                                    </TwoColumnWrapper>
-                                </SpacingTopRegularWrapper>
-                            })}
-                        </LocalitiesWrapper>
-                    </article>
-                }
-            </section>
-        )
+      return (
+        <section id="pricing-and-floor-plans">
+          <ArticleWrapper>
+            {!roomPrices.length && estimatedPriceBase &&
+              <EstimatedCost
+                propertyName={propertyName}
+                price={estimatedPriceBase}
+                onGetDetailedPricingClicked={onGetDetailedPricingClicked}
+              />
+            }
+            {roomPrices.map((object, i) => {
+              return (
+                <Item key={i}>
+                  <RoomTile onInquireOrBookClicked={onInquireOrBookClicked} {...object} />
+                </Item>
+              );
+            })}
+          </ArticleWrapper>
+          {estimatedPrice &&
+            <article>
+              <Heading size="subtitle">Compare to Local Assisted Living Costs</Heading>
+              <LocalitiesWrapper>
+                {sortedEstimatedPrice.map((object, i) => {
+                  // don't display zeros
+                  if (!object[1]) {
+                    return null;
+                  }
+                  return (
+                    <SpacingBottomRegularWrapper key={i}>
+                      {estimatedPriceLabelMap[object[0]]}
+                      <PriceBar width={`${this.constructor.findPercentage(object[1], maxPrice)}%`} price={object[1]} />
+                    </SpacingBottomRegularWrapper>
+                  );
+                })}
+              </LocalitiesWrapper>
+            </article>
+          }
+        </section>
+      );
     }
-};
+}
