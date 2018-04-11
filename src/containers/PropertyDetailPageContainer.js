@@ -1,21 +1,35 @@
-
 import React, { Component } from 'react';
-import PropertyDetailContainer from 'sly/containers/PropertyDetailContainer';
-import ConciergeContainer from 'sly/containers/ConciergeContainer';
+import { connect } from 'react-redux';
 
-const getPropertySlug = match => match.params.propertySlug;
+import PropertyDetailPage from 'sly/components/pages/PropertyDetailPage';
 
-export default class PropertyDetailPage extends Component {
+import {
+  resourceDetailReadRequest,
+} from 'sly/store/resource/actions';
+
+class PropertyDetailPageContainer extends Component {
+  componentWillMount() {
+    const { fetchData, propertySlug } = this.props;
+    fetchData(propertySlug);
+  }
+
   render() {
-    const { match } = this.props;
-    const propertySlug = getPropertySlug(match);
-
     // TODO: Layout here
-    return (
-      <div className="thisWillBeALayout">
-        <PropertyDetailContainer propertySlug={propertySlug} />
-        <ConciergeContainer propertySlug={propertySlug} />
-      </div>
-    );
+    const { propertySlug } = this.props;
+    return <PropertyDetailPage propertySlug={propertySlug} />;
   }
 }
+
+const getPropertySlug = match => match.params.propertySlug;
+const mapStateToProps = (state, { match }) => ({
+  propertySlug: getPropertySlug(match),
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchData: slug => {
+    dispatch(resourceDetailReadRequest('property', slug));
+    dispatch(resourceDetailReadRequest('userAction'));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PropertyDetailPageContainer);

@@ -14,11 +14,6 @@ class PropertyDetailContainer extends Component {
     propertySlug: string.isRequired,
   };
 
-  componentWillMount() {
-    const { readProperty } = this.props;
-    readProperty();
-  }
-
   render() {
     const { detail } = this.props;
     return <PropertyDetail {...detail} />;
@@ -29,8 +24,4 @@ const mapStateToProps = (state, { propertySlug }) => ({
   detail: getDetail(state, 'property', propertySlug),
 });
 
-const mapDispatchToProps = (dispatch, { propertySlug }) => ({
-  readProperty: () => dispatch(resourceDetailReadRequest('property', propertySlug)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PropertyDetailContainer);
+export default connect(mapStateToProps)(PropertyDetailContainer);
