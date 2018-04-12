@@ -27,7 +27,7 @@ const mapStateToProps = (state, { match }) => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchData: slug => {
-    dispatch(resourceDetailReadRequest('property', slug));
+    dispatch(resourceDetailReadRequest('property', slug, { include: 'similar-communities' }));
     dispatch(resourceDetailReadRequest('userAction'));
   },
 });
