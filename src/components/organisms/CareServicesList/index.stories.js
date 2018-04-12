@@ -5,9 +5,7 @@ import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rho
 
 import CareServicesList from '.';
 
-const { data } = RhodaGoldmanPlaza;
-const { attributes } = data;
-const { name, propInfo } = attributes;
+const { name, propInfo } = RhodaGoldmanPlaza;
 const { careServices, serviceHighlights } = propInfo;
 
 storiesOf('Organisms|CareServicesList', module).add('default', () => (

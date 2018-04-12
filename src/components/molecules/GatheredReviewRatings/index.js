@@ -42,9 +42,10 @@ const HRDiv = styled.div`
 export default class GatheredReviewRatings extends Component {
   static propTypes = {
     reviewRatings: arrayOf(shape({
-      providerDisplayText: string.isRequired,
-      url: string.isRequired,
-      rating: number.isRequired,
+      name: string.isRequired,
+      numReviews: number.isRequired,
+      reviewsUrl: string.isRequired,
+      avgRating: number.isRequired,
     })).isRequired,
     onLeaveReview: func.isRequired,
   };
@@ -52,10 +53,10 @@ export default class GatheredReviewRatings extends Component {
     const { reviewRatings, onLeaveReview } = this.props;
     const ratings = reviewRatings.map((review) => {
       return (
-        <ReviewDiv key={review.provider}>
-          <Rating value={review.rating} />
+        <ReviewDiv key={review.name}>
+          <Rating value={review.avgRating} />
           <ReviewProviderDiv>
-            <Link to={review.url}>{review.providerDisplayText}</Link>
+            <Link to={review.reviewsUrl}>{review.name}</Link>
           </ReviewProviderDiv>
         </ReviewDiv>
       );
