@@ -15,17 +15,17 @@ const StyledImg = styled.img`
   height: ${height};
 `;
 
-const Img = ({ tileSize, src }) => {
+const TileImage = ({ tileSize, src }) => {
   return <StyledImg tileSize={tileSize} src={src} />;
 };
 
-Img.propTypes = {
+TileImage.propTypes = {
   tileSize: string,
   src: string.isRequired,
 };
 
-Img.defaultProps = {
+TileImage.defaultProps = {
   tileSize: 'small',
 };
 
-export default Img;
+export default TileImage;
