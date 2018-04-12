@@ -16,13 +16,18 @@ storiesOf('Atoms|Heading', module)
       Id tempor duis non esse commodo fugiat excepteur nostrud.
     </Heading>
   ))
-  .add('level 2', () => (
-    <Heading level={2}>
+  .add('level hero', () => (
+    <Heading level="hero">
       Id tempor duis non esse commodo fugiat excepteur nostrud.
     </Heading>
   ))
-  .add('level 3', () => (
-    <Heading level={3}>
+  .add('level title', () => (
+    <Heading level="title">
+      Id tempor duis non esse commodo fugiat excepteur nostrud.
+    </Heading>
+  ))
+  .add('level subtitle', () => (
+    <Heading level="subtitle">
       Id tempor duis non esse commodo fugiat excepteur nostrud.
     </Heading>
   ));

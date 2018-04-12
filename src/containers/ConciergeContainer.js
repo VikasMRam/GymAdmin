@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
 import { string, func, bool, object } from 'prop-types';
+import styled from 'styled-components';
 
+import { size } from 'sly/components/themes';
 import { getDetail } from 'sly/store/selectors';
 
 import {
@@ -21,9 +22,9 @@ import {
   resourceCreateRequest,
 } from 'sly/store/resource/actions';
 
+
 class ConciergeContainer extends Component {
   static propTypes = {
-    fetchData: func.isRequired,
     // TODO: shape
     property: object,
     userRequestedCB: bool,
@@ -33,49 +34,35 @@ class ConciergeContainer extends Component {
     userRequestedCB: false,
   };
 
-  componentWillMount() {
-    const { fetchData } = this.props;
-    fetchData();
-  }
-
   submit = data => {
     const { submit } = this.props;
     submit(data);
   }
 
   render() {
-    const { userRequestedCB, property } = this.props;
-
-    if (!property) return null;
-
-    if (!userRequestedCB) {
-      return (
-        <div>
-          <ConversionFormContainer onSubmit={this.submit} />
-          <RCBModalContainer onClose={()=>{}} />
-        </div>
-      );
-    }
-    return <Thankyou community={property} onClose={() => {}} />;
+    const { userRequestedCB, property, className } = this.props;
+    return [ 
+      <div key="column" className={className}>
+        { userRequestedCB
+            ? <ConversionFormContainer onSubmit={this.submit} />
+            : <Thankyou community={property} onClose={() => {}} />
+        }
+      </div>,
+      <RCBModalContainer key="modal" onClose={()=>{}} />
+    ];
   }
 }
 
-const mapStateToProps = (state, { propertySlug }) => {
-  const userActions = getDetail(state, 'userAction');
+const mapStateToProps = (state, { propertySlug, userActions, property }) => {
   const userRequestedCB = userActions && (userActions.profilesContacted || [])
     .some(property => property.slug === propertySlug);
-  const property = getDetail(state, 'property', propertySlug);
   return { userRequestedCB, property };
 };
 
 const mapDispatchToProps = (dispatch, { propertySlug }) => ({
   submit: data => {
     data.slug = propertySlug;
-    return dispatch(resourceCreateRequest('platform/user_actions', data));
-  },
-  fetchData: () => {
-    dispatch(resourceDetailReadRequest('property', propertySlug));
-    dispatch(resourceDetailReadRequest('userAction'));
+    return dispatch(resourceCreateRequest('userAction', data));
   },
 });
 

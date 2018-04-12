@@ -15,14 +15,14 @@ const config = {
   test: {},
   development: {},
   staging: {
-    apiUrl: 'http://www.teamseniorly.com/v0',
-    authTokenUrl: 'http://www.teamseniorly.com/users/auth_token',
+    apiUrl: process.env.API_URL || 'http://www.myseniorly.com/v0',
+    authTokenUrl: process.env.AUTH_URL  || 'http://www.myseniorly.com/users/auth_token',
   },
   production: {
-    host: process.env.HOST || 'localhost',
+    host: process.env.HOST || 'seniorly.com',
     port: process.env.PORT || 8080,
-    apiUrl: process.env.API_URL || 'http://www.teamseniorly.com/v0/',
-    authTokenUrl: 'http://www.teamseniorly.com/users/auth_token',
+    apiUrl: process.env.API_URL || 'https://www.seniorly.com/v0/',
+    authTokenUrl: process.env.AUTH_URL ||  'https://www.seniorly.com/users/auth_token',
   },
 };
 
