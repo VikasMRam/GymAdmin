@@ -39,7 +39,7 @@ export default class CollapsibleSection extends Component {
   };
 
   static defaultProps = {
-    collapsedDefault: true,
+    collapsedDefault: false,
   };
 
   state = {

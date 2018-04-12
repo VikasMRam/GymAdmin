@@ -18,7 +18,7 @@ describe('CollapsibleSection', () => {
   });
 
   it('renders default collapsed, calls toggle', () => {
-    const wrapper = wrap();
+    const wrapper = wrap({ collapsedDefault: true });
     const heading = wrapper.find(Header);
 
     expect(wrapper.state()).toEqual({ collapsed: true });
@@ -27,7 +27,7 @@ describe('CollapsibleSection', () => {
   });
 
   it('renders default not collapsed, calls toggle', () => {
-    const wrapper = wrap({ collapsedDefault: false });
+    const wrapper = wrap();
     const heading = wrapper.find(Header);
 
     expect(wrapper.state()).toEqual({ collapsed: false });

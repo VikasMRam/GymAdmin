@@ -19,6 +19,7 @@ theme.fonts = {
 };
 
 theme.sizes = {
+  // pixel measurements
   breakpoint: {
     mobile:          '375px',
     tablet:          '768px',
@@ -28,6 +29,12 @@ theme.sizes = {
   },
 
   maxWidth:         '1200px',
+
+  // rem measurements
+  layout: {
+    mainColumn:   '43.50rem', // 696px 
+    sideColumn:   '21.00rem', // 336px 
+  },
 
   modal: {
     single:       '35.25rem', // 564px

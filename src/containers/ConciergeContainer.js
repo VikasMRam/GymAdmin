@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { string, func, bool, object } from 'prop-types';
+import styled from 'styled-components';
 
+import { size } from 'sly/components/themes';
 import { getDetail } from 'sly/store/selectors';
 
 import {
@@ -20,6 +22,7 @@ import {
   resourceCreateRequest,
 } from 'sly/store/resource/actions';
 
+
 class ConciergeContainer extends Component {
   static propTypes = {
     // TODO: shape
@@ -37,27 +40,22 @@ class ConciergeContainer extends Component {
   }
 
   render() {
-    const { userRequestedCB, property } = this.props;
-
-    if (!property) return null;
-
-    if (!userRequestedCB) {
-      return (
-        <div>
-          <ConversionFormContainer onSubmit={this.submit} />
-          <RCBModalContainer onClose={()=>{}} />
-        </div>
-      );
-    }
-    return <Thankyou community={property} onClose={() => {}} />;
+    const { userRequestedCB, property, className } = this.props;
+    return [ 
+      <div key="column" className={className}>
+        { userRequestedCB
+            ? <ConversionFormContainer onSubmit={this.submit} />
+            : <Thankyou community={property} onClose={() => {}} />
+        }
+      </div>,
+      <RCBModalContainer key="modal" onClose={()=>{}} />
+    ];
   }
 }
 
-const mapStateToProps = (state, { propertySlug }) => {
-  const userActions = getDetail(state, 'userAction');
+const mapStateToProps = (state, { propertySlug, userActions, property }) => {
   const userRequestedCB = userActions && (userActions.profilesContacted || [])
     .some(property => property.slug === propertySlug);
-  const property = getDetail(state, 'property', propertySlug);
   return { userRequestedCB, property };
 };
 
