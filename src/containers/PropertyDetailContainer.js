@@ -16,7 +16,7 @@ class PropertyDetailContainer extends Component {
 
   render() {
     const { detail } = this.props;
-    return <PropertyDetail {...detail} />;
+    return <PropertyDetail detail={detail} />;
   }
 }
 
