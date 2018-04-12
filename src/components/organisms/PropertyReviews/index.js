@@ -7,8 +7,8 @@ import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRating
 export default class PropertyReviews extends Component {
   static propTypes = {
     reviews: arrayOf(shape({
-      id: number.isRequired,
-      name: string.isRequired,
+      id: string.isRequired,
+      author: string.isRequired,
       date: string.isRequired,
       rating: number.isRequired,
       content: string.isRequired,

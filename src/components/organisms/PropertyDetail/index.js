@@ -8,9 +8,8 @@ export default class PropertyDetail extends Component {
       name, propInfo, propRatings, reviews, onLeaveReview,
     } = this.props;
     const { careServices, serviceHighlights } = propInfo;
-    // TODO : Fix API Response
     const ratingsArray = propRatings.ratingsArray || [];
-    const reviewsTemp = reviews[0] || [];
+    const reviewsFinal = reviews[0] || [];
     return (
       <div>
         {name}
@@ -20,7 +19,7 @@ export default class PropertyDetail extends Component {
           serviceHighlights={serviceHighlights}
         />
         <PropertyReviews
-          reviews={reviewsTemp}
+          reviews={reviewsFinal}
           reviewRatings={ratingsArray}
           onLeaveReview={onLeaveReview}
         />

@@ -6,10 +6,8 @@ import PropertyReviews from '.';
 
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const { propRatings } = RhodaGoldmanPlaza;
+const { propRatings, reviews } = RhodaGoldmanPlaza;
 const { ratingsArray } = propRatings;
-const reviews = RhodaGoldmanPlaza.reviews[0];
-
 
 const onLeaveReview = function () {
   console.log('On Click of onLeaveReview outside PropertyReviews ');
