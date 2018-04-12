@@ -310,7 +310,15 @@
     ]
   },
   "reviews":[
-
+    [
+      {
+        "author":"Pranesh",
+        "comments":"Best Senior Living Community Ever seen",
+        "published":true,
+        "value":5,
+        "id":"undefined"
+      }
+    ]
   ],
   "rgsAux":[
     {

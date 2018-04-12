@@ -7,15 +7,16 @@ export default class PropertyDetail extends Component {
     const { detail, onLeaveReview } = this.props;
     if(detail) {
       console.log(JSON.stringify((detail)));
-      const { name, propInfo, propRatings } = detail;
+      const { name, propInfo, propRatings, reviews } = detail;
       const { careServices, serviceHighlights } = propInfo;
-      const { ratingsArray } = propRatings;
-      const  reviews = [];
+      // TODO : Fix API Response
+      const ratingsArray = propRatings.ratingsArray || [];
+      const reviewsTemp = reviews[0] || [];
       return (
         <div>
           {name}
           <CareServicesList propertyName={name} careServices={careServices} serviceHighlights={serviceHighlights} />
-          <PropertyReviews reviews={reviews} reviewRatings={ratingsArray} onLeaveReview={onLeaveReview} />
+          <PropertyReviews reviews={reviewsTemp} reviewRatings={ratingsArray} onLeaveReview={onLeaveReview} />
         </div>
       );
     }
