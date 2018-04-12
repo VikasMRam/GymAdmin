@@ -14,7 +14,7 @@ const PageWrapper = styled.div`
     width: ${size('layout.mainColumn')};  
   }
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: calc(${size('layout.mainColumn')} + ${size('layout.sideColumn')});
+    width: calc(${size('layout.mainColumn')} + ${size('layout.sideColumn')} + ${size('spacing.xLarge')});
   }
 `;
 
@@ -22,6 +22,9 @@ const Main = styled(PropertyDetail)`
   width: 100%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};  
+  }
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    margin-right: ${size('spacing.xLarge')};
   }
 `;
 
