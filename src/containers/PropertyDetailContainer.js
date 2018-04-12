@@ -19,7 +19,10 @@ class PropertyDetailContainer extends Component {
     function onLeaveReview() {
       console.log('OnLeaveReview from Container');
     }
-    return <PropertyDetail detail={detail} onLeaveReview={onLeaveReview} />;
+    if (detail) {
+      return <PropertyDetail {...detail} onLeaveReview={onLeaveReview} />;
+    }
+    return <div>Loading...</div>;
   }
 }
 
