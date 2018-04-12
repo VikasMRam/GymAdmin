@@ -4,6 +4,11 @@ import { action } from '@storybook/addon-actions';
 
 import PropertyReviews from '.';
 
+import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+
+const { propRatings } = RhodaGoldmanPlaza;
+const { ratingsArray } = propRatings;
+
 const reviews = [
   {
     id: 1,
@@ -44,33 +49,6 @@ const reviews = [
   },
 ];
 
-const reviewRatings = [
-  {
-    provider: 'yelp',
-    providerDisplayText: 'Yelp®',
-    rating: 4.5,
-    url: '/yelp',
-  },
-  {
-    provider: 'senioradvisor',
-    providerDisplayText: 'SeniorAdvisor.com®',
-    rating: 4.5,
-    url: '/senioradvisor',
-  },
-  {
-    provider: 'caring',
-    providerDisplayText: 'Caring.com®',
-    rating: 5,
-    url: '/caring',
-  },
-  {
-    provider: 'facebook',
-    providerDisplayText: 'Facebook®',
-    rating: 4.5,
-    url: '/facebook',
-  },
-];
-
 const onLeaveReview = function () {
   console.log('On Click of onLeaveReview outside PropertyReviews ');
 };
@@ -78,7 +56,7 @@ const onLeaveReview = function () {
 storiesOf('Organisms|PropertyReviews', module).add('default', () => (
   <PropertyReviews
     reviews={reviews}
-    reviewRatings={reviewRatings}
+    reviewRatings={ratingsArray}
     onLeaveReview={onLeaveReview}
   />
 ));
