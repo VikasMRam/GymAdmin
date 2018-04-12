@@ -14,9 +14,10 @@ export default class PropertyReviews extends Component {
       content: string.isRequired,
     })).isRequired,
     reviewRatings: arrayOf(shape({
-      providerDisplayText: string.isRequired,
-      url: string.isRequired,
-      rating: number.isRequired,
+      name: string.isRequired,
+      numReviews: number.isRequired,
+      reviewsUrl: string.isRequired,
+      avgRating: number.isRequired,
     })).isRequired,
     onLeaveReview: func.isRequired,
   };
