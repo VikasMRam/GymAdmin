@@ -9,4 +9,7 @@ storiesOf('Atoms|Icon', module)
   .add('star small', () => <Icon icon="star" size="small" />)
   .add('star regular', () => <Icon icon="star" />)
   .add('star large', () => <Icon icon="star" size="large" />)
-  .add('star clip', () => <Icon icon="star-clip" size="large" />);
+  .add('star clip', () => <Icon icon="star-clip" size="large" />)
+  .add('chevron small', () => <Icon icon="chevron" size="small" />)
+  .add('chevron regular (default)', () => <Icon icon="chevron" />)
+  .add('chevron large', () => <Icon icon="chevron" size="large" palette="grays" />);

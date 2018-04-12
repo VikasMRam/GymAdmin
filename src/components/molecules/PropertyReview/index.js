@@ -26,27 +26,26 @@ const ReviewContentText = styled.div`
 `;
 
 const PropertyReview = ({
-  rating, name, uri, date, content,
+  value, author, date, comments,
 }) => (
   <div>
     <RatingHeadingDiv>
       <RatingIconDiv>
-        <Rating value={rating} />
+        <Rating value={value} />
       </RatingIconDiv>
-      <ReviewHeadingText>By {name}</ReviewHeadingText>
+      <ReviewHeadingText>By {author}</ReviewHeadingText>
       <ReviewHeadingText>{date}</ReviewHeadingText>
     </RatingHeadingDiv>
-    <ReviewContentText>{content}</ReviewContentText>
+    <ReviewContentText>{comments}</ReviewContentText>
     <Hr />
   </div>
 );
 
-PropertyReview.prototype = {
-  rating: number.isRequired,
-  name: string.isRequired,
-  uri: string.isRequired,
+PropertyReview.propTypes = {
+  value: number.isRequired,
+  author: string.isRequired,
   date: string.isRequired,
-  content: string.isRequired,
+  comments: string.isRequired,
 };
 
 export default PropertyReview;
