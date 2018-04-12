@@ -3,8 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 
-import { FonztestPage, PropertyListPage } from 'containers';
-import PropertyDetailPage from './pages/PropertyDetailPage';
+import PropertyDetailPageContainer from 'sly/containers/PropertyDetailPageContainer';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';
@@ -34,9 +33,7 @@ export default class App extends Component {
 
         <ThemeProvider theme={theme}>
           <Switch>
-            <Route path="/fonztest" component={FonztestPage} exact />
-            <Route path="/proplist" component={PropertyListPage} exact />
-            <Route path="/community/:propertySlug" component={PropertyDetailPage}  />
+            <Route path="/community/:propertySlug" component={PropertyDetailPageContainer}  />
             { /*<Route
               path={`/:careType(${careTypes})/:state/:city/:slug`}
               component={PropertyDetailPage}

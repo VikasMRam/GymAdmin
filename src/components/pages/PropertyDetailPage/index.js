@@ -1,20 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
+import styled from 'styled-components';
+import { string } from 'prop-types';
+
 import PropertyDetailContainer from 'sly/containers/PropertyDetailContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 
-const getPropertySlug = match => match.params.propertySlug;
+const PageWrapper = styled.div`
 
-export default class PropertyDetailPage extends Component {
-  render() {
-    const { match } = this.props;
-    const propertySlug = getPropertySlug(match);
+`;
 
-    // TODO: Layout here
-    return (
-      <div className="thisWillBeALayout">
-        <PropertyDetailContainer propertySlug={propertySlug} />
-        <ConciergeContainer propertySlug={propertySlug} />
-      </div>
-    );
-  }
-}
+
+const PropertyDetailPage = ({ propertySlug }) => {  
+  return (
+    <PageWrapper>
+      <PropertyDetailContainer propertySlug={propertySlug} />
+      <ConciergeContainer propertySlug={propertySlug} />
+    </PageWrapper>
+  );
+};
+
+PropertyDetailPage.propTypes = {
+  propertySlug: string.isRequired,
+};
+
+export default PropertyDetailPage;
