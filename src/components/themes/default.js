@@ -22,7 +22,9 @@ theme.sizes = {
   breakpoint: {
     mobile:          '375px',
     tablet:          '768px',
+    laptop:         '1024px',
     doubleModal:    '1200px',
+    laptopLarge:    '1440px',
   },
 
   maxWidth:         '1200px',
