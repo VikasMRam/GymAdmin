@@ -5,22 +5,22 @@ import CollapsibleSection from '.';
 
 storiesOf('Molecules|CollapsibleSection', module)
   .add('default', () => (
-    <CollapsibleSection>
+    <CollapsibleSection title="Section title">
       { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
     </CollapsibleSection>
   ))
   .add('small', () => (
-    <CollapsibleSection minHeight="small">
+    <CollapsibleSection title="Section title">
       { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
     </CollapsibleSection>
   ))
   .add('large', () => (
-    <CollapsibleSection minHeight="large">
+    <CollapsibleSection title="Section title">
       { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
     </CollapsibleSection>
   ))
   .add('splicit minHeight', () => (
-    <CollapsibleSection minHeight={200}>
+    <CollapsibleSection title="Section title">
       { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
     </CollapsibleSection>
   ));

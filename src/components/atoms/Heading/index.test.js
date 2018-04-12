@@ -14,8 +14,13 @@ it('renders props when passed in', () => {
   expect(wrapper.find({ id: 'foo' })).toHaveLength(1);
 });
 
-it('renders h1 by default', () => {
+it('renders h2 by default', () => {
   const wrapper = wrap();
+  expect(wrapper.find('h2')).toHaveLength(1);
+});
+
+it('renders h1 for hero', () => {
+  const wrapper = wrap({ level: 'hero' });
   expect(wrapper.find('h1')).toHaveLength(1);
 });
 

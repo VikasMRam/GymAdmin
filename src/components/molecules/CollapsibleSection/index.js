@@ -3,36 +3,42 @@ import Measure from 'react-measure';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
 import { key } from 'styled-theme';
-import { bool, number, oneOfType, oneOf } from 'prop-types';
+import { bool, string, oneOfType, oneOf } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import { Block, Button } from 'sly/components/atoms';
+import { Hr, Block, Button, Heading, Icon } from 'sly/components/atoms';
 
-export const blockCapHeight = props => !props.collapsed
-  ? `${props.maxHeight}px`
-  : typeof props.minHeight === 'number'
-    ? `${props.minHeight}px`
-    : size('collapsible', props.minHeight);
-
-export const ReadMore = styled(Button)`
-  padding: 0;
-  border: 0;
+const Section = styled.div`
+  padding-bottom: ${size('spacing.large')};
 `;
 
-const BlockCap = styled.div`
-  height: ${blockCapHeight};
+export const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: ${size('spacing.large')};
+`;
+
+const scaleX = p => p.collapsed ? 1 : -1;
+const StyledIcon = styled(Icon)`
+  transform: scaleY(${scaleX});
+  transition: transform ${key('transitions.fast')};
+`;
+
+const contentHeight = props => !props.collapsed ? `${props.maxHeight}px` : 0;
+const Content = styled.div`
+  height: ${contentHeight};
   overflow: hidden;
   transition: height ${key('transitions.default')};
 `;
 
 export default class CollapsibleSection extends Component {
   static propTypes = {
-    collapsedDefault: bool,
-    minHeight: oneOfType([number, oneOf(['small', 'regular', 'large'])]),
+    title: string.isRequired,
+    collapsedDefault: bool.isRequired,
   };
 
   static defaultProps = {
-    minHeight: 'small',
     collapsedDefault: true,
   };
 
@@ -51,26 +57,28 @@ export default class CollapsibleSection extends Component {
   }
 
   render() {
-    const { children, minHeight, collapsedDefault, ...props } = this.props;
+    const { children, title, minHeight, collapsedDefault, ...props } = this.props;
     const { collapsed, maxHeight } = this.state;
 
     return (
       <Measure onResize={this.onResize}>
         {({ measureRef }) =>
-          <div>
-            <BlockCap maxHeight={maxHeight} minHeight={minHeight} collapsed={collapsed}>
-              <div ref={measureRef} {...props}>
-                { children }
-              </div>
-            </BlockCap>
-            <ReadMore
+          <Section>
+            <Hr />
+            <Header
               onClick={this.toggle}
               transparent
               ghost
             >
-              {collapsed ? 'Read more' : 'Read less'}
-            </ReadMore>
-          </div>
+              <Heading>{title}</Heading>
+              <StyledIcon icon="chevron" palette="grays" collapsed={collapsed} />
+            </Header>
+            <Content maxHeight={maxHeight} collapsed={collapsed}>
+              <div ref={measureRef} {...props}>
+                { children }
+              </div>
+            </Content>
+          </Section>
         }
       </Measure>
     );
