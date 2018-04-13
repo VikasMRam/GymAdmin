@@ -110,6 +110,7 @@
     "json-api-normalizer": "^0.4.7",
     "lodash": "^4.17.4",
     "normalizr": "3.2.3",
+    "numeral": "^2.0.6",
     "prop-types": "^15.5.8",
     "query-string": "^5.0.0",
     "react": "^16.0.0",
