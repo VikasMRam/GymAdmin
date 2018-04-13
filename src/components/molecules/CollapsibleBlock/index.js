@@ -52,12 +52,9 @@ export default class CollapsibleBlock extends Component {
     collapsed: !this.state.collapsed,
   });
 
-  onResize = ({entry={}, ...rest}) => {
-    console.log('entry', entry, rest);
-    this.setState({ 
-      maxHeight: entry.height
-    });
-  }
+  onResize = ({entry={}}) => this.setState({ 
+    maxHeight: entry.height
+  });
 
   render() {
     const { children, minHeight, collapsedDefault, ...props } = this.props;
