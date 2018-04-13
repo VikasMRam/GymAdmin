@@ -93,7 +93,6 @@ const styles = css`
   cursor: ${ifProp('disabled', 'default', 'pointer')};
   appearance: none;
   border-radius: ${borderRadius};
-  box-sizing: border-box;
   transition: background-color 250ms ease-out, color 250ms ease-out,
     border-color 250ms ease-out;
   background-color: ${backgroundColor};

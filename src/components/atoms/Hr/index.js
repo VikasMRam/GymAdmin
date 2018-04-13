@@ -6,7 +6,6 @@ import { palette } from 'styled-theme';
 import { size } from 'sly/components/themes';
 
 const HRStyled = styled.hr`
-  box-sizing: border-box; 
   border: 0;
   padding: 0;
   margin: 0;

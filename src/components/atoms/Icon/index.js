@@ -13,9 +13,9 @@ const Wrapper = styled.span`
   display: inline-block;
   font-size: ${fontSize};
   color: ${prop('fill', palette(0))};
+  // sizes relative to set font-size
   width: 1em;
   height: 1em;
-  box-sizing: border-box;
   transform: ${ifProp({ orientation: 'up' }, 'rotate(180deg)', 'rotate(0deg)')};
   transition: transform 2s;
   & > svg {
