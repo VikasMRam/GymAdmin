@@ -157,7 +157,107 @@
   },
   "communityListings": [],
   "contacts": [],
-  "floorPlans": [],
+  "floorPlans": [
+    {
+      "id": "99600d1796edf82c16392b8487739716",
+      "createdAt": "2015-10-10T23:46:34Z",
+      "info": {
+        "title": "Beautiful, quiet private studio available now!",
+        "description": "This is a lovely unfurnished apartment in a boutique style community.  Kitchenettes are provided in all of our rooms. It has a large private bathroom with a shower. It has a large closet and 300 Sq. Ft. to bring your twin or full size bed, and several other pieces that will fit nicely to furnish your new home.",
+        "roomType": "Studio",
+        "shareType": "Private",
+        "accessibility": "Ambulatory or Non Ambulatory",
+        "bathroom": "Private",
+        "gender": "Male or Female",
+        "price": 5100,
+        "priceType": "Monthly Rate"
+      },
+      "updatedAt": "2018-04-12T08:40:12Z"
+    },
+    {
+      "id": "67baff78347f90c16577feb6fc018b72",
+      "createdAt": "2015-10-10T23:48:48Z",
+      "info": {
+        "title": "Beautiful, quiet private studio available now!",
+        "description": "This is a lovely unfurnished apartment in a boutique style community.  Kitchenettes are provided in all of our rooms. It has a large private bathroom with a shower. It has a large closet and 300 Sq. Ft. to bring your twin or full size bed, and several other pieces that will fit nicely to furnish your new home.",
+        "roomType": "Studio",
+        "shareType": "Private",
+        "accessibility": "Ambulatory or Non Ambulatory",
+        "bathroom": "Private",
+        "gender": "Male or Female",
+        "price": 5100,
+        "priceType": "Monthly Rate"
+      },
+      "updatedAt": "2018-04-12T08:40:12Z"
+    },
+    {
+      "id": "0a3d9e0e9c4adbf1483150e6a5a54ffe",
+      "createdAt": "2015-10-10T23:52:00Z",
+      "info": {
+        "title": "Beautiful, quiet private one bedroom available now!",
+        "description": "This is a lovely unfurnished apartment in a boutique style community.  Kitchenettes are provided in all of our rooms. It has a large private bathroom with a shower.  It has 2 semi private living spaces so you can either share with a companion or have a bedroom and a living room area.  It has 2 closets  and provides 410 Sq. Ft. for you to bring up to a queen size bed, and several other pieces that will fit nicely to furnish your new home.",
+        "roomType": "One Bedroom",
+        "shareType": "Private",
+        "accessibility": "Ambulatory or Non Ambulatory",
+        "bathroom": "Private",
+        "gender": "Male or Female",
+        "price": 5700,
+        "priceType": "Monthly Rate"
+      },
+      "updatedAt": "2018-04-12T08:40:12Z"
+    },
+    {
+      "id": "a287c90cfae6cd5427d0f5bfbfa9fda6",
+      "createdAt": "2015-10-11T00:10:09Z",
+      "info": {
+        "image": "https://d1qiigpe5txw4q.cloudfront.net/uploads/c12040412664de0a0c9443dc952ba53b/63047_SunriseofSanMateo_SanMateo_CA_AptBed_sd.jpg",
+        "title": "Private studio open in our lovely memory care neighborhood now!",
+        "description": "This is a private studio that has 300 Sq. Ft. of space.  It is very bright and has a nice view in a quiet residential neighborhood.",
+        "roomType": "Studio",
+        "shareType": "Private",
+        "accessibility": "Ambulatory or Non Ambulatory",
+        "bathroom": "Private",
+        "gender": "Male or Female",
+        "price": 5070,
+        "priceType": "Monthly Rate"
+      },
+      "updatedAt": "2018-04-12T08:40:12Z"
+    },
+    {
+      "id": "14e8482d03dce18522160b8d2520bb65",
+      "createdAt": "2015-10-11T00:00:22Z",
+      "info": {
+        "title": "Beautiful, quiet private studio available now!",
+        "description": "This is a lovely unfurnished apartment in our boutique style community.  Kitchenettes are provided in all of our rooms. It has a large shared bathroom with a shower.  It has a shared kitchenette area and It has a private bedroom with a door to close for privacy.",
+        "roomType": "Two Bedroom",
+        "shareType": "Shared",
+        "accessibility": "Ambulatory or Non Ambulatory",
+        "bathroom": "Shared",
+        "gender": "Female",
+        "price": 5100,
+        "priceShared": 3900,
+        "priceType": "Monthly Rate"
+      },
+      "updatedAt": "2018-04-12T08:40:12Z"
+    },
+    {
+      "id": "6af36a82804687edc00fed8df64eee73",
+      "createdAt": "2015-10-11T00:05:54Z",
+      "info": {
+        "image": "https://d1qiigpe5txw4q.cloudfront.net/uploads/c12040412664de0a0c9443dc952ba53b/63047_SunriseofSanMateo_SanMateo_CA_AptBed_sd.jpg",
+        "title": "Shared, bright Studio Apartment with 2 windows available now!",
+        "description": "This is a corner room has 325 Sq. Ft. of shared space.  The room is very bright as it has windows on 2 sides.  The bathroom will also be shared.  Roommate is very quiet and kind female.",
+        "roomType": "Studio",
+        "shareType": "Shared",
+        "accessibility": "Ambulatory or Non Ambulatory",
+        "bathroom": "Shared",
+        "gender": "Female",
+        "priceShared": 3300,
+        "priceType": "Monthly Rate"
+      },
+      "updatedAt": "2018-04-12T08:40:12Z"
+    }
+  ],
   "gallery": {
     "id": "c3e2a85523a03b2c3f9bbf1af19d21e9",
     "createdAt": "2015-04-10T22:38:59Z",
@@ -361,7 +461,9 @@
       "author": "Pranesh",
       "comments": "Best Senior Living Community Ever seen",
       "published": true,
-      "value": 5
+      "value": 5,
+      "createdAt": "2018-04-12T04:55:38Z",
+      "updatedAt": "2018-04-12T04:55:38Z"
     }
   ],
   "rgsAux": {

@@ -25,6 +25,14 @@ const BlockCap = styled.div`
   transition: height ${key('transitions.default')};
 `;
 
+const OnePix = styled.div`
+  // hack so last element in the measureaable element
+  // is not one with a margin-bottom, this way 
+  // getBoundingBox will return the right measure
+  height: 1px;
+  margin-top: -1px;
+`;
+
 export default class CollapsibleBlock extends Component {
   static propTypes = {
     collapsedDefault: bool,
@@ -44,23 +52,22 @@ export default class CollapsibleBlock extends Component {
     collapsed: !this.state.collapsed,
   });
 
-  onResize = ({entry={}}) => {
-    this.setState({ 
-      maxHeight: entry.height
-    });
-  }
+  onResize = ({entry={}}) => this.setState({ 
+    maxHeight: entry.height
+  });
 
   render() {
     const { children, minHeight, collapsedDefault, ...props } = this.props;
     const { collapsed, maxHeight } = this.state;
 
     return (
-      <Measure onResize={this.onResize}>
+      <Measure onResize={this.onResize} margin>
         {({ measureRef }) => 
           <div>
             <BlockCap maxHeight={maxHeight} minHeight={minHeight} collapsed={collapsed}>
               <div ref={measureRef} {...props}>
                 { children }
+                <OnePix />
               </div>
             </BlockCap>
             <ReadMore

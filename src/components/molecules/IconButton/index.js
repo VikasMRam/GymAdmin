@@ -26,7 +26,6 @@ const StyledButton = styled(Button)`
   height: ${iconHeight};
   padding: ${ifProp('hasText', '0 0.4375em', 0)};
   flex: 0 0 2.5em;
-  box-sizing: border-box;
   ${ifProp(
     'collapsed',
     css`

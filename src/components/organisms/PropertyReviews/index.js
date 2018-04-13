@@ -9,9 +9,9 @@ export default class PropertyReviews extends Component {
     reviews: arrayOf(shape({
       id: string.isRequired,
       author: string.isRequired,
-      date: string.isRequired,
-      rating: number.isRequired,
-      content: string.isRequired,
+      createdAt: string.isRequired,
+      value: number.isRequired,
+      comments: string.isRequired,
     })).isRequired,
     reviewRatings: arrayOf(shape({
       name: string.isRequired,

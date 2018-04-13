@@ -51,6 +51,7 @@ export default function setGlobalStyles() {
 
     html * {
       font-family: Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
+      box-sizing: border-box;
     }
   `;
 }

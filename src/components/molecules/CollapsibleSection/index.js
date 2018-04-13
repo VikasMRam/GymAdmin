@@ -8,20 +8,31 @@ import { bool, string, oneOfType, oneOf } from 'prop-types';
 import { size } from 'sly/components/themes';
 import { Hr, Block, Button, Heading, Icon } from 'sly/components/atoms';
 
-const Section = styled.div`
-  padding-bottom: ${size('spacing.large')};
+
+const marginBottom = p => p.collapsed ? 0 : size('spacing.xLarge');
+const Section = styled.section`
+  padding-bottom: ${marginBottom};
+  transition: padding-bottom ${key('transitions.default')};
+`;
+
+const StyledHr = styled(Hr)`
+  margin-bottom: 0;
 `;
 
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: ${size('spacing.large')};
+  padding: ${size('spacing.xLarge')} 0;
 `;
 
-const scaleX = p => p.collapsed ? 1 : -1;
+const StyledHeading = styled(Heading)`
+  margin: 0;
+`;
+
+const scaleY = p => p.collapsed ? 1 : -1;
 const StyledIcon = styled(Icon)`
-  transform: scaleY(${scaleX});
+  transform: scaleY(${scaleY});
   transition: transform ${key('transitions.fast')};
 `;
 
@@ -63,14 +74,14 @@ export default class CollapsibleSection extends Component {
     return (
       <Measure onResize={this.onResize}>
         {({ measureRef }) =>
-          <Section>
-            <Hr />
+          <Section collapsed={collapsed}>
+            <StyledHr />
             <Header
               onClick={this.toggle}
               transparent
               ghost
             >
-              <Heading>{title}</Heading>
+              <StyledHeading>{title}</StyledHeading>
               <StyledIcon icon="chevron" palette="grays" collapsed={collapsed} />
             </Header>
             <Content maxHeight={maxHeight} collapsed={collapsed}>

@@ -4,21 +4,20 @@ import styled from 'styled-components';
 import { font, palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 
+import { size } from 'sly/components/themes';
+
 const Paragraph = ({ ...props }) => {
   return <ParaWrapper {...props}>{props.children}</ParaWrapper>;
 };
 const ParaWrapper = styled.p`
-  font-family: ${font('primary')};
   color: ${palette('grayscale', 0)};
-  font-size: 1rem;
+  font-size: ${size('text.body')};
   line-height: 1.3;
-  margin: 1rem 0 0;
-  display: ${ifProp({ shown: true }, 'inherit', 'none')};
+  margin: 0 0 1rem 0;
 `;
 
 Paragraph.propTypes = {
   reverse: PropTypes.bool,
-  shown: PropTypes.bool,
 };
 
 export default Paragraph;

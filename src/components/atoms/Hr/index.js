@@ -6,11 +6,10 @@ import { palette } from 'styled-theme';
 import { size } from 'sly/components/themes';
 
 const HRStyled = styled.hr`
-  box-sizing: border-box; 
   border: 0;
   padding: 0;
   margin: 0;
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.xLarge')};
   border-top: 1px solid ${palette(2)};
 `;
 
