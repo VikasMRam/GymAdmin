@@ -8,7 +8,6 @@ const Paragraph = ({ ...props }) => {
   return <ParaWrapper {...props}>{props.children}</ParaWrapper>;
 };
 const ParaWrapper = styled.p`
-  font-family: ${font('primary')};
   color: ${palette('grayscale', 0)};
   font-size: 1rem;
   line-height: 1.3;

@@ -18,7 +18,6 @@ const getLevel = size => {
 };
 
 const styles = css`
-  font-family: ${font('primary')};
   font-weight: 700;
   font-size: ${fontSize};
   line-height: ${lineHeight};

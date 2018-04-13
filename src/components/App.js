@@ -11,6 +11,8 @@ import setGlobalStyles from './themes/setGlobalStyles';
 
 import { PrimaryNavigation } from 'sly/components/organisms';
 
+setGlobalStyles();
+
 export default class App extends Component {
   render() {
     const careTypes = ['assisted-living', 'independent-living'].join('|');

@@ -38,7 +38,6 @@ const ModalBox = styled(ReactModal)`
   position: absolute;
   display: flex;
   flex-direction: column;
-  font-family: ${font('primary')};
   background-color: ${palette('white', 2)};
   border-radius: ${size('spacing.tiny')};
   color: ${palette('grayscale', 0)};

@@ -6,7 +6,7 @@ import { CareServicesList, PropertyReviews } from 'sly/components/organisms';
 
 export default class PropertyDetail extends Component {
   render() {
-    const { property, ...props } = this.props;
+    const { property, propertySlug, ...props } = this.props;
     const {
       name, propInfo, propRatings, reviews,
     } = property;

@@ -8,7 +8,6 @@ import { size } from 'sly/components/themes';
 const Label = styled.label`
   display: block;
   font-size: ${size('text', 'body')};
-  font-family: ${font('primary')};
   color: ${ifProp('invalid', palette('danger', 0), palette(0))};
   margin-bottom: ${size('spacing.small')};
 `;
