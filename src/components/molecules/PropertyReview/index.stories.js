@@ -14,6 +14,6 @@ storiesOf('Molecules|PropertyReview', module).add('default', () => (
     value={review.value}
     comments={review.comments}
     author={review.author}
-    date="Sept 10, 2018"
+    createdAt={review.createdAt}
   />
 ));
