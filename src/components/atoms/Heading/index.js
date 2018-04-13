@@ -21,7 +21,9 @@ const styles = css`
   font-weight: 700;
   font-size: ${fontSize};
   line-height: ${lineHeight};
-  margin: 0;
+  // TODO: review this with @jared, 
+  // for now let's make margin-bottom relative to font-size
+  margin: 0 0 1em 0;
   color: ${palette({ grayscale: 0 }, 1)};
 `;
 

@@ -44,7 +44,6 @@ const ModalBox = styled(ReactModal)`
   transition: transform 250ms ease-in-out;
   outline: none;
   padding: ${size('spacing.xxxLarge')};
-  box-sizing: border-box;
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -87,7 +86,6 @@ const CloseButton = styled(IconButton)`
 
 const Heading = styled.div`
   width: 100%;
-  box-sizing: border-box;
   padding-bottom: ${size('spacing.xLarge')};
   @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
     padding: ${size('spacing.xxxLarge')};
@@ -96,7 +94,6 @@ const Heading = styled.div`
 `;
 
 const Content = styled.div`
-  box-sizing: border-box;
   @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
     padding: ${size('spacing.xxxLarge')};
     width: ${size('modal.single')};

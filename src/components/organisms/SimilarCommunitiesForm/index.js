@@ -23,7 +23,6 @@ const makeOptions = communities => communities
 
 const Form = styled.form`
   width: 100%;
-  box-sizing: border-box;
 `;
 
 const StyledButton = styled(Button)`

@@ -42,7 +42,6 @@ export const CaptionSpan = styled.span`
   width: 100%;
   background: ${p => `${palette('grayscale', 0)(p)}80`}; // 50%
   font-size: ${size('text.caption')};
-  box-sizing: border-box;
   padding: ${size('spacing.small')};
 `;
 

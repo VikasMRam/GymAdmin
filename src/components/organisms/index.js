@@ -4,3 +4,4 @@ export RCBModal from './RCBModal';
 export ReduxField from './ReduxField';
 export PropertyReviews from './PropertyReviews';
 export CareServicesList from './CareServicesList';
+export CommunityDetails from './CommunityDetails';
