@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
+import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import { Paragraph, Heading } from 'sly/components/atoms';
-import { CollapsibleBlock } from 'sly/components/molecules';
 
 const Wrapper = styled.article`
 `;

@@ -9,8 +9,6 @@ import PropertyDetailPageContainer from 'sly/containers/PropertyDetailPageContai
 import theme from './themes/default';
 import setGlobalStyles from './themes/setGlobalStyles';
 
-import { PrimaryNavigation } from 'sly/components/organisms';
-
 setGlobalStyles();
 
 export default class App extends Component {

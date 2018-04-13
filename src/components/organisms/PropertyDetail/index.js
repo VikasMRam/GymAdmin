@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Heading } from 'sly/components/atoms';
 
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
-import { CareServicesList, PropertyReviews, CommunityDetails } from 'sly/components/organisms';
+import CareServicesList from 'sly/components/organisms/CareServicesList';
+import PropertyReviews from 'sly/components/organisms/PropertyReviews';
+import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 
 export default class PropertyDetail extends Component {
   render() {
