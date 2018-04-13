@@ -8,7 +8,7 @@ import { bool, string, oneOfType, oneOf } from 'prop-types';
 import { size } from 'sly/components/themes';
 import { Hr, Block, Button, Heading, Icon } from 'sly/components/atoms';
 
-const Section = styled.div`
+const Section = styled.section`
   padding-bottom: ${size('spacing.large')};
 `;
 

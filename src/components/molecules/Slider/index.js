@@ -51,6 +51,7 @@ const SliderBar = styled.input`
     width: ${thumbWidth};
     border-radius: ${thumbBorderRadius};
     cursor: pointer;
+    // FIXME: test and fix
     margin-top: -0.95rem;
     transition: background 0.15s ease-in-out;
     &:hover {

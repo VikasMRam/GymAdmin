@@ -10,7 +10,6 @@ const styles = css`
   display: block;
   width: 100%;
   margin: 0;
-  box-sizing: border-box;
   font-size: ${size('text', 'body')};
   padding: ${size('padding', 'regular')};
   height: ${ifProp({ type: 'textarea' }, 'auto', size('element.regular'))};
