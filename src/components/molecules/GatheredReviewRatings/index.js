@@ -63,21 +63,26 @@ export default class GatheredReviewRatings extends Component {
     });
     return (
       <div>
-        <ReviewHeadingDiv>
-          Reviews gathered from across the web
-        </ReviewHeadingDiv>
-        {ratings}
-        <HRDiv>
-          <Hr />
-        </HRDiv>
-        <LeaveAReviewTextDiv>
-          If you are familiar with this community, your review will help other
-          families in a similar situation make a more informed decision.
-        </LeaveAReviewTextDiv>
-        <LeaveAReviewButtonDiv>
-          <Button onClick={onLeaveReview}>Leave a Review</Button>
-        </LeaveAReviewButtonDiv>
-        <Hr />
+        {reviewRatings.length > 0 && (
+          <div>
+            <ReviewHeadingDiv>
+              Reviews gathered from across the web
+            </ReviewHeadingDiv>
+            {ratings}
+            <HRDiv>
+              <Hr />
+            </HRDiv>
+            <LeaveAReviewTextDiv>
+              If you are familiar with this community, your review will help
+              other families in a similar situation make a more informed
+              decision.
+            </LeaveAReviewTextDiv>
+            <LeaveAReviewButtonDiv>
+              <Button onClick={onLeaveReview}>Leave a Review</Button>
+            </LeaveAReviewButtonDiv>
+            <Hr />
+          </div>
+        )}
       </div>
     );
   }
