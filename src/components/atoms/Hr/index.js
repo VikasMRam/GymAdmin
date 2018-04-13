@@ -9,7 +9,7 @@ const HRStyled = styled.hr`
   border: 0;
   padding: 0;
   margin: 0;
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.xLarge')};
   border-top: 1px solid ${palette(2)};
 `;
 
