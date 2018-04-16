@@ -2,42 +2,32 @@ import { injectGlobal } from 'styled-components';
 import { palette } from 'styled-theme';
 import styles from './default';
 
+import { assetsUrl } from 'sly/config';
+
 const baseColor = styles.palette.grayscale[0];
 
 export default function setGlobalStyles() {
   injectGlobal`
     @font-face {
       font-family: 'Azo Sans';
-      src: url('/fonts/azo/azosans-bold-webfont.eot');
-      src: url('/fonts/azo/azosans-bold-webfont.eot?#iefix') format('embedded-opentype'),
-           url('/fonts/azo/azosans-bold-webfont.woff2') format('woff2'),
-           url('/fonts/azo/azosans-bold-webfont.woff') format('woff'),
-           url('/fonts/azo/azosans-bold-webfont.ttf') format('truetype'),
-           url('/fonts/azo/azosans-bold-webfont.svg#azo_sansbold') format('svg');
+      src: url('${assetsUrl}/fonts/azo/azosans-bold-webfont.woff2') format('woff2'),
+           url('${assetsUrl}/fonts/azo/azosans-bold-webfont.woff') format('woff');
       font-weight: 700;
       font-style: normal;
     }
 
     @font-face {
       font-family: 'Azo Sans';
-      src: url('/fonts/azo/azosans-regular-webfont.eot');
-      src: url('/fonts/azo/azosans-regular-webfont.eot?#iefix') format('embedded-opentype'),
-           url('/fonts/azo/azosans-regular-webfont.woff2') format('woff2'),
-           url('/fonts/azo/azosans-regular-webfont.woff') format('woff'),
-           url('/fonts/azo/azosans-regular-webfont.ttf') format('truetype'),
-           url('/fonts/azo/azosans-regular-webfont.svg#azo_sansbold') format('svg');
+      src: url('${assetsUrl}/fonts/azo/azosans-regular-webfont.woff2') format('woff2'),
+           url('${assetsUrl}/fonts/azo/azosans-regular-webfont.woff') format('woff');
       font-weight: 400;
       font-style: normal;
     }
 
     @font-face {
       font-family: 'Azo Sans';
-      src: url('/fonts/azo/azosans-light-webfont.eot');
-      src: url('/fonts/azo/azosans-light-webfont.eot?#iefix') format('embedded-opentype'),
-           url('/fonts/azo/azosans-light-webfont.woff2') format('woff2'),
-           url('/fonts/azo/azosans-light-webfont.woff') format('woff'),
-           url('/fonts/azo/azosans-light-webfont.ttf') format('truetype'),
-           url('/fonts/azo/azosans-light-webfont.svg#azo_sansbold') format('svg');
+      src: url('${assetsUrl}/fonts/azo/azosans-light-webfont.woff2') format('woff2'),
+           url('${assetsUrl}/fonts/azo/azosans-light-webfont.woff') format('woff');
       font-weight: 300;
       font-style: normal;
     }

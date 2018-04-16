@@ -54,7 +54,7 @@ const base = () => group([
   setOutput({
     filename: '[name].js',
     path: outputPath,
-    publicPath,
+    publicPath: `/doItHere/${publicPath}`,
   }),
   defineConstants({
     'process.env.NODE_ENV': process.env.NODE_ENV,

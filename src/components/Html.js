@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import url from 'url';
 
 const Html = ({
   styles, assets, state, content,
@@ -24,7 +25,7 @@ const Html = ({
       <body {...bodyAttrs}>
         <main id="app" dangerouslySetInnerHTML={{ __html: content }} />
         <script dangerouslySetInnerHTML={{ __html: state }} />
-        {assets.js.map(path => <script key={path} src={path} />)}
+        {assets.js.map(path => <script key={path} src={`${path}`} />)}
       </body>
     </html>
   );
