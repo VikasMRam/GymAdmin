@@ -141,6 +141,7 @@ const SimilarCommunityInfo = ({ similarProperty }) => {
   const { communityDescription, typeCare } = propInfo;
   const averageRating = 5;
   const numberRatings = 60;
+  const floorPlansArray = ['1 Bedroom', 'Studio'];
   return (
     <div>
       <ClammpedDiv lineclamp={1}>
@@ -157,6 +158,9 @@ const SimilarCommunityInfo = ({ similarProperty }) => {
       </SimilarCommunityPriceRatingDiv>
       <ClammpedDiv lineclamp={1}>
         <div>Care Type: {getArrayAsString(typeCare)}</div>
+      </ClammpedDiv>
+      <ClammpedDiv lineclamp={1}>
+        <div>Floor Plans: {getArrayAsString(floorPlansArray)}</div>
       </ClammpedDiv>
       <SimilarCommunityDescDiv>
         <ClammpedDiv lineclamp={2}>
