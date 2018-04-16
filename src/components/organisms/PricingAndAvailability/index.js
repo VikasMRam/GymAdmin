@@ -137,7 +137,7 @@ export default class PricingAndAvailability extends Component {
                   return (
                     <SpacingBottomRegularWrapper key={i}>
                       {estimatedPriceLabelMap[object[0]]}
-                      <PriceBar width={`${this.constructor.findPercentage(object[1], maxPrice)}%`} price={object[1]} />
+                      <PriceBar width={this.constructor.findPercentage(object[1], maxPrice)} price={object[1]} />
                     </SpacingBottomRegularWrapper>
                   );
                 })}
