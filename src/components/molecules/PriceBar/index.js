@@ -29,7 +29,7 @@ const PriceBar = ({
 };
 
 PriceBar.propTypes = {
-  width: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
 };
 
