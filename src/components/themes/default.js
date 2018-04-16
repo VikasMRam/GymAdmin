@@ -69,7 +69,15 @@ theme.sizes = {
     small: {
       width:     '13.500rem',
       height:     '9.500rem',
-    }
+    },
+    smallSC: {
+      width:    '270px',
+      height:    '180px',
+    },
+    mediumSC: {
+      width:    '343px',
+      height:    '228px',
+    },
   },
 
   padding: {
@@ -91,6 +99,7 @@ theme.sizes = {
 
   icon: {
     small:        '0.750rem', // 12px
+    medium:       '1.000rem', // 16px
     regular:      '1.500rem', // 24px
     button:       '2.500rem', // 32px
     large:        '3.000rem', // 48px

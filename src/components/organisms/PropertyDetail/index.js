@@ -6,23 +6,33 @@ import CareServicesList from 'sly/components/organisms/CareServicesList';
 import PropertyReviews from 'sly/components/organisms/PropertyReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailability';
+import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 
 export default class PropertyDetail extends Component {
   render() {
     const { property, propertySlug, ...props } = this.props;
     const {
-      name, propInfo, propRatings, reviews, address, rgsAux, floorPlans,
+      name,
+      propInfo,
+      propRatings,
+      reviews,
+      address,
+      rgsAux,
+      floorPlans,
+      similarProperties,
     } = property;
     const { careServices, serviceHighlights } = propInfo;
     const {
-      communityDescription, staffDescription, residentDescription,
+      communityDescription,
+      staffDescription,
+      residentDescription,
     } = propInfo;
     // TODO: move this to a container for PropertyReviews handling posts
     const onLeaveReview = () => {};
     // TODO: move this to a container PricingAndAvailability for handling bookings
     const onInquireOrBookClicked = () => {};
     const ratingsArray = propRatings.ratingsArray || [];
-    const reviewsFinal = reviews[0] || [];
+    const reviewsFinal = reviews || [];
     const roomPrices = floorPlans.map(({ info }) => info);
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
@@ -46,6 +56,9 @@ export default class PropertyDetail extends Component {
             roomPrices={roomPrices}
             onInquireOrBookClicked={onInquireOrBookClicked}
           />
+        </CollapsibleSection>
+        <CollapsibleSection title="Similar Communities">
+          <SimilarCommunities similarProperties={similarProperties} />
         </CollapsibleSection>
         <CollapsibleSection title="Care Services">
           <CareServicesList

@@ -32,7 +32,7 @@ const Rating = ({ palette, value, size }) => {
 };
 
 Rating.propTypes = {
-  size: oneOf(['small', 'regular', 'large']),
+  size: oneOf(['small', 'medium', 'regular', 'large']),
   value: number.isRequired,
   palette: string,
 };
