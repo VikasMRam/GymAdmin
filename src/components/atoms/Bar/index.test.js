@@ -5,7 +5,7 @@ import Bar from '.';
 
 const wrap = (props = {}) => shallow(<Bar {...props} />);
 
-const width = '80%';
+const width = 80;
 
 describe('Bar', () => {
   it('renders with correct width', () => {

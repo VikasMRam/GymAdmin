@@ -5,7 +5,7 @@ import PriceBar from '.';
 
 const wrap = (props = {}) => mount(<PriceBar {...props} />);
 
-const width = '60%';
+const width = 60;
 const price200 = 200;
 const price200Formatted = '$200';
 const price2000 = 2000;
