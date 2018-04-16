@@ -71,12 +71,12 @@ theme.sizes = {
       height:     '9.500rem',
     },
     smallSC: {
-      width:    '270px',
-      height:    '180px',
+      width:    '16.875rem',
+      height:    '11.25rem',
     },
     mediumSC: {
-      width:    '343px',
-      height:    '228px',
+      width:    '21.4375rem',
+      height:    '14.25rem',
     },
   },
 
