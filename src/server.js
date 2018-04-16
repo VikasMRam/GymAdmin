@@ -35,13 +35,7 @@ const renderHtml = ({
 }) => {
   const styles = sheet.getStyleElement();
   const { assets } = global;
-  // TODO: REMOVE this!
-  for (const [i, v] of assets.js.entries()) {
-    if (v.match(/client-rails\.js/)) {
-      assets.js.splice(i, 1);
-      break;
-    }
-  }
+
   const state = `
     window.__SERVER_STATE__ = ${serialize(serverState)};
     window.__INITIAL_STATE__ = ${serialize(initialState)};
