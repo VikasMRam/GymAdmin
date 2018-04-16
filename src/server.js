@@ -12,7 +12,7 @@ import { renderToString } from 'react-router-server';
 
 import { port, host, basename } from 'sly/config';
 import configureStore from 'sly/store/configure';
-import api from 'sly/services/api';
+import apiService from 'sly/services/api';
 import App from 'sly/components/App';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
@@ -20,11 +20,13 @@ import Error from 'sly/components/Error';
 const renderApp = ({
   store, context, location, sheet,
 }) => {
-  const app = sheet.collectStyles(<Provider store={store}>
-    <StaticRouter basename={basename} context={context} location={location}>
-      <App />
-    </StaticRouter>
-  </Provider>);
+  const app = sheet.collectStyles((
+    <Provider store={store}>
+      <StaticRouter basename={basename} context={context} location={location}>
+        <App />
+      </StaticRouter>
+    </Provider>
+  ));
   return renderToString(app);
 };
 
@@ -59,10 +61,15 @@ const app = express();
 app.use(basename, express.static(path.resolve(process.cwd(), 'dist/public')));
 
 app.use((req, res, next) => {
+  const api = apiService.create();
+  if (req.headers.cookie) {
+    api.setCookie(req.headers.cookie);
+  }
+
   const location = req.url;
-  const store = configureStore({}, { api: api.create() });
-  const context = {};
+  const store = configureStore({}, { api });
   const sheet = new ServerStyleSheet();
+  const context = {};
 
   renderApp({
     store,

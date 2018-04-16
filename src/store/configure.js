@@ -19,7 +19,7 @@ const configureStore = (initialState, services = {}) => {
   const sagaMiddleware = createSagaMiddleware();
 
   const enhancers = [
-    applyMiddleware(entitiesMiddleware, thunkMiddleware, sagaMiddleware, loggerMiddleware),
+    applyMiddleware(entitiesMiddleware, thunkMiddleware, sagaMiddleware/*, loggerMiddleware*/),
     devtools(),
   ];
 
