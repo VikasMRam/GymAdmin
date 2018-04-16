@@ -47,7 +47,10 @@ const SCTileImage = styled.img`
 `;
 
 const ChildrenWrapper = styled.div`
-  margin: ${size('spacing.large')};
+  margin-top: ${size('spacing.large')};
+  margin-right: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.large')};
+  margin-left: ${size('spacing.xLarge')};
 `;
 
 // const ItemDescription = styled.div`
