@@ -17,8 +17,8 @@ const {
 const host = process.env.HOST || 'www.lvh.me'
 const port = (+process.env.PORT + 1) || 8001
 const sourceDir = process.env.SOURCE || 'src'
-const publicPath = process.env.PUBLIC_PATH || '/';
-const webpackPublicPath = `${publicPath}/`.replace(/\/\//gi, '/'); 
+const publicPath = process.env.PUBLIC_PATH || '/react-assets';
+const webpackPublicPath = `${publicPath}/`.replace(/\/\//gi, '/');
 const sourcePath = path.join(process.cwd(), sourceDir)
 const outputPath = path.join(process.cwd(), 'dist/public')
 const assetsPath = path.join(process.cwd(), 'dist/assets.json')
@@ -109,7 +109,7 @@ const server = createConfig([
 
 const client = createConfig([
   base(),
-  entryPoint({ 
+  entryPoint({
     client: clientEntryPath,
   }),
   addPlugins([

@@ -18,9 +18,9 @@
     "build:prod": "npm run env:prod -- npm run build",
     "build:staging": "npm run env:staging -- npm run build",
 
-    "env:dev": "cross-env NODE_ENV=development PUBLIC_PATH=/react-assets",
-    "env:prod": "cross-env NODE_ENV=production PUBLIC_PATH=/react-assets",
-    "env:staging": "cross-env NODE_ENV=staging PUBLIC_PATH=/react-assets",
+    "env:dev": "cross-env NODE_ENV=development",
+    "env:prod": "cross-env NODE_ENV=production",
+    "env:staging": "cross-env NODE_ENV=staging",
 
     "test": "jest",
     "coverage": "npm test -- --coverage",

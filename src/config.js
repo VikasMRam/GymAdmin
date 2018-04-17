@@ -11,7 +11,7 @@ const config = {
     isServer: typeof window === 'undefined',
     apiUrl: 'http://www.lvh.me/v0',
     authTokenUrl: 'http://www.lvh.me/users/auth_token',
-    publicPath: process.env.PUBLIC_PATH || '',
+    publicPath: process.env.PUBLIC_PATH || '/react-assets',
   },
   test: {},
   development: {},
