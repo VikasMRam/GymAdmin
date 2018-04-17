@@ -65,7 +65,7 @@ export default class PricingAndAvailability extends Component {
     };
 
     static findPercentage(price, maxPrice) {
-      return (price / maxPrice) * 100;
+      return +((price / maxPrice) * 100).toFixed(2);
     }
 
     static sortProperties(obj) {
