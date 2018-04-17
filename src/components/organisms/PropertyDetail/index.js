@@ -22,7 +22,7 @@ export default class PropertyDetail extends Component {
     // TODO: move this to a container PricingAndAvailability for handling bookings
     const onInquireOrBookClicked = () => {};
     const ratingsArray = propRatings.ratingsArray || [];
-    const reviewsFinal = reviews[0] || [];
+    const reviewsFinal = reviews || [];
     const roomPrices = floorPlans.map(({ info }) => info);
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
