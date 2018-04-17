@@ -9,7 +9,6 @@
 
     "predev": "npm run prebuild",
     "dev": "npm run env:dev -- webpack-dev-server",
-    "dev:example": "npm run env:example -- npm run dev",
 
     "build:clean": "rimraf \"dist/!(.git*|Procfile)**\"",
     "build:copy": "copyfiles public/* public/**/* public/**/**/* dist",
@@ -17,20 +16,17 @@
     "build": "webpack",
     "build:staging": "npm run env:staging -- npm run build",
 
-    "build:example": "npm run env:example -- npm run build",
     "env:dev": "cross-env NODE_ENV=development PUBLIC_PATH=/react-assets",
     "env:prod": "cross-env NODE_ENV=production",
     "env:staging": "cross-env NODE_ENV=staging PUBLIC_PATH=/react-assets",
-    "env:example": "cross-env SOURCE=src-example",
 
     "test": "jest",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
-    "lint": "eslint src src-example private webpack.config.js",
+    "lint": "eslint src private webpack.config.js",
     "format": "prettier-eslint --write",
     "format-all": "npm run format -- \"src/**/*.js\"",
     "storybook": "start-storybook -s ./public -p 9001 -c private/storybook",
-    "storybook:example": "npm run env:example -- npm run storybook"
   },
   "jest": {
     "moduleDirectories": [
@@ -38,8 +34,7 @@
       "node_modules"
     ],
     "testPathIgnorePatterns": [
-      "/node_modules/",
-      "src-example"
+      "/node_modules/"
     ],
     "moduleNameMapper": {
       "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/private/jest/fileMock.js",
