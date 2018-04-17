@@ -128,7 +128,7 @@ api.create = (settings = {}) => ({
   },
 
   uri(resource, id, params) {
-    return genUri(resource, id, params);   
+    return genUri(resource, id, params);
   },
 });
 
