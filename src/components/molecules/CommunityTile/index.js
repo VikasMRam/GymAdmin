@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
-import { bool, string, shape, number } from 'prop-types';
+import { bool, string, shape, number, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import Rating from 'sly/components/atoms/Rating';
@@ -65,7 +65,12 @@ const Checkbox = styled(Input)`
 `;
 
 const CommunityTile = ({
-  size, palette, community, selectable, selected,
+  size,
+  palette,
+  community,
+  selectable,
+  selected,
+  onSelect,
 }) => {
   const {
     name, uri, picture, rating, startingRate, numReviews,
@@ -74,7 +79,9 @@ const CommunityTile = ({
     <PaddingWrapper>
       <CommunityTileDiv selected={selected}>
         <CommunityTileImageDiv src={picture || defaultImage} />
-        {selectable && <Checkbox type="checkbox" checked={selected} />}
+        {selectable && (
+          <Checkbox type="checkbox" checked={selected} onChange={onSelect} />
+        )}
         <CommunityTileInfoDiv>
           <CommunityTileTitleDiv>{name}</CommunityTileTitleDiv>
           <CommunityTilePriceRatingDiv>
@@ -97,6 +104,7 @@ CommunityTile.propTypes = {
   selected: bool,
   size: string,
   palette: string,
+  onSelect: func,
   community: shape({
     name: string.isRequired,
     uri: string.isRequired,

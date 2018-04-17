@@ -18,9 +18,29 @@ const props = {
   },
 };
 
+class CommunityTileWrapper extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: false,
+    };
+  }
+  render() {
+    return (
+      <CommunityTile
+        {...props}
+        selectable
+        selected={this.state.selected}
+        onSelect={() => this.setState({ selected: !this.state.selected })}
+      />
+    );
+  }
+}
+
 storiesOf('Molecules|CommunityTile', module)
   .add('default', () => <CommunityTile {...props} />)
   .add('Selectable', () => <CommunityTile {...props} selectable />)
   .add('Selectable Selected', () => (
     <CommunityTile {...props} selectable selected />
-  ));
+  ))
+  .add('Selectable Toggle Check', () => <CommunityTileWrapper />);
