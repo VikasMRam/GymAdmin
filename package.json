@@ -1,6 +1,6 @@
 {
-  "name": "sush",
-  "version": "0.1.1",
+  "name": "SlyReact",
+  "version": "0.0.0",
   "private": true,
   "main": "dist/server",
   "scripts": {
