@@ -15,6 +15,7 @@ const PaddingWrapper = styled.div`
 `;
 
 const CommunityTileDiv = styled.div`
+  position: relative;
   display: flex;
   column-count: 2;
   border: ${size('border')} solid ${palette('secondary', 0)};
@@ -60,8 +61,8 @@ const CommunityTileNumberReviewDiv = styled.div`
 
 const Checkbox = styled(Input)`
   position: absolute;
-  top: ${size('spacing.large')};
-  left: ${size('spacing.large')};
+  top: ${size('spacing.small')};
+  left: ${size('spacing.small')};
 `;
 
 const CommunityTile = ({
