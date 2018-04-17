@@ -4,7 +4,7 @@ const theme = {};
 
 theme.palette = {
   primary:   ['#2f8fcb', '#80bae1', '#007fb6'],
-  secondary: ['#7ccdcc', '#aee1e0', '#4fb4b3'],
+  secondary: ['#7ccdcc', '#aee1e0', '#4fb4b3', '#f4ffff'],
   danger:    ['#c54e5b', '#dd939b', '#a92f42'],
   white:     ['#e7edef', '#f3f5f6', '#ffffff'],
   grayscale: ['#384c57', '#9ca8af', '#c6d0c5'],

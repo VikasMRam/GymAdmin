@@ -1,10 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
 import { bool, string, shape, number } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import Rating from 'sly/components/atoms/Rating';
+import { Input } from 'sly/components/atoms';
 
 const defaultImage =
   'https://d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
@@ -17,6 +18,18 @@ const CommunityTileDiv = styled.div`
   display: flex;
   column-count: 2;
   border: ${size('border')} solid ${palette('secondary', 0)};
+  ${props =>
+    props.selected &&
+    css`
+      background-color: ${palette('secondary', 3)};
+    `};
+
+  input[type='checkbox'] {
+    margin: 0px;
+  }
+  input[type='checkbox']:checked {
+    background-color: ${palette('secondary', 0)};
+  }
 `;
 
 const CommunityTileImageDiv = styled.img`
@@ -45,22 +58,29 @@ const CommunityTileNumberReviewDiv = styled.div`
   margin-left: 8px;
 `;
 
+const Checkbox = styled(Input)`
+  position: absolute;
+  top: ${size('spacing.large')};
+  left: ${size('spacing.large')};
+`;
+
 const CommunityTile = ({
-  size, palette, community, selectable, ...props
+  size, palette, community, selectable, selected,
 }) => {
   const {
     name, uri, picture, rating, startingRate, numReviews,
   } = community;
   return (
     <PaddingWrapper>
-      <CommunityTileDiv>
+      <CommunityTileDiv selected={selected}>
         <CommunityTileImageDiv src={picture || defaultImage} />
+        {selectable && <Checkbox type="checkbox" checked={selected} />}
         <CommunityTileInfoDiv>
           <CommunityTileTitleDiv>{name}</CommunityTileTitleDiv>
           <CommunityTilePriceRatingDiv>
             <div>${startingRate} per month</div>
             <CommunityTileyRatingDiv>
-              <Rating value={rating} size="medium" />
+              <Rating value={rating} size={size} palette={palette} />
               <CommunityTileNumberReviewDiv>
                 {numReviews}
               </CommunityTileNumberReviewDiv>
@@ -74,6 +94,7 @@ const CommunityTile = ({
 
 CommunityTile.propTypes = {
   selectable: bool,
+  selected: bool,
   size: string,
   palette: string,
   community: shape({
@@ -88,7 +109,7 @@ CommunityTile.propTypes = {
 
 CommunityTile.defaultProps = {
   palette: 'secondary',
-  size: 'small',
+  size: 'medium',
 };
 
 export default CommunityTile;

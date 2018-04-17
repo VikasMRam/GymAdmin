@@ -1,14 +1,14 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import CommunityTile from '.';
 
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+
+import CommunityTile from '.';
 
 const { similarProperties } = RhodaGoldmanPlaza;
 const similarProperty = similarProperties[0];
 
 const props = {
-  selectable: true,
   community: {
     name: similarProperty.name,
     picture: similarProperty.mainImage,
@@ -20,6 +20,7 @@ const props = {
 
 storiesOf('Molecules|CommunityTile', module)
   .add('default', () => <CommunityTile {...props} />)
-  .add('Selected', () => (
-    <CommunityTile similarProperty={similarProperty} selectable />
+  .add('Selectable', () => <CommunityTile {...props} selectable />)
+  .add('Selectable Selected', () => (
+    <CommunityTile {...props} selectable selected />
   ));
