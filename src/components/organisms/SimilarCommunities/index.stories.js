@@ -7,6 +7,6 @@ import SimilarCommunity from '.';
 
 const { similarProperties } = RhodaGoldmanPlaza;
 
-storiesOf('Organisms|SimilarCommunity', module).add('default', () => (
+storiesOf('Organisms|SimilarCommunities', module).add('default', () => (
   <SimilarCommunity similarProperties={similarProperties} />
 ));

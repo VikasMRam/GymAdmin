@@ -2,15 +2,24 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import CommunityTile from '.';
 
-const community = {
-  name: 'Rhoda Goldman Plaza',
-  uri: '/assisted-living/california/san-francisco/rhoda-goldman-plaza',
-  picture:
-    'https://d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg',
+import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+
+const { similarProperties } = RhodaGoldmanPlaza;
+const similarProperty = similarProperties[0];
+
+const props = {
+  selectable: true,
+  community: {
+    name: similarProperty.name,
+    picture: similarProperty.mainImage,
+    startingRate: similarProperty.startingRate,
+    rating: 3.5,
+    numReviews: 50,
+  },
 };
 
-const communityWithRating = { ...community, rating: 3.5 };
-
-storiesOf('Molecules|CommunityTile', module).add('default', () => (
-  <CommunityTile community={communityWithRating} />
-));
+storiesOf('Molecules|CommunityTile', module)
+  .add('default', () => <CommunityTile {...props} />)
+  .add('Selected', () => (
+    <CommunityTile similarProperty={similarProperty} selectable />
+  ));

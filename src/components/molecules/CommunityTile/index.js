@@ -1,70 +1,74 @@
 import React from 'react';
-import { string, shape, bool, number } from 'prop-types';
-import styled, { css } from 'styled-components';
-import { ifProp } from 'styled-tools';
+import styled from 'styled-components';
 import { palette } from 'styled-theme';
-import Link from 'react-router-dom/Link';
+import { bool, string, shape, number } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import Rating from 'sly/components/atoms/Rating';
-import Input from 'sly/components/atoms/Input';
 
-const width = ({ tileSize }) => size('tile', tileSize, 'width');
-const height = ({ tileSize }) => size('tile', tileSize, 'height');
+const defaultImage =
+  'https://d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
 
-const Wrapper = styled.div`
-  position: relative;
-  width: ${width};
-  height: ${height};
+const PaddingWrapper = styled.div`
+  padding-bottom: 16px;
 `;
 
-// TODO: create a img component that understand sly's resampling configurations
-const StyledImg = styled.img`
-  object-fit: cover;
-  width: ${width};
-  height: ${height};
-
-  input[type="checkbox"] {
-    margin: 0px;
-  }
+const CommunityTileDiv = styled.div`
+  display: flex;
+  column-count: 2;
+  border: ${size('border')} solid ${palette('secondary', 0)};
 `;
 
-const Checkbox = styled(Input)`
-  position: absolute;
-  top: ${size('spacing.small')};
-  right: ${size('spacing.small')};
+const CommunityTileImageDiv = styled.img`
+  width: 112px;
+  height: 84px;
+`;
+const CommunityTileInfoDiv = styled.div`
+  margin: 16px;
 `;
 
-export const CaptionSpan = styled.span`
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  width: 100%;
-  background: ${p => `${palette('grayscale', 0)(p)}80`}; // 50%
-  font-size: ${size('text.caption')};
-  padding: ${size('spacing.small')};
+const CommunityTileTitleDiv = styled.div`
+  font-size: 18px;
 `;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: ${palette('white', 0)};
+const CommunityTilePriceRatingDiv = styled.div`
+  display: flex;
+  font-size: 16px;
+`;
+
+const CommunityTileyRatingDiv = styled.div`
+  display: flex;
+  margin-left: 24px;
+`;
+
+const CommunityTileNumberReviewDiv = styled.div`
+  margin-left: 8px;
 `;
 
 const CommunityTile = ({
   size, palette, community, selectable, ...props
 }) => {
   const {
-    name, uri, picture, rating,
+    name, uri, picture, rating, startingRate, numReviews,
   } = community;
   return (
-    <Wrapper tileSize={size} {...props}>
-      <StyledImg tileSize={size} src={picture} />
-      {selectable && <Checkbox type="checkbox" />}
-      <CaptionSpan>
-        <StyledLink to={community.uri}>{name}</StyledLink>
-        {rating && <Rating size="small" palette={palette} value={rating} />}
-      </CaptionSpan>
-    </Wrapper>
+    <PaddingWrapper>
+      <CommunityTileDiv>
+        <CommunityTileImageDiv src={picture || defaultImage} />
+        <CommunityTileInfoDiv>
+          <CommunityTileTitleDiv>{name}</CommunityTileTitleDiv>
+          <CommunityTilePriceRatingDiv>
+            <div>${startingRate} per month</div>
+            <CommunityTileyRatingDiv>
+              <Rating value={rating} size="medium" />
+              <CommunityTileNumberReviewDiv>
+                {numReviews}
+              </CommunityTileNumberReviewDiv>
+            </CommunityTileyRatingDiv>
+          </CommunityTilePriceRatingDiv>
+        </CommunityTileInfoDiv>
+      </CommunityTileDiv>
+    </PaddingWrapper>
   );
 };
 
@@ -77,6 +81,8 @@ CommunityTile.propTypes = {
     uri: string.isRequired,
     picture: string.isRequired,
     rating: number,
+    startingRate: number,
+    numReviews: number,
   }),
 };
 
