@@ -17,9 +17,16 @@ const loggerMiddleware = createLogger();
 
 const configureStore = (initialState, services = {}) => {
   const sagaMiddleware = createSagaMiddleware();
+  const middlewares = [
+    entitiesMiddleware, thunkMiddleware, sagaMiddleware,
+  ];
+
+  if (isBrowser) {
+    middlewares.push(loggerMiddleware);
+  }
 
   const enhancers = [
-    applyMiddleware(entitiesMiddleware, thunkMiddleware, sagaMiddleware/*, loggerMiddleware*/),
+    applyMiddleware(...middlewares),
     devtools(),
   ];
 

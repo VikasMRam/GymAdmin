@@ -10,7 +10,7 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { renderToString } from 'react-router-server';
 
-import { port, host, basename, assetsUrl } from 'sly/config';
+import { port, host, basename, publicPath } from 'sly/config';
 import configureStore from 'sly/store/configure';
 import apiService from 'sly/services/api';
 import App from 'sly/components/App';
@@ -52,7 +52,7 @@ const renderHtml = ({
 
 const app = express();
 
-app.use(assetsUrl, express.static(path.resolve(process.cwd(), 'dist/public')));
+app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 
 app.use((req, res, next) => {
   const api = apiService.create();
@@ -103,6 +103,7 @@ app.listen(port, (error) => {
   if (error) {
     console.error(error);
   } else {
-    console.info(`Server is running at ${boldBlue(`http://${host}:${port}${basename}/`)}`);
+    console.info(`Server is running at ${boldBlue(`http://${host}:${port}${basename}`)}`);
   }
 });
+
