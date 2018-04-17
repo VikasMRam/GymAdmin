@@ -3,19 +3,10 @@ import { arrayOf, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import ListItem from 'sly/components/molecules/ListItem';
+import List from 'sly/components/molecules/List';
 
-const CareServiceDiv = styled.div``;
-
-const CareServiceTextDiv = styled.div`
-  padding-top: ${size('spacing.large')};
-  padding-bottom: ${size('spacing.large')};
-`;
-
-const TwoColumnListItemDiv = styled.div`
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    column-count: 2;
-  }
+const ArticleWrapper = styled.article`
+  margin-bottom: ${size('spacing.large')};
 `;
 
 export default class CareServicesList extends Component {
@@ -27,21 +18,16 @@ export default class CareServicesList extends Component {
 
   render() {
     const { propertyName, careServices, serviceHighlights } = this.props;
-    const serviceHighlightsComponent = serviceHighlights.map((service, index) => {
-      return <ListItem key={index} text={service} />;
-    });
-    const careServicesComponent = careServices.map((service, index) => {
-      return <ListItem key={index} text={service} />;
-    });
+
     return (
-      <CareServiceDiv>
-        <CareServiceTextDiv> {propertyName} is known for </CareServiceTextDiv>
-        <TwoColumnListItemDiv>
-          {serviceHighlightsComponent}
-        </TwoColumnListItemDiv>
-        <CareServiceTextDiv> {propertyName} also offers </CareServiceTextDiv>
-        <TwoColumnListItemDiv>{careServicesComponent}</TwoColumnListItemDiv>
-      </CareServiceDiv>
+      <section id="care-services">
+        <ArticleWrapper>
+          <List heading={`${propertyName} is known for`} items={serviceHighlights} />
+        </ArticleWrapper>
+        <ArticleWrapper>
+          <List heading={`${propertyName} also offers`} items={careServices} />
+        </ArticleWrapper>
+      </section>
     );
   }
 }
