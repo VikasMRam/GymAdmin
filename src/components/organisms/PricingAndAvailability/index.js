@@ -29,7 +29,7 @@ const LocalitiesWrapper = styled.div`
 const SpacingBottomRegularWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
-const ArticleWrapper = styled.article`
+const StyledArticle = styled.article`
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -97,19 +97,29 @@ export default class PricingAndAvailability extends Component {
         stateAverage: address.state,
         nationalAverage: address.country,
       };
-      let sortedEstimatedPrice = null;
+      let sortedEstimatedPrice = [];
       let maxPrice = 0;
       let estimatedPriceBase = 0;
       if (estimatedPrice) {
         sortedEstimatedPrice = this.constructor.sortProperties(estimatedPrice);
-        [, maxPrice] = sortedEstimatedPrice[sortedEstimatedPrice.length - 1];
+        // remove items with 0 price
+        sortedEstimatedPrice = sortedEstimatedPrice.filter(price => price[1] > 0);
+        if (sortedEstimatedPrice.length) {
+          // what if only providedAverage or estimatedAverage is non zero. just show nothing
+          if (sortedEstimatedPrice.length === 1 &&
+            (sortedEstimatedPrice[0][0] === 'providedAverage' || sortedEstimatedPrice[0][0] === 'estimatedAverage')) {
+            sortedEstimatedPrice = [];
+          } else {
+            [, maxPrice] = sortedEstimatedPrice[sortedEstimatedPrice.length - 1];
+          }
+        }
         estimatedPriceBase = estimatedPrice.providedAverage || estimatedPrice.estimatedAverage;
       }
       roomPrices.sort((a, b) => a.price - b.price);
 
       return (
         <section id="pricing-and-floor-plans">
-          <ArticleWrapper>
+          <StyledArticle id="pricing-and-floor-plans-price-tiles">
             {!roomPrices.length && estimatedPriceBase &&
               <EstimatedCost
                 propertyName={propertyName}
@@ -117,30 +127,22 @@ export default class PricingAndAvailability extends Component {
                 onGetDetailedPricingClicked={onGetDetailedPricingClicked}
               />
             }
-            {roomPrices.map((object, i) => {
-              return (
-                <Item key={i}>
-                  <RoomTile onInquireOrBookClicked={onInquireOrBookClicked} {...object} />
-                </Item>
-              );
-            })}
-          </ArticleWrapper>
-          {estimatedPrice &&
-            <article>
+            {roomPrices.map((object, i) => (
+              <Item key={i}>
+                <RoomTile onInquireOrBookClicked={onInquireOrBookClicked} {...object} />
+              </Item>
+            ))}
+          </StyledArticle>
+          {sortedEstimatedPrice.length > 0 &&
+            <article id="pricing-and-floor-plans-comparison">
               <Heading size="subtitle">Compare to Local Assisted Living Costs</Heading>
               <LocalitiesWrapper>
-                {sortedEstimatedPrice.map((object, i) => {
-                  // don't display zeros
-                  if (!object[1]) {
-                    return null;
-                  }
-                  return (
-                    <SpacingBottomRegularWrapper key={i}>
-                      {estimatedPriceLabelMap[object[0]]}
-                      <PriceBar width={this.constructor.findPercentage(object[1], maxPrice)} price={object[1]} />
-                    </SpacingBottomRegularWrapper>
-                  );
-                })}
+                {sortedEstimatedPrice.map((object, i) => (
+                  <SpacingBottomRegularWrapper key={i}>
+                    {estimatedPriceLabelMap[object[0]]}
+                    <PriceBar width={this.constructor.findPercentage(object[1], maxPrice)} price={object[1]} />
+                  </SpacingBottomRegularWrapper>
+                ))}
               </LocalitiesWrapper>
             </article>
           }

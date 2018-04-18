@@ -6,7 +6,7 @@ import { size } from 'sly/components/themes';
 import { Paragraph } from 'sly/components/atoms';
 import List from 'sly/components/molecules/List';
 
-const ArticleWrapper = styled.article`
+const StyledArticle = styled.article`
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -28,29 +28,29 @@ const AmenitiesAndFeatures = ({
         </Paragraph>
       }
       {communityHighlights.length > 0 &&
-        <ArticleWrapper id="amenities-and-features-known-for">
+        <StyledArticle id="amenities-and-features-known-for">
           <List heading={`${propertyName} is known for`} items={communityHighlights} />
-        </ArticleWrapper>
+        </StyledArticle>
       }
       {(personalSpace.length > 0 || personalSpaceOther.length > 0) &&
-        <ArticleWrapper id="amenities-and-features-personal-space">
+        <StyledArticle id="amenities-and-features-personal-space">
           <List heading="Personal Space/Amenities" items={personalSpace.concat(personalSpaceOther)} />
-        </ArticleWrapper>
+        </StyledArticle>
       }
       {(communitySpace.length > 0 || communitySpaceOther.length > 0) &&
-        <ArticleWrapper id="amenities-and-features-community-space">
+        <StyledArticle id="amenities-and-features-community-space">
           <List heading="Community Space/Neighborhood" items={communitySpace.concat(communitySpaceOther)} />
-        </ArticleWrapper>
+        </StyledArticle>
       }
       {(nonCareServices.length > 0 || nonCareServicesOther.length > 0) &&
-        <ArticleWrapper id="amenities-and-features-noncare-services">
+        <StyledArticle id="amenities-and-features-noncare-services">
           <List heading="Activities & other services" items={nonCareServices.concat(nonCareServicesOther)} />
-        </ArticleWrapper>
+        </StyledArticle>
       }
       {(languages.length > 0 || languagesOther.length > 0) &&
-        <ArticleWrapper id="amenities-and-features-languages">
+        <StyledArticle id="amenities-and-features-languages">
           <List heading="Resident Languages" items={languages.concat(languagesOther)} />
-        </ArticleWrapper>
+        </StyledArticle>
       }
     </section>
   );
