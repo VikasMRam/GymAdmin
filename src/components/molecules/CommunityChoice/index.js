@@ -42,6 +42,7 @@ export default class CommunityChoice extends Component {
   };
 
   onClick(option) {
+    console.log('CommunityChoice props', option, this.props);
     const { value, onChange } = this.props;
     const index = value.indexOf(option);
     if (index === -1) {
@@ -60,14 +61,12 @@ export default class CommunityChoice extends Component {
         {options &&
           options.map(({ value: option, label, ...props }, i) => (
             <StyledCommunityTile
-              selectable
-              ghost={!value.includes(option)}
               key={option+i}
+              selectable
+              selected={value.includes(option)}
               onClick={() => this.onClick(option)}
               {...props}
-            >
-              {label}
-            </StyledCommunityTile>
+            />
           ))}
       </Wrapper>
     );

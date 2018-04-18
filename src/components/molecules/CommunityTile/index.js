@@ -51,15 +51,31 @@ const StyledLink = styled(Link)`
 `;
 
 const CommunityTile = ({
-  size, palette, community, selectable, ...props
+  size, palette, community, selectable, selected, ...props
 }) => {
   const {
     name, uri, picture, rating,
   } = community;
+  const prevent = ev => {
+    ev.preventDefault();
+    ev.stopPropagation();
+  };
+  const onCheckboxClick = ev => {
+    prevent(ev);
+    props.onClick();
+  };
   return (
     <Wrapper tileSize={size} {...props}>
       <StyledImg tileSize={size} src={picture} />
-      {selectable && <Checkbox type="checkbox" />}
+      {selectable && (
+        <Checkbox checked={selected}
+          onChange={prevent}
+          onClick={onCheckboxClick}
+          onFocus={prevent}
+          onBlur={prevent}
+          type="checkbox"
+        />
+      )}
       <CaptionSpan>
         <StyledLink to={community.uri}>{name}</StyledLink>
         {rating && <Rating size="small" palette={palette} value={rating} />}
@@ -70,6 +86,7 @@ const CommunityTile = ({
 
 CommunityTile.propTypes = {
   selectable: bool,
+  selected: bool,
   size: string,
   palette: string,
   community: shape({
