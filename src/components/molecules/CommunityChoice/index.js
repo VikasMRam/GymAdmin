@@ -42,7 +42,6 @@ export default class CommunityChoice extends Component {
   };
 
   onClick(option) {
-    console.log('CommunityChoice props', option, this.props);
     const { value, onChange } = this.props;
     const index = value.indexOf(option);
     if (index === -1) {
