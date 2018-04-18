@@ -1,29 +1,66 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import numeral from 'numeral';
+
+import EstimatedCost from 'sly/components/molecules/EstimatedCost';
+import RoomTile from 'sly/components/molecules/RoomTile';
+import PriceBar from 'sly/components/molecules/PriceBar';
 
 import PricingAndAvailability from '.';
 
 const wrap = (props = {}) => mount(<PricingAndAvailability {...props} />);
 
 const properties = {
-  cityAverage: 0,
-  estimatedAverage: 0,
-  nationalAverage: 3628,
-  providedAverage: 7046,
-  stateAverage: 4000,
+  case1: {
+    cityAverage: 0,
+    estimatedAverage: 0,
+    nationalAverage: 3628,
+    providedAverage: 7046,
+    stateAverage: 4000,
+  },
+  case2: {
+    cityAverage: 0,
+    estimatedAverage: 0,
+    nationalAverage: 0,
+    providedAverage: 7046,
+    stateAverage: 0,
+  },
+  case3: {
+    cityAverage: 0,
+    estimatedAverage: 0,
+    nationalAverage: 0,
+    providedAverage: 0,
+    stateAverage: 0,
+  },
 };
-const sortedProperties = [
-  ['cityAverage', 0],
-  ['estimatedAverage', 0],
-  ['nationalAverage', 3628],
-  ['stateAverage', 4000],
-  ['providedAverage', 7046],
-];
+const sortedProperties = {
+  case1: [
+    ['cityAverage', 0],
+    ['estimatedAverage', 0],
+    ['nationalAverage', 3628],
+    ['stateAverage', 4000],
+    ['providedAverage', 7046],
+  ],
+  case2: [
+    ['cityAverage', 0],
+    ['estimatedAverage', 0],
+    ['nationalAverage', 0],
+    ['stateAverage', 0],
+    ['providedAverage', 7046],
+  ],
+  case3: [
+    ['cityAverage', 0],
+    ['estimatedAverage', 0],
+    ['nationalAverage', 0],
+    ['stateAverage', 0],
+    ['providedAverage', 0],
+  ],
+};
+const expectedPropertiesLength = {
+  case1: 3,
+  case2: 0,
+  case3: 0,
+};
 const propertyName = 'testPropertyName';
-const priceTypeMap = {
-  'Monthly Rate': 'month',
-};
 const roomPrices = [
   {
     title: 'Beautiful, quiet private studio available now!',
@@ -109,54 +146,66 @@ describe('PricingAndAvailability', () => {
   });
 
   it('verify sortProperties', () => {
-    expect(PricingAndAvailability.sortProperties(properties)).toEqual(sortedProperties);
+    expect(PricingAndAvailability.sortProperties(properties.case1)).toEqual(sortedProperties.case1);
   });
 
   it('verify estimatedPrice section not shown', () => {
     const wrapper = wrap({
       propertyName, roomPrices, address,
     });
-    expect(wrapper.find('article')).toHaveLength(1);
+    expect(wrapper.find(EstimatedCost)).toHaveLength(0);
+    const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
+    expect(comparison).toHaveLength(0);
   });
 
   it('verify roomPrices rendered without estimatedPrice', () => {
     const wrapper = wrap({
       propertyName, roomPrices, address,
     });
-    const children = wrapper.find('article').children();
-    expect(children).toHaveLength(roomPrices.length);
-    children.forEach((node, i) => {
-      const currentRoomPrice = roomPrices[i];
-      const priceToShow = currentRoomPrice.shareType === 'Shared' ? currentRoomPrice.priceShared : currentRoomPrice.price;
-      expect(node.text()).toBe(`Inquire or book a tour${currentRoomPrice.roomType} ${currentRoomPrice.shareType}$${numeral(priceToShow).format('0,0')} per ${priceTypeMap[currentRoomPrice.priceType]}`);
-    });
+    expect(wrapper.find(EstimatedCost)).toHaveLength(0);
+    const roomTiles = wrapper.find('#pricing-and-floor-plans-price-tiles').find(RoomTile);
+    expect(roomTiles).toHaveLength(roomPrices.length);
+    const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
+    expect(comparison).toHaveLength(0);
   });
 
   it('verify estimatedPrice section shown', () => {
     const wrapper = wrap({
-      propertyName, roomPrices, address, estimatedPrice: properties,
+      propertyName, address, estimatedPrice: properties.case1,
     });
-    expect(wrapper.find('article')).toHaveLength(2);
-    expect(wrapper.find('article').at(1).text()).toContain('Compare to Local Assisted Living Costs');
+    expect(wrapper.find(EstimatedCost)).toHaveLength(1);
+    const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
+    expect(comparison).toHaveLength(1);
+    expect(comparison.find(PriceBar)).toHaveLength(expectedPropertiesLength.case1);
   });
 
   it('verify roomPrices rendered with estimatedPrice', () => {
     const wrapper = wrap({
-      propertyName, roomPrices, address, estimatedPrice: properties,
+      propertyName, roomPrices, address, estimatedPrice: properties.case1,
     });
-    const children = wrapper.find('article').at(0).children();
-    expect(children).toHaveLength(roomPrices.length);
-    children.forEach((node, i) => {
-      const currentRoomPrice = roomPrices[i];
-      const priceToShow = currentRoomPrice.shareType === 'Shared' ? currentRoomPrice.priceShared : currentRoomPrice.price;
-      expect(node.text()).toBe(`Inquire or book a tour${currentRoomPrice.roomType} ${currentRoomPrice.shareType}$${numeral(priceToShow).format('0,0')} per ${priceTypeMap[currentRoomPrice.priceType]}`);
-    });
+    expect(wrapper.find(EstimatedCost)).toHaveLength(0);
+    const roomTiles = wrapper.find('#pricing-and-floor-plans-price-tiles').find(RoomTile);
+    expect(roomTiles).toHaveLength(roomPrices.length);
+    const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
+    expect(comparison).toHaveLength(1);
+    expect(comparison.find(PriceBar)).toHaveLength(expectedPropertiesLength.case1);
   });
 
-  it('verify estimatedCost section shown', () => {
+  it('verify price comparison with only providedAverage non zero ', () => {
     const wrapper = wrap({
-      propertyName, address, estimatedPrice: properties,
+      propertyName, roomPrices, address, estimatedPrice: properties.case2,
     });
-    expect(wrapper.find('article').at(0).text()).toContain(`*Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area, and the amenities and care services provided at ${propertyName}`);
+    const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
+    expect(comparison).toHaveLength(0);
+    expect(comparison.find(PriceBar)).toHaveLength(expectedPropertiesLength.case2);
+  });
+
+  it('verify price comparison with all properties zero ', () => {
+    const wrapper = wrap({
+      propertyName, roomPrices, address, estimatedPrice: properties.case3,
+    });
+    const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
+    expect(comparison).toHaveLength(0);
+    expect(comparison.find(PriceBar)).toHaveLength(expectedPropertiesLength.case3);
   });
 });
