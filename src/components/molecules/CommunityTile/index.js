@@ -35,6 +35,14 @@ const CommunityTileDiv = styled.div`
   :hover {
     cursor: pointer;
   }
+
+  // Disabling Text selection on the Tile
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 const CommunityTileImageDiv = styled.img`
