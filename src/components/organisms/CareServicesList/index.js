@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { size } from 'sly/components/themes';
 import List from 'sly/components/molecules/List';
 
-const ArticleWrapper = styled.article`
+const StyledArticle = styled.article`
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -21,15 +21,12 @@ export default class CareServicesList extends Component {
 
     return (
       <section id="care-services">
-        <ArticleWrapper>
-          <List
-            heading={`${propertyName} is known for`}
-            items={serviceHighlights}
-          />
-        </ArticleWrapper>
-        <ArticleWrapper>
+        <StyledArticle>
+          <List heading={`${propertyName} is known for`} items={serviceHighlights} />
+        </StyledArticle>
+        <StyledArticle>
           <List heading={`${propertyName} also offers`} items={careServices} />
-        </ArticleWrapper>
+        </StyledArticle>
       </section>
     );
   }

@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import Measure from 'react-measure';
 import styled from 'styled-components';
-import { prop } from 'styled-tools';
+import { ifProp } from 'styled-tools';
 import { key } from 'styled-theme';
-import { bool, string, oneOfType, oneOf } from 'prop-types';
+import { bool, string, node } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import { Hr, Block, Button, Heading, Icon } from 'sly/components/atoms';
-
+import { Hr, Heading, Icon } from 'sly/components/atoms';
 
 const marginBottom = p => p.collapsed ? 0 : size('spacing.xLarge');
 const Section = styled.section`
@@ -24,6 +23,10 @@ export const Header = styled.div`
   justify-content: space-between;
   align-items: baseline;
   padding: ${size('spacing.xLarge')} 0;
+
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledHeading = styled(Heading)`
@@ -39,12 +42,13 @@ const StyledIcon = styled(Icon)`
 const contentHeight = props => !props.collapsed ? `${props.maxHeight}px` : 0;
 const Content = styled.div`
   height: ${contentHeight};
-  overflow: hidden;
+  overflow: ${ifProp('collapsed', 'hidden', 'unset')};
   transition: height ${key('transitions.default')};
 `;
 
 export default class CollapsibleSection extends Component {
   static propTypes = {
+    children: node,
     title: string.isRequired,
     collapsedDefault: bool.isRequired,
   };
@@ -57,23 +61,25 @@ export default class CollapsibleSection extends Component {
     collapsed: this.props.collapsedDefault,
   };
 
+  onResize = ({ entry = {} }) => {
+    this.setState({
+      maxHeight: entry.height,
+    });
+  }
+
   toggle = () => this.setState({
     collapsed: !this.state.collapsed,
   });
 
-  onResize = ({entry={}}) => {
-    this.setState({
-      maxHeight: entry.height
-    });
-  }
-
   render() {
-    const { children, title, minHeight, collapsedDefault, ...props } = this.props;
+    const {
+      children, title, collapsedDefault, ...props
+    } = this.props;
     const { collapsed, maxHeight } = this.state;
 
     return (
       <Measure onResize={this.onResize}>
-        {({ measureRef }) =>
+        {({ measureRef }) => (
           <Section collapsed={collapsed}>
             <StyledHr />
             <Header
@@ -90,7 +96,7 @@ export default class CollapsibleSection extends Component {
               </div>
             </Content>
           </Section>
-        }
+        )}
       </Measure>
     );
   }
