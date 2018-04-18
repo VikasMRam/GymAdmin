@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import { prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Heading } from 'sly/components/atoms';
-import ListItem from 'sly/components/atoms/ListItem';
+import { Heading, ListItem } from 'sly/components/atoms';
 
 const ListWrapper = styled.ul`
   margin: 0;
@@ -30,7 +29,7 @@ const List = ({
         <Heading level="subtitle">{heading}</Heading>
       }
       <ListWrapper columns={columns}>
-        {items.map((item, i) => { return <ListItem key={i}>{item}</ListItem>; })}
+        {items.map((item, i) => (<ListItem key={i}>{item}</ListItem>))}
       </ListWrapper>
     </div>
   );
