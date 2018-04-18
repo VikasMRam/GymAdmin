@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { arrayOf, shape, string, number, func } from 'prop-types';
 import styled from 'styled-components';
-import Link from 'react-router-dom/Link';
+// import Link from 'react-router-dom/Link';
 
 import { size } from 'sly/components/themes';
 import { Button, Hr } from 'sly/components/atoms';
@@ -39,6 +39,8 @@ const HRDiv = styled.div`
   padding-top: ${size('spacing.xLarge')};
 `;
 
+const Link = styled.a``;
+
 export default class GatheredReviewRatings extends Component {
   static propTypes = {
     reviewRatings: arrayOf(shape({
@@ -56,7 +58,7 @@ export default class GatheredReviewRatings extends Component {
         <ReviewDiv key={review.name}>
           <Rating value={review.avgRating} />
           <ReviewProviderDiv>
-            <Link to={review.reviewsUrl}>{review.name}</Link>
+            <Link href={review.reviewsUrl}>{review.name}</Link>
           </ReviewProviderDiv>
         </ReviewDiv>
       );
