@@ -6,8 +6,8 @@ import { palette } from 'styled-theme';
 import Link from 'react-router-dom/Link';
 
 import { size } from 'sly/components/themes';
-import Rating from 'sly/components/atoms/Rating';
-import Input from 'sly/components/atoms/Input';
+import { Rating, Input } from 'sly/components/atoms';
+import Checkbox from 'sly/components/molecules/Checkbox';
 
 const width = ({ tileSize }) => size('tile', tileSize, 'width');
 const height = ({ tileSize }) => size('tile', tileSize, 'height');
@@ -29,7 +29,7 @@ const StyledImg = styled.img`
   }
 `;
 
-const Checkbox = styled(Input)`
+const StyledCheckbox = styled(Checkbox)`
   position: absolute;
   top: ${size('spacing.small')};
   right: ${size('spacing.small')};
@@ -56,25 +56,11 @@ const CommunityTile = ({
   const {
     name, uri, picture, rating,
   } = community;
-  const prevent = ev => {
-    ev.preventDefault();
-    ev.stopPropagation();
-  };
-  const onCheckboxClick = ev => {
-    prevent(ev);
-    props.onClick();
-  };
   return (
     <Wrapper tileSize={size} {...props}>
       <StyledImg tileSize={size} src={picture} />
       {selectable && (
-        <Checkbox checked={selected}
-          onChange={prevent}
-          onClick={onCheckboxClick}
-          onFocus={prevent}
-          onBlur={prevent}
-          type="checkbox"
-        />
+        <StyledCheckbox checked={selected}  />
       )}
       <CaptionSpan>
         <StyledLink to={community.uri}>{name}</StyledLink>
