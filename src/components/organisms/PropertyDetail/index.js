@@ -6,6 +6,7 @@ import CareServicesList from 'sly/components/organisms/CareServicesList';
 import PropertyReviews from 'sly/components/organisms/PropertyReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailability';
+import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 
 export default class PropertyDetail extends Component {
   render() {
@@ -16,6 +17,10 @@ export default class PropertyDetail extends Component {
     const { careServices, serviceHighlights } = propInfo;
     const {
       communityDescription, staffDescription, residentDescription,
+    } = propInfo;
+    const {
+      communityHighlights, personalSpace, personalSpaceOther, communitySpace, communitySpaceOther,
+      nonCareServices, nonCareServicesOther, languages, languagesOther,
     } = propInfo;
     // TODO: move this to a container for PropertyReviews handling posts
     const onLeaveReview = () => {};
@@ -52,6 +57,20 @@ export default class PropertyDetail extends Component {
             propertyName={name}
             careServices={careServices}
             serviceHighlights={serviceHighlights}
+          />
+        </CollapsibleSection>
+        <CollapsibleSection title="Amenities & Features">
+          <AmenitiesAndFeatures
+            propertyName={name}
+            communityHighlights={communityHighlights}
+            personalSpace={personalSpace}
+            personalSpaceOther={personalSpaceOther}
+            communitySpace={communitySpace}
+            communitySpaceOther={communitySpaceOther}
+            nonCareServices={nonCareServices}
+            nonCareServicesOther={nonCareServicesOther}
+            languages={languages}
+            languagesOther={languagesOther}
           />
         </CollapsibleSection>
         <CollapsibleSection title="Reviews">
