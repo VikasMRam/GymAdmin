@@ -12,7 +12,7 @@ const Paragraph = ({ ...props }) => {
 const ParaWrapper = styled.p`
   color: ${palette(0)};
   font-size: ${size('text.body')};
-  line-height: 1.3;
+  line-height: 1.5;
   margin: 0 0 1rem 0;
 `;
 
