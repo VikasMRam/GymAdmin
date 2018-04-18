@@ -9,7 +9,7 @@ const getSize = type => p => size(type, p.size);
 
 const Block = styled.div`
   background-color: ${ifProp('opaque', palette(0, true), 'transparent')};
-  color: ${palette({ grayscale: 0 }, 1)};
+  color: ${palette(0)};
   font-size: ${getSize('text')};
   line-height: ${getSize('lineHeight')};
 `;
@@ -21,7 +21,7 @@ Block.propTypes = {
 };
 
 Block.defaultProps = {
-  palette: 'grayscale',
+  palette: 'slate',
   size: 'body',
 };
 

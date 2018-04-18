@@ -4,7 +4,7 @@ import styles from './default';
 
 import { publicPath } from 'sly/config';
 
-const baseColor = styles.palette.grayscale[0];
+const baseColor = styles.palette.slate[0];
 
 export default function setGlobalStyles() {
   injectGlobal`

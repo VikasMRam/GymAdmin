@@ -40,7 +40,7 @@ const ModalBox = styled(ReactModal)`
   flex-direction: column;
   background-color: ${palette('white', 2)};
   border-radius: ${size('spacing.tiny')};
-  color: ${palette('grayscale', 0)};
+  color: ${palette('slate', 0)};
   transition: transform 250ms ease-in-out;
   outline: none;
   padding: ${size('spacing.xxxLarge')};
@@ -109,7 +109,7 @@ const Modal = ({
       icon="close"
       iconOnly
       onClick={onClose}
-      palette="grayscale"
+      palette="slate"
       reverse
     />
   );
