@@ -8,8 +8,7 @@ import ListItem from 'sly/components/molecules/ListItem';
 const CareServiceDiv = styled.div``;
 
 const CareServiceTextDiv = styled.div`
-  padding-top: ${size('spacing.large')};
-  padding-bottom: ${size('spacing.large')};
+  padding-top: ${size('spacing.xLarge')};
 `;
 
 const TwoColumnListItemDiv = styled.div`
