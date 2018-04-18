@@ -78,6 +78,13 @@ api.create = (settings = {}) => ({
     };
   },
 
+  setCookie(cookie) {
+    this.settings.headers = {
+      ...this.settings.headers,
+      Cookie: cookie,
+    };
+  },
+
   requestAuthToken() {
     return fetch(authTokenUrl, { credentials: 'same-origin' })
       .then(checkStatus)
@@ -121,7 +128,7 @@ api.create = (settings = {}) => ({
   },
 
   uri(resource, id, params) {
-    return genUri(resource, id, params);   
+    return genUri(resource, id, params);
   },
 });
 

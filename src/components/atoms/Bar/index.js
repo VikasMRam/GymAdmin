@@ -8,17 +8,17 @@ import { size } from 'sly/components/themes';
 const Bar = styled.div`
   background-color: ${palette(2, true)};
   height: ${size('text.body')};
-  width: ${prop('width')};
+  width: ${prop('width')}%;
 `;
 
 Bar.propTypes = {
   palette: PropTypes.string,
-  width: PropTypes.string,
+  width: PropTypes.number,
 };
 
 Bar.defaultProps = {
   palette: 'grayscale',
-  width: '100%',
+  width: 100,
 };
 
 export default Bar;

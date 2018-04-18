@@ -1,13 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import { Paragraph, Heading } from 'sly/components/atoms';
-
-const Wrapper = styled.article`
-`;
 
 const CommunityDetails = ({
   communityName, communityDescription, staffDescription, residentDescription,
@@ -15,32 +10,32 @@ const CommunityDetails = ({
   return (
     <CollapsibleBlock>
       {communityDescription ? (
-        <Wrapper>
+        <article>
           <Heading size="subtitle">
             More about {communityName}
           </Heading>
           <Paragraph
             dangerouslySetInnerHTML={{ __html: communityDescription }}
           />
-        </Wrapper>
+        </article>
       ) : (
         'No details are available'
       )}
       {staffDescription && (
-        <Wrapper>
+        <article>
           <Heading size="subtitle">
             About the Staff at {communityName}
           </Heading>
           <Paragraph>{staffDescription}</Paragraph>
-        </Wrapper>
+        </article>
       )}
       {residentDescription && (
-        <Wrapper>
+        <article>
           <Heading size="subtitle">
             About the Residents at {communityName}
           </Heading>
           <Paragraph>{residentDescription}</Paragraph>
-        </Wrapper>
+        </article>
       )}
     </CollapsibleBlock>
   );

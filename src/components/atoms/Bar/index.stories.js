@@ -10,5 +10,5 @@ storiesOf('Atoms|Bar', module)
     <Bar palette="danger" />
   ))
   .add('50%Width', () => (
-    <Bar width="50%" />
+    <Bar width={50} />
   ));

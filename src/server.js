@@ -10,9 +10,9 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { renderToString } from 'react-router-server';
 
-import { port, host, basename } from 'sly/config';
+import { port, host, basename, publicPath } from 'sly/config';
 import configureStore from 'sly/store/configure';
-import api from 'sly/services/api';
+import apiService from 'sly/services/api';
 import App from 'sly/components/App';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
@@ -20,11 +20,13 @@ import Error from 'sly/components/Error';
 const renderApp = ({
   store, context, location, sheet,
 }) => {
-  const app = sheet.collectStyles(<Provider store={store}>
-    <StaticRouter basename={basename} context={context} location={location}>
-      <App />
-    </StaticRouter>
-  </Provider>);
+  const app = sheet.collectStyles((
+    <Provider store={store}>
+      <StaticRouter basename={basename} context={context} location={location}>
+        <App />
+      </StaticRouter>
+    </Provider>
+  ));
   return renderToString(app);
 };
 
@@ -33,13 +35,7 @@ const renderHtml = ({
 }) => {
   const styles = sheet.getStyleElement();
   const { assets } = global;
-  // TODO: REMOVE this!
-  for (const [i, v] of assets.js.entries()) {
-    if (v.match(/client-rails\.js/)) {
-      assets.js.splice(i, 1);
-      break;
-    }
-  }
+
   const state = `
     window.__SERVER_STATE__ = ${serialize(serverState)};
     window.__INITIAL_STATE__ = ${serialize(initialState)};
@@ -56,13 +52,18 @@ const renderHtml = ({
 
 const app = express();
 
-app.use(basename, express.static(path.resolve(process.cwd(), 'dist/public')));
+app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 
 app.use((req, res, next) => {
+  const api = apiService.create();
+  if (req.headers.cookie) {
+    api.setCookie(req.headers.cookie);
+  }
+
   const location = req.url;
-  const store = configureStore({}, { api: api.create() });
-  const context = {};
+  const store = configureStore({}, { api });
   const sheet = new ServerStyleSheet();
+  const context = {};
 
   renderApp({
     store,
@@ -102,6 +103,7 @@ app.listen(port, (error) => {
   if (error) {
     console.error(error);
   } else {
-    console.info(`Server is running at ${boldBlue(`http://${host}:${port}${basename}/`)}`);
+    console.info(`Server is running at ${boldBlue(`http://${host}:${port}${basename}`)}`);
   }
 });
+
