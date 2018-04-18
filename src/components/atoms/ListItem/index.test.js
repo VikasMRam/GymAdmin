@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import Icon from 'sly/components/atoms/Icon';
 import ListItem from '.';
 
-const wrap = () => shallow(<ListItem text="blah" />);
+const wrap = () => shallow(<ListItem>blah</ListItem>);
 
 it('renders text when passed in', () => {
   const wrapper = wrap();

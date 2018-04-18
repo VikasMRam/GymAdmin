@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import ListItem from 'sly/components/molecules/ListItem';
+import List from 'sly/components/molecules/List';
 import CareServicesList from '.';
 
 const wrap = () =>
@@ -19,7 +19,7 @@ it('renders Property name when passed in', () => {
 
 it('renders ListItems properly', () => {
   const wrapper = wrap();
-  expect(wrapper.find(ListItem)).toHaveLength(5);
+  expect(wrapper.find(List)).toHaveLength(2);
 });
 
 it('does not render children when passed in', () => {
