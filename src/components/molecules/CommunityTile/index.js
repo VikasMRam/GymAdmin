@@ -31,6 +31,10 @@ const CommunityTileDiv = styled.div`
   input[type='checkbox']:checked {
     background-color: ${palette('secondary', 0)};
   }
+
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const CommunityTileImageDiv = styled.img`
