@@ -31,7 +31,7 @@ class CommunityTileWrapper extends React.Component {
         {...props}
         selectable
         selected={this.state.selected}
-        onSelect={() => this.setState({ selected: !this.state.selected })}
+        onClick={() => this.setState({ selected: !this.state.selected })}
       />
     );
   }

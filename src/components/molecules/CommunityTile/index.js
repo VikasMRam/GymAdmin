@@ -83,18 +83,16 @@ const CommunityTile = ({
   community,
   selectable,
   selected,
-  onSelect,
+  onClick,
 }) => {
   const {
     name, uri, picture, rating, startingRate, numReviews,
   } = community;
   return (
-    <PaddingWrapper>
+    <PaddingWrapper onClick={onClick}>
       <CommunityTileDiv selected={selected}>
         <CommunityTileImageDiv src={picture || defaultImage} />
-        {selectable && (
-          <Checkbox type="checkbox" checked={selected} onChange={onSelect} />
-        )}
+        {selectable && <Checkbox type="checkbox" checked={selected} />}
         <CommunityTileInfoDiv>
           <CommunityTileTitleDiv>{name}</CommunityTileTitleDiv>
           <CommunityTilePriceRatingDiv>
@@ -117,7 +115,7 @@ CommunityTile.propTypes = {
   selected: bool,
   size: string,
   palette: string,
-  onSelect: func,
+  onClick: func,
   community: shape({
     name: string.isRequired,
     uri: string.isRequired,
