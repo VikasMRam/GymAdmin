@@ -3,6 +3,7 @@ const merge = require('lodash/merge');
 const config = {
   all: {
     env: process.env.NODE_ENV || 'development',
+    slyEnv: process.env.SLY_ENV || 'development',
     isDev: process.env.NODE_ENV === 'development',
     basename: process.env.BASENAME || '',
     host: process.env.HOST || 'www.lvh.me',
@@ -11,7 +12,6 @@ const config = {
     isServer: typeof window === 'undefined',
     apiUrl: 'http://www.lvh.me/v0',
     authTokenUrl: 'http://www.lvh.me/users/auth_token',
-    assetHost: process.env.ASSET_HOST || 'http://www.lvh.me',
     publicPath: process.env.PUBLIC_PATH || '/react-assets',
   },
   test: {},
@@ -28,4 +28,4 @@ const config = {
   },
 };
 
-module.exports = merge(config.all, config[config.all.env]);
+module.exports = merge(config.all, config[config.all.slyEnv]);
