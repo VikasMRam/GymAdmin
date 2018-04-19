@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
+import Dotdotdot from 'react-dotdotdot';
 
 import { size } from 'sly/components/themes';
 import Rating from 'sly/components/atoms/Rating';
@@ -29,17 +30,6 @@ const SimilarCommunityDescDiv = styled.div`
   color: ${palette('grayscale', 0)};
 `;
 
-const ClammpedDiv = styled.div`
-  width: 100%;
-  overflow: hidden;
-  > div {
-    // TODO:  Find a better way to do this
-    display: -webkit-box;
-    -webkit-line-clamp: ${props => props.lineclamp};
-    -webkit-box-orient: vertical;
-  }
-`;
-
 function getArrayAsString(array) {
   let result = '';
   const { length } = array;
@@ -61,11 +51,11 @@ const SimilarCommunityInfo = ({ similarProperty }) => {
   const floorPlansArray = ['1 Bedroom', 'Studio'];
   return (
     <div>
-      <ClammpedDiv lineclamp={1}>
-        <SimilarCommunityNameDiv>{name}</SimilarCommunityNameDiv>
-      </ClammpedDiv>
+      <SimilarCommunityNameDiv>
+        <Dotdotdot clamp={1}>{name}</Dotdotdot>
+      </SimilarCommunityNameDiv>
       <SimilarCommunityPriceRatingDiv>
-        <div>${startingRate} per month</div>
+        <Dotdotdot clamp={1}>${startingRate} per month</Dotdotdot>
         <SimilarCommunityRatingDiv>
           <Rating value={averageRating} size="medium" />
           <SimilarCommunityNumberReviewDiv>
@@ -73,16 +63,12 @@ const SimilarCommunityInfo = ({ similarProperty }) => {
           </SimilarCommunityNumberReviewDiv>
         </SimilarCommunityRatingDiv>
       </SimilarCommunityPriceRatingDiv>
-      <ClammpedDiv lineclamp={1}>
-        <div>Care Type: {getArrayAsString(typeCare)}</div>
-      </ClammpedDiv>
-      <ClammpedDiv lineclamp={1}>
-        <div>Floor Plans: {getArrayAsString(floorPlansArray)}</div>
-      </ClammpedDiv>
+      <Dotdotdot clamp={1}>Care Type: {getArrayAsString(typeCare)}</Dotdotdot>
+      <Dotdotdot clamp={1}>
+        Floor Plans: {getArrayAsString(floorPlansArray)}
+      </Dotdotdot>
       <SimilarCommunityDescDiv>
-        <ClammpedDiv lineclamp={2}>
-          <div>{communityDescription}</div>
-        </ClammpedDiv>
+        <Dotdotdot clamp={2}>{communityDescription}</Dotdotdot>
       </SimilarCommunityDescDiv>
     </div>
   );
