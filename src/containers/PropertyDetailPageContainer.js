@@ -27,6 +27,13 @@ class PropertyDetailPageContainer extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { fetchData, propertySlug } = this.props;
+    if (propertySlug !== nextProps.propertySlug) {
+      fetchData(nextProps.propertySlug);
+    }
+  }
+
   render() {
     // TODO: Layout here
     const { propertySlug, property, userActions } = this.props;
