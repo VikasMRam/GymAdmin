@@ -7,6 +7,7 @@ import PropertyReviews from 'sly/components/organisms/PropertyReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailability';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
+import OwnerStory from 'sly/components/organisms/OwnerStory';
 
 export default class PropertyDetail extends Component {
   render() {
@@ -16,7 +17,7 @@ export default class PropertyDetail extends Component {
     } = property;
     const { careServices, serviceHighlights } = propInfo;
     const {
-      communityDescription, staffDescription, residentDescription,
+      communityDescription, staffDescription, residentDescription, ownerExprience,
     } = propInfo;
     const {
       communityHighlights, personalSpace, personalSpaceOther, communitySpace, communitySpaceOther,
@@ -71,6 +72,11 @@ export default class PropertyDetail extends Component {
             nonCareServicesOther={nonCareServicesOther}
             languages={languages}
             languagesOther={languagesOther}
+          />
+        </CollapsibleSection>
+        <CollapsibleSection title="Owner's Story">
+          <OwnerStory
+            ownerExprience={ownerExprience}
           />
         </CollapsibleSection>
         <CollapsibleSection title="Reviews">
