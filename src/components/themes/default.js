@@ -68,20 +68,20 @@ theme.sizes = {
 
   tile: {
     small: {
-      width:     '13.500rem',
-      height:     '9.500rem',
+      width:     '13.500rem', // 216px
+      height:     '9.500rem', // 152px
     },
     smallSC: {
-      width:    '16.875rem',
-      height:    '11.25rem',
+      width:    '16.875rem',  // 270px
+      height:    '11.25rem',  // 180px
     },
     mediumSC: {
-      width:    '21.4375rem',
-      height:    '14.25rem',
+      width:    '21.4375rem',  // 343px
+      height:    '14.25rem',   // 228px
     },
     communityRCB: {
-      width:    '7rem',
-      height:    '5.25rem',
+      width:    '7rem',       // 112px
+      height:    '5.25rem',   // 84px
     },
   },
 
