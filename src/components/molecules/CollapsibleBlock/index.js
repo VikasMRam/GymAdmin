@@ -6,7 +6,7 @@ import { key } from 'styled-theme';
 import { bool, number, oneOfType, oneOf } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import { Block, Button } from 'sly/components/atoms';
+import { Block, Link } from 'sly/components/atoms';
 
 export const blockCapHeight = props => !props.collapsed
   ? `${props.maxHeight}px`
@@ -14,9 +14,8 @@ export const blockCapHeight = props => !props.collapsed
     ? `${props.minHeight}px` 
     : size('collapsible', props.minHeight);
 
-export const ReadMore = styled(Button)`
-  padding: 0;
-  border: 0;
+export const ReadMore = styled(Link)`
+  display: block;
 `;
 
 const BlockCap = styled.div`
