@@ -31,15 +31,7 @@ const SimilarCommunityDescDiv = styled.div`
 `;
 
 function getArrayAsString(array) {
-  let result = '';
-  const { length } = array;
-  array.forEach((element, index) => {
-    result += element;
-    if (index !== length - 1) {
-      result += ', ';
-    }
-  });
-  return result;
+  return array.join(', ');
 }
 
 const SimilarCommunityInfo = ({ similarProperty }) => {
