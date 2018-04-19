@@ -5,7 +5,6 @@ import { bool, string, shape, number, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import Rating from 'sly/components/atoms/Rating';
-import { Input } from 'sly/components/atoms';
 import Checkbox from 'sly/components/molecules/Checkbox';
 
 const defaultImage =
@@ -15,7 +14,7 @@ const PaddingWrapper = styled.div`
   padding-bottom: 16px;
 `;
 
-const CommunityTileDiv = styled.div`
+export const CommunityTileDiv = styled.div`
   position: relative;
   display: flex;
   column-count: 2;
@@ -54,7 +53,7 @@ const CommunityTileInfoDiv = styled.div`
   margin: 16px;
 `;
 
-const StyledCheckbox = styled(Checkbox)`
+export const StyledCheckbox = styled(Checkbox)`
   position: absolute;
   top: ${size('spacing.small')};
   right: ${size('spacing.small')};
