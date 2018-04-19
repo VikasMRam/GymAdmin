@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Heading } from 'sly/components/atoms';
+import { Heading, Link } from 'sly/components/atoms';
 
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import CareServicesList from 'sly/components/organisms/CareServicesList';
@@ -9,6 +9,15 @@ import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailabil
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import OwnerStory from 'sly/components/organisms/OwnerStory';
+
+// TODO: remove this
+const nextUri = (() => {
+  const uris = ['rhoda-goldman-plaza', 'buena-vista-manor-house'];
+  return (propertySlug) => {
+    const index = uris.indexOf(propertySlug) + 1;
+    return uris[index % 2]; 
+  };
+})();
 
 export default class PropertyDetail extends Component {
   render() {
@@ -54,6 +63,8 @@ export default class PropertyDetail extends Component {
     return (
       <div {...props}>
         <Heading level="hero">{name}</Heading>
+        { /* temp shiz */ }
+        <Link to={`/community/${nextUri(propertySlug)}`}>Link to test navigation cross profile</Link>
         <CollapsibleSection title="Community Details">
           <CommunityDetails
             communityName={name}
