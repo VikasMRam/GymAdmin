@@ -10,14 +10,12 @@ import Checkbox from 'sly/components/molecules/Checkbox';
 const defaultImage =
   'https://d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
 
-const PaddingWrapper = styled.div`
-  padding-bottom: ${size('spacing.large')};
-`;
-
 export const CommunityTileDiv = styled.div`
+  margin-right: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.large')};
+
   position: relative;
   display: flex;
-  column-count: 2;
   border: ${size('border')} solid ${palette('secondary', 0)};
   ${props =>
     props.selected &&
@@ -91,24 +89,22 @@ const CommunityTile = ({
     name, uri, picture, rating, startingRate, numReviews,
   } = community;
   return (
-    <PaddingWrapper onClick={onClick}>
-      <CommunityTileDiv selected={selected}>
-        <CommunityTileImageDiv src={picture || defaultImage} />
-        {selectable && <StyledCheckbox checked={selected} />}
-        <CommunityTileInfoDiv>
-          <CommunityTileTitleDiv>{name}</CommunityTileTitleDiv>
-          <CommunityTilePriceRatingDiv>
-            <div>${startingRate} per month</div>
-            <CommunityTileyRatingDiv>
-              <Rating value={rating} size={size} palette={palette} />
-              <CommunityTileNumberReviewDiv>
-                {numReviews}
-              </CommunityTileNumberReviewDiv>
-            </CommunityTileyRatingDiv>
-          </CommunityTilePriceRatingDiv>
-        </CommunityTileInfoDiv>
-      </CommunityTileDiv>
-    </PaddingWrapper>
+    <CommunityTileDiv selected={selected} onClick={onClick}>
+      <CommunityTileImageDiv src={picture || defaultImage} />
+      {selectable && <StyledCheckbox checked={selected} />}
+      <CommunityTileInfoDiv>
+        <CommunityTileTitleDiv>{name}</CommunityTileTitleDiv>
+        <CommunityTilePriceRatingDiv>
+          <div>${startingRate} per month</div>
+          <CommunityTileyRatingDiv>
+            <Rating value={rating} size={size} palette={palette} />
+            <CommunityTileNumberReviewDiv>
+              {numReviews}
+            </CommunityTileNumberReviewDiv>
+          </CommunityTileyRatingDiv>
+        </CommunityTilePriceRatingDiv>
+      </CommunityTileInfoDiv>
+    </CommunityTileDiv>
   );
 };
 
