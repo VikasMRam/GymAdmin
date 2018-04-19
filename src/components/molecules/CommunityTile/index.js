@@ -61,6 +61,7 @@ export const StyledCheckbox = styled(Checkbox)`
 
 const CommunityTileTitleDiv = styled.div`
   font-size: ${size('text.subtitle')};
+  font-weight: bold;
 `;
 
 const CommunityTilePriceRatingDiv = styled.div`

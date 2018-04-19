@@ -8,6 +8,7 @@ import Rating from 'sly/components/atoms/Rating';
 
 const SimilarCommunityNameDiv = styled.div`
   font-size: ${size('text.subtitle')};
+  font-weight: bold;
 `;
 
 const SimilarCommunityPriceRatingDiv = styled.div`
