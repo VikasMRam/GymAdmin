@@ -31,7 +31,7 @@ const Main = styled(PropertyDetail)`
 const Column = styled(ConciergeContainer)`
   display: none;
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: ${size('breakpoint.sizeColumn')}; 
+    width: ${size('layout.sideColumn')}; 
     display: block;
   }
 `;
