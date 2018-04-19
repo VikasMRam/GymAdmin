@@ -54,7 +54,9 @@ export default class CommunityChoice extends Component {
   }
 
   render() {
-    const { options, value, type, ...props } = this.props;
+    const {
+      options, value, type, ...props
+    } = this.props;
     return (
       <Wrapper type={type} {...props}>
         {options &&

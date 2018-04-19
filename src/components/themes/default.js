@@ -67,10 +67,22 @@ theme.sizes = {
   },
 
   tile: {
+    tiny: {
+      width:    '7rem',       // 112px
+      height:    '5.25rem',   // 84px
+    },
     small: {
-      width:     '13.500rem',
-      height:     '9.500rem',
-    }
+      width:     '13.500rem', // 216px
+      height:     '9.500rem', // 152px
+    },
+    regular: {
+      width:    '16.875rem',  // 270px
+      height:    '11.25rem',  // 180px
+    },
+    large: {
+      width:    '21.4375rem',  // 343px
+      height:    '14.25rem',   // 228px
+    },
   },
 
   padding: {
@@ -92,6 +104,7 @@ theme.sizes = {
 
   icon: {
     small:        '0.750rem', // 12px
+    medium:       '1.000rem', // 16px
     regular:      '1.500rem', // 24px
     button:       '2.500rem', // 32px
     large:        '3.000rem', // 48px

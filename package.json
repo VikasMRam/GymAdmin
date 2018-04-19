@@ -7,24 +7,19 @@
     "start": "node .",
     "start:prod": "npm run env:prod -- node .",
     "start:staging": "npm run env:staging -- node .",
-
     "predev": "npm run prebuild",
     "dev": "npm run env:dev -- webpack-dev-server",
-
     "prestaging": "npm run prebuild",
     "staging": "npm run build:staging && npm run start:staging",
-
     "build:clean": "rimraf \"dist/!(.git*|Procfile)**\"",
     "build:copy": "copyfiles public/* public/**/* public/**/**/* dist",
     "prebuild": "npm run build:clean && npm run build:copy",
     "build": "webpack",
     "build:prod": "npm run env:prod -- npm run build",
     "build:staging": "npm run env:staging -- npm run build",
-
     "env:dev": "cross-env SLY_ENV=development",
     "env:prod": "cross-env NODE_ENV=production SLY_ENV=production",
     "env:staging": "cross-env NODE_ENV=production SLY_ENV=staging",
-
     "test": "jest",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
@@ -117,6 +112,7 @@
     "query-string": "^5.0.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "react-dotdotdot": "^1.2.3",
     "react-helmet": "^5.0.3",
     "react-hot-loader": "^3.1.1",
     "react-measure": "^2.0.2",
