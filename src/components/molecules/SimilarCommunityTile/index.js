@@ -53,29 +53,11 @@ const ChildrenWrapper = styled.div`
   margin-left: ${size('spacing.xLarge')};
 `;
 
-// const ItemDescription = styled.div`
-//   padding: ${size('spacing.large')};
-// `;
-// const ImageButtonContainer = styled.div`
-//   position: relative;
-
-//   button {
-//     display: none;
-//     position: absolute;
-//     top: 70%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//   }
-// `;
-
 const SimilarCommunityTile = ({ similarProperty, onClick }) => {
   const { mainImage } = similarProperty;
   return (
     <Wrapper onClick={onClick}>
-      {/* <ImageButtonContainer> */}
       <SCTileImage src={mainImage || defaultImage} />
-      {/* <Button onClick={onClick}>Inquire or book a tour</Button> */}
-      {/* </ImageButtonContainer> */}
       <ChildrenWrapper>
         <SimilarCommunityInfo similarProperty={similarProperty} />
       </ChildrenWrapper>
@@ -96,21 +78,20 @@ const SimilarCommunityNameDiv = styled.div`
 
 const SimilarCommunityPriceRatingDiv = styled.div`
   display: flex;
-  // column-count: 3;
   font-size: ${size('text.body')};
 `;
 
 const SimilarCommunityRatingDiv = styled.div`
   display: flex;
-  margin-left: 24px;
+  margin-left: ${size('spacing.xLarge')};
 `;
 
 const SimilarCommunityNumberReviewDiv = styled.div`
-  margin-left: 8px;
+  margin-left: ${size('spacing.regular')};
 `;
 
 const SimilarCommunityDescDiv = styled.div`
-  color: #8f9ca4;
+  color: ${palette('grayscale', 0)};
 `;
 
 const ClammpedDiv = styled.div`

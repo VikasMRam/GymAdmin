@@ -11,7 +11,7 @@ const defaultImage =
   'https://d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
 
 const PaddingWrapper = styled.div`
-  padding-bottom: 16px;
+  padding-bottom: ${size('spacing.large')};
 `;
 
 export const CommunityTileDiv = styled.div`
@@ -46,11 +46,11 @@ export const CommunityTileDiv = styled.div`
 `;
 
 const CommunityTileImageDiv = styled.img`
-  width: 112px;
-  height: 84px;
+  width: ${size('tile', 'communityRCB', 'width')};
+  height: ${size('tile', 'communityRCB', 'height')};
 `;
 const CommunityTileInfoDiv = styled.div`
-  margin: 16px;
+  margin: ${size('spacing.large')};
 `;
 
 export const StyledCheckbox = styled(Checkbox)`
@@ -60,21 +60,21 @@ export const StyledCheckbox = styled(Checkbox)`
 `;
 
 const CommunityTileTitleDiv = styled.div`
-  font-size: 18px;
+  font-size: ${size('text.subtitle')};
 `;
 
 const CommunityTilePriceRatingDiv = styled.div`
   display: flex;
-  font-size: 16px;
+  font-size: ${size('spacing.large')};
 `;
 
 const CommunityTileyRatingDiv = styled.div`
   display: flex;
-  margin-left: 24px;
+  margin-left: ${size('spacing.xLarge')};
 `;
 
 const CommunityTileNumberReviewDiv = styled.div`
-  margin-left: 8px;
+  margin-left: ${size('spacing.regular')};
 `;
 
 const CommunityTile = ({

@@ -79,6 +79,10 @@ theme.sizes = {
       width:    '21.4375rem',
       height:    '14.25rem',
     },
+    communityRCB: {
+      width:    '7rem',
+      height:    '5.25rem',
+    },
   },
 
   padding: {
