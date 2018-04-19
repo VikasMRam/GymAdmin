@@ -6,13 +6,14 @@ import numeral from 'numeral';
 import { size } from 'sly/components/themes';
 import { Button, Block, Box } from 'sly/components/atoms';
 
-const TwoColumnWrapper = styled.div`
+const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex-direction: initial;
   }
 `;
+
 const EstimatedCostWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -39,21 +40,19 @@ const EstimatedCost = ({
   to = price + basePer;
 
   return (
-    <Box>
-      <TwoColumnWrapper>
-        <EstimatedCostWrapper>
-          <SpacingBottomRegularWrapper>
-            Estimated cost from ${numeral(from).format('0,0')} to ${numeral(to).format('0,0')} per month*
-          </SpacingBottomRegularWrapper>
-          <Block size="caption">
-            *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area, and the amenities and care services provided at {propertyName}.
-          </Block>
-        </EstimatedCostWrapper>
-        <div>
-          <Button onClick={onGetDetailedPricingClicked}>Get Detailed Pricing</Button>
-        </div>
-      </TwoColumnWrapper>
-    </Box>
+    <StyledBox>
+      <EstimatedCostWrapper>
+        <SpacingBottomRegularWrapper>
+          Estimated cost from ${numeral(from).format('0,0')} to ${numeral(to).format('0,0')} per month*
+        </SpacingBottomRegularWrapper>
+        <Block size="caption">
+          *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area, and the amenities and care services provided at {propertyName}.
+        </Block>
+      </EstimatedCostWrapper>
+      <div>
+        <Button onClick={onGetDetailedPricingClicked}>Get Detailed Pricing</Button>
+      </div>
+    </StyledBox>
   );
 };
 

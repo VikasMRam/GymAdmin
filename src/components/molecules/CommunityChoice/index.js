@@ -62,14 +62,12 @@ export default class CommunityChoice extends Component {
         {options &&
           options.map(({ value: option, label, ...props }, i) => (
             <StyledCommunityTile
+              key={option+i}
               selectable
               selected={value.includes(option)}
-              key={option + i}
               onClick={() => this.onClick(option)}
               {...props}
-            >
-              {label}
-            </StyledCommunityTile>
+            />
           ))}
       </Wrapper>
     );

@@ -6,6 +6,7 @@ import { bool, string, shape, number, func } from 'prop-types';
 import { size } from 'sly/components/themes';
 import Rating from 'sly/components/atoms/Rating';
 import { Input } from 'sly/components/atoms';
+import Checkbox from 'sly/components/molecules/Checkbox';
 
 const defaultImage =
   'https://d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
@@ -53,6 +54,12 @@ const CommunityTileInfoDiv = styled.div`
   margin: 16px;
 `;
 
+const StyledCheckbox = styled(Checkbox)`
+  position: absolute;
+  top: ${size('spacing.small')};
+  right: ${size('spacing.small')};
+`;
+
 const CommunityTileTitleDiv = styled.div`
   font-size: 18px;
 `;
@@ -71,12 +78,6 @@ const CommunityTileNumberReviewDiv = styled.div`
   margin-left: 8px;
 `;
 
-const Checkbox = styled(Input)`
-  position: absolute;
-  top: ${size('spacing.small')};
-  left: ${size('spacing.small')};
-`;
-
 const CommunityTile = ({
   size,
   palette,
@@ -84,6 +85,7 @@ const CommunityTile = ({
   selectable,
   selected,
   onClick,
+  ...props
 }) => {
   const {
     name, uri, picture, rating, startingRate, numReviews,
@@ -92,7 +94,7 @@ const CommunityTile = ({
     <PaddingWrapper onClick={onClick}>
       <CommunityTileDiv selected={selected}>
         <CommunityTileImageDiv src={picture || defaultImage} />
-        {selectable && <Checkbox type="checkbox" checked={selected} />}
+        {selectable && <StyledCheckbox checked={selected} />}
         <CommunityTileInfoDiv>
           <CommunityTileTitleDiv>{name}</CommunityTileTitleDiv>
           <CommunityTilePriceRatingDiv>

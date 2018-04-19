@@ -6,9 +6,6 @@ import SimilarCommunitiesForm from '.';
 
 const SimilarCommunitiesFormContainer = reduxForm({
   form: 'SimilarCommunitiesForm',
-  initialValues: {
-    similar_communities: [],
-  },
 })(SimilarCommunitiesForm);
 
 const community = {
@@ -22,7 +19,7 @@ const community = {
   numReviews: 50,
 };
 
-const communities = [community, community, community, community];
+const communities = [community, community, community, community].map((c, i) => ({ ...c, id: `${c.id}_${i}` }));
 
 const tags = ['shared room', "alzheirmer's", 'san francisco'];
 
@@ -31,5 +28,9 @@ storiesOf('Organisms|SimilarCommunitiesForm', module).add('default', () => (
     handleSubmit={action('submit!')}
     tags={tags}
     communities={communities}
+    initialValues={{
+      similar_tags: [],
+      similar_communities: [],
+    }}
   />
 ));

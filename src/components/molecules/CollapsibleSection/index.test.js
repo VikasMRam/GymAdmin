@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import Measure from 'react-measure';
 import CollapsibleSection, { Header } from '.';
 
@@ -22,7 +22,7 @@ describe('CollapsibleSection', () => {
     const heading = wrapper.find(Header);
 
     expect(wrapper.state()).toEqual({ collapsed: true });
-    heading.simulate('click'); 
+    heading.simulate('click');
     expect(wrapper.state()).toEqual({ collapsed: false });
   });
 

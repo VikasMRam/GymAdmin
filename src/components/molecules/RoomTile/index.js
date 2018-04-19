@@ -14,7 +14,7 @@ const defaultImage = '//d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a81436
 
 const Wrapper = styled.div`
     display: inline-block;
-    border: ${size('border')} solid ${palette('grayscale', 0, true)};
+    border: ${size('border')} solid ${palette('grayscale', 2)};
     width: 100%;
     transition: box-shadow ${key('transitions.default')}, opacity ${key('transitions.default')};
     @media screen and (min-width: ${size('breakpoint.mobile')}) {

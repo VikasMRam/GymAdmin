@@ -23,7 +23,7 @@ const foregroundColor = ({ ghost, disabled, transparent, selectable, selected })
       ? palette(0)
       : (selectable && !selected)
         ? palette('grayscale', 1)
-        : transparent ? 'none' : palette('white', 2);
+        : transparent ? 'none' : palette('white', 0);
 
 const borderColor = ({ ghost, disabled, selectable, selected }) => {
   if (selectable && !selected) {
