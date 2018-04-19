@@ -14,7 +14,7 @@ const defaultImage =
 const Wrapper = styled.div`
   display: inline-block;
   border: ${size('border')} solid ${palette('grayscale', 2)};
-  width: ${size('tile', 'mediumSC', 'width')};
+  width: ${size('tile', 'large', 'width')};
   transition: box-shadow ${key('transitions.default')},
     opacity ${key('transitions.default')};
 
@@ -37,12 +37,12 @@ const Wrapper = styled.div`
 `;
 
 const SCTileImage = styled.img`
-  width: ${size('tile', 'mediumSC', 'width')};
-  height: ${size('tile', 'mediumSC', 'height')};
+  width: ${size('tile', 'large', 'width')};
+  height: ${size('tile', 'large', 'height')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('tile', 'smallSC', 'width')};
-    height: ${size('tile', 'smallSC', 'height')};
+    width: ${size('tile', 'regular', 'width')};
+    height: ${size('tile', 'regular', 'height')};
   }
 `;
 

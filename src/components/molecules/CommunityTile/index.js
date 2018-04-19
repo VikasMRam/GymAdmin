@@ -44,8 +44,8 @@ export const CommunityTileDiv = styled.div`
 `;
 
 const CommunityTileImageDiv = styled.img`
-  width: ${size('tile', 'communityRCB', 'width')};
-  height: ${size('tile', 'communityRCB', 'height')};
+  width: ${size('tile', 'tiny', 'width')};
+  height: ${size('tile', 'tiny', 'height')};
 `;
 const CommunityTileInfoDiv = styled.div`
   margin: ${size('spacing.large')};
