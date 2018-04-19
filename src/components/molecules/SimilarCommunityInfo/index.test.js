@@ -36,20 +36,14 @@ describe('SimilarCommunityInfo', () => {
     expect(wrapper
       .childAt(1)
       .childAt(0)
-      .text()).toEqual('$4500 per month');
+      .html()).toEqual('<div>$4500 per month</div>');
     // expect(wrapper
     //   .childAt(1)
     //   .childAt(1)
     //   .childAt(0)
     //   .contains('Rating')).toBeTruthy();
-    expect(wrapper
-      .childAt(2)
-      .dive()
-      .text()).toEqual('Care Type: A, B');
-    expect(wrapper
-      .childAt(3)
-      .dive()
-      .text()).toEqual('Floor Plans: 1 Bedroom, Studio');
+    expect(wrapper.childAt(2).html()).toEqual('<div>Care Type: A, B</div>');
+    expect(wrapper.childAt(3).html()).toEqual('<div>Floor Plans: 1 Bedroom, Studio</div>');
     expect(wrapper.childAt(4).contains('description')).toBe(true);
 
     // expect(wrapper.find('Rating[size="medium"]')).toHaveLength(1);
