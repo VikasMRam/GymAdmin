@@ -15,11 +15,10 @@ import {
 
 import Thankyou from 'sly/components/molecules/Thankyou';
 import ConversionFormContainer from 'sly/containers/ConversionFormContainer';
-import RCBModalContainer from 'sly/containers/RCBModalContainer';
+import RCBModal from 'sly/components/organisms/RCBModal';
 
 import {
   resourceDetailReadRequest,
-  resourceCreateRequest,
 } from 'sly/store/resource/actions';
 
 
@@ -34,21 +33,20 @@ class ConciergeContainer extends Component {
     userRequestedCB: false,
   };
 
-  submit = data => {
-    const { submit } = this.props;
-    submit(data);
-  }
-
   render() {
     const { userRequestedCB, property, className } = this.props;
-    return [ 
+    const column = (
       <div key="column" className={className}>
         { userRequestedCB
-            ? <ConversionFormContainer onSubmit={this.submit} />
-            : <Thankyou community={property} onClose={() => {}} />
+          ? <ConversionFormContainer />
+          : <Thankyou community={property} onClose={() => {}} />
         }
-      </div>,
-      <RCBModalContainer key="modal" onClose={()=>{}} />
+      </div>
+    );
+    // I return an array here as RCBModal is not even rendered here in the three
+    return [ 
+      column,
+      <RCBModal key="modal" onClose={()=>{}} />
     ];
   }
 }
@@ -59,11 +57,4 @@ const mapStateToProps = (state, { propertySlug, userActions, property }) => {
   return { userRequestedCB, property };
 };
 
-const mapDispatchToProps = (dispatch, { propertySlug }) => ({
-  submit: data => {
-    data.slug = propertySlug;
-    return dispatch(resourceCreateRequest('userAction', data));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ConciergeContainer);
+export default connect(mapStateToProps)(ConciergeContainer);

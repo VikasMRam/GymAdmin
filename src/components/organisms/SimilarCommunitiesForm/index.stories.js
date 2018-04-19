@@ -6,6 +6,10 @@ import SimilarCommunitiesForm from '.';
 
 const SimilarCommunitiesFormContainer = reduxForm({
   form: 'SimilarCommunitiesForm',
+  initialValues: {
+    similar_tags: [],
+    similar_communities: ['rhoda-goldman-plaza_1'],
+  },
 })(SimilarCommunitiesForm);
 
 const community = {
@@ -28,9 +32,5 @@ storiesOf('Organisms|SimilarCommunitiesForm', module).add('default', () => (
     handleSubmit={action('submit!')}
     tags={tags}
     communities={communities}
-    initialValues={{
-      similar_tags: [],
-      similar_communities: [],
-    }}
   />
 ));

@@ -1,5 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
+
+import { REQUEST_CALLBACK } from 'sly/services/api/actions';
+
+import {
+  resourceCreateRequest,
+} from 'sly/store/resource/actions';
 
 import {
   createValidator,
@@ -16,11 +23,36 @@ const validate = createValidator({
   phone: [required, usPhone],
 });
 
-const ConversionFormContainer = reduxForm({
+const ReduxForm = reduxForm({
   form: 'ConversionForm',
   destroyOnUnmount: false,
   validate,
 })(ConversionForm);
 
-export default ConversionFormContainer;
+class ConversionFormContainer extends Component {
+  submit = data => {
+    const { submit, propertySlug } = this.props;
+    submit({
+      action: REQUEST_CALLBACK, 
+      value: {
+        user: { ...data },
+        propertyIds: [propertySlug],
+      }
+    });
+  }
+
+  render() {
+    const { submit, ...props } = this.props;
+    return <ReduxForm onSubmit={this.submit} {...props} />;
+  }
+}
+
+const mapDispatchToProps = (dispatch, { propertySlug }) => ({
+  submit: data => {
+    data.slug = propertySlug;
+    return dispatch(resourceCreateRequest('userAction', data));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(ConversionFormContainer);
 
