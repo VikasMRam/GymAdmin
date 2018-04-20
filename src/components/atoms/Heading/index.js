@@ -18,13 +18,12 @@ const getLevel = size => {
 };
 
 const styles = css`
-  font-weight: normal;
   font-size: ${fontSize};
   line-height: ${lineHeight};
   // TODO: review this with @jared,
   // for now let's make margin-bottom relative to font-size
   margin: 0 0 1em 0;
-  color: ${palette({ grayscale: 0 }, 1)};
+  color: ${palette(0)};
 `;
 
 const Heading = styled(({
@@ -43,7 +42,7 @@ Heading.propTypes = {
 
 Heading.defaultProps = {
   level: 'title',
-  palette: 'grayscale',
+  palette: 'slate',
 };
 
 export default Heading;

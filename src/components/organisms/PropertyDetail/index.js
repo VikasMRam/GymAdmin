@@ -6,16 +6,40 @@ import CareServicesList from 'sly/components/organisms/CareServicesList';
 import PropertyReviews from 'sly/components/organisms/PropertyReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailability';
+import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
+import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
+import OwnerStory from 'sly/components/organisms/OwnerStory';
 
 export default class PropertyDetail extends Component {
   render() {
     const { property, propertySlug, ...props } = this.props;
     const {
-      name, propInfo, propRatings, reviews, address, rgsAux, floorPlans,
+      name,
+      propInfo,
+      propRatings,
+      reviews,
+      address,
+      rgsAux,
+      floorPlans,
+      similarProperties,
     } = property;
     const { careServices, serviceHighlights } = propInfo;
     const {
-      communityDescription, staffDescription, residentDescription,
+      communityDescription,
+      staffDescription,
+      residentDescription,
+      ownerExprience,
+    } = propInfo;
+    const {
+      communityHighlights,
+      personalSpace,
+      personalSpaceOther,
+      communitySpace,
+      communitySpaceOther,
+      nonCareServices,
+      nonCareServicesOther,
+      languages,
+      languagesOther,
     } = propInfo;
     // TODO: move this to a container for PropertyReviews handling posts
     const onLeaveReview = () => {};
@@ -47,12 +71,32 @@ export default class PropertyDetail extends Component {
             onInquireOrBookClicked={onInquireOrBookClicked}
           />
         </CollapsibleSection>
+        <CollapsibleSection title="Similar Communities">
+          <SimilarCommunities similarProperties={similarProperties} />
+        </CollapsibleSection>
         <CollapsibleSection title="Care Services">
           <CareServicesList
             propertyName={name}
             careServices={careServices}
             serviceHighlights={serviceHighlights}
           />
+        </CollapsibleSection>
+        <CollapsibleSection title="Amenities & Features">
+          <AmenitiesAndFeatures
+            propertyName={name}
+            communityHighlights={communityHighlights}
+            personalSpace={personalSpace}
+            personalSpaceOther={personalSpaceOther}
+            communitySpace={communitySpace}
+            communitySpaceOther={communitySpaceOther}
+            nonCareServices={nonCareServices}
+            nonCareServicesOther={nonCareServicesOther}
+            languages={languages}
+            languagesOther={languagesOther}
+          />
+        </CollapsibleSection>
+        <CollapsibleSection title="Owner's Story">
+          <OwnerStory ownerExprience={ownerExprience} />
         </CollapsibleSection>
         <CollapsibleSection title="Reviews">
           <PropertyReviews

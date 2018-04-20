@@ -3,11 +3,12 @@ import { reversePalette } from 'styled-theme/composer';
 const theme = {};
 
 theme.palette = {
-  primary:   ['#2f8fcb', '#80bae1', '#007fb6'],
-  secondary: ['#7ccdcc', '#aee1e0', '#4fb4b3'],
-  danger:    ['#c54e5b', '#dd939b', '#a92f42'],
-  white:     ['#e7edef', '#f3f5f6', '#ffffff'],
-  grayscale: ['#384c57', '#9ca8af', '#c6d0c5'],
+  slate:     ['#384c57'],
+  white:     ['#fff'],
+  primary:   ['#2f8fcb', '#2483be', '#63abd8'],
+  secondary: ['#7ccdcc', '#65c0bf', '#8bdbda', '#f4ffff'],
+  grayscale: ['#8f9ca4', '#9ca8af', '#c5d0d5', '#f2f6f7'],
+  danger:    ['#cc5663'],
 };
 
 theme.reversePalette = reversePalette(theme.palette);
@@ -66,10 +67,22 @@ theme.sizes = {
   },
 
   tile: {
+    tiny: {
+      width:    '7rem',       // 112px
+      height:    '5.25rem',   // 84px
+    },
     small: {
-      width:     '13.500rem',
-      height:     '9.500rem',
-    }
+      width:     '13.500rem', // 216px
+      height:     '9.500rem', // 152px
+    },
+    regular: {
+      width:    '16.875rem',  // 270px
+      height:    '11.25rem',  // 180px
+    },
+    large: {
+      width:    '21.4375rem',  // 343px
+      height:    '14.25rem',   // 228px
+    },
   },
 
   padding: {
@@ -91,6 +104,7 @@ theme.sizes = {
 
   icon: {
     small:        '0.750rem', // 12px
+    medium:       '1.000rem', // 16px
     regular:      '1.500rem', // 24px
     button:       '2.500rem', // 32px
     large:        '3.000rem', // 48px

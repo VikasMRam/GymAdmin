@@ -52,7 +52,9 @@ const renderHtml = ({
 
 const app = express();
 
-app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
+if (publicPath.match(/^\//)) {
+  app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
+}
 
 app.use((req, res, next) => {
   const api = apiService.create();

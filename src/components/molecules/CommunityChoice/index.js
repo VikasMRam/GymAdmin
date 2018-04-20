@@ -54,20 +54,20 @@ export default class CommunityChoice extends Component {
   }
 
   render() {
-    const { options, value, type, ...props } = this.props;
+    const {
+      options, value, type, ...props
+    } = this.props;
     return (
       <Wrapper type={type} {...props}>
         {options &&
           options.map(({ value: option, label, ...props }, i) => (
             <StyledCommunityTile
-              selectable
-              ghost={!value.includes(option)}
               key={option+i}
+              selectable
+              selected={value.includes(option)}
               onClick={() => this.onClick(option)}
               {...props}
-            >
-              {label}
-            </StyledCommunityTile>
+            />
           ))}
       </Wrapper>
     );
