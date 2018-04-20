@@ -13,7 +13,7 @@ const reviewRating = {
 };
 
 const review = {
-  id: 1,
+  id: '1',
   value: 3.5,
   author: 'Pranesh',
   createdAt: '2018-04-20T04:26:04.418Z',
