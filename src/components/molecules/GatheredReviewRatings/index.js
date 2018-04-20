@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { arrayOf, shape, string, number, func } from 'prop-types';
 import styled from 'styled-components';
-// import Link from 'react-router-dom/Link';
+import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 import { Button, Hr } from 'sly/components/atoms';
@@ -39,7 +39,9 @@ const HRDiv = styled.div`
   padding-top: ${size('spacing.xLarge')};
 `;
 
-const Link = styled.a``;
+const Link = styled.a`
+  color: ${palette('primary', 2)};
+`;
 
 export default class GatheredReviewRatings extends Component {
   static propTypes = {
