@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { Heading } from 'sly/components/atoms';
+import { Heading, Paragraph } from 'sly/components/atoms';
 
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
@@ -16,13 +16,9 @@ let {
 } = propInfo;
 communityHighlights = communityHighlights || [];
 personalSpace = personalSpace || [];
-personalSpaceOther = personalSpaceOther || [];
 communitySpace = communitySpace || [];
-communitySpaceOther = communitySpaceOther || [];
 nonCareServices = nonCareServices || [];
-nonCareServicesOther = nonCareServicesOther || [];
 languages = languages || [];
-languagesOther = languagesOther || [];
 
 
 describe('AmenitiesAndFeatures', () => {
@@ -55,15 +51,19 @@ describe('AmenitiesAndFeatures', () => {
       personalSpace,
       personalSpaceOther,
     });
-    const allPersonalSpace = personalSpace.concat(personalSpaceOther);
 
     const articleElem = wrapper.find('#amenities-and-features-personal-space');
     expect(articleElem.find(Heading).text()).toContain('Personal Space/Amenities');
     const elements = articleElem.find('ul').children();
-    expect(elements).toHaveLength(allPersonalSpace.length);
+    expect(elements).toHaveLength(personalSpace.length);
     elements.forEach((hl, i) => {
-      expect(hl.text()).toContain(allPersonalSpace[i]);
+      expect(hl.text()).toContain(personalSpace[i]);
     });
+    if (personalSpaceOther) {
+      expect(articleElem.find(Paragraph).text()).toContain(personalSpaceOther);
+    } else {
+      expect(articleElem.find(Paragraph)).toHaveLength(0);
+    }
   });
 
   it('verify communitySpace shown', () => {
@@ -75,15 +75,19 @@ describe('AmenitiesAndFeatures', () => {
       communitySpace,
       communitySpaceOther,
     });
-    const allCommunitySpace = communitySpace.concat(communitySpaceOther);
 
     const articleElem = wrapper.find('#amenities-and-features-community-space');
     expect(articleElem.find(Heading).text()).toContain('Community Space/Neighborhood');
     const elements = articleElem.find('ul').children();
-    expect(elements).toHaveLength(allCommunitySpace.length);
+    expect(elements).toHaveLength(communitySpace.length);
     elements.forEach((hl, i) => {
-      expect(hl.text()).toContain(allCommunitySpace[i]);
+      expect(hl.text()).toContain(communitySpace[i]);
     });
+    if (communitySpaceOther) {
+      expect(articleElem.find(Paragraph).text()).toContain(communitySpaceOther);
+    } else {
+      expect(articleElem.find(Paragraph)).toHaveLength(0);
+    }
   });
 
   it('verify nonCareServices shown', () => {
@@ -97,15 +101,19 @@ describe('AmenitiesAndFeatures', () => {
       nonCareServices,
       nonCareServicesOther,
     });
-    const allNonCareServices = nonCareServices.concat(nonCareServicesOther);
 
     const articleElem = wrapper.find('#amenities-and-features-noncare-services');
     expect(articleElem.find(Heading).text()).toContain('Activities & other services');
     const elements = articleElem.find('ul').children();
-    expect(elements).toHaveLength(allNonCareServices.length);
+    expect(elements).toHaveLength(nonCareServices.length);
     elements.forEach((hl, i) => {
-      expect(hl.text()).toContain(allNonCareServices[i]);
+      expect(hl.text()).toContain(nonCareServices[i]);
     });
+    if (nonCareServicesOther) {
+      expect(articleElem.find(Paragraph).text()).toContain(nonCareServicesOther);
+    } else {
+      expect(articleElem.find(Paragraph)).toHaveLength(0);
+    }
   });
 
   it('verify languages shown', () => {
@@ -121,14 +129,18 @@ describe('AmenitiesAndFeatures', () => {
       languages,
       languagesOther,
     });
-    const allLanguages = languages.concat(languagesOther);
 
     const articleElem = wrapper.find('#amenities-and-features-languages');
     expect(articleElem.find(Heading).text()).toContain('Resident Languages');
     const elements = articleElem.find('ul').children();
-    expect(elements).toHaveLength(allLanguages.length);
+    expect(elements).toHaveLength(languages.length);
     elements.forEach((hl, i) => {
-      expect(hl.text()).toContain(allLanguages[i]);
+      expect(hl.text()).toContain(languages[i]);
     });
+    if (languagesOther) {
+      expect(articleElem.find(Paragraph).text()).toContain(languagesOther);
+    } else {
+      expect(articleElem.find(Paragraph)).toHaveLength(0);
+    }
   });
 });
