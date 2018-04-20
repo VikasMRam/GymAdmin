@@ -60,7 +60,9 @@ export default class GatheredReviewRatings extends Component {
         <ReviewDiv key={review.name}>
           <Rating value={review.avgRating} />
           <ReviewProviderDiv>
-            <Link href={review.reviewsUrl}>{review.name}</Link>
+            <Link href={review.reviewsUrl} target="_blank">
+              {review.name}
+            </Link>
           </ReviewProviderDiv>
         </ReviewDiv>
       );
