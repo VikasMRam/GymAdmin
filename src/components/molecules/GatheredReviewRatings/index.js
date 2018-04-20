@@ -11,7 +11,7 @@ const ReviewHeadingDiv = styled.div`
   padding-top: ${size('spacing.xLarge')};
 `;
 
-const ReviewDiv = styled.div`
+export const ReviewDiv = styled.div`
   padding-top: ${size('spacing.large')};
   padding-right: ${size('spacing.large')};
   display: flex;
@@ -49,7 +49,7 @@ export default class GatheredReviewRatings extends Component {
       reviewsUrl: string.isRequired,
       avgRating: number.isRequired,
     })).isRequired,
-    onLeaveReview: func.isRequired,
+    onLeaveReview: func,
   };
   render() {
     const { reviewRatings, onLeaveReview } = this.props;
@@ -74,7 +74,7 @@ export default class GatheredReviewRatings extends Component {
             <HRDiv>
               <Hr />
             </HRDiv>
-            <LeaveAReviewTextDiv>
+            {/* <LeaveAReviewTextDiv>
               If you are familiar with this community, your review will help
               other families in a similar situation make a more informed
               decision.
@@ -82,7 +82,7 @@ export default class GatheredReviewRatings extends Component {
             <LeaveAReviewButtonDiv>
               <Button onClick={onLeaveReview}>Leave a Review</Button>
             </LeaveAReviewButtonDiv>
-            <Hr />
+            <Hr /> */}
           </div>
         )}
       </div>
