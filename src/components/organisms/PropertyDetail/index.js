@@ -15,7 +15,7 @@ const nextUri = (() => {
   const uris = ['rhoda-goldman-plaza', 'buena-vista-manor-house'];
   return (propertySlug) => {
     const index = uris.indexOf(propertySlug) + 1;
-    return uris[index % 2]; 
+    return uris[index % 2];
   };
 })();
 
@@ -54,6 +54,7 @@ export default class PropertyDetail extends Component {
     const onLeaveReview = () => {};
     // TODO: move this to a container PricingAndAvailability for handling bookings
     const onInquireOrBookClicked = () => {};
+    const { hasSlyReviews, hasWebReviews } = propRatings;
     const ratingsArray = propRatings.ratingsArray || [];
     const reviewsFinal = reviews || [];
     const roomPrices = floorPlans.map(({ info }) => info);
@@ -63,8 +64,10 @@ export default class PropertyDetail extends Component {
     return (
       <div {...props}>
         <Heading level="hero">{name}</Heading>
-        { /* temp shiz */ }
-        <Link to={`/community/${nextUri(propertySlug)}`}>Link to test navigation cross profile</Link>
+        {/* temp shiz */}
+        <Link to={`/community/${nextUri(propertySlug)}`}>
+          Link to test navigation cross profile
+        </Link>
         <CollapsibleSection title="Community Details">
           <CommunityDetails
             communityName={name}
@@ -111,6 +114,8 @@ export default class PropertyDetail extends Component {
         </CollapsibleSection>
         <CollapsibleSection title="Reviews">
           <PropertyReviews
+            hasSlyReviews={hasSlyReviews}
+            hasWebReviews={hasWebReviews}
             reviews={reviewsFinal}
             reviewRatings={ratingsArray}
             onLeaveReview={onLeaveReview}

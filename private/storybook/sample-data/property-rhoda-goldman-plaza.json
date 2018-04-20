@@ -15,26 +15,16 @@
           "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%2520and%2520tablet_sd.jpg"
       }
     ],
-    "ownerExprience": "Sunrise Senior Living’s unique resident-centered services are delivered by a team trained to enable freedom of choice, encourage independence, preserve dignity, and protect the privacy of each resident. This approach enables us to continue championing quality of life for all seniors — it’s been our mission since 1981, and it’s what has made Sunrise Senior Living the premier provider of senior living services.",
+    "ownerExprience":
+      "Sunrise Senior Living’s unique resident-centered services are delivered by a team trained to enable freedom of choice, encourage independence, preserve dignity, and protect the privacy of each resident. This approach enables us to continue championing quality of life for all seniors — it’s been our mission since 1981, and it’s what has made Sunrise Senior Living the premier provider of senior living services.",
     "ratesText": "$6,027",
     "licenseNumber": "385600125",
     "ownerName": "Scott Street Senior Housing",
     "ownerYears": "2000",
-    "languages": [
-      "English"
-    ],
-    "languagesOther": [
-      "Mandarin",
-      "Cantonese"
-    ],
-    "communitySpace": [
-      "Dining Room",
-      "Restaurant Style Dining"
-    ],
-    "communitySpaceOther": [
-      "Café",
-      "Small Library"
-    ],
+    "languages": ["English"],
+    "languagesOther": "Mandarin",
+    "communitySpace": ["Dining Room", "Restaurant Style Dining"],
+    "communitySpaceOther": "Café",
     "personalSpace": [
       "2-Bedroom Apartments",
       "1-Bedroom Apartments",
@@ -119,7 +109,7 @@
     "yelpUrl": "http://www.yelp.com/biz/rhoda-goldman-plaza-san-francisco"
   },
   "propRatings": {
-    "hasWebReviews": false,
+    "hasWebReviews": true,
     "hasSlyReviews": false,
     "ratingsArray": [
       {
@@ -151,14 +141,14 @@
         "avgRating": 4.13
       }
     ],
-    "reviewsValue": 0,
-    "numReviews": 0
+    "reviewsValue": 4.0540543,
+    "numReviews": 37
   },
   "slyPhoneNumber": "",
   "slyScore": 96.4873417721519,
   "startingRate": 6027,
   "status": 2,
-  "updatedAt": "2018-04-12T02:40:33Z",
+  "updatedAt": "2018-04-20T08:25:56Z",
   "url": "/assisted-living/california/san-francisco/rhoda-goldman-plaza",
   "address": {
     "id": "2707e29ff183af005487e959a086dea0",
@@ -179,7 +169,8 @@
       "createdAt": "2015-10-10T23:46:34Z",
       "info": {
         "title": "Beautiful, quiet private studio available now!",
-        "description": "This is a lovely unfurnished apartment in a boutique style community.  Kitchenettes are provided in all of our rooms. It has a large private bathroom with a shower. It has a large closet and 300 Sq. Ft. to bring your twin or full size bed, and several other pieces that will fit nicely to furnish your new home.",
+        "description":
+          "This is a lovely unfurnished apartment in a boutique style community.  Kitchenettes are provided in all of our rooms. It has a large private bathroom with a shower. It has a large closet and 300 Sq. Ft. to bring your twin or full size bed, and several other pieces that will fit nicely to furnish your new home.",
         "roomType": "Studio",
         "shareType": "Private",
         "accessibility": "Ambulatory or Non Ambulatory",
@@ -195,7 +186,8 @@
       "createdAt": "2015-10-10T23:48:48Z",
       "info": {
         "title": "Beautiful, quiet private studio available now!",
-        "description": "This is a lovely unfurnished apartment in a boutique style community.  Kitchenettes are provided in all of our rooms. It has a large private bathroom with a shower. It has a large closet and 300 Sq. Ft. to bring your twin or full size bed, and several other pieces that will fit nicely to furnish your new home.",
+        "description":
+          "This is a lovely unfurnished apartment in a boutique style community.  Kitchenettes are provided in all of our rooms. It has a large private bathroom with a shower. It has a large closet and 300 Sq. Ft. to bring your twin or full size bed, and several other pieces that will fit nicely to furnish your new home.",
         "roomType": "Studio",
         "shareType": "Private",
         "accessibility": "Ambulatory or Non Ambulatory",
@@ -211,7 +203,8 @@
       "createdAt": "2015-10-10T23:52:00Z",
       "info": {
         "title": "Beautiful, quiet private one bedroom available now!",
-        "description": "This is a lovely unfurnished apartment in a boutique style community.  Kitchenettes are provided in all of our rooms. It has a large private bathroom with a shower.  It has 2 semi private living spaces so you can either share with a companion or have a bedroom and a living room area.  It has 2 closets  and provides 410 Sq. Ft. for you to bring up to a queen size bed, and several other pieces that will fit nicely to furnish your new home.",
+        "description":
+          "This is a lovely unfurnished apartment in a boutique style community.  Kitchenettes are provided in all of our rooms. It has a large private bathroom with a shower.  It has 2 semi private living spaces so you can either share with a companion or have a bedroom and a living room area.  It has 2 closets  and provides 410 Sq. Ft. for you to bring up to a queen size bed, and several other pieces that will fit nicely to furnish your new home.",
         "roomType": "One Bedroom",
         "shareType": "Private",
         "accessibility": "Ambulatory or Non Ambulatory",
@@ -226,9 +219,12 @@
       "id": "a287c90cfae6cd5427d0f5bfbfa9fda6",
       "createdAt": "2015-10-11T00:10:09Z",
       "info": {
-        "image": "https://d1qiigpe5txw4q.cloudfront.net/uploads/c12040412664de0a0c9443dc952ba53b/63047_SunriseofSanMateo_SanMateo_CA_AptBed_sd.jpg",
-        "title": "Private studio open in our lovely memory care neighborhood now!",
-        "description": "This is a private studio that has 300 Sq. Ft. of space.  It is very bright and has a nice view in a quiet residential neighborhood.",
+        "image":
+          "https://d1qiigpe5txw4q.cloudfront.net/uploads/c12040412664de0a0c9443dc952ba53b/63047_SunriseofSanMateo_SanMateo_CA_AptBed_sd.jpg",
+        "title":
+          "Private studio open in our lovely memory care neighborhood now!",
+        "description":
+          "This is a private studio that has 300 Sq. Ft. of space.  It is very bright and has a nice view in a quiet residential neighborhood.",
         "roomType": "Studio",
         "shareType": "Private",
         "accessibility": "Ambulatory or Non Ambulatory",
@@ -244,7 +240,8 @@
       "createdAt": "2015-10-11T00:00:22Z",
       "info": {
         "title": "Beautiful, quiet private studio available now!",
-        "description": "This is a lovely unfurnished apartment in our boutique style community.  Kitchenettes are provided in all of our rooms. It has a large shared bathroom with a shower.  It has a shared kitchenette area and It has a private bedroom with a door to close for privacy.",
+        "description":
+          "This is a lovely unfurnished apartment in our boutique style community.  Kitchenettes are provided in all of our rooms. It has a large shared bathroom with a shower.  It has a shared kitchenette area and It has a private bedroom with a door to close for privacy.",
         "roomType": "Two Bedroom",
         "shareType": "Shared",
         "accessibility": "Ambulatory or Non Ambulatory",
@@ -260,9 +257,12 @@
       "id": "6af36a82804687edc00fed8df64eee73",
       "createdAt": "2015-10-11T00:05:54Z",
       "info": {
-        "image": "https://d1qiigpe5txw4q.cloudfront.net/uploads/c12040412664de0a0c9443dc952ba53b/63047_SunriseofSanMateo_SanMateo_CA_AptBed_sd.jpg",
-        "title": "Shared, bright Studio Apartment with 2 windows available now!",
-        "description": "This is a corner room has 325 Sq. Ft. of shared space.  The room is very bright as it has windows on 2 sides.  The bathroom will also be shared.  Roommate is very quiet and kind female.",
+        "image":
+          "https://d1qiigpe5txw4q.cloudfront.net/uploads/c12040412664de0a0c9443dc952ba53b/63047_SunriseofSanMateo_SanMateo_CA_AptBed_sd.jpg",
+        "title":
+          "Shared, bright Studio Apartment with 2 windows available now!",
+        "description":
+          "This is a corner room has 325 Sq. Ft. of shared space.  The room is very bright as it has windows on 2 sides.  The bathroom will also be shared.  Roommate is very quiet and kind female.",
         "roomType": "Studio",
         "shareType": "Shared",
         "accessibility": "Ambulatory or Non Ambulatory",
@@ -277,7 +277,7 @@
   "gallery": {
     "id": "c3e2a85523a03b2c3f9bbf1af19d21e9",
     "createdAt": "2015-04-10T22:38:59Z",
-    "updatedAt": "2018-04-12T02:39:08Z",
+    "updatedAt": "2018-04-20T06:58:07Z",
     "images": [
       {
         "id": "ddb49929f3915891cb67da8ad0ea663e",
@@ -471,19 +471,9 @@
     "updatedAt": "2015-05-21T23:51:57Z",
     "users": []
   },
-  "reviews": [
-    {
-      "id": "762b7f6b596ea519be9b7e3d95581b79",
-      "author": "Pranesh",
-      "comments": "Best Senior Living Community Ever seen",
-      "published": true,
-      "value": 5,
-      "createdAt": "2018-04-12T04:55:38Z",
-      "updatedAt": "2018-04-12T04:55:38Z"
-    }
-  ],
+  "reviews": [],
   "rgsAux": {
-    "id": "1812fd15b4cb90eac10a5539df4c97b6",
+    "id": "ea96683a131d1a159ea13fb9a217fd76",
     "amenityScore": "",
     "estimatedPrice": {
       "providedAverage": 7046,
@@ -496,626 +486,47 @@
   },
   "similarProperties": [
     {
-      "id": "speede-s-assisted-living",
-      "createdAt": "2014-10-22T04:46:14Z",
+      "id": "agesong-laguna-grove-care",
+      "createdAt": "2014-12-03T00:55:25Z",
       "mainImage":
-        "https://d1qiigpe5txw4q.cloudfront.net/uploads/14077fcae3281ebb7ec0f56745ea9497/FRONT1_DSC_0157_sm_sd.jpg",
-      "name": "Speede's Assisted Living",
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2_sd.jpg",
+      "name": "AgeSong Laguna Grove Care",
       "phoneNumber": "",
       "propInfo": {
         "roomImage": [
           {
-            "name": "BED1_DSC_0193_sm.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-15.jpg",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/14077fcae3281ebb7ec0f56745ea9497/BED1_DSC_0193_sm_hd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-15_hd.jpg",
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/14077fcae3281ebb7ec0f56745ea9497/BED1_DSC_0193_sm_sd.jpg"
+              "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-15_sd.jpg"
           }
         ],
         "ownerImage": [
           {
-            "name": "BaysidePark_5534.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-11.jpg",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/d3ad519edfef0a75ab6bde1bc36c7861/BaysidePark_5534_hd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-11_hd.jpg",
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/d3ad519edfef0a75ab6bde1bc36c7861/BaysidePark_5534_sd.jpg"
+              "https://d1qiigpe5txw4q.cloudfront.net/uploads/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-11_sd.jpg"
           }
         ],
-        "ratesText": "$4500",
-        "licenseNumber": "08182014",
-        "ownerName": "Jorge Speede",
-        "ownerYears": "2005",
+        "ratesText": "$5,800",
+        "licenseNumber": "385600372",
+        "ownerName": "Nader R. Shabahangi",
+        "ownerYears": "2011",
         "personalSpace": [
-          "2-Bedroom Apartments",
-          "1-Bedroom Apartments",
           "Private Suites",
           "Fully furnished",
-          "Kitchenettes",
-          "Private Bathrooms",
           "Air-conditioning",
           "Telephone",
           "Internet",
           "Cable",
           "Wifi"
         ],
-        "typeCare": ["Assisted Living", "Independent Living", "Memory Care"],
-        "careServices": [
-          "Activities of Daily Living Assistance",
-          "Meal Preparation and Service",
-          "Coordination with Health Care Providers",
-          "Medication Management",
-          "Transportation to Doctors Appointments",
-          "Transportation Arrangement",
-          "24-Hour Call System",
-          "24-Hour Supervision",
-          "Rehabilitation Program",
-          "Respite Program",
-          "Diabetes Diet",
-          "Diabetes Care",
-          "Parkinsons Care",
-          "Mild Cognitive Impairment",
-          "Hospice Waiver",
-          "Dementia Waiver"
-        ],
-        "nonCareServices": [
-          "Move-In Coordination",
-          "Housekeeping & Linen Services",
-          "Fitness Programs",
-          "Continuing Learning Programs",
-          "Resident-Run Activities",
-          "Planned Day Trips"
-        ],
-        "staffDescription":
-          "Our staff all go through training regarding dementia, hospice and other areas of need that our residents may encounter. Our staff love the people that they work with and offer stimulating activities for mind and body.  For them, this a life commitment and not just a job.  We pay particular attention to enabling our seniors to live happily in a warm loving and supportive environment.  Quality of care and attention to detail are our pride. We anticipate the needs of our residents and plan ahead for their care.",
-        "communityDescription":
-          "Jorge's Residential Care Home is located in The City of San Francisco in The China Town District, near a family park. We are 14 bed-facility with a bright sunny environment and green garden. We offer a cozy family atmosphere.",
-        "residentFaith": ["Catholic", "Buddhist", "Jewish"],
-        "residentLanguages": ["English", "Spanish"],
-        "websiteUrl": "Pro.Seniorly.com",
-        "capacity": "155",
-        "secured": "Yes",
-        "communitySize": "51 +",
-        "communityFee": "$500",
-        "alPrivateRate": "$5500",
-        "mcSharedRate": "$7500",
-        "privateSuiteRate": "$6500",
-        "alCareRate": "$500-$1000 additional",
-        "mcCareRate": "$500-$1000 additional",
-        "respiteAllowed": {
-          "label": "Respite Care",
-          "checked": true,
-          "minlength": 14
-        }
-      },
-      "propRatings": {
-        "hasWebReviews": false,
-        "hasSlyReviews": false,
-        "ratingsArray": [
-          {
-            "name": "Yelp",
-            "numReviews": 66,
-            "reviewsUrl":
-              "https://www.yelp.com/biz/benson-tam-dc-benson-chiropractic-san-francisco?adjust_creative=VsZZD5w6K3ruuvIjDlToBw&utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=VsZZD5w6K3ruuvIjDlToBw",
-            "avgRating": 5
-          }
-        ],
-        "reviewsValue": 0,
-        "numReviews": 0
-      },
-      "slyPhoneNumber": "",
-      "slyScore": 91.07594936708861,
-      "startingRate": 4500,
-      "status": 2,
-      "updatedAt": "2018-04-12T02:40:27Z",
-      "url":
-        "/assisted-living/california/san-francisco/speede-s-assisted-living",
-      "address": {
-        "id": "4deb74ff3a97e60a7d924f2abde7920c",
-        "city": "San Francisco",
-        "county": "San Francisco",
-        "latitude": 37.7939601,
-        "line1": "734 Grant Avenue",
-        "line2": "Ste 202",
-        "longitude": -122.4061188,
-        "state": "CA",
-        "zip": "94108"
-      },
-      "communityListings": [],
-      "contacts": [],
-      "floorPlans": [],
-      "gallery": {
-        "id": "d9967384f1b6184363e29388b644ed1b",
-        "createdAt": "2014-10-22T04:46:14Z",
-        "updatedAt": "2018-04-12T02:39:06Z",
-        "images": [
-          {
-            "id": "fbb8c0808e02d34ef263bba6b6aeec8f",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT1_DSC_0157_MED_hd.jpg",
-            "name": "FRONT1_DSC_0157_MED.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/FRONT1_DSC_0157_MED.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT1_DSC_0157_MED_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT1_DSC_0157_MED_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT1_DSC_0157_MED.jpg",
-            "gallery": null
-          },
-          {
-            "id": "c9d4620280879f2524ced6796c594ef9",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT1_DSC_0157_sm_hd.jpg",
-            "name": "FRONT1_DSC_0157_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/FRONT1_DSC_0157_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT1_DSC_0157_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT1_DSC_0157_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT1_DSC_0157_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "bc4c3cf7695f96572fd46b2b696fbb15",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM6_DSC_0221_sm_hd.jpg",
-            "name": "COM6_DSC_0221_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/COM6_DSC_0221_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM6_DSC_0221_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM6_DSC_0221_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM6_DSC_0221_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "49494bd9eaf4f45ff4967027845298c2",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT_Website_ALT_hd.jpg",
-            "name": "FRONT_Website_ALT.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/FRONT_Website_ALT.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT_Website_ALT_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT_Website_ALT_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT_Website_ALT.jpg",
-            "gallery": null
-          },
-          {
-            "id": "6d44df5bd639fbc4b7b717ef68d91369",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/BATH1_DSC_0207_sm_hd.jpg",
-            "name": "BATH1_DSC_0207_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/BATH1_DSC_0207_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/BATH1_DSC_0207_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/BATH1_DSC_0207_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/BATH1_DSC_0207_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "4e69e1836c01db72d8e2ddcb8adc8339",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM5_DSC_0205_sm_hd.jpg",
-            "name": "COM5_DSC_0205_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/COM5_DSC_0205_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM5_DSC_0205_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM5_DSC_0205_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM5_DSC_0205_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "4d62afca6c52f7b903e30b268ca23e15",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM7_DSC_0222_sm_hd.jpg",
-            "name": "COM7_DSC_0222_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/COM7_DSC_0222_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM7_DSC_0222_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM7_DSC_0222_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM7_DSC_0222_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "6551072baa8a343df301d139988dede7",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM2_DSC_0198_sm_hd.jpg",
-            "name": "COM2_DSC_0198_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/COM2_DSC_0198_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM2_DSC_0198_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM2_DSC_0198_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM2_DSC_0198_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "9f3e837c88faa90c4176264670a12f7d",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/BED1_DSC_0193_sm_hd.jpg",
-            "name": "BED1_DSC_0193_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/BED1_DSC_0193_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/BED1_DSC_0193_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/BED1_DSC_0193_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/BED1_DSC_0193_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "e9a9e46caf4a4e16b4080a50045ffcee",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTFR2_DSC_0170_sm_hd.jpg",
-            "name": "OUTFR2_DSC_0170_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/OUTFR2_DSC_0170_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTFR2_DSC_0170_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTFR2_DSC_0170_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTFR2_DSC_0170_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "e753e2e8758630133b506855436d31c4",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTBA1_DSC_0213_sm_hd.jpg",
-            "name": "OUTBA1_DSC_0213_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/OUTBA1_DSC_0213_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTBA1_DSC_0213_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTBA1_DSC_0213_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTBA1_DSC_0213_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "86b27fbbd708f8aa54bfeee0968aa237",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM4_DSC_0203_sm_hd.jpg",
-            "name": "COM4_DSC_0203_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/COM4_DSC_0203_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM4_DSC_0203_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM4_DSC_0203_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM4_DSC_0203_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "85d7c9df6ff99a817e9fed3499e1f3f4",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM3_DSC_0200_sm_hd.jpg",
-            "name": "COM3_DSC_0200_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/COM3_DSC_0200_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM3_DSC_0200_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM3_DSC_0200_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM3_DSC_0200_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "0f1ba5bb5ee3257e0d8443b00684f464",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OWNER_DSC_0188_sm_hd.jpg",
-            "name": "OWNER_DSC_0188_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/OWNER_DSC_0188_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OWNER_DSC_0188_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OWNER_DSC_0188_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OWNER_DSC_0188_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "e6d01d1f94bc2361efd9e7bb9fa999fe",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTBA3_DSC_0216_sm_hd.jpg",
-            "name": "OUTBA3_DSC_0216_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/OUTBA3_DSC_0216_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTBA3_DSC_0216_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTBA3_DSC_0216_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTBA3_DSC_0216_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "e9b40b397971125be18f266282c22fc8",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTFR1_DSC_0169_sm_hd.jpg",
-            "name": "OUTFR1_DSC_0169_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/OUTFR1_DSC_0169_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTFR1_DSC_0169_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTFR1_DSC_0169_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTFR1_DSC_0169_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "1c6e035cfad6c8373f78baf64e42f32f",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT2_DSC_0161_sm_hd.jpg",
-            "name": "FRONT2_DSC_0161_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/FRONT2_DSC_0161_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT2_DSC_0161_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT2_DSC_0161_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT2_DSC_0161_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "69e15bf822702328adcd9139e1e79bdd",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT2_DSC_0161_MED_hd.jpg",
-            "name": "FRONT2_DSC_0161_MED.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/FRONT2_DSC_0161_MED.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT2_DSC_0161_MED_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT2_DSC_0161_MED_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT2_DSC_0161_MED.jpg",
-            "gallery": null
-          },
-          {
-            "id": "034fec0e6b83aa2c3ac2b30912e3def5",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM6_DSC_0211_sm_hd.jpg",
-            "name": "COM6_DSC_0211_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/COM6_DSC_0211_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM6_DSC_0211_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM6_DSC_0211_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM6_DSC_0211_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "ad0bb1f9ed3a85496655a6b4bcec2901",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTBA2_DSC_0214_sm_hd.jpg",
-            "name": "OUTBA2_DSC_0214_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/OUTBA2_DSC_0214_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTBA2_DSC_0214_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTBA2_DSC_0214_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/OUTBA2_DSC_0214_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "aa298a569b44e36e2bfd6aceb2a75d35",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM1_DSC_0197_sm_hd.jpg",
-            "name": "COM1_DSC_0197_sm.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/COM1_DSC_0197_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM1_DSC_0197_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM1_DSC_0197_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/COM1_DSC_0197_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "f5698a11c09e40bf9fb562e68c7e8774",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/WEBSITE_FOOTER_hd.jpg",
-            "name": "WEBSITE_FOOTER.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/WEBSITE_FOOTER.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/WEBSITE_FOOTER_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/WEBSITE_FOOTER_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/WEBSITE_FOOTER.jpg",
-            "gallery": null
-          },
-          {
-            "id": "0b71de102bd8b47839f8b134191d644d",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/b748b4fc94463a80dcf90446e405b9c7/OWNER_DSC_0188_sm_hd.jpg",
-            "name": "OWNER_DSC_0188_sm.jpg",
-            "path": "b748b4fc94463a80dcf90446e405b9c7/OWNER_DSC_0188_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/b748b4fc94463a80dcf90446e405b9c7/OWNER_DSC_0188_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/b748b4fc94463a80dcf90446e405b9c7/OWNER_DSC_0188_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/b748b4fc94463a80dcf90446e405b9c7/OWNER_DSC_0188_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "3d0524e0284c669d4c835d701d8573f8",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT_WebsiteHeader_hd.jpg",
-            "name": "FRONT_WebsiteHeader.jpg",
-            "path": "14077fcae3281ebb7ec0f56745ea9497/FRONT_WebsiteHeader.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT_WebsiteHeader_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT_WebsiteHeader_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/14077fcae3281ebb7ec0f56745ea9497/FRONT_WebsiteHeader.jpg",
-            "gallery": null
-          },
-          {
-            "id": "c29da9dd444e4d53415bdfa7a8234220",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/c7469db28588765ab732c0b92f46d4d0/OUTFR1_DSC_0169_sm_hd.jpg",
-            "name": "OUTFR1_DSC_0169_sm.jpg",
-            "path": "c7469db28588765ab732c0b92f46d4d0/OUTFR1_DSC_0169_sm.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/c7469db28588765ab732c0b92f46d4d0/OUTFR1_DSC_0169_sm_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/c7469db28588765ab732c0b92f46d4d0/OUTFR1_DSC_0169_sm_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/c7469db28588765ab732c0b92f46d4d0/OUTFR1_DSC_0169_sm.jpg",
-            "gallery": null
-          },
-          {
-            "id": "0b594db97c64c148d5250a1984713671",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/d3ad519edfef0a75ab6bde1bc36c7861/BaysidePark_5534_hd.jpg",
-            "name": "BaysidePark_5534.jpg",
-            "path": "d3ad519edfef0a75ab6bde1bc36c7861/BaysidePark_5534.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/d3ad519edfef0a75ab6bde1bc36c7861/BaysidePark_5534_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/d3ad519edfef0a75ab6bde1bc36c7861/BaysidePark_5534_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/d3ad519edfef0a75ab6bde1bc36c7861/BaysidePark_5534.jpg",
-            "gallery": null
-          }
-        ]
-      },
-      "organization": {
-        "id": "bee877af68c08ce8502fcee0da9567f4",
-        "createdAt": "2014-08-07T22:48:57Z",
-        "name": "Seniorly",
-        "updatedAt": "2015-05-21T23:51:57Z",
-        "users": []
-      },
-      "reviews": [],
-      "rgsAux": {
-        "id": "5a71a2502e3ba4275bbde1866da82a5b",
-        "amenityScore": "0.0",
-        "estimatedPrice": {
-          "providedAverage": 6000,
-          "estimatedAverage": 0,
-          "cityAverage": 0,
-          "stateAverage": 4000,
-          "nationalAverage": 3628
-        },
-        "slyCommunityDescription": ""
-      },
-      "similarProperties": [],
-      "twilioNumber": [
-        {
-          "areaCode": 415,
-          "cityId": 2597,
-          "createdAt": "2017-03-15T18:39:24Z",
-          "numbers": [4152639703],
-          "updatedAt": "2017-03-15T18:39:24Z",
-          "id": "undefined"
-        }
-      ],
-      "user": {
-        "id": "a2c9987ae9a50a52a199145df1061b10",
-        "admin": true,
-        "createdAt": "2015-11-21T01:20:30Z",
-        "email": "sushanth@seniorly.com",
-        "name": "Sushanth Sly",
-        "roleId": 2,
-        "updatedAt": "2018-03-20T19:21:10Z",
-        "addressOmitempty": null,
-        "contact": null,
-        "organization": {
-          "id": "bee877af68c08ce8502fcee0da9567f4",
-          "createdAt": "2014-08-07T22:48:57Z",
-          "name": "Seniorly",
-          "updatedAt": "2015-05-21T23:51:57Z",
-          "users": []
-        }
-      },
-      "videoGallery": {
-        "id": "68b1e828898304247f09d1f7f8107569",
-        "createdAt": "2014-10-22T04:46:14Z",
-        "updatedAt": "2018-04-12T02:39:06Z",
-        "videos": []
-      }
-    },
-    {
-      "id": "agesong-university",
-      "createdAt": "2014-12-03T00:55:02Z",
-      "mainImage":
-        "https://d1qiigpe5txw4q.cloudfront.net/uploads/999faaca517084e1ee0ce59db58630ab/AgeSong_University-13_sd.jpg",
-      "name": "AgeSong University",
-      "phoneNumber": "",
-      "propInfo": {
-        "roomImage": [
-          {
-            "name": "AgeSong_University-17.jpg",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/999faaca517084e1ee0ce59db58630ab/AgeSong_University-17_hd.jpg",
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/999faaca517084e1ee0ce59db58630ab/AgeSong_University-17_sd.jpg"
-          }
-        ],
-        "ownerImage": [
-          {
-            "name": "Nader.JPG",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/008f2eda2d22f6bd752af969eacb6dee/Nader_hd.JPG",
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/008f2eda2d22f6bd752af969eacb6dee/Nader_sd.JPG"
-          }
-        ],
-        "ratesText": "4600",
-        "licenseNumber": "385600402",
-        "ownerName": "Nader R. Shabahangi",
-        "ownerYears": "Aug 2014",
-        "personalSpace": [
-          "Private Suites",
-          "Fully furnished",
-          "Private Bathrooms",
-          "Internet",
-          "Cable",
-          "Wifi"
-        ],
-        "personalSpaceOther": "24 hour nursing",
-        "typeCare": ["Assisted Living", "Memory Care"],
+        "personalSpaceOther":
+          "Furniture included (bed, night stand, closet, television)",
+        "typeCare": ["Assisted Living", "Memory Care", "Respite Care"],
         "careServices": [
           "Activities of Daily Living Assistance",
           "Meal Preparation and Service",
@@ -1126,6 +537,7 @@
           "24-Hour Call System",
           "24-Hour Supervision",
           "Mental Wellness Program",
+          "Physical Therapy",
           "Respite Program",
           "Diabetes Diet",
           "Diabetes Care",
@@ -1135,37 +547,52 @@
           "Hospice Waiver",
           "Dementia Waiver"
         ],
+        "careServicesOther":
+          "AgeSong does partner with a number of home health organizations, which do provide services including physical therapy and other rehabilitation programs.",
         "nonCareServices": [
           "Concierge Services",
           "Move-In Coordination",
           "Housekeeping & Linen Services",
           "Scheduled Transportation (non-medical related)",
+          "Fitness Programs",
           "Continuing Learning Programs",
+          "Resident-Run Activities",
+          "Community-Sponsored Activities",
           "Family Education and Support Services",
           "Planned Day Trips"
         ],
+        "nonCareServicesOther":
+          "Family Education and Support Services are organized by the GeroWellness team, a team who have a specialty in psychology.\r\nElders Academy Press is an extension for continuing learning opportunities. ",
         "staffDescription":
-          "Agesong has weekly AgeSong Certificate Training for Care Partners and Elders Academy Certificate Training for Volunteer, as well as the monthly Elders Academy discussions.\r\n\r\nOur 24-hour licensed nurses direct our Health Care Oversight program, successfully providing individualize care meeting the needs of the residents.",
+          "AgeSong has weekly AgeSong Certificate Training for Care Partners and Elders Academy Certificate Training for Volunteer, as well as the monthly Elders Academy discussions.\r\n\r\nOur 24-hour licensed nurses direct our Health Care Oversight program, successfully providing individualize care meeting the needs of the residents.",
         "communityDescription":
-          "AgeSong University provides outstanding care to residents in the newest AgeSong community. We strive to create an environment that is culturally and economically diverse. Since 1884 the site has continually evolved to meet the changing needs of the aging population in San Francisco, and that process continues today.\r\n\r\nOur elegant front parlor has a fireplace, comfortable seating, and a grand piano and the circular driveway in front of the building, along with the adjacent parking, simplifies transportation issues. The spacious, cheerful dining room has floor-to-ceiling windows (pictured above) and visitors are welcome, and the bright sunroom is perfect for residents who play cards or games, or have small gatherings. There is also the chapel, with its wood-beam ceiling, is a peaceful place where non-denominational services are held on Sundays, as well as the private backyard and garden features benches, raised planters, accessible walking paths, and is safely enclosed by a fence and locking gates. AgeSong University is close to public transportation by Muni (Lines #29, #44, and #52) and BART. ",
-        "residentLanguages": ["English", "Cantonese", "Tagalog", "Spanish"],
+          "AgeSong at Laguna Grove in San Francisco offers specialized meaning-based elder care for high needs assisted living, innovative forgetfulness care (what others call memory care, dementia care or Alzheimer's disease care), behavioral health care, coordination of scheduled nursing services, clinical care, and hospice care. Located in San Francisco's vibrant Hayes Valley neighborhood, the community at AgeSong Laguna Grove offers assisted living in a modern airy building which features abundant natural light and panoramic views from Zen and rooftop gardens, providing a therapeutic feel throughout.\r\n\r\nThe residential care programs at AgeSong at Laguna Grove offer a different approach to elder care, by integrating our inner community with our outer surroundings, and by offering residents encouragement, support, and opportunities for growth. Our high needs assisted living, and dementia care programs encourage learning and community involvement.",
+        "residentLanguages": [
+          "English",
+          "Mandarin",
+          "Cantonese",
+          "Tagalog",
+          "Spanish",
+          "French"
+        ],
+        "residentLanguagesOther": "Farsi",
         "communityVideo": [
           {
-            "name": "AgeSong_U",
+            "name": "AgeSong_LagunaGroveCare",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/fa1b0e5b-c02b-4717-8086-f6de50dc8255/AgeSong_University_nojoke1.1.1.1.mp4"
+              "https://d1qiigpe5txw4q.cloudfront.net/uploads/f3c47f7a-7eea-4777-af86-d57c95310efc/AgeSong_LagunaGroveCare_Lowres_04_29_2015.mp4"
           }
         ],
         "managementCompany": "AgeSong Living",
         "websiteUrl": "www.agesong.com",
-        "capacity": "74",
+        "capacity": "56",
         "minAge": "20% of community population less then 60 years of age.",
         "secured": "No",
         "communitySize": "51 +",
         "communityFee": "$3,500",
         "alPrivateRate": "Limited Private Room Commendations",
-        "alCareRate": "$1,350-$3,750",
-        "mcCareRate": "$1,350-$3,750",
+        "alCareRate": "$1,850-4,850",
+        "mcCareRate": "$1,850-4,850",
         "serviceHighlights": [
           "Alzheimer’s / Dementia support",
           "Behavioral health",
@@ -1174,474 +601,502 @@
         "communityHighlights": [
           "Alzheimer’s / Dementia",
           "Outdoor space",
-          "Library / Media / Activities room"
+          "Inviting neighborhood"
         ],
+        "amenitiesHighlights": ["Outdoor space", "Inviting neighborhood"],
+        "careHighlights": [
+          "Alzheimer’s / Dementia support",
+          "Behavioral health"
+        ],
+        "programHighlights": ["Art & music therapy"],
         "admin": ["Visited By Seniorly"],
+        "ownerEmail": "slyuser3@gmail.com",
         "respiteAllowed": {
           "checked": true,
           "minlength": 14,
           "label": "Respite Care"
         },
         "senioradvisorsUrl":
-          "https://www.senioradvisor.com/local/university-mound-ladies-home-san-francisco-ca",
-        "yelpUrl": "http://www.yelp.com/biz/agesong-san-francisco-2"
+          "https://www.senioradvisor.com/local/agesong-laguna-grove-san-francisco-ca",
+        "communityPhone": "8912992021",
+        "twilioPhone": "2121312312"
       },
       "propRatings": {
-        "hasWebReviews": false,
-        "hasSlyReviews": false,
+        "hasWebReviews": true,
+        "hasSlyReviews": true,
         "ratingsArray": [
-          {
-            "name": "Yelp",
-            "numReviews": 1,
-            "reviewsUrl": "http://www.yelp.com/biz/agesong-san-francisco-2",
-            "avgRating": 5
-          },
-          {
-            "name": "Facebook",
-            "numReviews": 13,
-            "reviewsUrl": "https://www.facebook.com/AgeSong/",
-            "avgRating": 4.2
-          },
           {
             "name": "SeniorAdvisor.com",
             "numReviews": 5,
             "reviewsUrl":
-              "https://www.senioradvisor.com/local/university-mound-ladies-home-san-francisco-ca",
+              "https://www.senioradvisor.com/local/agesong-laguna-grove-san-francisco-ca",
             "avgRating": 3.8
+          },
+          {
+            "name": "Seniorly",
+            "numReviews": 4,
+            "reviewsUrl": "#",
+            "avgRating": 4.3
           }
         ],
-        "reviewsValue": 0,
-        "numReviews": 0
+        "reviewsValue": 4,
+        "numReviews": 9
       },
       "slyPhoneNumber": "",
-      "slyScore": 93.70253164556962,
-      "startingRate": 4600,
+      "slyScore": 96.32911392405063,
+      "startingRate": 5800,
       "status": 2,
-      "updatedAt": "2018-04-12T02:40:29Z",
-      "url": "/assisted-living/california/san-francisco/agesong-university",
+      "updatedAt": "2018-04-20T08:25:50Z",
+      "url":
+        "/assisted-living/california/san-francisco/agesong-laguna-grove-care",
       "address": {
-        "id": "69fd3a436985ce3bb34379307adc7bf2",
+        "id": "897c85a60bbe2b49d8e315c135a902ec",
         "city": "San Francisco",
         "county": "San Francisco",
-        "latitude": 37.725526,
-        "line1": "350 University Street",
+        "latitude": 37.7768864,
+        "line1": "601 Laguna Street",
         "line2": "",
-        "longitude": -122.414207,
+        "longitude": -122.4266889,
         "state": "CA",
-        "zip": "94134"
+        "zip": "94102"
       },
       "communityListings": [],
       "contacts": [],
       "floorPlans": [],
       "gallery": {
-        "id": "43aadd8e5734d7750f92ef2b5a7abb9c",
-        "createdAt": "2014-12-03T00:55:02Z",
-        "updatedAt": "2018-04-12T02:39:06Z",
+        "id": "d54d4b12de5caf30cc289b08e418a9bb",
+        "createdAt": "2014-12-03T00:55:25Z",
+        "updatedAt": "2018-04-20T06:58:06Z",
         "images": [
           {
-            "id": "4664178d49a95ce82cc32af60c9df974",
+            "id": "6a82233ea918166e35a33f5127a26995",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University_header-1_hd.jpg",
-            "name": "AgeSong_University_header-1.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-6_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care_new-6.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University_header-1.jpg",
+              "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-6.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University_header-1_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-6_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University_header-1_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-6_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University_header-1.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-6.jpg",
             "gallery": null
           },
           {
-            "id": "53837728a9c605d3e5a6d104cb977236",
+            "id": "7d4de4d206013e13f0f5ba96a376fc11",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-6_hd.jpg",
-            "name": "AgeSong_University-6.jpg",
-            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-6.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-6_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-6_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-6.jpg",
-            "gallery": null
-          },
-          {
-            "id": "5cb1b51c0f18ec20ebea00aafb968c48",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-4_hd.jpg",
-            "name": "AgeSong_University-4.jpg",
-            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-4.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-4_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-4_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-4.jpg",
-            "gallery": null
-          },
-          {
-            "id": "89c191370dc32a470ce3fda1daf010cb",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-7_hd.jpg",
-            "name": "AgeSong_University-7.jpg",
-            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-7.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-7_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-7_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-7.jpg",
-            "gallery": null
-          },
-          {
-            "id": "8715fbb5ec3686c4983211075da44b62",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-17_hd.jpg",
-            "name": "AgeSong_University-17.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-5_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care_new-5.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-17.jpg",
+              "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-5.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-17_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-5_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-17_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-5_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-17.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-5.jpg",
             "gallery": null
           },
           {
-            "id": "9d3a15f3ed8e01978e747188278fa3e2",
+            "id": "b9fda36365032bb38ac736ceb4b69d54",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-23_hd.jpg",
-            "name": "AgeSong_University-23.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-4_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care_new-4.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-23.jpg",
+              "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-4.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-23_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-4_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-23_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-4_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-23.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-4.jpg",
             "gallery": null
           },
           {
-            "id": "495dd47a27222c9a43e9a51440378754",
+            "id": "4f8cf39e8a855fced8d509a5c07c3b18",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-3_hd.jpg",
-            "name": "AgeSong_University-3.jpg",
-            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-3.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-3_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-3_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-3.jpg",
-            "gallery": null
-          },
-          {
-            "id": "3782eefd4670f67bbda17ec21c7c9d49",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-13_hd.jpg",
-            "name": "AgeSong_University-13.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care_new-2.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-13.jpg",
+              "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-13_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-13_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-13.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2.jpg",
             "gallery": null
           },
           {
-            "id": "69fca1f13f10575b299d98a6b00c193f",
+            "id": "6d9e5510715aaf6af1739ebd3e1732d8",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-1_hd.jpg",
-            "name": "AgeSong_University-1.jpg",
-            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-1.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-1_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-1_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-1.jpg",
-            "gallery": null
-          },
-          {
-            "id": "baaa91c6d519d9c0fa9a0b5926c6ed77",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-14_hd.jpg",
-            "name": "AgeSong_University-14.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-3_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care_new-3.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-14.jpg",
+              "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-3.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-14_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-3_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-14_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-3_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-14.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-3.jpg",
             "gallery": null
           },
           {
-            "id": "1918d3359c8308e02c2b68c5089d0741",
+            "id": "594e31cac3a562f6bd4b137e3fa3efab",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-8_hd.jpg",
-            "name": "AgeSong_University-8.jpg",
-            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-8.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-8_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-8_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-8.jpg",
-            "gallery": null
-          },
-          {
-            "id": "fe512bb20e2c2d6fe652c19c81f2d8c4",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-19_hd.jpg",
-            "name": "AgeSong_University-19.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-7_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care_new-7.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-19.jpg",
+              "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-7.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-19_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-7_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-19_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-7_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-19.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-7.jpg",
             "gallery": null
           },
           {
-            "id": "e762f06a21ee76b7c9b942d881fd7cdb",
+            "id": "c238e523c6c6861f361425f5e3c8a928",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-11_hd.jpg",
-            "name": "AgeSong_University-11.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-1_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care_new-1.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-11.jpg",
+              "611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-1.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-11_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-1_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-11_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-1_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-11.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-1.jpg",
             "gallery": null
           },
           {
-            "id": "464e2d2e77cad8f783d3bbb070e16f71",
+            "id": "b8b39032984507ba9efabcc2d89ea02c",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-15_hd.jpg",
-            "name": "AgeSong_University-15.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-10_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-10.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-15.jpg",
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-10.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-15_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-10_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-15_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-10_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-15.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-10.jpg",
             "gallery": null
           },
           {
-            "id": "218a6cf76908755f3334ad002d3b412a",
+            "id": "7597b6ee9ff15a5def9fe8d07106f877",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-10_hd.jpg",
-            "name": "AgeSong_University-10.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-13_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-13.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-10.jpg",
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-13.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-10_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-13_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-10_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-13_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-10.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-13.jpg",
             "gallery": null
           },
           {
-            "id": "c6f53e3a5d7819ce73aa2f165717f9c3",
+            "id": "1251bac3168d1ffc5e89f363cffc199a",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-24_hd.jpg",
-            "name": "AgeSong_University-24.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-14_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-14.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-24.jpg",
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-14.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-24_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-14_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-24_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-14_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-24.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-14.jpg",
             "gallery": null
           },
           {
-            "id": "a671e234ece9660736aa4c7034b572e8",
+            "id": "7c349b41822c2dbf47e2ae4edb48a722",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-5_hd.jpg",
-            "name": "AgeSong_University-5.jpg",
-            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-5.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-5_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-5_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-5.jpg",
-            "gallery": null
-          },
-          {
-            "id": "5bf8910db793c3f5a6fc1e3a58092d15",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-12_hd.jpg",
-            "name": "AgeSong_University-12.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-3_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-3.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-12.jpg",
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-3.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-12_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-3_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-12_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-3_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-12.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-3.jpg",
             "gallery": null
           },
           {
-            "id": "6b0ff3c73dcb4cce219a41a50d76c374",
+            "id": "2d4223ff7e677821e3be583fe92997e7",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/008f2eda2d22f6bd752af969eacb6dee/Nader_hd.JPG",
-            "name": "Nader.JPG",
-            "path": "008f2eda2d22f6bd752af969eacb6dee/Nader.JPG",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/008f2eda2d22f6bd752af969eacb6dee/Nader_sd.JPG",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/008f2eda2d22f6bd752af969eacb6dee/Nader_thumb.JPG",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/008f2eda2d22f6bd752af969eacb6dee/Nader.JPG",
-            "gallery": null
-          },
-          {
-            "id": "2da3937c79f42be2563f5cd08c96a14c",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-2_hd.jpg",
-            "name": "AgeSong_University-2.jpg",
-            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-2.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-2_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-2_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-2.jpg",
-            "gallery": null
-          },
-          {
-            "id": "097e56e85110ebd5e320f7fcddb7bbc4",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-16_hd.jpg",
-            "name": "AgeSong_University-16.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-16_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-16.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-16.jpg",
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-16.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-16_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-16_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-16_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-16_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-16.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-16.jpg",
             "gallery": null
           },
           {
-            "id": "3d2f72b77dac37a1ba11f96909a16de2",
+            "id": "3f5edf8f9e62055f28b73cf94ae37d0a",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-21_hd.jpg",
-            "name": "AgeSong_University-21.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-4_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-4.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-21.jpg",
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-4.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-21_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-4_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-21_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-4_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-21.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-4.jpg",
             "gallery": null
           },
           {
-            "id": "16aaa94d7a5be08f990d2c0111c6acf1",
+            "id": "a361759fd2c0806918e4c64775a5bf37",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-9_hd.jpg",
-            "name": "AgeSong_University-9.jpg",
-            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-9.jpg",
-            "processed": 2,
-            "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-9_sd.jpg",
-            "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-9_thumb.jpg",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-9.jpg",
-            "gallery": null
-          },
-          {
-            "id": "408825ce529fb9af22e6d1aca149de8e",
-            "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-18_hd.jpg",
-            "name": "AgeSong_University-18.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-5_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-5.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-18.jpg",
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-5.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-18_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-5_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-18_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-5_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-18.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-5.jpg",
             "gallery": null
           },
           {
-            "id": "efdfcca3ce29e4ef0e6a7bed77eaca07",
+            "id": "9a6943c134c35e29c2bd63c5a855a80b",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-20_hd.jpg",
-            "name": "AgeSong_University-20.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-1_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-1.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-20.jpg",
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-1.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-20_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-1_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-20_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-1_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-20.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-1.jpg",
             "gallery": null
           },
           {
-            "id": "e18ccc94c0168b6bf2cdf410d103f68e",
+            "id": "f4e2cc1c7f994d4e497c1279e9a7cf86",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-22_hd.jpg",
-            "name": "AgeSong_University-22.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-6_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-6.jpg",
             "path":
-              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-22.jpg",
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-6.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-22_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-6_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-22_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-6_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-22.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-6.jpg",
+            "gallery": null
+          },
+          {
+            "id": "833c1a7d65a379a1d0cffe72bf32e50c",
+            "hd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-15_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-15.jpg",
+            "path":
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-15.jpg",
+            "processed": 2,
+            "sd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-15_sd.jpg",
+            "thumb":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-15_thumb.jpg",
+            "url":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-15.jpg",
+            "gallery": null
+          },
+          {
+            "id": "2c8e3d39c4274746b43429475b1de35b",
+            "hd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-11_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-11.jpg",
+            "path":
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-11.jpg",
+            "processed": 2,
+            "sd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-11_sd.jpg",
+            "thumb":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-11_thumb.jpg",
+            "url":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-11.jpg",
+            "gallery": null
+          },
+          {
+            "id": "c0c92eb9ab51c8d9d4ed902c7d98cc10",
+            "hd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-7_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-7.jpg",
+            "path":
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-7.jpg",
+            "processed": 2,
+            "sd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-7_sd.jpg",
+            "thumb":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-7_thumb.jpg",
+            "url":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-7.jpg",
+            "gallery": null
+          },
+          {
+            "id": "adc5958c4eb14bffc5c73b270895c5d5",
+            "hd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-9_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-9.jpg",
+            "path":
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-9.jpg",
+            "processed": 2,
+            "sd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-9_sd.jpg",
+            "thumb":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-9_thumb.jpg",
+            "url":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-9.jpg",
+            "gallery": null
+          },
+          {
+            "id": "5909552c67a804343c82094405bd1df7",
+            "hd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-8_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-8.jpg",
+            "path":
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-8.jpg",
+            "processed": 2,
+            "sd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-8_sd.jpg",
+            "thumb":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-8_thumb.jpg",
+            "url":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-8.jpg",
+            "gallery": null
+          },
+          {
+            "id": "bf06bc25d238ddd2fc2d5eecafebf6f7",
+            "hd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-12_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-12.jpg",
+            "path":
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-12.jpg",
+            "processed": 2,
+            "sd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-12_sd.jpg",
+            "thumb":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-12_thumb.jpg",
+            "url":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-12.jpg",
+            "gallery": null
+          },
+          {
+            "id": "1970a4e7edc69128aae220c73bb726e4",
+            "hd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-18_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-18.jpg",
+            "path":
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-18.jpg",
+            "processed": 2,
+            "sd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-18_sd.jpg",
+            "thumb":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-18_thumb.jpg",
+            "url":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-18.jpg",
+            "gallery": null
+          },
+          {
+            "id": "991b39188d7b17400a76865e6be64877",
+            "hd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-19_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-19.jpg",
+            "path":
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-19.jpg",
+            "processed": 2,
+            "sd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-19_sd.jpg",
+            "thumb":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-19_thumb.jpg",
+            "url":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-19.jpg",
+            "gallery": null
+          },
+          {
+            "id": "ad4548374cd249682618cd79d44497b7",
+            "hd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-17_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-17.jpg",
+            "path":
+              "1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-17.jpg",
+            "processed": 2,
+            "sd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-17_sd.jpg",
+            "thumb":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-17_thumb.jpg",
+            "url":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/1ea0956122a80b701c27101c0f6b1566/AgeSong_Laguna_Grove_Care-17.jpg",
+            "gallery": null
+          },
+          {
+            "id": "7cae6bc25a5f2b06b1c7184ab5899d84",
+            "hd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/a217a6403603653e47bead24b809de66/AgeSong_Laguna_Grove_Care-2_hd.jpg",
+            "name": "AgeSong_Laguna_Grove_Care-2.jpg",
+            "path":
+              "a217a6403603653e47bead24b809de66/AgeSong_Laguna_Grove_Care-2.jpg",
+            "processed": 2,
+            "sd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/a217a6403603653e47bead24b809de66/AgeSong_Laguna_Grove_Care-2_sd.jpg",
+            "thumb":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/a217a6403603653e47bead24b809de66/AgeSong_Laguna_Grove_Care-2_thumb.jpg",
+            "url":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/a217a6403603653e47bead24b809de66/AgeSong_Laguna_Grove_Care-2.jpg",
+            "gallery": null
+          },
+          {
+            "id": "9d7542413d7821b84969f22d36a28556",
+            "hd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/759fea73ae103dd27dd869fef95bf6ca/AgeSong_header-1_hd.jpg",
+            "name": "AgeSong_header-1.jpg",
+            "path": "759fea73ae103dd27dd869fef95bf6ca/AgeSong_header-1.jpg",
+            "processed": 2,
+            "sd":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/759fea73ae103dd27dd869fef95bf6ca/AgeSong_header-1_sd.jpg",
+            "thumb":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/759fea73ae103dd27dd869fef95bf6ca/AgeSong_header-1_thumb.jpg",
+            "url":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/759fea73ae103dd27dd869fef95bf6ca/AgeSong_header-1.jpg",
             "gallery": null
           }
         ]
@@ -1653,12 +1108,40 @@
         "updatedAt": "2015-05-21T23:51:57Z",
         "users": []
       },
-      "reviews": [],
+      "reviews": [
+        {
+          "id": "44d8522d3e9fc1766cbddfb7d97a4762",
+          "author": "Sushanth Ramakrishna",
+          "comments": "asdasdasdadsas",
+          "createdAt": "2016-07-20T22:31:45Z",
+          "published": true,
+          "updatedAt": "2016-07-20T22:31:45Z",
+          "value": 5
+        },
+        {
+          "id": "cd32449c4e959e3b812c9165e24690b1",
+          "author": "Sushanth Ramakrishna",
+          "comments": "HTis is daasdasll as djjasdjasdasd",
+          "createdAt": "2016-07-20T22:30:40Z",
+          "published": true,
+          "updatedAt": "2016-07-20T22:30:40Z",
+          "value": 4
+        },
+        {
+          "id": "ea37c020a0114210fe41bd1e1d3d09fb",
+          "author": "Sushanth Ramakrishna",
+          "comments": "This is Something new",
+          "createdAt": "2016-07-20T22:04:47Z",
+          "published": true,
+          "updatedAt": "2016-07-20T22:04:47Z",
+          "value": 3
+        }
+      ],
       "rgsAux": {
-        "id": "15c770040b34ed3946926a9528f5ecd8",
+        "id": "53d29674de95f4a7559905906950a87f",
         "amenityScore": "0.0",
         "estimatedPrice": {
-          "providedAverage": 4600,
+          "providedAverage": 5800,
           "estimatedAverage": 0,
           "cityAverage": 0,
           "stateAverage": 4000,
@@ -1667,16 +1150,7 @@
         "slyCommunityDescription": ""
       },
       "similarProperties": [],
-      "twilioNumber": [
-        {
-          "areaCode": 415,
-          "cityId": 2597,
-          "createdAt": "2017-03-15T18:39:24Z",
-          "numbers": [4152639703],
-          "updatedAt": "2017-03-15T18:39:24Z",
-          "id": "undefined"
-        }
-      ],
+      "twilioNumber": null,
       "user": {
         "id": "a2c9987ae9a50a52a199145df1061b10",
         "admin": true,
@@ -1696,35 +1170,22 @@
         }
       },
       "videoGallery": {
-        "id": "be8660c581273fa56841551bab94b996",
-        "createdAt": "2014-12-03T00:55:02Z",
-        "updatedAt": "2018-04-12T02:39:06Z",
+        "id": "503ee7e74ae3822affe7cffeaf594fef",
+        "createdAt": "2014-12-03T00:55:25Z",
+        "updatedAt": "2018-04-20T06:58:06Z",
         "videos": [
           {
-            "id": "ebcfe5b24b7f46f9075a394da412700d",
-            "name": "AgeSong_University",
+            "id": "46ea0ede80941d3126e32c2d64d1153d",
+            "name": "AgeSong_LagunaGroveCare",
             "path":
-              "c873aa3d-5586-497a-86cd-e8b82e215d7c/AgeSong_University.1.1.1.mp4",
+              "f3c47f7a-7eea-4777-af86-d57c95310efc/AgeSong_LagunaGroveCare_Lowres_04_29_2015.mp4",
             "processed": 2,
             "thumbUrl":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/c873aa3d-5586-497a-86cd-e8b82e215d7c/AgeSong_University.1.1.1_thump.png",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/f3c47f7a-7eea-4777-af86-d57c95310efc/AgeSong_LagunaGroveCare_Lowres_04_29_2015_thump.png",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/c873aa3d-5586-497a-86cd-e8b82e215d7c/AgeSong_University.1.1.1.mp4",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/f3c47f7a-7eea-4777-af86-d57c95310efc/AgeSong_LagunaGroveCare_Lowres_04_29_2015.mp4",
             "webmUrl":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/c873aa3d-5586-497a-86cd-e8b82e215d7c/AgeSong_University.1.1.1.webm"
-          },
-          {
-            "id": "a838ef104da154882b17deb8fd818e2b",
-            "name": "AgeSong_U",
-            "path":
-              "fa1b0e5b-c02b-4717-8086-f6de50dc8255/AgeSong_University_nojoke1.1.1.1.mp4",
-            "processed": 2,
-            "thumbUrl":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/fa1b0e5b-c02b-4717-8086-f6de50dc8255/AgeSong_University_nojoke1.1.1.1_thump.png",
-            "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/fa1b0e5b-c02b-4717-8086-f6de50dc8255/AgeSong_University_nojoke1.1.1.1.mp4",
-            "webmUrl":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/fa1b0e5b-c02b-4717-8086-f6de50dc8255/AgeSong_University_nojoke1.1.1.1.webm"
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/f3c47f7a-7eea-4777-af86-d57c95310efc/AgeSong_LagunaGroveCare_Lowres_04_29_2015.webm"
           }
         ]
       }
@@ -1861,7 +1322,7 @@
       "slyScore": 93.73493975903614,
       "startingRate": 4700,
       "status": 2,
-      "updatedAt": "2018-04-12T02:40:29Z",
+      "updatedAt": "2018-04-20T08:25:50Z",
       "url": "/assisted-living/california/oakland/agesong-woodpark",
       "address": {
         "id": "608d664802a220c971a6d7ae6b5f8582",
@@ -1880,7 +1341,7 @@
       "gallery": {
         "id": "7f387691b130f66d4de9dfec2e37f82c",
         "createdAt": "2014-12-03T00:55:40Z",
-        "updatedAt": "2018-04-12T02:39:06Z",
+        "updatedAt": "2018-04-20T06:58:06Z",
         "images": [
           {
             "id": "250eef9260e94c993b58c67f32e2f913",
@@ -2356,7 +1817,7 @@
       },
       "reviews": [],
       "rgsAux": {
-        "id": "64ecf6abd49c5252cfc5de868e7e3e8d",
+        "id": "c109144fd41bf926789cd08934b65eca",
         "amenityScore": "0.0",
         "estimatedPrice": {
           "providedAverage": 4700,
@@ -2399,7 +1860,7 @@
       "videoGallery": {
         "id": "132fff3e109fcceec34135c65cdae934",
         "createdAt": "2014-12-03T00:55:40Z",
-        "updatedAt": "2018-04-12T02:39:06Z",
+        "updatedAt": "2018-04-20T06:58:06Z",
         "videos": [
           {
             "id": "b4d5b4571b6b7ca15380cd72f1ed54ac",
@@ -2418,43 +1879,173 @@
       }
     },
     {
-      "id": "peninsula-reflections-205-collins-avenue-colma",
-      "createdAt": "2015-03-06T19:37:23Z",
+      "id": "vintage-golden-gate",
+      "createdAt": "2015-02-12T22:08:14Z",
       "mainImage":
-        "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-15_sd.jpg",
-      "name": "Peninsula Reflections",
+        "https://maps.googleapis.com/maps/api/streetview?size=200x160&location=1601 19th Avenue,San Francisco,CA&fov=90&pitch=-10&key=AIzaSyBbN8J_ogumAythgDCzwXzbuIn6qP-w0fM",
+      "name": "Vintage Golden Gate",
+      "phoneNumber": "",
+      "propInfo": {
+        "typeCare": ["Assisted Living", "Independent Living", "Memory Care"],
+        "parentCompany": "Vintage Senior Living",
+        "websiteUrl": "www.vintagesenior.com",
+        "capacity": "134",
+        "minAge": "62",
+        "secured": "Yes",
+        "communitySize": "51 +",
+        "senioradvisorsUrl":
+          "https://www.senioradvisor.com/local/vintage-golden-gate-san-francisco-ca"
+      },
+      "propRatings": {
+        "hasWebReviews": true,
+        "hasSlyReviews": false,
+        "ratingsArray": [
+          {
+            "name": "Facebook",
+            "numReviews": 2,
+            "reviewsUrl":
+              "https://www.facebook.com/Vintage-Golden-Gate-159148670783677/",
+            "avgRating": 5
+          },
+          {
+            "name": "Yelp",
+            "numReviews": 7,
+            "reviewsUrl":
+              "https://www.yelp.com/biz/vintage-golden-gate-san-francisco-2?adjust_creative=VsZZD5w6K3ruuvIjDlToBw&utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=VsZZD5w6K3ruuvIjDlToBw",
+            "avgRating": 4
+          },
+          {
+            "name": "SeniorAdvisor.com",
+            "numReviews": 12,
+            "reviewsUrl":
+              "https://www.senioradvisor.com/local/vintage-golden-gate-san-francisco-ca",
+            "avgRating": 4.25
+          }
+        ],
+        "reviewsValue": 4.2380953,
+        "numReviews": 21
+      },
+      "slyPhoneNumber": "",
+      "slyScore": 72.87974683544303,
+      "startingRate": 7091,
+      "status": 2,
+      "updatedAt": "2018-04-20T08:25:53Z",
+      "url": "/assisted-living/california/san-francisco/vintage-golden-gate",
+      "address": {
+        "id": "6a1c7af17786da4cb9e5d3cd01210860",
+        "city": "San Francisco",
+        "county": "San Francisco",
+        "latitude": 37.757266,
+        "line1": "1601 19th Avenue",
+        "line2": "1",
+        "longitude": -122.4772202,
+        "state": "CA",
+        "zip": "94122"
+      },
+      "communityListings": [],
+      "contacts": [],
+      "floorPlans": [],
+      "gallery": {
+        "id": "3c8b8e0874889e9b9a79c2a23cc6789a",
+        "createdAt": "2015-02-12T22:08:14Z",
+        "updatedAt": "2018-04-20T06:58:06Z",
+        "images": []
+      },
+      "organization": {
+        "id": "bee877af68c08ce8502fcee0da9567f4",
+        "createdAt": "2014-08-07T22:48:57Z",
+        "name": "Seniorly",
+        "updatedAt": "2015-05-21T23:51:57Z",
+        "users": []
+      },
+      "reviews": [],
+      "rgsAux": {
+        "id": "da988b2dbf2b1fd515f9cacd4e2c715d",
+        "amenityScore": "",
+        "estimatedPrice": {
+          "providedAverage": 0,
+          "estimatedAverage": 7091,
+          "cityAverage": 0,
+          "stateAverage": 4000,
+          "nationalAverage": 3628
+        },
+        "slyCommunityDescription": ""
+      },
+      "similarProperties": [],
+      "twilioNumber": [
+        {
+          "areaCode": 415,
+          "cityId": 2597,
+          "createdAt": "2017-03-15T18:39:24Z",
+          "numbers": [4152639703],
+          "updatedAt": "2017-03-15T18:39:24Z",
+          "id": "undefined"
+        }
+      ],
+      "user": {
+        "id": "a2c9987ae9a50a52a199145df1061b10",
+        "admin": true,
+        "createdAt": "2015-11-21T01:20:30Z",
+        "email": "sushanth@seniorly.com",
+        "name": "Sushanth Sly",
+        "roleId": 2,
+        "updatedAt": "2018-03-20T19:21:10Z",
+        "addressOmitempty": null,
+        "contact": null,
+        "organization": {
+          "id": "bee877af68c08ce8502fcee0da9567f4",
+          "createdAt": "2014-08-07T22:48:57Z",
+          "name": "Seniorly",
+          "updatedAt": "2015-05-21T23:51:57Z",
+          "users": []
+        }
+      },
+      "videoGallery": {
+        "id": "f00371443f26150e0b2598a925eafcce",
+        "createdAt": "2015-02-12T22:08:14Z",
+        "updatedAt": "2018-04-20T06:58:06Z",
+        "videos": []
+      }
+    },
+    {
+      "id": "agesong-university",
+      "createdAt": "2014-12-03T00:55:02Z",
+      "mainImage":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/999faaca517084e1ee0ce59db58630ab/AgeSong_University-13_sd.jpg",
+      "name": "AgeSong University",
       "phoneNumber": "",
       "propInfo": {
         "roomImage": [
           {
-            "name": "Peninsula_Reflections_sm-19.jpg",
+            "name": "AgeSong_University-17.jpg",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-19_hd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/uploads/999faaca517084e1ee0ce59db58630ab/AgeSong_University-17_hd.jpg",
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-19_sd.jpg"
+              "https://d1qiigpe5txw4q.cloudfront.net/uploads/999faaca517084e1ee0ce59db58630ab/AgeSong_University-17_sd.jpg"
           }
         ],
         "ownerImage": [
           {
-            "name": "Peninsula_Reflections_sm-21.jpg",
+            "name": "Nader.JPG",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-21_hd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/uploads/008f2eda2d22f6bd752af969eacb6dee/Nader_hd.JPG",
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-21_sd.jpg"
+              "https://d1qiigpe5txw4q.cloudfront.net/uploads/008f2eda2d22f6bd752af969eacb6dee/Nader_sd.JPG"
           }
         ],
-        "ratesText": "$6000 ",
-        "licenseNumber": "415600124",
-        "ownerName": "Peninsula Reflections",
-        "ownerYears": "2015",
+        "ratesText": "4600",
+        "licenseNumber": "385600402",
+        "ownerName": "Nader R. Shabahangi",
+        "ownerYears": "Aug 2014",
         "personalSpace": [
           "Private Suites",
-          "Shared Room",
           "Fully furnished",
           "Private Bathrooms",
           "Internet",
+          "Cable",
           "Wifi"
         ],
+        "personalSpaceOther": "24 hour nursing",
         "typeCare": ["Assisted Living", "Memory Care"],
         "careServices": [
           "Activities of Daily Living Assistance",
@@ -2476,41 +2067,40 @@
           "Dementia Waiver"
         ],
         "nonCareServices": [
+          "Concierge Services",
           "Move-In Coordination",
           "Housekeeping & Linen Services",
-          "Fitness Programs",
+          "Scheduled Transportation (non-medical related)",
           "Continuing Learning Programs",
-          "Community-Sponsored Activities",
-          "Family Education and Support Services"
+          "Family Education and Support Services",
+          "Planned Day Trips"
         ],
+        "staffDescription":
+          "Agesong has weekly AgeSong Certificate Training for Care Partners and Elders Academy Certificate Training for Volunteer, as well as the monthly Elders Academy discussions.\r\n\r\nOur 24-hour licensed nurses direct our Health Care Oversight program, successfully providing individualize care meeting the needs of the residents.",
         "communityDescription":
-          "Our community, a Spanish-Mission style setting, is situated in the township of Colma.  Our lobby areas and\r\ndining- and living-room open up to beautiful lined inner courtyards of fruit tress and a large variety of roses; all  within a secured and monitored perimeter.  ",
+          "AgeSong University provides outstanding care to residents in the newest AgeSong community. We strive to create an environment that is culturally and economically diverse. Since 1884 the site has continually evolved to meet the changing needs of the aging population in San Francisco, and that process continues today.\r\n\r\nOur elegant front parlor has a fireplace, comfortable seating, and a grand piano and the circular driveway in front of the building, along with the adjacent parking, simplifies transportation issues. The spacious, cheerful dining room has floor-to-ceiling windows (pictured above) and visitors are welcome, and the bright sunroom is perfect for residents who play cards or games, or have small gatherings. There is also the chapel, with its wood-beam ceiling, is a peaceful place where non-denominational services are held on Sundays, as well as the private backyard and garden features benches, raised planters, accessible walking paths, and is safely enclosed by a fence and locking gates. AgeSong University is close to public transportation by Muni (Lines #29, #44, and #52) and BART. ",
         "residentLanguages": ["English", "Cantonese", "Tagalog", "Spanish"],
         "communityVideo": [
           {
-            "name": "Peninsula_Reflections",
+            "name": "AgeSong_U",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/uploads/c0537d38-236a-4104-8268-cebd84e19834/Peninsula_Reflections_logo_lowres.mp4"
+              "https://d1qiigpe5txw4q.cloudfront.net/uploads/fa1b0e5b-c02b-4717-8086-f6de50dc8255/AgeSong_University_nojoke1.1.1.1.mp4"
           }
         ],
-        "managementCompany":
-          "Claremont Retirement Management Services Communities",
-        "websiteUrl": "www.peninsulareflections.com",
-        "capacity": "57",
-        "minAge": "62",
-        "secured": "Yes",
+        "managementCompany": "AgeSong Living",
+        "websiteUrl": "www.agesong.com",
+        "capacity": "74",
+        "minAge": "20% of community population less then 60 years of age.",
+        "secured": "No",
         "communitySize": "51 +",
-        "communityFee": "$1500",
-        "alPrivateRate": "$7500",
-        "alSharedRate": "$6000",
-        "mcPrivateRate": "$7500",
-        "mcSharedRate": "$6000",
-        "alCareRate": "All Inclusive",
-        "mcCareRate": "All Inclusive",
+        "communityFee": "$3,500",
+        "alPrivateRate": "Limited Private Room Commendations",
+        "alCareRate": "$1,350-$3,750",
+        "mcCareRate": "$1,350-$3,750",
         "serviceHighlights": [
           "Alzheimer’s / Dementia support",
-          "End of life care",
-          "Community operated transportation"
+          "Behavioral health",
+          "Art & music therapy"
         ],
         "communityHighlights": [
           "Alzheimer’s / Dementia",
@@ -2523,462 +2113,466 @@
           "minlength": 14,
           "label": "Respite Care"
         },
-        "yelpUrl": "http://www.yelp.com/biz/peninsula-reflections-colma"
+        "senioradvisorsUrl":
+          "https://www.senioradvisor.com/local/university-mound-ladies-home-san-francisco-ca",
+        "yelpUrl": "http://www.yelp.com/biz/agesong-san-francisco-2"
       },
       "propRatings": {
-        "hasWebReviews": false,
+        "hasWebReviews": true,
         "hasSlyReviews": false,
         "ratingsArray": [
           {
             "name": "Yelp",
-            "numReviews": 2,
-            "reviewsUrl": "http://www.yelp.com/biz/peninsula-reflections-colma",
+            "numReviews": 1,
+            "reviewsUrl": "http://www.yelp.com/biz/agesong-san-francisco-2",
             "avgRating": 5
+          },
+          {
+            "name": "Facebook",
+            "numReviews": 13,
+            "reviewsUrl": "https://www.facebook.com/AgeSong/",
+            "avgRating": 4.2
+          },
+          {
+            "name": "SeniorAdvisor.com",
+            "numReviews": 5,
+            "reviewsUrl":
+              "https://www.senioradvisor.com/local/university-mound-ladies-home-san-francisco-ca",
+            "avgRating": 3.8
           }
         ],
-        "reviewsValue": 0,
-        "numReviews": 0
+        "reviewsValue": 4.1368423,
+        "numReviews": 19
       },
       "slyPhoneNumber": "",
-      "slyScore": 93.63924050632912,
-      "startingRate": 6000,
+      "slyScore": 93.70253164556962,
+      "startingRate": 4600,
       "status": 2,
-      "updatedAt": "2018-04-12T02:40:31Z",
-      "url":
-        "/assisted-living/california/colma/peninsula-reflections-205-collins-avenue-colma",
+      "updatedAt": "2018-04-20T08:25:50Z",
+      "url": "/assisted-living/california/san-francisco/agesong-university",
       "address": {
-        "id": "539ae3bb0b58f4f1683a4b4be90cd13c",
-        "city": "Colma",
-        "county": "San Mateo",
-        "latitude": 37.6746709,
-        "line1": "205 Collins Avenue",
+        "id": "69fd3a436985ce3bb34379307adc7bf2",
+        "city": "San Francisco",
+        "county": "San Francisco",
+        "latitude": 37.725526,
+        "line1": "350 University Street",
         "line2": "",
-        "longitude": -122.4573416,
+        "longitude": -122.414207,
         "state": "CA",
-        "zip": "94014"
+        "zip": "94134"
       },
       "communityListings": [],
       "contacts": [],
       "floorPlans": [],
       "gallery": {
-        "id": "3b1cb1ed22966ded3aff99488279d19d",
-        "createdAt": "2015-03-06T19:37:23Z",
-        "updatedAt": "2018-04-12T02:39:07Z",
+        "id": "43aadd8e5734d7750f92ef2b5a7abb9c",
+        "createdAt": "2014-12-03T00:55:02Z",
+        "updatedAt": "2018-04-20T06:58:06Z",
         "images": [
           {
-            "id": "9a6394bdeb9978d598efc3e2bb834308",
+            "id": "4664178d49a95ce82cc32af60c9df974",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-10_hd.jpg",
-            "name": "Peninsula_Reflections_sm-10.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University_header-1_hd.jpg",
+            "name": "AgeSong_University_header-1.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-10.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University_header-1.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-10_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University_header-1_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-10_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University_header-1_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-10.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University_header-1.jpg",
             "gallery": null
           },
           {
-            "id": "ab6f2ba976f06c7c3393dfff38dc1d17",
+            "id": "53837728a9c605d3e5a6d104cb977236",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-16_hd.jpg",
-            "name": "Peninsula_Reflections_sm-16.jpg",
-            "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-16.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-6_hd.jpg",
+            "name": "AgeSong_University-6.jpg",
+            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-6.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-16_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-6_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-16_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-6_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-16.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-6.jpg",
             "gallery": null
           },
           {
-            "id": "1dfad0830b629a5a289c477604f0282c",
+            "id": "5cb1b51c0f18ec20ebea00aafb968c48",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-2_hd.jpg",
-            "name": "Peninsula_Reflections_sm-2.jpg",
-            "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-2.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-4_hd.jpg",
+            "name": "AgeSong_University-4.jpg",
+            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-4.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-2_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-4_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-2_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-4_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-2.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-4.jpg",
             "gallery": null
           },
           {
-            "id": "3c6fd794cda8675ca9017b0064a37f06",
+            "id": "89c191370dc32a470ce3fda1daf010cb",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-22_hd.jpg",
-            "name": "Peninsula_Reflections_sm-22.jpg",
-            "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-22.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-7_hd.jpg",
+            "name": "AgeSong_University-7.jpg",
+            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-7.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-22_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-7_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-22_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-7_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-22.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-7.jpg",
             "gallery": null
           },
           {
-            "id": "37cd5c213f19a1b7e604c7d530687c3a",
+            "id": "8715fbb5ec3686c4983211075da44b62",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-19_hd.jpg",
-            "name": "Peninsula_Reflections_sm-19.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-17_hd.jpg",
+            "name": "AgeSong_University-17.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-19.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-17.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-19_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-17_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-19_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-17_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-19.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-17.jpg",
             "gallery": null
           },
           {
-            "id": "e16e6e91080de5da2abe0a891e425b9b",
+            "id": "9d3a15f3ed8e01978e747188278fa3e2",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-25_hd.jpg",
-            "name": "Peninsula_Reflections_sm-25.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-23_hd.jpg",
+            "name": "AgeSong_University-23.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-25.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-23.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-25_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-23_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-25_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-23_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-25.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-23.jpg",
             "gallery": null
           },
           {
-            "id": "bc8a3f2c08f4e2010392403b40946e0d",
+            "id": "495dd47a27222c9a43e9a51440378754",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-27_hd.jpg",
-            "name": "Peninsula_Reflections_sm-27.jpg",
-            "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-27.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-3_hd.jpg",
+            "name": "AgeSong_University-3.jpg",
+            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-3.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-27_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-3_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-27_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-3_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-27.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-3.jpg",
             "gallery": null
           },
           {
-            "id": "1e7eaff383b5b0b3c42d0e970a92f6b9",
+            "id": "3782eefd4670f67bbda17ec21c7c9d49",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-11_hd.jpg",
-            "name": "Peninsula_Reflections_sm-11.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-13_hd.jpg",
+            "name": "AgeSong_University-13.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-11.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-13.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-11_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-13_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-11_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-13_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-11.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-13.jpg",
             "gallery": null
           },
           {
-            "id": "87372298f9385ae43cf789bc712b7b9d",
+            "id": "69fca1f13f10575b299d98a6b00c193f",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-14_hd.jpg",
-            "name": "Peninsula_Reflections_sm-14.jpg",
-            "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-14.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-1_hd.jpg",
+            "name": "AgeSong_University-1.jpg",
+            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-1.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-14_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-1_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-14_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-1_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-14.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-1.jpg",
             "gallery": null
           },
           {
-            "id": "be1f7aa65a148a0f169af7d234457597",
+            "id": "baaa91c6d519d9c0fa9a0b5926c6ed77",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-13_hd.jpg",
-            "name": "Peninsula_Reflections_sm-13.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-14_hd.jpg",
+            "name": "AgeSong_University-14.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-13.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-14.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-13_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-14_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-13_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-14_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-13.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-14.jpg",
             "gallery": null
           },
           {
-            "id": "fc4ec0e43b3b8b535a48b28453f4aacd",
+            "id": "1918d3359c8308e02c2b68c5089d0741",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-15_hd.jpg",
-            "name": "Peninsula_Reflections_sm-15.jpg",
-            "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-15.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-8_hd.jpg",
+            "name": "AgeSong_University-8.jpg",
+            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-8.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-15_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-8_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-15_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-8_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-15.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-8.jpg",
             "gallery": null
           },
           {
-            "id": "6c20ae708f6d7871971b4664cddfbc2f",
+            "id": "fe512bb20e2c2d6fe652c19c81f2d8c4",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-23_hd.jpg",
-            "name": "Peninsula_Reflections_sm-23.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-19_hd.jpg",
+            "name": "AgeSong_University-19.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-23.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-19.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-23_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-19_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-23_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-19_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-23.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-19.jpg",
             "gallery": null
           },
           {
-            "id": "6cd75b3ffcef3c54de5c832d42eb0f3a",
+            "id": "e762f06a21ee76b7c9b942d881fd7cdb",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-26_hd.jpg",
-            "name": "Peninsula_Reflections_sm-26.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-11_hd.jpg",
+            "name": "AgeSong_University-11.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-26.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-11.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-26_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-11_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-26_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-11_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-26.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-11.jpg",
             "gallery": null
           },
           {
-            "id": "ff30b486e42edad53262533a4bfd86b7",
+            "id": "464e2d2e77cad8f783d3bbb070e16f71",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-18_hd.jpg",
-            "name": "Peninsula_Reflections_sm-18.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-15_hd.jpg",
+            "name": "AgeSong_University-15.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-18.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-15.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-18_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-15_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-18_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-15_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-18.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-15.jpg",
             "gallery": null
           },
           {
-            "id": "f254c0d7f875482c661b57b043475660",
+            "id": "218a6cf76908755f3334ad002d3b412a",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-21_hd.jpg",
-            "name": "Peninsula_Reflections_sm-21.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-10_hd.jpg",
+            "name": "AgeSong_University-10.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-21.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-10.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-21_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-10_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-21_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-10_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-21.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-10.jpg",
             "gallery": null
           },
           {
-            "id": "45a9e0b2f4776631602da94b5a321b00",
+            "id": "c6f53e3a5d7819ce73aa2f165717f9c3",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-4_hd.jpg",
-            "name": "Peninsula_Reflections_sm-4.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-24_hd.jpg",
+            "name": "AgeSong_University-24.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-4.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-24.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-4_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-24_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-4_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-24_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-4.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-24.jpg",
             "gallery": null
           },
           {
-            "id": "d9e877d811741be15124661a2f7e3ba4",
+            "id": "a671e234ece9660736aa4c7034b572e8",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-20_hd.jpg",
-            "name": "Peninsula_Reflections_sm-20.jpg",
-            "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-20.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-5_hd.jpg",
+            "name": "AgeSong_University-5.jpg",
+            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-5.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-20_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-5_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-20_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-5_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-20.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-5.jpg",
             "gallery": null
           },
           {
-            "id": "a3764ceebcc09d264f159c2c929dee61",
+            "id": "5bf8910db793c3f5a6fc1e3a58092d15",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-12_hd.jpg",
-            "name": "Peninsula_Reflections_sm-12.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-12_hd.jpg",
+            "name": "AgeSong_University-12.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-12.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-12.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-12_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-12_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-12_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-12_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-12.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-12.jpg",
             "gallery": null
           },
           {
-            "id": "bd43c7d2ee64f569c3847655238fb7b7",
+            "id": "6b0ff3c73dcb4cce219a41a50d76c374",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-5_hd.jpg",
-            "name": "Peninsula_Reflections_sm-5.jpg",
-            "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-5.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/008f2eda2d22f6bd752af969eacb6dee/Nader_hd.JPG",
+            "name": "Nader.JPG",
+            "path": "008f2eda2d22f6bd752af969eacb6dee/Nader.JPG",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-5_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/008f2eda2d22f6bd752af969eacb6dee/Nader_sd.JPG",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-5_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/008f2eda2d22f6bd752af969eacb6dee/Nader_thumb.JPG",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-5.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/008f2eda2d22f6bd752af969eacb6dee/Nader.JPG",
             "gallery": null
           },
           {
-            "id": "d366713c61f02119d77593cfe48a56fc",
+            "id": "2da3937c79f42be2563f5cd08c96a14c",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-17_hd.jpg",
-            "name": "Peninsula_Reflections_sm-17.jpg",
-            "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-17.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-2_hd.jpg",
+            "name": "AgeSong_University-2.jpg",
+            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-2.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-17_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-2_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-17_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-2_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-17.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-2.jpg",
             "gallery": null
           },
           {
-            "id": "b0eebe00820ca227e0d6a6e87dfd481b",
+            "id": "097e56e85110ebd5e320f7fcddb7bbc4",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-24_hd.jpg",
-            "name": "Peninsula_Reflections_sm-24.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-16_hd.jpg",
+            "name": "AgeSong_University-16.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-24.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-16.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-24_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-16_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-24_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-16_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-24.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-16.jpg",
             "gallery": null
           },
           {
-            "id": "9738e3fb3bf320f1058ab0687a9ef351",
+            "id": "3d2f72b77dac37a1ba11f96909a16de2",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-9_hd.jpg",
-            "name": "Peninsula_Reflections_sm-9.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-21_hd.jpg",
+            "name": "AgeSong_University-21.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-9.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-21.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-9_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-21_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-9_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-21_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-9.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-21.jpg",
             "gallery": null
           },
           {
-            "id": "9237d48f029a695f5cd9dcb23adccd60",
+            "id": "16aaa94d7a5be08f990d2c0111c6acf1",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-6_hd.jpg",
-            "name": "Peninsula_Reflections_sm-6.jpg",
-            "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-6.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-9_hd.jpg",
+            "name": "AgeSong_University-9.jpg",
+            "path": "999faaca517084e1ee0ce59db58630ab/AgeSong_University-9.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-6_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-9_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-6_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-9_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-6.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-9.jpg",
             "gallery": null
           },
           {
-            "id": "2ad4be3ca39310d47bf4b9eb1b3936c4",
+            "id": "408825ce529fb9af22e6d1aca149de8e",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-3_hd.jpg",
-            "name": "Peninsula_Reflections_sm-3.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-18_hd.jpg",
+            "name": "AgeSong_University-18.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-3.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-18.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-3_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-18_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-3_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-18_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-3.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-18.jpg",
             "gallery": null
           },
           {
-            "id": "cfeed38afc6d357afe232208941fa2b6",
+            "id": "efdfcca3ce29e4ef0e6a7bed77eaca07",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-7_hd.jpg",
-            "name": "Peninsula_Reflections_sm-7.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-20_hd.jpg",
+            "name": "AgeSong_University-20.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-7.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-20.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-7_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-20_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-7_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-20_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-7.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-20.jpg",
             "gallery": null
           },
           {
-            "id": "aea4091fe4ee156996e5189673c19018",
+            "id": "e18ccc94c0168b6bf2cdf410d103f68e",
             "hd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-8_hd.jpg",
-            "name": "Peninsula_Reflections_sm-8.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-22_hd.jpg",
+            "name": "AgeSong_University-22.jpg",
             "path":
-              "5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-8.jpg",
+              "999faaca517084e1ee0ce59db58630ab/AgeSong_University-22.jpg",
             "processed": 2,
             "sd":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-8_sd.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-22_sd.jpg",
             "thumb":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-8_thumb.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-22_thumb.jpg",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/5f5b28144e76c1dff93b086d3a1880e8/Peninsula_Reflections_sm-8.jpg",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/999faaca517084e1ee0ce59db58630ab/AgeSong_University-22.jpg",
             "gallery": null
           }
         ]
@@ -2992,10 +2586,10 @@
       },
       "reviews": [],
       "rgsAux": {
-        "id": "d99e10dfef2b4c465fbb08ee95468a7d",
-        "amenityScore": "",
+        "id": "ae0a08ea4ccee799ef55d7954b5bf2b9",
+        "amenityScore": "0.0",
         "estimatedPrice": {
-          "providedAverage": 6750,
+          "providedAverage": 4600,
           "estimatedAverage": 0,
           "cityAverage": 0,
           "stateAverage": 4000,
@@ -3033,22 +2627,35 @@
         }
       },
       "videoGallery": {
-        "id": "ab37b11b2a9ef758f41534a22e030844",
-        "createdAt": "2015-03-06T19:37:23Z",
-        "updatedAt": "2018-04-12T02:39:07Z",
+        "id": "be8660c581273fa56841551bab94b996",
+        "createdAt": "2014-12-03T00:55:02Z",
+        "updatedAt": "2018-04-20T06:58:06Z",
         "videos": [
           {
-            "id": "73f098e7536d073426b0f3e9bf72d87e",
-            "name": "Peninsula_Reflections",
+            "id": "ebcfe5b24b7f46f9075a394da412700d",
+            "name": "AgeSong_University",
             "path":
-              "c0537d38-236a-4104-8268-cebd84e19834/Peninsula_Reflections_logo_lowres.mp4",
+              "c873aa3d-5586-497a-86cd-e8b82e215d7c/AgeSong_University.1.1.1.mp4",
             "processed": 2,
             "thumbUrl":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/c0537d38-236a-4104-8268-cebd84e19834/Peninsula_Reflections_logo_lowres_thump.png",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/c873aa3d-5586-497a-86cd-e8b82e215d7c/AgeSong_University.1.1.1_thump.png",
             "url":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/c0537d38-236a-4104-8268-cebd84e19834/Peninsula_Reflections_logo_lowres.mp4",
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/c873aa3d-5586-497a-86cd-e8b82e215d7c/AgeSong_University.1.1.1.mp4",
             "webmUrl":
-              "https://d1qiigpe5txw4q.cloudfront.net/upload/c0537d38-236a-4104-8268-cebd84e19834/Peninsula_Reflections_logo_lowres.webm"
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/c873aa3d-5586-497a-86cd-e8b82e215d7c/AgeSong_University.1.1.1.webm"
+          },
+          {
+            "id": "a838ef104da154882b17deb8fd818e2b",
+            "name": "AgeSong_U",
+            "path":
+              "fa1b0e5b-c02b-4717-8086-f6de50dc8255/AgeSong_University_nojoke1.1.1.1.mp4",
+            "processed": 2,
+            "thumbUrl":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/fa1b0e5b-c02b-4717-8086-f6de50dc8255/AgeSong_University_nojoke1.1.1.1_thump.png",
+            "url":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/fa1b0e5b-c02b-4717-8086-f6de50dc8255/AgeSong_University_nojoke1.1.1.1.mp4",
+            "webmUrl":
+              "https://d1qiigpe5txw4q.cloudfront.net/upload/fa1b0e5b-c02b-4717-8086-f6de50dc8255/AgeSong_University_nojoke1.1.1.1.webm"
           }
         ]
       }
@@ -3085,7 +2692,7 @@
   "videoGallery": {
     "id": "ffb714b0df795bd3ee310aafb7274a8e",
     "createdAt": "2015-04-10T22:38:59Z",
-    "updatedAt": "2018-04-12T02:39:08Z",
+    "updatedAt": "2018-04-20T06:58:07Z",
     "videos": []
   }
 }
