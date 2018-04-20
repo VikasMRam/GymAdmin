@@ -31,6 +31,12 @@ const SpacingBottomRegularWrapper = styled.div`
 `;
 const StyledArticle = styled.article`
   margin-bottom: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    div:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
 `;
 
 export default class PricingAndAvailability extends Component {
