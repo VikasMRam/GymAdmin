@@ -37,13 +37,35 @@ const wrap = (props = {}) =>
 
 describe('PropertyReviews', () => {
   it('does not renders children when passed in', () => {
-    const wrapper = wrap({ children: 'test' });
+    const wrapper = wrap({
+      hasSlyReviews: true,
+      hasWebReviews: true,
+      children: 'test',
+    });
     expect(wrapper.contains('test')).toBe(false);
   });
 
   it('renders Property review', () => {
-    const wrapper = wrap();
+    const wrapper = wrap({ hasSlyReviews: true, hasWebReviews: true });
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);
     expect(wrapper.find(PropertyReview)).toHaveLength(3);
+  });
+
+  it('renders Property review', () => {
+    const wrapper = wrap({ hasSlyReviews: true, hasWebReviews: true });
+    expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);
+    expect(wrapper.find(PropertyReview)).toHaveLength(3);
+  });
+
+  it('renders Seniorly Reviews only when hasSlyReviews is true', () => {
+    const wrapper = wrap({ hasSlyReviews: true, hasWebReviews: false });
+    expect(wrapper.find(GatheredReviewRatings)).toHaveLength(0);
+    expect(wrapper.find(PropertyReview)).toHaveLength(3);
+  });
+
+  it('renders Web Reviews only when hasWebReviews is true', () => {
+    const wrapper = wrap({ hasSlyReviews: false, hasWebReviews: true });
+    expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);
+    expect(wrapper.find(PropertyReview)).toHaveLength(0);
   });
 });

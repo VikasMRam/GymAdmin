@@ -38,7 +38,6 @@ export default class PropertyReviews extends Component {
         return <PropertyReview {...review} key={review.id} />;
       });
     }
-    console.log(propertyReviews);
     return (
       <div>
         {propertyReviews}
