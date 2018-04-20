@@ -20,6 +20,7 @@ const similarProperty = {
     communityDescription: 'description',
     typeCare: ['A', 'B'],
   },
+  propRatings: { reviewsValue: 4.5, numReviews: 4 },
 };
 const wrap = (props = {}) =>
   shallow(<SimilarCommunityInfo similarProperty={similarProperty} {...props} />);

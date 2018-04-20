@@ -57,7 +57,10 @@ const SimilarCommunityTile = ({ similarProperty, onClick }) => {
   const { mainImage } = similarProperty;
   return (
     <Wrapper onClick={onClick}>
-      <SCTileImage src={mainImage || defaultImage} />
+      {/* div is for the image below. If removed, the image dimensions wont adhere to the seize being set */}
+      <div>
+        <SCTileImage src={mainImage || defaultImage} />
+      </div>
       <ChildrenWrapper>
         <SimilarCommunityInfo similarProperty={similarProperty} />
       </ChildrenWrapper>

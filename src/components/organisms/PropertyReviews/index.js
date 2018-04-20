@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { arrayOf, shape, string, number, func } from 'prop-types';
+import { arrayOf, shape, string, number, func, bool } from 'prop-types';
 
 import PropertyReview from 'sly/components/molecules/PropertyReview';
 import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
@@ -20,20 +20,33 @@ export default class PropertyReviews extends Component {
       avgRating: number.isRequired,
     })).isRequired,
     onLeaveReview: func.isRequired,
+    hasSlyReviews: bool.isRequired,
+    hasWebReviews: bool.isRequired,
   };
 
   render() {
-    const { reviews, reviewRatings, onLeaveReview } = this.props;
-    const propertyReviews = reviews.map((review) => {
-      return <PropertyReview {...review} key={review.id} />;
-    });
+    const {
+      hasSlyReviews,
+      hasWebReviews,
+      reviews,
+      reviewRatings,
+      onLeaveReview,
+    } = this.props;
+    let propertyReviews = null;
+    if (hasSlyReviews) {
+      propertyReviews = reviews.map((review) => {
+        return <PropertyReview {...review} key={review.id} />;
+      });
+    }
     return (
       <div>
         {propertyReviews}
-        <GatheredReviewRatings
-          reviewRatings={reviewRatings}
-          onLeaveReview={onLeaveReview}
-        />
+        {hasWebReviews && (
+          <GatheredReviewRatings
+            reviewRatings={reviewRatings}
+            onLeaveReview={onLeaveReview}
+          />
+        )}
       </div>
     );
   }
