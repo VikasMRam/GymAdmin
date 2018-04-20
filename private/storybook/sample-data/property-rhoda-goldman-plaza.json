@@ -471,7 +471,17 @@
     "updatedAt": "2015-05-21T23:51:57Z",
     "users": []
   },
-  "reviews": [],
+  "reviews": [
+    {
+      "id": "762b7f6b596ea519be9b7e3d95581b79",
+      "author": "Pranesh",
+      "comments": "Best Senior Living Community Ever seen",
+      "published": true,
+      "value": 5,
+      "createdAt": "2018-04-12T04:55:38Z",
+      "updatedAt": "2018-04-12T04:55:38Z"
+    }
+  ],
   "rgsAux": {
     "id": "ea96683a131d1a159ea13fb9a217fd76",
     "amenityScore": "",
