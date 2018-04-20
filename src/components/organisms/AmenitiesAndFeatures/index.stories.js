@@ -13,13 +13,9 @@ let {
 
 communityHighlights = communityHighlights || [];
 personalSpace = personalSpace || [];
-personalSpaceOther = personalSpaceOther || [];
 communitySpace = communitySpace || [];
-communitySpaceOther = communitySpaceOther || [];
 nonCareServices = nonCareServices || [];
-nonCareServicesOther = nonCareServicesOther || [];
 languages = languages || [];
-languagesOther = languagesOther || [];
 
 storiesOf('Organisms|AmenitiesAndFeatures', module)
   .add('default', () => (

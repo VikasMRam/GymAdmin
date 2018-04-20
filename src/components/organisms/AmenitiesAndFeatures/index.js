@@ -15,8 +15,8 @@ const AmenitiesAndFeatures = ({
   nonCareServices, nonCareServicesOther, languages, languagesOther,
 }) => {
   let noData = false;
-  if (!communityHighlights.length && !personalSpace.length && !personalSpaceOther.length && !communitySpace.length &&
-      !communitySpaceOther.length && !nonCareServices.length && !nonCareServicesOther.length && !languages.length) {
+  if (!communityHighlights.length && !personalSpace.length && !personalSpaceOther && !communitySpace.length &&
+      !communitySpaceOther && !nonCareServices.length && !nonCareServicesOther && !languages.length) {
     noData = true;
   }
 
@@ -32,24 +32,52 @@ const AmenitiesAndFeatures = ({
           <List heading={`${propertyName} is known for`} items={communityHighlights} />
         </StyledArticle>
       }
-      {(personalSpace.length > 0 || personalSpaceOther.length > 0) &&
+      {(personalSpace.length > 0 || personalSpaceOther) &&
         <StyledArticle id="amenities-and-features-personal-space">
-          <List heading="Personal Space/Amenities" items={personalSpace.concat(personalSpaceOther)} />
+          {personalSpace.length > 0 &&
+            <List heading="Personal Space/Amenities" items={personalSpace} />
+          }
+          {personalSpaceOther &&
+            <Paragraph>
+              {personalSpaceOther}
+            </Paragraph>
+          }
         </StyledArticle>
       }
-      {(communitySpace.length > 0 || communitySpaceOther.length > 0) &&
+      {(communitySpace.length > 0 || communitySpaceOther) &&
         <StyledArticle id="amenities-and-features-community-space">
-          <List heading="Community Space/Neighborhood" items={communitySpace.concat(communitySpaceOther)} />
+          {communitySpace.length > 0 &&
+            <List heading="Community Space/Neighborhood" items={communitySpace} />
+          }
+          {communitySpaceOther &&
+            <Paragraph>
+              {communitySpaceOther}
+            </Paragraph>
+          }
         </StyledArticle>
       }
-      {(nonCareServices.length > 0 || nonCareServicesOther.length > 0) &&
+      {(nonCareServices.length > 0 || nonCareServicesOther) &&
         <StyledArticle id="amenities-and-features-noncare-services">
-          <List heading="Activities & other services" items={nonCareServices.concat(nonCareServicesOther)} />
+          {nonCareServices.length > 0 &&
+            <List heading="Activities & other services" items={nonCareServices} />
+          }
+          {nonCareServicesOther &&
+            <Paragraph>
+              {nonCareServicesOther}
+            </Paragraph>
+          }
         </StyledArticle>
       }
-      {(languages.length > 0 || languagesOther.length > 0) &&
+      {(languages.length > 0 || languagesOther) &&
         <StyledArticle id="amenities-and-features-languages">
-          <List heading="Resident Languages" items={languages.concat(languagesOther)} />
+          {languages.length > 0 &&
+            <List heading="Resident Languages" items={languages} />
+          }
+          {languagesOther &&
+            <Paragraph>
+              {languagesOther}
+            </Paragraph>
+          }
         </StyledArticle>
       }
     </section>
@@ -60,25 +88,21 @@ AmenitiesAndFeatures.propTypes = {
   propertyName: PropTypes.string.isRequired,
   communityHighlights: PropTypes.arrayOf(PropTypes.string),
   personalSpace: PropTypes.arrayOf(PropTypes.string),
-  personalSpaceOther: PropTypes.arrayOf(PropTypes.string),
+  personalSpaceOther: PropTypes.string,
   communitySpace: PropTypes.arrayOf(PropTypes.string),
-  communitySpaceOther: PropTypes.arrayOf(PropTypes.string),
+  communitySpaceOther: PropTypes.string,
   nonCareServices: PropTypes.arrayOf(PropTypes.string),
-  nonCareServicesOther: PropTypes.arrayOf(PropTypes.string),
+  nonCareServicesOther: PropTypes.string,
   languages: PropTypes.arrayOf(PropTypes.string),
-  languagesOther: PropTypes.arrayOf(PropTypes.string),
+  languagesOther: PropTypes.string,
 };
 
 AmenitiesAndFeatures.defaultProps = {
   communityHighlights: [],
   personalSpace: [],
-  personalSpaceOther: [],
   communitySpace: [],
-  communitySpaceOther: [],
   nonCareServices: [],
-  nonCareServicesOther: [],
   languages: [],
-  languagesOther: [],
 };
 
 export default AmenitiesAndFeatures;

@@ -9,6 +9,7 @@ import { Heading, ListItem } from 'sly/components/atoms';
 const ListWrapper = styled.ul`
   margin: 0;
   padding: 0;
+  margin-bottom: ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     column-count: ${prop('columns')};
