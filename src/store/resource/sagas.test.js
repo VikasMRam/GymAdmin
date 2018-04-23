@@ -25,7 +25,7 @@ const meta = { thunk, resource };
 
 describe('sagas', () => {
   describe('createResource', () => {
-    const payload = { data: 'foo' };
+    const payload = { data: 'foo', uri: uri('resources') };
 
     it('calls success', () => {
       const detail = 'detail';
@@ -86,7 +86,7 @@ describe('sagas', () => {
   });
 
   describe('updateResource', () => {
-    const payload = { needle: 1, data: 'foo' };
+    const payload = { needle: 1, data: 'foo', uri: uri('resources', 1) };
 
     it('calls success', () => {
       const detail = 'foo';
@@ -103,7 +103,7 @@ describe('sagas', () => {
   });
 
   describe('deleteResource', () => {
-    const payload = { needle: 1 };
+    const payload = { needle: 1, uri: uri('resources', 1) };
 
     it('calls success', () => {
       const generator = sagas.deleteResource(api, payload, meta);
