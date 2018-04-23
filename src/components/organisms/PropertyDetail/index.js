@@ -75,14 +75,6 @@ export default class PropertyDetail extends Component {
         <Link to={`/community/${nextUri(propertySlug)}`}>
           Link to test navigation cross profile
         </Link>
-        <CollapsibleSection title="Community Details">
-          <CommunityDetails
-            communityName={name}
-            communityDescription={communityDescription}
-            staffDescription={staffDescription}
-            residentDescription={residentDescription}
-          />
-        </CollapsibleSection>
         <CollapsibleSection title="Pricing & Floor Plans">
           <PricingAndAvailability
             propertyName={name}
@@ -94,6 +86,14 @@ export default class PropertyDetail extends Component {
         </CollapsibleSection>
         <CollapsibleSection title="Similar Communities">
           <SimilarCommunities similarProperties={similarProperties} />
+        </CollapsibleSection>
+        <CollapsibleSection title="Community Details">
+          <CommunityDetails
+            communityName={name}
+            communityDescription={communityDescription}
+            staffDescription={staffDescription}
+            residentDescription={residentDescription}
+          />
         </CollapsibleSection>
         <CollapsibleSection title="Care Services">
           <CareServicesList
