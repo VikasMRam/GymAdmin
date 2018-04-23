@@ -185,6 +185,7 @@ const mapConfig = {
 };
 
 const mapOptions = {
+  styles: mapConfig.theme,
   // zoom: 12,
   // center: this.centerLatLng,
   panControl: false,
@@ -222,8 +223,7 @@ const Map = compose(
     <GoogleMap
       defaultZoom={defaultZoom}
       defaultCenter={{ lat: latitude, lng: longitude }}
-      defaultOptions={{ styles: mapConfig.theme }}
-      options={mapOptions}
+      defaultOptions={mapOptions}
     >
       {markers.length > 0 &&
         markers.map(marker => (
