@@ -6,7 +6,7 @@ import { prop } from 'styled-tools';
 import { size } from 'sly/components/themes';
 
 const Bar = styled.div`
-  background-color: ${palette(0, true)};
+  background-color: ${palette(0)};
   height: ${size('text.body')};
   width: ${prop('width')}%;
 `;

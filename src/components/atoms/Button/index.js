@@ -11,9 +11,9 @@ import { size } from 'sly/components/themes';
 
 const backgroundColor = ({ ghost, disabled, transparent, selectable, selected }) =>
   disabled
-    ? palette('white', 1)
+    ? palette('white', 0)
     : ghost || (selectable && !selected)
-      ? palette('white', 2)
+      ? palette('white', 0)
       : transparent ? 'transparent' : palette(0);
 
 const foregroundColor = ({ ghost, disabled, transparent, selectable, selected }) =>
@@ -38,7 +38,7 @@ const hoverBackgroundColor = ({ disabled, ghost, transparent }) =>
 
 const hoverForegroundColor = ({ disabled, ghost, selectable, selected }) =>
   (selectable && !selected)
-    ? palette('white', 2)
+    ? palette('white', 0)
     : !disabled && ghost && palette(1);
 
 const activeBackgroundColor = ({ disabled, ghost, transparent }) =>

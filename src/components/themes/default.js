@@ -126,6 +126,11 @@ theme.sizes = {
     title:            '1.28',
     hero:              '1.2',
   },
+
+  carousel: {
+    mobile: '14.375em', // 230px
+    tablet: '28.750em', // 460px
+  },
 };
 
 theme.transitions = {
