@@ -33,8 +33,8 @@ theme.sizes = {
 
   // rem measurements
   layout: {
-    mainColumn:   '43.50rem', // 696px 
-    sideColumn:   '21.00rem', // 336px 
+    mainColumn:   '43.50rem', // 696px
+    sideColumn:   '21.00rem', // 336px
   },
 
   modal: {

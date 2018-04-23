@@ -33,27 +33,36 @@ class ConciergeContainer extends Component {
     userRequestedCB: false,
   };
 
+  state = { modalIsOpen: false };
+
+  next = (data) => {
+    console.log('next', data); 
+    this.setState({ modalIsOpen: true });
+  };
+
   render() {
     const { userRequestedCB, property, className } = this.props;
     const column = (
       <div key="column" className={className}>
         { userRequestedCB
-          ? <ConversionFormContainer />
-          : <Thankyou community={property} onClose={() => {}} />
+          ? <Thankyou community={property} onClose={() => {}} />
+          : <ConversionFormContainer next={this.next} />
         }
       </div>
     );
+    const { modalIsOpen } = this.state;
     // I return an array here as RCBModal is not even rendered here in the three
     return [ 
       column,
-      <RCBModal key="modal" onClose={()=>{}} />
+      <RCBModal key="modal" onClose={()=>{}} isOpen={modalIsOpen} community={property} />
     ];
   }
 }
 
+const isCallback = contact => contact.type === 'request_callback';
 const mapStateToProps = (state, { propertySlug, userActions, property }) => {
   const userRequestedCB = userActions && (userActions.profilesContacted || [])
-    .some(property => property.slug === propertySlug);
+    .some(contact => contact.slug === propertySlug && isCallback(contact));
   return { userRequestedCB, property };
 };
 

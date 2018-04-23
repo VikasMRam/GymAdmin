@@ -4,13 +4,14 @@ import { put, call, takeEvery } from 'redux-saga/effects';
 import * as actions from './actions';
 
 export function* createResource(api, { data }, { resource, thunk }) {
+  const uri = api.uri(resource);
   try {
     // https://github.com/diegohaz/arc/wiki/API-service
-    const detail = yield call([api, api.post], api.uri(resource), data);
+    const detail = yield call([api, api.post], uri, data);
     // https://github.com/diegohaz/arc/wiki/Actions#async-actions
-    yield put(actions.resourceCreateSuccess(resource, detail, { data }, thunk));
+    yield put(actions.resourceCreateSuccess(resource, detail, { uri, data }, thunk));
   } catch (e) {
-    yield put(actions.resourceCreateFailure(resource, e, { data }, thunk));
+    yield put(actions.resourceCreateFailure(resource, e, { uri, data }, thunk));
   }
 }
 
@@ -39,11 +40,12 @@ export function* readResourceDetail(
 }
 
 export function* updateResource(api, { needle, data }, { resource, thunk }) {
+  const uri = api.uri(resource, needle);
   try {
-    const detail = yield call([api, api.put], api.uri(resource,needle), data);
-    yield put(actions.resourceUpdateSuccess(resource, detail, { needle, data }, thunk));
+    const detail = yield call([api, api.put], uri, data);
+    yield put(actions.resourceUpdateSuccess(resource, detail, { uri, needle, data }, thunk));
   } catch (e) {
-    yield put(actions.resourceUpdateFailure(resource, e, { needle, data }, thunk));
+    yield put(actions.resourceUpdateFailure(resource, e, { uri, needle, data }, thunk));
   }
 }
 
@@ -51,9 +53,9 @@ export function* deleteResource(api, { needle }, { resource, thunk }) {
   const uri = api.uri(resource, needle);
   try {
     yield call([api, api.delete], uri);
-    yield put(actions.resourceDeleteSuccess(resource, { needle }, thunk));
+    yield put(actions.resourceDeleteSuccess(resource, { uri, needle }, thunk));
   } catch (e) {
-    yield put(actions.resourceDeleteFailure(resource, e, { needle }, thunk));
+    yield put(actions.resourceDeleteFailure(resource, e, { uri, needle }, thunk));
   }
 }
 
