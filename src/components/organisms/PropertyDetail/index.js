@@ -9,8 +9,7 @@ import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailabil
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import OwnerStory from 'sly/components/organisms/OwnerStory';
-
-import Map from 'sly/components/atoms/Map';
+import PropertyMap from 'sly/components/organisms/PropertyMap';
 
 // TODO: remove this
 const nextUri = (() => {
@@ -53,17 +52,6 @@ export default class PropertyDetail extends Component {
       languages,
       languagesOther,
     } = propInfo;
-    const { latitude, longitude } = address;
-    const center = {
-      latitude,
-      longitude,
-    };
-    const markers = [{ latitude, longitude, icon: 'blue' }];
-    similarProperties.forEach((property) => {
-      const { address } = property;
-      const { latitude, longitude } = address;
-      markers.push({ latitude, longitude, icon: 'red' });
-    });
 
     // TODO: move this to a container for PropertyReviews handling posts
     const onLeaveReview = () => {};
@@ -137,7 +125,10 @@ export default class PropertyDetail extends Component {
           />
         </CollapsibleSection>
         <CollapsibleSection title={mapViewTitle}>
-          <Map center={center} defaultZoom={13} markers={markers} />
+          <PropertyMap
+            address={address}
+            similarProperties={similarProperties}
+          />
         </CollapsibleSection>
       </div>
     );

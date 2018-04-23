@@ -1,15 +1,6 @@
 import React from 'react';
 import { compose, withProps } from 'recompose';
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-  InfoWindow,
-} from 'react-google-maps';
-
-import GreenMarker from 'sly/../public/icons/greenmarker.png';
-import RedMarker from 'sly/../public/icons/redmarker.png';
+import { withScriptjs, withGoogleMap, GoogleMap } from 'react-google-maps';
 
 const mapConfig = {
   theme: [
@@ -201,11 +192,6 @@ const mapOptions = {
   scrollwheel: false,
 };
 
-const iconMap = {
-  blue: GreenMarker,
-  red: RedMarker,
-};
-
 const Map = compose(
   withProps({
     googleMapURL:
@@ -217,7 +203,7 @@ const Map = compose(
   withScriptjs,
   withGoogleMap
 )((props) => {
-  const { center, defaultZoom, markers } = props;
+  const { center, defaultZoom, children } = props;
   const { latitude, longitude } = center;
   return (
     <GoogleMap
@@ -225,17 +211,7 @@ const Map = compose(
       defaultCenter={{ lat: latitude, lng: longitude }}
       defaultOptions={mapOptions}
     >
-      {markers.length > 0 &&
-        markers.map(marker => (
-          <Marker
-            position={{ lat: marker.latitude, lng: marker.longitude }}
-            defaultIcon={iconMap[marker.icon]}
-          >
-            {/* <InfoWindow onCloseClick={props.onToggleOpen}>
-              <div>Hello</div>
-            </InfoWindow> */}
-          </Marker>
-        ))}
+      {children}
     </GoogleMap>
   );
 });
