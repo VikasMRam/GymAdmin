@@ -184,6 +184,22 @@ const mapConfig = {
   ],
 };
 
+const mapOptions = {
+  // zoom: 12,
+  // center: this.centerLatLng,
+  panControl: false,
+  zoomControl: true,
+  // zoomControlOptions: {
+  //   style: google.maps.ZoomControlStyle.SMALL,
+  // },
+  mapTypeControl: false,
+  scaleControl: false,
+  streetViewControl: false,
+  overviewMapControl: false,
+  rotateControl: false,
+  scrollwheel: false,
+};
+
 const iconMap = {
   blue: GreenMarker,
   red: RedMarker,
@@ -207,6 +223,7 @@ const Map = compose(
       defaultZoom={defaultZoom}
       defaultCenter={{ lat: latitude, lng: longitude }}
       defaultOptions={{ styles: mapConfig.theme }}
+      options={mapOptions}
     >
       {markers.length > 0 &&
         markers.map(marker => (
