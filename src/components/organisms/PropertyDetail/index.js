@@ -10,6 +10,8 @@ import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import OwnerStory from 'sly/components/organisms/OwnerStory';
 
+import Map from 'sly/components/atoms/Map';
+
 // TODO: remove this
 const nextUri = (() => {
   const uris = ['rhoda-goldman-plaza', 'buena-vista-manor-house'];
@@ -20,6 +22,7 @@ const nextUri = (() => {
 })();
 
 export default class PropertyDetail extends Component {
+  componentWillMount() {}
   render() {
     const { property, propertySlug, ...props } = this.props;
     const {
@@ -50,6 +53,18 @@ export default class PropertyDetail extends Component {
       languages,
       languagesOther,
     } = propInfo;
+    const { latitude, longitude } = address;
+    const center = {
+      latitude,
+      longitude,
+    };
+    const markers = [{ latitude, longitude, icon: 'blue' }];
+    similarProperties.forEach((property) => {
+      const { address } = property;
+      const { latitude, longitude } = address;
+      markers.push({ latitude, longitude, icon: 'red' });
+    });
+
     // TODO: move this to a container for PropertyReviews handling posts
     const onLeaveReview = () => {};
     // TODO: move this to a container PricingAndAvailability for handling bookings
@@ -60,7 +75,7 @@ export default class PropertyDetail extends Component {
     const roomPrices = floorPlans.map(({ info }) => info);
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
-
+    const mapViewTitle = `Map View of ${name}`;
     return (
       <div {...props}>
         <Heading level="hero">{name}</Heading>
@@ -120,6 +135,9 @@ export default class PropertyDetail extends Component {
             reviewRatings={ratingsArray}
             onLeaveReview={onLeaveReview}
           />
+        </CollapsibleSection>
+        <CollapsibleSection title={mapViewTitle}>
+          <Map center={center} defaultZoom={13} markers={markers} />
         </CollapsibleSection>
       </div>
     );
