@@ -214,9 +214,9 @@ const Map = compose(
             position={{ lat: marker.latitude, lng: marker.longitude }}
             defaultIcon={iconMap[marker.icon]}
           >
-            <InfoWindow onCloseClick={props.onToggleOpen}>
+            {/* <InfoWindow onCloseClick={props.onToggleOpen}>
               <div>Hello</div>
-            </InfoWindow>
+            </InfoWindow> */}
           </Marker>
         ))}
     </GoogleMap>
