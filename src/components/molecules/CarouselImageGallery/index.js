@@ -17,6 +17,7 @@ const Wrapper = styled.section`
   }
 `;
 const StyledImg = styled.img`
+  pointer-events: none;
   width: 100%;
   object-fit: cover;
   vertical-align: middle;
