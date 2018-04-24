@@ -55,7 +55,7 @@ const InfoWindowPrice = styled.div`
 `;
 
 class PropertyMap extends Component {
-  propTypes = {
+  static propTypes = {
     id: string.isRequired,
     name: string.isRequired,
     startingRate: number.isRequired,
