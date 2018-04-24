@@ -1,10 +1,10 @@
 const merge = require('lodash/merge');
 
-// TODO: find a more elegant solution to 
+// TODO: find a more elegant solution to
 // storybook serve it's own assets, so to avoid trouble:
 const isStorybook = !!process.env.STORYBOOK_GIT_BRANCH;
-const publicPath = isStorybook 
-  ? '' 
+const publicPath = isStorybook
+  ? ''
   : process.env.PUBLIC_PATH || '/react-assets';
 
 const config = {
