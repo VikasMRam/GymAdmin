@@ -9,6 +9,7 @@ import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailabil
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import OwnerStory from 'sly/components/organisms/OwnerStory';
+import CarouselImageGallery from 'sly/components/molecules/CarouselImageGallery';
 
 // TODO: remove this
 const nextUri = (() => {
@@ -31,7 +32,9 @@ export default class PropertyDetail extends Component {
       rgsAux,
       floorPlans,
       similarProperties,
+      gallery,
     } = property;
+    const { images } = gallery || [];
     const { careServices, serviceHighlights } = propInfo;
     const {
       communityDescription,
@@ -63,19 +66,15 @@ export default class PropertyDetail extends Component {
 
     return (
       <div {...props}>
+        <CarouselImageGallery
+          propertyName={name}
+          images={images}
+        />
         <Heading level="hero">{name}</Heading>
         {/* temp shiz */}
         <Link to={`/community/${nextUri(propertySlug)}`}>
           Link to test navigation cross profile
         </Link>
-        <CollapsibleSection title="Community Details">
-          <CommunityDetails
-            communityName={name}
-            communityDescription={communityDescription}
-            staffDescription={staffDescription}
-            residentDescription={residentDescription}
-          />
-        </CollapsibleSection>
         <CollapsibleSection title="Pricing & Floor Plans">
           <PricingAndAvailability
             propertyName={name}
@@ -87,6 +86,14 @@ export default class PropertyDetail extends Component {
         </CollapsibleSection>
         <CollapsibleSection title="Similar Communities">
           <SimilarCommunities similarProperties={similarProperties} />
+        </CollapsibleSection>
+        <CollapsibleSection title="Community Details">
+          <CommunityDetails
+            communityName={name}
+            communityDescription={communityDescription}
+            staffDescription={staffDescription}
+            residentDescription={residentDescription}
+          />
         </CollapsibleSection>
         <CollapsibleSection title="Care Services">
           <CareServicesList
