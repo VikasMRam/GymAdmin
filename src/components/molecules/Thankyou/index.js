@@ -20,7 +20,7 @@ const Thankyou = ({ community, onClose }) => (
       Your message have succesfully been sent.
       {community.name} will be in touch shortly.
     </Block>
-    <Button onClick={onClose}>Done</Button>
+    {onClose && <Button onClick={onClose}>Done</Button>}
   </Wrapper>    
 );
 

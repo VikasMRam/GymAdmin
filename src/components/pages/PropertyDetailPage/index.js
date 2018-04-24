@@ -36,17 +36,16 @@ const Column = styled(ConciergeContainer)`
   }
 `;
 
-const PropertyDetailPage = ({ propertySlug, property, userActions }) => {  
+const PropertyDetailPage = ({ property, userActions }) => {  
   return (
     <PageWrapper>
-      <Main propertySlug={propertySlug} property={property} />
-      <Column propertySlug={propertySlug} property={property} userActions={userActions} />
+      <Main key="main" property={property} />
+      <Column key="column" community={property} userActions={userActions} />
     </PageWrapper>
   );
 };
 
 PropertyDetailPage.propTypes = {
-  propertySlug: string.isRequired,
   property: object.isRequired,
   userActions: object.isRequired,
 };

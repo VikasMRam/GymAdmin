@@ -50,9 +50,8 @@ class SimilarCommunitiesFormContainer extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, { propertySlug, next }) => ({
+const mapDispatchToProps = (dispatch) => ({
   submit: data => {
-    data.slug = propertySlug;
     return dispatch(resourceCreateRequest('userAction', data));
   },
 });

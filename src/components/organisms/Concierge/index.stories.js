@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import RCBModal from '.';
+import Concierge from '.';
 
 const user = {
   name: 'Ashley Clark',
@@ -20,9 +20,9 @@ const community = {
 const communities = [community, community, community, community];
 const tags = ['shared room', 'alzheirmer\'s', 'san francisco'];
 
-storiesOf('Organisms|RCBModal', module)
+storiesOf('Organisms|Concierge', module)
   .add('default', () => (
-    <RCBModal
+    <Concierge
       user={user}
       community={community}
       onClose={action('close')}
@@ -31,7 +31,7 @@ storiesOf('Organisms|RCBModal', module)
     />
   ))
   .add('similarCommunities', () => (
-    <RCBModal
+    <Concierge
       tags={tags}
       communities={communities}
       currentStep="similarCommunities"
@@ -41,7 +41,7 @@ storiesOf('Organisms|RCBModal', module)
     />
   ))
   .add('thankyou', () => (
-    <RCBModal
+    <Concierge
       community={community}
       currentStep="thankyou"
       onClose={action('close')}
