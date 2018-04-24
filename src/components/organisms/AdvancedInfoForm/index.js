@@ -44,6 +44,9 @@ const AdvancedInfoForm = ({
   handleSubmit, submitting, user, community,
 }) => (
   <Form onSubmit={handleSubmit}>
+    <Heading>Send a message to {community.name}</Heading>
+    <Block>{community.description}</Block>
+
     <Field
       name="type_of_care"
       label="What type of care do you need?"
