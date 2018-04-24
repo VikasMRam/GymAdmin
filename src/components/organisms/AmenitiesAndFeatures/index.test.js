@@ -24,14 +24,14 @@ languages = languages || [];
 describe('AmenitiesAndFeatures', () => {
   it('verify no info message shown', () => {
     const wrapper = wrap({
-      propertyName: name,
+      communityName: name,
     });
     expect(wrapper.text()).toContain('No information about amenities and features currently available');
   });
 
   it('verify communityHighlights shown', () => {
     const wrapper = wrap({
-      propertyName: name,
+      communityName: name,
       communityHighlights,
     });
     const articleElem = wrapper.find('#amenities-and-features-known-for');
@@ -46,7 +46,7 @@ describe('AmenitiesAndFeatures', () => {
 
   it('verify personalSpace shown', () => {
     const wrapper = wrap({
-      propertyName: name,
+      communityName: name,
       communityHighlights,
       personalSpace,
       personalSpaceOther,
@@ -68,7 +68,7 @@ describe('AmenitiesAndFeatures', () => {
 
   it('verify communitySpace shown', () => {
     const wrapper = wrap({
-      propertyName: name,
+      communityName: name,
       communityHighlights,
       personalSpace,
       personalSpaceOther,
@@ -92,7 +92,7 @@ describe('AmenitiesAndFeatures', () => {
 
   it('verify nonCareServices shown', () => {
     const wrapper = wrap({
-      propertyName: name,
+      communityName: name,
       communityHighlights,
       personalSpace,
       personalSpaceOther,
@@ -118,7 +118,7 @@ describe('AmenitiesAndFeatures', () => {
 
   it('verify languages shown', () => {
     const wrapper = wrap({
-      propertyName: name,
+      communityName: name,
       communityHighlights,
       personalSpace,
       personalSpaceOther,

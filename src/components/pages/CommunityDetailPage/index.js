@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { string, object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import PropertyDetail from 'sly/components/organisms/PropertyDetail';
+import CommunityDetail from 'sly/components/organisms/CommunityDetail';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 
 const PageWrapper = styled.div`
@@ -18,7 +18,7 @@ const PageWrapper = styled.div`
   }
 `;
 
-const Main = styled(PropertyDetail)`
+const Main = styled(CommunityDetail)`
   width: 100%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};  
@@ -36,18 +36,18 @@ const Column = styled(ConciergeContainer)`
   }
 `;
 
-const PropertyDetailPage = ({ property, userActions }) => {  
+const CommunityDetailPage = ({ community, userActions }) => {
   return (
     <PageWrapper>
-      <Main key="main" property={property} />
-      <Column key="column" community={property} userActions={userActions} />
+      <Main key="main" community={community} />
+      <Column key="column" community={community} userActions={userActions} />
     </PageWrapper>
   );
 };
 
-PropertyDetailPage.propTypes = {
-  property: object.isRequired,
+CommunityDetailPage.propTypes = {
+  community: object.isRequired,
   userActions: object.isRequired,
 };
 
-export default PropertyDetailPage;
+export default CommunityDetailPage;

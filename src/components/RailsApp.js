@@ -11,14 +11,14 @@ const StyledDiv = styled.div`
   width: 336px;
 `;
 
-const propertySlug = window.location.pathname.replace(/[\/\s]*$/, '').split('/').pop();
+const communitySlug = window.location.pathname.replace(/[\/\s]*$/, '').split('/').pop();
 
 export default class RailsApp extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
         <StyledDiv>
-          <ConciergeContainer propertySlug={propertySlug} />
+          <ConciergeContainer communitySlug={communitySlug} />
         </StyledDiv>
       </ThemeProvider>
     );

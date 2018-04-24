@@ -53,9 +53,9 @@ class AdvancedInfoFormContainer extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, { propertySlug, next }) => ({
+const mapDispatchToProps = (dispatch, { communitySlug, next }) => ({
   submit: data => {
-    data.slug = propertySlug;
+    data.slug = communitySlug;
     return dispatch(resourceCreateRequest('userAction', data));
   },
 });

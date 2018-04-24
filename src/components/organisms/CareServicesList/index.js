@@ -11,21 +11,21 @@ const StyledArticle = styled.article`
 
 export default class CareServicesList extends Component {
   static propTypes = {
-    propertyName: string.isRequired,
+    communityName: string.isRequired,
     careServices: arrayOf(string).isRequired,
     serviceHighlights: arrayOf(string).isRequired,
   };
 
   render() {
-    const { propertyName, careServices, serviceHighlights } = this.props;
+    const { communityName, careServices, serviceHighlights } = this.props;
 
     return (
       <section id="care-services">
         <StyledArticle>
-          <List heading={`${propertyName} is known for`} items={serviceHighlights} />
+          <List heading={`${communityName} is known for`} items={serviceHighlights} />
         </StyledArticle>
         <StyledArticle>
-          <List heading={`${propertyName} also offers`} items={careServices} />
+          <List heading={`${communityName} also offers`} items={careServices} />
         </StyledArticle>
       </section>
     );
