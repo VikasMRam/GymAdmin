@@ -21,6 +21,8 @@ const InfoWindowDiv = styled.div`
   position: relative;
 `;
 
+const InfoWindowAnchor = styled.a``;
+
 const InfoWindowImg = styled.img`
   width: 100%;
   height: 100%;
@@ -62,6 +64,24 @@ class PropertyMap extends Component {
     });
   };
 
+  getInfoWindowComponent = marker => () => {
+    const component = (
+      <div>
+        <InfoWindowImg src={marker.image} />
+        <InfoWindowPropertyName>{marker.name}</InfoWindowPropertyName>
+        <InfoWindowPrice>Starting at ${marker.startingRate}</InfoWindowPrice>
+      </div>
+    );
+    if (marker.clickable === true) {
+      return (
+        <InfoWindowAnchor href={`/community/${marker.id}`}>
+          {component}
+        </InfoWindowAnchor>
+      );
+    }
+    return component;
+  };
+
   render() {
     const {
       id,
@@ -85,6 +105,7 @@ class PropertyMap extends Component {
         longitude,
         image: mainImage,
         icon: 'blue',
+        clickable: false,
       },
     ];
     similarProperties.forEach((property) => {
@@ -100,34 +121,33 @@ class PropertyMap extends Component {
         longitude,
         image: mainImage,
         icon: 'red',
+        clickable: true,
       });
     });
 
+    const markerComponents = markers.map((marker) => {
+      const InfoWindowComponent = this.getInfoWindowComponent(marker);
+      return (
+        <Marker
+          key={marker.id}
+          position={{ lat: marker.latitude, lng: marker.longitude }}
+          defaultIcon={iconMap[marker.icon]}
+          onClick={this.onMarkerClick(marker)}
+        >
+          {this.state.activeInfoWindowId === marker.id && (
+            <InfoWindow key={marker.id}>
+              <InfoWindowDiv>
+                <InfoWindowComponent />
+              </InfoWindowDiv>
+            </InfoWindow>
+          )}
+        </Marker>
+      );
+    });
+
     return (
-      <Map center={center} defaultZoom={13} markers={markers}>
-        {markers.length > 0 &&
-          markers.map(marker => (
-            <Marker
-              key={marker.id}
-              position={{ lat: marker.latitude, lng: marker.longitude }}
-              defaultIcon={iconMap[marker.icon]}
-              onClick={this.onMarkerClick(marker)}
-            >
-              {this.state.activeInfoWindowId === marker.id && (
-                <InfoWindow key={marker.id}>
-                  <InfoWindowDiv>
-                    <InfoWindowImg src={marker.image} />
-                    <InfoWindowPropertyName>
-                      {marker.name}
-                    </InfoWindowPropertyName>
-                    <InfoWindowPrice>
-                      Starting at ${marker.startingRate}
-                    </InfoWindowPrice>
-                  </InfoWindowDiv>
-                </InfoWindow>
-              )}
-            </Marker>
-          ))}
+      <Map center={center} defaultZoom={13}>
+        {markerComponents}
       </Map>
     );
   }
