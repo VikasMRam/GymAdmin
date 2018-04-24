@@ -143,7 +143,6 @@ const Modal = ({
 Modal.propTypes = {
   layout: oneOf(['single', 'double']).isRequired,
   children: node,
-  title: string,
   closeable: bool,
   onClose: func.isRequired,
 };

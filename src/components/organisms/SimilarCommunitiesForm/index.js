@@ -65,3 +65,4 @@ SimilarCommunitiesForm.propTypes = {
 };
 
 export default SimilarCommunitiesForm;
+
