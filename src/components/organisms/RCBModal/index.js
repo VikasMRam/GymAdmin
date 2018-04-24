@@ -24,12 +24,12 @@ const steps = {
   advancedInfo: {
     heading: CommunityHeading,
     content: AdvancedInfoContainer,
-    layout: 'double'
+    layout: 'single'
   },
   similarCommunities: {
     heading: SimilarHeading,
     content: SimilarCommunitiesContainer,
-    layout: 'double'
+    layout: 'single'
   },
   thankyou: {
     content: Thankyou

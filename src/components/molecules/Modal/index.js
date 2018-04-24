@@ -3,7 +3,7 @@ import { node, string, bool, func, oneOf } from 'prop-types';
 import styled, { css, injectGlobal } from 'styled-components';
 import ReactModal from 'react-modal';
 import { font, palette } from 'styled-theme';
-import { ifProp, withProp } from 'styled-tools';
+import { ifProp, withProp, switchProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
@@ -64,12 +64,14 @@ const ModalBox = styled(ReactModal)`
       transform: translate(-50%, 100%);
     }
   }
-  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-    padding: 0;
-    flex-direction: row;
-    width: ${doubleModalWidth};
-    overflow: unset;
-  }
+  ${switchProp('layout', { 
+    double: css`@media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+      padding: 0;
+      flex-direction: row;
+      width: ${doubleModalWidth};
+      overflow: unset;
+    }`
+  })}
 `;
 
 const StyledReactModal = styled(({ className, ...props }) => (
@@ -79,26 +81,32 @@ const StyledReactModal = styled(({ className, ...props }) => (
 `;
 
 const CloseButton = styled(IconButton)`
-  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-    margin-bottom: ${size('spacing.xLarge')};
-  }
+  ${switchProp('layout', { 
+    double: css`@media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+      margin-bottom: ${size('spacing.xLarge')};
+    }`
+  })}
 `;
 
 const Heading = styled.div`
   width: 100%;
   padding-bottom: ${size('spacing.xLarge')};
-  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-    padding: ${size('spacing.xxxLarge')};
-    width: ${size('modal.single')};
-  }
+  ${switchProp('layout', { 
+    double: css`@media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+      padding: ${size('spacing.xxxLarge')};
+      width: ${size('modal.single')};
+    }`
+  })}
 `;
 
 const Content = styled.div`
-  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-    padding: ${size('spacing.xxxLarge')};
-    width: ${size('modal.single')};
-    overflow: auto;
-  }
+  ${switchProp('layout', { 
+    double: css`@media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+      padding: ${size('spacing.xxxLarge')};
+      width: ${size('modal.single')};
+      overflow: auto;
+    }`
+  })} 
 `;
 
 const Modal = ({
@@ -108,9 +116,9 @@ const Modal = ({
     <CloseButton
       icon="close"
       iconOnly
+      layout={layout}
       onClick={onClose}
       palette="slate"
-      reverse
     />
   );
   return (
@@ -120,7 +128,7 @@ const Modal = ({
       {...props}
     >
       {(closeable || heading) && (
-        <Heading>
+        <Heading layout={layout}>
           {closeable && iconClose}
           {heading}
         </Heading>
@@ -137,7 +145,6 @@ Modal.propTypes = {
   children: node,
   title: string,
   closeable: bool,
-  reverse: bool,
   onClose: func.isRequired,
 };
 

@@ -38,8 +38,7 @@ theme.sizes = {
   },
 
   modal: {
-    single:       '35.25rem', // 564px
-    double:       '70.50rem', // 1128px
+    single:       '35.25rem', // 516px
   },
 
   collapsible: {

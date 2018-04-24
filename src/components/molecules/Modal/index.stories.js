@@ -9,8 +9,8 @@ storiesOf('Molecules|Modal', module)
       Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
     </Modal>
   ))
-  .add('with title', () => (
-    <Modal onClose={action('closed')} title="Hello" isOpen>
+  .add('with heading', () => (
+    <Modal onClose={action('closed')} heading={<h1>Hello</h1>} isOpen>
       Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
     </Modal>
   ))
@@ -24,8 +24,8 @@ storiesOf('Molecules|Modal', module)
       Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
     </Modal>
   ))
-  .add('reverse', () => (
-    <Modal onClose={action('closed')} reverse isOpen>
+  .add('double closeable with heading', () => (
+    <Modal onClose={action('closed')} closeable heading={<h1>Hello</h1>} layout="double" isOpen>
       Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
     </Modal>
   ));
