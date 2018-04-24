@@ -29,7 +29,7 @@ const steps = {
   similarCommunities: {
     heading: SimilarHeading,
     content: SimilarCommunitiesContainer,
-    layout: 'single'
+    layout: 'double'
   },
   thankyou: {
     content: Thankyou

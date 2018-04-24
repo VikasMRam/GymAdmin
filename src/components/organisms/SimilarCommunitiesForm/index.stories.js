@@ -23,14 +23,14 @@ const community = {
   numReviews: 50,
 };
 
-const communities = [community, community, community, community].map((c, i) => ({ ...c, id: `${c.id}_${i}` }));
-
-const tags = ['shared room', "alzheirmer's", 'san francisco'];
+const similarProperties = [community, community, community, community].map((c, i) => ({ ...c, id: `${c.id}_${i}` }));
+const typeCare = ['shared room', "alzheirmer's", 'san francisco'];
+const property = { similarProperties, propInfo: { typeCare } };
 
 storiesOf('Organisms|SimilarCommunitiesForm', module).add('default', () => (
   <SimilarCommunitiesFormContainer
     handleSubmit={action('submit!')}
     tags={tags}
-    communities={communities}
+    community={property}
   />
 ));
