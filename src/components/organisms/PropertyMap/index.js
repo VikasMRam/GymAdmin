@@ -64,6 +64,12 @@ class PropertyMap extends Component {
     });
   };
 
+  onInfoWindowCloseClick = () => {
+    this.setState({
+      activeInfoWindowId: null,
+    });
+  };
+
   getInfoWindowComponent = marker => () => {
     const component = (
       <div>
@@ -135,7 +141,10 @@ class PropertyMap extends Component {
           onClick={this.onMarkerClick(marker)}
         >
           {this.state.activeInfoWindowId === marker.id && (
-            <InfoWindow key={marker.id}>
+            <InfoWindow
+              key={marker.id}
+              onCloseClick={this.onInfoWindowCloseClick}
+            >
               <InfoWindowDiv>
                 <InfoWindowComponent />
               </InfoWindowDiv>
