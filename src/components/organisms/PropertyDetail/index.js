@@ -62,6 +62,7 @@ export default class PropertyDetail extends Component {
     const { hasSlyReviews, hasWebReviews } = propRatings;
     const ratingsArray = propRatings.ratingsArray || [];
     const reviewsFinal = reviews || [];
+    const serviceHighlightsFinal = serviceHighlights || [];
     const roomPrices = floorPlans.map(({ info }) => info);
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
@@ -97,7 +98,7 @@ export default class PropertyDetail extends Component {
           <CareServicesList
             propertyName={name}
             careServices={careServices}
-            serviceHighlights={serviceHighlights}
+            serviceHighlights={serviceHighlightsFinal}
           />
         </CollapsibleSection>
         <CollapsibleSection title="Amenities & Features">
