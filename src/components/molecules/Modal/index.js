@@ -1,8 +1,8 @@
 import React from 'react';
-import { node, string, bool, func, oneOf } from 'prop-types';
+import { node, bool, func, oneOf } from 'prop-types';
 import styled, { css, injectGlobal } from 'styled-components';
 import ReactModal from 'react-modal';
-import { font, palette } from 'styled-theme';
+import { palette } from 'styled-theme';
 import { ifProp, withProp, switchProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
@@ -18,7 +18,7 @@ injectGlobal`
 
 const overlayStyles = css`
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${palette('slate', 0)}e5;
   top: 0;
   right: 0;
   left: 0;
@@ -38,39 +38,51 @@ const ModalBox = styled(ReactModal)`
   position: absolute;
   display: flex;
   flex-direction: column;
-  background-color: ${palette('white', 0)};
+  background-color: ${ifProp('transparent', 'transparent', palette('white', 0))};
   border-radius: ${size('spacing.tiny')};
-  color: ${palette('slate', 0)};
+  color: ${ifProp('transparent', palette('white', 0), palette('slate', 0))};
   transition: transform 250ms ease-in-out;
   outline: none;
   padding: ${size('spacing.xxxLarge')};
   width: 100%;
   height: 100%;
   overflow: auto;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    height: unset;
-    top: calc(50% - 1rem);
-    left: calc(50% - 1rem);
-    right: auto;
-    bottom: auto;
-    margin: 1rem calc(-50% + 1rem) 1rem 1rem;
-    transform: translate(-50%, 100%);
-    width: ${size('modal.single')};
-    max-height: calc(100% - 1rem);
-    &[class*='after-open'] {
-      transform: translate(-50%, -50%);
-    }
-    &[class*='before-close'] {
-      transform: translate(-50%, 100%);
-    }
+  height: unset;
+  top: calc(50% - 1rem);
+  left: calc(50% - 1rem);
+  right: auto;
+  bottom: auto;
+  margin: 1rem calc(-50% + 1rem) 1rem 1rem;
+  transform: translate(-50%, 100%);
+  max-height: calc(100% - 1rem);
+  &[class*='after-open'] {
+    transform: translate(-50%, -50%);
   }
-  ${switchProp('layout', { 
-    double: css`@media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+  &[class*='before-close'] {
+    transform: translate(-50%, 100%);
+  }
+
+  ${switchProp('layout', {
+    single: css`@media screen and (min-width: ${size('breakpoint.tablet')}) {
+        width: ${size('modal.single')};
+      }
+    `,
+    double: css`@media screen and (min-width: ${size('breakpoint.tablet')}) {
+      width: ${size('modal.single')};
+    }
+
+    @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
       padding: 0;
       flex-direction: row;
       width: ${doubleModalWidth};
       overflow: unset;
-    }`
+    }`,
+    gallery: css`
+      padding: 0;
+      @media screen and (min-width: ${size('breakpoint.laptop')}) {
+        width: ${doubleModalWidth};
+      }
+    `,
   })}
 `;
 
@@ -81,74 +93,85 @@ const StyledReactModal = styled(({ className, ...props }) => (
 `;
 
 const CloseButton = styled(IconButton)`
-  ${switchProp('layout', { 
+  ${switchProp('layout', {
     double: css`@media screen and (min-width: ${size('breakpoint.doubleModal')}) {
       margin-bottom: ${size('spacing.xLarge')};
-    }`
+    }`,
   })}
 `;
 
 const Heading = styled.div`
   width: 100%;
   padding-bottom: ${size('spacing.xLarge')};
-  ${switchProp('layout', { 
+  ${switchProp('layout', {
     double: css`@media screen and (min-width: ${size('breakpoint.doubleModal')}) {
       padding: ${size('spacing.xxxLarge')};
       width: ${size('modal.single')};
-    }`
+    }`,
   })}
 `;
 
 const Content = styled.div`
-  ${switchProp('layout', { 
+  ${switchProp('layout', {
     double: css`@media screen and (min-width: ${size('breakpoint.doubleModal')}) {
       padding: ${size('spacing.xxxLarge')};
       width: ${size('modal.single')};
       overflow: auto;
-    }`
-  })} 
+    }`,
+  })}
 `;
 
-const Modal = ({
-  heading, children, closeable, layout, onClose, ...props
-}) => {
-  const iconClose = (
-    <CloseButton
-      icon="close"
-      iconOnly
-      layout={layout}
-      onClick={onClose}
-      palette="slate"
-    />
-  );
-  return (
-    <StyledReactModal
-      onRequestClose={onClose}
-      layout={layout}
-      {...props}
-    >
-      {(closeable || heading) && (
-        <Heading layout={layout}>
-          {closeable && iconClose}
-          {heading}
-        </Heading>
-      )}
-      <Content layout={layout}>
-        {children}
-      </Content>
-    </StyledReactModal>
-  );
-};
+export default class Modal extends React.Component {
+  static propTypes = {
+    layout: oneOf(['single', 'double', 'gallery']).isRequired,
+    heading: node,
+    children: node,
+    closeable: bool,
+    onClose: func.isRequired,
+    transparent: bool,
+  };
 
-Modal.propTypes = {
-  layout: oneOf(['single', 'double']).isRequired,
-  children: node,
-  closeable: bool,
-  onClose: func.isRequired,
-};
+  static defaultProps = {
+    layout: 'single',
+    transparent: false,
+  };
 
-Modal.defaultProps = {
-  layout: 'single',
-};
+  componentDidMount() {
+    ReactModal.setAppElement(document.getElementById('app'));
+  }
 
-export default Modal;
+  render() {
+    const {
+      heading, children, closeable, layout, onClose, transparent,
+    } = this.props;
+    const iconClose = (
+      <CloseButton
+        icon="close"
+        iconOnly
+        layout={layout}
+        onClick={onClose}
+        palette={transparent ? 'white' : 'slate'}
+      />
+    );
+
+    return (
+      <StyledReactModal
+        onRequestClose={onClose}
+        layout={layout}
+        transparent={transparent}
+        onClose={onClose}
+        {...this.props}
+      >
+        {(closeable || heading) && (layout !== 'gallery') && (
+          <Heading layout={layout}>
+            {closeable && iconClose}
+            {heading}
+          </Heading>
+        )}
+        <Content layout={layout}>
+          {children}
+        </Content>
+      </StyledReactModal>
+    );
+  }
+}
