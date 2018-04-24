@@ -20,7 +20,7 @@ languages = languages || [];
 storiesOf('Organisms|AmenitiesAndFeatures', module)
   .add('default', () => (
     <AmenitiesAndFeatures
-      propertyName={name}
+      communityName={name}
       communityHighlights={communityHighlights}
       personalSpace={personalSpace}
       personalSpaceOther={personalSpaceOther}
@@ -34,6 +34,6 @@ storiesOf('Organisms|AmenitiesAndFeatures', module)
   ))
   .add('no data', () => (
     <AmenitiesAndFeatures
-      propertyName={name}
+      communityName={name}
     />
   ));

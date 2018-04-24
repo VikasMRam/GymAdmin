@@ -41,7 +41,7 @@ const StyledArticle = styled.article`
 
 export default class PricingAndAvailability extends Component {
     static propTypes = {
-      propertyName: PropTypes.string.isRequired,
+      communityName: PropTypes.string.isRequired,
       roomPrices: PropTypes.arrayOf(PropTypes.shape({
         roomType: PropTypes.string.isRequired,
         image: PropTypes.string,
@@ -89,7 +89,7 @@ export default class PricingAndAvailability extends Component {
 
     render() {
       const {
-        propertyName,
+        communityName,
         roomPrices,
         address,
         estimatedPrice,
@@ -97,8 +97,8 @@ export default class PricingAndAvailability extends Component {
         onInquireOrBookClicked,
       } = this.props;
       const estimatedPriceLabelMap = {
-        providedAverage: propertyName,
-        estimatedAverage: propertyName, // TODO: figure out correct label
+        providedAverage: communityName,
+        estimatedAverage: communityName, // TODO: figure out correct label
         cityAverage: address.city,
         stateAverage: address.state,
         nationalAverage: address.country,
@@ -128,7 +128,7 @@ export default class PricingAndAvailability extends Component {
           <StyledArticle id="pricing-and-floor-plans-price-tiles">
             {!roomPrices.length && estimatedPriceBase &&
               <EstimatedCost
-                propertyName={propertyName}
+                communityName={communityName}
                 price={estimatedPriceBase}
                 onGetDetailedPricingClicked={onGetDetailedPricingClicked}
               />

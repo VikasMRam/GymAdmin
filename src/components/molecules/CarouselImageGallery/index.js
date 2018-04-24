@@ -80,7 +80,7 @@ const StyledButton = styled(Button)`
 
 export default class CarouselImageGallery extends React.Component {
   static propTypes = {
-    propertyName: PropTypes.string.isRequired,
+    communityName: PropTypes.string.isRequired,
     images: PropTypes.arrayOf(PropTypes.shape({
       hd: PropTypes.string.isRequired,
       sd: PropTypes.string.isRequired,
@@ -128,7 +128,7 @@ export default class CarouselImageGallery extends React.Component {
             <StyledImg
               key={i}
               src={image.sd}
-              alt={`${this.props.propertyName} ${i + 1}`}
+              alt={`${this.props.communityName} ${i + 1}`}
             />
           ))}
         </SwipeableViews>

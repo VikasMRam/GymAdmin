@@ -6,7 +6,7 @@ import CareServicesList from '.';
 
 const wrap = () =>
   mount(<CareServicesList
-    propertyName="ABC"
+    communityName="ABC"
     careServices={['A', 'B']}
     serviceHighlights={['C', 'D', 'E']}
   />);
