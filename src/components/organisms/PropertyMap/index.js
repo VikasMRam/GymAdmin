@@ -154,8 +154,14 @@ class PropertyMap extends Component {
       );
     });
 
+    const isMobile = window.innerWidth < 768;
+    let defaultZoom = 13;
+    if (isMobile) {
+      defaultZoom = 12;
+    }
+
     return (
-      <Map center={center} defaultZoom={13}>
+      <Map center={center} defaultZoom={defaultZoom}>
         {markerComponents}
       </Map>
     );
