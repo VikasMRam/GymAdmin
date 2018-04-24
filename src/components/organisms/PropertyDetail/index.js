@@ -26,6 +26,8 @@ export default class PropertyDetail extends Component {
     const { property, propertySlug, ...props } = this.props;
     const {
       name,
+      mainImage,
+      startingRate,
       propInfo,
       propRatings,
       reviews,
@@ -126,6 +128,10 @@ export default class PropertyDetail extends Component {
         </CollapsibleSection>
         <CollapsibleSection title={mapViewTitle}>
           <PropertyMap
+            id={propertySlug}
+            name={name}
+            startingRate={startingRate}
+            mainImage={mainImage}
             address={address}
             similarProperties={similarProperties}
           />
