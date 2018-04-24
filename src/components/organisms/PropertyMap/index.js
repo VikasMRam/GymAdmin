@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { string, number, shape, arrayOf } from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
 import { Marker, InfoWindow } from 'react-google-maps';
@@ -54,6 +55,27 @@ const InfoWindowPrice = styled.div`
 `;
 
 class PropertyMap extends Component {
+  propTypes = {
+    id: string.isRequired,
+    name: string.isRequired,
+    startingRate: number.isRequired,
+    mainImage: string.isRequired,
+    address: shape({
+      latitude: number.isRequired,
+      longitude: number.isRequired,
+    }).isRequired,
+    similarProperties: arrayOf(shape({
+      id: string.isRequired,
+      name: string.isRequired,
+      startingRate: number.isRequired,
+      mainImage: string.isRequired,
+      address: shape({
+        latitude: number.isRequired,
+        longitude: number.isRequired,
+      }).isRequired,
+    })),
+  };
+
   state = {
     activeInfoWindowId: null,
   };
