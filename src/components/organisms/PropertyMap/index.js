@@ -47,7 +47,7 @@ const InfoWindowPrice = styled.div`
   z-index: 3;
   right: 0px;
   bottom: 0px;
-  background-color: rgba(104, 116, 122, 0.7);
+  background-color: ${palette('grayscale', 4)}B3; // 70% Opacity
   text-align: right;
   height: 22px;
   width: 100%;
