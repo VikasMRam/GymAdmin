@@ -33,7 +33,7 @@ class ConversionFormContainer extends Component {
   submit = data => {
     const { submit, propertySlug } = this.props;
     submit({
-      action: REQUEST_CALLBACK, 
+      action: REQUEST_CALLBACK,
       value: {
         user: { ...data },
         propertyIds: [propertySlug],
@@ -47,10 +47,10 @@ class ConversionFormContainer extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, { propertySlug }) => ({
+const mapDispatchToProps = (dispatch, { propertySlug, next }) => ({
   submit: data => {
     data.slug = propertySlug;
-    return dispatch(resourceCreateRequest('userAction', data));
+    return dispatch(resourceCreateRequest('userAction', data)).then(next);
   },
 });
 

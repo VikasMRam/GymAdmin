@@ -38,7 +38,7 @@ const ModalBox = styled(ReactModal)`
   position: absolute;
   display: flex;
   flex-direction: column;
-  background-color: ${palette('white', 2)};
+  background-color: ${palette('white', 0)};
   border-radius: ${size('spacing.tiny')};
   color: ${palette('slate', 0)};
   transition: transform 250ms ease-in-out;
