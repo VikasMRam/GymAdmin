@@ -8,7 +8,7 @@ import Hr from 'sly/components/atoms/Hr';
 
 const RatingHeadingDiv = styled.div`
   display: flex;
-  padding-top: ${size('spacing.large')};
+  padding-bottom: ${size('spacing.regular')};
 `;
 
 const RatingIconDiv = styled.div`
@@ -21,8 +21,9 @@ const ReviewHeadingText = styled.div`
   color: grey;
 `;
 
-const ReviewContentText = styled.div`
-  padding-bottom: ${size('spacing.xLarge')};
+const PaddedHR = styled(Hr)`
+  margin-top: ${size('spacing.xLarge')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 function formatDate(dateString) {
@@ -46,8 +47,8 @@ const PropertyReview = ({
       <ReviewHeadingText>By {author}</ReviewHeadingText>
       <ReviewHeadingText>{formatDate(createdAt)}</ReviewHeadingText>
     </RatingHeadingDiv>
-    <ReviewContentText>{comments}</ReviewContentText>
-    <Hr />
+    {comments}
+    <PaddedHR />
   </div>
 );
 
