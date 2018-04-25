@@ -19,6 +19,6 @@ const onInquireOrBookClicked = () => {
 };
 
 storiesOf('Organisms|PricingAndAvailability', module)
-  .add('default', () => <PricingAndAvailability propertyName={name} roomPrices={roomPrices} address={address} estimatedPrice={rgsAux.estimatedPrice} onInquireOrBookClicked={onInquireOrBookClicked} />)
-  .add('noPriceComparison', () => <PricingAndAvailability propertyName={name} roomPrices={roomPrices} address={address} onInquireOrBookClicked={onInquireOrBookClicked} />)
-  .add('estimatedPricing', () => <PricingAndAvailability propertyName={name} address={address} estimatedPrice={rgsAux.estimatedPrice} onGetDetailedPricingClicked={onGetDetailedPricingClicked} onInquireOrBookClicked={onInquireOrBookClicked} />);
+  .add('default', () => <PricingAndAvailability communityName={name} roomPrices={roomPrices} address={address} estimatedPrice={rgsAux.estimatedPrice} onInquireOrBookClicked={onInquireOrBookClicked} />)
+  .add('noPriceComparison', () => <PricingAndAvailability communityName={name} roomPrices={roomPrices} address={address} onInquireOrBookClicked={onInquireOrBookClicked} />)
+  .add('estimatedPricing', () => <PricingAndAvailability communityName={name} address={address} estimatedPrice={rgsAux.estimatedPrice} onGetDetailedPricingClicked={onGetDetailedPricingClicked} onInquireOrBookClicked={onInquireOrBookClicked} />);

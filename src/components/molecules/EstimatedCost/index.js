@@ -30,7 +30,7 @@ const percentageOf = (num, percentage) => {
 };
 
 const EstimatedCost = ({
-  price, propertyName, onGetDetailedPricingClicked,
+  price, communityName, onGetDetailedPricingClicked,
 }) => {
   let from = 0;
   let to = 0;
@@ -46,7 +46,7 @@ const EstimatedCost = ({
           Estimated cost from ${numeral(from).format('0,0')} to ${numeral(to).format('0,0')} per month*
         </SpacingBottomRegularWrapper>
         <Block size="caption">
-          *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area, and the amenities and care services provided at {propertyName}.
+          *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area, and the amenities and care services provided at {communityName}.
         </Block>
       </EstimatedCostWrapper>
       <div>
@@ -58,7 +58,7 @@ const EstimatedCost = ({
 
 EstimatedCost.propTypes = {
   price: PropTypes.number.isRequired,
-  propertyName: PropTypes.string.isRequired,
+  communityName: PropTypes.string.isRequired,
   onGetDetailedPricingClicked: PropTypes.func,
 };
 

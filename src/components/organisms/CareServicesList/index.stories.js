@@ -12,6 +12,6 @@ storiesOf('Organisms|CareServicesList', module).add('default', () => (
   <CareServicesList
     careServices={careServices}
     serviceHighlights={serviceHighlights}
-    propertyName={name}
+    communityName={name}
   />
 ));

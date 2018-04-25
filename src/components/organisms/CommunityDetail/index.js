@@ -15,16 +15,15 @@ import PropertyMap from 'sly/components/organisms/PropertyMap';
 // TODO: remove this
 const nextUri = (() => {
   const uris = ['rhoda-goldman-plaza', 'buena-vista-manor-house'];
-  return (propertySlug) => {
-    const index = uris.indexOf(propertySlug) + 1;
+  return (communitySlug) => {
+    const index = uris.indexOf(communitySlug) + 1;
     return uris[index % 2];
   };
 })();
 
-export default class PropertyDetail extends Component {
-  componentWillMount() {}
+export default class CommunityDetail extends Component {
   render() {
-    const { property, propertySlug, ...props } = this.props;
+    const { community, communitySlug, ...props } = this.props;
     const {
       name,
       mainImage,
@@ -37,7 +36,7 @@ export default class PropertyDetail extends Component {
       floorPlans,
       similarProperties,
       gallery,
-    } = property;
+    } = community;
     const { images } = gallery || [];
     const { careServices, serviceHighlights } = propInfo;
     const {
@@ -73,17 +72,17 @@ export default class PropertyDetail extends Component {
     return (
       <div {...props}>
         <CarouselImageGallery
-          propertyName={name}
+          communityName={name}
           images={images}
         />
         <Heading level="hero">{name}</Heading>
         {/* temp shiz */}
-        <Link to={`/community/${nextUri(propertySlug)}`}>
+        <Link to={`/community/${nextUri(communitySlug)}`}>
           Link to test navigation cross profile
         </Link>
         <CollapsibleSection title="Pricing & Floor Plans">
           <PricingAndAvailability
-            propertyName={name}
+            communityName={name}
             address={address}
             estimatedPrice={rgsAux.estimatedPrice}
             roomPrices={roomPrices}
@@ -103,14 +102,14 @@ export default class PropertyDetail extends Component {
         </CollapsibleSection>
         <CollapsibleSection title="Care Services">
           <CareServicesList
-            propertyName={name}
+            communityName={name}
             careServices={careServices}
             serviceHighlights={serviceHighlightsFinal}
           />
         </CollapsibleSection>
         <CollapsibleSection title="Amenities & Features">
           <AmenitiesAndFeatures
-            propertyName={name}
+            communityName={name}
             communityHighlights={communityHighlights}
             personalSpace={personalSpace}
             personalSpaceOther={personalSpaceOther}

@@ -6,26 +6,16 @@ import styled from 'styled-components';
 import { size } from 'sly/components/themes';
 import { getDetail } from 'sly/store/selectors';
 
-import {
-  createValidator,
-  required,
-  email,
-  usPhone,
-} from 'sly/services/validation';
-
-import Thankyou from 'sly/components/molecules/Thankyou';
-import ConversionFormContainer from 'sly/containers/ConversionFormContainer';
-import RCBModal from 'sly/components/organisms/RCBModal';
+import Concierge from 'sly/components/organisms/Concierge';
 
 import {
   resourceDetailReadRequest,
 } from 'sly/store/resource/actions';
 
-
 class ConciergeContainer extends Component {
   static propTypes = {
     // TODO: shape
-    property: object,
+    community: object,
     userRequestedCB: bool,
   };
 
@@ -33,37 +23,61 @@ class ConciergeContainer extends Component {
     userRequestedCB: false,
   };
 
-  state = { modalIsOpen: false };
+  steps = [
+    'conversionForm',
+    'advancedInfo',
+    'similarCommunities',
+    'thankyou',
+  ];
 
-  next = (data) => {
-    console.log('next', data); 
-    this.setState({ modalIsOpen: true });
+  state = {
+    currentStep: 'conversionForm',
+    modalIsOpen: false,
+  };
+
+  nextStep = (...args) => {
+    const { currentStep } = this.state;
+    const stepIndex = this.steps.indexOf(currentStep);
+    const nextStepIndex = stepIndex + 1;
+    if(nextStepIndex < this.steps.length) {
+      this.setState({
+        currentStep: this.steps[nextStepIndex],
+        modalIsOpen: true,
+      });
+    } else {
+      this.setState({
+        modalIsOpen: false,
+      });
+    }
+  };
+
+  closeModal = () => {
+    this.setState({ modalIsOpen: false });
   };
 
   render() {
-    const { userRequestedCB, property, className } = this.props;
-    const column = (
-      <div key="column" className={className}>
-        { userRequestedCB
-          ? <Thankyou community={property} onClose={() => {}} />
-          : <ConversionFormContainer next={this.next} />
-        }
-      </div>
+    const { ...props } = this.props;
+    const { modalIsOpen, currentStep } = this.state;
+    // I return an array here as Concierge is not even rendered here in the three
+    
+    return (
+      <Concierge
+        key="modal"
+        onClose={this.closeModal}
+        isOpen={modalIsOpen}
+        currentStep={currentStep}
+        next={this.nextStep}
+        {...props}
+      />
     );
-    const { modalIsOpen } = this.state;
-    // I return an array here as RCBModal is not even rendered here in the three
-    return [ 
-      column,
-      <RCBModal key="modal" onClose={()=>{}} isOpen={modalIsOpen} community={property} />
-    ];
   }
 }
 
 const isCallback = contact => contact.type === 'request_callback';
-const mapStateToProps = (state, { propertySlug, userActions, property }) => {
+const mapStateToProps = (state, { userActions, community }) => {
   const userRequestedCB = userActions && (userActions.profilesContacted || [])
-    .some(contact => contact.slug === propertySlug && isCallback(contact));
-  return { userRequestedCB, property };
+    .some(contact => contact.slug === community.id && isCallback(contact));
+  return { userRequestedCB, community };
 };
 
 export default connect(mapStateToProps)(ConciergeContainer);

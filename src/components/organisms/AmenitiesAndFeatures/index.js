@@ -11,7 +11,7 @@ const StyledArticle = styled.article`
 `;
 
 const AmenitiesAndFeatures = ({
-  propertyName, communityHighlights, personalSpace, personalSpaceOther, communitySpace, communitySpaceOther,
+  communityName, communityHighlights, personalSpace, personalSpaceOther, communitySpace, communitySpaceOther,
   nonCareServices, nonCareServicesOther, languages, languagesOther,
 }) => {
   let noData = false;
@@ -29,7 +29,7 @@ const AmenitiesAndFeatures = ({
       }
       {communityHighlights.length > 0 &&
         <StyledArticle id="amenities-and-features-known-for">
-          <List heading={`${propertyName} is known for`} items={communityHighlights} />
+          <List heading={`${communityName} is known for`} items={communityHighlights} />
         </StyledArticle>
       }
       {(personalSpace.length > 0 || personalSpaceOther) &&
@@ -85,7 +85,7 @@ const AmenitiesAndFeatures = ({
 };
 
 AmenitiesAndFeatures.propTypes = {
-  propertyName: PropTypes.string.isRequired,
+  communityName: PropTypes.string.isRequired,
   communityHighlights: PropTypes.arrayOf(PropTypes.string),
   personalSpace: PropTypes.arrayOf(PropTypes.string),
   personalSpaceOther: PropTypes.string,

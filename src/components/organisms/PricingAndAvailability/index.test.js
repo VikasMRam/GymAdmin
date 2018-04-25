@@ -60,7 +60,7 @@ const expectedPropertiesLength = {
   case2: 0,
   case3: 0,
 };
-const propertyName = 'testPropertyName';
+const communityName = 'testcommunityName';
 const roomPrices = [
   {
     title: 'Beautiful, quiet private studio available now!',
@@ -151,7 +151,7 @@ describe('PricingAndAvailability', () => {
 
   it('verify estimatedPrice section not shown', () => {
     const wrapper = wrap({
-      propertyName, roomPrices, address,
+      communityName, roomPrices, address,
     });
     expect(wrapper.find(EstimatedCost)).toHaveLength(0);
     const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
@@ -160,7 +160,7 @@ describe('PricingAndAvailability', () => {
 
   it('verify roomPrices rendered without estimatedPrice', () => {
     const wrapper = wrap({
-      propertyName, roomPrices, address,
+      communityName, roomPrices, address,
     });
     expect(wrapper.find(EstimatedCost)).toHaveLength(0);
     const roomTiles = wrapper.find('#pricing-and-floor-plans-price-tiles').find(RoomTile);
@@ -171,7 +171,7 @@ describe('PricingAndAvailability', () => {
 
   it('verify estimatedPrice section shown', () => {
     const wrapper = wrap({
-      propertyName, address, estimatedPrice: properties.case1,
+      communityName, address, estimatedPrice: properties.case1,
     });
     expect(wrapper.find(EstimatedCost)).toHaveLength(1);
     const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
@@ -181,7 +181,7 @@ describe('PricingAndAvailability', () => {
 
   it('verify roomPrices rendered with estimatedPrice', () => {
     const wrapper = wrap({
-      propertyName, roomPrices, address, estimatedPrice: properties.case1,
+      communityName, roomPrices, address, estimatedPrice: properties.case1,
     });
     expect(wrapper.find(EstimatedCost)).toHaveLength(0);
     const roomTiles = wrapper.find('#pricing-and-floor-plans-price-tiles').find(RoomTile);
@@ -193,7 +193,7 @@ describe('PricingAndAvailability', () => {
 
   it('verify price comparison with only providedAverage non zero ', () => {
     const wrapper = wrap({
-      propertyName, roomPrices, address, estimatedPrice: properties.case2,
+      communityName, roomPrices, address, estimatedPrice: properties.case2,
     });
     const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
     expect(comparison).toHaveLength(0);
@@ -202,7 +202,7 @@ describe('PricingAndAvailability', () => {
 
   it('verify price comparison with all properties zero ', () => {
     const wrapper = wrap({
-      propertyName, roomPrices, address, estimatedPrice: properties.case3,
+      communityName, roomPrices, address, estimatedPrice: properties.case3,
     });
     const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
     expect(comparison).toHaveLength(0);

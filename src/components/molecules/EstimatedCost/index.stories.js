@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import EstimatedCost from '.';
 
-const propertyName = 'Buena Vista Manor House';
+const communityName = 'Buena Vista Manor House';
 const price = 1230;
 const onGetDetailedPricingClicked = () => {
   alert('open booking modal');
@@ -10,5 +10,5 @@ const onGetDetailedPricingClicked = () => {
 
 storiesOf('Molecules|EstimatedCost', module)
   .add('default', () => (
-    <EstimatedCost propertyName={propertyName} price={price} onGetDetailedPricingClicked={onGetDetailedPricingClicked} />
+    <EstimatedCost communityName={communityName} price={price} onGetDetailedPricingClicked={onGetDetailedPricingClicked} />
   ));

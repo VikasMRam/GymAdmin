@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
+import { object } from 'prop-types';
 
 import { REQUEST_CALLBACK } from 'sly/services/api/actions';
 
@@ -30,15 +31,19 @@ const ReduxForm = reduxForm({
 })(ConversionForm);
 
 class ConversionFormContainer extends Component {
+  static propTypes = {
+    community: object.isRequired,
+  };
+
   submit = data => {
-    const { submit, propertySlug } = this.props;
+    const { submit, community, next } = this.props;
     submit({
       action: REQUEST_CALLBACK,
       value: {
         user: { ...data },
-        propertyIds: [propertySlug],
+        propertyIds: [community.id],
       }
-    });
+    }).then(next);
   }
 
   render() {
@@ -47,10 +52,9 @@ class ConversionFormContainer extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch, { propertySlug, next }) => ({
+const mapDispatchToProps = dispatch => ({
   submit: data => {
-    data.slug = propertySlug;
-    return dispatch(resourceCreateRequest('userAction', data)).then(next);
+    return dispatch(resourceCreateRequest('userAction', data));
   },
 });
 

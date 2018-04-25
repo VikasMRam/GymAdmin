@@ -9,4 +9,4 @@ const { name, gallery, videoGallery, } = RhodaGoldmanPlaza;
 const { images } = gallery;
 
 storiesOf('Molecules|CarouselImageGallery', module)
-  .add('default', () => <CarouselImageGallery propertyName={name} images={images} />);
+  .add('default', () => <CarouselImageGallery communityName={name} images={images} />);

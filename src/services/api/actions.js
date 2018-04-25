@@ -1,2 +1,4 @@
 export const REQUEST_CALLBACK = 'lead/REQUEST_CALLBACK';
 export const ASSESSMENT = 'lead/ASSESSMENT';
+export const SIMILAR_COMMUNITIES = 'lead/SIMILAR_COMMUNITIES';
+

@@ -30,20 +30,20 @@ const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const SimilarCommunitiesForm = ({ handleSubmit, submitting, communities, tags }) => (
+const SimilarCommunitiesForm = ({ handleSubmit, submitting, community }) => (
   <Form onSubmit={handleSubmit}>
     <Heading>Send your message to similar communities</Heading>
     <Block>We found that these communities have similar features that you are looking for.</Block>
     <Field
       name="similar_tags"
       type="multipletags"
-      options={makeTags(tags)}
+      options={makeTags(community.propInfo.typeCare)}
       component={ReduxField}
     />
     <Field
       name="similar_communities"
       type="communitychoice"
-      options={makeOptions(communities)}
+      options={makeOptions(community.similarProperties)}
       component={ReduxField}
     />
     <StyledButton type="submit" disabled={submitting}>
@@ -55,8 +55,14 @@ const SimilarCommunitiesForm = ({ handleSubmit, submitting, communities, tags })
 SimilarCommunitiesForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
-  communities: arrayOf(shape({ id: string.isRequired, name: string.isRequired, rating: number })).isRequired,
+  community: shape({
+    similarProperties: arrayOf(shape({ id: string.isRequired, name: string.isRequired, rating: number })).isRequired,
+    propInfo: shape({
+      typeCare: arrayOf(string),
+    }).isRequired,
+  }).isRequired,
   tags: arrayOf(string).isRequired,
 };
 
 export default SimilarCommunitiesForm;
+
