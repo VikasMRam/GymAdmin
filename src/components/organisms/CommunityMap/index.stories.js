@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import PropertyMap from '.';
+import CommunityMap from '.';
 
 const {
   id,
@@ -13,8 +13,8 @@ const {
   similarProperties,
 } = RhodaGoldmanPlaza;
 
-storiesOf('Organisms|PropertyMap', module).add('default', () => (
-  <PropertyMap
+storiesOf('Organisms|CommunityMap', module).add('default', () => (
+  <CommunityMap
     id={id}
     name={name}
     startingRate={startingRate}

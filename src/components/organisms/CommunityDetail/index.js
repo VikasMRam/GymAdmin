@@ -10,7 +10,7 @@ import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import OwnerStory from 'sly/components/organisms/OwnerStory';
 import CarouselImageGallery from 'sly/components/molecules/CarouselImageGallery';
-import PropertyMap from 'sly/components/organisms/PropertyMap';
+import CommunityMap from 'sly/components/organisms/CommunityMap';
 
 // TODO: remove this
 const nextUri = (() => {
@@ -135,7 +135,7 @@ export default class CommunityDetail extends Component {
           />
         </CollapsibleSection>
         <CollapsibleSection title={mapViewTitle}>
-          <PropertyMap
+          <CommunityMap
             id={id}
             name={name}
             startingRate={startingRate}

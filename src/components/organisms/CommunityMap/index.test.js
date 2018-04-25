@@ -5,9 +5,9 @@ import { Marker, InfoWindow } from 'react-google-maps';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 import Map from 'sly/components/atoms/Map';
 
-import PropertyMap from '.';
+import CommunityMap from '.';
 
-const wrap = (props = {}) => shallow(<PropertyMap {...props} />);
+const wrap = (props = {}) => shallow(<CommunityMap {...props} />);
 
 const {
   id,

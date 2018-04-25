@@ -54,7 +54,7 @@ const InfoWindowPrice = styled.div`
   width: 100%;
 `;
 
-class PropertyMap extends Component {
+class CommunityMap extends Component {
   static propTypes = {
     id: string.isRequired,
     name: string.isRequired,
@@ -190,4 +190,4 @@ class PropertyMap extends Component {
   }
 }
 
-export default PropertyMap;
+export default CommunityMap;
