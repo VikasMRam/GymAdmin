@@ -25,6 +25,7 @@ export default class CommunityDetail extends Component {
   render() {
     const { community, communitySlug, ...props } = this.props;
     const {
+      id,
       name,
       mainImage,
       startingRate,
@@ -135,7 +136,7 @@ export default class CommunityDetail extends Component {
         </CollapsibleSection>
         <CollapsibleSection title={mapViewTitle}>
           <PropertyMap
-            id={propertySlug}
+            id={id}
             name={name}
             startingRate={startingRate}
             mainImage={mainImage}
