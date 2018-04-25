@@ -42,3 +42,16 @@ it('renders InfoWindow when a Marker is clicked', () => {
   wrapper.find(InfoWindow).simulate('closeClick');
   expect(wrapper.find(InfoWindow)).toHaveLength(0);
 });
+
+it('renders only one InfoWindow at a time', () => {
+  const wrapper = wrap(props);
+  wrapper
+    .find(Marker)
+    .at(0)
+    .simulate('click');
+  wrapper
+    .find(Marker)
+    .at(1)
+    .simulate('click');
+  expect(wrapper.find(InfoWindow)).toHaveLength(1);
+});
