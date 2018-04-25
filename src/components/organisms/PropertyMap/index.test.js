@@ -1,18 +1,13 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-
-import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import PropertyMap from '.';
-
-import Map from 'sly/components/atoms/Map';
+import { shallow } from 'enzyme';
 import { Marker, InfoWindow } from 'react-google-maps';
 
-const wrap = (props = {}) => shallow(<PropertyMap {...props} />);
+import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import Map from 'sly/components/atoms/Map';
 
-// it('renders children when passed in', () => {
-//   const wrapper = wrap({ children: 'test' });
-//   expect(wrapper.contains('test')).toBe(false);
-// });
+import PropertyMap from '.';
+
+const wrap = (props = {}) => shallow(<PropertyMap {...props} />);
 
 const {
   id,
