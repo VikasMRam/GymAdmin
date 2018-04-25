@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Heading, ListItem } from 'sly/components/atoms';
+import { Heading } from 'sly/components/atoms';
+import ListItem from 'sly/components/molecules/ListItem';
 
 const ListWrapper = styled.ul`
   margin: 0;
@@ -23,18 +24,16 @@ const ListWrapper = styled.ul`
 
 const List = ({
   columns, heading, items,
-}) => {
-  return (
-    <div>
-      {heading &&
-        <Heading level="subtitle">{heading}</Heading>
-      }
-      <ListWrapper columns={columns}>
-        {items.map((item, i) => (<ListItem key={i}>{item}</ListItem>))}
-      </ListWrapper>
-    </div>
-  );
-};
+}) => (
+  <div>
+    {heading &&
+      <Heading level="subtitle">{heading}</Heading>
+    }
+    <ListWrapper columns={columns}>
+      {items.map((item, i) => (<ListItem key={i}>{item}</ListItem>))}
+    </ListWrapper>
+  </div>
+);
 
 List.propTypes = {
   items: PropTypes.arrayOf(PropTypes.string),

@@ -19,16 +19,14 @@ const ListItemTextDiv = styled.div`
 
 const ListItem = ({
   children,
-}) => {
-  return (
-    <ListItemWrapper>
-      <ListItemIconDiv>
-        <Icon icon="star" />
-      </ListItemIconDiv>
-      <ListItemTextDiv>{children}</ListItemTextDiv>
-    </ListItemWrapper>
-  );
-};
+}) => (
+  <ListItemWrapper>
+    <ListItemIconDiv>
+      <Icon icon="star" />
+    </ListItemIconDiv>
+    <ListItemTextDiv>{children}</ListItemTextDiv>
+  </ListItemWrapper>
+);
 
 ListItem.propTypes = {
   children: PropTypes.node,
