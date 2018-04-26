@@ -43,6 +43,10 @@ const Link = styled.a`
   color: ${palette('primary', 2)};
 `;
 
+const DisclaimerDiv = styled.div`
+  padding-top: ${size('spacing.large')};
+`;
+
 export default class GatheredReviewRatings extends Component {
   static propTypes = {
     reviewRatings: arrayOf(shape({
@@ -85,6 +89,11 @@ export default class GatheredReviewRatings extends Component {
               <Button onClick={onLeaveReview}>Leave a Review</Button>
             </LeaveAReviewButtonDiv>
             <Hr /> */}
+            <DisclaimerDiv>
+              Disclaimer: All trademarks and copyrights for names are owned by
+              the respective companies. They do not endorse Seniorly and are not
+              related to Seniorly's service in any way.
+            </DisclaimerDiv>
           </div>
         )}
       </div>
