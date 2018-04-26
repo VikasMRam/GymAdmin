@@ -38,7 +38,8 @@ theme.sizes = {
   },
 
   modal: {
-    single:       '35.25rem', // 516px
+    single: '35.25rem', // 516px
+    gallery: '54.75rem', // 876px
   },
 
   collapsible: {
@@ -88,7 +89,11 @@ theme.sizes = {
     regular:   '0.5rem 1rem',
   },
 
-  border:         '0.063rem', //  1px
+  border: {
+    regular: '0.063rem', // 1px
+    large: '0.125rem', // 2px
+    xLarge: '0.1875rem', // 3px
+  },
 
   spacing: {
     nano:         '0.062rem', //  1px
@@ -127,8 +132,13 @@ theme.sizes = {
   },
 
   carousel: {
-    mobile: '14.375em', // 230px
-    tablet: '28.750em', // 460px
+    mobile: '15.625em', // 250px
+    tablet: '28.750rem', // 460px
+  },
+
+  thumbnail: {
+    width: '8.0625rem', // 129px
+    height: '5.375rem', // 86px
   },
 };
 

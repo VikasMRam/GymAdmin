@@ -5,7 +5,7 @@ import { palette } from 'styled-theme';
 import { size } from 'sly/components/themes';
 
 const Box = styled.div`
-  border: ${size('border')} solid ${palette(2)};
+  border: ${size('border.regular')} solid ${palette(2)};
   border-radius: ${size('spacing.tiny')};
   padding: ${size('spacing.large')};
 `;

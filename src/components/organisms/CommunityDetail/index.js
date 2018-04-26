@@ -9,8 +9,8 @@ import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailabil
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import OwnerStory from 'sly/components/organisms/OwnerStory';
-import CarouselImageGallery from 'sly/components/molecules/CarouselImageGallery';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
+import MediaGallery from 'sly/components/organisms/MediaGallery';
 
 // TODO: remove this
 const nextUri = (() => {
@@ -72,7 +72,7 @@ export default class CommunityDetail extends Component {
     const mapViewTitle = `Map View of ${name}`;
     return (
       <div {...props}>
-        <CarouselImageGallery
+        <MediaGallery
           communityName={name}
           images={images}
         />

@@ -13,7 +13,7 @@ const defaultImage =
 
 const Wrapper = styled.div`
   display: inline-block;
-  border: ${size('border')} solid ${palette('grayscale', 2)};
+  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   width: ${size('tile', 'large', 'width')};
   transition: box-shadow ${key('transitions.default')},
     opacity ${key('transitions.default')};

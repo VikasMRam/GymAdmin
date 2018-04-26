@@ -15,7 +15,7 @@ export const CommunityTileDiv = styled.div`
 
   position: relative;
   display: flex;
-  border: ${size('border')} solid ${palette('secondary', 0)};
+  border: ${size('border.regular')} solid ${palette('secondary', 0)};
   ${props =>
     props.selected &&
     css`
