@@ -1,0 +1,20 @@
+
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.3 (51167) - http://www.bohemiancoding.com/sketch -->
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="24" height="24"></rect>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon/24/Search-white" transform="translate(-4.000000, -4.000000)">
+            <g id="Search">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Mask"></g>
+                <rect id="Rectangle-2" fill="#FFFFFF" mask="url(#mask-2)" transform="translate(18.242641, 18.242641) rotate(-45.000000) translate(-18.242641, -18.242641) " x="17.2426407" y="14.2426407" width="2" height="8" rx="1"></rect>
+                <path d="M11.1715729,18.1715729 C7.30557963,18.1715729 4.17157288,15.0375661 4.17157288,11.1715729 C4.17157288,7.30557963 7.30557963,4.17157288 11.1715729,4.17157288 C15.0375661,4.17157288 18.1715729,7.30557963 18.1715729,11.1715729 C18.1715729,15.0375661 15.0375661,18.1715729 11.1715729,18.1715729 Z M11.1715729,16.1715729 C13.9329966,16.1715729 16.1715729,13.9329966 16.1715729,11.1715729 C16.1715729,8.41014913 13.9329966,6.17157288 11.1715729,6.17157288 C8.41014913,6.17157288 6.17157288,8.41014913 6.17157288,11.1715729 C6.17157288,13.9329966 8.41014913,16.1715729 11.1715729,16.1715729 Z" id="Oval" fill="#FFFFFF" fill-rule="nonzero" mask="url(#mask-2)"></path>
+            </g>
+        </g>
+    </g>
+</svg>

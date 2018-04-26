@@ -14,11 +14,12 @@ const HeaderWrapper = styled.div`
   width: 100%;
   height: 60px;
   margin-bottom: 16px;
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     padding: 10px 24px;
     margin-bottom: 24px;
+    height: 72px;
   }
 `;
 
@@ -27,9 +28,9 @@ const SeniorlyFullIcon = styled(Icon)`
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     display: block;
-    float: left;
     width: 87px;
     height: 52px;
+    margin-right: 16px;
   }
 `;
 
@@ -44,7 +45,6 @@ const SeniorlyIconMenu = styled.div`
 `;
 
 const SeniorlyIcon = styled(Icon)`
-  float: left;
   margin: 12px 8px 12px 16px;
 `;
 
@@ -58,7 +58,6 @@ const MenuIcon = styled(Icon)`
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     display: block;
     margin: 16px;
-    float: right;
     cursor: pointer;
   }
 `;
@@ -66,6 +65,13 @@ const MenuIcon = styled(Icon)`
 const SearchBar = styled.div`
   display: flex;
   width: 100%;
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    width: 344px;
+    height: 40px;
+    margin-top: 5px;
+    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  }
 `;
 
 const SearchTextBox = styled(Input)`
@@ -77,6 +83,11 @@ const SearchButton = styled.div`
   height: 100%;
   padding: 18px 16px;
   cursor: pointer;
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    padding: 6px 16px;
+    background-color: ${palette('secondary', 0)};
+  }
 `;
 
 const HeaderMenu = styled.div`
@@ -100,12 +111,16 @@ const MarginnedHR = styled(Hr)`
   }
 `;
 
+const HeaderItems = styled.div`
+  display: flex;
+  margin-left: auto; // For Float Right in Flex
+`;
+
 const HeaderItem = styled.a`
   display: none;
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     display: block;
-    float: right;
     color: ${palette('slate', 0)};
     text-align: center;
     padding: 16px 8px;
@@ -127,15 +142,18 @@ const Header = ({ menuOpen, onMenuIconClick }) => (
       <SearchBar>
         <SearchTextBox placeholder="Search by city or zip code" />
         <SearchButton>
-          <Icon icon="star" size="regular" />
+          <Icon icon="search-white" size="regular" />
         </SearchButton>
       </SearchBar>
-      <MenuIcon icon="menu" size="medium" />
-      <HeaderItem>Login</HeaderItem>
-      <HeaderItem>Sign Up</HeaderItem>
-      <HeaderItem>Saved</HeaderItem>
-      <HeaderItem>Help Center</HeaderItem>
-      <HeaderItem>List on Seniorly</HeaderItem>
+      <HeaderItems>
+        <HeaderItem>List on Seniorly</HeaderItem>
+        <HeaderItem>Help Center</HeaderItem>
+        <HeaderItem>Saved</HeaderItem>
+        <HeaderItem>Sign Up</HeaderItem>
+        <HeaderItem>Login</HeaderItem>
+
+        <MenuIcon icon="menu" size="medium" />
+      </HeaderItems>
     </HeaderWrapper>
     {menuOpen && (
       <HeaderMenu>
