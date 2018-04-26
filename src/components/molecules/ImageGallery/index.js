@@ -102,12 +102,14 @@ export default class ImageGallery extends React.Component {
   };
 
   thumbnailRefs= [];
+  imageLoaded = [];
 
   handleChangeIndex = (index) => {
     // TODO: scrollIntoView is not supported in old browsers. See if there is better way
     if (this.thumbnailRefs[index] && this.thumbnailRefs[index].scrollIntoView) {
       this.thumbnailRefs[index].scrollIntoView({ behavior: 'smooth' });
     }
+    this.imageLoaded.push(index);
     this.setState({
       index,
     });
@@ -125,6 +127,20 @@ export default class ImageGallery extends React.Component {
     this.handleChangeIndex(index === 0 ? numItems - 1 : index - 1);
   };
 
+  shouldLoadImage = (i) => {
+    const { index } = this.state;
+    const numItems = this.props.images.length;
+    // an image can be loaded if:
+    // - it's already loaded(user viewed the slide)
+    // - it's current slide
+    // - it's one before current slide
+    // - it's one after current slide
+    return this.imageLoaded.includes(i) || (Math.abs(i - index) < 2) ||
+      // if the current slide is last slide then also load first slide
+      // if the current slide is first slide then also load last slide
+      (index === 0 && i === numItems - 1) || (index === numItems - 1 && i === 0);
+  };
+
   render() {
     return (
       <article>
@@ -134,14 +150,18 @@ export default class ImageGallery extends React.Component {
             {this.props.topRightSection}
           </TopRightWrapper>
           <SwipeableViews containerStyle={sliderComponentStyle} enableMouseEvents index={this.state.index} onChangeIndex={this.handleChangeIndex}>
+            {/* load only image before and after current slide. Also keep track of image that was loaded once so that it won't
+                be inserted and removed from dom when user switch slides
+            */}
             {this.props.images.map((image, i) => (
               <StyledImg
                 autoHeight={this.props.autoHeight}
                 key={i}
-                src={image.src}
+                src={this.shouldLoadImage(i) ? image.src : ''}
                 alt={image.alt}
               />
-            ))}
+              ))
+            }
           </SwipeableViews>
           <NextSlide icon="chevron-right" size="large" palette="white" onClick={this.nextSlide} />
           {this.props.bottomLeftSection}
