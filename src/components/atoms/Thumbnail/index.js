@@ -4,8 +4,9 @@ import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
+import Image from 'sly/components/atoms/Image';
 
-const StyledImg = styled.img`
+const StyledImg = styled(Image)`
   width: ${size('thumbnail.width')};
   height: ${size('thumbnail.height')};
 
