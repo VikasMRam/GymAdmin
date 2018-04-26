@@ -31,15 +31,15 @@ const renderApp = ({
 };
 
 const renderHtml = ({
-  serverState, initialState, content, sheet,
+  serverState, initialState, content, sheet, assets,
 }) => {
   const styles = sheet.getStyleElement();
-  const { assets } = global;
 
   const state = `
     window.__SERVER_STATE__ = ${serialize(serverState)};
     window.__INITIAL_STATE__ = ${serialize(initialState)};
   `;
+
   const props = {
     styles,
     assets,
@@ -74,18 +74,30 @@ app.use((req, res, next) => {
     sheet,
   })
     .then(({ state: serverState, html: content }) => {
+      if (serverState) {
+        Object.values(serverState).forEach(val => {
+          if (val && val.stack) {
+            console.error('There was an unhandled error');
+            throw val;
+          }
+        });
+      }
+
       if (context.status) {
         res.status(context.status);
       }
+
       if (context.url) {
         res.redirect(context.url);
       } else {
+        const { assets } = global;
         const initialState = store.getState();
         res.send(renderHtml({
           serverState,
           initialState,
           content,
           sheet,
+          assets,
         }));
       }
     })
@@ -95,7 +107,11 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   const sheet = new ServerStyleSheet();
   const content = renderToStaticMarkup(sheet.collectStyles(<Error />));
-  res.status(500).send(renderHtml({ content, sheet }));
+  const assets = {
+    ...global.assets,
+    js: [],
+  };
+  res.status(500).send(renderHtml({ content, sheet, assets }));
   console.error(err);
   next(err);
 });
