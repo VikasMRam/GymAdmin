@@ -13,3 +13,4 @@ export Heading from './Heading';
 export Hr from './Hr';
 export Label from './Label';
 export Link from './Link';
+export Image from './Image';
