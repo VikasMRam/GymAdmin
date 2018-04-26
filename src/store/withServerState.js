@@ -2,26 +2,32 @@ import React, { Component } from 'react';
 import { fetchState } from 'react-router-server';
 import { connect } from 'react-redux';
 import { isBrowser, isServer } from 'sly/config';
+import { func, bool } from 'prop-types';
 
 class ServerStateComponent extends Component {
+  static propTypes = {
+    fetchData: func.isRequired,
+    handleError: func.isRequired,
+    setServerState: func.isRequired,
+    hasServerState: bool.isRequired,
+    cleanServerState: func.isRequired,
+  };
+
   componentWillMount() {
     const {
-      fetchData, setServerState, hasServerState, cleanServerState
+      fetchData,
+      handleError,
+      setServerState,
+      hasServerState,
+      cleanServerState,
     } = this.props;
 
     if(!hasServerState) {
       if (isServer) {
         fetchData()
+          .catch(handleError)
           .then(setServerState)
-          .catch(err => {
-              if (err.response && err.response.status === 404) {
-                setServerState({
-                  error: 'Unkown community',
-                });
-              } else {
-                setServerState(err);
-              }
-            });
+          .catch(setServerState);
       } else {
         fetchData();
       }
@@ -30,9 +36,10 @@ class ServerStateComponent extends Component {
     }
   }
 
-  componentWillReceiveProps({ match }) {
-    if (this.props.match !== match) {
-      fetchData();
+  componentWillReceiveProps(nextProps) {
+    const { fetchData } = this.props;
+    if (this.props.match !== nextProps.match) {
+      fetchData(nextProps);
     }
   }
 
@@ -56,27 +63,31 @@ const serverStateDecorator = fetchState(
 );
 
 const noop = () => ({});
+const passthrouh = _=>_;
+const promiseNoop = Promise.resolve;
 
-const withServerState = ({ 
-  fetchData, 
-  mapStateToProps, 
-  mapDispatchToProps=noop 
-}) => {
-  if (typeof fetchData !== 'function') {
-    throw new Error('you need to provide a fetchData function');
-  }
-
+export default function withServerState({
+  fetchData=promiseNoop,
+  handleError=passthrouh,
+  mapStateToProps=null,
+  mapDispatchToProps=noop
+}) {
   return (ChildComponent) => {
-    const mapDispatchWithFetch = (dispatch, props) => ({
+    const childMapDispatchToProps = (dispatch, props) => ({
       ...mapDispatchToProps(dispatch, props),
-      fetchData: () => fetchData(dispatch, props),
+      fetchData: (nextProps=props) => fetchData(dispatch, nextProps),
+      handleError,
       ChildComponent,
     });
-    return serverStateDecorator(connect(
-      mapStateToProps, mapDispatchWithFetch,
-    )(ServerStateComponent));
+
+    const connector = connect(
+      mapStateToProps,
+      childMapDispatchToProps,
+    );
+
+    return serverStateDecorator(
+      connector(ServerStateComponent)
+    );
   };
 };
-
-export default withServerState;
 

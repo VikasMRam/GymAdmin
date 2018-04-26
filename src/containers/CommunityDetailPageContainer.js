@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, string, bool } from 'prop-types';
+import { object, string } from 'prop-types';
 
 import  withServerState from 'sly/store/withServerState';
 import { getDetail } from 'sly/store/selectors';
@@ -11,17 +11,13 @@ import {
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
-    fetchData: func.isRequired,
-    communitySlug: string.isRequired,
-    setServerState: func.isRequired,
-    hasServerState: bool.isRequired,
-    cleanServerState: func.isRequired,
+    community: object,
+    userActions: object,
     error: string,
   };
 
   render() {
-    // TODO: Layout here
-    const { communitySlug, community, userActions, error } = this.props;
+    const { community, userActions, error } = this.props;
 
     if (error) {
       return (
@@ -36,7 +32,6 @@ class CommunityDetailPageContainer extends Component {
     }
     return (
       <CommunityDetailPage
-        communitySlug={communitySlug}
         community={community}
         userActions={userActions}
       />
@@ -48,16 +43,28 @@ const getCommunitySlug = match => match.params.communitySlug;
 const mapStateToProps = (state, { match }) => {
   const communitySlug = getCommunitySlug(match);
   return {
-    communitySlug,
     community: getDetail(state, 'community', communitySlug),
     userActions: getDetail(state, 'userAction'),
   };
 }
 
 const fetchData = (dispatch, { match }) => Promise.all([
-  dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), { include: 'similar-communities' })),
+  dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), { 
+    include: 'similar-communities' 
+  })),
   dispatch(resourceDetailReadRequest('userAction')),
 ]);
 
-export default withServerState({ mapStateToProps, fetchData })(CommunityDetailPageContainer);
+const handleError = err => {
+  if (err.response.status === 404) {
+    return { error: 'Unknown Profile!' }; 
+  }
+  throw err;
+};
+
+export default withServerState({ 
+  mapStateToProps, 
+  fetchData, 
+  handleError,
+})(CommunityDetailPageContainer);
 
