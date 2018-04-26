@@ -1,7 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { Heading, ListItem } from 'sly/components/atoms';
+import { Heading } from 'sly/components/atoms';
+import ListItem from 'sly/components/molecules/ListItem';
 
 import List from '.';
 

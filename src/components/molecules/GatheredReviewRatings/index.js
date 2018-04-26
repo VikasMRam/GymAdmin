@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
-import { Button, Hr } from 'sly/components/atoms';
+// import { Button, Hr } from 'sly/components/atoms';
 import Rating from 'sly/components/atoms/Rating';
 
 const ReviewHeadingDiv = styled.div`
-  padding-top: ${size('spacing.xLarge')};
+  font-weight: bold;
 `;
 
 export const ReviewDiv = styled.div`
@@ -26,18 +26,18 @@ const ReviewProviderDiv = styled.div`
   }
 `;
 
-const LeaveAReviewTextDiv = styled.div`
-  padding-top: ${size('spacing.xLarge')};
-`;
+// const LeaveAReviewTextDiv = styled.div`
+//   padding-bottom: ${size('spacing.xLarge')};
+// `;
 
-const LeaveAReviewButtonDiv = styled.div`
-  padding-top: ${size('spacing.large')};
-  padding-bottom: ${size('spacing.xLarge')};
-`;
+// const LeaveAReviewButtonDiv = styled.div`
+//   padding-bottom: ${size('spacing.xLarge')};
+// `;
 
-const HRDiv = styled.div`
-  padding-top: ${size('spacing.xLarge')};
-`;
+// const PaddedHR = styled(Hr)`
+//   margin-top: ${size('spacing.xLarge')};
+//   margin-bottom: ${size('spacing.xLarge')};
+// `;
 
 const Link = styled.a`
   color: ${palette('primary', 2)};
@@ -75,10 +75,8 @@ export default class GatheredReviewRatings extends Component {
               Reviews gathered from across the web
             </ReviewHeadingDiv>
             {ratings}
-            <HRDiv>
-              <Hr />
-            </HRDiv>
-            {/* <LeaveAReviewTextDiv>
+            {/* <PaddedHR />
+            <LeaveAReviewTextDiv>
               If you are familiar with this community, your review will help
               other families in a similar situation make a more informed
               decision.

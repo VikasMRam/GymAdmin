@@ -89,7 +89,7 @@ const styles = css`
   text-decoration: none;
   white-space: nowrap;
   font-size: ${fontSize};
-  border: ${size('border')} solid ${borderColor};
+  border: ${size('border.regular')} solid ${borderColor};
   cursor: ${ifProp('disabled', 'default', 'pointer')};
   appearance: none;
   border-radius: ${borderRadius};
