@@ -21,7 +21,7 @@ const configureStore = (initialState, services = {}) => {
     entitiesMiddleware, thunkMiddleware, sagaMiddleware,
   ];
 
-  if (isBrowser) {
+  if (true || isBrowser) {
     middlewares.push(loggerMiddleware);
   }
 

@@ -36,9 +36,9 @@ export default class CommunityDetail extends Component {
       rgsAux,
       floorPlans,
       similarProperties,
-      gallery,
+      gallery={},
     } = community;
-    const { images } = gallery || [];
+    const images = gallery.images || [];
     const { careServices, serviceHighlights } = propInfo;
     const {
       communityDescription,
