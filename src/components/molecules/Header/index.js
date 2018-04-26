@@ -1,5 +1,5 @@
 import React from 'react';
-import { bool, func } from 'prop-types';
+import { bool, func, arrayOf, shape, string } from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
@@ -147,52 +147,62 @@ const HeaderItem = styled.a`
   }
 `;
 
-const Header = ({ menuOpen, onMenuIconClick }) => (
-  <div>
-    <HeaderWrapper>
-      <SeniorlyFullIcon icon="logo" size="regular" />
-      <SeniorlyIconMenu onClick={onMenuIconClick}>
-        <SeniorlyIcon icon="seniorlyLogo" size="button" />
-        {!menuOpen && <MenuArrowIcon icon="arrow-down" size="small" />}
-        {menuOpen && <MenuArrowIcon icon="arrow-up" size="small" />}
-      </SeniorlyIconMenu>
-      <SearchBar>
-        <SearchTextBox placeholder="Search by city or zip code" />
-        <SearchButton>
-          <Icon icon="search-white" size="regular" />
-        </SearchButton>
-      </SearchBar>
-      <HeaderItems>
-        <HeaderItem>List on Seniorly</HeaderItem>
-        <HeaderItem>Help Center</HeaderItem>
-        <HeaderItem>Saved</HeaderItem>
-        <HeaderItem>Sign Up</HeaderItem>
-        <HeaderItem>Login</HeaderItem>
-
-        <MenuIcon icon="menu" size="medium" onClick={onMenuIconClick} />
-      </HeaderItems>
-    </HeaderWrapper>
-    {menuOpen && (
-      <HeaderMenu>
-        <HeaderMenuItem>Assisted Living</HeaderMenuItem>
-        <HeaderMenuItem>Alzheimer's Care</HeaderMenuItem>
-        <HeaderMenuItem>Assisted Living</HeaderMenuItem>
-        <HeaderMenuItem>Respite Care</HeaderMenuItem>
-        <MarginnedHR />
-        <HeaderMenuItem>About Us</HeaderMenuItem>
-        <HeaderMenuItem>Contact</HeaderMenuItem>
-        <HeaderMenuItem>Careers</HeaderMenuItem>
-        <HeaderMenuItem>List on Seniorly</HeaderMenuItem>
-        <MarginnedHR />
-        <HeaderMenuItem>Sign Out</HeaderMenuItem>
-      </HeaderMenu>
-    )}
-  </div>
-);
+const Header = ({
+  menuOpen, onMenuIconClick, headerItems, menuItems,
+}) => {
+  const headerItemComponents = headerItems.map(item => (
+    <HeaderItem href={item.url}>{item.name}</HeaderItem>
+  ));
+  const hrIndices = [4, 8];
+  let menuItemPosition = 0;
+  const headerMenuItemComponents = menuItems.map((item) => {
+    menuItemPosition += 1;
+    if (hrIndices.indexOf(menuItemPosition) !== -1) {
+      return (
+        <div>
+          <MarginnedHR />
+          <HeaderMenuItem href={item.url}>{item.name}</HeaderMenuItem>
+        </div>
+      );
+    }
+    return <HeaderMenuItem href={item.url}>{item.name}</HeaderMenuItem>;
+  });
+  return (
+    <div>
+      <HeaderWrapper>
+        <SeniorlyFullIcon icon="logo" size="regular" />
+        <SeniorlyIconMenu onClick={onMenuIconClick}>
+          <SeniorlyIcon icon="seniorlyLogo" size="button" />
+          {!menuOpen && <MenuArrowIcon icon="arrow-down" size="small" />}
+          {menuOpen && <MenuArrowIcon icon="arrow-up" size="small" />}
+        </SeniorlyIconMenu>
+        <SearchBar>
+          <SearchTextBox placeholder="Search by city or zip code" />
+          <SearchButton>
+            <Icon icon="search-white" size="regular" />
+          </SearchButton>
+        </SearchBar>
+        <HeaderItems>
+          {headerItemComponents}
+          <MenuIcon icon="menu" size="medium" onClick={onMenuIconClick} />
+        </HeaderItems>
+      </HeaderWrapper>
+      {menuOpen && <HeaderMenu>{headerMenuItemComponents}</HeaderMenu>}
+    </div>
+  );
+};
 
 Header.propTypes = {
   menuOpen: bool,
   onMenuIconClick: func,
+  headerItems: arrayOf(shape({
+    name: string,
+    url: string,
+  })).isRequired,
+  menuItems: arrayOf(shape({
+    name: string,
+    url: string,
+  })).isRequired,
 };
 
 export default Header;
