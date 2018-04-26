@@ -54,8 +54,8 @@ const mapStateToProps = (state, { match }) => {
   };
 }
 
-const fetchData = (dispatch, { communitySlug }) => Promise.all([
-  dispatch(resourceDetailReadRequest('community', communitySlug, { include: 'similar-communities' })),
+const fetchData = (dispatch, { match }) => Promise.all([
+  dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), { include: 'similar-communities' })),
   dispatch(resourceDetailReadRequest('userAction')),
 ]);
 
