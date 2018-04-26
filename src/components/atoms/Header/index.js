@@ -5,17 +5,16 @@ import { palette } from 'styled-theme';
 import { size } from 'sly/components/themes';
 import Icon from 'sly/components/atoms/Icon';
 import Input from 'sly/components/atoms/Input';
-import Button from 'sly/components/atoms/Button';
 
 const HeaderWrapper = styled.div`
   display: flex;
   overflow: hidden;
   height: 60px;
   margin-bottom: 16px;
+  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     overflow: hidden;
-    border: ${size('border')} solid ${palette('grayscale', 2)};
     padding: 10px 24px;
     margin-bottom: 24px;
   }
@@ -35,7 +34,7 @@ const SeniorlyFullIcon = styled(Icon)`
 const SeniorlyIconMenu = styled.div`
   display: flex;
   width: 88px;
-  border: ${size('border')} solid ${palette('grayscale', 2)};
+  border-right: ${size('border.regular')} solid ${palette('grayscale', 2)};
 `;
 
 const SeniorlyIcon = styled(Icon)`
@@ -92,7 +91,7 @@ const HeaderItem = styled.a`
 
 const Header = () => (
   <HeaderWrapper>
-    <SeniorlyFullIcon icon="logo" />
+    <SeniorlyFullIcon icon="logo" size="regular" />
     <SeniorlyIconMenu>
       <SeniorlyIcon icon="seniorlyLogo" size="button" />
       <MenuArrowIcon icon="arrow-down" size="small" />
