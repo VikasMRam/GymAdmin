@@ -10,6 +10,10 @@ const defaultAltSrc = 'Vintage-Golden-Gate_San-Francisco_Assisted-Living_Origina
 const customAlt = 'this is a custom alt';
 const notExistngsrc = '//d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4_hd.jpg';
 const defaultAltNotExistingSrc = 'front of RGP building-4_hd.jpg';
+const halfPath = '/uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4_hd.jpg';
+const halfPathNoSlash = 'uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4_hd.jpg';
+const singlePath = '/front%20of%20RGP%20building-4_hd.jpg';
+const singlePathNoSlash = 'front%20of%20RGP%20building-4_hd.jpg';
 
 describe('Image', () => {
   it('default', () => {
@@ -34,5 +38,25 @@ describe('Image', () => {
     const wrapper = wrap({ src: notExistngsrc, alt: customAlt });
     expect(wrapper.props()).toHaveProperty('src', notExistngsrc);
     expect(wrapper.props()).toHaveProperty('alt', customAlt);
+  });
+
+  it('generate alt with full url', () => {
+    expect(Image.generateAlt(notExistngsrc)).toBe(defaultAltNotExistingSrc);
+  });
+
+  it('generate alt with only path', () => {
+    expect(Image.generateAlt(halfPath)).toBe(defaultAltNotExistingSrc);
+  });
+
+  it('generate alt with only path that has no leading slashes', () => {
+    expect(Image.generateAlt(halfPathNoSlash)).toBe(defaultAltNotExistingSrc);
+  });
+
+  it('generate alt with only filename', () => {
+    expect(Image.generateAlt(singlePath)).toBe(defaultAltNotExistingSrc);
+  });
+
+  it('generate alt with only filename that has no leading slashes', () => {
+    expect(Image.generateAlt(singlePathNoSlash)).toBe(defaultAltNotExistingSrc);
   });
 });
