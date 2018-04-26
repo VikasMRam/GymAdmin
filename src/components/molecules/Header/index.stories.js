@@ -21,7 +21,7 @@ class HeaderWithState extends Component {
   }
 }
 
-storiesOf('Atoms|Header', module)
+storiesOf('Molecules|Header', module)
   .add('default', () => <Header />)
   .add('Menu Open', () => <Header menuOpen />)
   .add('Menu Icon Click Toggle', () => <HeaderWithState />);
