@@ -37,7 +37,7 @@ const Icon = ({ icon, transform, ...props }) => {
 Icon.propTypes = {
   icon: string.isRequired,
   width: number,
-  size: oneOf(['small', 'medium', 'regular', 'large', 'xLarge']),
+  size: oneOf(['small', 'medium', 'regular', 'button', 'large', 'xLarge']),
   palette: string,
   fill: string,
   stroke: string,

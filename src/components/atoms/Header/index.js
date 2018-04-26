@@ -96,18 +96,34 @@ const HeaderMenu = styled.div`
   top: 70px;
   background: white;
   z-index: 101;
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    width: 264px;
+    top: 55px;
+    right: 16px;
+    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+    box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')}
+      ${palette('grayscale', 2)};
+  }
 `;
 
 const HeaderMenuItem = styled.div`
   width: 100%;
   padding: 16px;
+  cursor: pointer;
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    :hover {
+      background-color: ${palette('grayscale', 3)};
+    }
+  }
 `;
 
 const MarginnedHR = styled(Hr)`
   margin: 24px 16px;
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    margin: 24px 32px;
+    margin: 0px 16px;
   }
 `;
 
@@ -118,6 +134,7 @@ const HeaderItems = styled.div`
 
 const HeaderItem = styled.a`
   display: none;
+  cursor: pointer;
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     display: block;
@@ -133,7 +150,7 @@ const HeaderItem = styled.a`
 const Header = ({ menuOpen, onMenuIconClick }) => (
   <div>
     <HeaderWrapper>
-      <SeniorlyFullIcon icon="logo" size="regular" onClick={onMenuIconClick} />
+      <SeniorlyFullIcon icon="logo" size="regular" />
       <SeniorlyIconMenu onClick={onMenuIconClick}>
         <SeniorlyIcon icon="seniorlyLogo" size="button" />
         {!menuOpen && <MenuArrowIcon icon="arrow-down" size="small" />}
@@ -152,7 +169,7 @@ const Header = ({ menuOpen, onMenuIconClick }) => (
         <HeaderItem>Sign Up</HeaderItem>
         <HeaderItem>Login</HeaderItem>
 
-        <MenuIcon icon="menu" size="medium" />
+        <MenuIcon icon="menu" size="medium" onClick={onMenuIconClick} />
       </HeaderItems>
     </HeaderWrapper>
     {menuOpen && (
@@ -168,7 +185,6 @@ const Header = ({ menuOpen, onMenuIconClick }) => (
         <HeaderMenuItem>List on Seniorly</HeaderMenuItem>
         <MarginnedHR />
         <HeaderMenuItem>Sign Out</HeaderMenuItem>
-        <HeaderMenuItem />
       </HeaderMenu>
     )}
   </div>
