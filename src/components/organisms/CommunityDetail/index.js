@@ -15,15 +15,15 @@ import MediaGallery from 'sly/components/organisms/MediaGallery';
 // TODO: remove this
 const nextUri = (() => {
   const uris = ['rhoda-goldman-plaza', 'buena-vista-manor-house'];
-  return (communitySlug) => {
-    const index = uris.indexOf(communitySlug) + 1;
+  return (slug) => {
+    const index = uris.indexOf(slug) + 1;
     return uris[index % 2];
   };
 })();
 
 export default class CommunityDetail extends Component {
   render() {
-    const { community, communitySlug, ...props } = this.props;
+    const { community, ...props } = this.props;
     const {
       id,
       name,
@@ -78,7 +78,7 @@ export default class CommunityDetail extends Component {
         />
         <Heading level="hero">{name}</Heading>
         {/* temp shiz */}
-        <Link to={`/community/${nextUri(communitySlug)}`}>
+        <Link to={`/community/${nextUri(community.id)}`}>
           Link to test navigation cross profile
         </Link>
         <CollapsibleSection title="Pricing & Floor Plans">
