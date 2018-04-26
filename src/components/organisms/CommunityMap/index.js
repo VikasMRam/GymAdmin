@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { palette } from 'styled-theme';
 import { Marker, InfoWindow } from 'react-google-maps';
 
+import { isServer } from 'sly/config';
 import { size } from 'sly/components/themes';
 import Map from 'sly/components/atoms/Map';
 
@@ -136,6 +137,9 @@ class CommunityMap extends Component {
         clickable: false,
       },
     ];
+
+    if (isServer) return null;
+
     similarProperties.forEach((property) => {
       const {
         id, name, startingRate, mainImage, address,
