@@ -13,12 +13,12 @@ const HeaderWrapper = styled.div`
   overflow: hidden;
   width: 100%;
   height: 60px;
-  margin-bottom: 16px;
+  margin-bottom: ${size('spacing.large')};
   border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    padding: 10px 24px;
-    margin-bottom: 24px;
+    padding: ${size('spacing.regular')} ${size('spacing.xLarge')};
+    margin-bottom: ${size('spacing.xLarge')};
     height: 72px;
   }
 `;
@@ -30,13 +30,13 @@ const SeniorlyFullIcon = styled(Icon)`
     display: block;
     width: 87px;
     height: 52px;
-    margin-right: 16px;
+    margin-right: ${size('spacing.large')};
   }
 `;
 
 const SeniorlyIconMenu = styled.div`
   display: flex;
-  width: 88px;
+  padding: 12px ${size('spacing.large')};
   border-right: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
@@ -44,12 +44,10 @@ const SeniorlyIconMenu = styled.div`
   }
 `;
 
-const SeniorlyIcon = styled(Icon)`
-  margin: 12px 8px 12px 16px;
-`;
+const SeniorlyIcon = styled(Icon)``;
 
 const MenuArrowIcon = styled(Icon)`
-  margin: 24px 16px 0px 0px;
+  margin: 12px 0 0 ${size('spacing.regular')};
 `;
 
 const MenuIcon = styled(Icon)`
@@ -57,7 +55,7 @@ const MenuIcon = styled(Icon)`
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     display: block;
-    margin: 16px;
+    margin: ${size('spacing.large')};
     cursor: pointer;
   }
 `;
@@ -69,7 +67,7 @@ const SearchBar = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     width: 344px;
     height: 40px;
-    margin-top: 5px;
+    margin-top: ${size('spacing.small')};
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   }
 `;
@@ -81,11 +79,11 @@ const SearchTextBox = styled(Input)`
 
 const SearchButton = styled.div`
   height: 100%;
-  padding: 18px 16px;
+  padding: 18px ${size('spacing.large')};
   cursor: pointer;
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    padding: 6px 16px;
+    padding: ${size('spacing.regular')} ${size('spacing.large')};
     background-color: ${palette('secondary', 0)};
   }
 `;
@@ -100,7 +98,7 @@ const HeaderMenu = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     width: 264px;
     top: 55px;
-    right: 16px;
+    right: ${size('border.large')};
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')}
       ${palette('grayscale', 2)};
@@ -109,7 +107,7 @@ const HeaderMenu = styled.div`
 
 const HeaderMenuItem = styled.div`
   width: 100%;
-  padding: 16px;
+  padding: ${size('spacing.large')};
   cursor: pointer;
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
@@ -120,10 +118,10 @@ const HeaderMenuItem = styled.div`
 `;
 
 const MarginnedHR = styled(Hr)`
-  margin: 24px 16px;
+  margin: ${size('border.xLarge')} ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    margin: 0px 16px;
+    margin: 0px ${size('spacing.large')};
   }
 `;
 
@@ -140,8 +138,8 @@ const HeaderItem = styled.a`
     display: block;
     color: ${palette('slate', 0)};
     text-align: center;
-    padding: 16px 8px;
-    margin-left: 16px;
+    padding: ${size('spacing.large')} ${size('border.regular')};
+    margin-left: ${size('spacing.large')};
     text-decoration: none;
     font-size: 14px;
   }
