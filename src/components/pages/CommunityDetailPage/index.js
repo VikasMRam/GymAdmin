@@ -40,10 +40,29 @@ const Column = styled(ConciergeContainer)`
   }
 `;
 
+class HeaderWithState extends React.Component {
+  state = {
+    menuOpen: false,
+  };
+  onMenuIconClick = () => {
+    this.setState({
+      menuOpen: !this.state.menuOpen,
+    });
+  };
+  render() {
+    return (
+      <Header
+        menuOpen={this.state.menuOpen}
+        onMenuIconClick={this.onMenuIconClick}
+      />
+    );
+  }
+}
+
 const CommunityDetailPage = ({ community, userActions }) => {
   return (
     <div>
-      <Header />
+      <HeaderWithState />
       <PageWrapper>
         <Main key="main" community={community} />
         <Column key="column" community={community} userActions={userActions} />
