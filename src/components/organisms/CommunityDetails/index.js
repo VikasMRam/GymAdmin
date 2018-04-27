@@ -11,9 +11,6 @@ const CommunityDetails = ({
     <CollapsibleBlock>
       {communityDescription ? (
         <article>
-          <Heading size="subtitle">
-            More about {communityName}
-          </Heading>
           <Paragraph
             dangerouslySetInnerHTML={{ __html: communityDescription }}
           />

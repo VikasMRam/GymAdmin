@@ -10,16 +10,14 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { renderToString } from 'react-router-server';
 
-import { port, host, basename, publicPath } from 'sly/config';
+import { port, host, basename, publicPath, isDev, } from 'sly/config';
 import configureStore from 'sly/store/configure';
 import apiService from 'sly/services/api';
 import App from 'sly/components/App';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 
-const renderApp = ({
-  store, context, location, sheet,
-}) => {
+const renderApp = ({ store, context, location, sheet }) => {
   const app = sheet.collectStyles((
     <Provider store={store}>
       <StaticRouter basename={basename} context={context} location={location}>
@@ -30,16 +28,14 @@ const renderApp = ({
   return renderToString(app);
 };
 
-const renderHtml = ({
-  serverState, initialState, content, sheet,
-}) => {
+const renderHtml = ({ serverState, initialState, content, sheet, assets }) => {
   const styles = sheet.getStyleElement();
-  const { assets } = global;
 
   const state = `
     window.__SERVER_STATE__ = ${serialize(serverState)};
     window.__INITIAL_STATE__ = ${serialize(initialState)};
   `;
+
   const props = {
     styles,
     assets,
@@ -56,7 +52,7 @@ if (publicPath.match(/^\//)) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
-app.use((req, res, next) => {
+app.use(async (req, res, next) => {
   const api = apiService.create();
   if (req.headers.cookie) {
     api.setCookie(req.headers.cookie);
@@ -67,37 +63,67 @@ app.use((req, res, next) => {
   const sheet = new ServerStyleSheet();
   const context = {};
 
-  renderApp({
+  const { state: serverState, html: content } = await renderApp({
     store,
     context,
     location,
     sheet,
-  })
-    .then(({ state: serverState, html: content }) => {
-      if (context.status) {
-        res.status(context.status);
-      }
-      if (context.url) {
-        res.redirect(context.url);
-      } else {
-        const initialState = store.getState();
-        res.send(renderHtml({
-          serverState,
-          initialState,
-          content,
-          sheet,
-        }));
-      }
-    })
-    .catch(next);
+  });
+
+  try {
+    if (serverState) {
+      Object.values(serverState).forEach(val => {
+        if (val && val.stack) {
+          throw val;
+        }
+      });
+    }
+
+    if (context.status) {
+      res.status(context.status);
+    }
+
+    if (context.url) {
+      res.redirect(context.url);
+    } else {
+      const { assets } = global;
+      const initialState = store.getState();
+      res.send(renderHtml({
+        serverState,
+        initialState,
+        content,
+        sheet,
+        assets,
+      }));
+    }
+  } catch (error) {
+    next(error);
+  }
 });
+
+const getErrorContent = (err) => {
+  if (isDev) {
+    const Redbox = require('redbox-react').RedBoxError;
+    return <Redbox error={err} />;
+  } else {
+    return <Error />;
+  }
+}
 
 app.use((err, req, res, next) => {
   const sheet = new ServerStyleSheet();
-  const content = renderToStaticMarkup(sheet.collectStyles(<Error />));
-  res.status(500).send(renderHtml({ content, sheet }));
-  console.error(err);
-  next(err);
+  try {
+    const errorContent = getErrorContent(err);
+    const content = renderToStaticMarkup(sheet.collectStyles(errorContent));
+    const assets = {
+      ...global.assets,
+      js: [],
+    };
+    res.status(500).send(renderHtml({ content, sheet, assets }));
+    next(err);
+  } catch (otherError) {
+    next(otherError);
+  }
 });
 
 app.listen(port, (error) => {

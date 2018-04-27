@@ -97,6 +97,7 @@ const styles = css`
     border-color 250ms ease-out;
   background-color: ${backgroundColor};
   color: ${foregroundColor};
+  user-select: none;
 
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
 

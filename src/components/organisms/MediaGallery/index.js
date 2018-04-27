@@ -56,16 +56,11 @@ export default class MediaGallery extends React.Component {
   render() {
     const { communityName, images } = this.props;
     const sdGalleryImages = images.map((img, i) => {
-      const newImg = img;
-      newImg.src = img.sd;
-      newImg.alt = `${communityName} ${i + 1}`;
-      return newImg;
+      // Important: create new object instance having src & alt as we will be modifying same object below
+      return { ...img, src: img.sd, alt: `${communityName} ${i + 1}` };
     });
     const hdGalleryImages = images.map((img, i) => {
-      const newImg = img;
-      newImg.src = img.hd;
-      newImg.alt = `${communityName} ${i + 1}`;
-      return newImg;
+      return { ...img, src: img.hd, alt: `${communityName} ${i + 1}` };
     });
     const topRightSection = (
       <span>

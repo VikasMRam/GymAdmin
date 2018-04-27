@@ -9,22 +9,26 @@ import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailabil
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import OwnerStory from 'sly/components/organisms/OwnerStory';
+import CommunityMap from 'sly/components/organisms/CommunityMap';
 import MediaGallery from 'sly/components/organisms/MediaGallery';
 
 // TODO: remove this
 const nextUri = (() => {
   const uris = ['rhoda-goldman-plaza', 'buena-vista-manor-house'];
-  return (communitySlug) => {
-    const index = uris.indexOf(communitySlug) + 1;
+  return (slug) => {
+    const index = uris.indexOf(slug) + 1;
     return uris[index % 2];
   };
 })();
 
 export default class CommunityDetail extends Component {
   render() {
-    const { community, communitySlug, ...props } = this.props;
+    const { community, ...props } = this.props;
     const {
+      id,
       name,
+      mainImage,
+      startingRate,
       propInfo,
       propRatings,
       reviews,
@@ -32,9 +36,9 @@ export default class CommunityDetail extends Component {
       rgsAux,
       floorPlans,
       similarProperties,
-      gallery,
+      gallery={},
     } = community;
-    const { images } = gallery || [];
+    const images = gallery.images || [];
     const { careServices, serviceHighlights } = propInfo;
     const {
       communityDescription,
@@ -53,6 +57,7 @@ export default class CommunityDetail extends Component {
       languages,
       languagesOther,
     } = propInfo;
+
     // TODO: move this to a container for PropertyReviews handling posts
     const onLeaveReview = () => {};
     // TODO: move this to a container PricingAndAvailability for handling bookings
@@ -60,10 +65,11 @@ export default class CommunityDetail extends Component {
     const { hasSlyReviews, hasWebReviews } = propRatings;
     const ratingsArray = propRatings.ratingsArray || [];
     const reviewsFinal = reviews || [];
+    const serviceHighlightsFinal = serviceHighlights || [];
     const roomPrices = floorPlans.map(({ info }) => info);
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
-
+    const mapViewTitle = `Map View of ${name}`;
     return (
       <div {...props}>
         <MediaGallery
@@ -72,7 +78,7 @@ export default class CommunityDetail extends Component {
         />
         <Heading level="hero">{name}</Heading>
         {/* temp shiz */}
-        <Link to={`/community/${nextUri(communitySlug)}`}>
+        <Link to={`/community/${nextUri(community.id)}`}>
           Link to test navigation cross profile
         </Link>
         <CollapsibleSection title="Pricing & Floor Plans">
@@ -99,7 +105,7 @@ export default class CommunityDetail extends Component {
           <CareServicesList
             communityName={name}
             careServices={careServices}
-            serviceHighlights={serviceHighlights}
+            serviceHighlights={serviceHighlightsFinal}
           />
         </CollapsibleSection>
         <CollapsibleSection title="Amenities & Features">
@@ -126,6 +132,16 @@ export default class CommunityDetail extends Component {
             reviews={reviewsFinal}
             reviewRatings={ratingsArray}
             onLeaveReview={onLeaveReview}
+          />
+        </CollapsibleSection>
+        <CollapsibleSection title={mapViewTitle}>
+          <CommunityMap
+            id={id}
+            name={name}
+            startingRate={startingRate}
+            mainImage={mainImage}
+            address={address}
+            similarProperties={similarProperties}
           />
         </CollapsibleSection>
       </div>

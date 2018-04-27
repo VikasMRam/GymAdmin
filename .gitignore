@@ -1,6 +1,7 @@
 .DS_Store
 .happypack
 .idea
+.tern-port
 dist
 *.log
 node_modules

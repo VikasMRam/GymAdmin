@@ -6,7 +6,7 @@ import { palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Icon, Thumbnail } from 'sly/components/atoms';
+import { Icon, Thumbnail, Image } from 'sly/components/atoms';
 
 const CarouselWrapper = styled.div`
   overflow: hidden;
@@ -23,8 +23,7 @@ const CarouselWrapper = styled.div`
       }
     `};
 `;
-const StyledImg = styled.img`
-  pointer-events: none;
+const StyledImg = styled(Image)`
   width: 100%;
   object-fit: cover;
   ${props =>

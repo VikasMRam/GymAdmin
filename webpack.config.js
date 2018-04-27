@@ -58,6 +58,7 @@ const base = () => group([
     publicPath: webpackPublicPath,
   }),
   defineConstants({
+    'process.env.STORYBOOK_GIT_BRANCH': process.env.STORYBOOK_GIT_BRANCH,
     'process.env.NODE_ENV': process.env.NODE_ENV,
     'process.env.SLY_ENV': process.env.SLY_ENV,
     'process.env.PUBLIC_PATH': publicPath,
@@ -100,7 +101,7 @@ const server = createConfig([
   env('development', [
     serverSourceMap(),
     addPlugins([
-      new SpawnPlugin('npm', ['start']),
+      new SpawnPlugin('npm', ['run', 'start:dev']),
     ]),
     () => ({
       watch: true,
