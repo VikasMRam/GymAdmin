@@ -11,9 +11,9 @@ const PageWrapper = styled.div`
   margin: 0 auto;
   width: 100%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};  
+    width: ${size('layout.mainColumn')};
   }
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     width: calc(${size('layout.mainColumn')} + ${size('layout.sideColumn')} + ${size('spacing.xLarge')});
   }
 `;
@@ -21,17 +21,17 @@ const PageWrapper = styled.div`
 const Main = styled(CommunityDetail)`
   width: 100%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};  
+    width: ${size('layout.mainColumn')};
   }
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     margin-right: ${size('spacing.xLarge')};
   }
 `;
 
 const Column = styled(ConciergeContainer)`
   display: none;
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: ${size('layout.sideColumn')}; 
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    width: ${size('layout.sideColumn')};
     display: block;
   }
 `;
