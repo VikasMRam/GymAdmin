@@ -28,7 +28,7 @@ export default class Image extends React.Component {
   componentWillReceiveProps(nextProps) {
     // what if src of a failed image is changed(a failed image has placeholder as src),
     // state change here won't trigger render
-    if (nextProps.src !== this.props.src) {
+    if (nextProps.src !== this.props.src && this.state.failed) {
       this.setState({
         failed: false,
       });
@@ -36,9 +36,11 @@ export default class Image extends React.Component {
   }
 
   failedLoadImageHandler = () => {
-    this.setState({
-      failed: true,
-    });
+    if (this.props.src.length) {
+      this.setState({
+        failed: true,
+      });
+    }
   };
 
   render() {

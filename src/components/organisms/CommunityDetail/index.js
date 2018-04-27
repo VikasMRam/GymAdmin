@@ -37,8 +37,10 @@ export default class CommunityDetail extends Component {
       floorPlans,
       similarProperties,
       gallery={},
+      videoGallery={},
     } = community;
     const images = gallery.images || [];
+    const videos = videoGallery.videos || [];
     const { careServices, serviceHighlights } = propInfo;
     const {
       communityDescription,
@@ -69,12 +71,13 @@ export default class CommunityDetail extends Component {
     const roomPrices = floorPlans.map(({ info }) => info);
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
-    const mapViewTitle = `Map View of ${name}`;
+    const mapViewTitle = `Map View of ${name}`;console.log(videos);
     return (
       <div {...props}>
         <MediaGallery
           communityName={name}
           images={images}
+          videos={videos}
         />
         <Heading level="hero">{name}</Heading>
         {/* temp shiz */}
