@@ -31,7 +31,7 @@ const MorePicsMobile = styled(morePicButton)`
   }
 `;
 
-export default class MediaGallery extends React.Component {
+export default class CommunityMediaGallery extends React.Component {
   static propTypes = {
     communityName: PropTypes.string.isRequired,
     images: PropTypes.arrayOf(PropTypes.shape({

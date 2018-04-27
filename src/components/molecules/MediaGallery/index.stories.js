@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import ImageGallery from '.';
+import MediaGallery from '.';
 
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
@@ -14,5 +14,5 @@ const galleryImages = images.map((img, i) => {
   return newImg;
 });
 
-storiesOf('Molecules|ImageGallery', module)
-  .add('default', () => <ImageGallery images={galleryImages} />);
+storiesOf('Molecules|MediaGallery', module)
+  .add('default', () => <MediaGallery images={galleryImages} />);
