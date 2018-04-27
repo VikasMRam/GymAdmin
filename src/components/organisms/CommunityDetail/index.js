@@ -11,6 +11,7 @@ import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures'
 import OwnerStory from 'sly/components/organisms/OwnerStory';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import MediaGallery from 'sly/components/organisms/MediaGallery';
+import HowSlyWorks from "sly/components/organisms/HowSlyWorks";
 
 // TODO: remove this
 const nextUri = (() => {
@@ -38,7 +39,7 @@ export default class CommunityDetail extends Component {
       similarProperties,
       gallery={},
     } = community;
-    const images = gallery.images || [];
+    const images = (gallery && gallery.images) || [];
     const { careServices, serviceHighlights } = propInfo;
     const {
       communityDescription,
@@ -134,6 +135,7 @@ export default class CommunityDetail extends Component {
             onLeaveReview={onLeaveReview}
           />
         </CollapsibleSection>
+        <HowSlyWorks reason1="This is great"/>
         <CollapsibleSection title={mapViewTitle}>
           <CommunityMap
             id={id}
