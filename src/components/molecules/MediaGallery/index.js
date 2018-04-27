@@ -258,6 +258,7 @@ export default class MediaGallery extends React.Component {
                       <StyledImg
                         autoHeight={this.props.autoHeight}
                         src={this.shouldLoadMedia(i) ? media.src : ''}
+                        data-src={media.src}
                         alt={media.alt}
                         innerRef={(c) => { this.mediaRefs[i] = c; }}
                       />

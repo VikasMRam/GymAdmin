@@ -64,6 +64,7 @@ export default class CommunityMediaGallery extends React.Component {
   toggleModal = () => {
     const { fullscreen } = this.state;
     this.setState({
+      currentFullscreenSlide: 0,
       fullscreen: !fullscreen,
     });
   };
