@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Modal from 'sly/components/molecules/Modal';
-import ImageGallery from 'sly/components/molecules/ImageGallery';
+import MediaGallery from 'sly/components/molecules/MediaGallery';
 
-const FullscreenImageGallery = ({
+const FullscreenMediaGallery = ({
   images, videos, currentSlide, isOpen, onClose,
 }) => (
   <Modal
@@ -14,7 +14,7 @@ const FullscreenImageGallery = ({
     transparent
     onClose={onClose}
   >
-    <ImageGallery
+    <MediaGallery
       currentSlide={currentSlide}
       images={images}
       videos={videos}
@@ -24,7 +24,7 @@ const FullscreenImageGallery = ({
   </Modal>
 );
 
-FullscreenImageGallery.propTypes = {
+FullscreenMediaGallery.propTypes = {
   isOpen: PropTypes.bool,
   currentSlide: PropTypes.number,
   images: PropTypes.arrayOf(PropTypes.shape({
@@ -40,10 +40,10 @@ FullscreenImageGallery.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-FullscreenImageGallery.defaultProps = {
+FullscreenMediaGallery.defaultProps = {
   isOpen: true,
   images: [],
   videos: [],
 };
 
-export default FullscreenImageGallery;
+export default FullscreenMediaGallery;

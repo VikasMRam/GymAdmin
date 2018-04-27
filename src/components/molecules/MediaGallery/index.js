@@ -101,7 +101,7 @@ const PlayIcon = styled(Icon)`
   }
 `;
 
-export default class ImageGallery extends React.Component {
+export default class MediaGallery extends React.Component {
   static propTypes = {
     images: PropTypes.arrayOf(PropTypes.shape({
       src: PropTypes.string.isRequired,

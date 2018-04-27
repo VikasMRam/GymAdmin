@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import FullscreenImageGallery from '.';
+import FullscreenMediaGallery from '.';
 
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
@@ -18,5 +18,5 @@ const galleryImages = images.map((img, i) => {
   return newImg;
 });
 
-storiesOf('Molecules|FullscreenImageGallery', module)
-  .add('default', () => <FullscreenImageGallery images={galleryImages} onClose={onClose} />);
+storiesOf('Molecules|FullscreenMediaGallery', module)
+  .add('default', () => <FullscreenMediaGallery images={galleryImages} onClose={onClose} />);

@@ -10,7 +10,7 @@ import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import OwnerStory from 'sly/components/organisms/OwnerStory';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
-import MediaGallery from 'sly/components/organisms/MediaGallery';
+import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
 
 // TODO: remove this
 const nextUri = (() => {
@@ -71,10 +71,10 @@ export default class CommunityDetail extends Component {
     const roomPrices = floorPlans.map(({ info }) => info);
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
-    const mapViewTitle = `Map View of ${name}`;console.log(videos);
+    const mapViewTitle = `Map View of ${name}`;
     return (
       <div {...props}>
-        <MediaGallery
+        <CommunityMediaGallery
           communityName={name}
           images={images}
           videos={videos}
