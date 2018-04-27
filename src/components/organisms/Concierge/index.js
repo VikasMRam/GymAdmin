@@ -24,13 +24,13 @@ export default class Concierge extends Component {
   };
 
   render() {
-    const { 
-      onClose, 
-      isOpen, 
+    const {
+      onClose,
+      isOpen,
       next,
-      community, 
-      currentStep, 
-      className, 
+      community,
+      currentStep,
+      className,
       userRequestedCB,
       ...props,
     } = this.props;
@@ -46,16 +46,16 @@ export default class Concierge extends Component {
           <ConversionFormContainer community={community} next={next} />
         )}
         { appElement && StepComponent && isOpen && (
-          <Modal 
-            appElement={appElement} 
-            onClose={onClose} 
-            isOpen={isOpen} 
+          <Modal
+            appElement={appElement}
+            onClose={onClose}
+            isOpen={isOpen}
             closeable {...props}>
-            <StepComponent 
-              community={community} 
-              next={next} 
-              onClose={onClose} 
-              {...props} 
+            <StepComponent
+              community={community}
+              next={next}
+              onClose={onClose}
+              {...props}
             />
           </Modal>
         )}

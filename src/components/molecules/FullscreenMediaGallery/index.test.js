@@ -4,10 +4,10 @@ import { shallow } from 'enzyme';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 import Modal from 'sly/components/molecules/Modal';
-import ImageGalleryModel from 'sly/components/molecules/ImageGallery';
-import FullscreenImageGallery from '.';
+import MediaGalleryModel from 'sly/components/molecules/MediaGallery';
+import FullscreenMediaGallery from '.';
 
-const wrap = (props = {}) => shallow(<FullscreenImageGallery {...props} />);
+const wrap = (props = {}) => shallow(<FullscreenMediaGallery {...props} />);
 
 const onClose = jest.fn();
 
@@ -20,10 +20,10 @@ const galleryImages = images.map((img, i) => {
   return newImg;
 });
 
-describe('FullscreenImageGallery', () => {
+describe('FullscreenMediaGallery', () => {
   it('default', () => {
     const wrapper = wrap({ images: galleryImages, onClose });
     expect(wrapper.find(Modal)).toHaveLength(1);
-    expect(wrapper.find(ImageGalleryModel)).toHaveLength(1);
+    expect(wrapper.find(MediaGalleryModel)).toHaveLength(1);
   });
 });

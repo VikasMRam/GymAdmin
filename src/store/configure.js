@@ -1,4 +1,3 @@
-// https://github.com/diegohaz/arc/wiki/Redux-modules
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { middleware as thunkMiddleware } from 'redux-saga-thunk';
@@ -6,7 +5,7 @@ import { createLogger } from 'redux-logger';
 import { isDev, isBrowser } from 'sly/config';
 import entitiesMiddleware from './entities/middleware';
 import reducer from './reducer';
-import sagas from './sagas';
+import sagas from './resource/sagas';
 
 const devtools =
   isDev && isBrowser && window.devToolsExtension
@@ -38,8 +37,8 @@ const configureStore = (initialState, services = {}) => {
       const nextReducer = require('./reducer').default;
       store.replaceReducer(nextReducer);
     });
-    module.hot.accept('./sagas', () => {
-      const nextSagas = require('./sagas').default;
+    module.hot.accept('./resource/sagas', () => {
+      const nextSagas = require('./resource/sagas').default;
       sagaTask.cancel();
       sagaTask.done.then(() => {
         sagaTask = sagaMiddleware.run(nextSagas, services);
