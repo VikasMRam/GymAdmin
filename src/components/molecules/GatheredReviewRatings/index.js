@@ -11,6 +11,10 @@ const ReviewHeadingDiv = styled.div`
   font-weight: bold;
 `;
 
+const RatingsDiv = styled.div`
+  margin-bottom: ${size('spacing.large')};
+`;
+
 export const ReviewDiv = styled.div`
   padding-top: ${size('spacing.large')};
   padding-right: ${size('spacing.large')};
@@ -43,9 +47,7 @@ const Link = styled.a`
   color: ${palette('primary', 2)};
 `;
 
-const DisclaimerDiv = styled.div`
-  padding-top: ${size('spacing.large')};
-`;
+const DisclaimerDiv = styled.div``;
 
 export default class GatheredReviewRatings extends Component {
   static propTypes = {
@@ -78,7 +80,7 @@ export default class GatheredReviewRatings extends Component {
             <ReviewHeadingDiv>
               Reviews gathered from across the web
             </ReviewHeadingDiv>
-            {ratings}
+            <RatingsDiv>{ratings}</RatingsDiv>
             {/* <PaddedHR />
             <LeaveAReviewTextDiv>
               If you are familiar with this community, your review will help
