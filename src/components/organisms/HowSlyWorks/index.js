@@ -58,9 +58,16 @@ const reason4 = {
 const StyledCollapsibleSection = styled(CollapsibleSection)`
   display:flex;
   flex-direction: column;
-    @media screen and (min-width: ${size('breakpoint','tablet')}) {
-        flex-flow: row wrap;
-      }
+  position: relative;
+
+  @media screen and (min-width: ${size('breakpoint','tablet')}) {
+    flex-flow: row wrap;
+    margin-right: -${size('spacing.large')};
+    > a {
+      width: calc(50% - ${size('spacing.large')});
+      margin-right: ${size('spacing.large')};
+    }
+  }
 `
 const HowSlyWorks = ({
   ...props
