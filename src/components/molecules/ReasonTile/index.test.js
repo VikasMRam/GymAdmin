@@ -1,12 +1,11 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import sinon from 'sinon';
+import { mount, shallow } from 'enzyme';
 
-import RoomTile from '.';
 
-const wrap = (props = {}) => mount(<RoomTile {...props} />);
+import RoomTile, { TileImage } from '.';
 
-const defaultImage = '//d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
+const wrap = (props = {}) => shallow(<RoomTile {...props} />);
+
 const image = '//d1qiigpe5txw4q.cloudfront.net/uploads/3a2008ef77a20485e5924b0fcc34c123/Buena_Vista_logo-16_hd.jpg';
 
 const title = "Sample Title ";
@@ -18,14 +17,14 @@ describe('RoomTile', () => {
     const wrapper = wrap({
       image
     });
-    expect(wrapper.find('img').props()).toHaveProperty('src', image);
+    expect(wrapper.find(TileImage).props()).toHaveProperty('src', image);
   });
 
   it('verify title being set', () => {
     const wrapper = wrap({
       image, title
     });
-    expect(wrapper.find('h3').text()).toEqual(title)
+    expect(wrapper.find(StyledHeading).text()).toEqual(title)
   });
 
   it('verify text being set', () => {
@@ -35,16 +34,12 @@ describe('RoomTile', () => {
     expect(wrapper.find('div').last().text()).toContain(text);
   });
 
-  /*
   it('verify to link being set', () => {
     const wrapper = wrap({
       image, title, to
     });
     expect(wrapper.find('a').props()).toHaveProperty('href', to);
   });
-  TODO ENABLE WHEN TEST SUCCEEDS
-  */
 
-
-
+  //TODO Read react enzyme
 });

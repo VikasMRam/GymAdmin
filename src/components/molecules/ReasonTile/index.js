@@ -21,7 +21,7 @@ const Wrapper = styled(Link)`
     }
 `;
 
-const StyledHeading = styled(Heading)`
+export const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.small')};
 `;
 
@@ -45,6 +45,7 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
 `;
+
 
 const ReasonTile = ({
   image, title, text, to, ...props

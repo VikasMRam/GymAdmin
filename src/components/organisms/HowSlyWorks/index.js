@@ -58,7 +58,6 @@ const reason4 = {
 const StyledCollapsibleSection = styled(CollapsibleSection)`
   display:flex;
   flex-direction: column;
-  position: relative;
 
   @media screen and (min-width: ${size('breakpoint','tablet')}) {
     flex-flow: row wrap;
