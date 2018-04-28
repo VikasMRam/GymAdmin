@@ -88,7 +88,7 @@ const SearchButton = styled.div`
   }
 `;
 
-const HeaderMenu = styled.div`
+export const HeaderMenu = styled.div`
   width: 100%;
   position: absolute;
   top: 70px;
@@ -105,7 +105,7 @@ const HeaderMenu = styled.div`
   }
 `;
 
-const HeaderMenuItem = styled.div`
+export const HeaderMenuItem = styled.div`
   width: 100%;
   padding: ${size('spacing.large')};
   cursor: pointer;
@@ -149,7 +149,9 @@ const Header = ({
   menuOpen, onMenuIconClick, headerItems, menuItems,
 }) => {
   const headerItemComponents = headerItems.map(item => (
-    <HeaderItem href={item.url}>{item.name}</HeaderItem>
+    <HeaderItem href={item.url} key={item.name}>
+      {item.name}
+    </HeaderItem>
   ));
   const hrIndices = [4, 8];
   let menuItemPosition = 0;
@@ -157,13 +159,17 @@ const Header = ({
     menuItemPosition += 1;
     if (hrIndices.indexOf(menuItemPosition) !== -1) {
       return (
-        <div>
+        <div key={item.name}>
           <MarginnedHR />
           <HeaderMenuItem href={item.url}>{item.name}</HeaderMenuItem>
         </div>
       );
     }
-    return <HeaderMenuItem href={item.url}>{item.name}</HeaderMenuItem>;
+    return (
+      <HeaderMenuItem href={item.url} key={item.name}>
+        {item.name}
+      </HeaderMenuItem>
+    );
   });
   return (
     <div>
