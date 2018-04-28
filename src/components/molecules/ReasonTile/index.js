@@ -20,17 +20,9 @@ const Wrapper = styled(Link)`
       opacity: 0.75;
       background: ${palette('white',0)};
     }
-    
-    @media screen and (min-width: ${size('breakpoint','tablet')}) {
-      width:40%;
-    }
-
-    @media screen and (min-width: ${size('breakpoint','laptop')}) {
-      width:20%;
-    }
 `;
 
-const StyledHeading = styled(Heading)`
+export const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.small')};
 `;
 
@@ -39,18 +31,19 @@ const ItemDescription = styled.div`
   padding-bottom: ${size('spacing.large')};
 `;
 
-const TileImage = styled.img`
+export const TileImage = styled.img`
   object-fit: cover;
   width: 100%;
-  height: 75%;
+  height: auto;
   
 `;
+
 
 const ReasonTile = ({
   image, title, text, to, ...props
 }) => (
   <Wrapper to={to} {...props}>
-    <TileImage tileSize="small" src={image} />
+    <TileImage src={image} />
     <ItemDescription>
       <StyledHeading level="subtitle">{title}</StyledHeading>
       <Block>{text}</Block>

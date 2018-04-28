@@ -60,6 +60,9 @@ const StyledCollapsibleSection = styled(CollapsibleSection)`
   flex-direction: column;
     @media screen and (min-width: ${size('breakpoint','tablet')}) {
         flex-flow: row wrap;
+        >a {
+          flex: 1;  
+        }
       }
 `
 const HowSlyWorks = ({
