@@ -13,7 +13,6 @@ const Wrapper = styled(Link)`
     width: 100%;
     transition: box-shadow ${key('transitions.default')}, opacity ${key('transitions.default')};
     margin-bottom: ${size('spacing.regular')};
-    margin-left: ${size('spacing.regular')};
     &:hover {
       cursor: pointer;
       box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')} ${palette('grayscale', 1, true)};

@@ -61,7 +61,8 @@ const StyledCollapsibleSection = styled(CollapsibleSection)`
     @media screen and (min-width: ${size('breakpoint','tablet')}) {
         flex-flow: row wrap;
         >a {
-          flex: 1;  
+          flex: 1;
+          margin-right: ${size('spacing.regular')};  
         }
       }
 `
