@@ -5,6 +5,7 @@ import { string, object } from 'prop-types';
 import { size } from 'sly/components/themes';
 import CommunityDetail from 'sly/components/organisms/CommunityDetail';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
+import Footer from 'sly/components/molecules/Footer';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -14,7 +15,10 @@ const PageWrapper = styled.div`
     width: ${size('layout.mainColumn')};
   }
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-    width: calc(${size('layout.mainColumn')} + ${size('layout.sideColumn')} + ${size('spacing.xLarge')});
+    width: calc(
+      ${size('layout.mainColumn')} + ${size('layout.sideColumn')} +
+        ${size('spacing.xLarge')}
+    );
   }
 `;
 
@@ -38,10 +42,13 @@ const Column = styled(ConciergeContainer)`
 
 const CommunityDetailPage = ({ community, userActions }) => {
   return (
-    <PageWrapper>
-      <Main key="main" community={community} />
-      <Column key="column" community={community} userActions={userActions} />
-    </PageWrapper>
+    <div>
+      <PageWrapper>
+        <Main key="main" community={community} />
+        <Column key="column" community={community} userActions={userActions} />
+      </PageWrapper>
+      <Footer />
+    </div>
   );
 };
 
