@@ -17,7 +17,7 @@ const HeaderWrapper = styled.div`
   border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    padding: ${size('spacing.regular')} ${size('spacing.xLarge')};
+    padding: 10px ${size('spacing.xLarge')};
     margin-bottom: ${size('spacing.xLarge')};
     height: 72px;
   }
@@ -67,7 +67,7 @@ const SearchBar = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     width: 344px;
     height: 40px;
-    margin-top: ${size('spacing.small')};
+    margin-top: 6px;
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   }
 `;
@@ -79,11 +79,10 @@ const SearchTextBox = styled(Input)`
 
 const SearchButton = styled.div`
   height: 100%;
-  padding: 18px ${size('spacing.large')};
+  padding: ${size('spacing.regular')} ${size('spacing.large')};
   cursor: pointer;
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    padding: ${size('spacing.regular')} ${size('spacing.large')};
     background-color: ${palette('secondary', 0)};
   }
 `;
@@ -91,14 +90,14 @@ const SearchButton = styled.div`
 export const HeaderMenu = styled.div`
   width: 100%;
   position: absolute;
-  top: 70px;
+  top: 77px;
   background: white;
   z-index: 101;
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     width: 264px;
     top: 55px;
-    right: ${size('border.large')};
+    right: ${size('spacing.large')};
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')}
       ${palette('grayscale', 2)};
@@ -138,8 +137,7 @@ const HeaderItem = styled.a`
     display: block;
     color: ${palette('slate', 0)};
     text-align: center;
-    padding: ${size('spacing.large')} ${size('border.regular')};
-    margin-left: ${size('spacing.large')};
+    padding: ${size('spacing.large')} ${size('spacing.regular')};
     text-decoration: none;
     font-size: 14px;
   }
