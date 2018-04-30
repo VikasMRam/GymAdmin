@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import smoothscroll from 'smoothscroll-polyfill';
 
 import { size } from 'sly/components/themes';
 import { Thumbnail } from 'sly/components/atoms';
@@ -38,6 +39,7 @@ class ThumbnailScroller extends React.Component {
   };
 
   componentDidMount() {
+    smoothscroll.polyfill();
     this.scrollToSelected();
   }
 
@@ -46,7 +48,6 @@ class ThumbnailScroller extends React.Component {
   }
 
   scrollToSelected() {
-    // TODO: scrollIntoView is not supported in old browsers. See if there is better way
     if (this.thumbnailRefs[this.props.selected] && this.thumbnailRefs[this.props.selected].scrollIntoView) {
       this.thumbnailRefs[this.props.selected].scrollIntoView({ behavior: 'smooth' });
     }
