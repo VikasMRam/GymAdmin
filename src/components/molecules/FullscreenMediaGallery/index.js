@@ -14,10 +14,10 @@ const StyledMediaGallery = styled(MediaGallery)`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     .media-carousel-control-prev {
-      margin-left: -${size('spacing.xxxxLarge')};
+      margin-left: -${size('spacing.huge')};
     }
     .media-carousel-control-next {
-      margin-right: -${size('spacing.xxxxLarge')};
+      margin-right: -${size('spacing.huge')};
     }
   }
 `;

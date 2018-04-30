@@ -97,15 +97,15 @@ theme.sizes = {
   },
 
   spacing: {
-    nano:         '0.062rem', //  1px
-    tiny:         '0.125rem', //  2px
-    small:        '0.250rem', //  4px
-    regular:      '0.500rem', //  8px
-    large:        '1.000rem', // 16px
-    xLarge:       '1.500rem', // 24px
-    xxLarge:      '2.000rem', // 32px
-    xxxLarge:     '3.000rem', // 48px
-    xxxxLarge:    '4.000rem', // 65px
+    nano: '0.062rem', //  1px
+    tiny: '0.125rem', //  2px
+    small: '0.250rem', //  4px
+    regular: '0.500rem', //  8px
+    large: '1.000rem', // 16px
+    xLarge: '1.500rem', // 24px
+    xxLarge: '2.000rem', // 32px
+    xxxLarge: '3.000rem', // 48px
+    huge: '4.000rem', // 65px
   },
 
   icon: {
