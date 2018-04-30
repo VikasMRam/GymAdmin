@@ -3,10 +3,11 @@ import { mount } from 'enzyme';
 
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
+import CommunityMediaGallery from '.';
+
 import { Icon } from 'sly/components/atoms';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import FullScreenMediaGallery from 'sly/components/molecules/FullScreenMediaGallery';
-import CommunityMediaGallery from '.';
 
 const wrap = (props = {}) => mount(<CommunityMediaGallery {...props} />);
 
