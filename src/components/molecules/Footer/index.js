@@ -65,13 +65,13 @@ const GroupHeading = styled.div`
 const GroupItems = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 8px;
 `;
 
 const GroupItem = styled.a`
   color: ${palette('white', 0)};
   font-size: 16px;
   text-decoration: none;
+  margin-bottom: 8px;
 `;
 
 const StyledHR = styled(Hr)`
