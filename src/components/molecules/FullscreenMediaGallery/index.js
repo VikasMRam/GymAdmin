@@ -23,7 +23,7 @@ const StyledMediaGallery = styled(MediaGallery)`
 `;
 
 const FullscreenMediaGallery = ({
-  images, videos, currentSlide, isOpen, onClose, ...props
+  images, videos, currentSlide, isOpen, onClose, ariaHideApp,
 }) => (
   <Modal
     isOpen={isOpen}
@@ -31,7 +31,7 @@ const FullscreenMediaGallery = ({
     closeable
     transparent
     onClose={onClose}
-    {...props}
+    ariaHideApp={ariaHideApp}
   >
     <StyledMediaGallery
       currentSlide={currentSlide}
@@ -60,6 +60,7 @@ FullscreenMediaGallery.propTypes = {
     thumb: PropTypes.string.isRequired,
   })),
   onClose: PropTypes.func.isRequired,
+  ariaHideApp: PropTypes.bool,
 };
 
 FullscreenMediaGallery.defaultProps = {

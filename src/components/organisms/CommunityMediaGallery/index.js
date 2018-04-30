@@ -45,6 +45,7 @@ export default class CommunityMediaGallery extends React.Component {
       name: PropTypes.string.isRequired,
       thumbUrl: PropTypes.string.isRequired,
     })),
+    ariaHideApp: PropTypes.bool,
   };
 
   state = {
@@ -70,7 +71,9 @@ export default class CommunityMediaGallery extends React.Component {
   };
 
   render() {
-    const { communityName, images, videos } = this.props;
+    const {
+      communityName, images, videos, ariaHideApp,
+    } = this.props;
     this.sdGalleryImages = videos.map((vid, i) => {
       // Important: create new object instance having src & alt as we will be modifying same object below
       return {
@@ -129,6 +132,7 @@ export default class CommunityMediaGallery extends React.Component {
           videos={this.formattedVideos}
           images={this.hdGalleryImages}
           onClose={this.toggleModal}
+          ariaHideApp={ariaHideApp}
         />
       </section>
     );
