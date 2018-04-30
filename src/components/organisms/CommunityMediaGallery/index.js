@@ -84,7 +84,21 @@ export default class CommunityMediaGallery extends React.Component {
       return { ...img, src: img.hd, alt: `${communityName} ${i + 1}` };
     });
     this.formattedVideos = videos.map((vid) => {
-      return { ...vid, src: vid.url, thumb: vid.thumbUrl };
+      const src = [];
+      if (vid.url) {
+        src.push({
+          url: vid.url,
+          type: 'mp4',
+        });
+      }
+      if (vid.webmUrl) {
+        src.push({
+          url: vid.webmUrl,
+          type: 'webm',
+        });
+      }
+
+      return { ...vid, src, thumb: vid.thumbUrl };
     });
     const topRightSection = (
       <span>

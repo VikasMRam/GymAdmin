@@ -46,7 +46,6 @@ const ModalBox = styled(ReactModal)`
   padding: ${size('spacing.xxxLarge')};
   width: 100%;
   height: 100%;
-  overflow: auto;
   height: unset;
   top: calc(50% - 1rem);
   left: calc(50% - 1rem);
@@ -63,24 +62,30 @@ const ModalBox = styled(ReactModal)`
   }
 
   ${switchProp('layout', {
-    single: css`@media screen and (min-width: ${size('breakpoint.tablet')}) {
+    single: css`
+      overflow: auto;
+      @media screen and (min-width: ${size('breakpoint.tablet')}) {
         width: ${size('modal.single')};
       }
     `,
-    double: css`@media screen and (min-width: ${size('breakpoint.tablet')}) {
-      width: ${size('modal.single')};
-    }
+    double: css`
+      overflow: auto;
+      @media screen and (min-width: ${size('breakpoint.tablet')}) {
+        width: ${size('modal.single')};
+      }
 
-    @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-      padding: 0;
-      flex-direction: row;
-      width: ${doubleModalWidth};
-      overflow: unset;
-    }`,
+      @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+        padding: 0;
+        flex-direction: row;
+        width: ${doubleModalWidth};
+        overflow: unset;
+      }`,
     gallery: css`
       padding: 0;
+      overflow: auto;
       @media screen and (min-width: ${size('breakpoint.laptop')}) {
         width: ${doubleModalWidth};
+        overflow: initial;
       }
     `,
   })}
@@ -88,9 +93,7 @@ const ModalBox = styled(ReactModal)`
 
 const StyledReactModal = styled(({ className, ...props }) => (
   <ModalBox overlayClassName={className} closeTimeoutMS={250} {...props} />
-))`
-  ${overlayStyles};
-`;
+))`${overlayStyles};`;
 
 const CloseButton = styled(IconButton)`
   ${switchProp('layout', {
@@ -108,6 +111,12 @@ const Heading = styled.div`
       padding: ${size('spacing.xxxLarge')};
       width: ${size('modal.single')};
     }`,
+    gallery: css`
+      padding: 0;
+      position: fixed;
+      left: ${size('spacing.xLarge')};
+      top: ${size('spacing.large')};
+      z-index: 10000;`,
   })}
 `;
 
@@ -155,23 +164,31 @@ export default class Modal extends React.Component {
     );
 
     return (
-      <StyledReactModal
-        onRequestClose={onClose}
-        layout={layout}
-        transparent={transparent}
-        onClose={onClose}
-        {...this.props}
-      >
-        {(closeable || heading) && (layout !== 'gallery') && (
+      <div>
+        {(closeable || heading) && (layout === 'gallery') && (
           <Heading layout={layout}>
             {closeable && iconClose}
             {heading}
           </Heading>
         )}
-        <Content layout={layout}>
-          {children}
-        </Content>
-      </StyledReactModal>
+        <StyledReactModal
+          onRequestClose={onClose}
+          layout={layout}
+          transparent={transparent}
+          onClose={onClose}
+          {...this.props}
+        >
+          {(closeable || heading) && (layout !== 'gallery') && (
+            <Heading layout={layout}>
+              {closeable && iconClose}
+              {heading}
+            </Heading>
+          )}
+          <Content layout={layout}>
+            {children}
+          </Content>
+        </StyledReactModal>
+      </div>
     );
   }
 }

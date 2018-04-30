@@ -105,6 +105,7 @@ theme.sizes = {
     xLarge:       '1.500rem', // 24px
     xxLarge:      '2.000rem', // 32px
     xxxLarge:     '3.000rem', // 48px
+    xxxxLarge:    '4.000rem', // 65px
   },
 
   icon: {

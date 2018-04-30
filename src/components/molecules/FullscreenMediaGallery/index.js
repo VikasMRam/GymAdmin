@@ -1,11 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
+import { size } from 'sly/components/themes';
 import Modal from 'sly/components/molecules/Modal';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 
+const StyledMediaGallery = styled(MediaGallery)`
+  .media-carousel-control-prev, .media-carousel-control-next {
+    margin-left: initial;
+    margin-right: initial;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    .media-carousel-control-prev {
+      margin-left: -${size('spacing.xxxxLarge')};
+    }
+    .media-carousel-control-next {
+      margin-right: -${size('spacing.xxxxLarge')};
+    }
+  }
+`;
+
 const FullscreenMediaGallery = ({
-  images, videos, currentSlide, isOpen, onClose,
+  images, videos, currentSlide, isOpen, onClose, ...props
 }) => (
   <Modal
     isOpen={isOpen}
@@ -13,8 +31,9 @@ const FullscreenMediaGallery = ({
     closeable
     transparent
     onClose={onClose}
+    {...props}
   >
-    <MediaGallery
+    <StyledMediaGallery
       currentSlide={currentSlide}
       images={images}
       videos={videos}
@@ -33,7 +52,10 @@ FullscreenMediaGallery.propTypes = {
     thumb: PropTypes.string.isRequired,
   })),
   videos: PropTypes.arrayOf(PropTypes.shape({
-    src: PropTypes.string.isRequired,
+    src: PropTypes.arrayOf(PropTypes.shape({
+      type: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+    })),
     name: PropTypes.string.isRequired,
     thumb: PropTypes.string.isRequired,
   })),
