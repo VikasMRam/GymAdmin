@@ -44,7 +44,7 @@ export default class CommunityChoice extends Component {
 
   render() {
     const {
-      options, value, type, ...props
+      options, value, type, invalid, ...props
     } = this.props;
     return (
       <div {...props}>
