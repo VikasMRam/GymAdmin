@@ -6,10 +6,15 @@ import { palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Icon, Thumbnail, Image } from 'sly/components/atoms';
+import { Icon, Image } from 'sly/components/atoms';
+import ThumbnailScroller from 'sly/components/molecules/ThumbnailScroller';
+
+const videoMimeTypes = {
+  mp4: 'video/mp4',
+  webm: 'video/webm',
+};
 
 const CarouselWrapper = styled.div`
-  overflow: hidden;
   position: relative;
   background: ${ifProp('transparent', 'transparent', palette('grayscale', 1))};
   text-align: center;
@@ -70,20 +75,6 @@ const TopRightWrapper = styled.span`
   position: absolute;
   z-index: 1;
 `;
-const ThumbWrapper = styled.ul`
-  overflow: scroll;
-  display: flex;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  li {
-    margin-right: ${size('spacing.regular')};
-  }
-  li:hover {
-    cursor: pointer;
-  }
-`;
 const sliderComponentStyle = {
   alignItems: 'center',
 };
@@ -110,9 +101,13 @@ export default class MediaGallery extends React.Component {
       ofVideo: PropTypes.number,
     })),
     videos: PropTypes.arrayOf(PropTypes.shape({
-      src: PropTypes.string.isRequired,
+      src: PropTypes.arrayOf(PropTypes.shape({
+        type: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+      })),
       name: PropTypes.string.isRequired,
       thumb: PropTypes.string.isRequired,
+      alt: PropTypes.string,
     })),
     showThumbnails: PropTypes.bool,
     autoHeight: PropTypes.bool,
@@ -169,10 +164,6 @@ export default class MediaGallery extends React.Component {
   }
 
   handleChangeIndex = (index) => {
-    // TODO: scrollIntoView is not supported in old browsers. See if there is better way
-    if (this.thumbnailRefs[index] && this.thumbnailRefs[index].scrollIntoView) {
-      this.thumbnailRefs[index].scrollIntoView({ behavior: 'smooth' });
-    }
     // pause playing videos
     this.mediaRefs.forEach((mediaRef) => {
       if (mediaRef.pause) {
@@ -216,22 +207,85 @@ export default class MediaGallery extends React.Component {
   };
 
   render() {
+    const thumbnails = [];
     const formattedVideos = this.props.videos.map((video) => {
+      thumbnails.push({
+        src: video.thumb,
+        alt: `${video.alt} thumbnail`,
+      });
       return { ...video, type: 'video' };
     });
-    const formattedImages = this.props.images.map((video) => {
-      return { ...video, type: 'image' };
+    const formattedImages = this.props.images.map((image) => {
+      thumbnails.push({
+        src: image.thumb,
+        alt: `${image.alt} thumbnail`,
+      });
+      return { ...image, type: 'image' };
     });
     this.allMedia = formattedVideos.concat(formattedImages);
     this.setLoadedImages(this.state.index);
+    /* load only media before and after current slide. Also keep track of media that was loaded once so that it won't
+      be inserted and removed from dom when user switch slides */
+    const slideViews = this.allMedia.map((media, i) => {
+      switch (media.type) {
+        case 'image':
+          return (
+            <span key={i}>
+              {media.ofVideo !== undefined &&
+                <PlayIcon
+                  onClick={() => this.props.onPlayClicked(i)}
+                  icon="play"
+                  size="large"
+                  palette="white"
+                />
+              }
+              <StyledImg
+                autoHeight={this.props.autoHeight}
+                src={this.shouldLoadMedia(i) ? media.src : ''}
+                data-src={media.src}
+                alt={media.alt}
+                innerRef={(c) => { this.mediaRefs[i] = c; }}
+              />
+            </span>
+          );
+        case 'video':
+          return (
+            <StyledVideo
+              autoPlay={i === this.state.index}
+              controls
+              key={i}
+              controlsList="nodownload"
+              innerRef={(c) => { this.mediaRefs[i] = c; }}
+            >
+              {media.src.map((src, i) => (
+                <source
+                  key={i}
+                  src={this.shouldLoadMedia(i) ? src.url : ''}
+                  type={videoMimeTypes[src.type]}
+                />
+              ))}
+            </StyledVideo>
+          );
+        default:
+          return null;
+      }
+    });
 
     return (
       <article>
         <CarouselWrapper {...this.props}>
-          <PrevSlide icon="chevron-left" size="large" palette="white" onClick={this.prevSlide} />
-          <TopRightWrapper>
-            {this.props.topRightSection}
-          </TopRightWrapper>
+          <PrevSlide
+            className="media-carousel-control-prev"
+            icon="chevron-left"
+            size="large"
+            palette="white"
+            onClick={this.prevSlide}
+          />
+          {this.props.topRightSection &&
+            <TopRightWrapper>
+              {this.props.topRightSection}
+            </TopRightWrapper>
+          }
           <SwipeableViews
             containerStyle={sliderComponentStyle}
             slideStyle={slideStyle}
@@ -239,65 +293,24 @@ export default class MediaGallery extends React.Component {
             index={this.state.index}
             onChangeIndex={this.handleChangeIndex}
           >
-            {/* load only media before and after current slide. Also keep track of media that was loaded once so that it won't
-                be inserted and removed from dom when user switch slides
-            */}
-            {this.allMedia.map((media, i) => {
-              switch (media.type) {
-                case 'image':
-                  return (
-                    <span key={i}>
-                      {media.ofVideo !== undefined &&
-                        <PlayIcon
-                          onClick={() => this.props.onPlayClicked(i)}
-                          icon="play"
-                          size="large"
-                          palette="white"
-                        />
-                      }
-                      <StyledImg
-                        autoHeight={this.props.autoHeight}
-                        src={this.shouldLoadMedia(i) ? media.src : ''}
-                        data-src={media.src}
-                        alt={media.alt}
-                        innerRef={(c) => { this.mediaRefs[i] = c; }}
-                      />
-                    </span>
-                  );
-                case 'video':
-                  return (
-                    <StyledVideo
-                      autoPlay={i === this.state.index}
-                      controls
-                      key={i}
-                      controlsList="nodownload"
-                      innerRef={(c) => { this.mediaRefs[i] = c; }}
-                    >
-                      <source src={this.shouldLoadMedia(i) ? media.src : ''} type="video/mp4" />
-                    </StyledVideo>
-                  );
-                default:
-                  return null;
-              }
-            })}
+            {slideViews}
           </SwipeableViews>
-          <NextSlide icon="chevron-right" size="large" palette="white" onClick={this.nextSlide} />
+          <NextSlide
+            className="media-carousel-control-next"
+            icon="chevron-right"
+            size="large"
+            palette="white"
+            onClick={this.nextSlide}
+          />
           {this.props.bottomLeftSection}
         </CarouselWrapper>
         {this.props.showThumbnails &&
-          <ThumbWrapper>
-            {this.allMedia.map((media, i) => (
-              <li key={i} ref={(c) => { this.thumbnailRefs[i] = c; }}>
-                <Thumbnail
-                  palette="white"
-                  selected={i === this.state.index}
-                  src={media.thumb}
-                  alt={media.alt}
-                  onClick={() => this.handleChangeIndex(i)}
-                />
-              </li>
-            ))}
-          </ThumbWrapper>
+          <ThumbnailScroller
+            palette="white"
+            thumbnails={thumbnails}
+            selected={this.state.index}
+            onClick={this.handleChangeIndex}
+          />
         }
       </article>
     );
