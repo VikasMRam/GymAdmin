@@ -7,7 +7,7 @@ import CommunityMediaGallery from '.';
 
 import { Icon } from 'sly/components/atoms';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
-import FullScreenMediaGallery from 'sly/components/molecules/FullScreenMediaGallery';
+import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
 
 const wrap = (props = {}) => mount(<CommunityMediaGallery {...props} />);
 
@@ -23,6 +23,15 @@ describe('MediaGallery', () => {
     expect(wrapper.find(Icon).find({ icon: 'heart' })).toHaveLength(1);
     expect(wrapper.find(Icon).find({ icon: 'share' })).toHaveLength(1);
     expect(wrapper.find(MediaGallery)).toHaveLength(1);
-    expect(wrapper.find(FullScreenMediaGallery)).toHaveLength(0);
+    expect(wrapper.find(FullscreenMediaGallery)).toHaveLength(1);
+  });
+
+  it('verify toggleModal clicked', () => {
+    const wrapper = wrap({
+      communityName: name, videos, images, ariaHideApp: false,
+    });
+    wrapper.instance().toggleModal();
+    expect(wrapper.find(MediaGallery)).toHaveLength(1);
+    expect(wrapper.find(FullscreenMediaGallery)).toHaveLength(1);
   });
 });
