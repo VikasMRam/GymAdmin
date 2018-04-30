@@ -39,7 +39,10 @@ class ThumbnailScroller extends React.Component {
   };
 
   componentDidMount() {
-    smoothscroll.polyfill();
+    // this is not required when running in test env created by jsdom
+    if (document.documentElement.clientHeight) {
+      smoothscroll.polyfill();
+    }
     this.scrollToSelected();
   }
 
