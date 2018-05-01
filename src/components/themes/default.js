@@ -86,6 +86,21 @@ theme.sizes = {
     },
   },
 
+  picture: {
+    small: {
+      width:     '15.375rem', // 246px
+      height:     '11.25rem', // 180px
+    },
+    medium: {
+      width:         '21rem', // 336px
+      height:    '15.375rem', // 246px
+    },
+    large: {
+      width:    '21.4375rem', // 343px
+      height:    '15.625rem', // 250px
+    },
+  },
+
   padding: {
     regular:   '0.5rem 1rem',
   },
