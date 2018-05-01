@@ -37,8 +37,8 @@ export default class CommunityDetail extends Component {
       rgsAux,
       floorPlans,
       similarProperties,
-      gallery={},
-      videoGallery={},
+      gallery = {},
+      videoGallery = {},
     } = community;
     const images = gallery.images || [];
     const videos = videoGallery.videos || [];
@@ -138,7 +138,7 @@ export default class CommunityDetail extends Component {
             onLeaveReview={onLeaveReview}
           />
         </CollapsibleSection>
-        <CollapsibleSection title={mapViewTitle}>
+        <CollapsibleSection title={mapViewTitle} size="large">
           <CommunityMap
             id={id}
             name={name}

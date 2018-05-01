@@ -14,7 +14,14 @@ const PageWrapper = styled.div`
     width: ${size('layout.mainColumn')};
   }
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-    width: calc(${size('layout.mainColumn')} + ${size('layout.sideColumn')} + ${size('spacing.xLarge')});
+    width: calc(
+      ${size('layout.mainColumn')} + ${size('layout.sideColumn')} +
+        ${size('spacing.xLarge')}
+    );
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    width: ${size('layout.laptopLarge')};
   }
 `;
 

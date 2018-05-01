@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
-import { bool, string, shape, number, func } from 'prop-types';
+import { bool, string, shape, number, func, oneOf } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
@@ -130,7 +130,7 @@ const CommunityTile = ({
 CommunityTile.propTypes = {
   selectable: bool,
   selected: bool,
-  size: string,
+  size: oneOf(['small', 'medium']),
   palette: string,
   onClick: func,
   community: shape({
@@ -145,7 +145,7 @@ CommunityTile.propTypes = {
 
 CommunityTile.defaultProps = {
   palette: 'secondary',
-  size: 'medium',
+  size: 'small',
 };
 
 export default CommunityTile;

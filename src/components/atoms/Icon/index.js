@@ -27,27 +27,31 @@ const Wrapper = styled.span`
   }
 `;
 
-const Icon = ({ icon, transform, ...props }) => {
-  const svg = require(`!raw-loader!./icons/${icon}.svg`);
+const Icon = ({ icon, size, ...props }) => {
+  let svg;
+  try {
+    svg = require(`!raw-loader!./icons/${icon}-${size}.svg`);
+  } catch (e) {
+    console.error('Icon not found:', `${icon}-${size}`);
+    svg = "<span>x</span>";
+  }
   return (
-    <Wrapper {...props} dangerouslySetInnerHTML={{ __html: transform(svg) }} />
+    <Wrapper {...props} dangerouslySetInnerHTML={{ __html: svg }} />
   );
 };
 
 Icon.propTypes = {
   icon: string.isRequired,
   width: number,
-  size: oneOf(['small', 'medium', 'regular', 'large', 'xLarge']),
+  size: oneOf(['small', 'regular', 'large', 'xLarge', 'xxLarge']),
   palette: string,
   fill: string,
   stroke: string,
-  transform: func,
 };
 
 Icon.defaultProps = {
   size: 'regular',
   palette: 'secondary',
-  transform: txt => txt,
 };
 
 export default Icon;
