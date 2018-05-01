@@ -14,12 +14,13 @@ const StyledImage = styled(Image)`
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-bottom: ${size('spacing.xLarge')};
+    margin-left: 0;
 
     width: ${size('picture', 'regular', 'width')};
     height: ${size('picture', 'regular', 'height')};
 
     :nth-child(odd) {
-      ${size('spacing.xLarge')};
+      margin-right: ${size('spacing.xLarge')};
     }
   }
 
