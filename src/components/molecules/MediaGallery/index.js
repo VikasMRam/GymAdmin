@@ -52,7 +52,7 @@ const StyledVideo = styled.video`
       }
     `};
 `;
-const styledIcon = styled(Icon)`
+const StyledIcon = styled(Icon)`
   position: absolute;
   z-index: 100;
   margin: auto;
@@ -63,10 +63,10 @@ const styledIcon = styled(Icon)`
     cursor: pointer;
   }
 `;
-const PrevSlide = styled(styledIcon)`
+const PrevSlide = styled(StyledIcon)`
   left: 0;
 `;
-const NextSlide = styled(styledIcon)`
+const NextSlide = styled(StyledIcon)`
   right: 0;
 `;
 const TopRightWrapper = styled.span`

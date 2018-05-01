@@ -1,38 +1,69 @@
 import React, { Component } from 'react';
 import { number, string, oneOf } from 'prop-types';
 import styled from 'styled-components';
+import { prop } from 'styled-tools';
+import { palette } from 'styled-theme';
 
 import { Icon } from 'sly/components/atoms';
 
 const times = (nr, fn) => Array.from(Array(nr).keys()).map((_, i) => fn(i));
 
-const getValue = (current, total) => {
+const getWidth = (current, total) => {
   if (total > current + 1) return 100;
   else if (total < current) return 0;
-  return (total - current) * 100;
+  return (total - current) * 80 + 10;
 };
 
-// tranform hack due to FF not having implemented SVG 2
-const getTransform = (i, total) => svg =>
-  svg.replace('%WIDTH%', `${getValue(i, total)}%`);
+const Wrapper = styled.div`
+  display: flex;
+  line-height: 1;
+`;
+
+const BaseIcon = styled(Icon)`
+  svg {
+    color: ${palette(2)};
+  }
+`;
+
+export const PositionedMask = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: ${prop('width')}%;
+
+  svg {
+    color: ${palette(0)};
+  }
+`;
+
+const Star = styled.div`
+  position: relative;
+`;
 
 const Rating = ({ palette, value, size }) => {
   // TODO: fix hardcoded stroke size in svg
   const stars = times(5, i => (
-    <Icon
-      key={i}
-      icon="star-clip"
-      size={size}
-      palette={palette}
-      transform={getTransform(i, value)}
-    />
+    <Star key={`star${i}`}>
+      <BaseIcon
+        icon="star"
+        size={size}
+        palette={palette}
+      />
+      <PositionedMask palette={palette} width={getWidth(i, value)}>
+        <Icon
+          icon="star"
+          size={size}
+        />
+      </PositionedMask>
+    </Star>
   ));
 
-  return <div>{stars}</div>;
+  return <Wrapper>{stars}</Wrapper>;
 };
 
 Rating.propTypes = {
-  size: oneOf(['small', 'medium', 'regular', 'large']),
+  size: oneOf(['small', 'regular']),
   value: number.isRequired,
   palette: string,
 };

@@ -20,6 +20,10 @@ const PageWrapper = styled.div`
         ${size('spacing.xLarge')}
     );
   }
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    width: ${size('layout.laptopLarge')};
+  }
 `;
 
 const Main = styled(CommunityDetail)`

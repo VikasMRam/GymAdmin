@@ -22,7 +22,7 @@ const styles = css`
   line-height: ${lineHeight};
   // TODO: review this with @jared,
   // for now let's make margin-bottom relative to font-size
-  margin: 0 0 calc(${fontSize} * ${lineHeight} * 0.25) 0;
+  margin: 0 0 calc(${fontSize} * ${lineHeight} * 0.5) 0;
   color: ${palette(0)};
 `;
 
