@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { string } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import Image from 'sly/components/atoms/Image';
 
-// TODO: This component and Mobile view of Similar Community shares the same dimension. Find a way to reuse
-
-const Wrapper = styled.div`
+const StyledImage = styled(Image)`
   margin-bottom: 16px;
 
   width: ${size('picture', 'large', 'width')};
@@ -18,7 +17,7 @@ const Wrapper = styled.div`
     width: ${size('picture', 'medium', 'width')};
     height: ${size('picture', 'medium', 'height')};
 
-    img:nth-child(odd) {
+    :nth-child(odd) {
       margin-right: 24px;
     }
   }
@@ -26,30 +25,20 @@ const Wrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     width: ${size('picture', 'small', 'width')};
     height: ${size('picture', 'small', 'height')};
-  }
-`;
 
-const StyledImage = styled(Image)`
-  width: ${size('picture', 'large', 'width')};
-  height: ${size('picture', 'large', 'height')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('picture', 'medium', 'width')};
-    height: ${size('picture', 'medium', 'height')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: ${size('picture', 'small', 'width')};
-    height: ${size('picture', 'small', 'height')};
+    margin-right: 24px;
+    :nth-child(4n) {
+      margin-right: 0px;
+    }
   }
 `;
 
 const PictureTile = ({ src }) => {
-  return (
-    <Wrapper>
-      <StyledImage src={src} />
-    </Wrapper>
-  );
+  return <StyledImage src={src} />;
+};
+
+PictureTile.propTypes = {
+  src: string.isRequired,
 };
 
 export default PictureTile;

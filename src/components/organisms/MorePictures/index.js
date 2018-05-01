@@ -7,11 +7,23 @@ import PictureTile from 'sly/components/molecules/PictureTile';
 
 const Wrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    column-count: 2;
+    display: flex;
+    flex-wrap: wrap;
+
+    > div {
+      flex-grow: 1;
+      width: 50%;
+    }
   }
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    column-count: 4;
+    display: flex;
+    flex-wrap: wrap;
+
+    > div {
+      flex-grow: 1;
+      width: 25%;
+    }
   }
 `;
 
