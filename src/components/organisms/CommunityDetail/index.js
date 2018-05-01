@@ -10,8 +10,10 @@ import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import OwnerStory from 'sly/components/organisms/OwnerStory';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
-import MediaGallery from 'sly/components/organisms/MediaGallery';
+import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
+import MorePictures from 'sly/components/organisms/MorePictures';
 import HowSlyWorks from "sly/components/organisms/HowSlyWorks";
+
 
 // TODO: remove this
 const nextUri = (() => {
@@ -37,9 +39,11 @@ export default class CommunityDetail extends Component {
       rgsAux,
       floorPlans,
       similarProperties,
-      gallery={},
+      gallery = {},
+      videoGallery = {},
     } = community;
-    const images = (gallery && gallery.images) || [];
+    const images = gallery.images || [];
+    const videos = videoGallery.videos || [];
     const { careServices, serviceHighlights } = propInfo;
     const {
       communityDescription,
@@ -73,9 +77,10 @@ export default class CommunityDetail extends Component {
     const mapViewTitle = `Map View of ${name}`;
     return (
       <div {...props}>
-        <MediaGallery
+        <CommunityMediaGallery
           communityName={name}
           images={images}
+          videos={videos}
         />
         <Heading level="hero">{name}</Heading>
         {/* temp shiz */}
@@ -135,8 +140,7 @@ export default class CommunityDetail extends Component {
             onLeaveReview={onLeaveReview}
           />
         </CollapsibleSection>
-        <HowSlyWorks reason1="This is great"/>
-        <CollapsibleSection title={mapViewTitle}>
+        <CollapsibleSection title={mapViewTitle} size="large">
           <CommunityMap
             id={id}
             name={name}
@@ -146,6 +150,12 @@ export default class CommunityDetail extends Component {
             similarProperties={similarProperties}
           />
         </CollapsibleSection>
+        <CollapsibleSection title={"More Pictures"} size="large">
+          <MorePictures
+            gallery={gallery}
+          />
+        </CollapsibleSection>
+        <HowSlyWorks reason1="This is great"/>
       </div>
     );
   }

@@ -5,10 +5,14 @@ import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 // import { Button, Hr } from 'sly/components/atoms';
-import Rating from 'sly/components/atoms/Rating';
+import Rating from 'sly/components/molecules/Rating';
 
 const ReviewHeadingDiv = styled.div`
   font-weight: bold;
+`;
+
+const RatingsDiv = styled.div`
+  margin-bottom: ${size('spacing.large')};
 `;
 
 export const ReviewDiv = styled.div`
@@ -43,6 +47,8 @@ const Link = styled.a`
   color: ${palette('primary', 2)};
 `;
 
+const DisclaimerDiv = styled.div``;
+
 export default class GatheredReviewRatings extends Component {
   static propTypes = {
     reviewRatings: arrayOf(shape({
@@ -74,7 +80,7 @@ export default class GatheredReviewRatings extends Component {
             <ReviewHeadingDiv>
               Reviews gathered from across the web
             </ReviewHeadingDiv>
-            {ratings}
+            <RatingsDiv>{ratings}</RatingsDiv>
             {/* <PaddedHR />
             <LeaveAReviewTextDiv>
               If you are familiar with this community, your review will help
@@ -85,6 +91,11 @@ export default class GatheredReviewRatings extends Component {
               <Button onClick={onLeaveReview}>Leave a Review</Button>
             </LeaveAReviewButtonDiv>
             <Hr /> */}
+            <DisclaimerDiv>
+              Disclaimer: All trademarks and copyrights for names are owned by
+              the respective companies. They do not endorse Seniorly and are not
+              related to Seniorly's service in any way.
+            </DisclaimerDiv>
           </div>
         )}
       </div>

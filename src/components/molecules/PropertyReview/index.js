@@ -3,7 +3,7 @@ import { string, number } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import Rating from 'sly/components/atoms/Rating';
+import Rating from 'sly/components/molecules/Rating';
 import Hr from 'sly/components/atoms/Hr';
 
 const RatingHeadingDiv = styled.div`

@@ -6,7 +6,7 @@ theme.palette = {
   slate:     ['#384c57'],
   white:     ['#fff'],
   primary:   ['#2f8fcb', '#2483be', '#63abd8'],
-  secondary: ['#7ccdcc', '#65c0bf', '#8bdbda', '#f4ffff'],
+  secondary: ['#7ccdcc', '#65c0bf', '#b0e1e0', '#f4ffff'],
   grayscale: ['#8f9ca4', '#9ca8af', '#c5d0d5', '#f2f6f7', '#68747a'],
   danger:    ['#cc5663'],
 };
@@ -22,24 +22,26 @@ theme.fonts = {
 theme.sizes = {
   // pixel measurements
   breakpoint: {
-    mobile:          '375px',
-    tablet:          '768px',
-    laptop:         '1024px',
-    doubleModal:    '1200px',
-    laptopLarge:    '1440px',
+    mobile:            '375px',
+    tablet:            '768px',
+    laptop:           '1024px',
+    laptopSideColumn: '1104px',
+    doubleModal:      '1200px',
+    laptopLarge:      '1440px',
   },
 
   maxWidth:         '1200px',
 
   // rem measurements
   layout: {
+    laptopLarge:  '66rem',    // 1056px
     mainColumn:   '43.50rem', // 696px
     sideColumn:   '21.00rem', // 336px
   },
 
   modal: {
-    single: '35.25rem', // 516px
-    gallery: '54.75rem', // 876px
+    single:       '35.25rem', // 516px
+    gallery:      '54.75rem', // 876px
   },
 
   collapsible: {
@@ -49,7 +51,7 @@ theme.sizes = {
   },
 
   element: {
-    small:        '2.125rem', // 34px
+    small:        '2.000rem', // 34px
     regular:      '2.500rem', // 40px
     large:        '3.000rem', // 48px
     xLarge:       '3.250rem', // 52px
@@ -68,20 +70,51 @@ theme.sizes = {
 
   tile: {
     tiny: {
-      width:    '7rem',       // 112px
-      height:    '5.25rem',   // 84px
+      width:          '7rem', // 112px
+      height:      '5.25rem', // 84px
     },
     small: {
       width:     '13.500rem', // 216px
       height:     '9.500rem', // 152px
     },
     regular: {
-      width:    '16.875rem',  // 270px
-      height:    '11.25rem',  // 180px
+      width:     '16.875rem', // 270px
+      height:     '11.25rem', // 180px
     },
     large: {
-      width:    '21.4375rem',  // 343px
-      height:    '14.25rem',   // 228px
+      width:    '21.4375rem', // 343px
+      height:     '14.25rem', // 228px
+    },
+  },
+
+  picture: {
+    small: {
+      width:     '15.375rem', // 246px
+      height:     '11.25rem', // 180px
+    },
+    regular: {
+      width:         '21rem', // 336px
+      height:    '15.375rem', // 246px
+    },
+    large: {
+      width:    '21.4375rem', // 343px
+      height:    '15.625rem', // 250px
+    }
+  },
+  map: {
+    propertyDetail: {
+      small: {
+        width:      '343px', // 343px
+        height:     '198px', // 198px
+      },
+      regular: {
+        width:      '696px', // 696px
+        height:     '401px', // 401px
+      },
+      large: {
+        width:     '1056px', // 1056px
+        height:     '607px', // 607px
+      },
     },
   },
 
@@ -90,29 +123,30 @@ theme.sizes = {
   },
 
   border: {
-    regular: '0.063rem', // 1px
-    large: '0.125rem', // 2px
-    xLarge: '0.1875rem', // 3px
+    regular:      '1px', // 1px
+    large:        '2px', // 2px
+    xLarge:       '3px', // 3px
   },
 
   spacing: {
-    nano:         '0.062rem', //  1px
-    tiny:         '0.125rem', //  2px
-    small:        '0.250rem', //  4px
-    regular:      '0.500rem', //  8px
-    large:        '1.000rem', // 16px
-    xLarge:       '1.500rem', // 24px
-    xxLarge:      '2.000rem', // 32px
-    xxxLarge:     '3.000rem', // 48px
+    nano:    '0.062rem', //  1px
+    tiny:    '0.125rem', //  2px
+    small:   '0.250rem', //  4px
+    regular: '0.500rem', //  8px
+    large:   '1.000rem', // 16px
+    xLarge:  '1.500rem', // 24px
+    xxLarge: '2.000rem', // 32px
+    xxxLarge:'3.000rem', // 48px
+    huge:    '4.000rem', // 64px
   },
 
   icon: {
-    small:        '0.750rem', // 12px
-    medium:       '1.000rem', // 16px
+    tiny:         '0.750rem', // 12px
+    small:        '1.000rem', // 16px
     regular:      '1.500rem', // 24px
-    button:       '2.500rem', // 32px
-    large:        '3.000rem', // 48px
-    xLarge:       '6.000rem', // 96px
+    large:        '2.250rem', // 36px
+    xLarge:       '3.000rem', // 48px
+    xxLarge:      '4.500rem', // 72px
   },
 
   text: {
@@ -132,19 +166,19 @@ theme.sizes = {
   },
 
   carousel: {
-    mobile: '15.625em', // 250px
-    tablet: '28.750rem', // 460px
+    mobile:      '15.625rem', // 250px
+    tablet:      '28.750rem', // 460px
   },
 
   thumbnail: {
-    width: '8.0625rem', // 129px
-    height: '5.375rem', // 86px
+    width:       '8.0625rem', // 129px
+    height:       '5.375rem', // 86px
   },
 };
 
 theme.transitions = {
-  fast: '0.1s ease-out',
-  default: '0.2s ease-out',
+  fast:      '0.1s ease-out',
+  default:   '0.2s ease-out',
 };
 
 export default theme;

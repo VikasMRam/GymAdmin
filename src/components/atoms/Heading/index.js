@@ -6,8 +6,8 @@ import { prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 
-const fontSize = p => size('text', p.size);
-const lineHeight = p => size('lineHeight', p.size);
+const fontSize = p => size('text', p.level);
+const lineHeight = p => size('lineHeight', p.level);
 
 const getLevel = size => {
   switch(size) {
@@ -22,7 +22,7 @@ const styles = css`
   line-height: ${lineHeight};
   // TODO: review this with @jared,
   // for now let's make margin-bottom relative to font-size
-  margin: 0 0 1em 0;
+  margin: 0 0 calc(${fontSize} * ${lineHeight} * 0.5) 0;
   color: ${palette(0)};
 `;
 

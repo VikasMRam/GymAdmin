@@ -5,7 +5,7 @@ import { palette } from 'styled-theme';
 import Dotdotdot from 'react-dotdotdot';
 
 import { size } from 'sly/components/themes';
-import Rating from 'sly/components/atoms/Rating';
+import Rating from 'sly/components/molecules/Rating';
 
 const SimilarCommunityNameDiv = styled.div`
   font-size: ${size('text.subtitle')};
@@ -50,7 +50,7 @@ const SimilarCommunityInfo = ({ similarProperty }) => {
       <SimilarCommunityPriceRatingDiv>
         <Dotdotdot clamp={1}>${startingRate} per month</Dotdotdot>
         <SimilarCommunityRatingDiv>
-          <Rating value={reviewsValue} size="medium" />
+          <Rating value={reviewsValue} size="regular" />
           {numReviews > 0 && (
             <SimilarCommunityNumberReviewDiv>
               {numReviews}

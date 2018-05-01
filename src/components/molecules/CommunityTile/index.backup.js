@@ -6,7 +6,7 @@ import { palette } from 'styled-theme';
 import Link from 'react-router-dom/Link';
 
 import { size } from 'sly/components/themes';
-import Rating from 'sly/components/atoms/Rating';
+import Rating from 'sly/components/molecules/Rating';
 import Input from 'sly/components/atoms/Input';
 
 const width = ({ tileSize }) => size('tile', tileSize, 'width');
