@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { shape, string } from 'prop-types';
+import { arrayOf, shape, string } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import PictureTile from 'sly/components/molecules/PictureTile';
 
 const Wrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    // To Display 2 Tile per Row
     display: flex;
     flex-wrap: wrap;
 
@@ -17,6 +18,7 @@ const Wrapper = styled.div`
   }
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    // To Display 4 Tile per Row
     display: flex;
     flex-wrap: wrap;
 
@@ -37,8 +39,10 @@ const MorePictures = ({ gallery }) => {
 
 MorePictures.propTypes = {
   gallery: shape({
-    id: string.isRequired,
-    sd: string.isRequired,
+    images: arrayOf(shape({
+      id: string.isRequired,
+      sd: string.isRequired,
+    })),
   }),
 };
 
