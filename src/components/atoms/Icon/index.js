@@ -19,6 +19,7 @@ const Wrapper = styled.span`
   transform: ${ifProp('flip', 'rotate(180deg)', 'rotate(0deg)')};
   transition: transform ${key('transitions.fast')};
   & > svg {
+    font-size: ${fontSize};
     width: 100%;
     height: 100%;
     display: block;
@@ -36,7 +37,7 @@ const Icon = ({ icon, size, ...props }) => {
     svg = "<span>x</span>";
   }
   return (
-    <Wrapper {...props} dangerouslySetInnerHTML={{ __html: svg }} />
+    <Wrapper size={size} {...props} dangerouslySetInnerHTML={{ __html: svg }} />
   );
 };
 
