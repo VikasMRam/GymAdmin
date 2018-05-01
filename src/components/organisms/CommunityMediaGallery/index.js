@@ -45,6 +45,7 @@ export default class CommunityMediaGallery extends React.Component {
       name: PropTypes.string.isRequired,
       thumbUrl: PropTypes.string.isRequired,
     })),
+    ariaHideApp: PropTypes.bool,
   };
 
   state = {
@@ -70,7 +71,9 @@ export default class CommunityMediaGallery extends React.Component {
   };
 
   render() {
-    const { communityName, images, videos } = this.props;
+    const {
+      communityName, images, videos, ariaHideApp,
+    } = this.props;
     this.sdGalleryImages = videos.map((vid, i) => {
       // Important: create new object instance having src & alt as we will be modifying same object below
       return {
@@ -84,7 +87,21 @@ export default class CommunityMediaGallery extends React.Component {
       return { ...img, src: img.hd, alt: `${communityName} ${i + 1}` };
     });
     this.formattedVideos = videos.map((vid) => {
-      return { ...vid, src: vid.url, thumb: vid.thumbUrl };
+      const src = [];
+      if (vid.url) {
+        src.push({
+          url: vid.url,
+          type: 'mp4',
+        });
+      }
+      if (vid.webmUrl) {
+        src.push({
+          url: vid.webmUrl,
+          type: 'webm',
+        });
+      }
+
+      return { ...vid, src, thumb: vid.thumbUrl };
     });
     const topRightSection = (
       <span>
@@ -115,6 +132,7 @@ export default class CommunityMediaGallery extends React.Component {
           videos={this.formattedVideos}
           images={this.hdGalleryImages}
           onClose={this.toggleModal}
+          ariaHideApp={ariaHideApp}
         />
       </section>
     );

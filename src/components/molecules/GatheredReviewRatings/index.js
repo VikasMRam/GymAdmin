@@ -5,7 +5,7 @@ import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 // import { Button, Hr } from 'sly/components/atoms';
-import Rating from 'sly/components/atoms/Rating';
+import Rating from 'sly/components/molecules/Rating';
 
 const ReviewHeadingDiv = styled.div`
   font-weight: bold;
