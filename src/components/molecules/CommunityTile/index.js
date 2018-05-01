@@ -4,13 +4,14 @@ import { palette } from 'styled-theme';
 import { bool, string, shape, number, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import Rating from 'sly/components/atoms/Rating';
+import { Heading } from 'sly/components/atoms';
+import Rating from 'sly/components/molecules/Rating';
 import Checkbox from 'sly/components/molecules/Checkbox';
 
 const defaultImage =
   'https://d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
 
-export const CommunityTileDiv = styled.div`
+export const Wrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 
   position: relative;
@@ -42,11 +43,11 @@ export const CommunityTileDiv = styled.div`
   user-select: none;
 `;
 
-const CommunityTileImageDiv = styled.img`
+const Image = styled.img`
   width: ${size('tile', 'tiny', 'width')};
   height: ${size('tile', 'tiny', 'height')};
 `;
-const CommunityTileInfoDiv = styled.div`
+const Info = styled.div`
   margin: ${size('spacing.large')};
 `;
 
@@ -56,14 +57,29 @@ export const StyledCheckbox = styled(Checkbox)`
   right: ${size('spacing.small')};
 `;
 
-const CommunityTileTitleDiv = styled.div`
-  font-size: ${size('text.subtitle')};
-  font-weight: bold;
+const StyledHeading = styled(Heading)`
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const CommunityTilePriceRatingDiv = styled.div`
   display: flex;
   font-size: ${size('spacing.large')};
+`;
+
+const Mobrate = styled.span`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: none;
+  }
+`;
+
+const Deskrate = styled.span`
+  display: none;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: unset;
+  }
 `;
 
 const CommunityTileyRatingDiv = styled.div`
@@ -88,13 +104,17 @@ const CommunityTile = ({
     name, uri, picture, rating, startingRate, numReviews,
   } = community;
   return (
-    <CommunityTileDiv selected={selected} onClick={onClick}>
-      <CommunityTileImageDiv src={picture || defaultImage} />
+    <Wrapper selected={selected} onClick={onClick}>
+      <Image src={picture || defaultImage} />
       {selectable && <StyledCheckbox checked={selected} />}
-      <CommunityTileInfoDiv>
-        <CommunityTileTitleDiv>{name}</CommunityTileTitleDiv>
+      <Info>
+        <StyledHeading level="subtitle">{name}</StyledHeading>
         <CommunityTilePriceRatingDiv>
-          <div>${startingRate} per month</div>
+          <div>
+            ${startingRate}
+            <Mobrate>/mo</Mobrate> 
+            <Deskrate> per month</Deskrate>
+          </div>
           <CommunityTileyRatingDiv>
             <Rating value={rating} size={size} palette={palette} />
             <CommunityTileNumberReviewDiv>
@@ -102,8 +122,8 @@ const CommunityTile = ({
             </CommunityTileNumberReviewDiv>
           </CommunityTileyRatingDiv>
         </CommunityTilePriceRatingDiv>
-      </CommunityTileInfoDiv>
-    </CommunityTileDiv>
+      </Info>
+    </Wrapper>
   );
 };
 

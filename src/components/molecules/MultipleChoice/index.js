@@ -30,8 +30,6 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const Wrapper = styled.div``;
-
 export default class MultipleChoice extends Component {
   static propTypes = {
     options: arrayOf(shape({
@@ -60,7 +58,7 @@ export default class MultipleChoice extends Component {
   render() {
     const { options, value, type, ...props } = this.props;
     return (
-      <Wrapper type={type} {...props}>
+      <div {...props}>
         {options &&
           options.map(({ value: option, label, ...props }, i) => (
             <StyledButton
@@ -74,7 +72,7 @@ export default class MultipleChoice extends Component {
               {label}
             </StyledButton>
           ))}
-      </Wrapper>
+      </div>
     );
   }
 }

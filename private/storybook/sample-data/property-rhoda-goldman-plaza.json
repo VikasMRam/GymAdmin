@@ -2703,6 +2703,20 @@
     "id": "ffb714b0df795bd3ee310aafb7274a8e",
     "createdAt": "2015-04-10T22:38:59Z",
     "updatedAt": "2018-04-20T06:58:07Z",
-    "videos": []
+    "videos": [
+      {
+        "id": "46ea0ede80941d3126e32c2d64d1153d",
+        "name": "AgeSong_LagunaGroveCare",
+        "path":
+          "f3c47f7a-7eea-4777-af86-d57c95310efc/AgeSong_LagunaGroveCare_Lowres_04_29_2015.mp4",
+        "processed": 2,
+        "thumbUrl":
+          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9391fed0-9486-44f5-9da2-56ff33434bb1/BuenaVistaManorHouse_nojoke1.1_thump.png",
+        "url":
+          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9391fed0-9486-44f5-9da2-56ff33434bb1/BuenaVistaManorHouse_nojoke1.1.mp4",
+        "webmUrl":
+          "https://d1qiigpe5txw4q.cloudfront.net/uploads/9391fed0-9486-44f5-9da2-56ff33434bb1/BuenaVistaManorHouse_nojoke1.1.webm"
+      }
+    ]
   }
 }

@@ -1,16 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import SimilarCommunityInfo from '.';
-// import Rating from 'sly/components/atoms/Rating';
-
-// const community = {
-//   name: 'Rhoda Goldman Plaza',
-//   uri: 'rhoda-goldman-plaze',
-//   picture: 'blah',
-//   rating: 4.5,
-//   startingRate: 4500,
-//   numReviews: 55,
-// };
 
 const similarProperty = {
   name: 'Rhoda Goldman Plaza',
@@ -38,11 +28,6 @@ describe('SimilarCommunityInfo', () => {
       .childAt(1)
       .childAt(0)
       .html()).toEqual('<div>$4500 per month</div>');
-    // expect(wrapper
-    //   .childAt(1)
-    //   .childAt(1)
-    //   .childAt(0)
-    //   .contains('Rating')).toBeTruthy();
     expect(wrapper.childAt(2).html()).toEqual('<div>Care Type: A, B</div>');
     expect(wrapper.childAt(3).html()).toEqual('<div>Floor Plans: 1 Bedroom, Studio</div>');
     expect(wrapper.childAt(4).contains('description')).toBe(true);

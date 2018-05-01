@@ -5,7 +5,7 @@ import { palette } from 'styled-theme';
 import Dotdotdot from 'react-dotdotdot';
 
 import { size } from 'sly/components/themes';
-import Rating from 'sly/components/atoms/Rating';
+import Rating from 'sly/components/molecules/Rating';
 
 const SimilarCommunityNameDiv = styled.div`
   font-size: ${size('text.subtitle')};

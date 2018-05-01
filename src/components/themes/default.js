@@ -39,8 +39,8 @@ theme.sizes = {
   },
 
   modal: {
-    single: '35.25rem', // 516px
-    gallery: '54.75rem', // 876px
+    single:       '35.25rem', // 516px
+    gallery:      '54.75rem', // 876px
   },
 
   collapsible: {
@@ -50,7 +50,7 @@ theme.sizes = {
   },
 
   element: {
-    small:        '2.125rem', // 34px
+    small:        '2.000rem', // 34px
     regular:      '2.500rem', // 40px
     large:        '3.000rem', // 48px
     xLarge:       '3.250rem', // 52px
@@ -69,20 +69,20 @@ theme.sizes = {
 
   tile: {
     tiny: {
-      width:    '7rem',       // 112px
-      height:    '5.25rem',   // 84px
+      width:          '7rem', // 112px
+      height:      '5.25rem', // 84px
     },
     small: {
       width:     '13.500rem', // 216px
       height:     '9.500rem', // 152px
     },
     regular: {
-      width:    '16.875rem',  // 270px
-      height:    '11.25rem',  // 180px
+      width:     '16.875rem', // 270px
+      height:     '11.25rem', // 180px
     },
     large: {
-      width:    '21.4375rem',  // 343px
-      height:    '14.25rem',   // 228px
+      width:    '21.4375rem', // 343px
+      height:     '14.25rem', // 228px
     },
   },
 
@@ -91,20 +91,21 @@ theme.sizes = {
   },
 
   border: {
-    regular: '0.063rem', // 1px
-    large: '0.125rem', // 2px
-    xLarge: '0.1875rem', // 3px
+    regular:      '1px', // 1px
+    large:        '2px', // 2px
+    xLarge:       '3px', // 3px
   },
 
   spacing: {
-    nano:         '0.062rem', //  1px
-    tiny:         '0.125rem', //  2px
-    small:        '0.250rem', //  4px
-    regular:      '0.500rem', //  8px
-    large:        '1.000rem', // 16px
-    xLarge:       '1.500rem', // 24px
-    xxLarge:      '2.000rem', // 32px
-    xxxLarge:     '3.000rem', // 48px
+    nano: '0.062rem', //  1px
+    tiny: '0.125rem', //  2px
+    small: '0.250rem', //  4px
+    regular: '0.500rem', //  8px
+    large: '1.000rem', // 16px
+    xLarge: '1.500rem', // 24px
+    xxLarge: '2.000rem', // 32px
+    xxxLarge: '3.000rem', // 48px
+    huge: '4.000rem', // 65px
   },
 
   icon: {
@@ -133,19 +134,19 @@ theme.sizes = {
   },
 
   carousel: {
-    mobile: '15.625em', // 250px
-    tablet: '28.750rem', // 460px
+    mobile:      '15.625rem', // 250px
+    tablet:      '28.750rem', // 460px
   },
 
   thumbnail: {
-    width: '8.0625rem', // 129px
-    height: '5.375rem', // 86px
+    width:       '8.0625rem', // 129px
+    height:       '5.375rem', // 86px
   },
 };
 
 theme.transitions = {
-  fast: '0.1s ease-out',
-  default: '0.2s ease-out',
+  fast:      '0.1s ease-out',
+  default:   '0.2s ease-out',
 };
 
 export default theme;
