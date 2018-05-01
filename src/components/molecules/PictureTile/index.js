@@ -7,6 +7,7 @@ import Image from 'sly/components/atoms/Image';
 
 const StyledImage = styled(Image)`
   margin-bottom: 16px;
+  margin-left: 8px;
 
   width: ${size('picture', 'large', 'width')};
   height: ${size('picture', 'large', 'height')};
