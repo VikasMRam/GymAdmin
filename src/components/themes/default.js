@@ -34,6 +34,7 @@ theme.sizes = {
 
   // rem measurements
   layout: {
+    laptopLarge:  '66rem',    // 1056px
     mainColumn:   '43.50rem', // 696px
     sideColumn:   '21.00rem', // 336px
   },
