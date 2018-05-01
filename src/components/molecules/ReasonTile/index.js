@@ -7,7 +7,7 @@ import { size } from 'sly/components/themes';
 import { Block, Link } from 'sly/components/atoms';
 import Heading from "sly/components/atoms/Heading";
 
-const Wrapper = styled(Link)`
+export const Wrapper = styled(Link)`
     display: inline-block;
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
     width: 100%;
@@ -25,19 +25,19 @@ export const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.small')};
 `;
 
-const ItemDescription = styled.div`
+export const ItemDescription = styled.div`
   padding: 0 ${size('spacing.large')};
   padding-bottom: ${size('spacing.large')};
 `;
 
-const ImageWrapper = styled.div`
+export const ImageWrapper = styled.div`
   position: relative;
   height: 0;
   width: 100%;
   padding-top: 75%;
 `;
 
-const Image = styled.img`
+export const Image = styled.img`
   position: absolute;
   top: 0px;
   left: 0px;
