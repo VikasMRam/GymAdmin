@@ -11,6 +11,7 @@ import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures'
 import OwnerStory from 'sly/components/organisms/OwnerStory';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
+import MorePictures from 'sly/components/organisms/MorePictures';
 
 // TODO: remove this
 const nextUri = (() => {
@@ -145,6 +146,11 @@ export default class CommunityDetail extends Component {
             mainImage={mainImage}
             address={address}
             similarProperties={similarProperties}
+          />
+        </CollapsibleSection>
+        <CollapsibleSection title={"More Pictures"} size="large">
+          <MorePictures
+            gallery={gallery}
           />
         </CollapsibleSection>
       </div>

@@ -87,6 +87,20 @@ theme.sizes = {
     },
   },
 
+  picture: {
+    small: {
+      width:     '15.375rem', // 246px
+      height:     '11.25rem', // 180px
+    },
+    regular: {
+      width:         '21rem', // 336px
+      height:    '15.375rem', // 246px
+    },
+    large: {
+      width:    '21.4375rem', // 343px
+      height:    '15.625rem', // 250px
+    }
+  },
   map: {
     propertyDetail: {
       small: {
