@@ -2,7 +2,7 @@
 import React from 'react';
 import { string, number, bool, oneOf, func } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+import { palette, key } from 'styled-theme';
 import { ifProp, prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
@@ -16,8 +16,8 @@ const Wrapper = styled.span`
   // sizes relative to set font-size
   width: 1em;
   height: 1em;
-  transform: ${ifProp({ orientation: 'up' }, 'rotate(180deg)', 'rotate(0deg)')};
-  transition: transform 2s;
+  transform: ${ifProp('flip', 'rotate(180deg)', 'rotate(0deg)')};
+  transition: transform ${key('transitions.fast')};
   & > svg {
     width: 100%;
     height: 100%;
@@ -47,9 +47,11 @@ Icon.propTypes = {
   palette: string,
   fill: string,
   stroke: string,
+  flip: bool,
 };
 
 Icon.defaultProps = {
+  flip: false,
   size: 'regular',
   palette: 'secondary',
 };
