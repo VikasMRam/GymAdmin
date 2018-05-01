@@ -34,6 +34,7 @@ theme.sizes = {
 
   // rem measurements
   layout: {
+    laptopLarge:  '66rem',    // 1056px
     mainColumn:   '43.50rem', // 696px
     sideColumn:   '21.00rem', // 336px
   },
@@ -83,6 +84,23 @@ theme.sizes = {
     large: {
       width:    '21.4375rem', // 343px
       height:     '14.25rem', // 228px
+    },
+  },
+
+  map: {
+    propertyDetail: {
+      small: {
+        width:      '343px', // 343px
+        height:     '198px', // 198px
+      },
+      regular: {
+        width:      '696px', // 696px
+        height:     '401px', // 401px
+      },
+      large: {
+        width:     '1056px', // 1056px
+        height:     '607px', // 607px
+      },
     },
   },
 
