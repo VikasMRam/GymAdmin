@@ -40,16 +40,10 @@ const StyledHeading = styled(Heading)`
   margin: 0;
 `;
 
-const scaleY = p => (p.collapsed ? 1 : -1);
-const StyledIcon = styled(Icon)`
-  transform: scaleY(${scaleY});
-  transition: transform ${key('transitions.fast')};
-`;
-
 const contentHeight = props => (!props.collapsed ? `${props.maxHeight}px` : 0);
 const Content = styled.div`
   height: ${contentHeight};
-  overflow: ${ifProp('collapsed', 'hidden', 'unset')};
+  overflow: hidden;
   transition: height ${key('transitions.default')};
 `;
 
@@ -94,10 +88,10 @@ export default class CollapsibleSection extends Component {
             <StyledHr />
             <Header onClick={this.toggle} transparent ghost>
               <StyledHeading>{title}</StyledHeading>
-              <StyledIcon
+              <Icon
                 icon="chevron"
                 palette="grays"
-                collapsed={collapsed}
+                flip={collapsed}
               />
             </Header>
             <Content maxHeight={maxHeight} collapsed={collapsed}>

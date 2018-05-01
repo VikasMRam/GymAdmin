@@ -144,8 +144,9 @@ theme.sizes = {
     tiny:         '0.750rem', // 12px
     small:        '1.000rem', // 16px
     regular:      '1.500rem', // 24px
-    large:        '3.000rem', // 48px
-    xLarge:       '6.000rem', // 96px
+    large:        '2.250rem', // 36px
+    xLarge:       '3.000rem', // 48px
+    xxLarge:      '4.500rem', // 72px
   },
 
   text: {
