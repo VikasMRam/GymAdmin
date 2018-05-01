@@ -148,7 +148,7 @@ export default class CommunityDetail extends Component {
             similarProperties={similarProperties}
           />
         </CollapsibleSection>
-        <CollapsibleSection title={"More Pictures"}>
+        <CollapsibleSection title={"More Pictures"} size="large">
           <MorePictures
             gallery={gallery}
           />
