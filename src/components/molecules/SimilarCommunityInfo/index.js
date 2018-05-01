@@ -50,7 +50,7 @@ const SimilarCommunityInfo = ({ similarProperty }) => {
       <SimilarCommunityPriceRatingDiv>
         <Dotdotdot clamp={1}>${startingRate} per month</Dotdotdot>
         <SimilarCommunityRatingDiv>
-          <Rating value={reviewsValue} size="medium" />
+          <Rating value={reviewsValue} size="regular" />
           {numReviews > 0 && (
             <SimilarCommunityNumberReviewDiv>
               {numReviews}

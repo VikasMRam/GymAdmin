@@ -20,8 +20,8 @@ describe('CommunityTile', () => {
   });
 
   it('renders props when passed in', () => {
-    const wrapper = wrap({ size: 'medium' });
-    expect(wrapper.find('Rating[size="medium"]')).toHaveLength(1);
+    const wrapper = wrap({ size: 'regular' });
+    expect(wrapper.find('Rating[size="regular"]')).toHaveLength(1);
   });
 
   it('renders default not selectable, calls toggle', () => {

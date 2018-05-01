@@ -2,7 +2,7 @@
 import React from 'react';
 import { string, number, bool, oneOf, func } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+import { palette, key } from 'styled-theme';
 import { ifProp, prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
@@ -16,9 +16,10 @@ const Wrapper = styled.span`
   // sizes relative to set font-size
   width: 1em;
   height: 1em;
-  transform: ${ifProp({ orientation: 'up' }, 'rotate(180deg)', 'rotate(0deg)')};
-  transition: transform 2s;
+  transform: ${ifProp('flip', 'rotate(180deg)', 'rotate(0deg)')};
+  transition: transform ${key('transitions.fast')};
   & > svg {
+    font-size: ${fontSize};
     width: 100%;
     height: 100%;
     display: block;
@@ -27,27 +28,33 @@ const Wrapper = styled.span`
   }
 `;
 
-const Icon = ({ icon, transform, ...props }) => {
-  const svg = require(`!raw-loader!./icons/${icon}.svg`);
+const Icon = ({ icon, size, ...props }) => {
+  let svg;
+  try {
+    svg = require(`!raw-loader!./icons/${icon}-${size}.svg`);
+  } catch (e) {
+    console.error('Icon not found:', `${icon}-${size}`);
+    svg = '<span>x</span>';
+  }
   return (
-    <Wrapper {...props} dangerouslySetInnerHTML={{ __html: transform(svg) }} />
+    <Wrapper size={size} {...props} dangerouslySetInnerHTML={{ __html: svg }} />
   );
 };
 
 Icon.propTypes = {
   icon: string.isRequired,
   width: number,
-  size: oneOf(['small', 'medium', 'regular', 'button', 'large', 'xLarge']),
+  size: oneOf(['small', 'regular', 'large', 'xLarge', 'xxLarge']),
   palette: string,
   fill: string,
   stroke: string,
-  transform: func,
+  flip: bool,
 };
 
 Icon.defaultProps = {
+  flip: false,
   size: 'regular',
   palette: 'secondary',
-  transform: txt => txt,
 };
 
 export default Icon;
