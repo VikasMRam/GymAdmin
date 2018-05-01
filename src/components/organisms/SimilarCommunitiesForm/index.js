@@ -8,7 +8,7 @@ import ReduxField from 'sly/components/organisms/ReduxField';
 
 import { Heading, Button, Block, Tag } from 'sly/components/atoms';
 
-const makeTags = tags => tags.map(tag => <Tag>{tag}</Tag>);
+const makeTags = tags => tags.map(tag => <Tag key={tag}>{tag}</Tag>);
 
 const makeOptions = communities => communities
   .map(community => ({
@@ -36,9 +36,9 @@ const StyledButton = styled(Button)`
 
 const SimilarCommunitiesForm = ({ handleSubmit, submitting, community }) => (
   <Form onSubmit={handleSubmit}>
-    <StyledHeading>
+    <Heading>
       Send your message to similar communities
-    </StyledHeading>
+    </Heading>
     <Block>
       We found that these communities have similar features that you are looking for.
     </Block>
@@ -66,7 +66,6 @@ SimilarCommunitiesForm.propTypes = {
       typeCare: arrayOf(string),
     }).isRequired,
   }).isRequired,
-  tags: arrayOf(string).isRequired,
 };
 
 export default SimilarCommunitiesForm;

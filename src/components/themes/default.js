@@ -6,7 +6,7 @@ theme.palette = {
   slate:     ['#384c57'],
   white:     ['#fff'],
   primary:   ['#2f8fcb', '#2483be', '#63abd8'],
-  secondary: ['#7ccdcc', '#65c0bf', '#8bdbda', '#f4ffff'],
+  secondary: ['#7ccdcc', '#65c0bf', '#b0e1e0', '#f4ffff'],
   grayscale: ['#8f9ca4', '#9ca8af', '#c5d0d5', '#f2f6f7', '#68747a'],
   danger:    ['#cc5663'],
 };
@@ -97,22 +97,21 @@ theme.sizes = {
   },
 
   spacing: {
-    nano: '0.062rem', //  1px
-    tiny: '0.125rem', //  2px
-    small: '0.250rem', //  4px
+    nano:    '0.062rem', //  1px
+    tiny:    '0.125rem', //  2px
+    small:   '0.250rem', //  4px
     regular: '0.500rem', //  8px
-    large: '1.000rem', // 16px
-    xLarge: '1.500rem', // 24px
+    large:   '1.000rem', // 16px
+    xLarge:  '1.500rem', // 24px
     xxLarge: '2.000rem', // 32px
-    xxxLarge: '3.000rem', // 48px
-    huge: '4.000rem', // 65px
+    xxxLarge:'3.000rem', // 48px
+    huge:    '4.000rem', // 64px
   },
 
   icon: {
-    small:        '0.750rem', // 12px
-    medium:       '1.000rem', // 16px
+    tiny:         '0.750rem', // 12px
+    small:        '1.000rem', // 16px
     regular:      '1.500rem', // 24px
-    button:       '2.500rem', // 32px
     large:        '3.000rem', // 48px
     xLarge:       '6.000rem', // 96px
   },

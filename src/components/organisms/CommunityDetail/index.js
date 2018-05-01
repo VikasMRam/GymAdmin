@@ -137,7 +137,7 @@ export default class CommunityDetail extends Component {
             onLeaveReview={onLeaveReview}
           />
         </CollapsibleSection>
-        <CollapsibleSection title={mapViewTitle}>
+        { /* <CollapsibleSection title={mapViewTitle}>
           <CommunityMap
             id={id}
             name={name}
@@ -147,6 +147,7 @@ export default class CommunityDetail extends Component {
             similarProperties={similarProperties}
           />
         </CollapsibleSection>
+        */ }
       </div>
     );
   }
