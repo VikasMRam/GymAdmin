@@ -6,20 +6,20 @@ import { size } from 'sly/components/themes';
 import Image from 'sly/components/atoms/Image';
 
 const StyledImage = styled(Image)`
-  margin-bottom: 16px;
-  margin-left: 8px;
+  margin-bottom: ${size('spacing.large')};
+  margin-left: ${size('spacing.regular')};
 
   width: ${size('picture', 'large', 'width')};
   height: ${size('picture', 'large', 'height')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    margin-bottom: 24px;
+    margin-bottom: ${size('spacing.xLarge')};
 
     width: ${size('picture', 'medium', 'width')};
     height: ${size('picture', 'medium', 'height')};
 
     :nth-child(odd) {
-      margin-right: 24px;
+      ${size('spacing.xLarge')};
     }
   }
 
@@ -27,9 +27,9 @@ const StyledImage = styled(Image)`
     width: ${size('picture', 'small', 'width')};
     height: ${size('picture', 'small', 'height')};
 
-    margin-right: 24px;
+    margin-right: ${size('spacing.xLarge')};
     :nth-child(4n) {
-      margin-right: 0px;
+      margin-right: 0;
     }
   }
 `;
