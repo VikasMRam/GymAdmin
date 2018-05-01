@@ -93,7 +93,7 @@ theme.sizes = {
         width:      '343px', // 343px
         height:     '198px', // 198px
       },
-      medium: {
+      regular: {
         width:      '696px', // 696px
         height:     '401px', // 401px
       },
