@@ -87,6 +87,23 @@ theme.sizes = {
     },
   },
 
+  map: {
+    propertyDetail: {
+      small: {
+        width:      '343px', // 343px
+        height:     '198px', // 198px
+      },
+      medium: {
+        width:      '696px', // 696px
+        height:     '401px', // 401px
+      },
+      large: {
+        width:     '1056px', // 1056px
+        height:     '607px', // 607px
+      },
+    },
+  },
+
   padding: {
     regular:   '0.5rem 1rem',
   },

@@ -11,6 +11,21 @@ import Map from 'sly/components/atoms/Map';
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
 
+const MapContainerElement = styled.div`
+  width: ${size('map.propertyDetail.small.width')};
+  height: ${size('map.propertyDetail.small.height')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('map.propertyDetail.medium.width')};
+    height: ${size('map.propertyDetail.medium.height')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    width: ${size('map.propertyDetail.large.width')};
+    height: ${size('map.propertyDetail.large.height')};
+  }
+`;
+
 const iconMap = {
   blue: GreenMarker,
   red: RedMarker,
@@ -187,7 +202,11 @@ class CommunityMap extends Component {
     }
 
     return (
-      <Map center={center} defaultZoom={defaultZoom}>
+      <Map
+        center={center}
+        defaultZoom={defaultZoom}
+        containerElement={<MapContainerElement />}
+      >
         {markerComponents}
       </Map>
     );
