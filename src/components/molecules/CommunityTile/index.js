@@ -130,7 +130,7 @@ const CommunityTile = ({
 CommunityTile.propTypes = {
   selectable: bool,
   selected: bool,
-  size: oneOf(['small', 'medium']),
+  size: oneOf(['small', 'regular']),
   palette: string,
   onClick: func,
   community: shape({

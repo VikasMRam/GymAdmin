@@ -25,7 +25,7 @@ const BaseIcon = styled(Icon)`
   }
 `;
 
-const PositionedMask = styled.div`
+export const PositionedMask = styled.div`
   position: absolute;
   top: 0;
   left: 0;
