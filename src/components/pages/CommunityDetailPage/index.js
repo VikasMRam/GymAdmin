@@ -48,7 +48,7 @@ class HeaderWithState extends React.Component {
   state = {
     menuOpen: false,
   };
-  onMenuIconClick = () => {
+  toggleMenu = () => {
     this.setState({
       menuOpen: !this.state.menuOpen,
     });
@@ -74,7 +74,7 @@ class HeaderWithState extends React.Component {
     return (
       <Header
         menuOpen={this.state.menuOpen}
-        onMenuIconClick={this.onMenuIconClick}
+        onMenuIconClick={this.toggleMenu}
         headerItems={headerItems}
         menuItems={menuItems}
       />
