@@ -105,7 +105,7 @@ const Footer = () => {
   });
   return (
     <FooterWrapper>
-      <SeniorlyWhiteIcon icon="seniorly-white" size="large" />
+      <SeniorlyWhiteIcon icon="seniorly-white" size="xxLarge" />
       <SignUpButton>Sign up for Free</SignUpButton>
       <Groups>{groupComponents}</Groups>
       <StyledHR />
