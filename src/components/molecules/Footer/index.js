@@ -110,10 +110,10 @@ const Footer = () => {
       <Groups>{groupComponents}</Groups>
       <StyledHR />
       <div>
-        <FooterIcon icon="instagram" size="regular" />
-        <FooterIcon icon="linkedin" size="regular" />
-        <FooterIcon icon="google-plus" size="regular" />
-        <FooterIcon icon="facebook" size="regular" />
+        <FooterIcon icon="instagram" size="large" />
+        <FooterIcon icon="linkedin" size="large" />
+        <FooterIcon icon="google-plus" size="large" />
+        <FooterIcon icon="facebook" size="large" />
       </div>
       <TradeMark>© Seniorly 2018</TradeMark>
     </FooterWrapper>
