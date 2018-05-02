@@ -119,7 +119,7 @@ export default class MediaGallery extends React.Component {
     autoHeight: PropTypes.bool,
     currentSlide: PropTypes.number,
     topRightSection: PropTypes.node,
-    bottomLeftSection: PropTypes.node,
+    bottomLeftSection: PropTypes.func,
     transparent: PropTypes.bool,
     onPlayClicked: PropTypes.func,
   };
@@ -310,7 +310,7 @@ export default class MediaGallery extends React.Component {
           />
           {this.props.bottomLeftSection &&
             <BottomLeftWrapper>
-              {this.props.bottomLeftSection}
+              {this.props.bottomLeftSection(this.allMedia[this.state.index])}
             </BottomLeftWrapper>
           }
         </CarouselWrapper>

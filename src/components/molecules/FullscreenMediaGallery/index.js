@@ -33,11 +33,16 @@ const CopyrightWrapper = styled.div`
 const FullscreenMediaGallery = ({
   images, videos, currentSlide, isOpen, onClose, ariaHideApp,
 }) => {
-  const bottomLeftSection = (
-    <CopyrightWrapper>
-      This image maybe subject to copyright
-    </CopyrightWrapper>
-  );
+  const bottomLeftSection = (currentSlide) => {
+    if (currentSlide.type === 'video') {
+      return null;
+    }
+    return (
+      <CopyrightWrapper>
+        This image maybe subject to copyright
+      </CopyrightWrapper>
+    );
+  };
 
   return (
     <Modal
