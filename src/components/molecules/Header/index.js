@@ -33,7 +33,7 @@ const SeniorlyLogo = styled(Logo)`
   }
 `;
 
-const SeniorlyIconMenu = styled.div`
+export const SeniorlyIconMenu = styled.div`
   display: flex;
   padding: 12px ${size('spacing.large')};
   border-right: ${size('border.regular')} solid ${palette('grayscale', 2)};
