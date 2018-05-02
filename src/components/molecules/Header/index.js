@@ -65,8 +65,8 @@ const SearchBar = styled.div`
   width: 100%;
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: 344px;
-    height: 40px;
+    width: ${size('header.searchBar.width')};
+    height: ${size('header.searchBar.height')};
     margin-top: 6px;
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   }
