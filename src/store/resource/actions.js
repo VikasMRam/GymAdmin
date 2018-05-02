@@ -4,6 +4,14 @@ export const RESOURCE_CREATE_REQUEST = 'RESOURCE_CREATE_REQUEST';
 export const RESOURCE_CREATE_SUCCESS = 'RESOURCE_CREATE_SUCCESS';
 export const RESOURCE_CREATE_FAILURE = 'RESOURCE_CREATE_FAILURE';
 
+function getEntitiesForResource(resource) {
+  if (resource == 'search') {
+    return 'community';
+  } else {
+    return resource;
+  }
+}
+
 export const resourceCreateRequest = (resource, data) => ({
   type: RESOURCE_CREATE_REQUEST,
   payload: { data },
@@ -58,7 +66,7 @@ export const resourceListReadSuccess = (resource, list, request, thunk) => ({
     request,
     thunk,
     resource,
-    entities: resource,
+    entities: getEntitiesForResource(resource),
   },
 });
 
