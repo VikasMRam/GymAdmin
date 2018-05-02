@@ -5,14 +5,14 @@ import OwnerStory from '.';
 
 const wrap = (props = {}) => mount(<OwnerStory {...props} />);
 
-const ownerExprience = 'OwnerStory text here';
+const ownerExperience = 'OwnerStory text here';
 
 describe('OwnerStory', () => {
   it('verify ownerExprience is shown', () => {
     const wrapper = wrap({
-      ownerExprience,
+      ownerExperience,
     });
-    expect(wrapper.text()).toContain(ownerExprience);
+    expect(wrapper.text()).toContain(ownerExperience);
   });
 
   it('verify ownerExprience is not shown', () => {

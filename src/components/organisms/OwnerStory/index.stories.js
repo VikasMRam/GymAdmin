@@ -6,8 +6,8 @@ import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rho
 import OwnerStory from '.';
 
 const { propInfo } = RhodaGoldmanPlaza;
-const { ownerExprience } = propInfo;
+const { ownerExperience } = propInfo;
 
 storiesOf('Organisms|OwnerStory', module)
-  .add('default', () => <OwnerStory ownerExprience={ownerExprience} />)
+  .add('default', () => <OwnerStory ownerExprience={ownerExperience} />)
   .add('no experience', () => <OwnerStory />);
