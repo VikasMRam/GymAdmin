@@ -4,17 +4,17 @@ import PropTypes from 'prop-types';
 import { Paragraph } from 'sly/components/atoms';
 
 const OwnerStory = ({
-  ownerExprience,
+  ownerExperience,
 }) => {
   return (
     <Paragraph>
-      {ownerExprience || "No owner's story available"}
+      {ownerExperience || "No owner's story available"}
     </Paragraph>
   );
 };
 
 OwnerStory.propTypes = {
-  ownerExprience: PropTypes.string,
+  ownerExperience: PropTypes.string,
 };
 
 export default OwnerStory;
