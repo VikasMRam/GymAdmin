@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 import Modal from 'sly/components/molecules/Modal';
@@ -14,13 +15,26 @@ const StyledMediaGallery = styled(MediaGallery)`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     .media-carousel-control-prev {
-      margin-left: -${size('spacing.huge')};
+      margin-left: -${size('spacing.xxxLarge')};
     }
     .media-carousel-control-next {
-      margin-right: -${size('spacing.huge')};
+      margin-right: -${size('spacing.xxxLarge')};
     }
   }
 `;
+
+const CopyrightWrapper = styled.div`
+  background: ${palette('black', 0)}80;
+  color: ${palette('grayscale', 2)};
+  font-size: ${size('text.tiny')};
+  padding: ${size('spacing.small')} ${size('spacing.regular')};
+`;
+
+const bottomLeftSection = (
+  <CopyrightWrapper>
+    This image maybe subject to copyright
+  </CopyrightWrapper>
+);
 
 const FullscreenMediaGallery = ({
   images, videos, currentSlide, isOpen, onClose, ariaHideApp,
@@ -37,6 +51,7 @@ const FullscreenMediaGallery = ({
       currentSlide={currentSlide}
       images={images}
       videos={videos}
+      bottomLeftSection={bottomLeftSection}
       showThumbnails
       transparent
     />
