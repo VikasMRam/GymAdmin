@@ -172,7 +172,7 @@ const Header = ({
   return (
     <div>
       <HeaderWrapper>
-        <SeniorlyFullIcon icon="logo" size="regular" />
+        <SeniorlyFullIcon icon="seniorlyLogo" size="xxLarge" />
         <SeniorlyIconMenu onClick={onMenuIconClick}>
           <SeniorlyIcon icon="logo" size="large" />
           {!menuOpen && <MenuArrowIcon icon="arrow-down" size="tiny" />}
