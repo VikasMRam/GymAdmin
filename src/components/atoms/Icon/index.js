@@ -44,7 +44,7 @@ const Icon = ({ icon, size, ...props }) => {
 Icon.propTypes = {
   icon: string.isRequired,
   width: number,
-  size: oneOf(['small', 'regular', 'large', 'xLarge', 'xxLarge']),
+  size: oneOf(['tiny', 'small', 'regular', 'large', 'xLarge', 'xxLarge']),
   palette: string,
   fill: string,
   stroke: string,

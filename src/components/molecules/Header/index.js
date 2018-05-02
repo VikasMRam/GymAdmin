@@ -174,9 +174,9 @@ const Header = ({
       <HeaderWrapper>
         <SeniorlyFullIcon icon="logo" size="regular" />
         <SeniorlyIconMenu onClick={onMenuIconClick}>
-          <SeniorlyIcon icon="seniorlyLogo" size="button" />
-          {!menuOpen && <MenuArrowIcon icon="arrow-down" size="small" />}
-          {menuOpen && <MenuArrowIcon icon="arrow-up" size="small" />}
+          <SeniorlyIcon icon="logo" size="large" />
+          {!menuOpen && <MenuArrowIcon icon="arrow-down" size="tiny" />}
+          {menuOpen && <MenuArrowIcon icon="arrow-up" size="tiny" />}
         </SeniorlyIconMenu>
         <SearchBar>
           <SearchTextBox placeholder="Search by city or zip code" />
@@ -186,7 +186,7 @@ const Header = ({
         </SearchBar>
         <HeaderItems>
           {headerItemComponents}
-          <MenuIcon icon="menu" size="medium" onClick={onMenuIconClick} />
+          <MenuIcon icon="menu" size="regular" onClick={onMenuIconClick} />
         </HeaderItems>
       </HeaderWrapper>
       {menuOpen && <HeaderMenu>{headerMenuItemComponents}</HeaderMenu>}
