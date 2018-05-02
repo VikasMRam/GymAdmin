@@ -75,6 +75,12 @@ const TopRightWrapper = styled.span`
   position: absolute;
   z-index: 1;
 `;
+const BottomLeftWrapper = styled.span`
+  left: ${size('spacing.large')};
+  bottom: ${size('spacing.large')};
+  position: absolute;
+  z-index: 1;
+`;
 const sliderComponentStyle = {
   alignItems: 'center',
 };
@@ -302,7 +308,11 @@ export default class MediaGallery extends React.Component {
             palette="white"
             onClick={this.nextSlide}
           />
-          {this.props.bottomLeftSection}
+          {this.props.bottomLeftSection &&
+            <BottomLeftWrapper>
+              {this.props.bottomLeftSection}
+            </BottomLeftWrapper>
+          }
         </CarouselWrapper>
         {this.props.showThumbnails &&
           <ThumbnailScroller
