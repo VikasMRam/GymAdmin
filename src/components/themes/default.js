@@ -55,6 +55,7 @@ theme.sizes = {
     regular:      '2.500rem', // 40px
     large:        '3.000rem', // 48px
     xLarge:       '3.250rem', // 52px
+    textarea:      '7.500rem', // 120px
   },
 
   slider: {
