@@ -47,7 +47,7 @@ export default class CommunityDetail extends Component {
       communityDescription,
       staffDescription,
       residentDescription,
-      ownerExprience,
+      ownerExperience,
     } = propInfo;
     const {
       communityHighlights,
@@ -127,7 +127,7 @@ export default class CommunityDetail extends Component {
           />
         </CollapsibleSection>
         <CollapsibleSection title="Owner's Story">
-          <OwnerStory ownerExprience={ownerExprience} />
+          <OwnerStory ownerExperience={ownerExperience} />
         </CollapsibleSection>
         <CollapsibleSection title="Reviews">
           <PropertyReviews
