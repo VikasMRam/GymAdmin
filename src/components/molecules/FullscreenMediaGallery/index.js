@@ -30,33 +30,35 @@ const CopyrightWrapper = styled.div`
   padding: ${size('spacing.small')} ${size('spacing.regular')};
 `;
 
-const bottomLeftSection = (
-  <CopyrightWrapper>
-    This image maybe subject to copyright
-  </CopyrightWrapper>
-);
-
 const FullscreenMediaGallery = ({
   images, videos, currentSlide, isOpen, onClose, ariaHideApp,
-}) => (
-  <Modal
-    isOpen={isOpen}
-    layout="gallery"
-    closeable
-    transparent
-    onClose={onClose}
-    ariaHideApp={ariaHideApp}
-  >
-    <StyledMediaGallery
-      currentSlide={currentSlide}
-      images={images}
-      videos={videos}
-      bottomLeftSection={bottomLeftSection}
-      showThumbnails
+}) => {
+  const bottomLeftSection = (
+    <CopyrightWrapper>
+      This image maybe subject to copyright
+    </CopyrightWrapper>
+  );
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      layout="gallery"
+      closeable
       transparent
-    />
-  </Modal>
-);
+      onClose={onClose}
+      ariaHideApp={ariaHideApp}
+    >
+      <StyledMediaGallery
+        currentSlide={currentSlide}
+        images={images}
+        videos={videos}
+        bottomLeftSection={bottomLeftSection}
+        showThumbnails
+        transparent
+      />
+    </Modal>
+  );
+};
 
 FullscreenMediaGallery.propTypes = {
   isOpen: PropTypes.bool,
