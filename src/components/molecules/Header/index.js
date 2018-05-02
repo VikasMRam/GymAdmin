@@ -7,6 +7,7 @@ import { size } from 'sly/components/themes';
 import Icon from 'sly/components/atoms/Icon';
 import Input from 'sly/components/atoms/Input';
 import Hr from 'sly/components/atoms/Hr';
+import Logo from 'sly/components/atoms/Logo';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -23,13 +24,11 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const SeniorlyFullIcon = styled(Icon)`
+const SeniorlyLogo = styled(Logo)`
   display: none;
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     display: block;
-    width: 87px;
-    height: 52px;
     margin-right: ${size('spacing.large')};
   }
 `;
@@ -172,7 +171,7 @@ const Header = ({
   return (
     <div>
       <HeaderWrapper>
-        <SeniorlyFullIcon icon="seniorlyLogo" size="xxLarge" />
+        <SeniorlyLogo />
         <SeniorlyIconMenu onClick={onMenuIconClick}>
           <SeniorlyIcon icon="logo" size="large" />
           {!menuOpen && <MenuArrowIcon icon="arrow-down" size="tiny" />}
