@@ -14,7 +14,6 @@ const getInputType = type => (type === 'email' ? 'text' : type);
 const getInputComponent = (type) => {
   switch (type) {
     case 'multiplechoice':
-    case 'multipletags':
       return MultipleChoice;
     case 'communitychoice':
       return CommunityChoice;

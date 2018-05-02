@@ -19,11 +19,13 @@ describe('MultipleChoice', () => {
     expect(wrapper.children()).toHaveLength(2);
     const first = wrapper.childAt(0);
     const second = wrapper.childAt(1); 
+    expect(first.dive().prop('children')).toEqual('First');
     expect(first.dive().type()).toBe(Button);
+    expect(second.dive().prop('children')).toEqual('Second');
     expect(second.dive().type()).toBe(Button);
   });
 
-  it('should make buttons from options', () => {
+  it('should send the right value onChange', () => {
     const onChange = jest.fn();
     const wrapper = wrap({ options, onChange, value: ['first'] });
     expect(wrapper.children()).toHaveLength(2);
