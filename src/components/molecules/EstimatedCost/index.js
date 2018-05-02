@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import numeral from 'numeral';
 
 import { size } from 'sly/components/themes';
-import { Button, Block, Box } from 'sly/components/atoms';
+import { Button, Block, Box, Heading } from 'sly/components/atoms';
 
 const StyledBox = styled(Box)`
   display: flex;
@@ -20,9 +20,6 @@ const EstimatedCostWrapper = styled.div`
     margin-bottom: 0;
     margin-right: ${size('spacing.regular')};
   }
-`;
-const SpacingBottomRegularWrapper = styled.div`
-  margin-bottom: ${size('spacing.regular')};
 `;
 
 const percentageOf = (num, percentage) => {
@@ -42,9 +39,9 @@ const EstimatedCost = ({
   return (
     <StyledBox>
       <EstimatedCostWrapper>
-        <SpacingBottomRegularWrapper>
+        <Heading level="subtitle">
           Estimated cost from ${numeral(from).format('0,0')} to ${numeral(to).format('0,0')} per month*
-        </SpacingBottomRegularWrapper>
+        </Heading>
         <Block size="caption">
           *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area, and the amenities and care services provided at {communityName}.
         </Block>
