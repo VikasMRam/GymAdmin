@@ -5,6 +5,7 @@ const theme = {};
 theme.palette = {
   slate:     ['#384c57'],
   white:     ['#fff'],
+  black:     ['#000000'],
   primary:   ['#2f8fcb', '#2483be', '#63abd8'],
   secondary: ['#7ccdcc', '#65c0bf', '#b0e1e0', '#f4ffff'],
   grayscale: ['#8f9ca4', '#9ca8af', '#c5d0d5', '#f2f6f7', '#68747a'],
@@ -126,6 +127,7 @@ theme.sizes = {
     regular:      '1px', // 1px
     large:        '2px', // 2px
     xLarge:       '3px', // 3px
+    xxLarge:      '4px', // 4px
   },
 
   spacing: {
@@ -150,6 +152,7 @@ theme.sizes = {
   },
 
   text: {
+    tiny:         '0.750rem', // 12px
     caption:      '0.875rem', // 14px
     body:         '1.000rem', // 16px
     subtitle:     '1.125rem', // 18px
