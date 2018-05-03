@@ -128,7 +128,7 @@ const Value = styled.span`
 
 class Slider extends Component {
   state = {
-    value: this.props.defaultValue,
+    value: this.props.value,
   };
 
   onChange = ({ target }) => {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { func, object } from 'prop-types';
 
-import { SIMILAR_COMMUNITIES } from 'sly/services/api/actions';
+import { REQUEST_CALLBACK } from 'sly/services/api/actions';
 
 import {
   resourceCreateRequest,
@@ -36,7 +36,7 @@ class SimilarCommunitiesFormContainer extends Component {
     const { submit, user, next } = this.props;
     const { similar_communities, ...rest } = data;
     submit({
-      action: SIMILAR_COMMUNITIES,
+      action: REQUEST_CALLBACK,
       value: {
         user,
         propertyIds: similar_communities,

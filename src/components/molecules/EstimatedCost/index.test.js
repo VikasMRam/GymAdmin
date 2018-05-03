@@ -10,7 +10,7 @@ const price = 200;
 const priceFrom = 180;
 const priceTo = 220;
 const communityName = 'testcommunityName';
-const onGetDetailedPricingClickedSpy = sinon.spy();
+const onGetDetailedPricingClickedSpy = jest.fn();
 
 describe('EstimatedCost', () => {
   it('verify correct percentage', () => {
@@ -26,6 +26,6 @@ describe('EstimatedCost', () => {
   it('verify onGetDetailedPricingClicked callback', () => {
     const wrapper = wrap({ price, communityName, onGetDetailedPricingClicked: onGetDetailedPricingClickedSpy });
     wrapper.find('Button').simulate('click');
-    expect(onGetDetailedPricingClickedSpy.getCalls()).toHaveLength(1);
+    expect(onGetDetailedPricingClickedSpy).toHaveBeenCalled();
   });
 });

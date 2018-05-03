@@ -12,7 +12,7 @@ const styles = css`
   margin: 0;
   font-size: ${size('text', 'body')};
   padding: ${size('padding', 'regular')};
-  height: ${ifProp({ type: 'textarea' }, 'auto', size('element.regular'))};
+  height: ${ifProp({ type: 'textarea' }, size('element.textarea'), size('element.regular'))};
   color: ${ifProp('invalid', palette('danger', 0), palette('grayscale', 0))};
   background-color: ${palette('whites', 2)};
   border: 1px solid
@@ -75,3 +75,4 @@ Input.defaultProps = {
 };
 
 export default Input;
+
