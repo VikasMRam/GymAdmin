@@ -45,6 +45,22 @@ theme.sizes = {
     gallery:      '54.75rem', // 876px
   },
 
+  header: {
+    searchBar: {
+      width:            '21.5rem',  // 344px
+      height:           '2.5rem',   // 40px
+    },
+    menu: {
+      width:            '16.5rem',  // 264px
+      position: {
+        top: {
+          mobile:      '4.8125rem', // 77px
+          laptopLarge: '3.4375rem', // 55px
+        },
+      },
+    },
+  },
+
   collapsible: {
     small:        '10.00rem', // 160px
     regular:      '20.00rem', // 320px
