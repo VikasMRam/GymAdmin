@@ -14,7 +14,27 @@ const FooterWrapper = styled.div`
 const FooterTopWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: 16px 0;
+
+  margin: 0 auto;
+  width: 100%;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.mainColumn')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    width: calc(
+      ${size('layout.mainColumn')} + ${size('layout.sideColumn')} +
+        ${size('spacing.xLarge')}
+    );
+    padding-right: ${size('layout.sideColumn')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    width: ${size('layout.laptopLarge')};
+    padding-right: 0;
+  }
 `;
 
 const SeniorlyWhiteIcon = styled(Icon)`
@@ -23,6 +43,22 @@ const SeniorlyWhiteIcon = styled(Icon)`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     // To Center the Icon
     margin-left: 45%;
+  }
+`;
+
+const SeniorlyWhiteIconLaptopLargeDiv = styled.div`
+  display: none;
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    display: block;
+  }
+`;
+
+const SeniorlyWhiteIconLaptopDiv = styled.div`
+  display: block;
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    display: none;
   }
 `;
 
@@ -42,6 +78,11 @@ const SignUpButton = styled(Button)`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: block;
     margin-right: 32px;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    margin-right: 0;
+    float: right;
   }
 `;
 
@@ -81,8 +122,10 @@ const GroupDiv = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: 25%;
+  }
 
-    padding-left: 32px;
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    width: 20%;
   }
 `;
 
@@ -115,9 +158,27 @@ const FooterBottomWrapper = styled.div`
   flex-direction: column;
   padding: 16px;
 
+  margin: 0 auto;
+  width: 100%;
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.mainColumn')};
+
     flex-direction: row;
     padding: 8px;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    width: calc(
+      ${size('layout.mainColumn')} + ${size('layout.sideColumn')} +
+        ${size('spacing.xLarge')}
+    );
+    padding-right: ${size('layout.sideColumn')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    width: ${size('layout.laptopLarge')};
+    padding-right: 0;
   }
 `;
 
@@ -128,6 +189,10 @@ const SocialIcons = styled.div`
     display: flex;
     flex-direction: row-reverse;
     margin-right: 28px;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    margin-right: 0;
   }
 `;
 
@@ -148,6 +213,10 @@ const TradeMark = styled.a`
     margin-top: 8px;
     margin-bottom: 8px;
     margin-left: 28px;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    margin-left: 0;
   }
 `;
 
@@ -170,11 +239,20 @@ const Footer = () => {
   return (
     <FooterWrapper>
       <FooterTopWrapper>
-        <SeniorlyWhiteIcon icon="seniorly-white" size="xxLarge" />
+        <SeniorlyWhiteIconLaptopDiv>
+          <SeniorlyWhiteIcon icon="seniorly-white" size="xxLarge" />
+        </SeniorlyWhiteIconLaptopDiv>
         <MobileSignUpButton>Sign up for Free</MobileSignUpButton>
         <Groups>
+          <SeniorlyWhiteIconLaptopLargeDiv>
+            <GroupDiv>
+              <SeniorlyWhiteIcon icon="seniorly-white" size="xxLarge" />
+            </GroupDiv>
+          </SeniorlyWhiteIconLaptopLargeDiv>
           {groupComponents}
-          <SignUpButton>Sign up for Free</SignUpButton>
+          <GroupDiv>
+            <SignUpButton>Sign up for Free</SignUpButton>
+          </GroupDiv>
         </Groups>
       </FooterTopWrapper>
       <StyledHR />
