@@ -72,7 +72,6 @@ export default class CollapsibleBlock extends Component {
             <ReadMore
               onClick={this.toggle}
               transparent
-              ghost
             >
               {collapsed ? 'Read more' : 'Read less'}
             </ReadMore>

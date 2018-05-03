@@ -87,6 +87,7 @@ const styles = css`
   padding: 0 1em;
   text-transform: ${ifProp({ kind: 'label' }, 'uppercase', 'none')};
   text-decoration: none;
+  font-weight: ${ifProp({ kind: 'jumbo' }, 'bold', 'normal')};
   white-space: nowrap;
   font-size: ${fontSize};
   border: ${size('border.regular')} solid ${borderColor};
@@ -98,6 +99,10 @@ const styles = css`
   background-color: ${backgroundColor};
   color: ${foregroundColor};
   user-select: none;
+
+  ${ifProp({ kind: 'jumbo' }, css`
+    width: 100%; 
+  `)}
 
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
 

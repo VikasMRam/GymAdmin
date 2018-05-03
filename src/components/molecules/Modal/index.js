@@ -49,9 +49,10 @@ const ModalBox = styled(ReactModal)`
     transform: translate(-50%, 100%);
   }
 `;
+
 const ModalContext = styled.article`
   background-color: ${ifProp('transparent', 'transparent', palette('white', 0))};
-  border-radius: ${size('spacing.tiny')};
+  border-radius: ${size('spacing.small')};
   color: ${ifProp('transparent', palette('white', 0), palette('slate', 0))};
   position: absolute;
   display: flex;
@@ -105,7 +106,7 @@ const StyledReactModal = styled(({ className, ...props }) => (
 const CloseButton = styled(IconButton)`
   ${switchProp('layout', {
     double: css`@media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-      margin-bottom: ${size('spacing.xLarge')};
+      margin-bottom: ${size('spacing.xxLarge')};
     }`,
   })}
 `;
