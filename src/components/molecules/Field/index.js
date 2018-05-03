@@ -13,6 +13,7 @@ import Slider from 'sly/components/molecules/Slider';
 const getInputType = type => (type === 'email' ? 'text' : type);
 const getInputComponent = (type) => {
   switch (type) {
+    case 'singlechoice':
     case 'multiplechoice':
       return MultipleChoice;
     case 'communitychoice':
@@ -88,8 +89,8 @@ Field.propTypes = {
     'textarea',
     'select',
     'communitychoice',
+    'singlechoice',
     'multiplechoice',
-    'multipletags',
     'slider',
     'text',
     'email',
