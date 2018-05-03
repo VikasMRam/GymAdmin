@@ -3,7 +3,6 @@ import { string } from 'prop-types';
 
 import  withServerState from 'sly/store/withServerState';
 
-import getSearchUrl from 'sly/services/helpers/url';
 import { resourceListReadRequest } from "sly/store/resource/actions";
 import { getList } from "sly/store/selectors";
 import CommunitySearchPage from "sly/components/pages/CommunitySearchPage";
@@ -17,7 +16,8 @@ class CommunitySearchPageContainer extends Component {
   };
 
   render() {
-    const { city, state,toc, error, communityList } = this.props;
+    const {  searchParams, error, communityList } = this.props;
+    console.log("Seeing filters seen here",searchParams);
     //TODO Add Error Page
     if (error) {
       return (
@@ -27,26 +27,47 @@ class CommunitySearchPageContainer extends Component {
       );
     }
 
-
-    return <CommunitySearchPage communityList={communityList}/> ;
-
-
+    return <CommunitySearchPage searchParams communityList={communityList}/> ;
 
   }
 }
 
-const mapStateToProps = (state, { match }) => {
-  return {
-    city: match.params.city,
-    state: match.params.state,
-    toc: match.params.careType,
-    communityList: getList(state,'search')
+function parseQueryStringToFilters(qs) {
+  let ret = Object.create(null);
+  let input = qs;
+  input = input.trim().replace(/^[?#&]/, '');
 
+  if (!input) {
+    return ret;
+  }
+
+  for (const param of input.split('&')) {
+    let [key, value] = param.replace(/\+/g, ' ').split('=');
+    if (['size','budget','sort'].indexOf(key) > -1) {
+      // Missing `=` should be `null`:
+      // http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
+      value = value === undefined ? null : decodeURIComponent(value);
+      ret[key] = value;
+    }
+  }
+  return ret;
+
+}
+
+const mapStateToProps = (state, { match, location }) => {
+  //Maybe i can read this from just the response? and not have to repeat myself?
+  let searchParams = {};
+  Object.assign(searchParams,match.params,parseQueryStringToFilters(location.search))
+  return {
+    searchParams,
+    communityList: getList(state,'searchResource')
   };
 };
 
-const fetchData = (dispatch,  { match } ) =>{
-  return dispatch(resourceListReadRequest('search', getSearchUrl(match.params)))
+const fetchData = (dispatch,  { match, location }) =>{
+  let searchParams = {};
+  Object.assign(searchParams,match.params,parseQueryStringToFilters(location.search))
+  return dispatch(resourceListReadRequest('searchResource', searchParams))
 };
 
 const handleError = err => {

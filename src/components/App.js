@@ -35,7 +35,7 @@ export default class App extends Component {
           <Switch>
             <Route path="/community/:communitySlug" component={CommunityDetailPageContainer}  />
             <Route
-              path={`/:careType(${careTypes})/:state/:city`}
+              path={`/:toc(${careTypes})/:state/:city`}
               component={CommunitySearchPageContainer}
             />
           </Switch>

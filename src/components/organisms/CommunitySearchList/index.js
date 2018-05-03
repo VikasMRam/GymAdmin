@@ -4,6 +4,7 @@ import { object, arrayOf } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
+import Link from "sly/components/atoms/Link";
 
 const SimilarCommunityTileDiv = styled.div`
   padding-bottom: ${size('spacing.large')};
@@ -33,13 +34,42 @@ const SectionWrapper = styled.div`
 `;
 
 
+function getFullCommunity({
+  name,
+  numRatings,
+  ratingsValue,
+  description,
+  addressString,
+  imageUrl,
+  startingPrice,
+  webViewInfo
+  }) {
+
+  return {
+    name,
+    mainImage: imageUrl,
+    startingRate: startingPrice,
+    propInfo:{
+      communityDescription: description,
+      typeCare: webViewInfo.firstLineValue.split(',')
+    } ,
+    propRatings: {
+      reviewsValue: ratingsValue,
+      numReviews: numRatings
+    }
+  };
+}
+
 
 const CommunitySearchList = ({ communityList }) => {
+
   const components = communityList.map((similarProperty) => {
     return (
-      <SimilarCommunityTileDiv key={similarProperty.id}>
-        <SimilarCommunityTile similarProperty={similarProperty} />
-      </SimilarCommunityTileDiv>
+      <Link to={similarProperty.url}>
+        <SimilarCommunityTileDiv key={similarProperty.id}>
+          <SimilarCommunityTile similarProperty={getFullCommunity(similarProperty)} />
+        </SimilarCommunityTileDiv>
+      </Link>
     );
   });
   return (
