@@ -20,7 +20,7 @@ const CommunityDetails = ({
       )}
       {staffDescription && (
         <article>
-          <Heading size="subtitle">
+          <Heading level="subtitle">
             About the Staff at {communityName}
           </Heading>
           <Paragraph>{staffDescription}</Paragraph>
@@ -28,7 +28,7 @@ const CommunityDetails = ({
       )}
       {residentDescription && (
         <article>
-          <Heading size="subtitle">
+          <Heading level="subtitle">
             About the Residents at {communityName}
           </Heading>
           <Paragraph>{residentDescription}</Paragraph>

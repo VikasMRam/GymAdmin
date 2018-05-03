@@ -35,13 +35,27 @@ const overlayStyles = css`
 `;
 
 const ModalBox = styled(ReactModal)`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
+  background-color: ${ifProp('transparent', 'transparent', palette('white', 0))};
+  outline: none;
+
+  > article {
+    transition: transform 250ms ease-in-out;
+    transform: translate(-50%, 100%);
+  }
+  &[class*='after-open'] > article {
+    transform: translate(-50%, -50%);
+  }
+  &[class*='before-close'] > article {
+    transform: translate(-50%, 100%);
+  }
+`;
+const ModalContext = styled.article`
   background-color: ${ifProp('transparent', 'transparent', palette('white', 0))};
   border-radius: ${size('spacing.tiny')};
   color: ${ifProp('transparent', palette('white', 0), palette('slate', 0))};
-  transition: transform 250ms ease-in-out;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
   outline: none;
   padding: ${size('spacing.xxxLarge')};
   width: 100%;
@@ -52,14 +66,7 @@ const ModalBox = styled(ReactModal)`
   right: auto;
   bottom: auto;
   margin: 1rem calc(-50% + 1rem) 1rem 1rem;
-  transform: translate(-50%, 100%);
   max-height: calc(100% - 1rem);
-  &[class*='after-open'] {
-    transform: translate(-50%, -50%);
-  }
-  &[class*='before-close'] {
-    transform: translate(-50%, 100%);
-  }
 
   ${switchProp('layout', {
     single: css`
@@ -165,12 +172,6 @@ export default class Modal extends React.Component {
 
     return (
       <div>
-        {(closeable || heading) && (layout === 'gallery') && (
-          <Heading layout={layout}>
-            {closeable && iconClose}
-            {heading}
-          </Heading>
-        )}
         <StyledReactModal
           onRequestClose={onClose}
           layout={layout}
@@ -178,15 +179,25 @@ export default class Modal extends React.Component {
           onClose={onClose}
           {...this.props}
         >
-          {(closeable || heading) && (layout !== 'gallery') && (
+          {(closeable || heading) && (layout === 'gallery') && (
             <Heading layout={layout}>
               {closeable && iconClose}
               {heading}
             </Heading>
           )}
-          <Content layout={layout}>
-            {children}
-          </Content>
+          {/* apply centering css positioning only to modal content as in gallery
+              layout the close button should be fixed at screen top left corner */}
+          <ModalContext layout={layout} transparent={transparent}>
+            {(closeable || heading) && (layout !== 'gallery') && (
+              <Heading layout={layout}>
+                {closeable && iconClose}
+                {heading}
+              </Heading>
+            )}
+            <Content layout={layout}>
+              {children}
+            </Content>
+          </ModalContext>
         </StyledReactModal>
       </div>
     );

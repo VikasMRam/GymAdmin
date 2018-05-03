@@ -102,7 +102,7 @@ export default class CommunityMediaGallery extends React.Component {
         <StyledButton ghost palette="slate"><Icon icon="share" size="regular" palette="slate" /></StyledButton>
       </span>
     );
-    const bottomLeftSection = (
+    const bottomLeftSection = () => (
       <span>
         <MorePicsTablet ghost palette="slate" transparent={false} onClick={this.toggleModal}>See {this.sdGalleryImages.length - 1} more pictures</MorePicsTablet>
         <MorePicsMobile ghost palette="slate" transparent={false} onClick={this.toggleModal}>View pictures</MorePicsMobile>
