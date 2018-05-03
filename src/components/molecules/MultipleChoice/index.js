@@ -104,8 +104,6 @@ export default class MultipleChoice extends Component {
       ...props
     } = this.props;
 
-    console.log('props', this.props);
-
     return (
       <Wrapper onBlur={this.onBlur} {...props}>
         {options &&

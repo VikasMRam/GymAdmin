@@ -33,7 +33,7 @@ const ConversionForm = ({ handleSubmit, submitting }) => (
       placeholder="925-555-5555"
       component={ReduxField}
     />
-    <StyledButton type="submit" disabled={submitting}>
+    <StyledButton type="submit" kind="jumbo" disabled={submitting}>
       Contact
     </StyledButton>
 

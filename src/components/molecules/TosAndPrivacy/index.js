@@ -12,3 +12,4 @@ const TosAndPrivacy = () => (
 );
 
 export default TosAndPrivacy;
+
