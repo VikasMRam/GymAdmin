@@ -24,7 +24,7 @@ const HeaderWrapper = styled.div`
   }
 `;
 
-const SeniorlyLogo = styled(Logo)`
+const SeniorlyLogoWrapper = styled.div`
   display: none;
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
@@ -171,7 +171,9 @@ const Header = ({
   return (
     <div>
       <HeaderWrapper>
-        <SeniorlyLogo />
+        <SeniorlyLogoWrapper>
+          <Logo />
+        </SeniorlyLogoWrapper>
         <SeniorlyIconMenu onClick={onMenuIconClick}>
           <SeniorlyIcon icon="logo" size="large" />
           {!menuOpen && <MenuArrowIcon icon="arrow-down" size="tiny" />}
