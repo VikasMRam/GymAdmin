@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
 import { bool, string, shape, number, func, oneOf } from 'prop-types';
 
+import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
@@ -51,7 +52,7 @@ const Info = styled.div`
   margin: ${size('spacing.large')};
 `;
 
-export const StyledCheckbox = styled(Checkbox)`
+const StyledCheckbox = styled(Checkbox)`
   position: absolute;
   top: ${size('spacing.small')};
   right: ${size('spacing.small')};
@@ -64,7 +65,7 @@ const StyledHeading = styled(Heading)`
   text-overflow: ellipsis;
 `;
 
-const CommunityTilePriceRatingDiv = styled.div`
+const Data = styled.div`
   display: flex;
   font-size: ${size('spacing.large')};
 `;
@@ -82,70 +83,62 @@ const Deskrate = styled.span`
   }
 `;
 
-const CommunityTileyRatingDiv = styled.div`
+const ReviewsWrapper = styled.div`
   display: flex;
   margin-left: ${size('spacing.xLarge')};
 `;
 
-const CommunityTileNumberReviewDiv = styled.div`
+const NumberReviews = styled.div`
   margin-left: ${size('spacing.regular')};
 `;
 
-const CommunityTile = ({
+const CommunityChoiceTile = ({
   size,
   palette,
   community,
-  selectable,
   selected,
   onClick,
   ...props
 }) => {
   const {
-    name, uri, picture, rating, startingRate, numReviews,
+    name, uri, picture, startingRate, propRatings,
   } = community;
+
+  const { numReviews, reviewsValue } = propRatings; 
+
   return (
     <Wrapper selected={selected} onClick={onClick}>
       <Image src={picture || defaultImage} />
-      {selectable && <StyledCheckbox checked={selected} />}
+      <StyledCheckbox checked={selected} />
       <Info>
         <StyledHeading level="subtitle">{name}</StyledHeading>
-        <CommunityTilePriceRatingDiv>
+        <Data>
           <div>
             ${startingRate}
             <Mobrate>/mo</Mobrate> 
             <Deskrate> per month</Deskrate>
           </div>
-          <CommunityTileyRatingDiv>
-            <Rating value={rating} size={size} palette={palette} />
-            <CommunityTileNumberReviewDiv>
+          <ReviewsWrapper>
+            <Rating value={reviewsValue} size="small" />
+            <NumberReviews>
               {numReviews}
-            </CommunityTileNumberReviewDiv>
-          </CommunityTileyRatingDiv>
-        </CommunityTilePriceRatingDiv>
+            </NumberReviews>
+          </ReviewsWrapper>
+        </Data>
       </Info>
     </Wrapper>
   );
 };
 
-CommunityTile.propTypes = {
-  selectable: bool,
-  selected: bool,
-  size: oneOf(['small', 'regular']),
-  palette: string,
+CommunityChoiceTile.propTypes = {
+  selected: bool.isRequired,
   onClick: func,
-  community: shape({
-    name: string.isRequired,
-    uri: string.isRequired,
-    picture: string.isRequired,
-    rating: number,
-    startingRate: number,
-    numReviews: number,
-  }),
+  community: communityPropType,
 };
 
-CommunityTile.defaultProps = {
-  palette: 'secondary',
-  size: 'small',
+CommunityChoiceTile.defaultProps = {
+  selected: false,
 };
 
-export default CommunityTile;
+
+export default CommunityChoiceTile;
