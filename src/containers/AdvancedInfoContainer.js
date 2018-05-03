@@ -42,7 +42,7 @@ class AdvancedInfoFormContainer extends Component {
       value: {
         user: { ...rest },
         message,
-        propertyIds: [community.slug],
+        propertyIds: [community.id],
       }
     }).then(next);
   }

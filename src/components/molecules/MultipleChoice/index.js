@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import {
   oneOf,
   oneOfType,
@@ -7,44 +8,82 @@ import {
   string,
   number,
   func,
+  bool,
 } from 'prop-types';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { font, palette } from 'styled-theme';
 import { ifProp, prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import { Button } from 'sly/components/atoms';
 
-const kind = type => {
-  switch(type) {
-    case 'multipletags': return 'label';
-    default: return 'regular';
+const Wrapper = styled.div`
+  display: flex;
+  button {
+    flex: 1;
   }
-};
 
-const StyledButton = styled(Button)`
-  margin-right: ${size('spacing.small')};
-  &:last-child {
-    margin-right: none;
+  flex-wrap: wrap;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) { 
+    // hack % in AdvancedInfoForm
+    ${ifProp('width', css`
+      width: ${prop('width')};
+    `)};
   }
 `;
 
+const StyledButton = styled(Button)`
+  + Button {
+    margin-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  :not(:last-child) {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+`;
+
+const isSelected = (type, value, option) => (type === 'singlechoice')
+  ? value === option
+  : value.includes(option);
+
+
 export default class MultipleChoice extends Component {
+  // TODO: INvalid
   static propTypes = {
     options: arrayOf(shape({
       value: oneOfType([string, number]).isRequired,
       label: string,
     })).isRequired,
-    value: arrayOf(oneOfType([string, number])).isRequired,
+    invalid: bool,
+    value: oneOfType([
+      oneOfType([string, number]),
+      arrayOf(oneOfType([string, number])),
+    ]).isRequired,
+    type: oneOf(['multiplechoice', 'singlechoice']),
+    width: string, // hack % in AdvancedInfoForm
   };
 
   static defaultProps = {
     value: [],
   };
 
+  onBlur = () => {
+    const { onBlur, value } = this.props;
+    onBlur(value);
+  };
+
   onClick(option) {
-    const { value, onChange } = this.props;
+    const { value, type, onChange } = this.props;
+
+    if (type === 'singlechoice') {
+      return onChange(option);
+    }
+
     const index = value.indexOf(option);
     if (index === -1) {
       onChange([...value, option]);
@@ -56,23 +95,29 @@ export default class MultipleChoice extends Component {
   }
 
   render() {
-    const { options, value, type, ...props } = this.props;
+    const {
+      options,
+      value,
+      type,
+      onBlur,
+      invalid,
+      ...props
+    } = this.props;
+
     return (
-      <div {...props}>
+      <Wrapper onBlur={this.onBlur} {...props}>
         {options &&
           options.map(({ value: option, label, ...props }, i) => (
             <StyledButton
               selectable
-              selected={value.includes(option)}
+              selected={isSelected(type, value, option)}
               key={option+i}
-              kind={kind(type)}
               onClick={() => this.onClick(option)}
-              {...props}
             >
               {label}
             </StyledButton>
           ))}
-      </div>
+      </Wrapper>
     );
   }
 }

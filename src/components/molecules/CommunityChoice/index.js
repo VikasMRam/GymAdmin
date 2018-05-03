@@ -15,7 +15,7 @@ import { font, palette } from 'styled-theme';
 import { ifProp, prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import CommunityTile from 'sly/components/molecules/CommunityTile';
+import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
 
 export default class CommunityChoice extends Component {
   static propTypes = {
@@ -50,9 +50,8 @@ export default class CommunityChoice extends Component {
       <div {...props}>
         {options &&
           options.map(({ value: option, label, ...props }, i) => (
-            <CommunityTile
+            <CommunityChoiceTile
               key={option+i}
-              selectable
               selected={value.includes(option)}
               onClick={() => this.onClick(option)}
               {...props}

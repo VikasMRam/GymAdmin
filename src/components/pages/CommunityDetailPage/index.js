@@ -5,6 +5,7 @@ import { string, object } from 'prop-types';
 import { size } from 'sly/components/themes';
 import CommunityDetail from 'sly/components/organisms/CommunityDetail';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
+import Header from 'sly/components/molecules/Header';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -43,12 +44,53 @@ const Column = styled(ConciergeContainer)`
   }
 `;
 
+class HeaderWithState extends React.Component {
+  state = {
+    menuOpen: false,
+  };
+  toggleMenu = () => {
+    this.setState({
+      menuOpen: !this.state.menuOpen,
+    });
+  };
+  render() {
+    const headerItems = [
+      { name: 'List on Seniorly', url: '#' },
+      { name: 'Help Center', url: '#' },
+      { name: 'Saved', url: '#' },
+      { name: 'Sign Up', url: '#' },
+      { name: 'Login', url: '#' },
+    ];
+    const menuItems = [
+      { name: 'Assisted Living', url: '#' },
+      { name: "Alzheimer's Care", url: '#' },
+      { name: 'Respite Care', url: '#' },
+      { name: 'About Us', url: '#' },
+      { name: 'Contact', url: '#' },
+      { name: 'Careers', url: '#' },
+      { name: 'List on Seniorly', url: '#' },
+      { name: 'Sign Out', url: '#' },
+    ];
+    return (
+      <Header
+        menuOpen={this.state.menuOpen}
+        onMenuIconClick={this.toggleMenu}
+        headerItems={headerItems}
+        menuItems={menuItems}
+      />
+    );
+  }
+}
+
 const CommunityDetailPage = ({ community, userActions }) => {
   return (
-    <PageWrapper>
-      <Main key="main" community={community} />
-      <Column key="column" community={community} userActions={userActions} />
-    </PageWrapper>
+    <div>
+      <HeaderWithState />
+      <PageWrapper>
+        <Main key="main" community={community} />
+        <Column key="column" community={community} userActions={userActions} />
+      </PageWrapper>
+    </div>
   );
 };
 

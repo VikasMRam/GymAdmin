@@ -34,7 +34,7 @@ const Icon = ({ icon, size, ...props }) => {
     svg = require(`!raw-loader!./icons/${icon}-${size}.svg`);
   } catch (e) {
     console.error('Icon not found:', `${icon}-${size}`);
-    svg = "<span>x</span>";
+    svg = '<span>x</span>';
   }
   return (
     <Wrapper size={size} {...props} dangerouslySetInnerHTML={{ __html: svg }} />
@@ -44,7 +44,7 @@ const Icon = ({ icon, size, ...props }) => {
 Icon.propTypes = {
   icon: string.isRequired,
   width: number,
-  size: oneOf(['small', 'regular', 'large', 'xLarge', 'xxLarge']),
+  size: oneOf(['tiny', 'small', 'regular', 'large', 'xLarge', 'xxLarge']),
   palette: string,
   fill: string,
   stroke: string,

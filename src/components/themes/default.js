@@ -5,6 +5,7 @@ const theme = {};
 theme.palette = {
   slate:     ['#384c57'],
   white:     ['#fff'],
+  black:     ['#000000'],
   primary:   ['#2f8fcb', '#2483be', '#63abd8'],
   secondary: ['#7ccdcc', '#65c0bf', '#b0e1e0', '#f4ffff'],
   grayscale: ['#8f9ca4', '#9ca8af', '#c5d0d5', '#f2f6f7', '#68747a'],
@@ -44,6 +45,22 @@ theme.sizes = {
     gallery:      '54.75rem', // 876px
   },
 
+  header: {
+    searchBar: {
+      width:            '21.5rem',  // 344px
+      height:           '2.5rem',   // 40px
+    },
+    menu: {
+      width:            '16.5rem',  // 264px
+      position: {
+        top: {
+          mobile:      '4.8125rem', // 77px
+          laptopLarge: '3.4375rem', // 55px
+        },
+      },
+    },
+  },
+
   collapsible: {
     small:        '10.00rem', // 160px
     regular:      '20.00rem', // 320px
@@ -55,6 +72,7 @@ theme.sizes = {
     regular:      '2.500rem', // 40px
     large:        '3.000rem', // 48px
     xLarge:       '3.250rem', // 52px
+    textarea:      '7.500rem', // 120px
   },
 
   slider: {
@@ -126,6 +144,7 @@ theme.sizes = {
     regular:      '1px', // 1px
     large:        '2px', // 2px
     xLarge:       '3px', // 3px
+    xxLarge:      '4px', // 4px
   },
 
   spacing: {
@@ -150,6 +169,7 @@ theme.sizes = {
   },
 
   text: {
+    tiny:         '0.750rem', // 12px
     caption:      '0.875rem', // 14px
     body:         '1.000rem', // 16px
     subtitle:     '1.125rem', // 18px

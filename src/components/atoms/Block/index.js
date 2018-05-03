@@ -12,7 +12,7 @@ const Block = styled.div`
   color: ${palette(0)};
   font-size: ${getSize('text')};
   line-height: ${getSize('lineHeight')};
-  margin: 0 0 calc(${getSize('text')} * ${getSize('lineHeight')} * 0.25) 0;
+  margin: 0 0 calc(${getSize('text')} * ${getSize('lineHeight')} * 0.5) 0;
 `;
 
 Block.propTypes = {
