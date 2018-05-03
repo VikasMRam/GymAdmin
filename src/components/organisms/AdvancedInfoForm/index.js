@@ -64,7 +64,7 @@ const AdvancedInfoForm = ({
     <Field
       name="time_to_move"
       label="When would you/your loved one want to move in?"
-      type="multiplechoice"
+      type="singlechoice"
       options={timeToMoveOptions}
       component={ReduxField}
     />
