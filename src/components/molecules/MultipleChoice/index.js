@@ -11,17 +11,34 @@ import {
   bool,
 } from 'prop-types';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { font, palette } from 'styled-theme';
 import { ifProp, prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import { Button } from 'sly/components/atoms';
 
+const Wrapper = styled.div`
+  // hack % in AdvancedInfoForm
+  ${ifProp('width', css`
+    width: ${prop('width')};
+    display: flex;
+    button {
+      flex: 1;
+    }
+  `)};
+`;
+
 const StyledButton = styled(Button)`
-  margin-right: ${size('spacing.small')};
-  &:last-child {
-    margin-right: none;
+  + Button {
+    margin-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  :not(:last-child) {
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 `;
 
@@ -43,6 +60,7 @@ export default class MultipleChoice extends Component {
       arrayOf(oneOfType([string, number])),
     ]).isRequired,
     type: oneOf(['multiplechoice', 'singlechoice']),
+    width: string, // hack % in AdvancedInfoForm
   };
 
   static defaultProps = {
@@ -81,8 +99,10 @@ export default class MultipleChoice extends Component {
       ...props
     } = this.props;
 
+    console.log('props', this.props);
+
     return (
-      <div onBlur={this.onBlur} {...props}>
+      <Wrapper onBlur={this.onBlur} {...props}>
         {options &&
           options.map(({ value: option, label, ...props }, i) => (
             <StyledButton
@@ -94,7 +114,7 @@ export default class MultipleChoice extends Component {
               {label}
             </StyledButton>
           ))}
-      </div>
+      </Wrapper>
     );
   }
 }

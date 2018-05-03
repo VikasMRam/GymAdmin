@@ -22,7 +22,7 @@ const foregroundColor = ({ ghost, disabled, transparent, selectable, selected })
     : ghost
       ? palette(0)
       : (selectable && !selected)
-        ? palette('grayscale', 1)
+        ? palette('slate', 0)
         : transparent ? 'none' : palette('white', 0);
 
 const borderColor = ({ ghost, disabled, selectable, selected }) => {
@@ -107,6 +107,7 @@ const styles = css`
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
 
   &:hover {
+    border-color: ${borderColor({ selected: true })};
     background-color: ${hoverBackgroundColor};
     color: ${hoverForegroundColor};
   }
