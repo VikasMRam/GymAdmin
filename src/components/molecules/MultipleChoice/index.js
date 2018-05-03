@@ -19,14 +19,19 @@ import { size } from 'sly/components/themes';
 import { Button } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
-  // hack % in AdvancedInfoForm
-  ${ifProp('width', css`
-    width: ${prop('width')};
-    display: flex;
-    button {
-      flex: 1;
-    }
-  `)};
+  display: flex;
+  button {
+    flex: 1;
+  }
+
+  flex-wrap: wrap;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) { 
+    // hack % in AdvancedInfoForm
+    ${ifProp('width', css`
+      width: ${prop('width')};
+    `)};
+  }
 `;
 
 const StyledButton = styled(Button)`
