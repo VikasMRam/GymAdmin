@@ -4,7 +4,7 @@
   "mainImage":
     "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_sd.jpg",
   "name": "Rhoda Goldman Plaza",
-  "phoneNumber": "",
+  "phoneNumber": "123456789",
   "propInfo": {
     "ownerImage": [
       {
@@ -480,11 +480,29 @@
       "value": 5,
       "createdAt": "2018-04-12T04:55:38Z",
       "updatedAt": "2018-04-12T04:55:38Z"
+    },
+    {
+      "id": "762b7f6b596ea519be9b7e3d95581b79",
+      "author": "Amal",
+      "comments": "Worst Senior Living Community Ever seen",
+      "published": true,
+      "value": 1,
+      "createdAt": "2018-04-12T04:55:38Z",
+      "updatedAt": "2018-04-12T04:55:38Z"
+    },
+    {
+      "id": "762b7f6b596ea519be9b7e3d95581b79",
+      "author": "Francis",
+      "comments": "meh",
+      "published": true,
+      "value": 1.5,
+      "createdAt": "2018-04-12T04:55:38Z",
+      "updatedAt": "2018-04-12T04:55:38Z"
     }
   ],
   "rgsAux": {
     "id": "ea96683a131d1a159ea13fb9a217fd76",
-    "amenityScore": "",
+    "amenityScore": "3.4",
     "estimatedPrice": {
       "providedAverage": 7046,
       "estimatedAverage": 0,
@@ -2671,16 +2689,14 @@
       }
     }
   ],
-  "twilioNumber": [
-    {
-      "areaCode": 415,
-      "cityId": 2597,
-      "createdAt": "2017-03-15T18:39:24Z",
-      "numbers": [4152639703],
-      "updatedAt": "2017-03-15T18:39:24Z",
-      "id": "undefined"
-    }
-  ],
+  "twilioNumber": {
+    "areaCode": 415,
+    "cityId": 2597,
+    "createdAt": "2017-03-15T18:39:24Z",
+    "numbers": [4152639703],
+    "updatedAt": "2017-03-15T18:39:24Z",
+    "id": "sdkfmsdk"
+  },
   "user": {
     "id": "a2c9987ae9a50a52a199145df1061b10",
     "admin": true,
