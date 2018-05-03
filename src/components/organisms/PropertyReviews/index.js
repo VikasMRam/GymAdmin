@@ -39,7 +39,7 @@ export default class PropertyReviews extends Component {
       });
     }
     return (
-      <div>
+      <section id="property-reviews">
         {propertyReviews}
         {hasWebReviews && (
           <GatheredReviewRatings
@@ -47,7 +47,7 @@ export default class PropertyReviews extends Component {
             onLeaveReview={onLeaveReview}
           />
         )}
-      </div>
+      </section>
     );
   }
 }

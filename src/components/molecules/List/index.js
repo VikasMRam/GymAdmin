@@ -36,7 +36,7 @@ const List = ({
 );
 
 List.propTypes = {
-  items: PropTypes.arrayOf(PropTypes.string),
+  items: PropTypes.arrayOf(PropTypes.node),
   columns: PropTypes.number,
   heading: PropTypes.string,
 };
