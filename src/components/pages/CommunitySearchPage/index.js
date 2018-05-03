@@ -25,31 +25,42 @@ const Main = styled(CommunitySearchList)`
   width: 100%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
+    
   }
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: 75%;
     margin-right: ${size('spacing.xLarge')};
   }
 `;
-const Filterbar = styled(CommunityFilterList)`
+const SideFilter = styled(CommunityFilterList)`
   width: 50%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
   }
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: 25%;
     margin-right: ${size('spacing.xLarge')};
+  } 
+`;
+const BarFilter = styled(CommunityFilterList)`
+  width: 50%;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.mainColumn')};
   }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: 25%;
+    margin-right: ${size('spacing.xLarge')};
+  } 
 `;
 
 
-const CommunitySearchPage = ({ city , communityList }) => {
+const CommunitySearchPage = ({ toggleMap, isMapView, searchParams , communityList }) => {
   return (
     //Add Filter Elements
     //Add
     <Wrapper>
-      <Filterbar/>
-      <Link to={`/assisted-living/california/${nextUri(city)}`}>
-        Link to test navigation cross profile
-      </Link>,
+      <SideFilter/>
+      <BarFilter/>
       <Main key="main" communityList={communityList} />
     </Wrapper>
   );

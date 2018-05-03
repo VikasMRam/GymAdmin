@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string } from 'prop-types';
+import { string, bool } from 'prop-types';
 
 import  withServerState from 'sly/store/withServerState';
 
@@ -12,11 +12,23 @@ class CommunitySearchPageContainer extends Component {
     city:string,
     state:string,
     toc:string,
+    mapView:bool,
     error:string,
+
   };
+  state = {
+    mapView: this.props.mapView,
+  };
+
+  toggleMap = () =>{
+    this.setState({
+      mapView:!this.state.mapView,
+    });
+  }
 
   render() {
     const {  searchParams, error, communityList } = this.props;
+    const { isMapView } = this.state;
     console.log("Seeing filters seen here",searchParams);
     //TODO Add Error Page
     if (error) {
@@ -27,7 +39,7 @@ class CommunitySearchPageContainer extends Component {
       );
     }
 
-    return <CommunitySearchPage searchParams communityList={communityList}/> ;
+    return <CommunitySearchPage isMapView={isMapView} toggleMap={this.toggleMap} searchParams={searchParams} communityList={communityList}/> ;
 
   }
 }

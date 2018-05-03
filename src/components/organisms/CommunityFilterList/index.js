@@ -5,6 +5,7 @@ import { object, arrayOf } from 'prop-types';
 import { size } from 'sly/components/themes';
 import CollapsibleSection from "sly/components/molecules/CollapsibleSection";
 import Input from "sly/components/atoms/Input";
+import Button from "sly/components/atoms/Button";
 
 const SimilarCommunityTileDiv = styled.div`
   padding-bottom: ${size('spacing.large')};
@@ -35,39 +36,14 @@ const SectionWrapper = styled.div`
 
 
 
-function getFullCommunity({
-                            name,
-                            numRatings,
-                            ratingsValue,
-                            description,
-                            addressString,
-                            imageUrl,
-                            startingPrice,
-                            webViewInfo
-                          }) {
-
-  return {
-    name,
-    mainImage: imageUrl,
-    startingRate: startingPrice,
-    propInfo:{
-      communityDescription: description,
-      typeCare: webViewInfo.firstLineValue.split(',')
-    } ,
-    propRatings: {
-      reviewsValue: ratingsValue,
-      numReviews: numRatings
-    }
-  };
-}
-
 
 const CommunityFilterList = ({ communityList }) => {
 
   return (
     <SectionWrapper>
-      <CollapsibleSection size="small" title={"Type of Care"} />
-      <CollapsibleSection size="large" title={"Maximum Starting Rate"}>
+
+      <CollapsibleSection title={"Type of Care"} />
+      <CollapsibleSection title={"Maximum Starting Rate"}>
         {/*<Input type={"radio"}>*/}
           {/*<option>Option 1</option>*/}
           {/*<option>Option 2</option>*/}
@@ -75,11 +51,12 @@ const CommunityFilterList = ({ communityList }) => {
         {/*</Input>*/}
       </CollapsibleSection>
       <CollapsibleSection title={"Size"}>
-      <Input type={"select"}>
-        <option>Option 1</option>
-        <option>Option 2</option>
-        <option>Option 3</option>
-      </Input>
+        <Input type={"select"}>
+          <option>Option 1</option>
+          <option>Option 2</option>
+          <option>Option 3</option>
+        </Input>
+
       </CollapsibleSection>
     </SectionWrapper>
   );
