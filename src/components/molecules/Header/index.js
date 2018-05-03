@@ -8,19 +8,19 @@ import Icon from 'sly/components/atoms/Icon';
 import Input from 'sly/components/atoms/Input';
 import Hr from 'sly/components/atoms/Hr';
 import Logo from 'sly/components/atoms/Logo';
+import Button from 'sly/components/atoms/Button';
 
 const HeaderWrapper = styled.div`
   display: flex;
   overflow: hidden;
   width: 100%;
-  height: 60px;
   margin-bottom: ${size('spacing.large')};
   border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    padding: 10px ${size('spacing.xLarge')};
+    padding: ${size('spacing.regular')} 0;
     margin-bottom: ${size('spacing.xLarge')};
-    height: 72px;
+    align-items: center;
   }
 `;
 
@@ -30,12 +30,13 @@ const SeniorlyLogoWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     display: block;
     margin-right: ${size('spacing.large')};
+    margin-left: ${size('spacing.xLarge')};
   }
 `;
 
 export const SeniorlyIconMenu = styled.div`
   display: flex;
-  padding: 12px ${size('spacing.large')};
+  padding: calc( ${size('spacing.small')} + ${size('spacing.regular')} ) ${size('spacing.large')};
   border-right: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
@@ -43,10 +44,8 @@ export const SeniorlyIconMenu = styled.div`
   }
 `;
 
-const SeniorlyIcon = styled(Icon)``;
-
 const MenuArrowIcon = styled(Icon)`
-  margin: 12px 0 0 ${size('spacing.regular')};
+  margin: calc( ${size('spacing.small')} + ${size('spacing.regular')} ) 0 0 ${size('spacing.regular')};
 `;
 
 const MenuIcon = styled(Icon)`
@@ -65,37 +64,48 @@ const SearchBar = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     width: ${size('header.searchBar.width')};
-    height: ${size('header.searchBar.height')};
-    margin-top: 6px;
-    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   }
 `;
 
 const SearchTextBox = styled(Input)`
-  height: 100%;
-  border: none;
+    height: 100%;
+    border: none;
+
+    @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+      height: initial;
+      border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+    }
 `;
 
-const SearchButton = styled.div`
+const SearchButtonLargeLaptop = styled(Button)`
+    display: none;
+
+    @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+      display: block;
+      background-color: ${palette('secondary', 0)};
+      margin-left: -${size('spacing.tiny')};
+    }
+`;
+
+const SearchButton = styled(Button)`
   height: 100%;
-  padding: ${size('spacing.regular')} ${size('spacing.large')};
-  cursor: pointer;
+  border: none;
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    background-color: ${palette('secondary', 0)};
+    display: none;
   }
 `;
 
 export const HeaderMenu = styled.div`
   width: 100%;
   position: absolute;
-  top: 77px;
+  top: ${size('header.menu.position.top.mobile')};
   background: white;
   z-index: 101;
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: 264px;
-    top: 55px;
+    width: ${size('header.menu.width')};
+    top: ${size('header.menu.position.top.laptopLarge')};
     right: ${size('spacing.large')};
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')}
@@ -126,6 +136,7 @@ const MarginnedHR = styled(Hr)`
 const HeaderItems = styled.div`
   display: flex;
   margin-left: auto; // For Float Right in Flex
+  align-items: center;
 `;
 
 const HeaderItem = styled.a`
@@ -136,9 +147,9 @@ const HeaderItem = styled.a`
     display: block;
     color: ${palette('slate', 0)};
     text-align: center;
-    padding: ${size('spacing.large')} ${size('spacing.regular')};
+    padding: 0 ${size('spacing.regular')};
     text-decoration: none;
-    font-size: 14px;
+    font-size: ${size('text.caption')};
   }
 `;
 
@@ -175,14 +186,17 @@ const Header = ({
           <Logo />
         </SeniorlyLogoWrapper>
         <SeniorlyIconMenu onClick={onMenuIconClick}>
-          <SeniorlyIcon icon="logo" size="large" />
+          <Icon icon="logo" size="large" />
           {!menuOpen && <MenuArrowIcon icon="arrow-down" size="tiny" />}
           {menuOpen && <MenuArrowIcon icon="arrow-up" size="tiny" />}
         </SeniorlyIconMenu>
         <SearchBar>
           <SearchTextBox placeholder="Search by city or zip code" />
-          <SearchButton>
-            <Icon icon="search-white" size="regular" />
+          <SearchButtonLargeLaptop>
+            <Icon icon="search" size="regular" palette="white" />
+          </SearchButtonLargeLaptop>
+          <SearchButton transparent ghost>
+            <Icon icon="search" size="regular" palette="secondary" />
           </SearchButton>
         </SearchBar>
         <HeaderItems>
