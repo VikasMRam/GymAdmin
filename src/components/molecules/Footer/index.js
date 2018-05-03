@@ -2,25 +2,47 @@ import React from 'react';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
+import { size } from 'sly/components/themes';
 import Icon from 'sly/components/atoms/Icon';
 import Button from 'sly/components/atoms/Button';
 import Hr from 'sly/components/atoms/Hr';
 
 const FooterWrapper = styled.div`
+  background-color: ${palette('grayscale', 2)};
+`;
+
+const FooterTopWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${palette('grayscale', 2)};
   padding: 16px;
 `;
 
 const SeniorlyWhiteIcon = styled(Icon)`
   margin-bottom: 16px;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    // To Center the Icon
+    margin-left: 45%;
+  }
 `;
 
-const SignUpButton = styled(Button)`
+const MobileSignUpButton = styled(Button)`
   width: 148px;
   height: 40px;
   margin-bottom: 24px;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: none;
+  }
+`;
+
+const SignUpButton = styled(Button)`
+  display: none;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: block;
+    margin-right: 32px;
+  }
 `;
 
 const groups = {
@@ -53,6 +75,15 @@ const GroupDiv = styled.div`
   flex-grow: 1;
   width: 50%;
   margin-bottom: 16px;
+
+  padding-left: 16px;
+  padding-right: 16px;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: 25%;
+
+    padding-left: 32px;
+  }
 `;
 
 const GroupHeading = styled.div`
@@ -79,12 +110,45 @@ const StyledHR = styled(Hr)`
   margin-bottom: 8px;
 `;
 
+const FooterBottomWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    flex-direction: row;
+    padding: 8px;
+  }
+`;
+
+const SocialIcons = styled.div`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    flex-grow: 1;
+    order: 1;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: 28px;
+  }
+`;
+
 const FooterIcon = styled(Icon)`
   margin: 16px;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin: 0;
+    margin-left: 16px;
+  }
 `;
 
 const TradeMark = styled.a`
   color: ${palette('white', 0)};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    flex-grow: 1;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 28px;
+  }
 `;
 
 const Footer = () => {
@@ -105,17 +169,24 @@ const Footer = () => {
   });
   return (
     <FooterWrapper>
-      <SeniorlyWhiteIcon icon="seniorly-white" size="xxLarge" />
-      <SignUpButton>Sign up for Free</SignUpButton>
-      <Groups>{groupComponents}</Groups>
+      <FooterTopWrapper>
+        <SeniorlyWhiteIcon icon="seniorly-white" size="xxLarge" />
+        <MobileSignUpButton>Sign up for Free</MobileSignUpButton>
+        <Groups>
+          {groupComponents}
+          <SignUpButton>Sign up for Free</SignUpButton>
+        </Groups>
+      </FooterTopWrapper>
       <StyledHR />
-      <div>
-        <FooterIcon icon="instagram" size="large" />
-        <FooterIcon icon="linkedin" size="large" />
-        <FooterIcon icon="google-plus" size="large" />
-        <FooterIcon icon="facebook" size="large" />
-      </div>
-      <TradeMark>© Seniorly 2018</TradeMark>
+      <FooterBottomWrapper>
+        <SocialIcons>
+          <FooterIcon icon="facebook" size="large" />
+          <FooterIcon icon="google-plus" size="large" />
+          <FooterIcon icon="linkedin" size="large" />
+          <FooterIcon icon="instagram" size="large" />
+        </SocialIcons>
+        <TradeMark>© Seniorly 2018</TradeMark>
+      </FooterBottomWrapper>
     </FooterWrapper>
   );
 };
