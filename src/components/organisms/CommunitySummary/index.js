@@ -5,12 +5,6 @@ import smoothscroll from 'smoothscroll-polyfill';
 import { Link } from 'sly/components/atoms';
 import List from 'sly/components/molecules/List';
 
-const sectionIdMaps = {
-  pricingAndFloorPlans: 'pricing-and-floor-plans',
-  amenitiesAndFeatures: 'amenities-and-features',
-  reviews: 'property-reviews',
-};
-
 export default class communitySummary extends React.Component {
   static propTypes = {
     phoneNumber: PropTypes.string,
@@ -28,11 +22,17 @@ export default class communitySummary extends React.Component {
     })),
   };
 
+  static sectionIdMaps = {
+    pricingAndFloorPlans: 'pricing-and-floor-plans',
+    amenitiesAndFeatures: 'amenities-and-features',
+    reviews: 'property-reviews',
+  };
+
   static scrollToSection(e, section) {
     // Link triggers router navigation so need to preventDefault.
     // TODO: find better way to do it with any other component without much styling code
     e.preventDefault();
-    const sectionRef = document.getElementById(sectionIdMaps[section]);
+    const sectionRef = document.getElementById(this.sectionIdMaps[section]);
     if (sectionRef) {
       sectionRef.scrollIntoView({ behavior: 'smooth' });
     }
@@ -76,10 +76,10 @@ export default class communitySummary extends React.Component {
       if (parsedAmenityScore) {
         highlights.push((
           <Link
-            href={`#${sectionIdMaps.amenitiesAndFeatures}`}
+            href={`#${this.constructor.sectionIdMaps.amenitiesAndFeatures}`}
             onClick={e => this.constructor.scrollToSection(e, 'amenitiesAndFeatures')}
           >
-            {`Amenity Score ${parsedAmenityScore}`}
+            Amenity Score {parsedAmenityScore}
           </Link>
         ));
       }
@@ -92,7 +92,7 @@ export default class communitySummary extends React.Component {
     if (matchingHighlights && matchingHighlights.length) {
       highlights.push((
         <Link
-          href={`#${sectionIdMaps.amenitiesAndFeatures}`}
+          href={`#${this.constructor.sectionIdMaps.amenitiesAndFeatures}`}
           onClick={e => this.constructor.scrollToSection(e, 'amenitiesAndFeatures')}
         >
           Alzheimer's & Dementia support
@@ -101,7 +101,7 @@ export default class communitySummary extends React.Component {
     }
     highlights.push((
       <Link
-        href={`#${sectionIdMaps.pricingAndFloorPlans}`}
+        href={`#${this.constructor.sectionIdMaps.pricingAndFloorPlans}`}
         onClick={e => this.constructor.scrollToSection(e, 'pricingAndFloorPlans')}
       >
         Rooms Available
@@ -112,7 +112,7 @@ export default class communitySummary extends React.Component {
         <span>
           Pricing starts from&nbsp;
           <Link
-            href={`#${sectionIdMaps.pricingAndFloorPlans}`}
+            href={`#${this.constructor.sectionIdMaps.pricingAndFloorPlans}`}
             onClick={e => this.constructor.scrollToSection(e, 'pricingAndFloorPlans')}
           >
             ${startingRate}
@@ -120,20 +120,22 @@ export default class communitySummary extends React.Component {
         </span>
       ));
     }
-    let totalRating = 0;
-    reviews.forEach((review) => {
-      totalRating += review.value;
-    });
-    const avgReviews = reviews.length > 0 ? totalRating / reviews.length : 0;
-    if (avgReviews > 0) {
-      highlights.push((
-        <Link
-          href={`#${sectionIdMaps.reviews}`}
-          onClick={e => this.constructor.scrollToSection(e, 'reviews')}
-        >
-          Rating {avgReviews.toFixed(1).replace(/\.0+$/, '')}-Star Average
-        </Link>
-      ));
+    if (reviews) {
+      let totalRating = 0;
+      reviews.forEach((review) => {
+        totalRating += review.value;
+      });
+      const avgReviews = reviews.length > 0 ? totalRating / reviews.length : 0;
+      if (avgReviews > 0) {
+        highlights.push((
+          <Link
+            href={`#${this.constructor.sectionIdMaps.reviews}`}
+            onClick={e => this.constructor.scrollToSection(e, 'reviews')}
+          >
+            Rating {avgReviews.toFixed(1).replace(/\.0+$/, '')}-Star Average
+          </Link>
+        ));
+      }
     }
 
     return (

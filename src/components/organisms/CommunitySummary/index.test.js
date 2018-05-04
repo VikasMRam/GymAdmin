@@ -1,0 +1,101 @@
+import React from 'react';
+import { mount } from 'enzyme';
+
+import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+
+import CommunitySummary from '.';
+import { Link } from 'sly/components/atoms';
+import ListItem from 'sly/components/molecules/ListItem';
+
+const {
+  propInfo,
+  startingRate,
+  rgsAux,
+  twilioNumber,
+  phoneNumber,
+  user,
+  reviews,
+} = RhodaGoldmanPlaza;
+const {
+  communityHighlights,
+} = propInfo;
+
+const wrap = (props = {}) => mount(<CommunitySummary {...props} />);
+
+const testTwilioNumber = (wrapper) => {
+  expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${twilioNumber.numbers[0]}` }).length).toBeGreaterThan(0);
+  expect(wrapper.text()).toContain('Pricing & Availability');
+};
+const testPhoneNumber = (wrapper) => {
+  expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${phoneNumber}` }).length).toBeGreaterThan(0);
+  expect(wrapper.text()).toContain('Reception');
+};
+const testUserPhoneNumber = (wrapper) => {
+  expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${user.phoneNumber}` }).length).toBeGreaterThan(0);
+  expect(wrapper.text()).toContain('Reception');
+};
+const testAmenityScore = (wrapper) => {
+  expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.amenitiesAndFeatures}` }).length).toBeGreaterThan(0);
+  expect(wrapper.text()).toContain('Amenity Score');
+};
+const testStartingRate = (wrapper) => {
+  expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.pricingAndFloorPlans}` }).length).toBeGreaterThan(0);
+  expect(wrapper.text()).toContain('Pricing starts from');
+};
+const testCommunityHighlights = (wrapper) => {
+  expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.amenitiesAndFeatures}` }).length).toBeGreaterThan(0);
+  expect(wrapper.text()).toContain("Alzheimer's & Dementia support");
+};
+const testReviews = (wrapper) => {
+  expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.reviews}` }).length).toBeGreaterThan(0);
+  expect(wrapper.text()).toContain('Rating 2.5-Star Average');
+};
+
+it('renders twilioNumber', () => {
+  const wrapper = wrap({ twilioNumber });
+  testTwilioNumber(wrapper);
+});
+
+it('renders phoneNumber', () => {
+  const wrapper = wrap({ phoneNumber });
+  testPhoneNumber(wrapper);
+});
+
+it('renders user phone number', () => {
+  const wrapper = wrap({ user });
+  testUserPhoneNumber(wrapper);
+});
+
+it('renders amenityScore', () => {
+  const wrapper = wrap({ amenityScore: rgsAux.amenityScore });
+  testAmenityScore(wrapper);
+});
+
+it('renders startingRate', () => {
+  const wrapper = wrap({ startingRate });
+  testStartingRate(wrapper);
+});
+
+it('renders communityHighlights', () => {
+  const wrapper = wrap({ communityHighlights });
+  testCommunityHighlights(wrapper);
+});
+
+it('renders reviews', () => {
+  const wrapper = wrap({ reviews });
+  testReviews(wrapper);
+});
+
+it('renders all properties', () => {
+  const wrapper = wrap({
+    twilioNumber, phoneNumber, user, amenityScore: rgsAux.amenityScore, startingRate, communityHighlights, reviews,
+  });
+
+  testTwilioNumber(wrapper);
+  testPhoneNumber(wrapper);
+  testUserPhoneNumber(wrapper);
+  testAmenityScore(wrapper);
+  testStartingRate(wrapper);
+  testCommunityHighlights(wrapper);
+  testReviews(wrapper);
+});
