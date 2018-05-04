@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
-import numeral from 'numeral';
+import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
 import { Button, TileImage } from 'sly/components/atoms';
@@ -61,7 +61,7 @@ const RoomTile = ({
         <Button onClick={onInquireOrBookClicked}>Inquire or book a tour</Button>
       </ImageButtonContainer>
       <ItemDescription>
-        {roomType} {shareType}<br />${numeral(priceToShow).format('0,0')} per {priceTypeMap[priceType]}
+        {roomType} {shareType}<br /><NumberFormat value={priceToShow} displayType="text" thousandSeparator prefix="$" /> per {priceTypeMap[priceType]}
       </ItemDescription>
     </Wrapper>
   );
