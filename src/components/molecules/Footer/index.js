@@ -14,13 +14,17 @@ const FooterWrapper = styled.div`
 const FooterTopWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 16px 0;
+  padding: ${size('spacing.large')} ${size('spacing.large')} 0
+    ${size('spacing.large')};
 
   margin: 0 auto;
   width: 100%;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
+    padding: ${size('spacing.xLarge')} 0 0 0;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
@@ -34,55 +38,30 @@ const FooterTopWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     width: ${size('layout.laptopLarge')};
     padding-right: 0;
+    justify-content: space-between;
   }
 `;
 
 const SeniorlyWhiteIcon = styled(Icon)`
-  margin-bottom: 16px;
+  order: 1;
+  margin-bottom: ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     // To Center the Icon
     margin-left: 45%;
   }
-`;
-
-const SeniorlyWhiteIconLaptopLargeDiv = styled.div`
-  display: none;
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    display: block;
+    margin-left: 0;
   }
 `;
 
-const SeniorlyWhiteIconLaptopDiv = styled.div`
-  display: block;
-
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    display: none;
-  }
-`;
-
-const MobileSignUpButton = styled(Button)`
-  width: 148px;
-  height: 40px;
-  margin-bottom: 24px;
+const SignUpButtonDiv = styled.div`
+  order: 2;
+  margin-bottom: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: none;
-  }
-`;
-
-const SignUpButton = styled(Button)`
-  display: none;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: block;
-    margin-right: 32px;
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    margin-right: 0;
-    float: right;
+    order: 3;
   }
 `;
 
@@ -107,33 +86,34 @@ const groups = {
 };
 
 const Groups = styled.div`
+  order: 3;
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin-bottom: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    order: 2;
+  }
 `;
 
 const GroupDiv = styled.div`
-  flex-grow: 1;
-  width: 50%;
-  margin-bottom: 16px;
+  width: ${size('footer.group.width')};
+  margin-bottom: ${size('spacing.xLarge')};
 
-  padding-left: 16px;
-  padding-right: 16px;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: 25%;
+  :nth-child(odd) {
+    margin-right: ${size('spacing.large')};
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: 20%;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-right: ${size('spacing.xLarge')};
   }
 `;
 
 const GroupHeading = styled.div`
   color: ${palette('white', 0)};
-  font-size: 18px;
+  font-size: ${size('text.subtitle')};
   font-weight: bold;
-  margin-bottom: 16px;
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const GroupItems = styled.div`
@@ -143,20 +123,20 @@ const GroupItems = styled.div`
 
 const GroupItem = styled.a`
   color: ${palette('white', 0)};
-  font-size: 16px;
+  font-size: ${size('spacing.large')};
   text-decoration: none;
-  margin-bottom: 8px;
+  margin-bottom: ${size('spacing.regular')};
 `;
 
 const StyledHR = styled(Hr)`
-  border-top: 1px solid ${palette('white', 0)};
-  margin-bottom: 8px;
+  border-top: ${size('spacing.nano')} solid ${palette('white', 0)};
+  margin-bottom: ${size('spacing.regular')};
 `;
 
 const FooterBottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 16px;
+  padding: ${size('spacing.large')};
 
   margin: 0 auto;
   width: 100%;
@@ -165,7 +145,7 @@ const FooterBottomWrapper = styled.div`
     width: ${size('layout.mainColumn')};
 
     flex-direction: row;
-    padding: 8px;
+    padding: ${size('spacing.regular')} 0;
   }
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
@@ -183,12 +163,11 @@ const FooterBottomWrapper = styled.div`
 `;
 
 const SocialIcons = styled.div`
+  display: flex;
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    flex-grow: 1;
-    order: 1;
-    display: flex;
-    flex-direction: row-reverse;
-    margin-right: 28px;
+    order: 2;
+    margin-left: auto;
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -197,11 +176,11 @@ const SocialIcons = styled.div`
 `;
 
 const FooterIcon = styled(Icon)`
-  margin: 16px;
+  margin-right: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin: 0;
-    margin-left: 16px;
   }
 `;
 
@@ -209,10 +188,8 @@ const TradeMark = styled.a`
   color: ${palette('white', 0)};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    flex-grow: 1;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    margin-left: 28px;
+    order: 1;
+    margin: ${size('spacing.regular')} 0;
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -239,29 +216,19 @@ const Footer = () => {
   return (
     <FooterWrapper>
       <FooterTopWrapper>
-        <SeniorlyWhiteIconLaptopDiv>
-          <SeniorlyWhiteIcon icon="seniorly-white" size="xxLarge" />
-        </SeniorlyWhiteIconLaptopDiv>
-        <MobileSignUpButton>Sign up for Free</MobileSignUpButton>
-        <Groups>
-          <SeniorlyWhiteIconLaptopLargeDiv>
-            <GroupDiv>
-              <SeniorlyWhiteIcon icon="seniorly-white" size="xxLarge" />
-            </GroupDiv>
-          </SeniorlyWhiteIconLaptopLargeDiv>
-          {groupComponents}
-          <GroupDiv>
-            <SignUpButton>Sign up for Free</SignUpButton>
-          </GroupDiv>
-        </Groups>
+        <SeniorlyWhiteIcon icon="seniorly-white" size="xxLarge" />
+        <SignUpButtonDiv>
+          <Button>Sign up for Free</Button>
+        </SignUpButtonDiv>
+        <Groups>{groupComponents}</Groups>
       </FooterTopWrapper>
       <StyledHR />
       <FooterBottomWrapper>
         <SocialIcons>
-          <FooterIcon icon="facebook" size="large" />
-          <FooterIcon icon="google-plus" size="large" />
-          <FooterIcon icon="linkedin" size="large" />
           <FooterIcon icon="instagram" size="large" />
+          <FooterIcon icon="linkedin" size="large" />
+          <FooterIcon icon="google-plus" size="large" />
+          <FooterIcon icon="facebook" size="large" />
         </SocialIcons>
         <TradeMark>© Seniorly 2018</TradeMark>
       </FooterBottomWrapper>
