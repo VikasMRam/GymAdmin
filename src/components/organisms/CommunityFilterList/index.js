@@ -1,11 +1,12 @@
-import React from 'react';
+import
+  React from 'react';
 import styled from 'styled-components';
 import { object, arrayOf } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import CollapsibleSection from "sly/components/molecules/CollapsibleSection";
 import Input from "sly/components/atoms/Input";
-import Button from "sly/components/atoms/Button";
+import IconButton from "sly/components/molecules/IconButton";
 
 const SimilarCommunityTileDiv = styled.div`
   padding-bottom: ${size('spacing.large')};
@@ -19,6 +20,7 @@ const SectionWrapper = styled.div`
   flex-direction: column;
   margin: 0 auto;
   width: 100%;
+  border: 1px;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
   }
@@ -37,15 +39,22 @@ const SectionWrapper = styled.div`
 
 
 
-const CommunityFilterList = ({ communityList }) => {
+const CommunityFilterList = ({ toggleMap, isMapView, searchParams }) => {
 
   return (
     <SectionWrapper>
+      {isMapView && toggleMap && <IconButton icon={'list'} onClick={toggleMap} transparent>
+        Show List
+      </IconButton>}
+      {!isMapView && <IconButton icon={'map'} onClick={toggleMap} transparent>
+        Show Map
+      </IconButton>}
+      <CollapsibleSection title={"Type of Care"} >
 
-      <CollapsibleSection title={"Type of Care"} />
+      </CollapsibleSection>
       <CollapsibleSection title={"Maximum Starting Rate"}>
         {/*<Input type={"radio"}>*/}
-          {/*<option>Option 1</option>*/}
+          {/*<option>2500</option>*/}
           {/*<option>Option 2</option>*/}
           {/*<option>Option 3</option>*/}
         {/*</Input>*/}

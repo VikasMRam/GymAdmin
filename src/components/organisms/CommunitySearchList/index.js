@@ -65,8 +65,8 @@ const CommunitySearchList = ({ communityList }) => {
 
   const components = communityList.map((similarProperty) => {
     return (
-      <Link to={similarProperty.url}>
-        <SimilarCommunityTileDiv key={similarProperty.id}>
+      <Link key={similarProperty.id} to={similarProperty.url}>
+        <SimilarCommunityTileDiv >
           <SimilarCommunityTile similarProperty={getFullCommunity(similarProperty)} />
         </SimilarCommunityTileDiv>
       </Link>

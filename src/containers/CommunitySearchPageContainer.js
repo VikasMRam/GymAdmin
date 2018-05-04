@@ -5,6 +5,7 @@ import  withServerState from 'sly/store/withServerState';
 
 import { resourceListReadRequest } from "sly/store/resource/actions";
 import { getList } from "sly/store/selectors";
+import { getMeta } from "sly/store/entities/selectors";
 import CommunitySearchPage from "sly/components/pages/CommunitySearchPage";
 
 class CommunitySearchPageContainer extends Component {
@@ -17,19 +18,18 @@ class CommunitySearchPageContainer extends Component {
 
   };
   state = {
-    mapView: this.props.mapView,
+    mapView: !!this.props.mapView,
   };
 
   toggleMap = () =>{
     this.setState({
       mapView:!this.state.mapView,
     });
-  }
+  };
 
   render() {
-    const {  searchParams, error, communityList } = this.props;
-    const { isMapView } = this.state;
-    console.log("Seeing filters seen here",searchParams);
+    const {  searchParams, error, communityList, requestMeta } = this.props;
+    const { mapView } = this.state;
     //TODO Add Error Page
     if (error) {
       return (
@@ -39,7 +39,7 @@ class CommunitySearchPageContainer extends Component {
       );
     }
 
-    return <CommunitySearchPage isMapView={isMapView} toggleMap={this.toggleMap} searchParams={searchParams} communityList={communityList}/> ;
+    return <CommunitySearchPage requestMeta={requestMeta} isMapView={mapView} toggleMap={this.toggleMap} searchParams={searchParams} communityList={communityList}/> ;
 
   }
 }
@@ -55,7 +55,7 @@ function parseQueryStringToFilters(qs) {
 
   for (const param of input.split('&')) {
     let [key, value] = param.replace(/\+/g, ' ').split('=');
-    if (['size','budget','sort'].indexOf(key) > -1) {
+    if (['size','budget','sort','page-number','page-size','radius'].indexOf(key) > -1) {
       // Missing `=` should be `null`:
       // http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
       value = value === undefined ? null : decodeURIComponent(value);
@@ -72,7 +72,8 @@ const mapStateToProps = (state, { match, location }) => {
   Object.assign(searchParams,match.params,parseQueryStringToFilters(location.search))
   return {
     searchParams,
-    communityList: getList(state,'searchResource')
+    communityList: getList(state,'searchResource'),
+    requestMeta: getMeta(state,'searchResource'),
   };
 };
 
