@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import smoothscroll from 'smoothscroll-polyfill';
+import NumberFormat from 'react-number-format';
 
 import { Link } from 'sly/components/atoms';
 import List from 'sly/components/molecules/List';
@@ -56,7 +57,7 @@ export default class communitySummary extends React.Component {
         <span>
           Pricing & Availability&nbsp;
           <Link href={`tel:${twilioNumber.numbers[0]}`}>
-            {twilioNumber.numbers[0]}
+            <NumberFormat value={twilioNumber.numbers[0]} format="(###) ###-####" displayType="text" />
           </Link>
         </span>
       ));
@@ -66,7 +67,7 @@ export default class communitySummary extends React.Component {
         <span>
           Reception&nbsp;
           <Link href={`tel:${phoneNumber || user.phoneNumber}`}>
-            {phoneNumber || user.phoneNumber}
+            <NumberFormat value={phoneNumber || user.phoneNumber} format="(###) ###-####" displayType="text" />
           </Link>
         </span>
       ));
@@ -115,7 +116,7 @@ export default class communitySummary extends React.Component {
             href={`#${this.constructor.sectionIdMaps.pricingAndFloorPlans}`}
             onClick={e => this.constructor.scrollToSection(e, 'pricingAndFloorPlans')}
           >
-            ${startingRate}
+            <NumberFormat value={startingRate} thousandSeparator displayType="text" prefix="$" />
           </Link>
         </span>
       ));

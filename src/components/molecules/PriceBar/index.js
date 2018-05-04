@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import numeral from 'numeral';
+import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
 import { Bar, Block } from 'sly/components/atoms';
@@ -21,7 +21,7 @@ const PriceBar = ({
       <Bar width={width} />
       <TextWrapper>
         <Block size="caption">
-          ${numeral(price).format('0,0')}
+          <NumberFormat value={price} displayType="text" thousandSeparator prefix="$" />
         </Block>
       </TextWrapper>
     </TwoColumnWrapper>
