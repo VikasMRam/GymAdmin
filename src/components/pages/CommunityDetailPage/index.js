@@ -6,6 +6,7 @@ import { size } from 'sly/components/themes';
 import CommunityDetail from 'sly/components/organisms/CommunityDetail';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import Header from 'sly/components/molecules/Header';
+import Footer from 'sly/components/molecules/Footer';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -90,6 +91,7 @@ const CommunityDetailPage = ({ community, userActions }) => {
         <Main key="main" community={community} />
         <Column key="column" community={community} userActions={userActions} />
       </PageWrapper>
+      <Footer />
     </div>
   );
 };
