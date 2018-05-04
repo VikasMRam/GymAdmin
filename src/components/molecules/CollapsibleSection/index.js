@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import Measure from 'react-measure';
 import styled from 'styled-components';
-import { ifProp } from 'styled-tools';
 import { key } from 'styled-theme';
-import { bool, string, node, oneOf } from 'prop-types';
+import { bool, string, node, oneOf, object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Hr, Heading, Icon } from 'sly/components/atoms';
@@ -48,9 +47,11 @@ const Content = styled.div`
 `;
 
 const getHeadingLevel = (size) => {
-  switch (size){
+  switch (size) {
     case 'small':
       return 'subtitle';
+    default:
+      return 'title';
   }
 };
 export default class CollapsibleSection extends Component {
@@ -58,13 +59,18 @@ export default class CollapsibleSection extends Component {
     children: node,
     title: string.isRequired,
     collapsedDefault: bool.isRequired,
-    size: oneOf(['small','regular', 'large']),
+    size: oneOf(['small', 'regular', 'large']),
+    innerRef: object,
   };
 
   static defaultProps = {
     collapsedDefault: false,
     size: 'regular',
   };
+
+  static convertToClassName(str) {
+    return str.toLowerCase().replace(/[^a-z0-9_\s-]/, '').replace(/[\s-]+/, ' ').replace(/\s+/g, '-');
+  }
 
   state = {
     collapsed: this.props.collapsedDefault,
@@ -83,14 +89,19 @@ export default class CollapsibleSection extends Component {
 
   render() {
     const {
-      children, title, collapsedDefault, size, ...props
+      children, title, collapsedDefault, size, innerRef, ...props
     } = this.props;
     const { collapsed, maxHeight } = this.state;
 
     return (
       <Measure onResize={this.onResize}>
         {({ measureRef }) => (
-          <Section collapsed={collapsed} size={size}>
+          <Section
+            collapsed={collapsed}
+            size={size}
+            className={this.constructor.convertToClassName(title)}
+            innerRef={innerRef}
+          >
             <StyledHr />
             <Header onClick={this.toggle} transparent ghost>
               <StyledHeading level={getHeadingLevel(size)}>{title}</StyledHeading>

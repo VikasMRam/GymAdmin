@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
+import { key } from 'styled-theme';
 import Sticky from 'react-stickynode';
 
 import { size } from 'sly/components/themes';
@@ -9,6 +10,7 @@ import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import Header from 'sly/components/molecules/Header';
 import Footer from 'sly/components/molecules/Footer';
 import StickyFooter from 'sly/components/molecules/StickyFooter';
+import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -47,16 +49,61 @@ const Column = styled(ConciergeContainer)`
   }
 `;
 
-class HeaderWithState extends React.Component {
+export default class CommunityDetailPage extends React.Component {
+  static propTypes = {
+    community: object.isRequired,
+    userActions: object.isRequired,
+  };
+
   state = {
+    stickyHeaderVisible: false,
     menuOpen: false,
   };
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+    if (this.communityReviewsRef.current) {
+      this.bottomBoundaryQuerySelector = `.${this.communityReviewsRef.current.className.replace(/\s+/g, '.')}`;
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  // TODO: use ref forwarding once we upgrade to react 16.3+: https://reactjs.org/docs/forwarding-refs.html
+  communityReviewsRef = React.createRef();
+  breadCrumbRef = React.createRef();
+  pricingAndFloorPlansRef = React.createRef();
+  communitySummaryRef = React.createRef();
+
+  handleScroll = () => {
+    if (this.breadCrumbRef.current) {
+      const rect = this.breadCrumbRef.current.getBoundingClientRect();
+      const elemTop = rect.top;
+      const elemBottom = rect.bottom;
+      const isVisible = elemTop < window.innerHeight && elemBottom >= 0;
+
+      if (!isVisible) {
+        this.setState({
+          stickyHeaderVisible: true,
+        });
+      } else {
+        this.setState({
+          stickyHeaderVisible: false,
+        });
+      }
+    }
+  };
+
   toggleMenu = () => {
     this.setState({
       menuOpen: !this.state.menuOpen,
     });
   };
+
   render() {
+    const { community, userActions } = this.props;
     const headerItems = [
       { name: 'List on Seniorly', url: '#' },
       { name: 'Help Center', url: '#' },
@@ -74,41 +121,51 @@ class HeaderWithState extends React.Component {
       { name: 'List on Seniorly', url: '#' },
       { name: 'Sign Out', url: '#' },
     ];
+    const stickyHeaderItems = [
+      { label: 'Summary', ref: this.communitySummaryRef },
+      { label: 'Pricing & Floor Plans', ref: this.pricingAndFloorPlansRef },
+      { label: 'Reviews', ref: this.communityReviewsRef },
+    ];
+
     return (
-      <Header
-        menuOpen={this.state.menuOpen}
-        onMenuIconClick={this.toggleMenu}
-        headerItems={headerItems}
-        menuItems={menuItems}
-      />
+      <React.Fragment>
+        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+        <Header
+          menuOpen={this.state.menuOpen}
+          onMenuIconClick={this.toggleMenu}
+          headerItems={headerItems}
+          menuItems={menuItems}
+        />
+        <CommunityStickyHeader
+          items={stickyHeaderItems}
+          visible={this.state.stickyHeaderVisible}
+        />
+        <PageWrapper>
+          <Main
+            key="main"
+            breadCrumbRef={this.breadCrumbRef}
+            communityReviewsRef={this.communityReviewsRef}
+            pricingAndFloorPlansRef={this.pricingAndFloorPlansRef}
+            communitySummaryRef={this.communitySummaryRef}
+            community={community}
+          />
+          {/* 24px or 84px (when sticky header is visible) from top TODO: figure out how to get this from styled theme sizes */
+            this.communityReviewsRef.current &&
+            <Sticky
+              top={this.state.stickyHeaderVisible ? 84 : 24}
+              bottomBoundary={this.bottomBoundaryQuerySelector}
+            >
+              <Column
+                key="column"
+                community={community}
+                userActions={userActions}
+              />
+            </Sticky>
+          }
+        </PageWrapper>
+        <Footer />
+        <StickyFooter community={community} />
+      </React.Fragment>
     );
   }
 }
-
-const CommunityDetailPage = ({ community, userActions }) => {
-  return (
-    <div>
-      <HeaderWithState />
-      <PageWrapper>
-        <Main key="main" community={community} />
-        {/* 24px from top */}
-        <Sticky top={24} bottomBoundary="#property-reviews">
-          <Column
-            key="column"
-            community={community}
-            userActions={userActions}
-          />
-        </Sticky>
-      </PageWrapper>
-      <Footer />
-      <StickyFooter community={community} />
-    </div>
-  );
-};
-
-CommunityDetailPage.propTypes = {
-  community: object.isRequired,
-  userActions: object.isRequired,
-};
-
-export default CommunityDetailPage;

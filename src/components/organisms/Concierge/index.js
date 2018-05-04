@@ -32,7 +32,7 @@ export default class Concierge extends Component {
       currentStep,
       className,
       userRequestedCB,
-      ...props,
+      ...props
     } = this.props;
 
     const StepComponent = steps[currentStep];

@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import smoothscroll from 'smoothscroll-polyfill';
 
 import { size } from 'sly/components/themes';
 import { Thumbnail } from 'sly/components/atoms';
@@ -39,10 +38,6 @@ class ThumbnailScroller extends React.Component {
   };
 
   componentDidMount() {
-    // this is not required when running in test env created by jsdom
-    if (document.documentElement.clientHeight) {
-      smoothscroll.polyfill();
-    }
     this.scrollToSelected();
   }
 
@@ -51,7 +46,7 @@ class ThumbnailScroller extends React.Component {
   }
 
   scrollToSelected() {
-    if (this.thumbnailRefs[this.props.selected] && this.thumbnailRefs[this.props.selected].scrollIntoView) {
+    if (this.thumbnailRefs[this.props.selected]) {
       this.thumbnailRefs[this.props.selected].scrollIntoView({ behavior: 'smooth' });
     }
   }
@@ -62,7 +57,7 @@ class ThumbnailScroller extends React.Component {
     return (
       <Wrapper>
         {this.props.thumbnails.map((thumbnail, i) => (
-          <li key={i} ref={(c) => { this.thumbnailRefs[i] = c; }}>
+          <li key={i} ref={this.thumbnailRefs[i]}>
             <Thumbnail
               palette={this.props.palette}
               selected={i === this.props.selected}

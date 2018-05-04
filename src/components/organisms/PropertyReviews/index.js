@@ -31,6 +31,7 @@ export default class PropertyReviews extends Component {
       reviews,
       reviewRatings,
       onLeaveReview,
+      propertyReviewRef,
     } = this.props;
     let propertyReviews = null;
     if (hasSlyReviews) {
@@ -39,7 +40,7 @@ export default class PropertyReviews extends Component {
       });
     }
     return (
-      <section id="property-reviews">
+      <div>
         {propertyReviews}
         {hasWebReviews && (
           <GatheredReviewRatings
@@ -47,7 +48,7 @@ export default class PropertyReviews extends Component {
             onLeaveReview={onLeaveReview}
           />
         )}
-      </section>
+      </div>
     );
   }
 }

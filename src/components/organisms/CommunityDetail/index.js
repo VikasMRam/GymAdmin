@@ -14,6 +14,7 @@ import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGaller
 import MorePictures from 'sly/components/organisms/MorePictures';
 import HowSlyWorks from "sly/components/organisms/HowSlyWorks";
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
+import Breadcrumb from 'sly/components/molecules/Breadcrumb';
 
 // TODO: remove this
 const nextUri = (() => {
@@ -26,7 +27,7 @@ const nextUri = (() => {
 
 export default class CommunityDetail extends Component {
   render() {
-    const { community, ...props } = this.props;
+    const { community, communityReviewsRef, breadCrumbRef, pricingAndFloorPlansRef, communitySummaryRef, ...props } = this.props;
     const {
       id,
       name,
@@ -44,6 +45,7 @@ export default class CommunityDetail extends Component {
       phoneNumber,
       twilioNumber,
       user,
+      url,
     } = community;
     const images = gallery.images || [];
     const videos = videoGallery.videos || [];
@@ -78,6 +80,30 @@ export default class CommunityDetail extends Component {
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
     const mapViewTitle = `Map View of ${name}`;
+    // TODO: use react router generated paths once router wiring is complete
+    const breadcrumbItems = [
+      {
+        path: '/',
+        label: 'Home',
+      },
+      {
+        path: '/assisted-living',
+        label: 'Assisted Living',
+      },
+      {
+        path: `/assisted-living/${address.state}`,
+        label: address.state,
+      },
+      {
+        path: `/assisted-living/${address.state}/${address.city}`,
+        label: address.city,
+      },
+      {
+        path: url,
+        label: name,
+      },
+    ];
+
     return (
       <div {...props}>
         {/* temp shiz */}
@@ -89,8 +115,10 @@ export default class CommunityDetail extends Component {
           images={images}
           videos={videos}
         />
+        <Breadcrumb items={breadcrumbItems} innerRef={breadCrumbRef} />
         <Heading level="hero">{name}</Heading>
         <CommunitySummary
+          innerRef={communitySummaryRef}
           twilioNumber={twilioNumber}
           phoneNumber={phoneNumber}
           user={user}
@@ -99,7 +127,7 @@ export default class CommunityDetail extends Component {
           communityHighlights={communityHighlights}
           reviews={reviews}
         />
-        <CollapsibleSection title="Pricing & Floor Plans">
+        <CollapsibleSection title="Pricing & Floor Plans" innerRef={pricingAndFloorPlansRef}>
           <PricingAndAvailability
             communityName={name}
             address={address}
@@ -143,7 +171,7 @@ export default class CommunityDetail extends Component {
         <CollapsibleSection title="Owner's Story">
           <OwnerStory ownerExperience={ownerExperience} />
         </CollapsibleSection>
-        <CollapsibleSection title="Reviews">
+        <CollapsibleSection title="Reviews" innerRef={communityReviewsRef}>
           <PropertyReviews
             hasSlyReviews={hasSlyReviews}
             hasWebReviews={hasWebReviews}
@@ -162,7 +190,7 @@ export default class CommunityDetail extends Component {
             similarProperties={similarProperties}
           />
         </CollapsibleSection>
-        <CollapsibleSection title={"More Pictures"} size="large">
+        <CollapsibleSection title="More Pictures" size="large">
           <MorePictures
             gallery={gallery}
           />

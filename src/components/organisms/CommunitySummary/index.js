@@ -21,6 +21,7 @@ export default class communitySummary extends React.Component {
     reviews: PropTypes.arrayOf(PropTypes.shape({
       value: PropTypes.number,
     })),
+    innerRef: PropTypes.object,
   };
 
   static sectionIdMaps = {
@@ -48,7 +49,7 @@ export default class communitySummary extends React.Component {
 
   render() {
     const {
-      twilioNumber, phoneNumber, user, amenityScore, communityHighlights, startingRate, reviews,
+      twilioNumber, phoneNumber, user, amenityScore, communityHighlights, startingRate, reviews, innerRef,
     } = this.props;
     const highlights = [];
 
@@ -140,7 +141,7 @@ export default class communitySummary extends React.Component {
     }
 
     return (
-      <section id="community-summary">
+      <section ref={innerRef}>
         <List items={highlights} />
       </section>
     );
