@@ -30,7 +30,7 @@ const SimilarCommunityDescDiv = styled.div`
   color: ${palette('grayscale', 0)};
 `;
 
-function getArrayAsString(array) {
+function getArrayAsString(array=[]) {
   return array.join(', ');
 }
 

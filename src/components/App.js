@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
-
+import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';
 import setGlobalStyles from './themes/setGlobalStyles';
@@ -13,7 +13,7 @@ setGlobalStyles();
 
 export default class App extends Component {
   render() {
-    const careTypes = ['assisted-living', 'independent-living'].join('|');
+    const careTypes = ['retirement-community','assisted-living', 'independent-living','alzheimers-care'].join('|');
     return (
       <div>
         <Helmet titleTemplate="Seniorly - %s">
@@ -34,10 +34,10 @@ export default class App extends Component {
         <ThemeProvider theme={theme}>
           <Switch>
             <Route path="/community/:communitySlug" component={CommunityDetailPageContainer}  />
-            { /*<Route
-              path={`/:careType(${careTypes})/:state/:city/:slug`}
-              component={PropertyDetailPage}
-            /> */ }
+            <Route
+              path={`/:toc(${careTypes})/:state/:city`}
+              component={CommunitySearchPageContainer}
+            />
           </Switch>
         </ThemeProvider>
       </div>

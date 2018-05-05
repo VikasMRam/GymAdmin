@@ -16,3 +16,4 @@ export const getList = (state = initialState, resource) =>
 export const getDetail = (state = initialState, resource) =>
   getResourceState(state, resource).detail;
 
+

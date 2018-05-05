@@ -10,6 +10,7 @@ export default (state = initialState, { type, payload }) => {
       }
       return undefined;
     });
+
   }
   return state;
 };
