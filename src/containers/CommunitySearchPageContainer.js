@@ -6,7 +6,7 @@ import  withServerState from 'sly/store/withServerState';
 
 import { resourceListReadRequest } from "sly/store/resource/actions";
 import { getList } from "sly/store/selectors";
-import { getMeta } from "sly/store/entities/selectors";
+
 import CommunitySearchPage from "sly/components/pages/CommunitySearchPage";
 
 class CommunitySearchPageContainer extends Component {
@@ -111,7 +111,6 @@ const mapStateToProps = (state, { match, location }) => {
   return {
     searchParams,
     communityList: getList(state,'searchResource'),
-    requestMeta: getMeta(state,'searchResource'),
   };
 };
 
