@@ -58,7 +58,9 @@ const updateOrDeleteReducer = (state, { type, payload, meta }) => {
   }
 };
 
-export default (state = initialState, { type, payload, meta }) => {
+export default (state = initialState, action) => {
+  const { type, payload, meta } = action;
+
   const resource = get(meta, 'resource');
 
   if (!resource) {
@@ -101,6 +103,7 @@ export default (state = initialState, { type, payload, meta }) => {
         },
       };
     case RESOURCE_DETAIL_READ_SUCCESS:
+      console.log('from reducer', action);
       return {
         ...state,
         [resource]: {
