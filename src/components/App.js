@@ -13,7 +13,7 @@ setGlobalStyles();
 
 export default class App extends Component {
   render() {
-    const careTypes = ['assisted-living', 'independent-living','alzheimers-care'].join('|');
+    const careTypes = ['retirement-community','assisted-living', 'independent-living','alzheimers-care'].join('|');
     return (
       <div>
         <Helmet titleTemplate="Seniorly - %s">

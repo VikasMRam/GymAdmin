@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { string, bool } from 'prop-types';
+import { merge, omit } from 'lodash';
 
 import  withServerState from 'sly/store/withServerState';
 
@@ -27,6 +28,23 @@ class CommunitySearchPageContainer extends Component {
     });
   };
 
+  changeSearchParams = (fullEvent) => {
+    //Changed search params
+    const origParams = this.props.searchParams;
+    const changedParams = fullEvent.changedParams;
+    const fullParams = merge(origParams,changedParams);
+    const newUri = parseParamsToFullPath(fullParams);
+    this.props.history.push(newUri)
+  };
+
+  removeSearchFilters = (fullEvent)=>{
+    const paramsToRemove = fullEvent.paramsToRemove;
+    const fullParams = omit(this.props.searchParams, paramsToRemove);
+
+    const newUri = parseParamsToFullPath(fullParams);
+    this.props.history.push(newUri)
+  };
+
   render() {
     const {  searchParams, error, communityList, requestMeta } = this.props;
     const { mapView } = this.state;
@@ -39,9 +57,29 @@ class CommunitySearchPageContainer extends Component {
       );
     }
 
-    return <CommunitySearchPage requestMeta={requestMeta} isMapView={mapView} toggleMap={this.toggleMap} searchParams={searchParams} communityList={communityList}/> ;
+    return <CommunitySearchPage requestMeta={requestMeta}
+                                isMapView={mapView}
+                                toggleMap={this.toggleMap}
+                                searchParams={searchParams}
+                                onParamsChange={this.changeSearchParams}
+                                onParamsRemove={this.removeSearchFilters}
+                                communityList={communityList}/> ;
 
   }
+}
+function parseParamsToFullPath(params) {
+  let path = `/${params.toc}/${params.state}/${params.city}?`;
+  Object.keys(params).map((key)=>{
+    if (['size','budget','sort','page-number','page-size','radius'].indexOf(key) > -1) {
+      let value = params[key];
+      if (value !== "" && value !== undefined) {
+        path += `${key}=${value}&`;
+      }
+    }
+  });
+  path = path.replace(/&$/,'');
+  return path;
+
 }
 
 function parseQueryStringToFilters(qs) {
@@ -69,7 +107,7 @@ function parseQueryStringToFilters(qs) {
 const mapStateToProps = (state, { match, location }) => {
   //Maybe i can read this from just the response? and not have to repeat myself?
   let searchParams = {};
-  Object.assign(searchParams,match.params,parseQueryStringToFilters(location.search))
+  Object.assign(searchParams,match.params,parseQueryStringToFilters(location.search));
   return {
     searchParams,
     communityList: getList(state,'searchResource'),
@@ -79,7 +117,7 @@ const mapStateToProps = (state, { match, location }) => {
 
 const fetchData = (dispatch,  { match, location }) =>{
   let searchParams = {};
-  Object.assign(searchParams,match.params,parseQueryStringToFilters(location.search))
+  Object.assign(searchParams,match.params,parseQueryStringToFilters(location.search));
   return dispatch(resourceListReadRequest('searchResource', searchParams))
 };
 

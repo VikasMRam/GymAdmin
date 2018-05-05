@@ -3,10 +3,9 @@ import styled from 'styled-components';
 import { bool, object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import { Link } from 'sly/components/atoms';
+
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
-import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
-import CommunityMap from "sly/components/organisms/CommunityMap";
+import CommunitySearchFilterContainer from 'sly/containers/CommunitySearchFilterContainer';
 import SearchMap from "sly/components/organisms/SearchMap";
 
 // TODO: remove this
@@ -24,7 +23,7 @@ const Wrapper = styled.div`
   flex-direction:row;
 `
 
-const Main = styled(CommunitySearchList)`
+const StyledCommunitySearchList = styled(CommunitySearchList)`
   width: 100%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
@@ -36,7 +35,7 @@ const Main = styled(CommunitySearchList)`
   }
 `;
 
-const SideFilter = styled(CommunityFilterList)`
+const SideFilterContainer = styled(CommunitySearchFilterContainer)`
   width: 50%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
@@ -46,8 +45,19 @@ const SideFilter = styled(CommunityFilterList)`
     margin-right: ${size('spacing.xLarge')};
   } 
 `;
+const SearchMapContainer = styled(SearchMap)`
+  width: 100%;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.mainColumn')};
+    
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: 75%;
+    margin-right: ${size('spacing.xLarge')};
+  }
+`;
 
-const CommunitySearchPage = ({ toggleMap, isMapView, searchParams , requestMeta, communityList }) => {
+const CommunitySearchPage = ({ toggleMap, isMapView, onParamsChange, onParamsRemove, searchParams , requestMeta, communityList }) => {
   let latitude = 0.00;
   let longitude = 0.00;
   if (communityList.length > 0){
@@ -60,10 +70,13 @@ const CommunitySearchPage = ({ toggleMap, isMapView, searchParams , requestMeta,
 
     <Wrapper>
       <div>{requestMeta}</div>
-      <SideFilter toggleMap={toggleMap} isMapView={isMapView} />
-      {!isMapView && <Main key="main" communityList={communityList} />}
-      {isMapView && <SearchMap latitude={latitude} longitude={longitude} propertiesList={communityList}/>}
-      {/*{!isMapView && <SideFilter/>}*/}
+      <SideFilterContainer onFieldChange={onParamsChange} searchParams={searchParams} toggleMap={toggleMap} isMapView={isMapView} />
+      { !isMapView &&
+        <StyledCommunitySearchList key="main" communityList={communityList}
+                                   searchParams={searchParams} onParamsRemove={onParamsRemove}/>}
+      { isMapView &&
+       <SearchMapContainer latitude={latitude} longitude={longitude} communityList={communityList} />
+      }
     </Wrapper>
   );
 };

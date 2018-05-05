@@ -13,17 +13,14 @@ import RedMarker from 'sly/../public/icons/redmarker.png';
 
 //TODO SEARCH MAP
 const MapContainerElement = styled.div`
-  width: 100%;
-  height: 100%;
-
+ width: 100%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('map.search.regular.width')};
-    height: ${size('map.search.regular.height')};
+    width: ${size('layout.mainColumn')};
+    
   }
-
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: ${size('map.search.large.width')};
-    height: ${size('map.search.large.height')};
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: 75%;
+    margin-right: ${size('spacing.xLarge')};
   }
 `;
 
@@ -75,7 +72,7 @@ class SearchMap extends Component {
   static propTypes = {
     latitude: number.isRequired,
     longitude: number.isRequired,
-    propertiesList: arrayOf(shape({
+    communityList: arrayOf(shape({
       id: string.isRequired,
       name: string.isRequired,
       startingRate: number.isRequired,
@@ -124,7 +121,8 @@ class SearchMap extends Component {
     const {
       latitude,
       longitude,
-      propertiesList,
+      communityList,
+
     } = this.props;
     const center = {
       latitude,
@@ -134,7 +132,7 @@ class SearchMap extends Component {
 
     if (isServer) return null;
 
-    propertiesList.forEach((property) => {
+    communityList.forEach((property) => {
       const {
         id, name, startingRate, imageUrl, latitude, longitude,
       } = property;

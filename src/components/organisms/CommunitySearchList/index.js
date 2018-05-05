@@ -5,6 +5,7 @@ import { object, arrayOf } from 'prop-types';
 import { size } from 'sly/components/themes';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
 import Link from "sly/components/atoms/Link";
+import CommunityFilterBar from "sly/components/organisms/CommunityFilterBar";
 
 const SimilarCommunityTileDiv = styled.div`
   padding-bottom: ${size('spacing.large')};
@@ -61,8 +62,12 @@ function getFullCommunity({
 }
 
 
-const CommunitySearchList = ({ communityList }) => {
-
+const CommunitySearchList = ({ communityList,...props }) => {
+  if (communityList.length < 1 ){
+    return (
+      <SectionWrapper>Loading!</SectionWrapper>
+    )
+  }
   const components = communityList.map((similarProperty) => {
     return (
       <Link key={similarProperty.id} to={similarProperty.url}>
@@ -73,7 +78,10 @@ const CommunitySearchList = ({ communityList }) => {
     );
   });
   return (
-    <SectionWrapper>{components}</SectionWrapper>
+    <SectionWrapper>
+      <CommunityFilterBar {...props}/>
+      {components}
+    </SectionWrapper>
   );
 };
 

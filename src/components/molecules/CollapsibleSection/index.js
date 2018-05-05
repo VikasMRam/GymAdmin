@@ -47,12 +47,18 @@ const Content = styled.div`
   transition: height ${key('transitions.default')};
 `;
 
+const getHeadingLevel = (size) => {
+  switch (size){
+    case 'small':
+      return 'subtitle';
+  }
+};
 export default class CollapsibleSection extends Component {
   static propTypes = {
     children: node,
     title: string.isRequired,
     collapsedDefault: bool.isRequired,
-    size: oneOf(['regular', 'large']),
+    size: oneOf(['small','regular', 'large']),
   };
 
   static defaultProps = {
@@ -87,7 +93,7 @@ export default class CollapsibleSection extends Component {
           <Section collapsed={collapsed} size={size}>
             <StyledHr />
             <Header onClick={this.toggle} transparent ghost>
-              <StyledHeading>{title}</StyledHeading>
+              <StyledHeading level={getHeadingLevel(size)}>{title}</StyledHeading>
               <Icon
                 icon="chevron"
                 palette="grays"
