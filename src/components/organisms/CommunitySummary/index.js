@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import smoothscroll from 'smoothscroll-polyfill';
+import { arrayOf, string, number, object, shape } from 'prop-types';
 import NumberFormat from 'react-number-format';
 
 import { Link } from 'sly/components/atoms';
@@ -8,42 +7,37 @@ import List from 'sly/components/molecules/List';
 
 export default class communitySummary extends React.Component {
   static propTypes = {
-    phoneNumber: PropTypes.string,
-    user: PropTypes.shape({
-      phoneNumber: PropTypes.string,
+    phoneNumber: string,
+    user: shape({
+      phoneNumber: string,
     }),
-    twilioNumber: PropTypes.shape({
-      numbers: PropTypes.arrayOf(PropTypes.number),
+    twilioNumber: shape({
+      numbers: arrayOf(number),
     }),
-    amenityScore: PropTypes.string,
-    communityHighlights: PropTypes.arrayOf(PropTypes.string),
-    startingRate: PropTypes.number,
-    reviews: PropTypes.arrayOf(PropTypes.shape({
-      value: PropTypes.number,
+    amenityScore: string,
+    communityHighlights: arrayOf(string),
+    startingRate: number,
+    reviews: arrayOf(shape({
+      value: number,
     })),
-    innerRef: PropTypes.object,
+    innerRef: object,
+    pricingAndFloorPlansRef: object.isRequired,
+    amenitiesAndFeaturesRef: object.isRequired,
+    communityReviewsRef: object.isRequired,
   };
 
   static sectionIdMaps = {
-    pricingAndFloorPlans: 'pricing-and-floor-plans',
     amenitiesAndFeatures: 'amenities-and-features',
-    reviews: 'property-reviews',
+    pricingAndFloorPlans: 'pricing-and-floor-plans',
+    reviews: 'reviews',
   };
 
-  static scrollToSection(e, section) {
+  static scrollToSection(e, sectionRef) {
     // Link triggers router navigation so need to preventDefault.
     // TODO: find better way to do it with any other component without much styling code
     e.preventDefault();
-    const sectionRef = document.getElementById(this.sectionIdMaps[section]);
-    if (sectionRef) {
-      sectionRef.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  componentDidMount() {
-    // this is not required when running in test env created by jsdom
-    if (document.documentElement.clientHeight) {
-      smoothscroll.polyfill();
+    if (sectionRef.current) {
+      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }
 
@@ -79,7 +73,7 @@ export default class communitySummary extends React.Component {
         highlights.push((
           <Link
             href={`#${this.constructor.sectionIdMaps.amenitiesAndFeatures}`}
-            onClick={e => this.constructor.scrollToSection(e, 'amenitiesAndFeatures')}
+            onClick={e => this.constructor.scrollToSection(e, this.props.amenitiesAndFeaturesRef)}
           >
             Amenity Score {parsedAmenityScore}
           </Link>
@@ -95,7 +89,7 @@ export default class communitySummary extends React.Component {
       highlights.push((
         <Link
           href={`#${this.constructor.sectionIdMaps.amenitiesAndFeatures}`}
-          onClick={e => this.constructor.scrollToSection(e, 'amenitiesAndFeatures')}
+          onClick={e => this.constructor.scrollToSection(e, this.props.amenitiesAndFeaturesRef)}
         >
           Alzheimer's & Dementia support
         </Link>
@@ -104,7 +98,7 @@ export default class communitySummary extends React.Component {
     highlights.push((
       <Link
         href={`#${this.constructor.sectionIdMaps.pricingAndFloorPlans}`}
-        onClick={e => this.constructor.scrollToSection(e, 'pricingAndFloorPlans')}
+        onClick={e => this.constructor.scrollToSection(e, this.props.pricingAndFloorPlansRef)}
       >
         Rooms Available
       </Link>
@@ -115,7 +109,7 @@ export default class communitySummary extends React.Component {
           Pricing starts from&nbsp;
           <Link
             href={`#${this.constructor.sectionIdMaps.pricingAndFloorPlans}`}
-            onClick={e => this.constructor.scrollToSection(e, 'pricingAndFloorPlans')}
+            onClick={e => this.constructor.scrollToSection(e, this.props.pricingAndFloorPlansRef)}
           >
             <NumberFormat value={startingRate} thousandSeparator displayType="text" prefix="$" />
           </Link>
@@ -132,7 +126,7 @@ export default class communitySummary extends React.Component {
         highlights.push((
           <Link
             href={`#${this.constructor.sectionIdMaps.reviews}`}
-            onClick={e => this.constructor.scrollToSection(e, 'reviews')}
+            onClick={e => this.constructor.scrollToSection(e, this.props.communityReviewsRef)}
           >
             Rating {avgReviews.toFixed(1).replace(/\.0+$/, '')}-Star Average
           </Link>
@@ -141,9 +135,9 @@ export default class communitySummary extends React.Component {
     }
 
     return (
-      <section ref={innerRef}>
+      <article ref={innerRef}>
         <List items={highlights} />
-      </section>
+      </article>
     );
   }
 }

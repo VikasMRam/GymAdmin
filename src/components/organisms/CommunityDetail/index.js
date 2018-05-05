@@ -27,7 +27,9 @@ const nextUri = (() => {
 
 export default class CommunityDetail extends Component {
   render() {
-    const { community, communityReviewsRef, breadCrumbRef, pricingAndFloorPlansRef, communitySummaryRef, ...props } = this.props;
+    const {
+      community, communityReviewsRef, breadCrumbRef, pricingAndFloorPlansRef, communitySummaryRef, amenitiesAndFeaturesRef, ...props
+    } = this.props;
     const {
       id,
       name,
@@ -119,6 +121,9 @@ export default class CommunityDetail extends Component {
         <Heading level="hero">{name}</Heading>
         <CommunitySummary
           innerRef={communitySummaryRef}
+          pricingAndFloorPlansRef={pricingAndFloorPlansRef}
+          amenitiesAndFeaturesRef={amenitiesAndFeaturesRef}
+          communityReviewsRef={communityReviewsRef}
           twilioNumber={twilioNumber}
           phoneNumber={phoneNumber}
           user={user}
@@ -154,7 +159,7 @@ export default class CommunityDetail extends Component {
             serviceHighlights={serviceHighlightsFinal}
           />
         </CollapsibleSection>
-        <CollapsibleSection title="Amenities & Features">
+        <CollapsibleSection title="Amenities & Features" innerRef={amenitiesAndFeaturesRef}>
           <AmenitiesAndFeatures
             communityName={name}
             communityHighlights={communityHighlights}

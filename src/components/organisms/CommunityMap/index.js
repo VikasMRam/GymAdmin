@@ -202,7 +202,7 @@ class CommunityMap extends Component {
     }
 
     return (
-      <section id="community-map">
+      <article>
         <Map
           center={center}
           defaultZoom={defaultZoom}
@@ -210,7 +210,7 @@ class CommunityMap extends Component {
         >
           {markerComponents}
         </Map>
-      </section>
+      </article>
     );
   }
 }

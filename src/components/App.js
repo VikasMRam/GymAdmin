@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
 
+import { isBrowser } from 'sly/config';
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 // https://github.com/diegohaz/arc/wiki/Styling
@@ -15,7 +16,7 @@ setGlobalStyles();
 export default class App extends Component {
   componentDidMount() {
     // this is not required when running in test env created by jsdom
-    if (document.documentElement.clientHeight) {
+    if (isBrowser) {
       smoothscroll.polyfill();
     }
   }

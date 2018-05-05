@@ -68,6 +68,7 @@ export default class CommunityStickyHeader extends React.Component {
 
   render() {
     const { items, visible } = this.props;
+
     return (
       <React.Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}

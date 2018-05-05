@@ -76,6 +76,7 @@ export default class CommunityDetailPage extends React.Component {
   breadCrumbRef = React.createRef();
   pricingAndFloorPlansRef = React.createRef();
   communitySummaryRef = React.createRef();
+  amenitiesAndFeaturesRef = React.createRef();
 
   handleScroll = () => {
     if (this.breadCrumbRef.current) {
@@ -147,6 +148,7 @@ export default class CommunityDetailPage extends React.Component {
             communityReviewsRef={this.communityReviewsRef}
             pricingAndFloorPlansRef={this.pricingAndFloorPlansRef}
             communitySummaryRef={this.communitySummaryRef}
+            amenitiesAndFeaturesRef={this.amenitiesAndFeaturesRef}
             community={community}
           />
           {/* 24px or 84px (when sticky header is visible) from top TODO: figure out how to get this from styled theme sizes */

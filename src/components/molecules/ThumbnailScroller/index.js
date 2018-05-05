@@ -57,7 +57,7 @@ class ThumbnailScroller extends React.Component {
     return (
       <Wrapper>
         {this.props.thumbnails.map((thumbnail, i) => (
-          <li key={i} ref={this.thumbnailRefs[i]}>
+          <li key={i} ref={(r) => { this.thumbnailRefs[i] = r; }}>
             <Thumbnail
               palette={this.props.palette}
               selected={i === this.props.selected}
