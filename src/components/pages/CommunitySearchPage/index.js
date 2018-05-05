@@ -5,7 +5,7 @@ import { bool, object } from 'prop-types';
 import { size } from 'sly/components/themes';
 
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
-import CommunitySearchFilterContainer from 'sly/containers/CommunitySearchFilterContainer';
+import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
 import SearchMap from "sly/components/organisms/SearchMap";
 
 // TODO: remove this
@@ -35,7 +35,7 @@ const StyledCommunitySearchList = styled(CommunitySearchList)`
   }
 `;
 
-const SideFilterContainer = styled(CommunitySearchFilterContainer)`
+const SideFilterContainer = styled(CommunityFilterList)`
   width: 50%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};

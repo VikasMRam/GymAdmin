@@ -37,26 +37,26 @@ const SectionWrapper = styled.div`
 
 function getFullCommunity({
   name,
-  numRatings,
-  ratingsValue,
+  numReviews,
+  reviewsValue,
   description,
   addressString,
   imageUrl,
-  startingPrice,
+  startingRate,
   webViewInfo
   }) {
 
   return {
     name,
     mainImage: imageUrl,
-    startingRate: startingPrice,
+    startingRate,
     propInfo:{
       communityDescription: description,
       typeCare: webViewInfo.firstLineValue.split(',')
     } ,
     propRatings: {
-      reviewsValue: ratingsValue,
-      numReviews: numRatings
+      reviewsValue: reviewsValue,
+      numReviews: numReviews,
     }
   };
 }

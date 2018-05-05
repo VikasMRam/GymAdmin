@@ -14,6 +14,7 @@ import RedMarker from 'sly/../public/icons/redmarker.png';
 //TODO SEARCH MAP
 const MapContainerElement = styled.div`
  width: 100%;
+ 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
     
