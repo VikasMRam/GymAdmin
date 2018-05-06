@@ -7,8 +7,7 @@ import { entitiesReceive } from './actions';
 const middleware = store => next => (action) => {
   const { payload:rawEntities, meta } = action;
 
-  if (meta && meta.entities) {
-    console.log(action.type, action);
+  if (meta && meta.thunk && meta.resource) {
     const { uri, path, queryString } = meta.request;
 
     const { meta: result, ...entities } = normalize(rawEntities, {
@@ -16,12 +15,12 @@ const middleware = store => next => (action) => {
       filterEndpoint: false,
     });
 
-    if (entities[meta.entities]) {
+    try {
       store.dispatch(entitiesReceive(entities));
-      const ids = result[path][queryString].data.map(({id})=>id);
       return next({ ...action, payload: result});
-    } else {
-      throw new Error(`Possibly malformed response with type: ${meta.entities}`);
+    } catch(e) {
+      console.error(e);
+      next();
     }
   }
 

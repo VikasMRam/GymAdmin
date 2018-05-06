@@ -3,46 +3,38 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
 import * as actions from './actions';
 
-export function* createResource(api, { data }, { resource, thunk }) {
-  const { uri, path, queryString } = api.uri(resource);
+export function* createResource(api, request, { thunk }) {
   try {
     // https://github.com/diegohaz/arc/wiki/API-service
-    const detail = yield call([api, api.post], uri, data);
+    const detail = yield call([api, api.post], request);
     // https://github.com/diegohaz/arc/wiki/Actions#async-actions
-    yield put(actions.resourceCreateSuccess(resource, detail, { uri, path, queryString, data }, thunk));
+    yield put(actions.resourceCreateSuccess(resource, detail, request, thunk));
   } catch (e) {
     yield put(actions.resourceCreateFailure(resource, e, { uri, path, queryString, data }, thunk));
   }
 }
 
-export function* readResourceList(api, { params }, { resource, thunk }) {
-  const { uri, path, queryString } = api.uri(resource, params);
+export function* readResourceList(api, request, { thunk }) {
   try {
-    const list = yield call([api, api.get], uri);
-    yield put(actions.resourceListReadSuccess(resource, list, { uri, path, queryString }, thunk));
+    const list = yield call([api, api.get], request);
+    yield put(actions.resourceListReadSuccess(request, list, thunk));
   } catch (e) {
-    yield put(actions.resourceListReadFailure(resource, e, { uri, path, queryString }, thunk));
+    yield put(actions.resourceListReadFailure(request, e, thunk));
   }
 }
 
-export function* readResourceDetail(
-  api,
-  { needle, params },
-  { resource, thunk }
-) {
-  const { uri, path, queryString } = api.uri(resource, needle, params);
+export function* readResourceDetail(api, request, { thunk }) {
   try {
-    const detail = yield call([api, api.get], uri);
-    yield put(actions.resourceDetailReadSuccess(resource, detail, { needle, uri, path, queryString }, thunk));
+    const detail = yield call([api, api.get], request);
+    yield put(actions.resourceDetailReadSuccess(request, detail, thunk));
   } catch (e) {
-    yield put(actions.resourceDetailReadFailure(resource, e, { needle, path, queryString, uri }, thunk));
+    yield put(actions.resourceDetailReadFailure(request, e, thunk));
   }
 }
 
-export function* updateResource(api, { needle, data }, { resource, thunk }) {
-  const { uri, path, queryString } = api.uri(resource, needle);
+export function* updateResource(api, request, { thunk }) {
   try {
-    const detail = yield call([api, api.put], uri, data);
+    const detail = yield call([api, api.put], request, data);
     yield put(actions.resourceUpdateSuccess(resource, detail, { uri, path, queryString, needle, data }, thunk));
   } catch (e) {
     yield put(actions.resourceUpdateFailure(resource, e, { uri, path, queryString, needle, data }, thunk));

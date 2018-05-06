@@ -3,7 +3,7 @@ import { string, bool } from 'prop-types';
 import { merge, omit } from 'lodash';
 
 import  withServerState from 'sly/store/withServerState';
-
+import genRequest from 'sly/services/api/genRequest';
 import { resourceListReadRequest } from "sly/store/resource/actions";
 import { getList } from "sly/store/selectors";
 
@@ -104,20 +104,24 @@ function parseQueryStringToFilters(qs) {
 
 }
 
+const genSearchParams = (match, location) => ({
+  ...match.params,
+  ...parseQueryStringToFilters(location.search),
+});
+
+const genListRequest = params => genRequest('searchResource', params);
+
 const mapStateToProps = (state, { match, location }) => {
-  //Maybe i can read this from just the response? and not have to repeat myself?
-  let searchParams = {};
-  Object.assign(searchParams,match.params,parseQueryStringToFilters(location.search));
+  const searchParams = genSearchParams(match, location);
   return {
     searchParams,
-    communityList: getList(state,'searchResource'),
+    communityList: getList(state, genListRequest(searchParams)),
   };
 };
 
 const fetchData = (dispatch,  { match, location }) =>{
-  let searchParams = {};
-  Object.assign(searchParams,match.params,parseQueryStringToFilters(location.search));
-  return dispatch(resourceListReadRequest('searchResource', searchParams))
+  const searchParams = genSearchParams(match, location);
+  return dispatch(resourceListReadRequest(genListRequest(searchParams)));
 };
 
 const handleError = err => {
@@ -132,3 +136,4 @@ export default withServerState({
   fetchData,
   handleError
 })(CommunitySearchPageContainer);
+

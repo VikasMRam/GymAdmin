@@ -21,6 +21,13 @@ export default function(resource, id, params) {
   const path = `/${resourceUri(resource)}${idString}`;
   const uri = `${path}${queryString}`;
 
-  return { uri, path, queryString };
+  return { 
+    resource, 
+    id, 
+    params, 
+    uri, 
+    path, 
+    queryString 
+  };
 };
 

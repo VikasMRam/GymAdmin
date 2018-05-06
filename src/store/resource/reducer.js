@@ -77,11 +77,12 @@ export default (state = initialState, action) => {
       };
 
     case RESOURCE_LIST_READ_REQUEST:
+      // TODO: figure out how to reset state prior request
       return {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          list: getList(initialState, resource),
+          // list: getList(initialState, resource),
         },
       };
     case RESOURCE_LIST_READ_SUCCESS:
@@ -94,12 +95,12 @@ export default (state = initialState, action) => {
       };
 
     case RESOURCE_DETAIL_READ_REQUEST:
-      console.log(action.type, action);
+      // TODO: figure out how to reset state prior request
       return {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          detail: getDetail(initialState, resource),
+          //detail: getDetail(initialState, resource),
         },
       };
     case RESOURCE_DETAIL_READ_SUCCESS:
