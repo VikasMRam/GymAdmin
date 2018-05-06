@@ -8,22 +8,18 @@ const middleware = store => next => (action) => {
   const { payload:rawEntities, meta } = action;
 
   if (meta && meta.entities) {
-    const { uri } = meta.request;
-    const qsPos = uri.indexOf('?');
-    const path =  qsPos !== -1 ? uri.substring(0, qsPos) : uri;
-    const key =  qsPos !== -1 ? uri.substring(qsPos) : '';
+    console.log(action.type, action);
+    const { uri, path, queryString } = meta.request;
 
     const { meta: result, ...entities } = normalize(rawEntities, {
       endpoint: uri,
       filterEndpoint: false,
-    }); // { meta :...., key1,;
-
-    console.log(action.type, result);
+    });
 
     if (entities[meta.entities]) {
       store.dispatch(entitiesReceive(entities));
-      const ids = result[path][key].data.map(({id})=>id);
-      return next({ ...action, payload: ids});
+      const ids = result[path][queryString].data.map(({id})=>id);
+      return next({ ...action, payload: result});
     } else {
       throw new Error(`Possibly malformed response with type: ${meta.entities}`);
     }

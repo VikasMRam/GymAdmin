@@ -14,8 +14,13 @@ export default function(resource, id, params) {
     params = id;
     id = null;
   }
-  let idString = id ? `/${id}` : '';
-  let queryString = params ? `?${stringify(params)}` : '';
-  return `/${resourceUri(resource)}${idString}${queryString}`;
+
+  const idString = id ? `/${id}` : '';
+  const queryString = params ? `?${stringify(params)}` : '';
+
+  const path = `/${resourceUri(resource)}${idString}`;
+  const uri = `${path}${queryString}`;
+
+  return { uri, path, queryString };
 };
 

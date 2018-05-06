@@ -1,7 +1,6 @@
-// https://github.com/diegohaz/arc/wiki/Reducers
-// https://github.com/diegohaz/arc/wiki/Example-redux-modules#resource
 import findIndex from 'lodash/findIndex';
 import get from 'lodash/get';
+import mergeWith from 'lodash/mergeWith';
 
 import {
   initialState,
@@ -95,6 +94,7 @@ export default (state = initialState, action) => {
       };
 
     case RESOURCE_DETAIL_READ_REQUEST:
+      console.log(action.type, action);
       return {
         ...state,
         [resource]: {
@@ -103,12 +103,12 @@ export default (state = initialState, action) => {
         },
       };
     case RESOURCE_DETAIL_READ_SUCCESS:
-      console.log('from reducer', action);
+      const resourceState = getResourceState(state, resource);
       return {
         ...state,
         [resource]: {
-          ...getResourceState(state, resource),
-          detail: payload[0],
+          ...resourceState,
+          detail: mergeWith({}, resourceState.detail, payload),
         },
       };
 
