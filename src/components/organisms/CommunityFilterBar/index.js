@@ -16,14 +16,14 @@ const SectionWrapper = styled.div`
   width: 100%;
   padding: ${size('spacing.large')};
 `;
-const StyledIButton = styled(IconButton)`
+export const StyledIButton = styled(IconButton)`
   display: flex;
   flex-direction: row;
   margin: ${size('spacing.large')};
   width: 100%;
   padding: ${size('spacing.large')};
 `;
-const StyledButton = styled(Button)`
+export const StyledButton = styled(Button)`
   display: flex;
   flex-direction: row;
   margin: auto;
