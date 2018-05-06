@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { string, object } from 'prop-types';
+import Sticky from 'react-stickynode';
 
 import { size } from 'sly/components/themes';
 import CommunityDetail from 'sly/components/organisms/CommunityDetail';
@@ -89,7 +90,14 @@ const CommunityDetailPage = ({ community, userActions }) => {
       <HeaderWithState />
       <PageWrapper>
         <Main key="main" community={community} />
-        <Column key="column" community={community} userActions={userActions} />
+        {/* 24px from top */}
+        <Sticky top={24} bottomBoundary="#property-reviews">
+          <Column
+            key="column"
+            community={community}
+            userActions={userActions}
+          />
+        </Sticky>
       </PageWrapper>
       <Footer />
     </div>
