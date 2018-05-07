@@ -8,6 +8,7 @@ import CommunityDetail from 'sly/components/organisms/CommunityDetail';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import Header from 'sly/components/molecules/Header';
 import Footer from 'sly/components/molecules/Footer';
+import StickyFooter from 'sly/components/molecules/StickyFooter';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -101,6 +102,7 @@ const CommunityDetailPage = ({ community, userActions }) => {
         </Sticky>
       </PageWrapper>
       <Footer />
+      <StickyFooter community={community} />
     </div>
   );
 };

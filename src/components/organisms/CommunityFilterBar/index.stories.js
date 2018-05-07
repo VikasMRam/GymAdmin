@@ -14,7 +14,7 @@ const fullSp = {
 
 storiesOf('Organisms|CommunityFilterBar', module)
   .add('default', () => (
-    <CommunityFilterBar searchParams={null} onParamsRemove={paramsRemover()} />
+    <CommunityFilterBar searchParams={{}} onParamsRemove={paramsRemover()} />
   ))
   .add('With All Filters', () => (
     <CommunityFilterBar
