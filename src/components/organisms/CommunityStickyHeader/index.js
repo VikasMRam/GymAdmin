@@ -1,10 +1,8 @@
 import React from 'react';
 import { bool, string, arrayOf, shape, object } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+import { palette, key } from 'styled-theme';
 import { ifProp } from 'styled-tools';
-import { key } from 'styled-theme';
-import Sticky from 'react-stickynode';
 
 import { size } from 'sly/components/themes';
 import { Link } from 'sly/components/atoms';
@@ -16,9 +14,10 @@ const StyledNav = styled.nav`
   padding: ${size('spacing.large')};
   transform-origin: center -100%;
   transform: ${ifProp('visible', 'scaleY(1)', 'scaleY(0)')};
-  transition: transform ${key('transitions.slow')};
+  transition: transform ${ifProp('visible', key('transitions.slow.out'), key('transitions.slow.in'))};
   position: fixed;
   top: 0;
+  z-index: 200;
 
   ol {
     width: 100%;
@@ -72,23 +71,21 @@ export default class CommunityStickyHeader extends React.Component {
     return (
       <React.Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-        <Sticky innerZ={200}>
-          <StyledNav visible={visible}>
-            <ol>
-              {
-                items.map((item, key) => {
-                  const { label } = item;
+        <StyledNav visible={visible}>
+          <ol>
+            {
+              items.map((item, key) => {
+                const { label } = item;
 
-                  return (
-                    <li key={key}>
-                      <Link onClick={e => this.handleClick(e, key)}>{label}</Link>
-                    </li>
-                  );
-                })
-              }
-            </ol>
-          </StyledNav>
-        </Sticky>
+                return (
+                  <li key={key}>
+                    <Link onClick={e => this.handleClick(e, key)}>{label}</Link>
+                  </li>
+                );
+              })
+            }
+          </ol>
+        </StyledNav>
       </React.Fragment>
     );
   }

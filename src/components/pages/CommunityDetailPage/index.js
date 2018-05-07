@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
-import { key } from 'styled-theme';
 import Sticky from 'react-stickynode';
 
 import { size } from 'sly/components/themes';
