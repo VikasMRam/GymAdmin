@@ -46,7 +46,6 @@ Link.propTypes = {
 
 Link.defaultProps = {
   palette: 'primary',
-  href: '#',
 };
 
 export default Link;
