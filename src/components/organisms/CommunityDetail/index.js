@@ -12,6 +12,7 @@ import OwnerStory from 'sly/components/organisms/OwnerStory';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
 import MorePictures from 'sly/components/organisms/MorePictures';
+import HowSlyWorks from "sly/components/organisms/HowSlyWorks";
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 
 // TODO: remove this
@@ -166,6 +167,7 @@ export default class CommunityDetail extends Component {
             gallery={gallery}
           />
         </CollapsibleSection>
+        <HowSlyWorks reason1="This is great"/>
       </div>
     );
   }
