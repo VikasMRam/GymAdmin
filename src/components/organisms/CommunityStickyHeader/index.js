@@ -16,7 +16,7 @@ const StyledNav = styled.nav`
   padding: ${size('spacing.large')};
   transform-origin: center -100%;
   transform: ${ifProp('visible', 'scaleY(1)', 'scaleY(0)')};
-  transition: transform ${key('transitions.stickyHeaderEntrance')};
+  transition: transform ${key('transitions.slow')};
   position: fixed;
   top: 0;
 
