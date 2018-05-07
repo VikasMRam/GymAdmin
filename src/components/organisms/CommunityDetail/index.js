@@ -200,7 +200,9 @@ export default class CommunityDetail extends Component {
             gallery={gallery}
           />
         </CollapsibleSection>
-        <HowSlyWorks reason1="This is great"/>
+        <CollapsibleSection title="How Seniorly Works" size="large">
+          <HowSlyWorks/>
+        </CollapsibleSection>
       </div>
     );
   }

@@ -15,6 +15,7 @@ const PageWrapper = styled.div`
   display: flex;
   margin: 0 auto;
   width: 100%;
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
   }

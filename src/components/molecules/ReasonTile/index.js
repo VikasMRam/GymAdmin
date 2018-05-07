@@ -5,55 +5,73 @@ import { palette, key } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 import { Block, Link } from 'sly/components/atoms';
-import Heading from "sly/components/atoms/Heading";
+import Heading from 'sly/components/atoms/Heading';
 
 export const Wrapper = styled(Link)`
-    display: inline-block;
-    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
-    width: 100%;
-    transition: box-shadow ${key('transitions.default')}, opacity ${key('transitions.default')};
-    margin-bottom: ${size('spacing.regular')};
-    &:hover {
-      cursor: pointer;
-      box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')} ${palette('grayscale', 1, true)};
-      opacity: 0.75;
-      background: ${palette('white',0)};
+  display: flex;
+  flex-direction: column;
+
+  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  transition: box-shadow ${key('transitions.default')},
+    opacity ${key('transitions.default')};
+  width: ${size('picture', 'large', 'width')};
+  margin-bottom: ${size('spacing.large')};
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')}
+      ${palette('grayscale', 1, true)};
+    opacity: 0.75;
+    background: ${palette('white', 0)};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('picture', 'regular', 'width')};
+    margin-bottom: ${size('spacing.large')};
+
+    :nth-child(odd) {
+      margin-right: ${size('spacing.xLarge')};
     }
-`;
+  }
 
-export const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.small')};
-`;
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    width: ${size('picture', 'small', 'width')};
+    margin-right: ${size('spacing.xLarge')};
 
-export const ItemDescription = styled.div`
-  padding: 0 ${size('spacing.large')};
-  padding-bottom: ${size('spacing.large')};
-`;
-
-export const ImageWrapper = styled.div`
-  position: relative;
-  height: 0;
-  width: 100%;
-  padding-top: 75%;
+    :nth-child(4n) {
+      margin-right: 0;
+    }
+  }
 `;
 
 export const Image = styled.img`
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+  width: ${size('picture', 'large', 'width')};
+  height: ${size('picture', 'large', 'height')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('picture', 'regular', 'width')};
+    height: ${size('picture', 'regular', 'height')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    width: ${size('picture', 'small', 'width')};
+    height: ${size('picture', 'small', 'height')};
+  }
 `;
 
+export const ItemDescription = styled.div`
+  padding: ${size('spacing.large')};
+`;
+
+export const StyledHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.regular')};
+`;
 
 const ReasonTile = ({
   image, title, text, to, ...props
 }) => (
   <Wrapper to={to} {...props}>
-    <ImageWrapper>
-      <Image src={image} />
-    </ImageWrapper>
+    <Image src={image} />
     <ItemDescription>
       <StyledHeading level="subtitle">{title}</StyledHeading>
       <Block>{text}</Block>
@@ -65,7 +83,7 @@ ReasonTile.propTypes = {
   image: PropTypes.string,
   title: PropTypes.string,
   text: PropTypes.string,
-  to: PropTypes.string
+  to: PropTypes.string,
 };
 
 export default ReasonTile;
