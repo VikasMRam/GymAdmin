@@ -20,14 +20,14 @@ const FullWrapper = styled.div`
 `;
 
 const FooterWrapper = styled.div`
-  padding: 13px 18px;
+  padding: 8px 16px;
   display: flex;
   margin: 0 auto;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
     display: flex;
-    padding: 12px 0;
+    padding: 16px 0;
   }
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
@@ -43,7 +43,7 @@ const FooterWrapper = styled.div`
   }
 `;
 
-const StyledButton = styled(Button)`
+const ContactButton = styled(Button)`
   width: 100%;
   height: 52px;
 
@@ -78,7 +78,7 @@ const StickyFooter = ({ community, onContactClick }) => {
           <ContactDetailHeader>Contact Property Manager</ContactDetailHeader>
           <ContactName>{agentName}</ContactName>
         </ContactDetails>
-        <StyledButton onClick={onContactClick}>Contact</StyledButton>
+        <ContactButton onClick={onContactClick}>Contact</ContactButton>
       </FooterWrapper>
     </FullWrapper>
   );
