@@ -20,14 +20,14 @@ const FullWrapper = styled.div`
 `;
 
 const FooterWrapper = styled.div`
-  padding: 8px 16px;
+  padding: ${size('spacing.regular')} ${size('spacing.large')};
   display: flex;
   margin: 0 auto;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
     display: flex;
-    padding: 16px 0;
+    padding: ${size('spacing.large')} 0;
   }
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
@@ -62,7 +62,7 @@ const ContactDetails = styled.div`
 `;
 
 const ContactDetailHeader = styled.div`
-  font-size: 18px;
+  font-size: ${size('text.subtitle')};
   font-weight: bold;
 `;
 
