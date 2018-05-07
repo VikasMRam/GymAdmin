@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string, object } from 'prop-types';
+import { object } from 'prop-types';
 import Sticky from 'react-stickynode';
 
 import { size } from 'sly/components/themes';
@@ -13,6 +13,8 @@ const PageWrapper = styled.div`
   display: flex;
   margin: 0 auto;
   width: 100%;
+  margin: ${size('spacing.large')};
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
   }
