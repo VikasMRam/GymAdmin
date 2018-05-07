@@ -44,7 +44,7 @@ const AdvancedInfoForm = ({
   handleSubmit, submitting, user, community,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Heading>Send a message to {community.name}</Heading>
+    <Heading>Contact {community.name}</Heading>
     <Block>{community.description}</Block>
 
     <Field
@@ -52,6 +52,7 @@ const AdvancedInfoForm = ({
       label="What type of care do you need?"
       type="multiplechoice"
       options={typeOfCareOptions}
+      width="75%"
       component={ReduxField}
     />
     <Field
@@ -59,13 +60,15 @@ const AdvancedInfoForm = ({
       label="What type of room are you looking for?"
       type="multiplechoice"
       options={typeOfRoomOptions}
+      width="75%"
       component={ReduxField}
     />
     <Field
       name="time_to_move"
       label="When would you/your loved one want to move in?"
-      type="multiplechoice"
+      type="singlechoice"
       options={timeToMoveOptions}
+      width="100%"
       component={ReduxField}
     />
     <Field
@@ -86,7 +89,7 @@ const AdvancedInfoForm = ({
       type="textarea"
       component={ReduxField}
     />
-    <StyledButton type="submit" disabled={submitting}>
+    <StyledButton type="submit" kind="jumbo" disabled={submitting}>
       Send Message
     </StyledButton>
   </Form>

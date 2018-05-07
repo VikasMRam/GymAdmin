@@ -37,6 +37,8 @@ export default function setGlobalStyles() {
       font-size: 16px;
       font-weight: 400;
       line-height: 1.5;
+      padding: 0;
+      margin: 0;
     }
 
     html * {

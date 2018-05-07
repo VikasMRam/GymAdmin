@@ -13,7 +13,7 @@ import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
 import MorePictures from 'sly/components/organisms/MorePictures';
 import HowSlyWorks from "sly/components/organisms/HowSlyWorks";
-
+import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 
 // TODO: remove this
 const nextUri = (() => {
@@ -41,6 +41,9 @@ export default class CommunityDetail extends Component {
       similarProperties,
       gallery = {},
       videoGallery = {},
+      phoneNumber,
+      twilioNumber,
+      user,
     } = community;
     const images = gallery.images || [];
     const videos = videoGallery.videos || [];
@@ -49,7 +52,7 @@ export default class CommunityDetail extends Component {
       communityDescription,
       staffDescription,
       residentDescription,
-      ownerExprience,
+      ownerExperience,
     } = propInfo;
     const {
       communityHighlights,
@@ -77,16 +80,25 @@ export default class CommunityDetail extends Component {
     const mapViewTitle = `Map View of ${name}`;
     return (
       <div {...props}>
+        {/* temp shiz */}
+        <Link to={`/community/${nextUri(community.id)}`}>
+          Link to test navigation cross profile
+        </Link>
         <CommunityMediaGallery
           communityName={name}
           images={images}
           videos={videos}
         />
         <Heading level="hero">{name}</Heading>
-        {/* temp shiz */}
-        <Link to={`/community/${nextUri(community.id)}`}>
-          Link to test navigation cross profile
-        </Link>
+        <CommunitySummary
+          twilioNumber={twilioNumber}
+          phoneNumber={phoneNumber}
+          user={user}
+          amenityScore={rgsAux.amenityScore}
+          startingRate={startingRate}
+          communityHighlights={communityHighlights}
+          reviews={reviews}
+        />
         <CollapsibleSection title="Pricing & Floor Plans">
           <PricingAndAvailability
             communityName={name}
@@ -129,7 +141,7 @@ export default class CommunityDetail extends Component {
           />
         </CollapsibleSection>
         <CollapsibleSection title="Owner's Story">
-          <OwnerStory ownerExprience={ownerExprience} />
+          <OwnerStory ownerExperience={ownerExperience} />
         </CollapsibleSection>
         <CollapsibleSection title="Reviews">
           <PropertyReviews

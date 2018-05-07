@@ -14,11 +14,10 @@ const Label = styled.label`
 
 Label.propTypes = {
   palette: string,
-  reverse: bool,
 };
 
 Label.defaultProps = {
-  palette: 'grayscale',
+  palette: 'slate',
 };
 
 export default Label;

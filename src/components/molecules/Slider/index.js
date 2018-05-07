@@ -128,15 +128,21 @@ const Value = styled.span`
 
 class Slider extends Component {
   state = {
-    value: this.props.defaultValue,
+    value: this.props.value,
   };
 
   onChange = ({ target }) => {
     const { onChange } = this.props;
+    const value = parseFloat(target.value);
     if (onChange) {
-      onChange(target.value);
+      onChange(value);
     }
-    this.setState({ value: target.value });
+    this.setState({ value });
+  };
+
+  onBlur = ({ target }) => {
+    const { onBlur } = this.props;
+    onBlur(parseFloat(target.value));
   };
 
   render() {
@@ -148,6 +154,7 @@ class Slider extends Component {
       valueParse,
       step,
       onChange,
+      onBlur,
       type,
       ...props
     } = this.props;
@@ -163,6 +170,7 @@ class Slider extends Component {
           max={max}
           step={step}
           onChange={this.onChange}
+          onBlur={this.onBlur}
           {...props}
         />
         <Value width={valueWidth}>{valueParse(value)}</Value>

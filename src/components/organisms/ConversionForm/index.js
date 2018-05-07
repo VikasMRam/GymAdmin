@@ -2,14 +2,18 @@ import React from 'react';
 import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
+import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
 import { Heading, Button, Block } from 'sly/components/atoms';
+import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 
 const Form = styled.form`
   width: 100%;
+  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  padding: ${size('spacing.xLarge')};
 `;
 
 const StyledButton = styled(Button)`
@@ -18,12 +22,17 @@ const StyledButton = styled(Button)`
 
 const ConversionForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
-    <Field name="full_name" label="Full Name" component={ReduxField} />
+    <Field
+      name="full_name"
+      label="Full Name"
+      placeholder="Jane Doe"
+      component={ReduxField}
+    />
     <Field
       name="email"
       label="Email"
       type="email"
-      placeholder="jdoe@gmail.com"
+      placeholder="janedoe@gmail.com"
       component={ReduxField}
     />
     <Field
@@ -32,12 +41,11 @@ const ConversionForm = ({ handleSubmit, submitting }) => (
       placeholder="925-555-5555"
       component={ReduxField}
     />
-    <StyledButton type="submit" disabled={submitting}>
+    <StyledButton type="submit" kind="jumbo" disabled={submitting}>
       Contact
     </StyledButton>
-    <Block size="caption">
-      By continuing, you agree to Seniorly's Terms of Use and Privacy Policy
-    </Block>
+
+    <TosAndPrivacy />
   </Form>
 );
 
@@ -47,4 +55,3 @@ ConversionForm.propTypes = {
 };
 
 export default ConversionForm;
-

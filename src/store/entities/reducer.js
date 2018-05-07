@@ -1,5 +1,3 @@
-// https://github.com/diegohaz/arc/wiki/Reducers
-// https://github.com/diegohaz/arc/wiki/Example-redux-modules#entities
 import mergeWith from 'lodash/mergeWith';
 import { initialState } from './selectors';
 import { ENTITIES_RECEIVE } from './actions';
@@ -12,6 +10,7 @@ export default (state = initialState, { type, payload }) => {
       }
       return undefined;
     });
+
   }
   return state;
 };
