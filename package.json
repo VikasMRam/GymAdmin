@@ -123,6 +123,7 @@
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "react-router-server": "^4.2.1",
+    "react-stickynode": "^1.4.1",
     "react-swipeable-views": "^0.12.13",
     "redbox-react": "^1.6.0",
     "redux": "^3.6.0",
