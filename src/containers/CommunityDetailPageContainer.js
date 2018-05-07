@@ -3,7 +3,6 @@ import { object, string } from 'prop-types';
 
 import  withServerState from 'sly/store/withServerState';
 import { getDetail } from 'sly/store/selectors';
-import genRequest from 'sly/services/api/genRequest';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
 import {
@@ -40,22 +39,20 @@ class CommunityDetailPageContainer extends Component {
   }
 }
 
-const genCommunityRequest = match => genRequest(
-  'community', 
-  match.params.communitySlug,
-  { include: 'similarCommunities' },
-);
-
+const getCommunitySlug = match => match.params.communitySlug;
 const mapStateToProps = (state, { match }) => {
+  const communitySlug = getCommunitySlug(match);
   return {
-    community: getDetail(state, genCommunityRequest(match)),
+    community: getDetail(state, 'community', communitySlug),
     userActions: getDetail(state, 'userAction'),
   };
 }
 
 const fetchData = (dispatch, { match }) => Promise.all([
-  dispatch(resourceDetailReadRequest(genCommunityRequest(match))),
-  dispatch(resourceDetailReadRequest(genRequest('userAction'))),
+  dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), { 
+    include: 'similar-communities' 
+  })),
+  dispatch(resourceDetailReadRequest('userAction')),
 ]);
 
 const handleError = err => {

@@ -14,20 +14,8 @@ export default function(resource, id, params) {
     params = id;
     id = null;
   }
-
-  const idString = id ? `/${id}` : '';
-  const queryString = params ? `?${stringify(params)}` : '';
-
-  const path = `/${resourceUri(resource)}${idString}`;
-  const uri = `${path}${queryString}`;
-
-  return { 
-    resource, 
-    id, 
-    params, 
-    uri, 
-    path, 
-    queryString 
-  };
+  let idString = id ? `/${id}` : '';
+  let queryString = params ? `?${stringify(params)}` : '';
+  return `/${resourceUri(resource)}${idString}${queryString}`;
 };
 

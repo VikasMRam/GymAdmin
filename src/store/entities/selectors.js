@@ -5,12 +5,12 @@ import { denormalize } from 'normalizr';
 
 export const initialState = {};
 
-export const getDetail = (state = initialState, { id, type }) => {
+export const getDetail = (state = initialState, entity, id) => {
   if (!id) return null;
-  return build(state, type, id, { eager: true });
+  return build(state, entity, id, { eager: true });
 };
 
-export const getList = (state = initialState, { list }) => {
-  return list.map(item => getDetail(state, item));
+export const getList = (state = initialState, entity, ids=[]) => {
+  return ids.map(id => getDetail(state, entity, id));
 };
 
