@@ -202,13 +202,15 @@ class CommunityMap extends Component {
     }
 
     return (
-      <Map
-        center={center}
-        defaultZoom={defaultZoom}
-        containerElement={<MapContainerElement />}
-      >
-        {markerComponents}
-      </Map>
+      <article>
+        <Map
+          center={center}
+          defaultZoom={defaultZoom}
+          containerElement={<MapContainerElement />}
+        >
+          {markerComponents}
+        </Map>
+      </article>
     );
   }
 }

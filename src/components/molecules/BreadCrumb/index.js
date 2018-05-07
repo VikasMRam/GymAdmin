@@ -1,56 +1,65 @@
 import React from 'react';
 import styled from 'styled-components';
+import { arrayOf, shape, string, object } from 'prop-types';
 
-const BcWrapper = styled.div`
-  ul {
+import { size } from 'sly/components/themes';
+import { Link } from 'sly/components/atoms';
+
+const Wrapper = styled.nav`
+  margin-bottom: ${size('spacing.regular')};
+
+  ol {
     list-style-type: none;
+    margin: 0;
+    padding: 0;
+
     li {
       display: inline-block;
+      text-transform: capitalize;
+
+      span:not(:first-child) {
+        margin: 0 ${size('spacing.regular')};
+      }
     }
   }
 `;
 
-const BcOul = (props) => {
-  return (
-    <BcWrapper>
-      {' '}
-      <ul itemScope itemType="http://schema.org/BreadcrumbList">
-        {props.children}
-      </ul>
-    </BcWrapper>
-  );
-};
-const BcLi = (props) => {
-  return (
-    <li
-      key={props.path}
-      itemProp="itemListElement"
-      itemScope
-      itemType="http://schema.org/ListItem"
-    >
-      <a itemProp="item" href={props.path}>
-        <span itemProp="name">{props.label}</span>
-      </a>
-      <meta itemProp="position" content={props.position} /> >
-    </li>
-  );
-};
+const BreadCrumb = ({ items, innerRef }) => (
+  <Wrapper innerRef={innerRef}>
+    <ol itemScope itemType="http://schema.org/BreadcrumbList">
+      {
+        items.map((item, key) => {
+          const { label, path } = item;
 
-const BreadCrumb = (in_ob) => {
-  const bcs = in_ob.bcs;
-  bcs.push(in_ob.curr);
+          return (
+            <li
+              key={path}
+              itemProp="itemListElement"
+              itemScope
+              itemType="http://schema.org/ListItem"
+            >
+              {key === items.length - 1 ?
+                <span itemProp="name">{label}</span>
+              :
+                <Link itemProp="item" to={path}>
+                  <span itemProp="name">{label}</span>
+                </Link>
+              }
+              {key < items.length - 1 ? <span>/</span> : null}
+            </li>
+          );
+        })
+      }
+    </ol>
+  </Wrapper>
+);
 
-  let position = 1;
-  const listItems = [];
-  let path = '';
-  for (let i = 0; i < bcs.length; i++) {
-    const elem = bcs[i];
-    const label = elem.label;
-    position += 1;
-    path += `/${elem.path}`;
-    listItems.push(<BcLi key={path} path={path} label={label} position={position} />);
-  }
-  return <BcOul>{listItems}</BcOul>;
+BreadCrumb.propTypes = {
+  items: arrayOf(shape({
+    label: string.isRequired,
+    path: string.isRequired,
+  })).isRequired,
+  innerRef: object,
 };
 
 export default BreadCrumb;

@@ -19,6 +19,9 @@ const {
 const {
   communityHighlights,
 } = propInfo;
+const communityReviewsRef = React.createRef();
+const pricingAndFloorPlansRef = React.createRef();
+const amenitiesAndFeaturesRef = React.createRef();
 
 const wrap = (props = {}) => mount(<CommunitySummary {...props} />);
 
@@ -52,43 +55,66 @@ const testReviews = (wrapper) => {
 };
 
 it('renders twilioNumber', () => {
-  const wrapper = wrap({ twilioNumber });
+  const wrapper = wrap({
+    twilioNumber, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
+  });
   testTwilioNumber(wrapper);
 });
 
 it('renders phoneNumber', () => {
-  const wrapper = wrap({ phoneNumber });
+  const wrapper = wrap({
+    phoneNumber, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
+  });
   testPhoneNumber(wrapper);
 });
 
 it('renders user phone number', () => {
-  const wrapper = wrap({ user });
+  const wrapper = wrap({
+    user, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
+  });
   testUserPhoneNumber(wrapper);
 });
 
 it('renders amenityScore', () => {
-  const wrapper = wrap({ amenityScore: rgsAux.amenityScore });
+  const wrapper = wrap({
+    amenityScore: rgsAux.amenityScore, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
+  });
   testAmenityScore(wrapper);
 });
 
 it('renders startingRate', () => {
-  const wrapper = wrap({ startingRate });
+  const wrapper = wrap({
+    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
+  });
   testStartingRate(wrapper);
 });
 
 it('renders communityHighlights', () => {
-  const wrapper = wrap({ communityHighlights });
+  const wrapper = wrap({
+    communityHighlights, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
+  });
   testCommunityHighlights(wrapper);
 });
 
 it('renders reviews', () => {
-  const wrapper = wrap({ reviews });
+  const wrapper = wrap({
+    reviews, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
+  });
   testReviews(wrapper);
 });
 
 it('renders all properties', () => {
   const wrapper = wrap({
-    twilioNumber, phoneNumber, user, amenityScore: rgsAux.amenityScore, startingRate, communityHighlights, reviews,
+    twilioNumber,
+    phoneNumber,
+    user,
+    amenityScore: rgsAux.amenityScore,
+    startingRate,
+    communityHighlights,
+    reviews,
+    communityReviewsRef,
+    pricingAndFloorPlansRef,
+    amenitiesAndFeaturesRef,
   });
 
   testTwilioNumber(wrapper);

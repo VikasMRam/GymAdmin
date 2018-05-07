@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
+import smoothscroll from 'smoothscroll-polyfill';
 
+import { isBrowser } from 'sly/config';
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 // https://github.com/diegohaz/arc/wiki/Styling
@@ -12,10 +14,18 @@ import setGlobalStyles from './themes/setGlobalStyles';
 setGlobalStyles();
 
 export default class App extends Component {
+  componentDidMount() {
+    // this is not required when running in test env created by jsdom
+    if (isBrowser) {
+      smoothscroll.polyfill();
+    }
+  }
+
   render() {
     const careTypes = ['retirement-community','assisted-living', 'independent-living','alzheimers-care'].join('|');
     return (
-      <div>
+      <React.Fragment>
+        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <Helmet titleTemplate="Seniorly - %s">
           <title>Home</title>
           <meta name="description" content="The Senior Living Marketplace" />
@@ -40,7 +50,7 @@ export default class App extends Component {
             />
           </Switch>
         </ThemeProvider>
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -17,6 +17,9 @@ const {
 const {
   communityHighlights,
 } = propInfo;
+const communityReviewsRef = React.createRef();
+const pricingAndFloorPlansRef = React.createRef();
+const amenitiesAndFeaturesRef = React.createRef();
 
 storiesOf('Organisms|CommunitySummary', module)
   .add('default', () => (
@@ -28,5 +31,8 @@ storiesOf('Organisms|CommunitySummary', module)
       startingRate={startingRate}
       communityHighlights={communityHighlights}
       reviews={reviews}
+      communityReviewsRef={communityReviewsRef}
+      pricingAndFloorPlansRef={pricingAndFloorPlansRef}
+      amenitiesAndFeaturesRef={amenitiesAndFeaturesRef}
     />
   ));
