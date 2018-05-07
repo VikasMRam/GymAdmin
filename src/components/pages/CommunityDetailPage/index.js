@@ -63,7 +63,7 @@ export default class CommunityDetailPage extends React.Component {
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
     if (this.communityReviewsRef.current) {
-      this.bottomBoundaryQuerySelector = `.${this.communityReviewsRef.current.className.replace(/\s+/g, '.')}`;
+      this.bottomBoundaryQuerySelector = `.${this.communityReviewsRef.current.className.replace(/\s+/g, '.')} article`;
     }
   }
 
