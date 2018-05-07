@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string, object } from 'prop-types';
+import { object } from 'prop-types';
 import Sticky from 'react-stickynode';
 
 import { size } from 'sly/components/themes';
@@ -8,6 +8,7 @@ import CommunityDetail from 'sly/components/organisms/CommunityDetail';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import Header from 'sly/components/molecules/Header';
 import Footer from 'sly/components/molecules/Footer';
+import StickyFooter from 'sly/components/molecules/StickyFooter';
 
 const PageWrapper = styled.div`
   display: flex;
@@ -100,6 +101,7 @@ const CommunityDetailPage = ({ community, userActions }) => {
         </Sticky>
       </PageWrapper>
       <Footer />
+      <StickyFooter community={community} />
     </div>
   );
 };
