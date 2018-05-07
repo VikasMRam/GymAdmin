@@ -5,6 +5,8 @@ import { object } from 'prop-types';
 
 import { REQUEST_CALLBACK } from 'sly/services/api/actions';
 
+import genRequest from 'sly/services/api/genRequest';
+
 import {
   resourceCreateRequest,
 } from 'sly/store/resource/actions';
@@ -54,7 +56,7 @@ class ConversionFormContainer extends Component {
 
 const mapDispatchToProps = dispatch => ({
   submit: data => {
-    return dispatch(resourceCreateRequest('userAction', data));
+    return dispatch(resourceCreateRequest(genRequest('userAction'), data));
   },
 });
 

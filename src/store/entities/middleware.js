@@ -5,24 +5,22 @@ import { env } from 'sly/config';
 import { entitiesReceive } from './actions';
 
 const middleware = store => next => (action) => {
-
   const { payload:rawEntities, meta } = action;
 
-  if (meta && meta.entities) {
-    const { uri } = meta.request;
-    const qsPos = uri.indexOf('?');
-    const key =  qsPos !== -1 ? uri.substring(0,qsPos) : uri;
+  if (meta && meta.thunk && meta.resource) {
+    const { uri, path, queryString } = meta.request;
 
     const { meta: result, ...entities } = normalize(rawEntities, {
-      endpoint: key,
-    }); // { meta :...., key1,;
+      endpoint: uri,
+      filterEndpoint: false,
+    });
 
-    if (entities[meta.entities]) {
+    try {
       store.dispatch(entitiesReceive(entities));
-      const ids = result[key].data.map(({id})=>id);
-      return next({ ...action, payload: ids});
-    } else {
-      throw new Error(`Possibly malformed response with type: ${meta.entities}`);
+      return next({ ...action, payload: result});
+    } catch(e) {
+      console.error(e);
+      next();
     }
   }
 

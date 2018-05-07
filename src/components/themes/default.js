@@ -61,6 +61,12 @@ theme.sizes = {
     },
   },
 
+  footer: {
+    group: {
+      width:             '9.75rem', // 156px
+    },
+  },
+
   collapsible: {
     small:        '10.00rem', // 160px
     regular:      '20.00rem', // 320px

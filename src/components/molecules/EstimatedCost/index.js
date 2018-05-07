@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import numeral from 'numeral';
+import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
 import { Button, Block, Box, Heading } from 'sly/components/atoms';
@@ -33,14 +33,14 @@ const EstimatedCost = ({
   let to = 0;
   // create a fuzzy range from given price
   const basePer = percentageOf(price, 10);
-  from = price - basePer;
-  to = price + basePer;
+  from = Math.round(price - basePer);
+  to = Math.round(price + basePer);
 
   return (
     <StyledBox>
       <EstimatedCostWrapper>
         <Heading level="subtitle">
-          Estimated cost from ${numeral(from).format('0,0')} to ${numeral(to).format('0,0')} per month*
+          Estimated cost from <NumberFormat value={from} displayType="text" thousandSeparator prefix="$" /> to <NumberFormat value={to} displayType="text" thousandSeparator prefix="$" /> per month*
         </Heading>
         <Block size="caption">
           *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area, and the amenities and care services provided at {communityName}.

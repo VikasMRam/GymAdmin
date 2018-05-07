@@ -13,10 +13,6 @@ const ListItemIconDiv = styled.div`
   padding-right: ${size('spacing.regular')}
 `;
 
-const ListItemTextDiv = styled.div`
-  padding-top: ${size('spacing.small')}
-`;
-
 const ListItem = ({
   children,
 }) => (
@@ -24,7 +20,7 @@ const ListItem = ({
     <ListItemIconDiv>
       <Icon icon="star" />
     </ListItemIconDiv>
-    <ListItemTextDiv>{children}</ListItemTextDiv>
+    {children}
   </ListItemWrapper>
 );
 
