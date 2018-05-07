@@ -140,6 +140,20 @@ theme.sizes = {
         height:     '607px', // 607px
       },
     },
+    search: {
+      small: {
+        width:      '343px', // 343px
+        height:     '198px', // 198px
+      },
+      regular: {
+        width:      '696px', // 696px
+        height:     '800px', // 800px
+      },
+      large: {
+        width:     '1056px', // 1056px
+        height:     '1056px', // 1056px
+      },
+    },
   },
 
   padding: {

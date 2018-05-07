@@ -1,7 +1,6 @@
-// https://github.com/diegohaz/arc/wiki/Reducers
-// https://github.com/diegohaz/arc/wiki/Example-redux-modules#resource
 import findIndex from 'lodash/findIndex';
 import get from 'lodash/get';
+import mergeWith from 'lodash/mergeWith';
 
 import {
   initialState,
@@ -58,7 +57,9 @@ const updateOrDeleteReducer = (state, { type, payload, meta }) => {
   }
 };
 
-export default (state = initialState, { type, payload, meta }) => {
+export default (state = initialState, action) => {
+  const { type, payload, meta } = action;
+
   const resource = get(meta, 'resource');
 
   if (!resource) {
@@ -76,11 +77,12 @@ export default (state = initialState, { type, payload, meta }) => {
       };
 
     case RESOURCE_LIST_READ_REQUEST:
+      // TODO: figure out how to reset state prior request
       return {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          list: getList(initialState, resource),
+          // list: getList(initialState, resource),
         },
       };
     case RESOURCE_LIST_READ_SUCCESS:
@@ -93,19 +95,21 @@ export default (state = initialState, { type, payload, meta }) => {
       };
 
     case RESOURCE_DETAIL_READ_REQUEST:
+      // TODO: figure out how to reset state prior request
       return {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          detail: getDetail(initialState, resource),
+          //detail: getDetail(initialState, resource),
         },
       };
     case RESOURCE_DETAIL_READ_SUCCESS:
+      const resourceState = getResourceState(state, resource);
       return {
         ...state,
         [resource]: {
-          ...getResourceState(state, resource),
-          detail: payload[0],
+          ...resourceState,
+          detail: mergeWith({}, resourceState.detail, payload),
         },
       };
 

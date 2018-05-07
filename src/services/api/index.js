@@ -2,7 +2,7 @@
 import 'isomorphic-fetch';
 import merge from 'lodash/merge';
 import { apiUrl, authTokenUrl } from 'sly/config';
-import genUri from './genUri';
+import genRequest from './genRequest';
 
 export const checkStatus = (response) => {
   if (response.ok) {
@@ -93,10 +93,11 @@ api.create = (settings = {}) => ({
   },
 
   request(endpoint, settings) {
-    // FIXME: More specific way of doing this
+    const uri = endpoint.uri || endpoint; 
     let tries = 2;
     const aTry = () =>
-      api.request(endpoint, merge({}, this.settings, settings)).catch((error) => {
+      api.request(uri, merge({}, this.settings, settings)).catch((error) => {
+        console.log('Seeing error in ',error);
         if ([401, 403].includes(error.response.status) && tries--) {
           this.unsetToken();
           return this.requestAuthToken().then(aTry);
@@ -128,7 +129,7 @@ api.create = (settings = {}) => ({
   },
 
   uri(resource, id, params) {
-    return genUri(resource, id, params);
+    return genRequest(resource, id, params);
   },
 });
 
