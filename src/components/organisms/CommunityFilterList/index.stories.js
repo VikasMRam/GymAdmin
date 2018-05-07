@@ -13,7 +13,7 @@ const {
   similarProperties,
 } = RhodaGoldmanPlaza;
 
-storiesOf('Organisms|CommunityMap', module).add('default', () => (
+storiesOf('Organisms|CommunityFilterList', module).add('default', () => (
   <CommunityMap
     id={id}
     name={name}

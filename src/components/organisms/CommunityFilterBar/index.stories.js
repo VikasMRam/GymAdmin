@@ -14,7 +14,7 @@ const paramsRemover = (elem) =>{
 
 storiesOf('Organisms|CommunityFilterBar', module).add('default', () => (
   <CommunityFilterBar
-    searchParams={}
+    searchParams={{}}
     onParamsRemove={paramsRemover()}
 
   />
