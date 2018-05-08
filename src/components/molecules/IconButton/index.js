@@ -12,18 +12,17 @@ const fadeIn = keyframes`
   100% { display: block; opacity: 1; }
 `;
 
-const iconWidth = p => p.hasText
-  ? 'auto'
-  : p.iconOnly
-    ? size('icon.regular')
-    : size('icon.button');
+const iconWidth = p =>
+  p.hasText ? 'auto' : p.iconOnly ? size('icon.regular') : size('icon.large');
 
-const iconHeight = p => p.iconOnly ? size('icon.regular') : size('icon.button');
+const iconHeight = p =>
+  p.iconOnly ? size('icon.regular') : size('icon.large');
 
 // TODO: measurements from theme
 const StyledButton = styled(Button)`
   width: ${iconWidth};
-  height: ${iconHeight};
+  // TODO : Need to fix this
+  // height: ${iconHeight};
   padding: ${ifProp('hasText', '0 0.4375em', 0)};
   flex: 0 0 2.5em;
   ${ifProp(
@@ -76,7 +75,12 @@ const IconButton = ({
     />
   );
   return (
-    <StyledButton hasText={!!children} iconOnly transparent={iconOnly} {...props}>
+    <StyledButton
+      hasText={!!children}
+      iconOnly
+      transparent={iconOnly}
+      {...props}
+    >
       <Wrapper>
         {right || iconElement}
         {children && <Text className="text">{children}</Text>}

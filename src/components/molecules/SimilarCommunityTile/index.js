@@ -13,7 +13,8 @@ const defaultImage =
 
 const Wrapper = styled.div`
   display: inline-block;
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border: ${p => (p.borderless ? 0 : size('border.regular'))} solid
+    ${palette('grayscale', 2)};
   width: ${size('tile', 'large', 'width')};
   transition: box-shadow ${key('transitions.default')},
     opacity ${key('transitions.default')};
@@ -53,10 +54,10 @@ const ChildrenWrapper = styled.div`
   margin-left: ${size('spacing.xLarge')};
 `;
 
-const SimilarCommunityTile = ({ similarProperty, onClick }) => {
+const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
   const { mainImage } = similarProperty;
   return (
-    <Wrapper onClick={onClick}>
+    <Wrapper onClick={onClick} borderless={borderless}>
       {/* div is for the image below. If removed, the image dimensions wont adhere to the seize being set */}
       <div>
         <SCTileImage src={mainImage || defaultImage} />
@@ -71,6 +72,11 @@ const SimilarCommunityTile = ({ similarProperty, onClick }) => {
 SimilarCommunityTile.propTypes = {
   similarProperty: PropTypes.object.isRequired,
   onClick: PropTypes.func,
+  borderless: PropTypes.bool,
+};
+
+SimilarCommunityTile.defaultProps = {
+  borderless: false,
 };
 
 export default SimilarCommunityTile;

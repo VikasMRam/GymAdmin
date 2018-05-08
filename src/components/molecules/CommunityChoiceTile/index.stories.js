@@ -5,10 +5,15 @@ import parentCommunity from 'sly/../private/storybook/sample-data/property-rhoda
 
 import CommunityChoiceTile from '.';
 
-const { similarProperties: { [0]: community } } = parentCommunity;
+const { similarProperties: { 0: community } } = parentCommunity;
 
 storiesOf('Molecules|CommunityChoiceTile', module)
-  .add('default', () => <CommunityChoiceTile community={community} />)
+  .add('default', () => (
+    <CommunityChoiceTile community={community} selectable />
+  ))
   .add('selected', () => (
+    <CommunityChoiceTile community={community} selected selectable />
+  ))
+  .add('non selectable', () => (
     <CommunityChoiceTile community={community} selected />
   ));
