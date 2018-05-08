@@ -5,6 +5,7 @@ import { bool, object } from 'prop-types';
 import { size } from 'sly/components/themes';
 
 import Heading from 'sly/components/atoms/Heading';
+import Hr from 'sly/components/atoms/Hr';
 import Header from 'sly/components/molecules/Header';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
@@ -22,12 +23,38 @@ const nextUri = (() => {
 
 const Wrapper = styled.div`
   width: 100%;
-  padding: ${size('spacing.large')};
-  padding-top: 0;
+`;
+
+// TODO : Reuse this FixedColumnWrapper across the App
+const FixedColumnWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+
+  width: ${size('layout.mobile')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.mainColumn')};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    width: calc(
+      ${size('layout.mainColumn')} + ${size('layout.sideColumn')} +
+        ${size('spacing.xLarge')}
+    );
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    width: ${size('layout.laptopLarge')};
+  }
+`;
+
+const TopWrapper = styled.div`
+  margin: 0 ${size('spacing.large')};
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const StyledCommunitySearchList = styled(CommunitySearchList)`
-  width: 100%;
+  width: width: ${size('layout.mobile')};
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
   }
@@ -47,6 +74,7 @@ const SideFilterContainer = styled(CommunityFilterList)`
     margin-right: ${size('spacing.xLarge')};
   }
 `;
+
 const SearchMapContainer = styled(SearchMap)`
   width: 100%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -73,6 +101,12 @@ const FiltersButton = styled(IconButton)`
 class CommunitySearchPage extends React.Component {
   state = {
     menuOpen: false,
+    isMapView: false,
+  };
+  onMapButtonClick = () => {
+    this.setState({
+      isMapView: true,
+    });
   };
   toggleMenu = () => {
     this.setState({
@@ -82,19 +116,20 @@ class CommunitySearchPage extends React.Component {
   render() {
     const {
       toggleMap,
-      isMapView,
       onParamsChange,
       onParamsRemove,
       searchParams,
       requestMeta,
       communityList,
     } = this.props;
+    const { isMapView } = this.state;
     let latitude = 0.0;
     let longitude = 0.0;
     if (communityList.length > 0) {
       latitude = communityList[0].latitude;
       longitude = communityList[0].longitude;
     }
+    // TODO : Header is duplicated. Refactor it so that it can be reused
     const headerItems = [
       { name: 'List on Seniorly', url: '#' },
       { name: 'Help Center', url: '#' },
@@ -121,37 +156,49 @@ class CommunitySearchPage extends React.Component {
           menuItems={menuItems}
         />
         <Wrapper>
-          <StyledHeading level="subtitle">
-            258 communities in San Francisco
-          </StyledHeading>
-          <ViewMapButton icon="map" ghost transparent>
-            View Map
-          </ViewMapButton>
-          <FiltersButton icon="filter" ghost transparent>
-            Filters
-          </FiltersButton>
-          <div>{requestMeta}</div>
+          <FixedColumnWrapper>
+            <TopWrapper>
+              <StyledHeading level="subtitle">
+                258 communities in San Francisco
+              </StyledHeading>
+              <ViewMapButton
+                icon="map"
+                ghost
+                transparent
+                onClick={this.onMapButtonClick}
+              >
+                View Map
+              </ViewMapButton>
+              <FiltersButton icon="filter" ghost transparent>
+                Filters
+              </FiltersButton>
+              {/* <div>{requestMeta}</div> */}
+            </TopWrapper>
+          </FixedColumnWrapper>
+          <Hr />
           {/* <SideFilterContainer
           onFieldChange={onParamsChange}
           searchParams={searchParams}
           toggleMap={toggleMap}
           isMapView={isMapView}
         /> */}
-          {!isMapView && (
-            <StyledCommunitySearchList
-              key="main"
-              communityList={communityList}
-              searchParams={searchParams}
-              onParamsRemove={onParamsRemove}
-            />
-          )}
-          {isMapView && (
-            <SearchMapContainer
-              latitude={latitude}
-              longitude={longitude}
-              communityList={communityList}
-            />
-          )}
+          <FixedColumnWrapper>
+            {!isMapView && (
+              <StyledCommunitySearchList
+                key="main"
+                communityList={communityList}
+                searchParams={searchParams}
+                onParamsRemove={onParamsRemove}
+              />
+            )}
+            {isMapView && (
+              <SearchMapContainer
+                latitude={latitude}
+                longitude={longitude}
+                communityList={communityList}
+              />
+            )}
+          </FixedColumnWrapper>
         </Wrapper>
       </div>
     );
