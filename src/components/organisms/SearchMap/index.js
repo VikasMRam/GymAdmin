@@ -7,67 +7,22 @@ import { Marker, InfoWindow } from 'react-google-maps';
 import { isServer } from 'sly/config';
 import { size } from 'sly/components/themes';
 import Map from 'sly/components/atoms/Map';
+import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
+import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
 
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
 
-//TODO SEARCH MAP
+// TODO SEARCH MAP
 const MapContainerElement = styled.div`
- width: 100%;
- 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};
-    
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: 75%;
-    margin-right: ${size('spacing.xLarge')};
-  }
+  width: 100%;
+  height: ${size('map.propertyDetail.large.height')};
 `;
 
 const iconMap = {
   blue: GreenMarker,
   red: RedMarker,
 };
-
-const InfoWindowDiv = styled.div`
-  width: ${size('tile', 'small', 'width')};
-  height: ${size('tile', 'small', 'height')};
-
-  position: relative;
-`;
-
-const InfoWindowAnchor = styled.a``;
-
-const InfoWindowImg = styled.img`
-  width: 100%;
-  height: 100%;
-`;
-
-const InfoWindowPropertyName = styled.h4`
-  color: white;
-  font-size: ${size('text', 'subtitle')};
-
-  position: absolute;
-  z-index: 3;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-`;
-
-const InfoWindowPrice = styled.div`
-  color: white;
-  font-size: ${size('text', 'subtitle')};
-
-  position: absolute;
-  z-index: 3;
-  right: 0px;
-  bottom: 0px;
-  background-color: ${palette('grayscale', 4)}B3; // 70% Opacity
-  text-align: right;
-  height: 22px;
-  width: 100%;
-`;
 
 class SearchMap extends Component {
   static propTypes = {
@@ -80,7 +35,6 @@ class SearchMap extends Component {
       imageUrl: string.isRequired,
       latitude: number.isRequired,
       longitude: number.isRequired,
-
     })),
   };
 
@@ -99,58 +53,99 @@ class SearchMap extends Component {
       activeInfoWindowId: null,
     });
   };
-
-  getInfoWindowComponent = marker => () => {
-    const component = (
-      <div>
-        <InfoWindowImg src={marker.image} />
-        <InfoWindowPropertyName>{marker.name}</InfoWindowPropertyName>
-        <InfoWindowPrice>Starting at ${marker.startingRate}</InfoWindowPrice>
-      </div>
-    );
-    if (marker.clickable === true) {
-      return (
-        <InfoWindowAnchor href={`/community/${marker.id}`}>
-          {component}
-        </InfoWindowAnchor>
-      );
-    }
-    return component;
-  };
-
   render() {
-    const {
-      latitude,
-      longitude,
-      communityList,
-
-    } = this.props;
+    const { latitude, longitude, communityList } = this.props;
     const center = {
       latitude,
       longitude,
     };
     const markers = [];
 
+    // TODO Move to constants and helpers for things like isMobile?
+    const isMobile = window.innerWidth < 768;
+    let defaultZoom = 14;
+    if (isMobile) {
+      defaultZoom = 13;
+    }
+
     if (isServer) return null;
 
     communityList.forEach((property) => {
       const {
-        id, name, startingRate, imageUrl, latitude, longitude,
+        id,
+        url,
+        name,
+        description,
+        startingRate,
+        imageUrl,
+        numReviews,
+        reviewsValue,
+        latitude,
+        longitude,
+        webViewInfo,
       } = property;
       markers.push({
         id,
+        url,
         name,
+        description,
+        typeCare: webViewInfo.firstLineValue.split(','),
         startingRate,
+        numReviews,
+        reviewsValue,
         latitude,
         longitude,
         image: imageUrl,
-        icon: 'red',
+        icon: 'blue',
         clickable: true,
       });
     });
 
     const markerComponents = markers.map((marker) => {
-      const InfoWindowComponent = this.getInfoWindowComponent(marker);
+      const {
+        id,
+        url,
+        name,
+        description,
+        typeCare,
+        startingRate,
+        numReviews,
+        reviewsValue,
+        latitude,
+        longitude,
+        image,
+      } = marker;
+      const community = {
+        id,
+        name,
+        startingRate,
+        propInfo: {
+          communityDescription: description,
+          typeCare,
+        },
+        propRatings: {
+          reviewsValue,
+          numReviews,
+        },
+      };
+      const communityForSmallTile = {
+        name,
+        url,
+        picture: image,
+        startingRate,
+        propRatings: {
+          reviewsValue,
+          numReviews,
+        },
+      };
+      let infoWindowTile = (
+        <SimilarCommunityTile similarProperty={community} borderless />
+      );
+      if (isMobile) {
+        infoWindowTile = (
+          <CommunityChoiceTile community={communityForSmallTile} borderless />
+        );
+      }
       return (
         <Marker
           key={marker.id}
@@ -159,25 +154,17 @@ class SearchMap extends Component {
           onClick={this.onMarkerClick(marker)}
         >
           {this.state.activeInfoWindowId === marker.id && (
+            // TODO : Remove Close Button
             <InfoWindow
               key={marker.id}
               onCloseClick={this.onInfoWindowCloseClick}
             >
-              <InfoWindowDiv>
-                <InfoWindowComponent />
-              </InfoWindowDiv>
+              {infoWindowTile}
             </InfoWindow>
           )}
         </Marker>
       );
     });
-
-    //TODO Move to constants and helpers for things like isMobile?
-    const isMobile = window.innerWidth < 768;
-    let defaultZoom = 14;
-    if (isMobile) {
-      defaultZoom = 13;
-    }
 
     return (
       <Map
@@ -185,7 +172,7 @@ class SearchMap extends Component {
         defaultZoom={defaultZoom}
         containerElement={<MapContainerElement />}
       >
-          {markerComponents}
+        {markerComponents}
       </Map>
     );
   }

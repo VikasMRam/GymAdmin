@@ -13,11 +13,11 @@ const defaultImage =
   'https://d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
 
 export const Wrapper = styled.div`
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${p => p.borderless ? 0 : size('spacing.large')};
 
   position: relative;
   display: flex;
-  border: ${size('border.regular')} solid ${palette('secondary', 0)};
+  border: ${p => p.borderless ? 0 : size('border.regular')} solid ${palette('secondary', 0)};
   ${props =>
     props.selected &&
     css`
@@ -31,9 +31,13 @@ export const Wrapper = styled.div`
     background-color: ${palette('secondary', 0)};
   }
 
-  :hover {
-    cursor: pointer;
-  }
+  ${props =>
+    props.selectable &&
+    css`
+      :hover {
+        cursor: pointer;
+      }
+    `};
 
   // Disabling Text selection on the Tile
   -webkit-touch-callout: none;
@@ -97,6 +101,8 @@ const CommunityChoiceTile = ({
   palette,
   community,
   selected,
+  selectable,
+  borderless,
   onClick,
   ...props
 }) => {
@@ -104,27 +110,27 @@ const CommunityChoiceTile = ({
     name, uri, picture, startingRate, propRatings,
   } = community;
 
-  const { numReviews, reviewsValue } = propRatings; 
-
+  const { numReviews, reviewsValue } = propRatings;
   return (
-    <Wrapper selected={selected} onClick={onClick}>
+    <Wrapper
+      selected={selected && selectable}
+      selectable={selectable}
+      borderless={borderless}
+      onClick={onClick}
+    >
       <Image src={picture || defaultImage} />
-      <StyledCheckbox checked={selected} />
+      {selectable && <StyledCheckbox checked={selected && selectable} />}
       <Info>
-        <StyledHeading level="subtitle">
-          {name}
-        </StyledHeading>
+        <StyledHeading level="subtitle">{name}</StyledHeading>
         <Data>
           <div>
             ${startingRate}
-            <Mobrate>/mo</Mobrate> 
+            <Mobrate>/mo</Mobrate>
             <Deskrate> per month</Deskrate>
           </div>
           <ReviewsWrapper>
             <Rating value={reviewsValue} size="small" />
-            <NumberReviews>
-              {numReviews}
-            </NumberReviews>
+            <NumberReviews>{numReviews}</NumberReviews>
           </ReviewsWrapper>
         </Data>
       </Info>
@@ -134,13 +140,16 @@ const CommunityChoiceTile = ({
 
 CommunityChoiceTile.propTypes = {
   selected: bool.isRequired,
+  selectable: bool,
+  borderless: bool,
   onClick: func,
   community: communityPropType,
 };
 
 CommunityChoiceTile.defaultProps = {
   selected: false,
+  selectable: false,
+  borderless: false,
 };
-
 
 export default CommunityChoiceTile;

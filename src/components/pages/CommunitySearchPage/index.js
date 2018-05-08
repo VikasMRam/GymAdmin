@@ -76,14 +76,8 @@ const SideFilterContainer = styled(CommunityFilterList)`
 `;
 
 const SearchMapContainer = styled(SearchMap)`
-  width: 100%;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: 75%;
-    margin-right: ${size('spacing.xLarge')};
-  }
+  width:100%;
+  height:100%;
 `;
 
 const StyledHeading = styled(Heading)`
@@ -101,7 +95,12 @@ const FiltersButton = styled(IconButton)`
 class CommunitySearchPage extends React.Component {
   state = {
     menuOpen: false,
-    isMapView: false,
+    isMapView: true,
+  };
+  onListButtonClick = () => {
+    this.setState({
+      isMapView: false,
+    });
   };
   onMapButtonClick = () => {
     this.setState({
@@ -161,14 +160,26 @@ class CommunitySearchPage extends React.Component {
               <StyledHeading level="subtitle">
                 258 communities in San Francisco
               </StyledHeading>
-              <ViewMapButton
-                icon="map"
-                ghost
-                transparent
-                onClick={this.onMapButtonClick}
-              >
-                View Map
-              </ViewMapButton>
+              {isMapView && (
+                <ViewMapButton
+                  icon="list"
+                  ghost
+                  transparent
+                  onClick={this.onListButtonClick}
+                >
+                  View List
+                </ViewMapButton>
+              )}
+              {!isMapView && (
+                <ViewMapButton
+                  icon="map"
+                  ghost
+                  transparent
+                  onClick={this.onMapButtonClick}
+                >
+                  View Map
+                </ViewMapButton>
+              )}
               <FiltersButton icon="filter" ghost transparent>
                 Filters
               </FiltersButton>
