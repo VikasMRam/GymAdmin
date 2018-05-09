@@ -1,4 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
+import { size } from 'sly/components/themes';
 import { object } from 'prop-types';
 
 import { Heading } from 'sly/components/atoms';
@@ -16,6 +18,16 @@ import MorePictures from 'sly/components/organisms/MorePictures';
 import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import Breadcrumb from 'sly/components/molecules/BreadCrumb';
+
+const Wrapper = styled.div`
+  padding-left:1rem;
+  padding-right:1rem;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding-left:0rem;
+    padding-right:0rem;
+  }
+`;
+
 
 const CommunityDetail = ({
   community,
@@ -109,7 +121,7 @@ const CommunityDetail = ({
     .replace(/, ,/g, ', ');
 
   return (
-    <div {...props}>
+    <Wrapper {...props}>
       <CommunityMediaGallery
         communityName={name}
         images={images}
@@ -206,7 +218,7 @@ const CommunityDetail = ({
       <CollapsibleSection title="How Seniorly Works" size="large">
         <HowSlyWorks />
       </CollapsibleSection>
-    </div>
+    </Wrapper>
   );
 };
 
