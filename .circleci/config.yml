@@ -33,7 +33,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
 #      - run:
 #           name: "JavaScript Linter"
 #           command: yarn lint -- --format junit -o reports/junit/js-lint-results.xml
