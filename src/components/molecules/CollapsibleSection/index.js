@@ -8,8 +8,18 @@ import { size } from 'sly/components/themes';
 import { Hr, Heading, Icon } from 'sly/components/atoms';
 
 const marginBottom = p => (p.collapsed ? 0 : size('spacing.xLarge'));
-const laptopLargeWidth = p =>
-  p.size === 'regular' ? size('layout.mainColumn') : size('layout.laptopLarge');
+const laptopLargeWidth = p =>{
+  switch (p.size) {
+    case 'small':
+      return size('layout.sideColumn');
+    case 'regular':
+      return size('layout.mainColumn');
+    default:
+      return size('layout.laptopLarge');
+
+  }
+}
+
 
 const Section = styled.section`
   padding-bottom: ${marginBottom};

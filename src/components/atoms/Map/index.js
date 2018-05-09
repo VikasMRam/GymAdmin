@@ -3,6 +3,7 @@ import { compose, withProps } from 'recompose';
 import { withScriptjs, withGoogleMap, GoogleMap } from 'react-google-maps';
 
 import mapsTheme from 'sly/components/themes/maps';
+import { gmapsApiKey } from 'sly/config';
 
 const mapConfig = {
   theme: mapsTheme.propertyDetailTheme,
@@ -25,10 +26,12 @@ const mapOptions = {
   scrollwheel: false,
 };
 
+
+
 const Map = compose(
   withProps({
     googleMapURL:
-      'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places',
+      `https://maps.googleapis.com/maps/api/js?key=${gmapsApiKey}&v=3.exp&libraries=geometry,drawing,places`,
     loadingElement: <div style={{ height: '100%' }} />,
     // containerElement: <div style={{ height: '400px' }} />,
     mapElement: <div style={{ height: '100%' }} />,
@@ -38,11 +41,14 @@ const Map = compose(
 )((props) => {
   const { center, defaultZoom, children } = props;
   const { latitude, longitude } = center;
+  const { onBoundsChanged, onMapMounted } = props;
   return (
     <GoogleMap
       defaultZoom={defaultZoom}
       defaultCenter={{ lat: latitude, lng: longitude }}
       defaultOptions={mapOptions}
+      onBoundsChanged={onBoundsChanged}
+      ref={onMapMounted}
     >
       {children}
     </GoogleMap>

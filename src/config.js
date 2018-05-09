@@ -19,7 +19,9 @@ const config = {
     isServer: typeof window === 'undefined',
     apiUrl: 'http://www.lvh.me/v0',
     authTokenUrl: 'http://www.lvh.me/users/auth_token',
+    gmapsApiKey: 'AIzaSyDGcBUVVLnoCTe46mT141WuWShs6eibk58',
     publicPath,
+
   },
   test: {},
   development: {},

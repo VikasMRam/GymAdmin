@@ -23,6 +23,8 @@ const nextUri = (() => {
 
 const Wrapper = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction:row;
 `;
 
 // TODO : Reuse this FixedColumnWrapper across the App
@@ -53,24 +55,25 @@ const TopWrapper = styled.div`
 `;
 
 const StyledCommunitySearchList = styled(CommunitySearchList)`
-  width: width: ${size('layout.mobile')};
+  width: calc(
+      ${size('layout.sideColumn')} + ${size('spacing.xLarge')}
+    );
   
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: 75%;
+    width: ${size('layout.laptopLarge')};
     margin-right: ${size('spacing.xLarge')};
   }
 `;
 
 const SideFilterContainer = styled(CommunityFilterList)`
-  width: 50%;
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};
+    width: ${size('layout.sideColumn')};
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: 25%;
     margin-right: ${size('spacing.xLarge')};
   }
 `;
@@ -93,19 +96,25 @@ const FiltersButton = styled(IconButton)`
 `;
 
 class CommunitySearchPage extends React.Component {
+
   state = {
     menuOpen: false,
-    isMapView: true,
+    isMapView: this.props.searchParams.view === 'map',//isMapView,
   };
   onListButtonClick = () => {
+    const { onParamsChange } = this.props;
     this.setState({
       isMapView: false,
     });
+    onParamsChange({changedParams:{view:'list'}});
   };
   onMapButtonClick = () => {
+    const { onParamsChange } = this.props;
+
     this.setState({
       isMapView: true,
     });
+    onParamsChange({changedParams:{view:'map'}});
   };
   toggleMenu = () => {
     this.setState({
@@ -155,6 +164,12 @@ class CommunitySearchPage extends React.Component {
           menuItems={menuItems}
         />
         <Wrapper>
+          <SideFilterContainer
+            onFieldChange={onParamsChange}
+            searchParams={searchParams}
+            toggleMap={toggleMap}
+            isMapView={isMapView}
+          />
           <FixedColumnWrapper>
             <TopWrapper>
               <StyledHeading level="subtitle">
@@ -185,30 +200,26 @@ class CommunitySearchPage extends React.Component {
               </FiltersButton>
               {/* <div>{requestMeta}</div> */}
             </TopWrapper>
-          </FixedColumnWrapper>
+
+
           <Hr />
-          {/* <SideFilterContainer
-          onFieldChange={onParamsChange}
-          searchParams={searchParams}
-          toggleMap={toggleMap}
-          isMapView={isMapView}
-        /> */}
-          <FixedColumnWrapper>
-            {!isMapView && (
-              <StyledCommunitySearchList
-                key="main"
-                communityList={communityList}
-                searchParams={searchParams}
-                onParamsRemove={onParamsRemove}
-              />
-            )}
-            {isMapView && (
-              <SearchMapContainer
-                latitude={latitude}
-                longitude={longitude}
-                communityList={communityList}
-              />
-            )}
+
+          {!isMapView && (
+            <StyledCommunitySearchList
+              key="main"
+              communityList={communityList}
+              searchParams={searchParams}
+              onParamsRemove={onParamsRemove}
+            />
+          )}
+          {isMapView && (
+            <SearchMapContainer
+              latitude={latitude}
+              longitude={longitude}
+              communityList={communityList}
+              onParamsChange={onParamsChange}
+            />
+          )}
           </FixedColumnWrapper>
         </Wrapper>
       </div>

@@ -10,22 +10,15 @@ import { getList } from "sly/store/selectors";
 import CommunitySearchPage from "sly/components/pages/CommunitySearchPage";
 
 class CommunitySearchPageContainer extends Component {
-  static propTypes = {
-    city:string,
-    state:string,
-    toc:string,
-    mapView:bool,
-    error:string,
 
-  };
-  state = {
-    mapView: !!this.props.mapView,
-  };
-
+  //TODO Define Search Parameters
   toggleMap = () =>{
-    this.setState({
-      mapView:!this.state.mapView,
-    });
+
+    let event = {changedParams:{view:'map'}};
+    if (this.props.searchParams && this.props.searchParams.view === 'map'){
+      event.changedParams = {view:'list'};
+    }
+    this.changeSearchParams(event);
   };
 
   changeSearchParams = (fullEvent) => {
@@ -47,7 +40,6 @@ class CommunitySearchPageContainer extends Component {
 
   render() {
     const {  searchParams, error, communityList, requestMeta } = this.props;
-    const { mapView } = this.state;
     //TODO Add Error Page
     if (error) {
       return (
@@ -58,7 +50,6 @@ class CommunitySearchPageContainer extends Component {
     }
 
     return <CommunitySearchPage requestMeta={requestMeta}
-                                isMapView={mapView}
                                 toggleMap={this.toggleMap}
                                 searchParams={searchParams}
                                 onParamsChange={this.changeSearchParams}
@@ -70,7 +61,7 @@ class CommunitySearchPageContainer extends Component {
 function parseParamsToFullPath(params) {
   let path = `/${params.toc}/${params.state}/${params.city}?`;
   Object.keys(params).map((key)=>{
-    if (['size','budget','sort','page-number','page-size','radius'].indexOf(key) > -1) {
+    if (['size','budget','sort','page-number','page-size','radius','view'].indexOf(key) > -1) {
       let value = params[key];
       if (value !== "" && value !== undefined) {
         path += `${key}=${value}&`;
@@ -93,7 +84,7 @@ function parseQueryStringToFilters(qs) {
 
   for (const param of input.split('&')) {
     let [key, value] = param.replace(/\+/g, ' ').split('=');
-    if (['size','budget','sort','page-number','page-size','radius'].indexOf(key) > -1) {
+    if (['size','budget','sort','page-number','page-size','radius','view'].indexOf(key) > -1) {
       // Missing `=` should be `null`:
       // http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
       value = value === undefined ? null : decodeURIComponent(value);

@@ -56,9 +56,12 @@ const getSortHandler = (origFn) => {
   };
 };
 
-const CommunityFilterList = ({ toggleMap, isMapView, searchParams, onFieldChange }) => {
+const CommunityFilterList = ({ toggleMap, searchParams, onFieldChange }) => {
 
-  const { toc, size, budget, sort } = searchParams;
+  const { toc, size, budget, sort, view } = searchParams;
+  const isMapView  = () =>{
+    return view === 'map'
+  }
   const intBudget = parseInt(budget);
 
   const tocFields = tocs.map((elem)=>
@@ -75,10 +78,10 @@ const CommunityFilterList = ({ toggleMap, isMapView, searchParams, onFieldChange
   );
   return (
     <SectionWrapper>
-      {isMapView && toggleMap && <IconButton icon={'list'} onClick={toggleMap}>
+      {isMapView() && toggleMap && <IconButton icon={'list'} onClick={toggleMap}>
         Show List
       </IconButton>}
-      {!isMapView && <IconButton icon={'map'} onClick={toggleMap} >
+      {!isMapView() && <IconButton icon={'map'} onClick={toggleMap} >
         Show Map
       </IconButton>}
       <CollapsibleSection size={'small'} title={"Type of Care"} >
