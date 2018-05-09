@@ -6,13 +6,13 @@ import { Marker, InfoWindow, OverlayView } from 'react-google-maps';
 
 import { isServer } from 'sly/config';
 import { size } from 'sly/components/themes';
+import Checkbox from 'sly/components/molecules/Checkbox';
 import Map from 'sly/components/atoms/Map';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
 import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
 
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
-import Field from 'sly/components/molecules/Field';
 
 const MapContainerElement = styled.div`
   width: 100%;
@@ -38,6 +38,10 @@ const refs = {
   map: undefined,
 };
 
+function preciseCoordinate(x) {
+  return Number.parseFloat(x).toPrecision(8);
+}
+
 class SearchMap extends Component {
   static propTypes = {
     latitude: number.isRequired,
@@ -54,7 +58,7 @@ class SearchMap extends Component {
 
   state = {
     activeInfoWindowId: null,
-    // redoSearchOnMove: true,
+    redoSearchOnMove: false,
   };
 
   onMapMounted = (map) => {
@@ -85,8 +89,15 @@ class SearchMap extends Component {
       const { onParamsChange } = this.props;
       if (onParamsChange && typeof onParamsChange === 'function') {
         // Get Map's center and get latitude and longitude
-        const { lat, lng } = refs.map.getCenter();
-        onParamsChange({ changedParams: { lat, long: lng } });
+        if (refs.map) {
+          const center = refs.map.getCenter();
+          const lat = center.lat();
+          const long = center.lng();
+          const { latitude, longitude } = this.props;
+          if (preciseCoordinate(lat) !== preciseCoordinate(latitude) && preciseCoordinate(long) !== preciseCoordinate(longitude)) {
+            onParamsChange({ changedParams: { latitude: lat, longitude: long, searchOnMove: this.state.redoSearchOnMove } });
+          }
+        }
       }
     }
   };
@@ -102,6 +113,9 @@ class SearchMap extends Component {
       latitude,
       longitude,
     };
+    if (latitude === 0 && longitude === 0) {
+      return <div>Loading Map...</div>;
+    }
     const markers = [];
 
     // TODO Move to constants and helpers for things like isMobile?
@@ -154,8 +168,6 @@ class SearchMap extends Component {
         startingRate,
         numReviews,
         reviewsValue,
-        latitude,
-        longitude,
         image,
       } = marker;
       const community = {
@@ -215,16 +227,11 @@ class SearchMap extends Component {
         mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
       >
         <StyledDiv>
-          <Field
-            name="redosearchonmove"
-            type="checkbox"
-            onChange={this.onToggleSearchOnMove}
-            label="Redo Search on Move"
-          />
+          <Checkbox checked={this.state.redoSearchOnMove} onClick={this.onToggleSearchOnMove} />
+          Redo Search on Move
         </StyledDiv>
       </OverlayView>
     );
-
     return (
       <Map
         center={center}
@@ -234,7 +241,7 @@ class SearchMap extends Component {
         onMapMounted={this.onMapMounted}
       >
         {markerComponents}
-        <RedoSearchDiv />
+        {/* <RedoSearchDiv /> */}
       </Map>
     );
   }

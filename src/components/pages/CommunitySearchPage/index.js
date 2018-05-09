@@ -117,6 +117,10 @@ class CommunitySearchPage extends React.Component {
       latitude = communityList[0].latitude;
       longitude = communityList[0].longitude;
     }
+    if (searchParams.searchOnMove) {
+      latitude = parseFloat(searchParams.latitude);
+      longitude = parseFloat(searchParams.longitude);
+    }
     // TODO : Header is duplicated. Refactor it so that it can be reused
     const headerItems = [
       { name: 'List on Seniorly', url: '#' },

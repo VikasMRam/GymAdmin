@@ -72,6 +72,7 @@ function parseParamsToFullPath(params) {
         'view',
         'latitude',
         'longitude',
+        'searchOnMove',
       ].indexOf(key) > -1
     ) {
       const value = params[key];
@@ -106,6 +107,7 @@ function parseQueryStringToFilters(qs) {
         'view',
         'latitude',
         'longitude',
+        'searchOnMove',
       ].indexOf(key) > -1
     ) {
       // Missing `=` should be `null`:
