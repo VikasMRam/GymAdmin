@@ -16,8 +16,10 @@ const Wrapper = styled.div`
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid
     ${palette('grayscale', 2)};
   width: ${size('tile', 'large', 'width')};
+  padding: 1.0rem;
   transition: box-shadow ${key('transitions.default')},
     opacity ${key('transitions.default')};
+    
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
@@ -36,22 +38,26 @@ const Wrapper = styled.div`
     }
   }
 `;
+const ImageWrapper = styled.div`
+  line-height: 0;
+`;
 
 const SCTileImage = styled.img`
-  width: ${size('tile', 'large', 'width')};
-  height: ${size('tile', 'large', 'height')};
+  max-width: 100%;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('tile', 'regular', 'width')};
     height: ${size('tile', 'regular', 'height')};
+    max-width: none;
   }
 `;
 
 const ChildrenWrapper = styled.div`
-  margin-top: ${size('spacing.large')};
-  margin-right: ${size('spacing.large')};
-  margin-bottom: ${size('spacing.large')};
-  margin-left: ${size('spacing.xLarge')};
+  margin-top: ${size('spacing.regular')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-top: 0;
+    margin-left: ${size('spacing.large')};
+  }
 `;
 
 const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
@@ -59,9 +65,9 @@ const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
       {/* div is for the image below. If removed, the image dimensions wont adhere to the seize being set */}
-      <div>
+      <ImageWrapper>
         <SCTileImage src={mainImage || defaultImage} />
-      </div>
+      </ImageWrapper>
       <ChildrenWrapper>
         <SimilarCommunityInfo similarProperty={similarProperty} />
       </ChildrenWrapper>

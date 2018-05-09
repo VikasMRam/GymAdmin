@@ -7,8 +7,6 @@ import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile'
 
 const SimilarCommunityTileDiv = styled.div`
   padding-bottom: ${size('spacing.large')};
-  padding-right: ${size('spacing.regular')};
-  padding-left: ${size('spacing.large')};
 `;
 
 const SimilarCommunity = ({ similarProperties }) => {

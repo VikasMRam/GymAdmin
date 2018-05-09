@@ -15,6 +15,7 @@ const SimilarCommunityNameDiv = styled.div`
 const SimilarCommunityPriceRatingDiv = styled.div`
   display: flex;
   font-size: ${size('text.body')};
+  margin-bottom:${size('spacing.regular')}
 `;
 
 const SimilarCommunityRatingDiv = styled.div`
@@ -28,6 +29,7 @@ const SimilarCommunityNumberReviewDiv = styled.div`
 
 const SimilarCommunityDescDiv = styled.div`
   color: ${palette('grayscale', 0)};
+  margin-top:${size('spacing.regular')}
 `;
 
 function getArrayAsString(array=[]) {
@@ -58,10 +60,8 @@ const SimilarCommunityInfo = ({ similarProperty }) => {
           )}
         </SimilarCommunityRatingDiv>
       </SimilarCommunityPriceRatingDiv>
-      <Dotdotdot clamp={1}>Care Type: {getArrayAsString(typeCare)}</Dotdotdot>
-      <Dotdotdot clamp={1}>
-        Floor Plans: {getArrayAsString(floorPlansArray)}
-      </Dotdotdot>
+      <Dotdotdot clamp={1}>{getArrayAsString(typeCare)}</Dotdotdot>
+      <Dotdotdot clamp={1}>{getArrayAsString(floorPlansArray)}</Dotdotdot>
       <SimilarCommunityDescDiv>
         <Dotdotdot clamp={2}>{communityDescription}</Dotdotdot>
       </SimilarCommunityDescDiv>
