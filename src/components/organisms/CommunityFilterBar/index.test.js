@@ -2,46 +2,40 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Marker, InfoWindow } from 'react-google-maps';
 
-import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-
-
-import CommunityFilterBar from '.';
-import {StyledIButton,StyledButton} from '.';
+import CommunityFilterBar, { FilterButton, ClearAllButton } from '.';
 
 const wrap = (props = {}) => shallow(<CommunityFilterBar {...props} />);
 const fullSp = {
-  size:'small',
-  budget:'3000',
+  size: 'small',
+  budget: '3000',
 };
 const halfSp = {
-  size:'small',
+  size: 'small',
 };
-const onParamsRemove=()=>{};
+const onParamsRemove = () => {};
 const props = {
-  searchParams:{},
-  onParamsRemove
+  searchParams: {},
+  onParamsRemove,
 };
 
 it('renders Filterbar with no filters selected', () => {
   const wrapper = wrap(props);
-  expect(wrapper.find(StyledIButton)).toHaveLength(0);
-  expect(wrapper.find(StyledButton)).toHaveLength(0);
-  //TODO find what's happening here
+  expect(wrapper.find(FilterButton)).toHaveLength(0);
+  expect(wrapper.find(ClearAllButton)).toHaveLength(0);
+  // TODO find what's happening here
   // expect(wrapper.find(<div></div>)).toHaveLength(1);
 });
 
 it('renders Filterbar button and clear all with one filter selected', () => {
-  const wrapper = wrap({searchParams:halfSp,onParamsRemove});
-  expect(wrapper.find(StyledIButton)).toHaveLength(1);
-  expect(wrapper.find(StyledButton)).toHaveLength(1);
-
+  const wrapper = wrap({ searchParams: halfSp, onParamsRemove });
+  expect(wrapper.find(FilterButton)).toHaveLength(1);
+  expect(wrapper.find(ClearAllButton)).toHaveLength(1);
 });
 
 it('renders Filterbar button and clear all with two filters selected', () => {
-  const wrapper = wrap({searchParams:fullSp,onParamsRemove});
-  expect(wrapper.find(StyledIButton)).toHaveLength(2);
-  expect(wrapper.find(StyledButton)).toHaveLength(1);
-
+  const wrapper = wrap({ searchParams: fullSp, onParamsRemove });
+  expect(wrapper.find(FilterButton)).toHaveLength(2);
+  expect(wrapper.find(ClearAllButton)).toHaveLength(1);
 });
 
 // it('renders InfoWindow when a Marker is clicked', () => {

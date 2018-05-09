@@ -62,7 +62,7 @@ const StyledIcon = styled(Icon)`
 `;
 
 const IconButton = ({
-  icon, iconOnly, fill, children, ...props
+  icon, iconSize, iconOnly, fill, children, ...props
 }) => {
   const { right, height, palette } = props;
   const iconElement = (
@@ -70,6 +70,7 @@ const IconButton = ({
       height={height ? height / 2.5 : undefined}
       fill={fill}
       icon={icon}
+      size={iconSize}
       palette={palette}
     />
   );
@@ -92,6 +93,8 @@ const IconButton = ({
 IconButton.propTypes = {
   fill: string,
   icon: string.isRequired,
+  iconSize: string,
+  palette: string,
   iconOnly: bool,
   collapsed: bool,
   right: bool,
@@ -101,6 +104,8 @@ IconButton.propTypes = {
 
 IconButton.defaultProps = {
   iconOnly: false,
+  iconSize: 'regular',
+  palette: 'secondary',
 };
 
 export default IconButton;

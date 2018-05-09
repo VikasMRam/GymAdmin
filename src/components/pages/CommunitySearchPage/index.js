@@ -84,13 +84,31 @@ const SearchMapContainer = styled(SearchMap)`
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
+  font-size: ${size('text.subtitle')};
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    font-size: ${size('text.title')};
+  }
 `;
 
 const ViewMapButton = styled(IconButton)`
   margin-right: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    display: none;
+  }
 `;
 
 const FiltersButton = styled(IconButton)`
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    display: none;
+  }
+`;
+
+const StyledHr = styled(Hr)`
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    display: none;
+  }
 `;
 
 class CommunitySearchPage extends React.Component {
@@ -157,7 +175,7 @@ class CommunitySearchPage extends React.Component {
           />
           <FixedColumnWrapper>
             <TopWrapper>
-              <StyledHeading level="subtitle">
+              <StyledHeading>
                 258 communities in San Francisco
               </StyledHeading>
               {isMapView && (
@@ -179,6 +197,7 @@ class CommunitySearchPage extends React.Component {
                 Filters
               </FiltersButton>
             </TopWrapper>
+            <StyledHr />
             {!isMapView && (
               <StyledCommunitySearchList
                 key="main"
