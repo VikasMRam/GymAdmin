@@ -23,6 +23,8 @@ const nextUri = (() => {
 
 const Wrapper = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: row;
 `;
 
 // TODO : Reuse this FixedColumnWrapper across the App
@@ -53,31 +55,29 @@ const TopWrapper = styled.div`
 `;
 
 const StyledCommunitySearchList = styled(CommunitySearchList)`
-  width: width: ${size('layout.mobile')};
-  
+  width: calc(${size('layout.sideColumn')} + ${size('spacing.xLarge')});
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: 75%;
+    width: ${size('layout.laptopLarge')};
     margin-right: ${size('spacing.xLarge')};
   }
 `;
 
 const SideFilterContainer = styled(CommunityFilterList)`
-  width: 50%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};
+    width: ${size('layout.sideColumn')};
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: 25%;
     margin-right: ${size('spacing.xLarge')};
   }
 `;
 
 const SearchMapContainer = styled(SearchMap)`
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
 `;
 
 const StyledHeading = styled(Heading)`
@@ -95,17 +95,6 @@ const FiltersButton = styled(IconButton)`
 class CommunitySearchPage extends React.Component {
   state = {
     menuOpen: false,
-    isMapView: true,
-  };
-  onListButtonClick = () => {
-    this.setState({
-      isMapView: false,
-    });
-  };
-  onMapButtonClick = () => {
-    this.setState({
-      isMapView: true,
-    });
   };
   toggleMenu = () => {
     this.setState({
@@ -114,6 +103,7 @@ class CommunitySearchPage extends React.Component {
   };
   render() {
     const {
+      isMapView,
       toggleMap,
       onParamsChange,
       onParamsRemove,
@@ -121,12 +111,15 @@ class CommunitySearchPage extends React.Component {
       requestMeta,
       communityList,
     } = this.props;
-    const { isMapView } = this.state;
     let latitude = 0.0;
     let longitude = 0.0;
     if (communityList.length > 0) {
       latitude = communityList[0].latitude;
       longitude = communityList[0].longitude;
+    }
+    if (searchParams.searchOnMove) {
+      latitude = parseFloat(searchParams.latitude);
+      longitude = parseFloat(searchParams.longitude);
     }
     // TODO : Header is duplicated. Refactor it so that it can be reused
     const headerItems = [
@@ -155,6 +148,12 @@ class CommunitySearchPage extends React.Component {
           menuItems={menuItems}
         />
         <Wrapper>
+          <SideFilterContainer
+            onFieldChange={onParamsChange}
+            searchParams={searchParams}
+            toggleMap={toggleMap}
+            isMapView={isMapView}
+          />
           <FixedColumnWrapper>
             <TopWrapper>
               <StyledHeading level="subtitle">
@@ -165,18 +164,13 @@ class CommunitySearchPage extends React.Component {
                   icon="list"
                   ghost
                   transparent
-                  onClick={this.onListButtonClick}
+                  onClick={toggleMap}
                 >
                   View List
                 </ViewMapButton>
               )}
               {!isMapView && (
-                <ViewMapButton
-                  icon="map"
-                  ghost
-                  transparent
-                  onClick={this.onMapButtonClick}
-                >
+                <ViewMapButton icon="map" ghost transparent onClick={toggleMap}>
                   View Map
                 </ViewMapButton>
               )}
@@ -185,15 +179,9 @@ class CommunitySearchPage extends React.Component {
               </FiltersButton>
               {/* <div>{requestMeta}</div> */}
             </TopWrapper>
-          </FixedColumnWrapper>
-          <Hr />
-          {/* <SideFilterContainer
-          onFieldChange={onParamsChange}
-          searchParams={searchParams}
-          toggleMap={toggleMap}
-          isMapView={isMapView}
-        /> */}
-          <FixedColumnWrapper>
+
+            <Hr />
+
             {!isMapView && (
               <StyledCommunitySearchList
                 key="main"
@@ -207,6 +195,7 @@ class CommunitySearchPage extends React.Component {
                 latitude={latitude}
                 longitude={longitude}
                 communityList={communityList}
+                onParamsChange={onParamsChange}
               />
             )}
           </FixedColumnWrapper>

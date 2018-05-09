@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { string, number, shape, arrayOf } from 'prop-types';
+import { string, number, shape, arrayOf, func } from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
-import { Marker, InfoWindow } from 'react-google-maps';
+import { Marker, InfoWindow, OverlayView } from 'react-google-maps';
 
 import { isServer } from 'sly/config';
 import { size } from 'sly/components/themes';
+import Checkbox from 'sly/components/molecules/Checkbox';
 import Map from 'sly/components/atoms/Map';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
 import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
@@ -13,17 +14,70 @@ import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
 
-// TODO SEARCH MAP
 const MapContainerElement = styled.div`
   width: 100%;
   height: ${size('map.propertyDetail.large.height')};
+`;
+
+const StyledDiv = styled.div`
+  position: fixed;
+  top: -300px;
+  left: -200px;
+  background-color: ${palette('white', 0)};
+  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  width: auto;
+  height: auto;
+  padding: ${size('spacing.small')};
+  display: flex;
+`;
+
+const OverlayText = styled.div`
+  padding: calc(${size('spacing.regular')} + ${size('spacing.small')}) ${size('spacing.regular')};
+`;
+
+const StyledCheckbox = styled(Checkbox)`
+  margin: ${size('spacing.regular')};
 `;
 
 const iconMap = {
   blue: GreenMarker,
   red: RedMarker,
 };
+const refs = {
+  map: undefined,
+};
 
+function preciseCoordinate(x) {
+  return Number.parseFloat(x).toPrecision(8);
+}
+
+class RedoSearchDiv extends Component {
+  static propTypes = {
+    latitude: number.isRequired,
+    longitude: number.isRequired,
+    redoSearchOnMove: func.isRequired,
+    onToggleSearchOnMove: func.isRequired,
+  }
+  getPixelPositionOffset = (width, height) => ({
+    x: -(width / 2),
+    y: -(height / 2),
+  });
+  render() {
+    const { latitude, longitude, redoSearchOnMove, onToggleSearchOnMove } = this.props;
+    return (
+      <OverlayView
+        position={{ lat: latitude, lng: longitude }}
+        getPixelPositionOffset={this.getPixelPositionOffset}
+        mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+      >
+        <StyledDiv>
+          <StyledCheckbox checked={redoSearchOnMove} onClick={onToggleSearchOnMove} />
+          <OverlayText>Redo Search on Move</OverlayText>
+        </StyledDiv>
+      </OverlayView>
+    );
+  }
+}
 class SearchMap extends Component {
   static propTypes = {
     latitude: number.isRequired,
@@ -40,6 +94,17 @@ class SearchMap extends Component {
 
   state = {
     activeInfoWindowId: null,
+    redoSearchOnMove: false,
+  };
+
+  onMapMounted = (map) => {
+    refs.map = map;
+  };
+
+  onToggleSearchOnMove = () => {
+    this.setState({
+      redoSearchOnMove: !this.state.redoSearchOnMove,
+    });
   };
 
   onMarkerClick = marker => () => {
@@ -53,16 +118,39 @@ class SearchMap extends Component {
       activeInfoWindowId: null,
     });
   };
+
+  onBoundsChange = () => {
+    // Do something if this is checked
+    if (this.state.redoSearchOnMove) {
+      const { onParamsChange } = this.props;
+      if (onParamsChange && typeof onParamsChange === 'function') {
+        // Get Map's center and get latitude and longitude
+        if (refs.map) {
+          const center = refs.map.getCenter();
+          const lat = center.lat();
+          const long = center.lng();
+          const { latitude, longitude } = this.props;
+          if (preciseCoordinate(lat) !== preciseCoordinate(latitude) && preciseCoordinate(long) !== preciseCoordinate(longitude)) {
+            onParamsChange({ changedParams: { latitude: lat, longitude: long, searchOnMove: this.state.redoSearchOnMove } });
+          }
+        }
+      }
+    }
+  };
+
   render() {
     const { latitude, longitude, communityList } = this.props;
     const center = {
       latitude,
       longitude,
     };
+    if (latitude === 0 && longitude === 0) {
+      return <div>Loading Map...</div>;
+    }
     const markers = [];
 
     // TODO Move to constants and helpers for things like isMobile?
-    const isMobile = window.innerWidth < 768;
+    const isMobile = false; // window && window.innerWidth < size('breakpoint.tablet');
     let defaultZoom = 14;
     if (isMobile) {
       defaultZoom = 13;
@@ -111,8 +199,6 @@ class SearchMap extends Component {
         startingRate,
         numReviews,
         reviewsValue,
-        latitude,
-        longitude,
         image,
       } = marker;
       const community = {
@@ -165,14 +251,17 @@ class SearchMap extends Component {
         </Marker>
       );
     });
-
     return (
       <Map
         center={center}
         defaultZoom={defaultZoom}
         containerElement={<MapContainerElement />}
+        onBoundsChanged={this.onBoundsChange}
+        onMapMounted={this.onMapMounted}
       >
         {markerComponents}
+        <RedoSearchDiv latitude={latitude} longitude={longitude} redoSearchOnMove={this.state.redoSearchOnMove}
+         onToggleSearchOnMove={this.onToggleSearchOnMove}/>
       </Map>
     );
   }

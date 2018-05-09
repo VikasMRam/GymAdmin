@@ -47,7 +47,7 @@ export default class communitySummary extends React.Component {
     } = this.props;
     const highlights = [];
 
-    if (twilioNumber && twilioNumber.numbers.length) {
+    if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
       highlights.push((
         <span>
           Pricing & Availability&nbsp;
