@@ -71,11 +71,14 @@ export const filterLinkPath = (currentFilters, nextFilters) => {
     ? `/filters${sizeSegment}${budgetSegment}`
     : '';
 
+  const qsString = stringify(qs);
+  const qsPart = qsString ? `?${qsString}` : '';
+
   const key = Object.keys(nextFilters)[0];
   const selected = currentFilters[key] === nextFilters[key];
 
   return {
-    path: `/${toc}/${state}/${city}${filtersSegment}${stringify(qs)}`,
+    path: `/${toc}/${state}/${city}${filtersSegment}${qsPart}`,
     selected,
   };
 };

@@ -8,7 +8,7 @@ import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList } from 'sly/store/selectors';
 
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
-import { getSearchParams } from 'sly/services/helpers/search'; 
+import { filterLinkPath, getSearchParams } from 'sly/services/helpers/search'; 
 
 class CommunitySearchPageContainer extends Component {
   // TODO Define Search Parameters
@@ -20,25 +20,18 @@ class CommunitySearchPageContainer extends Component {
     this.changeSearchParams(event);
   };
 
-  changeSearchParams = (fullEvent) => {
+  changeSearchParams = ({ changedParams }) => {
     // Changed search params
     const origParams = this.props.searchParams;
-    const changedParams = fullEvent.changedParams;
-    const fullParams = merge(origParams, changedParams);
-    const newUri = parseParamsToFullPath(fullParams);
-    // TODO: as we are using links now, we only use callbacks for internal state, 
-    // so this should be this.setState, for example in sort
-    this.props.history.push(newUri);
+    const { path } = filterLinkPath(origParams, changedParams);
+    this.props.history.push(path);
   };
 
-  removeSearchFilters = (fullEvent) => {
-    const paramsToRemove = fullEvent.paramsToRemove;
+  removeSearchFilters = ({ paramsToRemove }) => {
     const fullParams = omit(this.props.searchParams, paramsToRemove);
 
-    const newUri = parseParamsToFullPath(fullParams);
-    // TODO: as we are using links now, we only use callbacks for internal state, 
-    // so this should be this.setState, for example in sort
-    this.props.history.push(newUri);
+    const { path } = filterLinkPath(fullParams, {});
+    this.props.history.push(path);
   };
 
   render() {
@@ -63,32 +56,6 @@ class CommunitySearchPageContainer extends Component {
     );
   }
 }
-function parseParamsToFullPath(params) {
-  let path = `/${params.toc}/${params.state}/${params.city}?`;
-  Object.keys(params).map((key) => {
-    if (
-      [
-        'size',
-        'budget',
-        'sort',
-        'page-number',
-        'page-size',
-        'radius',
-        'view',
-        'latitude',
-        'longitude',
-        'searchOnMove',
-      ].indexOf(key) > -1
-    ) {
-      const value = params[key];
-      if (value !== '' && value !== undefined) {
-        path += `${key}=${value}&`;
-      }
-    }
-  });
-  path = path.replace(/&$/, '');
-  return path;
-}
 
 const mapStateToProps = (state, { match, location }) => {
   const searchParams = getSearchParams(match, location);
@@ -100,7 +67,6 @@ const mapStateToProps = (state, { match, location }) => {
 
 const fetchData = (dispatch, { match, location }) => {
   const searchParams = getSearchParams(match, location);
-  console.log('searchParams', searchParams);
   return dispatch(resourceListReadRequest('searchResource', searchParams));
 };
 
