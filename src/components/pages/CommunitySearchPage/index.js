@@ -177,9 +177,6 @@ class CommunitySearchPage extends React.Component {
                 Filters
               </FiltersButton>
             </TopWrapper>
-<<<<<<< HEAD
-            <Hr />
-=======
           </FixedColumnWrapper>
           <Hr />
           <SideFilterContainer
@@ -189,7 +186,6 @@ class CommunitySearchPage extends React.Component {
             isMapView={isMapView}
           />
           <FixedColumnWrapper>
->>>>>>> b029419... prototype for filter function
             {!isMapView && (
               <StyledCommunitySearchList
                 key="main"
@@ -198,14 +194,14 @@ class CommunitySearchPage extends React.Component {
                 onParamsRemove={onParamsRemove}
               />
             )}
-            {/*isMapView && (
+            {isMapView && (
               <SearchMapContainer
                 latitude={latitude}
                 longitude={longitude}
                 communityList={communityList}
                 onParamsChange={onParamsChange}
               />
-            )*/}
+            )}
           </FixedColumnWrapper>
         </Wrapper>
       </div>
