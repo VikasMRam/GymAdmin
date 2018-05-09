@@ -8,6 +8,7 @@ import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList } from 'sly/store/selectors';
 
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
+import { filterLinkPath, getSearchParams } from 'sly/services/helpers/search'; 
 
 class CommunitySearchPageContainer extends Component {
   // TODO Define Search Parameters
@@ -19,21 +20,18 @@ class CommunitySearchPageContainer extends Component {
     this.changeSearchParams(event);
   };
 
-  changeSearchParams = (fullEvent) => {
+  changeSearchParams = ({ changedParams }) => {
     // Changed search params
     const origParams = this.props.searchParams;
-    const changedParams = fullEvent.changedParams;
-    const fullParams = merge(origParams, changedParams);
-    const newUri = parseParamsToFullPath(fullParams);
-    this.props.history.push(newUri);
+    const { path } = filterLinkPath(origParams, changedParams);
+    this.props.history.push(path);
   };
 
-  removeSearchFilters = (fullEvent) => {
-    const paramsToRemove = fullEvent.paramsToRemove;
+  removeSearchFilters = ({ paramsToRemove }) => {
     const fullParams = omit(this.props.searchParams, paramsToRemove);
 
-    const newUri = parseParamsToFullPath(fullParams);
-    this.props.history.push(newUri);
+    const { path } = filterLinkPath(fullParams, {});
+    this.props.history.push(path);
   };
 
   render() {
@@ -58,75 +56,9 @@ class CommunitySearchPageContainer extends Component {
     );
   }
 }
-function parseParamsToFullPath(params) {
-  let path = `/${params.toc}/${params.state}/${params.city}?`;
-  Object.keys(params).map((key) => {
-    if (
-      [
-        'size',
-        'budget',
-        'sort',
-        'page-number',
-        'page-size',
-        'radius',
-        'view',
-        'latitude',
-        'longitude',
-        'searchOnMove',
-      ].indexOf(key) > -1
-    ) {
-      const value = params[key];
-      if (value !== '' && value !== undefined) {
-        path += `${key}=${value}&`;
-      }
-    }
-  });
-  path = path.replace(/&$/, '');
-  return path;
-}
-
-function parseQueryStringToFilters(qs) {
-  const ret = Object.create(null);
-  let input = qs;
-  input = input.trim().replace(/^[?#&]/, '');
-
-  if (!input) {
-    return ret;
-  }
-
-  for (const param of input.split('&')) {
-    let [key, value] = param.replace(/\+/g, ' ').split('=');
-    if (
-      [
-        'size',
-        'budget',
-        'sort',
-        'page-number',
-        'page-size',
-        'radius',
-        'view',
-        'latitude',
-        'longitude',
-        'searchOnMove',
-      ].indexOf(key) > -1
-    ) {
-      // Missing `=` should be `null`:
-      // http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
-      value = value === undefined ? null : decodeURIComponent(value);
-      ret[key] = value;
-    }
-  }
-  return ret;
-}
 
 const mapStateToProps = (state, { match, location }) => {
-  // Maybe i can read this from just the response? and not have to repeat myself?
-  const searchParams = {};
-  Object.assign(
-    searchParams,
-    match.params,
-    parseQueryStringToFilters(location.search)
-  );
+  const searchParams = getSearchParams(match, location);
   return {
     searchParams,
     communityList: getList(state, 'searchResource'),
@@ -134,12 +66,7 @@ const mapStateToProps = (state, { match, location }) => {
 };
 
 const fetchData = (dispatch, { match, location }) => {
-  const searchParams = {};
-  Object.assign(
-    searchParams,
-    match.params,
-    parseQueryStringToFilters(location.search)
-  );
+  const searchParams = getSearchParams(match, location);
   return dispatch(resourceListReadRequest('searchResource', searchParams));
 };
 
