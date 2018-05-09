@@ -22,7 +22,6 @@ const iconHeight = p =>
 const StyledButton = styled(Button)`
   width: ${iconWidth};
   // TODO : Need to fix this
-  // height: ${iconHeight};
   padding: ${ifProp('hasText', '0 0.4375em', 0)};
   flex: 0 0 2.5em;
   ${ifProp(

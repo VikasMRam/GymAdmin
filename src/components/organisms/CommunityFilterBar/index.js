@@ -12,7 +12,6 @@ const SectionWrapper = styled.div`
   flex-direction: row;
   margin: 0 auto;
   width: 100%;
-  // padding: ${size('spacing.large')};
 `;
 export const StyledIButton = styled(IconButton)`
   display: flex;

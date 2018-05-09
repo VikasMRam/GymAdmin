@@ -89,7 +89,6 @@ const ViewMapButton = styled(IconButton)`
 `;
 
 const FiltersButton = styled(IconButton)`
-  // margin-right: ${size('spacing.large')};
 `;
 
 class CommunitySearchPage extends React.Component {
@@ -177,7 +176,6 @@ class CommunitySearchPage extends React.Component {
               <FiltersButton icon="filter" ghost transparent>
                 Filters
               </FiltersButton>
-              {/* <div>{requestMeta}</div> */}
             </TopWrapper>
 
             <Hr />
@@ -205,8 +203,8 @@ class CommunitySearchPage extends React.Component {
   }
 }
 
-// CommunitySearchPage.propTypes = {
-//   communityList: object.isRequired,
-// };
+CommunitySearchPage.propTypes = {
+   communityList: object.isRequired,
+};
 
 export default CommunitySearchPage;
