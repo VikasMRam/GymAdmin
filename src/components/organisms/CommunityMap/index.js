@@ -20,7 +20,7 @@ const MapContainerElement = styled.div`
     height: ${size('map.propertyDetail.regular.height')};
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     width: ${size('map.propertyDetail.large.width')};
     height: ${size('map.propertyDetail.large.height')};
   }

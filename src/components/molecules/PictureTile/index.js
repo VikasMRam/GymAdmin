@@ -24,7 +24,7 @@ const StyledImage = styled(Image)`
     }
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     width: ${size('picture', 'small', 'width')};
     height: ${size('picture', 'small', 'height')};
 

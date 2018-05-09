@@ -14,7 +14,7 @@ const reason1 = {
 };
 
 const reason2 = {
-  title: 'Connect with Communities',
+  title: 'Community Connect',
   text:
     'We connect you directly to each senior community you choose and we guarantee no other properties will obtain your personal information.',
   to: '/how-it-works/consumers',

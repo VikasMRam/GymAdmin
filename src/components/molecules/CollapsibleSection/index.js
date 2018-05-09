@@ -25,7 +25,7 @@ const Section = styled.section`
   padding-bottom: ${marginBottom};
   transition: padding-bottom ${key('transitions.default')};
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     width: ${laptopLargeWidth};
   }
 `;

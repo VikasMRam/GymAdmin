@@ -35,8 +35,8 @@ const FooterTopWrapper = styled.div`
     padding-right: ${size('layout.sideColumn')};
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: ${size('layout.laptopLarge')};
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    width: ${size('layout.laptopSideColumn')};
     padding-right: 0;
     justify-content: space-between;
   }
@@ -51,7 +51,7 @@ const SeniorlyWhiteIcon = styled(Icon)`
     margin-left: 45%;
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     margin-left: 0;
   }
 `;
@@ -156,8 +156,8 @@ const FooterBottomWrapper = styled.div`
     padding-right: ${size('layout.sideColumn')};
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: ${size('layout.laptopLarge')};
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    width: ${size('layout.laptopSideColumn')};
     padding-right: 0;
   }
 `;
