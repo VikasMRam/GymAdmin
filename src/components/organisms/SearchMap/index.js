@@ -24,7 +24,7 @@ const StyledDiv = styled.div`
   top: -300px;
   left: -200px;
   background-color: ${palette('white', 0)};
-  border: 1px solid;
+  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   width: auto;
   height: auto;
   padding: ${size('spacing.small')};
