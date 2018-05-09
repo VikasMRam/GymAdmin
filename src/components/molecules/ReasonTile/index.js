@@ -34,7 +34,7 @@ export const Wrapper = styled(Link)`
     }
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     width: ${size('picture', 'small', 'width')};
     margin-right: ${size('spacing.xLarge')};
 
@@ -53,7 +53,7 @@ export const Image = styled.img`
     height: ${size('picture', 'regular', 'height')};
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     width: ${size('picture', 'small', 'width')};
     height: ${size('picture', 'small', 'height')};
   }

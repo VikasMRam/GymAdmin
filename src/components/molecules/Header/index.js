@@ -17,7 +17,7 @@ const HeaderWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
   border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     padding: ${size('spacing.regular')} 0;
     margin-bottom: ${size('spacing.xLarge')};
     align-items: center;
@@ -27,7 +27,7 @@ const HeaderWrapper = styled.div`
 const SeniorlyLogoWrapper = styled.div`
   display: none;
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     display: block;
     margin-right: ${size('spacing.large')};
     margin-left: ${size('spacing.xLarge')};
@@ -39,7 +39,7 @@ export const SeniorlyIconMenu = styled.div`
   padding: calc( ${size('spacing.small')} + ${size('spacing.regular')} ) ${size('spacing.large')};
   border-right: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     display: none;
   }
 `;
@@ -51,7 +51,7 @@ const MenuArrowIcon = styled(Icon)`
 const MenuIcon = styled(Icon)`
   display: none;
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     display: block;
     margin: ${size('spacing.large')};
     cursor: pointer;
@@ -62,7 +62,7 @@ const SearchBar = styled.div`
   display: flex;
   width: 100%;
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     width: ${size('header.searchBar.width')};
   }
 `;
@@ -71,7 +71,7 @@ const SearchTextBox = styled(Input)`
     height: 100%;
     border: none;
 
-    @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
       height: initial;
       border: ${size('border.regular')} solid ${palette('grayscale', 2)};
     }
@@ -80,7 +80,7 @@ const SearchTextBox = styled(Input)`
 const SearchButtonLargeLaptop = styled(Button)`
     display: none;
 
-    @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
       display: block;
       background-color: ${palette('secondary', 0)};
       margin-left: -${size('spacing.tiny')};
@@ -91,7 +91,7 @@ const SearchButton = styled(Button)`
   height: 100%;
   border: none;
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     display: none;
   }
 `;
@@ -103,9 +103,9 @@ export const HeaderMenu = styled.div`
   background: white;
   z-index: 101;
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     width: ${size('header.menu.width')};
-    top: ${size('header.menu.position.top.laptopLarge')};
+    top: ${size('header.menu.position.top.laptopSideColumn')};
     right: ${size('spacing.large')};
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')}
@@ -118,7 +118,7 @@ export const HeaderMenuItem = styled.div`
   padding: ${size('spacing.large')};
   cursor: pointer;
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     :hover {
       background-color: ${palette('grayscale', 3)};
     }
@@ -128,7 +128,7 @@ export const HeaderMenuItem = styled.div`
 const MarginnedHR = styled(Hr)`
   margin: ${size('border.xLarge')} ${size('spacing.large')};
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     margin: 0px ${size('spacing.large')};
   }
 `;
@@ -143,7 +143,7 @@ const HeaderItem = styled.a`
   display: none;
   cursor: pointer;
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     display: block;
     color: ${palette('slate', 0)};
     text-align: center;

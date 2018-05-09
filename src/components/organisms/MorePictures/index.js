@@ -17,7 +17,7 @@ const Wrapper = styled.div`
     }
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     // To Display 4 Tile per Row
     display: flex;
     flex-wrap: wrap;
