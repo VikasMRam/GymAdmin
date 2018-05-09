@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, number, shape, arrayOf } from 'prop-types';
+import { string, number, shape, arrayOf, func } from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
 import { Marker, InfoWindow, OverlayView } from 'react-google-maps';
@@ -23,11 +23,20 @@ const StyledDiv = styled.div`
   position: fixed;
   top: -300px;
   left: -200px;
-  background-color: white;
+  background-color: ${palette('white', 0)};
   border: 1px solid;
   width: auto;
   height: auto;
   padding: ${size('spacing.small')};
+  display: flex;
+`;
+
+const OverlayText = styled.div`
+  padding: calc(${size('spacing.regular')} + ${size('spacing.small')}) ${size('spacing.regular')};
+`;
+
+const StyledCheckbox = styled(Checkbox)`
+  margin: ${size('spacing.regular')};
 `;
 
 const iconMap = {
@@ -42,6 +51,33 @@ function preciseCoordinate(x) {
   return Number.parseFloat(x).toPrecision(8);
 }
 
+class RedoSearchDiv extends Component {
+  static propTypes = {
+    latitude: number.isRequired,
+    longitude: number.isRequired,
+    redoSearchOnMove: func.isRequired,
+    onToggleSearchOnMove: func.isRequired,
+  }
+  getPixelPositionOffset = (width, height) => ({
+    x: -(width / 2),
+    y: -(height / 2),
+  });
+  render() {
+    const { latitude, longitude, redoSearchOnMove, onToggleSearchOnMove } = this.props;
+    return (
+      <OverlayView
+        position={{ lat: latitude, lng: longitude }}
+        getPixelPositionOffset={this.getPixelPositionOffset}
+        mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+      >
+        <StyledDiv>
+          <StyledCheckbox checked={redoSearchOnMove} onClick={onToggleSearchOnMove} />
+          <OverlayText>Redo Search on Move</OverlayText>
+        </StyledDiv>
+      </OverlayView>
+    );
+  }
+}
 class SearchMap extends Component {
   static propTypes = {
     latitude: number.isRequired,
@@ -101,11 +137,6 @@ class SearchMap extends Component {
       }
     }
   };
-
-  getPixelPositionOffset = (width, height) => ({
-    x: -(width / 2),
-    y: -(height / 2),
-  });
 
   render() {
     const { latitude, longitude, communityList } = this.props;
@@ -220,18 +251,6 @@ class SearchMap extends Component {
         </Marker>
       );
     });
-    const RedoSearchDiv = () => (
-      <OverlayView
-        position={{ lat: latitude, lng: longitude }}
-        getPixelPositionOffset={this.getPixelPositionOffset}
-        mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-      >
-        <StyledDiv>
-          <Checkbox checked={this.state.redoSearchOnMove} onClick={this.onToggleSearchOnMove} />
-          Redo Search on Move
-        </StyledDiv>
-      </OverlayView>
-    );
     return (
       <Map
         center={center}
@@ -241,7 +260,8 @@ class SearchMap extends Component {
         onMapMounted={this.onMapMounted}
       >
         {markerComponents}
-        {/* <RedoSearchDiv /> */}
+        <RedoSearchDiv latitude={latitude} longitude={longitude} redoSearchOnMove={this.state.redoSearchOnMove}
+         onToggleSearchOnMove={this.onToggleSearchOnMove}/>
       </Map>
     );
   }
