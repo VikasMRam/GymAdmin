@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { object, func, bool } from 'prop-types';
+import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
@@ -13,15 +14,9 @@ const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  border: solid 1px;
+  border: solid 1px ${palette('grayscale', 2)};
   padding: ${size('spacing.large')};
 `;
-
-const getEvtHandler = (changedParams, origFn) => {
-  return (uiEvt) => {
-    origFn({ origUiEvt: uiEvt, changedParams });
-  };
-};
 
 const getSortHandler = (origFn) => {
   return (uiEvt) => {
@@ -36,11 +31,6 @@ const CommunityFilterList = ({
   searchParams,
   onFieldChange,
 }) => {
-  const {
-    toc, size, budget, sort,
-  } = searchParams;
-  const intBudget = parseInt(budget);
-
   const tocFields = tocs.map((elem)=> {
     const { path, selected } = filterLinkPath(searchParams, { toc: elem.value });
     return (
@@ -79,31 +69,36 @@ const CommunityFilterList = ({
       </Link>
     );
   });
-  const sizeFields = communitySizes.map((elem)=>
-    <Field name={'size'} id={`size-${elem.value}`} key={`size-${elem.value}`} onChange={getEvtHandler({ 'size':elem.value},onFieldChange)}
-      type={'radio'} value={elem.value} label={elem.label} checked={elem.value===size}/>
-  );
 
+  const sizeFields = sizes.map((elem)=>{
+    const { path, selected } = filterLinkPath(searchParams, { selected: elem.segment });
+    return (
+      <Link
+        to={path}
+        id={`size-${elem.value}`}
+        key={`size-${elem.value}`}
+        selected={selected}>
+        {selected ? '[x]' : '[ ]'}{elem.label}
+      </Link>
+    );
+  });
+
+  const { sort } = searchParams;
   return (
     <SectionWrapper>
-      {isMapView &&
-        toggleMap && (
-          <IconButton icon="list" onClick={toggleMap}>
-            Show List
-          </IconButton>
-        )}
-      {!isMapView && (
-        <IconButton icon="map" onClick={toggleMap}>
-          Show Map
-        </IconButton>
-      )}
-      <CollapsibleSection size="small" title="Type of Care">
+      {isMapView && toggleMap && <IconButton icon={'list'} onClick={toggleMap}>
+        Show List
+      </IconButton>}
+      {!isMapView && <IconButton icon={'map'} onClick={toggleMap} >
+        Show Map
+      </IconButton>}
+      <Hr />
+      <CollapsibleSection size={'small'} title={"Type of care"} >
         {tocFields}
       </CollapsibleSection>
       <CollapsibleSection
-        collapsedDefault
         size="small"
-        title="Maximum Starting Rate"
+        title="Budget"
       >
         {budgetFields}
       </CollapsibleSection>

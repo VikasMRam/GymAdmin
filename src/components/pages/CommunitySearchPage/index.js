@@ -177,15 +177,6 @@ class CommunitySearchPage extends React.Component {
                 Filters
               </FiltersButton>
             </TopWrapper>
-          </FixedColumnWrapper>
-          <Hr />
-          <SideFilterContainer
-            onFieldChange={onParamsChange}
-            searchParams={searchParams}
-            toggleMap={toggleMap}
-            isMapView={isMapView}
-          />
-          <FixedColumnWrapper>
             {!isMapView && (
               <StyledCommunitySearchList
                 key="main"
@@ -208,5 +199,9 @@ class CommunitySearchPage extends React.Component {
     );
   }
 }
+
+CommunitySearchPage.propTypes = {
+  communityList: object.isRequired,
+};
 
 export default CommunitySearchPage;
