@@ -24,7 +24,7 @@ const nextUri = (() => {
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
 `;
 
 // TODO : Reuse this FixedColumnWrapper across the App
@@ -55,10 +55,8 @@ const TopWrapper = styled.div`
 `;
 
 const StyledCommunitySearchList = styled(CommunitySearchList)`
-  width: calc(
-      ${size('layout.sideColumn')} + ${size('spacing.xLarge')}
-    );
-  
+  width: calc(${size('layout.sideColumn')} + ${size('spacing.xLarge')});
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
   }
@@ -69,7 +67,6 @@ const StyledCommunitySearchList = styled(CommunitySearchList)`
 `;
 
 const SideFilterContainer = styled(CommunityFilterList)`
-  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.sideColumn')};
   }
@@ -79,8 +76,8 @@ const SideFilterContainer = styled(CommunityFilterList)`
 `;
 
 const SearchMapContainer = styled(SearchMap)`
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
 `;
 
 const StyledHeading = styled(Heading)`
@@ -96,25 +93,8 @@ const FiltersButton = styled(IconButton)`
 `;
 
 class CommunitySearchPage extends React.Component {
-
   state = {
     menuOpen: false,
-    isMapView: this.props.searchParams.view === 'map',//isMapView,
-  };
-  onListButtonClick = () => {
-    const { onParamsChange } = this.props;
-    this.setState({
-      isMapView: false,
-    });
-    onParamsChange({changedParams:{view:'list'}});
-  };
-  onMapButtonClick = () => {
-    const { onParamsChange } = this.props;
-
-    this.setState({
-      isMapView: true,
-    });
-    onParamsChange({changedParams:{view:'map'}});
   };
   toggleMenu = () => {
     this.setState({
@@ -123,6 +103,7 @@ class CommunitySearchPage extends React.Component {
   };
   render() {
     const {
+      isMapView,
       toggleMap,
       onParamsChange,
       onParamsRemove,
@@ -130,7 +111,6 @@ class CommunitySearchPage extends React.Component {
       requestMeta,
       communityList,
     } = this.props;
-    const { isMapView } = this.state;
     let latitude = 0.0;
     let longitude = 0.0;
     if (communityList.length > 0) {
@@ -180,18 +160,13 @@ class CommunitySearchPage extends React.Component {
                   icon="list"
                   ghost
                   transparent
-                  onClick={this.onListButtonClick}
+                  onClick={toggleMap}
                 >
                   View List
                 </ViewMapButton>
               )}
               {!isMapView && (
-                <ViewMapButton
-                  icon="map"
-                  ghost
-                  transparent
-                  onClick={this.onMapButtonClick}
-                >
+                <ViewMapButton icon="map" ghost transparent onClick={toggleMap}>
                   View Map
                 </ViewMapButton>
               )}
@@ -201,25 +176,24 @@ class CommunitySearchPage extends React.Component {
               {/* <div>{requestMeta}</div> */}
             </TopWrapper>
 
+            <Hr />
 
-          <Hr />
-
-          {!isMapView && (
-            <StyledCommunitySearchList
-              key="main"
-              communityList={communityList}
-              searchParams={searchParams}
-              onParamsRemove={onParamsRemove}
-            />
-          )}
-          {isMapView && (
-            <SearchMapContainer
-              latitude={latitude}
-              longitude={longitude}
-              communityList={communityList}
-              onParamsChange={onParamsChange}
-            />
-          )}
+            {!isMapView && (
+              <StyledCommunitySearchList
+                key="main"
+                communityList={communityList}
+                searchParams={searchParams}
+                onParamsRemove={onParamsRemove}
+              />
+            )}
+            {isMapView && (
+              <SearchMapContainer
+                latitude={latitude}
+                longitude={longitude}
+                communityList={communityList}
+                onParamsChange={onParamsChange}
+              />
+            )}
           </FixedColumnWrapper>
         </Wrapper>
       </div>

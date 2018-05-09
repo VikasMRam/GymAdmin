@@ -12,8 +12,7 @@ import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
 
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
-import Field from "sly/components/molecules/Field";
-
+import Field from 'sly/components/molecules/Field';
 
 const MapContainerElement = styled.div`
   width: 100%;
@@ -21,14 +20,14 @@ const MapContainerElement = styled.div`
 `;
 
 const StyledDiv = styled.div`
-  position:fixed;
-  top:-300px;
-  left:-200px;   
-  background-color:white;
+  position: fixed;
+  top: -300px;
+  left: -200px;
+  background-color: white;
   border: 1px solid;
   width: auto;
   height: auto;
-  padding: ${size('spacing.small')}
+  padding: ${size('spacing.small')};
 `;
 
 const iconMap = {
@@ -36,7 +35,7 @@ const iconMap = {
   red: RedMarker,
 };
 const refs = {
-  map:undefined,
+  map: undefined,
 };
 
 class SearchMap extends Component {
@@ -53,18 +52,16 @@ class SearchMap extends Component {
     })),
   };
 
-
-
   state = {
     activeInfoWindowId: null,
     // redoSearchOnMove: true,
   };
 
-  onMapMounted = (map) =>  {
-    refs.map = map
+  onMapMounted = (map) => {
+    refs.map = map;
   };
 
-  onToggleSearchOnMove = ()=>{
+  onToggleSearchOnMove = () => {
     this.setState({
       redoSearchOnMove: !this.state.redoSearchOnMove,
     });
@@ -82,26 +79,22 @@ class SearchMap extends Component {
     });
   };
 
-
-  getPixelPositionOffset = (width, height) => ({
-    x: -(width/2 ),
-    y: -(height/2),
-  });
-
-  onBoundsChange = ()=>{
-
-    //Do something if this is checked
+  onBoundsChange = () => {
+    // Do something if this is checked
     if (this.state.redoSearchOnMove) {
-
       const { onParamsChange } = this.props;
-      if (onParamsChange && typeof onParamsChange==='function') {
-        //Get Map's center and get latitude and longitude
-        let { lat,lng } = refs.map.getCenter();
-        onParamsChange({changedParams:{lat:lat,long:lng}});
+      if (onParamsChange && typeof onParamsChange === 'function') {
+        // Get Map's center and get latitude and longitude
+        const { lat, lng } = refs.map.getCenter();
+        onParamsChange({ changedParams: { lat, long: lng } });
       }
     }
-
   };
+
+  getPixelPositionOffset = (width, height) => ({
+    x: -(width / 2),
+    y: -(height / 2),
+  });
 
   render() {
     const { latitude, longitude, communityList } = this.props;
@@ -112,7 +105,7 @@ class SearchMap extends Component {
     const markers = [];
 
     // TODO Move to constants and helpers for things like isMobile?
-    const isMobile = false;//window && window.innerWidth < size('breakpoint.tablet');
+    const isMobile = false; // window && window.innerWidth < size('breakpoint.tablet');
     let defaultZoom = 14;
     if (isMobile) {
       defaultZoom = 13;
@@ -215,27 +208,33 @@ class SearchMap extends Component {
         </Marker>
       );
     });
-    const RedoSearchDiv = () =>(
-        <OverlayView position={{ lat: latitude, lng: longitude }} getPixelPositionOffset={this.getPixelPositionOffset} mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}>
-          <StyledDiv>
-            <Field name={'redosearchonmove'} type={'checkbox'} onChange={this.onToggleSearchOnMove} label={'Redo Search on Move'}/>
-          </StyledDiv>
-        </OverlayView>
+    const RedoSearchDiv = () => (
+      <OverlayView
+        position={{ lat: latitude, lng: longitude }}
+        getPixelPositionOffset={this.getPixelPositionOffset}
+        mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+      >
+        <StyledDiv>
+          <Field
+            name="redosearchonmove"
+            type="checkbox"
+            onChange={this.onToggleSearchOnMove}
+            label="Redo Search on Move"
+          />
+        </StyledDiv>
+      </OverlayView>
     );
 
     return (
       <Map
         center={center}
-
         defaultZoom={defaultZoom}
         containerElement={<MapContainerElement />}
         onBoundsChanged={this.onBoundsChange}
         onMapMounted={this.onMapMounted}
-
       >
         {markerComponents}
-        <RedoSearchDiv/>
-
+        <RedoSearchDiv />
       </Map>
     );
   }
