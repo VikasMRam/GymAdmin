@@ -195,9 +195,7 @@ class CommunitySearchPage extends React.Component {
                 Filters
               </FiltersButton>
             </TopWrapper>
-
             <StyledHr />
-
             {!isMapView && (
               <StyledCommunitySearchList
                 key="main"

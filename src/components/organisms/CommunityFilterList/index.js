@@ -1,49 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import { object, func, bool } from 'prop-types';
+import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Field from 'sly/components/molecules/Field';
 import IconButton from 'sly/components/molecules/IconButton';
+import { Hr, Link } from "sly/components/atoms";
+import { tocs, budgets, sizes, filterLinkPath } from 'sly/services/helpers/search';
 
 const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  border: solid 1px;
+  border: solid 1px ${palette('grayscale', 2)};
   padding: ${size('spacing.large')};
 `;
-
-const tocs = [
-  { label: 'All Communities', value: 'retirement-community' },
-  { label: 'Assisted Living', value: 'assisted-living' },
-  { label: 'Independent Living', value: 'independent-living' },
-  { label: 'Memory Care', value: 'alzheimers-care' },
-];
-
-const communitySizes = [
-  { label: 'Small', value: 'small' },
-  { label: 'Medium', value: 'medium' },
-  { label: 'Large', value: 'large' },
-];
-
-const budgets = [
-  { label: 'Up to $2500', value: 2500 },
-  { label: 'Up to $3000', value: 3000 },
-  { label: 'Up to $3500', value: 3500 },
-  { label: 'Up to $4000', value: 4000 },
-  { label: 'Up to $4500', value: 4500 },
-  { label: 'Up to $5000', value: 5000 },
-  { label: 'Up to $5500', value: 5500 },
-  { label: 'Up to $6000', value: 6000 },
-];
-
-const getEvtHandler = (changedParams, origFn) => {
-  return (uiEvt) => {
-    origFn({ origUiEvt: uiEvt, changedParams });
-  };
-};
 
 const getSortHandler = (origFn) => {
   return (uiEvt) => {
@@ -58,67 +31,74 @@ const CommunityFilterList = ({
   searchParams,
   onFieldChange,
 }) => {
-  const {
-    toc, size, budget, sort,
-  } = searchParams;
-  const intBudget = parseInt(budget);
+  const tocFields = tocs.map((elem)=> {
+    const { path, selected } = filterLinkPath(searchParams, { toc: elem.value });
+    return (
+      <Link
+        to={path}
+        id={elem.value}
+        key={`toc-${elem.value}`}
+        selected={selected}>
+        {selected ? '[x]' : '[ ]'}{elem.label}
+      </Link>
+    );
+  });
+  const budgetFields = budgets.map((elem)=> {
+    const currentBudget = (searchParams.filters || '').split('/')
+      .reduce((cumul, filter) => {
+        return budgets
+          .reduce((cumul, budget) => {
+            if (budget.segment === filter) return budget.segment;
+            return cumul;
+          }, cumul)
+      }, undefined);
+    const params = {
+      ...searchParams,
+      budget: currentBudget,
+    };
 
-  const tocFields = tocs.map(elem => (
-    <Field
-      name="toc"
-      id={elem.value}
-      key={`toc-${elem.value}`}
-      onChange={getEvtHandler({ toc: elem.value }, onFieldChange)}
-      type="radio"
-      value={elem.value}
-      label={elem.label}
-      checked={elem.value === toc}
-    />
-  ));
-  const budgetFields = budgets.map(elem => (
-    <Field
-      name="budget"
-      id={`budget-${elem.value}`}
-      key={`budget-${elem.value}`}
-      onChange={getEvtHandler({ budget: elem.value }, onFieldChange)}
-      type="radio"
-      value={elem.value}
-      label={elem.label}
-      checked={elem.value === intBudget}
-    />
-  ));
-  const sizeFields = communitySizes.map(elem => (
-    <Field
-      name="size"
-      id={`size-${elem.value}`}
-      key={`size-${elem.value}`}
-      onChange={getEvtHandler({ size: elem.value }, onFieldChange)}
-      type="radio"
-      value={elem.value}
-      label={elem.label}
-      checked={elem.value === size}
-    />
-  ));
+    const { path, selected } = filterLinkPath(params, {budget: elem.segment});
+
+    return (
+      <Link
+        to={path}
+        id={`budget-${elem.value}`}
+        key={`budget-${elem.value}`}
+        selected={selected}>
+        {selected ? '[x]' : '[ ]'}{elem.label}
+      </Link>
+    );
+  });
+
+  const sizeFields = sizes.map((elem)=>{
+    const { path, selected } = filterLinkPath(searchParams, { selected: elem.segment });
+    return (
+      <Link
+        to={path}
+        id={`size-${elem.value}`}
+        key={`size-${elem.value}`}
+        selected={selected}>
+        {selected ? '[x]' : '[ ]'}{elem.label}
+      </Link>
+    );
+  });
+
+  const { sort } = searchParams;
   return (
     <SectionWrapper>
-      {isMapView &&
-        toggleMap && (
-          <IconButton icon="list" onClick={toggleMap}>
-            Show List
-          </IconButton>
-        )}
-      {!isMapView && (
-        <IconButton icon="map" onClick={toggleMap}>
-          Show Map
-        </IconButton>
-      )}
-      <CollapsibleSection size="small" title="Type of Care">
+      {isMapView && toggleMap && <IconButton icon={'list'} onClick={toggleMap}>
+        Show List
+      </IconButton>}
+      {!isMapView && <IconButton icon={'map'} onClick={toggleMap} >
+        Show Map
+      </IconButton>}
+      <Hr />
+      <CollapsibleSection size={'small'} title={"Type of care"} >
         {tocFields}
       </CollapsibleSection>
       <CollapsibleSection
-        collapsedDefault
         size="small"
-        title="Maximum Starting Rate"
+        title="Budget"
       >
         {budgetFields}
       </CollapsibleSection>
