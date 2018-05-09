@@ -132,6 +132,7 @@ class CommunitySearchPage extends React.Component {
     } = this.props;
     let latitude = 0.0;
     let longitude = 0.0;
+
     if (communityList.length > 0) {
       latitude = communityList[0].latitude;
       longitude = communityList[0].longitude;

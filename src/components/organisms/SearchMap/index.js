@@ -13,6 +13,7 @@ import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
 
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
+import {delayedExecutor, getRadiusFromMapBounds} from "sly/services/helpers/search";
 
 const MapContainerElement = styled.div`
   width: 100%;
@@ -94,7 +95,7 @@ class SearchMap extends Component {
 
   state = {
     activeInfoWindowId: null,
-    redoSearchOnMove: false,
+    redoSearchOnMove: true,
   };
 
   onMapMounted = (map) => {
@@ -119,7 +120,7 @@ class SearchMap extends Component {
     });
   };
 
-  onBoundsChange = () => {
+  onBoundsChange = delayedExecutor(() => {
     // Do something if this is checked
     if (this.state.redoSearchOnMove) {
       const { onParamsChange } = this.props;
@@ -130,13 +131,15 @@ class SearchMap extends Component {
           const lat = center.lat();
           const long = center.lng();
           const { latitude, longitude } = this.props;
+          //Calculate radius
+          const radius = getRadiusFromMapBounds(refs.map.getBounds());
           if (preciseCoordinate(lat) !== preciseCoordinate(latitude) && preciseCoordinate(long) !== preciseCoordinate(longitude)) {
-            onParamsChange({ changedParams: { latitude: lat, longitude: long, searchOnMove: this.state.redoSearchOnMove } });
+            onParamsChange({ changedParams: { latitude: lat, longitude: long, radius: radius, searchOnMove: true } });
           }
         }
       }
     }
-  };
+  },'mapBoundsChange',10000) ;
 
   render() {
     const { latitude, longitude, communityList } = this.props;
