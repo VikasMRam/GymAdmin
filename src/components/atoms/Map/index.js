@@ -26,8 +26,6 @@ const mapOptions = {
   scrollwheel: false,
 };
 
-
-
 const Map = compose(
   withProps({
     googleMapURL:
