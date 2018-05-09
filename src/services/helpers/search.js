@@ -40,7 +40,7 @@ export const budgets = [
   { label: 'Up to $6000', segment: '6000-dollars', value: 6000 },
 ];
 
-export const findAFilter = (ary, filters='') => filters.split('/')
+const findAFilter = (ary, filters='') => filters.split('/')
   .reduce((cumul, filter) => {
     return ary 
       .reduce((cumul, item) => {
@@ -49,26 +49,6 @@ export const findAFilter = (ary, filters='') => filters.split('/')
       }, cumul)
   }, undefined);  
 
-export const filterLinkPath = (currentFilters, nextFilters) => {
-  const filters = {
-    ...currentFilters,
-    ...nextFilters,
-  };
-
-  const key = Object.keys(nextFilters)[0];
-  const selected = currentFilters[key] === nextFilters[key];
-  const size = filters.size ? `/${filters.size}` : '';
-  const budget = filters.budget ? `/${filters.budget}` : '';
-  const filtersSegment = (size || budget)
-    ? `/filters${size}${budget}`
-    : '';
-
-  return {
-    path: `/${filters.toc}/${filters.state}/${filters.city}${filtersSegment}`,
-    selected,
-  };
-};
-
 const filterSearchParams = params => Object.keys(params)
   .reduce((cumul, key) => {
     if (searchParamsWhitelist.includes(key)) {
@@ -76,6 +56,29 @@ const filterSearchParams = params => Object.keys(params)
     }
     return cumul;
   }, {});
+
+export const filterLinkPath = (currentFilters, nextFilters) => {
+  const filters = filterSearchParams({
+    ...currentFilters,
+    ...nextFilters,
+  });
+
+  const { size, budget, toc, state, city, ...qs } = filters;
+
+  const sizeSegment = size ? `/${size}` : '';
+  const budgetSegment = budget ? `/${budget}` : '';
+  const filtersSegment = (sizeSegment || budgetSegment)
+    ? `/filters${sizeSegment}${budgetSegment}`
+    : '';
+
+  const key = Object.keys(nextFilters)[0];
+  const selected = currentFilters[key] === nextFilters[key];
+
+  return {
+    path: `/${toc}/${state}/${city}${filtersSegment}${stringify(qs)}`,
+    selected,
+  };
+};
 
 export const getSearchParams = ({ params }, location) => {
   const qs = parse(location.search);

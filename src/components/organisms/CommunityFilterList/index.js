@@ -71,6 +71,80 @@ const CommunityFilterList = ({ toggleMap, isMapView, searchParams, onFieldChange
   });
 
   const { sort } = searchParams;
+const filterLinkPath = (currentFilters, nextFilters) => {
+  const filters = {
+    ...currentFilters,
+    ...nextFilters,
+  };
+
+  const key = Object.keys(nextFilters)[0];
+  const selected = currentFilters[key] === nextFilters[key];
+  const size = filters.size ? `/${filters.size}` : '';
+  const budget = filters.budget ? `/${filters.budget}` : '';
+  const filtersSegment = (size || budget)
+    ? `/filters${size}${budget}`
+    : '';
+
+  return {
+    path: `/${filters.toc}/${filters.state}/${filters.city}${filtersSegment}`,
+    selected,
+  };
+};
+
+const CommunityFilterList = ({
+  toggleMap,
+  isMapView,
+  searchParams,
+  onFieldChange,
+}) => {
+  const {
+    toc, size, budget, sort,
+  } = searchParams;
+  const intBudget = parseInt(budget);
+
+  const tocFields = tocs.map((elem)=> {
+    const { path, selected } = filterLinkPath(searchParams, { toc: elem.value });
+    return (
+      <Link
+        to={path}
+        id={elem.value}
+        key={`toc-${elem.value}`}
+        selected={selected}>
+        {selected ? '[x]' : '[ ]'}{elem.label}
+      </Link>
+    );
+  });
+  const budgetFields = budgets.map((elem)=> {
+    const currentBudget = (searchParams.filters || '').split('/')
+      .reduce((cumul, filter) => {
+        return budgets
+          .reduce((cumul, budget) => {
+            if (budget.segment === filter) return budget.segment;
+            return cumul;
+          }, cumul)
+      }, undefined);
+    const params = {
+      ...searchParams,
+      budget: currentBudget,
+    };
+
+    const { path, selected } = filterLinkPath(params, {budget: elem.segment});
+
+    return (
+      <Link
+        to={path}
+        id={`budget-${elem.value}`}
+        key={`budget-${elem.value}`}
+        selected={selected}>
+        {selected ? '[x]' : '[ ]'}{elem.label}
+      </Link>
+    );
+  });
+  const sizeFields = communitySizes.map((elem)=>
+    <Field name={'size'} id={`size-${elem.value}`} key={`size-${elem.value}`} onChange={getEvtHandler({ 'size':elem.value},onFieldChange)}
+      type={'radio'} value={elem.value} label={elem.label} checked={elem.value===size}/>
+  );
+
   return (
     <SectionWrapper>
       {isMapView &&
