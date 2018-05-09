@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
+import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 
@@ -8,24 +9,27 @@ import IconButton from 'sly/components/molecules/IconButton';
 import Button from 'sly/components/atoms/Button';
 
 const SectionWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin: 0 auto;
-  width: 100%;
+  display: none;
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    display: flex;
+    flex-direction: row;
+    margin-left: ${size('spacing.large')};
+    margin-bottom: ${size('spacing.large')};
+  }
 `;
-export const StyledIButton = styled(IconButton)`
+
+export const FilterButton = styled(IconButton)`
   display: flex;
   flex-direction: row;
-  margin: ${size('spacing.large')};
-  width: 100%;
-  padding: ${size('spacing.large')};
+  margin-right: ${size('spacing.regular')};
+  margin-bottom: ${size('spacing.large')};
 `;
-export const StyledButton = styled(Button)`
+
+export const ClearAllButton = styled(Button)`
   display: flex;
   flex-direction: row;
-  margin: auto;
-  width: 100%;
-  padding: ${size('spacing.large')};
+  color: ${palette('primary', 0)};
 `;
 
 const getEvtHandler = (paramsToRemove, origFn) => {
@@ -44,30 +48,38 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
   return (
     <SectionWrapper>
       {size && (
-        <StyledIButton
+        <FilterButton
           right
           icon="close"
+          iconSize="small"
+          palette="grayscale"
+          ghost
+          transparent
           onClick={getEvtHandler(['size'], onParamsRemove)}
         >
-          Size
-        </StyledIButton>
+          Size: {size}
+        </FilterButton>
       )}
       {budget && (
-        <StyledIButton
+        <FilterButton
           right
           icon="close"
+          iconSize="small"
+          palette="grayscale"
+          ghost
+          transparent
           onClick={getEvtHandler(['budget'], onParamsRemove)}
         >
-          Budget
-        </StyledIButton>
+          Budget: Up to ${budget}
+        </FilterButton>
       )}
       {filtersApplied.length > 0 && (
-        <StyledButton
+        <ClearAllButton
           onClick={getEvtHandler(filtersApplied, onParamsRemove)}
           transparent
         >
           Clear All Filters
-        </StyledButton>
+        </ClearAllButton>
       )}
     </SectionWrapper>
   );

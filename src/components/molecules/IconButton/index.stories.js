@@ -24,4 +24,16 @@ storiesOf('Molecules|IconButton', module)
     <IconButton icon="close" height={100}>
       Hello
     </IconButton>
+  ))
+  .add('Seach Filter Button', () => (
+    <IconButton
+      right
+      icon="close"
+      iconSize="small"
+      palette="grayscale"
+      ghost
+      transparent
+    >
+      Budget: Up to $2500
+    </IconButton>
   ));
