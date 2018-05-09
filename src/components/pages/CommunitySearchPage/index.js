@@ -25,6 +25,8 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-items:flex-start;
+  align-content:flex-start;
 `;
 
 // TODO : Reuse this FixedColumnWrapper across the App

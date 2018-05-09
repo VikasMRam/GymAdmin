@@ -4,8 +4,10 @@ import { object, func, bool } from 'prop-types';
 import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
+
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Field from 'sly/components/molecules/Field';
+import Radio from 'sly/components/molecules/Radio';
 import IconButton from 'sly/components/molecules/IconButton';
 import { Hr, Link } from "sly/components/atoms";
 import { tocs, budgets, sizes, filterLinkPath } from 'sly/services/helpers/search';
@@ -17,6 +19,14 @@ const SectionWrapper = styled.div`
   border: solid 1px ${palette('grayscale', 2)};
   padding: ${size('spacing.large')};
 `;
+const StyledLink = styled(Link)`
+  display: flex;
+  margin-bottom: ${size('spacing.regular')};
+
+  span {
+    margin-right: ${size('spacing.small')};
+  }
+`;
 
 const getSortHandler = (origFn) => {
   return (uiEvt) => {
@@ -25,75 +35,65 @@ const getSortHandler = (origFn) => {
   };
 };
 
+const generateRadioLink = (elem, type, path, selected) => (
+  <StyledLink
+    to={path}
+    id={`${type}-${elem.value}`}
+    key={`${type}-${elem.value}`}
+    selected={selected}
+  >
+    <Radio checked={selected} />{elem.label}
+  </StyledLink>
+);
+
 const CommunityFilterList = ({
   toggleMap,
   isMapView,
   searchParams,
   onFieldChange,
 }) => {
-  const tocFields = tocs.map((elem)=> {
+  const tocFields = tocs.map((elem) => {
     const { path, selected } = filterLinkPath(searchParams, { toc: elem.value });
-    return (
-      <Link
-        to={path}
-        id={elem.value}
-        key={`toc-${elem.value}`}
-        selected={selected}>
-        {selected ? '[x]' : '[ ]'}{elem.label}
-      </Link>
-    );
+    return generateRadioLink(elem, 'toc', path, selected);
   });
-  const budgetFields = budgets.map((elem)=> {
+  const budgetFields = budgets.map((elem) => {
     const currentBudget = (searchParams.filters || '').split('/')
       .reduce((cumul, filter) => {
         return budgets
           .reduce((cumul, budget) => {
             if (budget.segment === filter) return budget.segment;
             return cumul;
-          }, cumul)
+          }, cumul);
       }, undefined);
     const params = {
       ...searchParams,
       budget: currentBudget,
     };
 
-    const { path, selected } = filterLinkPath(params, {budget: elem.segment});
-
-    return (
-      <Link
-        to={path}
-        id={`budget-${elem.value}`}
-        key={`budget-${elem.value}`}
-        selected={selected}>
-        {selected ? '[x]' : '[ ]'}{elem.label}
-      </Link>
-    );
+    const { path, selected } = filterLinkPath(params, { budget: elem.segment });
+    return generateRadioLink(elem, 'budget', path, selected);
   });
 
-  const sizeFields = sizes.map((elem)=>{
+  const sizeFields = sizes.map((elem) => {
     const { path, selected } = filterLinkPath(searchParams, { selected: elem.segment });
-    return (
-      <Link
-        to={path}
-        id={`size-${elem.value}`}
-        key={`size-${elem.value}`}
-        selected={selected}>
-        {selected ? '[x]' : '[ ]'}{elem.label}
-      </Link>
-    );
+    return generateRadioLink(elem, 'size', path, selected);
   });
 
   const { sort } = searchParams;
   return (
     <SectionWrapper>
-      {isMapView && toggleMap && <IconButton icon={'list'} onClick={toggleMap}>
-        Show List
-      </IconButton>}
-      {!isMapView && <IconButton icon={'map'} onClick={toggleMap} >
-        Show Map
-      </IconButton>}
+      {isMapView && toggleMap &&
+        <IconButton icon="list" onClick={toggleMap}>
+          Show List
+        </IconButton>
+      }
+      {!isMapView &&
+        <IconButton icon="map" onClick={toggleMap} >
+          Show Map
+        </IconButton>
+      }
       <Hr />
-      <CollapsibleSection size={'small'} title={"Type of care"} >
+      <CollapsibleSection size="small" title="Type of care" >
         {tocFields}
       </CollapsibleSection>
       <CollapsibleSection

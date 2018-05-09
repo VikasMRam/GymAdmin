@@ -15,7 +15,7 @@ export const StyledIcon = styled(Icon)`
     #box {
       stroke: ${palette('grayscale', 2)};
     }
-    color: ${palette('secondary', 0)}; 
+    color: ${ifProp('checked', palette('secondary', 0), palette('white', 0))};
   }
 `;
 
