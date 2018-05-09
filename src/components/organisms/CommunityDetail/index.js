@@ -13,12 +13,18 @@ import OwnerStory from 'sly/components/organisms/OwnerStory';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
 import MorePictures from 'sly/components/organisms/MorePictures';
-import HowSlyWorks from "sly/components/organisms/HowSlyWorks";
+import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
-import Breadcrumb from 'sly/components/molecules/Breadcrumb';
+import Breadcrumb from 'sly/components/molecules/BreadCrumb';
 
 const CommunityDetail = ({
-  community, communityReviewsRef, breadCrumbRef, pricingAndFloorPlansRef, communitySummaryRef, amenitiesAndFeaturesRef, ...props
+  community,
+  communityReviewsRef,
+  breadCrumbRef,
+  pricingAndFloorPlansRef,
+  communitySummaryRef,
+  amenitiesAndFeaturesRef,
+  ...props
 }) => {
   const {
     id,
@@ -95,8 +101,12 @@ const CommunityDetail = ({
       label: name,
     },
   ];
-  const formattedAddress = `${address.line1}, ${address.line2}, ${address.city}, ${address.state}
-    ${address.zip}`.replace(/\s/g, ' ').replace(/, ,/g, ', ');
+  const formattedAddress = `${address.line1}, ${address.line2}, ${
+    address.city
+  }, ${address.state}
+    ${address.zip}`
+    .replace(/\s/g, ' ')
+    .replace(/, ,/g, ', ');
 
   return (
     <div {...props}>
@@ -121,7 +131,10 @@ const CommunityDetail = ({
         communityHighlights={communityHighlights}
         reviews={reviews}
       />
-      <CollapsibleSection title="Pricing & Floor Plans" innerRef={pricingAndFloorPlansRef}>
+      <CollapsibleSection
+        title="Pricing & Floor Plans"
+        innerRef={pricingAndFloorPlansRef}
+      >
         <PricingAndAvailability
           communityName={name}
           address={address}
@@ -148,7 +161,10 @@ const CommunityDetail = ({
           serviceHighlights={serviceHighlightsFinal}
         />
       </CollapsibleSection>
-      <CollapsibleSection title="Amenities & Features" innerRef={amenitiesAndFeaturesRef}>
+      <CollapsibleSection
+        title="Amenities & Features"
+        innerRef={amenitiesAndFeaturesRef}
+      >
         <AmenitiesAndFeatures
           communityName={name}
           communityHighlights={communityHighlights}
@@ -185,9 +201,7 @@ const CommunityDetail = ({
         />
       </CollapsibleSection>
       <CollapsibleSection title="More Pictures" size="large">
-        <MorePictures
-          gallery={gallery}
-        />
+        <MorePictures gallery={gallery} />
       </CollapsibleSection>
       <CollapsibleSection title="How Seniorly Works" size="large">
         <HowSlyWorks />
