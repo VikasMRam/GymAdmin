@@ -130,10 +130,9 @@ export const filterLinkPath = (currentFilters, nextFilters) => {
     ...currentFilters,
     ...nextFilters,
   });
-  console.log('Seeing selected filters here',filters);
+
   const { toc, state, city, ...qs } = filters;
-
-
+  
   const qsString = stringify(qs);
   const qsPart = qsString ? `?${qsString}` : '';
 
