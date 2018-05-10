@@ -43,6 +43,7 @@ List.propTypes = {
 
 List.defaultProps = {
   columns: 2,
+  items: [],
 };
 
 export default List;

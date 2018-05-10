@@ -103,11 +103,13 @@ const CommunityDetail = ({
 
   return (
     <Wrapper {...props}>
-      <CommunityMediaGallery
-        communityName={name}
-        images={images}
-        videos={videos}
-      />
+      {(images.length > 0 || videos.length > 0) &&
+        <CommunityMediaGallery
+          communityName={name}
+          images={images}
+          videos={videos}
+        />
+      }
       <BreadCrumb items={getBreadCrumbsForCommunity( {name, typeCare, address} )} innerRef={breadCrumbRef} />
       <Heading level="hero">{name}</Heading>
       <Heading level="subtitle">{formattedAddress}</Heading>
