@@ -22,6 +22,7 @@ const SectionWrapper = styled.div`
 const StyledLink = styled(Link)`
   display: flex;
   margin-bottom: ${size('spacing.regular')};
+  color: ${palette('slate', 0)};
 
   span {
     margin-right: ${size('spacing.small')};
