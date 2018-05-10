@@ -1,6 +1,7 @@
 import React from 'react';
 import { object } from 'prop-types';
 
+import { getBreadCrumbsForCommunity } from "sly/services/helpers/url";
 import { Heading } from 'sly/components/atoms';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import CareServicesList from 'sly/components/organisms/CareServicesList';
@@ -15,7 +16,7 @@ import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGaller
 import MorePictures from 'sly/components/organisms/MorePictures';
 import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
-import Breadcrumb from 'sly/components/molecules/BreadCrumb';
+import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 
 const CommunityDetail = ({
   community,
@@ -44,6 +45,7 @@ const CommunityDetail = ({
     twilioNumber,
     user,
     url,
+    typeCare,
   } = community;
   const images = gallery.images || [];
   const videos = videoGallery.videos || [];
@@ -78,29 +80,8 @@ const CommunityDetail = ({
   // TODO: mock as USA until country becomes available
   address.country = 'USA';
   const mapViewTitle = `Map View of ${name}`;
-  // TODO: use react router generated paths once router wiring is complete
-  const breadcrumbItems = [
-    {
-      path: '/',
-      label: 'Home',
-    },
-    {
-      path: '/assisted-living',
-      label: 'Assisted Living',
-    },
-    {
-      path: `/assisted-living/${address.state}`,
-      label: address.state,
-    },
-    {
-      path: `/assisted-living/${address.state}/${address.city}`,
-      label: address.city,
-    },
-    {
-      path: url,
-      label: name,
-    },
-  ];
+
+
   const formattedAddress = `${address.line1}, ${address.line2}, ${
     address.city
   }, ${address.state}
@@ -115,7 +96,7 @@ const CommunityDetail = ({
         images={images}
         videos={videos}
       />
-      <Breadcrumb items={breadcrumbItems} innerRef={breadCrumbRef} />
+      <BreadCrumb items={getBreadCrumbsForCommunity( {name, typeCare, address} )} innerRef={breadCrumbRef} />
       <Heading level="hero">{name}</Heading>
       <Heading level="subtitle">{formattedAddress}</Heading>
       <CommunitySummary
