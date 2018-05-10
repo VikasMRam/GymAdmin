@@ -27,6 +27,8 @@ const Wrapper = styled.div`
   flex-direction: row;
   align-items:flex-start;
   align-content:flex-start;
+  margin: 0 auto;
+  max-width: ${size('maxWidth')}
 `;
 
 // TODO : Reuse this FixedColumnWrapper across the App
