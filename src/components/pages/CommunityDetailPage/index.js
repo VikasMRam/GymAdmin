@@ -6,8 +6,6 @@ import Sticky from 'react-stickynode';
 import { size } from 'sly/components/themes';
 import CommunityDetail from 'sly/components/organisms/CommunityDetail';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
-import Header from 'sly/components/molecules/Header';
-import Footer from 'sly/components/molecules/Footer';
 import StickyFooter from 'sly/components/molecules/StickyFooter';
 import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
 
@@ -57,7 +55,6 @@ export default class CommunityDetailPage extends React.Component {
 
   state = {
     stickyHeaderVisible: false,
-    menuOpen: false,
   };
 
   componentDidMount() {
@@ -97,31 +94,8 @@ export default class CommunityDetailPage extends React.Component {
     }
   };
 
-  toggleMenu = () => {
-    this.setState({
-      menuOpen: !this.state.menuOpen,
-    });
-  };
-
   render() {
     const { community, userActions } = this.props;
-    const headerItems = [
-      { name: 'List on Seniorly', url: '#' },
-      { name: 'Help Center', url: '#' },
-      { name: 'Saved', url: '#' },
-      { name: 'Sign Up', url: '#' },
-      { name: 'Login', url: '#' },
-    ];
-    const menuItems = [
-      { name: 'Assisted Living', url: '#' },
-      { name: "Alzheimer's Care", url: '#' },
-      { name: 'Respite Care', url: '#' },
-      { name: 'About Us', url: '#' },
-      { name: 'Contact', url: '#' },
-      { name: 'Careers', url: '#' },
-      { name: 'List on Seniorly', url: '#' },
-      { name: 'Sign Out', url: '#' },
-    ];
     const stickyHeaderItems = [
       { label: 'Summary', ref: this.communitySummaryRef },
       { label: 'Pricing & Floor Plans', ref: this.pricingAndFloorPlansRef },
@@ -129,14 +103,7 @@ export default class CommunityDetailPage extends React.Component {
     ];
 
     return (
-      <React.Fragment>
-        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-        <Header
-          menuOpen={this.state.menuOpen}
-          onMenuIconClick={this.toggleMenu}
-          headerItems={headerItems}
-          menuItems={menuItems}
-        />
+      <main>
         <CommunityStickyHeader
           items={stickyHeaderItems}
           visible={this.state.stickyHeaderVisible}
@@ -165,9 +132,8 @@ export default class CommunityDetailPage extends React.Component {
             </Sticky>
           }
         </PageWrapper>
-        <Footer />
         <StickyFooter community={community} />
-      </React.Fragment>
+      </main>
     );
   }
 }

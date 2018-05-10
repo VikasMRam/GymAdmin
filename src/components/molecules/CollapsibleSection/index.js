@@ -113,7 +113,7 @@ export default class CollapsibleSection extends Component {
               <Icon
                 icon="chevron"
                 palette="grays"
-                flip={collapsed}
+                flip={!collapsed}
               />
             </Header>
             <Content maxHeight={maxHeight} collapsed={collapsed}>

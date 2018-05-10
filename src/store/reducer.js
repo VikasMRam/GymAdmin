@@ -1,4 +1,3 @@
-import camelCase from 'lodash/camelCase';
 import { combineReducers } from 'redux';
 import { reducer as form } from 'redux-form';
 import { reducer as thunk } from 'redux-saga-thunk';
@@ -7,6 +6,7 @@ import entities from './entities/reducer';
 import modal from './modal/reducer';
 import resource from './resource/reducer';
 import concierge from './concierge/reducer';
+import header from './header/reducer';
 
 const reducers = {
   form,
@@ -15,6 +15,7 @@ const reducers = {
   modal,
   concierge,
   resource,
+  header,
 };
 
 export default combineReducers(reducers);
