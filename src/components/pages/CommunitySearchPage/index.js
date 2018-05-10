@@ -24,10 +24,13 @@ const nextUri = (() => {
 
 const Wrapper = styled.div`
   width: 100%;
+  
   // display: flex;
   // flex-direction: row;
   // align-items:flex-start;
   // align-content:flex-start;
+  // margin: 0 auto;
+  // max-width: ${size('maxWidth')}
 `;
 
 // TODO : Reuse this FixedColumnWrapper across the App

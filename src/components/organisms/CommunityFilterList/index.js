@@ -3,19 +3,19 @@ import styled from 'styled-components';
 import { object, func, bool } from 'prop-types';
 import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+import { size, assetPath } from 'sly/components/themes';
 
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Field from 'sly/components/molecules/Field';
 import Radio from 'sly/components/molecules/Radio';
 import IconButton from 'sly/components/molecules/IconButton';
-import { Hr, Link } from 'sly/components/atoms';
 import {
   tocs,
   budgets,
   sizes,
   filterLinkPath,
 } from 'sly/services/helpers/search';
+import { Link, Image } from 'sly/components/atoms';
 
 const SectionWrapper = styled.div`
   display: flex;
@@ -27,20 +27,44 @@ const SectionWrapper = styled.div`
   padding-bottom: ${size('spacing.large')};
 `;
 
-const IconButtonWrapper = styled.div`
+const StyledLink = styled(Link)`
+  display: flex;
+  margin-bottom: ${size('spacing.regular')};
+  color: ${palette('slate', 0)};
+
+  span {
+    margin-right: ${size('spacing.small')};
+  }
+`;
+const ImageButtonWrapper = styled.div`
   display: none;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
-  }
-`;
 
-const StyledLink = styled(Link)`
-  display: flex;
-  margin-bottom: ${size('spacing.regular')};
+    position: relative;
+    text-align: center;
 
-  span {
-    margin-right: ${size('spacing.small')};
+    img {
+      width: 100%;
+    }
+
+    button {
+      border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+    }
+
+    ${(props) => {
+    if (!props.isMapView) {
+      return `
+          button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }`;
+    }
+    return '';
+  }};
   }
 `;
 
@@ -103,20 +127,34 @@ const CommunityFilterList = ({
   const { sort } = searchParams;
   return (
     <SectionWrapper>
-      <IconButtonWrapper>
+      <ImageButtonWrapper isMapView={isMapView}>
         {isMapView &&
           toggleMap && (
-            <IconButton icon="list" onClick={toggleMap}>
-              Show List
+            <IconButton
+              icon="list"
+              onClick={toggleMap}
+              palette="secondary"
+              ghost
+            >
+              View List
             </IconButton>
           )}
         {!isMapView && (
-          <IconButton icon="map" onClick={toggleMap}>
-            Show Map
-          </IconButton>
+          <React.Fragment>
+            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+            <Image src={assetPath('map-placeholder.png')} />
+            <IconButton
+              icon="map"
+              onClick={toggleMap}
+              palette="secondary"
+              ghost
+            >
+              View Map
+            </IconButton>
+          </React.Fragment>
         )}
-        <Hr />
-      </IconButtonWrapper>
+      </ImageButtonWrapper>
+      <br />
       {/* TODO: Top bottom padding must be 16px in CollapsibleSection */}
       <CollapsibleSection size="small" title="Type of care" noHr>
         {tocFields}
