@@ -66,7 +66,7 @@ const getSortHandler = (origFn) => {
   };
 };
 
-const generateRadioLink = (elem, type, path, selected) => (
+const RadioLink = (elem, type, path, selected) => (
   <StyledLink
     to={path}
     id={`${type}-${elem.value}`}
@@ -83,31 +83,19 @@ const CommunityFilterList = ({
   searchParams,
   onFieldChange,
 }) => {
-  const tocFields = tocs.map((elem) => {
+  const tocFields = tocs.map(elem => {
     const { path, selected } = filterLinkPath(searchParams, { toc: elem.value });
-    return generateRadioLink(elem, 'toc', path, selected);
+    return RadioLink(elem, 'toc', path, selected);
   });
-  const budgetFields = budgets.map((elem) => {
-    const currentBudget = (searchParams.filters || '').split('/')
-      .reduce((cumul, filter) => {
-        return budgets
-          .reduce((cumul, budget) => {
-            if (budget.segment === filter) return budget.segment;
-            return cumul;
-          }, cumul);
-      }, undefined);
-    const params = {
-      ...searchParams,
-      budget: currentBudget,
-    };
 
-    const { path, selected } = filterLinkPath(params, { budget: elem.segment });
-    return generateRadioLink(elem, 'budget', path, selected);
+  const budgetFields = budgets.map((elem) => {
+    const { path, selected } = filterLinkPath(searchParams, { budget: elem.value });
+    return RadioLink(elem, 'budget', path, selected);
   });
 
   const sizeFields = sizes.map((elem) => {
-    const { path, selected } = filterLinkPath(searchParams, { selected: elem.segment });
-    return generateRadioLink(elem, 'size', path, selected);
+    const { path, selected } = filterLinkPath(searchParams, { size: elem.value });
+    return RadioLink(elem, 'size', path, selected);
   });
 
   const { sort } = searchParams;

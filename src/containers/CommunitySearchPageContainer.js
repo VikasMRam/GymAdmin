@@ -21,17 +21,22 @@ class CommunitySearchPageContainer extends Component {
   };
 
   changeSearchParams = ({ changedParams }) => {
-    // Changed search params
-    const origParams = this.props.searchParams;
-    const { path } = filterLinkPath(origParams, changedParams);
-    this.props.history.push(path);
+    const { searchParams, history } = this.props;
+
+    const { path } = filterLinkPath(searchParams, changedParams);
+    history.push(path);
   };
 
   removeSearchFilters = ({ paramsToRemove }) => {
-    const fullParams = omit(this.props.searchParams, paramsToRemove);
+    const { searchParams, history } = this.props;
 
-    const { path } = filterLinkPath(fullParams, {});
-    this.props.history.push(path);
+    const changedParams = paramsToRemove.reduce((cumul, param) => {
+      cumul[param] = undefined;
+      return cumul;
+    });
+
+    const { path } = filterLinkPath(fullParams, changedParams);
+    history.push(path);
   };
 
   render() {

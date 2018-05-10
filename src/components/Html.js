@@ -22,7 +22,7 @@ const Html = ({
         {styles}
       </head>
       <body {...bodyAttrs}>
-        <main id="app" dangerouslySetInnerHTML={{ __html: content }} />
+        <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
         <script dangerouslySetInnerHTML={{ __html: state }} />
         {assets.js.map(path => <script key={path} src={`${path}`} />)}
       </body>
