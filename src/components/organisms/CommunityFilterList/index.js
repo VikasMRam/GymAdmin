@@ -20,11 +20,14 @@ import { Link, Image } from 'sly/components/atoms';
 const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  // margin: 0 auto;
-  width: ${size('layout.mobile')};
+  =width: ${size('filtersMenu.width.mobile')};
   border-bottom: solid 1px ${palette('grayscale', 2)};
   padding: 0 ${size('spacing.large')};
   padding-bottom: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('filtersMenu.width.laptop')};
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -36,6 +39,7 @@ const StyledLink = styled(Link)`
     margin-right: ${size('spacing.small')};
   }
 `;
+
 const ImageButtonWrapper = styled.div`
   display: none;
 

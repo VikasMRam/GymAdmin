@@ -62,6 +62,13 @@ theme.sizes = {
     },
   },
 
+  filtersMenu: {
+    width: {
+      mobile:       '23.4375rem',   // 375px
+      laptop:       '15.375rem',    // 246px
+    },
+  },
+
   footer: {
     group: {
       width:             '9.75rem', // 156px

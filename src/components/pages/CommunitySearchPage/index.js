@@ -25,12 +25,14 @@ const nextUri = (() => {
 const Wrapper = styled.div`
   width: 100%;
   
-  // display: flex;
-  // flex-direction: row;
-  // align-items:flex-start;
-  // align-content:flex-start;
-  // margin: 0 auto;
-  // max-width: ${size('maxWidth')}
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    align-content: flex-start;
+    margin: 0 auto;
+    max-width: ${size('maxWidth')};
+  }
 `;
 
 // TODO : Reuse this FixedColumnWrapper across the App
@@ -58,6 +60,10 @@ const FixedColumnWrapper = styled.div`
 const TopWrapper = styled.div`
   margin: 0 ${size('spacing.large')};
   margin-bottom: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+    margin-bottom: 0;
+  }
 `;
 
 const StyledCommunitySearchList = styled(CommunitySearchList)`
@@ -81,6 +87,13 @@ const FiltersWrapper = styled.div`
   position: fixed;
   top: 0;
   z-index: 102; // Above Header Menu
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: flex;
+    position: relative;
+    width: auto;
+    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  }
 `;
 
 const FilterMenuWrapper = styled.div`
@@ -89,11 +102,20 @@ const FilterMenuWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: ${size('spacing.xxLarge')};
   }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding: 0;
+    padding-top: ${size('spacing.large')};
+  }
 `;
 
 const FilterTranslucentOverlay = styled.div`
   width: 100%;
   background: ${palette('slate', 0)}e5;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
 `;
 
 const FiltersMenuCloseButton = styled(IconButton)`
@@ -102,6 +124,10 @@ const FiltersMenuCloseButton = styled(IconButton)`
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin: 0;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
   }
 `;
 
@@ -131,19 +157,19 @@ const StyledHeading = styled(Heading)`
 const ViewMapButton = styled(IconButton)`
   margin-right: ${size('spacing.large')};
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }
 `;
 
 const FiltersButton = styled(IconButton)`
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }
 `;
 
 const StyledHr = styled(Hr)`
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }
 `;
