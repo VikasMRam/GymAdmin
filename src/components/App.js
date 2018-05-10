@@ -4,12 +4,13 @@ import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
 
-import { isBrowser } from 'sly/config';
-import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
-import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';
 import setGlobalStyles from './themes/setGlobalStyles';
+
+import { isBrowser } from 'sly/config';
+import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
+import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 
 setGlobalStyles();
 
@@ -22,7 +23,7 @@ export default class App extends Component {
   }
 
   render() {
-    const careTypes = ['retirement-community','assisted-living', 'independent-living','alzheimers-care'].join('|');
+    const careTypes = ['retirement-community', 'assisted-living', 'independent-living', 'alzheimers-care'].join('|');
     return (
       <React.Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -43,7 +44,10 @@ export default class App extends Component {
 
         <ThemeProvider theme={theme}>
           <Switch>
-            <Route path="/community/:communitySlug" component={CommunityDetailPageContainer}  />
+            <Route
+              path="/community/:communitySlug"
+              component={CommunityDetailPageContainer}
+            />
             <Route
               path={`/:toc(${careTypes})/:state/:city`}
               component={CommunitySearchPageContainer}
