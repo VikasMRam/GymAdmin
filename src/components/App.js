@@ -9,6 +9,8 @@ import theme from './themes/default';
 import setGlobalStyles from './themes/setGlobalStyles';
 
 import { isBrowser } from 'sly/config';
+import Footer from 'sly/components/organisms/Footer';
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 
@@ -24,6 +26,7 @@ export default class App extends Component {
 
   render() {
     const careTypes = ['retirement-community', 'assisted-living', 'independent-living', 'alzheimers-care'].join('|');
+
     return (
       <React.Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -43,17 +46,23 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          <Switch>
-            <Route
-              path="/community/:communitySlug"
-              component={CommunityDetailPageContainer}
-            />
-            <Route
-              path={`/:toc(${careTypes})/:state/:city`}
-              component={CommunitySearchPageContainer}
-            />
-          </Switch>
+          <React.Fragment>
+            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+            <HeaderContainer />
+            <Switch>
+              <Route
+                path="/community/:communitySlug"
+                component={CommunityDetailPageContainer}
+              />
+              <Route
+                path={`/:toc(${careTypes})/:state/:city`}
+                component={CommunitySearchPageContainer}
+              />
+            </Switch>
+            <Footer />
+          </React.Fragment>
         </ThemeProvider>
+
       </React.Fragment>
     );
   }
