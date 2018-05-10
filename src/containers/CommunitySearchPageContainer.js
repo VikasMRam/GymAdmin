@@ -8,9 +8,17 @@ import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList } from 'sly/store/selectors';
 
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
-import { filterLinkPath, getSearchParams } from 'sly/services/helpers/search'; 
+import { filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
 
 class CommunitySearchPageContainer extends Component {
+  state = {
+    isFilterVisible: false,
+  };
+  toggleFilter = () => {
+    this.setState({
+      isFilterVisible: !this.state.isFilterVisible,
+    });
+  };
   // TODO Define Search Parameters
   toggleMap = () => {
     const event = { changedParams: { view: 'map' } };
@@ -46,8 +54,10 @@ class CommunitySearchPageContainer extends Component {
     return (
       <CommunitySearchPage
         isMapView={isMapView}
+        isFilterVisible={this.state.isFilterVisible}
         requestMeta={requestMeta}
         toggleMap={this.toggleMap}
+        toggleFilter={this.toggleFilter}
         searchParams={searchParams}
         onParamsChange={this.changeSearchParams}
         onParamsRemove={this.removeSearchFilters}

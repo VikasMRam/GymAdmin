@@ -9,16 +9,31 @@ import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Field from 'sly/components/molecules/Field';
 import Radio from 'sly/components/molecules/Radio';
 import IconButton from 'sly/components/molecules/IconButton';
-import { Hr, Link } from "sly/components/atoms";
-import { tocs, budgets, sizes, filterLinkPath } from 'sly/services/helpers/search';
+import { Hr, Link } from 'sly/components/atoms';
+import {
+  tocs,
+  budgets,
+  sizes,
+  filterLinkPath,
+} from 'sly/services/helpers/search';
 
 const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  border: solid 1px ${palette('grayscale', 2)};
-  padding: ${size('spacing.large')};
+  // margin: 0 auto;
+  border-bottom: solid 1px ${palette('grayscale', 2)};
+  padding: 0 ${size('spacing.large')};
+  padding-bottom: ${size('spacing.large')};
 `;
+
+const IconButtonWrapper = styled.div`
+  display: none;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: block;
+  }
+`;
+
 const StyledLink = styled(Link)`
   display: flex;
   margin-bottom: ${size('spacing.regular')};
@@ -42,7 +57,8 @@ const generateRadioLink = (elem, type, path, selected) => (
     key={`${type}-${elem.value}`}
     selected={selected}
   >
-    <Radio checked={selected} />{elem.label}
+    <Radio checked={selected} />
+    {elem.label}
   </StyledLink>
 );
 
@@ -53,17 +69,19 @@ const CommunityFilterList = ({
   onFieldChange,
 }) => {
   const tocFields = tocs.map((elem) => {
-    const { path, selected } = filterLinkPath(searchParams, { toc: elem.value });
+    const { path, selected } = filterLinkPath(searchParams, {
+      toc: elem.value,
+    });
     return generateRadioLink(elem, 'toc', path, selected);
   });
   const budgetFields = budgets.map((elem) => {
-    const currentBudget = (searchParams.filters || '').split('/')
+    const currentBudget = (searchParams.filters || '')
+      .split('/')
       .reduce((cumul, filter) => {
-        return budgets
-          .reduce((cumul, budget) => {
-            if (budget.segment === filter) return budget.segment;
-            return cumul;
-          }, cumul);
+        return budgets.reduce((cumul, budget) => {
+          if (budget.segment === filter) return budget.segment;
+          return cumul;
+        }, cumul);
       }, undefined);
     const params = {
       ...searchParams,
@@ -75,37 +93,40 @@ const CommunityFilterList = ({
   });
 
   const sizeFields = sizes.map((elem) => {
-    const { path, selected } = filterLinkPath(searchParams, { selected: elem.segment });
+    const { path, selected } = filterLinkPath(searchParams, {
+      selected: elem.segment,
+    });
     return generateRadioLink(elem, 'size', path, selected);
   });
 
   const { sort } = searchParams;
   return (
     <SectionWrapper>
-      {isMapView && toggleMap &&
-        <IconButton icon="list" onClick={toggleMap}>
-          Show List
-        </IconButton>
-      }
-      {!isMapView &&
-        <IconButton icon="map" onClick={toggleMap} >
-          Show Map
-        </IconButton>
-      }
-      <Hr />
-      <CollapsibleSection size="small" title="Type of care" >
+      <IconButtonWrapper>
+        {isMapView &&
+          toggleMap && (
+            <IconButton icon="list" onClick={toggleMap}>
+              Show List
+            </IconButton>
+          )}
+        {!isMapView && (
+          <IconButton icon="map" onClick={toggleMap}>
+            Show Map
+          </IconButton>
+        )}
+        <Hr />
+      </IconButtonWrapper>
+      {/* TODO: Top bottom padding must be 16px in CollapsibleSection */}
+      <CollapsibleSection size="small" title="Type of care" noHr>
         {tocFields}
       </CollapsibleSection>
-      <CollapsibleSection
-        size="small"
-        title="Budget"
-      >
+      <CollapsibleSection size="small" title="Budget" noHr>
         {budgetFields}
       </CollapsibleSection>
-      <CollapsibleSection size="small" title="Size">
+      <CollapsibleSection size="small" title="Size" noHr>
         {sizeFields}
       </CollapsibleSection>
-      <CollapsibleSection size="small" title="Sort">
+      <CollapsibleSection size="small" title="Sort" noHr>
         <Field
           name="Sort"
           type="select"

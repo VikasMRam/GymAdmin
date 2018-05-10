@@ -23,10 +23,10 @@ const nextUri = (() => {
 
 const Wrapper = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items:flex-start;
-  align-content:flex-start;
+  // display: flex;
+  // flex-direction: row;
+  // align-items:flex-start;
+  // align-content:flex-start;
 `;
 
 // TODO : Reuse this FixedColumnWrapper across the App
@@ -66,6 +66,24 @@ const StyledCommunitySearchList = styled(CommunitySearchList)`
     width: ${size('layout.laptopLarge')};
     margin-right: ${size('spacing.xLarge')};
   }
+`;
+
+const filtersWrapperDisplay = p => (p.isFilterVisible ? 'flex' : 'none');
+const FiltersWrapper = styled.div`
+  display: ${filtersWrapperDisplay};
+  flex-direction: column;
+
+  // Overlay Settings
+  width: 100%;
+  position: absolute;
+  top: 0;
+  background: white;
+  z-index: 101;
+`;
+
+const FiltersMenuCloseButton = styled(IconButton)`
+  margin: ${size('spacing.large')};
+  margin-bottom: 0;
 `;
 
 const SideFilterContainer = styled(CommunityFilterList)`
@@ -124,6 +142,8 @@ class CommunitySearchPage extends React.Component {
     const {
       isMapView,
       toggleMap,
+      isFilterVisible,
+      toggleFilter,
       onParamsChange,
       onParamsRemove,
       searchParams,
@@ -168,17 +188,26 @@ class CommunitySearchPage extends React.Component {
           menuItems={menuItems}
         />
         <Wrapper>
-          <SideFilterContainer
-            onFieldChange={onParamsChange}
-            searchParams={searchParams}
-            toggleMap={toggleMap}
-            isMapView={isMapView}
-          />
+          <FiltersWrapper isFilterVisible={isFilterVisible}>
+            <FiltersMenuCloseButton
+              icon="close"
+              iconSize="regular"
+              palette="black"
+              transparent
+              onClick={toggleFilter}
+            />
+            <SideFilterContainer
+              onFieldChange={onParamsChange}
+              searchParams={searchParams}
+              toggleMap={toggleMap}
+              isMapView={isMapView}
+              isFilterVisible={isFilterVisible}
+              toggleFilter={toggleFilter}
+            />
+          </FiltersWrapper>
           <FixedColumnWrapper>
             <TopWrapper>
-              <StyledHeading>
-                258 communities in San Francisco
-              </StyledHeading>
+              <StyledHeading>258 communities in San Francisco</StyledHeading>
               {isMapView && (
                 <ViewMapButton
                   icon="list"
@@ -194,7 +223,12 @@ class CommunitySearchPage extends React.Component {
                   View Map
                 </ViewMapButton>
               )}
-              <FiltersButton icon="filter" ghost transparent>
+              <FiltersButton
+                icon="filter"
+                ghost
+                transparent
+                onClick={toggleFilter}
+              >
                 Filters
               </FiltersButton>
             </TopWrapper>
