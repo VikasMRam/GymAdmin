@@ -107,7 +107,6 @@ const urlize = ( inString )=>
 export const getBreadCrumbsForCommunity = ( { name, typeCare, address } ) => {
 
   let tocBc = tocPaths(typeCare);
-  console.log('Seeing TOC BC', tocBc);
   // TODO: use react router generated paths once router wiring is complete
   return [
     {
@@ -120,7 +119,7 @@ export const getBreadCrumbsForCommunity = ( { name, typeCare, address } ) => {
       label: stateNames[address.state],
     },
     {
-      path: `${tocBc.path}/${urlize(address.state)}/${urlize(address.city)}`,
+      path: `${tocBc.path}/${urlize(stateNames[address.state])}/${urlize(address.city)}`,
       label: address.city,
     },
     {

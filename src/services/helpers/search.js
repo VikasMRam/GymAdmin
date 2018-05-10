@@ -1,12 +1,11 @@
 import { stringify, parse } from 'query-string';
 
-
 const fnExecutionTracker = {};
 
 /**
  * Decorator function that helps restrict number of function calls  to 1 within a specified timelimit.
- * It does execute the last function requested
- * @param fnToEval -
+ * It always executes the last function call
+ * @param fnToEval - the actual function you want to be executed.
  * @param key
  * @param waitTimeInMillis
  * @returns {Function}
@@ -14,9 +13,11 @@ const fnExecutionTracker = {};
 export const delayedExecutor = (fnToEval, key, waitTimeInMillis)=> {
   //Add fnExecutionQ
   fnExecutionTracker[key] = { lastExecutionTime:undefined, timer:undefined };
+
   if (waitTimeInMillis === undefined) {
     waitTimeInMillis = 3000;
   }
+
   return function(...args) {
     let timeNow = new Date();
     if ( !fnExecutionTracker[key].lastExecutionTime ||  ( (timeNow - fnExecutionTracker[key].lastExecutionTime) > waitTimeInMillis) ){
@@ -99,6 +100,7 @@ export const budgets = [
   { label: 'Up to $6000', segment: '6000-dollars', value: 6000 },
 ];
 
+/** Not used currently
 const findAFilter = (ary, filters='') => filters.split('/')
   .reduce((cumul, filter) => {
     return ary
@@ -107,11 +109,18 @@ const findAFilter = (ary, filters='') => filters.split('/')
         return cumul;
       }, cumul)
   }, undefined);
+ */
 
-const filterSearchParams = params => Object.keys(params)
+export const filterSearchParams = params => Object.keys(params)
   .reduce((cumul, key) => {
     if (searchParamsWhitelist.includes(key)) {
       cumul[key] = params[key];
+    }
+    if (key ==='budget') {
+      try {
+        cumul[key] = Math.floor(parseFloat(params[key]));
+      }catch(e){
+      }
     }
     return cumul;
   }, {});
@@ -121,14 +130,9 @@ export const filterLinkPath = (currentFilters, nextFilters) => {
     ...currentFilters,
     ...nextFilters,
   });
+  console.log('Seeing selected filters here',filters);
+  const { toc, state, city, ...qs } = filters;
 
-  const { size, budget, toc, state, city, ...qs } = filters;
-
-  const sizeSegment = size ? `/${size}` : '';
-  const budgetSegment = budget ? `/${budget}` : '';
-  const filtersSegment = (sizeSegment || budgetSegment)
-    ? `/filters${sizeSegment}${budgetSegment}`
-    : '';
 
   const qsString = stringify(qs);
   const qsPart = qsString ? `?${qsString}` : '';
@@ -137,20 +141,16 @@ export const filterLinkPath = (currentFilters, nextFilters) => {
   const selected = currentFilters[key] === nextFilters[key];
 
   return {
-    path: `/${toc}/${state}/${city}${filtersSegment}${qsPart}`,
+    path: `/${toc}/${state}/${city}${qsPart}`,
     selected,
   };
 };
 
 export const getSearchParams = ({ params }, location) => {
   const qs = parse(location.search);
-  const budget = findAFilter(budgets, params.filters);
-  const size = findAFilter(sizes, params.filters);
 
   return filterSearchParams({
     ...params,
-    ...qs,
-    budget,
-    size,
+    ...qs
   });
 };

@@ -83,25 +83,13 @@ const CommunityFilterList = ({
     return generateRadioLink(elem, 'toc', path, selected);
   });
   const budgetFields = budgets.map((elem) => {
-    const currentBudget = (searchParams.filters || '').split('/')
-      .reduce((cumul, filter) => {
-        return budgets
-          .reduce((cumul, budget) => {
-            if (budget.segment === filter) return budget.segment;
-            return cumul;
-          }, cumul);
-      }, undefined);
-    const params = {
-      ...searchParams,
-      budget: currentBudget,
-    };
 
-    const { path, selected } = filterLinkPath(params, { budget: elem.segment });
+    const { path, selected } = filterLinkPath(searchParams, { budget: elem.value });
     return generateRadioLink(elem, 'budget', path, selected);
   });
 
   const sizeFields = sizes.map((elem) => {
-    const { path, selected } = filterLinkPath(searchParams, { selected: elem.segment });
+    const { path, selected } = filterLinkPath(searchParams, { size: elem.value });
     return generateRadioLink(elem, 'size', path, selected);
   });
 
