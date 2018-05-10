@@ -78,10 +78,6 @@ export default class CollapsibleSection extends Component {
     size: 'regular',
   };
 
-  static convertToClassName(str) {
-    return str.toLowerCase().replace(/[^a-z0-9_\s-]/, '').replace(/[\s-]+/, ' ').replace(/\s+/g, '-');
-  }
-
   state = {
     collapsed: this.props.collapsedDefault,
   };
@@ -109,7 +105,6 @@ export default class CollapsibleSection extends Component {
           <Section
             collapsed={collapsed}
             size={size}
-            className={this.constructor.convertToClassName(title)}
             innerRef={innerRef}
           >
             <StyledHr />
