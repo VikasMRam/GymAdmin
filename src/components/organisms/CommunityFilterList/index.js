@@ -18,6 +18,7 @@ const SectionWrapper = styled.div`
   margin: 0 auto;
   border: solid 1px ${palette('grayscale', 2)};
   padding: ${size('spacing.large')};
+  width: ${size('layout.sideColumnSmall')};
 `;
 const StyledLink = styled(Link)`
   display: flex;
@@ -52,6 +53,10 @@ const ImageButtonWrapper = styled.div`
     }
     return '';
   }};
+`;
+
+const StyledImage = styled(Image)`
+  max-width: 100%;
 `;
 
 const getSortHandler = (origFn) => {
@@ -117,7 +122,7 @@ const CommunityFilterList = ({
         {!isMapView &&
           <React.Fragment>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-            <Image src={assetPath('map-placeholder.png')} />
+            <StyledImage src={assetPath('map-placeholder.png')} />
             <IconButton icon="map" onClick={toggleMap} palette="secondary" ghost>
               View Map
             </IconButton>

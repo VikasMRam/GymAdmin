@@ -8,7 +8,7 @@ import { isServer } from 'sly/config';
 import { size } from 'sly/components/themes';
 import Checkbox from 'sly/components/molecules/Checkbox';
 import Map from 'sly/components/atoms/Map';
-import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
+import MapTile from 'sly/components/molecules/MapTile';
 import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
 
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
@@ -17,16 +17,18 @@ import {delayedExecutor, getRadiusFromMapBounds} from "sly/services/helpers/sear
 
 const MapContainerElement = styled.div`
   width: 100%;
-  height: ${size('map.propertyDetail.large.height')};
+  height: 80vh;
+  margin: 0 1.000rem;
+  margin-bottom: 1.000rem;
 `;
 
 const StyledDiv = styled.div`
   position: fixed;
-  top: -300px;
-  left: -200px;
+  top: -40vh;
+  left: -100px;
   background-color: ${palette('white', 0)};
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
-  width: auto;
+  width: 200px;
   height: auto;
   padding: ${size('spacing.small')};
   display: flex;
@@ -47,6 +49,8 @@ const iconMap = {
 const refs = {
   map: undefined,
 };
+
+const minRadius = 10;
 
 function preciseCoordinate(x) {
   return Number.parseFloat(x).toPrecision(8);
@@ -123,6 +127,7 @@ class SearchMap extends Component {
   onBoundsChange = delayedExecutor(() => {
     // Do something if this is checked
     if (this.state.redoSearchOnMove) {
+
       const { onParamsChange } = this.props;
       if (onParamsChange && typeof onParamsChange === 'function') {
         // Get Map's center and get latitude and longitude
@@ -130,16 +135,16 @@ class SearchMap extends Component {
           const center = refs.map.getCenter();
           const lat = center.lat();
           const long = center.lng();
-          const { latitude, longitude } = this.props;
           //Calculate radius
-          const radius = getRadiusFromMapBounds(refs.map.getBounds());
-          if (preciseCoordinate(lat) !== preciseCoordinate(latitude) && preciseCoordinate(long) !== preciseCoordinate(longitude)) {
-            onParamsChange({ changedParams: { latitude: lat, longitude: long, radius: radius, searchOnMove: true } });
+          let radius = getRadiusFromMapBounds(refs.map.getBounds());
+          if (radius < minRadius) {
+            radius = minRadius
           }
+          onParamsChange({ changedParams: { latitude: lat, longitude: long, radius: radius, 'page-size': 50, searchOnMove: true } });
         }
       }
     }
-  },'mapBoundsChange',10000) ;
+  },'mapBoundsChange') ;
 
   render() {
     const { latitude, longitude, communityList } = this.props;
@@ -228,7 +233,7 @@ class SearchMap extends Component {
         },
       };
       let infoWindowTile = (
-        <SimilarCommunityTile similarProperty={community} borderless />
+        <MapTile tileInfo={community} borderless />
       );
       if (isMobile) {
         infoWindowTile = (

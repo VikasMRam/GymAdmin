@@ -11,7 +11,7 @@ const marginBottom = p => (p.collapsed ? 0 : size('spacing.xLarge'));
 const laptopLargeWidth = p =>{
   switch (p.size) {
     case 'small':
-      return size('layout.sideColumn');
+      return size('layout.sideColumnSmall');
     case 'regular':
       return size('layout.mainColumn');
     default:
@@ -24,7 +24,8 @@ const laptopLargeWidth = p =>{
 const Section = styled.section`
   padding-bottom: ${marginBottom};
   transition: padding-bottom ${key('transitions.default')};
-
+  max-width:100%;
+  
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     width: ${laptopLargeWidth};
   }

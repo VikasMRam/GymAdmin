@@ -72,7 +72,6 @@ const StyledCommunitySearchList = styled(CommunitySearchList)`
 
 const SideFilterContainer = styled(CommunityFilterList)`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.sideColumn')};
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-right: ${size('spacing.xLarge')};
