@@ -1,12 +1,11 @@
 import { stringify, parse } from 'query-string';
 
-
 const fnExecutionTracker = {};
 
 /**
  * Decorator function that helps restrict number of function calls  to 1 within a specified timelimit.
- * It does execute the last function requested
- * @param fnToEval -
+ * It always executes the last function call
+ * @param fnToEval - the actual function you want to be executed.
  * @param key
  * @param waitTimeInMillis
  * @returns {Function}
@@ -14,9 +13,11 @@ const fnExecutionTracker = {};
 export const delayedExecutor = (fnToEval, key, waitTimeInMillis)=> {
   //Add fnExecutionQ
   fnExecutionTracker[key] = { lastExecutionTime:undefined, timer:undefined };
+
   if (waitTimeInMillis === undefined) {
     waitTimeInMillis = 800;
   }
+
   return function(...args) {
     let timeNow = new Date();
     if ( !fnExecutionTracker[key].lastExecutionTime ||  ( (timeNow - fnExecutionTracker[key].lastExecutionTime) > waitTimeInMillis) ){
@@ -76,33 +77,50 @@ const searchParamsWhitelist = [
 ];
 
 export const tocs = [
-  { label: 'All Communities', value: 'retirement-community' },
-  { label: 'Assisted Living', value: 'assisted-living' },
-  { label: 'Independent Living', value: 'independent-living' },
-  { label: 'Memory Care', value: 'alzheimers-care' },
+  { label: 'All Communities',    value: 'retirement-community', segment: 'retirement-community'},
+  { label: 'Assisted Living',    value: 'assisted-living'     , segment: 'assisted-living'},
+  { label: 'Independent Living', value: 'independent-living'  , segment: 'independent-living'},
+  { label: 'Memory Care',        value: 'alzheimers-care'     , segment: 'alzheimers-care'},
 ];
 
 export const sizes = [
-  { label: 'Small', value: 'small' },
-  { label: 'Medium', value: 'medium' },
-  { label: 'Large', value: 'large' },
+  { label: 'Small', segment: 'less-than-20-beds', value: 'small' },
+  { label: 'Medium', segment: '20-to-51-beds', value: 'medium' },
+  { label: 'Large', segment: 'greater-than-51-beds', value: 'large' },
 ];
 
 export const budgets = [
-  { label: 'Up to $2500', value: 2500 },
-  { label: 'Up to $3000', value: 3000 },
-  { label: 'Up to $3500', value: 3500 },
-  { label: 'Up to $4000', value: 4000 },
-  { label: 'Up to $4500', value: 4500 },
-  { label: 'Up to $5000', value: 5000 },
-  { label: 'Up to $5500', value: 5500 },
-  { label: 'Up to $6000', value: 6000 },
+  { label: 'Up to $2500', segment: '2500-dollars', value: 2500 },
+  { label: 'Up to $3000', segment: '3000-dollars', value: 3000 },
+  { label: 'Up to $3500', segment: '3500-dollars', value: 3500 },
+  { label: 'Up to $4000', segment: '4000-dollars', value: 4000 },
+  { label: 'Up to $4500', segment: '4500-dollars', value: 4500 },
+  { label: 'Up to $5000', segment: '5000-dollars', value: 5000 },
+  { label: 'Up to $5500', segment: '5500-dollars', value: 5500 },
+  { label: 'Up to $6000', segment: '6000-dollars', value: 6000 },
 ];
 
-const filterSearchParams = params => Object.keys(params)
+/** Not used currently
+const findAFilter = (ary, filters='') => filters.split('/')
+  .reduce((cumul, filter) => {
+    return ary
+      .reduce((cumul, item) => {
+        if (item.segment === filter) return item.segment;
+        return cumul;
+      }, cumul)
+  }, undefined);
+ */
+
+export const filterSearchParams = params => Object.keys(params)
   .reduce((cumul, key) => {
     if (searchParamsWhitelist.includes(key)) {
       cumul[key] = params[key];
+    }
+    if (key ==='budget') {
+      try {
+        cumul[key] = Math.floor(parseFloat(params[key]));
+      }catch(e){
+      }
     }
     return cumul;
   }, {});
@@ -114,21 +132,12 @@ export const filterLinkPath = (currentFilters, nextFilters) => {
   });
 
   const { toc, state, city, ...qs } = filters;
-
+  
   const qsString = stringify(qs);
   const qsPart = qsString ? `?${qsString}` : '';
 
-  const keys = Object.keys(nextFilters);
-  const selected = keys.reduce((cumul, key) => {
-    const next = nextFilters[key];
-    const current = typeof next === 'number'
-      ? parseInt(currentFilters[key])
-      : currentFilters[key];
-    if (current === next) {
-      return true;
-    }
-    return cumul;
-  }, false);
+  const key = Object.keys(nextFilters)[0];
+  const selected = currentFilters[key] === nextFilters[key];
 
   return {
     path: `/${toc}/${state}/${city}${qsPart}`,
@@ -141,6 +150,6 @@ export const getSearchParams = ({ params }, location) => {
 
   return filterSearchParams({
     ...params,
-    ...qs,
+    ...qs
   });
 };
