@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { bool, object } from 'prop-types';
+import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 
@@ -71,19 +72,34 @@ const StyledCommunitySearchList = styled(CommunitySearchList)`
 const filtersWrapperDisplay = p => (p.isFilterVisible ? 'flex' : 'none');
 const FiltersWrapper = styled.div`
   display: ${filtersWrapperDisplay};
-  flex-direction: column;
 
   // Overlay Settings
   width: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
+  z-index: 102; // Above Header Menu
+`;
+
+const FilterMenuWrapper = styled.div`
   background: white;
-  z-index: 101;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.xxLarge')};
+  }
+`;
+
+const FilterTranslucentOverlay = styled.div`
+  width: 100%;
+  background: ${palette('slate', 0)}e5;
 `;
 
 const FiltersMenuCloseButton = styled(IconButton)`
   margin: ${size('spacing.large')};
   margin-bottom: 0;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin: 0;
+  }
 `;
 
 const SideFilterContainer = styled(CommunityFilterList)`
@@ -189,21 +205,24 @@ class CommunitySearchPage extends React.Component {
         />
         <Wrapper>
           <FiltersWrapper isFilterVisible={isFilterVisible}>
-            <FiltersMenuCloseButton
-              icon="close"
-              iconSize="regular"
-              palette="black"
-              transparent
-              onClick={toggleFilter}
-            />
-            <SideFilterContainer
-              onFieldChange={onParamsChange}
-              searchParams={searchParams}
-              toggleMap={toggleMap}
-              isMapView={isMapView}
-              isFilterVisible={isFilterVisible}
-              toggleFilter={toggleFilter}
-            />
+            <FilterMenuWrapper>
+              <FiltersMenuCloseButton
+                icon="close"
+                iconSize="regular"
+                palette="black"
+                transparent
+                onClick={toggleFilter}
+              />
+              <SideFilterContainer
+                onFieldChange={onParamsChange}
+                searchParams={searchParams}
+                toggleMap={toggleMap}
+                isMapView={isMapView}
+                isFilterVisible={isFilterVisible}
+                toggleFilter={toggleFilter}
+              />
+            </FilterMenuWrapper>
+            <FilterTranslucentOverlay />
           </FiltersWrapper>
           <FixedColumnWrapper>
             <TopWrapper>

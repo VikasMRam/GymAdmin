@@ -38,6 +38,7 @@ theme.sizes = {
     laptopLarge:  '66rem',    // 1056px
     mainColumn:   '43.50rem', // 696px
     sideColumn:   '21.00rem', // 336px
+    mobile:       '23.4375rem'// 375px
   },
 
   modal: {

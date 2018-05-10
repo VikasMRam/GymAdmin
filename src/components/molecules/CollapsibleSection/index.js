@@ -75,7 +75,7 @@ export default class CollapsibleSection extends Component {
   static defaultProps = {
     collapsedDefault: false,
     size: 'regular',
-    noHr: 'false',
+    noHr: false,
   };
 
   static convertToClassName(str) {
@@ -113,7 +113,6 @@ export default class CollapsibleSection extends Component {
       ...props
     } = this.props;
     const { collapsed, maxHeight } = this.state;
-
     return (
       <Measure onResize={this.onResize}>
         {({ measureRef }) => (

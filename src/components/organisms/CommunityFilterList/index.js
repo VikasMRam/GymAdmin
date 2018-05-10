@@ -21,6 +21,7 @@ const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   // margin: 0 auto;
+  width: ${size('layout.mobile')};
   border-bottom: solid 1px ${palette('grayscale', 2)};
   padding: 0 ${size('spacing.large')};
   padding-bottom: ${size('spacing.large')};
