@@ -1,5 +1,64 @@
 import { stringify, parse } from 'query-string';
 
+
+const fnExecutionTracker = {};
+
+/**
+ * Decorator function that helps restrict number of function calls  to 1 within a specified timelimit.
+ * It does execute the last function requested
+ * @param fnToEval -
+ * @param key
+ * @param waitTimeInMillis
+ * @returns {Function}
+ */
+export const delayedExecutor = (fnToEval, key, waitTimeInMillis)=> {
+  //Add fnExecutionQ
+  fnExecutionTracker[key] = { lastExecutionTime:undefined, timer:undefined };
+  if (waitTimeInMillis === undefined) {
+    waitTimeInMillis = 3000;
+  }
+  return function(...args) {
+    let timeNow = new Date();
+    if ( !fnExecutionTracker[key].lastExecutionTime ||  ( (timeNow - fnExecutionTracker[key].lastExecutionTime) > waitTimeInMillis) ){
+      fnExecutionTracker[key].lastExecutionTime = new Date();
+      fnExecutionTracker[key].timer = undefined;
+      fnToEval(...args);
+    } else {
+      if (fnExecutionTracker[key].timer){
+        clearTimeout(fnExecutionTracker[key].timer);
+      }
+      let timeout = waitTimeInMillis - (timeNow - fnExecutionTracker[key].lastExecutionTime);
+      let timer = setTimeout(() => {
+        fnToEval(...args)
+      },timeout);
+      fnExecutionTracker[key].timer = timer;
+    }
+
+  }
+
+
+};
+
+export const getRadiusFromMapBounds = (bounds) => {
+
+  let center = bounds.getCenter();
+  let ne = bounds.getNorthEast();
+
+// r = radius of the earth in miles
+  let r = 3963.0;
+
+// Convert lat or lng from decimal degrees into radians (divide by 57.2958)
+  let lat1 = center.lat() / 57.2958;
+  let lon1 = center.lng() / 57.2958;
+  let lat2 = ne.lat() / 57.2958;
+  let lon2 = ne.lng() / 57.2958;
+
+// distance = circle radius from center to Northeast corner of bounds
+  let dis = r * Math.acos(Math.sin(lat1) * Math.sin(lat2) +
+    Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1));
+  return Math.round(dis);
+};
+
 const searchParamsWhitelist = [
   'toc',
   'state',
@@ -42,12 +101,12 @@ export const budgets = [
 
 const findAFilter = (ary, filters='') => filters.split('/')
   .reduce((cumul, filter) => {
-    return ary 
+    return ary
       .reduce((cumul, item) => {
         if (item.segment === filter) return item.segment;
         return cumul;
       }, cumul)
-  }, undefined);  
+  }, undefined);
 
 const filterSearchParams = params => Object.keys(params)
   .reduce((cumul, key) => {
