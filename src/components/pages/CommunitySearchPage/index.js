@@ -46,6 +46,15 @@ const FixedColumnWrapper = styled.div`
 const TopWrapper = styled.div`
   margin: 0 ${size('spacing.large')};
   margin-bottom: ${size('spacing.large')};
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.mainColumn')};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    display:none;
+  }
+
+ 
 `;
 
 const StyledCommunitySearchList = styled(CommunitySearchList)`
@@ -74,7 +83,9 @@ const SearchMapContainer = styled(SearchMap)`
 `;
 
 const StyledHeading = styled(Heading)`
+  margin: 0 ${size('spacing.large')};
   margin-bottom: ${size('spacing.large')};
+  
   font-size: ${size('text.subtitle')};
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
@@ -133,10 +144,10 @@ const CommunitySearchPage = ({
           isMapView={isMapView}
         />
         <FixedColumnWrapper>
+          <StyledHeading>
+            258 communities in San Francisco
+          </StyledHeading>
           <TopWrapper>
-            <StyledHeading>
-              258 communities in San Francisco
-            </StyledHeading>
             {isMapView && (
               <ViewMapButton
                 icon="list"
@@ -156,7 +167,7 @@ const CommunitySearchPage = ({
               Filters
             </FiltersButton>
           </TopWrapper>
-          <StyledHr />
+
           {!isMapView && (
             <StyledCommunitySearchList
               key="main"
