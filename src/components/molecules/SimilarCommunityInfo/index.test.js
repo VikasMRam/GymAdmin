@@ -28,8 +28,8 @@ describe('SimilarCommunityInfo', () => {
       .childAt(1)
       .childAt(0)
       .html()).toEqual('<div>$4500 per month</div>');
-    expect(wrapper.childAt(2).html()).toEqual('<div>Care Type: A, B</div>');
-    expect(wrapper.childAt(3).html()).toEqual('<div>Floor Plans: 1 Bedroom, Studio</div>');
+    expect(wrapper.childAt(2).html()).toEqual('<div>A, B</div>');
+    expect(wrapper.childAt(3).html()).toEqual('<div>1 Bedroom, Studio</div>');
     expect(wrapper.childAt(4).contains('description')).toBe(true);
 
     // expect(wrapper.find('Rating[size="medium"]')).toHaveLength(1);
