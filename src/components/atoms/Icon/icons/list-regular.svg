@@ -1,33 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="14px" viewBox="0 0 16 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 49 (51002) - http://www.bohemiancoding.com/sketch -->
-    <title>Icon/24/Share</title>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon/24/List</title>
     <desc>Created with Sketch.</desc>
     <defs>
         <rect id="path-1" x="0" y="0" width="24" height="24"></rect>
     </defs>
-    <g id="Search" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Map-Search---1440px" transform="translate(-101.000000, -134.000000)">
-            <g id="Filters" transform="translate(24.000000, 97.000000)">
-                <g id="Button-List" transform="translate(57.000000, 24.000000)">
-                    <g id="Group-11" transform="translate(16.000000, 8.000000)">
-                        <g id="Icon/24/List">
-                            <g id="Icon/menu" fill-rule="evenodd">
-                                <mask id="mask-2" fill="white">
-                                    <use xlink:href="#path-1"></use>
-                                </mask>
-                                <use id="Mask" fill-opacity="0" fill="#FFFFFF" xlink:href="#path-1"></use>
-                            </g>
-                            <rect id="Rectangle-2" stroke="#7CCDCC" x="8.5" y="5.5" width="11" height="1"></rect>
-                            <rect id="Rectangle-2-Copy-3" stroke="#7CCDCC" x="4.5" y="5.5" width="1" height="1"></rect>
-                            <rect id="Rectangle-2-Copy" stroke="#7CCDCC" x="8.5" y="17.5" width="11" height="1"></rect>
-                            <rect id="Rectangle-2-Copy-4" stroke="#7CCDCC" x="4.5" y="17.5" width="1" height="1"></rect>
-                            <rect id="Rectangle-2-Copy-2" stroke="#7CCDCC" x="8.5" y="11.5" width="11" height="1"></rect>
-                            <rect id="Rectangle-2-Copy-5" stroke="#7CCDCC" x="4.5" y="11.5" width="1" height="1"></rect>
-                        </g>
-                    </g>
-                </g>
-            </g>
+    <g id="Icon/24/List" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Icon/menu">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill-opacity="0" fill="#FFFFFF" xlink:href="#path-1"></use>
         </g>
+        <rect id="Rectangle-2" stroke="currentcolor" x="8.5" y="5.5" width="11" height="1"></rect>
+        <rect id="Rectangle-2-Copy-3" stroke="currentcolor" x="4.5" y="5.5" width="1" height="1"></rect>
+        <rect id="Rectangle-2-Copy" stroke="currentcolor" x="8.5" y="17.5" width="11" height="1"></rect>
+        <rect id="Rectangle-2-Copy-4" stroke="currentcolor" x="4.5" y="17.5" width="1" height="1"></rect>
+        <rect id="Rectangle-2-Copy-2" stroke="currentcolor" x="8.5" y="11.5" width="11" height="1"></rect>
+        <rect id="Rectangle-2-Copy-5" stroke="currentcolor" x="4.5" y="11.5" width="1" height="1"></rect>
     </g>
 </svg>
