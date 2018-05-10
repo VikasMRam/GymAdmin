@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, bool, number, oneOf } from 'prop-types';
+import { bool, number, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
@@ -48,6 +48,8 @@ const StyledTextarea = styled.textarea`
 `;
 const StyledSelect = styled.select`
   ${styles};
+  background: ${palette('white', 0)};
+  color: ${palette('slate', 0)};
 `;
 const StyledInput = styled.input`
   ${styles};
