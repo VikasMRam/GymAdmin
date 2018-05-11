@@ -28,6 +28,7 @@ const Section = styled.section`
   
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     width: ${laptopLargeWidth};
+    max-width:none;
   }
 `;
 
