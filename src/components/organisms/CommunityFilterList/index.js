@@ -21,10 +21,10 @@ import { Link, Image } from 'sly/components/atoms';
 const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  =width: ${size('filtersMenu.width.mobile')};
-  border-bottom: solid 1px ${palette('grayscale', 2)};
-  padding: 0 ${size('spacing.large')};
-  padding-bottom: ${size('spacing.large')};
+  margin: 0 auto;
+  border: solid 1px ${palette('grayscale', 2)};
+  padding: ${size('spacing.large')};
+  width: ${size('layout.sideColumnSmall')};
 `;
 
 const StyledLink = styled(Link)`
@@ -69,6 +69,10 @@ const ImageButtonWrapper = styled.div`
   }
 `;
 
+const StyledImage = styled(Image)`
+  max-width: 100%;
+`;
+
 const getSortHandler = (origFn) => {
   return (uiEvt) => {
     const changedParams = { sort: uiEvt.target.value };
@@ -101,27 +105,13 @@ const CommunityFilterList = ({
     return generateRadioLink(elem, 'toc', path, selected);
   });
   const budgetFields = budgets.map((elem) => {
-    const currentBudget = (searchParams.filters || '')
-      .split('/')
-      .reduce((cumul, filter) => {
-        return budgets.reduce((cumul, budget) => {
-          if (budget.segment === filter) return budget.segment;
-          return cumul;
-        }, cumul);
-      }, undefined);
-    const params = {
-      ...searchParams,
-      budget: currentBudget,
-    };
 
-    const { path, selected } = filterLinkPath(params, { budget: elem.segment });
+    const { path, selected } = filterLinkPath(searchParams, { budget: elem.value });
     return generateRadioLink(elem, 'budget', path, selected);
   });
 
   const sizeFields = sizes.map((elem) => {
-    const { path, selected } = filterLinkPath(searchParams, {
-      selected: elem.segment,
-    });
+    const { path, selected } = filterLinkPath(searchParams, { size: elem.value });
     return generateRadioLink(elem, 'size', path, selected);
   });
 
@@ -143,13 +133,8 @@ const CommunityFilterList = ({
         {!isMapView && (
           <React.Fragment>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-            <Image src={assetPath('map-placeholder.png')} />
-            <IconButton
-              icon="map"
-              onClick={toggleMap}
-              palette="secondary"
-              ghost
-            >
+            <StyledImage src={assetPath('map-placeholder.png')} />
+            <IconButton icon="map" onClick={toggleMap} palette="secondary" ghost>
               View Map
             </IconButton>
           </React.Fragment>

@@ -11,7 +11,7 @@ const marginBottom = p => (p.collapsed ? 0 : size('spacing.xLarge'));
 const laptopLargeWidth = (p) => {
   switch (p.size) {
     case 'small':
-      return size('layout.sideColumn');
+      return size('layout.sideColumnSmall');
     case 'regular':
       return size('layout.mainColumn');
     default:
@@ -22,9 +22,11 @@ const laptopLargeWidth = (p) => {
 const Section = styled.section`
   padding-bottom: ${marginBottom};
   transition: padding-bottom ${key('transitions.default')};
+  max-width: 100%;
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     width: ${laptopLargeWidth};
+    max-width: none;
   }
 `;
 
@@ -78,14 +80,6 @@ export default class CollapsibleSection extends Component {
     noHr: false,
   };
 
-  static convertToClassName(str) {
-    return str
-      .toLowerCase()
-      .replace(/[^a-z0-9_\s-]/, '')
-      .replace(/[\s-]+/, ' ')
-      .replace(/\s+/g, '-');
-  }
-
   state = {
     collapsed: this.props.collapsedDefault,
   };
@@ -116,12 +110,7 @@ export default class CollapsibleSection extends Component {
     return (
       <Measure onResize={this.onResize}>
         {({ measureRef }) => (
-          <Section
-            collapsed={collapsed}
-            size={size}
-            className={this.constructor.convertToClassName(title)}
-            innerRef={innerRef}
-          >
+          <Section collapsed={collapsed} size={size} innerRef={innerRef}>
             {!noHr && <StyledHr />}
             <Header onClick={this.toggle} transparent ghost>
               <StyledHeading level={getHeadingLevel(size)}>

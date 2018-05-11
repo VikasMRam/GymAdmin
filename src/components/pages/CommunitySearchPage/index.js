@@ -7,24 +7,15 @@ import { size } from 'sly/components/themes';
 
 import Heading from 'sly/components/atoms/Heading';
 import Hr from 'sly/components/atoms/Hr';
-import Header from 'sly/components/molecules/Header';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
-
-// TODO: remove this
-const nextUri = (() => {
-  const uris = ['los-angeles', 'san-francisco'];
-  return (slug) => {
-    const index = uris.indexOf(slug) + 1;
-    return uris[index % 2];
-  };
-})();
+import Header from 'sly/components/organisms/Header';
 
 const Wrapper = styled.div`
   width: 100%;
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: flex;
     flex-direction: row;
@@ -133,7 +124,6 @@ const FiltersMenuCloseButton = styled(IconButton)`
 
 const SideFilterContainer = styled(CommunityFilterList)`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.sideColumn')};
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-right: ${size('spacing.xLarge')};
@@ -206,32 +196,8 @@ class CommunitySearchPage extends React.Component {
       latitude = parseFloat(searchParams.latitude);
       longitude = parseFloat(searchParams.longitude);
     }
-    // TODO : Header is duplicated. Refactor it so that it can be reused
-    const headerItems = [
-      { name: 'List on Seniorly', url: '#' },
-      { name: 'Help Center', url: '#' },
-      { name: 'Saved', url: '#' },
-      { name: 'Sign Up', url: '#' },
-      { name: 'Login', url: '#' },
-    ];
-    const menuItems = [
-      { name: 'Assisted Living', url: '#' },
-      { name: "Alzheimer's Care", url: '#' },
-      { name: 'Respite Care', url: '#' },
-      { name: 'About Us', url: '#' },
-      { name: 'Contact', url: '#' },
-      { name: 'Careers', url: '#' },
-      { name: 'List on Seniorly', url: '#' },
-      { name: 'Sign Out', url: '#' },
-    ];
     return (
-      <div>
-        <Header
-          menuOpen={this.state.menuOpen}
-          onMenuIconClick={this.toggleMenu}
-          headerItems={headerItems}
-          menuItems={menuItems}
-        />
+      <main>
         <Wrapper>
           <FiltersWrapper isFilterVisible={isFilterVisible}>
             <FilterMenuWrapper>
@@ -299,13 +265,13 @@ class CommunitySearchPage extends React.Component {
             )}
           </FixedColumnWrapper>
         </Wrapper>
-      </div>
+      </main>
     );
   }
 }
 
-CommunitySearchPage.propTypes = {
-  communityList: object.isRequired,
-};
+// CommunitySearchPage.propTypes = {
+//   communityList: object.isRequired,
+// };
 
 export default CommunitySearchPage;
