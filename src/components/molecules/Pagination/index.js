@@ -17,7 +17,12 @@ const marginLeftNext = css`
 `;
 
 const ChevronButton = styled(({ flip, ...props }) => (
-  <Button palette="grayscale" ghost {...props}>
+  <Button 
+    ghost 
+    palette="grayscale" 
+    kind="label"
+    {...props}
+  >
     <Icon 
       flip={flip}
       icon="chevron-left" 
@@ -27,7 +32,7 @@ const ChevronButton = styled(({ flip, ...props }) => (
   </Button>
 ))`
   margin-right: ${ifProp('flip', 0, size('spacing.large'))};
-  ${ifProp('flip', marginLeftNext, 0)}
+  ${ifProp('flip', marginLeftNext, 0)};
 `;
 
 const PageButton = styled(Button)`
@@ -81,6 +86,7 @@ export default class Pagination extends Component {
     return (
       <BreakView 
         ghost 
+        kind="label"
         palette="grayscale"
         key={index}
       >
@@ -98,6 +104,7 @@ export default class Pagination extends Component {
     const click = () => !sel && onChange(index);
     return (
       <PageButton 
+        kind="label"
         key={index}
         ghost={!sel} 
         palette={palette}

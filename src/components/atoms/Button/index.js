@@ -72,8 +72,8 @@ const fontSize = ({ kind }) => {
 const borderRadius = ({ kind }) => {
   switch (kind) {
     case 'jumbo':
-    case 'label':
       return size('spacing.small');
+    case 'label':
     default:
       return size('spacing.tiny');
   }
@@ -85,7 +85,6 @@ export const styles = css`
   justify-content: center;
   height: ${height};
   padding: 0 1em;
-  text-transform: ${ifProp({ kind: 'label' }, 'uppercase', 'none')};
   text-decoration: none;
   font-weight: ${ifProp({ kind: 'jumbo' }, 'bold', 'normal')};
   white-space: nowrap;
