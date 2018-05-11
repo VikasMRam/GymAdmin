@@ -40,6 +40,7 @@ const StyledLink = styled(Link)`
 const ImageButtonWrapper = styled.div`
   position: relative;
   text-align: center;
+  display: none;
     
   img {
     width: 100%;
@@ -47,6 +48,9 @@ const ImageButtonWrapper = styled.div`
 
   button {
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: block;   
   }
 
   ${(props) => {

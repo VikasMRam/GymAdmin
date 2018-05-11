@@ -111,7 +111,7 @@ const SideFilterContainer = styled.div`
             display: block;
             position: absolute;
             width: 100%;
-            background-color: #ggg;
+            z-index: 1;
           `
         } else {
           return  `
@@ -123,6 +123,7 @@ const SideFilterContainer = styled.div`
   
   }
   margin-bottom: ${size('spacing.xxLarge')};
+  background-color: ${palette('slate', 0)};
   
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
@@ -225,7 +226,7 @@ class CommunitySearchPage extends Component{
             toggleMap={toggleMap}
             isMapView={isMapView}
             />
-            <StickyFooter footerInfo={{title:'Call',name:'some',ctaTitle:'Apply'}} onFooterClick={this.hideFilters}/>
+            <StickyFooter footerInfo={{title:'',name:'',ctaTitle:'Apply'}} onFooterClick={this.hideFilters}/>
           </SideFilterContainer>
           <FixedColumnWrapper filtersShown={this.state.filtersShown}>
             <StyledHeading>
