@@ -14,7 +14,7 @@ const FullWrapper = styled.div`
   width: 100%;
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }
 `;
@@ -43,7 +43,7 @@ const FooterWrapper = styled.div`
   }
 `;
 
-const ContactButton = styled(Button)`
+const FooterButton = styled(Button)`
   width: 100%;
   height: 52px;
 
@@ -52,7 +52,7 @@ const ContactButton = styled(Button)`
   }
 `;
 
-const ContactDetails = styled.div`
+const FooterDetails = styled.div`
   display: none;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -61,32 +61,31 @@ const ContactDetails = styled.div`
   }
 `;
 
-const ContactDetailHeader = styled.div`
+const FooterDetailHeader = styled.div`
   font-size: ${size('text.subtitle')};
   font-weight: bold;
 `;
 
-const ContactName = styled.div``;
+const FooterName = styled.div``;
 
-const StickyFooter = ({ community, onContactClick }) => {
-  const { contacts } = community;
-  const agentName = contacts.length > 0 ? 'Agent Name' : 'Seniorly Conceirge';
+const StickyFooter = ({ footerInfo, onFooterClick }) => {
+  const { title, name, ctaTitle } = footerInfo;
   return (
     <FullWrapper>
       <FooterWrapper>
-        <ContactDetails>
-          <ContactDetailHeader>Contact Property Manager</ContactDetailHeader>
-          <ContactName>{agentName}</ContactName>
-        </ContactDetails>
-        <ContactButton onClick={onContactClick}>Contact</ContactButton>
+        <FooterDetails>
+          <FooterDetailHeader>{title}</FooterDetailHeader>
+          <FooterName>{name}</FooterName>
+        </FooterDetails>
+        <FooterButton onClick={onFooterClick}>{ctaTitle}</FooterButton>
       </FooterWrapper>
     </FullWrapper>
   );
 };
 
 StickyFooter.propTypes = {
-  community: object.isRequired,
-  onContactClick: func.isRequired,
+  footerInfo: object.isRequired,
+  onFooterClick: func.isRequired,
 };
 
 export default StickyFooter;

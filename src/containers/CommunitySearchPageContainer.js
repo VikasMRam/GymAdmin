@@ -33,11 +33,13 @@ class CommunitySearchPageContainer extends Component {
     const changedParams = paramsToRemove.reduce((cumul, param) => {
       cumul[param] = undefined;
       return cumul;
-    });
+    },{});
 
-    const { path } = filterLinkPath(fullParams, changedParams);
+    const { path } = filterLinkPath(searchParams, changedParams);
+
     history.push(path);
   };
+
 
   render() {
     const {

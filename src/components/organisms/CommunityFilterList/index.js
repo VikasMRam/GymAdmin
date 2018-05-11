@@ -15,10 +15,18 @@ import { tocs, budgets, sizes, filterLinkPath } from 'sly/services/helpers/searc
 const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
   border: solid 1px ${palette('grayscale', 2)};
   padding: ${size('spacing.large')};
-  width: ${size('layout.sideColumnSmall')};
+  width: 100%;
+  background-color: ${palette('white', 0)};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.sideColumn')};
+  }
+  
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('layout.sideColumnSmall')};    
+  }
+  
 `;
 const StyledLink = styled(Link)`
   display: flex;
@@ -32,13 +40,17 @@ const StyledLink = styled(Link)`
 const ImageButtonWrapper = styled.div`
   position: relative;
   text-align: center;
-
+  display: none;
+    
   img {
     width: 100%;
   }
 
   button {
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: block;   
   }
 
   ${(props) => {
@@ -53,6 +65,7 @@ const ImageButtonWrapper = styled.div`
     }
     return '';
   }};
+  
 `;
 
 const StyledImage = styled(Image)`
