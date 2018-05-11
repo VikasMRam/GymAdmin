@@ -40,6 +40,7 @@ class CommunitySearchPageContainer extends Component {
     history.push(path);
   };
 
+
   render() {
     const {
       searchParams, error, communityList, requestMeta,
