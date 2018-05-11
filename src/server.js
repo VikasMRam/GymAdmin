@@ -63,14 +63,14 @@ app.use(async (req, res, next) => {
   const sheet = new ServerStyleSheet();
   const context = {};
 
-  const { state: serverState, html: content } = await renderApp({
-    store,
-    context,
-    location,
-    sheet,
-  });
-
   try {
+    const { state: serverState, html: content } = await renderApp({
+      store,
+      context,
+      location,
+      sheet,
+    });
+
     if (serverState) {
       Object.values(serverState).forEach(val => {
         if (val && val.stack) {

@@ -9,22 +9,22 @@ import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Field from 'sly/components/molecules/Field';
 import Radio from 'sly/components/molecules/Radio';
 import IconButton from 'sly/components/molecules/IconButton';
-import {
-  tocs,
-  budgets,
-  sizes,
-  filterLinkPath,
-} from 'sly/services/helpers/search';
-import { Link, Image } from 'sly/components/atoms';
-// TODO: Remove Fixed width in Collapsible Section before enabling the width
-// width: ${size('filtersMenu.width.laptop')}; for laptop breakpoint
-const SectionWrapper = styled.div`
+import { Link, Image, Box } from "sly/components/atoms";
+import { tocs, budgets, sizes, filterLinkPath } from 'sly/services/helpers/search';
+
+
+const StyledBox = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   padding: ${size('spacing.large')};
   width: ${size('filtersMenu.width.mobile')};
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('filtersMenu.width.laptop')};
+  }
+
 `;
+
 
 const StyledLink = styled(Link)`
   display: flex;
@@ -35,37 +35,35 @@ const StyledLink = styled(Link)`
     margin-right: ${size('spacing.small')};
   }
 `;
-
 const ImageButtonWrapper = styled.div`
+  position: relative;
+  text-align: center;
   display: none;
+    
+  img {
+    width: 100%;
+  }
 
+  button {
+    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: block;
+    display: block;   
+  }
 
-    position: relative;
-    text-align: center;
-
-    img {
-      width: 100%;
-    }
-
-    button {
-      border: ${size('border.regular')} solid ${palette('grayscale', 2)};
-    }
-
-    ${(props) => {
+  ${(props) => {
     if (!props.isMapView) {
       return `
-          button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-          }`;
+        button {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }`;
     }
     return '';
   }};
-  }
+  
 `;
 
 const StyledImage = styled(Image)`
@@ -86,8 +84,7 @@ const generateRadioLink = (elem, type, path, selected) => (
     key={`${type}-${elem.value}`}
     selected={selected}
   >
-    <Radio checked={selected} />
-    {elem.label}
+    <Radio checked={selected} />{elem.label}
   </StyledLink>
 );
 
@@ -98,57 +95,40 @@ const CommunityFilterList = ({
   onFieldChange,
 }) => {
   const tocFields = tocs.map((elem) => {
-    const { path, selected } = filterLinkPath(searchParams, {
-      toc: elem.value,
-    });
+    const { path, selected } = filterLinkPath(searchParams, { toc: elem.value });
     return generateRadioLink(elem, 'toc', path, selected);
   });
   const budgetFields = budgets.map((elem) => {
-    const { path, selected } = filterLinkPath(searchParams, {
-      budget: elem.value,
-    });
+
+    const { path, selected } = filterLinkPath(searchParams, { budget: elem.value });
     return generateRadioLink(elem, 'budget', path, selected);
   });
 
   const sizeFields = sizes.map((elem) => {
-    const { path, selected } = filterLinkPath(searchParams, {
-      size: elem.value,
-    });
+    const { path, selected } = filterLinkPath(searchParams, { size: elem.value });
     return generateRadioLink(elem, 'size', path, selected);
   });
 
   const { sort } = searchParams;
   return (
-    <SectionWrapper>
+    <StyledBox>
       <ImageButtonWrapper isMapView={isMapView}>
-        {isMapView &&
-          toggleMap && (
-            <IconButton
-              icon="list"
-              onClick={toggleMap}
-              palette="secondary"
-              ghost
-            >
-              View List
-            </IconButton>
-          )}
-        {!isMapView && (
+        {isMapView && toggleMap &&
+          <IconButton icon="list" onClick={toggleMap} palette="secondary" ghost>
+            View List
+          </IconButton>
+        }
+        {!isMapView &&
           <React.Fragment>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             <StyledImage src={assetPath('map-placeholder.png')} />
-            <IconButton
-              icon="map"
-              onClick={toggleMap}
-              palette="secondary"
-              ghost
-            >
+            <IconButton icon="map" onClick={toggleMap} palette="secondary" ghost>
               View Map
             </IconButton>
           </React.Fragment>
-        )}
+        }
       </ImageButtonWrapper>
-      <br />
-      {/* TODO: Top bottom padding must be 16px in CollapsibleSection */}
+
       <CollapsibleSection size="small" title="Type of care" noHr>
         {tocFields}
       </CollapsibleSection>
@@ -178,7 +158,7 @@ const CommunityFilterList = ({
           </option>
         </Field>
       </CollapsibleSection>
-    </SectionWrapper>
+    </StyledBox>
   );
 };
 

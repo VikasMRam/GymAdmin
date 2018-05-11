@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon/16/Arrow-left</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="-1.42108547e-14" y="0" width="16" height="16"></rect>
+    </defs>
+    <g id="Icon/16/Arrow-left" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Arrow-left" transform="translate(8.000000, 8.000000) rotate(-270.000000) translate(-8.000000, -8.000000) translate(0.000000, 0.000000)">
+          <polyline id="Stroke-1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-2)" points="13.8133334 5.1818 7.99496972 11.0001636 2.17715153 5.1818"></polyline>
+        </g>
+    </g>
+</svg>

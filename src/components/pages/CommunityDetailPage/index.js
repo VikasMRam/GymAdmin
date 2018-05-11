@@ -1,51 +1,30 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { Fragment } from 'react';
 import { object } from 'prop-types';
 import Sticky from 'react-stickynode';
 
-import { size } from 'sly/components/themes';
-import CommunityDetail from 'sly/components/organisms/CommunityDetail';
+import { getBreadCrumbsForCommunity } from "sly/services/helpers/url";
+
+import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
+
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import StickyFooter from 'sly/components/molecules/StickyFooter';
 import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
-
-const PageWrapper = styled.div`
-  display: flex;
-  margin: 0 auto;
-  width: 100%;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};
-  }
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-    width: calc(
-      ${size('layout.mainColumn')} + ${size('layout.sideColumn')} +
-        ${size('spacing.xLarge')}
-    );
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: ${size('layout.laptopLarge')};
-  }
-`;
-
-const Main = styled(CommunityDetail)`
-  width: 100%;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};
-  }
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-    margin-right: ${size('spacing.xLarge')};
-  }
-`;
-
-const Column = styled(ConciergeContainer)`
-  display: none;
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-    width: ${size('layout.sideColumn')};
-    display: block;
-  }
-`;
+import { Heading, Hr } from 'sly/components/atoms';
+import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
+import Section from 'sly/components/molecules/Section';
+import CareServicesList from 'sly/components/organisms/CareServicesList';
+import PropertyReviews from 'sly/components/organisms/PropertyReviews';
+import CommunityDetails from 'sly/components/organisms/CommunityDetails';
+import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailability';
+import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
+import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
+import OwnerStory from 'sly/components/organisms/OwnerStory';
+import CommunityMap from 'sly/components/organisms/CommunityMap';
+import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
+import MorePictures from 'sly/components/organisms/MorePictures';
+import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
+import CommunitySummary from 'sly/components/organisms/CommunitySummary';
+import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 
 export default class CommunityDetailPage extends React.Component {
   static propTypes = {
@@ -59,9 +38,6 @@ export default class CommunityDetailPage extends React.Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
-    if (this.communityReviewsRef.current) {
-      this.bottomBoundaryQuerySelector = `.${this.communityReviewsRef.current.className.replace(/\s+/g, '.')} article`;
-    }
   }
 
   componentWillUnmount() {
@@ -96,44 +72,198 @@ export default class CommunityDetailPage extends React.Component {
 
   render() {
     const { community, userActions } = this.props;
+    const {
+      id,
+      name,
+      mainImage,
+      startingRate,
+      propInfo,
+      propRatings,
+      reviews,
+      address,
+      rgsAux,
+      floorPlans,
+      similarProperties,
+      gallery = {},
+      videoGallery = {},
+      phoneNumber,
+      twilioNumber,
+      user,
+      typeCare,
+    } = community;
+    const images = gallery.images || [];
+    const videos = videoGallery.videos || [];
+    const { careServices, serviceHighlights } = propInfo;
+    const {
+      communityDescription,
+      staffDescription,
+      residentDescription,
+      ownerExperience,
+    } = propInfo;
+    const {
+      communityHighlights,
+      personalSpace,
+      personalSpaceOther,
+      communitySpace,
+      communitySpaceOther,
+      nonCareServices,
+      nonCareServicesOther,
+      languages,
+      languagesOther,
+    } = propInfo;
+    // TODO: move this to a container for PropertyReviews handling posts
+    const onLeaveReview = () => {};
+    // TODO: move this to a container PricingAndAvailability for handling bookings
+    const onInquireOrBookClicked = () => {};
+    const { hasSlyReviews, hasWebReviews } = propRatings;
+    const ratingsArray = propRatings.ratingsArray || [];
+    const reviewsFinal = reviews || [];
+    const serviceHighlightsFinal = serviceHighlights || [];
+    const roomPrices = floorPlans.map(({ info }) => info);
+    // TODO: mock as USA until country becomes available
+    address.country = 'USA';
+    const formattedAddress = `${address.line1}, ${address.line2}, ${
+      address.city
+    }, ${address.state}
+      ${address.zip}`
+      .replace(/\s/g, ' ')
+      .replace(/, ,/g, ', ');
     const stickyHeaderItems = [
       { label: 'Summary', ref: this.communitySummaryRef },
       { label: 'Pricing & Floor Plans', ref: this.pricingAndFloorPlansRef },
       { label: 'Reviews', ref: this.communityReviewsRef },
     ];
+    // 24px or 84px (when sticky header is visible) from top TODO: figure out how to get this from styled theme sizes
+    const columnContent = (
+      <Sticky
+        top={this.state.stickyHeaderVisible ? 84 : 24}
+        bottomBoundary="#sticky-sidebar-boundary"
+      >
+        <ConciergeContainer
+          community={community}
+          userActions={userActions}
+        />
+      </Sticky>
+    );
+    const bottomContent = (
+      <Fragment>
+        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+        <Section title={`Map View of ${name}`}>
+          <CommunityMap
+            id={id}
+            name={name}
+            startingRate={startingRate}
+            mainImage={mainImage}
+            address={address}
+            similarProperties={similarProperties}
+          />
+        </Section>
+        <Section title="More Pictures">
+          <MorePictures gallery={gallery} />
+        </Section>
+        <Section title="How Seniorly Works">
+          <HowSlyWorks />
+        </Section>
+      </Fragment>
+    );
 
     return (
-      <main>
+      <Fragment>
+        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <CommunityStickyHeader
           items={stickyHeaderItems}
           visible={this.state.stickyHeaderVisible}
         />
-        <PageWrapper>
-          <Main
-            key="main"
-            breadCrumbRef={this.breadCrumbRef}
-            communityReviewsRef={this.communityReviewsRef}
-            pricingAndFloorPlansRef={this.pricingAndFloorPlansRef}
-            communitySummaryRef={this.communitySummaryRef}
-            amenitiesAndFeaturesRef={this.amenitiesAndFeaturesRef}
-            community={community}
-          />
-          {/* 24px or 84px (when sticky header is visible) from top TODO: figure out how to get this from styled theme sizes */
-            this.communityReviewsRef.current &&
-            <Sticky
-              top={this.state.stickyHeaderVisible ? 84 : 24}
-              bottomBoundary={this.bottomBoundaryQuerySelector}
-            >
-              <Column
-                key="column"
-                community={community}
-                userActions={userActions}
-              />
-            </Sticky>
+        <CommunityDetailPageTemplate
+          column={columnContent}
+          bottom={bottomContent}
+        >
+          {(images.length > 0 || videos.length > 0) &&
+            <CommunityMediaGallery
+              communityName={name}
+              images={images}
+              videos={videos}
+            />
           }
-        </PageWrapper>
-        <StickyFooter community={community} />
-      </main>
+          <BreadCrumb items={getBreadCrumbsForCommunity({ name, typeCare, address })} innerRef={this.breadCrumbRef} />
+          <Heading level="hero">{name}</Heading>
+          <Heading level="subtitle">{formattedAddress}</Heading>
+          <CommunitySummary
+            innerRef={this.communitySummaryRef}
+            pricingAndFloorPlansRef={this.pricingAndFloorPlansRef}
+            amenitiesAndFeaturesRef={this.amenitiesAndFeaturesRef}
+            communityReviewsRef={this.communityReviewsRef}
+            twilioNumber={twilioNumber}
+            phoneNumber={phoneNumber}
+            user={user}
+            amenityScore={rgsAux.amenityScore}
+            startingRate={startingRate}
+            communityHighlights={communityHighlights}
+            reviews={reviews}
+          />
+          <CollapsibleSection
+            title="Pricing & Floor Plans"
+            innerRef={this.pricingAndFloorPlansRef}
+          >
+            <PricingAndAvailability
+              communityName={name}
+              address={address}
+              estimatedPrice={rgsAux.estimatedPrice}
+              roomPrices={roomPrices}
+              onInquireOrBookClicked={onInquireOrBookClicked}
+            />
+          </CollapsibleSection>
+          <CollapsibleSection title="Similar Communities">
+            <SimilarCommunities similarProperties={similarProperties} />
+          </CollapsibleSection>
+          <CollapsibleSection title="Community Details">
+            <CommunityDetails
+              communityName={name}
+              communityDescription={communityDescription}
+              staffDescription={staffDescription}
+              residentDescription={residentDescription}
+            />
+          </CollapsibleSection>
+          <CollapsibleSection title="Care Services">
+            <CareServicesList
+              communityName={name}
+              careServices={careServices}
+              serviceHighlights={serviceHighlightsFinal}
+            />
+          </CollapsibleSection>
+          <CollapsibleSection
+            title="Amenities & Features"
+            innerRef={this.amenitiesAndFeaturesRef}
+          >
+            <AmenitiesAndFeatures
+              communityName={name}
+              communityHighlights={communityHighlights}
+              personalSpace={personalSpace}
+              personalSpaceOther={personalSpaceOther}
+              communitySpace={communitySpace}
+              communitySpaceOther={communitySpaceOther}
+              nonCareServices={nonCareServices}
+              nonCareServicesOther={nonCareServicesOther}
+              languages={languages}
+              languagesOther={languagesOther}
+            />
+          </CollapsibleSection>
+          <CollapsibleSection title="Owner's Story">
+            <OwnerStory ownerExperience={ownerExperience} />
+          </CollapsibleSection>
+          <CollapsibleSection title="Reviews" innerRef={this.communityReviewsRef}>
+            <PropertyReviews
+              hasSlyReviews={hasSlyReviews}
+              hasWebReviews={hasWebReviews}
+              reviews={reviewsFinal}
+              reviewRatings={ratingsArray}
+              onLeaveReview={onLeaveReview}
+            />
+          </CollapsibleSection>
+          <Hr id="sticky-sidebar-boundary" />
+        </CommunityDetailPageTemplate>
+        <StickyFooter footerInfo={{title:`Contact Property`, name: community.name, ctaTitle: `Contact`}} />
+      </Fragment>
     );
   }
 }

@@ -6,6 +6,7 @@ import { size } from 'sly/components/themes';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
 import Link from 'sly/components/atoms/Link';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
+import Pagination from 'sly/components/molecules/Pagination';
 
 const SimilarCommunityTileDiv = styled.div`
   padding: 0 ${size('spacing.large')};
@@ -36,7 +37,7 @@ function getFullCommunity({
       reviewsValue,
       numReviews,
     },
-  };
+  };;
 }
 
 const CommunitySearchList = ({ communityList, ...props }) => {
@@ -58,6 +59,7 @@ const CommunitySearchList = ({ communityList, ...props }) => {
     <SectionWrapper>
       <CommunityFilterBar {...props} />
       {components}
+      <Pagination onChange={()=>{}} current={0} total={15} />
     </SectionWrapper>
   );
 };

@@ -62,6 +62,7 @@ const ChildrenWrapper = styled.div`
 
 const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
   const { mainImage } = similarProperty;
+
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
       {/* div is for the image below. If removed, the image dimensions wont adhere to the seize being set */}

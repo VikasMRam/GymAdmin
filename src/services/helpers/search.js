@@ -113,14 +113,11 @@ const findAFilter = (ary, filters='') => filters.split('/')
 
 export const filterSearchParams = params => Object.keys(params)
   .reduce((cumul, key) => {
-    if (searchParamsWhitelist.includes(key)) {
+    if (searchParamsWhitelist.includes(key) && params[key]) {
       cumul[key] = params[key];
     }
-    if (key ==='budget') {
-      try {
-        cumul[key] = Math.floor(parseFloat(params[key]));
-      }catch(e){
-      }
+    if (key ==='budget' && params[key]) {
+      cumul[key] = Math.floor(parseInt(params[key]));
     }
     return cumul;
   }, {});
@@ -132,7 +129,7 @@ export const filterLinkPath = (currentFilters, nextFilters) => {
   });
 
   const { toc, state, city, ...qs } = filters;
-  
+
   const qsString = stringify(qs);
   const qsPart = qsString ? `?${qsString}` : '';
 

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
 import { palette } from 'styled-theme';
+import { startCase } from 'lodash';
 
 import { size } from 'sly/components/themes';
 
@@ -11,7 +12,7 @@ import Button from 'sly/components/atoms/Button';
 const SectionWrapper = styled.div`
   display: none;
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     display: flex;
     flex-direction: row;
     margin-left: ${size('spacing.large')};
@@ -57,7 +58,7 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
           transparent
           onClick={getEvtHandler(['size'], onParamsRemove)}
         >
-          Size: {size}
+          Size: {startCase(size)}
         </FilterButton>
       )}
       {budget && (
