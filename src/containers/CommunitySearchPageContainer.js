@@ -11,6 +11,7 @@ import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 import { filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
 
 class CommunitySearchPageContainer extends Component {
+
   // TODO Define Search Parameters
   toggleMap = () => {
     const event = { changedParams: { view: 'map' } };

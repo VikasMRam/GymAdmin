@@ -29,10 +29,66 @@ const Wrapper = styled.div`
   max-width: ${size('maxWidth')}
 `;
 
+const filtersWrapperDisplay = p => (p.isFilterPanelVisible ? 'flex' : 'none');
+const FiltersWrapper = styled.div`
+  display: ${filtersWrapperDisplay};
+  margin-bottom: ${size('spacing.large')};
+  // Overlay Settings
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 102; // Above Header Menu
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: flex;
+    position: relative;
+    width: auto;
+    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  }
+`;
+
+const FilterMenuWrapper = styled.div`
+  background: white;
+  margin-bottom: ${size('spacing.large')};
+  
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.xxLarge')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding: 0;
+    padding-top: ${size('spacing.large')};
+  }
+`;
+
+const FilterTranslucentOverlay = styled.div`
+  width: 100%;
+  background: ${palette('slate', 0)}e5;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
+`;
+
+const FiltersMenuCloseButton = styled(IconButton)`
+  margin: ${size('spacing.large')};
+  margin-bottom: 0;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin: 0;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
+`;
+
 // TODO : Reuse this FixedColumnWrapper across the App
 const FixedColumnWrapper = styled.div`
   ${p => {
-  if (p.filtersShown) {
+  if (p.isFilterPanelVisible) {
     return `
             display: none;
           `;
@@ -84,7 +140,7 @@ const TopWrapper = styled.div`
 
 const StyledCommunitySearchList = styled(CommunitySearchList)`
   ${p => {
-  if (p.filtersShown) {
+  if (p.isFilterPanelVisible) {
     return `
             display: none;
           `;
@@ -109,10 +165,19 @@ const StyledCommunitySearchList = styled(CommunitySearchList)`
   }
 `;
 
+const SideFilterContainer = styled(CommunityFilterList)`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    margin-right: ${size('spacing.xLarge')};
+  }
+`;
+
+/**
 const SideFilterContainer = styled.div`
   ${p => {
-        if (p.filtersShown) {
-          return ` 
+        if (p.isFilterPanelVisible) {
+          return `
             display: block;
             position: absolute;
             top: 0;
@@ -124,26 +189,26 @@ const SideFilterContainer = styled.div`
         } else {
           return  `
             display: none;
-          `;  
+          `;
         }
-    
+
     }
-  
+
   }
   margin-bottom: ${size('spacing.xxLarge')};
   background-color: ${palette('slate', 0)}af;
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-bottom: 0;
   }
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
     z-index: 1;
     margin-bottom: 0;
   }
 `;
-
+*/
 
 const SearchMapContainer = styled(SearchMap)`
   width: 100%;
@@ -175,31 +240,25 @@ const FiltersButton = styled(IconButton)`
   }
 `;
 
-const StyledHr = styled(Hr)`
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    display: none;
-  }
-`;
-
 class CommunitySearchPage extends Component{
   static propTypes = {
     communityList: array.isRequired,
   };
 
   state = {
-    filtersShown : false,
+    isFilterPanelVisible : false,
   };
 
   showFilters= ()=>{
 
     this.setState({
-      filtersShown:true,
+      isFilterPanelVisible:true,
     });
   };
   hideFilters= ()=>{
 
     this.setState({
-      filtersShown:false,
+      isFilterPanelVisible:false,
     });
   };
 
@@ -231,16 +290,28 @@ class CommunitySearchPage extends Component{
 
         <CommunitySearchPageTemplate>
           <Wrapper>
-            <SideFilterContainer filtersShown={this.state.filtersShown}>
-              <CommunityFilterList
-              onFieldChange={onParamsChange}
-              searchParams={searchParams}
-              toggleMap={toggleMap}
-              isMapView={isMapView}
-              />
+            <FiltersWrapper isFilterPanelVisible={this.state.isFilterPanelVisible}>
+              <FilterMenuWrapper>
+                <FiltersMenuCloseButton
+                  icon="close"
+                  iconSize="regular"
+                  palette="black"
+                  transparent
+                  onClick={this.hideFilters}
+                />
+                <SideFilterContainer
+                  onFieldChange={onParamsChange}
+                  searchParams={searchParams}
+                  toggleMap={toggleMap}
+                  isMapView={isMapView}
+                  isFilterPanelVisible={this.state.isFilterPanelVisible}
+                  toggleFilter={this.hideFilters}
+                />
+              </FilterMenuWrapper>
               <StickyFooter footerInfo={{title:'',name:'',ctaTitle:'Apply'}} onFooterClick={this.hideFilters}/>
-            </SideFilterContainer>
-            <FixedColumnWrapper filtersShown={this.state.filtersShown}>
+              <FilterTranslucentOverlay />
+            </FiltersWrapper>
+            <FixedColumnWrapper isFilterPanelVisible={this.state.isFilterPanelVisible}>
               <StyledHeading>
                 258 communities in San Francisco
               </StyledHeading>

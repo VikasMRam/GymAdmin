@@ -8,10 +8,26 @@ import { size } from 'sly/components/themes';
 import { Hr, Heading, Icon } from 'sly/components/atoms';
 
 const marginBottom = p => (p.collapsed ? 0 : size('spacing.xLarge'));
+const laptopLargeWidth = (p) => {
+  switch (p.size) {
+    case 'small':
+      return size('layout.sideColumnSmall');
+    case 'regular':
+      return size('layout.mainColumn');
+    default:
+      return size('layout.laptopLarge');
+  }
+};
 
 const Section = styled.section`
   padding-bottom: ${marginBottom};
   transition: padding-bottom ${key('transitions.default')};
+  max-width: 100%;
+
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    width: ${laptopLargeWidth};
+    max-width: none;
+  }
 `;
 
 const StyledHr = styled(Hr)`
@@ -55,11 +71,13 @@ export default class CollapsibleSection extends Component {
     collapsedDefault: bool.isRequired,
     size: oneOf(['small', 'regular', 'large']),
     innerRef: object,
+    noHr: bool,
   };
 
   static defaultProps = {
     collapsedDefault: false,
     size: 'regular',
+    noHr: false,
   };
 
   state = {
@@ -79,26 +97,26 @@ export default class CollapsibleSection extends Component {
 
   render() {
     const {
-      children, title, collapsedDefault, size, innerRef, ...props
+      children,
+      title,
+      collapsedDefault,
+      size,
+      innerRef,
+      // TODO: Add Stories and Test for noHr
+      noHr,
+      ...props
     } = this.props;
     const { collapsed, maxHeight } = this.state;
-
     return (
       <Measure onResize={this.onResize}>
         {({ measureRef }) => (
-          <Section
-            collapsed={collapsed}
-            size={size}
-            innerRef={innerRef}
-          >
-            <StyledHr />
+          <Section collapsed={collapsed} size={size} innerRef={innerRef}>
+            {!noHr && <StyledHr />}
             <Header onClick={this.toggle} transparent ghost>
-              <StyledHeading level={getHeadingLevel(size)}>{title}</StyledHeading>
-              <Icon
-                icon="chevron"
-                palette="grays"
-                flip={!collapsed}
-              />
+              <StyledHeading level={getHeadingLevel(size)}>
+                {title}
+              </StyledHeading>
+              <Icon icon="chevron" palette="grays" flip={!collapsed} />
             </Header>
             <Content maxHeight={maxHeight} collapsed={collapsed}>
               <div ref={measureRef} {...props}>

@@ -13,19 +13,14 @@ import { Link, Image, Box } from "sly/components/atoms";
 import { tocs, budgets, sizes, filterLinkPath } from 'sly/services/helpers/search';
 
 
-const StyledBox = styled(Box)`
+const StyledBox = styled.div`
   display: flex;
   flex-direction: column;
-  border: solid 1px ${palette('grayscale', 2)};
+  margin: 0 auto;
   padding: ${size('spacing.large')};
-  width: 100%;
-  background-color: ${palette('white', 0)};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.sideColumn')};
-  }
-
+  width: ${size('filtersMenu.width.mobile')};
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.sideColumnSmall')};
+    width: ${size('filtersMenu.width.laptop')};
   }
 
 `;
@@ -134,19 +129,16 @@ const CommunityFilterList = ({
         }
       </ImageButtonWrapper>
 
-      <CollapsibleSection size="small" title="Type of care" >
+      <CollapsibleSection size="small" title="Type of care" noHr>
         {tocFields}
       </CollapsibleSection>
-      <CollapsibleSection
-        size="small"
-        title="Budget"
-      >
+      <CollapsibleSection size="small" title="Budget" noHr>
         {budgetFields}
       </CollapsibleSection>
-      <CollapsibleSection size="small" title="Size">
+      <CollapsibleSection size="small" title="Size" noHr>
         {sizeFields}
       </CollapsibleSection>
-      <CollapsibleSection size="small" title="Sort">
+      <CollapsibleSection size="small" title="Sort" noHr>
         <Field
           name="Sort"
           type="select"

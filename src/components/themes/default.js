@@ -38,7 +38,6 @@ theme.sizes = {
     laptopLarge:      '66rem',    // 1056px
     mainColumn:       '43.50rem', // 696px
     sideColumn:       '21.00rem', // 336px
-    sideColumnSmall:  '15.375rem', //246px
   },
 
   modal: {
@@ -59,6 +58,13 @@ theme.sizes = {
           laptopLarge: '3.4375rem', // 55px
         },
       },
+    },
+  },
+
+  filtersMenu: {
+    width: {
+      mobile:       '23.4375rem',   // 375px
+      laptop:       '15.375rem',    // 246px
     },
   },
 
