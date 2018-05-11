@@ -11,7 +11,6 @@ import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
-import Header from 'sly/components/organisms/Header';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -164,15 +163,7 @@ const StyledHr = styled(Hr)`
   }
 `;
 
-class CommunitySearchPage extends React.Component {
-  state = {
-    menuOpen: false,
-  };
-  toggleMenu = () => {
-    this.setState({
-      menuOpen: !this.state.menuOpen,
-    });
-  };
+const CommunitySearchPage = {
   render() {
     const {
       isMapView,
@@ -267,11 +258,11 @@ class CommunitySearchPage extends React.Component {
         </Wrapper>
       </main>
     );
-  }
-}
+  },
+};
 
-// CommunitySearchPage.propTypes = {
-//   communityList: object.isRequired,
-// };
+CommunitySearchPage.propTypes = {
+  communityList: object.isRequired,
+};
 
 export default CommunitySearchPage;
