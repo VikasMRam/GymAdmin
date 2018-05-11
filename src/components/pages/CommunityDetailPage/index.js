@@ -219,7 +219,7 @@ export default class CommunityDetailPage extends React.Component {
           <CollapsibleSection title="Community Details">
             <CommunityDetails
               communityName={name}
-              communityDescription={communityDescription}
+              communityDescription={communityDescription || rgsAux.slyCommunityDescription}
               staffDescription={staffDescription}
               residentDescription={residentDescription}
             />
