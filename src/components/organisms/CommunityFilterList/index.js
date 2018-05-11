@@ -133,7 +133,7 @@ const CommunityFilterList = ({
           </React.Fragment>
         }
       </ImageButtonWrapper>
-      <br />
+
       <CollapsibleSection size="small" title="Type of care" >
         {tocFields}
       </CollapsibleSection>

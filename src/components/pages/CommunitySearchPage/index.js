@@ -52,7 +52,9 @@ const FixedColumnWrapper = styled.div`
   width: ${size('layout.mobile')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
+    display: flex;       
   }
+  
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     width: calc(
       ${size('layout.mainColumn')} + ${size('layout.sideColumn')} +
@@ -113,7 +115,10 @@ const SideFilterContainer = styled.div`
           return ` 
             display: block;
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
             z-index: 1;
           `
         } else {
@@ -126,7 +131,11 @@ const SideFilterContainer = styled.div`
   
   }
   margin-bottom: ${size('spacing.xxLarge')};
-  background-color: ${palette('slate', 0)};
+  background-color: ${palette('slate', 0)}af;
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-bottom: 0;
+  }
   
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
