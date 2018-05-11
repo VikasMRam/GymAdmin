@@ -5,8 +5,8 @@ let baseParams = {toc:'assisted-living',state:'california',city:'san-francisco'}
 let filterParams = {size:'small',radius:20,dummy:'',some:''};
 
 it('filter search params checks against searchWhiteListParmas correctly', () => {
-  let fullParams = {size:'',radius:'',dummy:'',some:''};
-  expect(filterSearchParams(fullParams)).toEqual({size:'',radius:''});
+  let fullParams = {size:'small',radius:30,dummy:'',some:''};
+  expect(filterSearchParams(fullParams)).toEqual({size:'small',radius:30});
 
 });
 

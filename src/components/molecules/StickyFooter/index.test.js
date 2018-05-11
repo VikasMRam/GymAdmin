@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { mount } from 'enzyme';
 import StickyFooter from '.';
 
-const communityEmptyContact = {
-  contacts: [],
+
+const footerInfo = {
+  title: 'Some',
+  name: 'Other',
+  ctaTitle: 'Contact',
 };
 
 const communityWithContact = {
@@ -26,34 +29,25 @@ class StickyFooterWithState extends Component {
   render() {
     return (
       <StickyFooter
-        community={communityEmptyContact}
-        onContactClick={this.onContactClick}
+        footerInfo={footerInfo}
+        onFooterClick={this.onContactClick}
       />
     );
   }
 }
 
 const wrap = (props = {}) =>
-  mount(<StickyFooter onContactClick={onContactClick} {...props} />);
+  mount(<StickyFooter onFooterClick={onContactClick} {...props} />);
 
 describe('StickyFooter', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({
       children: 'test',
-      community: communityEmptyContact,
+      footerInfo: footerInfo,
     });
     expect(wrapper.contains('test')).toBe(false);
   });
 
-  it('renders Seniorly Conceirge as default Agent Name if no contacts found', () => {
-    const wrapper = wrap({ community: communityEmptyContact });
-    expect(wrapper.contains('Seniorly Conceirge')).toBe(true);
-  });
-
-  it('does not render Seniorly Conceirge as default Agent Name if contacts are found', () => {
-    const wrapper = wrap({ community: communityWithContact });
-    expect(wrapper.contains('Seniorly Conceirge')).toBe(false);
-  });
 
   it('onContactClick test', () => {
     const wrapper = mount(<StickyFooterWithState />);

@@ -132,7 +132,9 @@ export default class CommunityDetailPage extends React.Component {
             </Sticky>
           }
         </PageWrapper>
-        <StickyFooter community={community} />
+
+
+        <StickyFooter footerInfo={{title:`Contact Property`, name: community.name, ctaTitle: `Contact`}} />
       </main>
     );
   }

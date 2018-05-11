@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import { Paragraph, Heading } from 'sly/components/atoms';
 
+
 const CommunityDetails = ({
   communityName, communityDescription, staffDescription, residentDescription,
 }) => {

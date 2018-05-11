@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object } from 'prop-types';
+
+import { array } from 'prop-types';
+import { palette } from "styled-theme";
 
 import { size } from 'sly/components/themes';
 
+
 import Heading from 'sly/components/atoms/Heading';
 import Hr from 'sly/components/atoms/Hr';
+import StickyFooter from 'sly/components/molecules/StickyFooter';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
+
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
+
 
 const Wrapper = styled.div`
   width: 100%;
@@ -23,7 +29,21 @@ const Wrapper = styled.div`
 
 // TODO : Reuse this FixedColumnWrapper across the App
 const FixedColumnWrapper = styled.div`
-  display: flex;
+  ${p => {
+  if (p.filtersShown) {
+    return `
+            display: none;
+          `;
+        } else {
+          return  `
+            display: flex;
+          `;  
+        }
+    
+    }
+  
+  }
+  
   flex-direction: column;
   margin: 0 auto;
 
@@ -46,9 +66,33 @@ const FixedColumnWrapper = styled.div`
 const TopWrapper = styled.div`
   margin: 0 ${size('spacing.large')};
   margin-bottom: ${size('spacing.large')};
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.mainColumn')};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display:none;
+  }
+
+ 
 `;
 
 const StyledCommunitySearchList = styled(CommunitySearchList)`
+  ${p => {
+  if (p.filtersShown) {
+    return `
+            display: none;
+          `;
+        } else {
+          return  `
+            display: block;
+          `;  
+        }
+    
+    }
+  
+  }
+  
   width: calc(${size('layout.sideColumn')} + ${size('spacing.xLarge')});
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -60,11 +104,31 @@ const StyledCommunitySearchList = styled(CommunitySearchList)`
   }
 `;
 
-const SideFilterContainer = styled(CommunityFilterList)`
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+const SideFilterContainer = styled.div`
+  ${p => {
+        if (p.filtersShown) {
+          return ` 
+            display: block;
+            position: absolute;
+            width: 100%;
+            z-index: 1;
+          `
+        } else {
+          return  `
+            display: none;
+          `;  
+        }
+    
+    }
+  
   }
+  margin-bottom: ${size('spacing.xxLarge')};
+  background-color: ${palette('slate', 0)};
+  
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    margin-right: ${size('spacing.xLarge')};
+    display: block;
+    z-index: 1;
+    margin-bottom: 0;
   }
 `;
 
@@ -74,7 +138,9 @@ const SearchMapContainer = styled(SearchMap)`
 `;
 
 const StyledHeading = styled(Heading)`
+  margin: 0 ${size('spacing.large')};
   margin-bottom: ${size('spacing.large')};
+  
   font-size: ${size('text.subtitle')};
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
@@ -102,85 +168,116 @@ const StyledHr = styled(Hr)`
   }
 `;
 
-const CommunitySearchPage = ({
-  isMapView,
-  toggleMap,
-  onParamsChange,
-  onParamsRemove,
-  searchParams,
-  requestMeta,
-  communityList,
-}) => {
-  let latitude = 0.0;
-  let longitude = 0.0;
 
-  if (communityList.length > 0) {
-    latitude = communityList[0].latitude;
-    longitude = communityList[0].longitude;
-  }
-  if (searchParams.searchOnMove) {
-    latitude = parseFloat(searchParams.latitude);
-    longitude = parseFloat(searchParams.longitude);
-  }
 
-  return (
-    <main>
-      <Wrapper>
-        <SideFilterContainer
-          onFieldChange={onParamsChange}
-          searchParams={searchParams}
-          toggleMap={toggleMap}
-          isMapView={isMapView}
-        />
-        <FixedColumnWrapper>
-          <TopWrapper>
+class CommunitySearchPage extends Component{
+  static propTypes = {
+    communityList: array.isRequired,
+  };
+
+  state = {
+    filtersShown : false,
+  };
+
+  showFilters= ()=>{
+
+    this.setState({
+      filtersShown:true,
+    });
+  };
+  hideFilters= ()=>{
+
+    this.setState({
+      filtersShown:false,
+    });
+  };
+
+  render () {
+    const {
+      isMapView,
+      toggleMap,
+      onParamsChange,
+      onParamsRemove,
+      searchParams,
+      requestMeta,
+      communityList,
+    } = this.props;
+
+    let latitude = 0.0;
+    let longitude = 0.0;
+
+    if (communityList.length > 0) {
+      latitude = communityList[0].latitude;
+      longitude = communityList[0].longitude;
+    }
+    if (searchParams.searchOnMove) {
+      latitude = parseFloat(searchParams.latitude);
+      longitude = parseFloat(searchParams.longitude);
+    }
+
+
+    return (
+      <main>
+        <Wrapper>
+          <SideFilterContainer filtersShown={this.state.filtersShown}>
+            <CommunityFilterList
+            onFieldChange={onParamsChange}
+            searchParams={searchParams}
+            toggleMap={toggleMap}
+            isMapView={isMapView}
+            />
+            <StickyFooter footerInfo={{title:'',name:'',ctaTitle:'Apply'}} onFooterClick={this.hideFilters}/>
+          </SideFilterContainer>
+          <FixedColumnWrapper filtersShown={this.state.filtersShown}>
             <StyledHeading>
               258 communities in San Francisco
             </StyledHeading>
-            {isMapView && (
-              <ViewMapButton
-                icon="list"
-                ghost
-                transparent
-                onClick={toggleMap}
-              >
-                View List
-              </ViewMapButton>
-            )}
+            <TopWrapper>
+              {isMapView && (
+                <ViewMapButton
+                  icon="list"
+                  ghost
+                  transparent
+                  onClick={toggleMap}
+                >
+                  View List
+                </ViewMapButton>
+              )}
+              {!isMapView && (
+                <ViewMapButton icon="map" ghost transparent onClick={toggleMap}>
+                  View Map
+                </ViewMapButton>
+              )}
+              <FiltersButton icon="filter" ghost transparent onClick={this.showFilters}>
+                Filters
+              </FiltersButton>
+            </TopWrapper>
+
             {!isMapView && (
-              <ViewMapButton icon="map" ghost transparent onClick={toggleMap}>
-                View Map
-              </ViewMapButton>
+              <StyledCommunitySearchList
+                key="main"
+                communityList={communityList}
+                searchParams={searchParams}
+                onParamsRemove={onParamsRemove}
+              />
             )}
-            <FiltersButton icon="filter" ghost transparent>
-              Filters
-            </FiltersButton>
-          </TopWrapper>
-          <StyledHr />
-          {!isMapView && (
-            <StyledCommunitySearchList
-              key="main"
-              communityList={communityList}
-              searchParams={searchParams}
-              onParamsRemove={onParamsRemove}
-            />
-          )}
-          {isMapView && (
-            <SearchMapContainer
-              latitude={latitude}
-              longitude={longitude}
-              communityList={communityList}
-              onParamsChange={onParamsChange}
-            />
-          )}
-        </FixedColumnWrapper>
-      </Wrapper>
-    </main>
-  );
-};
+            {isMapView && (
+              <SearchMapContainer
+                latitude={latitude}
+                longitude={longitude}
+                communityList={communityList}
+                onParamsChange={onParamsChange}
+              />
+            )}
+          </FixedColumnWrapper>
+        </Wrapper>
+      </main>
+    );
+  }
+}
 
 CommunitySearchPage.propTypes = {
-  communityList: object.isRequired,
+  communityList: array.isRequired,
 };
 
 export default CommunitySearchPage;
