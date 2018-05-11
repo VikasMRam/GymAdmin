@@ -62,28 +62,22 @@ export default class Pagination extends Component {
   prevButton() {
     const { current, total, onChange } = this.props;
 
-    if (current <= 0) {
-      return null;
-    }
+    if (current <= 0) return null;
 
     const prev = () => onChange(current - 1);
-
-    return <ChevronButton />;
+    return <ChevronButton onClick={prev} />;
   }
 
   nextButton() {
     const { current, total, onChange } = this.props;
 
-    if (current >= total - 1) {
-      return null;
-    }
+    if (current >= total - 1) return null;
 
     const next = () => onChange(current + 1);
-
-    return <ChevronButton onChange={next} flip />
+    return <ChevronButton onClick={next} flip />
   }
 
-  ellipsys(index) {
+  ellipsis(index) {
     return (
       <BreakView 
         ghost 
@@ -101,12 +95,13 @@ export default class Pagination extends Component {
     const palette = sel
       ? 'primary'
       : 'grayscale';
+    const click = () => !sel && onChange(index);
     return (
       <PageButton 
         key={index}
         ghost={!sel} 
         palette={palette}
-        onClick={() => onChange(index)}>
+        onClick={click}>
           { index + 1 }
       </PageButton>
     );
@@ -115,8 +110,6 @@ export default class Pagination extends Component {
   pagination() {
     // loop inspired by react-paginate
     
-    const items = [];
-
     const {
       current,
       range,
@@ -138,6 +131,7 @@ export default class Pagination extends Component {
     let page;
     let breakView;
 
+    const items = [];
     for (let index = 0; index < total; index++) {
       page = index + 1;
 
@@ -157,7 +151,7 @@ export default class Pagination extends Component {
       }
 
       if (items[items.length - 1] !== breakView) {
-        breakView = this.ellipsys(index);
+        breakView = this.ellipsis(index);
         items.push(breakView);
       }
     }
