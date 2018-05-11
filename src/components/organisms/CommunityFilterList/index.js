@@ -16,7 +16,8 @@ import {
   filterLinkPath,
 } from 'sly/services/helpers/search';
 import { Link, Image } from 'sly/components/atoms';
-
+// TODO: Remove Fixed width in Collapsible Section before enabling the width
+// width: ${size('filtersMenu.width.laptop')}; for laptop breakpoint
 const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,10 +25,6 @@ const SectionWrapper = styled.div`
   border-bottom: solid 1px ${palette('grayscale', 2)};
   padding: 0 ${size('spacing.large')};
   padding-bottom: ${size('spacing.large')};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('filtersMenu.width.laptop')};
-  }
 `;
 
 const StyledLink = styled(Link)`
