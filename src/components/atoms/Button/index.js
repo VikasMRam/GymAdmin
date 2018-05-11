@@ -79,7 +79,7 @@ const borderRadius = ({ kind }) => {
   }
 };
 
-const styles = css`
+export const styles = css`
   display: inline-flex;
   align-items: center;
   justify-content: center;

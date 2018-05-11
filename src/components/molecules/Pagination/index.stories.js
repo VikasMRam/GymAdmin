@@ -25,4 +25,10 @@ storiesOf('Molecules|Pagination', module)
   .add('large first', () => (
     <Pagination {...firstLarge} />
   ))
-;
+  .add('large middle', () => (
+    <Pagination {...firstLarge} current={50} />
+  ))
+  .add('large last', () => (
+    <Pagination {...firstLarge} current={99} />
+  ));
+
