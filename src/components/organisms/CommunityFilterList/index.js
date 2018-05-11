@@ -9,17 +9,9 @@ import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Field from 'sly/components/molecules/Field';
 import Radio from 'sly/components/molecules/Radio';
 import IconButton from 'sly/components/molecules/IconButton';
-import { Link, Image } from "sly/components/atoms";
+import { Link, Image, Box } from "sly/components/atoms";
 import { tocs, budgets, sizes, filterLinkPath } from 'sly/services/helpers/search';
 
-const SectionWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
-  border: solid 1px ${palette('grayscale', 2)};
-  padding: ${size('spacing.large')};
-  width: ${size('layout.sideColumnSmall')};
-`;
 const StyledLink = styled(Link)`
   display: flex;
   margin-bottom: ${size('spacing.regular')};
@@ -100,7 +92,7 @@ const CommunityFilterList = ({
 
   const { sort } = searchParams;
   return (
-    <SectionWrapper>
+    <Box>
       <ImageButtonWrapper isMapView={isMapView}>
         {isMapView && toggleMap &&
           <IconButton icon="list" onClick={toggleMap} palette="secondary" ghost>
@@ -150,7 +142,7 @@ const CommunityFilterList = ({
           </option>
         </Field>
       </CollapsibleSection>
-    </SectionWrapper>
+    </Box>
   );
 };
 
