@@ -22,9 +22,8 @@ const SectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  border: solid 1px ${palette('grayscale', 2)};
   padding: ${size('spacing.large')};
-  width: ${size('layout.sideColumnSmall')};
+  width: ${size('filtersMenu.width.mobile')};
 `;
 
 const StyledLink = styled(Link)`
@@ -105,13 +104,16 @@ const CommunityFilterList = ({
     return generateRadioLink(elem, 'toc', path, selected);
   });
   const budgetFields = budgets.map((elem) => {
-
-    const { path, selected } = filterLinkPath(searchParams, { budget: elem.value });
+    const { path, selected } = filterLinkPath(searchParams, {
+      budget: elem.value,
+    });
     return generateRadioLink(elem, 'budget', path, selected);
   });
 
   const sizeFields = sizes.map((elem) => {
-    const { path, selected } = filterLinkPath(searchParams, { size: elem.value });
+    const { path, selected } = filterLinkPath(searchParams, {
+      size: elem.value,
+    });
     return generateRadioLink(elem, 'size', path, selected);
   });
 
@@ -134,7 +136,12 @@ const CommunityFilterList = ({
           <React.Fragment>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             <StyledImage src={assetPath('map-placeholder.png')} />
-            <IconButton icon="map" onClick={toggleMap} palette="secondary" ghost>
+            <IconButton
+              icon="map"
+              onClick={toggleMap}
+              palette="secondary"
+              ghost
+            >
               View Map
             </IconButton>
           </React.Fragment>
