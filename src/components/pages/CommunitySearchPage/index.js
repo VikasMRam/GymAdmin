@@ -7,6 +7,9 @@ import { palette } from "styled-theme";
 import { size } from 'sly/components/themes';
 
 
+import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
+
+
 import Heading from 'sly/components/atoms/Heading';
 import Hr from 'sly/components/atoms/Hr';
 import StickyFooter from 'sly/components/molecules/StickyFooter';
@@ -15,7 +18,6 @@ import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
 
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
-
 
 const Wrapper = styled.div`
   width: 100%;
@@ -50,7 +52,9 @@ const FixedColumnWrapper = styled.div`
   width: ${size('layout.mobile')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
+    display: flex;       
   }
+  
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     width: calc(
       ${size('layout.mainColumn')} + ${size('layout.sideColumn')} +
@@ -76,6 +80,7 @@ const TopWrapper = styled.div`
 
  
 `;
+
 
 const StyledCommunitySearchList = styled(CommunitySearchList)`
   ${p => {
@@ -110,7 +115,10 @@ const SideFilterContainer = styled.div`
           return ` 
             display: block;
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
             z-index: 1;
           `
         } else {
@@ -123,7 +131,11 @@ const SideFilterContainer = styled.div`
   
   }
   margin-bottom: ${size('spacing.xxLarge')};
-  background-color: ${palette('slate', 0)};
+  background-color: ${palette('slate', 0)}af;
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-bottom: 0;
+  }
   
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
@@ -131,6 +143,7 @@ const SideFilterContainer = styled.div`
     margin-bottom: 0;
   }
 `;
+
 
 const SearchMapContainer = styled(SearchMap)`
   width: 100%;
@@ -167,8 +180,6 @@ const StyledHr = styled(Hr)`
     display: none;
   }
 `;
-
-
 
 class CommunitySearchPage extends Component{
   static propTypes = {
@@ -217,64 +228,66 @@ class CommunitySearchPage extends Component{
 
 
     return (
-      <main>
-        <Wrapper>
-          <SideFilterContainer filtersShown={this.state.filtersShown}>
-            <CommunityFilterList
-            onFieldChange={onParamsChange}
-            searchParams={searchParams}
-            toggleMap={toggleMap}
-            isMapView={isMapView}
-            />
-            <StickyFooter footerInfo={{title:'',name:'',ctaTitle:'Apply'}} onFooterClick={this.hideFilters}/>
-          </SideFilterContainer>
-          <FixedColumnWrapper filtersShown={this.state.filtersShown}>
-            <StyledHeading>
-              258 communities in San Francisco
-            </StyledHeading>
-            <TopWrapper>
-              {isMapView && (
-                <ViewMapButton
-                  icon="list"
-                  ghost
-                  transparent
-                  onClick={toggleMap}
-                >
-                  View List
-                </ViewMapButton>
-              )}
-              {!isMapView && (
-                <ViewMapButton icon="map" ghost transparent onClick={toggleMap}>
-                  View Map
-                </ViewMapButton>
-              )}
-              <FiltersButton icon="filter" ghost transparent onClick={this.showFilters}>
-                Filters
-              </FiltersButton>
-            </TopWrapper>
 
-            {!isMapView && (
-              <StyledCommunitySearchList
-                key="main"
-                communityList={communityList}
-                searchParams={searchParams}
-                onParamsRemove={onParamsRemove}
+        <CommunitySearchPageTemplate>
+          <Wrapper>
+            <SideFilterContainer filtersShown={this.state.filtersShown}>
+              <CommunityFilterList
+              onFieldChange={onParamsChange}
+              searchParams={searchParams}
+              toggleMap={toggleMap}
+              isMapView={isMapView}
               />
-            )}
-            {isMapView && (
-              <SearchMapContainer
-                latitude={latitude}
-                longitude={longitude}
-                communityList={communityList}
-                onParamsChange={onParamsChange}
-              />
-            )}
-          </FixedColumnWrapper>
-        </Wrapper>
-      </main>
+              <StickyFooter footerInfo={{title:'',name:'',ctaTitle:'Apply'}} onFooterClick={this.hideFilters}/>
+            </SideFilterContainer>
+            <FixedColumnWrapper filtersShown={this.state.filtersShown}>
+              <StyledHeading>
+                258 communities in San Francisco
+              </StyledHeading>
+              <TopWrapper>
+                {isMapView && (
+                  <ViewMapButton
+                    icon="list"
+                    ghost
+                    transparent
+                    onClick={toggleMap}
+                  >
+                    View List
+                  </ViewMapButton>
+                )}
+                {!isMapView && (
+                  <ViewMapButton icon="map" ghost transparent onClick={toggleMap}>
+                    View Map
+                  </ViewMapButton>
+                )}
+                <FiltersButton icon="filter" ghost transparent onClick={this.showFilters}>
+                  Filters
+                </FiltersButton>
+              </TopWrapper>
+
+              {!isMapView && (
+                <StyledCommunitySearchList
+                  key="main"
+                  communityList={communityList}
+                  searchParams={searchParams}
+                  onParamsRemove={onParamsRemove}
+                />
+              )}
+              {isMapView && (
+                <SearchMapContainer
+                  latitude={latitude}
+                  longitude={longitude}
+                  communityList={communityList}
+                  onParamsChange={onParamsChange}
+                />
+              )}
+            </FixedColumnWrapper>
+          </Wrapper>
+    </CommunitySearchPageTemplate>
     );
   }
 }
+
 
 CommunitySearchPage.propTypes = {
   communityList: array.isRequired,
