@@ -16,7 +16,6 @@ const MainWrapper = styled.section`
 `;
 const ColumnWrapper = styled.aside`
   width: ${size('layout.sideColumnSmall')};
-  display: none;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
@@ -31,8 +30,10 @@ const CommunitySearchPageTemplate = ({
     header={<HeaderContainer />}
     footer={<Footer />}
   >
-    <MainWrapper>{children}</MainWrapper>
-
+    <TwoColumnWrapper>
+      <ColumnWrapper>{column}</ColumnWrapper>
+      <MainWrapper>{children}</MainWrapper>
+    </TwoColumnWrapper>
   </BasePageTemplate>
 );
 

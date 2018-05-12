@@ -18,7 +18,7 @@ injectGlobal`
 
 const overlayStyles = css`
   position: fixed;
-  background-color: ${palette('slate', 0)};
+  background-color: ${palette('slate', 0)}e5;
   top: 0;
   right: 0;
   left: 0;

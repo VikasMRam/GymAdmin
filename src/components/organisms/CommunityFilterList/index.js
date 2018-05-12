@@ -9,11 +9,10 @@ import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Field from 'sly/components/molecules/Field';
 import Radio from 'sly/components/molecules/Radio';
 import IconButton from 'sly/components/molecules/IconButton';
-import { Link, Image, Box } from "sly/components/atoms";
+import { Link, Image, Box, Hr } from "sly/components/atoms";
 import { tocs, budgets, sizes, filterLinkPath } from 'sly/services/helpers/search';
 
-
-const StyledBox = styled.div`
+const StyledBox = styled(Box)`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -22,10 +21,7 @@ const StyledBox = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('filtersMenu.width.laptop')};
   }
-
 `;
-
-
 const StyledLink = styled(Link)`
   display: flex;
   margin-bottom: ${size('spacing.regular')};
@@ -39,7 +35,8 @@ const ImageButtonWrapper = styled.div`
   position: relative;
   text-align: center;
   display: none;
-    
+  margin-bottom: ${size('spacing.large')};
+
   img {
     width: 100%;
   }
@@ -48,7 +45,7 @@ const ImageButtonWrapper = styled.div`
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: block;   
+    display: block;
   }
 
   ${(props) => {
@@ -63,11 +60,13 @@ const ImageButtonWrapper = styled.div`
     }
     return '';
   }};
-  
-`;
 
+`;
 const StyledImage = styled(Image)`
   max-width: 100%;
+`;
+const StyledHr = styled(Hr)`
+  margin-bottom: ${size('spacing.regular')};
 `;
 
 const getSortHandler = (origFn) => {
@@ -128,7 +127,7 @@ const CommunityFilterList = ({
           </React.Fragment>
         }
       </ImageButtonWrapper>
-
+      <StyledHr />
       <CollapsibleSection size="small" title="Type of care" noHr>
         {tocFields}
       </CollapsibleSection>

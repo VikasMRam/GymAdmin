@@ -7,7 +7,9 @@ import { size } from 'sly/components/themes';
 const Content = styled.main`
   width: 100%;
   margin: 0 auto;
+  padding: 0 ${size('spacing.large')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: 0;
     width: ${size('layout.mainColumn')};
   }
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {

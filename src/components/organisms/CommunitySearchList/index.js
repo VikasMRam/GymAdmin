@@ -9,8 +9,7 @@ import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import Pagination from 'sly/components/molecules/Pagination';
 
 const SimilarCommunityTileDiv = styled.div`
-  padding: 0 ${size('spacing.large')};
-  padding-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const SectionWrapper = styled.div``;
@@ -37,7 +36,7 @@ function getFullCommunity({
       reviewsValue,
       numReviews,
     },
-  };;
+  };
 }
 
 const CommunitySearchList = ({ communityList, ...props }) => {

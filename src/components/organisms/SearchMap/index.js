@@ -18,7 +18,6 @@ import {delayedExecutor, getRadiusFromMapBounds} from "sly/services/helpers/sear
 const MapContainerElement = styled.div`
   width: 100%;
   height: 80vh;
-  margin: 0 1.000rem;
   margin-bottom: 1.000rem;
 `;
 
