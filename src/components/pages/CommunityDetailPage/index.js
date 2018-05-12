@@ -262,7 +262,7 @@ export default class CommunityDetailPage extends React.Component {
           </CollapsibleSection>
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
-        <StickyFooter footerInfo={{title:`Contact Property`, name: community.name, ctaTitle: `Contact`}} />
+        <StickyFooter footerInfo={{ title: 'Contact Property', name: community.name, ctaTitle: 'Contact' }} />
       </Fragment>
     );
   }

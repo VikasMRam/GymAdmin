@@ -31,8 +31,10 @@ const CommunitySearchPageTemplate = ({
     header={<HeaderContainer />}
     footer={<Footer />}
   >
-    <MainWrapper>{children}</MainWrapper>
-
+    <TwoColumnWrapper>
+      <ColumnWrapper>{column}</ColumnWrapper>
+      <MainWrapper>{children}</MainWrapper>
+    </TwoColumnWrapper>
   </BasePageTemplate>
 );
 
