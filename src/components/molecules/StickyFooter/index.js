@@ -10,7 +10,7 @@ const FullWrapper = styled.div`
   position: fixed;
   left: 0;
   bottom: 0;
-  background-color: white;
+  background-color: ${palette('white', 0)};
   width: 100%;
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
@@ -23,6 +23,9 @@ const FooterWrapper = styled.div`
   padding: ${size('spacing.regular')} ${size('spacing.large')};
   display: flex;
   margin: 0 auto;
+  > * {
+    flex: 1;
+  }
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
@@ -40,15 +43,6 @@ const FooterWrapper = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     width: ${size('layout.laptopLarge')};
-  }
-`;
-
-const FooterButton = styled(Button)`
-  width: 100%;
-  height: 52px;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: 50%;
   }
 `;
 
@@ -77,7 +71,7 @@ const StickyFooter = ({ footerInfo, onFooterClick }) => {
           <FooterDetailHeader>{title}</FooterDetailHeader>
           <FooterName>{name}</FooterName>
         </FooterDetails>
-        <FooterButton onClick={onFooterClick}>{ctaTitle}</FooterButton>
+        <Button kind="jumbo" onClick={onFooterClick}>{ctaTitle}</Button>
       </FooterWrapper>
     </FullWrapper>
   );

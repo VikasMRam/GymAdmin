@@ -44,6 +44,9 @@ const ModalBox = styled(ReactModal)`
   }
   &[class*='after-open'] > article {
     transform: translate(-50%, -50%);
+    ${switchProp('layout', {
+      sidebar: css`transform: translate(0%, 0%);`,
+    })};
   }
   &[class*='before-close'] > article {
     transform: translate(-50%, 100%);
@@ -52,7 +55,6 @@ const ModalBox = styled(ReactModal)`
 
 const ModalContext = styled.article`
   background-color: ${ifProp('transparent', 'transparent', palette('white', 0))};
-  border-radius: ${size('spacing.small')};
   color: ${ifProp('transparent', palette('white', 0), palette('slate', 0))};
   position: absolute;
   display: flex;
@@ -68,16 +70,16 @@ const ModalContext = styled.article`
   bottom: auto;
   margin: 1rem calc(-50% + 1rem) 1rem 1rem;
   max-height: calc(100% - 1rem);
+  overflow: auto;
 
   ${switchProp('layout', {
     single: css`
-      overflow: auto;
+      border-radius: ${size('spacing.small')};
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
         width: ${size('modal.single')};
-      }
-    `,
+      }`,
     double: css`
-      overflow: auto;
+      border-radius: ${size('spacing.small')};
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
         width: ${size('modal.single')};
       }
@@ -90,11 +92,19 @@ const ModalContext = styled.article`
       }`,
     gallery: css`
       padding: 0;
-      overflow: auto;
+      border-radius: ${size('spacing.small')};
       @media screen and (min-width: ${size('breakpoint.laptop')}) {
         width: ${doubleModalWidth};
         overflow: initial;
-      }
+      }`,
+    sidebar: css`
+      top: 0;
+      left: 0;
+      width: auto;
+      margin: 0;
+      height: 100%;
+      max-height: 100%;
+      padding: ${size('spacing.xLarge')};
     `,
   })}
 `;
@@ -125,6 +135,9 @@ const Heading = styled.div`
       left: ${size('spacing.xLarge')};
       top: ${size('spacing.large')};
       z-index: 10000;`,
+    sidebar: css`
+      padding-bottom: ${size('spacing.regular')};
+    `,
   })}
 `;
 
@@ -140,7 +153,7 @@ const Content = styled.div`
 
 export default class Modal extends React.Component {
   static propTypes = {
-    layout: oneOf(['single', 'double', 'gallery']).isRequired,
+    layout: oneOf(['single', 'double', 'gallery', 'sidebar']).isRequired,
     heading: node,
     children: node,
     closeable: bool,

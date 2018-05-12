@@ -16,6 +16,7 @@ const MainWrapper = styled.section`
 `;
 const ColumnWrapper = styled.aside`
   width: ${size('layout.sideColumnSmall')};
+  display: none;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
