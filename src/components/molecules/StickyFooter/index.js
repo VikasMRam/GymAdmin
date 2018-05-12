@@ -20,7 +20,7 @@ const FullWrapper = styled.div`
 `;
 
 const FooterWrapper = styled.div`
-  padding: ${size('spacing.regular')} ${size('spacing.large')};
+  padding: ${size('spacing.large')};
   display: flex;
   margin: 0 auto;
   > * {
