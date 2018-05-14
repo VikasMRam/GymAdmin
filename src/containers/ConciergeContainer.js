@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import { getDetail } from 'sly/store/selectors';
+import { next, close } from 'sly/store/concierge/actions';
 
 import Concierge from 'sly/components/organisms/Concierge';
 
@@ -15,6 +16,10 @@ import {
 class ConciergeContainer extends Component {
   static propTypes = {
     // TODO: shape
+    next: func.isRequired,
+    close: func.isRequired,
+    currentStep: string.isRequired,
+    modalIsOpen: bool.isRequired,
     community: object,
     userRequestedCB: bool,
   };
@@ -23,50 +28,17 @@ class ConciergeContainer extends Component {
     userRequestedCB: false,
   };
 
-  steps = [
-    'conversionForm',
-    'advancedInfo',
-    'similarCommunities',
-    'thankyou',
-  ];
-
-  state = {
-    currentStep: 'conversionForm',
-    modalIsOpen: false,
-  };
-
-  nextStep = (...args) => {
-    const { currentStep } = this.state;
-    const stepIndex = this.steps.indexOf(currentStep);
-    const nextStepIndex = stepIndex + 1;
-    if(nextStepIndex < this.steps.length) {
-      this.setState({
-        currentStep: this.steps[nextStepIndex],
-        modalIsOpen: true,
-      });
-    } else {
-      this.setState({
-        modalIsOpen: false,
-      });
-    }
-  };
-
-  closeModal = () => {
-    this.setState({ modalIsOpen: false });
-  };
-
   render() {
-    const { ...props } = this.props;
-    const { modalIsOpen, currentStep } = this.state;
+    const { modalIsOpen, currentStep, next, close, ...props } = this.props;
     // I return an array here as Concierge is not even rendered here in the three
-    
+
     return (
       <Concierge
         key="modal"
-        onClose={this.closeModal}
+        onClose={close}
         isOpen={modalIsOpen}
         currentStep={currentStep}
-        next={this.nextStep}
+        next={next}
         {...props}
       />
     );
@@ -75,9 +47,16 @@ class ConciergeContainer extends Component {
 
 const isCallback = contact => contact.type === 'request_callback';
 const mapStateToProps = (state, { userActions, community }) => {
+  const { currentStep, modalIsOpen } = state.concierge;
   const userRequestedCB = userActions && (userActions.profilesContacted || [])
     .some(contact => contact.slug === community.id && isCallback(contact));
-  return { userRequestedCB, community };
+
+  return {
+    currentStep,
+    modalIsOpen,
+    userRequestedCB,
+    community,
+  };
 };
 
-export default connect(mapStateToProps)(ConciergeContainer);
+export default connect(mapStateToProps, { next, close })(ConciergeContainer);

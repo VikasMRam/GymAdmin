@@ -73,8 +73,14 @@ export default function withServerState({
   mapDispatchToProps=noop
 }) {
   return (ChildComponent) => {
+    const getMapDispatchToProps = (dispatch, props) => {
+      return typeof mapDispatchToProps === 'function'
+        ? mapDispatchToProps(dispatch, props)
+        : mapDispatchToProps;
+    };
+
     const childMapDispatchToProps = (dispatch, props) => ({
-      ...mapDispatchToProps(dispatch, props),
+      ...getMapDispatchToProps(dispatch, props),
       fetchData: (nextProps=props) => fetchData(dispatch, nextProps),
       handleError,
       ChildComponent,

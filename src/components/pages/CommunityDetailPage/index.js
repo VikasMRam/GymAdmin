@@ -71,7 +71,7 @@ export default class CommunityDetailPage extends React.Component {
   };
 
   render() {
-    const { community, userActions } = this.props;
+    const { community, userActions, getDetailedPricing } = this.props;
     const {
       id,
       name,
@@ -211,6 +211,7 @@ export default class CommunityDetailPage extends React.Component {
               estimatedPrice={rgsAux.estimatedPrice}
               roomPrices={roomPrices}
               onInquireOrBookClicked={onInquireOrBookClicked}
+              getDetailedPricing={getDetailedPricing}
             />
           </CollapsibleSection>
           <CollapsibleSection title="Similar Communities">

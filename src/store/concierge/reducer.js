@@ -1,23 +1,31 @@
 import { GET_DETAILED_PRICING, NEXT, CLOSE } from './actions';
 
+import {
+  CONVERSION_FORM,
+  ADVANCED_INFO,
+  SIMILAR_COMMUNITIES,
+  THANKYOU,
+} from './constants';
+
 const steps = [
-  'conversionForm',
-  'advancedInfo',
-  'similarCommunities',
-  'thankyou',
+  CONVERSION_FORM,
+  ADVANCED_INFO,
+  SIMILAR_COMMUNITIES,
+  THANKYOU,
 ];
 
 const initialState = {
-  currentStep: 'conversionForm',
+  currentStep: CONVERSION_FORM,
   modalIsOpen: false,
 };
 
 export default (state = initialState, { type, payload }) => {
   if (type === GET_DETAILED_PRICING) {
+    console.log('hererere');
     return {
       ...state,
       modalIsOpen: true,
-      currentStep: 'advancedInfo', 
+      currentStep: ADVANCED_INFO,
     };
   } else if (type === NEXT) {
     const { currentStep } = state;
