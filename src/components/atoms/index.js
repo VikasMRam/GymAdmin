@@ -1,16 +1,35 @@
-export Avatar from './Avatar';
-export Bar from './Bar';
-export Block from './Block';
-export Box from './Box';
-export Button from './Button';
-export Heading from './Heading';
-export Hr from './Hr';
-export Icon from './Icon';
-export Image from './Image';
-export Input from './Input';
-export Label from './Label';
-export Link from './Link';
-export Paragraph from './Paragraph';
-export Tag from './Tag';
-export Thumbnail from './Thumbnail';
-export TileImage from './TileImage';
+import Avatar from './Avatar';
+import Bar from './Bar';
+import Block from './Block';
+import Box from './Box';
+import Button from './Button';
+import Heading from './Heading';
+import Hr from './Hr';
+import Icon from './Icon';
+import Image from './Image';
+import Input from './Input';
+import Label from './Label';
+import Link from './Link';
+import Paragraph from './Paragraph';
+import Tag from './Tag';
+import Thumbnail from './Thumbnail';
+import TileImage from './TileImage';
+
+export {
+  Avatar,
+  Bar,
+  Block,
+  Box,
+  Button,
+  Heading,
+  Hr,
+  Icon,
+  Image,
+  Input,
+  Label,
+  Link,
+  Paragraph,
+  Tag,
+  Thumbnail,
+  TileImage,
+};

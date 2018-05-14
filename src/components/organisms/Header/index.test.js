@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { shallow, mount } from 'enzyme';
+import { MemoryRouter } from 'react-router';
 
 import Header, { HeaderMenu, HeaderMenuItem, SeniorlyIconMenu } from '.';
 
@@ -57,12 +58,14 @@ class HeaderWithState extends Component {
   };
   render() {
     return (
-      <Header
-        menuOpen={this.state.menuOpen}
-        onMenuIconClick={this.toggleMenu}
-        headerItems={headerItems}
-        menuItems={menuItems}
-      />
+      <MemoryRouter>
+        <Header
+          menuOpen={this.state.menuOpen}
+          onMenuIconClick={this.toggleMenu}
+          headerItems={headerItems}
+          menuItems={menuItems}
+        />
+      </MemoryRouter>
     );
   }
 }
