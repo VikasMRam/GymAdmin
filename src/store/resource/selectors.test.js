@@ -15,8 +15,8 @@ test('initialState', () => {
 
 test('initialResourceState', () => {
   expect(selectors.initialResourceState).toEqual({
-    list: [],
-    detail: null,
+    list: { ids: [], meta: {} },
+    detail: { id: null, ids: [], meta: {} },
   });
 });
 

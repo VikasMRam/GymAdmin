@@ -20,10 +20,11 @@ describe('entities middleware', () => {
       payload: { data: { id: 2, type: 'entity' } },
       meta: { entities: 'entity', request: { uri: '/foo' } },
     };
-    expect(store.dispatch(action)).toEqual({ ...action, payload: [2] });
+    const payload = { ids: [2], meta: undefined };
+    expect(store.dispatch(action)).toEqual({ ...action, payload });
     expect(store.getActions()).toEqual([
       entitiesReceive({ entity: { 2: { id: 2, attributes: {}, type: 'entity' } } }),
-      { ...action, payload: [2] },
+      { ...action, payload },
     ]);
   });
 
@@ -34,10 +35,11 @@ describe('entities middleware', () => {
       payload: { data: [{ id: 2, type: 'entity' }] },
       meta: { entities: 'entity', request: { uri: '/foo' } },
     };
-    expect(store.dispatch(action)).toEqual({ ...action, payload: [2] });
+    const payload = { ids: [2], meta: undefined };
+    expect(store.dispatch(action)).toEqual({ ...action, payload });
     expect(store.getActions()).toEqual([
       entitiesReceive({ entity: { 2: { id: 2, attributes: {}, type: 'entity' } } }),
-      { ...action, payload: [2] },
+      { ...action, payload },
     ]);
   });
 });
