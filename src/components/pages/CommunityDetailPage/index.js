@@ -25,6 +25,7 @@ import MorePictures from 'sly/components/organisms/MorePictures';
 import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
+import {getHelmetForCommunityPage} from "sly/services/helpers/html_headers";
 
 export default class CommunityDetailPage extends React.Component {
   static propTypes = {
@@ -147,6 +148,7 @@ export default class CommunityDetailPage extends React.Component {
     );
     const bottomContent = (
       <Fragment>
+        { getHelmetForCommunityPage( community )}
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <Section title={`Map View of ${name}`}>
           <CommunityMap

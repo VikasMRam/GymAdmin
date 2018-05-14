@@ -44,8 +44,9 @@ class CommunitySearchPageContainer extends Component {
 
   render() {
     const {
-      searchParams, error, communityList, requestMeta,
+      searchParams, error, communityList, requestMeta, location
     } = this.props;
+
     // TODO Add Error Page
     if (error) {
       return <div>{error}</div>;
@@ -60,6 +61,7 @@ class CommunitySearchPageContainer extends Component {
         onParamsChange={this.changeSearchParams}
         onParamsRemove={this.removeSearchFilters}
         communityList={communityList}
+        location={location}
       />
     );
   }

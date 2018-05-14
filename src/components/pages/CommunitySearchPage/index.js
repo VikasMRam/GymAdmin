@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import styled from 'styled-components';
 
 import { array } from 'prop-types';
@@ -6,18 +7,17 @@ import { palette } from "styled-theme";
 
 import { size } from 'sly/components/themes';
 
-
-import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
-
+import {getHelmetForSearchPage} from "sly/services/helpers/html_headers";
 
 import Heading from 'sly/components/atoms/Heading';
-import Hr from 'sly/components/atoms/Hr';
 import StickyFooter from 'sly/components/molecules/StickyFooter';
+import IconButton from 'sly/components/molecules/IconButton';
+
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
-
 import SearchMap from 'sly/components/organisms/SearchMap';
-import IconButton from 'sly/components/molecules/IconButton';
+
+import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -173,43 +173,6 @@ const SideFilterContainer = styled(CommunityFilterList)`
   }
 `;
 
-/**
-const SideFilterContainer = styled.div`
-  ${p => {
-        if (p.isFilterPanelVisible) {
-          return `
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-          `
-        } else {
-          return  `
-            display: none;
-          `;
-        }
-
-    }
-
-  }
-  margin-bottom: ${size('spacing.xxLarge')};
-  background-color: ${palette('slate', 0)}af;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    margin-bottom: 0;
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: block;
-    z-index: 1;
-    margin-bottom: 0;
-  }
-`;
-*/
-
 const SearchMapContainer = styled(SearchMap)`
   width: 100%;
   height: 100%;
@@ -271,6 +234,7 @@ class CommunitySearchPage extends Component{
       searchParams,
       requestMeta,
       communityList,
+      location,
     } = this.props;
 
     let latitude = 0.0;
@@ -289,6 +253,9 @@ class CommunitySearchPage extends Component{
     return (
 
         <CommunitySearchPageTemplate>
+
+          {  getHelmetForSearchPage({...searchParams, url: location.url}) }
+
           <Wrapper>
             <FiltersWrapper isFilterPanelVisible={this.state.isFilterPanelVisible}>
               <FilterMenuWrapper>
