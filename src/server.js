@@ -10,6 +10,9 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { renderToString } from 'react-router-server';
 
+import { v4 } from 'uuid';
+import cookieParser from 'cookie-parser';
+
 import { port, host, basename, publicPath, isDev, } from 'sly/config';
 import configureStore from 'sly/store/configure';
 import apiService from 'sly/services/api';
@@ -48,6 +51,7 @@ const renderHtml = ({ serverState, initialState, content, sheet, assets }) => {
 
 const app = express();
 
+app.use(cookieParser());
 if (publicPath.match(/^\//)) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
@@ -57,7 +61,11 @@ app.use(async (req, res, next) => {
   if (req.headers.cookie) {
     api.setCookie(req.headers.cookie);
   }
-
+  const sly_uuid_c = req.cookies.sly_uuid;
+  if (sly_uuid_c === undefined) {
+    const sly_uuid = v4();
+    res.cookie('sly_uuid',sly_uuid, { maxAge: 900000 } );
+  }
   const location = req.url;
   const store = configureStore({}, { api });
   const sheet = new ServerStyleSheet();

@@ -50,7 +50,7 @@ export const getHelmetForCommunityPage =  (community ) => {
   let toc = tocs.find((elem)=> (elem.label === propInfo.typeCare[0]));
   let title = `${name} - Pricing, Photos and Floor Plans`;
   let description =   `${name} ${toc} located at ${address}. See pricing and photos"`;
-  
+
   let ld = getSDForCommunity({...community});
 
   // TODO Add Image and Video and structured data.
