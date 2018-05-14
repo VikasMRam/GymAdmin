@@ -100,11 +100,14 @@ const ModalContext = styled.article`
     sidebar: css`
       top: 0;
       left: 0;
-      width: auto;
       margin: 0;
       height: 100%;
       max-height: 100%;
       padding: ${size('spacing.xLarge')};
+      width: 100%;
+      @media screen and (min-width: ${size('breakpoint.mobile')}) {
+        width: auto;
+      }
     `,
   })}
 `;

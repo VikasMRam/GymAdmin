@@ -20,7 +20,11 @@ const StyledWrapper = styled.div`
   }
 `;
 const StyledBox = styled(Box)`
-  ${StyledWrapper}
+  padding: ${size('spacing.large')};
+  width: ${size('filtersMenu.width.mobile')};
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('filtersMenu.width.laptop')};
+  }
 `;
 const StyledLink = styled(Link)`
   display: flex;
