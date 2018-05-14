@@ -198,6 +198,7 @@ const TradeMark = styled.a`
 `;
 
 const Footer = () => {
+  const currentYear = (new Date()).getFullYear();
   const groupComponents = Object.keys(groups).map((group) => {
     const groupItemComponents = groups[group].map((item) => {
       return (
@@ -230,7 +231,7 @@ const Footer = () => {
           <FooterIcon icon="google-plus" size="large" />
           <FooterIcon icon="facebook" size="large" />
         </SocialIcons>
-        <TradeMark>© Seniorly 2018</TradeMark>
+        <TradeMark>&copy; Seniorly {currentYear}</TradeMark>
       </FooterBottomWrapper>
     </FooterWrapper>
   );

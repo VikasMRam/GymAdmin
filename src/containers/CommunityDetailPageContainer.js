@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import { object, string } from 'prop-types';
+import { object, string, func } from 'prop-types';
 
 import  withServerState from 'sly/store/withServerState';
 import { getDetail } from 'sly/store/selectors';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
-import {
-  resourceDetailReadRequest,
-} from 'sly/store/resource/actions';
+import { resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { getDetailedPricing } from 'sly/store/concierge/actions';
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
+    getDetailedPricing: func.isRequired,
     community: object,
     userActions: object,
     error: string,
   };
 
   render() {
-    const { community, userActions, error } = this.props;
+    const { community, userActions, error, getDetailedPricing } = this.props;
 
     if (error) {
       return (
@@ -32,6 +32,7 @@ class CommunityDetailPageContainer extends Component {
     }
     return (
       <CommunityDetailPage
+        getDetailedPricing={getDetailedPricing}
         community={community}
         userActions={userActions}
       />
@@ -49,22 +50,27 @@ const mapStateToProps = (state, { match }) => {
 }
 
 const fetchData = (dispatch, { match }) => Promise.all([
-  dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), { 
-    include: 'similar-communities' 
+  dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
+    include: 'similar-communities'
   })),
   dispatch(resourceDetailReadRequest('userAction')),
 ]);
 
 const handleError = err => {
   if (err.response.status === 404) {
-    return { error: 'Unknown Profile!' }; 
+    return { error: 'Unknown Profile!' };
   }
   throw err;
 };
 
-export default withServerState({ 
-  mapStateToProps, 
-  fetchData, 
+const mapDispatchToProps = {
+  getDetailedPricing
+};
+
+export default withServerState({
+  mapStateToProps,
+  mapDispatchToProps,
+  fetchData,
   handleError,
 })(CommunityDetailPageContainer);
 

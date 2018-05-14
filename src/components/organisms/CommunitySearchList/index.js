@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import { object, arrayOf } from 'prop-types';
+import { object, arrayOf, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
@@ -9,8 +9,7 @@ import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import Pagination from 'sly/components/molecules/Pagination';
 
 const SimilarCommunityTileDiv = styled.div`
-  padding: 0 ${size('spacing.large')};
-  padding-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const SectionWrapper = styled.div``;
@@ -37,35 +36,54 @@ function getFullCommunity({
       reviewsValue,
       numReviews,
     },
-  };;
+  };
 }
 
-const CommunitySearchList = ({ communityList, ...props }) => {
-  if (communityList.length < 1) {
-    return <SectionWrapper>Loading!</SectionWrapper>;
-  }
-  const components = communityList.map((similarProperty) => {
+const getPaginationData = (requestMeta) => ({
+  current: requestMeta['page-number'],
+  total: requestMeta['filtered-count'] / requestMeta['page-size'],
+});
+
+export default class CommunitySearchList extends Component {
+  static propTypes = {
+    requestMeta: object.isRequired,
+    searchParams: object.isRequired,
+    onParamsChange: func.isRequired,
+    communityList: arrayOf(object).isRequired,
+  };
+
+  onPageChange = (page) => {
+    const { onParamsChange } = this.props;
+    onParamsChange({
+      changedParams: { 'page-number': page },
+    });
+  };
+
+  render() {
+    const { communityList, requestMeta, ...props } = this.props;
+
+    if (communityList.length < 1) {
+      return <SectionWrapper>Loading!</SectionWrapper>;
+    }
+    const components = communityList.map((similarProperty) => {
+      return (
+        <Link key={similarProperty.id} to={similarProperty.url}>
+          <SimilarCommunityTileDiv>
+            <SimilarCommunityTile
+              similarProperty={getFullCommunity(similarProperty)}
+            />
+          </SimilarCommunityTileDiv>
+        </Link>
+      );
+    });
+    const { current, total } = getPaginationData(requestMeta);
     return (
-      <Link key={similarProperty.id} to={similarProperty.url}>
-        <SimilarCommunityTileDiv>
-          <SimilarCommunityTile
-            similarProperty={getFullCommunity(similarProperty)}
-          />
-        </SimilarCommunityTileDiv>
-      </Link>
+      <SectionWrapper>
+        <CommunityFilterBar {...props} />
+        {components}
+        <Pagination onChange={this.onPageChange} current={current} total={total} />
+      </SectionWrapper>
     );
-  });
-  return (
-    <SectionWrapper>
-      <CommunityFilterBar {...props} />
-      {components}
-      <Pagination onChange={()=>{}} current={0} total={15} />
-    </SectionWrapper>
-  );
+  }
 };
 
-CommunitySearchList.propTypes = {
-  communityList: arrayOf(object).isRequired,
-};
-
-export default CommunitySearchList;

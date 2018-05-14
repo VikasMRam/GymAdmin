@@ -73,8 +73,18 @@ export default function withServerState({
   mapDispatchToProps=noop
 }) {
   return (ChildComponent) => {
+    const getMapDispatchToProps = (dispatch, props) => {
+      return typeof mapDispatchToProps === 'function'
+        ? mapDispatchToProps(dispatch, props)
+        : Object.keys(mapDispatchToProps)
+          .reduce((cumul, key) => {
+            cumul[key] = (...args) => dispatch(mapDispatchToProps[key](...args)); 
+            return cumul;
+          }, {});
+    };
+
     const childMapDispatchToProps = (dispatch, props) => ({
-      ...mapDispatchToProps(dispatch, props),
+      ...getMapDispatchToProps(dispatch, props),
       fetchData: (nextProps=props) => fetchData(dispatch, nextProps),
       handleError,
       ChildComponent,

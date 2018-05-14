@@ -10,5 +10,5 @@ const onGetDetailedPricingClicked = () => {
 
 storiesOf('Molecules|EstimatedCost', module)
   .add('default', () => (
-    <EstimatedCost communityName={communityName} price={price} onGetDetailedPricingClicked={onGetDetailedPricingClicked} />
+    <EstimatedCost communityName={communityName} price={price} getDetailedPricing={onGetDetailedPricingClicked} />
   ));

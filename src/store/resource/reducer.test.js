@@ -85,14 +85,14 @@ describe('resource reducer', () => {
 
   describe('RESOURCE_DETAIL_READ_SUCCESS', () => {
     it('sets detail in the initial state', () => {
-      expect(reducer(initialState, action(actions.RESOURCE_DETAIL_READ_SUCCESS, [1]))).toEqual(state({ detail: 1 }));
+      expect(reducer(initialState, action(actions.RESOURCE_DETAIL_READ_SUCCESS, { ids: [1], meta: {} }))).toEqual(state({ detail: { meta: {}, id: 1, ids: [1] } }));
     });
 
     it('overrides detail in an existing state', () => {
       expect(reducer(
         state({ detail: 1 }),
-        action(actions.RESOURCE_DETAIL_READ_SUCCESS, [2])
-      )).toEqual(state({ detail: 2 }));
+        action(actions.RESOURCE_DETAIL_READ_SUCCESS, { ids: [2], meta: {} })
+      )).toEqual(state({ detail: { meta: {}, id: 2, ids: [2] } }));
     });
   });
 

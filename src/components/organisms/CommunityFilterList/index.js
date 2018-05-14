@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object, func, bool } from 'prop-types';
 import { palette } from 'styled-theme';
@@ -9,23 +9,23 @@ import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Field from 'sly/components/molecules/Field';
 import Radio from 'sly/components/molecules/Radio';
 import IconButton from 'sly/components/molecules/IconButton';
-import { Link, Image, Box } from "sly/components/atoms";
+import { Link, Image, Box, Hr } from "sly/components/atoms";
 import { tocs, budgets, sizes, filterLinkPath } from 'sly/services/helpers/search';
 
-
-const StyledBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
+const StyledWrapper = styled.div`
   padding: ${size('spacing.large')};
   width: ${size('filtersMenu.width.mobile')};
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('filtersMenu.width.laptop')};
   }
-
 `;
-
-
+const StyledBox = styled(Box)`
+  padding: ${size('spacing.large')};
+  width: ${size('filtersMenu.width.mobile')};
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('filtersMenu.width.laptop')};
+  }
+`;
 const StyledLink = styled(Link)`
   display: flex;
   margin-bottom: ${size('spacing.regular')};
@@ -38,17 +38,14 @@ const StyledLink = styled(Link)`
 const ImageButtonWrapper = styled.div`
   position: relative;
   text-align: center;
-  display: none;
-    
+  margin-bottom: ${size('spacing.large')};
+
   img {
     width: 100%;
   }
 
   button {
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: block;   
   }
 
   ${(props) => {
@@ -63,11 +60,13 @@ const ImageButtonWrapper = styled.div`
     }
     return '';
   }};
-  
-`;
 
+`;
 const StyledImage = styled(Image)`
   max-width: 100%;
+`;
+const StyledHr = styled(Hr)`
+  margin-bottom: ${size('spacing.regular')};
 `;
 
 const getSortHandler = (origFn) => {
@@ -91,6 +90,7 @@ const generateRadioLink = (elem, type, path, selected) => (
 const CommunityFilterList = ({
   toggleMap,
   isMapView,
+  isModalView,
   searchParams,
   onFieldChange,
 }) => {
@@ -99,36 +99,40 @@ const CommunityFilterList = ({
     return generateRadioLink(elem, 'toc', path, selected);
   });
   const budgetFields = budgets.map((elem) => {
-
     const { path, selected } = filterLinkPath(searchParams, { budget: elem.value });
     return generateRadioLink(elem, 'budget', path, selected);
   });
-
   const sizeFields = sizes.map((elem) => {
     const { path, selected } = filterLinkPath(searchParams, { size: elem.value });
     return generateRadioLink(elem, 'size', path, selected);
   });
-
   const { sort } = searchParams;
-  return (
-    <StyledBox>
-      <ImageButtonWrapper isMapView={isMapView}>
-        {isMapView && toggleMap &&
-          <IconButton icon="list" onClick={toggleMap} palette="secondary" ghost>
-            View List
-          </IconButton>
-        }
-        {!isMapView &&
-          <React.Fragment>
-            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-            <StyledImage src={assetPath('map-placeholder.png')} />
-            <IconButton icon="map" onClick={toggleMap} palette="secondary" ghost>
-              View Map
-            </IconButton>
-          </React.Fragment>
-        }
-      </ImageButtonWrapper>
+  const WrapperElement = (isModalView) ? StyledWrapper : StyledBox;
 
+  return (
+    <WrapperElement>
+      {!isModalView &&
+        <Fragment>
+          {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+          <ImageButtonWrapper isMapView={isMapView}>
+            {isMapView && toggleMap &&
+              <IconButton icon="list" onClick={toggleMap} palette="secondary" ghost>
+                View List
+              </IconButton>
+            }
+            {!isMapView &&
+              <Fragment>
+                {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+                <StyledImage src={assetPath('images/map-placeholder.png')} />
+                <IconButton icon="map" onClick={toggleMap} palette="secondary" ghost>
+                  View Map
+                </IconButton>
+              </Fragment>
+            }
+          </ImageButtonWrapper>
+          <StyledHr />
+        </Fragment>
+      }
       <CollapsibleSection size="small" title="Type of care" noHr>
         {tocFields}
       </CollapsibleSection>
@@ -158,15 +162,20 @@ const CommunityFilterList = ({
           </option>
         </Field>
       </CollapsibleSection>
-    </StyledBox>
+    </WrapperElement>
   );
 };
 
 CommunityFilterList.propTypes = {
   toggleMap: func.isRequired,
   isMapView: bool.isRequired,
+  isModalView: bool,
   searchParams: object.isRequired,
   onFieldChange: func.isRequired,
+};
+
+CommunityFilterList.defaultProps = {
+  isModalView: false,
 };
 
 export default CommunityFilterList;

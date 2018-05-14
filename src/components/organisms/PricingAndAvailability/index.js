@@ -62,7 +62,7 @@ export default class PricingAndAvailability extends Component {
         stateAverage: PropTypes.number.isRequired,
         nationalAverage: PropTypes.number.isRequired,
       }),
-      onGetDetailedPricingClicked: PropTypes.func,
+      getDetailedPricing: PropTypes.func,
       onInquireOrBookClicked: PropTypes.func,
     };
 
@@ -93,9 +93,10 @@ export default class PricingAndAvailability extends Component {
         roomPrices,
         address,
         estimatedPrice,
-        onGetDetailedPricingClicked,
+        getDetailedPricing,
         onInquireOrBookClicked,
       } = this.props;
+
       const estimatedPriceLabelMap = {
         providedAverage: communityName,
         estimatedAverage: communityName, // TODO: figure out correct label
@@ -103,6 +104,7 @@ export default class PricingAndAvailability extends Component {
         stateAverage: address.state,
         nationalAverage: address.country,
       };
+
       let sortedEstimatedPrice = [];
       let maxPrice = 0;
       let estimatedPriceBase = 0;
@@ -130,7 +132,7 @@ export default class PricingAndAvailability extends Component {
               <EstimatedCost
                 communityName={communityName}
                 price={estimatedPriceBase}
-                onGetDetailedPricingClicked={onGetDetailedPricingClicked}
+                getDetailedPricing={getDetailedPricing}
               />
             }
             {roomPrices.map((object, i) => (

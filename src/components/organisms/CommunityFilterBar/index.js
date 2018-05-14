@@ -15,7 +15,6 @@ const SectionWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     display: flex;
     flex-direction: row;
-    margin-left: ${size('spacing.large')};
     margin-bottom: ${size('spacing.large')};
   }
 `;
@@ -79,7 +78,7 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
           onClick={getEvtHandler(filtersApplied, onParamsRemove)}
           transparent
         >
-          Clear All Filters
+          Clear all filters
         </ClearAllButton>
       )}
     </SectionWrapper>

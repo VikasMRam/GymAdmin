@@ -5,7 +5,6 @@
   "main": "dist/server",
   "scripts": {
     "start": "node .",
-    "start:dev": "node --inspect .",
     "start:prod": "npm run env:prod -- node .",
     "start:staging": "npm run env:staging -- node .",
     "predev": "npm run prebuild",

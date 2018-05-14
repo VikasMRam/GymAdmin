@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   padding: 1.0rem;
   transition: box-shadow ${key('transitions.default')},
     opacity ${key('transitions.default')};
-    
+
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
@@ -27,7 +27,6 @@ const Wrapper = styled.div`
   }
 
   &:hover {
-    cursor: default;
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')}
       ${palette('grayscale', 1, true)};
     opacity: 0.75;

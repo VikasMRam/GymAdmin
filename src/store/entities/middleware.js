@@ -15,15 +15,12 @@ const middleware = store => next => (action) => {
 
     const { meta: result, ...entities } = normalize(rawEntities, {
       endpoint: key,
-    }); // { meta :...., key1,;
+    });
 
-    if (entities[meta.entities]) {
-      store.dispatch(entitiesReceive(entities));
-      const ids = result[key].data.map(({id})=>id);
-      return next({ ...action, payload: ids});
-    } else {
-      throw new Error(`Possibly malformed response with type: ${meta.entities}`);
-    }
+    store.dispatch(entitiesReceive(entities));
+    const data = result[key].data;
+    const ids = data.map(({id})=>id);
+    return next({ ...action, payload: { ids, meta: rawEntities.meta }});
   }
 
   return next(action);

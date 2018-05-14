@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import { bool, string, arrayOf, shape, object } from 'prop-types';
 import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
@@ -42,7 +42,7 @@ const StyledNav = styled.nav`
   }
 `;
 
-export default class CommunityStickyHeader extends React.Component {
+export default class CommunityStickyHeader extends Component {
   static propTypes = {
     items: arrayOf(shape({
       ref: object.isRequired,
@@ -69,7 +69,7 @@ export default class CommunityStickyHeader extends React.Component {
     const { items, visible } = this.props;
 
     return (
-      <React.Fragment>
+      <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <StyledNav visible={visible}>
           <ol>
@@ -86,7 +86,7 @@ export default class CommunityStickyHeader extends React.Component {
             }
           </ol>
         </StyledNav>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Measure from 'react-measure';
 import styled from 'styled-components';
 import { key } from 'styled-theme';
+import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
@@ -37,8 +38,8 @@ const StyledHr = styled(Hr)`
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  padding: ${size('spacing.xLarge')} 0;
+  align-items: center;
+  padding: ${ifProp('noHr', size('spacing.large'), size('spacing.xLarge'))} 0;
 
   :hover {
     cursor: pointer;
@@ -112,7 +113,7 @@ export default class CollapsibleSection extends Component {
         {({ measureRef }) => (
           <Section collapsed={collapsed} size={size} innerRef={innerRef}>
             {!noHr && <StyledHr />}
-            <Header onClick={this.toggle} transparent ghost>
+            <Header onClick={this.toggle} transparent ghost noHr={noHr}>
               <StyledHeading level={getHeadingLevel(size)}>
                 {title}
               </StyledHeading>

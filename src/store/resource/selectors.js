@@ -3,8 +3,15 @@
 export const initialState = {};
 
 export const initialResourceState = {
-  list: [],
-  detail: null,
+  list: {
+    ids: [],
+    meta: {},
+  },
+  detail: {
+    id: null,
+    ids: [],
+    meta: {},
+  },
 };
 
 export const getResourceState = (state = initialState, resource) =>

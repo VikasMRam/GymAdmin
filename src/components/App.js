@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
@@ -11,6 +11,7 @@ import setGlobalStyles from './themes/setGlobalStyles';
 import { isBrowser } from 'sly/config';
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
+import HomePage from 'sly/components/pages/HomePage';
 
 setGlobalStyles();
 
@@ -26,7 +27,7 @@ export default class App extends Component {
     const careTypes = ['retirement-community', 'assisted-living', 'independent-living', 'alzheimers-care'].join('|');
 
     return (
-      <React.Fragment>
+      <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <Helmet titleTemplate="%s | Seniorly">
           <title>Home</title>
@@ -61,10 +62,14 @@ export default class App extends Component {
               path={`/:toc(${careTypes})/:state/:city`}
               component={CommunitySearchPageContainer}
             />
+            <Route
+              path="/"
+              exact
+              component={HomePage}
+            />
           </Switch>
         </ThemeProvider>
-
-      </React.Fragment>
+      </Fragment>
     );
   }
 }

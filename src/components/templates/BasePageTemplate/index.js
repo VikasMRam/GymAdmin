@@ -7,7 +7,9 @@ import { size } from 'sly/components/themes';
 const Content = styled.main`
   width: 100%;
   margin: 0 auto;
+  padding: 0 ${size('spacing.large')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: 0;
     width: ${size('layout.mainColumn')};
   }
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
@@ -20,13 +22,19 @@ const Content = styled.main`
     width: ${size('layout.laptopLarge')};
   }
 `;
+const StyledHeader = styled.header`
+  margin-bottom: ${size('spacing.large')};
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    margin-bottom: ${size('spacing.xLarge')};
+  }
+`;
 
 const BasePageTemplate = ({
   header, children, footer,
 }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-    <header>{header}</header>
+    <StyledHeader>{header}</StyledHeader>
     <Content>{children}</Content>
     <footer>{footer}</footer>
   </Fragment>

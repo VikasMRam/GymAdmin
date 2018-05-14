@@ -3,5 +3,5 @@ import { storiesOf } from '@storybook/react';
 
 import ListItem from '.';
 
-storiesOf('Atoms|ListItem', module)
+storiesOf('Molecules|ListItem', module)
   .add('default', () => <ListItem>Meal Preparation and Service</ListItem>)

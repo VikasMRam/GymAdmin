@@ -46,7 +46,7 @@ export default class Image extends React.Component {
   render() {
     const { src } = this.props;
     const alt = this.props.alt || this.constructor.generateAlt(src);
-    const defaultImage = <StyledImage {...this.props} src={assetPath('placeholder.png')} alt={alt} />;
+    const defaultImage = <StyledImage {...this.props} src={assetPath('images/img-placeholder.png')} alt={alt} />;
 
     if (this.state.failed) return defaultImage;
     return <StyledImage src={src} {...this.props} alt={alt} onError={this.failedLoadImageHandler} />;
