@@ -101,7 +101,7 @@ const server = createConfig([
   env('development', [
     serverSourceMap(),
     addPlugins([
-      new SpawnPlugin('node', ['.']),
+      new SpawnPlugin('node', ['--inspect', '.']),
     ]),
     () => ({
       watch: true,
