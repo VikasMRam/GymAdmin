@@ -3,15 +3,22 @@
 export const initialState = {};
 
 export const initialResourceState = {
-  list: [],
-  detail: null,
+  list: {
+    ids: [],
+    meta: {},
+  },
+  detail: {
+    id: null,
+    ids: [],
+    meta: {},
+  },
 };
 
 export const getResourceState = (state = initialState, resource) =>
   state[resource] || initialResourceState;
 
 export const getList = (state = initialState, resource) =>
-  getResourceState(state, resource).list;
+  getResourceState(state, resource).list.ids;
 
 export const getDetail = (state = initialState, resource) =>
   getResourceState(state, resource).detail;
