@@ -76,7 +76,11 @@ export default function withServerState({
     const getMapDispatchToProps = (dispatch, props) => {
       return typeof mapDispatchToProps === 'function'
         ? mapDispatchToProps(dispatch, props)
-        : mapDispatchToProps;
+        : Object.keys(mapDispatchToProps)
+          .reduce((cumul, key) => {
+            cumul[key] = (...args) => dispatch(mapDispatchToProps[key](...args)); 
+            return cumul;
+          }, {});
     };
 
     const childMapDispatchToProps = (dispatch, props) => ({

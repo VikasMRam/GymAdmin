@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import Sticky from 'react-stickynode';
 
 import { getBreadCrumbsForCommunity } from "sly/services/helpers/url";
@@ -28,6 +28,7 @@ import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 
 export default class CommunityDetailPage extends React.Component {
   static propTypes = {
+    getDetailedPricing: func.isRequired,
     community: object.isRequired,
     userActions: object.isRequired,
   };
