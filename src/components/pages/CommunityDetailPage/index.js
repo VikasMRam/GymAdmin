@@ -91,7 +91,6 @@ export default class CommunityDetailPage extends React.Component {
       phoneNumber,
       twilioNumber,
       user,
-      typeCare,
     } = community;
     const images = gallery.images || [];
     const videos = videoGallery.videos || [];
@@ -188,7 +187,7 @@ export default class CommunityDetailPage extends React.Component {
               videos={videos}
             />
           }
-          <BreadCrumb items={getBreadCrumbsForCommunity({ name, typeCare, address })} innerRef={this.breadCrumbRef} />
+          <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} innerRef={this.breadCrumbRef} />
           <Heading level="hero">{name}</Heading>
           <Heading level="subtitle">{formattedAddress}</Heading>
           <CommunitySummary
