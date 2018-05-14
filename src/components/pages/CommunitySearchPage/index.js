@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { array, bool, func } from 'prop-types';
+import { array, bool, func, object } from 'prop-types';
 import { palette } from "styled-theme";
 
 import { size } from 'sly/components/themes';
@@ -37,6 +37,7 @@ const SearchMapContainer = styled(SearchMap)`
 export default class CommunitySearchPage extends Component {
   static propTypes = {
     communityList: array.isRequired,
+    requestMeta: object.isRequired,
     isMapView: bool,
     toggleMap: func,
     onParamsChange: func,
@@ -140,7 +141,9 @@ export default class CommunitySearchPage extends Component {
           {!isMapView && (
             <CommunitySearchList
               communityList={communityList}
+              onParamsChange={onParamsChange}
               searchParams={searchParams}
+              requestMeta={requestMeta}
               onParamsRemove={onParamsRemove}
             />
           )}

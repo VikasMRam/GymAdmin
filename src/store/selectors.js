@@ -5,13 +5,17 @@ import * as header from './header/selectors';
 export const getDetail = (state, resource, id) => entities.getDetail(
   state.entities,
   resource,
-  id || resources.getDetail(state.resource, resource),
+  id || resources.getDetail(state.resource, resource).id,
 );
 
 export const getList = (state, resource) => entities.getList(
   state.entities,
   resource,
-  resources.getList(state.resource, resource),
+  resources.getList(state.resource, resource).ids,
 );
+
+export const getDetailMeta = (state, resource) => resources.getDetail(state.resource, resource).meta;
+
+export const getListMeta = (state, resource) => resources.getList(state.resource, resource).meta;
 
 export const isHeaderDropdownOpen = state => header.isDropdownOpen(state.header);

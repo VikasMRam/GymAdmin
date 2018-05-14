@@ -5,7 +5,7 @@ import { merge, omit } from 'lodash';
 import withServerState from 'sly/store/withServerState';
 
 import { resourceListReadRequest } from 'sly/store/resource/actions';
-import { getList } from 'sly/store/selectors';
+import { getList, getListMeta } from 'sly/store/selectors';
 
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 import { filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
@@ -24,6 +24,7 @@ class CommunitySearchPageContainer extends Component {
   changeSearchParams = ({ changedParams }) => {
     const { searchParams, history } = this.props;
 
+    console.log(searchParams, changedParams);
     const { path } = filterLinkPath(searchParams, changedParams);
     history.push(path);
   };
@@ -70,6 +71,7 @@ const mapStateToProps = (state, { match, location }) => {
   return {
     searchParams,
     communityList: getList(state, 'searchResource'),
+    requestMeta: getListMeta(state, 'searchResource'),
   };
 };
 
