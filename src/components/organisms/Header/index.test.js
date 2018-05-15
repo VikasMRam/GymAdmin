@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { shallow, mount } from 'enzyme';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
 import Header, { HeaderMenu, HeaderMenuItem, SeniorlyIconMenu } from '.';
 
@@ -47,6 +49,8 @@ it('renders menu when flag is set', () => {
   expect(wrapper.find(HeaderMenuItem)).toHaveLength(menuItems.length);
 });
 
+const store = createStore(state => state);
+
 class HeaderWithState extends Component {
   state = {
     menuOpen: false,
@@ -58,14 +62,16 @@ class HeaderWithState extends Component {
   };
   render() {
     return (
-      <MemoryRouter>
-        <Header
-          menuOpen={this.state.menuOpen}
-          onMenuIconClick={this.toggleMenu}
-          headerItems={headerItems}
-          menuItems={menuItems}
-        />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <Header
+            menuOpen={this.state.menuOpen}
+            onMenuIconClick={this.toggleMenu}
+            headerItems={headerItems}
+            menuItems={menuItems}
+          />
+        </MemoryRouter>
+      </Provider>
     );
   }
 }
