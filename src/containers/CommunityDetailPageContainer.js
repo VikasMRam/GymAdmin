@@ -10,12 +10,11 @@ import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
     community: object,
-    userActions: object,
     error: string,
   };
 
   render() {
-    const { community, userActions, error } = this.props;
+    const { community, error } = this.props;
 
     if (error) {
       return (
@@ -25,13 +24,12 @@ class CommunityDetailPageContainer extends Component {
       );
     }
 
-    if (!community /*|| !userActions*/) {
+    if (!community) {
       return <div>Loading...</div>;
     }
     return (
       <CommunityDetailPage
         community={community}
-        userActions={userActions}
       />
     );
   }
@@ -42,7 +40,6 @@ const mapStateToProps = (state, { match }) => {
   const communitySlug = getCommunitySlug(match);
   return {
     community: getDetail(state, 'community', communitySlug),
-    userActions: getDetail(state, 'userAction'),
   };
 }
 

@@ -30,7 +30,6 @@ import {getHelmetForCommunityPage} from "sly/services/helpers/html_headers";
 export default class CommunityDetailPage extends React.Component {
   static propTypes = {
     community: object.isRequired,
-    userActions: object.isRequired,
   };
 
   state = {
@@ -72,7 +71,7 @@ export default class CommunityDetailPage extends React.Component {
   };
 
   render() {
-    const { community, userActions } = this.props;
+    const { community } = this.props;
     const {
       id,
       name,
@@ -139,10 +138,7 @@ export default class CommunityDetailPage extends React.Component {
         top={this.state.stickyHeaderVisible ? 84 : 24}
         bottomBoundary="#sticky-sidebar-boundary"
       >
-        <ConciergeContainer
-          community={community}
-          userActions={userActions}
-        />
+        <ConciergeContainer community={community} />
       </Sticky>
     );
     const bottomContent = (
@@ -207,7 +203,7 @@ export default class CommunityDetailPage extends React.Component {
             innerRef={this.pricingAndFloorPlansRef}
           >
             <PricingAndAvailability
-              communityName={name}
+              community={community}
               address={address}
               estimatedPrice={rgsAux.estimatedPrice}
               roomPrices={roomPrices}

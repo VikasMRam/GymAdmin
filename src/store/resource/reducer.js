@@ -71,7 +71,10 @@ export default (state = initialState, { type, payload, meta }) => {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          list: [payload, ...getList(state, resource)],
+          detail: {
+            ...payload,
+            id: payload.ids[0],
+          },
         },
       };
 

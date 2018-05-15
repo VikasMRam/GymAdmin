@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { string, number, func, bool } from 'prop-types';
+import { object, number, func } from 'prop-types';
 
+import { community as communityPropType } from 'sly/propTypes/community';
 import EstimatedCost from 'sly/components/molecules/EstimatedCost';
+import { conciergeSelector } from 'sly/store/concierge/selectors';
 import { getDetailedPricing } from 'sly/store/concierge/actions';
 
 class EstimatedCostContainer extends Component {
   static propTypes = {
-    communityName: string.isRequired,
+    community: communityPropType.isRequired,
     price: number.isRequired,
     getDetailedPricing: func.isRequired,
-    conversionSubmitted: bool.isRequired,
+    concierge: object.isRequired,
   };
 
   getPricing = () => {
-    const { conversionSubmitted, getDetailedPricing } = this.props;
-    getDetailedPricing({ conversionSubmitted });
+    const { concierge, getDetailedPricing } = this.props;
+    const { callbackRequested, advancedInfoSent } = concierge;
+ 
+    console.log('concierge', concierge);
+    getDetailedPricing({ callbackRequested, advancedInfoSent });
   }
 
   render() {
-    const { getDetailedPricing, ...props } = this.props;
+    const { 
+      getDetailedPricing, 
+      ...props 
+    } = this.props;
+
     return (
       <EstimatedCost
         getPricing={this.getPricing}
@@ -29,13 +38,13 @@ class EstimatedCostContainer extends Component {
   }
 }
 
-const conversionSelector = (state) => state.form.ConversionForm || {};
-const mapStateToProps = state => ({
-  conversionSubmitted: !!conversionSelector(state).submitSucceeded,
+const mapStateToProps = (state, { community }) => ({
+  concierge: conciergeSelector(state, community.id),
 });
+const mapDispatchToActions = { getDetailedPricing };
 
 export default connect(
   mapStateToProps,
-  { getDetailedPricing }
+  mapDispatchToActions, 
 )(EstimatedCostContainer);
 

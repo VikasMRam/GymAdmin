@@ -6,6 +6,7 @@ import { Heading } from 'sly/components/atoms';
 import RoomTile from 'sly/components/molecules/RoomTile';
 import PriceBar from 'sly/components/molecules/PriceBar';
 import EstimatedCostContainer from 'sly/containers/EstimatedCostContainer';
+import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 
 const Item = styled.div`
@@ -41,7 +42,7 @@ const StyledArticle = styled.article`
 
 export default class PricingAndAvailability extends Component {
     static propTypes = {
-      communityName: PropTypes.string.isRequired,
+      community: communityPropType.isRequired,
       roomPrices: PropTypes.arrayOf(PropTypes.shape({
         roomType: PropTypes.string.isRequired,
         image: PropTypes.string,
@@ -89,7 +90,7 @@ export default class PricingAndAvailability extends Component {
 
     render() {
       const {
-        communityName,
+        community,
         roomPrices,
         address,
         estimatedPrice,
@@ -98,8 +99,8 @@ export default class PricingAndAvailability extends Component {
       } = this.props;
 
       const estimatedPriceLabelMap = {
-        providedAverage: communityName,
-        estimatedAverage: communityName, // TODO: figure out correct label
+        providedAverage: community.name,
+        estimatedAverage: community.name, // TODO: figure out correct label
         cityAverage: address.city,
         stateAverage: address.state,
         nationalAverage: address.country,
@@ -130,7 +131,7 @@ export default class PricingAndAvailability extends Component {
           <StyledArticle id="pricing-and-floor-plans-price-tiles">
             {!roomPrices.length && estimatedPriceBase &&
               <EstimatedCostContainer
-                communityName={communityName}
+                community={community}
                 price={estimatedPriceBase}
               />
             }

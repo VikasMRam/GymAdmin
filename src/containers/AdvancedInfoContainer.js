@@ -5,9 +5,7 @@ import { func, object } from 'prop-types';
 
 import { ASSESSMENT } from 'sly/services/api/actions';
 
-import {
-  resourceCreateRequest,
-} from 'sly/store/resource/actions';
+import { resourceCreateRequest } from 'sly/store/resource/actions';
 
 import {
   createValidator,
