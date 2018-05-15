@@ -13,7 +13,7 @@ import { renderToString } from 'react-router-server';
 import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 
-import { port, host, basename, publicPath, isDev, } from 'sly/config';
+import { port, host, basename, publicPath, isDev, cookieDomain, } from 'sly/config';
 import configureStore from 'sly/store/configure';
 import apiService from 'sly/services/api';
 import App from 'sly/components/App';
@@ -52,20 +52,30 @@ const renderHtml = ({ serverState, initialState, content, sheet, assets }) => {
 const app = express();
 
 app.use(cookieParser());
+
 if (publicPath.match(/^\//)) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
 app.use(async (req, res, next) => {
   const api = apiService.create();
+  /* @fonz This could be made  less amateurish */
+  const sly_uuid_c = req.cookies.sly_uuid;
+  let sly_uuid = null;
+  let set_uuid = false;
+  if (sly_uuid_c === undefined) {
+    sly_uuid = v4();
+    res.header('Set-Cookie',`sly_uuid=${sly_uuid};Max-Age=27000000;Domain=${cookieDomain};Path=/;`);
+    set_uuid = true;
+  }
+
   if (req.headers.cookie) {
     api.setCookie(req.headers.cookie);
+  } else if (set_uuid){
+    api.setCookie(`sly_uuid=${sly_uuid}`);
   }
-  const sly_uuid_c = req.cookies.sly_uuid;
-  if (sly_uuid_c === undefined) {
-    const sly_uuid = v4();
-    res.cookie('sly_uuid',sly_uuid, { maxAge: 900000 } );
-  }
+  /* End of possible temp code */
+
   const location = req.url;
   const store = configureStore({}, { api });
   const sheet = new ServerStyleSheet();

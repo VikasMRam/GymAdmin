@@ -3,7 +3,9 @@ import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
+import ReactGA from 'react-ga';
 
+import { gAnalyticsKey } from 'config';
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';
 import setGlobalStyles from './themes/setGlobalStyles';
@@ -20,7 +22,9 @@ export default class App extends Component {
     // this is not required when running in test env created by jsdom
     if (isBrowser) {
       smoothscroll.polyfill();
+      ReactGA.initialize(gAnalyticsKey);
     }
+
   }
 
   render() {

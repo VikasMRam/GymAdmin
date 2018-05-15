@@ -4,6 +4,7 @@ import { array, bool, func, object } from 'prop-types';
 import { palette } from "styled-theme";
 
 import { size } from 'sly/components/themes';
+import { sendPageView } from "sly/services/helpers/events";
 
 import {getHelmetForSearchPage} from "sly/services/helpers/html_headers";
 import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
@@ -13,6 +14,7 @@ import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 import Modal from 'sly/components/molecules/Modal';
+
 
 const TopWrapper = styled.div`
   padding-bottom: ${size('spacing.xLarge')};
@@ -59,6 +61,10 @@ export default class CommunitySearchPage extends Component {
       isModalFilterPanelVisible: false,
     });
   };
+
+  componentDidMount() {
+     sendPageView(this.props.location.pathname);
+  }
 
   render() {
     const {

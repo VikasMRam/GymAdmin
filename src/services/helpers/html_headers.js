@@ -11,7 +11,7 @@ export const getHelmetForSearchPage = ( { url, city, state, toc} ) => {
   let actualToc = tocs.find((elem)=> (elem.value === toc));
   let title = `See Search Results for ${actualToc.label} in ${city}, ${state}, and `;
   let description = `Seniorly offers a comprehensive data search where we help maintain `;
-  let c_url = `${host}/${url.path}`;
+  let c_url = `${host}/${url.pathname}`;
   let ld = {};
   ld["@context"] = "http://schema.org";
   ld["@type"] = "Webpage";
