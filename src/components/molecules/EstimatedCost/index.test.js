@@ -24,7 +24,7 @@ describe('EstimatedCost', () => {
   });
 
   it('verify onGetDetailedPricingClicked callback', () => {
-    const wrapper = wrap({ price, communityName, getDetailedPricing: onGetDetailedPricingClickedSpy });
+    const wrapper = wrap({ price, communityName, getPricing: onGetDetailedPricingClickedSpy });
     wrapper.find('Button').simulate('click');
     expect(onGetDetailedPricingClickedSpy).toHaveBeenCalled();
   });
