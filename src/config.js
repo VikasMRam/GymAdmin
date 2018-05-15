@@ -19,12 +19,16 @@ const config = {
     isServer: typeof window === 'undefined',
     apiUrl: 'http://www.lvh.me/v0',
     authTokenUrl: 'http://www.lvh.me/users/auth_token',
-    gmapsApiKey: 'AIzaSyDGcBUVVLnoCTe46mT141WuWShs6eibk58',
+    gMapsApiKey: 'AIzaSyDGcBUVVLnoCTe46mT141WuWShs6eibk58',
+    gAnalyticsKey: 'UA-55078261-2',
+    eventServerUrl: 'https://events.seniorly.com/events/new',
     publicPath,
 
   },
   test: {},
-  development: {},
+  development: {
+    cookieDomain: 'lvh.me'
+  },
   staging: {
     apiUrl: process.env.API_URL || 'http://www.myseniorly.com/v0',
     authTokenUrl: process.env.AUTH_URL  || 'http://www.myseniorly.com/users/auth_token',
@@ -34,6 +38,7 @@ const config = {
     port: process.env.PORT || 8080,
     apiUrl: process.env.API_URL || 'https://www.seniorly.com/v0/',
     authTokenUrl: process.env.AUTH_URL ||  'https://www.seniorly.com/users/auth_token',
+    gAnalyticsKey: 'UA-55078261-1',
   },
 };
 
