@@ -8,7 +8,7 @@ import { getDetail } from 'sly/store/selectors';
 import { next, close } from 'sly/store/concierge/actions';
 
 import Concierge from 'sly/components/organisms/Concierge';
-
+import { REQUEST_CALLBACK } from 'sly/services/api/actions';
 import {
   resourceDetailReadRequest,
 } from 'sly/store/resource/actions';
@@ -45,7 +45,7 @@ class ConciergeContainer extends Component {
   }
 }
 
-const isCallback = contact => contact.type === 'request_callback';
+const isCallback = contact => contact.contactType === REQUEST_CALLBACK;
 const mapStateToProps = (state, { userActions, community }) => {
   const { currentStep, modalIsOpen } = state.concierge;
   const userRequestedCB = userActions && (userActions.profilesContacted || [])

@@ -21,9 +21,9 @@ class EstimatedCostContainer extends Component {
   render() {
     const { getDetailedPricing, ...props } = this.props;
     return (
-      <EstimatedCost 
-        getPricing={this.getPricing} 
-        {...props} 
+      <EstimatedCost
+        getPricing={this.getPricing}
+        {...props}
       />
     );
   }
@@ -31,11 +31,11 @@ class EstimatedCostContainer extends Component {
 
 const conversionSelector = (state) => state.form.ConversionForm || {};
 const mapStateToProps = state => ({
-  conversionSubmitted: !!conversionSelector(state).submitSucceeded, 
+  conversionSubmitted: !!conversionSelector(state).submitSucceeded,
 });
 
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   { getDetailedPricing }
 )(EstimatedCostContainer);
 
