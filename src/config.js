@@ -22,6 +22,7 @@ const config = {
     gMapsApiKey: 'AIzaSyDGcBUVVLnoCTe46mT141WuWShs6eibk58',
     gAnalyticsKey: 'UA-55078261-2',
     eventServerUrl: 'https://events.seniorly.com/events/new',
+    cookieDomain: process.env.DOMAIN || 'lvh.me',
     publicPath,
 
   },
@@ -32,6 +33,7 @@ const config = {
   staging: {
     apiUrl: process.env.API_URL || 'http://www.myseniorly.com/v0',
     authTokenUrl: process.env.AUTH_URL  || 'http://www.myseniorly.com/users/auth_token',
+    cookieDomain: process.env.DOMAIN || 'myseniorly.com',
   },
   production: {
     host: process.env.HOST || 'seniorly.com',
