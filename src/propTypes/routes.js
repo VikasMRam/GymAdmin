@@ -8,5 +8,5 @@ export const routes = arrayOf(shape({
     func
   ]).isRequired,
   exact: bool,
-})).isRequired;
+}));
 
