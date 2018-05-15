@@ -3,10 +3,14 @@ import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
 import RRLink from 'react-router-dom/Link';
+import { matchPath } from 'react-router-dom';
+import { string, array } from 'prop-types';
 
-import { string, shape, func, object } from 'prop-types';
+import { routes as routesPropType } from 'sly/propTypes/routes';
 
-import { isLinkToAllowed } from 'sly/services/helpers/url';
+const isLinkToAllowed = (routes, to) => {
+  return routes.some(route => matchPath(to, route));
+};
 
 const styles = css`
   color: ${palette(0)};
@@ -34,10 +38,6 @@ const StyledLink = styled(RRLink)`
   ${styles};
 `;
 
-const checkLink = (props) => {
-   
-};
-
 export default class Link extends Component {
   static propTypes = {
     to: string,
@@ -49,13 +49,14 @@ export default class Link extends Component {
   };
 
   static contextTypes = {
-    router: object.isRequired,
+    routes: routesPropType,
   };
 
   checkPropsForLinks() {
     const { to, ...props } = this.props;
+    const { routes } = this.context;
 
-    if (to && !isLinkToAllowed(to)) {
+    if (to && !isLinkToAllowed(routes, to)) {
       return {
         href: to,
         ...props,

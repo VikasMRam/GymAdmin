@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
 import ReactGA from 'react-ga';
 
-import { gAnalyticsKey } from 'config';
+import { gAnalyticsKey } from 'sly/config';
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';
 import setGlobalStyles from './themes/setGlobalStyles';
@@ -14,28 +14,38 @@ import { isBrowser } from 'sly/config';
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 import HomePage from 'sly/components/pages/HomePage';
+import { routes as routesPropType } from 'sly/propTypes/routes';
 
 setGlobalStyles();
 
-const careTypes = ['retirement-community', 'assisted-living', 'independent-living', 'alzheimers-care'].join('|');
+const careTypes = [
+  'retirement-community', 
+  'assisted-living', 
+  'independent-living', 
+  'alzheimers-care'
+].join('|');
 
-export const routes = [
-  { 
+export default class App extends Component {
+  static childContextTypes = {
+    routes: routesPropType,
+  };
+
+  routes = [{ 
     path: `/:toc(${careTypes})/:state/:city/:communitySlug`, 
     component: CommunityDetailPageContainer,
-  },
-  {
+  }, {
     path: `/:toc(${careTypes})/:state/:city`,
     component: CommunitySearchPageContainer,
-  },
-  { 
+  }, { 
     path: '/',
     component: HomePage,
     exact: true,
-  }
-];
+  }];
 
-export default class App extends Component {
+  getChildContext = () => ({
+    routes: this.routes,
+  });
+
   componentDidMount() {
     // this is not required when running in test env created by jsdom
     if (isBrowser) {
@@ -73,7 +83,9 @@ export default class App extends Component {
 
         <ThemeProvider theme={theme}>
           <Switch>
-            {routes.map(route => <Route key={route.path} {...route} />)}
+            {this.routes.map(route => (
+              <Route key={route.path} {...route} />
+            ))}
           </Switch>
         </ThemeProvider>
       </Fragment>

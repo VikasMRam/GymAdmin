@@ -1,6 +1,3 @@
-import { matchPath } from 'react-router-dom';
-import { routes } from 'sly/components/App';
-
 export default function getSearchUrl(matchParams) {
   /*
    { careType: 'assisted-living', state: 'califo', city: 'sf' }
@@ -131,6 +128,3 @@ export const getBreadCrumbsForCommunity = ( { name, propInfo, address } ) => {
   ];
 }
 
-export const isLinkToAllowed = (to) => {
-  return routes.some(route => matchPath(to, route)); 
-};
