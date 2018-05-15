@@ -27,7 +27,7 @@ const percentageOf = (num, percentage) => {
 };
 
 const EstimatedCost = ({
-  price, communityName, getDetailedPricing,
+  price, communityName, getPricing,
 }) => {
   let from = 0;
   let to = 0;
@@ -47,7 +47,7 @@ const EstimatedCost = ({
         </Block>
       </EstimatedCostWrapper>
       <div>
-        <Button onClick={getDetailedPricing}>Get Detailed Pricing</Button>
+        <Button onClick={getPricing}>Get Detailed Pricing</Button>
       </div>
     </StyledBox>
   );
@@ -56,7 +56,7 @@ const EstimatedCost = ({
 EstimatedCost.propTypes = {
   price: PropTypes.number.isRequired,
   communityName: PropTypes.string.isRequired,
-  getDetailedPricing: PropTypes.func,
+  getPricing: PropTypes.func,
 };
 
 export default EstimatedCost;

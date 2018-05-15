@@ -29,7 +29,6 @@ import {getHelmetForCommunityPage} from "sly/services/helpers/html_headers";
 
 export default class CommunityDetailPage extends React.Component {
   static propTypes = {
-    getDetailedPricing: func.isRequired,
     community: object.isRequired,
     userActions: object.isRequired,
   };
@@ -73,7 +72,7 @@ export default class CommunityDetailPage extends React.Component {
   };
 
   render() {
-    const { community, userActions, getDetailedPricing } = this.props;
+    const { community, userActions } = this.props;
     const {
       id,
       name,
@@ -213,7 +212,6 @@ export default class CommunityDetailPage extends React.Component {
               estimatedPrice={rgsAux.estimatedPrice}
               roomPrices={roomPrices}
               onInquireOrBookClicked={onInquireOrBookClicked}
-              getDetailedPricing={getDetailedPricing}
             />
           </CollapsibleSection>
           <CollapsibleSection title="Similar Communities">

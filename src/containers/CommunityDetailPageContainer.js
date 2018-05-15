@@ -6,18 +6,16 @@ import { getDetail } from 'sly/store/selectors';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { getDetailedPricing } from 'sly/store/concierge/actions';
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
-    getDetailedPricing: func.isRequired,
     community: object,
     userActions: object,
     error: string,
   };
 
   render() {
-    const { community, userActions, error, getDetailedPricing } = this.props;
+    const { community, userActions, error } = this.props;
 
     if (error) {
       return (
@@ -32,7 +30,6 @@ class CommunityDetailPageContainer extends Component {
     }
     return (
       <CommunityDetailPage
-        getDetailedPricing={getDetailedPricing}
         community={community}
         userActions={userActions}
       />
@@ -63,13 +60,8 @@ const handleError = err => {
   throw err;
 };
 
-const mapDispatchToProps = {
-  getDetailedPricing
-};
-
 export default withServerState({
   mapStateToProps,
-  mapDispatchToProps,
   fetchData,
   handleError,
 })(CommunityDetailPageContainer);

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Heading } from 'sly/components/atoms';
 import RoomTile from 'sly/components/molecules/RoomTile';
 import PriceBar from 'sly/components/molecules/PriceBar';
-import EstimatedCost from 'sly/components/molecules/EstimatedCost';
+import EstimatedCostContainer from 'sly/containers/EstimatedCostContainer';
 import { size } from 'sly/components/themes';
 
 const Item = styled.div`
@@ -129,10 +129,9 @@ export default class PricingAndAvailability extends Component {
         <section id="pricing-and-floor-plans">
           <StyledArticle id="pricing-and-floor-plans-price-tiles">
             {!roomPrices.length && estimatedPriceBase &&
-              <EstimatedCost
+              <EstimatedCostContainer
                 communityName={communityName}
                 price={estimatedPriceBase}
-                getDetailedPricing={getDetailedPricing}
               />
             }
             {roomPrices.map((object, i) => (
