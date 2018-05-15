@@ -5,13 +5,14 @@ import { palette } from 'styled-theme';
 import { size, assetPath } from 'sly/components/themes';
 
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
-import { Image, Heading, Hr } from 'sly/components/atoms';
+import { Image, Heading, Hr, Link } from 'sly/components/atoms';
 import Header from 'sly/components/organisms/Header';
 import Footer from 'sly/components/organisms/Footer';
 import SearchBox from 'sly/components/molecules/SearchBox';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
+import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 
 const headerItems = [
   { name: 'Resources', url: '#' },
@@ -84,6 +85,11 @@ const ColumnWrapper = styled.div`
 `;
 const StyledHr = styled(Hr)`
   border-color: ${palette('primary', 3)};
+`;
+const UIColumnWrapper = ColumnWrapper.extend`
+  > a {
+    margin-bottom: ${size('spacing.large')};
+  }
 `;
 
 const HomePage = () => {
@@ -168,6 +174,41 @@ const HomePage = () => {
         </ColumnWrapper>
       </StyledSection>
       <br />
+      <StyledHr />
+      <StyledSection title="Useful Information">
+        <UIColumnWrapper>
+          <Link to="#">
+            <ImageOverlayContentTile image={assetPath('images/home/useful-info/independent-living.png')}>
+              <Heading palette="white">Independent Living</Heading>
+            </ImageOverlayContentTile>
+          </Link>
+          <Link to="#">
+            <ImageOverlayContentTile image={assetPath('images/home/useful-info/assisted-living.png')}>
+              <Heading palette="white">Assisted Living</Heading>
+            </ImageOverlayContentTile>
+          </Link>
+          <Link to="#">
+            <ImageOverlayContentTile image={assetPath('images/home/useful-info/memory-care.png')}>
+              <Heading palette="white">Memory Care</Heading>
+            </ImageOverlayContentTile>
+          </Link>
+          <Link to="#">
+            <ImageOverlayContentTile image={assetPath('images/home/useful-info/board-and-care-residential.png')}>
+              <Heading palette="white">Board & Care Residential</Heading>
+            </ImageOverlayContentTile>
+          </Link>
+          <Link to="#">
+            <ImageOverlayContentTile image={assetPath('images/home/useful-info/skilled-nursing.png')}>
+              <Heading palette="white">Skilled Nursing</Heading>
+            </ImageOverlayContentTile>
+          </Link>
+          <Link to="#">
+            <ImageOverlayContentTile image={assetPath('images/home/useful-info/ccrc-life-plan.png')}>
+              <Heading palette="white">CCRC / Life Plan</Heading>
+            </ImageOverlayContentTile>
+          </Link>
+        </UIColumnWrapper>
+      </StyledSection>
       <StyledHr />
     </BasePageTemplate>
   );
