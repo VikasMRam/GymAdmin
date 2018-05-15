@@ -106,9 +106,9 @@ const stateNames = {
 const urlize = ( inString )=>
   (inString.trim().toLowerCase().replace(/\s+/g,' ').replace(/\s/g,'-'));
 
-export const getBreadCrumbsForCommunity = ( { name, typeCare, address } ) => {
+export const getBreadCrumbsForCommunity = ( { name, propInfo, address } ) => {
 
-  let tocBc = tocPaths(typeCare);
+  let tocBc = tocPaths(propInfo.typeCare);
   // TODO: use react router generated paths once router wiring is complete
   return [
     {
