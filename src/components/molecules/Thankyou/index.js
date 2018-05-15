@@ -29,12 +29,16 @@ const Thankyou = ({ community, onClose }) => (
   <Wrapper>
     <StyledIcon icon="logo" size="xLarge" />
     <StyledHeading>Thank you!</StyledHeading>
+    {/*<StyledBlock>*/}
+      {/*Your request has been successfully sent to*/}
+      {/*{' '}{community.name}. A local expert will also be in touch shortly.*/}
+    {/*</StyledBlock>*/}
     <StyledBlock>
-      Your message have succesfully been sent. 
-      {' '}{community.name} will be in touch shortly.
+      Your request has been successfully sent to
+      {' '}{community.name}. To ensure a personalized experience, a local expert will also be in touch.
     </StyledBlock>
     {onClose && <Button onClick={onClose} kind="jumbo">Done</Button>}
-  </Wrapper>    
+  </Wrapper>
 );
 
 Thankyou.propTypes = {
