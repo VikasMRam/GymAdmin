@@ -12,7 +12,7 @@
     "prestaging": "npm run prebuild",
     "staging": "npm run build:staging && npm run start:staging",
     "build:clean": "rimraf \"dist/!(.git*|Procfile)**\"",
-    "build:copy": "copyfiles public/* public/**/* public/**/**/* dist",
+    "build:copy": "copyfiles \"public/**/*\" dist",
     "prebuild": "npm run build:clean && npm run build:copy",
     "build": "webpack",
     "build:prod": "npm run env:prod -- npm run build",
