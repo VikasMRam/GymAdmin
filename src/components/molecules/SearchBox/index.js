@@ -3,28 +3,31 @@ import { oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
 import { switchProp } from 'styled-tools';
+import PlacesAutocomplete from 'react-places-autocomplete';
 
-import { size } from 'sly/components/themes';
-import { Icon, Input, Button } from 'sly/components/atoms';
+import { size, assetPath } from 'sly/components/themes';
+import { Icon, Input, Button, Image } from 'sly/components/atoms';
 
 const SearchBar = styled.div`
   display: flex;
   width: 100%;
+  position: relative;
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-  ${switchProp('layout', {
-    header: css`
-      width: ${size('header.searchBar.width')};`,
-    homeHero: css`
-      width: ${size('header.home.heroSearchBar.width')};`,
-  })}
+    ${switchProp('layout', {
+      header: css`
+          width: ${size('header.searchBar.width')};`,
+      homeHero: css`
+        width: ${size('header.home.heroSearchBar.width')};`,
+    })}
   }
 `;
 const SearchTextBox = styled(Input)`
   ${switchProp('layout', {
     header: css`
       height: 100%;
-      border: none;`,
+      border: none;
+    `,
   })}
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
@@ -57,17 +60,73 @@ const SearchButton = styled(Button)`
   }
 `;
 
-const SearchBox = ({ layout }) => (
+const SearchSuggestionsWrapper = styled.div`
+  display: flex;
+  flex: 1;
+`;
+
+const SearchSuggestions = styled.div`
+  width: 300px;
+  z-index: 101;
+  position: absolute;
+  top: 40px;
+  left: 0px;
+  background: white;
+  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')}
+    ${palette('grayscale', 2)};
+`;
+
+const SearchSuggestion = styled.div`
+  width: 100%;
+  padding: 16px 8px;
+
+  :hover {
+    background-color: ${palette('grayscale', 3)};
+  }
+`;
+
+const GoogleLogo = styled(Image)`
+  width: 50%;
+  height: 50%;
+  float: right;
+`;
+
+const SearchBox = ({
+  layout, value, onChange, onSelect,
+}) => (
   <SearchBar layout={layout}>
-    <SearchTextBox size="large" placeholder="Search by city or zip code" layout={layout} />
+    <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect}>
+      {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+        <SearchSuggestionsWrapper>
+          <SearchTextBox
+            {...getInputProps({
+              placeholder: 'Search by city or zip code',
+            })}
+            // onBlur={() => false}
+            layout={layout}
+          />
+          {suggestions.length > 0 && (
+            <SearchSuggestions>
+              {suggestions.map(suggestion => (
+                <SearchSuggestion {...getSuggestionItemProps(suggestion)}>
+                  <span>{suggestion.description}</span>
+                </SearchSuggestion>
+              ))}
+              <GoogleLogo src={assetPath('powered_by_google.png')} />
+            </SearchSuggestions>
+          )}
+        </SearchSuggestionsWrapper>
+      )}
+    </PlacesAutocomplete>
     <SearchButtonLargeLaptop layout={layout}>
       <Icon icon="search" size="regular" palette="white" />
     </SearchButtonLargeLaptop>
-    {layout !== 'homeHero' &&
+    {layout !== 'homeHero' && (
       <SearchButton transparent ghost>
         <Icon icon="search" size="regular" palette="secondary" />
       </SearchButton>
-    }
+    )}
   </SearchBar>
 );
 

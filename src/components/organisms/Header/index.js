@@ -6,7 +6,7 @@ import { palette } from 'styled-theme';
 import { size } from 'sly/components/themes';
 import { Icon, Hr, Link } from 'sly/components/atoms';
 import Logo from 'sly/components/atoms/Logo';
-import SearchBox from 'sly/components/molecules/SearchBox';
+import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 const HeaderWrapper = styled.nav`
   display: flex;
@@ -32,7 +32,8 @@ const SeniorlyLogoWrapper = styled.div`
 
 export const SeniorlyIconMenu = styled.div`
   display: flex;
-  padding: calc( ${size('spacing.small')} + ${size('spacing.regular')} ) ${size('spacing.large')};
+  padding: calc(${size('spacing.small')} + ${size('spacing.regular')})
+    ${size('spacing.large')};
   border-right: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
@@ -41,7 +42,8 @@ export const SeniorlyIconMenu = styled.div`
 `;
 
 const MenuArrowIcon = styled(Icon)`
-  margin: calc( ${size('spacing.small')} + ${size('spacing.regular')} ) 0 0 ${size('spacing.regular')};
+  margin: calc(${size('spacing.small')} + ${size('spacing.regular')}) 0 0
+    ${size('spacing.regular')};
 `;
 
 const MenuIcon = styled(Icon)`
@@ -90,10 +92,14 @@ const MarginnedHR = styled(Hr)`
 `;
 
 const HeaderItems = styled.div`
-  display: flex;
-  margin-left: auto; // For Float Right in Flex
-  align-items: center;
-  margin-right: ${size('spacing.large')};
+  display: none;
+
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    display: flex;
+    margin-left: auto; // For Float Right in Flex
+    align-items: center;
+    margin-right: ${size('spacing.large')};
+  }
 `;
 
 const HeaderItem = styled(Link)`
@@ -122,7 +128,9 @@ const Header = ({
       return (
         <div key={item.name}>
           <MarginnedHR />
-          <HeaderMenuItem to={item.url} palette="slate">{item.name}</HeaderMenuItem>
+          <HeaderMenuItem to={item.url} palette="slate">
+            {item.name}
+          </HeaderMenuItem>
         </div>
       );
     }
@@ -139,20 +147,20 @@ const Header = ({
       </SeniorlyLogoWrapper>
       <SeniorlyIconMenu onClick={onMenuIconClick}>
         <Icon icon="logo" size="large" />
-        {headerMenuItemComponents.length > 0 &&
+        {headerMenuItemComponents.length > 0 && (
           <Fragment>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {!menuOpen && <MenuArrowIcon icon="arrow-down" size="tiny" />}
             {menuOpen && <MenuArrowIcon icon="arrow-up" size="tiny" />}
           </Fragment>
-        }
+        )}
       </SeniorlyIconMenu>
-      <SearchBox layout="header" />
+      <SearchBoxContainer layout="header" />
       <HeaderItems>
         {headerItemComponents}
-        {headerMenuItemComponents.length > 0 &&
+        {headerMenuItemComponents.length > 0 && (
           <MenuIcon icon="menu" size="regular" onClick={onMenuIconClick} />
-        }
+        )}
       </HeaderItems>
       {menuOpen && <HeaderMenu>{headerMenuItemComponents}</HeaderMenu>}
     </HeaderWrapper>
