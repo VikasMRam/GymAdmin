@@ -38,7 +38,7 @@ function getArrayAsString(array=[]) {
 
 const SimilarCommunityInfo = ({ similarProperty }) => {
   const {
-    name, startingRate, propInfo, propRatings,
+    name, startingRate, propInfo, propRatings, floorPlanString,
   } = similarProperty;
   const { communityDescription, typeCare } = propInfo;
   // TODO : Get the following values from API Response
@@ -61,7 +61,7 @@ const SimilarCommunityInfo = ({ similarProperty }) => {
         </SimilarCommunityRatingDiv>
       </SimilarCommunityPriceRatingDiv>
       <Dotdotdot clamp={1}>{getArrayAsString(typeCare)}</Dotdotdot>
-      <Dotdotdot clamp={1}>{getArrayAsString(floorPlansArray)}</Dotdotdot>
+      <Dotdotdot clamp={1}>{floorPlanString}</Dotdotdot>
       <SimilarCommunityDescDiv>
         <Dotdotdot clamp={2}>{communityDescription}</Dotdotdot>
       </SimilarCommunityDescDiv>
