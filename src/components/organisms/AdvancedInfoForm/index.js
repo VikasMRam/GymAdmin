@@ -46,7 +46,7 @@ const AdvancedInfoForm = ({
   <Form onSubmit={handleSubmit}>
     <Heading>Contact {community.name}</Heading>
     <Block>{community.description}</Block>
-
+    <Block>We will send this message to the community and the local senior living expert in the area</Block>
     <Field
       name="type_of_care"
       label="What type of care do you need?"
