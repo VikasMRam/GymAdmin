@@ -11,6 +11,7 @@ const similarProperty = {
     typeCare: ['A', 'B'],
   },
   propRatings: { reviewsValue: 4.5, numReviews: 4 },
+  floorPlanString : 'Suite, One Bedroom',
 };
 const wrap = (props = {}) =>
   shallow(<SimilarCommunityInfo similarProperty={similarProperty} {...props} />);
@@ -29,7 +30,7 @@ describe('SimilarCommunityInfo', () => {
       .childAt(0)
       .html()).toEqual('<div>$4500 per month</div>');
     expect(wrapper.childAt(2).html()).toEqual('<div>A, B</div>');
-    expect(wrapper.childAt(3).html()).toEqual('<div>1 Bedroom, Studio</div>');
+    expect(wrapper.childAt(3).html()).toEqual('<div>Suite, One Bedroom</div>');
     expect(wrapper.childAt(4).contains('description')).toBe(true);
 
     // expect(wrapper.find('Rating[size="medium"]')).toHaveLength(1);
