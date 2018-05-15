@@ -1,3 +1,5 @@
+import { matchPath } from 'react-router-dom';
+import { routes } from 'sly/components/App';
 
 export default function getSearchUrl(matchParams) {
   /*
@@ -39,10 +41,10 @@ const tocPaths = ( toc ) => {
 
     }
   }
-
-
-
 };
+
+
+
 const stateNames = {
   'AL': 'Alabama',
   'AK': 'Alaska',
@@ -128,3 +130,7 @@ export const getBreadCrumbsForCommunity = ( { name, typeCare, address } ) => {
     },
   ];
 }
+
+export const isLinkToAllowed = (to) => {
+  return routes.some(route => matchPath(to, route)); 
+};

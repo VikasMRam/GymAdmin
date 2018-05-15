@@ -15,6 +15,24 @@ import HomePage from 'sly/components/pages/HomePage';
 
 setGlobalStyles();
 
+const careTypes = ['retirement-community', 'assisted-living', 'independent-living', 'alzheimers-care'].join('|');
+
+export const routes = [
+  { 
+    path: '/community/:communitySlug', 
+    component: CommunityDetailPageContainer,
+  },
+  {
+    path: `/:toc(${careTypes})/:state/:city`,
+    component: CommunitySearchPageContainer,
+  },
+  { 
+    path: '/',
+    component: HomePage,
+    exact: true,
+  }
+];
+
 export default class App extends Component {
   componentDidMount() {
     // this is not required when running in test env created by jsdom
@@ -24,8 +42,6 @@ export default class App extends Component {
   }
 
   render() {
-    const careTypes = ['retirement-community', 'assisted-living', 'independent-living', 'alzheimers-care'].join('|');
-
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -46,19 +62,7 @@ export default class App extends Component {
 
         <ThemeProvider theme={theme}>
           <Switch>
-            <Route
-              path="/community/:communitySlug"
-              component={CommunityDetailPageContainer}
-            />
-            <Route
-              path={`/:toc(${careTypes})/:state/:city`}
-              component={CommunitySearchPageContainer}
-            />
-            <Route
-              path="/"
-              exact
-              component={HomePage}
-            />
+            {routes.map(route => <Route key={route.path} {...route} />)}
           </Switch>
         </ThemeProvider>
       </Fragment>
