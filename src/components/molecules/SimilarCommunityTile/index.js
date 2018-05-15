@@ -27,6 +27,7 @@ const Wrapper = styled.div`
   }
 
   &:hover {
+    cursor: pointer;
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')}
       ${palette('grayscale', 1, true)};
     opacity: 0.75;
@@ -64,7 +65,6 @@ const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
 
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
-      {/* div is for the image below. If removed, the image dimensions wont adhere to the seize being set */}
       <ImageWrapper>
         <SCTileImage src={mainImage || defaultImage} />
       </ImageWrapper>

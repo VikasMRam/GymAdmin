@@ -32,6 +32,7 @@ function getFullCommunity({
       communityDescription: description,
       typeCare: webViewInfo.firstLineValue.split(','),
     },
+    floorPlanString: webViewInfo.secondLineValue,
     propRatings: {
       reviewsValue,
       numReviews,
