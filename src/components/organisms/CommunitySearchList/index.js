@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { object, arrayOf, func } from 'prop-types';
+import { stringify } from 'query-string';
+import { sendEvent } from "sly/services/helpers/events";
 
 import { size } from 'sly/components/themes';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
 import Link from 'sly/components/atoms/Link';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import Pagination from 'sly/components/molecules/Pagination';
+
 
 const SimilarCommunityTileDiv = styled.div`
   margin-bottom: ${size('spacing.large')};
@@ -59,6 +62,14 @@ export default class CommunitySearchList extends Component {
       changedParams: { 'page-number': page },
     });
   };
+
+  componentDidMount() {
+
+    let params = {};//this.props.location.search;
+    stringify(params);
+    sendEvent({action:'filters',category:'search','label':params});
+
+  }
 
   render() {
     const { communityList, requestMeta, ...props } = this.props;

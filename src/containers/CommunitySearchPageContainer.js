@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { string, bool } from 'prop-types';
 import { merge, omit } from 'lodash';
 
+
 import withServerState from 'sly/store/withServerState';
 
 import { resourceListReadRequest } from 'sly/store/resource/actions';
@@ -9,6 +10,7 @@ import { getList, getListMeta } from 'sly/store/selectors';
 
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 import { filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
+
 
 class CommunitySearchPageContainer extends Component {
 
@@ -23,8 +25,6 @@ class CommunitySearchPageContainer extends Component {
 
   changeSearchParams = ({ changedParams }) => {
     const { searchParams, history } = this.props;
-
-    console.log(searchParams, changedParams);
     const { path } = filterLinkPath(searchParams, changedParams);
     history.push(path);
   };
@@ -45,8 +45,9 @@ class CommunitySearchPageContainer extends Component {
 
   render() {
     const {
-      searchParams, error, communityList, requestMeta,
+      searchParams, error, communityList, requestMeta, location
     } = this.props;
+
     // TODO Add Error Page
     if (error) {
       return <div>{error}</div>;
@@ -61,6 +62,7 @@ class CommunitySearchPageContainer extends Component {
         onParamsChange={this.changeSearchParams}
         onParamsRemove={this.removeSearchFilters}
         communityList={communityList}
+        location={location}
       />
     );
   }

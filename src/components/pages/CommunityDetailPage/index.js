@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import Sticky from 'react-stickynode';
 
 import { getBreadCrumbsForCommunity } from "sly/services/helpers/url";
@@ -25,6 +25,7 @@ import MorePictures from 'sly/components/organisms/MorePictures';
 import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
+import {getHelmetForCommunityPage} from "sly/services/helpers/html_headers";
 
 export default class CommunityDetailPage extends React.Component {
   static propTypes = {
@@ -89,7 +90,6 @@ export default class CommunityDetailPage extends React.Component {
       phoneNumber,
       twilioNumber,
       user,
-      typeCare,
     } = community;
     const images = gallery.images || [];
     const videos = videoGallery.videos || [];
@@ -147,6 +147,7 @@ export default class CommunityDetailPage extends React.Component {
     );
     const bottomContent = (
       <Fragment>
+        { getHelmetForCommunityPage( community )}
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <Section title={`Map View of ${name}`}>
           <CommunityMap
@@ -185,7 +186,7 @@ export default class CommunityDetailPage extends React.Component {
               videos={videos}
             />
           }
-          <BreadCrumb items={getBreadCrumbsForCommunity({ name, typeCare, address })} innerRef={this.breadCrumbRef} />
+          <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} innerRef={this.breadCrumbRef} />
           <Heading level="hero">{name}</Heading>
           <Heading level="subtitle">{formattedAddress}</Heading>
           <CommunitySummary
@@ -219,7 +220,7 @@ export default class CommunityDetailPage extends React.Component {
           <CollapsibleSection title="Community Details">
             <CommunityDetails
               communityName={name}
-              communityDescription={communityDescription}
+              communityDescription={communityDescription || rgsAux.slyCommunityDescription}
               staffDescription={staffDescription}
               residentDescription={residentDescription}
             />
@@ -262,7 +263,7 @@ export default class CommunityDetailPage extends React.Component {
           </CollapsibleSection>
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
-        <StickyFooter footerInfo={{ title: 'Contact Property', name: community.name, ctaTitle: 'Contact' }} />
+        <StickyFooter footerInfo={{ title: 'Contact Property', name: community.name, ctaTitle: 'Contact' }} onFooterClick={onInquireOrBookClicked} />
       </Fragment>
     );
   }

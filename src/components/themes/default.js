@@ -6,7 +6,7 @@ theme.palette = {
   slate:     ['#384c57'],
   white:     ['#fff'],
   black:     ['#000000'],
-  primary:   ['#2f8fcb', '#2483be', '#63abd8'],
+  primary:   ['#2f8fcb', '#2483be', '#63abd8', '#e1eaef'],
   secondary: ['#7ccdcc', '#65c0bf', '#b0e1e0', '#f4ffff'],
   grayscale: ['#8f9ca4', '#9ca8af', '#c5d0d5', '#f2f6f7', '#68747a'],
   danger:    ['#cc5663'],
@@ -59,8 +59,11 @@ theme.sizes = {
       },
     },
     homeHeroSearchBar: {
-      width: '27.75rem',  // 444px
-    }
+      width: '27.75rem', // 444px
+    },
+    homeHeroImage: {
+      height: '40rem', // 640px
+    },
   },
 
   filtersMenu: {
@@ -122,17 +125,21 @@ theme.sizes = {
 
   picture: {
     small: {
-      width:     '15.375rem', // 246px
-      height:     '11.25rem', // 180px
+      width: '15.375rem', // 246px
+      height: '11.25rem', // 180px
     },
     regular: {
-      width:         '21rem', // 336px
-      height:    '15.375rem', // 246px
+      width: '21rem', // 336px
+      height: '17.5rem', // 280px
     },
     large: {
-      width:    '21.4375rem', // 343px
-      height:    '15.625rem', // 250px
-    }
+      width: '21.4375rem', // 343px
+      height: '15.625rem', // 250px
+    },
+    huge: {
+      width: '32.25rem', // 516px
+      height: '17.5rem', // 280px
+    },
   },
   map: {
     propertyDetail: {

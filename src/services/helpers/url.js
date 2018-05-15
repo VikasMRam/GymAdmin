@@ -1,4 +1,3 @@
-
 export default function getSearchUrl(matchParams) {
   /*
    { careType: 'assisted-living', state: 'califo', city: 'sf' }
@@ -39,10 +38,10 @@ const tocPaths = ( toc ) => {
 
     }
   }
-
-
-
 };
+
+
+
 const stateNames = {
   'AL': 'Alabama',
   'AK': 'Alaska',
@@ -104,9 +103,9 @@ const stateNames = {
 const urlize = ( inString )=>
   (inString.trim().toLowerCase().replace(/\s+/g,' ').replace(/\s/g,'-'));
 
-export const getBreadCrumbsForCommunity = ( { name, typeCare, address } ) => {
+export const getBreadCrumbsForCommunity = ( { name, propInfo, address } ) => {
 
-  let tocBc = tocPaths(typeCare);
+  let tocBc = tocPaths(propInfo.typeCare);
   // TODO: use react router generated paths once router wiring is complete
   return [
     {
@@ -128,3 +127,4 @@ export const getBreadCrumbsForCommunity = ( { name, typeCare, address } ) => {
     },
   ];
 }
+

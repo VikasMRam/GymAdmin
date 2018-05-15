@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Heading } from 'sly/components/atoms';
 import RoomTile from 'sly/components/molecules/RoomTile';
 import PriceBar from 'sly/components/molecules/PriceBar';
-import EstimatedCost from 'sly/components/molecules/EstimatedCost';
+import EstimatedCostContainer from 'sly/containers/EstimatedCostContainer';
 import { size } from 'sly/components/themes';
 
 const Item = styled.div`
@@ -62,7 +62,7 @@ export default class PricingAndAvailability extends Component {
         stateAverage: PropTypes.number.isRequired,
         nationalAverage: PropTypes.number.isRequired,
       }),
-      onGetDetailedPricingClicked: PropTypes.func,
+      getDetailedPricing: PropTypes.func,
       onInquireOrBookClicked: PropTypes.func,
     };
 
@@ -93,9 +93,10 @@ export default class PricingAndAvailability extends Component {
         roomPrices,
         address,
         estimatedPrice,
-        onGetDetailedPricingClicked,
+        getDetailedPricing,
         onInquireOrBookClicked,
       } = this.props;
+
       const estimatedPriceLabelMap = {
         providedAverage: communityName,
         estimatedAverage: communityName, // TODO: figure out correct label
@@ -103,6 +104,7 @@ export default class PricingAndAvailability extends Component {
         stateAverage: address.state,
         nationalAverage: address.country,
       };
+
       let sortedEstimatedPrice = [];
       let maxPrice = 0;
       let estimatedPriceBase = 0;
@@ -127,10 +129,9 @@ export default class PricingAndAvailability extends Component {
         <section id="pricing-and-floor-plans">
           <StyledArticle id="pricing-and-floor-plans-price-tiles">
             {!roomPrices.length && estimatedPriceBase &&
-              <EstimatedCost
+              <EstimatedCostContainer
                 communityName={communityName}
                 price={estimatedPriceBase}
-                onGetDetailedPricingClicked={onGetDetailedPricingClicked}
               />
             }
             {roomPrices.map((object, i) => (

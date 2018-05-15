@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
 import RRLink from 'react-router-dom/Link';
+import { matchPath } from 'react-router-dom';
+import { string, array } from 'prop-types';
 
-import { string } from 'prop-types';
+import { routes as routesPropType } from 'sly/propTypes/routes';
+
+const isLinkToAllowed = (routes, to) => {
+  return routes.some(route => matchPath(to, route));
+};
 
 const styles = css`
   color: ${palette(0)};
@@ -32,20 +38,40 @@ const StyledLink = styled(RRLink)`
   ${styles};
 `;
 
-const Link = ({ ...props }) => {
-  if (props.to) {
-    return <StyledLink {...props} />;
+export default class Link extends Component {
+  static propTypes = {
+    to: string,
+    href: string,
+  };
+
+  static defaultProps = {
+    palette: 'primary',
+  };
+
+  static contextTypes = {
+    routes: routesPropType,
+  };
+
+  checkPropsForLinks() {
+    const { to, ...props } = this.props;
+    const { routes } = this.context;
+
+    if (to && routes && !isLinkToAllowed(routes, to)) {
+      return {
+        href: to,
+        ...props,
+      };
+    }
+
+    return this.props;
   }
-  return <Anchor {...props} />;
+
+  render() {
+    const props = this.checkPropsForLinks();
+    if (props.to) {
+      return <StyledLink {...props} />;
+    }
+    return <Anchor {...props} />;
+  }
 };
 
-Link.propTypes = {
-  to: string,
-  href: string,
-};
-
-Link.defaultProps = {
-  palette: 'primary',
-};
-
-export default Link;

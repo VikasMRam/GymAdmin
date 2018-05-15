@@ -1,46 +1,59 @@
 import { GET_DETAILED_PRICING, NEXT, CLOSE } from './actions';
 
+import {
+  CONVERSION_FORM,
+  ADVANCED_INFO,
+  SIMILAR_COMMUNITIES,
+  THANKYOU,
+} from './constants';
+
 const steps = [
-  'conversionForm',
-  'advancedInfo',
-  'similarCommunities',
-  'thankyou',
+  CONVERSION_FORM,
+  ADVANCED_INFO,
+  SIMILAR_COMMUNITIES,
+  THANKYOU,
 ];
 
 const initialState = {
-  currentStep: 'conversionForm',
+  currentStep: CONVERSION_FORM,
   modalIsOpen: false,
 };
 
 export default (state = initialState, { type, payload }) => {
-  if (type === GET_DETAILED_PRICING) {
-    return {
-      ...state,
-      modalIsOpen: true,
-      currentStep: 'advancedInfo', 
-    };
-  } else if (type === NEXT) {
-    const { currentStep } = state;
-    const stepIndex = steps.indexOf(currentStep);
-    const nextStepIndex = stepIndex + 1;
-    if(nextStepIndex < steps.length) {
+  switch(type) {
+    case GET_DETAILED_PRICING: {
+      const { conversionSubmitted } = payload;
       return {
         ...state,
-        currentStep: steps[nextStepIndex],
         modalIsOpen: true,
+        currentStep: conversionSubmitted
+          ? ADVANCED_INFO
+          : CONVERSION_FORM,
       };
-    } else {
+    }
+    case NEXT: {
+      const { currentStep } = state;
+      const stepIndex = steps.indexOf(currentStep);
+      const nextStepIndex = stepIndex + 1;
+      if(nextStepIndex < steps.length) {
+        return {
+          ...state,
+          currentStep: steps[nextStepIndex],
+          modalIsOpen: true,
+        };
+      } else {
+        return {
+          ...state,
+          modalIsOpen: false,
+        };
+      }
+    }
+    case CLOSE: {
       return {
         ...state,
         modalIsOpen: false,
       };
     }
-  } else if(type === CLOSE) {
-      return {
-        ...state,
-        modalIsOpen: false,
-      };
+    default: return state;
   }
-
-  return state;
 };

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { object, string } from 'prop-types';
+import { object, string, func } from 'prop-types';
 
 import  withServerState from 'sly/store/withServerState';
 import { getDetail } from 'sly/store/selectors';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
-import {
-  resourceDetailReadRequest,
-} from 'sly/store/resource/actions';
+import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
@@ -49,22 +47,22 @@ const mapStateToProps = (state, { match }) => {
 }
 
 const fetchData = (dispatch, { match }) => Promise.all([
-  dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), { 
-    include: 'similar-communities' 
+  dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
+    include: 'similar-communities'
   })),
   dispatch(resourceDetailReadRequest('userAction')),
 ]);
 
 const handleError = err => {
   if (err.response.status === 404) {
-    return { error: 'Unknown Profile!' }; 
+    return { error: 'Unknown Profile!' };
   }
   throw err;
 };
 
-export default withServerState({ 
-  mapStateToProps, 
-  fetchData, 
+export default withServerState({
+  mapStateToProps,
+  fetchData,
   handleError,
 })(CommunityDetailPageContainer);
 

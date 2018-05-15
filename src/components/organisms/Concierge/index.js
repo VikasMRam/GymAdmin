@@ -11,6 +11,7 @@ import SimilarCommunitiesContainer from 'sly/containers/SimilarCommunitiesContai
 import Thankyou from 'sly/components/molecules/Thankyou';
 
 const steps = {
+  conversionForm:     ConversionFormContainer,
   advancedInfo:       AdvancedInfoContainer,
   similarCommunities: SimilarCommunitiesContainer,
   thankyou:           Thankyou,
