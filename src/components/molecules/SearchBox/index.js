@@ -1,5 +1,5 @@
 import React from 'react';
-import { oneOf } from 'prop-types';
+import { oneOf, string, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
 import { switchProp } from 'styled-tools';
@@ -92,46 +92,79 @@ const GoogleLogo = styled(Image)`
   float: right;
 `;
 
-const SearchBox = ({
-  layout, value, onChange, onSelect,
-}) => (
-  <SearchBar layout={layout}>
-    <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect}>
-      {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-        <SearchSuggestionsWrapper>
-          <SearchTextBox
-            {...getInputProps({
-              placeholder: 'Search by city or zip code',
-            })}
-            // onBlur={() => false}
-            layout={layout}
-          />
-          {suggestions.length > 0 && (
-            <SearchSuggestions>
-              {suggestions.map(suggestion => (
-                <SearchSuggestion {...getSuggestionItemProps(suggestion)}>
-                  <span>{suggestion.description}</span>
-                </SearchSuggestion>
-              ))}
-              <GoogleLogo src={assetPath('powered_by_google.png')} />
-            </SearchSuggestions>
+class SearchBox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isMounted: false };
+  }
+
+  componentDidMount() {
+    const scriptjs = require('scriptjs');
+    scriptjs(
+      'https://maps.googleapis.com/maps/api/js?key=AIzaSyDnadc7V6jUuE9bs6Fw3SLAbzFbkBkqFP0&libraries=places',
+      () => {
+        this.setState({
+          isMounted: true,
+        });
+      }
+    );
+  }
+
+  render() {
+    const {
+      layout, value, onChange, onSelect,
+    } = this.props;
+    const { isMounted } = this.state;
+    if (!isMounted) {
+      return <div>Loading...</div>;
+    }
+    return (
+      <SearchBar layout={layout}>
+        <PlacesAutocomplete
+          value={value}
+          onChange={onChange}
+          onSelect={onSelect}
+        >
+          {({ getInputProps, suggestions, getSuggestionItemProps }) => (
+            <SearchSuggestionsWrapper>
+              <SearchTextBox
+                {...getInputProps({
+                  placeholder: 'Search by city or zip code',
+                })}
+                // onBlur={() => false}
+                layout={layout}
+              />
+              {suggestions.length > 0 && (
+                <SearchSuggestions>
+                  {suggestions.map(suggestion => (
+                    <SearchSuggestion {...getSuggestionItemProps(suggestion)}>
+                      <span>{suggestion.description}</span>
+                    </SearchSuggestion>
+                  ))}
+                  <GoogleLogo src={assetPath('powered_by_google.png')} />
+                </SearchSuggestions>
+              )}
+            </SearchSuggestionsWrapper>
           )}
-        </SearchSuggestionsWrapper>
-      )}
-    </PlacesAutocomplete>
-    <SearchButtonLargeLaptop layout={layout}>
-      <Icon icon="search" size="regular" palette="white" />
-    </SearchButtonLargeLaptop>
-    {layout !== 'homeHero' && (
-      <SearchButton transparent ghost>
-        <Icon icon="search" size="regular" palette="secondary" />
-      </SearchButton>
-    )}
-  </SearchBar>
-);
+        </PlacesAutocomplete>
+        <SearchButtonLargeLaptop layout={layout}>
+          <Icon icon="search" size="regular" palette="white" />
+        </SearchButtonLargeLaptop>
+        {layout !== 'homeHero' && (
+          <SearchButton transparent ghost>
+            <Icon icon="search" size="regular" palette="secondary" />
+          </SearchButton>
+        )}
+      </SearchBar>
+    );
+  }
+}
 
 SearchBox.propTypes = {
   layout: oneOf(['header', 'homeHero']),
+  value: string.isRequired,
+  onChange: func.isRequired,
+  onSelect: func.isRequired,
 };
 
 SearchBox.defaultProps = {
