@@ -69,8 +69,8 @@ const SearchSuggestions = styled.div`
   width: 300px;
   z-index: 101;
   position: absolute;
-  top: 40px;
-  left: 0px;
+  top: ${size('header.menu.position.top.laptopLarge')};
+  left: 0;
   background: white;
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')}
@@ -79,7 +79,7 @@ const SearchSuggestions = styled.div`
 
 const SearchSuggestion = styled.div`
   width: 100%;
-  padding: 16px 8px;
+  padding: ${size('spacing.large')} ${size('spacing.regular')};
 
   :hover {
     background-color: ${palette('grayscale', 3)};
