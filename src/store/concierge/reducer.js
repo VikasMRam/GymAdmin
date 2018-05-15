@@ -22,13 +22,17 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch(type) {
     case GET_DETAILED_PRICING: {
-      const { conversionSubmitted } = payload;
+      const { conversionSubmitted, advancedInfoSubmitted } = payload;
+      let currentStep = CONVERSION_FORM;
+      if ( conversionSubmitted && advancedInfoSubmitted ) {
+        currentStep = THANKYOU;
+      } else if ( conversionSubmitted ) {
+        currentStep = ADVANCED_INFO;
+      }
       return {
         ...state,
         modalIsOpen: true,
-        currentStep: conversionSubmitted
-          ? ADVANCED_INFO
-          : CONVERSION_FORM,
+        currentStep,
       };
     }
     case NEXT: {
