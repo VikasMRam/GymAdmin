@@ -8,37 +8,25 @@ import { size } from 'sly/components/themes';
 
 import { Box, Heading, Block, Button, Image } from 'sly/components/atoms';
 
+const width = p => size('picture', p.size, 'width');
+const height = p => size('picture', p.size, 'height');
 const Wrapper = styled.div`
-  ${switchProp('size', {
-    regular: css`
-      width: ${size('picture.regular.width')};`,
-    large: css`
-      width: 100%;
-
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        width: ${size('picture.huge.width')};
-      }`,
-  })};
+  width: 100%;
+  @media screen and (min-width: ${width}) {
+    width: ${width};
+  }
 `;
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.small')};
 `;
 const StyledImage = styled(Image)`
   width: 100%;
+  height: initial;
   display: block;
-  ${switchProp('size', {
-    regular: css`
-      width: ${size('picture.regular.width')};
-      height: ${size('picture.regular.height')};`,
-    large: css`
-      width: 100%;
-      height: 100%;
-
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        width: ${size('picture.huge.width')};
-        height: ${size('picture.regular.height')};
-      }`,
-  })};
+  @media screen and (min-width: ${width}) {
+    width: ${width};
+    height: ${height};
+  }
 `;
 const ButtonWrapper = styled.div`
   align-self: center;

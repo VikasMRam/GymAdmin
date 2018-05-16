@@ -58,11 +58,13 @@ theme.sizes = {
         },
       },
     },
-    homeHeroSearchBar: {
-      width: '27.75rem', // 444px
-    },
-    homeHeroImage: {
-      height: '40rem', // 640px
+    home: {
+      heroSearchBar: {
+        width: '27.75rem', // 444px
+      },
+      heroImage: {
+        height: '40rem', // 640px
+      },
     },
   },
 
@@ -126,17 +128,13 @@ theme.sizes = {
   picture: {
     small: {
       width: '15.375rem', // 246px
-      height: '11.25rem', // 180px
+      height: '11.5rem', // 184px
     },
     regular: {
       width: '21rem', // 336px
-      height: '17.5rem', // 280px
-    },
-    large: {
-      width: '21.4375rem', // 343px
       height: '15.625rem', // 250px
     },
-    huge: {
+    large: {
       width: '32.25rem', // 516px
       height: '17.5rem', // 280px
     },

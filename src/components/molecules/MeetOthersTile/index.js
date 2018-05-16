@@ -7,13 +7,19 @@ import { size } from 'sly/components/themes';
 import { Heading, Block, Image } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
-  width: ${size('picture.regular.width')};
+  width: 100%;
+  @media screen and (min-width: ${size('picture.regular.width')}) {
+    width: ${size('picture.regular.width')};
+  }
   text-align: left;
 `;
 const StyledImage = styled(Image)`
   border-radius: ${size('border.large')};
-  width: ${size('picture.regular.width')};
   margin-bottom: ${size('spacing.xLarge')};
+  width: 100%;
+  @media screen and (min-width: ${size('picture.regular.width')}) {
+    width: ${size('picture.regular.width')};
+  }
 `;
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};

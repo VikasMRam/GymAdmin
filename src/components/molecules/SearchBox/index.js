@@ -16,7 +16,7 @@ const SearchBar = styled.div`
     header: css`
       width: ${size('header.searchBar.width')};`,
     homeHero: css`
-      width: ${size('header.homeHeroSearchBar.width')};`,
+      width: ${size('header.home.heroSearchBar.width')};`,
   })}
   }
 `;

@@ -5,13 +5,15 @@ import { Heading } from 'sly/components/atoms';
 
 const Section = ({ title, children, ...props }) => (
   <section {...props}>
-    <Heading>{title}</Heading>
+    {title &&
+      <Heading>{title}</Heading>
+    }
     <article>{children}</article>
   </section>
 );
 
 Section.propTypes = {
-  title: string.isRequired,
+  title: string,
   children: node,
 };
 
