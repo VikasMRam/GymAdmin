@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "main": "dist/server",
+  "engines": {
+    "npm": "~6.0.0"
+  },
   "scripts": {
     "start": "node .",
     "start:prod": "npm run env:prod -- node .",
