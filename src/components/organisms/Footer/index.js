@@ -67,21 +67,21 @@ const SignUpButtonDiv = styled.div`
 
 const groups = {
   Company: [
-    { name: 'About Us', url: '#' },
-    { name: 'Career', url: '#' },
-    { name: 'Contact', url: '#' },
-    { name: 'Terms', url: '#' },
-    { name: 'Privacy', url: '#' },
+    { name: 'About Us', url: '/about' },
+    { name: 'Career', url: 'https://angel.co/seniorly/jobs', target: '_blank' },
+    { name: 'Contact', url: '/contact' },
+    { name: 'Terms', url: '/tos' },
+    { name: 'Privacy', url: '/privacy' },
   ],
   Explore: [
-    { name: 'Assisted Living', url: '#' },
-    { name: 'Respite Care', url: '#' },
-    { name: 'CareTalks', url: '#' },
-    { name: 'Resources', url: '#' },
+    { name: 'Assisted Living', url: '/assisted-living' },
+    { name: 'Respite Care', url: '/respite-care' },
+    { name: 'CareTalks', url: '/caretalks' },
+    { name: 'Resources', url: '/resources' },
   ],
   Marketplace: [
-    { name: 'How It Works', url: '#' },
-    { name: 'List Your Business', url: '#' },
+    { name: 'How It Works', url: '/how-it-works' },
+    { name: 'List Your Business', url: '/providers' },
   ],
 };
 
@@ -202,7 +202,7 @@ const Footer = () => {
   const groupComponents = Object.keys(groups).map((group) => {
     const groupItemComponents = groups[group].map((item) => {
       return (
-        <GroupItem key={item.name} href={item.url}>
+        <GroupItem key={item.name} href={item.url} target={item.target}>
           {item.name}
         </GroupItem>
       );
