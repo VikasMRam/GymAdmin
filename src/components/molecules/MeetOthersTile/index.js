@@ -13,6 +13,10 @@ const Wrapper = styled.div`
 const StyledImage = styled(Image)`
   border-radius: ${size('border.large')};
   width: ${size('picture.regular.width')};
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+const StyledHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const MeetOthersTile = ({
@@ -20,7 +24,7 @@ const MeetOthersTile = ({
 }) => (
   <Wrapper>
     <StyledImage src={image} />
-    <Heading level="subtitle">{title}</Heading>
+    <StyledHeading level="subtitle">{title}</StyledHeading>
     <Block>{description}</Block>
   </Wrapper>
 );
