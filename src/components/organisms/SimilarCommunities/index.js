@@ -4,6 +4,7 @@ import { object, arrayOf } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
+import Link from 'sly/components/atoms/Link';
 
 const SimilarCommunityTileDiv = styled.div`
   padding-bottom: ${size('spacing.large')};
@@ -12,9 +13,11 @@ const SimilarCommunityTileDiv = styled.div`
 const SimilarCommunity = ({ similarProperties }) => {
   const components = similarProperties.map((similarProperty) => {
     return (
-      <SimilarCommunityTileDiv key={similarProperty.id}>
-        <SimilarCommunityTile similarProperty={similarProperty} />
-      </SimilarCommunityTileDiv>
+      <Link key={similarProperty.id} to={similarProperty.url}>
+        <SimilarCommunityTileDiv>
+          <SimilarCommunityTile similarProperty={similarProperty} />
+        </SimilarCommunityTileDiv>
+      </Link>
     );
   });
   return <div>{components}</div>;

@@ -115,7 +115,7 @@ export default class CommunityMediaGallery extends React.Component {
           onPlayClicked={this.onPlayClicked}
           communityName={communityName}
           images={this.sdGalleryImages}
-          topRightSection={topRightSection}
+          //topRightSection={topRightSection}
           bottomLeftSection={bottomLeftSection}
         />
         <FullscreenMediaGallery

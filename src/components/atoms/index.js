@@ -14,6 +14,7 @@ import Paragraph from './Paragraph';
 import Tag from './Tag';
 import Thumbnail from './Thumbnail';
 import TileImage from './TileImage';
+import Tooltip from './Tooltip';
 
 export {
   Avatar,
@@ -32,4 +33,5 @@ export {
   Tag,
   Thumbnail,
   TileImage,
+  Tooltip,
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { arrayOf, string, number, object, shape } from 'prop-types';
 import NumberFormat from 'react-number-format';
 
-import { Link } from 'sly/components/atoms';
+import { Link, Icon, Tooltip } from 'sly/components/atoms';
 import List from 'sly/components/molecules/List';
 
 export default class communitySummary extends React.Component {
@@ -46,27 +46,35 @@ export default class communitySummary extends React.Component {
       twilioNumber, phoneNumber, user, amenityScore, communityHighlights, startingRate, reviews, innerRef,
     } = this.props;
     const highlights = [];
+    let receptionNumber = phoneNumber;
+    if (receptionNumber === '' && user) {
+      receptionNumber = user.phoneNumber;
+    }
 
+    let conciergeNumber = receptionNumber;
     if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
-      highlights.push((
-        <span>
-          Pricing & Availability&nbsp;
-          <Link href={`tel:${twilioNumber.numbers[0]}`}>
-            <NumberFormat value={twilioNumber.numbers[0]} format="(###) ###-####" displayType="text" />
-          </Link>
-        </span>
-      ));
+      conciergeNumber = twilioNumber.numbers[0];
     }
-    if (phoneNumber || (user && user.phoneNumber)) {
-      highlights.push((
-        <span>
-          Reception&nbsp;
-          <Link href={`tel:${phoneNumber || user.phoneNumber}`}>
-            <NumberFormat value={phoneNumber || user.phoneNumber} format="(###) ###-####" displayType="text" />
-          </Link>
-        </span>
-      ));
-    }
+
+
+    highlights.push((
+      <span>
+        Pricing & Availability&nbsp;
+        <Link href={`tel:${conciergeNumber}`}>
+          <NumberFormat value={conciergeNumber} format="(###) ###-####" displayType="text" />
+        </Link>
+      </span>
+    ));
+
+    highlights.push((
+      <span>
+        Reception&nbsp;
+        <Link href={`tel:${receptionNumber}`}>
+          <NumberFormat value={receptionNumber} format="(###) ###-####" displayType="text" />
+        </Link>
+      </span>
+    ));
+
     if (amenityScore) {
       const parsedAmenityScore = parseFloat(amenityScore);
       if (parsedAmenityScore) {
@@ -100,7 +108,7 @@ export default class communitySummary extends React.Component {
         href={`#${this.constructor.sectionIdMaps.pricingAndFloorPlans}`}
         onClick={e => this.constructor.scrollToSection(e, this.props.pricingAndFloorPlansRef)}
       >
-        Rooms Available
+        Available Floor Plans
       </Link>
     ));
     if (startingRate) {

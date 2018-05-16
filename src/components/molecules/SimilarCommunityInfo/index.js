@@ -14,6 +14,7 @@ const SimilarCommunityNameDiv = styled.div`
 
 const SimilarCommunityPriceRatingDiv = styled.div`
   display: flex;
+  color: ${palette('slate', 0)};
   font-size: ${size('text.body')};
   margin-bottom:${size('spacing.regular')}
 `;
@@ -27,6 +28,9 @@ const SimilarCommunityNumberReviewDiv = styled.div`
   margin-left: ${size('spacing.regular')};
 `;
 
+const CareFloorPlanDiv = styled.div`
+  color: ${palette('slate', 0)}
+`;
 const SimilarCommunityDescDiv = styled.div`
   color: ${palette('grayscale', 0)};
   margin-top:${size('spacing.regular')}
@@ -43,25 +47,31 @@ const SimilarCommunityInfo = ({ similarProperty }) => {
   const { communityDescription, typeCare } = propInfo;
   // TODO : Get the following values from API Response
   const { reviewsValue, numReviews } = propRatings;
-  const floorPlansArray = ['1 Bedroom', 'Studio'];
   return (
     <div>
       <SimilarCommunityNameDiv>
         <Dotdotdot clamp={1}>{name}</Dotdotdot>
       </SimilarCommunityNameDiv>
       <SimilarCommunityPriceRatingDiv>
-        <Dotdotdot clamp={1}>${startingRate} per month</Dotdotdot>
-        <SimilarCommunityRatingDiv>
-          <Rating value={reviewsValue} size="regular" />
-          {numReviews > 0 && (
-            <SimilarCommunityNumberReviewDiv>
-              {numReviews}
-            </SimilarCommunityNumberReviewDiv>
-          )}
-        </SimilarCommunityRatingDiv>
+        {
+          (startingRate && startingRate > 0) ? (<Dotdotdot clamp={1}>${startingRate} per month</Dotdotdot>) : null
+        }
+        {
+          (numReviews && numReviews > 0) ? (
+            <SimilarCommunityRatingDiv>
+              <Rating value={reviewsValue} size="regular" />
+              {numReviews > 0 && (
+                <SimilarCommunityNumberReviewDiv>
+                  {numReviews}
+                </SimilarCommunityNumberReviewDiv>
+              )}
+            </SimilarCommunityRatingDiv>) : null
+        }
       </SimilarCommunityPriceRatingDiv>
-      <Dotdotdot clamp={1}>{getArrayAsString(typeCare)}</Dotdotdot>
-      <Dotdotdot clamp={1}>{floorPlanString}</Dotdotdot>
+      <CareFloorPlanDiv>
+        <Dotdotdot clamp={1}>{getArrayAsString(typeCare)}</Dotdotdot>
+        <Dotdotdot clamp={1}>Floor Plans: {floorPlanString}</Dotdotdot>
+      </CareFloorPlanDiv>
       <SimilarCommunityDescDiv>
         <Dotdotdot clamp={2}>{communityDescription}</Dotdotdot>
       </SimilarCommunityDescDiv>

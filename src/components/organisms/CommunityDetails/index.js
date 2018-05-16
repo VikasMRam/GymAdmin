@@ -6,7 +6,7 @@ import { Paragraph, Heading } from 'sly/components/atoms';
 
 
 const CommunityDetails = ({
-  communityName, communityDescription, staffDescription, residentDescription,
+  communityName, communityDescription, staffDescription, residentDescription, ownerExperience,
 }) => {
   return (
     <CollapsibleBlock>
@@ -18,6 +18,14 @@ const CommunityDetails = ({
         </article>
       ) : (
         'No details are available'
+      )}
+      {ownerExperience && (
+        <article>
+          <Heading level="subtitle">
+            Owners Story
+          </Heading>
+          <Paragraph>{ownerExperience}</Paragraph>
+        </article>
       )}
       {staffDescription && (
         <article>
@@ -44,6 +52,7 @@ CommunityDetails.propTypes = {
   communityDescription: PropTypes.string,
   staffDescription: PropTypes.string,
   residentDescription: PropTypes.string,
+  ownerExperience: PropTypes.string,
 };
 
 export default CommunityDetails;

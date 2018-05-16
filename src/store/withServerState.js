@@ -40,6 +40,7 @@ class ServerStateComponent extends Component {
     const { fetchData } = this.props;
     if (this.props.match !== nextProps.match) {
       fetchData(nextProps);
+      window && window.scrollTo(0,0);
     }
   }
 
@@ -78,7 +79,7 @@ export default function withServerState({
         ? mapDispatchToProps(dispatch, props)
         : Object.keys(mapDispatchToProps)
           .reduce((cumul, key) => {
-            cumul[key] = (...args) => dispatch(mapDispatchToProps[key](...args)); 
+            cumul[key] = (...args) => dispatch(mapDispatchToProps[key](...args));
             return cumul;
           }, {});
     };
