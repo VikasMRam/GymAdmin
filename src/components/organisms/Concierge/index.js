@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { oneOf, object } from 'prop-types';
 import styled from 'styled-components';
+import { palette } from 'styled-theme';
 
 import { isBrowser } from 'sly/config';
-
+import { size } from 'sly/components/themes';
 import Modal from 'sly/components/molecules/Modal';
 import ConversionFormContainer from 'sly/containers/ConversionFormContainer';
 import AdvancedInfoContainer from 'sly/containers/AdvancedInfoContainer';
@@ -18,6 +19,12 @@ const steps = {
 };
 
 const appElement = isBrowser && document.querySelector('#app');
+
+const Wrapper = styled.div`
+  width: 100%;
+  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  padding: ${size('spacing.xLarge')};
+`;
 
 export default class Concierge extends Component {
   static propTypes = {
@@ -40,7 +47,7 @@ export default class Concierge extends Component {
     const StepComponent = steps[currentStep];
 
     return (
-      <div className={className}>
+      <Wrapper className={className}>
         {callbackRequested && (
           <Thankyou community={community} />
         )}
@@ -64,7 +71,7 @@ export default class Concierge extends Component {
             />
           </Modal>
         )}
-      </div>
+      </Wrapper>
     );
   }
 }
