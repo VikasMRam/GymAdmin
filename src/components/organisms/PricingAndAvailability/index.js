@@ -5,9 +5,10 @@ import styled from 'styled-components';
 import { Heading } from 'sly/components/atoms';
 import RoomTile from 'sly/components/molecules/RoomTile';
 import PriceBar from 'sly/components/molecules/PriceBar';
-import EstimatedCostContainer from 'sly/containers/EstimatedCostContainer';
+import EstimatedCost from 'sly/components/molecules/EstimatedCost';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
+import ConciergeController from 'sly/controllers/ConciergeController';
 
 const Item = styled.div`
   display: inline-block;
@@ -130,10 +131,15 @@ export default class PricingAndAvailability extends Component {
         <section id="pricing-and-floor-plans">
           <StyledArticle id="pricing-and-floor-plans-price-tiles">
             {!roomPrices.length && estimatedPriceBase &&
-              <EstimatedCostContainer
-                community={community}
-                price={estimatedPriceBase}
-              />
+              <ConciergeController community={community}>
+                {({ getPricing }) =>
+                  <EstimatedCost
+                    getPricing={getPricing}
+                    community={community}
+                    price={estimatedPriceBase}
+                  />
+                }
+              </ConciergeController>
             }
             {roomPrices.map((object, i) => (
               <Item key={i}>

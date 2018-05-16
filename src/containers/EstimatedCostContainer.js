@@ -11,26 +11,14 @@ class EstimatedCostContainer extends Component {
   static propTypes = {
     community: communityPropType.isRequired,
     price: number.isRequired,
-    getDetailedPricing: func.isRequired,
     concierge: object.isRequired,
   };
 
-  getPricing = () => {
-    const { concierge, getDetailedPricing } = this.props;
-    const { callbackRequested, advancedInfoSent } = concierge;
- 
-    getDetailedPricing({ callbackRequested, advancedInfoSent });
-  }
-
   render() {
-    const { 
-      getDetailedPricing, 
-      ...props 
-    } = this.props;
+    const { ...props } = this.props;
 
     return (
       <EstimatedCost
-        getPricing={this.getPricing}
         {...props}
       />
     );
@@ -44,6 +32,6 @@ const mapDispatchToActions = { getDetailedPricing };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToActions, 
+  mapDispatchToActions,
 )(EstimatedCostContainer);
 
