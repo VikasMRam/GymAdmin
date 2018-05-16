@@ -117,6 +117,7 @@
     "react-google-maps": "^9.4.5",
     "react-helmet": "^5.0.3",
     "react-hot-loader": "^3.1.1",
+    "react-lazy": "^0.5.1",
     "react-measure": "^2.0.2",
     "react-modal": "^3.4.4",
     "react-number-format": "^3.3.4",
