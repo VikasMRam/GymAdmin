@@ -23,6 +23,7 @@ const SeniorlyLogoWrapper = styled.div`
   display: none;
   margin-right: ${size('spacing.large')};
   margin-left: ${size('spacing.xLarge')};
+  max-width: ${size('icon.xxLarge')};
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     display: block;

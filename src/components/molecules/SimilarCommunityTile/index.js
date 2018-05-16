@@ -5,6 +5,7 @@ import { palette, key } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 import SimilarCommunityInfo from 'sly/components/molecules/SimilarCommunityInfo';
+import Button from 'sly/components/atoms/Button'
 
 // TODO : Tech Dept - Similar Code as of RoomTile Molecule. Find how to reuse
 
@@ -33,13 +34,22 @@ const Wrapper = styled.div`
     opacity: 0.75;
     background: ${palette('white', 2)};
 
-    button {
-      display: initial;
-    }
+    Button {
+        display: initial;
+      }
   }
 `;
 const ImageWrapper = styled.div`
   line-height: 0;
+  position: relative;
+
+    Button {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 `;
 
 const SCTileImage = styled.img`
@@ -67,6 +77,7 @@ const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
     <Wrapper onClick={onClick} borderless={borderless}>
       <ImageWrapper>
         <SCTileImage src={mainImage || defaultImage} />
+        <Button onClick={onClick}>See More Details</Button>
       </ImageWrapper>
       <ChildrenWrapper>
         <SimilarCommunityInfo similarProperty={similarProperty} />

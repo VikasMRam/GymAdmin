@@ -92,6 +92,7 @@ const PlayIcon = styled(Icon)`
   position: absolute;
   top: 44%;
   left: 50%;
+  font-size: ${size('icon.xLarge')};
 
   :hover {
     cursor: pointer;

@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react';
+import styled from 'styled-components';
+import { palette} from 'styled-theme';
 import { object, func } from 'prop-types';
 import Sticky from 'react-stickynode';
 
-import { getBreadCrumbsForCommunity } from "sly/services/helpers/url";
+import { getBreadCrumbsForCommunity , getCitySearchUrl} from "sly/services/helpers/url";
 
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
@@ -18,7 +20,6 @@ import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailability';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
-import OwnerStory from 'sly/components/organisms/OwnerStory';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
 import MorePictures from 'sly/components/organisms/MorePictures';
@@ -26,6 +27,11 @@ import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import {getHelmetForCommunityPage} from "sly/services/helpers/html_headers";
+import Button from 'sly/components/atoms/Button'
+
+const BackToSearch = styled.div`
+  text-align:center
+`;
 
 export default class CommunityDetailPage extends React.Component {
   static propTypes = {
@@ -86,13 +92,12 @@ export default class CommunityDetailPage extends React.Component {
       similarProperties,
       gallery = {},
       videoGallery = {},
-      phoneNumber,
       twilioNumber,
       user,
     } = community;
     const images = gallery.images || [];
     const videos = videoGallery.videos || [];
-    const { careServices, serviceHighlights } = propInfo;
+    const { careServices, serviceHighlights, communityPhone } = propInfo;
     const {
       communityDescription,
       staffDescription,
@@ -191,7 +196,7 @@ export default class CommunityDetailPage extends React.Component {
             amenitiesAndFeaturesRef={this.amenitiesAndFeaturesRef}
             communityReviewsRef={this.communityReviewsRef}
             twilioNumber={twilioNumber}
-            phoneNumber={phoneNumber}
+            phoneNumber={communityPhone}
             user={user}
             amenityScore={rgsAux.amenityScore}
             startingRate={startingRate}
@@ -212,6 +217,9 @@ export default class CommunityDetailPage extends React.Component {
           </CollapsibleSection>
           <CollapsibleSection title="Similar Communities">
             <SimilarCommunities similarProperties={similarProperties} />
+            <BackToSearch>
+              <Button ghost  href={getCitySearchUrl({ propInfo, address })}>Communities In {address.city}</Button>
+            </BackToSearch>
           </CollapsibleSection>
           <CollapsibleSection title="Community Details">
             <CommunityDetails
@@ -219,6 +227,7 @@ export default class CommunityDetailPage extends React.Component {
               communityDescription={communityDescription || rgsAux.slyCommunityDescription}
               staffDescription={staffDescription}
               residentDescription={residentDescription}
+              ownerExperience={ownerExperience}
             />
           </CollapsibleSection>
           <CollapsibleSection title="Care Services">
@@ -244,9 +253,6 @@ export default class CommunityDetailPage extends React.Component {
               languages={languages}
               languagesOther={languagesOther}
             />
-          </CollapsibleSection>
-          <CollapsibleSection title="Owner's Story">
-            <OwnerStory ownerExperience={ownerExperience} />
           </CollapsibleSection>
           <CollapsibleSection title="Reviews" innerRef={this.communityReviewsRef}>
             <PropertyReviews
