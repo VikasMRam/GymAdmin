@@ -1,7 +1,7 @@
 export const GET_DETAILED_PRICING = 'GET_DETAILED_PRICING';
-export const getDetailedPricing = ({ conversionSubmitted }) => ({
+export const getDetailedPricing = ({ callbackRequested, advancedInfoSent }) => ({
   type: GET_DETAILED_PRICING,
-  payload: { conversionSubmitted }
+  payload: { callbackRequested, advancedInfoSent },
 });
 
 export const NEXT = 'concierge/NEXT';

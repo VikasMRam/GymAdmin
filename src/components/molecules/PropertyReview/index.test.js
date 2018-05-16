@@ -5,7 +5,7 @@ import PropertyReview from '.';
 const review = {
   value: 3.5,
   author: 'Pranesh',
-  createdAt: '2018-04-20T04:26:04.418Z',
+  createdAt: '2018-04-20 00:00:00.00',
   comments: 'Best Community',
 };
 const wrap = (props = {}) => shallow(<PropertyReview {...review} {...props} />);

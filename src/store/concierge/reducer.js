@@ -3,14 +3,14 @@ import { GET_DETAILED_PRICING, NEXT, CLOSE } from './actions';
 import {
   CONVERSION_FORM,
   ADVANCED_INFO,
-  SIMILAR_COMMUNITIES,
+  // SIMILAR_COMMUNITIES,
   THANKYOU,
 } from './constants';
 
 const steps = [
   CONVERSION_FORM,
   ADVANCED_INFO,
-  SIMILAR_COMMUNITIES,
+  // SIMILAR_COMMUNITIES,
   THANKYOU,
 ];
 
@@ -22,13 +22,17 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch(type) {
     case GET_DETAILED_PRICING: {
-      const { conversionSubmitted } = payload;
+      const { callbackRequested, advancedInfoSent } = payload;
+      let currentStep = CONVERSION_FORM;
+      if ( callbackRequested && advancedInfoSent ) {
+        currentStep = THANKYOU;
+      } else if ( callbackRequested ) {
+        currentStep = ADVANCED_INFO;
+      }
       return {
         ...state,
         modalIsOpen: true,
-        currentStep: conversionSubmitted
-          ? ADVANCED_INFO
-          : CONVERSION_FORM,
+        currentStep,
       };
     }
     case NEXT: {

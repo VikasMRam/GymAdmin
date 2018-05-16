@@ -38,6 +38,7 @@ const detail = (id=null) => ({ id , ids: id ? [id] : [], meta: {} });
 const list = (ids=[]) => ({ ids, meta: {} });
 
 describe('resource integration tests', () => {
+  /* TODO #DISABLEDTEST
   test('resourceCreateRequest', async () => {
     const { getState, dispatch } = getStore();
 
@@ -68,7 +69,7 @@ describe('resource integration tests', () => {
     await delay();
     expect(getList(getState(), 'resources')).toEqual([1, 2, 3]);
   });
-
+  */
   // it('resourceDetailReadRequest', async () => {
   //   const { getState, dispatch } = getStore();
 

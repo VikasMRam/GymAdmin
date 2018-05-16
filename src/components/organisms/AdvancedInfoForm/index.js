@@ -44,7 +44,7 @@ const AdvancedInfoForm = ({
   handleSubmit, submitting, user, community,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Heading>Contact {community.name}</Heading>
+    <Heading>To connect to {community.name}...</Heading>
     <Block>{community.description}</Block>
 
     <Field
@@ -85,12 +85,13 @@ const AdvancedInfoForm = ({
     />
     <Field
       name="message"
-      label={`Message ${messageRecipient(user, community)}`}
+      label={`Add any additional requests below:`}
       type="textarea"
       component={ReduxField}
     />
+    <Block>To ensure a personalized experience, one of our caring, local experts will be in touch.</Block>
     <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-      Send Message
+      Connect Me
     </StyledButton>
   </Form>
 );

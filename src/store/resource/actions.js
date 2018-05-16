@@ -10,7 +10,6 @@ export const resourceCreateRequest = (resource, data) => ({
   payload: { data },
   meta: {
     resource,
-    // https://github.com/diegohaz/arc/wiki/Actions#async-actions
     thunk: `${resource}Create`,
   },
 });
@@ -22,7 +21,6 @@ export const resourceCreateSuccess = (resource, detail, request, thunk) => ({
     request,
     thunk,
     resource,
-    // https://github.com/diegohaz/arc/wiki/Example-redux-modules#entities
     entities: resource,
   },
 });
@@ -34,7 +32,6 @@ export const resourceCreateFailure = (resource, error, request, thunk) => ({
   meta: {
     request,
     resource,
-    // https://github.com/diegohaz/arc/wiki/Actions#async-actions
     thunk,
   },
 });

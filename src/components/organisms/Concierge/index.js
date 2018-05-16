@@ -13,7 +13,7 @@ import Thankyou from 'sly/components/molecules/Thankyou';
 const steps = {
   conversionForm:     ConversionFormContainer,
   advancedInfo:       AdvancedInfoContainer,
-  similarCommunities: SimilarCommunitiesContainer,
+  // similarCommunities: SimilarCommunitiesContainer,
   thankyou:           Thankyou,
 };
 
@@ -22,35 +22,39 @@ const appElement = isBrowser && document.querySelector('#app');
 export default class Concierge extends Component {
   static propTypes = {
     community: object.isRequired,
+    concierge: object.isRequired,
   };
 
   render() {
     const {
       onClose,
-      isOpen,
       next,
       community,
-      currentStep,
       className,
-      userRequestedCB,
+      concierge,
       ...props
     } = this.props;
+
+    const { modalIsOpen, currentStep, callbackRequested } = concierge;
 
     const StepComponent = steps[currentStep];
 
     return (
       <div className={className}>
-        { userRequestedCB && (
+        {callbackRequested && (
           <Thankyou community={community} />
         )}
-        { !userRequestedCB && (
-          <ConversionFormContainer community={community} next={next} />
+        {!callbackRequested && (
+          <ConversionFormContainer
+            community={community}
+            next={next}
+          />
         )}
-        { appElement && StepComponent && isOpen && (
+        {appElement && StepComponent && modalIsOpen && (
           <Modal
             appElement={appElement}
             onClose={onClose}
-            isOpen={isOpen}
+            isOpen={modalIsOpen}
             closeable {...props}>
             <StepComponent
               community={community}

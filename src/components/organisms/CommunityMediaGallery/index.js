@@ -96,12 +96,12 @@ export default class CommunityMediaGallery extends React.Component {
 
       return { ...vid, src, thumb: vid.thumbUrl };
     });
-    const topRightSection = (
-      <span>
-        <StyledButton ghost palette="slate"><Icon icon="heart" size="regular" palette="slate" /></StyledButton>
-        <StyledButton ghost palette="slate"><Icon icon="share" size="regular" palette="slate" /></StyledButton>
-      </span>
-    );
+    // const topRightSection = (
+    //   <span>
+    //     {/*<StyledButton ghost palette="slate"><Icon icon="heart" size="regular" palette="slate" /></StyledButton>*/}
+    //     {/*<StyledButton ghost palette="slate"><Icon icon="share" size="regular" palette="slate" /></StyledButton>*/}
+    //   </span>
+    // );
     const bottomLeftSection = () => (
       <span>
         <MorePicsTablet ghost palette="slate" transparent={false} onClick={this.toggleModal}>See {this.sdGalleryImages.length - 1} more pictures</MorePicsTablet>
@@ -115,7 +115,6 @@ export default class CommunityMediaGallery extends React.Component {
           onPlayClicked={this.onPlayClicked}
           communityName={communityName}
           images={this.sdGalleryImages}
-          //topRightSection={topRightSection}
           bottomLeftSection={bottomLeftSection}
         />
         <FullscreenMediaGallery
