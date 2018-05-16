@@ -8,6 +8,7 @@ import resource from './resource/reducer';
 import concierge from './concierge/reducer';
 import header from './header/reducer';
 import searchBox from './searchBox/reducer';
+import controller from './controller/reducer';
 
 const reducers = {
   form,
@@ -18,6 +19,8 @@ const reducers = {
   resource,
   header,
   searchBox,
+  controller,
 };
 
 export default combineReducers(reducers);
+

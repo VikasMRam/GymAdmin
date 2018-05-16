@@ -13,17 +13,6 @@ import {
   resourceDetailReadRequest,
 } from 'sly/store/resource/actions';
 
-function connectController(controllerKey, mapStateToProps, mapDispatchToProps) {
-  return function controllerCreator(WrappedComponent) {
-    class Controller extends Component {
-      render() {
-        return React.createElement(WrappedComponent, this.props);
-      }
-    };
-    return connect(mapStateToProps, mapDispatchToProps)(Controller);
-  }
-}
-
 class ConciergeController extends Component {
   static propTypes = {
     next: func.isRequired,
@@ -57,4 +46,4 @@ const mapStateToProps = (state, { community }) => {
   };
 };
 
-export default connectController('concierge', mapStateToProps, { next, close, getDetailedPricing })(ConciergeController);
+export default connect(mapStateToProps, { next, close, getDetailedPricing })(ConciergeController);
