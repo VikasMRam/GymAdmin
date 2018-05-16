@@ -92,6 +92,14 @@ const UIColumnWrapper = ColumnWrapper.extend`
 const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
+const CWTColumnWrapper = ColumnWrapper.extend`
+  width: 100%;
+  margin: auto;
+
+  @media screen and (min-width: ${size('home.companiesWeTrust.width')}) {
+    width: ${size('home.companiesWeTrust.width')};
+  }
+`;
 
 const HomePage = () => {
   const HeaderContent = (
@@ -279,6 +287,23 @@ const HomePage = () => {
         </UIColumnWrapper>
       </StyledSection>
       <StyledHr />
+      <StyledSection title="Companies We Trust">
+        <br />
+        <CWTColumnWrapper>
+          <Link to="https://www.seniorly.com/resources/articles/seniorly-conversations-caregiver-resources" target="_blank">
+            <Image src={assetPath('images/home/companies-we-trust/UCBerkeley.png')} />
+          </Link>
+          <Link to="https://www.nike.com" target="_blank">
+            <Image src={assetPath('images/home/companies-we-trust/NIKE.png')} />
+          </Link>
+          <Link to="https://www.seniorly.com/assisted-living/articles/seniorly-conversations-staying-social-in-senior-housing-communities" target="_blank">
+            <Image src={assetPath('images/home/companies-we-trust/Seniorly.png')} />
+          </Link>
+          <Link to="https://www.seniorly.com/resources/articles/seniorly-conversations-on-demand-transportation-for-older-adults" target="_blank">
+            <Image src={assetPath('images/home/companies-we-trust/Lyft.png')} />
+          </Link>
+        </CWTColumnWrapper>
+      </StyledSection>
     </BasePageTemplate>
   );
 };
