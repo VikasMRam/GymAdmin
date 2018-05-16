@@ -5,8 +5,9 @@ import { palette } from "styled-theme";
 
 import { size } from 'sly/components/themes';
 import { sendPageView } from "sly/services/helpers/events";
+import { titleize } from "sly/services/helpers/strings";
+import { getHelmetForSearchPage } from "sly/services/helpers/html_headers";
 
-import {getHelmetForSearchPage} from "sly/services/helpers/html_headers";
 import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
 import { Heading, Button } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
@@ -77,6 +78,8 @@ export default class CommunitySearchPage extends Component {
       communityList,
       location,
     } = this.props;
+    const listSize = requestMeta['filtered-count'];
+    const city = titleize(searchParams.city);
 
     let latitude = 0.0;
     let longitude = 0.0;
@@ -124,7 +127,7 @@ export default class CommunitySearchPage extends Component {
           column={columnContent}
         >
           <Heading>
-            258 communities in San Francisco
+            {listSize} communities near {city}
           </Heading>
           <TopWrapper>
             {isMapView && (

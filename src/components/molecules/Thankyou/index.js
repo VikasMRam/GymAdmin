@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 
 import { Button, Block, Icon, Heading } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
+import AgentTile from "sly/components/molecules/AgentTile";
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,6 +23,8 @@ const StyledHeading = styled(Heading)`
 `;
 
 const StyledBlock = styled(Block)`
+  padding: ${size('spacing.regular')};
+  margin: 0 ${size('spacing.large')};
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -30,11 +33,12 @@ const Thankyou = ({ community, onClose }) => (
     <StyledIcon icon="logo" size="xLarge" />
     <StyledHeading>Thank you!</StyledHeading>
     <StyledBlock>
-      Your message have succesfully been sent. 
-      {' '}{community.name} will be in touch shortly.
+      Your request has been successfully sent to
+      {' '}{community.name}.
     </StyledBlock>
+    {/*{<AgentTile community={ {...community, uri:'#' } } user={{name:'Test'}}/>}*/}
     {onClose && <Button onClick={onClose} kind="jumbo">Done</Button>}
-  </Wrapper>    
+  </Wrapper>
 );
 
 Thankyou.propTypes = {

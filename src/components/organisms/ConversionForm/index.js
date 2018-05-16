@@ -22,6 +22,7 @@ const StyledButton = styled(Button)`
 
 const ConversionForm = ({ handleSubmit, submitting }) => (
   <Form onSubmit={handleSubmit}>
+    <Heading level={'subtitle'}>Yes, connect me to this community...</Heading>
     <Field
       name="full_name"
       label="Full Name"
@@ -42,7 +43,7 @@ const ConversionForm = ({ handleSubmit, submitting }) => (
       component={ReduxField}
     />
     <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-      Contact
+      Connect
     </StyledButton>
 
     <TosAndPrivacy />

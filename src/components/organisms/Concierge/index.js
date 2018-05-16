@@ -13,7 +13,7 @@ import Thankyou from 'sly/components/molecules/Thankyou';
 const steps = {
   conversionForm:     ConversionFormContainer,
   advancedInfo:       AdvancedInfoContainer,
-  similarCommunities: SimilarCommunitiesContainer,
+  // similarCommunities: SimilarCommunitiesContainer,
   thankyou:           Thankyou,
 };
 
@@ -45,9 +45,9 @@ export default class Concierge extends Component {
           <Thankyou community={community} />
         )}
         {!callbackRequested && (
-          <ConversionFormContainer 
-            community={community} 
-            next={next} 
+          <ConversionFormContainer
+            community={community}
+            next={next}
           />
         )}
         {appElement && StepComponent && modalIsOpen && (
