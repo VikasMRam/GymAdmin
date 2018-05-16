@@ -15,6 +15,23 @@ class SearchBoxContainer extends Component {
     changeAddress: func,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = { isMounted: false };
+  }
+
+  componentDidMount() {
+    const scriptjs = require('scriptjs');
+    scriptjs(
+      'https://maps.googleapis.com/maps/api/js?key=AIzaSyDnadc7V6jUuE9bs6Fw3SLAbzFbkBkqFP0&libraries=places',
+      () => {
+        this.setState({
+          isMounted: true,
+        });
+      }
+    );
+  }
+
   handleChange = (address) => {
     const { changeAddress } = this.props;
     changeAddress(address);
@@ -29,6 +46,10 @@ class SearchBoxContainer extends Component {
 
   render() {
     const { layout, address } = this.props;
+    const { isMounted } = this.state;
+    if (!isMounted) {
+      return <div>Loading...</div>;
+    }
     return (
       <SearchBox
         layout={layout}

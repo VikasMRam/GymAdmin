@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { shallow, mount } from 'enzyme';
 import { MemoryRouter } from 'react-router';
+import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
 
 import Header, { HeaderMenu, HeaderMenuItem, SeniorlyIconMenu } from '.';
 
@@ -27,6 +27,43 @@ const menuItems = [
 const wrap = (props = {}) =>
   shallow(<Header headerItems={headerItems} menuItems={menuItems} {...props} />);
 
+const setupGoogleMock = () => {
+  /** * Mock Google Maps JavaScript API ** */
+  // https://github.com/kenny-hibino/react-places-autocomplete/issues/189
+  const google = {
+    maps: {
+      places: {
+        AutocompleteService: () => {},
+        PlacesServiceStatus: {
+          INVALID_REQUEST: 'INVALID_REQUEST',
+          NOT_FOUND: 'NOT_FOUND',
+          OK: 'OK',
+          OVER_QUERY_LIMIT: 'OVER_QUERY_LIMIT',
+          REQUEST_DENIED: 'REQUEST_DENIED',
+          UNKNOWN_ERROR: 'UNKNOWN_ERROR',
+          ZERO_RESULTS: 'ZERO_RESULTS',
+        },
+      },
+      Geocoder: () => {},
+      GeocoderStatus: {
+        ERROR: 'ERROR',
+        INVALID_REQUEST: 'INVALID_REQUEST',
+        OK: 'OK',
+        OVER_QUERY_LIMIT: 'OVER_QUERY_LIMIT',
+        REQUEST_DENIED: 'REQUEST_DENIED',
+        UNKNOWN_ERROR: 'UNKNOWN_ERROR',
+        ZERO_RESULTS: 'ZERO_RESULTS',
+      },
+    },
+  };
+  global.window.google = google;
+};
+
+// in test file.
+beforeAll(() => {
+  setupGoogleMock();
+});
+
 it('renders children when passed in', () => {
   const wrapper = wrap({ children: 'test' });
   expect(wrapper.contains('test')).toBe(false);
@@ -49,7 +86,11 @@ it('renders menu when flag is set', () => {
   expect(wrapper.find(HeaderMenuItem)).toHaveLength(menuItems.length);
 });
 
-const store = createStore(state => state);
+// Initialize mockstore with empty state
+const middlewares = [];
+const mockStore = configureStore(middlewares);
+const initialState = {};
+const store = mockStore(initialState);
 
 class HeaderWithState extends Component {
   state = {
