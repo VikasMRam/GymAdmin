@@ -12,13 +12,14 @@ const {
   startingRate,
   rgsAux,
   twilioNumber,
-  phoneNumber,
   user,
   reviews,
 } = RhodaGoldmanPlaza;
 const {
   communityHighlights,
+  communityPhone,
 } = propInfo;
+const phoneNumber = communityPhone;
 const communityReviewsRef = React.createRef();
 const pricingAndFloorPlansRef = React.createRef();
 const amenitiesAndFeaturesRef = React.createRef();
@@ -30,7 +31,7 @@ const testTwilioNumber = (wrapper) => {
   expect(wrapper.text()).toContain('Pricing & Availability');
 };
 const testPhoneNumber = (wrapper) => {
-  expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${phoneNumber}` }).length).toBeGreaterThan(0);
+  expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${communityPhone}` }).length).toBeGreaterThan(0);
   expect(wrapper.text()).toContain('Reception');
 };
 const testUserPhoneNumber = (wrapper) => {

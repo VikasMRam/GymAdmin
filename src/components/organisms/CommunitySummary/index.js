@@ -47,7 +47,7 @@ export default class communitySummary extends React.Component {
     } = this.props;
     const highlights = [];
     let receptionNumber = phoneNumber;
-    if (receptionNumber === '' && user) {
+    if ((receptionNumber === undefined || receptionNumber === '') && user) {
       receptionNumber = user.phoneNumber;
     }
 
