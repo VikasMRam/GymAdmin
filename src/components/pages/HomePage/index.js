@@ -16,12 +16,12 @@ import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayConten
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 const headerItems = [
-  { name: 'Resources', url: '#' },
-  { name: 'Moving Center', url: '#' },
-  { name: 'News', url: '#' },
-  { name: 'List Your Property', url: '#' },
-  { name: 'Our History', url: '#' },
-  { name: 'Sign in', url: '#' },
+  { name: 'Resources', url: '/resources' },
+  // { name: 'Moving Center', url: '#' },
+  // { name: 'News', url: '#' },
+  { name: 'List Your Property', url: '/providers' },
+  { name: 'Our History', url: '/about' },
+  { name: 'Sign in', url: '/signin' },
 ];
 
 const HeroWrapper = styled.div`
