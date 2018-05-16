@@ -112,18 +112,18 @@ const CWTColumnWrapper = ColumnWrapper.extend`
   }
 `;
 
-const HomePage = () => {
+const HomePage = ({ onLocationSearch }) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <Header headerItems={headerItems} />
+      <Header headerItems={headerItems} onLocationSearch={onLocationSearch} />
       <HeroWrapper>
         <StyledImage src={assetPath('images/home/cover.png')} alt="hero image" />
         <SearchBoxWrapper>
           <StyledHeading level="hero" palette="white">
             Find a Home to Love
           </StyledHeading>
-          <SearchBoxContainer layout="homeHero" />
+          <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
       </HeroWrapper>
     </Fragment>
