@@ -8,6 +8,7 @@ import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpe
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
+import ConciergeController from 'sly/controllers/ConciergeController';
 import StickyFooter from 'sly/components/molecules/StickyFooter';
 import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
 import { Heading, Hr } from 'sly/components/atoms';
@@ -118,7 +119,6 @@ export default class CommunityDetailPage extends React.Component {
     // TODO: move this to a container for PropertyReviews handling posts
     const onLeaveReview = () => {};
     // TODO: move this to a container PricingAndAvailability for handling bookings
-    const onInquireOrBookClicked = () => {};
     const { hasSlyReviews, hasWebReviews } = propRatings;
     const ratingsArray = propRatings.ratingsArray || [];
     const reviewsFinal = reviews || [];
@@ -208,13 +208,17 @@ export default class CommunityDetailPage extends React.Component {
             title="Pricing & Floor Plans"
             innerRef={this.pricingAndFloorPlansRef}
           >
-            <PricingAndAvailability
-              community={community}
-              address={address}
-              estimatedPrice={rgsAux.estimatedPrice}
-              roomPrices={roomPrices}
-              onInquireOrBookClicked={onInquireOrBookClicked}
-            />
+          <ConciergeController community={community}>
+            {({ getPricing }) =>
+              <PricingAndAvailability
+                community={community}
+                address={address}
+                estimatedPrice={rgsAux.estimatedPrice}
+                roomPrices={roomPrices}
+                onInquireOrBookClicked={getPricing}
+              />
+            }
+          </ConciergeController>
           </CollapsibleSection>
           <CollapsibleSection title="Similar Communities">
             <SimilarCommunities similarProperties={similarProperties} />
@@ -266,7 +270,18 @@ export default class CommunityDetailPage extends React.Component {
           </CollapsibleSection>
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
-        <StickyFooter footerInfo={{ title: 'Contact Property', name: community.name, ctaTitle: 'Contact' }} onFooterClick={onInquireOrBookClicked} />
+        <ConciergeController community={community}>
+          {({ getPricing }) =>
+            <StickyFooter
+              footerInfo={{
+                title: 'Contact Property',
+                name: community.name,
+                ctaTitle: 'Contact'
+              }}
+              onFooterClick={getPricing}
+            />
+          }
+        </ConciergeController>
       </Fragment>
     );
   }
