@@ -68,6 +68,12 @@ theme.sizes = {
     },
   },
 
+  home: {
+    companiesWeTrust: {
+      width: '33.625rem', // 538px
+    },
+  },
+
   filtersMenu: {
     width: {
       mobile:       '23.4375rem',   // 375px
