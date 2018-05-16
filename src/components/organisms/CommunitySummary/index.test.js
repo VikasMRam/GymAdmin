@@ -19,7 +19,7 @@ const {
   communityHighlights,
   communityPhone,
 } = propInfo;
-const phoneNumber = communityPhone;
+
 const communityReviewsRef = React.createRef();
 const pricingAndFloorPlansRef = React.createRef();
 const amenitiesAndFeaturesRef = React.createRef();
@@ -64,7 +64,7 @@ it('renders twilioNumber', () => {
 
 it('renders phoneNumber', () => {
   const wrapper = wrap({
-    phoneNumber, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
+    phoneNumber:communityPhone, user, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
   });
   testPhoneNumber(wrapper);
 });
@@ -107,7 +107,7 @@ it('renders reviews', () => {
 it('renders all properties', () => {
   const wrapper = wrap({
     twilioNumber,
-    phoneNumber,
+    phoneNumber: communityPhone,
     user,
     amenityScore: rgsAux.amenityScore,
     startingRate,
