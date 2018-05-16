@@ -1,7 +1,7 @@
 import { string, bool } from 'prop-types';
 import styled from 'styled-components';
-import { font, palette } from 'styled-theme';
-import { ifProp, prop } from 'styled-tools';
+import { palette } from 'styled-theme';
+import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 
@@ -12,7 +12,9 @@ const Block = styled.div`
   color: ${palette(0)};
   font-size: ${getSize('text')};
   line-height: ${getSize('lineHeight')};
-  margin: 0 0 calc(${getSize('text')} * ${getSize('lineHeight')} * 0.5) 0;
+  // TODO: review this with @jared,
+  // for now let's make margin-bottom relative to font-size
+  margin: 0 0 calc(${getSize('text')} * 0.25) 0;
 `;
 
 Block.propTypes = {
