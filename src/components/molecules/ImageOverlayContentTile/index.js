@@ -48,7 +48,7 @@ const ImageOverlayContentTile = ({
 ImageOverlayContentTile.propTypes = {
   image: string.isRequired,
   children: node,
-  size: oneOf(['small', 'regular', 'large']),
+  size: oneOf(['small', 'regular', 'large', 'xLarge']),
 };
 
 ImageOverlayContentTile.defaultProps = {

@@ -134,13 +134,17 @@ theme.sizes = {
   picture: {
     small: {
       width: '15.375rem', // 246px
-      height: '11.5rem', // 184px
+      height: '11.25rem', // 180px
     },
     regular: {
       width: '21rem', // 336px
       height: '15.625rem', // 250px
     },
     large: {
+      width: '21.4375rem', // 343px
+      height: '15.625rem', // 250px
+    },
+    xLarge: {
       width: '32.25rem', // 516px
       height: '17.5rem', // 280px
     },
