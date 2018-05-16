@@ -1,5 +1,5 @@
 import React from 'react';
-import { any } from 'prop-types';
+import { any, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -29,10 +29,13 @@ const ColumnWrapper = styled.aside`
 `;
 
 const CommunityDetailPageTemplate = ({
-  children, column, bottom,
+  children,
+  column,
+  bottom,
+  onLocationSearch,
 }) => (
   <BasePageTemplate
-    header={<HeaderContainer />}
+    header={<HeaderContainer onLocationSearch={onLocationSearch} />}
     footer={<Footer />}
   >
     <TwoColummnWrapper>
@@ -47,6 +50,7 @@ CommunityDetailPageTemplate.propTypes = {
   children: any.isRequired,
   column: any.isRequired,
   bottom: any.isRequired,
+  onLocationSearch: func,
 };
 
 export default CommunityDetailPageTemplate;

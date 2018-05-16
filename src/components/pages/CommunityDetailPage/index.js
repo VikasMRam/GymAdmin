@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { palette} from 'styled-theme';
 import { object, func } from 'prop-types';
 import Sticky from 'react-stickynode';
 
-import { getBreadCrumbsForCommunity , getCitySearchUrl} from "sly/services/helpers/url";
+import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
@@ -26,8 +25,8 @@ import MorePictures from 'sly/components/organisms/MorePictures';
 import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import {getHelmetForCommunityPage} from "sly/services/helpers/html_headers";
-import Button from 'sly/components/atoms/Button'
+import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
+import Button from 'sly/components/atoms/Button';
 
 const BackToSearch = styled.div`
   text-align:center
@@ -36,6 +35,7 @@ const BackToSearch = styled.div`
 export default class CommunityDetailPage extends React.Component {
   static propTypes = {
     community: object.isRequired,
+    onLocationSearch: func,
   };
 
   state = {
@@ -77,7 +77,7 @@ export default class CommunityDetailPage extends React.Component {
   };
 
   render() {
-    const { community } = this.props;
+    const { community, onLocationSearch } = this.props;
     const {
       id,
       name,
@@ -148,7 +148,7 @@ export default class CommunityDetailPage extends React.Component {
     );
     const bottomContent = (
       <Fragment>
-        { getHelmetForCommunityPage( community )}
+        { getHelmetForCommunityPage(community) }
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <Section title={`Map View of ${name}`}>
           <CommunityMap
@@ -179,6 +179,7 @@ export default class CommunityDetailPage extends React.Component {
         <CommunityDetailPageTemplate
           column={columnContent}
           bottom={bottomContent}
+          onLocationSearch={onLocationSearch}
         >
           {(images.length > 0 || videos.length > 0) &&
             <CommunityMediaGallery
@@ -218,7 +219,7 @@ export default class CommunityDetailPage extends React.Component {
           <CollapsibleSection title="Similar Communities">
             <SimilarCommunities similarProperties={similarProperties} />
             <BackToSearch>
-              <Button ghost  href={getCitySearchUrl({ propInfo, address })}>Communities In {address.city}</Button>
+              <Button ghost href={getCitySearchUrl({ propInfo, address })}>Communities In {address.city}</Button>
             </BackToSearch>
           </CollapsibleSection>
           <CollapsibleSection title="Community Details">
