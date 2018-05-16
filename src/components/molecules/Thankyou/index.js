@@ -36,7 +36,7 @@ const Thankyou = ({ community, onClose }) => (
       Your request has been successfully sent to
       {' '}{community.name}.
     </StyledBlock>
-    <AgentTile community={ {...community, uri:'#' } } user={{name:'Test'}}/>
+    {/*{<AgentTile community={ {...community, uri:'#' } } user={{name:'Test'}}/>}*/}
     {onClose && <Button onClick={onClose} kind="jumbo">Done</Button>}
   </Wrapper>
 );
