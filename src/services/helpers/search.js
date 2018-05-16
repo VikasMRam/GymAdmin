@@ -1,5 +1,7 @@
 import { stringify, parse } from 'query-string';
 
+import { urlize } from './url';
+
 const fnExecutionTracker = {};
 
 /**
@@ -10,53 +12,56 @@ const fnExecutionTracker = {};
  * @param waitTimeInMillis
  * @returns {Function}
  */
-export const delayedExecutor = (fnToEval, key, waitTimeInMillis)=> {
-  //Add fnExecutionQ
-  fnExecutionTracker[key] = { lastExecutionTime:undefined, timer:undefined };
+export const delayedExecutor = (fnToEval, key, waitTimeInMillis) => {
+  // Add fnExecutionQ
+  fnExecutionTracker[key] = { lastExecutionTime: undefined, timer: undefined };
 
   if (waitTimeInMillis === undefined) {
     waitTimeInMillis = 800;
   }
 
-  return function(...args) {
-    let timeNow = new Date();
-    if ( !fnExecutionTracker[key].lastExecutionTime ||  ( (timeNow - fnExecutionTracker[key].lastExecutionTime) > waitTimeInMillis) ){
+  return function (...args) {
+    const timeNow = new Date();
+    if (
+      !fnExecutionTracker[key].lastExecutionTime ||
+      timeNow - fnExecutionTracker[key].lastExecutionTime > waitTimeInMillis
+    ) {
       fnExecutionTracker[key].lastExecutionTime = new Date();
       fnExecutionTracker[key].timer = undefined;
       fnToEval(...args);
     } else {
-      if (fnExecutionTracker[key].timer){
+      if (fnExecutionTracker[key].timer) {
         clearTimeout(fnExecutionTracker[key].timer);
       }
-      let timeout = waitTimeInMillis - (timeNow - fnExecutionTracker[key].lastExecutionTime);
-      let timer = setTimeout(() => {
-        fnToEval(...args)
-      },timeout);
+      const timeout =
+        waitTimeInMillis -
+        (timeNow - fnExecutionTracker[key].lastExecutionTime);
+      const timer = setTimeout(() => {
+        fnToEval(...args);
+      }, timeout);
       fnExecutionTracker[key].timer = timer;
     }
-
-  }
-
-
+  };
 };
 
 export const getRadiusFromMapBounds = (bounds) => {
+  const center = bounds.getCenter();
+  const ne = bounds.getNorthEast();
 
-  let center = bounds.getCenter();
-  let ne = bounds.getNorthEast();
+  // r = radius of the earth in miles
+  const r = 3963.0;
 
-// r = radius of the earth in miles
-  let r = 3963.0;
+  // Convert lat or lng from decimal degrees into radians (divide by 57.2958)
+  const lat1 = center.lat() / 57.2958;
+  const lon1 = center.lng() / 57.2958;
+  const lat2 = ne.lat() / 57.2958;
+  const lon2 = ne.lng() / 57.2958;
 
-// Convert lat or lng from decimal degrees into radians (divide by 57.2958)
-  let lat1 = center.lat() / 57.2958;
-  let lon1 = center.lng() / 57.2958;
-  let lat2 = ne.lat() / 57.2958;
-  let lon2 = ne.lng() / 57.2958;
-
-// distance = circle radius from center to Northeast corner of bounds
-  let dis = r * Math.acos(Math.sin(lat1) * Math.sin(lat2) +
-    Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1));
+  // distance = circle radius from center to Northeast corner of bounds
+  const dis =
+    r *
+    Math.acos(Math.sin(lat1) * Math.sin(lat2) +
+        Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1));
   return Math.round(dis);
 };
 
@@ -77,10 +82,26 @@ const searchParamsWhitelist = [
 ];
 
 export const tocs = [
-  { label: 'All Communities',    value: 'retirement-community', segment: 'retirement-community'},
-  { label: 'Assisted Living',    value: 'assisted-living'     , segment: 'assisted-living'},
-  { label: 'Independent Living', value: 'independent-living'  , segment: 'independent-living'},
-  { label: 'Memory Care',        value: 'alzheimers-care'     , segment: 'alzheimers-care'},
+  {
+    label: 'All Communities',
+    value: 'retirement-community',
+    segment: 'retirement-community',
+  },
+  {
+    label: 'Assisted Living',
+    value: 'assisted-living',
+    segment: 'assisted-living',
+  },
+  {
+    label: 'Independent Living',
+    value: 'independent-living',
+    segment: 'independent-living',
+  },
+  {
+    label: 'Memory Care',
+    value: 'alzheimers-care',
+    segment: 'alzheimers-care',
+  },
 ];
 
 export const sizes = [
@@ -111,12 +132,12 @@ const findAFilter = (ary, filters='') => filters.split('/')
   }, undefined);
  */
 
-export const filterSearchParams = params => Object.keys(params)
-  .reduce((cumul, key) => {
+export const filterSearchParams = params =>
+  Object.keys(params).reduce((cumul, key) => {
     if (searchParamsWhitelist.includes(key) && params[key]) {
       cumul[key] = params[key];
     }
-    if (key ==='budget' && params[key]) {
+    if (key === 'budget' && params[key]) {
       cumul[key] = Math.floor(parseInt(params[key]));
     }
     return cumul;
@@ -128,7 +149,9 @@ export const filterLinkPath = (currentFilters, nextFilters) => {
     ...nextFilters,
   });
 
-  const { toc, state, city, ...qs } = filters;
+  const {
+    toc, state, city, ...qs
+  } = filters;
 
   const qsString = stringify(qs);
   const qsPart = qsString ? `?${qsString}` : '';
@@ -147,6 +170,17 @@ export const getSearchParams = ({ params }, location) => {
 
   return filterSearchParams({
     ...params,
-    ...qs
+    ...qs,
   });
+};
+
+export const getPathFromPlacesResponse = ({ address_components }) => {
+  const cityFull = address_components.filter(e => e.types.indexOf('locality') > -1);
+  const stateFull = address_components.filter(e => e.types.indexOf('administrative_area_level_1') > -1);
+  if (cityFull.length > 0 && stateFull.length > 0) {
+    const city = urlize(cityFull[0].long_name);
+    const state = urlize(stateFull[0].long_name);
+    return `${'/assisted-living/'}${state}/${city}`;
+  }
+  return '/assisted-living/';
 };

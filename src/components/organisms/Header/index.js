@@ -113,7 +113,7 @@ const HeaderItem = styled(Link)`
 `;
 
 const Header = ({
-  menuOpen, onMenuIconClick, headerItems, menuItems,
+  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems,
 }) => {
   const headerItemComponents = headerItems.map(item => (
     <HeaderItem to={item.url} palette="slate" key={item.name}>
@@ -155,7 +155,7 @@ const Header = ({
           </Fragment>
         )}
       </SeniorlyIconMenu>
-      <SearchBoxContainer layout="header" />
+      <SearchBoxContainer layout="header" onLocationSearch={onLocationSearch} />
       <HeaderItems>
         {headerItemComponents}
         {headerMenuItemComponents.length > 0 && (
@@ -170,6 +170,7 @@ const Header = ({
 Header.propTypes = {
   menuOpen: bool,
   onMenuIconClick: func,
+  onLocationSearch: func,
   headerItems: arrayOf(shape({
     name: string,
     url: string,

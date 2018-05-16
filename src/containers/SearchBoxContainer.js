@@ -13,6 +13,7 @@ class SearchBoxContainer extends Component {
     layout: string.isRequired,
     address: string,
     changeAddress: func,
+    onLocationSearch: func,
   };
 
   constructor(props) {
@@ -38,9 +39,10 @@ class SearchBoxContainer extends Component {
   };
 
   handleSelect = (address) => {
+    const { onLocationSearch } = this.props;
     geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
+      .then(results => results[0])
+      .then(result => onLocationSearch(result))
       .catch(error => console.error('Error', error));
   };
 

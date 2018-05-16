@@ -6,7 +6,11 @@ import Header from 'sly/components/organisms/Header';
 import { toggle } from 'sly/store/actions';
 import { isHeaderDropdownOpen } from 'sly/store/selectors';
 
-const HeaderContainer = ({ dispatchToggleAction, dropdownOpen }) => {
+const HeaderContainer = ({
+  dispatchToggleAction,
+  dropdownOpen,
+  onLocationSearch,
+}) => {
   const headerItems = [
     { name: 'List on Seniorly', url: '#' },
     { name: 'Help Center', url: '#' },
@@ -29,6 +33,7 @@ const HeaderContainer = ({ dispatchToggleAction, dropdownOpen }) => {
     <Header
       menuOpen={dropdownOpen}
       onMenuIconClick={dispatchToggleAction}
+      onLocationSearch={onLocationSearch}
       headerItems={headerItems}
       menuItems={menuItems}
     />
@@ -37,6 +42,7 @@ const HeaderContainer = ({ dispatchToggleAction, dropdownOpen }) => {
 
 HeaderContainer.propTypes = {
   dispatchToggleAction: func,
+  onLocationSearch: func,
   dropdownOpen: bool,
 };
 
@@ -52,7 +58,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(HeaderContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);
