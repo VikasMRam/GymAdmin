@@ -1,18 +1,19 @@
 import React from 'react';
-import { bool, number, oneOf } from 'prop-types';
+import { bool, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 
+const height = p => size('element', p.size);
 const styles = css`
   display: block;
   width: 100%;
   margin: 0;
   font-size: ${size('text', 'body')};
   padding: ${size('padding', 'regular')};
-  height: ${ifProp({ type: 'textarea' }, size('element.textarea'), size('element.regular'))};
+  height: ${ifProp({ type: 'textarea' }, size('element.textarea'), height)};
   color: ${ifProp('invalid', palette('danger', 0), palette('grayscale', 0))};
   background-color: ${palette('whites', 2)};
   border: 1px solid
@@ -66,14 +67,14 @@ const Input = ({ ...props }) => {
 
 Input.propTypes = {
   type: oneOf(['textarea', 'select', 'text', 'checkbox', 'radio']),
-  height: number,
+  size: oneOf(['small', 'regular', 'large', 'xLarge']),
   invalid: bool,
 };
 
 Input.defaultProps = {
   palette: 'grayscale',
   type: 'text',
-  height: 40,
+  size: 'regular',
 };
 
 export default Input;

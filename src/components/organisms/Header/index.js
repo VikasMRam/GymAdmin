@@ -46,7 +46,6 @@ const MenuArrowIcon = styled(Icon)`
 
 const MenuIcon = styled(Icon)`
   display: none;
-  margin: ${size('spacing.large')};
   cursor: pointer;
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
@@ -99,7 +98,7 @@ const HeaderItems = styled.div`
 
 const HeaderItem = styled(Link)`
   display: none;
-  padding: 0 ${size('spacing.large')};
+  padding: ${size('spacing.large')};
   font-size: ${size('text.caption')};
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {

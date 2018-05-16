@@ -28,17 +28,21 @@ const SearchTextBox = styled(Input)`
   })}
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-    height: initial;
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   }
 `;
 const SearchButtonLargeLaptop = styled(Button)`
   ${switchProp('layout', {
     header: css`
-    display: none;`,
+      display: none;`,
+    homeHero: css`
+      height: ${size('element.large')};`,
   })}
   background-color: ${palette('secondary', 0)};
   margin-left: -${size('spacing.tiny')};
+  > span {
+    vertical-align: middle;
+  }
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     display: block;
@@ -55,7 +59,7 @@ const SearchButton = styled(Button)`
 
 const SearchBox = ({ layout }) => (
   <SearchBar layout={layout}>
-    <SearchTextBox placeholder="Search by city or zip code" layout={layout} />
+    <SearchTextBox size="large" placeholder="Search by city or zip code" layout={layout} />
     <SearchButtonLargeLaptop layout={layout}>
       <Icon icon="search" size="regular" palette="white" />
     </SearchButtonLargeLaptop>
