@@ -2,18 +2,19 @@ import React, { Component } from 'react';
 import { string, bool } from 'prop-types';
 import { merge, omit } from 'lodash';
 
-
 import withServerState from 'sly/store/withServerState';
 
 import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList, getListMeta } from 'sly/store/selectors';
 
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
-import { filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
-
+import {
+  filterLinkPath,
+  getSearchParams,
+  getPathFromPlacesResponse,
+} from 'sly/services/helpers/search';
 
 class CommunitySearchPageContainer extends Component {
-
   // TODO Define Search Parameters
   toggleMap = () => {
     const event = { changedParams: { view: 'map' } };
@@ -35,17 +36,26 @@ class CommunitySearchPageContainer extends Component {
     const changedParams = paramsToRemove.reduce((cumul, param) => {
       cumul[param] = undefined;
       return cumul;
-    },{});
+    }, {});
 
     const { path } = filterLinkPath(searchParams, changedParams);
 
     history.push(path);
   };
 
+  handleOnLocationSearch = (result) => {
+    const { history } = this.props;
+    const path = getPathFromPlacesResponse(result);
+    history.push(path);
+  };
 
   render() {
     const {
-      searchParams, error, communityList, requestMeta, location
+      searchParams,
+      error,
+      communityList,
+      requestMeta,
+      location,
     } = this.props;
 
     // TODO Add Error Page
@@ -61,6 +71,7 @@ class CommunitySearchPageContainer extends Component {
         searchParams={searchParams}
         onParamsChange={this.changeSearchParams}
         onParamsRemove={this.removeSearchFilters}
+        onLocationSearch={this.handleOnLocationSearch}
         communityList={communityList}
         location={location}
       />

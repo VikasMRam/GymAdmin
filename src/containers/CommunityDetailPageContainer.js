@@ -1,27 +1,31 @@
 import React, { Component } from 'react';
-import { object, string, func } from 'prop-types';
+import { object, string } from 'prop-types';
 
-import  withServerState from 'sly/store/withServerState';
+import withServerState from 'sly/store/withServerState';
 import { getDetail } from 'sly/store/selectors';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { getPathFromPlacesResponse } from 'sly/services/helpers/search';
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
     community: object,
     error: string,
+    history: object,
+  };
+
+  handleOnLocationSearch = (result) => {
+    const { history } = this.props;
+    const path = getPathFromPlacesResponse(result);
+    history.push(path);
   };
 
   render() {
     const { community, error } = this.props;
 
     if (error) {
-      return (
-        <div>
-          {error}
-        </div>
-      );
+      return <div>{error}</div>;
     }
 
     if (!community) {
@@ -30,6 +34,7 @@ class CommunityDetailPageContainer extends Component {
     return (
       <CommunityDetailPage
         community={community}
+        onLocationSearch={this.handleOnLocationSearch}
       />
     );
   }
@@ -41,16 +46,17 @@ const mapStateToProps = (state, { match }) => {
   return {
     community: getDetail(state, 'community', communitySlug),
   };
-}
+};
 
-const fetchData = (dispatch, { match }) => Promise.all([
-  dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
-    include: 'similar-communities'
-  })),
-  dispatch(resourceDetailReadRequest('userAction')),
-]);
+const fetchData = (dispatch, { match }) =>
+  Promise.all([
+    dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
+      include: 'similar-communities',
+    })),
+    dispatch(resourceDetailReadRequest('userAction')),
+  ]);
 
-const handleError = err => {
+const handleError = (err) => {
   if (err.response.status === 404) {
     return { error: 'Unknown Profile!' };
   }
@@ -62,4 +68,3 @@ export default withServerState({
   fetchData,
   handleError,
 })(CommunityDetailPageContainer);
-

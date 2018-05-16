@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
-import { palette } from "styled-theme";
+import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
-import { sendPageView } from "sly/services/helpers/events";
-import { titleize } from "sly/services/helpers/strings";
-import { getHelmetForSearchPage } from "sly/services/helpers/html_headers";
+import { sendPageView } from 'sly/services/helpers/events';
+import { titleize } from 'sly/services/helpers/strings';
+import { getHelmetForSearchPage } from 'sly/services/helpers/html_headers';
 
 import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
 import { Heading, Button } from 'sly/components/atoms';
@@ -15,7 +15,6 @@ import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 import Modal from 'sly/components/molecules/Modal';
-
 
 const TopWrapper = styled.div`
   padding-bottom: ${size('spacing.xLarge')};
@@ -46,25 +45,26 @@ export default class CommunitySearchPage extends Component {
     toggleMap: func,
     onParamsChange: func,
     onParamsRemove: func,
+    onLocationSearch: func,
   };
 
   state = {
     isModalFilterPanelVisible: false,
   };
 
-  showFilters= () => {
+  showFilters = () => {
     this.setState({
       isModalFilterPanelVisible: true,
     });
   };
-  hideFilters= () => {
+  hideFilters = () => {
     this.setState({
       isModalFilterPanelVisible: false,
     });
   };
 
   componentDidMount() {
-     sendPageView(this.props.location.pathname);
+    sendPageView(this.props.location.pathname);
   }
 
   render() {
@@ -73,6 +73,7 @@ export default class CommunitySearchPage extends Component {
       toggleMap,
       onParamsChange,
       onParamsRemove,
+      onLocationSearch,
       searchParams,
       requestMeta,
       communityList,
@@ -104,7 +105,7 @@ export default class CommunitySearchPage extends Component {
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-        {getHelmetForSearchPage({...searchParams,url:location})}
+        {getHelmetForSearchPage({ ...searchParams, url: location })}
         <Modal
           closeable
           onClose={this.hideFilters}
@@ -125,18 +126,14 @@ export default class CommunitySearchPage extends Component {
         </Modal>
         <CommunitySearchPageTemplate
           column={columnContent}
+          onLocationSearch={onLocationSearch}
         >
           <Heading>
             {listSize} communities near {city}
           </Heading>
           <TopWrapper>
             {isMapView && (
-              <IconButton
-                icon="list"
-                ghost
-                transparent
-                onClick={toggleMap}
-              >
+              <IconButton icon="list" ghost transparent onClick={toggleMap}>
                 View List
               </IconButton>
             )}
@@ -145,7 +142,12 @@ export default class CommunitySearchPage extends Component {
                 View Map
               </IconButton>
             )}
-            <IconButton icon="filter" ghost transparent onClick={this.showFilters}>
+            <IconButton
+              icon="filter"
+              ghost
+              transparent
+              onClick={this.showFilters}
+            >
               Filters
             </IconButton>
           </TopWrapper>

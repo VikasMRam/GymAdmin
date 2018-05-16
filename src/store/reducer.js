@@ -7,6 +7,7 @@ import modal from './modal/reducer';
 import resource from './resource/reducer';
 import concierge from './concierge/reducer';
 import header from './header/reducer';
+import searchBox from './searchBox/reducer';
 
 const reducers = {
   form,
@@ -16,6 +17,7 @@ const reducers = {
   concierge,
   resource,
   header,
+  searchBox,
 };
 
 export default combineReducers(reducers);

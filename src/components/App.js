@@ -12,7 +12,7 @@ import setGlobalStyles from './themes/setGlobalStyles';
 
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
-import HomePage from 'sly/components/pages/HomePage';
+import HomePageContainer from 'sly/containers/HomePageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 
 setGlobalStyles();
@@ -21,7 +21,7 @@ const careTypes = [
   'retirement-community',
   'assisted-living',
   'independent-living',
-  'alzheimers-care'
+  'alzheimers-care',
 ].join('|');
 
 export default class App extends Component {
@@ -41,17 +41,21 @@ export default class App extends Component {
     }
   }
 
-  routes = [{
-    path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
-    component: CommunityDetailPageContainer,
-  }, {
-    path: `/:toc(${careTypes})/:state/:city`,
-    component: CommunitySearchPageContainer,
-  }, {
-    path: '/',
-    component: HomePage,
-    exact: true,
-  }];
+  routes = [
+    {
+      path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
+      component: CommunityDetailPageContainer,
+    },
+    {
+      path: `/:toc(${careTypes})/:state/:city`,
+      component: CommunitySearchPageContainer,
+    },
+    {
+      path: '/',
+      component: HomePageContainer,
+      exact: true,
+    },
+  ];
 
   render() {
     return (
@@ -61,7 +65,10 @@ export default class App extends Component {
           <title>Home</title>
 
           <meta name="description" content="The Senior Living Marketplace" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
           {/*
             Open graph
           */}
@@ -81,9 +88,7 @@ export default class App extends Component {
 
         <ThemeProvider theme={theme}>
           <Switch>
-            {this.routes.map(route => (
-              <Route key={route.path} {...route} />
-            ))}
+            {this.routes.map(route => <Route key={route.path} {...route} />)}
           </Switch>
         </ThemeProvider>
       </Fragment>

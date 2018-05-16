@@ -8,11 +8,11 @@ import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
 import { Image, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import Header from 'sly/components/organisms/Header';
 import Footer from 'sly/components/organisms/Footer';
-import SearchBox from 'sly/components/molecules/SearchBox';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
+import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 const headerItems = [
   { name: 'Resources', url: '#' },
@@ -27,6 +27,16 @@ const HeroWrapper = styled.div`
   position: relative;
   background-color: ${palette('grayscale', 0)};
 
+  > img {
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+    z-index: 0;
+  }
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     height: ${size('header.home.heroImage.height')};
   }
@@ -102,16 +112,18 @@ const CWTColumnWrapper = ColumnWrapper.extend`
   }
 `;
 
-const HomePage = () => {
+const HomePage = ({ onLocationSearch }) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <Header headerItems={headerItems} />
+      <Header headerItems={headerItems} onLocationSearch={onLocationSearch} />
       <HeroWrapper>
         <StyledImage src={assetPath('images/home/cover.png')} alt="hero image" />
         <SearchBoxWrapper>
-          <StyledHeading level="hero" palette="white">Find a Home to Love</StyledHeading>
-          <SearchBox layout="homeHero" />
+          <StyledHeading level="hero" palette="white">
+            Find a Home to Love
+          </StyledHeading>
+          <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
       </HeroWrapper>
     </Fragment>
