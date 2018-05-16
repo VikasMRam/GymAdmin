@@ -103,7 +103,6 @@ const SearchBox = ({
             {...getInputProps({
               placeholder: 'Search by city or zip code',
             })}
-            // onBlur={() => false}
             layout={layout}
           />
           {suggestions.length > 0 && (

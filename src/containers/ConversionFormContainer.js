@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { object } from 'prop-types';
 
+import { getDetail } from 'sly/store/selectors';
 import { REQUEST_CALLBACK } from 'sly/services/api/actions';
 
 import {
@@ -47,10 +48,26 @@ class ConversionFormContainer extends Component {
   }
 
   render() {
-    const { submit, ...props } = this.props;
-    return <ReduxForm onSubmit={this.submit} {...props} />;
+    const { submit, userDetails, ...props } = this.props;
+    const { email, fullName, phone } = userDetails; 
+    const initialValues = {
+      email,
+      phone,
+      full_name: fullName,
+    };
+    return (
+      <ReduxForm 
+        initialValues={initialValues} 
+        onSubmit={this.submit} 
+        {...props} 
+      />
+    );
   }
 }
+
+const mapStateToProps = (state, ownProps) => ({
+  userDetails: getDetail(state, 'userAction').userDetails || {}, 
+});
 
 const mapDispatchToProps = dispatch => ({
   submit: data => {
@@ -58,5 +75,5 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(ConversionFormContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ConversionFormContainer);
 

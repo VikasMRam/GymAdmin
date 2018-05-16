@@ -19,7 +19,6 @@ class EstimatedCostContainer extends Component {
     const { concierge, getDetailedPricing } = this.props;
     const { callbackRequested, advancedInfoSent } = concierge;
  
-    console.log('concierge', concierge);
     getDetailedPricing({ callbackRequested, advancedInfoSent });
   }
 
