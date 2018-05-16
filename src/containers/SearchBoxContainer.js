@@ -32,6 +32,11 @@ class SearchBoxContainer extends Component {
       }
     );
   }
+  componentWillUnmount() {
+    this.setState({
+      isMounted: false,
+    });
+  }
 
   handleChange = (address) => {
     const { changeAddress } = this.props;
