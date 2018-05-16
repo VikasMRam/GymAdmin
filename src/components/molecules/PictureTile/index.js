@@ -6,32 +6,17 @@ import { size } from 'sly/components/themes';
 import Image from 'sly/components/atoms/Image';
 
 const StyledImage = styled(Image)`
-  margin-bottom: ${size('spacing.large')};
-  margin-left: ${size('spacing.regular')};
-
-  width: ${size('picture', 'large', 'width')};
-  height: ${size('picture', 'large', 'height')};
+  width: 100%;
+  height: auto;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    margin-bottom: ${size('spacing.xLarge')};
-    margin-left: 0;
-
-    width: ${size('picture', 'regular', 'width')};
-    height: ${size('picture', 'regular', 'height')};
-
-    :nth-child(odd) {
-      margin-right: ${size('spacing.xLarge')};
-    }
+    width: ${size('picture.regular.width')};
+    height: ${size('picture.regular.height')};
   }
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-    width: ${size('picture', 'small', 'width')};
-    height: ${size('picture', 'small', 'height')};
-
-    margin-right: ${size('spacing.xLarge')};
-    :nth-child(4n) {
-      margin-right: 0;
-    }
+    width: ${size('picture.small.width')};
+    height: ${size('picture.small.height')};
   }
 `;
 
