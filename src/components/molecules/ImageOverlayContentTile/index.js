@@ -7,13 +7,22 @@ import { size } from 'sly/components/themes';
 import { Image } from 'sly/components/atoms';
 
 const width = p => size('picture', p.size, 'width');
+const height = p => size('picture', p.size, 'height');
 const Wrapper = styled.div`
-  width: ${width};
+  width: 100%;
+  @media screen and (min-width: ${width}) {
+    width: ${width};
+  }
   position: relative
 `;
 const StyledImage = styled(Image)`
   border-radius: ${size('border.large')};
-  width: ${width};
+  width: 100%;
+  height: initial;
+  @media screen and (min-width: ${width}) {
+    width: ${width};
+    height: ${height};
+  }
 `;
 const ContentWrapper = styled.div`
   position: absolute;
@@ -39,7 +48,7 @@ const ImageOverlayContentTile = ({
 ImageOverlayContentTile.propTypes = {
   image: string.isRequired,
   children: node,
-  size: oneOf(['regular']),
+  size: oneOf(['small', 'regular', 'large']),
 };
 
 ImageOverlayContentTile.defaultProps = {

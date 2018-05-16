@@ -5,7 +5,7 @@ import { palette } from 'styled-theme';
 import { size, assetPath } from 'sly/components/themes';
 
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
-import { Image, Heading, Hr, Link } from 'sly/components/atoms';
+import { Image, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import Header from 'sly/components/organisms/Header';
 import Footer from 'sly/components/organisms/Footer';
 import SearchBox from 'sly/components/molecules/SearchBox';
@@ -25,31 +25,30 @@ const headerItems = [
 
 const HeroWrapper = styled.div`
   position: relative;
-  padding-top: 15%;
-  padding-bottom: 15%;
   background-color: ${palette('grayscale', 0)};
 
-  > img {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.8;
-    z-index: 0;
-  }
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    height: ${size('header.homeHeroImage.height')};
+    height: ${size('header.home.heroImage.height')};
   }
+`;
+const StyledImage = styled(Image)`
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  z-index: 0;
+  display: block;
 `;
 const SearchBoxWrapper = styled.div`
   margin: auto;
-  position: relative;
   width: 90%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('header.homeHeroSearchBar.width')};
+    width: ${size('header.home.heroSearchBar.width')};
   }
 `;
 const StyledHeading = styled(Heading)`
@@ -65,20 +64,19 @@ const StyledSection = styled(Section)`
 `;
 const ColumnWrapper = styled.div`
   display: flex;
-  justify-content: space-between;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 
-  > div {
+  > * {
     margin-bottom: ${size('spacing.xLarge')};
+    margin-right: ${size('spacing.xLarge')};
   }
 
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-    flex-direction: row;
-    align-items: initial;
-
-    > div {
+    justify-content: space-between;
+    > * {
+      margin-right: initial;
       margin-bottom: initial;
     }
   }
@@ -91,6 +89,9 @@ const UIColumnWrapper = ColumnWrapper.extend`
     margin-bottom: ${size('spacing.large')};
   }
 `;
+const StyledBlock = styled(Block)`
+  margin-bottom: ${size('spacing.xLarge')};
+`;
 
 const HomePage = () => {
   const HeaderContent = (
@@ -98,7 +99,7 @@ const HomePage = () => {
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <Header headerItems={headerItems} />
       <HeroWrapper>
-        <Image src={assetPath('images/home/cover.png')} alt="hero image" />
+        <StyledImage src={assetPath('images/home/cover.png')} alt="hero image" />
         <SearchBoxWrapper>
           <StyledHeading level="hero" palette="white">Find a Home to Love</StyledHeading>
           <SearchBox layout="homeHero" />
@@ -207,6 +208,74 @@ const HomePage = () => {
               <Heading palette="white">CCRC / Life Plan</Heading>
             </ImageOverlayContentTile>
           </Link>
+        </UIColumnWrapper>
+      </StyledSection>
+      <StyledHr />
+      <StyledSection title="Most searched cities">
+        <UIColumnWrapper>
+          <Link to="#">
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanFrancisco.png')}>
+              <Heading palette="white" level="subtitle">San Francisco, CA</Heading>
+              <Block palette="white">200+ communities</Block>
+            </ImageOverlayContentTile>
+          </Link>
+          <Link to="#">
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/LosAngeles.png')}>
+              <Heading palette="white" level="subtitle">Los Angeles, CA</Heading>
+              <Block palette="white">75+ communities</Block>
+            </ImageOverlayContentTile>
+          </Link>
+          <Link to="#">
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanDiego.png')}>
+              <Heading palette="white" level="subtitle">San Diego, CA</Heading>
+              <Block palette="white">100+ communities</Block>
+            </ImageOverlayContentTile>
+          </Link>
+          <Link to="#">
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Dallas.png')}>
+              <Heading palette="white" level="subtitle">Dallas, TX</Heading>
+              <Block palette="white">120+ communities</Block>
+            </ImageOverlayContentTile>
+          </Link>
+          <Link to="#">
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Houston.png')}>
+              <Heading palette="white" level="subtitle">Houston, TX</Heading>
+              <Block palette="white">72+ communities</Block>
+            </ImageOverlayContentTile>
+          </Link>
+          <Link to="#">
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Pheonix.png')}>
+              <Heading palette="white" level="subtitle">Pheonix, AZ</Heading>
+              <Block palette="white">151+ communities</Block>
+            </ImageOverlayContentTile>
+          </Link>
+          <Link to="#">
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Orlando.png')}>
+              <Heading palette="white" level="subtitle">Orlando, FL</Heading>
+              <Block palette="white">130+ communities</Block>
+            </ImageOverlayContentTile>
+          </Link>
+          <Link to="#">
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Miami.png')}>
+              <Heading palette="white" level="subtitle">Miami, FL</Heading>
+              <Block palette="white">80+ communities</Block>
+            </ImageOverlayContentTile>
+          </Link>
+        </UIColumnWrapper>
+      </StyledSection>
+      <StyledHr />
+      <StyledSection>
+        <UIColumnWrapper>
+          <ImageOverlayContentTile size="large" image={assetPath('images/home/partner-with-us.png')}>
+            <Heading palette="white">Partner With Us</Heading>
+            <StyledBlock palette="white" level="subtitle">For Local Referral Agents</StyledBlock>
+            <Button href="#">Get Started</Button>
+          </ImageOverlayContentTile>
+          <ImageOverlayContentTile size="large" image={assetPath('images/home/list-a-property.png')}>
+            <Heading palette="white">List a Property</Heading>
+            <StyledBlock palette="white" level="subtitle">For Senior Housing Providers</StyledBlock>
+            <Button href="#">Get Started</Button>
+          </ImageOverlayContentTile>
         </UIColumnWrapper>
       </StyledSection>
       <StyledHr />
