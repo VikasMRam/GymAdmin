@@ -53,6 +53,7 @@ const SearchBoxWrapper = styled.div`
 `;
 const StyledHeading = styled(Heading)`
   text-align: center;
+  margin-bottom: ${size('spacing.xxLarge')};
 `;
 const StyledSection = styled(Section)`
   text-align: center;
