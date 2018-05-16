@@ -16,7 +16,7 @@ const SearchBar = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     ${switchProp('layout', {
       header: css`
-          width: ${size('header.searchBar.width')};`,
+        width: ${size('header.searchBar.width')};`,
       homeHero: css`
         width: ${size('header.home.heroSearchBar.width')};`,
     })}
@@ -100,6 +100,7 @@ const SearchBox = ({
       {({ getInputProps, suggestions, getSuggestionItemProps }) => (
         <SearchSuggestionsWrapper>
           <SearchTextBox
+            size="large"
             {...getInputProps({
               placeholder: 'Search by city or zip code',
             })}

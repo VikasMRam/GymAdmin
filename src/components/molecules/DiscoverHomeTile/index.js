@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   }
 `;
 const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.small')};
+  margin-bottom: ${size('spacing.regular')};
 `;
 const StyledImage = styled(Image)`
   width: 100%;
@@ -29,43 +29,29 @@ const StyledImage = styled(Image)`
   }
 `;
 const ButtonWrapper = styled.div`
-  align-self: center;
+  align-self: flex-end;
+  margin-top: ${size('spacing.large')};
   ${switchProp('size', {
-    regular: css`
-      align-self: flex-end;
-      margin-top: ${size('spacing.regular')};`,
-    large: css`
-      align-self: flex-end;
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        align-self: initial;
-      }`,
+    xLarge: css`
+    margin-top: ${size('spacing.large')};
+    @media screen and (min-width: ${width}) {
+      margin-top: 0;
+    }`,
   })};
 `;
 const StyledBox = styled(Box)`
   padding: ${size('spacing.xLarge')};
-  padding-bottom: ${size('spacing.regular')};
   border-color: ${palette('primary', 3)};
   border-top: 0;
-  ${switchProp('size', {
-    regular: css`
-      padding-bottom: ${size('spacing.xLarge')};`,
-    large: css`
-      padding-bottom: ${size('spacing.xLarge')};
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        padding-bottom: initial;
-      }`,
-  })};
 `;
 const TwoColumnWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   ${switchProp('size', {
-    regular: css`
-      flex-direction: column;`,
-    large: css`
-      flex-direction: column;
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        flex-direction: initial;
+    xLarge: css`
+      @media screen and (min-width: ${width}) {
+        flex-direction: row;
       }`,
   })};
 `;
@@ -74,7 +60,7 @@ const StyledTextWrapper = styled.div`
 `;
 
 const DiscoverHomeTile = ({
-  size, image, title, description,
+  size, image, title, description, link,
 }) => (
   <Wrapper size={size}>
     <StyledImage src={image} size={size} />
@@ -85,7 +71,7 @@ const DiscoverHomeTile = ({
           <Block palette="grayscale">{description}</Block>
         </StyledTextWrapper>
         <ButtonWrapper size={size}>
-          <Button href="#">See more</Button>
+          <Button href={link.href}>{link.text}</Button>
         </ButtonWrapper>
       </TwoColumnWrapper>
     </StyledBox>
@@ -100,11 +86,11 @@ DiscoverHomeTile.propTypes = {
     text: string.isRequired,
     href: string.isRequired,
   }).isRequired,
-  size: oneOf(['regular', 'large']),
+  size: oneOf(['regular', 'large', 'xLarge']),
 };
 
 DiscoverHomeTile.defaultProps = {
-  size: 'large',
+  size: 'xLarge',
 };
 
 export default DiscoverHomeTile;

@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
+import { func } from 'prop-types';
 import { palette } from 'styled-theme';
 
 import { size, assetPath } from 'sly/components/themes';
@@ -26,17 +27,8 @@ const headerItems = [
 const HeroWrapper = styled.div`
   position: relative;
   background-color: ${palette('grayscale', 0)};
+  height: calc(${size('header.home.heroImage.height')}/2);
 
-  > img {
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.8;
-    z-index: 0;
-  }
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     height: ${size('header.home.heroImage.height')};
   }
@@ -287,12 +279,12 @@ const HomePage = ({ onLocationSearch }) => {
       <StyledHr />
       <StyledSection>
         <UIColumnWrapper>
-          <ImageOverlayContentTile size="large" image={assetPath('images/home/partner-with-us.png')}>
+          <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/partner-with-us.png')}>
             <Heading palette="white">Partner With Us</Heading>
             <StyledBlock palette="white" level="subtitle">For Local Referral Agents</StyledBlock>
             <Button href="#">Get Started</Button>
           </ImageOverlayContentTile>
-          <ImageOverlayContentTile size="large" image={assetPath('images/home/list-a-property.png')}>
+          <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/list-a-property.png')}>
             <Heading palette="white">List a Property</Heading>
             <StyledBlock palette="white" level="subtitle">For Senior Housing Providers</StyledBlock>
             <Button href="#">Get Started</Button>
@@ -319,6 +311,10 @@ const HomePage = ({ onLocationSearch }) => {
       </StyledSection>
     </BasePageTemplate>
   );
+};
+
+HomePage.propTypes = {
+  onLocationSearch: func,
 };
 
 export default HomePage;
