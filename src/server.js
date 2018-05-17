@@ -12,6 +12,7 @@ import { renderToString } from 'react-router-server';
 
 import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
+import serializeError from 'serialize-error';
 
 import { port, host, basename, publicPath, isDev, cookieDomain, } from 'sly/config';
 import configureStore from 'sly/store/configure';
@@ -142,6 +143,11 @@ app.use((err, req, res, next) => {
   } catch (otherError) {
     next(otherError);
   }
+});
+
+app.use(err => {
+  const json = JSON.stringify(serializeError(err));
+  console.error(`${new Date().toISOString()} ${json}`);
 });
 
 app.listen(port, (error) => {

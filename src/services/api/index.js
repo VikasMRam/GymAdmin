@@ -97,7 +97,6 @@ api.create = (settings = {}) => ({
     let tries = 2;
     const aTry = () =>
       api.request(endpoint, merge({}, this.settings, settings)).catch((error) => {
-        console.log('Seeing error in ',error);
         if ([401, 403].includes(error.response.status) && tries--) {
           this.unsetToken();
           return this.requestAuthToken().then(aTry);
