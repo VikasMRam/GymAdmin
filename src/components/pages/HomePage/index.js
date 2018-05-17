@@ -325,49 +325,49 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       <StyledHr />
       <StyledSection title="Most searched cities">
         <MSCColumnWrapper>
-          <Link to="#">
+          <Link to="/assisted-living/california/san-francisco">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanFrancisco.png')}>
               <Heading palette="white" level="subtitle">San Francisco, CA</Heading>
               <Block palette="white">200+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
-          <Link to="#">
+          <Link to="/assisted-living/california/los-angeles">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/LosAngeles.png')}>
               <Heading palette="white" level="subtitle">Los Angeles, CA</Heading>
               <Block palette="white">75+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
-          <Link to="#">
+          <Link to="/assisted-living/california/san-diego">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanDiego.png')}>
               <Heading palette="white" level="subtitle">San Diego, CA</Heading>
               <Block palette="white">100+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
-          <Link to="#">
+          <Link to="/assisted-living/texas/dallas">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/Dallas.png')}>
               <Heading palette="white" level="subtitle">Dallas, TX</Heading>
               <Block palette="white">120+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
-          <Link to="#">
+          <Link to="/assisted-living/texas/houston">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/Houston.png')}>
               <Heading palette="white" level="subtitle">Houston, TX</Heading>
               <Block palette="white">72+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
-          <Link to="#">
+          <Link to="/assisted-living/arizona/phoenix">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/Pheonix.png')}>
-              <Heading palette="white" level="subtitle">Pheonix, AZ</Heading>
+              <Heading palette="white" level="subtitle">Phoenix, AZ</Heading>
               <Block palette="white">151+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
-          <Link to="#">
+          <Link to="/assisted-living/florida/orlando">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/Orlando.png')}>
               <Heading palette="white" level="subtitle">Orlando, FL</Heading>
               <Block palette="white">130+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
-          <Link to="#">
+          <Link to="/assisted-living/florida/miami">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/Miami.png')}>
               <Heading palette="white" level="subtitle">Miami, FL</Heading>
               <Block palette="white">80+ communities</Block>
