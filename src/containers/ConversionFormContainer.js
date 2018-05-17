@@ -55,7 +55,7 @@ class ConversionFormContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  userDetails: getDetail(state, 'userAction').userDetails || {}, 
+  userDetails: (getDetail(state, 'userAction') || {}).userDetails || {}, 
 });
 
 const mapDispatchToProps = dispatch => ({
