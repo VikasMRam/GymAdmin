@@ -10,19 +10,10 @@ import CommunityMap from '.';
 const wrap = (props = {}) => shallow(<CommunityMap {...props} />);
 
 const {
-  id,
-  name,
-  startingRate,
-  mainImage,
-  address,
   similarProperties,
 } = RhodaGoldmanPlaza;
 const props = {
-  id,
-  name,
-  startingRate,
-  mainImage,
-  address,
+  community:RhodaGoldmanPlaza,
   similarProperties,
 };
 

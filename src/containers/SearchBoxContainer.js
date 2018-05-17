@@ -3,6 +3,7 @@ import { string, func } from 'prop-types';
 import { connect } from 'react-redux';
 import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 
+import { gMapsApiKey } from 'sly/config';
 import { changeAddress } from 'sly/store/actions';
 import { searchBoxAddress } from 'sly/store/selectors';
 
@@ -24,7 +25,7 @@ class SearchBoxContainer extends Component {
   componentDidMount() {
     const scriptjs = require('scriptjs');
     scriptjs(
-      'https://maps.googleapis.com/maps/api/js?key=AIzaSyDnadc7V6jUuE9bs6Fw3SLAbzFbkBkqFP0&libraries=places',
+      `https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&v=3.exp&libraries=geometry,drawing,place`,
       () => {
         this.setState({
           isMounted: true,

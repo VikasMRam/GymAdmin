@@ -9,7 +9,6 @@ import { size } from 'sly/components/themes';
 import Checkbox from 'sly/components/molecules/Checkbox';
 import Map from 'sly/components/atoms/Map';
 import MapTile from 'sly/components/molecules/MapTile';
-import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
 
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
@@ -221,24 +220,11 @@ class SearchMap extends Component {
           numReviews,
         },
       };
-      const communityForSmallTile = {
-        name,
-        url,
-        picture: image,
-        startingRate,
-        propRatings: {
-          reviewsValue,
-          numReviews,
-        },
-      };
+
       let infoWindowTile = (
         <MapTile tileInfo={community} borderless />
       );
-      if (isMobile) {
-        infoWindowTile = (
-          <CommunityChoiceTile community={communityForSmallTile} borderless />
-        );
-      }
+
       return (
         <Marker
           key={marker.id}
