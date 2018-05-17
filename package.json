@@ -111,6 +111,7 @@
     "prop-types": "^15.5.8",
     "query-string": "^5.0.0",
     "react": "^16.3.2",
+    "react-cookie": "^1.0.5",
     "react-dom": "^16.3.2",
     "react-dotdotdot": "^1.2.3",
     "react-ga": "^2.5.0",
