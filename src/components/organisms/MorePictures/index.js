@@ -9,14 +9,29 @@ import PictureTile from 'sly/components/molecules/PictureTile';
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  > div {
+  > * {
+    width: 100%;
     margin-bottom: ${size('spacing.xLarge')};
     line-height: 0;
   }
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    justify-content: space-between;
+    > * {
+      width: auto;
+      margin-right: ${size('spacing.xLarge')};
+    }
+    > *:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    > *:nth-child(2n) {
+      margin-right: ${size('spacing.xLarge')};
+    }
+    > *:nth-child(4n) {
+      margin-right: 0;
+    }
   }
 `;
 
