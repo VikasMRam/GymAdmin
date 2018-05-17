@@ -67,20 +67,43 @@ const StyledSection = styled(Section)`
 `;
 const ColumnWrapper = styled.div`
   display: flex;
-  // justify-content: center;
-  // align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 
   > * {
     margin-bottom: ${size('spacing.xLarge')};
-    margin-right: ${size('spacing.xLarge')};
   }
-
+  > *:last-child {
+    margin-right: 0;
+  }
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-    justify-content: space-between;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+`;
+const TwoColumnWrapper = ColumnWrapper.extend`
+  > * {
+    margin-right: 0;
+  }
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     > * {
-      margin-right: initial;
-      margin-bottom: initial;
+      margin-right: ${size('spacing.xLarge')};
+    }
+  }
+`;
+const ThreeColumnWrapper = ColumnWrapper.extend`
+  > * {
+    margin-right: 0;
+  }
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    > *:first-child {
+      margin-right: ${size('spacing.xLarge')};
+    }
+  }
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    > * {
+      margin-right: ${size('spacing.xLarge')};
     }
   }
 `;
@@ -88,19 +111,54 @@ const StyledHr = styled(Hr)`
   border-color: ${palette('primary', 3)};
 `;
 const UIColumnWrapper = ColumnWrapper.extend`
-  > a {
+  > * {
     margin-bottom: ${size('spacing.large')};
+  }
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    > *:nth-child(odd) {
+      margin-right: ${size('spacing.xLarge')};
+    }
+  }
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    > * {
+      margin-right: ${size('spacing.xLarge')};
+    }
+    > *:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+`;
+const MSCColumnWrapper = ColumnWrapper.extend`
+  > * {
+    margin-bottom: ${size('spacing.large')};
+  }
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    > *:nth-child(odd) {
+      margin-right: ${size('spacing.xLarge')};
+    }
+  }
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    > * {
+      margin-right: ${size('spacing.xLarge')};
+    }
+    > *:nth-child(4n) {
+      margin-right: 0;
+    }
   }
 `;
 const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 const CWTColumnWrapper = ColumnWrapper.extend`
-  width: 100%;
-  margin: auto;
+  > * {
+    margin-right: ${size('spacing.large')};
+  }
 
-  @media screen and (min-width: ${size('home.companiesWeTrust.width')}) {
-    width: ${size('home.companiesWeTrust.width')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    justify-content: center;
+    > * {
+      margin-right: ${size('spacing.huge')};
+    }
   }
 `;
 
@@ -127,7 +185,7 @@ const HomePage = ({ onLocationSearch }) => {
       footer={<Footer />}
     >
       <StyledSection title="Discover Favorite Homes">
-        <ColumnWrapper>
+        <TwoColumnWrapper>
           <DiscoverHomeTile
             image={assetPath('images/home/discover-home/independent-living-tile.png')}
             title="Care Homes"
@@ -140,9 +198,8 @@ const HomePage = ({ onLocationSearch }) => {
             description="200 properties starting from $4,000"
             link={{ text: 'See more', href: '#' }}
           />
-        </ColumnWrapper>
-        <br />
-        <ColumnWrapper>
+        </TwoColumnWrapper>
+        <ThreeColumnWrapper>
           <DiscoverHomeTile
             size="regular"
             image={assetPath('images/home/discover-home/studios-tile.png')}
@@ -164,12 +221,12 @@ const HomePage = ({ onLocationSearch }) => {
             description="200 properties from $4,000"
             link={{ text: 'See more', href: '#' }}
           />
-        </ColumnWrapper>
+        </ThreeColumnWrapper>
       </StyledSection>
       <br />
       <StyledHr />
       <StyledSection title="Meet others we've helped">
-        <ColumnWrapper>
+        <ThreeColumnWrapper>
           <MeetOthersTile
             image={assetPath('images/home/meet-others/female1-tile.png')}
             title="Sharon T."
@@ -185,7 +242,7 @@ const HomePage = ({ onLocationSearch }) => {
             title="Henry W."
             description={'“We were lucky enough to find a great place for my father-in-law. Seniorly is a really helpful website, very helpful and informative. Thank you so much for what you do.”'}
           />
-        </ColumnWrapper>
+        </ThreeColumnWrapper>
       </StyledSection>
       <br />
       <StyledHr />
@@ -225,7 +282,7 @@ const HomePage = ({ onLocationSearch }) => {
       </StyledSection>
       <StyledHr />
       <StyledSection title="Most searched cities">
-        <UIColumnWrapper>
+        <MSCColumnWrapper>
           <Link to="#">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanFrancisco.png')}>
               <Heading palette="white" level="subtitle">San Francisco, CA</Heading>
@@ -274,11 +331,11 @@ const HomePage = ({ onLocationSearch }) => {
               <Block palette="white">80+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
-        </UIColumnWrapper>
+        </MSCColumnWrapper>
       </StyledSection>
       <StyledHr />
       <StyledSection>
-        <UIColumnWrapper>
+        <TwoColumnWrapper>
           <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/partner-with-us.png')}>
             <Heading palette="white">Partner With Us</Heading>
             <StyledBlock palette="white" level="subtitle">For Local Referral Agents</StyledBlock>
@@ -289,7 +346,7 @@ const HomePage = ({ onLocationSearch }) => {
             <StyledBlock palette="white" level="subtitle">For Senior Housing Providers</StyledBlock>
             <Button href="#">Get Started</Button>
           </ImageOverlayContentTile>
-        </UIColumnWrapper>
+        </TwoColumnWrapper>
       </StyledSection>
       <StyledHr />
       <StyledSection title="Communities We Trust">
@@ -299,7 +356,6 @@ const HomePage = ({ onLocationSearch }) => {
           <Image src={assetPath('images/home/companies-we-trust/NIKE.png')} />
           <Image src={assetPath('images/home/companies-we-trust/Seniorly.png')} />
           <Image src={assetPath('images/home/companies-we-trust/Lyft.png')} />
-
         </CWTColumnWrapper>
       </StyledSection>
     </BasePageTemplate>
