@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
-import { connect } from 'react-redux';
 
 import HomePage from 'sly/components/pages/HomePage';
-import { setLocation } from 'sly/store/searchBox/actions';
 import { getPathFromPlacesResponse } from 'sly/services/helpers/search';
 
 class HomePageContainer extends Component {
@@ -22,8 +20,7 @@ class HomePageContainer extends Component {
   };
 
   handleOnLocationSearch = (result) => {
-    const { history, setLocation } = this.props;
-    setLocation(result);
+    const { history } = this.props;
     const path = getPathFromPlacesResponse(result);
     history.push(path);
   };
@@ -40,10 +37,4 @@ class HomePageContainer extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setLocation: result => dispatch(setLocation(result)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(HomePageContainer);
+export default HomePageContainer;

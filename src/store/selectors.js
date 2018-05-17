@@ -28,3 +28,7 @@ export const isHeaderDropdownOpen = state =>
 
 export const searchBoxAddress = state =>
   searchBox.searchBoxAddress(state.searchBox);
+
+export const searchBoxLocation = state =>
+  searchBox.searchBoxLocation(state.searchBox);
+

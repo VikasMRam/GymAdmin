@@ -93,7 +93,7 @@ const GoogleLogo = styled(Image)`
 `;
 const baseSearchOptions = {types: ['(regions)']};
 const SearchBox = ({
-  layout, value, onChange, onSelect,
+  layout, value, onChange, onSelect, onSeachButtonClick,
 }) => (
   <SearchBar layout={layout}>
     <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions}>
@@ -119,11 +119,11 @@ const SearchBox = ({
         </SearchSuggestionsWrapper>
       )}
     </PlacesAutocomplete>
-    <SearchButtonLargeLaptop layout={layout}>
+    <SearchButtonLargeLaptop layout={layout} onClick={onSeachButtonClick}>
       <Icon icon="search" size="regular" palette="white" />
     </SearchButtonLargeLaptop>
     {layout !== 'homeHero' && (
-      <SearchButton transparent ghost>
+      <SearchButton transparent ghost onClick={onSeachButtonClick}>
         <Icon icon="search" size="regular" palette="secondary" />
       </SearchButton>
     )}
@@ -135,6 +135,7 @@ SearchBox.propTypes = {
   value: string.isRequired,
   onChange: func.isRequired,
   onSelect: func.isRequired,
+  onSeachButtonClick: func.isRequired,
 };
 
 SearchBox.defaultProps = {

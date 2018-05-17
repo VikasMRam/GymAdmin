@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { string, func } from 'prop-types';
+import { string, func, object } from 'prop-types';
 import { connect } from 'react-redux';
-import { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import { geocodeByAddress } from 'react-places-autocomplete';
 
 import { gMapsApiKey } from 'sly/config';
-import { changeAddress } from 'sly/store/actions';
-import { searchBoxAddress } from 'sly/store/selectors';
+import { changeAddress, setLocation } from 'sly/store/actions';
+import { searchBoxAddress, searchBoxLocation } from 'sly/store/selectors';
 
 import SearchBox from 'sly/components/molecules/SearchBox';
 
@@ -13,7 +13,9 @@ class SearchBoxContainer extends Component {
   static propTypes = {
     layout: string.isRequired,
     address: string,
+    location: object,
     changeAddress: func,
+    setLocation: func,
     onLocationSearch: func,
   };
 
@@ -45,11 +47,16 @@ class SearchBoxContainer extends Component {
   };
 
   handleSelect = (address) => {
-    const { onLocationSearch } = this.props;
+    const { setLocation } = this.props;
     geocodeByAddress(address)
       .then(results => results[0])
-      .then(result => onLocationSearch(result))
+      .then(result => setLocation(result))
       .catch(error => console.error('Error', error));
+  }
+
+  handleSearch = () => {
+    const { location, onLocationSearch } = this.props;
+    onLocationSearch(location);
   };
 
   render() {
@@ -64,6 +71,7 @@ class SearchBoxContainer extends Component {
         value={address}
         onChange={this.handleChange}
         onSelect={this.handleSelect}
+        onSeachButtonClick={this.handleSearch}
       />
     );
   }
@@ -72,12 +80,14 @@ class SearchBoxContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     address: searchBoxAddress(state),
+    location: searchBoxLocation(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     changeAddress: value => dispatch(changeAddress(value)),
+    setLocation: value => (dispatch(setLocation(value))),
   };
 };
 
