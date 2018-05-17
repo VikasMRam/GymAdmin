@@ -290,22 +290,22 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       <StyledHr />
       <StyledSection title="Useful Information">
         <UIColumnWrapper>
-          <Link to="#">
+          <Link to="/independent-living">
             <ImageOverlayContentTile image={assetPath('images/home/useful-info/independent-living.png')}>
               <Heading palette="white">Independent Living</Heading>
             </ImageOverlayContentTile>
           </Link>
-          <Link to="#">
+          <Link to="/assisted-living">
             <ImageOverlayContentTile image={assetPath('images/home/useful-info/assisted-living.png')}>
               <Heading palette="white">Assisted Living</Heading>
             </ImageOverlayContentTile>
           </Link>
-          <Link to="#">
+          <Link to="/alzheimers-care">
             <ImageOverlayContentTile image={assetPath('images/home/useful-info/memory-care.png')}>
               <Heading palette="white">Memory Care</Heading>
             </ImageOverlayContentTile>
           </Link>
-          <Link to="#">
+          <Link to="/board-and-care-home">
             <ImageOverlayContentTile image={assetPath('images/home/useful-info/board-and-care-residential.png')}>
               <Heading palette="white">Board & Care Residential</Heading>
             </ImageOverlayContentTile>
@@ -315,7 +315,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
           {/* <Heading palette="white">Skilled Nursing</Heading> */}
           {/* </ImageOverlayContentTile> */}
           {/* </Link> */}
-          <Link to="#">
+          <Link to="/continuing-care-retirement-community">
             <ImageOverlayContentTile image={assetPath('images/home/useful-info/ccrc-life-plan.png')}>
               <Heading palette="white">CCRC / Life Plan</Heading>
             </ImageOverlayContentTile>
