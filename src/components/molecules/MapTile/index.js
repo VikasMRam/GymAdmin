@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
+import { Link } from 'sly/components/atoms'
 
 import { size } from 'sly/components/themes';
 import Dotdotdot from 'react-dotdotdot';
@@ -20,7 +21,6 @@ const Wrapper = styled.div`
     opacity ${key('transitions.default')};
 
   &:hover {
-    cursor: default;
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')}
       ${palette('grayscale', 1, true)};
     opacity: 0.75;
@@ -66,30 +66,32 @@ const NumberReviewDiv = styled.div`
 `;
 
 const MapTile = ({ tileInfo, onClick, borderless }) => {
-  const { mainImage, name, startingRate, propRatings } = tileInfo;
+  const { id, mainImage, name, startingRate, propRatings, url } = tileInfo;
   const { reviewsValue, numReviews } = propRatings;
   return (
-    <Wrapper onClick={onClick} borderless={borderless}>
-      <ImageWrapper>
-        <TileImage src={mainImage || defaultImage} />
-      </ImageWrapper>
-      <ChildrenWrapper>
-        <NameDiv>
-          <Dotdotdot clamp={1}>{name}</Dotdotdot>
-        </NameDiv>
-        <PriceRatingDiv>
-          <Dotdotdot clamp={1}>${startingRate} per month</Dotdotdot>
-        </PriceRatingDiv>
-        <RatingDiv>
-          <Rating value={reviewsValue} size="regular" />
-          {numReviews > 0 && (
-            <NumberReviewDiv>
-              {numReviews}
-            </NumberReviewDiv>
-          )}
-        </RatingDiv>
-      </ChildrenWrapper>
-    </Wrapper>
+    <Link key={id} to={url}>
+      <Wrapper onClick={onClick} borderless={borderless}>
+        <ImageWrapper>
+          <TileImage src={mainImage || defaultImage} />
+        </ImageWrapper>
+        <ChildrenWrapper>
+          <NameDiv>
+            <Dotdotdot clamp={1}>{name}</Dotdotdot>
+          </NameDiv>
+          <PriceRatingDiv>
+            <Dotdotdot clamp={1}>${startingRate} per month</Dotdotdot>
+          </PriceRatingDiv>
+          <RatingDiv>
+            <Rating value={reviewsValue} size="regular" />
+            {numReviews > 0 && (
+              <NumberReviewDiv>
+                {numReviews}
+              </NumberReviewDiv>
+            )}
+          </RatingDiv>
+        </ChildrenWrapper>
+      </Wrapper>
+    </Link>
   );
 };
 

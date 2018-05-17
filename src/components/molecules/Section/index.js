@@ -7,7 +7,7 @@ import { Heading } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
 
 const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.xxLarge')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const Section = ({ title, children, ...props }) => (

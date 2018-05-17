@@ -7,6 +7,7 @@ import { Marker, InfoWindow } from 'react-google-maps';
 import { isServer } from 'sly/config';
 import { size } from 'sly/components/themes';
 import Map from 'sly/components/atoms/Map';
+import MapTile from 'sly/components/molecules/MapTile';
 
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
@@ -31,60 +32,25 @@ const iconMap = {
   red: RedMarker,
 };
 
-const InfoWindowDiv = styled.div`
-  width: ${size('tile', 'small', 'width')};
-  height: ${size('tile', 'small', 'height')};
-
-  position: relative;
-`;
-
-const InfoWindowAnchor = styled.a``;
-
-const InfoWindowImg = styled.img`
-  width: 100%;
-  height: 100%;
-`;
-
-const InfoWindowPropertyName = styled.h4`
-  color: white;
-  font-size: ${size('text', 'subtitle')};
-
-  position: absolute;
-  z-index: 3;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-`;
-
-const InfoWindowPrice = styled.div`
-  color: white;
-  font-size: ${size('text', 'subtitle')};
-
-  position: absolute;
-  z-index: 3;
-  right: 0px;
-  bottom: 0px;
-  background-color: ${palette('grayscale', 4)}B3; // 70% Opacity
-  text-align: right;
-  height: 22px;
-  width: 100%;
+const MapDiv = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 class CommunityMap extends Component {
   static propTypes = {
-    id: string.isRequired,
-    name: string.isRequired,
-    startingRate: number.isRequired,
-    mainImage: string.isRequired,
-    address: shape({
-      latitude: number.isRequired,
-      longitude: number.isRequired,
-    }).isRequired,
+    community: shape({
+      id: string.isRequired,
+      name: string.isRequired,
+      url: string.isRequired,
+      address: shape({
+        latitude: number.isRequired,
+        longitude: number.isRequired,
+      }).isRequired,
+    }),
     similarProperties: arrayOf(shape({
       id: string.isRequired,
       name: string.isRequired,
-      startingRate: number.isRequired,
-      mainImage: string.isRequired,
+      url: string.isRequired,
       address: shape({
         latitude: number.isRequired,
         longitude: number.isRequired,
@@ -108,87 +74,60 @@ class CommunityMap extends Component {
     });
   };
 
-  getInfoWindowComponent = marker => () => {
-    const component = (
-      <div>
-        <InfoWindowImg src={marker.image} />
-        <InfoWindowPropertyName>{marker.name}</InfoWindowPropertyName>
-        <InfoWindowPrice>Starting at ${marker.startingRate}</InfoWindowPrice>
-      </div>
-    );
-    if (marker.clickable === true) {
-      return (
-        <InfoWindowAnchor href={`/community/${marker.id}`}>
-          {component}
-        </InfoWindowAnchor>
-      );
-    }
-    return component;
-  };
-
   render() {
     const {
-      id,
-      name,
-      startingRate,
-      mainImage,
-      address,
+      community,
       similarProperties,
     } = this.props;
-    const { latitude, longitude } = address;
+    const { latitude, longitude } = community.address;
     const center = {
       latitude,
       longitude,
     };
     const markers = [
       {
-        id,
-        name,
-        startingRate,
+        community,
         latitude,
         longitude,
-        image: mainImage,
-        icon: 'blue',
+        icon: 'red',
         clickable: false,
       },
     ];
 
     if (isServer) return null;
 
-    similarProperties.forEach((property) => {
-      const {
-        id, name, startingRate, mainImage, address,
-      } = property;
-      const { latitude, longitude } = address;
+    similarProperties.forEach((prop) => {
+      const { latitude, longitude } = prop.address;
       markers.push({
-        id,
-        name,
-        startingRate,
+        id:prop.id,
+        community: prop,
         latitude,
         longitude,
-        image: mainImage,
-        icon: 'red',
+        icon: 'blue',
         clickable: true,
       });
     });
 
     const markerComponents = markers.map((marker) => {
-      const InfoWindowComponent = this.getInfoWindowComponent(marker);
+      const {
+        community,
+      } = marker;
+      const infoWindowTile = (
+        <MapTile tileInfo={community} borderless />
+      );
       return (
         <Marker
-          key={marker.id}
+          key={community.id}
           position={{ lat: marker.latitude, lng: marker.longitude }}
           defaultIcon={iconMap[marker.icon]}
           onClick={this.onMarkerClick(marker)}
         >
           {this.state.activeInfoWindowId === marker.id && (
             <InfoWindow
-              key={marker.id}
+              key={community.id}
               onCloseClick={this.onInfoWindowCloseClick}
             >
-              <InfoWindowDiv>
-                <InfoWindowComponent />
-              </InfoWindowDiv>
+              {infoWindowTile}
             </InfoWindow>
           )}
         </Marker>
@@ -202,15 +141,18 @@ class CommunityMap extends Component {
     }
 
     return (
-      <article>
-        <Map
-          center={center}
-          defaultZoom={defaultZoom}
-          containerElement={<MapContainerElement />}
-        >
-          {markerComponents}
-        </Map>
-      </article>
+
+      <MapDiv>
+        <article>
+          <Map
+            center={center}
+            defaultZoom={defaultZoom}
+            containerElement={<MapContainerElement />}
+          >
+            {markerComponents}
+          </Map>
+        </article>
+      </MapDiv>
     );
   }
 }
