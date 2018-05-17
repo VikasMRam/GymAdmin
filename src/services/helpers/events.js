@@ -1,7 +1,7 @@
 import ReactGA from 'react-ga';
 import cookie from 'react-cookie';
 import { stringify } from 'query-string';
-import { gAnalyticsKey, eventServerUrl } from 'sly/config';
+import { isServer, gAnalyticsKey, eventServerUrl } from 'sly/config';
 
 export default class SlyEvent {
   static _seInstance = null;
@@ -14,18 +14,20 @@ export default class SlyEvent {
     if ( this._seInstance === null ) {
       this._seInstance = new SlyEvent();
       ReactGA.initialize(gAnalyticsKey);
-      this._seInstance.ga = ReactGA.ga();
 
     }
     return this._seInstance;
   }
 
   sendPageView( path ) {
+    if ( isServer ) {
+      return;
+    }
 
     let se = {
       a: 'view',
       c: path,
-      p: window.location.pathname,
+      p: path,
       u: this.uuid,
       s: this.sid,
       t: Date.now()
@@ -37,6 +39,10 @@ export default class SlyEvent {
   }
 
   sendEvent( event ) {
+    if ( isServer ) {
+      return;
+    }
+
     let { action, category, label, value } = event;
     let se = {
       a: action,

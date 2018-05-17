@@ -7,7 +7,6 @@ import { size } from 'sly/components/themes';
 
 import { titleize } from 'sly/services/helpers/strings';
 import { getHelmetForSearchPage } from 'sly/services/helpers/html_headers';
-import SlyEvent from "sly/services/helpers/events";
 
 import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
 import { Heading, Button } from 'sly/components/atoms';
@@ -58,21 +57,14 @@ export default class CommunitySearchPage extends Component {
     this.setState({
       isModalFilterPanelVisible: true,
     });
-
-    SlyEvent.getInstance().sendEvent({action:'show',category:'filters'});
   };
+
   hideFilters = () => {
     this.setState({
       isModalFilterPanelVisible: false,
     });
-
-    SlyEvent.getInstance().sendEvent({action:'hide',category:'filters'});
   };
 
-  componentDidMount() {
-    // sendPageView(this.props.location.pathname);
-    SlyEvent.getInstance().sendPageView(this.props.location.pathname);
-  }
 
   render() {
     const {

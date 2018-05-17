@@ -39,7 +39,7 @@ class CommunitySearchPageContainer extends Component {
     }, {});
 
     const { path } = filterLinkPath(searchParams, changedParams);
-    
+
     history.push(path);
   };
 
@@ -61,7 +61,8 @@ class CommunitySearchPageContainer extends Component {
 
     // TODO Add Error Page
     if (error) {
-      return <div>{error}</div>;
+      location.push('/error');
+      return null ;//<div>{error}</div>;
     }
     const isMapView = searchParams.view === 'map';
     return (
