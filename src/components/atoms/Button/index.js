@@ -3,11 +3,11 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
-import Link from 'react-router-dom/Link';
 
 import { bool, string, oneOf } from 'prop-types';
 
 import { size } from 'sly/components/themes';
+import Link from 'sly/components/atoms/Link';
 
 const backgroundColor = ({ ghost, disabled, transparent, selectable, selected }) =>
   disabled
