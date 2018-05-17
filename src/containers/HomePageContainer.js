@@ -12,6 +12,15 @@ class HomePageContainer extends Component {
     setLocation: func,
   };
 
+  state = {
+    isModalOpen: false,
+  };
+
+  toggleModal = () => {
+    const { isModalOpen } = this.state;
+    this.setState({ isModalOpen: !isModalOpen });
+  };
+
   handleOnLocationSearch = (result) => {
     const { history, setLocation } = this.props;
     setLocation(result);
@@ -20,7 +29,14 @@ class HomePageContainer extends Component {
   };
 
   render() {
-    return <HomePage onLocationSearch={this.handleOnLocationSearch} />;
+    const { isModalOpen } = this.state;
+    return (
+      <HomePage
+        isModalOpen={isModalOpen}
+        toggleModal={this.toggleModal}
+        onLocationSearch={this.handleOnLocationSearch}
+      />
+    );
   }
 }
 

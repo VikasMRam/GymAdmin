@@ -9,6 +9,7 @@ import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
 import { Image, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import Header from 'sly/components/organisms/Header';
 import Footer from 'sly/components/organisms/Footer';
+import Modal from 'sly/components/molecules/Modal';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
@@ -104,7 +105,53 @@ const CWTColumnWrapper = ColumnWrapper.extend`
   }
 `;
 
-const HomePage = ({ onLocationSearch }) => {
+const firstRowDiscoverHomes = [
+  {
+    title: 'Care Homes',
+    description: '200 properties starting from $4,000',
+    image: 'images/home/discover-home/independent-living-tile.png',
+    buttonText: 'See more',
+    size: 'xLarge',
+    searchParams: { budget: 4000 },
+  },
+  {
+    title: 'Assisted Living',
+    description: '200 properties starting from $4,000',
+    image: 'images/home/discover-home/alzheimers-care-tile.png',
+    buttonText: 'See more',
+    size: 'xLarge',
+    searchParams: { budget: 4000 },
+  },
+];
+
+const secondRowDiscoverHomes = [
+  {
+    title: 'Boutique',
+    description: '200 properties starting from $4,000',
+    image: 'images/home/discover-home/studios-tile.png',
+    buttonText: 'See more',
+    size: 'regular',
+    searchParams: { budget: 4000 },
+  },
+  {
+    title: 'Luxury',
+    description: '200 properties starting from $4,000',
+    image: 'images/home/discover-home/1-bedroom-tile.png',
+    buttonText: 'See more',
+    size: 'regular',
+    searchParams: { budget: 4000 },
+  },
+  {
+    title: 'Memory Care',
+    description: '200 properties starting from $4,000',
+    image: 'images/home/discover-home/shared-rooms-tile.png',
+    buttonText: 'See more',
+    size: 'regular',
+    searchParams: { budget: 4000 },
+  },
+];
+
+const HomePage = ({ isModalOpen, onLocationSearch, toggleModal }) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -121,49 +168,46 @@ const HomePage = ({ onLocationSearch }) => {
     </Fragment>
   );
 
+  const onButtonClick = (discoverHome) => {
+    console.log(discoverHome);
+    toggleModal();
+  };
+
+  const firstRowDiscoverHomesComponents = firstRowDiscoverHomes.map(discoverHome => (
+    <DiscoverHomeTile
+      key={discoverHome.title}
+      title={discoverHome.title}
+      description={discoverHome.description}
+      image={assetPath(discoverHome.image)}
+      buttonText={discoverHome.buttonText}
+      onButtonClick={() => onButtonClick(discoverHome)}
+    />
+  ));
+
+  const secondRowDiscoverHomesComponents = secondRowDiscoverHomes.map(discoverHome => (
+    <DiscoverHomeTile
+      key={discoverHome.title}
+      title={discoverHome.title}
+      description={discoverHome.description}
+      image={assetPath(discoverHome.image)}
+      buttonText={discoverHome.buttonText}
+      onButtonClick={() => onButtonClick(discoverHome)}
+    />
+  ));
+
   return (
     <BasePageTemplate
       header={HeaderContent}
       footer={<Footer />}
     >
+      <Modal closeable onClose={toggleModal} isOpen={isModalOpen}><SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} /></Modal>
       <StyledSection title="Discover Favorite Homes">
         <ColumnWrapper>
-          <DiscoverHomeTile
-            image={assetPath('images/home/discover-home/independent-living-tile.png')}
-            title="Care Homes"
-            description="200 properties starting from $4,000"
-            link={{ text: 'See more', href: '#' }}
-          />
-          <DiscoverHomeTile
-            image={assetPath('images/home/discover-home/alzheimers-care-tile.png')}
-            title="Assisted Living"
-            description="200 properties starting from $4,000"
-            link={{ text: 'See more', href: '#' }}
-          />
+          {firstRowDiscoverHomesComponents}
         </ColumnWrapper>
         <br />
         <ColumnWrapper>
-          <DiscoverHomeTile
-            size="regular"
-            image={assetPath('images/home/discover-home/studios-tile.png')}
-            title="Boutique"
-            description="200 properties from $4,000"
-            link={{ text: 'See more', href: '#' }}
-          />
-          <DiscoverHomeTile
-            size="regular"
-            image={assetPath('images/home/discover-home/1-bedroom-tile.png')}
-            title="Luxury"
-            description="200 properties from $4,000"
-            link={{ text: 'See more', href: '#' }}
-          />
-          <DiscoverHomeTile
-            size="regular"
-            image={assetPath('images/home/discover-home/shared-rooms-tile.png')}
-            title="Memory Care"
-            description="200 properties from $4,000"
-            link={{ text: 'See more', href: '#' }}
-          />
+          {secondRowDiscoverHomesComponents}
         </ColumnWrapper>
       </StyledSection>
       <br />
@@ -173,17 +217,17 @@ const HomePage = ({ onLocationSearch }) => {
           <MeetOthersTile
             image={assetPath('images/home/meet-others/female1-tile.png')}
             title="Sharon T."
-            description={'“I felt like Seniorly was a lifesaver! I was daunted at the prospect of going through so many possibilities to find the right fit for my mom in such a short time, while taking care of so many other things that need attending as we deal with the aftermath of her stroke.”'}
+            description="“I felt like Seniorly was a lifesaver! I was daunted at the prospect of going through so many possibilities to find the right fit for my mom in such a short time, while taking care of so many other things that need attending as we deal with the aftermath of her stroke.”"
           />
           <MeetOthersTile
             image={assetPath('images/home/meet-others/female2-tile.png')}
             title="Kathy O."
-            description={'It’s such a wonderful comfort to be able to view the pictures, video and information on the Seniorly website. The Seniorly staff is also responsive, kind and compassionate. Thank you for caring about this community and the needs of future generations!”'}
+            description="It’s such a wonderful comfort to be able to view the pictures, video and information on the Seniorly website. The Seniorly staff is also responsive, kind and compassionate. Thank you for caring about this community and the needs of future generations!”"
           />
           <MeetOthersTile
             image={assetPath('images/home/meet-others/female3-tile.png')}
             title="Henry W."
-            description={'“We were lucky enough to find a great place for my father-in-law. Seniorly is a really helpful website, very helpful and informative. Thank you so much for what you do.”'}
+            description="“We were lucky enough to find a great place for my father-in-law. Seniorly is a really helpful website, very helpful and informative. Thank you so much for what you do.”"
           />
         </ColumnWrapper>
       </StyledSection>
@@ -211,11 +255,11 @@ const HomePage = ({ onLocationSearch }) => {
               <Heading palette="white">Board & Care Residential</Heading>
             </ImageOverlayContentTile>
           </Link>
-          {/*<Link to="#">*/}
-            {/*<ImageOverlayContentTile image={assetPath('images/home/useful-info/skilled-nursing.png')}>*/}
-              {/*<Heading palette="white">Skilled Nursing</Heading>*/}
-            {/*</ImageOverlayContentTile>*/}
-          {/*</Link>*/}
+          {/* <Link to="#"> */}
+          {/* <ImageOverlayContentTile image={assetPath('images/home/useful-info/skilled-nursing.png')}> */}
+          {/* <Heading palette="white">Skilled Nursing</Heading> */}
+          {/* </ImageOverlayContentTile> */}
+          {/* </Link> */}
           <Link to="#">
             <ImageOverlayContentTile image={assetPath('images/home/useful-info/ccrc-life-plan.png')}>
               <Heading palette="white">CCRC / Life Plan</Heading>
