@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { string, shape, oneOf } from 'prop-types';
+import { string, func, oneOf } from 'prop-types';
 import { switchProp } from 'styled-tools';
 import { palette } from 'styled-theme';
 
@@ -33,10 +33,8 @@ const ButtonWrapper = styled.div`
   margin-top: ${size('spacing.large')};
   ${switchProp('size', {
     xLarge: css`
-    margin-top: ${size('spacing.large')};
-    @media screen and (min-width: ${width}) {
-      margin-top: 0;
-    }`,
+      margin-top: ${size('spacing.large')};
+      @media screen and (min-width: ${width}) {margin-top: 0;}`,
   })};
 `;
 const StyledBox = styled(Box)`
@@ -50,9 +48,7 @@ const TwoColumnWrapper = styled.div`
   flex-direction: column;
   ${switchProp('size', {
     xLarge: css`
-      @media screen and (min-width: ${width}) {
-        flex-direction: row;
-      }`,
+      @media screen and (min-width: ${width}) {flex-direction: row;}`,
   })};
 `;
 const StyledTextWrapper = styled.div`
@@ -60,7 +56,12 @@ const StyledTextWrapper = styled.div`
 `;
 
 const DiscoverHomeTile = ({
-  size, image, title, description, link,
+  size,
+  image,
+  title,
+  description,
+  buttonText,
+  onButtonClick,
 }) => (
   <Wrapper size={size}>
     <StyledImage src={image} size={size} />
@@ -71,7 +72,7 @@ const DiscoverHomeTile = ({
           <Block palette="grayscale">{description}</Block>
         </StyledTextWrapper>
         <ButtonWrapper size={size}>
-          <Button href={link.href}>{link.text}</Button>
+          <Button onClick={onButtonClick}>{buttonText}</Button>
         </ButtonWrapper>
       </TwoColumnWrapper>
     </StyledBox>
@@ -82,15 +83,13 @@ DiscoverHomeTile.propTypes = {
   image: string.isRequired,
   title: string.isRequired,
   description: string.isRequired,
-  link: shape({
-    text: string.isRequired,
-    href: string.isRequired,
-  }).isRequired,
+  buttonText: string.isRequired,
+  onButtonClick: func.isRequired,
   size: oneOf(['regular', 'large', 'xLarge']),
 };
 
 DiscoverHomeTile.defaultProps = {
-  size: 'xLarge',
+  size: 'regular',
 };
 
 export default DiscoverHomeTile;

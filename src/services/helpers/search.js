@@ -143,7 +143,7 @@ export const filterSearchParams = params =>
     return cumul;
   }, {});
 
-export const filterLinkPath = (currentFilters, nextFilters) => {
+export const filterLinkPath = (currentFilters, nextFilters = {}) => {
   const filters = filterSearchParams({
     ...currentFilters,
     ...nextFilters,
@@ -174,14 +174,20 @@ export const getSearchParams = ({ params }, location) => {
   });
 };
 
-export const getPathFromPlacesResponse = ({ address_components, geometry }) => {
+export const getSearchParamFromPlacesResponse = ({ address_components, geometry }) => {
   const cityFull = address_components.filter(e => e.types.indexOf('locality') > -1);
   const stateFull = address_components.filter(e => e.types.indexOf('administrative_area_level_1') > -1);
   if (cityFull.length > 0 && stateFull.length > 0) {
     const city = urlize(cityFull[0].long_name);
     const state = urlize(stateFull[0].long_name);
     const { lat, lng } =  geometry['location'];
-    return `${'/assisted-living/'}${state}/${city}?latitude=${lat()}&longitude=${lng()}`;
+    return {
+      toc: 'assisted-living',
+      state,
+      city,
+      latitude: lat(),
+      longitude: lng(),
+    };
   }
-  return '/assisted-living/';
+  return { toc: 'assisted-living' };
 };
