@@ -381,12 +381,12 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
           <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/partner-with-us.png')}>
             <Heading palette="white">Partner With Us</Heading>
             <StyledBlock palette="white" level="subtitle">For Local Referral Agents</StyledBlock>
-            <Button href="#">Get Started</Button>
+            <Button to="/providers/crm">Get Started</Button>
           </ImageOverlayContentTile>
           <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/list-a-property.png')}>
             <Heading palette="white">List a Property</Heading>
             <StyledBlock palette="white" level="subtitle">For Senior Housing Providers</StyledBlock>
-            <Button href="#">Get Started</Button>
+            <Button to="/providers/housing">Get Started</Button>
           </ImageOverlayContentTile>
         </TwoColumnWrapper>
       </StyledSection>
