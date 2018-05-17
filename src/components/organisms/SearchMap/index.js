@@ -17,7 +17,7 @@ import { delayedExecutor, filterSearchParams, getRadiusFromMapBounds } from 'sly
 const MapContainerElement = styled.div`
   width: 100%;
   height: 80vh;
-  margin-bottom: 1.000rem;
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const StyledDiv = styled.div`

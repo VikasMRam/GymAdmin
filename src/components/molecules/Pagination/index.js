@@ -10,6 +10,7 @@ import { size } from 'sly/components/themes';
 
 const Wrapper = styled.div`
   display: flex;
+  margin-bottom: ${size('spacing.large')}
 `;
 
 const marginLeftNext = css`
@@ -17,16 +18,16 @@ const marginLeftNext = css`
 `;
 
 const ChevronButton = styled(({ flip, ...props }) => (
-  <Button 
-    ghost 
-    palette="grayscale" 
+  <Button
+    ghost
+    palette="grayscale"
     kind="label"
     {...props}
   >
-    <Icon 
+    <Icon
       flip={flip}
-      icon="chevron-left" 
-      size="small" 
+      icon="chevron-left"
+      size="small"
       palette="grayscale"
     />
   </Button>
@@ -84,8 +85,8 @@ export default class Pagination extends Component {
 
   ellipsis(index) {
     return (
-      <BreakView 
-        ghost 
+      <BreakView
+        ghost
         kind="label"
         palette="grayscale"
         key={index}
@@ -103,10 +104,10 @@ export default class Pagination extends Component {
       : 'grayscale';
     const click = () => !sel && onChange(index);
     return (
-      <PageButton 
+      <PageButton
         kind="label"
         key={index}
-        ghost={!sel} 
+        ghost={!sel}
         palette={palette}
         onClick={click}>
           { index + 1 }
@@ -116,7 +117,7 @@ export default class Pagination extends Component {
 
   pagination() {
     // loop inspired by react-paginate
-    
+
     const {
       current,
       range,
@@ -165,7 +166,7 @@ export default class Pagination extends Component {
 
     return items;
   }
-  
+
   render() {
     const { current, total, onChange } = this.props;
 
