@@ -20,7 +20,7 @@ describe('EstimatedCost', () => {
 
   it('verify correct description', () => {
     const wrapper = wrap({ price, community });
-    expect(wrapper.text()).toContain(`*Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area, and the amenities and care services provided at ${community.name}`);
+    expect(wrapper.text()).toContain(`*Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services.`);
   });
 
   it('verify onGetDetailedPricingClicked callback', () => {
