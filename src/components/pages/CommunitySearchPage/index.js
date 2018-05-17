@@ -128,9 +128,11 @@ export default class CommunitySearchPage extends Component {
           column={columnContent}
           onLocationSearch={onLocationSearch}
         >
-          <Heading>
-            {listSize} communities near {city}
-          </Heading>
+          {!isMapView && (
+            <Heading>
+              {listSize} communities near {city}
+            </Heading>
+          )}
           <TopWrapper>
             {isMapView && (
               <IconButton icon="list" ghost transparent onClick={toggleMap}>
@@ -166,6 +168,7 @@ export default class CommunitySearchPage extends Component {
               latitude={latitude}
               longitude={longitude}
               communityList={communityList}
+              searchParams={searchParams}
               onParamsChange={onParamsChange}
             />
           )}
