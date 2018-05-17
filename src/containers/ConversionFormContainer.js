@@ -4,7 +4,6 @@ import { reduxForm } from 'redux-form';
 import { object } from 'prop-types';
 
 import { getDetail } from 'sly/store/selectors';
-import { REQUEST_CALLBACK } from 'sly/services/api/actions';
 
 import {
   resourceCreateRequest,
@@ -34,21 +33,11 @@ const ReduxForm = reduxForm({
 class ConversionFormContainer extends Component {
   static propTypes = {
     community: object.isRequired,
+    concierge: object.isRequired,
   };
 
-  submit = data => {
-    const { submit, community, next } = this.props;
-    submit({
-      action: REQUEST_CALLBACK,
-      value: {
-        user: { ...data },
-        propertyIds: [community.id],
-      }
-    }).then(next);
-  }
-
   render() {
-    const { submit, userDetails, ...props } = this.props;
+    const { concierge, userDetails, ...props } = this.props;
     const { email, fullName, phone } = userDetails; 
     const initialValues = {
       email,
@@ -58,7 +47,7 @@ class ConversionFormContainer extends Component {
     return (
       <ReduxForm 
         initialValues={initialValues} 
-        onSubmit={this.submit} 
+        onSubmit={concierge.submitConversion} 
         {...props} 
       />
     );

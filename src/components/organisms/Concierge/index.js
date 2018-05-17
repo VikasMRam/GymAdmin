@@ -42,7 +42,7 @@ export default class Concierge extends Component {
       ...props
     } = this.props;
 
-    const { modalIsOpen, currentStep, callbackRequested } = concierge;
+    const { modalIsOpen, currentStep, callbackRequested } = concierge.get();
 
     const StepComponent = steps[currentStep];
 
@@ -54,19 +54,19 @@ export default class Concierge extends Component {
         {!callbackRequested && (
           <ConversionFormContainer
             community={community}
+            concierge={concierge}
             next={next}
           />
         )}
         {appElement && StepComponent && modalIsOpen && (
           <Modal
             appElement={appElement}
-            onClose={onClose}
+            onClose={concierge.close}
             isOpen={modalIsOpen}
             closeable {...props}>
             <StepComponent
               community={community}
-              next={next}
-              onClose={onClose}
+              concierge={concierge}
               {...props}
             />
           </Modal>

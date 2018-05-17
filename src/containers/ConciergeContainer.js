@@ -8,10 +8,8 @@ export default class ConciergeContainer extends Component {
     const { community, ...props } = this.props;
     return (
       <ConciergeController community={community}>
-        {({ next, close, concierge }) =>
+        {({ concierge }) =>
           <Concierge
-            onClose={close}
-            next={next}
             concierge={concierge}
             community={community}
             {...props}

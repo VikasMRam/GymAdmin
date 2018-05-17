@@ -16,7 +16,7 @@ const StyledButton = styled(Button)`
 
 const ConversionForm = ({ handleSubmit, submitting, community }) => (
   <form onSubmit={handleSubmit}>
-    <Heading level={'title'}>Contact {community.name}</Heading>
+    <Heading level={'title'}>Yes, connect me to this community...</Heading>
     <Field
       name="full_name"
       label="Full Name"

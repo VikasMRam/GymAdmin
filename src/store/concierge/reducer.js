@@ -1,4 +1,4 @@
-import { GET_DETAILED_PRICING, NEXT, CLOSE } from './actions';
+import { GET_DETAILED_PRICING, NEXT, CLOSE, GOTO_STEP } from './actions';
 
 import {
   CONVERSION_FORM,
@@ -33,6 +33,14 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         modalIsOpen: true,
         currentStep,
+      };
+    }
+    case GOTO_STEP: {
+      const { step } = payload;
+      return {
+        ...state,
+        modalIsOpen: true,
+        currentStep: step,
       };
     }
     case NEXT: {

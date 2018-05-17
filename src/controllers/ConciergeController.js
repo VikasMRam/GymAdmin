@@ -2,28 +2,40 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { string, func, bool, object } from 'prop-types';
 import styled from 'styled-components';
+import get from 'lodash/get';
+
+import {
+  resourceCreateRequest,
+} from 'sly/store/resource/actions';
 
 import { size } from 'sly/components/themes';
 import { getDetail } from 'sly/store/selectors';
-import { next, close, getDetailedPricing } from 'sly/store/concierge/actions';
+import { next, gotoStep, close, getDetailedPricing } from 'sly/store/concierge/actions';
 import { community as communityPropType } from 'sly/propTypes/community';
+import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
 import { conciergeSelector } from 'sly/store/concierge/selectors';
+import { THANKYOU } from 'sly/store/concierge/constants';
 
 import {
   resourceDetailReadRequest,
 } from 'sly/store/resource/actions';
 
-function connectController(controllerKey, mapStateToProps, mapDispatchToProps) {
-  return function controllerCreator(WrappedComponent) {
-    class Controller extends Component {
-      render() {
-        return React.createElement(WrappedComponent, this.props);
-      }
-    };
-    return connect(mapStateToProps, mapDispatchToProps)(Controller);
-  }
-}
+//function connectController(controllerKey, mapStateToProps, mapDispatchToProps) {
+//  return function controllerCreator(WrappedComponent) {
+//    class Controller extends Component {
+//      render() {
+//        return React.createElement(WrappedComponent, this.props);
+//      }
+//    };
+//    return connect(mapStateToProps, mapDispatchToProps)(Controller);
+//  }
+//}
 
+// TODO: Make an abstraction for Controllers
+// This outlines the idea of a 'Controller', which passes 
+// itself down, once created the abstraction with a simple setter
+// and getter to the store, it will be useful to avoid all the 
+// synchronous mess in the reducer, actions and selectors. 
 class ConciergeController extends Component {
   static propTypes = {
     next: func.isRequired,
@@ -36,15 +48,65 @@ class ConciergeController extends Component {
   getPricing = () => {
     const { concierge, getDetailedPricing } = this.props;
     const { callbackRequested, advancedInfoSent } = concierge;
- 
     getDetailedPricing({ callbackRequested, advancedInfoSent });
   }
 
+
+  submitAdvancedInfo = data => {
+    const { submit, community, next } = this.props;
+    const { message, ...rest } = data;
+    submit({
+      action: ASSESSMENT,
+      value: {
+        user: { ...rest },
+        message,
+        propertyIds: [community.id],
+      }
+    }).then(this.next);
+  }
+
+  submitConversion = data => {
+    const { submit, community } = this.props;
+    submit({
+      action: REQUEST_CALLBACK,
+      value: {
+        user: { ...data },
+        propertyIds: [community.id],
+      }
+    }).then(this.next);
+  }
+
+  /* 
+   * IF NOT gotUserDetails OR NOT conversionSent
+   *   currentStep = conversion
+   * ELSE IF NOT advancedSent
+   *   currentStep = advanced
+   * ELSE IF advancedSent
+   *   currentStep = thankyou
+   */
+
+  next = () => {
+    const { concierge, getDetailedPricing, community, next, gotoStep, submit } = this.props;
+    const { callbackRequested, advancedInfoSent, currentStep } = concierge;
+
+    if (callbackRequested && advancedInfoSent) {
+      gotoStep({ step: THANKYOU });
+    } else {
+      next({ callbackRequested, advancedInfoSent });
+    }
+  }
+
+  get = path => path
+    ? get(this.props.concierge, path)
+    : this.props.concierge;
+
+  close = () => this.props.close();
+
   render() {
-    const { children, ...props } = this.props;
+    const { children, concierge, close, ...props } = this.props;
+    const { next, getPricing, submitAdvancedInfo } = this;
     return children({
-      ...props,
-      getPricing: this.getPricing,
+      concierge: this,
     });
   }
 }
@@ -57,4 +119,15 @@ const mapStateToProps = (state, { community }) => {
   };
 };
 
-export default connectController('concierge', mapStateToProps, { next, close, getDetailedPricing })(ConciergeController);
+const submit = (data) => resourceCreateRequest('userAction', data);
+
+export default connect(
+  mapStateToProps, 
+  { 
+    next, 
+    gotoStep, 
+    close, 
+    getDetailedPricing, 
+    submit 
+  }
+)(ConciergeController);
