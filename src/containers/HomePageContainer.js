@@ -22,7 +22,7 @@ class HomePageContainer extends Component {
     const { history } = this.props;
     const { activeDiscoverHome } = this.state;
     const searchParams = getSearchParamFromPlacesResponse(result);
-    const { path } = filterLinkPath(searchParams, activeDiscoverHome.searchParams);
+    const { path } = filterLinkPath(searchParams, activeDiscoverHome ? activeDiscoverHome.searchParams : {});
     history.push(path);
   };
 
