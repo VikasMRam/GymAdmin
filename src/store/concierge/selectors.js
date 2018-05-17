@@ -15,7 +15,7 @@ const isAssessment = ({
 
 export const conciergeSelector = (state, slug) => {
   const { currentStep, modalIsOpen } = state.concierge;
-  const userActions = getDetail(state, 'userAction');
+  const userActions = getDetail(state, 'userAction') || {};
   const callbackRequested = (userActions.profilesContacted || [])
     .some(isCallback(slug));
   const advancedInfoSent = isAssessment(userActions.userDetails || {});

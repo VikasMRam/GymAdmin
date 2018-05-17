@@ -26,37 +26,20 @@ const ReduxForm = reduxForm({
   },
 })(AdvancedInfoForm);
 
-class AdvancedInfoFormContainer extends Component {
+export default class AdvancedInfoFormContainer extends Component {
   static propTypes = {
     community: object.isRequired,
-    next: func.isRequired,
+    concierge: object.isRequired,
   };
 
-  submit = data => {
-    const { submit, community, next } = this.props;
-    const { message, ...rest } = data;
-    submit({
-      action: ASSESSMENT,
-      value: {
-        user: { ...rest },
-        message,
-        propertyIds: [community.id],
-      }
-    }).then(next);
-  }
-
   render() {
-    const { submit, ...props } = this.props;
-    return <ReduxForm onSubmit={this.submit} {...props} />;
+    const { concierge, ...props } = this.props;
+    return (
+      <ReduxForm 
+        onSubmit={concierge.submitAdvancedInfo} 
+        {...props}
+      />
+    );
   }
 }
-
-const mapDispatchToProps = (dispatch, { communitySlug, next }) => ({
-  submit: data => {
-    data.slug = communitySlug;
-    return dispatch(resourceCreateRequest('userAction', data));
-  },
-});
-
-export default connect(null, mapDispatchToProps)(AdvancedInfoFormContainer);
 

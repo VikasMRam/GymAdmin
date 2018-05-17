@@ -132,9 +132,9 @@ export default class PricingAndAvailability extends Component {
           <StyledArticle id="pricing-and-floor-plans-price-tiles">
             {!roomPrices.length && estimatedPriceBase &&
               <ConciergeController community={community}>
-                {({ getPricing }) =>
+                {({ concierge }) =>
                   <EstimatedCost
-                    getPricing={getPricing}
+                    getPricing={concierge.getPricing}
                     community={community}
                     price={estimatedPriceBase}
                   />

@@ -45,7 +45,7 @@ Thankyou.propTypes = {
   community: shape({
     name: string.isRequired,
   }).isRequired,
-  onClose: func.isRequired,
+  onClose: func,
 };
 
 export default Thankyou;
