@@ -86,6 +86,7 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
+
           <Switch>
             {this.routes.map(route => <Route key={route.path} {...route} />)}
           </Switch>

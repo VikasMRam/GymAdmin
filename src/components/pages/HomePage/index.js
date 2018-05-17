@@ -256,7 +256,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       header={HeaderContent}
       footer={<Footer />}
     >
-      <Modal closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}><SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} /></Modal>
+      <Modal closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}><Heading>Please enter a location:</Heading><SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} /></Modal>
       <StyledSection title="Discover Favorite Homes">
         <TwoColumnWrapper>
           {firstRowDiscoverHomesComponents}

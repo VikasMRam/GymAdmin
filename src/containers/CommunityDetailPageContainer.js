@@ -23,10 +23,14 @@ class CommunityDetailPageContainer extends Component {
   };
 
   render() {
-    const { community, error } = this.props;
+    const { community, error, history } = this.props;
+
 
     if (error) {
-      return <div>{error}</div>;
+
+      history.push('/notfound');
+      return null;
+      // return <div>{error}</div>;
     }
 
     if (!community) {

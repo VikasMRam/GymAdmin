@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { fetchState } from 'react-router-server';
 import { connect } from 'react-redux';
-import { isBrowser, isServer } from 'sly/config';
 import { func, bool } from 'prop-types';
+
+import { isBrowser, isServer } from 'sly/config';
+import SlyEvent from 'sly/services/helpers/events'
 
 class ServerStateComponent extends Component {
   static propTypes = {
@@ -41,6 +43,10 @@ class ServerStateComponent extends Component {
     if (this.props.match !== nextProps.match) {
       fetchData(nextProps);
       window && window.scrollTo(0,0);
+      // TODO Fix actual
+      SlyEvent.getInstance().sendEvent({action:'dummy',category:'another'});
+
+
     }
   }
 

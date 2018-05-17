@@ -28,7 +28,8 @@ const config = {
   },
   test: {},
   development: {
-    cookieDomain: 'lvh.me'
+    cookieDomain: 'lvh.me',
+    eventServerUrl: 'http://localhost:8888/events/new',
   },
   staging: {
     apiUrl: process.env.API_URL || 'http://www.myseniorly.com/v0',
