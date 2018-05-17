@@ -145,9 +145,11 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.use(err => {
-  const json = JSON.stringify(serializeError(err));
-  console.error(`${new Date().toISOString()} ${json}`);
+app.use((err, req, res, next) => {
+  if (err) {
+    const json = JSON.stringify(serializeError(err));
+    console.error(`${new Date().toISOString()} ${json}`);
+  }
 });
 
 app.listen(port, (error) => {
