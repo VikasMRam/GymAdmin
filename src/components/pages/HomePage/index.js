@@ -67,8 +67,8 @@ const StyledSection = styled(Section)`
 `;
 const ColumnWrapper = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  // justify-content: center;
+  // align-items: center;
   flex-wrap: wrap;
 
   > * {
@@ -110,7 +110,7 @@ const HomePage = ({ onLocationSearch }) => {
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <Header headerItems={headerItems} onLocationSearch={onLocationSearch} />
       <HeroWrapper>
-        <StyledImage src={assetPath('images/home/cover.png')} alt="hero image" />
+        <StyledImage src={assetPath('images/home/cover.jpg')} alt="hero image" />
         <SearchBoxWrapper>
           <StyledHeading level="hero" palette="white">
             Find a Home to Love
@@ -126,17 +126,17 @@ const HomePage = ({ onLocationSearch }) => {
       header={HeaderContent}
       footer={<Footer />}
     >
-      <StyledSection title="Discover Favourite Homes">
+      <StyledSection title="Discover Favorite Homes">
         <ColumnWrapper>
           <DiscoverHomeTile
             image={assetPath('images/home/discover-home/independent-living-tile.png')}
-            title="Independent Living"
+            title="Care Homes"
             description="200 properties starting from $4,000"
             link={{ text: 'See more', href: '#' }}
           />
           <DiscoverHomeTile
             image={assetPath('images/home/discover-home/alzheimers-care-tile.png')}
-            title="Alzheimer's Care"
+            title="Assisted Living"
             description="200 properties starting from $4,000"
             link={{ text: 'See more', href: '#' }}
           />
@@ -146,21 +146,21 @@ const HomePage = ({ onLocationSearch }) => {
           <DiscoverHomeTile
             size="regular"
             image={assetPath('images/home/discover-home/studios-tile.png')}
-            title="Studios"
-            description="200 properties from $4,000"
-            link={{ text: 'See more', href: '#' }}
-          />
-          <DiscoverHomeTile
-            size="regular"
-            image={assetPath('images/home/discover-home/shared-rooms-tile.png')}
-            title="Shared Rooms"
+            title="Boutique"
             description="200 properties from $4,000"
             link={{ text: 'See more', href: '#' }}
           />
           <DiscoverHomeTile
             size="regular"
             image={assetPath('images/home/discover-home/1-bedroom-tile.png')}
-            title="1 Bedroom"
+            title="Luxury"
+            description="200 properties from $4,000"
+            link={{ text: 'See more', href: '#' }}
+          />
+          <DiscoverHomeTile
+            size="regular"
+            image={assetPath('images/home/discover-home/shared-rooms-tile.png')}
+            title="Memory Care"
             description="200 properties from $4,000"
             link={{ text: 'See more', href: '#' }}
           />
@@ -172,18 +172,18 @@ const HomePage = ({ onLocationSearch }) => {
         <ColumnWrapper>
           <MeetOthersTile
             image={assetPath('images/home/meet-others/female1-tile.png')}
-            title="Middle-aged adult female child #1"
-            description={'"Family Caregiver Alliance provides “online educational materials in terms of fact sheets, videos, and online support groups" which are invaluable to family caregivers and their families.'}
+            title="Sharon T."
+            description={'“I felt like Seniorly was a lifesaver! I was daunted at the prospect of going through so many possibilities to find the right fit for my mom in such a short time, while taking care of so many other things that need attending as we deal with the aftermath of her stroke.”'}
           />
           <MeetOthersTile
             image={assetPath('images/home/meet-others/female2-tile.png')}
-            title="Middle-aged adult female child #2"
-            description={'"Family Caregiver Alliance provides “online educational materials in terms of fact sheets, videos, and online support groups" which are invaluable to family caregivers and their families.'}
+            title="Kathy O."
+            description={'It’s such a wonderful comfort to be able to view the pictures, video and information on the Seniorly website. The Seniorly staff is also responsive, kind and compassionate. Thank you for caring about this community and the needs of future generations!”'}
           />
           <MeetOthersTile
             image={assetPath('images/home/meet-others/female3-tile.png')}
-            title="Middle-aged adult female child #3"
-            description={'"Family Caregiver Alliance provides “online educational materials in terms of fact sheets, videos, and online support groups" which are invaluable to family caregivers and their families.'}
+            title="Henry W."
+            description={'“We were lucky enough to find a great place for my father-in-law. Seniorly is a really helpful website, very helpful and informative. Thank you so much for what you do.”'}
           />
         </ColumnWrapper>
       </StyledSection>
@@ -211,11 +211,11 @@ const HomePage = ({ onLocationSearch }) => {
               <Heading palette="white">Board & Care Residential</Heading>
             </ImageOverlayContentTile>
           </Link>
-          <Link to="#">
-            <ImageOverlayContentTile image={assetPath('images/home/useful-info/skilled-nursing.png')}>
-              <Heading palette="white">Skilled Nursing</Heading>
-            </ImageOverlayContentTile>
-          </Link>
+          {/*<Link to="#">*/}
+            {/*<ImageOverlayContentTile image={assetPath('images/home/useful-info/skilled-nursing.png')}>*/}
+              {/*<Heading palette="white">Skilled Nursing</Heading>*/}
+            {/*</ImageOverlayContentTile>*/}
+          {/*</Link>*/}
           <Link to="#">
             <ImageOverlayContentTile image={assetPath('images/home/useful-info/ccrc-life-plan.png')}>
               <Heading palette="white">CCRC / Life Plan</Heading>
@@ -292,21 +292,14 @@ const HomePage = ({ onLocationSearch }) => {
         </UIColumnWrapper>
       </StyledSection>
       <StyledHr />
-      <StyledSection title="Companies We Trust">
+      <StyledSection title="Communities We Trust">
         <br />
         <CWTColumnWrapper>
-          <Link to="https://www.seniorly.com/resources/articles/seniorly-conversations-caregiver-resources" target="_blank">
-            <Image src={assetPath('images/home/companies-we-trust/UCBerkeley.png')} />
-          </Link>
-          <Link to="https://www.nike.com" target="_blank">
-            <Image src={assetPath('images/home/companies-we-trust/NIKE.png')} />
-          </Link>
-          <Link to="https://www.seniorly.com/assisted-living/articles/seniorly-conversations-staying-social-in-senior-housing-communities" target="_blank">
-            <Image src={assetPath('images/home/companies-we-trust/Seniorly.png')} />
-          </Link>
-          <Link to="https://www.seniorly.com/resources/articles/seniorly-conversations-on-demand-transportation-for-older-adults" target="_blank">
-            <Image src={assetPath('images/home/companies-we-trust/Lyft.png')} />
-          </Link>
+          <Image src={assetPath('images/home/companies-we-trust/UCBerkeley.png')} />
+          <Image src={assetPath('images/home/companies-we-trust/NIKE.png')} />
+          <Image src={assetPath('images/home/companies-we-trust/Seniorly.png')} />
+          <Image src={assetPath('images/home/companies-we-trust/Lyft.png')} />
+
         </CWTColumnWrapper>
       </StyledSection>
     </BasePageTemplate>

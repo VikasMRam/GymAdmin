@@ -1,34 +1,70 @@
 import ReactGA from 'react-ga';
+import cookie from 'react-cookie';
+import { stringify } from 'query-string';
+import { gAnalyticsKey, eventServerUrl } from 'sly/config';
 
-import { eventServerUrl } from 'sly/config';
+export default class SlyEvent {
+  static _seInstance = null;
+  address = eventServerUrl;
+  uuid = cookie.load('sly_uuid');
+  sid = cookie.load('sly_sid');
+  ga  = null;
 
-export const sendPageView =(path)=>{
+  static getInstance() {
+    if ( this._seInstance === null ) {
+      this._seInstance = new SlyEvent();
+      ReactGA.initialize(gAnalyticsKey);
+      this._seInstance.ga = ReactGA.ga();
 
-  ReactGA.pageview(path);
-  // fetch(eventServerUrl,{});
-};
+    }
+    return this._seInstance;
+  }
 
-export const sendEvent = (event) => {
-  /*
-    category: 'profile',
-    action: 'view',
-    label: 'slug'
-   */
+  sendPageView( path ) {
 
-  // ReactGA.event(event);
+    let se = {
+      a: 'view',
+      c: path,
+      p: window.location.pathname,
+      u: this.uuid,
+      s: this.sid,
+      t: Date.now()
+    };
 
-  /*
-     evt = {
-        a: 'view',
-        c: window.location.pathname,
-        l: 'pageView',
-        u: this.slyEvent.uuid,
-        s: this.slyEvent.sid,
-        t: Date.now()
-      };
-      //
-   */
+    fetch(`${eventServerUrl}?${stringify(se)}`);
+    ReactGA.pageview(path);
 
-};
+  }
+
+  sendEvent( event ) {
+    let { action, category, label, value } = event;
+    let se = {
+      a: action,
+      c: category,
+      l: label,
+      v: value,
+      p: window.location.pathname,
+      u: this.uuid,
+      s: this.sid,
+      t: Date.now()
+    };
+
+    fetch(`${eventServerUrl}?${stringify(se)}`);
+    if (category == null) {
+      category = window.location.pathname+window.location.hash.split('?')[0];
+    }
+    ReactGA.event({
+      category,
+      action,
+      label,
+      value
+
+    });
+
+
+  }
+
+}
+
 
 //TODO Add more methods for sending timing and non interactive i events.
