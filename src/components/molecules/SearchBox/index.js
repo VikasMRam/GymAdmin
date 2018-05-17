@@ -91,12 +91,12 @@ const GoogleLogo = styled(Image)`
   height: 50%;
   float: right;
 `;
-
+const baseSearchOptions = {types: ['(regions)']};
 const SearchBox = ({
   layout, value, onChange, onSelect,
 }) => (
   <SearchBar layout={layout}>
-    <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect}>
+    <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions}>
       {({ getInputProps, suggestions, getSuggestionItemProps }) => (
         <SearchSuggestionsWrapper>
           <SearchTextBox

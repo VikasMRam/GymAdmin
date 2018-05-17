@@ -16,12 +16,12 @@ import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayConten
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 const headerItems = [
-  { name: 'Resources', url: '#' },
-  { name: 'Moving Center', url: '#' },
-  { name: 'News', url: '#' },
-  { name: 'List Your Property', url: '#' },
-  { name: 'Our History', url: '#' },
-  { name: 'Sign in', url: '#' },
+  { name: 'Resources', url: '/resources' },
+  // { name: 'Moving Center', url: '#' },
+  // { name: 'News', url: '#' },
+  { name: 'List Your Property', url: '/providers' },
+  { name: 'Our History', url: '/about' },
+  { name: 'Sign in', url: '/signin' },
 ];
 
 const HeroWrapper = styled.div`
@@ -67,20 +67,43 @@ const StyledSection = styled(Section)`
 `;
 const ColumnWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
 
   > * {
     margin-bottom: ${size('spacing.xLarge')};
-    margin-right: ${size('spacing.xLarge')};
   }
-
+  > *:last-child {
+    margin-right: 0;
+  }
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-    justify-content: space-between;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+`;
+const TwoColumnWrapper = ColumnWrapper.extend`
+  > * {
+    margin-right: 0;
+  }
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
     > * {
-      margin-right: initial;
-      margin-bottom: initial;
+      margin-right: ${size('spacing.xLarge')};
+    }
+  }
+`;
+const ThreeColumnWrapper = ColumnWrapper.extend`
+  > * {
+    margin-right: 0;
+  }
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    > *:first-child {
+      margin-right: ${size('spacing.xLarge')};
+    }
+  }
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    > * {
+      margin-right: ${size('spacing.xLarge')};
     }
   }
 `;
@@ -88,19 +111,54 @@ const StyledHr = styled(Hr)`
   border-color: ${palette('primary', 3)};
 `;
 const UIColumnWrapper = ColumnWrapper.extend`
-  > a {
+  > * {
     margin-bottom: ${size('spacing.large')};
+  }
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    > *:nth-child(odd) {
+      margin-right: ${size('spacing.xLarge')};
+    }
+  }
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    > * {
+      margin-right: ${size('spacing.xLarge')};
+    }
+    > *:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+`;
+const MSCColumnWrapper = ColumnWrapper.extend`
+  > * {
+    margin-bottom: ${size('spacing.large')};
+  }
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    > *:nth-child(odd) {
+      margin-right: ${size('spacing.xLarge')};
+    }
+  }
+  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    > * {
+      margin-right: ${size('spacing.xLarge')};
+    }
+    > *:nth-child(4n) {
+      margin-right: 0;
+    }
   }
 `;
 const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 const CWTColumnWrapper = ColumnWrapper.extend`
-  width: 100%;
-  margin: auto;
+  > * {
+    margin-right: ${size('spacing.large')};
+  }
 
-  @media screen and (min-width: ${size('home.companiesWeTrust.width')}) {
-    width: ${size('home.companiesWeTrust.width')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    justify-content: center;
+    > * {
+      margin-right: ${size('spacing.huge')};
+    }
   }
 `;
 
@@ -110,7 +168,7 @@ const HomePage = ({ onLocationSearch }) => {
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <Header headerItems={headerItems} onLocationSearch={onLocationSearch} />
       <HeroWrapper>
-        <StyledImage src={assetPath('images/home/cover.png')} alt="hero image" />
+        <StyledImage src={assetPath('images/home/cover.jpg')} alt="hero image" />
         <SearchBoxWrapper>
           <StyledHeading level="hero" palette="white">
             Find a Home to Love
@@ -126,66 +184,65 @@ const HomePage = ({ onLocationSearch }) => {
       header={HeaderContent}
       footer={<Footer />}
     >
-      <StyledSection title="Discover Favourite Homes">
-        <ColumnWrapper>
+      <StyledSection title="Discover Favorite Homes">
+        <TwoColumnWrapper>
           <DiscoverHomeTile
             image={assetPath('images/home/discover-home/independent-living-tile.png')}
-            title="Independent Living"
+            title="Care Homes"
             description="200 properties starting from $4,000"
             link={{ text: 'See more', href: '#' }}
           />
           <DiscoverHomeTile
             image={assetPath('images/home/discover-home/alzheimers-care-tile.png')}
-            title="Alzheimer's Care"
+            title="Assisted Living"
             description="200 properties starting from $4,000"
             link={{ text: 'See more', href: '#' }}
           />
-        </ColumnWrapper>
-        <br />
-        <ColumnWrapper>
+        </TwoColumnWrapper>
+        <ThreeColumnWrapper>
           <DiscoverHomeTile
             size="regular"
             image={assetPath('images/home/discover-home/studios-tile.png')}
-            title="Studios"
-            description="200 properties from $4,000"
-            link={{ text: 'See more', href: '#' }}
-          />
-          <DiscoverHomeTile
-            size="regular"
-            image={assetPath('images/home/discover-home/shared-rooms-tile.png')}
-            title="Shared Rooms"
+            title="Boutique"
             description="200 properties from $4,000"
             link={{ text: 'See more', href: '#' }}
           />
           <DiscoverHomeTile
             size="regular"
             image={assetPath('images/home/discover-home/1-bedroom-tile.png')}
-            title="1 Bedroom"
+            title="Luxury"
             description="200 properties from $4,000"
             link={{ text: 'See more', href: '#' }}
           />
-        </ColumnWrapper>
+          <DiscoverHomeTile
+            size="regular"
+            image={assetPath('images/home/discover-home/shared-rooms-tile.png')}
+            title="Memory Care"
+            description="200 properties from $4,000"
+            link={{ text: 'See more', href: '#' }}
+          />
+        </ThreeColumnWrapper>
       </StyledSection>
       <br />
       <StyledHr />
       <StyledSection title="Meet others we've helped">
-        <ColumnWrapper>
+        <ThreeColumnWrapper>
           <MeetOthersTile
             image={assetPath('images/home/meet-others/female1-tile.png')}
-            title="Middle-aged adult female child #1"
-            description={'"Family Caregiver Alliance provides “online educational materials in terms of fact sheets, videos, and online support groups" which are invaluable to family caregivers and their families.'}
+            title="Sharon T."
+            description={'“I felt like Seniorly was a lifesaver! I was daunted at the prospect of going through so many possibilities to find the right fit for my mom in such a short time, while taking care of so many other things that need attending as we deal with the aftermath of her stroke.”'}
           />
           <MeetOthersTile
             image={assetPath('images/home/meet-others/female2-tile.png')}
-            title="Middle-aged adult female child #2"
-            description={'"Family Caregiver Alliance provides “online educational materials in terms of fact sheets, videos, and online support groups" which are invaluable to family caregivers and their families.'}
+            title="Kathy O."
+            description={'It’s such a wonderful comfort to be able to view the pictures, video and information on the Seniorly website. The Seniorly staff is also responsive, kind and compassionate. Thank you for caring about this community and the needs of future generations!”'}
           />
           <MeetOthersTile
             image={assetPath('images/home/meet-others/female3-tile.png')}
-            title="Middle-aged adult female child #3"
-            description={'"Family Caregiver Alliance provides “online educational materials in terms of fact sheets, videos, and online support groups" which are invaluable to family caregivers and their families.'}
+            title="Henry W."
+            description={'“We were lucky enough to find a great place for my father-in-law. Seniorly is a really helpful website, very helpful and informative. Thank you so much for what you do.”'}
           />
-        </ColumnWrapper>
+        </ThreeColumnWrapper>
       </StyledSection>
       <br />
       <StyledHr />
@@ -211,11 +268,11 @@ const HomePage = ({ onLocationSearch }) => {
               <Heading palette="white">Board & Care Residential</Heading>
             </ImageOverlayContentTile>
           </Link>
-          <Link to="#">
-            <ImageOverlayContentTile image={assetPath('images/home/useful-info/skilled-nursing.png')}>
-              <Heading palette="white">Skilled Nursing</Heading>
-            </ImageOverlayContentTile>
-          </Link>
+          {/*<Link to="#">*/}
+            {/*<ImageOverlayContentTile image={assetPath('images/home/useful-info/skilled-nursing.png')}>*/}
+              {/*<Heading palette="white">Skilled Nursing</Heading>*/}
+            {/*</ImageOverlayContentTile>*/}
+          {/*</Link>*/}
           <Link to="#">
             <ImageOverlayContentTile image={assetPath('images/home/useful-info/ccrc-life-plan.png')}>
               <Heading palette="white">CCRC / Life Plan</Heading>
@@ -225,7 +282,7 @@ const HomePage = ({ onLocationSearch }) => {
       </StyledSection>
       <StyledHr />
       <StyledSection title="Most searched cities">
-        <UIColumnWrapper>
+        <MSCColumnWrapper>
           <Link to="#">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanFrancisco.png')}>
               <Heading palette="white" level="subtitle">San Francisco, CA</Heading>
@@ -274,11 +331,11 @@ const HomePage = ({ onLocationSearch }) => {
               <Block palette="white">80+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
-        </UIColumnWrapper>
+        </MSCColumnWrapper>
       </StyledSection>
       <StyledHr />
       <StyledSection>
-        <UIColumnWrapper>
+        <TwoColumnWrapper>
           <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/partner-with-us.png')}>
             <Heading palette="white">Partner With Us</Heading>
             <StyledBlock palette="white" level="subtitle">For Local Referral Agents</StyledBlock>
@@ -289,24 +346,16 @@ const HomePage = ({ onLocationSearch }) => {
             <StyledBlock palette="white" level="subtitle">For Senior Housing Providers</StyledBlock>
             <Button href="#">Get Started</Button>
           </ImageOverlayContentTile>
-        </UIColumnWrapper>
+        </TwoColumnWrapper>
       </StyledSection>
       <StyledHr />
-      <StyledSection title="Companies We Trust">
+      <StyledSection title="Communities We Trust">
         <br />
         <CWTColumnWrapper>
-          <Link to="https://www.seniorly.com/resources/articles/seniorly-conversations-caregiver-resources" target="_blank">
-            <Image src={assetPath('images/home/companies-we-trust/UCBerkeley.png')} />
-          </Link>
-          <Link to="https://www.nike.com" target="_blank">
-            <Image src={assetPath('images/home/companies-we-trust/NIKE.png')} />
-          </Link>
-          <Link to="https://www.seniorly.com/assisted-living/articles/seniorly-conversations-staying-social-in-senior-housing-communities" target="_blank">
-            <Image src={assetPath('images/home/companies-we-trust/Seniorly.png')} />
-          </Link>
-          <Link to="https://www.seniorly.com/resources/articles/seniorly-conversations-on-demand-transportation-for-older-adults" target="_blank">
-            <Image src={assetPath('images/home/companies-we-trust/Lyft.png')} />
-          </Link>
+          <Image src={assetPath('images/home/companies-we-trust/UCBerkeley.png')} />
+          <Image src={assetPath('images/home/companies-we-trust/NIKE.png')} />
+          <Image src={assetPath('images/home/companies-we-trust/Seniorly.png')} />
+          <Image src={assetPath('images/home/companies-we-trust/Lyft.png')} />
         </CWTColumnWrapper>
       </StyledSection>
     </BasePageTemplate>

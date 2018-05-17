@@ -143,7 +143,9 @@ const Header = ({
   return (
     <HeaderWrapper>
       <SeniorlyLogoWrapper>
-        <Logo />
+        <Link href={'/'}>
+          <Logo />
+        </Link>
       </SeniorlyLogoWrapper>
       <SeniorlyIconMenu onClick={onMenuIconClick}>
         <Icon icon="logo" size="large" />

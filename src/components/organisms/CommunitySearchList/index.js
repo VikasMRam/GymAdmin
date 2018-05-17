@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { object, arrayOf, func } from 'prop-types';
-import { stringify } from 'query-string';
-import { sendEvent } from "sly/services/helpers/events";
+
 
 import { size } from 'sly/components/themes';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
@@ -63,13 +62,6 @@ export default class CommunitySearchList extends Component {
     });
   };
 
-  componentDidMount() {
-
-    let params = {};//this.props.location.search;
-    stringify(params);
-    sendEvent({action:'filters',category:'search','label':params});
-
-  }
 
   render() {
     const { communityList, requestMeta, ...props } = this.props;

@@ -152,11 +152,7 @@ export default class CommunityDetailPage extends React.Component {
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <Section title={`Map View of ${name}`}>
           <CommunityMap
-            id={id}
-            name={name}
-            startingRate={startingRate}
-            mainImage={mainImage}
-            address={address}
+            community={community}
             similarProperties={similarProperties}
           />
         </Section>

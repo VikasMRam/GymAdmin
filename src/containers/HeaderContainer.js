@@ -12,21 +12,21 @@ const HeaderContainer = ({
   onLocationSearch,
 }) => {
   const headerItems = [
-    { name: 'List on Seniorly', url: '#' },
-    { name: 'Help Center', url: '#' },
-    { name: 'Saved', url: '#' },
-    { name: 'Sign Up', url: '#' },
-    { name: 'Login', url: '#' },
+    { name: 'List on Seniorly', url: '/providers' },
+    { name: 'Help Center', url: '/resources' },
+    // { name: 'Saved', url: '#' },
+    { name: 'Sign Up', url: '/signup' },
+    { name: 'Login', url: '/signin' },
   ];
   const menuItems = [
-    { name: 'Assisted Living', url: '#' },
-    { name: "Alzheimer's Care", url: '#' },
+    { name: 'Assisted Living', url: '/assisted-living' },
+    { name: "Alzheimer's Care", url: '/alzheimers-care' },
     { name: 'Respite Care', url: '#' },
-    { name: 'About Us', url: '#' },
-    { name: 'Contact', url: '#' },
-    { name: 'Careers', url: '#' },
-    { name: 'List on Seniorly', url: '#' },
-    { name: 'Sign Out', url: '#' },
+    { name: 'About Us', url: '/about' },
+    { name: 'Contact', url: '/contact' },
+    { name: 'Careers', url: 'https://angel.co/seniorly/jobs' },
+    { name: 'List on Seniorly', url: '/providers' },
+    // { name: 'Sign Out', url: '#' },
   ];
 
   return (

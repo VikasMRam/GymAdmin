@@ -3,9 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "main": "dist/server",
-  "engines": {
-    "npm": "6.0.1"
-  },
   "scripts": {
     "start": "node .",
     "start:prod": "npm run env:prod -- node .",
@@ -114,12 +111,14 @@
     "prop-types": "^15.5.8",
     "query-string": "^5.0.0",
     "react": "^16.3.2",
+    "react-cookie": "^1.0.5",
     "react-dom": "^16.3.2",
     "react-dotdotdot": "^1.2.3",
     "react-ga": "^2.5.0",
     "react-google-maps": "^9.4.5",
     "react-helmet": "^5.0.3",
     "react-hot-loader": "^3.1.1",
+    "react-lazy": "^0.5.1",
     "react-measure": "^2.0.2",
     "react-modal": "^3.4.4",
     "react-number-format": "^3.3.4",

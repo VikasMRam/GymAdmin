@@ -9,16 +9,15 @@ import { size } from 'sly/components/themes';
 import Checkbox from 'sly/components/molecules/Checkbox';
 import Map from 'sly/components/atoms/Map';
 import MapTile from 'sly/components/molecules/MapTile';
-import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
 
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
-import {delayedExecutor, getRadiusFromMapBounds} from "sly/services/helpers/search";
+import { delayedExecutor, filterSearchParams, getRadiusFromMapBounds } from 'sly/services/helpers/search';
 
 const MapContainerElement = styled.div`
   width: 100%;
   height: 80vh;
-  margin-bottom: 1.000rem;
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const StyledDiv = styled.div`
@@ -67,7 +66,9 @@ class RedoSearchDiv extends Component {
     y: -(height / 2),
   });
   render() {
-    const { latitude, longitude, redoSearchOnMove, onToggleSearchOnMove } = this.props;
+    const {
+      latitude, longitude, redoSearchOnMove, onToggleSearchOnMove,
+    } = this.props;
     return (
       <OverlayView
         position={{ lat: latitude, lng: longitude }}
@@ -126,24 +127,31 @@ class SearchMap extends Component {
   onBoundsChange = delayedExecutor(() => {
     // Do something if this is checked
     if (this.state.redoSearchOnMove) {
-
-      const { onParamsChange } = this.props;
+      const { onParamsChange, searchParams } = this.props;
       if (onParamsChange && typeof onParamsChange === 'function') {
         // Get Map's center and get latitude and longitude
         if (refs.map) {
           const center = refs.map.getCenter();
-          const lat = center.lat();
-          const long = center.lng();
-          //Calculate radius
+          const latitude = center.lat();
+          const longitude = center.lng();
+          // Calculate radius
           let radius = getRadiusFromMapBounds(refs.map.getBounds());
           if (radius < minRadius) {
-            radius = minRadius
+            radius = minRadius;
           }
-          onParamsChange({ changedParams: { latitude: lat, longitude: long, radius: radius, 'page-size': 50, searchOnMove: true } });
+          if (searchParams.latitude !== latitude.toString() &&
+            searchParams.longitude !== longitude.toString() &&
+            searchParams.radius !== radius.toString()) {
+            onParamsChange({
+              changedParams: {
+                latitude, longitude, radius,
+              },
+            });
+          }
         }
       }
     }
-  },'mapBoundsChange') ;
+  }, 'mapBoundsChange') ;
 
   render() {
     const { latitude, longitude, communityList } = this.props;
@@ -221,24 +229,11 @@ class SearchMap extends Component {
           numReviews,
         },
       };
-      const communityForSmallTile = {
-        name,
-        url,
-        picture: image,
-        startingRate,
-        propRatings: {
-          reviewsValue,
-          numReviews,
-        },
-      };
-      let infoWindowTile = (
+
+      const infoWindowTile = (
         <MapTile tileInfo={community} borderless />
       );
-      if (isMobile) {
-        infoWindowTile = (
-          <CommunityChoiceTile community={communityForSmallTile} borderless />
-        );
-      }
+
       return (
         <Marker
           key={marker.id}
@@ -267,8 +262,12 @@ class SearchMap extends Component {
         onMapMounted={this.onMapMounted}
       >
         {markerComponents}
-        <RedoSearchDiv latitude={latitude} longitude={longitude} redoSearchOnMove={this.state.redoSearchOnMove}
-         onToggleSearchOnMove={this.onToggleSearchOnMove}/>
+        <RedoSearchDiv
+          latitude={latitude}
+          longitude={longitude}
+          redoSearchOnMove={this.state.redoSearchOnMove}
+          onToggleSearchOnMove={this.onToggleSearchOnMove}
+        />
       </Map>
     );
   }
