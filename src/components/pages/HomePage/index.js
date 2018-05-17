@@ -130,7 +130,6 @@ const secondRowDiscoverHomes = [
     description: '200 properties starting from $4,000',
     image: assetPath('images/home/discover-home/studios-tile.png'),
     buttonText: 'See more',
-    size: 'regular',
     searchParams: { budget: 4000 },
   },
   {
@@ -138,7 +137,6 @@ const secondRowDiscoverHomes = [
     description: '200 properties starting from $4,000',
     image: assetPath('images/home/discover-home/1-bedroom-tile.png'),
     buttonText: 'See more',
-    size: 'regular',
     searchParams: { budget: 4000 },
   },
   {
@@ -146,7 +144,6 @@ const secondRowDiscoverHomes = [
     description: '200 properties starting from $4,000',
     image: assetPath('images/home/discover-home/shared-rooms-tile.png'),
     buttonText: 'See more',
-    size: 'regular',
     searchParams: { budget: 4000 },
   },
 ];
@@ -178,6 +175,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       title={discoverHome.title}
       description={discoverHome.description}
       image={discoverHome.image}
+      size={discoverHome.size}
       buttonText={discoverHome.buttonText}
       onButtonClick={() => onButtonClick(discoverHome)}
     />
@@ -189,6 +187,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       title={discoverHome.title}
       description={discoverHome.description}
       image={discoverHome.image}
+      size={discoverHome.size}
       buttonText={discoverHome.buttonText}
       onButtonClick={() => onButtonClick(discoverHome)}
     />

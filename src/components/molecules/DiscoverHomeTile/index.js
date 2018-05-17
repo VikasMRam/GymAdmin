@@ -89,7 +89,7 @@ DiscoverHomeTile.propTypes = {
 };
 
 DiscoverHomeTile.defaultProps = {
-  size: 'xLarge',
+  size: 'regular',
 };
 
 export default DiscoverHomeTile;
