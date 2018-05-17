@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 
 import HomePage from 'sly/components/pages/HomePage';
-import { getPathFromPlacesResponse } from 'sly/services/helpers/search';
+import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 
 class HomePageContainer extends Component {
   static propTypes = {
@@ -11,26 +11,27 @@ class HomePageContainer extends Component {
   };
 
   state = {
-    isModalOpen: false,
+    activeDiscoverHome: null,
   };
 
-  toggleModal = () => {
-    const { isModalOpen } = this.state;
-    this.setState({ isModalOpen: !isModalOpen });
+  setActiveDiscoverHome = (activeDiscoverHome) => {
+    this.setState({ activeDiscoverHome });
   };
 
   handleOnLocationSearch = (result) => {
     const { history } = this.props;
-    const path = getPathFromPlacesResponse(result);
+    const { activeDiscoverHome } = this.state;
+    const searchParams = getSearchParamFromPlacesResponse(result);
+    const { path } = filterLinkPath(searchParams, activeDiscoverHome.searchParams);
     history.push(path);
   };
 
   render() {
-    const { isModalOpen } = this.state;
+    const { activeDiscoverHome } = this.state;
     return (
       <HomePage
-        isModalOpen={isModalOpen}
-        toggleModal={this.toggleModal}
+        isModalOpen={activeDiscoverHome !== null}
+        setActiveDiscoverHome={this.setActiveDiscoverHome}
         onLocationSearch={this.handleOnLocationSearch}
       />
     );

@@ -6,7 +6,7 @@ import { getDetail } from 'sly/store/selectors';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { getPathFromPlacesResponse } from 'sly/services/helpers/search';
+import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
@@ -17,7 +17,8 @@ class CommunityDetailPageContainer extends Component {
 
   handleOnLocationSearch = (result) => {
     const { history } = this.props;
-    const path = getPathFromPlacesResponse(result);
+    const searchParams = getSearchParamFromPlacesResponse(result);
+    const { path } = filterLinkPath(searchParams);
     history.push(path);
   };
 

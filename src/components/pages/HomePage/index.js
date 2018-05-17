@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { func } from 'prop-types';
+import { bool, func } from 'prop-types';
 import { palette } from 'styled-theme';
 
 import { size, assetPath } from 'sly/components/themes';
@@ -109,7 +109,7 @@ const firstRowDiscoverHomes = [
   {
     title: 'Care Homes',
     description: '200 properties starting from $4,000',
-    image: 'images/home/discover-home/independent-living-tile.png',
+    image: assetPath('images/home/discover-home/independent-living-tile.png'),
     buttonText: 'See more',
     size: 'xLarge',
     searchParams: { budget: 4000 },
@@ -117,7 +117,7 @@ const firstRowDiscoverHomes = [
   {
     title: 'Assisted Living',
     description: '200 properties starting from $4,000',
-    image: 'images/home/discover-home/alzheimers-care-tile.png',
+    image: assetPath('images/home/discover-home/alzheimers-care-tile.png'),
     buttonText: 'See more',
     size: 'xLarge',
     searchParams: { budget: 4000 },
@@ -128,7 +128,7 @@ const secondRowDiscoverHomes = [
   {
     title: 'Boutique',
     description: '200 properties starting from $4,000',
-    image: 'images/home/discover-home/studios-tile.png',
+    image: assetPath('images/home/discover-home/studios-tile.png'),
     buttonText: 'See more',
     size: 'regular',
     searchParams: { budget: 4000 },
@@ -136,7 +136,7 @@ const secondRowDiscoverHomes = [
   {
     title: 'Luxury',
     description: '200 properties starting from $4,000',
-    image: 'images/home/discover-home/1-bedroom-tile.png',
+    image: assetPath('images/home/discover-home/1-bedroom-tile.png'),
     buttonText: 'See more',
     size: 'regular',
     searchParams: { budget: 4000 },
@@ -144,14 +144,14 @@ const secondRowDiscoverHomes = [
   {
     title: 'Memory Care',
     description: '200 properties starting from $4,000',
-    image: 'images/home/discover-home/shared-rooms-tile.png',
+    image: assetPath('images/home/discover-home/shared-rooms-tile.png'),
     buttonText: 'See more',
     size: 'regular',
     searchParams: { budget: 4000 },
   },
 ];
 
-const HomePage = ({ isModalOpen, onLocationSearch, toggleModal }) => {
+const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -169,8 +169,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, toggleModal }) => {
   );
 
   const onButtonClick = (discoverHome) => {
-    console.log(discoverHome);
-    toggleModal();
+    setActiveDiscoverHome(discoverHome);
   };
 
   const firstRowDiscoverHomesComponents = firstRowDiscoverHomes.map(discoverHome => (
@@ -178,7 +177,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, toggleModal }) => {
       key={discoverHome.title}
       title={discoverHome.title}
       description={discoverHome.description}
-      image={assetPath(discoverHome.image)}
+      image={discoverHome.image}
       buttonText={discoverHome.buttonText}
       onButtonClick={() => onButtonClick(discoverHome)}
     />
@@ -189,7 +188,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, toggleModal }) => {
       key={discoverHome.title}
       title={discoverHome.title}
       description={discoverHome.description}
-      image={assetPath(discoverHome.image)}
+      image={discoverHome.image}
       buttonText={discoverHome.buttonText}
       onButtonClick={() => onButtonClick(discoverHome)}
     />
@@ -200,7 +199,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, toggleModal }) => {
       header={HeaderContent}
       footer={<Footer />}
     >
-      <Modal closeable onClose={toggleModal} isOpen={isModalOpen}><SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} /></Modal>
+      <Modal closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}><SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} /></Modal>
       <StyledSection title="Discover Favorite Homes">
         <ColumnWrapper>
           {firstRowDiscoverHomesComponents}
@@ -351,7 +350,9 @@ const HomePage = ({ isModalOpen, onLocationSearch, toggleModal }) => {
 };
 
 HomePage.propTypes = {
+  isModalOpen: bool,
   onLocationSearch: func,
+  setActiveDiscoverHome: func,
 };
 
 export default HomePage;
