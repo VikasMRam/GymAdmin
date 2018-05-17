@@ -12,8 +12,12 @@ function onSelect() {
   // console.log('onSelect');
 }
 
+function onSeachButtonClick() {
+  // console.log('onSeachButtonClick');
+}
+
 const wrap = (props = {}) =>
-  mount(<SearchBox {...props} value="" onChange={onChange} onSelect={onSelect} />);
+  mount(<SearchBox {...props} value="" onChange={onChange} onSelect={onSelect} onSeachButtonClick={onSeachButtonClick} />);
 
 const setupGoogleMock = () => {
   /** * Mock Google Maps JavaScript API ** */

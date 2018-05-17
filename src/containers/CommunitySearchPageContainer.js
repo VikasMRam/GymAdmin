@@ -11,7 +11,7 @@ import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 import {
   filterLinkPath,
   getSearchParams,
-  getPathFromPlacesResponse,
+  getSearchParamFromPlacesResponse,
 } from 'sly/services/helpers/search';
 
 class CommunitySearchPageContainer extends Component {
@@ -39,13 +39,14 @@ class CommunitySearchPageContainer extends Component {
     }, {});
 
     const { path } = filterLinkPath(searchParams, changedParams);
-
+    
     history.push(path);
   };
 
   handleOnLocationSearch = (result) => {
     const { history } = this.props;
-    const path = getPathFromPlacesResponse(result);
+    const searchParams = getSearchParamFromPlacesResponse(result);
+    const { path } = filterLinkPath(searchParams);
     history.push(path);
   };
 

@@ -70,7 +70,6 @@ const ModalContext = styled.article`
   bottom: auto;
   margin: 1rem calc(-50% + 1rem) 1rem 1rem;
   max-height: calc(100% - 1rem);
-  overflow: auto;
 
   ${switchProp('layout', {
     single: css`
@@ -105,6 +104,7 @@ const ModalContext = styled.article`
       max-height: 100%;
       padding: ${size('spacing.xLarge')};
       width: 100%;
+      overflow: auto;
       @media screen and (min-width: ${size('breakpoint.mobile')}) {
         width: auto;
       }
