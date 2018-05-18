@@ -46,7 +46,7 @@ const Wrapper = styled.div`
 `;
 
 const HowSlyWorks = () => {
-  const reasonTiles = reasons.map((reason) => <ReasonTile {...reason}/>);
+  const reasonTiles = reasons.map((reason) => <ReasonTile key={reason.title} {...reason}/>);
   return (
     <Wrapper>
       {reasonTiles}

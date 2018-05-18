@@ -391,15 +391,16 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
         </TwoColumnWrapper>
       </StyledSection>
       <StyledHr />
-      <StyledSection title="Communities We Trust">
-        <br />
-        <CWTColumnWrapper>
-          <Image src={assetPath('images/home/companies-we-trust/UCBerkeley.png')} />
-          <Image src={assetPath('images/home/companies-we-trust/NIKE.png')} />
-          <Image src={assetPath('images/home/companies-we-trust/Seniorly.png')} />
-          <Image src={assetPath('images/home/companies-we-trust/Lyft.png')} />
-        </CWTColumnWrapper>
-      </StyledSection>
+      {/*<StyledSection title="Communities We Trust">*/}
+        {/*<br />*/}
+        {/*<CWTColumnWrapper>*/}
+          {/*<StyledImage src={assetPath('images/home/communities-we-trust/bhsl.png')} />*/}
+          {/*<Image src={assetPath('images/home/communities-we-trust/brookdale.png')} />*/}
+          {/*<Image src={assetPath('images/home/communities-we-trust/integral.png')} />*/}
+          {/*<Image src={assetPath('images/home/communities-we-trust/pacifica.png')} />*/}
+          {/*<Image src={assetPath('images/home/communities-we-trust/Lyft.png')} />*/}
+        {/*</CWTColumnWrapper>*/}
+      {/*</StyledSection>*/}
     </BasePageTemplate>
   );
 };
