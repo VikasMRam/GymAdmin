@@ -47,16 +47,21 @@ class SearchBoxContainer extends Component {
   };
 
   handleSelect = (address) => {
-    const { setLocation } = this.props;
+    const { setLocation, onLocationSearch } = this.props;
     geocodeByAddress(address)
       .then(results => results[0])
-      .then(result => setLocation(result))
+      .then((result) => {
+        setLocation(result);
+        onLocationSearch(result);
+      })
       .catch(error => console.error('Error', error));
   }
 
   handleSearch = () => {
     const { location, onLocationSearch } = this.props;
-    onLocationSearch(location);
+    if (location) {
+      onLocationSearch(location);
+    }
   };
 
   render() {
