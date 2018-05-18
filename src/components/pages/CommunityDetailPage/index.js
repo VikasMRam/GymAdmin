@@ -156,9 +156,12 @@ export default class CommunityDetailPage extends React.Component {
             similarProperties={similarProperties}
           />
         </Section>
-        <Section title="More Pictures">
-          <MorePictures gallery={gallery} />
-        </Section>
+        {(images.length > 1) &&
+          <Section title="More Pictures">
+            <MorePictures gallery={gallery} />
+          </Section>
+        }
+
         <Section title="How Seniorly Works">
           <HowSlyWorks />
         </Section>
@@ -222,7 +225,7 @@ export default class CommunityDetailPage extends React.Component {
               <Button ghost href={getCitySearchUrl({ propInfo, address })}>Communities In {address.city}</Button>
             </BackToSearch>
           </CollapsibleSection>
-          <CollapsibleSection title="Community Details">
+          {(communityDescription || rgsAux.slyCommunityDescription) && <CollapsibleSection title="Community Details">
             <CommunityDetails
               communityName={name}
               communityDescription={communityDescription || rgsAux.slyCommunityDescription}
@@ -230,7 +233,7 @@ export default class CommunityDetailPage extends React.Component {
               residentDescription={residentDescription}
               ownerExperience={ownerExperience}
             />
-          </CollapsibleSection>
+          </CollapsibleSection>}
           <CollapsibleSection title="Care Services">
             <CareServicesList
               communityName={name}

@@ -21,9 +21,11 @@ export default class CareServicesList extends Component {
 
     return (
       <section id="care-services">
-        <StyledArticle>
+        {serviceHighlights && serviceHighlights.length > 0 && <StyledArticle>
           <List heading={`${communityName} is known for`} items={serviceHighlights} />
         </StyledArticle>
+        }
+
         <StyledArticle>
           <List heading={`${communityName} also offers`} items={careServices} />
         </StyledArticle>
