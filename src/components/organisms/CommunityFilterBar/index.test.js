@@ -7,7 +7,7 @@ import CommunityFilterBar, { FilterButton, ClearAllButton } from '.';
 const wrap = (props = {}) => shallow(<CommunityFilterBar {...props} />);
 const fullSp = {
   size: 'small',
-  budget: '3000',
+  budget: 3000,
 };
 const halfSp = {
   size: 'small',
