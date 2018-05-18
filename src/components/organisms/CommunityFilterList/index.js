@@ -9,7 +9,7 @@ import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Field from 'sly/components/molecules/Field';
 import Radio from 'sly/components/molecules/Radio';
 import IconButton from 'sly/components/molecules/IconButton';
-import { Link, Image, Box, Hr } from "sly/components/atoms";
+import { Link, Image, Box, Hr, Button } from 'sly/components/atoms';
 import { tocs, budgets, sizes, filterLinkPath } from 'sly/services/helpers/search';
 
 const StyledWrapper = styled.div`
@@ -87,12 +87,21 @@ const generateRadioLink = (elem, type, path, selected) => (
   </StyledLink>
 );
 
+export const ClearAllButton = styled(Button)`
+  color: ${palette('primary', 0)};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
+`;
+
 const CommunityFilterList = ({
   toggleMap,
   isMapView,
   isModalView,
   searchParams,
   onFieldChange,
+  onParamsRemove,
 }) => {
   const tocFields = tocs.map((elem) => {
     const { path, selected } = filterLinkPath(searchParams, { toc: elem.value });
@@ -108,6 +117,18 @@ const CommunityFilterList = ({
   });
   const { sort } = searchParams;
   const WrapperElement = (isModalView) ? StyledWrapper : StyledBox;
+
+  // TODO: Duplicate logic from CommunityFilterBar
+  const { size, budget } = searchParams;
+  const filtersApplied = [];
+  if (size) filtersApplied.push('size');
+  if (budget) filtersApplied.push('budget');
+
+  const getEvtHandler = (paramsToRemove, origFn) => {
+    return (uiEvt) => {
+      origFn({ origUiEvt: uiEvt, paramsToRemove });
+    };
+  };
 
   return (
     <WrapperElement>
@@ -162,6 +183,14 @@ const CommunityFilterList = ({
           </option>
         </Field>
       </CollapsibleSection>
+      {filtersApplied.length > 0 && (
+        <ClearAllButton
+          onClick={getEvtHandler(filtersApplied, onParamsRemove)}
+          transparent
+        >
+          Clear all filters
+        </ClearAllButton>
+      )}
     </WrapperElement>
   );
 };
@@ -172,6 +201,7 @@ CommunityFilterList.propTypes = {
   isModalView: bool,
   searchParams: object.isRequired,
   onFieldChange: func.isRequired,
+  onParamsRemove: func.isRequired,
 };
 
 CommunityFilterList.defaultProps = {

@@ -98,6 +98,7 @@ export default class CommunitySearchPage extends Component {
         toggleMap={toggleMap}
         isMapView={isMapView}
         toggleFilter={this.hideFilters}
+        onParamsRemove={onParamsRemove}
       />
     );
 
@@ -118,6 +119,7 @@ export default class CommunitySearchPage extends Component {
             isMapView={isMapView}
             isModalView
             toggleFilter={this.hideFilters}
+            onParamsRemove={onParamsRemove}
           />
           <Button kind="jumbo" onClick={this.hideFilters}>
             Apply Filters
