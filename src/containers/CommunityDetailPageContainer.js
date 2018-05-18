@@ -62,7 +62,7 @@ const fetchData = (dispatch, { match }) =>
   ]);
 
 const handleError = (err) => {
-  if (err.response.status === 404) {
+  if (err.response && err.response.status === 404) {
     return { error: 'Unknown Profile!' };
   }
   throw err;
