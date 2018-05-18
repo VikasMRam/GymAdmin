@@ -42,6 +42,7 @@ const config = {
     apiUrl: process.env.API_URL || 'https://www.seniorly.com/v0/',
     authTokenUrl: process.env.AUTH_URL ||  'https://www.seniorly.com/users/auth_token',
     gAnalyticsKey: 'UA-55078261-1',
+    cookieDomain: process.env.DOMAIN || 'lvh.me',
   },
 };
 
