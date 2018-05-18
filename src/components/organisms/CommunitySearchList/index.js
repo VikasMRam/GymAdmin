@@ -8,8 +8,10 @@ import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile'
 import Link from 'sly/components/atoms/Link';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import Pagination from 'sly/components/molecules/Pagination';
-import Heading from "sly/components/atoms/Heading";
+import Heading from 'sly/components/atoms/Heading';
+import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 
+import { getBreadCrumbsForCity } from 'sly/services/helpers/url';
 
 const SimilarCommunityTileDiv = styled.div`
   margin-bottom: ${size('spacing.large')};
@@ -65,7 +67,7 @@ export default class CommunitySearchList extends Component {
 
 
   render() {
-    const { communityList, requestMeta, ...props } = this.props;
+    const { communityList, requestMeta, searchParams, ...props } = this.props;
 
     if (communityList.length < 1) {
       return <SectionWrapper><Heading>It doesn't look like we have added communities in the area yet. </Heading></SectionWrapper>;
@@ -84,9 +86,10 @@ export default class CommunitySearchList extends Component {
     const { current, total } = getPaginationData(requestMeta);
     return (
       <SectionWrapper>
-        <CommunityFilterBar {...props} />
+        <CommunityFilterBar searchParams={searchParams} {...props} />
         {components}
         <Pagination onChange={this.onPageChange} current={current} total={total} />
+        <BreadCrumb items={getBreadCrumbsForCity(searchParams)} />
       </SectionWrapper>
     );
   }

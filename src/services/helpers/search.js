@@ -119,6 +119,7 @@ export const budgets = [
   { label: 'Up to $5000', segment: '5000-dollars', value: 5000 },
   { label: 'Up to $5500', segment: '5500-dollars', value: 5500 },
   { label: 'Up to $6000', segment: '6000-dollars', value: 6000 },
+  { label: 'More than $6000', segment: 'greater-than-6000-dollars', value: 100000 },
 ];
 
 /** Not used currently
@@ -194,4 +195,18 @@ export const getSearchParamFromPlacesResponse = ({ address_components, geometry 
     };
   }
   return { toc: 'assisted-living' };
+};
+
+export const getFiltersApplied = (searchParams) => {
+  const { size, budget } = searchParams;
+  const filtersApplied = [];
+  if (size) filtersApplied.push('size');
+  if (budget) filtersApplied.push('budget');
+  return filtersApplied;
+};
+
+export const getEvtHandler = (paramsToRemove, origFn) => {
+  return (uiEvt) => {
+    origFn({ origUiEvt: uiEvt, paramsToRemove });
+  };
 };
