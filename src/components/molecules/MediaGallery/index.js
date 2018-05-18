@@ -54,7 +54,7 @@ const StyledVideo = styled.video`
 `;
 const StyledIcon = styled(Icon)`
   position: absolute;
-  z-index: 100;
+  z-index: 1;
   margin: auto;
   top: 0;
   bottom: 0;
@@ -81,16 +81,18 @@ const BottomLeftWrapper = styled.span`
   position: absolute;
   z-index: 1;
 `;
+const rootElementStyle = {
+  maxHeight: '100%',
+};
 const sliderComponentStyle = {
   alignItems: 'center',
 };
-const slideStyle = {
-  position: 'relative',
-  overflow: 'initial',
-};
 const PlayIcon = styled(Icon)`
+  z-index: 1;
   position: absolute;
-  top: 44%;
+  margin: auto;
+  top: 0;
+  bottom: 0;
   left: 50%;
   font-size: ${size('icon.xLarge')};
 
@@ -203,22 +205,10 @@ export default class MediaGallery extends Component {
 
   generateSlideContent = (media, index) => {
     const { autoHeight, currentSlide } = this.props;
-    const playIcon = (
-      <PlayIcon
-        key="media-gallery-play-button"
-        icon="play"
-        size="large"
-        palette="white"
-      />
-    );
-    const slide = [];
 
     switch (media.type) {
-      case 'image': {
-        if (media.ofVideo !== undefined) {
-          slide.push(playIcon);
-        }
-        slide.push((
+      case 'image':
+        return (
           <StyledImg
             key="media-gallery-slide"
             autoHeight={autoHeight}
@@ -227,13 +217,12 @@ export default class MediaGallery extends Component {
             alt={media.alt}
             innerRef={(c) => { this.mediaRefs[index] = c; }}
           />
-        ));
-        break;
-      }
+        );
       case 'video':
-        slide.push((
+        return (
           <StyledVideo
             key="media-gallery-slide"
+            autoHeight={autoHeight}
             autoPlay={index === currentSlide}
             controls
             controlsList="nodownload"
@@ -247,16 +236,15 @@ export default class MediaGallery extends Component {
               />
             ))}
           </StyledVideo>
-        ));
-        break;
-      default: break;
+        );
+      default:
+        return null;
     }
-    return slide;
   };
 
   render() {
     const {
-      currentSlide, videos, images, topRightSection, bottomLeftSection, showThumbnails, onSlideClick, onSlideChange, autoHeight,
+      currentSlide, videos, images, topRightSection, bottomLeftSection, showThumbnails, onSlideClick, onSlideChange,
     } = this.props;
     const thumbnails = [];
     const formattedVideos = videos.map((video) => {
@@ -280,7 +268,6 @@ export default class MediaGallery extends Component {
     const slideViews = this.allMedia.map((media, i) => (
       <StyledSlide
         key={i}
-        autoHeight={autoHeight}
         hasOnSlideClick={onSlideClick}
         onClick={() => onSlideClick && onSlideClick(i)}
       >
@@ -304,9 +291,17 @@ export default class MediaGallery extends Component {
               {topRightSection(this.allMedia[currentSlide])}
             </TopRightWrapper>
           }
+          {this.allMedia[currentSlide].ofVideo !== undefined &&
+            <PlayIcon
+              icon="play"
+              size="large"
+              palette="white"
+              onClick={() => onSlideClick && onSlideClick(currentSlide)}
+            />
+          }
           <SwipeableViews
+            style={rootElementStyle}
             containerStyle={sliderComponentStyle}
-            slideStyle={slideStyle}
             onChangeIndex={onSlideChange}
             enableMouseEvents
             index={currentSlide}
