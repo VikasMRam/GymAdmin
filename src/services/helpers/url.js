@@ -1,3 +1,5 @@
+import { titleize } from 'sly/services/helpers/strings'
+
 export default function getSearchUrl(matchParams) {
   /*
    { careType: 'assisted-living', state: 'califo', city: 'sf' }
@@ -127,6 +129,26 @@ export const getBreadCrumbsForCommunity = ({ name, propInfo, address }) => {
     {
       path: '#',
       label: name,
+    },
+  ];
+};
+
+export const getBreadCrumbsForCity = ({ toc, state, city }) => {
+  const tocBc = tocPaths([titleize(toc)]);
+  // TODO: use react router generated paths once router wiring is complete
+  return [
+    {
+      path: '/',
+      label: 'Home',
+    },
+    tocBc,
+    {
+      path: `${tocBc.path}/${state}`,
+      label: titleize(state),
+    },
+    {
+      path: `${tocBc.path}/${state}/${city}`,
+      label: titleize(city),
     },
   ];
 };
