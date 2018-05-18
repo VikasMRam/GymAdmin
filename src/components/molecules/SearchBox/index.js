@@ -96,7 +96,7 @@ const SearchBox = ({
   layout, value, onChange, onSelect, onSeachButtonClick,
 }) => (
   <SearchBar layout={layout}>
-    <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions}>
+    <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion>
       {({ getInputProps, suggestions, getSuggestionItemProps }) => (
         <SearchSuggestionsWrapper>
           <SearchTextBox
