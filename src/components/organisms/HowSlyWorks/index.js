@@ -31,13 +31,13 @@ const reasons = [
 
   },
 
-  // {
-  //   image: assetPath('images/how-sly-works/info.jpg'),
-  //   title: 'Personalized Service',
-  //   text:
-  //     'We listen in your time of need because we have been there. We are available to you via email, online chat, text message or telephone.',
-  //   to: '/how-it-works/consumers',
-  // }
+  {
+    image: assetPath('images/how-sly-works/support.jpg'),
+    title: 'Personalized Service',
+    text:
+      'We listen in your time of need because we have been there. We are available to you via email, online chat, text message or telephone.',
+    to: '/how-it-works/consumers',
+  }
 ];
 
 const Wrapper = styled.div`

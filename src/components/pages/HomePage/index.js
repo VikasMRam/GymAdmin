@@ -174,7 +174,7 @@ const firstRowDiscoverHomes = [
   },
   {
     title: 'Assisted Living',
-    description: '200 properties starting from $4,000',
+    description: 'Communities with care services',
     image: assetPath('images/home/discover-home/alzheimers-care-tile.png'),
     buttonText: 'See more',
     size: 'xLarge',
