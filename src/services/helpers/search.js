@@ -191,3 +191,17 @@ export const getSearchParamFromPlacesResponse = ({ address_components, geometry 
   }
   return { toc: 'assisted-living' };
 };
+
+export const getFiltersApplied = (searchParams) => {
+  const { size, budget } = searchParams;
+  const filtersApplied = [];
+  if (size) filtersApplied.push('size');
+  if (budget) filtersApplied.push('budget');
+  return filtersApplied;
+};
+
+export const getEvtHandler = (paramsToRemove, origFn) => {
+  return (uiEvt) => {
+    origFn({ origUiEvt: uiEvt, paramsToRemove });
+  };
+};

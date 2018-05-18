@@ -9,6 +9,8 @@ import { size } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 import Button from 'sly/components/atoms/Button';
 
+import { getFiltersApplied, getEvtHandler } from 'sly/services/helpers/search';
+
 const SectionWrapper = styled.div`
   display: none;
 
@@ -32,18 +34,10 @@ export const ClearAllButton = styled(Button)`
   color: ${palette('primary', 0)};
 `;
 
-const getEvtHandler = (paramsToRemove, origFn) => {
-  return (uiEvt) => {
-    origFn({ origUiEvt: uiEvt, paramsToRemove });
-  };
-};
-
 const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
   const { size, budget } = searchParams;
 
-  const filtersApplied = [];
-  if (size) filtersApplied.push('size');
-  if (budget) filtersApplied.push('budget');
+  const filtersApplied = getFiltersApplied(searchParams);
 
   return (
     <SectionWrapper>

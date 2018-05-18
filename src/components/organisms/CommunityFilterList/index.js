@@ -10,7 +10,7 @@ import Field from 'sly/components/molecules/Field';
 import Radio from 'sly/components/molecules/Radio';
 import IconButton from 'sly/components/molecules/IconButton';
 import { Link, Image, Box, Hr, Button } from 'sly/components/atoms';
-import { tocs, budgets, sizes, filterLinkPath } from 'sly/services/helpers/search';
+import { tocs, budgets, sizes, filterLinkPath, getFiltersApplied, getEvtHandler } from 'sly/services/helpers/search';
 
 const StyledWrapper = styled.div`
   padding: ${size('spacing.large')};
@@ -118,17 +118,7 @@ const CommunityFilterList = ({
   const { sort } = searchParams;
   const WrapperElement = (isModalView) ? StyledWrapper : StyledBox;
 
-  // TODO: Duplicate logic from CommunityFilterBar
-  const { size, budget } = searchParams;
-  const filtersApplied = [];
-  if (size) filtersApplied.push('size');
-  if (budget) filtersApplied.push('budget');
-
-  const getEvtHandler = (paramsToRemove, origFn) => {
-    return (uiEvt) => {
-      origFn({ origUiEvt: uiEvt, paramsToRemove });
-    };
-  };
+  const filtersApplied = getFiltersApplied(searchParams);
 
   return (
     <WrapperElement>
