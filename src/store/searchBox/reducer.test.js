@@ -14,6 +14,7 @@ it('handles SEARCH_BOX_CHANGE_ADDRESS', () => {
     payload: value,
   };
   expect(reducer(initialState, action).address).toEqual(value);
+  expect(reducer(initialState, action).location).toEqual(null);
 });
 
 it('handles SEARCH_BOX_SET_LOCATION', () => {
@@ -29,6 +30,7 @@ it('handles SEARCH_BOX_CLEAR_LOCATION', () => {
     type: actions.SEARCH_BOX_CLEAR_LOCATION,
   };
   expect(reducer(initialState, action).location).toEqual(null);
+  expect(reducer(initialState, action).address).toEqual('');
 });
 
 it('handles SEARCH_BOX_CLEAR_LOCATION with Value', () => {
@@ -37,4 +39,5 @@ it('handles SEARCH_BOX_CLEAR_LOCATION with Value', () => {
     payload: value,
   };
   expect(reducer(initialState, action).location).toEqual(null);
+  expect(reducer(initialState, action).address).toEqual('');
 });

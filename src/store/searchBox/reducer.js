@@ -11,6 +11,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         address: payload,
+        location: null,
       };
     case SEARCH_BOX_SET_LOCATION:
       return {
@@ -21,6 +22,7 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         location: null,
+        address: '',
       };
     default:
       return state;
