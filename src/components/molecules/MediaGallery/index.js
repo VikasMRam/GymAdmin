@@ -86,6 +86,8 @@ const rootElementStyle = {
 };
 const sliderComponentStyle = {
   alignItems: 'center',
+  // TODO: temp fix first slide change having no transition
+  transition: 'transform 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s',
 };
 const PlayIcon = styled(Icon)`
   z-index: 1;
