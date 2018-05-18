@@ -166,43 +166,43 @@ const CWTColumnWrapper = ColumnWrapper.extend`
 const firstRowDiscoverHomes = [
   {
     title: 'Care Homes',
-    description: '200 properties starting from $4,000',
+    description: 'Small communities in a home-like setting',
     image: assetPath('images/home/discover-home/independent-living-tile.png'),
     buttonText: 'See more',
     size: 'xLarge',
-    searchParams: { budget: 4000 },
+    searchParams: { size: 'small' },
   },
   {
     title: 'Assisted Living',
-    description: '200 properties starting from $4,000',
+    description: 'Communities with care services',
     image: assetPath('images/home/discover-home/alzheimers-care-tile.png'),
     buttonText: 'See more',
     size: 'xLarge',
-    searchParams: { budget: 4000 },
+    searchParams: { toc: 'assisted-living' },
   },
 ];
 
 const secondRowDiscoverHomes = [
   {
     title: 'Boutique',
-    description: '200 properties starting from $4,000',
+    description: 'Unique communities with Activities and Services',
     image: assetPath('images/home/discover-home/studios-tile.png'),
     buttonText: 'See more',
-    searchParams: { budget: 4000 },
+    searchParams: { size: 'medium' },
   },
   {
     title: 'Luxury',
-    description: '200 properties starting from $4,000',
+    description: 'High-end Senior Living',
     image: assetPath('images/home/discover-home/1-bedroom-tile.png'),
     buttonText: 'See more',
-    searchParams: { budget: 4000 },
+    searchParams: { size:'large', budget: 5000 },
   },
   {
     title: 'Memory Care',
-    description: '200 properties starting from $4,000',
+    description: 'Specialized Memory care programs available',
     image: assetPath('images/home/discover-home/shared-rooms-tile.png'),
     buttonText: 'See more',
-    searchParams: { budget: 4000 },
+    searchParams: { toc: 'alzheimers-care' },
   },
 ];
 
@@ -212,7 +212,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <Header headerItems={headerItems} onLocationSearch={onLocationSearch} />
       <HeroWrapper>
-        <StyledImage src={assetPath('images/home/cover.jpg')} alt="hero image" />
+        <StyledImage src={assetPath('images/home/cover-1.jpg')} alt="hero image" />
         <SearchBoxWrapper>
           <StyledHeading level="hero" palette="white">
             Find a Home to Love

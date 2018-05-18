@@ -8,6 +8,7 @@ import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile'
 import Link from 'sly/components/atoms/Link';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import Pagination from 'sly/components/molecules/Pagination';
+import Heading from "sly/components/atoms/Heading";
 
 
 const SimilarCommunityTileDiv = styled.div`
@@ -67,7 +68,7 @@ export default class CommunitySearchList extends Component {
     const { communityList, requestMeta, ...props } = this.props;
 
     if (communityList.length < 1) {
-      return <SectionWrapper>Loading!</SectionWrapper>;
+      return <SectionWrapper><Heading>It doesn't look like we have added communities in the area yet. </Heading></SectionWrapper>;
     }
     const components = communityList.map((similarProperty) => {
       return (

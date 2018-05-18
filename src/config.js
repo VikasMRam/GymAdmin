@@ -19,7 +19,7 @@ const config = {
     isServer: typeof window === 'undefined',
     apiUrl: 'http://www.lvh.me/v0',
     authTokenUrl: 'http://www.lvh.me/users/auth_token',
-    gMapsApiKey: 'AIzaSyDGcBUVVLnoCTe46mT141WuWShs6eibk58',
+    gMapsApiKey: 'AIzaSyBbN8J_ogumAythgDCzwXzbuIn6qP-w0fM',
     gAnalyticsKey: 'UA-55078261-2',
     eventServerUrl: 'https://events.seniorly.com/events/new',
     cookieDomain: process.env.DOMAIN || 'lvh.me',
