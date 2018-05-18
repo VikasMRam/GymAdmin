@@ -153,14 +153,18 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
     toc, state, city, ...qs
   } = filters;
 
-  const qsString = stringify(qs);
-  const qsPart = qsString ? `?${qsString}` : '';
+  let path = `/${toc}`;
+  if (state && city) {
+    const qsString = stringify(qs);
+    const qsPart = qsString ? `?${qsString}` : '';
+    path = `/${toc}/${state}/${city}${qsPart}`;
+  }
 
   const key = Object.keys(nextFilters)[0];
   const selected = currentFilters[key] === nextFilters[key];
 
   return {
-    path: `/${toc}/${state}/${city}${qsPart}`,
+    path,
     selected,
   };
 };
