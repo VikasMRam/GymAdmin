@@ -2,6 +2,7 @@ import * as resources from './resource/selectors';
 import * as entities from './entities/selectors';
 import * as header from './header/selectors';
 import * as searchBox from './searchBox/selectors';
+import * as communityDetailPage from './communityDetailPage/selectors';
 
 export const getDetail = (state, resource, id) =>
   entities.getDetail(
@@ -32,3 +33,8 @@ export const searchBoxAddress = state =>
 export const searchBoxLocation = state =>
   searchBox.searchBoxLocation(state.searchBox);
 
+export const getHomePageMediaGalleryCurrentSlideIndex = state =>
+  communityDetailPage.currentMediaGallerySlideIndex(state.communityDetailPage);
+
+export const isHomePageMediaGalleryFullscreenActive = state =>
+  communityDetailPage.isMediaGalleryFullscreenActive(state.communityDetailPage);

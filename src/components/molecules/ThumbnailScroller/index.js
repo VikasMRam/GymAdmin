@@ -42,20 +42,23 @@ class ThumbnailScroller extends React.Component {
   }
 
   componentDidUpdate() {
-    this.scrollToSelected();
+    this.scrollToSelected(true);
   }
 
-  scrollToSelected() {
-    if (this.thumbnailRefs[this.props.selected]) {
-      this.thumbnailRefs[this.props.selected].scrollIntoView({ behavior: 'smooth' });
+  scrollToSelected(isUpdate) {
+    if (this.thumbnailRefs[this.props.selected] && this.wrapperRef) {
+      const leftPosition = this.thumbnailRefs[this.props.selected].offsetWidth * this.props.selected;
+      // smooth scroll effect is not required when intially setting scroll position
+      this.wrapperRef.scroll({ left: leftPosition, behavior: isUpdate ? 'smooth' : 'auto' });
     }
   }
 
   thumbnailRefs = [];
+  wrapperRef = null;
 
   render() {
     return (
-      <Wrapper>
+      <Wrapper innerRef={(r) => { this.wrapperRef = r; }}>
         {this.props.thumbnails.map((thumbnail, i) => (
           <li key={i} ref={(r) => { this.thumbnailRefs[i] = r; }}>
             <Thumbnail
