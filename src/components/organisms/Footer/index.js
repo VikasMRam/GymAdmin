@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
-import Icon from 'sly/components/atoms/Icon';
-import Button from 'sly/components/atoms/Button';
-import Hr from 'sly/components/atoms/Hr';
+import { Icon, Button, Link, Hr } from 'sly/components/atoms';
 
 const FooterWrapper = styled.div`
   background-color: ${palette('grayscale', 2)};
@@ -121,7 +119,7 @@ const GroupItems = styled.div`
   flex-direction: column;
 `;
 
-const GroupItem = styled.a`
+const GroupItem = styled(Link)`
   color: ${palette('white', 0)};
   font-size: ${size('spacing.large')};
   text-decoration: none;
@@ -202,7 +200,7 @@ const Footer = () => {
   const groupComponents = Object.keys(groups).map((group) => {
     const groupItemComponents = groups[group].map((item) => {
       return (
-        <GroupItem key={item.name} href={item.url} target={item.target}>
+        <GroupItem key={item.name} to={item.url} target={item.target}>
           {item.name}
         </GroupItem>
       );
@@ -219,17 +217,17 @@ const Footer = () => {
       <FooterTopWrapper>
         <SeniorlyWhiteIcon icon="seniorly-white" size="xxLarge" />
         <SignUpButtonDiv>
-          <Button>Sign up for Free</Button>
+          <Button to="/signin">Sign up for Free</Button>
         </SignUpButtonDiv>
         <Groups>{groupComponents}</Groups>
       </FooterTopWrapper>
       <StyledHR />
       <FooterBottomWrapper>
         <SocialIcons>
-          <FooterIcon icon="instagram" size="large" />
-          <FooterIcon icon="linkedin" size="large" />
-          <FooterIcon icon="google-plus" size="large" />
-          <FooterIcon icon="facebook" size="large" />
+          <Link href="https://www.instagram.com/seniorlyinc"><FooterIcon icon="instagram" size="large" /></Link>
+          <Link href="https://www.linkedin.com/company/seniorly"><FooterIcon icon="linkedin" size="large" /></Link>
+          <Link href="https://plus.google.com/u/0/+SeniorlyIncSanFrancisco"><FooterIcon icon="google-plus" size="large" /></Link>
+          <Link href="https://www.facebook.com/seniorly/posts"><FooterIcon icon="facebook" size="large" /></Link>
         </SocialIcons>
         <TradeMark>&copy; Seniorly {currentYear}</TradeMark>
       </FooterBottomWrapper>
