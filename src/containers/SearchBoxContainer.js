@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { geocodeByAddress } from 'react-places-autocomplete';
 
 import { gMapsApiKey } from 'sly/config';
-import { changeAddress, setLocation } from 'sly/store/actions';
+import { changeAddress, setLocation, clearLocation } from 'sly/store/actions';
 import { searchBoxAddress, searchBoxLocation } from 'sly/store/selectors';
 
 import SearchBox from 'sly/components/molecules/SearchBox';
@@ -17,6 +17,7 @@ class SearchBoxContainer extends Component {
     changeAddress: func,
     setLocation: func,
     onLocationSearch: func,
+    clearLocation: func,
   };
 
   constructor(props) {
@@ -64,6 +65,11 @@ class SearchBoxContainer extends Component {
     }
   };
 
+  handleTextboxFocus = () => {
+    const { clearLocation } = this.props;
+    clearLocation();
+  };
+
   render() {
     const { layout, address } = this.props;
     const { isMounted } = this.state;
@@ -77,6 +83,7 @@ class SearchBoxContainer extends Component {
         onChange={this.handleChange}
         onSelect={this.handleSelect}
         onSeachButtonClick={this.handleSearch}
+        onTextboxFocus={this.handleTextboxFocus}
       />
     );
   }
@@ -93,6 +100,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     changeAddress: value => dispatch(changeAddress(value)),
     setLocation: value => (dispatch(setLocation(value))),
+    clearLocation: () => dispatch(clearLocation()),
   };
 };
 

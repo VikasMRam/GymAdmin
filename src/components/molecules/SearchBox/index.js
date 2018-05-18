@@ -77,9 +77,11 @@ const SearchSuggestions = styled.div`
     ${palette('grayscale', 2)};
 `;
 
+const searchSuggestionBGColor = p => p.active ? palette('grayscale', 3) : palette('white', 0);
 const SearchSuggestion = styled.div`
   width: 100%;
   padding: ${size('spacing.large')} ${size('spacing.regular')};
+  background-color: ${searchSuggestionBGColor};
 
   :hover {
     background-color: ${palette('grayscale', 3)};
@@ -93,7 +95,7 @@ const GoogleLogo = styled(Image)`
 `;
 const baseSearchOptions = {types: ['(regions)']};
 const SearchBox = ({
-  layout, value, onChange, onSelect, onSeachButtonClick,
+  layout, value, onChange, onSelect, onSeachButtonClick, onTextboxFocus,
 }) => (
   <SearchBar layout={layout}>
     <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion>
@@ -105,11 +107,12 @@ const SearchBox = ({
               placeholder: 'Search by city or zip code',
             })}
             layout={layout}
+            onFocus={onTextboxFocus}
           />
           {suggestions.length > 0 && (
             <SearchSuggestions>
               {suggestions.map(suggestion => (
-                <SearchSuggestion {...getSuggestionItemProps(suggestion)}>
+                <SearchSuggestion {...getSuggestionItemProps(suggestion)} active={suggestion.active}>
                   <span>{suggestion.description}</span>
                 </SearchSuggestion>
               ))}
@@ -136,6 +139,7 @@ SearchBox.propTypes = {
   onChange: func.isRequired,
   onSelect: func.isRequired,
   onSeachButtonClick: func.isRequired,
+  onTextboxFocus: func,
 };
 
 SearchBox.defaultProps = {
