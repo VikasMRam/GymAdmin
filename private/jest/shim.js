@@ -7,3 +7,4 @@ global.requestAnimationFrame = /* istanbul ignore next */ (callback) => {
 global.alert = (msg) => { console.log(msg); };
 global.scroll = jest.fn();
 global.HTMLElement.prototype.scrollIntoView = jest.fn();
+global.HTMLElement.prototype.scroll = jest.fn();

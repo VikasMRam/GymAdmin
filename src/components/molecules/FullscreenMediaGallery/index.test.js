@@ -10,6 +10,7 @@ import FullscreenMediaGallery from '.';
 const wrap = (props = {}) => mount(<FullscreenMediaGallery {...props} />);
 
 const onClose = jest.fn();
+const onSlideChange = jest.fn();
 
 const { name, gallery, videoGallery } = RhodaGoldmanPlaza;
 const images = gallery.images || [];
@@ -41,7 +42,7 @@ const galleryVideos = videos.map((vid) => {
 describe('FullscreenMediaGallery', () => {
   it('default', () => {
     const wrapper = wrap({
-      images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false,
+      images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false, onSlideChange,
     });
     expect(wrapper.find(Modal)).toHaveLength(1);
     expect(wrapper.find(MediaGallery)).toHaveLength(1);

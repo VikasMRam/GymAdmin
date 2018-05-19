@@ -1,0 +1,13 @@
+export const COMMUNITY_DETAIL_GOTO_MEDIA_GALLERY_SLIDE = 'COMMUNITY_DETAIL_GOTO_MEDIA_GALLERY_SLIDE';
+export const COMMUNITY_DETAIL_TOGGLE_FULLSCREEN_MEDIA_GALLERY = 'COMMUNITY_DETAIL_TOGGLE_FULLSCREEN_MEDIA_GALLERY';
+
+export const gotoSlide = (slideIndex = 0) => ({
+  type: COMMUNITY_DETAIL_GOTO_MEDIA_GALLERY_SLIDE,
+  payload: {
+    slideIndex,
+  },
+});
+
+export const toggleFullscreenMediaGallery = () => ({
+  type: COMMUNITY_DETAIL_TOGGLE_FULLSCREEN_MEDIA_GALLERY,
+});

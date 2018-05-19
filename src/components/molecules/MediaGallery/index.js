@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
@@ -54,7 +54,7 @@ const StyledVideo = styled.video`
 `;
 const StyledIcon = styled(Icon)`
   position: absolute;
-  z-index: 100;
+  z-index: 1;
   margin: auto;
   top: 0;
   bottom: 0;
@@ -64,10 +64,10 @@ const StyledIcon = styled(Icon)`
   }
 `;
 const PrevSlide = styled(StyledIcon)`
-  left: 0;
+  left: ${size('spacing.large')};
 `;
 const NextSlide = styled(StyledIcon)`
-  right: 0;
+  right: ${size('spacing.large')};
 `;
 const TopRightWrapper = styled.span`
   right: ${size('spacing.large')};
@@ -81,16 +81,20 @@ const BottomLeftWrapper = styled.span`
   position: absolute;
   z-index: 1;
 `;
+const rootElementStyle = {
+  maxHeight: '100%',
+};
 const sliderComponentStyle = {
   alignItems: 'center',
-};
-const slideStyle = {
-  position: 'relative',
-  overflow: 'initial',
+  // TODO: temp fix first slide change having no transition
+  transition: 'transform 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s',
 };
 const PlayIcon = styled(Icon)`
+  z-index: 1;
   position: absolute;
-  top: 44%;
+  margin: auto;
+  top: 0;
+  bottom: 0;
   left: 50%;
   font-size: ${size('icon.xLarge')};
 
@@ -98,8 +102,13 @@ const PlayIcon = styled(Icon)`
     cursor: pointer;
   }
 `;
+const StyledSlide = styled.span`
+  :hover {
+    cursor: ${ifProp('hasOnSlideClick', 'pointer', 'initial')};
+  }
+`;
 
-export default class MediaGallery extends React.Component {
+export default class MediaGallery extends Component {
   static propTypes = {
     images: PropTypes.arrayOf(PropTypes.shape({
       src: PropTypes.string.isRequired,
@@ -119,10 +128,11 @@ export default class MediaGallery extends React.Component {
     showThumbnails: PropTypes.bool,
     autoHeight: PropTypes.bool,
     currentSlide: PropTypes.number,
-    topRightSection: PropTypes.node,
+    topRightSection: PropTypes.func,
     bottomLeftSection: PropTypes.func,
     transparent: PropTypes.bool,
-    onPlayClicked: PropTypes.func,
+    onSlideClick: PropTypes.func,
+    onSlideChange: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -130,29 +140,8 @@ export default class MediaGallery extends React.Component {
     videos: [],
     showThumbnails: false,
     autoHeight: false,
+    currentSlide: 0,
   };
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      index: 0,
-    };
-    this.thumbnailRefs = [];
-    this.mediaRefs = [];
-    this.mediaLoaded = new Set();
-
-    if (props.currentSlide !== undefined) {
-      this.state.index = props.currentSlide;
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.currentSlide !== undefined) {
-      this.setState({
-        index: nextProps.currentSlide,
-      });
-    }
-  }
 
   setLoadedImages(index) {
     if (index - 1 >= 0) {
@@ -170,6 +159,11 @@ export default class MediaGallery extends React.Component {
     }
   }
 
+  thumbnailRefs = [];
+  mediaRefs = [];
+  allMedia = [];
+  mediaLoaded = new Set();
+
   handleChangeIndex = (index) => {
     // pause playing videos
     this.mediaRefs.forEach((mediaRef) => {
@@ -182,47 +176,87 @@ export default class MediaGallery extends React.Component {
       this.mediaRefs[index].play();
     }
 
-    this.setState({
-      index,
-    });
+    this.props.onSlideChange(index);
   };
 
   nextSlide = () => {
-    const { index } = this.state;
+    const { currentSlide } = this.props;
     const numItems = this.allMedia.length;
-    this.handleChangeIndex(index === numItems - 1 ? 0 : index + 1);
+    this.handleChangeIndex(currentSlide === numItems - 1 ? 0 : currentSlide + 1);
   };
 
   prevSlide = () => {
-    const { index } = this.state;
+    const { currentSlide } = this.props;
     const numItems = this.allMedia.length;
-    this.handleChangeIndex(index === 0 ? numItems - 1 : index - 1);
+    this.handleChangeIndex(currentSlide === 0 ? numItems - 1 : currentSlide - 1);
   };
 
   shouldLoadMedia = (i) => {
-    const { index } = this.state;
+    const { currentSlide } = this.props;
     const numItems = this.allMedia.length;
     // media can be loaded if:
     // - it's already loaded(user viewed the slide)
     // - it's current slide
     // - it's one before current slide
     // - it's one after current slide
-    return this.mediaLoaded.has(i) || (Math.abs(i - index) < 2) ||
+    return this.mediaLoaded.has(i) || (Math.abs(i - currentSlide) < 2) ||
       // if the current slide is last slide then also load first slide
       // if the current slide is first slide then also load last slide
-      (index === 0 && i === numItems - 1) || (index === numItems - 1 && i === 0);
+      (currentSlide === 0 && i === numItems - 1) || (currentSlide === numItems - 1 && i === 0);
+  };
+
+  generateSlideContent = (media, index) => {
+    const { autoHeight, currentSlide } = this.props;
+
+    switch (media.type) {
+      case 'image':
+        return (
+          <StyledImg
+            key="media-gallery-slide"
+            autoHeight={autoHeight}
+            src={this.shouldLoadMedia(index) ? media.src : ''}
+            data-src={media.src}
+            alt={media.alt}
+            innerRef={(c) => { this.mediaRefs[index] = c; }}
+          />
+        );
+      case 'video':
+        return (
+          <StyledVideo
+            key="media-gallery-slide"
+            autoHeight={autoHeight}
+            autoPlay={index === currentSlide}
+            controls
+            controlsList="nodownload"
+            innerRef={(c) => { this.mediaRefs[index] = c; }}
+          >
+            {media.src.map((src, i) => (
+              <source
+                key={i}
+                src={this.shouldLoadMedia(index) ? src.url : ''}
+                type={videoMimeTypes[src.type]}
+              />
+            ))}
+          </StyledVideo>
+        );
+      default:
+        return null;
+    }
   };
 
   render() {
+    const {
+      currentSlide, videos, images, topRightSection, bottomLeftSection, showThumbnails, onSlideClick, onSlideChange,
+    } = this.props;
     const thumbnails = [];
-    const formattedVideos = this.props.videos.map((video) => {
+    const formattedVideos = videos.map((video) => {
       thumbnails.push({
         src: video.thumb,
         alt: `${video.alt} thumbnail`,
       });
       return { ...video, type: 'video' };
     });
-    const formattedImages = this.props.images.map((image) => {
+    const formattedImages = images.map((image) => {
       thumbnails.push({
         src: image.thumb,
         alt: `${image.alt} thumbnail`,
@@ -230,56 +264,22 @@ export default class MediaGallery extends React.Component {
       return { ...image, type: 'image' };
     });
     this.allMedia = formattedVideos.concat(formattedImages);
-    this.setLoadedImages(this.state.index);
     /* load only media before and after current slide. Also keep track of media that was loaded once so that it won't
       be inserted and removed from dom when user switch slides */
-    const slideViews = this.allMedia.map((media, i) => {
-      switch (media.type) {
-        case 'image':
-          return (
-            <span key={i}>
-              {media.ofVideo !== undefined &&
-                <PlayIcon
-                  onClick={() => this.props.onPlayClicked(i)}
-                  icon="play"
-                  size="large"
-                  palette="white"
-                />
-              }
-              <StyledImg
-                autoHeight={this.props.autoHeight}
-                src={this.shouldLoadMedia(i) ? media.src : ''}
-                data-src={media.src}
-                alt={media.alt}
-                innerRef={(c) => { this.mediaRefs[i] = c; }}
-              />
-            </span>
-          );
-        case 'video':
-          return (
-            <StyledVideo
-              autoPlay={i === this.state.index}
-              controls
-              key={i}
-              controlsList="nodownload"
-              innerRef={(c) => { this.mediaRefs[i] = c; }}
-            >
-              {media.src.map((src, i) => (
-                <source
-                  key={i}
-                  src={this.shouldLoadMedia(i) ? src.url : ''}
-                  type={videoMimeTypes[src.type]}
-                />
-              ))}
-            </StyledVideo>
-          );
-        default:
-          return null;
-      }
-    });
+    this.setLoadedImages(currentSlide);
+    const slideViews = this.allMedia.map((media, i) => (
+      <StyledSlide
+        key={i}
+        hasOnSlideClick={onSlideClick}
+        onClick={() => onSlideClick && onSlideClick(i)}
+      >
+        {this.generateSlideContent(media, i)}
+      </StyledSlide>
+    ));
 
     return (
-      <article>
+      <Fragment>
+        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <CarouselWrapper {...this.props}>
           <PrevSlide
             className="media-carousel-control-prev"
@@ -288,17 +288,25 @@ export default class MediaGallery extends React.Component {
             palette="white"
             onClick={this.prevSlide}
           />
-          {this.props.topRightSection &&
+          {topRightSection &&
             <TopRightWrapper>
-              {this.props.topRightSection}
+              {topRightSection(this.allMedia[currentSlide])}
             </TopRightWrapper>
           }
+          {this.allMedia[currentSlide].ofVideo !== undefined &&
+            <PlayIcon
+              icon="play"
+              size="large"
+              palette="white"
+              onClick={() => onSlideClick && onSlideClick(currentSlide)}
+            />
+          }
           <SwipeableViews
+            style={rootElementStyle}
             containerStyle={sliderComponentStyle}
-            slideStyle={slideStyle}
+            onChangeIndex={onSlideChange}
             enableMouseEvents
-            index={this.state.index}
-            onChangeIndex={this.handleChangeIndex}
+            index={currentSlide}
           >
             {slideViews}
           </SwipeableViews>
@@ -309,21 +317,21 @@ export default class MediaGallery extends React.Component {
             palette="white"
             onClick={this.nextSlide}
           />
-          {this.props.bottomLeftSection &&
+          {bottomLeftSection &&
             <BottomLeftWrapper>
-              {this.props.bottomLeftSection(this.allMedia[this.state.index])}
+              {bottomLeftSection(this.allMedia[currentSlide])}
             </BottomLeftWrapper>
           }
         </CarouselWrapper>
-        {this.props.showThumbnails &&
+        {showThumbnails &&
           <ThumbnailScroller
             palette="white"
             thumbnails={thumbnails}
-            selected={this.state.index}
+            selected={currentSlide}
             onClick={this.handleChangeIndex}
           />
         }
-      </article>
+      </Fragment>
     );
   }
 }

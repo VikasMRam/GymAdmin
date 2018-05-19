@@ -9,6 +9,7 @@ import concierge from './concierge/reducer';
 import header from './header/reducer';
 import searchBox from './searchBox/reducer';
 import controller from './controller/reducer';
+import communityDetailPage from './communityDetailPage/reducer';
 
 const reducers = {
   form,
@@ -20,6 +21,7 @@ const reducers = {
   header,
   searchBox,
   controller,
+  communityDetailPage,
 };
 
 export default combineReducers(reducers);

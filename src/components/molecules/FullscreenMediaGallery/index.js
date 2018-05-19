@@ -15,10 +15,10 @@ const StyledMediaGallery = styled(MediaGallery)`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     .media-carousel-control-prev {
-      margin-left: -${size('spacing.xxxLarge')};
+      margin-left: -${size('spacing.huge')};
     }
     .media-carousel-control-next {
-      margin-right: -${size('spacing.xxxLarge')};
+      margin-right: -${size('spacing.huge')};
     }
   }
 `;
@@ -31,10 +31,10 @@ const CopyrightWrapper = styled.div`
 `;
 
 const FullscreenMediaGallery = ({
-  images, videos, currentSlide, isOpen, onClose, ariaHideApp,
+  images, videos, currentSlide, isOpen, onClose, ariaHideApp, onSlideChange,
 }) => {
-  const bottomLeftSection = (currentSlide) => {
-    if (currentSlide.type === 'video') {
+  const bottomLeftSection = (slide) => {
+    if (slide.type === 'video') {
       return null;
     }
     return (
@@ -58,6 +58,7 @@ const FullscreenMediaGallery = ({
         images={images}
         videos={videos}
         bottomLeftSection={bottomLeftSection}
+        onSlideChange={onSlideChange}
         showThumbnails
         transparent
       />
@@ -83,12 +84,14 @@ FullscreenMediaGallery.propTypes = {
   })),
   onClose: PropTypes.func.isRequired,
   ariaHideApp: PropTypes.bool,
+  onSlideChange: PropTypes.func.isRequired,
 };
 
 FullscreenMediaGallery.defaultProps = {
   isOpen: true,
   images: [],
   videos: [],
+  currentSlide: 0,
 };
 
 export default FullscreenMediaGallery;

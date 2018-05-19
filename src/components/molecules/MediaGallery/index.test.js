@@ -11,6 +11,7 @@ import MediaGallery from '.';
 const wrap = (props = {}) => mount(<MediaGallery {...props} />);
 
 const onClose = jest.fn();
+const onSlideChange = jest.fn();
 
 const { name, gallery, videoGallery } = RhodaGoldmanPlaza;
 const images = gallery.images || [];
@@ -42,7 +43,7 @@ const galleryVideos = videos.map((vid) => {
 describe('MediaGallery', () => {
   it('default', () => {
     const wrapper = wrap({
-      images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false,
+      images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false, onSlideChange,
     });
     expect(wrapper.find(Image)).toHaveLength(galleryImages.length);
     expect(wrapper.find('video')).toHaveLength(galleryVideos.length);
@@ -51,7 +52,7 @@ describe('MediaGallery', () => {
 
   it('with thumbnail scroller enabled', () => {
     const wrapper = wrap({
-      images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false, showThumbnails: true,
+      images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false, showThumbnails: true, onSlideChange,
     });
     expect(wrapper.find(SwipeableViews).find(Image)).toHaveLength(galleryImages.length);
     expect(wrapper.find('video')).toHaveLength(galleryVideos.length);
@@ -60,7 +61,7 @@ describe('MediaGallery', () => {
 
   it('setLoadedImages without currentSlide property passed', () => {
     const wrapper = wrap({
-      images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false,
+      images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false, onSlideChange,
     });
     const totalSlides = (galleryImages.length > 2 ? galleryImages.length - 1 : galleryImages.length) +
       (galleryVideos.length > 2 ? galleryVideos.length - 1 : galleryVideos.length);
@@ -77,7 +78,7 @@ describe('MediaGallery', () => {
   it('setLoadedImages with currentSlide property passed', () => {
     const currentSlide = galleryImages.length / 2;
     const wrapper = wrap({
-      images: galleryImages, videos: galleryVideos, onClose, currentSlide, ariaHideApp: false,
+      images: galleryImages, videos: galleryVideos, onClose, currentSlide, ariaHideApp: false, onSlideChange,
     });
     const totalSlides = (galleryImages.length > 2 ? galleryImages.length - 1 : galleryImages.length) +
       (galleryVideos.length > 2 ? galleryVideos.length - 1 : galleryVideos.length);
@@ -99,7 +100,7 @@ describe('MediaGallery', () => {
 
   it('shouldLoadMedia', () => {
     const wrapper = wrap({
-      images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false,
+      images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false, onSlideChange,
     });
     const totalSlides = (galleryImages.length > 2 ? galleryImages.length - 1 : galleryImages.length) +
       (galleryVideos.length > 2 ? galleryVideos.length - 1 : galleryVideos.length);
@@ -113,7 +114,7 @@ describe('MediaGallery', () => {
   it('shouldLoadMedia after changing slide', () => {
     const currentSlide = galleryImages.length / 2;
     const wrapper = wrap({
-      images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false, currentSlide,
+      images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false, currentSlide, onSlideChange,
     });
     const totalSlides = (galleryImages.length > 2 ? galleryImages.length - 1 : galleryImages.length) +
       (galleryVideos.length > 2 ? galleryVideos.length - 1 : galleryVideos.length);

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { object, func } from 'prop-types';
+import { object, func, number, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
@@ -37,6 +37,10 @@ export default class CommunityDetailPage extends React.Component {
   static propTypes = {
     community: object.isRequired,
     onLocationSearch: func,
+    mediaGallerySlideIndex: number,
+    isMediaGalleryFullscreenActive: bool,
+    onMediaGallerySlideChange: func,
+    onMediaGalleryToggleFullscreen: func,
   };
 
   state = {
@@ -78,7 +82,10 @@ export default class CommunityDetailPage extends React.Component {
   };
 
   render() {
-    const { community, onLocationSearch } = this.props;
+    const {
+      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, onLocationSearch,
+      onMediaGallerySlideChange, onMediaGalleryToggleFullscreen,
+    } = this.props;
     const {
       id,
       name,
@@ -183,8 +190,12 @@ export default class CommunityDetailPage extends React.Component {
           {(images.length > 0 || videos.length > 0) &&
             <CommunityMediaGallery
               communityName={name}
+              currentSlide={mediaGallerySlideIndex}
               images={images}
               videos={videos}
+              onSlideChange={onMediaGallerySlideChange}
+              isFullscreenMode={isMediaGalleryFullscreenActive}
+              onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
             />
           }
           <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} innerRef={this.breadCrumbRef} />

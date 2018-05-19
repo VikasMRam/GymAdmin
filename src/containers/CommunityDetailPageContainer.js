@@ -1,18 +1,33 @@
 import React, { Component } from 'react';
-import { object, string } from 'prop-types';
+import { object, string, number, func, bool } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
-import { getDetail } from 'sly/store/selectors';
+import { getDetail, getHomePageMediaGalleryCurrentSlideIndex, isHomePageMediaGalleryFullscreenActive } from 'sly/store/selectors';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
+import { gotoSlide, toggleFullscreenMediaGallery } from 'sly/store/communityDetailPage/actions';
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
     community: object,
     error: string,
     history: object,
+    mediaGallerySlideIndex: number,
+    isMediaGalleryFullscreenActive: bool,
+    gotoMediaGallerySlide: func,
+    toggleFullscreenMediaGallery: func,
+  };
+
+  handleMediaGallerySlideChange = (slideIndex) => {
+    const { gotoMediaGallerySlide } = this.props;
+    gotoMediaGallerySlide(slideIndex);
+  };
+
+  handleToggleMediaGalleryFullscreen = () => {
+    const { toggleFullscreenMediaGallery } = this.props;
+    toggleFullscreenMediaGallery();
   };
 
   handleOnLocationSearch = (result) => {
@@ -23,11 +38,11 @@ class CommunityDetailPageContainer extends Component {
   };
 
   render() {
-    const { community, error, history } = this.props;
-
+    const {
+      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, error, history,
+    } = this.props;
 
     if (error) {
-
       history.push('/notfound');
       return null;
       // return <div>{error}</div>;
@@ -39,7 +54,11 @@ class CommunityDetailPageContainer extends Component {
     return (
       <CommunityDetailPage
         community={community}
+        mediaGallerySlideIndex={mediaGallerySlideIndex}
         onLocationSearch={this.handleOnLocationSearch}
+        onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
+        onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
+        isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
       />
     );
   }
@@ -48,8 +67,18 @@ class CommunityDetailPageContainer extends Component {
 const getCommunitySlug = match => match.params.communitySlug;
 const mapStateToProps = (state, { match }) => {
   const communitySlug = getCommunitySlug(match);
+  const mediaGallerySlideIndex = getHomePageMediaGalleryCurrentSlideIndex(state);
+  const isMediaGalleryFullscreenActive = isHomePageMediaGalleryFullscreenActive(state);
   return {
     community: getDetail(state, 'community', communitySlug),
+    mediaGallerySlideIndex,
+    isMediaGalleryFullscreenActive,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    gotoMediaGallerySlide: slideIndex => dispatch(gotoSlide(slideIndex)),
+    toggleFullscreenMediaGallery: () => dispatch(toggleFullscreenMediaGallery()),
   };
 };
 
@@ -70,6 +99,7 @@ const handleError = (err) => {
 
 export default withServerState({
   mapStateToProps,
+  mapDispatchToProps,
   fetchData,
   handleError,
 })(CommunityDetailPageContainer);

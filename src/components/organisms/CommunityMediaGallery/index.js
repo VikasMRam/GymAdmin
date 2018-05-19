@@ -39,33 +39,20 @@ export default class CommunityMediaGallery extends React.Component {
       thumbUrl: PropTypes.string.isRequired,
     })),
     ariaHideApp: PropTypes.bool,
+    currentSlide: PropTypes.number,
+    onSlideChange: PropTypes.func.isRequired,
+    isFullscreenMode: PropTypes.bool,
+    onToggleFullscreenMode: PropTypes.func,
   };
 
-  state = {
-    fullscreen: false,
-    currentFullscreenSlide: 0,
-  };
-
-  onPlayClicked = (slide) => {
-    if (this.sdGalleryImages[slide].ofVideo !== undefined) {
-      this.setState({
-        currentFullscreenSlide: slide,
-        fullscreen: true,
-      });
-    }
-  };
-
-  toggleModal = () => {
-    const { fullscreen } = this.state;
-    this.setState({
-      currentFullscreenSlide: 0,
-      fullscreen: !fullscreen,
-    });
+  static defaultProps = {
+    currentSlide: 0,
+    isFullscreenMode: false,
   };
 
   render() {
     const {
-      communityName, images, videos, ariaHideApp,
+      communityName, images, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
     } = this.props;
     this.sdGalleryImages = videos.map((vid, i) => {
       // Important: create new object instance having src & alt as we will be modifying same object below
@@ -96,7 +83,7 @@ export default class CommunityMediaGallery extends React.Component {
 
       return { ...vid, src, thumb: vid.thumbUrl };
     });
-    // const topRightSection = (
+    // const topRightSection = () => (
     //   <span>
     //     {/*<StyledButton ghost palette="slate"><Icon icon="heart" size="regular" palette="slate" /></StyledButton>*/}
     //     {/*<StyledButton ghost palette="slate"><Icon icon="share" size="regular" palette="slate" /></StyledButton>*/}
@@ -104,27 +91,30 @@ export default class CommunityMediaGallery extends React.Component {
     // );
     const bottomLeftSection = () => (
       <span>
-        <MorePicsTablet ghost palette="slate" transparent={false} onClick={this.toggleModal}>See {this.sdGalleryImages.length - 1} more pictures</MorePicsTablet>
-        <MorePicsMobile ghost palette="slate" transparent={false} onClick={this.toggleModal}>View pictures</MorePicsMobile>
+        <MorePicsTablet ghost palette="slate" transparent={false} onClick={onToggleFullscreenMode}>See {this.sdGalleryImages.length - 1} more pictures</MorePicsTablet>
+        <MorePicsMobile ghost palette="slate" transparent={false} onClick={onToggleFullscreenMode}>View pictures</MorePicsMobile>
       </span>
     );
 
     return (
-      <section id="media-gallery">
+      <section>
         <MediaGallery
-          onPlayClicked={this.onPlayClicked}
+          onSlideClick={onToggleFullscreenMode}
           communityName={communityName}
           images={this.sdGalleryImages}
           bottomLeftSection={bottomLeftSection}
+          currentSlide={currentSlide}
+          onSlideChange={onSlideChange}
         />
         <FullscreenMediaGallery
-          currentSlide={this.state.currentFullscreenSlide}
-          isOpen={this.state.fullscreen}
+          currentSlide={currentSlide}
+          isOpen={isFullscreenMode}
           communityName={communityName}
           videos={this.formattedVideos}
           images={this.hdGalleryImages}
-          onClose={this.toggleModal}
+          onClose={onToggleFullscreenMode}
           ariaHideApp={ariaHideApp}
+          onSlideChange={onSlideChange}
         />
       </section>
     );
