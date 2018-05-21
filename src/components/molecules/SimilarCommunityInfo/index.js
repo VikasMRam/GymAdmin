@@ -20,6 +20,7 @@ const SimilarCommunityPriceRatingDiv = styled.div`
 `;
 
 const SimilarCommunityRatingDiv = styled.div`
+  display: flex;
   margin-left: ${size('spacing.xLarge')};
 `;
 
