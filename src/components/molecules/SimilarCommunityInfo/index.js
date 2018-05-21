@@ -29,9 +29,11 @@ const SimilarCommunityNumberReviewDiv = styled.div`
 `;
 
 const CareFloorPlanDiv = styled.div`
+  display: flex;
   color: ${palette('slate', 0)}
 `;
 const SimilarCommunityDescDiv = styled.div`
+  display: flex;
   color: ${palette('grayscale', 0)};
   margin-top:${size('spacing.regular')}
 `;
