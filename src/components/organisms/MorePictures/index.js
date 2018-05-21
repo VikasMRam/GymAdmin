@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { arrayOf, shape, string } from 'prop-types';
+import { arrayOf, shape, string, func } from 'prop-types';
 import { Lazy } from 'react-lazy';
+import { ifProp } from 'styled-tools';
+import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 import PictureTile from 'sly/components/molecules/PictureTile';
@@ -13,6 +15,10 @@ const Wrapper = styled.div`
     width: 100%;
     margin-bottom: ${size('spacing.xLarge')};
     line-height: 0;
+    background-color: ${palette('grayscale', 1)};
+  }
+  > *:hover {
+    cursor: ${ifProp('hasOnPictureClick', 'pointer', 'initial')};
   }
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -35,14 +41,19 @@ const Wrapper = styled.div`
   }
 `;
 
-const MorePictures = ({ gallery }) => {
+const MorePictures = ({ gallery, onPictureClick }) => {
   const { images } = gallery;
   const imageComponents = images.map(image => (
-    <Lazy component="div" ltIE9 key={image.id}>
+    <Lazy
+      component="div"
+      ltIE9
+      key={image.id}
+      onClick={() => onPictureClick && onPictureClick(image)}
+    >
       <PictureTile src={image.sd} />
     </Lazy>
   ));
-  return <Wrapper>{imageComponents}</Wrapper>;
+  return <Wrapper hasOnPictureClick={onPictureClick}>{imageComponents}</Wrapper>;
 };
 
 MorePictures.propTypes = {
@@ -52,6 +63,7 @@ MorePictures.propTypes = {
       sd: string.isRequired,
     })),
   }),
+  onPictureClick: func,
 };
 
 export default MorePictures;

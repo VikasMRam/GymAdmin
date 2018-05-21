@@ -34,8 +34,9 @@ const StyledImg = styled(Image)`
   ${props =>
     !props.autoHeight &&
     css`
-      max-height: ${size('carousel.mobile')};
+      height: ${size('carousel.mobile')};
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
+        height: auto;
         max-height: ${size('carousel.tablet')};
       }
     `};
@@ -46,8 +47,9 @@ const StyledVideo = styled.video`
   ${props =>
     !props.autoHeight &&
     css`
-      max-height: ${size('carousel.mobile')};
+      height: ${size('carousel.mobile')};
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
+        height: auto;
         max-height: ${size('carousel.tablet')};
       }
     `};
@@ -81,13 +83,17 @@ const BottomLeftWrapper = styled.span`
   position: absolute;
   z-index: 1;
 `;
-const rootElementStyle = {
+const sliderRootElementStyle = {
   maxHeight: '100%',
+  lineHeight: 0,
 };
 const sliderComponentStyle = {
   alignItems: 'center',
   // TODO: temp fix first slide change having no transition
   transition: 'transform 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s',
+};
+const sliderSlideStyle = {
+  overflow: 'hidden',
 };
 const PlayIcon = styled(Icon)`
   z-index: 1;
@@ -102,7 +108,7 @@ const PlayIcon = styled(Icon)`
     cursor: pointer;
   }
 `;
-const StyledSlide = styled.span`
+const StyledSlide = styled.div`
   :hover {
     cursor: ${ifProp('hasOnSlideClick', 'pointer', 'initial')};
   }
@@ -302,8 +308,9 @@ export default class MediaGallery extends Component {
             />
           }
           <SwipeableViews
-            style={rootElementStyle}
+            style={sliderRootElementStyle}
             containerStyle={sliderComponentStyle}
+            slideStyle={sliderSlideStyle}
             onChangeIndex={onSlideChange}
             enableMouseEvents
             index={currentSlide}
