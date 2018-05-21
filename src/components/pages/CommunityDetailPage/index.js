@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
 import { object, func, number, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
@@ -30,10 +30,10 @@ import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import Button from 'sly/components/atoms/Button';
 
 const BackToSearch = styled.div`
-  text-align:center
+  text-align: center
 `;
 
-export default class CommunityDetailPage extends React.Component {
+export default class CommunityDetailPage extends Component {
   static propTypes = {
     community: object.isRequired,
     onLocationSearch: func,
@@ -81,15 +81,28 @@ export default class CommunityDetailPage extends React.Component {
     }
   };
 
+  handleMorePicturesClick = (image) => {
+    const {
+      community, onMediaGallerySlideChange, onMediaGalleryToggleFullscreen,
+    } = this.props;
+    const { gallery = {}, videoGallery = {} } = community;
+    const images = gallery.images || [];
+    const videos = videoGallery.videos || [];
+    let matchingIndex = images.findIndex(i => image.id === i.id);
+    if (matchingIndex > -1) {
+      matchingIndex = videos.length + matchingIndex;
+      onMediaGallerySlideChange(matchingIndex);
+      onMediaGalleryToggleFullscreen();
+    }
+  };
+
   render() {
     const {
       mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, onLocationSearch,
       onMediaGallerySlideChange, onMediaGalleryToggleFullscreen,
     } = this.props;
     const {
-      id,
       name,
-      mainImage,
       startingRate,
       propInfo,
       propRatings,
@@ -165,7 +178,7 @@ export default class CommunityDetailPage extends React.Component {
         </Section>
         {(images.length > 1) &&
           <Section title="More Pictures">
-            <MorePictures gallery={gallery} />
+            <MorePictures gallery={gallery} onPictureClick={this.handleMorePicturesClick} />
           </Section>
         }
 
@@ -218,17 +231,17 @@ export default class CommunityDetailPage extends React.Component {
             title="Pricing & Floor Plans"
             innerRef={this.pricingAndFloorPlansRef}
           >
-          <ConciergeController community={community}>
-            {({ concierge }) =>
-              <PricingAndAvailability
-                community={community}
-                address={address}
-                estimatedPrice={rgsAux.estimatedPrice}
-                roomPrices={roomPrices}
-                onInquireOrBookClicked={concierge.getPricing}
-              />
-            }
-          </ConciergeController>
+            <ConciergeController community={community}>
+              {({ concierge }) => (
+                <PricingAndAvailability
+                  community={community}
+                  address={address}
+                  estimatedPrice={rgsAux.estimatedPrice}
+                  roomPrices={roomPrices}
+                  onInquireOrBookClicked={concierge.getPricing}
+                />
+              )}
+            </ConciergeController>
           </CollapsibleSection>
           <CollapsibleSection title="Similar Communities">
             <SimilarCommunities similarProperties={similarProperties} />
@@ -236,15 +249,17 @@ export default class CommunityDetailPage extends React.Component {
               <Button ghost href={getCitySearchUrl({ propInfo, address })}>Communities In {address.city}</Button>
             </BackToSearch>
           </CollapsibleSection>
-          {(communityDescription || rgsAux.slyCommunityDescription) && <CollapsibleSection title="Community Details">
-            <CommunityDetails
-              communityName={name}
-              communityDescription={communityDescription || rgsAux.slyCommunityDescription}
-              staffDescription={staffDescription}
-              residentDescription={residentDescription}
-              ownerExperience={ownerExperience}
-            />
-          </CollapsibleSection>}
+          {(communityDescription || rgsAux.slyCommunityDescription) &&
+            <CollapsibleSection title="Community Details">
+              <CommunityDetails
+                communityName={name}
+                communityDescription={communityDescription || rgsAux.slyCommunityDescription}
+                staffDescription={staffDescription}
+                residentDescription={residentDescription}
+                ownerExperience={ownerExperience}
+              />
+            </CollapsibleSection>
+          }
           <CollapsibleSection title="Care Services">
             <CareServicesList
               communityName={name}
@@ -281,16 +296,16 @@ export default class CommunityDetailPage extends React.Component {
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
         <ConciergeController community={community}>
-          {({ concierge }) =>
+          {({ concierge }) => (
             <StickyFooter
               footerInfo={{
                 title: 'Contact Property',
                 name: community.name,
-                ctaTitle: 'Contact'
+                ctaTitle: 'Contact',
               }}
               onFooterClick={concierge.getPricing}
             />
-          }
+          )}
         </ConciergeController>
       </Fragment>
     );

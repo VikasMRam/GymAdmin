@@ -14,14 +14,12 @@ const Wrapper = styled.span`
   font-size: ${fontSize};
   color: ${prop('fill', palette(0))};
   // sizes relative to set font-size
-  width: 1em;
-  height: 1em;
+  width: ${fontSize};
+  height: ${fontSize};
   transform: ${ifProp('flip', 'rotate(180deg)', 'rotate(0deg)')};
   transition: transform ${key('transitions.fast')};
   & > svg {
     font-size: ${fontSize};
-    width: 100%;
-    height: 100%;
     display: block;
     fill: currentColor;
     stroke: ${prop('stroke', 'none')};

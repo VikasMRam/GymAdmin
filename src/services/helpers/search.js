@@ -3,6 +3,7 @@ import { stringify, parse } from 'query-string';
 import { urlize } from './url';
 
 const fnExecutionTracker = {};
+const defaultSort = 'distance';
 
 /**
  * Decorator function that helps restrict number of function calls  to 1 within a specified timelimit.
@@ -145,9 +146,20 @@ export const filterSearchParams = params =>
   }, {});
 
 export const filterLinkPath = (currentFilters, nextFilters = {}) => {
+  let pageFilters = {
+    'page-number': null,
+    'page-size': null,
+  };
+  if (nextFilters['page-number'] || nextFilters['page-size']) {
+    pageFilters = {
+      'page-number': nextFilters['page-number'],
+      'page-size': nextFilters['page-size'],
+    };
+  }
   const filters = filterSearchParams({
     ...currentFilters,
     ...nextFilters,
+    ...pageFilters,
   });
 
   const {
@@ -172,6 +184,7 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
 
 export const getSearchParams = ({ params }, location) => {
   const qs = parse(location.search);
+  qs.sort = qs.sort || defaultSort;
 
   return filterSearchParams({
     ...params,

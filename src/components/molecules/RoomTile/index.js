@@ -9,7 +9,9 @@ import { Button, TileImage } from 'sly/components/atoms';
 
 const priceTypeMap = {
   'Monthly Rate': 'month',
+  'Daily Rate': 'day',
 };
+
 const defaultImage = '//d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
 
 const Wrapper = styled.div`

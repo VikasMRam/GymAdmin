@@ -9,17 +9,10 @@ const Content = styled.main`
   margin: 0 auto;
   padding: 0 ${size('spacing.large')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: 0;
     width: ${size('layout.mainColumn')};
   }
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-    width: calc(
-      ${size('layout.mainColumn')} + ${size('layout.sideColumn')} +
-        ${size('spacing.xLarge')}
-    );
-  }
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: ${size('layout.laptopLarge')};
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('maxWidth')};
   }
 `;
 const StyledHeader = styled.header`

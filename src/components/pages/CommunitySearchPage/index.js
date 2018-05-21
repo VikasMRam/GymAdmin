@@ -16,15 +16,11 @@ import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 import Modal from 'sly/components/molecules/Modal';
 
-
 const TopWrapper = styled.div`
   padding-bottom: ${size('spacing.xLarge')};
   margin-bottom: ${size('spacing.xLarge')};
   border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};
-  }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }
@@ -47,6 +43,8 @@ export default class CommunitySearchPage extends Component {
     onParamsChange: func,
     onParamsRemove: func,
     onLocationSearch: func,
+    location: object,
+    searchParams: object,
   };
 
   state = {
@@ -64,7 +62,6 @@ export default class CommunitySearchPage extends Component {
       isModalFilterPanelVisible: false,
     });
   };
-
 
   render() {
     const {
@@ -84,8 +81,7 @@ export default class CommunitySearchPage extends Component {
     let latitude = 0.0;
     let longitude = 0.0;
     if (communityList.length > 0) {
-      latitude = communityList[0].latitude;
-      longitude = communityList[0].longitude;
+      ([{ latitude, longitude }] = communityList);
     }
     if (searchParams.searchOnMove) {
       latitude = parseFloat(searchParams.latitude);

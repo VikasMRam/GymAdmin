@@ -11,9 +11,11 @@ import Footer from 'sly/components/organisms/Footer';
 const TwoColumnWrapper = styled.div`
   display: flex;
 `;
+
 const MainWrapper = styled.section`
   flex: 1;
 `;
+
 const ColumnWrapper = styled.aside`
   width: ${size('layout.sideColumnSmall')};
   display: none;

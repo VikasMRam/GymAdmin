@@ -102,7 +102,7 @@ export default class CommunityMediaGallery extends React.Component {
           onSlideClick={onToggleFullscreenMode}
           communityName={communityName}
           images={this.sdGalleryImages}
-          bottomLeftSection={bottomLeftSection}
+          bottomLeftSection={this.sdGalleryImages.length > 1 ? bottomLeftSection : null}
           currentSlide={currentSlide}
           onSlideChange={onSlideChange}
         />

@@ -7,7 +7,7 @@ import { size } from 'sly/components/themes';
 import SimilarCommunityInfo from 'sly/components/molecules/SimilarCommunityInfo';
 import Button from 'sly/components/atoms/Button'
 
-// TODO : Tech Dept - Similar Code as of RoomTile Molecule. Find how to reuse
+// TODO : Tech Debt - Similar Code as of RoomTile Molecule. Find how to reuse
 
 const defaultImage =
   '//d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
@@ -17,11 +17,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid
     ${palette('grayscale', 2)};
-  width: ${size('tile', 'large', 'width')};
   padding: 1.0rem;
   transition: box-shadow ${key('transitions.default')},
-    opacity ${key('transitions.default')};
-
+  opacity ${key('transitions.default')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex-direction: row;
@@ -36,29 +34,43 @@ const Wrapper = styled.div`
     background: ${palette('white', 2)};
 
     Button {
-        display: initial;
-      }
+      display: initial;
+    }
   }
 `;
-const ImageWrapper = styled.div`
-  line-height: 0;
-  position: relative;
 
-    Button {
-      display: none;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+const ImageWrapper = styled.div`
+  position: relative;
+  height: 0;
+  width: 100%;
+  padding-top: 56.25%;
+  
+  Button {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('tile.regular.width')};
+    height: ${size('tile.regular.height')};
+    padding-top: unset;
+  }
 `;
 
 const SCTileImage = styled.img`
-  max-width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('tile', 'regular', 'width')};
-    height: ${size('tile', 'regular', 'height')};
+    position: relative;
+    width: ${size('tile.regular.width')};
+    height: ${size('tile.regular.height')};
     max-width: none;
   }
 `;

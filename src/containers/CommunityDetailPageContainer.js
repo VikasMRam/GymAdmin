@@ -51,6 +51,15 @@ class CommunityDetailPageContainer extends Component {
     if (!community) {
       return <div>Loading...</div>;
     }
+
+    // If request url does not match resource url from api, perform 302 redirect
+    const { location } = history;
+    const { pathname } = location;
+    const { url } = community;
+    if (pathname !== url) {
+      history.push(url);
+    }
+
     return (
       <CommunityDetailPage
         community={community}
