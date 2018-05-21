@@ -25,11 +25,12 @@ const SimilarCommunityRatingDiv = styled.div`
 `;
 
 const SimilarCommunityNumberReviewDiv = styled.div`
-  margin-left: ${size('spacing.regular')};
+  margin-left: ${size('spacing.small')};
 `;
 
 const CareFloorPlanDiv = styled.div`
   display: flex;
+  flex-direction: column;
   color: ${palette('slate', 0)}
 `;
 const SimilarCommunityDescDiv = styled.div`
