@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid
     ${palette('grayscale', 2)};
-  padding: 1.0rem;
+  padding: ${size('spacing.large')};
   transition: box-shadow ${key('transitions.default')},
   opacity ${key('transitions.default')};
 
@@ -57,6 +57,7 @@ const ImageWrapper = styled.div`
     width: ${size('tile.regular.width')};
     height: ${size('tile.regular.height')};
     padding-top: unset;
+    flex-shrink: 0;
   }
 `;
 
