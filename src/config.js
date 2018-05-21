@@ -44,10 +44,11 @@ const config = {
     host: process.env.HOST || 'teamseniorly.com',
     port: process.env.PORT || 8080,
     apiUrl: process.env.API_URL || 'https://www.teamseniorly.com/v0',
-    authTokenUrl: process.env.AUTH_URL ||  'https://www.teamseniorly.com/users/auth_token',
+    authTokenUrl: process.env.AUTH_URL || 'https://www.teamseniorly.com/users/auth_token',
     cookieDomain: process.env.DOMAIN || 'teamseniorly.com',
     eventServerUrl: 'http://events.myseniorly.com/events/new',
     gAnalyticsKey: 'UA-55078261-1',
+    publicPath: process.env.PUBLIC_PATH || 'https://dnmsvctzw2bbb.cloudfront.net/react-assets',
   },
 };
 
