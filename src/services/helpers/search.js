@@ -145,9 +145,20 @@ export const filterSearchParams = params =>
   }, {});
 
 export const filterLinkPath = (currentFilters, nextFilters = {}) => {
+  let pageFilters = {
+    'page-number': null,
+    'page-size': null,
+  };
+  if (nextFilters['page-number'] || nextFilters['page-size']) {
+    pageFilters = {
+      'page-number': nextFilters['page-number'],
+      'page-size': nextFilters['page-size'],
+    };
+  }
   const filters = filterSearchParams({
     ...currentFilters,
     ...nextFilters,
+    ...pageFilters,
   });
 
   const {
