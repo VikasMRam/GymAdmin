@@ -157,18 +157,19 @@ const CommunityFilterList = ({
         <Field
           name="Sort"
           type="select"
+          value={sort}
           onChange={getSortHandler(onFieldChange)}
         >
-          <option selected={sort === 'price-l-h'} value="price-l-h">
+          <option value="price-l-h">
             Price: Low to High
           </option>
-          <option selected={sort === 'price-h-l'} value="price-h-l">
+          <option value="price-h-l">
             Price: High to Low
           </option>
-          <option selected={sort === 'distance'} value="distance">
+          <option value="distance">
             Distance
           </option>
-          <option selected={sort === 'relevance'} value="relevance">
+          <option value="relevance">
             Relevance
           </option>
         </Field>
