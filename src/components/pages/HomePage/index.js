@@ -150,7 +150,7 @@ const MSCColumnWrapper = ColumnWrapper.extend`
 const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
-const CWTColumnWrapper = ColumnWrapper.extend`
+/* const CWTColumnWrapper = ColumnWrapper.extend`
   > * {
     margin-right: ${size('spacing.large')};
   }
@@ -161,7 +161,7 @@ const CWTColumnWrapper = ColumnWrapper.extend`
       margin-right: ${size('spacing.huge')};
     }
   }
-`;
+`; */
 
 const firstRowDiscoverHomes = [
   {
@@ -195,7 +195,7 @@ const secondRowDiscoverHomes = [
     description: 'High-end Senior Living',
     image: assetPath('images/home/discover-home/1-bedroom-tile.png'),
     buttonText: 'See more',
-    searchParams: { size:'large', budget: 5000 },
+    searchParams: { size: 'large', budget: 5000 },
   },
   {
     title: 'Memory Care',
@@ -390,17 +390,17 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
           </ImageOverlayContentTile>
         </TwoColumnWrapper>
       </StyledSection>
-      <StyledHr />
-      {/*<StyledSection title="Communities We Trust">*/}
-        {/*<br />*/}
-        {/*<CWTColumnWrapper>*/}
-          {/*<StyledImage src={assetPath('images/home/communities-we-trust/bhsl.png')} />*/}
-          {/*<Image src={assetPath('images/home/communities-we-trust/brookdale.png')} />*/}
-          {/*<Image src={assetPath('images/home/communities-we-trust/integral.png')} />*/}
-          {/*<Image src={assetPath('images/home/communities-we-trust/pacifica.png')} />*/}
-          {/*<Image src={assetPath('images/home/communities-we-trust/Lyft.png')} />*/}
-        {/*</CWTColumnWrapper>*/}
-      {/*</StyledSection>*/}
+      {/* <StyledHr />
+      <StyledSection title="Communities We Trust">
+        <br />
+        <CWTColumnWrapper>
+          <StyledImage src={assetPath('images/home/communities-we-trust/bhsl.png')} />
+          <Image src={assetPath('images/home/communities-we-trust/brookdale.png')} />
+          <Image src={assetPath('images/home/communities-we-trust/integral.png')} />
+          <Image src={assetPath('images/home/communities-we-trust/pacifica.png')} />
+          <Image src={assetPath('images/home/communities-we-trust/Lyft.png')} />
+        </CWTColumnWrapper>
+      </StyledSection> */}
     </BasePageTemplate>
   );
 };
