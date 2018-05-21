@@ -13,7 +13,8 @@ const defaultImage =
   '//d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
 
 const Wrapper = styled.div`
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid
     ${palette('grayscale', 2)};
   width: ${size('tile', 'large', 'width')};
@@ -23,8 +24,8 @@ const Wrapper = styled.div`
 
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: flex;
-    width: auto;
+    flex-direction: row;
+    width: auto
   }
 
   &:hover {
