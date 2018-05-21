@@ -6,6 +6,7 @@ import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
 import { Button, TileImage } from 'sly/components/atoms';
+import { Lazy } from 'react-lazy';
 
 const priceTypeMap = {
   'Monthly Rate': 'month',
@@ -59,7 +60,12 @@ const RoomTile = ({
   return (
     <Wrapper>
       <ImageButtonContainer>
-        <TileImage tileSize="small" src={image || defaultImage} />
+        <Lazy
+          component="div"
+          ltIE9
+        >
+          <TileImage tileSize="small" src={image || defaultImage} />
+        </Lazy>
         <Button onClick={onInquireOrBookClicked}>Inquire or book a tour</Button>
       </ImageButtonContainer>
       <ItemDescription>

@@ -5,7 +5,8 @@ import { palette, key } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 import SimilarCommunityInfo from 'sly/components/molecules/SimilarCommunityInfo';
-import Button from 'sly/components/atoms/Button'
+import Button from 'sly/components/atoms/Button';
+import { Lazy } from 'react-lazy';
 
 // TODO : Tech Debt - Similar Code as of RoomTile Molecule. Find how to reuse
 
@@ -90,7 +91,12 @@ const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
       <ImageWrapper>
-        <SCTileImage src={mainImage || defaultImage} />
+        <Lazy
+          component="div"
+          ltIE9
+        >
+          <SCTileImage src={mainImage || defaultImage} />
+        </Lazy>
         <Button onClick={onClick}>See More Details</Button>
       </ImageWrapper>
       <ChildrenWrapper>
