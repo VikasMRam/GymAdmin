@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex-direction: row;
-    width: auto
+    width: auto;
   }
 
   &:hover {
