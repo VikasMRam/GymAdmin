@@ -21,9 +21,6 @@ const TopWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
   border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};
-  }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }

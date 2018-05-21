@@ -11,11 +11,8 @@ const Content = styled.main`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
   }
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-    width: calc(
-      ${size('layout.mainColumn')} + ${size('layout.sideColumn')} +
-        ${size('spacing.xLarge')}
-    );
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('maxWidth')};
   }
 `;
 const StyledHeader = styled.header`
