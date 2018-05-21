@@ -25,13 +25,13 @@ theme.sizes = {
   breakpoint: {
     mobile:            '375px',
     tablet:            '768px',
-    laptop:           '1024px',
+    laptop:           '1104px',
     laptopSideColumn: '1104px',
     doubleModal:      '1200px',
     laptopLarge:      '1440px',
   },
 
-  maxWidth:         '1200px',
+  maxWidth:         '1056px',
 
   // rem measurements
   layout: {
