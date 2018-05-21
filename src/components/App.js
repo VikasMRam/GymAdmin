@@ -4,7 +4,6 @@ import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
 
-
 import { isBrowser } from 'sly/config';
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';
@@ -86,7 +85,6 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-
           <Switch>
             {this.routes.map(route => <Route key={route.path} {...route} />)}
           </Switch>
