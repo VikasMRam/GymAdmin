@@ -153,6 +153,7 @@ const FooterBottomWrapper = styled.div`
 
 const SocialIcons = styled.div`
   display: flex;
+  flex-wrap: wrap;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     order: 2;
