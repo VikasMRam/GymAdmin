@@ -287,13 +287,15 @@ export default class MediaGallery extends Component {
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <CarouselWrapper {...this.props}>
-          <PrevSlide
-            className="media-carousel-control-prev"
-            icon="chevron-left"
-            size="large"
-            palette="white"
-            onClick={this.prevSlide}
-          />
+          {this.allMedia.length > 1 &&
+            <PrevSlide
+              className="media-carousel-control-prev"
+              icon="chevron-left"
+              size="large"
+              palette="white"
+              onClick={this.prevSlide}
+            />
+          }
           {topRightSection &&
             <TopRightWrapper>
               {topRightSection(this.allMedia[currentSlide])}
@@ -317,13 +319,15 @@ export default class MediaGallery extends Component {
           >
             {slideViews}
           </SwipeableViews>
-          <NextSlide
-            className="media-carousel-control-next"
-            icon="chevron-right"
-            size="large"
-            palette="white"
-            onClick={this.nextSlide}
-          />
+          {this.allMedia.length > 1 &&
+            <NextSlide
+              className="media-carousel-control-next"
+              icon="chevron-right"
+              size="large"
+              palette="white"
+              onClick={this.nextSlide}
+            />
+          }
           {bottomLeftSection &&
             <BottomLeftWrapper>
               {bottomLeftSection(this.allMedia[currentSlide])}
