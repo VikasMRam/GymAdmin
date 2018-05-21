@@ -2,7 +2,7 @@ import React from 'react';
 import { oneOf, string, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
-import { switchProp } from 'styled-tools';
+import { switchProp, ifProp } from 'styled-tools';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
 import { size, assetPath } from 'sly/components/themes';
@@ -13,7 +13,7 @@ const SearchBar = styled.div`
   width: 100%;
   position: relative;
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     ${switchProp('layout', {
       header: css`
         width: ${size('header.searchBar.width')};`,
@@ -30,7 +30,7 @@ const SearchTextBox = styled(Input)`
     `,
   })}
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   }
 `;
@@ -47,7 +47,7 @@ const SearchButtonLargeLaptop = styled(Button)`
     vertical-align: middle;
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
   }
 `;
@@ -55,7 +55,7 @@ const SearchButton = styled(Button)`
   height: 100%;
   border: none;
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }
 `;
@@ -65,16 +65,23 @@ const SearchSuggestionsWrapper = styled.div`
   flex: 1;
 `;
 
+// TODO: put this into parent and 
 const SearchSuggestions = styled.div`
-  width: 300px;
   z-index: 101;
   position: absolute;
   top: ${size('header.menu.position.top.laptopLarge')};
   left: 0;
+  right: 0;
   background: white;
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')}
     ${palette('grayscale', 2)};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    right: ${ifProp({layout: 'header'}, size('spacing.xxxLarge'), 0)};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    right: 0;
+  }
 `;
 
 const searchSuggestionBGColor = p => p.active ? palette('grayscale', 3) : palette('white', 0);
@@ -86,11 +93,11 @@ const SearchSuggestion = styled.div`
   :hover {
     background-color: ${palette('grayscale', 3)};
   }
+
 `;
 
 const GoogleLogo = styled(Image)`
-  width: 50%;
-  height: 50%;
+  width: 25%;
   float: right;
 `;
 const baseSearchOptions = {types: ['(regions)']};
@@ -110,7 +117,7 @@ const SearchBox = ({
             onFocus={onTextboxFocus}
           />
           {suggestions.length > 0 && (
-            <SearchSuggestions>
+            <SearchSuggestions layout={layout}>
               {suggestions.map(suggestion => (
                 <SearchSuggestion {...getSuggestionItemProps(suggestion)} active={suggestion.active}>
                   <span>{suggestion.description}</span>
