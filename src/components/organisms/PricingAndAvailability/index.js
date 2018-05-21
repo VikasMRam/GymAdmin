@@ -20,12 +20,10 @@ const Item = styled.div`
   }
 `;
 const LocalitiesWrapper = styled.div`
+  // TODO: WTF
   width: 95%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: 70%;
-  }
-  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-    width: 85%;
   }
 `;
 const SpacingBottomRegularWrapper = styled.div`

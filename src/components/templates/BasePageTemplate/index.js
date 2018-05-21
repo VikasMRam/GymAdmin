@@ -9,7 +9,6 @@ const Content = styled.main`
   margin: 0 auto;
   padding: 0 ${size('spacing.large')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: 0;
     width: ${size('layout.mainColumn')};
   }
   @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
@@ -17,9 +16,6 @@ const Content = styled.main`
       ${size('layout.mainColumn')} + ${size('layout.sideColumn')} +
         ${size('spacing.xLarge')}
     );
-  }
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: ${size('layout.laptopLarge')};
   }
 `;
 const StyledHeader = styled.header`
