@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { object, func, number, bool } from 'prop-types';
+import { object, func, number, bool, string } from 'prop-types';
 import Sticky from 'react-stickynode';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
@@ -78,6 +78,21 @@ export default class CommunityDetailPage extends React.Component {
           stickyHeaderVisible: false,
         });
       }
+    }
+  };
+
+  handleMorePicturesClick = (image) => {
+    const {
+      community, onMediaGallerySlideChange, onMediaGalleryToggleFullscreen,
+    } = this.props;
+    const { gallery = {}, videoGallery = {} } = community;
+    const images = gallery.images || [];
+    const videos = videoGallery.videos || [];
+    let matchingIndex = images.findIndex(i => image.id === i.id);
+    if (matchingIndex > -1) {
+      matchingIndex = videos.length + matchingIndex;
+      onMediaGallerySlideChange(matchingIndex);
+      onMediaGalleryToggleFullscreen();
     }
   };
 
@@ -165,7 +180,7 @@ export default class CommunityDetailPage extends React.Component {
         </Section>
         {(images.length > 1) &&
           <Section title="More Pictures">
-            <MorePictures gallery={gallery} />
+            <MorePictures gallery={gallery} onPictureClick={this.handleMorePicturesClick} />
           </Section>
         }
 
