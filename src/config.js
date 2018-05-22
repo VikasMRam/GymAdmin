@@ -41,7 +41,7 @@ const config = {
     slyEnv: process.env.SLY_ENV || 'production',
     isDev: false,
     basename: process.env.BASENAME || '',
-    host: process.env.HOST || 'teamseniorly.com',
+    host: process.env.HOST || 'www.teamseniorly.com',
     port: process.env.PORT || 8080,
     apiUrl: process.env.API_URL || 'https://www.teamseniorly.com/v0',
     authTokenUrl: process.env.AUTH_URL || 'https://www.teamseniorly.com/users/auth_token',
