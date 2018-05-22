@@ -75,12 +75,12 @@ const ChildrenWrapper = styled.div`
 `;
 
 const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
-  const { mainImage } = similarProperty;
+  const { imageUrl } = similarProperty;
 
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
       <Lazy component="div" ltIE9>
-        <ImageWrapper src={mainImage || defaultImage} aspectRatio='16:9'>
+        <ImageWrapper src={imageUrl || defaultImage} aspectRatio='16:9'>
           <Button onClick={onClick}>See More Details</Button>
         </ImageWrapper>
       </Lazy>
