@@ -12,11 +12,32 @@ import MapTile from 'sly/components/molecules/MapTile';
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
 
-const MapContainerElement = styled.div`
-  width: ${size('map.propertyDetail.small.width')};
-  height: ${size('map.propertyDetail.small.height')};
+const Wrapper = styled.article`
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: ${size('picture.proportions', '4:3')};
+  margin-bottom: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    height: unset;
+    padding-top: unset;
+  }
+`;
+
+const MapContainerElement = styled.div`
+  width: 100%;
+  height: ${size('map.propertyDetail.small.height')};
+
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    position: unset;
     width: ${size('map.propertyDetail.regular.width')};
     height: ${size('map.propertyDetail.regular.height')};
   }
@@ -31,10 +52,6 @@ const iconMap = {
   blue: GreenMarker,
   red: RedMarker,
 };
-
-const MapDiv = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
 
 class CommunityMap extends Component {
   static propTypes = {
@@ -158,18 +175,15 @@ class CommunityMap extends Component {
     }
 
     return (
-
-      <MapDiv>
-        <article>
-          <Map
-            center={center}
-            defaultZoom={defaultZoom}
-            containerElement={<MapContainerElement />}
-          >
-            {markerComponents}
-          </Map>
-        </article>
-      </MapDiv>
+      <Wrapper>
+        <Map
+          center={center}
+          defaultZoom={defaultZoom}
+          containerElement={<MapContainerElement />}
+        >
+          {markerComponents}
+        </Map>
+      </Wrapper>
     );
   }
 }
