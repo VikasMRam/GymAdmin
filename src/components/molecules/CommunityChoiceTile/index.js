@@ -107,10 +107,9 @@ const CommunityChoiceTile = ({
   ...props
 }) => {
   const {
-    name, uri, picture, startingRate, propRatings,
+    name, uri, picture, startingRate, numReviews, reviewsValue,
   } = community;
 
-  const { numReviews, reviewsValue } = propRatings;
   return (
     <Wrapper
       selected={selected && selectable}
