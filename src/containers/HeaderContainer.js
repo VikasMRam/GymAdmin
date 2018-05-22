@@ -19,9 +19,10 @@ const HeaderContainer = ({
     { name: 'Login', url: '/signin' },
   ];
   const menuItems = [
+    { name: 'Home', url: '/' },
     { name: 'Assisted Living', url: '/assisted-living' },
     { name: "Alzheimer's Care", url: '/alzheimers-care' },
-    { name: 'Respite Care', url: '#' },
+    { name: 'Respite Care', url: '/respite-care' },
     { name: 'About Us', url: '/about' },
     { name: 'Contact', url: '/contact' },
     { name: 'Careers', url: 'https://angel.co/seniorly/jobs' },

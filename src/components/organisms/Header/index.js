@@ -120,7 +120,7 @@ const Header = ({
       {item.name}
     </HeaderItem>
   ));
-  const hrIndices = [4, 8];
+  const hrIndices = [5, 9];
   let menuItemPosition = 0;
   const headerMenuItemComponents = menuItems.map((item) => {
     menuItemPosition += 1;

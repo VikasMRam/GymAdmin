@@ -23,9 +23,10 @@ const tocPaths = (toc) => {
       case 'Independent Living':
         return {
           path: '/independent-living',
-          label: 'Assisted Living',
+          label: 'Independent Living',
         };
       case 'Memory Care':
+      case 'Alzheimers Care':
         return {
           path: '/alzheimers-care',
           label: 'Alzheimers Care',
