@@ -28,6 +28,7 @@ import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import Button from 'sly/components/atoms/Button';
+import SlyEvent from "sly/services/helpers/events";
 
 const BackToSearch = styled.div`
   text-align: center
@@ -49,6 +50,7 @@ export default class CommunityDetailPage extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
+
   }
 
   componentWillUnmount() {
@@ -94,6 +96,8 @@ export default class CommunityDetailPage extends Component {
       onMediaGallerySlideChange(matchingIndex);
       onMediaGalleryToggleFullscreen();
     }
+    let event = {action:'show',category:'images',label:this.props.communityName};
+    SlyEvent.getInstance().sendEvent(event);
   };
 
   render() {

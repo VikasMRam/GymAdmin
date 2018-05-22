@@ -3,14 +3,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import { Button, Icon } from 'sly/components/atoms';
+import { Button } from 'sly/components/atoms';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
 
-const StyledButton = styled(Button)`
-  padding: 0 ${size('spacing.regular')};
-  margin-left: ${size('spacing.large')};
-`;
+
 const MorePicsTablet = styled(Button)`
   display: none;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -49,6 +46,7 @@ export default class CommunityMediaGallery extends React.Component {
     currentSlide: 0,
     isFullscreenMode: false,
   };
+
 
   render() {
     const {

@@ -14,7 +14,7 @@ const stringifyReplacer = (k, v) => {
 };
 
 const getSDForCommunity = ({
-  name, url, address, latitude, longitude, propRatings, startingRate, gallery = {},
+  name, url, address, latitude, longitude, propRatings = {}, startingRate, gallery = {},
 }) => {
   const { reviewsValue, numReviews } = propRatings;
   const ld = {};
@@ -39,10 +39,10 @@ const getSDForCommunity = ({
 
   if (numReviews && numReviews > 0) {
     const aggregatedRating = {};
-    aggregatedRating['@type'] = 'AggregatedRating';
+    aggregatedRating['@type'] = 'AggregateRating';
     aggregatedRating.ratingValue = reviewsValue;
     aggregatedRating.ratingCount = numReviews;
-    ld.aggregatedRating = aggregatedRating;
+    ld.aggregateRating = aggregatedRating;
   }
 
   if (startingRate > 0) {
@@ -53,6 +53,54 @@ const getSDForCommunity = ({
   let imageUrl = null;
   if (gallery.images && gallery.images.length > 0) {
     imageUrl = gallery.images[0];
+    const imageObj = {};
+    imageObj['@type'] = 'ImageObject';
+    imageObj.name = `Front Image for ${name}`;
+    imageObj.url = imageUrl;
+    ld.image = imageObj;
+  }
+
+  return ld;
+};
+
+const getSDForSearchResource = ({
+                             name, url, addressString, latitude, longitude, imageUrl,
+                                  reviewsValue, numReviews, startingRate,
+                           }) => {
+  const ld = {};
+  ld['@context'] = 'http://schema.org';
+  ld['@type'] = 'LodgingBusiness';
+  ld.name = name;
+  ld.url = `${host}/${url}`;
+
+  const addressLd = {};
+  addressLd['@type'] = 'PostalAddress';
+  let [streetAddress, city, state] = addressString.split(',');
+  addressLd.streetAddress = streetAddress;
+  addressLd.addressLocality = city;
+  addressLd.addressRegion = state;
+  addressLd.addressCountry ='US';
+  ld.address = addressLd;
+
+  const geo = {};
+  geo['@type'] = 'GeoCoordinates';
+  geo.latitude = latitude;
+  geo.longitude = longitude;
+  ld.geo = geo;
+
+  if (numReviews && numReviews > 0) {
+    const aggregatedRating = {};
+    aggregatedRating['@type'] = 'AggregateRating';
+    aggregatedRating.ratingValue = reviewsValue;
+    aggregatedRating.ratingCount = numReviews;
+    ld.aggregateRating = aggregatedRating;
+  }
+
+  if (startingRate > 0) {
+    ld.priceRange = `From $${startingRate} per month`;
+  }
+
+  if (imageUrl) {
     const imageObj = {};
     imageObj['@type'] = 'ImageObject';
     imageObj.name = `Front Image for ${name}`;
@@ -78,7 +126,7 @@ export const getHelmetForSearchPage = ({
   ld.url = canonicalUrl;
   const ldCommunities = [];
   if (communityList.length > 0) {
-    communityList.map(e => ldCommunities.push(getSDForCommunity({ ...e })));
+    communityList.map(e => ldCommunities.push(getSDForSearchResource({ ...e })));
   }
 
 
@@ -111,12 +159,12 @@ export const getHelmetForCommunityPage = (community) => {
   const description = `${name} ${toc} located at ${address}. See pricing and photos"`;
   let imageUrl = null;
   if (gallery.images && gallery.images.length > 0) {
-    imageUrl = gallery.images[0];
+    imageUrl = gallery.images[0].url;
   }
   let videoUrl = null;
 
   if (videoGallery.videos && videoGallery.videos.length > 0) {
-    videoUrl = videoGallery.video[0];
+    videoUrl = videoGallery.videos[0];
   }
 
   const ld = getSDForCommunity({ ...community });
