@@ -86,7 +86,7 @@ const ChildrenWrapper = styled.div`
 `;
 
 const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
-  const { mainImage } = similarProperty;
+  const { imageUrl } = similarProperty;
 
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
@@ -95,7 +95,7 @@ const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
           component="div"
           ltIE9
         >
-          <SCTileImage src={mainImage || defaultImage} />
+          <SCTileImage src={imageUrl || defaultImage} />
         </Lazy>
         <Button onClick={onClick}>See More Details</Button>
       </ImageWrapper>
