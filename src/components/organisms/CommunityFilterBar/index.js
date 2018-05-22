@@ -14,7 +14,7 @@ import { budgets, sizes, getFiltersApplied, getEvtHandler } from 'sly/services/h
 const SectionWrapper = styled.div`
   display: none;
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: flex;
     flex-direction: row;
     margin-bottom: ${size('spacing.large')};

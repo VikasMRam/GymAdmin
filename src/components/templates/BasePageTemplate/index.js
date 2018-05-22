@@ -18,7 +18,7 @@ const Content = styled.main`
 `;
 const StyledHeader = styled.header`
   margin-bottom: ${size('spacing.large')};
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-bottom: ${size('spacing.xLarge')};
   }
 `;

@@ -16,13 +16,13 @@ const MainWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.mainColumn')};
   }
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-right: ${size('spacing.xLarge')};
   }
 `;
 const ColumnWrapper = styled.aside`
   display: none;
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('layout.sideColumn')};
     display: block;
   }

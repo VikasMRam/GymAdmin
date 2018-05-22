@@ -78,7 +78,7 @@ const ColumnWrapper = styled.div`
   > *:last-child {
     margin-right: 0;
   }
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     align-items: flex-start;
     justify-content: flex-start;
   }
@@ -87,7 +87,7 @@ const TwoColumnWrapper = ColumnWrapper.extend`
   > * {
     margin-right: 0;
   }
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     > * {
       margin-right: ${size('spacing.xLarge')};
     }
@@ -102,7 +102,7 @@ const ThreeColumnWrapper = ColumnWrapper.extend`
       margin-right: ${size('spacing.xLarge')};
     }
   }
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     > * {
       margin-right: ${size('spacing.xLarge')};
     }
@@ -120,7 +120,7 @@ const UIColumnWrapper = ColumnWrapper.extend`
       margin-right: ${size('spacing.xLarge')};
     }
   }
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     > * {
       margin-right: ${size('spacing.xLarge')};
     }
@@ -138,7 +138,7 @@ const MSCColumnWrapper = ColumnWrapper.extend`
       margin-right: ${size('spacing.xLarge')};
     }
   }
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     > * {
       margin-right: ${size('spacing.xLarge')};
     }

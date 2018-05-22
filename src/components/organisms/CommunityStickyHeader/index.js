@@ -24,7 +24,7 @@ const StyledNav = styled.nav`
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       width: ${size('layout.mainColumn')};
     }
-    @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
       width: ${size('layout.laptopLarge')};
     }
     list-style-type: none;

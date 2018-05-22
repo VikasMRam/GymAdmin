@@ -13,7 +13,7 @@ const HeaderWrapper = styled.nav`
   width: 100%;
   border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: ${size('spacing.regular')} 0;
     align-items: center;
   }
@@ -25,7 +25,7 @@ const SeniorlyLogoWrapper = styled.div`
   margin-left: ${size('spacing.xLarge')};
   max-width: ${size('icon.xxLarge')};
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
   }
 `;
@@ -36,7 +36,7 @@ export const SeniorlyIconMenu = styled.div`
     ${size('spacing.large')};
   border-right: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }
 `;
@@ -50,7 +50,7 @@ const MenuIcon = styled(Icon)`
   display: none;
   cursor: pointer;
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
   }
 `;
@@ -62,7 +62,7 @@ export const HeaderMenu = styled.div`
   background: white;
   z-index: 101;
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('header.menu.width')};
     top: ${size('header.menu.position.top.laptopLarge')};
     right: ${size('spacing.xLarge')};
@@ -76,7 +76,7 @@ export const HeaderMenuItem = styled(Link)`
   display: block;
   padding: ${size('spacing.large')};
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     :hover {
       background-color: ${palette('grayscale', 3)};
     }
@@ -86,7 +86,7 @@ export const HeaderMenuItem = styled(Link)`
 const MarginnedHR = styled(Hr)`
   margin: ${size('border.xLarge')} ${size('spacing.large')};
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin: 0px ${size('spacing.large')};
   }
 `;
@@ -94,7 +94,7 @@ const MarginnedHR = styled(Hr)`
 const HeaderItems = styled.div`
   display: none;
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: flex;
     margin-left: auto; // For Float Right in Flex
     align-items: center;
@@ -107,7 +107,7 @@ const HeaderItem = styled(Link)`
   padding: ${size('spacing.large')};
   font-size: ${size('text.caption')};
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
   }
 `;

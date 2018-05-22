@@ -31,7 +31,7 @@ const Wrapper = styled.div`
     }
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     > *:nth-child(2n) {
       margin-right: ${size('spacing.xLarge')};
     }
