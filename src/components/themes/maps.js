@@ -57,7 +57,7 @@ maps.propertyDetailTheme = [
     elementType: 'all',
     stylers: [
       {
-        visibility: 'on',
+        visibility: 'off',
       },
       {
         hue: '#00ff6a',

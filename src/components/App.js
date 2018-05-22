@@ -9,6 +9,7 @@ import { isBrowser } from 'sly/config';
 import theme from './themes/default';
 import setGlobalStyles from './themes/setGlobalStyles';
 
+import { assetPath } from "sly/components/themes";
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
@@ -83,7 +84,7 @@ export default class App extends Component {
           <meta content="https://www.seniorly.com" property="twitter:site" />
           <meta content="@seniorly" property="twitter:creator" />
 
-          <link rel="icon" href="/favicon.ico" />
+          <link rel="icon" href={assetPath('favicon.ico')} />
         </Helmet>
 
         <ThemeProvider theme={theme}>
