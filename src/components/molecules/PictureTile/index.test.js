@@ -8,11 +8,6 @@ const src =
 const wrap = (props = {}) => shallow(<PictureTile src={src} {...props} />);
 
 describe('PictureTile', () => {
-  it('does not renders children when passed in', () => {
-    const wrapper = wrap({ children: 'test' });
-    expect(wrapper.contains('test')).toBe(false);
-  });
-
   it('renders Image', () => {
     const wrapper = wrap();
     expect(wrapper).toHaveLength(1);
