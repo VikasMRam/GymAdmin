@@ -13,13 +13,47 @@ const {
   similarProperties,
 } = RhodaGoldmanPlaza;
 
+const toggleMap = () => {};
+const onFieldChange = () => {};
+const onParamsRemove = () => {};
+
 storiesOf('Organisms|CommunityFilterList', module).add('default', () => (
   <CommunityFilterList
-    id={id}
-    name={name}
-    startingRate={startingRate}
-    mainImage={mainImage}
-    address={address}
-    similarProperties={similarProperties}
+    toggleMap={toggleMap}
+    isMapView={false}
+    isModalView={false}
+    searchParams={{}}
+    onFieldChange={onFieldChange}
+    onParamsRemove={onParamsRemove}
   />
-));
+))
+  .add('Modal View', () => (
+    <CommunityFilterList
+      toggleMap={toggleMap}
+      isMapView={false}
+      isModalView
+      searchParams={{}}
+      onFieldChange={onFieldChange}
+      onParamsRemove={onParamsRemove}
+    />
+  ))
+  .add('Map View', () => (
+    <CommunityFilterList
+      toggleMap={toggleMap}
+      isMapView
+      isModalView={false}
+      searchParams={{}}
+      onFieldChange={onFieldChange}
+      onParamsRemove={onParamsRemove}
+    />
+  ))
+  .add('MapView & ModalView', () => (
+    <CommunityFilterList
+      toggleMap={toggleMap}
+      isMapView
+      isModalView
+      searchParams={{}}
+      onFieldChange={onFieldChange}
+      onParamsRemove={onParamsRemove}
+    />
+  ));

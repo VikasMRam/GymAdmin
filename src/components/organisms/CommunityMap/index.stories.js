@@ -15,11 +15,7 @@ const {
 
 storiesOf('Organisms|CommunityMap', module).add('default', () => (
   <CommunityMap
-    id={id}
-    name={name}
-    startingRate={startingRate}
-    mainImage={mainImage}
-    address={address}
+    community={RhodaGoldmanPlaza}
     similarProperties={similarProperties}
   />
 ));
