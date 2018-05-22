@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon/48/Arrow-left</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-12.5%" y="-12.5%" width="125.0%" height="125.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+        <rect id="path-2" x="-1.42108547e-14" y="0" width="48" height="48"></rect>
+    </defs>
+    <g id="Icon/48/Arrow-left" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Arrow-left" filter="url(#filter-1)" transform="translate(24.000000, 24.000000) rotate(-270.000000) translate(-24.000000, -24.000000) translate(0.000000, -0.000000)">
+            <mask id="mask-3" fill="white">
+                <use xlink:href="#path-2"></use>
+            </mask>
+            <use id="Mask" fill-opacity="0" fill="#D8D8D8" transform="translate(24.000000, 24.000000) rotate(-180.000000) translate(-24.000000, -24.000000) " xlink:href="#path-2"></use>
+            <polyline id="Stroke-1" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" mask="url(#mask-3)" points="41.4485449 15.5454 23.993454 33.0004909 6.53999949 15.5454"></polyline>
+        </g>
+    </g>
+</svg>
