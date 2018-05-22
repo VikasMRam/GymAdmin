@@ -20,7 +20,7 @@ const props = {
 it('renders Map with proper props', () => {
   const wrapper = wrap(props);
   expect(wrapper.find(Map)).toHaveLength(1);
-  expect(wrapper.find(Marker)).toHaveLength(5);
+  expect(wrapper.find(Marker)).toHaveLength(4);
 });
 
 it('renders InfoWindow when a Marker is clicked', () => {
