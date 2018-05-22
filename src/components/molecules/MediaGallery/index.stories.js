@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 
 import MediaGallery from '.';
 
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const { name, gallery, videoGallery, } = RhodaGoldmanPlaza;
+class MediaGalleryWithState extends Component {
+  state = {
+    index: 0,
+  };
+  onSlideChange = (index) => {
+    this.setState({
+      index,
+    });
+  };
+  render() {
+    return (
+      <MediaGallery
+        {...this.props}
+        currentSlide={this.state.index}
+        onSlideChange={this.onSlideChange}
+      />
+    );
+  }
+}
+
+const { name, gallery } = RhodaGoldmanPlaza;
 const { images } = gallery;
 const galleryImages = images.map((img, i) => {
   const newImg = img;
@@ -15,4 +35,4 @@ const galleryImages = images.map((img, i) => {
 });
 
 storiesOf('Molecules|MediaGallery', module)
-  .add('default', () => <MediaGallery images={galleryImages} />);
+  .add('default', () => <MediaGalleryWithState images={galleryImages} />);
