@@ -69,10 +69,9 @@ export default class Image extends React.Component {
     const { src, alt, aspectRatio, children, ...props } = this.props;
     const { failed } = this.state;
 
-    const srcProps = failed ? { 
-      onError: this.failedLoadImageHandler, 
-      src: assetPath('images/img-placeholder.png') 
-    } : { src };
+    const srcProps = failed 
+      ? { src: assetPath('images/img-placeholder.png') } 
+      : { src, onError: this.failedLoadImageHandler };
 
     const imageProps = {
       ...srcProps,

@@ -14,6 +14,7 @@ const halfPath = '/uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20b
 const halfPathNoSlash = 'uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4_hd.jpg';
 const singlePath = '/front%20of%20RGP%20building-4_hd.jpg';
 const singlePathNoSlash = 'front%20of%20RGP%20building-4_hd.jpg';
+const aspectRatio = '16:9';
 
 describe('Image', () => {
   it('default', () => {
@@ -58,5 +59,12 @@ describe('Image', () => {
 
   it('generate alt with only filename that has no leading slashes', () => {
     expect(Image.generateAlt(singlePathNoSlash)).toBe(defaultAltNotExistingSrc);
+  });
+
+  it('renders a wrapper when using aspectRatio', () => {
+    const wrapper = wrap({ aspectRatio, src });
+    expect(wrapper.props()).not.toHaveProperty('src');
+    expect(wrapper.props()).toHaveProperty('aspectRatio', aspectRatio);
+    expect(wrapper.childAt(0).props()).toHaveProperty('src', src);
   });
 });
