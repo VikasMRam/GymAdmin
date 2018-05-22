@@ -117,7 +117,7 @@ export const getHelmetForSearchPage = ({
 }) => {
   const actualToc = tocs.find(elem => (elem.value === toc));
   const title = `See Search Results for ${actualToc.label} in ${titleize(city)}, ${titleize(state)}`;
-  const description = 'Seniorly offers a comprehensive data search where we help maintain ';
+  const description = 'Seniorly offers a comprehensive data search where we maintain updated pricing and availabilty information to serve our customers better.';
   const canonicalUrl = `${host}/${url.pathname}`;
   const ld = {};
   ld['@context'] = 'http://schema.org';
