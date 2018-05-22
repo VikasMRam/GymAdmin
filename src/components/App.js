@@ -67,6 +67,8 @@ export default class App extends Component {
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
+          <meta content="Seniorly Inc." property="author"/>
+          <meta content="English" property="language"/>
           {/*
             Open graph
           */}

@@ -13,13 +13,10 @@ const defaultSort = 'distance';
  * @param waitTimeInMillis
  * @returns {Function}
  */
-export const delayedExecutor = (fnToEval, key, waitTimeInMillis) => {
+export const delayedExecutor = (fnToEval, key, waitTimeInMillis = 800) => {
   // Add fnExecutionQ
   fnExecutionTracker[key] = { lastExecutionTime: undefined, timer: undefined };
 
-  if (waitTimeInMillis === undefined) {
-    waitTimeInMillis = 800;
-  }
 
   return function (...args) {
     const timeNow = new Date();
@@ -61,8 +58,8 @@ export const getRadiusFromMapBounds = (bounds) => {
   // distance = circle radius from center to Northeast corner of bounds
   const dis =
     r *
-    Math.acos(Math.sin(lat1) * Math.sin(lat2) +
-        Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1));
+    Math.acos((Math.sin(lat1) * Math.sin(lat2)) +
+      (Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)));
   return Math.round(dis);
 };
 
@@ -140,7 +137,7 @@ export const filterSearchParams = params =>
       cumul[key] = params[key];
     }
     if (key === 'budget' && params[key]) {
-      cumul[key] = Math.floor(parseInt(params[key]));
+      cumul[key] = Math.floor(parseInt(params[key], 10));
     }
     return cumul;
   }, {});
@@ -198,7 +195,7 @@ export const getSearchParamFromPlacesResponse = ({ address_components, geometry 
   if (cityFull.length > 0 && stateFull.length > 0) {
     const city = urlize(cityFull[0].long_name);
     const state = urlize(stateFull[0].long_name);
-    const { lat, lng } =  geometry['location'];
+    const { lat, lng } = geometry.location;
     return {
       toc: 'assisted-living',
       state,

@@ -1,4 +1,4 @@
-import { titleize } from 'sly/services/helpers/strings'
+import { titleize } from 'sly/services/helpers/strings';
 
 export default function getSearchUrl(matchParams) {
   /*

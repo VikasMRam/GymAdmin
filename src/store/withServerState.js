@@ -39,12 +39,14 @@ class ServerStateComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { fetchData } = this.props;
+    const { fetchData, location } = this.props;
     if (this.props.match !== nextProps.match) {
       fetchData(nextProps);
       window && window.scrollTo(0,0);
       // TODO Fix actual
-      SlyEvent.getInstance().sendEvent({action:'dummy',category:'another'});
+      // let event = {action:'view',category:'profile',label:this.props.community.id};
+      // SlyEvent.getInstance().sendEvent(event);
+      SlyEvent.getInstance().sendPageView(location.pathname);
 
 
     }
