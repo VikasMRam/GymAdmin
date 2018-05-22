@@ -5,6 +5,8 @@ import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rho
 
 import StickyFooter from '.';
 
+const footerInfo = { title: 'Property Manager', name: 'Agent Carter', ctaTitle: 'Contact Us' };
+
 storiesOf('Molecules|StickyFooter', module).add('default', () => (
-  <StickyFooter community={RhodaGoldmanPlaza} />
+  <StickyFooter footerInfo={footerInfo} />
 ));

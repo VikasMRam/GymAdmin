@@ -5,9 +5,6 @@ import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rho
 
 import MapTile from '.';
 
-const { similarProperties } = RhodaGoldmanPlaza;
-const tileInfo = similarProperties[0];
-
 const onInquireOrBookClicked = () => {
   alert('on Click of MapTile');
 };
@@ -15,6 +12,6 @@ const onInquireOrBookClicked = () => {
 storiesOf('Molecules|MapTile', module).add('default', () => (
   <MapTile
     onClick={onInquireOrBookClicked}
-    tileInfo={tileInfo}
+    tileInfo={RhodaGoldmanPlaza}
   />
 ));

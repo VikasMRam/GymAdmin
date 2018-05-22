@@ -9,7 +9,7 @@ const paramsRemover = (elem) => {
 };
 const fullSp = {
   size: 'small',
-  budget: '3000',
+  budget: 3000,
 };
 
 storiesOf('Organisms|CommunityFilterBar', module)

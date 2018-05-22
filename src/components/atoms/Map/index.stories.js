@@ -15,22 +15,21 @@ const center = {
 const markers = [{ latitude, longitude }];
 
 similarProperties.forEach((property) => {
-  const { address } = property;
-  const { latitude, longitude } = address;
+  const { latitude, longitude } = property;
   markers.push({ latitude, longitude });
 });
 
 const DEFAULT_ZOOM = 13;
 
 storiesOf('Atoms|Map', module)
-  .add('default', () => <Map center={center} defaultZoom={DEFAULT_ZOOM} />)
+  .add('default', () => <Map center={center} defaultZoom={DEFAULT_ZOOM} containerElement={<div style={{ height: '400px' }} />} />)
   .add('with Single Marker', () => (
-    <Map center={center} defaultZoom={DEFAULT_ZOOM}>
+    <Map center={center} defaultZoom={DEFAULT_ZOOM} containerElement={<div style={{ height: '400px' }} />}>
       <Marker position={{ lat: center.latitude, lng: center.longitude }} />
     </Map>
   ))
   .add('with Muliple Markers', () => (
-    <Map center={center} defaultZoom={DEFAULT_ZOOM}>
+    <Map center={center} defaultZoom={DEFAULT_ZOOM} containerElement={<div style={{ height: '400px' }} />}>
       {markers.map(marker => (
         <Marker position={{ lat: marker.latitude, lng: marker.longitude }} />
       ))}
