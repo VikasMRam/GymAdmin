@@ -24,6 +24,8 @@ class ServerStateComponent extends Component {
       cleanServerState,
     } = this.props;
 
+    const { match, location } = this.props;
+
     if(!hasServerState) {
       if (isServer) {
         fetchData()
@@ -34,22 +36,26 @@ class ServerStateComponent extends Component {
         fetchData();
       }
     } else if (isBrowser) {
+      SlyEvent.getInstance().sendPageView(location.pathname);
+
       cleanServerState();
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { fetchData, location } = this.props;
+    const { fetchData } = this.props;
     if (this.props.match !== nextProps.match) {
       fetchData(nextProps);
       window && window.scrollTo(0,0);
-      // TODO Fix actual
-      // let event = {action:'view',category:'profile',label:this.props.community.id};
-      // SlyEvent.getInstance().sendEvent(event);
+      const { match, location } = nextProps;
       SlyEvent.getInstance().sendPageView(location.pathname);
 
+      // if (match.params && match.params.city && typeof match.params.communitySlug === 'undefined') {
+      //   //This is a filtered search request send
+      // }
 
     }
+
   }
 
   render() {
