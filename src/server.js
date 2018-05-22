@@ -51,7 +51,7 @@ const renderHtml = ({ serverState, initialState, content, sheet, assets }) => {
 };
 
 const app = express();
-
+app.disable('x-powered-by');
 app.use(cookieParser());
 
 if (publicPath.match(/^\//)) {
