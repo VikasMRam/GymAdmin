@@ -20,8 +20,8 @@ const StyledImage = styled(Image)`
   }
 `;
 
-const PictureTile = ({ src }) => {
-  return <StyledImage src={src} />;
+const PictureTile = ({ src, ...props }) => {
+  return <StyledImage src={src} {...props} />;
 };
 
 PictureTile.propTypes = {

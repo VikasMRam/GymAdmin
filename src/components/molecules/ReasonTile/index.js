@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
-import { Block, Link } from 'sly/components/atoms';
+import { Image, Block, Link } from 'sly/components/atoms';
 import Heading from 'sly/components/atoms/Heading';
 
 export const Wrapper = styled(Link)`
@@ -13,7 +13,7 @@ export const Wrapper = styled(Link)`
 
   transition: box-shadow ${key('transitions.default')},
     opacity ${key('transitions.default')};
-  width: ${size('picture', 'large', 'width')};
+  width: 100%;
   margin-bottom: ${size('spacing.large')};
 
   &:hover {
@@ -43,9 +43,8 @@ export const Wrapper = styled(Link)`
   }
 `;
 
-export const Image = styled.img`
-  width: ${size('picture', 'large', 'width')};
-  height: ${size('picture', 'large', 'height')};
+export const WrappedImage = styled(Image)`
+  width: 100%;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('picture', 'regular', 'width')};
@@ -75,7 +74,7 @@ const ReasonTile = ({
   image, title, text, to, ...props
 }) => (
   <Wrapper to={to} {...props}>
-    <Image src={image} />
+    <WrappedImage src={image} aspectRatio="4:3" />
     <ItemDescription>
       <StyledHeading level="subtitle">{title}</StyledHeading>
       <Block>{text}</Block>

@@ -19,6 +19,7 @@ const ResponsiveWrapper = styled.div`
   padding-top: ${paddingTop};
 
   > img {
+    object-fit: cover;
     position: absolute;
     top: 0;
     left: 0;

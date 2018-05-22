@@ -50,7 +50,7 @@ const MorePictures = ({ gallery, onPictureClick }) => {
       key={image.id}
       onClick={() => onPictureClick && onPictureClick(image)}
     >
-      <PictureTile src={image.sd} />
+      <PictureTile src={image.sd} aspectRatio="4:3" />
     </Lazy>
   ));
   return <Wrapper hasOnPictureClick={onPictureClick}>{imageComponents}</Wrapper>;
