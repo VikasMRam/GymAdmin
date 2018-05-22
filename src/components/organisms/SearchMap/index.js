@@ -139,8 +139,8 @@ class SearchMap extends Component {
           if (radius < minRadius) {
             radius = minRadius;
           }
-          if (searchParams.latitude !== latitude.toString() &&
-            searchParams.longitude !== longitude.toString() &&
+          if (searchParams.latitude !== latitude.toString() ||
+            searchParams.longitude !== longitude.toString() ||
             searchParams.radius !== radius.toString()) {
             onParamsChange({
               changedParams: {
@@ -220,6 +220,8 @@ class SearchMap extends Component {
         id,
         name,
         startingRate,
+        url,
+        mainImage:image,
         propInfo: {
           communityDescription: description,
           typeCare,
