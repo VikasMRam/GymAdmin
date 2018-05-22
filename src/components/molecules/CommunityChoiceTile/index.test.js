@@ -20,12 +20,12 @@ describe('CommunityChoiceTile', () => {
   it('renders the reviews', () => {
     const wrapper = wrap();
     const rating = wrapper.find('Rating');
-    expect(rating.prop('value')).toEqual(community.propRatings.reviewsValue);
+    expect(rating.prop('value')).toEqual(community.reviewsValue);
     const numReviews = rating
       .parent()
       .dive()
       .childAt(1);
-    expect(numReviews.prop('children')).toEqual(community.propRatings.numReviews);
+    expect(numReviews.prop('children')).toEqual(community.numReviews);
   });
 
   it('renders checkbox not checked', () => {

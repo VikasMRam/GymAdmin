@@ -12,7 +12,7 @@ import MapTile from 'sly/components/molecules/MapTile';
 
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
-import { delayedExecutor, filterSearchParams, getRadiusFromMapBounds } from 'sly/services/helpers/search';
+import { delayedExecutor, getRadiusFromMapBounds } from 'sly/services/helpers/search';
 
 const MapContainerElement = styled.div`
   width: 100%;

@@ -4,14 +4,16 @@ import SimilarCommunityInfo from '.';
 
 const similarProperty = {
   name: 'Rhoda Goldman Plaza',
+  url: 'url',
   mainImage: 'foo',
   startingRate: 4500,
-  propInfo: {
-    communityDescription: 'description',
-    typeCare: ['A', 'B'],
+  description: 'description',
+  reviewsValue: 4.5,
+  numReviews: 4,
+  webViewInfo: {
+    firstLineValue: 'A, B',
+    secondLineValue : 'Suite, One Bedroom',
   },
-  propRatings: { reviewsValue: 4.5, numReviews: 4 },
-  floorPlanString : 'Suite, One Bedroom',
 };
 const wrap = (props = {}) =>
   shallow(<SimilarCommunityInfo similarProperty={similarProperty} {...props} />);

@@ -51,10 +51,10 @@ class CommunityMap extends Component {
       id: string.isRequired,
       name: string.isRequired,
       url: string.isRequired,
-      address: shape({
-        latitude: number.isRequired,
-        longitude: number.isRequired,
-      }).isRequired,
+      startingRate: number.isRequired,
+      imageUrl: string.isRequired,
+      latitude: number.isRequired,
+      longitude: number.isRequired,
     })),
   };
 
@@ -97,10 +97,27 @@ class CommunityMap extends Component {
     if (isServer) return null;
 
     similarProperties.forEach((prop) => {
-      const { latitude, longitude } = prop.address;
+      const {
+        id,
+        imageUrl,
+        name,
+        startingRate,
+        reviewsValue,
+        numReviews,
+        latitude,
+        longitude,
+        url,
+      } = prop;
       markers.push({
-        id:prop.id,
-        community: prop,
+        id,
+        community: {
+          id,
+          mainImage: imageUrl,
+          name,
+          startingRate,
+          propRatings: { reviewsValue, numReviews },
+          url,
+        },
         latitude,
         longitude,
         icon: 'blue',
