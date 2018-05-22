@@ -38,7 +38,7 @@ export const Wrapper = styled(Link)`
     width: ${size('picture', 'small', 'width')};
     margin-right: ${size('spacing.xLarge')};
 
-    :nth-child(4n) {
+    :last-child {
       margin-right: 0;
     }
   }

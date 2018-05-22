@@ -33,16 +33,8 @@ const FooterWrapper = styled.div`
     padding: ${size('spacing.large')} 0;
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptopSideColumn')}) {
-    width: calc(
-      ${size('layout.mainColumn')} + ${size('layout.sideColumn')} +
-        ${size('spacing.xLarge')}
-    );
-    padding-right: ${size('layout.sideColumn')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    width: ${size('layout.laptopLarge')};
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('maxWidth')};
   }
 `;
 

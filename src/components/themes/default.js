@@ -31,6 +31,10 @@ theme.sizes = {
     laptopLarge:      '1440px',
   },
 
+  proportions: {
+
+  },
+
   maxWidth:         '1056px',
 
   // rem measurements
@@ -148,7 +152,12 @@ theme.sizes = {
       width: '32.25rem', // 516px
       height: '17.5rem', // 280px
     },
+    proportions: {
+      ['16:9']: '56.25%', 
+      ['4:3']: '75%',
+    },
   },
+
   map: {
     propertyDetail: {
       small: {

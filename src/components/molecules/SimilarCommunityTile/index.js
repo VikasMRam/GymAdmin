@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
+import { Image, Button } from 'sly/components/atoms';
 import SimilarCommunityInfo from 'sly/components/molecules/SimilarCommunityInfo';
-import Button from 'sly/components/atoms/Button'
 
 // TODO : Tech Debt - Similar Code as of RoomTile Molecule. Find how to reuse
 
@@ -39,12 +39,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const ImageWrapper = styled.div`
-  position: relative;
-  height: 0;
-  width: 100%;
-  padding-top: 56.25%;
-  
+const ImageWrapper = styled(Image)`
+  // because we are passing aspectRatio prop, we have a relative position
+  // in the Image so we can use here absolute
   Button {
     display: none;
     position: absolute;
@@ -57,22 +54,15 @@ const ImageWrapper = styled.div`
     width: ${size('tile.regular.width')};
     height: ${size('tile.regular.height')};
     padding-top: unset;
-  }
-`;
 
-const SCTileImage = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    position: relative;
-    width: ${size('tile.regular.width')};
-    height: ${size('tile.regular.height')};
-    max-width: none;
+    > img {
+      position: relative;
+      width: ${size('tile.regular.width')};
+      height: ${size('tile.regular.height')};
+      max-width: none;
+    }
   }
+
 `;
 
 const ChildrenWrapper = styled.div`
@@ -88,8 +78,7 @@ const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
 
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
-      <ImageWrapper>
-        <SCTileImage src={mainImage || defaultImage} />
+      <ImageWrapper src={mainImage || defaultImage} aspectRatio='16:9'>
         <Button onClick={onClick}>See More Details</Button>
       </ImageWrapper>
       <ChildrenWrapper>

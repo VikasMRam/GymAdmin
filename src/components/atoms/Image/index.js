@@ -1,11 +1,30 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { string, oneOf } from 'prop-types';
 import styled from 'styled-components';
+import { prop } from 'styled-tools';
 
+import { size } from 'sly/components/themes';
 import { assetPath } from 'sly/components/themes';
 
 const StyledImage = styled.img`
   user-select: none;
+`;
+
+const paddingTop = ({ aspectRatio }) => size('picture.proportions', aspectRatio);
+
+const ResponsiveWrapper = styled.div`
+  position: relative;
+  height: 0;
+  width: 100%;
+  padding-top: ${paddingTop};
+
+  > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 // TODO: a note for the future if we do the resampling of the images with lambda,
@@ -14,6 +33,7 @@ export default class Image extends React.Component {
   static propTypes = {
     src: string.isRequired,
     alt: string,
+    aspectRatio: oneOf(['4:3', '16:9']),
   };
 
   static generateAlt(src) {
@@ -36,20 +56,39 @@ export default class Image extends React.Component {
   }
 
   failedLoadImageHandler = () => {
-    if (this.props.src.length) {
+    if (this.props.src) {
       this.setState({
         failed: true,
       });
     }
   };
 
-  render() {
-    const { src } = this.props;
-    const alt = this.props.alt || this.constructor.generateAlt(src);
-    const defaultImage = <StyledImage {...this.props} src={assetPath('images/img-placeholder.png')} alt={alt} />;
+  renderImage = (props) => <StyledImage {...props} />;
 
-    if (this.state.failed) return defaultImage;
-    return <StyledImage src={src} {...this.props} alt={alt} onError={this.failedLoadImageHandler} />;
+  render() {
+    const { src, alt, aspectRatio, children, ...props } = this.props;
+    const { failed } = this.state;
+
+    const srcProps = failed ? { 
+      onError: this.failedLoadImageHandler, 
+      src: assetPath('images/img-placeholder.png') 
+    } : { src };
+
+    const imageProps = {
+      ...srcProps,
+      alt: alt || this.constructor.generateAlt(src)
+    };
+
+    if (aspectRatio) {
+      return (
+        <ResponsiveWrapper aspectRatio={aspectRatio} {...props}>
+          {this.renderImage(imageProps)} 
+          {children}
+        </ResponsiveWrapper> 
+      );
+    } else {
+      return this.renderImage({ ...imageProps, ...props }); 
+    }
   }
 }
 
