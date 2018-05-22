@@ -72,7 +72,11 @@ const SimilarCommunityInfo = ({ similarProperty }) => {
                   {numReviews}
                 </SimilarCommunityNumberReviewDiv>
               )}
-            </SimilarCommunityRatingDiv>) : null
+            </SimilarCommunityRatingDiv>) : (
+            <SimilarCommunityRatingDiv>
+              <Rating value={0} size="regular" />
+              (No ratings)
+            </SimilarCommunityRatingDiv>)
         }
       </SimilarCommunityPriceRatingDiv>
       <CareFloorPlanDiv>
