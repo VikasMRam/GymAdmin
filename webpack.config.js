@@ -62,7 +62,12 @@ const base = () => group([
     'process.env.NODE_ENV': process.env.NODE_ENV,
     'process.env.SLY_ENV': process.env.SLY_ENV,
     'process.env.PUBLIC_PATH': publicPath,
+    'process.env.HOST': process.env.HOST,
+    'process.env.PORT': process.env.PORT,
     'process.env.BASENAME': process.env.BASENAME,
+    'process.env.API_URL': process.env.API_URL,
+    'process.env.AUTH_URL': process.env.AUTH_URL,
+    'process.env.DOMAIN': process.env.DOMAIN,
   }),
   addPlugins([
     new webpack.ProgressPlugin(),
