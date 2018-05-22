@@ -62,6 +62,7 @@ const base = () => group([
     'process.env.NODE_ENV': process.env.NODE_ENV,
     'process.env.SLY_ENV': process.env.SLY_ENV,
     'process.env.PUBLIC_PATH': publicPath,
+    'process.env.BASENAME': process.env.BASENAME,
   }),
   addPlugins([
     new webpack.ProgressPlugin(),
