@@ -26,13 +26,8 @@ theme.sizes = {
     mobile:            '375px',
     tablet:            '768px',
     laptop:           '1104px',
-    laptopSideColumn: '1104px',
     doubleModal:      '1200px',
     laptopLarge:      '1440px',
-  },
-
-  proportions: {
-
   },
 
   maxWidth:         '1056px',
