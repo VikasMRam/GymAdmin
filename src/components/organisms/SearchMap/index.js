@@ -139,8 +139,8 @@ class SearchMap extends Component {
           if (radius < minRadius) {
             radius = minRadius;
           }
-          if (searchParams.latitude !== latitude.toString() &&
-            searchParams.longitude !== longitude.toString() &&
+          if (searchParams.latitude !== latitude.toString() ||
+            searchParams.longitude !== longitude.toString() ||
             searchParams.radius !== radius.toString()) {
             onParamsChange({
               changedParams: {
@@ -164,11 +164,10 @@ class SearchMap extends Component {
     }
     const markers = [];
 
-    // TODO Move to constants and helpers for things like isMobile?
-    const isMobile = false; // window && window.innerWidth < size('breakpoint.tablet');
-    let defaultZoom = 14;
+    const isMobile = ( typeof window === 'undefined') ? false : window.innerWidth < size('breakpoint.tablet');
+    let defaultZoom = 12;
     if (isMobile) {
-      defaultZoom = 13;
+      defaultZoom = 11;
     }
 
     if (isServer) return null;
@@ -220,6 +219,8 @@ class SearchMap extends Component {
         id,
         name,
         startingRate,
+        mainImage: image,
+        url,
         propInfo: {
           communityDescription: description,
           typeCare,

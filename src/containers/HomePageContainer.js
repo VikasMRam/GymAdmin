@@ -28,14 +28,13 @@ class HomePageContainer extends Component {
   };
 
   componentWillMount() {
-
-    SlyEvent.getInstance().sendEvent({action:'dummy',category:'another'});
+    SlyEvent.getInstance().sendPageView(this.props.location.pathname);
   }
 
   componentWillReceiveProps(nextProps) {
 
     if (this.props.match !== nextProps.match) {
-      SlyEvent.getInstance().sendEvent({action:'dummy',category:'another'});
+      SlyEvent.getInstance().sendPageView(this.props.location.pathname);
     }
 
 

@@ -8,8 +8,7 @@ import {
   resourceCreateRequest,
 } from 'sly/store/resource/actions';
 
-import { size } from 'sly/components/themes';
-import { getDetail } from 'sly/store/selectors';
+import SlyEvent from 'sly/services/helpers/events';
 import { next, gotoStep, close, getDetailedPricing } from 'sly/store/concierge/actions';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
@@ -32,10 +31,10 @@ import {
 //}
 
 // TODO: Make an abstraction for Controllers
-// This outlines the idea of a 'Controller', which passes 
+// This outlines the idea of a 'Controller', which passes
 // itself down, once created the abstraction with a simple setter
-// and getter to the store, it will be useful to avoid all the 
-// synchronous mess in the reducer, actions and selectors. 
+// and getter to the store, it will be useful to avoid all the
+// synchronous mess in the reducer, actions and selectors.
 class ConciergeController extends Component {
   static propTypes = {
     next: func.isRequired,
@@ -46,8 +45,10 @@ class ConciergeController extends Component {
   };
 
   getPricing = () => {
-    const { concierge, getDetailedPricing } = this.props;
+    const { concierge, getDetailedPricing, community } = this.props;
     const { callbackRequested, advancedInfoSent } = concierge;
+    let event = {action:'submit',category:'requestavailability',label:community.id};
+    SlyEvent.getInstance().sendEvent(event);
     getDetailedPricing({ callbackRequested, advancedInfoSent });
   }
 
@@ -55,6 +56,7 @@ class ConciergeController extends Component {
   submitAdvancedInfo = data => {
     const { submit, community, next } = this.props;
     const { message, ...rest } = data;
+
     submit({
       action: ASSESSMENT,
       value: {
@@ -67,6 +69,10 @@ class ConciergeController extends Component {
 
   submitConversion = data => {
     const { submit, community } = this.props;
+
+    let event = {action:'contactCommunity',category:'requestCallback',label:community.id};
+    SlyEvent.getInstance().sendEvent(event);
+
     submit({
       action: REQUEST_CALLBACK,
       value: {
@@ -76,7 +82,7 @@ class ConciergeController extends Component {
     }).then(this.next);
   }
 
-  /* 
+  /*
    * IF NOT gotUserDetails OR NOT conversionSent
    *   currentStep = conversion
    * ELSE IF NOT advancedSent
@@ -122,12 +128,12 @@ const mapStateToProps = (state, { community }) => {
 const submit = (data) => resourceCreateRequest('userAction', data);
 
 export default connect(
-  mapStateToProps, 
-  { 
-    next, 
-    gotoStep, 
-    close, 
-    getDetailedPricing, 
-    submit 
+  mapStateToProps,
+  {
+    next,
+    gotoStep,
+    close,
+    getDetailedPricing,
+    submit
   }
 )(ConciergeController);
