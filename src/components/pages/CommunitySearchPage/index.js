@@ -101,7 +101,7 @@ export default class CommunitySearchPage extends Component {
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-        {getHelmetForSearchPage({ ...searchParams, url: location })}
+        {getHelmetForSearchPage({ ...searchParams, url: location, communityList })}
         <Modal
           closeable
           onClose={this.hideFilters}

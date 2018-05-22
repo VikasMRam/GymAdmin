@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
+import { Lazy } from 'react-lazy';
 import { Image, Button } from 'sly/components/atoms';
 import SimilarCommunityInfo from 'sly/components/molecules/SimilarCommunityInfo';
 
@@ -17,7 +18,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid
     ${palette('grayscale', 2)};
-  padding: 1.0rem;
+  padding: ${size('spacing.large')};
   transition: box-shadow ${key('transitions.default')},
   opacity ${key('transitions.default')};
 
@@ -54,6 +55,7 @@ const ImageWrapper = styled(Image)`
     width: ${size('tile.regular.width')};
     height: ${size('tile.regular.height')};
     padding-top: unset;
+    flex-shrink: 0;
 
     > img {
       position: relative;
@@ -62,7 +64,6 @@ const ImageWrapper = styled(Image)`
       max-width: none;
     }
   }
-
 `;
 
 const ChildrenWrapper = styled.div`
@@ -78,9 +79,11 @@ const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
 
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
-      <ImageWrapper src={mainImage || defaultImage} aspectRatio='16:9'>
-        <Button onClick={onClick}>See More Details</Button>
-      </ImageWrapper>
+      <Lazy component="div" ltIE9>
+        <ImageWrapper src={mainImage || defaultImage} aspectRatio='16:9'>
+          <Button onClick={onClick}>See More Details</Button>
+        </ImageWrapper>
+      </Lazy>
       <ChildrenWrapper>
         <SimilarCommunityInfo similarProperty={similarProperty} />
       </ChildrenWrapper>

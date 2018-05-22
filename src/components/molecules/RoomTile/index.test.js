@@ -21,14 +21,14 @@ describe('RoomTile', () => {
     const wrapper = wrap({
       roomType, shareType: shareTypePrivate, price, priceType,
     });
-    expect(wrapper.find('img').props()).toHaveProperty('src', defaultImage);
+    expect(wrapper.text()).toContain(defaultImage);
   });
 
   it('verify image being set', () => {
     const wrapper = wrap({
       image, roomType, shareType: shareTypePrivate, price, priceType,
     });
-    expect(wrapper.find('img').props()).toHaveProperty('src', image);
+    expect(wrapper.text()).toContain(image);
   });
 
   it('verify onInquireOrBookClicked callback', () => {

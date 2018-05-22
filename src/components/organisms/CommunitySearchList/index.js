@@ -19,32 +19,6 @@ const SimilarCommunityTileDiv = styled.div`
 
 const SectionWrapper = styled.div``;
 
-function getFullCommunity({
-  name,
-  numReviews,
-  reviewsValue,
-  description,
-  addressString,
-  imageUrl,
-  startingRate,
-  webViewInfo,
-}) {
-  return {
-    name,
-    mainImage: imageUrl,
-    startingRate,
-    propInfo: {
-      communityDescription: description,
-      typeCare: webViewInfo.firstLineValue.split(','),
-    },
-    floorPlanString: webViewInfo.secondLineValue,
-    propRatings: {
-      reviewsValue,
-      numReviews,
-    },
-  };
-}
-
 const getPaginationData = (requestMeta) => ({
   current: requestMeta['page-number'],
   total: requestMeta['filtered-count'] / requestMeta['page-size'],
@@ -77,7 +51,7 @@ export default class CommunitySearchList extends Component {
         <Link key={similarProperty.id} to={similarProperty.url}>
           <SimilarCommunityTileDiv>
             <SimilarCommunityTile
-              similarProperty={getFullCommunity(similarProperty)}
+              similarProperty={similarProperty}
             />
           </SimilarCommunityTileDiv>
         </Link>

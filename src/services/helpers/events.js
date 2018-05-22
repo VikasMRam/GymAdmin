@@ -4,47 +4,47 @@ import { stringify } from 'query-string';
 import { isServer, gAnalyticsKey, eventServerUrl } from 'sly/config';
 
 export default class SlyEvent {
-  static _seInstance = null;
+  static seInstance = null;
   address = eventServerUrl;
   uuid = cookie.load('sly_uuid');
   sid = cookie.load('sly_sid');
-  ga  = null;
+  ga = null;
 
   static getInstance() {
-    if ( this._seInstance === null ) {
-      this._seInstance = new SlyEvent();
+    if (this.seInstance === null) {
+      this.seInstance = new SlyEvent();
       ReactGA.initialize(gAnalyticsKey);
-
     }
-    return this._seInstance;
+    return this.seInstance;
   }
 
-  sendPageView( path ) {
-    if ( isServer ) {
+  sendPageView(path) {
+    if (isServer) {
       return;
     }
 
-    let se = {
+    const se = {
       a: 'view',
       c: path,
       p: path,
       u: this.uuid,
       s: this.sid,
-      t: Date.now()
+      t: Date.now(),
     };
 
     fetch(`${eventServerUrl}?${stringify(se)}`);
     ReactGA.pageview(path);
-
   }
 
-  sendEvent( event ) {
-    if ( isServer ) {
+  sendEvent(event) {
+    if (isServer) {
       return;
     }
 
-    let { action, category, label, value } = event;
-    let se = {
+    let {
+      action, category, label, value,
+    } = event;
+    const se = {
       a: action,
       c: category,
       l: label,
@@ -52,25 +52,22 @@ export default class SlyEvent {
       p: window.location.pathname,
       u: this.uuid,
       s: this.sid,
-      t: Date.now()
+      t: Date.now(),
     };
 
     fetch(`${eventServerUrl}?${stringify(se)}`);
     if (category == null) {
-      category = window.location.pathname+window.location.hash.split('?')[0];
+      category = window.location.pathname + window.location.hash.split('?')[0];
     }
     ReactGA.event({
       category,
       action,
       label,
-      value
+      value,
 
     });
-
-
   }
-
 }
 
 
-//TODO Add more methods for sending timing and non interactive i events.
+// TODO Add more methods for sending timing and non interactive i events.

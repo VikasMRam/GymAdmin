@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 
 import FullscreenMediaGallery from '.';
@@ -7,6 +7,26 @@ import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rho
 
 function onClose() {
   alert('modal close triggered');
+}
+
+class FullscreenMediaGalleryWithState extends Component {
+  state = {
+    index: 0,
+  };
+  onSlideChange = (index) => {
+    this.setState({
+      index,
+    });
+  };
+  render() {
+    return (
+      <FullscreenMediaGallery
+        {...this.props}
+        currentSlide={this.state.index}
+        onSlideChange={this.onSlideChange}
+      />
+    );
+  }
 }
 
 const { name, gallery, videoGallery } = RhodaGoldmanPlaza;
@@ -37,5 +57,5 @@ const galleryVideos = videos.map((vid) => {
 });
 
 storiesOf('Molecules|FullscreenMediaGallery', module)
-  .add('default', () => <FullscreenMediaGallery images={galleryImages} onClose={onClose} />)
-  .add('with videos', () => <FullscreenMediaGallery images={galleryImages} videos={galleryVideos} onClose={onClose} />);
+  .add('default', () => <FullscreenMediaGalleryWithState images={galleryImages} onClose={onClose} />)
+  .add('with videos', () => <FullscreenMediaGalleryWithState images={galleryImages} videos={galleryVideos} onClose={onClose} />);

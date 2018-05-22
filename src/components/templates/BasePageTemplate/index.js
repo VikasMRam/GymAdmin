@@ -9,6 +9,7 @@ const Content = styled.main`
   margin: 0 auto;
   padding: 0 ${size('spacing.large')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: 0;
     width: ${size('layout.mainColumn')};
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {

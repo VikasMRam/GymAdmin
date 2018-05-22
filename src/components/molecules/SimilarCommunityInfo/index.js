@@ -25,11 +25,12 @@ const SimilarCommunityRatingDiv = styled.div`
 `;
 
 const SimilarCommunityNumberReviewDiv = styled.div`
-  margin-left: ${size('spacing.regular')};
+  margin-left: ${size('spacing.small')};
 `;
 
 const CareFloorPlanDiv = styled.div`
   display: flex;
+  flex-direction: column;
   color: ${palette('slate', 0)}
 `;
 const SimilarCommunityDescDiv = styled.div`
@@ -38,17 +39,21 @@ const SimilarCommunityDescDiv = styled.div`
   margin-top:${size('spacing.regular')}
 `;
 
-function getArrayAsString(array=[]) {
-  return array.join(', ');
-}
-
 const SimilarCommunityInfo = ({ similarProperty }) => {
   const {
-    name, startingRate, propInfo, propRatings, floorPlanString,
+    name,
+    startingRate,
+    reviewsValue,
+    numReviews,
+    description,
+    webViewInfo,
   } = similarProperty;
-  const { communityDescription, typeCare } = propInfo;
+  const {
+    firstLineValue,
+    secondLineValue,
+  } = webViewInfo;
+
   // TODO : Get the following values from API Response
-  const { reviewsValue, numReviews } = propRatings;
   return (
     <div>
       <SimilarCommunityNameDiv>
@@ -71,11 +76,11 @@ const SimilarCommunityInfo = ({ similarProperty }) => {
         }
       </SimilarCommunityPriceRatingDiv>
       <CareFloorPlanDiv>
-        <Dotdotdot clamp={1}>{getArrayAsString(typeCare)}</Dotdotdot>
-        <Dotdotdot clamp={1}>Floor Plans: {floorPlanString}</Dotdotdot>
+        <Dotdotdot clamp={1}>{firstLineValue}</Dotdotdot>
+        <Dotdotdot clamp={1}>Floor Plans: {secondLineValue}</Dotdotdot>
       </CareFloorPlanDiv>
       <SimilarCommunityDescDiv>
-        <Dotdotdot clamp={2}>{communityDescription}</Dotdotdot>
+        <Dotdotdot clamp={2}>{description}</Dotdotdot>
       </SimilarCommunityDescDiv>
     </div>
   );

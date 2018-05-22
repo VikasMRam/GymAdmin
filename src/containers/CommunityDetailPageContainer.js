@@ -8,6 +8,7 @@ import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 import { gotoSlide, toggleFullscreenMediaGallery } from 'sly/store/communityDetailPage/actions';
+import SlyEvent from "sly/services/helpers/events";
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
@@ -27,6 +28,15 @@ class CommunityDetailPageContainer extends Component {
 
   handleToggleMediaGalleryFullscreen = () => {
     const { toggleFullscreenMediaGallery } = this.props;
+    /*
+    let event = {action:'show',category:'images',label:this.props.community.id};
+    SlyEvent.getInstance().sendEvent(event);
+    let event = {action:'submit',category:'requestavailability',label:this.props.community.id};
+    SlyEvent.getInstance().sendEvent(event);
+    let event = {action:'submit',category:'requestavailability',label:this.props.community.id};
+    let event = {action:'contactCommunity',category:'requestCallback',label:this.props.community.id};
+    SlyEvent.getInstance().sendEvent(event);
+    */
     toggleFullscreenMediaGallery();
   };
 

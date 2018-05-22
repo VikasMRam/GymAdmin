@@ -11,7 +11,6 @@ export const Wrapper = styled(Link)`
   display: flex;
   flex-direction: column;
 
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   transition: box-shadow ${key('transitions.default')},
     opacity ${key('transitions.default')};
   width: ${size('picture', 'large', 'width')};
@@ -61,6 +60,11 @@ export const Image = styled.img`
 
 export const ItemDescription = styled.div`
   padding: ${size('spacing.large')};
+  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border-top: 0;
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
 `;
 
 export const StyledHeading = styled(Heading)`
