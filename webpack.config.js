@@ -26,6 +26,13 @@ const clientEntryPath = path.join(sourcePath, 'client.js')
 const serverEntryPath = path.join(sourcePath, 'server.js')
 const devDomain = `http://${host}:${port}/`
 
+const isDev = process.env.NODE_ENV === 'development';
+const isStaging = process.env.SLY_ENV === 'staging';
+
+const when = (condition, setters) => condition
+  ? group(setters)
+  : () => _ => _;
+
 const babel = () => () => ({
   module: {
     rules: [
@@ -115,14 +122,24 @@ const server = createConfig([
   ]),
 ])
 
+if (isDev || isStaging) {
+  console.log('Will do sourcemaps');
+}
+
 const client = createConfig([
   base(),
+
   entryPoint({
     client: clientEntryPath,
   }),
+
   addPlugins([
     new AssetsByTypePlugin({ path: assetsPath }),
     new ChildConfigPlugin(server),
+  ]),
+
+  when(isDev || isStaging, [
+    sourceMaps(),
   ]),
 
   env('development', [
@@ -134,7 +151,6 @@ const client = createConfig([
       host,
       port,
     }),
-    sourceMaps(),
     addPlugins([
       new webpack.NamedModulesPlugin(),
     ]),
@@ -143,9 +159,13 @@ const client = createConfig([
   env('production', [
     splitVendor(),
     addPlugins([
-      new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false } }),
+      new webpack.optimize.UglifyJsPlugin({
+        sourceMap: isStaging,
+        compress: { warnings: false },
+      }),
     ]),
   ]),
 ])
+
 
 module.exports = client
