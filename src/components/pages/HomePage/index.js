@@ -7,7 +7,7 @@ import { size, assetPath } from 'sly/components/themes';
 
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
 import { Image, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
-import Header from 'sly/components/organisms/Header';
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import Modal from 'sly/components/molecules/Modal';
 import Section from 'sly/components/molecules/Section';
@@ -210,7 +210,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <Header headerItems={headerItems} onLocationSearch={onLocationSearch} />
+      <HeaderContainer headerItems={headerItems} onLocationSearch={onLocationSearch} />
       <HeroWrapper>
         <StyledImage src={assetPath('images/home/cover-1.jpg')} alt="hero image" />
         <SearchBoxWrapper>

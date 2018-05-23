@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { bool, func, arrayOf, shape, string } from 'prop-types';
+import { bool, func, arrayOf, shape, string, number } from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
@@ -113,18 +113,19 @@ const HeaderItem = styled(Link)`
 `;
 
 const Header = ({
-  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems,
+  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices,
 }) => {
   const headerItemComponents = headerItems.map(item => (
     <HeaderItem to={item.url} palette="slate" key={item.name}>
       {item.name}
     </HeaderItem>
   ));
-  const hrIndices = [5, 9];
   let menuItemPosition = 0;
-  const headerMenuItemComponents = menuItems.map((item) => {
+  const menuItemsPresent = menuItems.length > 0;
+  const headerMenuItems = menuItemsPresent ? menuItems : headerItems;
+  const headerMenuItemComponents = headerMenuItems.map((item) => {
     menuItemPosition += 1;
-    if (hrIndices.indexOf(menuItemPosition) !== -1) {
+    if (menuItemHrIndices.indexOf(menuItemPosition) !== -1) {
       return (
         <div key={item.name}>
           <MarginnedHR />
@@ -143,7 +144,7 @@ const Header = ({
   return (
     <HeaderWrapper>
       <SeniorlyLogoWrapper>
-        <Link href={'/'}>
+        <Link href="/">
           <Logo />
         </Link>
       </SeniorlyLogoWrapper>
@@ -160,7 +161,7 @@ const Header = ({
       <SearchBoxContainer layout="header" onLocationSearch={onLocationSearch} />
       <HeaderItems>
         {headerItemComponents}
-        {headerMenuItemComponents.length > 0 && (
+        {menuItemsPresent && (
           <MenuIcon icon="menu" size="regular" onClick={onMenuIconClick} />
         )}
       </HeaderItems>
@@ -181,10 +182,12 @@ Header.propTypes = {
     name: string,
     url: string,
   })),
+  menuItemHrIndices: arrayOf(number),
 };
 
 Header.defaultProps = {
   menuItems: [],
+  menuItemHrIndices: [],
 };
 
 export default Header;

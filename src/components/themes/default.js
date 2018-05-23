@@ -52,7 +52,7 @@ theme.sizes = {
       width:            '16.5rem',  // 264px
       position: {
         top: {
-          mobile:      '4.8125rem', // 77px
+          mobile:      '3.8125rem', // 61px
           laptopLarge: '3.4375rem', // 55px
         },
       },
@@ -148,7 +148,7 @@ theme.sizes = {
       height: '17.5rem', // 280px
     },
     proportions: {
-      ['16:9']: '56.25%', 
+      ['16:9']: '56.25%',
       ['4:3']: '75%',
     },
   },
