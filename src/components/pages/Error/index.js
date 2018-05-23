@@ -15,13 +15,11 @@ import { filterLinkPath, getSearchParamFromPlacesResponse } from "sly/services/h
 
 const Wrapper = styled.div`
   position: relative;
-  padding: calc(${size('header.home.heroImage.height')}/4);
   background-color: ${palette('white', 0)};
-  height: calc(${size('header.home.heroImage.height')}/2);
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    height: ${size('header.home.heroImage.height')};
-    padding: calc(${size('header.home.heroImage.height')}/4);
+  margin: calc(${size('breakpoint.tablet')}/4) auto;
+  content-align: center;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {    
+    width:${size('breakpoint.tablet')};
   }
 `;
 
@@ -29,6 +27,7 @@ const getTextError= (errorCode) => {
   //Change to map and add more codeS!
   let text = '';
   switch (errorCode) {
+    //TODO: Use Localizable Labels.
     case 404:
       text = 'Sorry, we couldn\'t find the page.';
       break;

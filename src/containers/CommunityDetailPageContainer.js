@@ -8,7 +8,7 @@ import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 import { gotoSlide, toggleFullscreenMediaGallery } from 'sly/store/communityDetailPage/actions';
-import SlyEvent from "sly/services/helpers/events";
+
 import ErrorPage from "sly/components/pages/Error";
 
 class CommunityDetailPageContainer extends Component {
