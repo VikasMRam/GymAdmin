@@ -51,7 +51,7 @@ const assets = () => () => ({
   module: {
     rules: [
       {
-        test: /\.(png|jpe?g|svg|woff2?|ttf|eot)$/,
+        test: /\.(ico|png|jpe?g|svg|woff2?|ttf|eot)$/,
         loader: 'url-loader?limit=8000',
       },
     ],

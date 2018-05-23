@@ -134,7 +134,7 @@ const CommunityFilterList = ({
             {!isMapView &&
               <Fragment>
                 {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-                <StyledImage src={assetPath('images/map-placeholder.png')} />
+                <StyledImage src={assetPath('images/map-placeholder.jpeg')} />
                 <IconButton icon="map" onClick={toggleMap} palette="secondary" ghost>
                   View Map
                 </IconButton>
@@ -160,14 +160,14 @@ const CommunityFilterList = ({
           value={sort}
           onChange={getSortHandler(onFieldChange)}
         >
+          <option value="distance">
+            Distance
+          </option>
           <option value="price-l-h">
             Price: Low to High
           </option>
           <option value="price-h-l">
             Price: High to Low
-          </option>
-          <option value="distance">
-            Distance
           </option>
           <option value="relevance">
             Relevance

@@ -84,7 +84,7 @@ export default class App extends Component {
           <meta content="https://www.seniorly.com" property="twitter:site" />
           <meta content="@seniorly" property="twitter:creator" />
 
-          <link rel="icon" href={assetPath('favicon.ico')} />
+          <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
         </Helmet>
 
         <ThemeProvider theme={theme}>

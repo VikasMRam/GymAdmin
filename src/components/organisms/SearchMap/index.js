@@ -165,9 +165,9 @@ class SearchMap extends Component {
     const markers = [];
 
     const isMobile = (typeof window === 'undefined') ? false : window.innerWidth < size('breakpoint.tablet');
-    let defaultZoom = 12;
+    let defaultZoom = 13;
     if (isMobile) {
-      defaultZoom = 11;
+      defaultZoom = 12;
     }
 
     if (isServer) return null;

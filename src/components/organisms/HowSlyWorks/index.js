@@ -7,7 +7,7 @@ import ReasonTile from 'sly/components/molecules/ReasonTile';
 
 const reasons = [
   {
-    image: assetPath('images/how-sly-works/info.png'),
+    image: assetPath('images/how-sly-works/info.jpeg'),
     title: 'Get the Info You Want',
     text:
       'Our powerful search engine is designed to give you unlimited access to all the information you want- pricing, floor plans, photos, ratings and more.',
@@ -15,7 +15,7 @@ const reasons = [
   },
 
   {
-    image: assetPath('images/how-sly-works/community.png'),
+    image: assetPath('images/how-sly-works/community.jpeg'),
     title: 'Community Connect',
     text:
       'We connect you directly to each senior community you choose and we guarantee no other properties will obtain your personal information.',
