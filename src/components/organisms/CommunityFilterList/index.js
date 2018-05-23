@@ -160,14 +160,14 @@ const CommunityFilterList = ({
           value={sort}
           onChange={getSortHandler(onFieldChange)}
         >
+          <option value="distance">
+            Distance
+          </option>
           <option value="price-l-h">
             Price: Low to High
           </option>
           <option value="price-h-l">
             Price: High to Low
-          </option>
-          <option value="distance">
-            Distance
           </option>
           <option value="relevance">
             Relevance
