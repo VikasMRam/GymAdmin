@@ -24,6 +24,19 @@ const headerItems = [
   { name: 'Our History', url: '/about' },
   { name: 'Sign in', url: '/signin' },
 ];
+const menuItems = [
+  { name: 'Home', url: '/' },
+  { name: 'Resources', url: '/resources' },
+  { name: 'Assisted Living', url: '/assisted-living' },
+  { name: "Alzheimer's Care", url: '/alzheimers-care' },
+  { name: 'Respite Care', url: '/respite-care' },
+  { name: 'Our History', url: '/about' },
+  { name: 'Contact', url: '/contact' },
+  { name: 'Careers', url: 'https://angel.co/seniorly/jobs' },
+  { name: 'List on Seniorly', url: '/providers' },
+  // { name: 'Sign Out', url: '#' },
+];
+const menuItemHrIndices = [6, 10];
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -210,7 +223,10 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <HeaderContainer headerItems={headerItems} onLocationSearch={onLocationSearch} />
+      <HeaderContainer headerItems={headerItems}
+                       menuItems={menuItems}
+                       menuItemHrIndices={menuItemHrIndices}
+                       onLocationSearch={onLocationSearch} />
       <HeroWrapper>
         <StyledImage src={assetPath('images/home/cover-1.jpg')} alt="hero image" />
         <SearchBoxWrapper>
