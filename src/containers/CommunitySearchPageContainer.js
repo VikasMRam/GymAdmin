@@ -18,7 +18,11 @@ import {
 class CommunitySearchPageContainer extends Component {
   // TODO Define Search Parameters
   toggleMap = () => {
-    const event = { changedParams: { view: 'map', 'page-number': 0, 'page-size': 50, searchOnMove: true, } };
+    const event = {
+      changedParams: {
+        view: 'map', 'page-number': 0, 'page-size': 50, searchOnMove: true,
+      },
+    };
     if (this.props.searchParams && this.props.searchParams.view === 'map') {
       event.changedParams = { view: 'list', 'page-size': 15 };
     }
