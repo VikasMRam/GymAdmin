@@ -42,7 +42,7 @@ class CommunityDetailPageContainer extends Component {
   };
 
   handleOnLocationSearch = (result) => {
-    const { location } = this.props;
+    const { history } = this.props;
     const searchParams = getSearchParamFromPlacesResponse(result);
     const { path } = filterLinkPath(searchParams);
     history.push(path);
@@ -50,11 +50,11 @@ class CommunityDetailPageContainer extends Component {
 
   render() {
     const {
-      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, error,
+      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, error, history
     } = this.props;
 
     if (error) {
-      return <ErrorPage errorCode={404} location={this.props.location} />;
+      return <ErrorPage errorCode={404} history={history} />;
 
     }
 

@@ -58,12 +58,13 @@ class CommunitySearchPageContainer extends Component {
       communityList,
       requestMeta,
       location,
+      history,
     } = this.props;
 
     // TODO Add Error Page
     if (error) {
       // location.push('/error');
-      return <ErrorPage errorCode={404} location={location} />;
+      return <ErrorPage errorCode={404} history={history} />;
       // return null ;//<div>{error}</div>;
     }
     const isMapView = searchParams.view === 'map';

@@ -48,10 +48,10 @@ export default class ErrorPage extends Component {
   };
 
   handleOnLocationSearch = (result) => {
-    const { location } = this.props;
+    const { history } = this.props;
     const searchParams = getSearchParamFromPlacesResponse(result);
     const { path } = filterLinkPath(searchParams);
-    location.push(path);
+    history.push(path);
   };
 
   render () {
