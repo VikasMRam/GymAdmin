@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, number, shape, arrayOf, func } from 'prop-types';
+import { string, number, shape, arrayOf, func, bool } from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
 import { Marker, InfoWindow, OverlayView } from 'react-google-maps';
@@ -58,7 +58,7 @@ class RedoSearchDiv extends Component {
   static propTypes = {
     latitude: number.isRequired,
     longitude: number.isRequired,
-    redoSearchOnMove: func.isRequired,
+    redoSearchOnMove: bool.isRequired,
     onToggleSearchOnMove: func.isRequired,
   }
   getPixelPositionOffset = (width, height) => ({
