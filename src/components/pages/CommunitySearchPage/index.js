@@ -78,12 +78,12 @@ export default class CommunitySearchPage extends Component {
     const listSize = requestMeta['filtered-count'];
     const city = titleize(searchParams.city);
 
-    let latitude = 0.0;
-    let longitude = 0.0;
+    let latitude = 0;
+    let longitude = 0;
     if (communityList.length > 0) {
       ([{ latitude, longitude }] = communityList);
     }
-    if (searchParams.searchOnMove) {
+    if (searchParams.searchOnMove && searchParams.latitude && searchParams.longitude) {
       latitude = parseFloat(searchParams.latitude);
       longitude = parseFloat(searchParams.longitude);
     }
