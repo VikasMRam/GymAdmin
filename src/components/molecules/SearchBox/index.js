@@ -65,7 +65,7 @@ const SearchSuggestionsWrapper = styled.div`
   flex: 1;
 `;
 
-// TODO: put this into parent and 
+// TODO: put this into parent and
 const SearchSuggestions = styled.div`
   z-index: 101;
   position: absolute;

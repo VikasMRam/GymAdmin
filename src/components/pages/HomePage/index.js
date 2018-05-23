@@ -167,7 +167,7 @@ const firstRowDiscoverHomes = [
   {
     title: 'Care Homes',
     description: 'Small communities in a home-like setting',
-    image: assetPath('images/home/discover-home/independent-living-tile.png'),
+    image: assetPath('images/home/discover-home/independent-living-tile.jpeg'),
     buttonText: 'See more',
     size: 'xLarge',
     searchParams: { size: 'small' },
@@ -175,7 +175,7 @@ const firstRowDiscoverHomes = [
   {
     title: 'Assisted Living',
     description: 'Communities with care services',
-    image: assetPath('images/home/discover-home/alzheimers-care-tile.png'),
+    image: assetPath('images/home/discover-home/alzheimers-care-tile.jpeg'),
     buttonText: 'See more',
     size: 'xLarge',
     searchParams: { toc: 'assisted-living' },
@@ -186,21 +186,21 @@ const secondRowDiscoverHomes = [
   {
     title: 'Boutique',
     description: 'Unique communities with Activities and Services',
-    image: assetPath('images/home/discover-home/studios-tile.png'),
+    image: assetPath('images/home/discover-home/studios-tile.jpeg'),
     buttonText: 'See more',
     searchParams: { size: 'medium' },
   },
   {
     title: 'Luxury',
     description: 'High-end Senior Living',
-    image: assetPath('images/home/discover-home/1-bedroom-tile.png'),
+    image: assetPath('images/home/discover-home/1-bedroom-tile.jpeg'),
     buttonText: 'See more',
     searchParams: { size: 'large', budget: 5000 },
   },
   {
     title: 'Memory Care',
     description: 'Specialized Memory care programs available',
-    image: assetPath('images/home/discover-home/shared-rooms-tile.png'),
+    image: assetPath('images/home/discover-home/shared-rooms-tile.jpeg'),
     buttonText: 'See more',
     searchParams: { toc: 'alzheimers-care' },
   },
@@ -270,17 +270,17 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       <StyledSection title="Meet others we've helped">
         <ThreeColumnWrapper>
           <MeetOthersTile
-            image={assetPath('images/home/meet-others/female1-tile.png')}
+            image={assetPath('images/home/meet-others/female1-tile.jpeg')}
             title="Sharon T."
             description="“I felt like Seniorly was a lifesaver! I was daunted at the prospect of going through so many possibilities to find the right fit for my mom in such a short time, while taking care of so many other things that need attending as we deal with the aftermath of her stroke.”"
           />
           <MeetOthersTile
-            image={assetPath('images/home/meet-others/female2-tile.png')}
+            image={assetPath('images/home/meet-others/female2-tile.jpeg')}
             title="Kathy O."
             description="It’s such a wonderful comfort to be able to view the pictures, video and information on the Seniorly website. The Seniorly staff is also responsive, kind and compassionate. Thank you for caring about this community and the needs of future generations!”"
           />
           <MeetOthersTile
-            image={assetPath('images/home/meet-others/female3-tile.png')}
+            image={assetPath('images/home/meet-others/female3-tile.jpeg')}
             title="Henry W."
             description="“We were lucky enough to find a great place for my father-in-law. Seniorly is a really helpful website, very helpful and informative. Thank you so much for what you do.”"
           />
@@ -291,32 +291,32 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       <StyledSection title="Useful Information">
         <UIColumnWrapper>
           <Link to="/independent-living">
-            <ImageOverlayContentTile image={assetPath('images/home/useful-info/independent-living.png')}>
+            <ImageOverlayContentTile image={assetPath('images/home/useful-info/independent-living.jpeg')}>
               <Heading palette="white">Independent Living</Heading>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/assisted-living">
-            <ImageOverlayContentTile image={assetPath('images/home/useful-info/assisted-living.png')}>
+            <ImageOverlayContentTile image={assetPath('images/home/useful-info/assisted-living.jpeg')}>
               <Heading palette="white">Assisted Living</Heading>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/alzheimers-care">
-            <ImageOverlayContentTile image={assetPath('images/home/useful-info/memory-care.png')}>
+            <ImageOverlayContentTile image={assetPath('images/home/useful-info/memory-care.jpeg')}>
               <Heading palette="white">Memory Care</Heading>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/board-and-care-home">
-            <ImageOverlayContentTile image={assetPath('images/home/useful-info/board-and-care-residential.png')}>
+            <ImageOverlayContentTile image={assetPath('images/home/useful-info/board-and-care-residential.jpeg')}>
               <Heading palette="white">Board & Care Residential</Heading>
             </ImageOverlayContentTile>
           </Link>
           {/* <Link to="#"> */}
-          {/* <ImageOverlayContentTile image={assetPath('images/home/useful-info/skilled-nursing.png')}> */}
+          {/* <ImageOverlayContentTile image={assetPath('images/home/useful-info/skilled-nursing.jpeg')}> */}
           {/* <Heading palette="white">Skilled Nursing</Heading> */}
           {/* </ImageOverlayContentTile> */}
           {/* </Link> */}
           <Link to="/continuing-care-retirement-community">
-            <ImageOverlayContentTile image={assetPath('images/home/useful-info/ccrc-life-plan.png')}>
+            <ImageOverlayContentTile image={assetPath('images/home/useful-info/ccrc-life-plan.jpeg')}>
               <Heading palette="white">CCRC / Life Plan</Heading>
             </ImageOverlayContentTile>
           </Link>
@@ -326,49 +326,49 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       <StyledSection title="Most searched cities">
         <MSCColumnWrapper>
           <Link to="/assisted-living/california/san-francisco">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanFrancisco.png')}>
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanFrancisco.jpeg')}>
               <Heading palette="white" level="subtitle">San Francisco, CA</Heading>
               <Block palette="white">200+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/assisted-living/california/los-angeles">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/LosAngeles.png')}>
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/LosAngeles.jpeg')}>
               <Heading palette="white" level="subtitle">Los Angeles, CA</Heading>
               <Block palette="white">75+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/assisted-living/california/san-diego">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanDiego.png')}>
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanDiego.jpeg')}>
               <Heading palette="white" level="subtitle">San Diego, CA</Heading>
               <Block palette="white">100+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/assisted-living/texas/dallas">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Dallas.png')}>
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Dallas.jpeg')}>
               <Heading palette="white" level="subtitle">Dallas, TX</Heading>
               <Block palette="white">120+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/assisted-living/texas/houston">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Houston.png')}>
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Houston.jpeg')}>
               <Heading palette="white" level="subtitle">Houston, TX</Heading>
               <Block palette="white">72+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/assisted-living/arizona/phoenix">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Pheonix.png')}>
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Pheonix.jpeg')}>
               <Heading palette="white" level="subtitle">Phoenix, AZ</Heading>
               <Block palette="white">151+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/assisted-living/florida/orlando">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Orlando.png')}>
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Orlando.jpeg')}>
               <Heading palette="white" level="subtitle">Orlando, FL</Heading>
               <Block palette="white">130+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/assisted-living/florida/miami">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Miami.png')}>
+            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Miami.jpeg')}>
               <Heading palette="white" level="subtitle">Miami, FL</Heading>
               <Block palette="white">80+ communities</Block>
             </ImageOverlayContentTile>
@@ -378,12 +378,12 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       <StyledHr />
       <StyledSection>
         <TwoColumnWrapper>
-          <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/partner-with-us.png')}>
+          <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/partner-with-us.jpeg')}>
             <Heading palette="white">Partner With Us</Heading>
             <StyledBlock palette="white" level="subtitle">For Local Referral Agents</StyledBlock>
             <Button to="/providers/crm">Get Started</Button>
           </ImageOverlayContentTile>
-          <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/list-a-property.png')}>
+          <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/list-a-property.jpeg')}>
             <Heading palette="white">List a Property</Heading>
             <StyledBlock palette="white" level="subtitle">For Senior Housing Providers</StyledBlock>
             <Button to="/providers/housing">Get Started</Button>

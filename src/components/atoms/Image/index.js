@@ -70,8 +70,8 @@ export default class Image extends React.Component {
     const { src, alt, aspectRatio, children, ...props } = this.props;
     const { failed } = this.state;
 
-    const srcProps = failed 
-      ? { src: assetPath('images/img-placeholder.png') } 
+    const srcProps = failed
+      ? { src: assetPath('images/img-placeholder.png') }
       : { src, onError: this.failedLoadImageHandler };
 
     const imageProps = {
@@ -82,12 +82,12 @@ export default class Image extends React.Component {
     if (aspectRatio) {
       return (
         <ResponsiveWrapper aspectRatio={aspectRatio} {...props}>
-          {this.renderImage(imageProps)} 
+          {this.renderImage(imageProps)}
           {children}
-        </ResponsiveWrapper> 
+        </ResponsiveWrapper>
       );
     } else {
-      return this.renderImage({ ...imageProps, ...props }); 
+      return this.renderImage({ ...imageProps, ...props });
     }
   }
 }
