@@ -9,6 +9,7 @@ import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 import { gotoSlide, toggleFullscreenMediaGallery } from 'sly/store/communityDetailPage/actions';
 import SlyEvent from "sly/services/helpers/events";
+import ErrorPage from "sly/components/pages/Error";
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
@@ -41,7 +42,7 @@ class CommunityDetailPageContainer extends Component {
   };
 
   handleOnLocationSearch = (result) => {
-    const { history } = this.props;
+    const { location } = this.props;
     const searchParams = getSearchParamFromPlacesResponse(result);
     const { path } = filterLinkPath(searchParams);
     history.push(path);
@@ -49,13 +50,12 @@ class CommunityDetailPageContainer extends Component {
 
   render() {
     const {
-      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, error, history,
+      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, error,
     } = this.props;
 
     if (error) {
-      history.push('/notfound');
-      return null;
-      // return <div>{error}</div>;
+      return <ErrorPage errorCode={404} location={this.props.location} />;
+
     }
 
     if (!community) {
