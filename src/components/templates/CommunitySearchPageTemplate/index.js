@@ -1,11 +1,11 @@
 import React from 'react';
-import { any } from 'prop-types';
+import { any, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
-import HeaderContainer from 'sly/containers/HeaderContainer';
+import DefaultHeaderTemplate from 'sly/components/templates/DefaultHeaderTemplate';
 import Footer from 'sly/components/organisms/Footer';
 
 const TwoColumnWrapper = styled.div`
@@ -32,7 +32,7 @@ const CommunitySearchPageTemplate = ({
   onLocationSearch,
 }) => (
   <BasePageTemplate
-    header={<HeaderContainer onLocationSearch={onLocationSearch} />}
+    header={<DefaultHeaderTemplate onLocationSearch={onLocationSearch} />}
     footer={<Footer />}
   >
     <TwoColumnWrapper>
@@ -45,6 +45,7 @@ const CommunitySearchPageTemplate = ({
 CommunitySearchPageTemplate.propTypes = {
   children: any.isRequired,
   column: any.isRequired,
+  onLocationSearch: func,
 };
 
 export default CommunitySearchPageTemplate;
