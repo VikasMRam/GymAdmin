@@ -21,7 +21,7 @@ const getSDForCommunity = ({
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'LodgingBusiness';
   ld.name = name;
-  ld.url = `${host}/${url}`;
+  ld.url = `${host}${url}`;
 
   const addressLd = {};
   addressLd['@type'] = 'PostalAddress';
@@ -118,7 +118,7 @@ export const getHelmetForSearchPage = ({
   const actualToc = tocs.find(elem => (elem.value === toc));
   const title = `See Search Results for ${actualToc.label} in ${titleize(city)}, ${titleize(state)}`;
   const description = 'Seniorly offers a comprehensive data search where we maintain updated pricing and availabilty information to serve our customers better.';
-  const canonicalUrl = `${host}/${url.pathname}`;
+  const canonicalUrl = `${host}${url.pathname}`;
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'Webpage';

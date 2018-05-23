@@ -6,8 +6,9 @@ import withServerState from 'sly/store/withServerState';
 
 import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList, getListMeta } from 'sly/store/selectors';
-
+import ErrorPage from "sly/components/pages/Error";
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
+
 import {
   filterLinkPath,
   getSearchParams,
@@ -61,12 +62,14 @@ class CommunitySearchPageContainer extends Component {
       communityList,
       requestMeta,
       location,
+      history,
     } = this.props;
 
     // TODO Add Error Page
     if (error) {
-      location.push('/error');
-      return null;// <div>{error}</div>;
+      // location.push('/error');
+      return <ErrorPage errorCode={404} history={history} />;
+      // return null ;//<div>{error}</div>;
     }
     const isMapView = searchParams.view === 'map';
     return (
