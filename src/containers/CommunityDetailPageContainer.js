@@ -8,7 +8,8 @@ import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 import { gotoSlide, toggleFullscreenMediaGallery } from 'sly/store/communityDetailPage/actions';
-import SlyEvent from "sly/services/helpers/events";
+
+import ErrorPage from "sly/components/pages/Error";
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
@@ -49,13 +50,12 @@ class CommunityDetailPageContainer extends Component {
 
   render() {
     const {
-      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, error, history,
+      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, error, history
     } = this.props;
 
     if (error) {
-      history.push('/notfound');
-      return null;
-      // return <div>{error}</div>;
+      return <ErrorPage errorCode={404} history={history} />;
+
     }
 
     if (!community) {

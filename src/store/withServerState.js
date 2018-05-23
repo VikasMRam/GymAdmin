@@ -50,9 +50,9 @@ class ServerStateComponent extends Component {
       const { match, location } = nextProps;
       SlyEvent.getInstance().sendPageView(location.pathname);
 
-      // if (match.params && match.params.city && typeof match.params.communitySlug === 'undefined') {
-      //   //This is a filtered search request send
-      // }
+      if (match.params && match.params.city && typeof match.params.communitySlug === 'undefined') {
+        //This is a filtered search request send
+      }
 
     }
 
