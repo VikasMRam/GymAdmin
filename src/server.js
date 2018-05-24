@@ -103,7 +103,7 @@ app.use(async (req, res, next) => {
     }
 
     if (context.url) {
-      res.redirect(context.url);
+      res.redirect(301, context.url);
     } else {
       const { assets } = global;
       const initialState = store.getState();
