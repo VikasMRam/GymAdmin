@@ -253,5 +253,13 @@ theme.transitions = {
   },
 };
 
+theme.zIndexes = {
+  modal: {
+    overlay: 9999,
+    galleryLayoutHeading: 10000,
+  },
+  header: 2,
+};
+
 export default theme;
 

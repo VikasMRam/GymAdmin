@@ -1,7 +1,7 @@
 import React from 'react';
 import { oneOf, string, func } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { palette } from 'styled-theme';
+import { palette, key } from 'styled-theme';
 import { switchProp, ifProp } from 'styled-tools';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
@@ -67,7 +67,7 @@ const SearchSuggestionsWrapper = styled.div`
 
 // TODO: put this into parent and
 const SearchSuggestions = styled.div`
-  z-index: 101;
+  z-index: ${key('zIndexes.header')};
   position: absolute;
   top: ${size('header.menu.position.top.laptopLarge')};
   left: 0;
@@ -97,7 +97,7 @@ const SearchSuggestion = styled.div`
 `;
 
 const GoogleLogo = styled(Image)`
-  width: 25%;
+  width: 40%;
   float: right;
 `;
 const baseSearchOptions = {types: ['(regions)']};
@@ -123,7 +123,7 @@ const SearchBox = ({
                   <span>{suggestion.description}</span>
                 </SearchSuggestion>
               ))}
-              <GoogleLogo src={assetPath('powered_by_google.png')} />
+              <GoogleLogo src={assetPath('images/powered_by_google.png')} />
             </SearchSuggestions>
           )}
         </SearchSuggestionsWrapper>
