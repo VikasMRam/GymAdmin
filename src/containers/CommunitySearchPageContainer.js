@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { string, bool } from 'prop-types';
-import { merge, omit } from 'lodash';
+import { object, number, array } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
 
 import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList, getListMeta } from 'sly/store/selectors';
-import ErrorPage from "sly/components/pages/Error";
+import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 
 import {
@@ -16,6 +15,15 @@ import {
 } from 'sly/services/helpers/search';
 
 class CommunitySearchPageContainer extends Component {
+  static propTypes = {
+    searchParams: object.isRequired,
+    history: object.isRequired,
+    location: object.isRequired,
+    communityList: array.isRequired,
+    requestMeta: object.isRequired,
+    errorCode: number,
+  }
+
   // TODO Define Search Parameters
   toggleMap = () => {
     const event = {
@@ -58,17 +66,16 @@ class CommunitySearchPageContainer extends Component {
   render() {
     const {
       searchParams,
-      error,
+      errorCode,
       communityList,
       requestMeta,
       location,
       history,
     } = this.props;
-
     // TODO Add Error Page
-    if (error) {
+    if (errorCode) {
       // location.push('/error');
-      return <ErrorPage errorCode={404} history={history} />;
+      return <ErrorPage errorCode={errorCode} history={history} />;
       // return null ;//<div>{error}</div>;
     }
     const isMapView = searchParams.view === 'map';
@@ -103,8 +110,11 @@ const fetchData = (dispatch, { match, location }) => {
 };
 
 const handleError = (err) => {
-  if (err.response && err.response.status === 404) {
-    return { error: 'Unknown City and State!' };
+  if (err.response) {
+    if (err.response.status !== 200) {
+      return { errorCode: err.response.status };
+    }
+    return { errorCode: null };
   }
   throw err;
 };
