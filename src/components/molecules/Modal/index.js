@@ -2,7 +2,7 @@ import React from 'react';
 import { node, bool, func, oneOf } from 'prop-types';
 import styled, { css, injectGlobal } from 'styled-components';
 import ReactModal from 'react-modal';
-import { palette } from 'styled-theme';
+import { palette, key } from 'styled-theme';
 import { ifProp, withProp, switchProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
@@ -23,7 +23,7 @@ const overlayStyles = css`
   right: 0;
   left: 0;
   bottom: 0;
-  z-index: 9999;
+  z-index: ${key('zIndexes.modal.overlay')};
   transition: opacity 250ms ease-in-out;
   opacity: 0;
   &[class*='after-open'] {
@@ -139,7 +139,7 @@ const Heading = styled.div`
       position: fixed;
       left: ${size('spacing.xLarge')};
       top: ${size('spacing.large')};
-      z-index: 10000;`,
+      z-index: ${key('zIndexes.modal.galleryLayoutHeading')};`,
     sidebar: css`
       padding-bottom: ${size('spacing.regular')};
     `,

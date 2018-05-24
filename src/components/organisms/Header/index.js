@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { bool, func, arrayOf, shape, string, number } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+import { palette, key } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 import { Icon, Hr, Link } from 'sly/components/atoms';
@@ -60,7 +60,7 @@ export const HeaderMenu = styled.div`
   position: absolute;
   top: ${size('header.menu.position.top.mobile')};
   background: white;
-  z-index: 101;
+  z-index: ${key('zIndexes.header')};;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('header.menu.width')};

@@ -131,6 +131,9 @@ theme.sizes = {
   },
 
   picture: {
+    tiny: {
+      width: '9.375rem', // 150px
+    },
     small: {
       width: '15.375rem', // 246px
       height: '11.25rem', // 180px
@@ -251,6 +254,14 @@ theme.transitions = {
     in: '.4s ease-in',
     out: '.4s ease-out',
   },
+};
+
+theme.zIndexes = {
+  modal: {
+    overlay: 10000,
+    galleryLayoutHeading: 10001,
+  },
+  header: 10000,
 };
 
 export default theme;
