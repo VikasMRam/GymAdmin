@@ -73,11 +73,13 @@ const ModalContext = styled.article`
 
   ${switchProp('layout', {
     single: css`
+      overflow: auto;
       border-radius: ${size('spacing.small')};
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
         width: ${size('modal.single')};
       }`,
     double: css`
+      overflow: auto;
       border-radius: ${size('spacing.small')};
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
         width: ${size('modal.single')};
