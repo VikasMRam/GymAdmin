@@ -33,8 +33,8 @@ const FooterTopWrapper = styled.div`
 `;
 
 const SeniorlyWhiteIcon = styled(Icon)`
-  order: 1;
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.small')};
+  display:flex;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: 100%;
@@ -48,45 +48,31 @@ const SeniorlyWhiteIcon = styled(Icon)`
   }
 `;
 
-const SignUpButtonDiv = styled.div`
-  order: 2;
-  margin-bottom: ${size('spacing.xLarge')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    order: 3;
-  }
-`;
-
 const groups = {
   Company: [
-    { name: 'About Us', url: '/about' },
+    { name: 'Our History', url: '/about' },
+    { name: 'The Team', url: '/about#/#sly-team' },
     { name: 'Career', url: 'https://angel.co/seniorly/jobs', target: '_blank' },
+    { name: 'Press', url: '/about#/#press' },
     { name: 'Contact', url: '/contact' },
     { name: 'Terms', url: '/tos' },
     { name: 'Privacy', url: '/privacy' },
   ],
-  Explore: [
-    { name: 'Assisted Living', url: '/assisted-living' },
-    { name: 'Respite Care', url: '/respite-care' },
-    { name: 'CareTalks', url: '/caretalks' },
-    { name: 'Resources', url: '/resources' },
-  ],
-  Marketplace: [
+  Listings: [
+    { name: 'For Referral Agents', url: '/providers/crm' },
+    { name: 'List Your Property', url: '/providers' },
     { name: 'How It Works', url: '/how-it-works' },
-    { name: 'List Your Business', url: '/providers' },
+  ],
+  Resources: [
+    { name: 'Articles', url: '/resources' },
+    { name: 'Assisted Living', url: '/assisted-living' },
+    { name: 'Independent Living', url: '/assisted-living' },
+    { name: 'Alzheimer\'s Care', url: '/memory-care' },
+    { name: 'Respite Care', url: '/respite-care' },
+    { name: 'CCRC', url: '/continuing-care-retirement-community' },
   ],
 };
 
-const Groups = styled.div`
-  order: 3;
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: ${size('spacing.large')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    order: 2;
-  }
-`;
 
 const GroupDiv = styled.div`
   width: ${size('footer.group.width')};
@@ -105,6 +91,7 @@ const GroupHeading = styled.div`
   color: ${palette('white', 0)};
   font-size: ${size('text.subtitle')};
   font-weight: bold;
+  text-transform: uppercase;
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -137,6 +124,7 @@ const FooterBottomWrapper = styled.div`
     width: ${size('layout.mainColumn')};
 
     flex-direction: row;
+    justify-content: space-between;
     padding: ${size('spacing.regular')} 0;
   }
 
@@ -156,8 +144,7 @@ const SocialIcons = styled.div`
   flex-wrap: wrap;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    order: 2;
-    margin-left: auto;
+    order: 3;
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -187,6 +174,22 @@ const TradeMark = styled.a`
   }
 `;
 
+const Join = styled.a`
+  color: ${palette('white', 0)};
+  font-size: ${size('spacing.large')};
+  text-decoration: none;
+  margin-bottom: ${size('spacing.regular')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    order: 2;
+    margin: ${size('spacing.regular')} 0;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    margin-left: 0;
+  }
+`;
+
 const Footer = () => {
   const currentYear = (new Date()).getFullYear();
   const groupComponents = Object.keys(groups).map((group) => {
@@ -207,11 +210,13 @@ const Footer = () => {
   return (
     <FooterWrapper>
       <FooterTopWrapper>
-        <SeniorlyWhiteIcon icon="seniorly-white" size="xxLarge" />
-        <SignUpButtonDiv>
-          <Button to="/signin">Sign up for Free</Button>
-        </SignUpButtonDiv>
-        <Groups>{groupComponents}</Groups>
+        <GroupDiv>
+          <GroupItem to="/">
+            <SeniorlyWhiteIcon icon="seniorly-white" size="xxLarge" />
+            Find a Home to Love
+          </GroupItem>
+        </GroupDiv>
+        {groupComponents}
       </FooterTopWrapper>
       <StyledHR />
       <FooterBottomWrapper>
@@ -221,6 +226,9 @@ const Footer = () => {
           <Link href="https://plus.google.com/u/0/+SeniorlyIncSanFrancisco"><FooterIcon icon="google-plus" size="large" /></Link>
           <Link href="https://www.facebook.com/seniorly/posts"><FooterIcon icon="facebook" size="large" /></Link>
         </SocialIcons>
+        <Join>
+          Join Our Community
+        </Join>
         <TradeMark>&copy; Seniorly {currentYear}</TradeMark>
       </FooterBottomWrapper>
     </FooterWrapper>
