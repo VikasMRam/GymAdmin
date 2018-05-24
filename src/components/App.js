@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
@@ -9,7 +9,7 @@ import { isBrowser } from 'sly/config';
 import theme from './themes/default';
 import setGlobalStyles from './themes/setGlobalStyles';
 
-import { assetPath } from "sly/components/themes";
+import { assetPath } from 'sly/components/themes';
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
@@ -24,6 +24,11 @@ const careTypes = [
   'independent-living',
   'alzheimers-care',
 ].join('|');
+
+const filtersRedirect = ({props}) => {
+  console.log(this);
+  return <Redirect to={`${props.match.params.toc}/${props.match.state}/${props.match.params.city}`} />;
+};
 
 export default class App extends Component {
   static childContextTypes = {
@@ -71,8 +76,8 @@ export default class App extends Component {
             name="viewport"
             content="width=device-width, initial-scale=1.0"
           />
-          <meta content="Seniorly Inc." property="author"/>
-          <meta content="English" property="language"/>
+          <meta content="Seniorly Inc." property="author" />
+          <meta content="English" property="language" />
           {/*
             Open graph
           */}
@@ -92,6 +97,11 @@ export default class App extends Component {
 
         <ThemeProvider theme={theme}>
           <Switch>
+            <Route path={`/:toc(${careTypes})/:state/:city/filters`}
+                   render={({ match }) => {
+                     return <Redirect to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}  />;
+                   }}
+            />
             {this.routes.map(route => <Route key={route.path} {...route} />)}
             <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
           </Switch>
