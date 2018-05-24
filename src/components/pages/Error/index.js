@@ -57,6 +57,7 @@ export default class ErrorPage extends Component {
     const searchParams = getSearchParamFromPlacesResponse(result);
     const { path } = filterLinkPath(searchParams);
     history.push(path);
+    window.location.reload();
   };
 
   render () {

@@ -14,6 +14,7 @@ import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageCont
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
+import Error from 'sly/components/pages/Error';
 
 setGlobalStyles();
 
@@ -90,6 +91,7 @@ export default class App extends Component {
         <ThemeProvider theme={theme}>
           <Switch>
             {this.routes.map(route => <Route key={route.path} {...route} />)}
+            <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
           </Switch>
         </ThemeProvider>
       </Fragment>
