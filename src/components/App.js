@@ -25,11 +25,6 @@ const careTypes = [
   'alzheimers-care',
 ].join('|');
 
-const filtersRedirect = ({props}) => {
-  console.log(this);
-  return <Redirect to={`${props.match.params.toc}/${props.match.state}/${props.match.params.city}`} />;
-};
-
 export default class App extends Component {
   static childContextTypes = {
     routes: routesPropType,
