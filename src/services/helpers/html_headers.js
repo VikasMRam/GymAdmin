@@ -52,7 +52,7 @@ const getSDForCommunity = ({
 
   let imageUrl = null;
   if (gallery.images && gallery.images.length > 0) {
-    imageUrl = gallery.images[0];
+    imageUrl = gallery.images[0].url;
     const imageObj = {};
     imageObj['@type'] = 'ImageObject';
     imageObj.name = `Front Image for ${name}`;
@@ -117,8 +117,8 @@ export const getHelmetForSearchPage = ({
 }) => {
   const actualToc = tocs.find(elem => (elem.value === toc));
   let location_str = city ? `${titleize(city)}, ${titleize(state)}` : `${titleize(state)}`;
-  const title = `See Search Results for ${actualToc.label} in ${location_str}`;
-  const description = 'Seniorly offers a comprehensive data search where we maintain updated pricing and availabilty information to serve our customers better.';
+  const title = ` ${location_str} Senior Housing & Senior Living for ${actualToc.label}`;
+  const description = `Find senior housing and senior care services in  ${location_str}. Search Seniorly's database for the best senior housing options, compare pricing, and more!`;
   const canonicalUrl = `${host}${url.pathname}`;
   const ld = {};
   ld['@context'] = 'http://schema.org';
@@ -156,8 +156,8 @@ export const getHelmetForCommunityPage = (community) => {
     name, address, propInfo, url, gallery = {}, videoGallery = {},
   } = community;
   const toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
-  const title = `${name} - Pricing, Photos and Floor Plans`;
-  const description = `${name} ${toc} located at ${address}. See pricing and photos"`;
+  const title = `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`;
+  const description = `${name} ${toc.label} located at ${titleize(address.city)}, ${titleize(address.state)} . See pricing and photos"`;
   let imageUrl = null;
   if (gallery.images && gallery.images.length > 0) {
     imageUrl = gallery.images[0].url;
@@ -165,7 +165,7 @@ export const getHelmetForCommunityPage = (community) => {
   let videoUrl = null;
 
   if (videoGallery.videos && videoGallery.videos.length > 0) {
-    videoUrl = videoGallery.videos[0];
+    videoUrl = videoGallery.videos[0].url;
   }
 
   const ld = getSDForCommunity({ ...community });
@@ -180,7 +180,7 @@ export const getHelmetForCommunityPage = (community) => {
       <meta content={title} property="og:title" />
       <meta content={url} property="og:url" />
       {imageUrl && <meta content={imageUrl} property="og:image" /> }
-      {videoUrl && <meta content={videoUrl} property="or:video" /> }
+      {videoUrl && <meta content={videoUrl} property="og:video" /> }
 
       <meta content={description} property="twitter:description" />
       <meta content={title} property="twitter:title" />
