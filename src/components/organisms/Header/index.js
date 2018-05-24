@@ -14,16 +14,18 @@ const HeaderWrapper = styled.nav`
   border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    padding: ${size('spacing.regular')} 0;
+    padding: ${size('spacing.regular')} ${size('spacing.xLarge')};
     align-items: center;
   }
 `;
 
 const SeniorlyLogoWrapper = styled.div`
   display: none;
-  margin-right: ${size('spacing.large')};
-  margin-left: ${size('spacing.xLarge')};
-  max-width: ${size('icon.xxLarge')};
+  margin-right: ${size('spacing.xLarge')};
+  a {
+    line-height: 0;
+    display: block;
+  }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
@@ -65,7 +67,7 @@ export const HeaderMenu = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('header.menu.width')};
     top: ${size('header.menu.position.top.laptopLarge')};
-    right: ${size('spacing.xLarge')};
+    right: ${size('spacing.large')};
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')}
       ${palette('grayscale', 2)};
@@ -98,7 +100,7 @@ const HeaderItems = styled.div`
     display: flex;
     margin-left: auto; // For Float Right in Flex
     align-items: center;
-    margin-right: ${size('spacing.large')};
+    margin-right: ${size('spacing.regular')};
   }
 `;
 
@@ -161,10 +163,10 @@ const Header = ({
       <SearchBoxContainer layout="header" onLocationSearch={onLocationSearch} />
       <HeaderItems>
         {headerItemComponents}
-        {menuItemsPresent && (
-          <MenuIcon icon="menu" size="regular" onClick={onMenuIconClick} />
-        )}
       </HeaderItems>
+      {menuItemsPresent && (
+        <MenuIcon icon="menu" size="regular" onClick={onMenuIconClick} />
+      )}
       {menuOpen && <HeaderMenu>{headerMenuItemComponents}</HeaderMenu>}
     </HeaderWrapper>
   );
