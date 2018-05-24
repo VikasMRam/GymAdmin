@@ -54,6 +54,7 @@ const SearchButtonLargeLaptop = styled(Button)`
 const SearchButton = styled(Button)`
   height: 100%;
   border: none;
+  margin-right: ${size('spacing.regular')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
@@ -93,7 +94,6 @@ const SearchSuggestion = styled.div`
   :hover {
     background-color: ${palette('grayscale', 3)};
   }
-
 `;
 
 const GoogleLogo = styled(Image)`
