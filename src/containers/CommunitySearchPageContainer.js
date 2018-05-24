@@ -58,17 +58,16 @@ class CommunitySearchPageContainer extends Component {
   render() {
     const {
       searchParams,
-      error,
+      errorCode,
       communityList,
       requestMeta,
       location,
       history,
     } = this.props;
-
     // TODO Add Error Page
-    if (error) {
+    if (errorCode) {
       // location.push('/error');
-      return <ErrorPage errorCode={404} history={history} />;
+      return <ErrorPage errorCode={errorCode} history={history} />;
       // return null ;//<div>{error}</div>;
     }
     const isMapView = searchParams.view === 'map';
@@ -103,8 +102,11 @@ const fetchData = (dispatch, { match, location }) => {
 };
 
 const handleError = (err) => {
-  if (err.response && err.response.status === 404) {
-    return { error: 'Unknown City and State!' };
+  if (err.response) {
+    if (err.response.status !== 200) {
+      return { errorCode: err.response.status };
+    }
+    return { errorCode: null };
   }
   throw err;
 };
