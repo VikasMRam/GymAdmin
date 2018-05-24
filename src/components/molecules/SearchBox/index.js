@@ -97,7 +97,7 @@ const SearchSuggestion = styled.div`
 `;
 
 const GoogleLogo = styled(Image)`
-  width: 40%;
+  width: ${size('picture.tiny.width')};
   float: right;
 `;
 const baseSearchOptions = {types: ['(regions)']};
