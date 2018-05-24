@@ -12,6 +12,7 @@ import setGlobalStyles from './themes/setGlobalStyles';
 import { assetPath } from "sly/components/themes";
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
+import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
@@ -49,6 +50,10 @@ export default class App extends Component {
     {
       path: `/:toc(${careTypes})/:state/:city`,
       component: CommunitySearchPageContainer,
+    },
+    {
+      path: `/:toc(${careTypes})/:state`,
+      component: StateSearchPageContainer,
     },
     {
       path: '/',

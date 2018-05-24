@@ -116,7 +116,8 @@ export const getHelmetForSearchPage = ({
   url, city, state, toc, communityList,
 }) => {
   const actualToc = tocs.find(elem => (elem.value === toc));
-  const title = `See Search Results for ${actualToc.label} in ${titleize(city)}, ${titleize(state)}`;
+  let location_str = city ? `${titleize(city)}, ${titleize(state)}` : `${titleize(state)}`;
+  const title = `See Search Results for ${actualToc.label} in ${location_str}`;
   const description = 'Seniorly offers a comprehensive data search where we maintain updated pricing and availabilty information to serve our customers better.';
   const canonicalUrl = `${host}${url.pathname}`;
   const ld = {};
