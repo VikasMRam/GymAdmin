@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { string, bool } from 'prop-types';
-import { merge, omit } from 'lodash';
+import { object, number, array } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
 
 import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList, getListMeta } from 'sly/store/selectors';
-import ErrorPage from "sly/components/pages/Error";
+import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 
 import {
@@ -16,6 +15,15 @@ import {
 } from 'sly/services/helpers/search';
 
 class CommunitySearchPageContainer extends Component {
+  static propTypes = {
+    searchParams: object.isRequired,
+    history: object.isRequired,
+    location: object.isRequired,
+    communityList: array.isRequired,
+    requestMeta: object.isRequired,
+    errorCode: number,
+  }
+
   // TODO Define Search Parameters
   toggleMap = () => {
     const event = {

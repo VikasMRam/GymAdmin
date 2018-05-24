@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, string, number, func, bool } from 'prop-types';
+import { object, number, func, bool } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
 import { getDetail, getHomePageMediaGalleryCurrentSlideIndex, isHomePageMediaGalleryFullscreenActive } from 'sly/store/selectors';
@@ -9,12 +9,12 @@ import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 import { gotoSlide, toggleFullscreenMediaGallery } from 'sly/store/communityDetailPage/actions';
 
-import ErrorPage from "sly/components/pages/Error";
+import ErrorPage from 'sly/components/pages/Error';
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
     community: object,
-    error: string,
+    errorCode: number,
     history: object,
     mediaGallerySlideIndex: number,
     isMediaGalleryFullscreenActive: bool,
@@ -50,12 +50,11 @@ class CommunityDetailPageContainer extends Component {
 
   render() {
     const {
-      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, error, history
+      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, errorCode, history,
     } = this.props;
 
-    if (error) {
-      return <ErrorPage errorCode={404} history={history} />;
-
+    if (errorCode) {
+      return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
     if (!community) {
@@ -110,8 +109,11 @@ const fetchData = (dispatch, { match }) =>
   ]);
 
 const handleError = (err) => {
-  if (err.response && err.response.status === 404) {
-    return { error: 'Unknown Profile!' };
+  if (err.response) {
+    if (err.response.status !== 200) {
+      return { errorCode: err.response.status };
+    }
+    return { errorCode: null };
   }
   throw err;
 };
