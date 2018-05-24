@@ -45,10 +45,12 @@ export default class App extends Component {
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
       component: CommunityDetailPageContainer,
+      exact: true,
     },
     {
       path: `/:toc(${careTypes})/:state/:city`,
       component: CommunitySearchPageContainer,
+      exact: true,
     },
     {
       path: '/',
