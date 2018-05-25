@@ -3,8 +3,8 @@ import { fetchState } from 'react-router-server';
 import { connect } from 'react-redux';
 import { func, bool } from 'prop-types';
 
+import SlyEvent from 'sly/services/helpers/events';
 import { isBrowser, isServer } from 'sly/config';
-import SlyEvent from 'sly/services/helpers/events'
 
 class ServerStateComponent extends Component {
   static propTypes = {
@@ -26,6 +26,10 @@ class ServerStateComponent extends Component {
 
     const { match, location } = this.props;
 
+    if(isBrowser) {
+      SlyEvent.getInstance().sendPageView(location.pathname);
+    }
+
     if(!hasServerState) {
       if (isServer) {
         fetchData()
@@ -36,8 +40,6 @@ class ServerStateComponent extends Component {
         fetchData();
       }
     } else if (isBrowser) {
-      SlyEvent.getInstance().sendPageView(location.pathname);
-
       cleanServerState();
     }
   }
@@ -53,9 +55,7 @@ class ServerStateComponent extends Component {
       if (match.params && match.params.city && typeof match.params.communitySlug === 'undefined') {
         //This is a filtered search request send
       }
-
     }
-
   }
 
   render() {

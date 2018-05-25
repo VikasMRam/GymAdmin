@@ -1,14 +1,10 @@
 import ReactGA from 'react-ga';
 import cookie from 'react-cookie';
 import { stringify } from 'query-string';
-import { isServer, gAnalyticsKey, eventServerUrl } from 'sly/config';
+import { isServer, gAnalyticsKey, eventServerUrl, isDev } from 'sly/config';
 
 export default class SlyEvent {
   static seInstance = null;
-  address = eventServerUrl;
-  uuid = cookie.load('sly_uuid');
-  sid = cookie.load('sly_sid');
-  ga = null;
 
   static getInstance() {
     if (this.seInstance === null) {
@@ -17,6 +13,11 @@ export default class SlyEvent {
     }
     return this.seInstance;
   }
+
+  address = eventServerUrl;
+  uuid = cookie.load('sly_uuid');
+  sid = cookie.load('sly_sid');
+  ga = null;
 
   sendPageView(path) {
     if (isServer) {
@@ -32,8 +33,12 @@ export default class SlyEvent {
       t: Date.now(),
     };
 
-    fetch(`${eventServerUrl}?${stringify(se)}`);
-    ReactGA.pageview(path);
+    if (isDev) {
+      console.info('EVENT pageview', path, se);
+    } else {
+      fetch(`${eventServerUrl}?${stringify(se)}`);
+      ReactGA.pageview(path);
+    }
   }
 
   sendEvent(event) {
@@ -41,9 +46,8 @@ export default class SlyEvent {
       return;
     }
 
-    let {
-      action, category, label, value,
-    } = event;
+    let { action, category, label, value } = event;
+
     const se = {
       a: action,
       c: category,
@@ -55,17 +59,23 @@ export default class SlyEvent {
       t: Date.now(),
     };
 
-    fetch(`${eventServerUrl}?${stringify(se)}`);
     if (category == null) {
       category = window.location.pathname + window.location.hash.split('?')[0];
     }
-    ReactGA.event({
+
+    const gaEvent = {
       category,
       action,
       label,
       value,
+    };
 
-    });
+    if (isDev) {
+      console.info('EVENT event', gaEvent);
+    } else {
+      fetch(`${eventServerUrl}?${stringify(se)}`);
+      ReactGA.event(gaEvent);
+    }
   }
 }
 

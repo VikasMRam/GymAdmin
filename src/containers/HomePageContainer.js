@@ -32,12 +32,9 @@ class HomePageContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
     if (this.props.match !== nextProps.match) {
       SlyEvent.getInstance().sendPageView(this.props.location.pathname);
     }
-
-
   }
 
   render() {
