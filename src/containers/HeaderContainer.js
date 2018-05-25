@@ -18,6 +18,7 @@ const HeaderContainer = ({
     <Header
       menuOpen={dropdownOpen}
       onMenuIconClick={dispatchToggleAction}
+      onMenuItemClick={dispatchToggleAction}
       onLocationSearch={onLocationSearch}
       headerItems={headerItems}
       menuItems={menuItems}

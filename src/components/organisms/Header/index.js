@@ -117,7 +117,7 @@ const HeaderItem = styled(Link)`
 `;
 
 const Header = ({
-  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices,
+  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick,
 }) => {
   const headerItemComponents = headerItems.map(item => (
     <HeaderItem to={item.url} palette="slate" key={item.name}>
@@ -169,7 +169,7 @@ const Header = ({
       {menuItemsPresent && (
         <MenuIcon icon="menu" size="regular" onClick={onMenuIconClick} />
       )}
-      {menuOpen && <HeaderMenu>{headerMenuItemComponents}</HeaderMenu>}
+      {menuOpen && <HeaderMenu onClick={onMenuItemClick}>{headerMenuItemComponents}</HeaderMenu>}
     </HeaderWrapper>
   );
 };
@@ -177,6 +177,7 @@ const Header = ({
 Header.propTypes = {
   menuOpen: bool,
   onMenuIconClick: func,
+  onMenuItemClick: func,
   onLocationSearch: func,
   headerItems: arrayOf(shape({
     name: string,
