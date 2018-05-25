@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import { object, arrayOf, func } from 'prop-types';
 
@@ -16,8 +16,16 @@ import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
 const SimilarCommunityTileDiv = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
+const CommunityFilterBarWrapper = styled.div`
+  display: none;
 
-const SectionWrapper = styled.div``;
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: block;
+  }
+`;
+const StyledLink = styled(Link)`
+  display: block;
+`;
 
 const getPaginationData = (requestMeta) => ({
   current: requestMeta['page-number'],
@@ -40,33 +48,35 @@ export default class CommunitySearchList extends Component {
     });
   };
 
-
   render() {
     const { communityList, requestMeta, searchParams, ...props } = this.props;
 
     if (communityList.length < 1) {
-      return <SectionWrapper><Heading>It doesn't look like we have added communities in the area yet. </Heading></SectionWrapper>;
+      return <Heading>It doesn&apos;t look like we have added communities in the area yet.</Heading>;
     }
     const components = communityList.map((similarProperty) => {
       return (
-        <Link key={similarProperty.id} to={similarProperty.url}>
+        <StyledLink key={similarProperty.id} to={similarProperty.url}>
           <SimilarCommunityTileDiv>
             <SimilarCommunityTile
               similarProperty={similarProperty}
             />
           </SimilarCommunityTileDiv>
-        </Link>
+        </StyledLink>
       );
     });
     const { current, total } = getPaginationData(requestMeta);
     return (
-      <SectionWrapper>
-        <CommunityFilterBar searchParams={searchParams} {...props} />
+      <Fragment>
+        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+        <CommunityFilterBarWrapper>
+          <CommunityFilterBar searchParams={searchParams} {...props} />
+        </CommunityFilterBarWrapper>
         {components}
         <Pagination onChange={this.onPageChange} current={current} total={total} />
         <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
-      </SectionWrapper>
+      </Fragment>
     );
   }
-};
+}
 

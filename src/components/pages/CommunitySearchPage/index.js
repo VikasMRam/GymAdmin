@@ -33,6 +33,9 @@ const SearchMapContainer = styled(SearchMap)`
   width: 100%;
   height: 100%;
 `;
+const StyledHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.large')};
+`;
 
 export default class CommunitySearchPage extends Component {
   static propTypes = {
@@ -126,9 +129,9 @@ export default class CommunitySearchPage extends Component {
           onLocationSearch={onLocationSearch}
         >
           {!isMapView && (
-            <Heading>
+            <StyledHeading>
               {listSize} communities near {city}
-            </Heading>
+            </StyledHeading>
           )}
           <TopWrapper>
             {isMapView && (
