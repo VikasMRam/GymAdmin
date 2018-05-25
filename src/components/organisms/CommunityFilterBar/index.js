@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
 import { palette } from 'styled-theme';
-import { startCase } from 'lodash';
+import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 
@@ -12,20 +12,15 @@ import Button from 'sly/components/atoms/Button';
 import { budgets, sizes, getFiltersApplied, getEvtHandler } from 'sly/services/helpers/search';
 
 const SectionWrapper = styled.div`
-  display: none;
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: ${size('spacing.large')};
-  }
+  display: flex;
+  flex-direction: row;
+  margin-bottom: ${ifProp('hasFilters', size('spacing.xLarge'), size('spacing.regular'))};
 `;
 
 export const FilterButton = styled(IconButton)`
   display: flex;
   flex-direction: row;
   margin-right: ${size('spacing.regular')};
-  margin-bottom: ${size('spacing.large')};
 `;
 
 export const ClearAllButton = styled(Button)`
@@ -42,7 +37,7 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
   const filtersApplied = getFiltersApplied(searchParams);
 
   return (
-    <SectionWrapper>
+    <SectionWrapper hasFilters={size || budget}>
       {size && (
         <FilterButton
           right
