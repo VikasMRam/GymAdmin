@@ -261,7 +261,8 @@ theme.zIndexes = {
     overlay: 10000,
     galleryLayoutHeading: 10001,
   },
-  header: 10000,
+  stickySections: 10000,
+  header: 10001,
 };
 
 export default theme;
