@@ -25,23 +25,23 @@ const Wrapper = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: 0;
-    padding-top: ${size('spacing.regular')};
   }
 `;
 
 const StyledHeading = styled(Heading)`
   ${clamp};
+  margin-bottom: ${size('spacing.tiny')};
 `;
 
 const RatingWrapper = styled.div`
   display: flex;
-  margin-bottom: ${size('spacing.regular')};
+  margin-top:${size('spacing.small')};
+  margin-bottom: ${size('spacing.small')};
   > * {
     ${clamp};
     width: unset;
   }
 `;
-
 const Rate = styled.span`
   margin-right: ${size('spacing.regular')};
 `;
@@ -58,7 +58,7 @@ const ClampedLine = styled.div`
 const ClampedBlock = styled.div`
   color: ${palette(0)}; 
   font-size: ${size('text.caption')};
-  margin-top: ${size('spacing.regular')};
+  margin-top: ${size('spacing.small')};
 `;
 
 export default class SimilarCommunityInfo extends Component {
@@ -66,7 +66,7 @@ export default class SimilarCommunityInfo extends Component {
     similarProperty: PropTypes.object.isRequired,
   };
 
-  renderRate({ startingRate }){
+  renderRate({ startingRate }) {
     if (!startingRate) return null;
     return (
       <Rate>
@@ -76,12 +76,19 @@ export default class SimilarCommunityInfo extends Component {
   }
 
   renderReviews({ numReviews, reviewsValue }) {
+    if (numReviews > 0) {
+      return (
+        <span>
+          <StyledRating value={reviewsValue || 0} size="regular" />
+          {numReviews }
+        </span>
+      );
+    }
     return (
       <span>
-        <StyledRating value={reviewsValue || 0} size="regular" />
-        {' '}{numReviews || '(No ratings)'}
+        {'Not Yet Rated'}
       </span>
-    ); 
+    );
   }
 
   render() {
@@ -92,6 +99,7 @@ export default class SimilarCommunityInfo extends Component {
       startingRate,
       reviewsValue,
       numReviews,
+      addressString,
       description,
       webViewInfo,
     } = community;
@@ -104,7 +112,10 @@ export default class SimilarCommunityInfo extends Component {
     // TODO : Get the following values from API Response
     return (
       <Wrapper {...props}>
-        <StyledHeading level='subtitle'>{name}</StyledHeading>
+        <StyledHeading level="subtitle">{name}</StyledHeading>
+        <ClampedLine>
+          {addressString}
+        </ClampedLine>
         <RatingWrapper>
           {this.renderRate(community)}
           {this.renderReviews(community)}
