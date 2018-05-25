@@ -59,7 +59,6 @@ const MenuIcon = styled(Icon)`
 
 export const HeaderMenu = styled.div`
   width: 100%;
-  height: 100%;
   position: absolute;
   top: ${size('header.menu.position.top.mobile')};
   background: white;
@@ -68,7 +67,6 @@ export const HeaderMenu = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: 0;
-    height: auto;
     width: ${size('header.menu.width')};
     top: ${size('header.menu.position.top.laptopLarge')};
     right: ${size('spacing.large')};
