@@ -7,7 +7,7 @@ import ReasonTile from 'sly/components/molecules/ReasonTile';
 
 const reasons = [
   {
-    image: assetPath('images/how-sly-works/info.jpeg'),
+    image: assetPath('images/how-sly-works/search-map.jpeg'),
     title: 'Get the Info You Want',
     text:
       'Our powerful search engine is designed to give you unlimited access to all the information you want- pricing, floor plans, photos, ratings and more.',
@@ -15,7 +15,7 @@ const reasons = [
   },
 
   {
-    image: assetPath('images/how-sly-works/community.jpeg'),
+    image: assetPath('images/how-sly-works/connect.jpeg'),
     title: 'Community Connect',
     text:
       'We connect you directly to each senior community you choose and we guarantee no other properties will obtain your personal information.',
@@ -23,7 +23,7 @@ const reasons = [
   },
 
   {
-    image: assetPath('images/how-sly-works/support.jpg'),
+    image: assetPath('images/how-sly-works/support.jpeg'),
     title: 'Access Local Support',
     text:
       'We’ve partnered with top senior living experts to  help you find local options, accompany you on tours, and coordinate the move.',
@@ -32,7 +32,7 @@ const reasons = [
   },
 
   {
-    image: assetPath('images/how-sly-works/support.jpg'),
+    image: assetPath('images/how-sly-works/personalized.jpeg'),
     title: 'Personalized Service',
     text:
       'We listen in your time of need because we have been there. We are available to you via email, online chat, text message or telephone.',

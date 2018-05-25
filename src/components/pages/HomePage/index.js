@@ -179,16 +179,16 @@ const StyledBlock = styled(Block)`
 const firstRowDiscoverHomes = [
   {
     title: 'Care Homes',
-    description: 'Small communities in a home-like setting',
-    image: assetPath('images/home/discover-home/independent-living-tile.jpeg'),
+    description: 'Smaller communities in a home-like setting',
+    image: assetPath('images/home/discover-home/care-home.jpeg'),
     buttonText: 'See more',
     size: 'xLarge',
     searchParams: { size: 'small' },
   },
   {
     title: 'Assisted Living',
-    description: 'Communities with care services',
-    image: assetPath('images/home/discover-home/alzheimers-care-tile.jpeg'),
+    description: 'Larger communities with more services',
+    image: assetPath('images/home/discover-home/assisted-living.jpeg'),
     buttonText: 'See more',
     size: 'xLarge',
     searchParams: { toc: 'assisted-living' },
@@ -197,22 +197,22 @@ const firstRowDiscoverHomes = [
 
 const secondRowDiscoverHomes = [
   {
-    title: 'Boutique',
-    description: 'Unique communities with Activities and Services',
+    title: 'Value',
+    description: 'Communities with more services in a more residential like setting',
     image: assetPath('images/home/discover-home/studios-tile.jpeg'),
     buttonText: 'See more',
     searchParams: { size: 'medium' },
   },
   {
     title: 'Luxury',
-    description: 'High-end Senior Living',
+    description: 'Communities with high-end services in a hotel like setting',
     image: assetPath('images/home/discover-home/1-bedroom-tile.jpeg'),
     buttonText: 'See more',
     searchParams: { size: 'large', budget: 5000 },
   },
   {
     title: 'Memory Care',
-    description: 'Specialized Memory care programs available',
+    description: 'Communities that offer services for residents with cognitive decline',
     image: assetPath('images/home/discover-home/shared-rooms-tile.jpeg'),
     buttonText: 'See more',
     searchParams: { toc: 'alzheimers-care' },
@@ -228,7 +228,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
                        menuItemHrIndices={menuItemHrIndices}
                        onLocationSearch={onLocationSearch} />
       <HeroWrapper>
-        <StyledImage src={assetPath('images/home/cover-1.jpg')} alt="hero image" />
+        <StyledImage src={assetPath('images/home/cover2.jpg')} alt="hero image" />
         <SearchBoxWrapper>
           <StyledHeading level="hero" palette="white">
             Find a Home to Love
@@ -273,7 +273,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       footer={<Footer />}
     >
       <Modal closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}><Heading>Please enter a location:</Heading><SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} /></Modal>
-      <StyledSection title="Discover Favorite Homes">
+      <StyledSection title="Discover Homes Near You">
         <TwoColumnWrapper>
           {firstRowDiscoverHomesComponents}
         </TwoColumnWrapper>
@@ -283,20 +283,20 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       </StyledSection>
       <br />
       <StyledHr />
-      <StyledSection title="Meet others we've helped">
+      <StyledSection title="Meet Families We’ve Helped">
         <ThreeColumnWrapper>
           <MeetOthersTile
-            image={assetPath('images/home/meet-others/female1-tile.jpeg')}
+            image={assetPath('images/home/meet-others/Sharon.jpg')}
             title="Sharon T."
-            description="“I felt like Seniorly was a lifesaver! I was daunted at the prospect of going through so many possibilities to find the right fit for my mom in such a short time, while taking care of so many other things that need attending as we deal with the aftermath of her stroke.”"
+            description="“Seniorly was a lifesaver when I was trying to find the right fit for my mom and also take care of the many other things happening following her stroke.”"
           />
           <MeetOthersTile
-            image={assetPath('images/home/meet-others/female2-tile.jpeg')}
+            image={assetPath('images/home/meet-others/Kathy.jpg')}
             title="Kathy O."
-            description="It’s such a wonderful comfort to be able to view the pictures, video and information on the Seniorly website. The Seniorly staff is also responsive, kind and compassionate. Thank you for caring about this community and the needs of future generations!”"
+            description="“It’s such a wonderful comfort to view pictures, videos and information on the Seniorly website. The Seniorly staff is also responsive, kind and compassionate.”"
           />
           <MeetOthersTile
-            image={assetPath('images/home/meet-others/female3-tile.jpeg')}
+            image={assetPath('images/home/meet-others/Henry.jpg')}
             title="Henry W."
             description="“We were lucky enough to find a great place for my father-in-law. Seniorly is a really helpful website, very helpful and informative. Thank you so much for what you do.”"
           />
@@ -336,33 +336,38 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
               <Heading palette="white">CCRC / Life Plan</Heading>
             </ImageOverlayContentTile>
           </Link>
+          <Link to="/resources">
+            <ImageOverlayContentTile image={assetPath('images/home/useful-info/more-resources.jpeg')}>
+              <Heading palette="white">More Resources</Heading>
+            </ImageOverlayContentTile>
+          </Link>
         </UIColumnWrapper>
       </StyledSection>
       <StyledHr />
-      <StyledSection title="Most searched cities">
+      <StyledSection title="Most Searched Cities">
         <MSCColumnWrapper>
           <Link to="/assisted-living/california/san-francisco">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanFrancisco.jpeg')}>
               <Heading palette="white" level="subtitle">San Francisco, CA</Heading>
-              <Block palette="white">200+ communities</Block>
+              <Block palette="white">95+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/assisted-living/california/los-angeles">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/LosAngeles.jpeg')}>
               <Heading palette="white" level="subtitle">Los Angeles, CA</Heading>
-              <Block palette="white">75+ communities</Block>
+              <Block palette="white">105+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/assisted-living/california/san-diego">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanDiego.jpeg')}>
               <Heading palette="white" level="subtitle">San Diego, CA</Heading>
-              <Block palette="white">100+ communities</Block>
+              <Block palette="white">75+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/assisted-living/texas/dallas">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/Dallas.jpeg')}>
               <Heading palette="white" level="subtitle">Dallas, TX</Heading>
-              <Block palette="white">120+ communities</Block>
+              <Block palette="white">90+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/assisted-living/texas/houston">
@@ -380,13 +385,13 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
           <Link to="/assisted-living/florida/orlando">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/Orlando.jpeg')}>
               <Heading palette="white" level="subtitle">Orlando, FL</Heading>
-              <Block palette="white">130+ communities</Block>
+              <Block palette="white">60+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
           <Link to="/assisted-living/florida/miami">
             <ImageOverlayContentTile size="small" image={assetPath('images/cities/Miami.jpeg')}>
               <Heading palette="white" level="subtitle">Miami, FL</Heading>
-              <Block palette="white">80+ communities</Block>
+              <Block palette="white">150+ communities</Block>
             </ImageOverlayContentTile>
           </Link>
         </MSCColumnWrapper>
