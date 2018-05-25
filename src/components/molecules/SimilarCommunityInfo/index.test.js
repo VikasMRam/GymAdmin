@@ -8,6 +8,7 @@ const similarProperty = {
   mainImage: 'foo',
   startingRate: 4500,
   description: 'description',
+  addressString: '601 Laguna Street, San Francisco, CA 94102',
   reviewsValue: 4.5,
   numReviews: 4,
   webViewInfo: {
@@ -27,13 +28,15 @@ describe('SimilarCommunityInfo', () => {
   it('renders similarProperty', () => {
     const wrapper = wrap();
     expect(wrapper.childAt(0).contains('Rhoda Goldman Plaza')).toBe(true);
+    expect(wrapper.childAt(1).contains('601 Laguna Street, San Francisco, CA 94102')).toBe(true);
     expect(wrapper
-      .childAt(1)
+      .childAt(2)
       .childAt(0)
-      .html()).toEqual('<div>$4500 per month</div>');
-    expect(wrapper.childAt(2).childAt(0).html()).toEqual('<div>A, B</div>');
-    expect(wrapper.childAt(2).childAt(1).html()).toEqual('<div>Floor Plans: Suite, One Bedroom</div>');
-    expect(wrapper.childAt(3).contains('description')).toBe(true);
+      .childAt(0)
+      .html()).toEqual('<span>$4,500</span>');
+    expect(wrapper.childAt(3).contains('A, B')).toBe(true);
+    expect(wrapper.childAt(4).contains('Suite, One Bedroom')).toBe(true);
+    expect(wrapper.childAt(5).contains('description')).toBe(true);
 
     // expect(wrapper.find('Rating[size="medium"]')).toHaveLength(1);
   });
