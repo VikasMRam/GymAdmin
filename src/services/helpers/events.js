@@ -36,7 +36,7 @@ export default class SlyEvent {
     };
 
     if (isDev) {
-      console.info('EVENT pageview', path);
+      console.info('EVENT pageview', uri);
     } else {
       fetch(`${eventServerUrl}?${stringify(se)}`);
       ReactGA.pageview(uri);
