@@ -7,6 +7,7 @@ import Dotdotdot from 'react-dotdotdot';
 import { size } from 'sly/components/themes';
 import { Heading, Block } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
+import NumberFormat from 'react-number-format';
 
 const clamp = css`
   display: block;
@@ -69,8 +70,10 @@ export default class SimilarCommunityInfo extends Component {
   renderRate({ startingRate }) {
     if (!startingRate) return null;
     return (
+
       <Rate>
-        ${startingRate} per month
+        <NumberFormat value={startingRate} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+        {' per month.'}
       </Rate>
     );
   }
@@ -80,13 +83,13 @@ export default class SimilarCommunityInfo extends Component {
       return (
         <span>
           <StyledRating value={reviewsValue || 0} size="regular" />
-          {numReviews }
+          {' '}{numReviews }
         </span>
       );
     }
     return (
       <span>
-        {'Not Yet Rated'}
+        {' Not Yet Rated'}
       </span>
     );
   }

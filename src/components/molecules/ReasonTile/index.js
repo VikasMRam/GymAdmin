@@ -45,6 +45,8 @@ export const Wrapper = styled(Link)`
 
 export const WrappedImage = styled(Image)`
   width: 100%;
+  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border-bottom: 0;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('picture', 'regular', 'width')};
