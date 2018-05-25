@@ -19,25 +19,27 @@ export default class SlyEvent {
   sid = cookie.load('sly_sid');
   ga = null;
 
-  sendPageView(path) {
+  sendPageView(path, search='') {
     if (isServer) {
       return;
     }
 
+    const uri = `${path}${search}`;
+
     const se = {
       a: 'view',
       c: path,
-      p: path,
+      p: uri,
       u: this.uuid,
       s: this.sid,
       t: Date.now(),
     };
 
     if (isDev) {
-      console.info('EVENT pageview', path, se);
+      console.info('EVENT pageview', path);
     } else {
       fetch(`${eventServerUrl}?${stringify(se)}`);
-      ReactGA.pageview(path);
+      ReactGA.pageview(uri);
     }
   }
 

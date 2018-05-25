@@ -27,7 +27,8 @@ class ServerStateComponent extends Component {
     const { match, location } = this.props;
 
     if(isBrowser) {
-      SlyEvent.getInstance().sendPageView(location.pathname);
+      const { pathname, search } = location;
+      SlyEvent.getInstance().sendPageView(`${pathname}${search}`);
     }
 
     if(!hasServerState) {
@@ -50,7 +51,8 @@ class ServerStateComponent extends Component {
       fetchData(nextProps);
       window && window.scrollTo(0,0);
       const { match, location } = nextProps;
-      SlyEvent.getInstance().sendPageView(location.pathname);
+      const { pathname, search } = location;
+      SlyEvent.getInstance().sendPageView(`${pathname}${search}`);
 
       if (match.params && match.params.city && typeof match.params.communitySlug === 'undefined') {
         //This is a filtered search request send
