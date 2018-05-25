@@ -13,7 +13,7 @@ const FullWrapper = styled.div`
   background-color: ${palette('white', 0)};
   width: 100%;
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
-  z-index: ${key('zIndexes.header')};
+  z-index: ${key('zIndexes.stickySections')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;

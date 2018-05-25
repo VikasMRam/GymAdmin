@@ -17,7 +17,7 @@ const StyledNav = styled.nav`
   transition: transform ${ifProp('visible', key('transitions.slow.out'), key('transitions.slow.in'))};
   position: fixed;
   top: 0;
-  z-index: ${key('zIndexes.header')};
+  z-index: ${key('zIndexes.stickySections')};
 
   ol {
     width: 100%;
