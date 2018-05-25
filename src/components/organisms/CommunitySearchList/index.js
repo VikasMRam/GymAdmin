@@ -13,9 +13,6 @@ import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 
 import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
 
-const SimilarCommunityTileDiv = styled.div`
-  margin-bottom: ${size('spacing.large')};
-`;
 const CommunityFilterBarWrapper = styled.div`
   display: none;
 
@@ -25,6 +22,7 @@ const CommunityFilterBarWrapper = styled.div`
 `;
 const StyledLink = styled(Link)`
   display: block;
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const getPaginationData = (requestMeta) => ({
@@ -57,11 +55,9 @@ export default class CommunitySearchList extends Component {
     const components = communityList.map((similarProperty) => {
       return (
         <StyledLink key={similarProperty.id} to={similarProperty.url}>
-          <SimilarCommunityTileDiv>
-            <SimilarCommunityTile
-              similarProperty={similarProperty}
-            />
-          </SimilarCommunityTileDiv>
+          <SimilarCommunityTile
+            similarProperty={similarProperty}
+          />
         </StyledLink>
       );
     });

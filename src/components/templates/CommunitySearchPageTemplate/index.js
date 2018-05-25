@@ -9,20 +9,23 @@ import DefaultHeaderTemplate from 'sly/components/templates/DefaultHeaderTemplat
 import Footer from 'sly/components/organisms/Footer';
 
 const TwoColumnWrapper = styled.div`
-  display: flex;
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: flex;
+  }
 `;
 
 const MainWrapper = styled.section`
-  flex: 1;
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    flex: 1;
+  }
 `;
 
 const ColumnWrapper = styled.aside`
-  width: ${size('layout.sideColumnSmall')};
   display: none;
-
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
     margin-right: ${size('spacing.xLarge')};
+    width: ${size('layout.sideColumnSmall')};
   }
 `;
 

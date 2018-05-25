@@ -1,97 +1,125 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
 import Dotdotdot from 'react-dotdotdot';
 
 import { size } from 'sly/components/themes';
+import { Heading, Block } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
 
-const SimilarCommunityNameDiv = styled.div`
-  font-size: ${size('text.subtitle')};
-  font-weight: bold;
+const clamp = css`
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 `;
 
-const SimilarCommunityPriceRatingDiv = styled.div`
-  display: flex;
+const Wrapper = styled.div`
   color: ${palette('slate', 0)};
   font-size: ${size('text.body')};
-  margin-bottom:${size('spacing.regular')}
+  box-sizing: border-box;
+  min-width: 0;
+  padding: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: 0;
+    padding-top: ${size('spacing.regular')};
+  }
 `;
 
-const SimilarCommunityRatingDiv = styled.div`
+const StyledHeading = styled(Heading)`
+  ${clamp};
+`;
+
+const RatingWrapper = styled.div`
   display: flex;
-  margin-left: ${size('spacing.xLarge')};
+  margin-bottom: ${size('spacing.regular')};
+  > * {
+    ${clamp};
+    width: unset;
+  }
 `;
 
-const SimilarCommunityNumberReviewDiv = styled.div`
-  margin-left: ${size('spacing.small')};
+const Rate = styled.span`
+  margin-right: ${size('spacing.regular')};
 `;
 
-const CareFloorPlanDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  color: ${palette('slate', 0)}
-`;
-const SimilarCommunityDescDiv = styled.div`
-  display: flex;
-  color: ${palette('grayscale', 0)};
-  margin-top:${size('spacing.regular')}
+const StyledRating = styled(Rating)`
+  display: inline-flex;
+  vertical-align: top;
 `;
 
-const SimilarCommunityInfo = ({ similarProperty }) => {
-  const {
-    name,
-    startingRate,
-    reviewsValue,
-    numReviews,
-    description,
-    webViewInfo,
-  } = similarProperty;
-  const {
-    firstLineValue,
-    secondLineValue,
-  } = webViewInfo;
+const ClampedLine = styled.div`
+  ${clamp};
+`;
 
-  // TODO : Get the following values from API Response
-  return (
-    <div>
-      <SimilarCommunityNameDiv>
-        <Dotdotdot clamp={1}>{name}</Dotdotdot>
-      </SimilarCommunityNameDiv>
-      <SimilarCommunityPriceRatingDiv>
-        {
-          (startingRate && startingRate > 0) ? (<Dotdotdot clamp={1}>${startingRate} per month</Dotdotdot>) : null
-        }
-        {
-          (numReviews && numReviews > 0) ? (
-            <SimilarCommunityRatingDiv>
-              <Rating value={reviewsValue} size="regular" />
-              {numReviews > 0 && (
-                <SimilarCommunityNumberReviewDiv>
-                  {numReviews}
-                </SimilarCommunityNumberReviewDiv>
-              )}
-            </SimilarCommunityRatingDiv>) : (
-            <SimilarCommunityRatingDiv>
-              <Rating value={0} size="regular" />
-              (No ratings)
-            </SimilarCommunityRatingDiv>)
-        }
-      </SimilarCommunityPriceRatingDiv>
-      <CareFloorPlanDiv>
-        <Dotdotdot clamp={1}>{firstLineValue}</Dotdotdot>
-        <Dotdotdot clamp={1}>Floor Plans: {secondLineValue}</Dotdotdot>
-      </CareFloorPlanDiv>
-      <SimilarCommunityDescDiv>
-        <Dotdotdot clamp={2}>{description}</Dotdotdot>
-      </SimilarCommunityDescDiv>
-    </div>
-  );
-};
+const ClampedBlock = styled.div`
+  color: ${palette(0)}; 
+  font-size: ${size('text.caption')};
+  margin-top: ${size('spacing.regular')};
+`;
 
-SimilarCommunityInfo.propTypes = {
-  similarProperty: PropTypes.object.isRequired,
-};
+export default class SimilarCommunityInfo extends Component {
+  static propTypes = {
+    similarProperty: PropTypes.object.isRequired,
+  };
 
-export default SimilarCommunityInfo;
+  renderRate({ startingRate }){
+    if (!startingRate) return null;
+    return (
+      <Rate>
+        ${startingRate} per month
+      </Rate>
+    );
+  }
+
+  renderReviews({ numReviews, reviewsValue }) {
+    return (
+      <span>
+        <StyledRating value={reviewsValue || 0} size="regular" />
+        {' '}{numReviews || '(No ratings)'}
+      </span>
+    ); 
+  }
+
+  render() {
+    const { similarProperty: community, ...props } = this.props;
+
+    const {
+      name,
+      startingRate,
+      reviewsValue,
+      numReviews,
+      description,
+      webViewInfo,
+    } = community;
+
+    const {
+      firstLineValue,
+      secondLineValue,
+    } = webViewInfo;
+
+    // TODO : Get the following values from API Response
+    return (
+      <Wrapper {...props}>
+        <StyledHeading level='subtitle'>{name}</StyledHeading>
+        <RatingWrapper>
+          {this.renderRate(community)}
+          {this.renderReviews(community)}
+        </RatingWrapper>
+
+        <ClampedLine>{firstLineValue}</ClampedLine>
+
+        <ClampedLine>Floor Plans: {secondLineValue}</ClampedLine>
+
+        <ClampedBlock palette="grayscale">
+          <Dotdotdot clamp={2}>
+            {description}
+          </Dotdotdot>
+        </ClampedBlock>
+      </Wrapper>
+    );
+  }
+}

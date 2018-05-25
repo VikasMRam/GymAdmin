@@ -41,7 +41,7 @@ const Star = styled.div`
   position: relative;
 `;
 
-const Rating = ({ palette, value, size }) => {
+const Rating = ({ palette, value, size, ...props }) => {
   // TODO: fix hardcoded stroke size in svg
   const stars = times(5, i => (
     <Star key={`star${i}`}>
@@ -59,7 +59,7 @@ const Rating = ({ palette, value, size }) => {
     </Star>
   ));
 
-  return <Wrapper>{stars}</Wrapper>;
+  return <Wrapper {...props}>{stars}</Wrapper>;
 };
 
 Rating.propTypes = {
