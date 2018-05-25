@@ -68,7 +68,7 @@ const SearchSuggestionsWrapper = styled.div`
 
 // TODO: put this into parent and
 const SearchSuggestions = styled.div`
-  z-index: ${key('zIndexes.header')};
+  z-index: ${key('zIndexes.searchSuggestions')};
   position: absolute;
   top: ${size('header.menu.position.top.laptopLarge')};
   left: 0;

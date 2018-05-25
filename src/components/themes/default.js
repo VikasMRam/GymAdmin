@@ -263,6 +263,7 @@ theme.zIndexes = {
   },
   stickySections: 10000,
   header: 10001,
+  searchSuggestions: 10002,
 };
 
 export default theme;
