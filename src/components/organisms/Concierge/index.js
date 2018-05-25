@@ -49,7 +49,7 @@ export default class Concierge extends Component {
     return (
       <Wrapper className={className}>
         {callbackRequested && (
-          <Thankyou community={community} />
+          <Thankyou community={community} onClose={concierge.onClose} />
         )}
         {!callbackRequested && (
           <ConversionFormContainer

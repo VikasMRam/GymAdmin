@@ -12,6 +12,7 @@ import setGlobalStyles from './themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
+import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
@@ -53,6 +54,10 @@ export default class App extends Component {
       exact: true,
     },
     {
+      path: `/:toc(${careTypes})/:state`,
+      component: StateSearchPageContainer,
+    },
+    {
       path: '/',
       component: HomePageContainer,
       exact: true,
@@ -64,9 +69,8 @@ export default class App extends Component {
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <Helmet titleTemplate="%s | Seniorly">
-          <title>Home</title>
-
-          <meta name="description" content="The Senior Living Marketplace" />
+          <title>Find Local Senior Housing & Senior Care Services</title>
+          <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best Senior Home by comparing pricing, availabilities, and amenities with Seniorly!" />
           <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0"

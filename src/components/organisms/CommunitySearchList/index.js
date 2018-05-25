@@ -11,7 +11,7 @@ import Pagination from 'sly/components/molecules/Pagination';
 import Heading from 'sly/components/atoms/Heading';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 
-import { getBreadCrumbsForCity } from 'sly/services/helpers/url';
+import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
 
 const SimilarCommunityTileDiv = styled.div`
   margin-bottom: ${size('spacing.large')};
@@ -34,6 +34,7 @@ export default class CommunitySearchList extends Component {
 
   onPageChange = (page) => {
     const { onParamsChange } = this.props;
+    console.log('Seeing page change',page);
     onParamsChange({
       changedParams: { 'page-number': page },
     });
@@ -63,7 +64,7 @@ export default class CommunitySearchList extends Component {
         <CommunityFilterBar searchParams={searchParams} {...props} />
         {components}
         <Pagination onChange={this.onPageChange} current={current} total={total} />
-        <BreadCrumb items={getBreadCrumbsForCity(searchParams)} />
+        <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
       </SectionWrapper>
     );
   }
