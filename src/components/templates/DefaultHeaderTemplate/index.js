@@ -7,6 +7,7 @@ const headerItems = [
   { name: 'Resources', url: '/resources' },
   // { name: 'Moving Center', url: '#' },
   // { name: 'News', url: '#' },
+  { name: 'Moving Center', url: '/resources/tags/moving+center' },
   { name: 'List Your Property', url: '/providers' },
   { name: 'Our History', url: '/about' },
   { name: 'Sign in', url: '/signin' },
