@@ -141,12 +141,13 @@ export const filterSearchParams = params =>
     return cumul;
   }, {});
 
+const validFilter = x => typeof x === 'number' || x === undefined;
 export const filterLinkPath = (currentFilters, nextFilters = {}) => {
   let pageFilters = {
     'page-number': currentFilters['page-number'] || null,
     'page-size': currentFilters['page-size'] || null,
   };
-  if (nextFilters['page-number'] || nextFilters['page-size']) {
+  if (validFilter(nextFilters['page-number']) || validFilter(nextFilters['page-size'])) {
     pageFilters = {
       'page-number': nextFilters['page-number'],
       'page-size': nextFilters['page-size'],
