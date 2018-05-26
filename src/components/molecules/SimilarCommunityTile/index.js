@@ -22,9 +22,12 @@ const Wrapper = styled.div`
   opacity ${key('transitions.default')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    box-sizing: content-box;
+    height: ${size('tile.regular.height')};
+    overflow: hidden;
+
     padding: ${size('spacing.large')};
     flex-direction: row;
-    width: auto;
   }
 
   // because we are passing aspectRatio prop, we have a relative position
@@ -55,7 +58,6 @@ const ImageWrapper = styled(Image)`
     width: ${size('tile.regular.width')};
     height: ${size('tile.regular.height')};
     padding-top: unset;
-    flex-shrink: 1;
 
     > img {
       position: relative;
