@@ -22,9 +22,12 @@ const Wrapper = styled.div`
   opacity ${key('transitions.default')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    box-sizing: content-box;
+    height: ${size('tile.regular.height')};
+    overflow: hidden;
+
     padding: ${size('spacing.large')};
     flex-direction: row;
-    width: auto;
   }
 
   // because we are passing aspectRatio prop, we have a relative position
@@ -42,11 +45,21 @@ const Wrapper = styled.div`
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')}
       ${palette('grayscale', 1, true)};
     opacity: 0.75;
-    background: ${palette('white', 2)};
+    background: ${palette('grayscale', 3)};
 
     Button {
       display: initial;
     }
+  }
+`;
+
+const StyledLazy = styled(Lazy)`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    min-width: 0;
+    flex-shrink: 0;
+    background: ${palette('grayscale', 3)};
+    width: ${size('tile.regular.width')};
+    height: ${size('tile.regular.height')};
   }
 `;
 
@@ -55,7 +68,6 @@ const ImageWrapper = styled(Image)`
     width: ${size('tile.regular.width')};
     height: ${size('tile.regular.height')};
     padding-top: unset;
-    flex-shrink: 1;
 
     > img {
       position: relative;
@@ -69,6 +81,7 @@ const ImageWrapper = styled(Image)`
 const Info = styled(SimilarCommunityInfo)`
   margin-top: ${size('spacing.regular')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    flex-grow: 1;
     margin-top: 0;
     margin-left: ${size('spacing.large')};
   }
@@ -79,11 +92,11 @@ const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
 
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
-      {/*<Lazy component="div" ltIE9>*/}
-      <ImageWrapper src={imageUrl || defaultImage} aspectRatio='16:9'>
-        <Button onClick={onClick}>See More Details</Button>
-      </ImageWrapper>
-      {/*</Lazy>*/}
+      <StyledLazy component="div" ltIE9>
+        <ImageWrapper src={imageUrl || defaultImage} aspectRatio='16:9'>
+          <Button onClick={onClick}>See More Details</Button>
+        </ImageWrapper>
+      </StyledLazy>
       <Info similarProperty={similarProperty} />
     </Wrapper>
   );

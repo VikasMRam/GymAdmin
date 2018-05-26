@@ -56,7 +56,7 @@ const ClampedLine = styled.div`
   ${clamp};
 `;
 
-const ClampedBlock = styled.div`
+const Description = styled.div`
   color: ${palette(0)}; 
   font-size: ${size('text.caption')};
   margin-top: ${size('spacing.small')};
@@ -128,11 +128,11 @@ export default class SimilarCommunityInfo extends Component {
 
         <ClampedLine>Floor Plans: {secondLineValue}</ClampedLine>
 
-        <ClampedBlock palette="grayscale">
+        <Description palette="grayscale">
           <Dotdotdot clamp={2}>
             {description}
           </Dotdotdot>
-        </ClampedBlock>
+        </Description>
       </Wrapper>
     );
   }
