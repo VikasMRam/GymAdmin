@@ -33,7 +33,7 @@ describe('GatheredReviewRatings', () => {
       .childAt(1)
       .childAt(0)
       .dive()
-      .text()).toEqual('Yelp');
+      .text()).toContain('Yelp');
     expect(reviewDiv.childAt(1).find('[href="foo"]')).toHaveLength(1);
   });
 });
