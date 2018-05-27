@@ -17,9 +17,7 @@ export default class communitySummary extends React.Component {
     amenityScore: string,
     communityHighlights: arrayOf(string),
     startingRate: number,
-    reviews: arrayOf(shape({
-      value: number,
-    })),
+    reviewsValue : number,
     innerRef: object,
     pricingAndFloorPlansRef: object.isRequired,
     amenitiesAndFeaturesRef: object.isRequired,
@@ -43,7 +41,7 @@ export default class communitySummary extends React.Component {
 
   render() {
     const {
-      twilioNumber, phoneNumber, user, amenityScore, communityHighlights, startingRate, reviews, innerRef,
+      twilioNumber, phoneNumber, user, amenityScore, communityHighlights, startingRate, reviewsValue, innerRef,
     } = this.props;
     const highlights = [];
     let receptionNumber = phoneNumber;
@@ -124,23 +122,17 @@ export default class communitySummary extends React.Component {
         </span>
       ));
     }
-    if (reviews) {
-      let totalRating = 0;
-      reviews.forEach((review) => {
-        totalRating += review.value;
-      });
-      const avgReviews = reviews.length > 0 ? totalRating / reviews.length : 0;
-      if (avgReviews > 0) {
-        highlights.push((
-          <Link
-            href={`#${this.constructor.sectionIdMaps.reviews}`}
-            onClick={e => this.constructor.scrollToSection(e, this.props.communityReviewsRef)}
-          >
-            Rating {avgReviews.toFixed(1).replace(/\.0+$/, '')}-Star Average
-          </Link>
-        ));
-      }
+    if (reviewsValue > 0) {
+      highlights.push((
+        <Link
+          href={`#${this.constructor.sectionIdMaps.reviews}`}
+          onClick={e => this.constructor.scrollToSection(e, this.props.communityReviewsRef)}
+        >
+          Rating {reviewsValue.toFixed(1).replace(/\.0+$/, '')}-Star Average
+        </Link>
+      ));
     }
+
 
     return (
       <article ref={innerRef}>

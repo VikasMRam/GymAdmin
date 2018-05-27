@@ -29,6 +29,7 @@ const menuItems = [
   { name: 'Home', url: '/' },
   { name: 'Resources', url: '/resources' },
   { name: 'Assisted Living', url: '/assisted-living' },
+  { name: 'Moving Center', url: '/resources/tags/moving+center' },
   { name: "Alzheimer's Care", url: '/alzheimers-care' },
   { name: 'Respite Care', url: '/respite-care' },
   { name: 'Our History', url: '/about' },
@@ -37,7 +38,7 @@ const menuItems = [
   { name: 'List on Seniorly', url: '/providers' },
   // { name: 'Sign Out', url: '#' },
 ];
-const menuItemHrIndices = [6, 10];
+const menuItemHrIndices = [7, 10];
 
 const HeroWrapper = styled.div`
   position: relative;

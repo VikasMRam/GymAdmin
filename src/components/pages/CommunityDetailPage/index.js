@@ -143,7 +143,7 @@ export default class CommunityDetailPage extends Component {
     // TODO: move this to a container for PropertyReviews handling posts
     const onLeaveReview = () => {};
     // TODO: move this to a container PricingAndAvailability for handling bookings
-    const { hasSlyReviews, hasWebReviews } = propRatings;
+    const { hasSlyReviews, hasWebReviews, reviewsValue} = propRatings;
     const ratingsArray = propRatings.ratingsArray || [];
     const reviewsFinal = reviews || [];
     const serviceHighlightsFinal = serviceHighlights || [];
@@ -224,6 +224,7 @@ export default class CommunityDetailPage extends Component {
             amenitiesAndFeaturesRef={this.amenitiesAndFeaturesRef}
             communityReviewsRef={this.communityReviewsRef}
             twilioNumber={twilioNumber}
+            reviewsValue={reviewsValue}
             phoneNumber={communityPhone}
             user={user}
             amenityScore={rgsAux.amenityScore}
