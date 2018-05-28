@@ -70,6 +70,9 @@ app.use(async (req, res, next) => {
     set_uuid = true;
   }
 
+  res.header('Cache-Control', 'max-age=0, private, must-revalidate');
+  res.header('Cache-Control', 'no-cache="set-cookie"');
+
   if (req.headers.cookie) {
     api.setCookie(req.headers.cookie);
   } else if (set_uuid){
