@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { object, number, func, bool } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
-import { getDetail, getHomePageMediaGalleryCurrentSlideIndex, isHomePageMediaGalleryFullscreenActive } from 'sly/store/selectors';
+import {
+  getDetail, getHomePageMediaGalleryCurrentSlideIndex, isHomePageMediaGalleryFullscreenActive,
+  isCommunityDetailPageStickyHeaderActive,
+} from 'sly/store/selectors';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
-import { gotoSlide, toggleFullscreenMediaGallery } from 'sly/store/communityDetailPage/actions';
+import { gotoSlide, toggleFullscreenMediaGallery, toggleStickyHeader } from 'sly/store/communityDetailPage/actions';
 
 import ErrorPage from 'sly/components/pages/Error';
 
@@ -20,6 +23,8 @@ class CommunityDetailPageContainer extends Component {
     isMediaGalleryFullscreenActive: bool,
     gotoMediaGallerySlide: func,
     toggleFullscreenMediaGallery: func,
+    isStickyHeaderVisible: bool,
+    toggleStickyHeader: func,
   };
 
   handleMediaGallerySlideChange = (slideIndex) => {
@@ -48,9 +53,14 @@ class CommunityDetailPageContainer extends Component {
     history.push(path);
   };
 
+  handleToggleStickyHeader = () => {
+    const { toggleStickyHeader } = this.props;
+    toggleStickyHeader();
+  };
+
   render() {
     const {
-      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, errorCode, history,
+      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, errorCode, history, isStickyHeaderVisible,
     } = this.props;
 
     if (errorCode) {
@@ -77,6 +87,8 @@ class CommunityDetailPageContainer extends Component {
         onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
         onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
         isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
+        isStickyHeaderVisible={isStickyHeaderVisible}
+        onToggleStickyHeader={this.handleToggleStickyHeader}
       />
     );
   }
@@ -87,16 +99,19 @@ const mapStateToProps = (state, { match }) => {
   const communitySlug = getCommunitySlug(match);
   const mediaGallerySlideIndex = getHomePageMediaGalleryCurrentSlideIndex(state);
   const isMediaGalleryFullscreenActive = isHomePageMediaGalleryFullscreenActive(state);
+  const isStickyHeaderVisible = isCommunityDetailPageStickyHeaderActive(state);
   return {
     community: getDetail(state, 'community', communitySlug),
     mediaGallerySlideIndex,
     isMediaGalleryFullscreenActive,
+    isStickyHeaderVisible,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     gotoMediaGallerySlide: slideIndex => dispatch(gotoSlide(slideIndex)),
     toggleFullscreenMediaGallery: () => dispatch(toggleFullscreenMediaGallery()),
+    toggleStickyHeader: () => dispatch(toggleStickyHeader()),
   };
 };
 

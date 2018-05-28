@@ -1,5 +1,6 @@
 export const COMMUNITY_DETAIL_GOTO_MEDIA_GALLERY_SLIDE = 'COMMUNITY_DETAIL_GOTO_MEDIA_GALLERY_SLIDE';
 export const COMMUNITY_DETAIL_TOGGLE_FULLSCREEN_MEDIA_GALLERY = 'COMMUNITY_DETAIL_TOGGLE_FULLSCREEN_MEDIA_GALLERY';
+export const COMMUNITY_DETAIL_STICKY_HEADER_VISIBLE = 'COMMUNITY_DETAIL_STICKY_HEADER_VISIBLE';
 
 export const gotoSlide = (slideIndex = 0) => ({
   type: COMMUNITY_DETAIL_GOTO_MEDIA_GALLERY_SLIDE,
@@ -10,4 +11,8 @@ export const gotoSlide = (slideIndex = 0) => ({
 
 export const toggleFullscreenMediaGallery = () => ({
   type: COMMUNITY_DETAIL_TOGGLE_FULLSCREEN_MEDIA_GALLERY,
+});
+
+export const toggleStickyHeader = () => ({
+  type: COMMUNITY_DETAIL_STICKY_HEADER_VISIBLE,
 });
