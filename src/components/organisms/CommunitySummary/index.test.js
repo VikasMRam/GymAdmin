@@ -9,6 +9,7 @@ import ListItem from 'sly/components/molecules/ListItem';
 
 const {
   propInfo,
+  propRatings,
   startingRate,
   rgsAux,
   twilioNumber,
@@ -19,6 +20,9 @@ const {
   communityHighlights,
   communityPhone,
 } = propInfo;
+const {
+  reviewsValue
+} = propRatings
 
 const communityReviewsRef = React.createRef();
 const pricingAndFloorPlansRef = React.createRef();
@@ -52,7 +56,7 @@ const testCommunityHighlights = (wrapper) => {
 };
 const testReviews = (wrapper) => {
   expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.reviews}` }).length).toBeGreaterThan(0);
-  expect(wrapper.text()).toContain('Rating 2.5-Star Average');
+  expect(wrapper.text()).toContain('Rating 4.1-Star Average');
 };
 
 it('renders twilioNumber', () => {
@@ -99,7 +103,7 @@ it('renders communityHighlights', () => {
 
 it('renders reviews', () => {
   const wrapper = wrap({
-    reviews, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
+    reviewsValue, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
   });
   testReviews(wrapper);
 });
@@ -112,7 +116,7 @@ it('renders all properties', () => {
     amenityScore: rgsAux.amenityScore,
     startingRate,
     communityHighlights,
-    reviews,
+    reviewsValue,
     communityReviewsRef,
     pricingAndFloorPlansRef,
     amenitiesAndFeaturesRef,

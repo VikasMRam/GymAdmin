@@ -38,3 +38,6 @@ export const getHomePageMediaGalleryCurrentSlideIndex = state =>
 
 export const isHomePageMediaGalleryFullscreenActive = state =>
   communityDetailPage.isMediaGalleryFullscreenActive(state.communityDetailPage);
+
+export const isCommunityDetailPageStickyHeaderActive = state =>
+  communityDetailPage.isStickyHeaderVisible(state.communityDetailPage);

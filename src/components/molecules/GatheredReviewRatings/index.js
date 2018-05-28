@@ -15,6 +15,10 @@ const RatingsDiv = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
+const StartNumDiv = styled.div`
+  display: flex;
+`;
+
 export const ReviewDiv = styled.div`
   padding-top: ${size('spacing.large')};
   padding-right: ${size('spacing.large')};
@@ -64,10 +68,13 @@ export default class GatheredReviewRatings extends Component {
     const ratings = reviewRatings.map((review, i) => {
       return (
         <ReviewDiv key={`${review.name}_${i}`}>
-          <Rating value={review.avgRating} />
+          <StartNumDiv>
+            <Rating value={review.avgRating} />
+            {' ('}{review.numReviews }{')'}
+          </StartNumDiv>
           <ReviewProviderDiv>
             <Link href={review.reviewsUrl} target="_blank">
-              {review.name}
+              {review.name}&#174;
             </Link>
           </ReviewProviderDiv>
         </ReviewDiv>

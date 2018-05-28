@@ -65,6 +65,7 @@ const groups = {
   ],
   Resources: [
     { name: 'Articles', url: '/resources' },
+    { name: 'Moving Center', url: '/resources/tags/moving+center' },
     { name: 'Assisted Living', url: '/assisted-living' },
     { name: 'Independent Living', url: '/assisted-living' },
     { name: 'Alzheimer\'s Care', url: '/memory-care' },
