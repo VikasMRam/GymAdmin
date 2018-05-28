@@ -9,12 +9,10 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:7.10
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
     working_directory: ~/repo
+
+    environment:
+      TEST_RESULTS: /tmp/test-results
 
     steps:
       - checkout
@@ -28,24 +26,23 @@ jobs:
 
       - run: npm install
 
-      - run: mkdir -p reports/junit
+      - run:
+          name: Setup dirs
+          command: mkdir -p $TEST_RESULTS
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package-lock.json" }}
-#      - run:
-#           name: "JavaScript Linter"
-#           command: yarn lint -- --format junit -o reports/junit/js-lint-results.xml
+#     - run:
+#         name: "JavaScript Linter"
+#         command: yarn lint -- --format junit -o "$TEST_RESULTS/js-lint-results.xml"
       # run tests!
       - run:
-           name: "JS Test Suite"
-           command: yarn jest --ci --testResultsProcessor="jest-junit"
-           environment:
-             JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+          name: "JS Test Suite"
+          command: JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml" npm test -- --ci --testResultsProcessor="jest-junit"
+
       - store_test_results:
-           path: reports/junit
+          path: /tmp/test-results
       - store_artifacts:
-           path: reports/junit
-
-
+          path: /tmp/test-results
