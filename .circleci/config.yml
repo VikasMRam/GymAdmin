@@ -56,7 +56,7 @@ jobs:
           name: Check if Sly Master Repo
           command: |
             echo $CIRCLE_PROJECT_USERNAME
-            if [[ $CIRCLE_PROJECT_USERNAME -ne "seniorly" ]]; then
+            if [[ $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
               echo "Skip doing stuff since it is a PR."
               circleci step halt
             else
