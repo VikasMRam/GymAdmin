@@ -42,15 +42,14 @@ export default class CommunityDetailPage extends Component {
     isMediaGalleryFullscreenActive: bool,
     onMediaGallerySlideChange: func,
     onMediaGalleryToggleFullscreen: func,
-  };
-
-  state = {
-    stickyHeaderVisible: false,
+    isStickyHeaderVisible: bool,
+    onToggleStickyHeader: func,
   };
 
   componentDidMount() {
+    // if page is reloaded at scroll position where sticky header should be visible, don't wait for scroll to happen
+    this.handleScroll();
     window.addEventListener('scroll', this.handleScroll);
-
   }
 
   componentWillUnmount() {
@@ -66,19 +65,14 @@ export default class CommunityDetailPage extends Component {
 
   handleScroll = () => {
     if (this.breadCrumbRef.current) {
+      const { onToggleStickyHeader, isStickyHeaderVisible } = this.props;
       const rect = this.breadCrumbRef.current.getBoundingClientRect();
       const elemTop = rect.top;
-      const elemBottom = rect.bottom;
-      const isVisible = elemTop < window.innerHeight && elemBottom >= 0;
+      const isVisible = elemTop < 0;
 
-      if (!isVisible) {
-        this.setState({
-          stickyHeaderVisible: true,
-        });
-      } else {
-        this.setState({
-          stickyHeaderVisible: false,
-        });
+      // Important: don't trigger rerender if sticky header visiblity hasn't changed
+      if (isStickyHeaderVisible !== isVisible) {
+        onToggleStickyHeader();
       }
     }
   };
@@ -96,14 +90,14 @@ export default class CommunityDetailPage extends Component {
       onMediaGallerySlideChange(matchingIndex);
       onMediaGalleryToggleFullscreen();
     }
-    let event = {action:'show',category:'images',label:this.props.communityName};
+    const event = { action: 'show', category: 'images', label: this.props.communityName };
     SlyEvent.getInstance().sendEvent(event);
   };
 
   render() {
     const {
       mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, onLocationSearch,
-      onMediaGallerySlideChange, onMediaGalleryToggleFullscreen,
+      onMediaGallerySlideChange, onMediaGalleryToggleFullscreen, isStickyHeaderVisible,
     } = this.props;
     const {
       name,
@@ -143,7 +137,7 @@ export default class CommunityDetailPage extends Component {
     // TODO: move this to a container for PropertyReviews handling posts
     const onLeaveReview = () => {};
     // TODO: move this to a container PricingAndAvailability for handling bookings
-    const { hasSlyReviews, hasWebReviews, reviewsValue} = propRatings;
+    const { hasSlyReviews, hasWebReviews, reviewsValue } = propRatings;
     const ratingsArray = propRatings.ratingsArray || [];
     const reviewsFinal = reviews || [];
     const serviceHighlightsFinal = serviceHighlights || [];
@@ -164,7 +158,7 @@ export default class CommunityDetailPage extends Component {
     // 24px or 84px (when sticky header is visible) from top TODO: figure out how to get this from styled theme sizes
     const columnContent = (
       <Sticky
-        top={this.state.stickyHeaderVisible ? 84 : 24}
+        top={isStickyHeaderVisible ? 84 : 24}
         bottomBoundary="#sticky-sidebar-boundary"
       >
         <ConciergeContainer community={community} />
@@ -197,7 +191,7 @@ export default class CommunityDetailPage extends Component {
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <CommunityStickyHeader
           items={stickyHeaderItems}
-          visible={this.state.stickyHeaderVisible}
+          visible={isStickyHeaderVisible}
         />
         <CommunityDetailPageTemplate
           column={columnContent}
