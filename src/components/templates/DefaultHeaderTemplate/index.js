@@ -25,7 +25,7 @@ const menuItems = [
   { name: 'List on Seniorly', url: '/providers' },
   // { name: 'Sign Out', url: '#' },
 ];
-const menuItemHrIndices = [7  , 10];
+const menuItemHrIndices = [7, 10];
 
 const DefaultHeaderTemplate = ({ onLocationSearch }) => (
   <HeaderContainer

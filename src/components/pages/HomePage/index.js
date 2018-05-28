@@ -7,7 +7,7 @@ import { size, assetPath } from 'sly/components/themes';
 
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
 import { Image, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
-import HeaderContainer from 'sly/containers/HeaderContainer';
+import DefaultHeaderTemplate from 'sly/components/templates/DefaultHeaderTemplate';
 import Footer from 'sly/components/organisms/Footer';
 import Modal from 'sly/components/molecules/Modal';
 import Section from 'sly/components/molecules/Section';
@@ -15,30 +15,6 @@ import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-
-const headerItems = [
-  { name: 'Resources', url: '/resources' },
-  // { name: 'Moving Center', url: '#' },
-  // { name: 'News', url: '#' },
-  { name: 'Moving Center', url: '/resources/tags/moving+center' },
-  { name: 'List Your Property', url: '/providers' },
-  { name: 'Our History', url: '/about' },
-  { name: 'Sign in', url: '/signin' },
-];
-const menuItems = [
-  { name: 'Home', url: '/' },
-  { name: 'Resources', url: '/resources' },
-  { name: 'Assisted Living', url: '/assisted-living' },
-  { name: 'Moving Center', url: '/resources/tags/moving+center' },
-  { name: "Alzheimer's Care", url: '/alzheimers-care' },
-  { name: 'Respite Care', url: '/respite-care' },
-  { name: 'Our History', url: '/about' },
-  { name: 'Contact', url: '/contact' },
-  { name: 'Careers', url: 'https://angel.co/seniorly/jobs' },
-  { name: 'List on Seniorly', url: '/providers' },
-  // { name: 'Sign Out', url: '#' },
-];
-const menuItemHrIndices = [7, 10];
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -225,10 +201,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <HeaderContainer headerItems={headerItems}
-                       menuItems={menuItems}
-                       menuItemHrIndices={menuItemHrIndices}
-                       onLocationSearch={onLocationSearch} />
+      <DefaultHeaderTemplate onLocationSearch={onLocationSearch} />
       <HeroWrapper>
         <StyledImage src={assetPath('images/home/cover2.jpg')} alt="hero image" />
         <SearchBoxWrapper>
