@@ -259,7 +259,7 @@ class SearchMap extends Component {
         center={center}
         defaultZoom={defaultZoom}
         containerElement={<MapContainerElement />}
-        onBoundsChanged={this.onBoundsChange}
+        onIdle={this.onBoundsChange}
         onMapMounted={this.onMapMounted}
       >
         {markerComponents}
