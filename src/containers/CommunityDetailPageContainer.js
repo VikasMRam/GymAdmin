@@ -68,7 +68,7 @@ class CommunityDetailPageContainer extends Component {
     }
 
     if (!community) {
-      return <div>Loading...</div>;
+      return <div></div>;
     }
 
     // If request url does not match resource url from api, perform 302 redirect

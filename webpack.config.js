@@ -157,7 +157,7 @@ const client = createConfig([
   ]),
 
   env('production', [
-    splitVendor(),
+    //splitVendor(),
     addPlugins([
       new webpack.optimize.UglifyJsPlugin({
         sourceMap: isStaging,
