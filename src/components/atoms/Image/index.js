@@ -7,7 +7,7 @@ import { assetPath } from 'sly/components/themes';
 
 const StyledImage = styled.img`
   user-select: none;
-  border-style: none;
+  border: none;
 `;
 
 const paddingTop = ({ aspectRatio }) => size('picture.proportions', aspectRatio);
