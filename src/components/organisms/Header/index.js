@@ -20,7 +20,6 @@ const HeaderWrapper = styled.nav`
 `;
 
 const SeniorlyLogoWrapper = styled.div`
-  background: red;
   display: none;
   margin-right: ${size('spacing.xLarge')};
   a {
