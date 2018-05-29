@@ -52,6 +52,7 @@ const CommunitySearchPage = ({
 }) => {
   const listSize = requestMeta['filtered-count'];
   const city = titleize(searchParams.city);
+  const toc = titleize(searchParams.toc).toLowerCase();
 
   let latitude = 0;
   let longitude = 0;
@@ -102,7 +103,7 @@ const CommunitySearchPage = ({
       >
         {!isMapView && (
           <StyledHeading>
-            {listSize} communities near {city}
+            {listSize} {toc} communities near {city}
           </StyledHeading>
         )}
         <TopWrapper>
