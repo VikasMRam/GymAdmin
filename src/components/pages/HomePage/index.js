@@ -267,7 +267,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
           />
           <MeetOthersTile
             image={assetPath('images/home/meet-others/Kathy.jpg')}
-            title="Kathy O."
+            title="Aileen H."
             description="“I was very frustrated that every time I wanted to see the price of a facility that I had to give my phone number and I would get bombarded with calls.  Your sight was the only one that allowed me to search on my own time and it listed more info than other sites.”"
           />
           <MeetOthersTile
