@@ -1,7 +1,7 @@
 import { initialState } from './selectors';
 import {
   COMMUNITY_DETAIL_GOTO_MEDIA_GALLERY_SLIDE, COMMUNITY_DETAIL_TOGGLE_FULLSCREEN_MEDIA_GALLERY,
-  COMMUNITY_DETAIL_STICKY_HEADER_VISIBLE,
+  COMMUNITY_DETAIL_TOGGLE_STICKY_HEADER,
 } from './actions';
 
 export default (state = initialState, { type, payload }) => {
@@ -16,7 +16,7 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         mediaGalleryFullscreenActive: !state.mediaGalleryFullscreenActive,
       };
-    case COMMUNITY_DETAIL_STICKY_HEADER_VISIBLE:
+    case COMMUNITY_DETAIL_TOGGLE_STICKY_HEADER:
       return {
         ...state,
         stickyHeaderVisible: !state.stickyHeaderVisible,

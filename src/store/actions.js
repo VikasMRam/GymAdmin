@@ -3,3 +3,4 @@ export * from './modal/actions';
 export * from './header/actions';
 export * from './searchBox/actions';
 export * from './communityDetailPage/actions';
+export * from './communitySearchPage/actions';

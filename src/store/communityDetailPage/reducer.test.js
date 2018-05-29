@@ -39,9 +39,9 @@ it('handles COMMUNITY_DETAIL_TOGGLE_FULLSCREEN_MEDIA_GALLERY', () => {
   expect(reducer(initialState, action)).toEqual({ ...fullscreenState });
 });
 
-it('handles COMMUNITY_DETAIL_STICKY_HEADER_VISIBLE', () => {
+it('handles COMMUNITY_DETAIL_TOGGLE_STICKY_HEADER', () => {
   const action = {
-    type: actions.COMMUNITY_DETAIL_STICKY_HEADER_VISIBLE,
+    type: actions.COMMUNITY_DETAIL_TOGGLE_STICKY_HEADER,
   };
   expect(reducer(initialState, action)).toEqual({ ...stickyHeaderState });
 });

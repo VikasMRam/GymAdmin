@@ -12,8 +12,8 @@ test('COMMUNITY_DETAIL_TOGGLE_FULLSCREEN_MEDIA_GALLERY', () => {
   }));
 });
 
-test('COMMUNITY_DETAIL_STICKY_HEADER_VISIBLE', () => {
+test('COMMUNITY_DETAIL_TOGGLE_STICKY_HEADER', () => {
   expect(actions.toggleStickyHeader()).toEqual(expect.objectContaining({
-    type: actions.COMMUNITY_DETAIL_STICKY_HEADER_VISIBLE,
+    type: actions.COMMUNITY_DETAIL_TOGGLE_STICKY_HEADER,
   }));
 });

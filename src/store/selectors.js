@@ -3,6 +3,7 @@ import * as entities from './entities/selectors';
 import * as header from './header/selectors';
 import * as searchBox from './searchBox/selectors';
 import * as communityDetailPage from './communityDetailPage/selectors';
+import * as communitySearchPage from './communitySearchPage/selectors';
 
 export const getDetail = (state, resource, id) =>
   entities.getDetail(
@@ -41,3 +42,6 @@ export const isHomePageMediaGalleryFullscreenActive = state =>
 
 export const isCommunityDetailPageStickyHeaderActive = state =>
   communityDetailPage.isStickyHeaderVisible(state.communityDetailPage);
+
+export const isCommunitySearchPageModalFilterPanelActive = state =>
+  communitySearchPage.isModalFilterPanelVisible(state.communitySearchPage);
