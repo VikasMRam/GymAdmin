@@ -39,13 +39,17 @@ const Map = compose(
 )((props) => {
   const { center, defaultZoom, children } = props;
   const { latitude, longitude } = center;
-  const { onBoundsChanged, onMapMounted } = props;
+  const {
+    onBoundsChanged, onMapMounted, onCenterChanged, onIdle,
+  } = props;
   return (
     <GoogleMap
       defaultZoom={defaultZoom}
       defaultCenter={{ lat: latitude, lng: longitude }}
       defaultOptions={mapOptions}
       onBoundsChanged={onBoundsChanged}
+      onCenterChanged={onCenterChanged}
+      onIdle={onIdle}
       ref={onMapMounted}
     >
       {children}
