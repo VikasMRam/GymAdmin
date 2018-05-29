@@ -1,0 +1,20 @@
+branch-defaults:
+  master:
+    environment: slyreact-staging
+environment-defaults:
+  slyreact-staging:
+    branch: null
+    repository: null
+global:
+  application_name: SlyReact
+  default_ec2_keyname: slynode-eb
+  default_platform: arn:aws:elasticbeanstalk:us-west-2::platform/Node.js running on
+    64bit Amazon Linux/4.4.6
+  default_region: us-west-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  sc: git
+  workspace_type: Application
