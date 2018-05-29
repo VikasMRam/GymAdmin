@@ -157,7 +157,7 @@ const StyledBlock = styled(Block)`
 const firstRowDiscoverHomes = [
   {
     title: 'Care Homes',
-    description: 'Smaller communities in a home-like setting',
+    description: 'Communities combining comfort and care',
     image: assetPath('images/home/discover-home/care-home.jpeg'),
     buttonText: 'See more',
     size: 'xLarge',
@@ -165,7 +165,7 @@ const firstRowDiscoverHomes = [
   },
   {
     title: 'Assisted Living',
-    description: 'Larger communities with more services',
+    description: 'Specializing in all of your daily care needs',
     image: assetPath('images/home/discover-home/assisted-living.jpeg'),
     buttonText: 'See more',
     size: 'xLarge',
@@ -175,22 +175,22 @@ const firstRowDiscoverHomes = [
 
 const secondRowDiscoverHomes = [
   {
-    title: 'Value',
-    description: 'Communities with more services in a more residential like setting',
+    title: 'Boutique',
+    description: 'More services in an intimate home-like setting',
     image: assetPath('images/home/discover-home/studios-tile.jpeg'),
     buttonText: 'See more',
     searchParams: { size: 'medium' },
   },
   {
     title: 'Luxury',
-    description: 'Communities with high-end services in a hotel like setting',
+    description: 'The ultimate in comfort, care and community',
     image: assetPath('images/home/discover-home/1-bedroom-tile.jpeg'),
     buttonText: 'See more',
     searchParams: { size: 'large', budget: 5000 },
   },
   {
     title: 'Memory Care',
-    description: 'Communities that offer services for residents with cognitive decline',
+    description: 'For those with Alzheimer’s, Dementia and more',
     image: assetPath('images/home/discover-home/shared-rooms-tile.jpeg'),
     buttonText: 'See more',
     searchParams: { toc: 'alzheimers-care' },
@@ -263,12 +263,12 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
           <MeetOthersTile
             image={assetPath('images/home/meet-others/Sharon.jpg')}
             title="Sharon T."
-            description="“Seniorly was a lifesaver when I was trying to find the right fit for my mom and also take care of the many other things happening following her stroke.”"
+            description="“I felt like Seniorly was a lifesaver! I was daunted at the prospect of going through so many possibilities to find the right fit for my mom in such a short time, while taking care of so many other things that need attending as we deal with the aftermath of her stroke.”"
           />
           <MeetOthersTile
             image={assetPath('images/home/meet-others/Kathy.jpg')}
             title="Kathy O."
-            description="“It’s such a wonderful comfort to view pictures, videos and information on the Seniorly website. The Seniorly staff is also responsive, kind and compassionate.”"
+            description="“I was very frustrated that every time I wanted to see the price of a facility that I had to give my phone number and I would get bombarded with calls.  Your sight was the only one that allowed me to search on my own time and it listed more info than other sites.”"
           />
           <MeetOthersTile
             image={assetPath('images/home/meet-others/Henry.jpg')}

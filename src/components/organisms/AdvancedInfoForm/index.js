@@ -20,7 +20,7 @@ const StyledButton = styled(Button)`
 const typeOfCareOptions = [
   { value: 'none', label: 'None' },
   { value: 'assisted', label: 'Assisted' },
-  { value: 'memory', label: 'Memory' },
+  { value: 'memory', label: 'Dementia' },
 ];
 
 const typeOfRoomOptions = [
