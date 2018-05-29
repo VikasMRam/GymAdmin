@@ -73,7 +73,7 @@ export default class SimilarCommunityInfo extends Component {
 
       <Rate>
         <NumberFormat value={startingRate} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-        {' per month.'}
+        {' per month'}
       </Rate>
     );
   }
