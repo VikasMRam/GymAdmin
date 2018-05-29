@@ -10,6 +10,7 @@ import header from './header/reducer';
 import searchBox from './searchBox/reducer';
 import controller from './controller/reducer';
 import communityDetailPage from './communityDetailPage/reducer';
+import communitySearchPage from './communitySearchPage/reducer';
 
 const reducers = {
   form,
@@ -22,6 +23,7 @@ const reducers = {
   searchBox,
   controller,
   communityDetailPage,
+  communitySearchPage,
 };
 
 export default combineReducers(reducers);

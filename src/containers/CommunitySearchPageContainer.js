@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { object, number, array } from 'prop-types';
+import { object, number, array, bool, func } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
 
 import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList, getListMeta } from 'sly/store/selectors';
+import { isCommunitySearchPageModalFilterPanelActive } from 'sly/store/selectors';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
+import { toggleModalFilterPanel } from 'sly/store/communitySearchPage/actions';
 
 import {
   filterLinkPath,
@@ -22,6 +24,8 @@ class CommunitySearchPageContainer extends Component {
     communityList: array.isRequired,
     requestMeta: object.isRequired,
     errorCode: number,
+    isModalFilterPanelVisible: bool,
+    toggleModalFilterPanel: func,
   }
 
   // TODO Define Search Parameters
@@ -63,6 +67,11 @@ class CommunitySearchPageContainer extends Component {
     history.push(path);
   };
 
+  handleToggleModalFilterPanel = () => {
+    const { toggleModalFilterPanel } = this.props;
+    toggleModalFilterPanel();
+  };
+
   render() {
     const {
       searchParams,
@@ -71,6 +80,7 @@ class CommunitySearchPageContainer extends Component {
       requestMeta,
       location,
       history,
+      isModalFilterPanelVisible,
     } = this.props;
     // TODO Add Error Page
     if (errorCode) {
@@ -90,6 +100,8 @@ class CommunitySearchPageContainer extends Component {
         onLocationSearch={this.handleOnLocationSearch}
         communityList={communityList}
         location={location}
+        isModalFilterPanelVisible={isModalFilterPanelVisible}
+        onToggleModalFilterPanel={this.handleToggleModalFilterPanel}
       />
     );
   }
@@ -97,10 +109,17 @@ class CommunitySearchPageContainer extends Component {
 
 const mapStateToProps = (state, { match, location }) => {
   const searchParams = getSearchParams(match, location);
+  const isModalFilterPanelVisible = isCommunitySearchPageModalFilterPanelActive(state);
   return {
     searchParams,
     communityList: getList(state, 'searchResource'),
     requestMeta: getListMeta(state, 'searchResource'),
+    isModalFilterPanelVisible,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleModalFilterPanel: () => dispatch(toggleModalFilterPanel()),
   };
 };
 
@@ -121,6 +140,7 @@ const handleError = (err) => {
 
 export default withServerState({
   mapStateToProps,
+  mapDispatchToProps,
   fetchData,
   handleError,
 })(CommunitySearchPageContainer);

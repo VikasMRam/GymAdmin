@@ -1,5 +1,4 @@
 import { injectGlobal } from 'styled-components';
-import { palette } from 'styled-theme';
 import styles from './default';
 
 import { publicPath } from 'sly/config';
@@ -33,7 +32,7 @@ export default function setGlobalStyles() {
     }
 
     body {
-      color: ${baseColor}; 
+      color: ${baseColor};
       font-size: 16px;
       font-weight: 400;
       line-height: 1.5;
@@ -44,6 +43,15 @@ export default function setGlobalStyles() {
     html * {
       font-family: Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
       box-sizing: border-box;
+    }
+
+    // for IE
+    header, nav, main, article, section, aside, footer {
+      display: block;
+    }
+
+    a {
+      background-color: transparent;
     }
   `;
 }
