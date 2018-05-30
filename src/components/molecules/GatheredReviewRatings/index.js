@@ -73,7 +73,7 @@ export default class GatheredReviewRatings extends Component {
             {' ('}{review.numReviews }{')'}
           </StartNumDiv>
           <ReviewProviderDiv>
-            <Link href={review.reviewsUrl} target="_blank">
+            <Link href={review.reviewsUrl} target="_blank" rel="nofollow">
               {review.name}&#174;
             </Link>
           </ReviewProviderDiv>

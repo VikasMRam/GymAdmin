@@ -35,5 +35,6 @@ describe('GatheredReviewRatings', () => {
       .dive()
       .text()).toContain('Yelp');
     expect(reviewDiv.childAt(1).find('[href="foo"]')).toHaveLength(1);
+    expect(reviewDiv.childAt(1).find('[rel="nofollow"]')).toHaveLength(1);
   });
 });
