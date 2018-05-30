@@ -55,10 +55,10 @@ jobs:
       - run:
           name: Check if Sly Master Repo
           command: |
-            #if [[ $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
-            #  echo "Skipping Deployment since this is not a Sly Master Build"
-            #  circleci step halt
-            #fi
+            if [[ $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
+              echo "Skipping Deployment since this is not a Sly Master Build"
+              circleci step halt
+            fi
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
       - checkout
       - run:
