@@ -157,7 +157,7 @@ export const getHelmetForCommunityPage = (community) => {
   } = community;
   const toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
   const title = `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`;
-  const description = `${name} ${toc.label} located at ${titleize(address.city)}, ${titleize(address.state)} . See pricing and photos"`;
+  const description = `${name} ${toc ? toc.label : ''} located at ${titleize(address.city)}, ${titleize(address.state)} . See pricing and photos"`;
   let imageUrl = null;
   if (gallery.images && gallery.images.length > 0) {
     imageUrl = gallery.images[0].url;
