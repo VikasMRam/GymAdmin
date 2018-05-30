@@ -153,6 +153,10 @@ const StyledBlock = styled(Block)`
     }
   }
 `; */
+// this is required for IE as it won't consider inline elements as flex children
+const StyledLink = styled(Link)`
+  display: block;
+`;
 
 const firstRowDiscoverHomes = [
   {
@@ -194,6 +198,113 @@ const secondRowDiscoverHomes = [
     image: assetPath('images/home/discover-home/shared-rooms-tile.jpeg'),
     buttonText: 'See more',
     searchParams: { toc: 'alzheimers-care' },
+  },
+];
+
+const usefulInformationTiles = [
+  {
+    to: '/independent-living',
+    image: assetPath('images/home/useful-info/independent-living.jpeg'),
+    title: 'Independent Living',
+  },
+  {
+    to: '/assisted-living',
+    image: assetPath('images/home/useful-info/assisted-living.jpeg'),
+    title: 'Assisted Living',
+  },
+  {
+    to: '/alzheimers-care',
+    image: assetPath('images/home/useful-info/memory-care.jpeg'),
+    title: 'Memory Care',
+  },
+  {
+    to: '/board-and-care-home',
+    image: assetPath('images/home/useful-info/board-and-care-residential.jpeg'),
+    title: 'Board & Care Residential',
+  },
+  /* {
+    to: '#',
+    image: assetPath('images/home/useful-info/skilled-nursing.jpeg'),
+    title: 'Skilled Nursing',
+  }, */
+  {
+    to: '/continuing-care-retirement-community',
+    image: assetPath('images/home/useful-info/ccrc-life-plan.jpeg'),
+    title: 'CCRC / Life Plan',
+  },
+  {
+    to: '/resources',
+    image: assetPath('images/home/useful-info/more-resources.jpeg'),
+    title: 'More Resources',
+  },
+];
+
+const mostSearchedCities = [
+  {
+    to: '/assisted-living/california/san-francisco',
+    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    subtitle: 'San Francisco, CA',
+    title: '95+ communities',
+  },
+  {
+    to: '/assisted-living/california/los-angeles',
+    image: assetPath('images/cities/LosAngeles.jpeg'),
+    subtitle: 'Los Angeles, CA',
+    title: '105+ communities',
+  },
+  {
+    to: '/assisted-living/california/san-diego',
+    image: assetPath('images/cities/SanDiego.jpeg'),
+    subtitle: 'San Diego, CA',
+    title: '75+ communities',
+  },
+  {
+    to: '/assisted-living/texas/dallas',
+    image: assetPath('images/cities/Dallas.jpeg'),
+    subtitle: 'Dallas, TX',
+    title: '90+ communities',
+  },
+  {
+    to: '/assisted-living/texas/houston',
+    image: assetPath('images/cities/Houston.jpeg'),
+    subtitle: 'Houston, TX',
+    title: '72+ communities',
+  },
+  {
+    to: '/assisted-living/arizona/phoenix',
+    image: assetPath('images/cities/Pheonix.jpeg'),
+    subtitle: 'Phoenix, AZ',
+    title: '151+ communities',
+  },
+  {
+    to: '/assisted-living/florida/orlando',
+    image: assetPath('images/cities/Orlando.jpeg'),
+    subtitle: 'Orlando, FL',
+    title: '60+ communities',
+  },
+  {
+    to: '/assisted-living/florida/miami',
+    image: assetPath('images/cities/Miami.jpeg'),
+    subtitle: 'Miami, FL',
+    title: '150+ communities',
+  },
+];
+
+const familiesWeHaveHelpedTiles = [
+  {
+    image: assetPath('images/home/meet-others/Sharon.jpg'),
+    title: 'Sharon T.',
+    description: '"I felt like Seniorly was a lifesaver! I was daunted at the prospect of going through so many possibilities to find the right fit for my mom in such a short time, while taking care of so many other things that need attending as we deal with the aftermath of her stroke."',
+  },
+  {
+    image: assetPath('images/home/meet-others/Kathy.jpg'),
+    title: 'Aileen H.',
+    description: '"I was very frustrated that every time I wanted to see the price of a facility that I had to give my phone number and I would get bombarded with calls. Your site was the only one that allowed me to search on my own time and it listed more info than other sites."',
+  },
+  {
+    image: assetPath('images/home/meet-others/Henry.jpg'),
+    title: 'Henry W.',
+    description: '"We were lucky enough to find a great place for my father-in-law. Seniorly is a really helpful website, very helpful and informative. Thank you so much for what you do."',
   },
 ];
 
@@ -242,6 +353,32 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
     />
   ));
 
+  const usefulInformationTilesComponents = usefulInformationTiles.map(usefulInformation => (
+    <StyledLink key={usefulInformation.title} to={usefulInformation.to}>
+      <ImageOverlayContentTile image={usefulInformation.image}>
+        <Heading palette="white">{usefulInformation.title}</Heading>
+      </ImageOverlayContentTile>
+    </StyledLink>
+  ));
+
+  const mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
+    <StyledLink key={mostSearchedCity.title} to={mostSearchedCity.to}>
+      <ImageOverlayContentTile size="small" image={mostSearchedCity.image}>
+        <Heading palette="white" level="subtitle">{mostSearchedCity.subtitle}</Heading>
+        <Block palette="white">{mostSearchedCity.title}</Block>
+      </ImageOverlayContentTile>
+    </StyledLink>
+  ));
+
+  const familiesWeHaveHelpedTilesComponents = familiesWeHaveHelpedTiles.map(familyWeHaveHelped => (
+    <MeetOthersTile
+      key={familyWeHaveHelped.title}
+      image={familyWeHaveHelped.image}
+      title={familyWeHaveHelped.title}
+      description={familyWeHaveHelped.description}
+    />
+  ));
+
   return (
     <BasePageTemplate
       header={HeaderContent}
@@ -260,115 +397,20 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       <StyledHr />
       <StyledSection title="Meet Families We’ve Helped">
         <ThreeColumnWrapper>
-          <MeetOthersTile
-            image={assetPath('images/home/meet-others/Sharon.jpg')}
-            title="Sharon T."
-            description="“I felt like Seniorly was a lifesaver! I was daunted at the prospect of going through so many possibilities to find the right fit for my mom in such a short time, while taking care of so many other things that need attending as we deal with the aftermath of her stroke.”"
-          />
-          <MeetOthersTile
-            image={assetPath('images/home/meet-others/Kathy.jpg')}
-            title="Aileen H."
-            description="“I was very frustrated that every time I wanted to see the price of a facility that I had to give my phone number and I would get bombarded with calls. Your site was the only one that allowed me to search on my own time and it listed more info than other sites.”"
-          />
-          <MeetOthersTile
-            image={assetPath('images/home/meet-others/Henry.jpg')}
-            title="Henry W."
-            description="“We were lucky enough to find a great place for my father-in-law. Seniorly is a really helpful website, very helpful and informative. Thank you so much for what you do.”"
-          />
+          {familiesWeHaveHelpedTilesComponents}
         </ThreeColumnWrapper>
       </StyledSection>
       <br />
       <StyledHr />
       <StyledSection title="Useful Information">
         <UIColumnWrapper>
-          <Link to="/independent-living">
-            <ImageOverlayContentTile image={assetPath('images/home/useful-info/independent-living.jpeg')}>
-              <Heading palette="white">Independent Living</Heading>
-            </ImageOverlayContentTile>
-          </Link>
-          <Link to="/assisted-living">
-            <ImageOverlayContentTile image={assetPath('images/home/useful-info/assisted-living.jpeg')}>
-              <Heading palette="white">Assisted Living</Heading>
-            </ImageOverlayContentTile>
-          </Link>
-          <Link to="/alzheimers-care">
-            <ImageOverlayContentTile image={assetPath('images/home/useful-info/memory-care.jpeg')}>
-              <Heading palette="white">Memory Care</Heading>
-            </ImageOverlayContentTile>
-          </Link>
-          <Link to="/board-and-care-home">
-            <ImageOverlayContentTile image={assetPath('images/home/useful-info/board-and-care-residential.jpeg')}>
-              <Heading palette="white">Board & Care Residential</Heading>
-            </ImageOverlayContentTile>
-          </Link>
-          {/* <Link to="#"> */}
-          {/* <ImageOverlayContentTile image={assetPath('images/home/useful-info/skilled-nursing.jpeg')}> */}
-          {/* <Heading palette="white">Skilled Nursing</Heading> */}
-          {/* </ImageOverlayContentTile> */}
-          {/* </Link> */}
-          <Link to="/continuing-care-retirement-community">
-            <ImageOverlayContentTile image={assetPath('images/home/useful-info/ccrc-life-plan.jpeg')}>
-              <Heading palette="white">CCRC / Life Plan</Heading>
-            </ImageOverlayContentTile>
-          </Link>
-          <Link to="/resources">
-            <ImageOverlayContentTile image={assetPath('images/home/useful-info/more-resources.jpeg')}>
-              <Heading palette="white">More Resources</Heading>
-            </ImageOverlayContentTile>
-          </Link>
+          {usefulInformationTilesComponents}
         </UIColumnWrapper>
       </StyledSection>
       <StyledHr />
       <StyledSection title="Most Searched Cities">
         <MSCColumnWrapper>
-          <Link to="/assisted-living/california/san-francisco">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanFrancisco.jpeg')}>
-              <Heading palette="white" level="subtitle">San Francisco, CA</Heading>
-              <Block palette="white">95+ communities</Block>
-            </ImageOverlayContentTile>
-          </Link>
-          <Link to="/assisted-living/california/los-angeles">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/LosAngeles.jpeg')}>
-              <Heading palette="white" level="subtitle">Los Angeles, CA</Heading>
-              <Block palette="white">105+ communities</Block>
-            </ImageOverlayContentTile>
-          </Link>
-          <Link to="/assisted-living/california/san-diego">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/SanDiego.jpeg')}>
-              <Heading palette="white" level="subtitle">San Diego, CA</Heading>
-              <Block palette="white">75+ communities</Block>
-            </ImageOverlayContentTile>
-          </Link>
-          <Link to="/assisted-living/texas/dallas">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Dallas.jpeg')}>
-              <Heading palette="white" level="subtitle">Dallas, TX</Heading>
-              <Block palette="white">90+ communities</Block>
-            </ImageOverlayContentTile>
-          </Link>
-          <Link to="/assisted-living/texas/houston">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Houston.jpeg')}>
-              <Heading palette="white" level="subtitle">Houston, TX</Heading>
-              <Block palette="white">72+ communities</Block>
-            </ImageOverlayContentTile>
-          </Link>
-          <Link to="/assisted-living/arizona/phoenix">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Pheonix.jpeg')}>
-              <Heading palette="white" level="subtitle">Phoenix, AZ</Heading>
-              <Block palette="white">151+ communities</Block>
-            </ImageOverlayContentTile>
-          </Link>
-          <Link to="/assisted-living/florida/orlando">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Orlando.jpeg')}>
-              <Heading palette="white" level="subtitle">Orlando, FL</Heading>
-              <Block palette="white">60+ communities</Block>
-            </ImageOverlayContentTile>
-          </Link>
-          <Link to="/assisted-living/florida/miami">
-            <ImageOverlayContentTile size="small" image={assetPath('images/cities/Miami.jpeg')}>
-              <Heading palette="white" level="subtitle">Miami, FL</Heading>
-              <Block palette="white">150+ communities</Block>
-            </ImageOverlayContentTile>
-          </Link>
+          {mostSearchedCitiesComponents}
         </MSCColumnWrapper>
       </StyledSection>
       <StyledHr />
