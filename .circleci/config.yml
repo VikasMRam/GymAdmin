@@ -73,7 +73,7 @@ jobs:
       - run:
           name: Deploy to EB if branch is Master
           command: |
-            export DEPLOY_FAILED=$(eb deploy slyreact-staging -v | tee /dev/tty | grep -c "ERROR")
+            export DEPLOY_FAILED=$(eb deploy slyreact-$SLY_ENV -v | tee /dev/tty | grep -c "ERROR")
             echo "export DEPLOY_FAILED=$DEPLOY_FAILED" >> $BASH_ENV
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
       - run:
