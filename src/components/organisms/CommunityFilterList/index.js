@@ -2,15 +2,23 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object, func, bool } from 'prop-types';
 import { palette } from 'styled-theme';
+import { ifProp } from 'styled-tools';
 
 import { size, assetPath } from 'sly/components/themes';
-
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Field from 'sly/components/molecules/Field';
 import Radio from 'sly/components/molecules/Radio';
 import IconButton from 'sly/components/molecules/IconButton';
 import { Link, Image, Box, Hr, Button } from 'sly/components/atoms';
-import { tocs, budgets, sizes, filterLinkPath, getFiltersApplied, getEvtHandler } from 'sly/services/helpers/search';
+
+import {
+  tocs,
+  budgets,
+  sizes,
+  filterLinkPath,
+  getFiltersApplied,
+  getEvtHandler,
+} from 'sly/services/helpers/search';
 
 const StyledWrapper = styled.div`
   padding: ${size('spacing.large')};
@@ -19,13 +27,18 @@ const StyledWrapper = styled.div`
     width: ${size('filtersMenu.width.laptop')};
   }
 `;
+
 const StyledBox = styled(Box)`
   padding: ${size('spacing.large')};
   width: ${size('filtersMenu.width.mobile')};
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    position: sticky;
+    top: ${size('spacing.xLarge')};
+    bottom: ${size('spacing.xxLarge')};
     width: ${size('filtersMenu.width.laptop')};
   }
 `;
+
 const StyledLink = styled(Link)`
   display: flex;
   margin-bottom: ${size('spacing.regular')};
@@ -35,6 +48,7 @@ const StyledLink = styled(Link)`
     margin-right: ${size('spacing.small')};
   }
 `;
+
 const ImageButtonWrapper = styled.div`
   position: relative;
   text-align: center;
@@ -48,23 +62,20 @@ const ImageButtonWrapper = styled.div`
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   }
 
-  ${(props) => {
-    if (!props.isMapView) {
-      return `
-        button {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }`;
+  ${ifProp('isMapView', `
+    button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
-    return '';
-  }};
-
+  `)};
 `;
+
 const StyledImage = styled(Image)`
   max-width: 100%;
 `;
+
 const StyledHr = styled(Hr)`
   margin-bottom: ${size('spacing.regular')};
 `;
