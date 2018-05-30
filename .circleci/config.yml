@@ -90,7 +90,7 @@ workflows:
   build-deploy:
     jobs:
       - build
-      - deploy-development:
+      - deploy:
           context: ReactDev
           requires:
             - build
@@ -98,7 +98,7 @@ workflows:
             branches:
               only:
                 - master
-      - deploy-staging:
+      - deploy:
           context: ReactStaging
           requires:
             - build
