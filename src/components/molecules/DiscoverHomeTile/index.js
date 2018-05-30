@@ -16,10 +16,10 @@ const Wrapper = styled.div`
     width: ${width};
   }
 `;
-const StyledHeading = styled(Heading)`
+export const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
 `;
-const StyledImage = styled(Image)`
+export const StyledImage = styled(Image)`
   width: 100%;
   height: initial;
   display: block;
