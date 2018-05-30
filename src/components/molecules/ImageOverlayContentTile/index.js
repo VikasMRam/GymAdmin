@@ -42,7 +42,7 @@ const ImageOverlayContentTile = ({
 }) => (
   <Wrapper size={size}>
     <StyledImage src={image} size={size} />
-    <ContentWrapper>
+    <ContentWrapper size={size}>
       {children}
     </ContentWrapper>
   </Wrapper>
