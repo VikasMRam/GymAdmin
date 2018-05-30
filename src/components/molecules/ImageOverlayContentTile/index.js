@@ -33,7 +33,7 @@ const ContentWrapper = styled.div`
   width: 100%;
   text-align: center;
   @media screen and (min-width: ${width}) {
-    width: auto;
+    width: inherit;
   }
 `;
 
