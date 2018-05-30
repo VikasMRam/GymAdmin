@@ -65,7 +65,7 @@ jobs:
           name: Send deploy start notification
           command: |
             export GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: %H%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
-            ./.circleci/push-slack-notification.sh "starting deploy to slyreact-staging - \n $GIT_COMMIT_DESC" "#66d3e4"
+            ./.circleci/push-slack-notification.sh "starting deploy to slyreact-$SLY_ENV - \n $GIT_COMMIT_DESC" "#66d3e4"
       - run:
           name: Install awscli
           command: |
@@ -81,19 +81,29 @@ jobs:
           command: |
             export GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: %H%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
             if [ "$DEPLOY_FAILED" -gt 0 ]; then
-              ./.circleci/push-slack-notification.sh "failed deploying to slyreact-staging - \n $GIT_COMMIT_DESC" "#ed5c5c"
+              ./.circleci/push-slack-notification.sh "failed deploying to slyreact-$SLY_ENV - \n $GIT_COMMIT_DESC" "#ed5c5c"
             else
-              ./.circleci/push-slack-notification.sh "sucessfully deployed to slyreact-staging - \n $GIT_COMMIT_DESC" "#42c88a"
+              ./.circleci/push-slack-notification.sh "sucessfully deployed to slyreact-$SLY_ENV - \n $GIT_COMMIT_DESC" "#42c88a"
             fi
 workflows:
   version: 2
   build-deploy:
     jobs:
       - build
-      - deploy:
+      - deploy-development:
+          context: ReactDev
           requires:
             - build
           filters:
             branches:
               only:
                 - master
+      - deploy-staging:
+          context: ReactStaging
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
