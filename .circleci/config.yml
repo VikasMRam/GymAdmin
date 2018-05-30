@@ -60,12 +60,12 @@ jobs:
       #         circleci step halt
       #       fi
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
+      - checkout
       - run:
           name: Send deploy start notification
           environment:
             GIT_COMMIT_DESC: $(git log --format=oneline -n 1 $CIRCLE_SHA1)
           command: ./.circleci/push-slack-notification.sh "starting deploying to slyreact-staging - $GIT_COMMIT_DESC"
-      - checkout
       - run:
           name: Install awscli
           command: |
@@ -90,10 +90,10 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - build
+      # - build
       - deploy:
-          requires:
-            - build
+          # requires:
+            # - build
           filters:
             branches:
               only:
