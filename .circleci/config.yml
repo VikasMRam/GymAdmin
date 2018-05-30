@@ -55,17 +55,17 @@ jobs:
       - run:
           name: Check if Sly Master Repo
           command: |
-            if [[ $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
-              echo "Skipping Deployment since this is not a Sly Master Build"
-              circleci step halt
-            fi
+            #if [[ $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
+            #  echo "Skipping Deployment since this is not a Sly Master Build"
+            #  circleci step halt
+            #fi
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
       - checkout
       - run:
           name: Send deploy start notification
-          environment:
-            GIT_COMMIT_DESC: $(git log --format=oneline -n 1 $CIRCLE_SHA1)
-          command: ./.circleci/push-slack-notification.sh "starting deploying to slyreact-staging - $GIT_COMMIT_DESC"
+          command: |
+            export GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: %H%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
+            ./.circleci/push-slack-notification.sh "starting deploy to slyreact-staging - \n $GIT_COMMIT_DESC" "#66d3e4"
       - run:
           name: Install awscli
           command: |
@@ -73,18 +73,17 @@ jobs:
       - run:
           name: Deploy to EB if branch is Master
           command: |
-            DEPLOY_FAILED = $(eb deploy slyreact-staging -v | tee /dev/tty | grep -c "ERROR")
+            export DEPLOY_FAILED=$(eb deploy slyreact-staging -v | tee /dev/tty | grep -c "ERROR")
             echo "export DEPLOY_FAILED=$DEPLOY_FAILED" >> $BASH_ENV
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
       - run:
           name: Send deploy end notification
-          environment:
-            GIT_COMMIT_DESC: $(git log --format=oneline -n 1 $CIRCLE_SHA1)
           command: |
+            export GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: %H%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
             if [ "$DEPLOY_FAILED" -gt 0 ]; then
-              ./.circleci/push-slack-notification.sh "failed deploying to slyreact-staging - $GIT_COMMIT_DESC"
+              ./.circleci/push-slack-notification.sh "failed deploying to slyreact-staging - \n $GIT_COMMIT_DESC" "#ed5c5c"
             else
-              ./.circleci/push-slack-notification.sh "sucessfully deployed to slyreact-staging - $GIT_COMMIT_DESC"
+              ./.circleci/push-slack-notification.sh "sucessfully deployed to slyreact-staging - \n $GIT_COMMIT_DESC" "#42c88a"
             fi
 workflows:
   version: 2
