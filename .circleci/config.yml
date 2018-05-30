@@ -60,12 +60,12 @@ jobs:
               circleci step halt
             fi
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
+      - checkout
       - run:
           name: Send deploy start notification
           environment:
             GIT_COMMIT_DESC: $(git log --format=oneline -n 1 $CIRCLE_SHA1)
-          command: ./.circleci/push-slack-notification "starting deploying to slyreact-staging - $GIT_COMMIT_DESC"
-      - checkout
+          command: ./.circleci/push-slack-notification.sh "starting deploying to slyreact-staging - $GIT_COMMIT_DESC"
       - run:
           name: Install awscli
           command: |
@@ -82,9 +82,9 @@ jobs:
             GIT_COMMIT_DESC: $(git log --format=oneline -n 1 $CIRCLE_SHA1)
           command: |
             if [ "$DEPLOY_FAILED" -gt 0 ]; then
-              ./.circleci/push-slack-notification "failed deploying to slyreact-staging - $GIT_COMMIT_DESC"
+              ./.circleci/push-slack-notification.sh "failed deploying to slyreact-staging - $GIT_COMMIT_DESC"
             else
-              ./.circleci/push-slack-notification "sucessfully deployed to slyreact-staging - $GIT_COMMIT_DESC"
+              ./.circleci/push-slack-notification.sh "sucessfully deployed to slyreact-staging - $GIT_COMMIT_DESC"
             fi
 workflows:
   version: 2
