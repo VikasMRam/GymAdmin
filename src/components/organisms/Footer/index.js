@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
-import { Icon, Button, Link, Hr } from 'sly/components/atoms';
+import { Icon, Link, Hr } from 'sly/components/atoms';
 
 const FooterWrapper = styled.div`
   background-color: ${palette('grayscale', 2)};
+  color: ${palette('white', 0)};
 `;
 
 const FooterTopWrapper = styled.div`
@@ -14,6 +15,7 @@ const FooterTopWrapper = styled.div`
   flex-direction: column;
   padding: ${size('spacing.large')} ${size('spacing.large')} 0
     ${size('spacing.large')};
+  justify-content: space-between;
 
   margin: 0 auto;
   width: 100%;
@@ -78,30 +80,17 @@ const groups = {
 const GroupDiv = styled.div`
   width: ${size('footer.group.width')};
   margin-bottom: ${size('spacing.xLarge')};
-
-  :nth-child(odd) {
-    margin-right: ${size('spacing.large')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    margin-right: ${size('spacing.xLarge')};
-  }
 `;
 
 const GroupHeading = styled.div`
-  color: ${palette('white', 0)};
   font-size: ${size('text.subtitle')};
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: ${size('spacing.large')};
 `;
 
-const GroupItems = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 const GroupItem = styled(Link)`
+  display: block;
   color: ${palette('white', 0)};
   font-size: ${size('spacing.large')};
   text-decoration: none;
@@ -147,10 +136,6 @@ const SocialIcons = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     order: 3;
   }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    margin-right: 0;
-  }
 `;
 
 const FooterIcon = styled(Icon)`
@@ -162,32 +147,22 @@ const FooterIcon = styled(Icon)`
   }
 `;
 
-const TradeMark = styled.a`
+const TradeMark = styled.div`
   color: ${palette('white', 0)};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     order: 1;
     margin: ${size('spacing.regular')} 0;
   }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    margin-left: 0;
-  }
 `;
 
-const Join = styled.a`
-  color: ${palette('white', 0)};
+const Join = styled.div`
   font-size: ${size('spacing.large')};
-  text-decoration: none;
   margin-bottom: ${size('spacing.regular')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     order: 2;
     margin: ${size('spacing.regular')} 0;
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    margin-left: 0;
   }
 `;
 
@@ -204,7 +179,7 @@ const Footer = () => {
     return (
       <GroupDiv key={group}>
         <GroupHeading>{group}</GroupHeading>
-        <GroupItems>{groupItemComponents}</GroupItems>
+        {groupItemComponents}
       </GroupDiv>
     );
   });
