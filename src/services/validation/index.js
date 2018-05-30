@@ -26,7 +26,7 @@ export const maxLength = max => value =>
 export const integer = value => !isInt(value) && 'Must be an integer';
 
 export const usPhone = value =>
-  !isEmpty(value) && !isMobilePhone(value, 'en-US') && 'Invalid phone number';
+  !isEmpty(value) && !isMobilePhone(value.replace(/-/g, ''), 'en-US') && 'Invalid phone number';
 
 export const oneOf = values => value =>
   !isIn(value, values) && `Must be one of: ${values.join(', ')}`;
