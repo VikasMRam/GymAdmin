@@ -9,7 +9,7 @@ import { Image } from 'sly/components/atoms';
 const width = p => size('picture', p.size, 'width');
 const height = p => size('picture', p.size, 'height');
 const Wrapper = styled.div`
-  width: 100%;
+  width: auto;
   @media screen and (min-width: ${width}) {
     width: ${width};
   }
