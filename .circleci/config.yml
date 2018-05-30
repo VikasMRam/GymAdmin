@@ -87,7 +87,7 @@ jobs:
             fi
 workflows:
   version: 2
-  build-deploy:
+  build-development:
     jobs:
       - build
       - deploy:
@@ -98,6 +98,9 @@ workflows:
             branches:
               only:
                 - master
+  build-staging:
+    jobs:
+      - build
       - deploy:
           context: ReactStaging
           requires:
