@@ -9,7 +9,7 @@ import { Image } from 'sly/components/atoms';
 const width = p => size('picture', p.size, 'width');
 const height = p => size('picture', p.size, 'height');
 const Wrapper = styled.div`
-  width: auto;
+  width: 100%;
   @media screen and (min-width: ${width}) {
     width: ${width};
   }
@@ -29,9 +29,12 @@ const ContentWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
   padding: 0 ${size('spacing.large')};
+  width: 100%;
   text-align: center;
+  @media screen and (min-width: ${width}) {
+    width: auto;
+  }
 `;
 
 const ImageOverlayContentTile = ({
