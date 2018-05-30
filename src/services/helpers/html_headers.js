@@ -115,7 +115,14 @@ const getSDForSearchResource = ({
 export const getHelmetForSearchPage = ({
   url, city, state, toc, communityList,
 }) => {
-  const actualToc = tocs.find(elem => (elem.value === toc));
+  let actualToc = tocs.find(elem => (elem.value === toc));
+  if (typeof actualToc === 'undefined'){
+    actualToc = {
+      label: 'All Communities',
+      value: 'retirement-community',
+      segment: 'retirement-community',
+    };
+  }
   let location_str = city ? `${titleize(city)}, ${titleize(state)}` : `${titleize(state)}`;
   const title = ` ${location_str} Senior Housing & Senior Living for ${actualToc.label}`;
   const description = `Find senior housing and senior care services in  ${location_str}. Search Seniorly's database for the best senior housing options, compare pricing, and more!`;
@@ -136,10 +143,10 @@ export const getHelmetForSearchPage = ({
       <title>{title}</title>
 
       <meta content={description} property="og:description" />
-      <meta content={title} property="og:title" />
+      <meta content={`${title} | Seniorly`} property="og:title" />
 
       <meta content={description} property="twitter:description" />
-      <meta content={title} property="twitter:title" />
+      <meta content={`${title} | Seniorly`} property="twitter:title" />
       <link rel="canonical" href={canonicalUrl} />
 
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
@@ -155,9 +162,16 @@ export const getHelmetForCommunityPage = (community) => {
   const {
     name, address, propInfo, url, gallery = {}, videoGallery = {},
   } = community;
-  const toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
+  let toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
+  if (typeof toc === 'undefined'){
+    toc = {
+      label: 'All Communities',
+      value: 'retirement-community',
+      segment: 'retirement-community',
+    };
+  }
   const title = `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`;
-  const description = `${name} ${toc ? toc.label : ''} located at ${titleize(address.city)}, ${titleize(address.state)} . See pricing and photos"`;
+  const description = `${name} ${toc ? toc.label : ''} located at ${address.line1} in ${titleize(address.city)}, ${titleize(address.state)}. See pricing and photos"`;
   let imageUrl = null;
   if (gallery.images && gallery.images.length > 0) {
     imageUrl = gallery.images[0].url;
@@ -177,13 +191,13 @@ export const getHelmetForCommunityPage = (community) => {
       <meta name="description" content={description} />
 
       <meta content={description} property="og:description" />
-      <meta content={title} property="og:title" />
+      <meta content={`${title} | Seniorly`} property="og:title" />
       <meta content={url} property="og:url" />
       {imageUrl && <meta content={imageUrl} property="og:image" /> }
       {videoUrl && <meta content={videoUrl} property="og:video" /> }
 
       <meta content={description} property="twitter:description" />
-      <meta content={title} property="twitter:title" />
+      <meta content={`${title} | Seniorly`} property="twitter:title" />
       {imageUrl && <meta content={imageUrl} property="twitter:image:src" /> }
 
 

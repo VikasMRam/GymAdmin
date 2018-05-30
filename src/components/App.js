@@ -24,6 +24,7 @@ const careTypes = [
   'assisted-living',
   'independent-living',
   'alzheimers-care',
+  'continuing-care-retirement-community'
 ].join('|');
 
 export default class App extends Component {
