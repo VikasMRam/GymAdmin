@@ -81,7 +81,7 @@ export default class StateSearchPage extends Component {
           onLocationSearch={onLocationSearch}
         >
           {!isMapView && (
-            <Heading>
+            <Heading level="hero" size="title">
               {listSize} communities in {state}
             </Heading>
           )}

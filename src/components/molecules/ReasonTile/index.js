@@ -78,7 +78,7 @@ const ReasonTile = ({
   <Wrapper to={to} {...props}>
     <WrappedImage src={image} aspectRatio="4:3" />
     <ItemDescription>
-      <StyledHeading level="subtitle">{title}</StyledHeading>
+      <StyledHeading level="subtitle" size="subtitle">{title}</StyledHeading>
       <Block>{text}</Block>
     </ItemDescription>
   </Wrapper>

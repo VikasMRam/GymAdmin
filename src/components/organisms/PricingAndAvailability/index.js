@@ -147,7 +147,7 @@ export default class PricingAndAvailability extends Component {
           </StyledArticle>
           {sortedEstimatedPrice.length > 0 &&
             <article id="pricing-and-floor-plans-comparison">
-              <Heading level="subtitle">Compare to Local Assisted Living Costs</Heading>
+              <Heading level="subtitle" size="subtitle">Compare to Local Assisted Living Costs</Heading>
               <LocalitiesWrapper>
                 {sortedEstimatedPrice.map((object, i) => (
                   <SpacingBottomRegularWrapper key={i}>

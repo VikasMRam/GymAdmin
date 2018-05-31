@@ -44,7 +44,7 @@ const AdvancedInfoForm = ({
   handleSubmit, submitting, user, community,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Heading>To connect to {community.name}...</Heading>
+    <Heading level="subtitle" size="subtitle">To connect to {community.name}...</Heading>
     <Block>{community.description}</Block>
 
     <Field
@@ -89,9 +89,9 @@ const AdvancedInfoForm = ({
       type="textarea"
       component={ReduxField}
     />
-    <Block>To ensure a personalized experience, one of our caring, local experts will be in touch.</Block>
+
     <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-      Connect Me
+      Send
     </StyledButton>
   </Form>
 );

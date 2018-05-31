@@ -102,7 +102,7 @@ const CommunitySearchPage = ({
         onLocationSearch={onLocationSearch}
       >
         {!isMapView && (
-          <StyledHeading>
+          <StyledHeading level={'hero'} size={'title'}>
             {listSize} {toc} communities near {city}
           </StyledHeading>
         )}
