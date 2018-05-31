@@ -28,7 +28,7 @@ const SLY_ENV = process.env.SLY_ENV || 'development';
 const PUBLIC_PATH = process.env.PUBLIC_PATH || '/react-assets';
 const HOST = process.env.HOST || 'www.lvh.me';
 const PORT = process.env.PORT || 8000;
-const DEV_PORT = process.env.DEV_PORT || +PORT + 1 || 8001;
+const DEV_PORT = process.env.DEV_PORT || (+PORT + 1) || 8001;
 const BASENAME = process.env.BASENAME || '';
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
@@ -176,7 +176,7 @@ const client = createConfig([
       stats: 'errors-only',
       historyApiFallback: { index: webpackPublicPath },
       headers: { 'Access-Control-Allow-Origin': '*' },
-      host: HOST,
+      disableHostCheck: true,
       port: DEV_PORT,
     }),
     addPlugins([new webpack.NamedModulesPlugin()]),
