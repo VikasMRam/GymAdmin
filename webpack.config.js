@@ -42,7 +42,7 @@ console.info('Using config', JSON.stringify({
   SLY_ENV,
   PUBLIC_PATH,
   HOST,
-  PORT
+  PORT,
   DEV_PORT,
   BASENAME,
   API_URL,
