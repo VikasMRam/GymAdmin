@@ -161,7 +161,7 @@ const client = createConfig([
       historyApiFallback: { index: webpackPublicPath },
       headers: { 'Access-Control-Allow-Origin': '*' },
       host: HOST,
-      port: PORT,
+      port: +PORT + 1 || 8001,
     }),
     addPlugins([new webpack.NamedModulesPlugin()]),
   ]),
