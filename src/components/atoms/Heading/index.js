@@ -6,11 +6,11 @@ import { prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 
-const fontSize = p => size('text', p.level);
-const lineHeight = p => size('lineHeight', p.level);
+const fontSize = p => size('text', p.size);
+const lineHeight = p => size('lineHeight', p.size);
 
-const getLevel = size => {
-  switch(size) {
+const getTag = level => {
+  switch(level) {
     case 'hero': return 1;
     case 'title': return 2;
     case 'subtitle': return 3;
@@ -29,12 +29,13 @@ const styles = css`
 const Heading = styled(({
   level, children, reverse, palette, theme, ...props
 }) =>
-  React.createElement(`h${getLevel(level)}`, props, children))`
+  React.createElement(`h${getTag(level)}`, props, children))`
   ${styles};
 `;
 
 Heading.propTypes = {
   level: oneOf(['hero', 'title', 'subtitle']),
+  size: oneOf(['hero', 'title', 'subtitle']),
   children: node,
   palette: string,
   reverse: bool,
@@ -42,6 +43,7 @@ Heading.propTypes = {
 
 Heading.defaultProps = {
   level: 'title',
+  size: 'title',
   palette: 'slate',
 };
 

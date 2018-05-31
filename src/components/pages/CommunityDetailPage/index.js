@@ -210,8 +210,8 @@ export default class CommunityDetailPage extends Component {
             />
           }
           <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} innerRef={this.breadCrumbRef} />
-          <Heading level="hero">{name}</Heading>
-          <Heading level="subtitle">{formattedAddress}</Heading>
+          <Heading level="hero" size="hero">{name}</Heading>
+          <Heading level="subtitle" size="subtitle">{formattedAddress}</Heading>
           <CommunitySummary
             innerRef={this.communitySummaryRef}
             pricingAndFloorPlansRef={this.pricingAndFloorPlansRef}

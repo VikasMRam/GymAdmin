@@ -314,9 +314,9 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <DefaultHeaderTemplate onLocationSearch={onLocationSearch} />
       <HeroWrapper>
-        <StyledImage src={assetPath('images/home/cover2.jpg')} alt="hero image" />
+        <StyledImage src={assetPath('images/home/cover3.jpg')} alt="hero image" />
         <SearchBoxWrapper>
-          <StyledHeading level="hero" palette="white">
+          <StyledHeading level="hero" size="hero" palette="white">
             Find a Home to Love
           </StyledHeading>
           <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
@@ -364,7 +364,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
   const mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
     <StyledLink key={mostSearchedCity.title} to={mostSearchedCity.to}>
       <ImageOverlayContentTile size="small" image={mostSearchedCity.image}>
-        <Heading palette="white" level="subtitle">{mostSearchedCity.subtitle}</Heading>
+        <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
         <Block palette="white">{mostSearchedCity.title}</Block>
       </ImageOverlayContentTile>
     </StyledLink>

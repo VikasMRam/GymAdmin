@@ -115,7 +115,7 @@ export default class SimilarCommunityInfo extends Component {
     // TODO : Get the following values from API Response
     return (
       <Wrapper {...props}>
-        <StyledHeading level="subtitle">{name}</StyledHeading>
+        <StyledHeading level="subtitle" size="subtitle">{name}</StyledHeading>
         <ClampedLine>
           {addressString}
         </ClampedLine>
