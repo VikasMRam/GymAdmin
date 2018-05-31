@@ -62,7 +62,7 @@ const ImageButtonWrapper = styled.div`
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   }
 
-  ${ifProp('isMapView', `
+  ${ifProp('isMapView', '', `
     button {
       position: absolute;
       top: 50%;
