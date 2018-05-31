@@ -31,28 +31,12 @@ const CarouselWrapper = styled.div`
 const StyledImg = styled(Image)`
   width: 100%;
   object-fit: cover;
-  ${props =>
-    !props.autoHeight &&
-    css`
-      height: ${size('carousel.mobile')};
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        height: auto;
-        max-height: ${size('carousel.tablet')};
-      }
-    `};
+  height: inherit;
 `;
 const StyledVideo = styled.video`
   width: 100%;
   object-fit: fill;
-  ${props =>
-    !props.autoHeight &&
-    css`
-      height: ${size('carousel.mobile')};
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        height: auto;
-        max-height: ${size('carousel.tablet')};
-      }
-    `};
+  height: inherit;
 `;
 const StyledIcon = styled(Icon)`
   position: absolute;
@@ -84,16 +68,18 @@ const BottomLeftWrapper = styled.span`
   z-index: 1;
 `;
 const sliderRootElementStyle = {
-  maxHeight: '100%',
+  height: 'inherit',
   lineHeight: 0,
 };
 const sliderComponentStyle = {
   alignItems: 'center',
+  height: 'inherit',
   // TODO: temp fix first slide change having no transition
   transition: 'transform 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s',
 };
 const sliderSlideStyle = {
   overflow: 'hidden',
+  height: 'inherit',
 };
 const PlayIcon = styled(Icon)`
   z-index: 1;
@@ -109,6 +95,7 @@ const PlayIcon = styled(Icon)`
   }
 `;
 const StyledSlide = styled.div`
+  height: inherit;
   :hover {
     cursor: ${ifProp('hasOnSlideClick', 'pointer', 'initial')};
   }
