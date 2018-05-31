@@ -26,9 +26,11 @@ const MainWrapper = styled.section`
 const ColumnWrapper = styled.aside`
   display: none;
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    position: relative;
     display: block;
     margin-right: ${size('spacing.xLarge')};
     width: ${size('layout.sideColumnSmall')};
+    padding-bottom: ${size('spacing.xLarge')};
   }
 `;
 

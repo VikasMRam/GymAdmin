@@ -99,6 +99,11 @@ export const tocs = [
     value: 'alzheimers-care',
     segment: 'alzheimers-care',
   },
+  {
+    label: 'Continuing Care Retirement Communities',
+    value: 'continuing-care-retirement-community',
+    segment: 'continuing-care-retirement-community',
+  },
 ];
 
 export const sizes = [

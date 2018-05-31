@@ -16,6 +16,7 @@ import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
+import ScrollToTopRoute from 'sly/components/ScrollToTopRoute';
 
 setGlobalStyles();
 
@@ -24,6 +25,7 @@ const careTypes = [
   'assisted-living',
   'independent-living',
   'alzheimers-care',
+  'continuing-care-retirement-community'
 ].join('|');
 
 export default class App extends Component {
@@ -93,15 +95,18 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          <Switch>
-            <Route path={`/:toc(${careTypes})/:state/:city/filters`}
-                   render={({ match }) => {
-                     return <Redirect to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}  />;
-                   }}
-            />
-            {this.routes.map(route => <Route key={route.path} {...route} />)}
-            <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
-          </Switch>
+          <ScrollToTopRoute>
+            <Switch>
+              <Route
+                path={`/:toc(${careTypes})/:state/:city/filters`}
+                render={({ match }) => {
+                      return <Redirect to={`/${match.params.toc}/${match.params.state}/${match.params.city}`} />;
+                    }}
+              />
+              {this.routes.map(route => <Route key={route.path} {...route} />)}
+              <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
+            </Switch>
+          </ScrollToTopRoute>
         </ThemeProvider>
       </Fragment>
     );

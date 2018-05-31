@@ -124,13 +124,14 @@ app.use(async (req, res, next) => {
 });
 
 const getErrorContent = (err) => {
-  const Redbox = require('redbox-react').RedBoxError;
-  return <Redbox error={err} />;
-  // if (isDev) {
-  //
-  // } else {
-  //   return <Error />;
-  // }
+
+
+  if (isDev) {
+    const Redbox = require('redbox-react').RedBoxError;
+    return <Redbox error={err} />;
+  } else {
+    return <Error />;
+  }
 };
 
 app.use((err, req, res, next) => {

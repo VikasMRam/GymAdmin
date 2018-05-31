@@ -5,50 +5,39 @@ const merge = require('lodash/merge');
 const isStorybook = !!process.env.STORYBOOK_GIT_BRANCH;
 const publicPath = isStorybook
   ? ''
-  : process.env.PUBLIC_PATH || '/react-assets';
+  : process.env.PUBLIC_PATH;
 
 const config = {
   all: {
-    env: process.env.NODE_ENV || 'development',
-    slyEnv: process.env.SLY_ENV || 'development',
-    isDev: process.env.NODE_ENV === 'development',
-    basename: process.env.BASENAME || '',
-    host: process.env.HOST || 'www.lvh.me',
-    port: process.env.PORT || 8000,
+    env: process.env.NODE_ENV,
+    slyEnv: process.env.SLY_ENV,
+    isDev: process.env.NODE_ENV,
+    basename: process.env.BASENAME,
+    host: process.env.HOST,
+    port: process.env.PORT,
     isBrowser: typeof window !== 'undefined',
     isServer: typeof window === 'undefined',
-    apiUrl: 'http://www.lvh.me/v0',
-    authTokenUrl: 'http://www.lvh.me/users/auth_token',
+    apiUrl: process.env.API_URL,
+    authTokenUrl: process.env.AUTH_URL,
     gMapsApiKey: 'AIzaSyBbN8J_ogumAythgDCzwXzbuIn6qP-w0fM',
     gAnalyticsKey: 'UA-55078261-2',
     eventServerUrl: 'http://localhost:8888/events/new',
-    cookieDomain: process.env.DOMAIN || 'lvh.me',
+    cookieDomain: process.env.DOMAIN,
     publicPath,
 
   },
+
   test: {},
-  development: {
-    cookieDomain: 'lvh.me',
-    eventServerUrl: 'http://localhost:8888/events/new',
-  },
+  development: {},
+
   staging: {
-    apiUrl: process.env.API_URL || 'http://www.myseniorly.com/v0',
-    authTokenUrl: process.env.AUTH_URL  || 'http://www.myseniorly.com/users/auth_token',
-    cookieDomain: process.env.DOMAIN || 'myseniorly.com',
-  },
-  production: {
-    env: process.env.NODE_ENV || 'production',
-    slyEnv: process.env.SLY_ENV || 'production',
     isDev: false,
-    basename: process.env.BASENAME || '',
-    host: process.env.HOST || 'https://www.seniorly.com',
-    port: process.env.PORT || 8080,
-    apiUrl: process.env.API_URL || 'https://www.seniorly.com/v0',
-    authTokenUrl: process.env.AUTH_URL || 'https://www.seniorly.com/users/auth_token',
-    cookieDomain: process.env.DOMAIN || 'seniorly.com',
+  },
+
+  production: {
+    isDev: false,
     eventServerUrl: 'https://events.seniorly.com/events/new',
     gAnalyticsKey: 'UA-55078261-1',
-    publicPath: process.env.PUBLIC_PATH || 'https://dnmsvctzw2bbb.cloudfront.net/react-assets',
   },
 };
 
