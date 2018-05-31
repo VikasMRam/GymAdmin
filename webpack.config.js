@@ -36,6 +36,21 @@ const DOMAIN = process.env.DOMAIN || 'lvh.me';
 
 const SOURCE = process.env.SOURCE || 'src';
 
+console.info('Using config', JSON.stringify({
+  STORYBOOK_GIT_BRANCH,
+  NODE_ENV,
+  SLY_ENV,
+  PUBLIC_PATH,
+  HOST,
+  PORT
+  DEV_PORT,
+  BASENAME,
+  API_URL,
+  AUTH_URL, 
+  DOMAIN, 
+  SOURCE,
+}, null, 2));
+
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
 const sourcePath = path.join(process.cwd(), SOURCE);
 const outputPath = path.join(process.cwd(), 'dist/public');

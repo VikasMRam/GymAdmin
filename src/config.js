@@ -11,7 +11,7 @@ const config = {
   all: {
     env: process.env.NODE_ENV,
     slyEnv: process.env.SLY_ENV,
-    isDev: process.env.NODE_ENV === 'development',
+    isDev: process.env.NODE_ENV,
     basename: process.env.BASENAME,
     host: process.env.HOST,
     port: process.env.PORT,
