@@ -78,6 +78,12 @@ const ModalContext = styled.article`
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
         width: ${size('modal.single')};
       }`,
+    searchBox: css`
+      // same as single without overflow auto
+      border-radius: ${size('spacing.small')};
+      @media screen and (min-width: ${size('breakpoint.tablet')}) {
+        width: ${size('modal.single')};
+      }`,
     double: css`
       overflow: auto;
       border-radius: ${size('spacing.small')};
@@ -158,7 +164,7 @@ const Content = styled.div`
 
 export default class Modal extends React.Component {
   static propTypes = {
-    layout: oneOf(['single', 'double', 'gallery', 'sidebar']).isRequired,
+    layout: oneOf(['single', 'double', 'gallery', 'sidebar', 'searchBox']).isRequired,
     heading: node,
     children: node,
     closeable: bool,

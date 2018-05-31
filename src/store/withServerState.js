@@ -49,7 +49,6 @@ class ServerStateComponent extends Component {
     const { fetchData } = this.props;
     if (this.props.match !== nextProps.match) {
       fetchData(nextProps);
-      window && window.scrollTo(0,0);
       const { match, location } = nextProps;
       const { pathname, search } = location;
       SlyEvent.getInstance().sendPageView(pathname, search);

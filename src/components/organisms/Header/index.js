@@ -12,6 +12,8 @@ const HeaderWrapper = styled.nav`
   display: flex;
   width: 100%;
   border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  // To remove blue line caused by tabIndex
+  outline: none;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: ${size('spacing.regular')} ${size('spacing.xLarge')};
@@ -117,7 +119,7 @@ const HeaderItem = styled(Link)`
 `;
 
 const Header = ({
-  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick,
+  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur
 }) => {
   const headerItemComponents = headerItems.map(item => (
     <HeaderItem to={item.url} palette="slate" key={item.name}>
@@ -146,7 +148,8 @@ const Header = ({
     );
   });
   return (
-    <HeaderWrapper>
+    // tabIndex necessary for onBlur to work
+    <HeaderWrapper tabIndex={-1} onBlur={onHeaderBlur}>
       <SeniorlyLogoWrapper>
         <Link href="/">
           <Logo />
@@ -179,6 +182,7 @@ Header.propTypes = {
   onMenuIconClick: func,
   onMenuItemClick: func,
   onLocationSearch: func,
+  onHeaderBlur: func,
   headerItems: arrayOf(shape({
     name: string,
     url: string,

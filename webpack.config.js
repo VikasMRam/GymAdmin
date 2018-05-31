@@ -28,6 +28,7 @@ const SLY_ENV = process.env.SLY_ENV || 'development';
 const PUBLIC_PATH = process.env.PUBLIC_PATH || '/react-assets';
 const HOST = process.env.HOST || 'www.lvh.me';
 const PORT = process.env.PORT || 8000;
+const DEV_PORT = process.env.DEV_PORT || (+PORT + 1) || 8001;
 const BASENAME = process.env.BASENAME || '';
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
@@ -35,13 +36,28 @@ const DOMAIN = process.env.DOMAIN || 'lvh.me';
 
 const SOURCE = process.env.SOURCE || 'src';
 
+console.info('Using config', JSON.stringify({
+  STORYBOOK_GIT_BRANCH,
+  NODE_ENV,
+  SLY_ENV,
+  PUBLIC_PATH,
+  HOST,
+  PORT,
+  DEV_PORT,
+  BASENAME,
+  API_URL,
+  AUTH_URL, 
+  DOMAIN, 
+  SOURCE,
+}, null, 2));
+
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
 const sourcePath = path.join(process.cwd(), SOURCE);
 const outputPath = path.join(process.cwd(), 'dist/public');
 const assetsPath = path.join(process.cwd(), 'dist/assets.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');
-const devDomain = `http://${HOST}:${PORT}/`;
+const devDomain = `http://${HOST}:${DEV_PORT}/`;
 
 const isDev = NODE_ENV === 'development';
 const isStaging = SLY_ENV === 'staging';
@@ -160,8 +176,8 @@ const client = createConfig([
       stats: 'errors-only',
       historyApiFallback: { index: webpackPublicPath },
       headers: { 'Access-Control-Allow-Origin': '*' },
-      host: HOST,
-      port: +PORT + 1 || 8001,
+      disableHostCheck: true,
+      port: DEV_PORT,
     }),
     addPlugins([new webpack.NamedModulesPlugin()]),
   ]),
