@@ -14,7 +14,10 @@ const TwoColumnWrapper = styled.div`
   }
 `;
 
+// min-width reset is required for changing default flex behaviour which prevents flex-boxes of becoming smaller than it's contents.
+// Ref: https://stackoverflow.com/questions/38223879/white-space-nowrap-breaks-flexbox-layout
 const MainWrapper = styled.section`
+  min-width: 0;
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     flex: 1;
   }
@@ -23,9 +26,11 @@ const MainWrapper = styled.section`
 const ColumnWrapper = styled.aside`
   display: none;
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    position: relative;
     display: block;
     margin-right: ${size('spacing.xLarge')};
     width: ${size('layout.sideColumnSmall')};
+    padding-bottom: ${size('spacing.xLarge')};
   }
 `;
 

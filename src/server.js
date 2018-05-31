@@ -70,6 +70,9 @@ app.use(async (req, res, next) => {
     set_uuid = true;
   }
 
+  res.header('Cache-Control', 'max-age=0, private, must-revalidate');
+  res.header('Cache-Control', 'no-cache="set-cookie"');
+
   if (req.headers.cookie) {
     api.setCookie(req.headers.cookie);
   } else if (set_uuid){
@@ -121,13 +124,14 @@ app.use(async (req, res, next) => {
 });
 
 const getErrorContent = (err) => {
-  const Redbox = require('redbox-react').RedBoxError;
-  return <Redbox error={err} />;
-  // if (isDev) {
-  //
-  // } else {
-  //   return <Error />;
-  // }
+
+
+  if (isDev) {
+    const Redbox = require('redbox-react').RedBoxError;
+    return <Redbox error={err} />;
+  } else {
+    return <Error />;
+  }
 };
 
 app.use((err, req, res, next) => {

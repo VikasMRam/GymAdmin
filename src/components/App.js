@@ -25,6 +25,7 @@ const careTypes = [
   'assisted-living',
   'independent-living',
   'alzheimers-care',
+  'continuing-care-retirement-community'
 ].join('|');
 
 export default class App extends Component {
@@ -72,10 +73,8 @@ export default class App extends Component {
         <Helmet titleTemplate="%s | Seniorly">
           <title>Find Local Senior Housing & Senior Care Services</title>
           <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best Senior Home by comparing pricing, availabilities, and amenities with Seniorly!" />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
-          />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
           <meta content="Seniorly Inc." property="author" />
           <meta content="English" property="language" />
           {/*

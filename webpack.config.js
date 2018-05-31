@@ -70,7 +70,7 @@ const resolveModules = modules => () => ({
 const base = () =>
   group([
     setOutput({
-      filename: '[name].js',
+      filename: '[name].[hash].js',
       path: outputPath,
       publicPath: webpackPublicPath,
     }),
@@ -157,7 +157,7 @@ const client = createConfig([
   ]),
 
   env('production', [
-    splitVendor(),
+    //splitVendor(),
     addPlugins([
       new webpack.optimize.UglifyJsPlugin({
         sourceMap: isStaging,

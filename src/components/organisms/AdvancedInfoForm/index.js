@@ -18,15 +18,15 @@ const StyledButton = styled(Button)`
 `;
 
 const typeOfCareOptions = [
-  { value: 'low', label: 'Low' },
-  { value: 'med', label: 'Med' },
-  { value: 'high', label: 'High' },
+  { value: 'none', label: 'None' },
+  { value: 'assisted', label: 'Assisted' },
+  { value: 'memory', label: 'Dementia' },
 ];
 
 const typeOfRoomOptions = [
+  { value: 'shared', label: 'Shared Suite' },
   { value: 'studio', label: 'Studio' },
-  { value: 'shared', label: 'Shared' },
-  { value: 'bedroom', label: '1 bedroom' },
+  { value: 'bedroom', label: '1+ Bedroom' },
 ];
 
 const timeToMoveOptions = [

@@ -57,7 +57,7 @@ const ClampedLine = styled.div`
 `;
 
 const Description = styled.div`
-  color: ${palette(0)}; 
+  color: ${palette(0)};
   font-size: ${size('text.caption')};
   margin-top: ${size('spacing.small')};
 `;
@@ -73,7 +73,7 @@ export default class SimilarCommunityInfo extends Component {
 
       <Rate>
         <NumberFormat value={startingRate} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-        {' per month.'}
+        {' per month'}
       </Rate>
     );
   }

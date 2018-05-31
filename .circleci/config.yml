@@ -9,12 +9,10 @@ jobs:
       # specify the version you desire here
       - image: circleci/node:7.10
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
     working_directory: ~/repo
+
+    environment:
+      TEST_RESULTS: /tmp/test-results
 
     steps:
       - checkout
@@ -28,24 +26,100 @@ jobs:
 
       - run: npm install
 
-      - run: mkdir -p reports/junit
+      - run:
+          name: Setup dirs
+          command: mkdir -p $TEST_RESULTS
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package-lock.json" }}
-#      - run:
-#           name: "JavaScript Linter"
-#           command: yarn lint -- --format junit -o reports/junit/js-lint-results.xml
+#     - run:
+#         name: "JavaScript Linter"
+#         command: yarn lint -- --format junit -o "$TEST_RESULTS/js-lint-results.xml"
       # run tests!
       - run:
-           name: "JS Test Suite"
-           command: yarn jest --ci --testResultsProcessor="jest-junit"
-           environment:
-             JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
+          name: "JS Test Suite"
+          command: JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml" npm test -- --ci --testResultsProcessor="jest-junit"
+
       - store_test_results:
-           path: reports/junit
+          path: /tmp/test-results
       - store_artifacts:
-           path: reports/junit
+          path: /tmp/test-results
 
-
+  deploy:
+    docker:
+      - image: circleci/python:2.7
+    working_directory: ~/repo
+    steps:
+      - run:
+          name: Check if Sly Master Repo
+          command: |
+            if [[ $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
+              echo "Skipping Deployment since this is not a Sly Master Build"
+              circleci step halt
+            fi
+      # TODO: remove once circle ci starts supporting customizable notifications in workflows
+      - checkout
+      - run:
+          name: Send deploy start notification
+          command: |
+            export GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: %H%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
+            ./.circleci/push-slack-notification.sh "starting deploy to slyreact-$SLY_ENV - \n $GIT_COMMIT_DESC" "#66d3e4"
+      - run:
+          name: Install awscli
+          command: |
+            sudo pip install awsebcli --upgrade
+      - run:
+          name: Deploy to EB if branch is Master
+          command: |
+            export DEPLOY_FAILED=$(eb deploy slyreact-$SLY_ENV -v | tee /dev/tty | grep -c "ERROR")
+            if [ "$DEPLOY_FAILED" -gt 0 ]; then
+              exit 1
+            fi
+      # TODO: remove once circle ci starts supporting customizable notifications in workflows
+      - run:
+          name: Send deploy success notification
+          command: |
+            export GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: %H%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
+            ./.circleci/push-slack-notification.sh "successfully deployed to slyreact-$SLY_ENV - \n $GIT_COMMIT_DESC" "#42c88a"
+      - run:
+          name: Send deploy failed notification
+          when: on_fail
+          command: |
+            export GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: %H%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
+            ./.circleci/push-slack-notification.sh "failed deploying to slyreact-$SLY_ENV - \n $GIT_COMMIT_DESC" "#ed5c5c"
+workflows:
+  version: 2
+  build-development:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
+          context: ReactDev
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
+  build-staging:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
+      - deploy:
+          context: ReactStaging
+          requires:
+            - build
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/

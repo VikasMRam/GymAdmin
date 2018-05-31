@@ -65,15 +65,15 @@ export default class GatheredReviewRatings extends Component {
   };
   render() {
     const { reviewRatings, onLeaveReview } = this.props;
-    const ratings = reviewRatings.map((review) => {
+    const ratings = reviewRatings.map((review, i) => {
       return (
-        <ReviewDiv key={review.name}>
+        <ReviewDiv key={`${review.name}_${i}`}>
           <StartNumDiv>
             <Rating value={review.avgRating} />
             {' ('}{review.numReviews }{')'}
           </StartNumDiv>
           <ReviewProviderDiv>
-            <Link href={review.reviewsUrl} target="_blank">
+            <Link href={review.reviewsUrl} target="_blank" rel="nofollow">
               {review.name}&#174;
             </Link>
           </ReviewProviderDiv>

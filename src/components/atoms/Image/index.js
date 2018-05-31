@@ -1,13 +1,13 @@
 import React from 'react';
 import { string, oneOf } from 'prop-types';
 import styled from 'styled-components';
-import { prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import { assetPath } from 'sly/components/themes';
 
 const StyledImage = styled.img`
   user-select: none;
+  border: none;
 `;
 
 const paddingTop = ({ aspectRatio }) => size('picture.proportions', aspectRatio);

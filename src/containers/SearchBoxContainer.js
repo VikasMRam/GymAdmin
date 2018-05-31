@@ -74,7 +74,7 @@ class SearchBoxContainer extends Component {
     const { layout, address } = this.props;
     const { isMounted } = this.state;
     if (!isMounted) {
-      return <div>Loading...</div>;
+      return <div></div>;
     }
     return (
       <SearchBox

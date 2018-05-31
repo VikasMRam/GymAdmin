@@ -11,3 +11,9 @@ test('COMMUNITY_DETAIL_TOGGLE_FULLSCREEN_MEDIA_GALLERY', () => {
     type: actions.COMMUNITY_DETAIL_TOGGLE_FULLSCREEN_MEDIA_GALLERY,
   }));
 });
+
+test('COMMUNITY_DETAIL_TOGGLE_STICKY_HEADER', () => {
+  expect(actions.toggleStickyHeader()).toEqual(expect.objectContaining({
+    type: actions.COMMUNITY_DETAIL_TOGGLE_STICKY_HEADER,
+  }));
+});

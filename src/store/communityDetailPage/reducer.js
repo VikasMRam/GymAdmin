@@ -1,5 +1,8 @@
 import { initialState } from './selectors';
-import { COMMUNITY_DETAIL_GOTO_MEDIA_GALLERY_SLIDE, COMMUNITY_DETAIL_TOGGLE_FULLSCREEN_MEDIA_GALLERY } from './actions';
+import {
+  COMMUNITY_DETAIL_GOTO_MEDIA_GALLERY_SLIDE, COMMUNITY_DETAIL_TOGGLE_FULLSCREEN_MEDIA_GALLERY,
+  COMMUNITY_DETAIL_TOGGLE_STICKY_HEADER,
+} from './actions';
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
@@ -12,6 +15,11 @@ export default (state = initialState, { type, payload }) => {
       return {
         ...state,
         mediaGalleryFullscreenActive: !state.mediaGalleryFullscreenActive,
+      };
+    case COMMUNITY_DETAIL_TOGGLE_STICKY_HEADER:
+      return {
+        ...state,
+        stickyHeaderVisible: !state.stickyHeaderVisible,
       };
     default:
       return state;

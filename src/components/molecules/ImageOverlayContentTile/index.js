@@ -29,9 +29,12 @@ const ContentWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
   padding: 0 ${size('spacing.large')};
+  width: 100%;
   text-align: center;
+  @media screen and (min-width: ${width}) {
+    width: inherit;
+  }
 `;
 
 const ImageOverlayContentTile = ({
@@ -39,7 +42,7 @@ const ImageOverlayContentTile = ({
 }) => (
   <Wrapper size={size}>
     <StyledImage src={image} size={size} />
-    <ContentWrapper>
+    <ContentWrapper size={size}>
       {children}
     </ContentWrapper>
   </Wrapper>
