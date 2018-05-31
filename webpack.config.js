@@ -21,20 +21,30 @@ const {
   group,
 } = require('@webpack-blocks/webpack2');
 
-const host = process.env.HOST || 'www.lvh.me';
-const port = +process.env.PORT + 1 || 8001;
-const sourceDir = process.env.SOURCE || 'src';
-const publicPath = process.env.PUBLIC_PATH || '/react-assets';
-const webpackPublicPath = `${publicPath}/`.replace(/\/\/$/gi, '/');
-const sourcePath = path.join(process.cwd(), sourceDir);
+// defaults to dev env, otherwise specify with env vars
+const STORYBOOK_GIT_BRANCH = process.env.STORYBOOK_GIT_BRANCH;
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const SLY_ENV = process.env.SLY_ENV || 'development';
+const PUBLIC_PATH = process.env.PUBLIC_PATH || '/react-assets';
+const HOST = process.env.HOST || 'www.lvh.me';
+const PORT = process.env.PORT || 8000;
+const BASENAME = process.env.BASENAME || '';
+const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
+const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
+const DOMAIN = process.env.DOMAIN || 'lvh.me';
+
+const SOURCE = process.env.SOURCE || 'src';
+
+const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
+const sourcePath = path.join(process.cwd(), SOURCE);
 const outputPath = path.join(process.cwd(), 'dist/public');
 const assetsPath = path.join(process.cwd(), 'dist/assets.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');
-const devDomain = `http://${host}:${port}/`;
+const devDomain = `http://${HOST}:${PORT}/`;
 
-const isDev = process.env.NODE_ENV === 'development';
-const isStaging = process.env.SLY_ENV === 'staging';
+const isDev = NODE_ENV === 'development';
+const isStaging = SLY_ENV === 'staging';
 
 const when = (condition, setters) =>
   condition ? group(setters) : () => _ => _;
@@ -75,16 +85,16 @@ const base = () =>
       publicPath: webpackPublicPath,
     }),
     defineConstants({
-      'process.env.STORYBOOK_GIT_BRANCH': process.env.STORYBOOK_GIT_BRANCH,
-      'process.env.NODE_ENV': process.env.NODE_ENV,
-      'process.env.SLY_ENV': process.env.SLY_ENV,
-      'process.env.PUBLIC_PATH': publicPath,
-      'process.env.HOST': process.env.HOST,
-      'process.env.PORT': process.env.PORT,
-      'process.env.BASENAME': process.env.BASENAME,
-      'process.env.API_URL': process.env.API_URL,
-      'process.env.AUTH_URL': process.env.AUTH_URL,
-      'process.env.DOMAIN': process.env.DOMAIN,
+      'process.env.STORYBOOK_GIT_BRANCH': STORYBOOK_GIT_BRANCH,
+      'process.env.NODE_ENV': NODE_ENV,
+      'process.env.SLY_ENV': SLY_ENV,
+      'process.env.PUBLIC_PATH': PUBLIC_PATH,
+      'process.env.HOST': HOST,
+      'process.env.PORT': PORT,
+      'process.env.BASENAME': BASENAME,
+      'process.env.API_URL': API_URL,
+      'process.env.AUTH_URL': AUTH_URL,
+      'process.env.DOMAIN': DOMAIN,
     }),
     addPlugins([new webpack.ProgressPlugin()]),
     happypack([babel()]),
@@ -150,8 +160,8 @@ const client = createConfig([
       stats: 'errors-only',
       historyApiFallback: { index: webpackPublicPath },
       headers: { 'Access-Control-Allow-Origin': '*' },
-      host,
-      port,
+      host: HOST,
+      port: PORT,
     }),
     addPlugins([new webpack.NamedModulesPlugin()]),
   ]),
