@@ -1,9 +1,18 @@
 import { Component } from 'react';
 import { object, node } from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import queryString from 'query-string'; 
+
 import SlyEvent from "sly/services/helpers/events";
 
-// https://stackoverflow.com/questions/36904185/react-router-scroll-to-top-on-every-transition
+const searchWhitelist = [
+  'page-number',
+  'page-size',
+];
+
+const bumpOnSearch = (prev, next) => searchWhitelist
+  .some(key => next[key] !== prev[key]); 
+
 class Router extends Component {
   static propTypes = {
     location: object,
@@ -23,7 +32,13 @@ class Router extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.location !== prevProps.location) {
+    const { pathname, search } = this.props.location;
+    const { pathname: prevPath, search: prevSearch } = prevProps.location;
+
+    const qs = queryString.parse(search);
+    const prevQs = queryString.parse(prevSearch);
+
+    if (pathname !== prevPath || bumpOnSearch(prevQs, qs)) {
       window && window.scrollTo(0, 0);
     }
   }
