@@ -9,6 +9,6 @@ coverage
 webpack/webpack-assets.json
 
 # Elastic Beanstalk Files
-# .elasticbeanstalk/*
+.elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
