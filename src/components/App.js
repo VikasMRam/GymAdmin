@@ -16,7 +16,7 @@ import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
-import ScrollToTopRoute from 'sly/components/ScrollToTopRoute';
+import Router from 'sly/components/molecules/Router';
 
 setGlobalStyles();
 
@@ -95,7 +95,7 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          <ScrollToTopRoute>
+          <Router>
             <Switch>
               <Route
                 path={`/:toc(${careTypes})/:state/:city/filters`}
@@ -106,7 +106,7 @@ export default class App extends Component {
               {this.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
             </Switch>
-          </ScrollToTopRoute>
+          </Router>
         </ThemeProvider>
       </Fragment>
     );

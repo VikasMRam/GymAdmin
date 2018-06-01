@@ -3,7 +3,6 @@ import { object, func } from 'prop-types';
 
 import HomePage from 'sly/components/pages/HomePage';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
-import SlyEvent from "sly/services/helpers/events";
 
 class HomePageContainer extends Component {
   static propTypes = {
@@ -26,16 +25,6 @@ class HomePageContainer extends Component {
     const { path } = filterLinkPath(searchParams, activeDiscoverHome ? activeDiscoverHome.searchParams : {});
     history.push(path);
   };
-
-  componentWillMount() {
-    SlyEvent.getInstance().sendPageView(this.props.location.pathname);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.match !== nextProps.match) {
-      SlyEvent.getInstance().sendPageView(this.props.location.pathname);
-    }
-  }
 
   render() {
     const { activeDiscoverHome } = this.state;
