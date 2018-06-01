@@ -146,18 +146,19 @@ export const filterSearchParams = params =>
     return cumul;
   }, {});
 
-const validFilter = x => typeof x === 'number' || x === undefined;
+const validNumber = x => typeof x === 'number' || x === undefined;
 export const filterLinkPath = (currentFilters, nextFilters = {}) => {
   let pageFilters = {
     'page-number': currentFilters['page-number'] || null,
     'page-size': currentFilters['page-size'] || null,
   };
-  if (validFilter(nextFilters['page-number']) || validFilter(nextFilters['page-size'])) {
+  if (validNumber(nextFilters['page-number']) || validNumber(nextFilters['page-size'])) {
     pageFilters = {
       'page-number': nextFilters['page-number'],
       'page-size': nextFilters['page-size'],
     };
   }
+
   const filters = filterSearchParams({
     ...currentFilters,
     ...nextFilters,
@@ -168,15 +169,20 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
     toc, state, city, ...qs
   } = filters;
 
+  const selected = !Object.keys(nextFilters)
+    .some(key => currentFilters[key] !== nextFilters[key]);
+  
+  if (selected) {
+    Object.keys(nextFilters)
+      .forEach(filter => delete qs[filter]);
+  }
+
   let path = `/${toc}`;
   if (state && city) {
     const qsString = stringify(qs);
     const qsPart = qsString ? `?${qsString}` : '';
     path = `/${toc}/${state}/${city}${qsPart}`;
   }
-
-  const key = Object.keys(nextFilters)[0];
-  const selected = currentFilters[key] === nextFilters[key];
 
   return {
     path,

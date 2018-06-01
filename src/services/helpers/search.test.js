@@ -54,13 +54,13 @@ it('size & budget & radius filters are transformed into url correctly', () => {
   filterParams.budget = 4000;
   expect(filterLinkPath({ ...baseParams, ...filterParams }, { budget: 4000 }))
     .toEqual({
-      path: '/assisted-living/california/san-francisco?budget=4000&radius=20&size=small',
+      path: '/assisted-living/california/san-francisco?radius=20&size=small',
       selected: true,
     });
 
   expect(filterLinkPath({ ...baseParams, ...filterParams }, { size: 'small' }))
     .toEqual({
-      path: '/assisted-living/california/san-francisco?budget=4000&radius=20&size=small',
+      path: '/assisted-living/california/san-francisco?budget=4000&radius=20',
       selected: true,
     });
 
