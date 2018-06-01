@@ -32,9 +32,6 @@ const StyledBox = styled(Box)`
   padding: ${size('spacing.large')};
   width: ${size('filtersMenu.width.mobile')};
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    position: sticky;
-    top: ${size('spacing.xLarge')};
-    bottom: ${size('spacing.xxLarge')};
     width: ${size('filtersMenu.width.laptop')};
   }
 `;
