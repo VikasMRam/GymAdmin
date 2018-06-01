@@ -123,9 +123,12 @@ export const getHelmetForSearchPage = ({
       segment: 'retirement-community',
     };
   }
-  let location_str = city ? `${titleize(city)}, ${titleize(state)}` : `${titleize(state)}`;
-  const title = ` ${location_str} Senior Housing & Senior Living for ${actualToc.label}`;
-  const description = `Find senior housing and senior care services in  ${location_str}. Search Seniorly's database for the best senior housing options, compare pricing, and more!`;
+
+  let locationStr = city ? `${titleize(city)}, ${titleize(state)}` : `${titleize(state)}`;
+  let numResultsStr = (communityList && communityList.length > 0) ? `${communityList.length} results` : `results`;
+  const title = `${actualToc.label} in ${locationStr} - Price & Compare ${numResultsStr} `;
+
+  const description = `Find ${numResultsStr} for ${actualToc.label} in  ${locationStr}. Get pricing information, see picture, read reviews and get help from local senior care service experts`;
   const canonicalUrl = `${host}${url.pathname}`;
   const ld = {};
   ld['@context'] = 'http://schema.org';
