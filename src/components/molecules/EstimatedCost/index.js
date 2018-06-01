@@ -39,7 +39,7 @@ const EstimatedCost = ({
   return (
     <StyledBox>
       <EstimatedCostWrapper>
-        <Heading level="subtitle">
+        <Heading level="subtitle" size="subtitle">
           Estimated cost from <NumberFormat value={from} displayType="text" thousandSeparator prefix="$" /> to <NumberFormat value={to} displayType="text" thousandSeparator prefix="$" /> per month*
         </Heading>
         <Block size="caption">

@@ -30,7 +30,7 @@ const MeetOthersTile = ({
 }) => (
   <Wrapper>
     <StyledImage src={image} />
-    <StyledHeading level="subtitle">{title}</StyledHeading>
+    <StyledHeading level="subtitle" size="subtitle">{title}</StyledHeading>
     <Block>{description}</Block>
   </Wrapper>
 );

@@ -120,7 +120,7 @@ const CommunityChoiceTile = ({
       <Image src={picture || defaultImage} />
       {selectable && <StyledCheckbox checked={selected && selectable} />}
       <Info>
-        <StyledHeading level="subtitle">{name}</StyledHeading>
+        <StyledHeading level="subtitle" size="subtitle">{name}</StyledHeading>
         <Data>
           <div>
             ${startingRate}

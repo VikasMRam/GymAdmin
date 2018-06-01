@@ -46,8 +46,8 @@ console.info('Using config', JSON.stringify({
   DEV_PORT,
   BASENAME,
   API_URL,
-  AUTH_URL, 
-  DOMAIN, 
+  AUTH_URL,
+  DOMAIN,
   SOURCE,
 }, null, 2));
 
@@ -177,6 +177,7 @@ const client = createConfig([
       historyApiFallback: { index: webpackPublicPath },
       headers: { 'Access-Control-Allow-Origin': '*' },
       disableHostCheck: true,
+      host: '0.0.0.0',
       port: DEV_PORT,
     }),
     addPlugins([new webpack.NamedModulesPlugin()]),

@@ -27,7 +27,7 @@ const List = ({
 }) => (
   <div>
     {heading &&
-      <Heading level="subtitle">{heading}</Heading>
+      <Heading level="subtitle" size="subtitle">{heading}</Heading>
     }
     <ListWrapper columns={columns}>
       {items.map((item, i) => (<ListItem key={i}>{item}</ListItem>))}

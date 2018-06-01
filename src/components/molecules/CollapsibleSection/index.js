@@ -50,6 +50,15 @@ const getHeadingLevel = (size) => {
       return 'title';
   }
 };
+const getHeadingSize = (size) => {
+  switch (size) {
+    case 'small':
+      return 'subtitle';
+    default:
+      return 'title';
+  }
+};
+
 export default class CollapsibleSection extends Component {
   static propTypes = {
     children: node,
@@ -99,7 +108,7 @@ export default class CollapsibleSection extends Component {
           <Section collapsed={collapsed} size={size} innerRef={innerRef}>
             {!noHr && <StyledHr />}
             <Header onClick={this.toggle} transparent ghost noHr={noHr}>
-              <StyledHeading level={getHeadingLevel(size)}>
+              <StyledHeading level={getHeadingLevel(size)}  size={getHeadingSize(size)}>
                 {title}
               </StyledHeading>
               <Icon icon="chevron" palette="grays" flip={!collapsed} />
