@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { oneOf, string, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { palette, key } from 'styled-theme';
@@ -8,24 +8,27 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 import { size, assetPath } from 'sly/components/themes';
 import { Icon, Input, Button, Image } from 'sly/components/atoms';
 
-const SearchBar = styled.div`
-  display: flex;
+const Wrapper = styled.div`
   width: 100%;
   position: relative;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    ${switchProp('layout', {
-      header: css`
-        width: ${size('header.searchBar.width')};`,
-      homeHero: css`
-        width: ${size('header.home.heroSearchBar.width')};`,
-    })}
+  ${switchProp('layout', {
+    header: css`
+      width: ${size('header.SearchBox.width')};`,
+    homeHero: css`
+      width: ${size('header.home.heroSearchBox.width')};`,
+  })}
   }
+`;
+const SearchInputButtonWrapper = styled.div`
+  display: flex;
+  height: 100%;
 `;
 const SearchTextBox = styled(Input)`
   ${switchProp('layout', {
     header: css`
-      height: 100%;
+      height: auto;
       border: none;
     `,
   })}
@@ -60,43 +63,38 @@ const SearchButton = styled(Button)`
     display: none;
   }
 `;
-
 const SearchSuggestionsWrapper = styled.div`
-  display: flex;
-  flex: 1;
-`;
-
-// TODO: put this into parent and
-const SearchSuggestions = styled.div`
   z-index: ${key('zIndexes.searchSuggestions')};
   position: absolute;
-  top: ${size('header.menu.position.top.laptopLarge')};
+  // position the autocomplete items to be the same width as the container
+  top: calc(100% + ${size('spacing.small')});
   left: 0;
   right: 0;
-  background: white;
+  background: ${palette('white', 0)};
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')}
     ${palette('grayscale', 2)};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    right: ${ifProp({layout: 'header'}, size('spacing.xxxLarge'), 0)};
+    right: ${ifProp({ layout: 'header' }, size('spacing.xxxLarge'), 0)};
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     right: 0;
   }
 `;
-
 const searchSuggestionBGColor = p => p.active ? palette('grayscale', 3) : palette('white', 0);
 const SearchSuggestion = styled.div`
   width: 100%;
-  padding: ${size('spacing.large')} ${size('spacing.regular')};
+  padding: ${size('spacing.large')};
   background-color: ${searchSuggestionBGColor};
 
   :hover {
     background-color: ${palette('grayscale', 3)};
+    cursor: pointer;
   }
 `;
 
 const GoogleLogo = styled(Image)`
+  margin: ${size('spacing.regular')} ${size('spacing.large')};
   width: ${size('picture.tiny.width')};
   float: right;
 `;
@@ -104,40 +102,43 @@ const baseSearchOptions = {types: ['(regions)']};
 const SearchBox = ({
   layout, value, onChange, onSelect, onSeachButtonClick, onTextboxFocus,
 }) => (
-  <SearchBar layout={layout}>
+  <Wrapper layout={layout}>
     <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion>
       {({ getInputProps, suggestions, getSuggestionItemProps }) => (
-        <SearchSuggestionsWrapper>
-          <SearchTextBox
-            size="large"
-            {...getInputProps({
-              placeholder: 'Search by city or zip code',
-            })}
-            layout={layout}
-            onFocus={onTextboxFocus}
-          />
+        <Fragment>
+          {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+          <SearchInputButtonWrapper>
+            <SearchTextBox
+              size="large"
+              {...getInputProps({
+                placeholder: 'Search by city or zip code',
+              })}
+              layout={layout}
+              onFocus={onTextboxFocus}
+            />
+            <SearchButtonLargeLaptop layout={layout} onClick={onSeachButtonClick}>
+              <Icon icon="search" size="regular" palette="white" />
+            </SearchButtonLargeLaptop>
+            {layout !== 'homeHero' && (
+              <SearchButton transparent ghost onClick={onSeachButtonClick}>
+                <Icon icon="search" size="regular" palette="secondary" />
+              </SearchButton>
+            )}
+          </SearchInputButtonWrapper>
           {suggestions.length > 0 && (
-            <SearchSuggestions layout={layout}>
+            <SearchSuggestionsWrapper layout={layout}>
               {suggestions.map(suggestion => (
                 <SearchSuggestion {...getSuggestionItemProps(suggestion)} active={suggestion.active}>
-                  <span>{suggestion.description}</span>
+                  {suggestion.description}
                 </SearchSuggestion>
               ))}
               <GoogleLogo src={assetPath('images/powered_by_google.png')} />
-            </SearchSuggestions>
+            </SearchSuggestionsWrapper>
           )}
-        </SearchSuggestionsWrapper>
+        </Fragment>
       )}
     </PlacesAutocomplete>
-    <SearchButtonLargeLaptop layout={layout} onClick={onSeachButtonClick}>
-      <Icon icon="search" size="regular" palette="white" />
-    </SearchButtonLargeLaptop>
-    {layout !== 'homeHero' && (
-      <SearchButton transparent ghost onClick={onSeachButtonClick}>
-        <Icon icon="search" size="regular" palette="secondary" />
-      </SearchButton>
-    )}
-  </SearchBar>
+  </Wrapper>
 );
 
 SearchBox.propTypes = {
