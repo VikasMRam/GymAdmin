@@ -42,7 +42,7 @@ const SearchBoxWrapper = styled.div`
   transform: translate(-50%, -50%);
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('header.home.heroSearchBar.width')};
+    width: ${size('header.home.heroSearchBox.width')};
   }
 `;
 const StyledHeading = styled(Heading)`

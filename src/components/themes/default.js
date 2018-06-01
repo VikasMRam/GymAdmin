@@ -45,7 +45,7 @@ theme.sizes = {
   },
 
   header: {
-    searchBar: {
+    SearchBox: {
       width: '21.5rem', // 344px
     },
     menu: {
@@ -58,7 +58,7 @@ theme.sizes = {
       },
     },
     home: {
-      heroSearchBar: {
+      heroSearchBox: {
         width: '27.75rem', // 444px
       },
       heroImage: {
