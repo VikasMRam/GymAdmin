@@ -67,7 +67,7 @@ const SearchSuggestionsWrapper = styled.div`
   z-index: ${key('zIndexes.searchSuggestions')};
   position: absolute;
   // position the autocomplete items to be the same width as the container
-  top: calc(100% + ${size('spacing.small')});
+  top: calc(100% + ${size('spacing.regular')});
   left: 0;
   right: 0;
   background: ${palette('white', 0)};
