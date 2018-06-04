@@ -3,7 +3,7 @@ import { object, node } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string'; 
 
-import SlyEvent from "sly/services/helpers/events";
+import SlyEvent from 'sly/services/helpers/events';
 
 const searchWhitelist = [
   'page-number',
@@ -13,7 +13,7 @@ const searchWhitelist = [
 const bumpOnSearch = (prev, next) => searchWhitelist
   .some(key => next[key] !== prev[key]); 
 
-class Router extends Component {
+export class Router extends Component {
   static propTypes = {
     location: object,
     children: node,
