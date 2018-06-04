@@ -24,6 +24,7 @@ const mapOptions = {
   overviewMapControl: false,
   rotateControl: false,
   scrollwheel: false,
+  draggable: true,
 };
 
 const Map = compose(
@@ -37,15 +38,23 @@ const Map = compose(
   withScriptjs,
   withGoogleMap
 )((props) => {
-  const { center, defaultZoom, children } = props;
+  const {
+    center, defaultZoom, children, zoomControl, fullscreenControl, draggable,
+  } = props;
   const { latitude, longitude } = center;
   const {
     onBoundsChanged, onMapMounted, onCenterChanged, onIdle,
   } = props;
+  const defaultCenter = { lat: latitude, lng: longitude };
+  mapOptions.zoomControl = zoomControl;
+  mapOptions.fullscreenControl = fullscreenControl;
+  mapOptions.draggable = draggable;
+
   return (
     <GoogleMap
       defaultZoom={defaultZoom}
-      defaultCenter={{ lat: latitude, lng: longitude }}
+      // refresh map when center changes
+      center={defaultCenter}
       defaultOptions={mapOptions}
       onBoundsChanged={onBoundsChanged}
       onCenterChanged={onCenterChanged}

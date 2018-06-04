@@ -53,18 +53,20 @@ const CommunitySearchPage = ({
   const listSize = requestMeta['filtered-count'];
   const city = titleize(searchParams.city);
   const toc = titleize(searchParams.toc).toLowerCase();
-
   let latitude = 0;
   let longitude = 0;
   if (communityList.length > 0) {
     ([{ latitude, longitude }] = communityList);
   }
-  if (searchParams.searchOnMove && searchParams.latitude && searchParams.longitude) {
+  if (searchParams.latitude && searchParams.longitude) {
     latitude = parseFloat(searchParams.latitude);
     longitude = parseFloat(searchParams.longitude);
   }
+
   const columnContent = (
     <CommunityFilterList
+      latitude={latitude}
+      longitude={longitude}
       onFieldChange={onParamsChange}
       searchParams={searchParams}
       toggleMap={toggleMap}

@@ -1,3 +1,6 @@
+# Do not include user specific config like global.profile
+# https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-configuration.html#eb-cli3-profile
+# https://github.com/aws-samples/eb-python-flask/blob/master/.elasticbeanstalk/config.global.yml
 branch-defaults:
   master:
     environment: slyreact-development
@@ -14,9 +17,5 @@ global:
   default_platform: Node.js
   default_region: us-west-2
   include_git_submodules: true
-  instance_profile: null
-  platform_name: null
-  platform_version: null
-  profile: eb-cli
   sc: git
   workspace_type: Application

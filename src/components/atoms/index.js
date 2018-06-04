@@ -15,6 +15,7 @@ import Tag from './Tag';
 import Thumbnail from './Thumbnail';
 import TileImage from './TileImage';
 import Tooltip from './Tooltip';
+import Map from './Map';
 
 export {
   Avatar,
@@ -34,4 +35,5 @@ export {
   Thumbnail,
   TileImage,
   Tooltip,
+  Map,
 };
