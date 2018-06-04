@@ -172,6 +172,10 @@ theme.sizes = {
       },
     },
     search: {
+      tiny: {
+        width: '13.375rem', // 214px
+        height: '7rem', // 112px
+      },
       small: {
         width: '343px', // 343px
         height: '198px', // 198px
