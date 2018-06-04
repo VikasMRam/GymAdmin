@@ -1,15 +1,15 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { object, func, bool } from 'prop-types';
+import { object, func, bool, number } from 'prop-types';
 import { palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Field from 'sly/components/molecules/Field';
 import Radio from 'sly/components/molecules/Radio';
 import IconButton from 'sly/components/molecules/IconButton';
-import { Link, Image, Box, Hr, Button } from 'sly/components/atoms';
+import { Link, Box, Hr, Button, Map } from 'sly/components/atoms';
 
 import {
   tocs,
@@ -20,6 +20,19 @@ import {
   getEvtHandler,
 } from 'sly/services/helpers/search';
 
+const MapWrapper = styled.div`
+  width: ${size('map.search.tiny.width')};
+  height: ${size('map.search.tiny.height')};
+  background: ${palette('grayscale', 3)};
+`;
+const MapContainerElement = styled.div`
+  width: 100%;
+  height: 100%;
+
+  * {
+    cursor: default!important;
+  }
+`;
 const StyledWrapper = styled.div`
   padding: ${size('spacing.large')};
   width: ${size('filtersMenu.width.mobile')};
@@ -46,7 +59,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const ImageButtonWrapper = styled.div`
+const MapButtonWrapper = styled.div`
   position: relative;
   text-align: center;
   margin-bottom: ${size('spacing.large')};
@@ -68,11 +81,6 @@ const ImageButtonWrapper = styled.div`
     }
   `)};
 `;
-
-const StyledImage = styled(Image)`
-  max-width: 100%;
-`;
-
 const StyledHr = styled(Hr)`
   margin-bottom: ${size('spacing.regular')};
 `;
@@ -110,6 +118,8 @@ const CommunityFilterList = ({
   searchParams,
   onFieldChange,
   onParamsRemove,
+  latitude,
+  longitude,
 }) => {
   const tocFields = tocs.map((elem) => {
     const { path, selected } = filterLinkPath(searchParams, { toc: elem.value });
@@ -125,6 +135,11 @@ const CommunityFilterList = ({
   });
   const { sort } = searchParams;
   const WrapperElement = (isModalView) ? StyledWrapper : StyledBox;
+  const center = {
+    latitude,
+    longitude,
+  };
+  const defaultZoom = 13;
 
   const filtersApplied = getFiltersApplied(searchParams);
 
@@ -133,7 +148,7 @@ const CommunityFilterList = ({
       {!isModalView &&
         <Fragment>
           {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-          <ImageButtonWrapper isMapView={isMapView}>
+          <MapButtonWrapper isMapView={isMapView}>
             {isMapView && toggleMap &&
               <IconButton icon="list" onClick={toggleMap} palette="secondary" ghost>
                 View List
@@ -142,13 +157,22 @@ const CommunityFilterList = ({
             {!isMapView &&
               <Fragment>
                 {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-                <StyledImage src={assetPath('images/map-placeholder.jpeg')} />
+                <MapWrapper>
+                  <Map
+                    center={center}
+                    defaultZoom={defaultZoom}
+                    zoomControl={false}
+                    fullscreenControl={false}
+                    draggable={false}
+                    containerElement={<MapContainerElement />}
+                  />
+                </MapWrapper>
                 <IconButton icon="map" onClick={toggleMap} palette="secondary" ghost>
                   View Map
                 </IconButton>
               </Fragment>
             }
-          </ImageButtonWrapper>
+          </MapButtonWrapper>
           <StyledHr />
         </Fragment>
       }
@@ -201,10 +225,14 @@ CommunityFilterList.propTypes = {
   searchParams: object.isRequired,
   onFieldChange: func.isRequired,
   onParamsRemove: func.isRequired,
+  latitude: number,
+  longitude: number,
 };
 
 CommunityFilterList.defaultProps = {
   isModalView: false,
+  latitude: 0,
+  longitude: 0,
 };
 
 export default CommunityFilterList;
