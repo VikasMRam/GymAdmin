@@ -113,7 +113,7 @@ const getSDForSearchResource = ({
 
 
 export const getHelmetForSearchPage = ({
-  url, city, state, toc, communityList,
+  url, city, state, toc, listSize, communityList
 }) => {
   let actualToc = tocs.find(elem => (elem.value === toc));
   if (typeof actualToc === 'undefined'){
@@ -125,10 +125,10 @@ export const getHelmetForSearchPage = ({
   }
 
   let locationStr = city ? `${titleize(city)}, ${titleize(state)}` : `${titleize(state)}`;
-  let numResultsStr = (communityList && communityList.length > 0) ? `${communityList.length} results` : `results`;
+  let numResultsStr = (listSize && listSize > 0) ? `${listSize} results` : `results`;
   const title = `${actualToc.label} in ${locationStr} - Price & Compare ${numResultsStr} `;
 
-  const description = `Find ${numResultsStr} for ${actualToc.label} in  ${locationStr}. Get pricing information, see picture, read reviews and get help from local senior care service experts`;
+  const description = `Find ${numResultsStr} for ${actualToc.label} in  ${locationStr}. Get pricing information, see picture, read reviews and get help from local senior care service experts.`;
   const canonicalUrl = `${host}${url.pathname}`;
   const ld = {};
   ld['@context'] = 'http://schema.org';

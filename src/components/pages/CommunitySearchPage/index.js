@@ -79,7 +79,7 @@ const CommunitySearchPage = ({
   return (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      {getHelmetForSearchPage({ ...searchParams, url: location, communityList })}
+      {getHelmetForSearchPage({ ...searchParams, url: location, communityList, listSize })}
       <Modal
         closeable
         onClose={onToggleModalFilterPanel}
