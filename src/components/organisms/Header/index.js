@@ -23,7 +23,7 @@ const HeaderWrapper = styled.nav`
 
 const SeniorlyLogoWrapper = styled.div`
   display: none;
-  margin-right: ${size('spacing.xLarge')};
+  margin-right: ${size('spacing.large')};
   a {
     line-height: 0;
     display: block;
@@ -112,6 +112,9 @@ const HeaderItem = styled(Link)`
   display: none;
   padding: ${size('spacing.large')};
   font-size: ${size('text.caption')};
+  &:first-child {
+    padding-left: 0px; 
+  }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
