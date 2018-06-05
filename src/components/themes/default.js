@@ -262,6 +262,11 @@ theme.transitions = {
   },
 };
 
+theme.animations = {
+  default: '0.2s',
+  slow:    '0.4s',
+};
+
 theme.zIndexes = {
   modal: {
     overlay             : 10000,

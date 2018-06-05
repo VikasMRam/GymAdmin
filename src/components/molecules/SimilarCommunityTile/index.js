@@ -42,10 +42,8 @@ const Wrapper = styled.div`
 
   &:hover {
     cursor: pointer;
-    box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')}
-      ${palette('grayscale', 1, true)};
-    opacity: 0.75;
-    background: ${palette('grayscale', 3)};
+    background: #fff;
+    box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('grayscale', 0)};
 
     Button {
       display: initial;
@@ -57,7 +55,7 @@ const StyledLazy = styled(Lazy)`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     min-width: 0;
     flex-shrink: 0;
-    background: ${palette('grayscale', 3)};
+    background: ${palette('grayscale', 2)};
     width: ${size('tile.regular.width')};
     height: ${size('tile.regular.height')};
   }

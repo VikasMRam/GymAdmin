@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Measure from 'react-measure';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { key } from 'styled-theme';
-import { ifProp } from 'styled-tools';
+import { ifProp, switchProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
@@ -35,11 +35,19 @@ const StyledHeading = styled(Heading)`
   margin: 0;
 `;
 
-const contentHeight = props => (!props.collapsed ? `${props.maxHeight}px` : 0);
+const contentHeight = ({ collapsed, maxHeight }) => (!collapsed ? `${maxHeight}px` : 0);
 const Content = styled.div`
   height: ${contentHeight};
-  overflow: hidden;
   transition: height ${key('transitions.default')};
+  ${ifProp('collapsed', css`
+    overflow: hidden;
+  `, css`
+    overflow: visible;
+    animation: 0.4s delay-overflow;
+  `)};
+  @keyframes delay-overflow {
+    from { overflow: hidden; }
+  }
 `;
 
 const getHeadingLevel = (size) => {
