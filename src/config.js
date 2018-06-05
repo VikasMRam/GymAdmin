@@ -24,7 +24,7 @@ const config = {
     eventServerUrl: 'http://localhost:8888/events/new',
     cookieDomain: process.env.DOMAIN,
     publicPath,
-
+    olarkSiteId: '9319-500-10-7635',
   },
 
   test: {},

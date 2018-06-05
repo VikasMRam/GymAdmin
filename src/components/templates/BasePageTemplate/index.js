@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
-import { any } from 'prop-types';
+import { any, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
+import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 
 const Content = styled.main`
   width: 100%;
@@ -25,13 +26,14 @@ const StyledHeader = styled.header`
 `;
 
 const BasePageTemplate = ({
-  header, children, footer,
+  header, children, footer, hasStickyFooter,
 }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeader>{header}</StyledHeader>
     <Content>{children}</Content>
     <footer>{footer}</footer>
+    <ChatBoxContainer pageWithStickyFooter={hasStickyFooter} />
   </Fragment>
 );
 
@@ -39,6 +41,7 @@ BasePageTemplate.propTypes = {
   header: any.isRequired,
   footer: any.isRequired,
   children: any.isRequired,
+  hasStickyFooter: bool,
 };
 
 export default BasePageTemplate;
