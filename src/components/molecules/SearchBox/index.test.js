@@ -58,8 +58,8 @@ beforeAll(() => {
 
 it('renders', () => {
   const wrapper = wrap();
-  expect(wrapper.find(Icon)).toHaveLength(2);
-  expect(wrapper.find(Button)).toHaveLength(2);
+  expect(wrapper.find(Icon)).toHaveLength(1);
+  expect(wrapper.find(Button)).toHaveLength(1);
   expect(wrapper.find(Input)).toHaveLength(1);
 });
 
