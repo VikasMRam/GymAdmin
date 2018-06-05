@@ -11,6 +11,7 @@ import searchBox from './searchBox/reducer';
 import controller from './controller/reducer';
 import communityDetailPage from './communityDetailPage/reducer';
 import communitySearchPage from './communitySearchPage/reducer';
+import chatBox from './chatBox/reducer';
 
 const reducers = {
   form,
@@ -24,6 +25,7 @@ const reducers = {
   controller,
   communityDetailPage,
   communitySearchPage,
+  chatBox,
 };
 
 export default combineReducers(reducers);

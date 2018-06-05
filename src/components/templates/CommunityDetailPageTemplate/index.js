@@ -37,6 +37,7 @@ const CommunityDetailPageTemplate = ({
   <BasePageTemplate
     header={<DefaultHeaderTemplate onLocationSearch={onLocationSearch} />}
     footer={<Footer />}
+    hasStickyFooter
   >
     <TwoColummnWrapper>
       <MainWrapper>{children}</MainWrapper>

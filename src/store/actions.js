@@ -4,3 +4,4 @@ export * from './header/actions';
 export * from './searchBox/actions';
 export * from './communityDetailPage/actions';
 export * from './communitySearchPage/actions';
+export * from './chatBox/actions';
