@@ -1,8 +1,10 @@
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
+import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 
-export const TemplateContent = styled.main`
+const Main = styled.main`
   width: 100%;
   margin: 0 auto;
   padding: 0 ${size('spacing.large')};
@@ -14,6 +16,13 @@ export const TemplateContent = styled.main`
     width: ${size('layout.col12')};
   }
 `;
+
+export const TemplateContent = ({ hasStickyFooter, children }) => (
+  <Fragment>
+    <Main>{children}</Main>
+    <ChatBoxContainer pageWithStickyFooter={hasStickyFooter} />
+  </Fragment>
+);
 
 export const TemplateHeader = styled.header`
   margin-bottom: ${size('spacing.large')};
