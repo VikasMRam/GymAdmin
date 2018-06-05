@@ -94,10 +94,10 @@ workflows:
   build-development:
     jobs:
       - build:
-          filters:
-            branches:
-              only:
-                - master
+ #         filters:
+ #           branches:
+ #             only:
+ #               - master
       - deploy:
           context: ReactDev
           requires:
