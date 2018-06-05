@@ -70,12 +70,12 @@ export default class SimilarCommunityInfo extends Component {
     similarProperty: PropTypes.object.isRequired,
   };
 
-  renderRate = ({ startingRate }) => !startingRate && (
+  renderRate = ({ startingRate }) => startingRate ? (
     <Rate>
       <NumberFormat value={startingRate} displayType={'text'} thousandSeparator={true} prefix={'$'} />
       {' per month'}
     </Rate>
-  );
+  ): null;
 
   renderReviews = ({ numReviews, reviewsValue }) => { 
     if (numReviews > 0) {

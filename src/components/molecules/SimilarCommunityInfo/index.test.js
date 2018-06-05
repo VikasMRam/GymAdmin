@@ -29,8 +29,7 @@ describe('SimilarCommunityInfo', () => {
     const wrapper = wrap();
     expect(wrapper.childAt(0).contains('Rhoda Goldman Plaza')).toBe(true);
     expect(wrapper.childAt(1).contains('601 Laguna Street, San Francisco, CA 94102')).toBe(true);
-    expect(wrapper
-      .childAt(2)
+    expect(wrapper.childAt(2)
       .childAt(0)
       .childAt(0)
       .html()).toEqual('<span>$4,500</span>');
