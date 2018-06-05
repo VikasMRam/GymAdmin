@@ -4,6 +4,7 @@ import * as header from './header/selectors';
 import * as searchBox from './searchBox/selectors';
 import * as communityDetailPage from './communityDetailPage/selectors';
 import * as communitySearchPage from './communitySearchPage/selectors';
+import * as chatBox from './chatBox/selectors';
 
 export const getDetail = (state, resource, id) =>
   entities.getDetail(
@@ -45,3 +46,6 @@ export const isCommunityDetailPageStickyHeaderActive = state =>
 
 export const isCommunitySearchPageModalFilterPanelActive = state =>
   communitySearchPage.isModalFilterPanelVisible(state.communitySearchPage);
+
+export const hasChatBoxFooterReached = state =>
+  chatBox.hasFooterReached(state.chatBox);
