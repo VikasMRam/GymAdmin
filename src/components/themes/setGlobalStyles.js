@@ -31,7 +31,7 @@ export default function setGlobalStyles() {
       font-style: normal;
     }
 
-    body {
+    html, body {
       color: ${baseColor};
       font-size: 16px;
       font-weight: 400;

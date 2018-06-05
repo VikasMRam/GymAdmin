@@ -16,6 +16,7 @@ const Content = styled.main`
     width: ${size('maxWidth')};
   }
 `;
+
 const StyledHeader = styled.header`
   margin-bottom: ${size('spacing.large')};
   @media screen and (min-width: ${size('breakpoint.laptop')}) {

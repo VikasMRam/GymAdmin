@@ -26,6 +26,11 @@ const SearchInputButtonWrapper = styled.div`
   height: 100%;
 `;
 const SearchTextBox = styled(Input)`
+  height: ${size('element.large')};
+  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border-radius: ${size('spacing.tiny')} 0 0 ${size('spacing.tiny')};
+  border-right: 0;
+
   ${switchProp('layout', {
     header: css`
       height: auto;
@@ -34,35 +39,43 @@ const SearchTextBox = styled(Input)`
   })}
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    height: ${size('element.large')};
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+    border-radius: ${size('spacing.tiny')} 0 0 ${size('spacing.tiny')};
+    border-right: 0;
   }
 `;
-const SearchButtonLargeLaptop = styled(Button)`
+
+const SearchButton = styled(Button)`
+  height: ${size('element.large')};
+  border: none;
+  flex-shrink: 0;
+  width: ${size('element.xxLarge')};
+  border-radius: 0 ${size('spacing.tiny')} ${size('spacing.tiny')} 0;
+
   ${switchProp('layout', {
     header: css`
-      display: none;`,
-    homeHero: css`
-      height: ${size('element.large')};`,
-  })}
-  background-color: ${palette('secondary', 0)};
-  margin-left: -${size('spacing.tiny')};
-  > span {
-    vertical-align: middle;
-  }
+      margin-right: ${size('spacing.regular')};
+      width: ${size('element.large')};
+      height: auto;
+      background: none;
+      > span {
+        color: ${palette('secondary', 0)};
+      }
+    `,
+  })};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: block;
+    margin-right: 0px;
+    background-color: ${palette('secondary', 0)};
+    width: ${size('element.xxLarge')};
+    > span {
+      color: ${palette('white', 0)};
+      vertical-align: middle;
+    }
   }
 `;
-const SearchButton = styled(Button)`
-  height: 100%;
-  border: none;
-  margin-right: ${size('spacing.regular')};
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none;
-  }
-`;
 const SearchSuggestionsWrapper = styled.div`
   z-index: ${key('zIndexes.searchSuggestions')};
   position: absolute;
@@ -116,14 +129,9 @@ const SearchBox = ({
               layout={layout}
               onFocus={onTextboxFocus}
             />
-            <SearchButtonLargeLaptop layout={layout} onClick={onSeachButtonClick}>
+            <SearchButton layout={layout} onClick={onSeachButtonClick}>
               <Icon icon="search" size="regular" palette="white" />
-            </SearchButtonLargeLaptop>
-            {layout !== 'homeHero' && (
-              <SearchButton transparent ghost onClick={onSeachButtonClick}>
-                <Icon icon="search" size="regular" palette="secondary" />
-              </SearchButton>
-            )}
+            </SearchButton>
           </SearchInputButtonWrapper>
           {suggestions.length > 0 && (
             <SearchSuggestionsWrapper layout={layout}>
