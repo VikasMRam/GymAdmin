@@ -257,6 +257,7 @@ theme.sizes = {
   },
 
   chatBox: {
+    reachedBottomTriggerScrollGap   : '60',
     footerReachedBottomMargin       : '3.75rem',   // 60px
     pageWithStickyFooterBottomMargin: '6.25rem',   // 100px
   },

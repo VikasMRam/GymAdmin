@@ -38,10 +38,7 @@ export default class App extends Component {
   });
 
   componentDidMount() {
-    // this is not required when running in test env created by jsdom
-    if (isBrowser) {
-      smoothscroll.polyfill();
-    }
+    smoothscroll.polyfill();
   }
 
   routes = [
