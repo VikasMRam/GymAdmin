@@ -10,24 +10,24 @@ import SimilarCommunityInfo from 'sly/components/molecules/SimilarCommunityInfo'
 
 // TODO : Tech Debt - Similar Code as of RoomTile Molecule. Find how to reuse
 
-const defaultImage =
-  '//d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a814366385f3488c29be/Vintage-Golden-Gate_San-Francisco_Assisted-Living_Original-16_hd.jpg';
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid
     ${palette('grayscale', 2)};
-  transition: box-shadow ${key('transitions.default')},
-  opacity ${key('transitions.default')};
+  transition: box-shadow ${key('transitions.default')}
+    , opacity ${key('transitions.default')}
+    , transform ${key('transitions.default')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    transform: scale(1);
     box-sizing: content-box;
     height: ${size('tile.regular.height')};
     overflow: hidden;
 
     padding: ${size('spacing.large')};
     flex-direction: row;
+    border-radius: ${size('spacing.tiny')};
   }
 
   // because we are passing aspectRatio prop, we have a relative position
@@ -41,9 +41,14 @@ const Wrapper = styled.div`
   }
 
   &:hover {
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      transform: scale(1.002);
+      border-radius: ${size('spacing.small')};
+    }
+
     cursor: pointer;
     background: #fff;
-    box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('grayscale', 0)};
+    box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('grayscale', 0)}80;
 
     Button {
       display: initial;
@@ -91,7 +96,7 @@ const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
       <StyledLazy component="div" ltIE9>
-        <ImageWrapper src={imageUrl || defaultImage} aspectRatio='16:9'>
+        <ImageWrapper src={imageUrl} aspectRatio='16:9'>
           <Button onClick={onClick}>See More Details</Button>
         </ImageWrapper>
       </StyledLazy>

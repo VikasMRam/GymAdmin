@@ -22,10 +22,10 @@ const StyledNav = styled.nav`
   ol {
     width: 100%;
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      width: ${size('layout.mainColumn')};
+      width: ${size('layout.col8')};
     }
     @media screen and (min-width: ${size('breakpoint.laptop')}) {
-      width: ${size('layout.laptopLarge')};
+      width: ${size('layout.col12')};
     }
     list-style-type: none;
     margin: 0 auto;

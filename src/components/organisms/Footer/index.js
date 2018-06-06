@@ -15,22 +15,20 @@ const FooterTopWrapper = styled.div`
   flex-direction: column;
   padding: ${size('spacing.large')} ${size('spacing.large')} 0
     ${size('spacing.large')};
-  justify-content: space-between;
 
   margin: 0 auto;
   width: 100%;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};
+    width: ${size('layout.col8')};
     padding: ${size('spacing.xLarge')} 0 0 0;
     flex-direction: row;
     flex-wrap: wrap;
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('maxWidth')};
+    width: ${size('layout.col12')};
     padding-right: 0;
-    justify-content: space-between;
   }
 `;
 
@@ -78,14 +76,22 @@ const groups = {
 
 
 const GroupDiv = styled.div`
-  width: ${size('footer.group.width')};
   margin-bottom: ${size('spacing.xLarge')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    &:last-child {
+      margin-right: 0px
+    }
+    width: ${size('layout.col3')};
+    margin-right: ${size('spacing.xLarge')};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('layout.col4')};
+  }
 `;
 
 const GroupHeading = styled.div`
   font-size: ${size('text.subtitle')};
   font-weight: bold;
-  text-transform: uppercase;
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -111,7 +117,7 @@ const FooterBottomWrapper = styled.div`
   width: 100%;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};
+    width: ${size('layout.col8')};
 
     flex-direction: row;
     justify-content: space-between;
@@ -119,13 +125,7 @@ const FooterBottomWrapper = styled.div`
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('maxWidth')};
-    padding-right: ${size('layout.sideColumn')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.laptop')};
-    padding-right: 0;
+    width: ${size('layout.col12')};
   }
 `;
 

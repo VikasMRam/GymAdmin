@@ -12,6 +12,7 @@ const config = {
     env: process.env.NODE_ENV,
     slyEnv: process.env.SLY_ENV,
     isDev: process.env.NODE_ENV,
+    isTest: false,
     basename: process.env.BASENAME,
     host: process.env.HOST,
     port: process.env.PORT,
@@ -27,7 +28,9 @@ const config = {
     olarkSiteId: '9319-500-10-7635',
   },
 
-  test: {},
+  test: {
+    isTest: true,
+  },
   development: {},
 
   staging: {

@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { injectGlobal } from 'styled-components';
 import { bool } from 'prop-types';
 
-import { isBrowser, olarkSiteId } from 'sly/config';
+import { isTest, isBrowser, olarkSiteId } from 'sly/config';
 import { getKey } from 'sly/components/themes';
 
 injectGlobal`
@@ -63,7 +63,7 @@ class ChatBox extends Component {
   }
 
   render() {
-    if (isBrowser) {
+    if (isBrowser && !isTest) {
       loadOlark();
       window.olark.identify(olarkSiteId);
     }
