@@ -149,7 +149,7 @@ const Header = ({
   });
   return (
     // tabIndex necessary for onBlur to work
-    <HeaderWrapper tabIndex={-1} onBlur={onHeaderBlur}>
+    <HeaderWrapper tabIndex={-1}>
       <SeniorlyLogoWrapper>
         <Link href="/">
           <Logo />
