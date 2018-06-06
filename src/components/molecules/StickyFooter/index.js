@@ -29,13 +29,13 @@ const FooterWrapper = styled.div`
   }
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};
+    width: ${size('layout.col8')};
     display: flex;
     padding: ${size('spacing.large')} 0;
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('maxWidth')};
+    width: ${size('layout.col12')};
   }
 `;
 

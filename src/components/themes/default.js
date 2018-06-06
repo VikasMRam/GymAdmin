@@ -31,13 +31,23 @@ theme.sizes = {
     laptopLarge: '1440px',
   },
 
-  maxWidth: '1056px',
-
-  // rem measurements
+  // only for tablet and wider
   layout: {
-    laptopLarge: '66rem',      // 1056px
-    mainColumn : '43.50rem',   // 696px
-    sideColumn : '21.00rem',   // 336px
+    col1:        '4.125rem', // 66px
+    col2:        '9.750rem', // 156px
+    col3:       '15.375rem', // 246px
+    // side column
+    col4:       '21.000rem', // 336px
+    col5:       '26.625rem', // 426px
+    col6:       '32.250rem', // 516px
+    col7:       '37.875rem', // 606px
+    // main body column
+    col8:       '43.500rem', // 696px
+    col9:       '49.125rem', // 786px
+    col10:      '54.750rem', // 876px
+    col11:      '60.375rem', // 966px
+    // max page width
+    col12:      '66.000rem', // 1056px
   },
 
   modal: {
@@ -78,12 +88,6 @@ theme.sizes = {
     width: {
       mobile: '23.4375rem',   // 375px
       laptop: '15.375rem',    // 246px
-    },
-  },
-
-  footer: {
-    group: {
-      width: '9.75rem',   // 156px
     },
   },
 

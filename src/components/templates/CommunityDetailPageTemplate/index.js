@@ -14,7 +14,7 @@ const TwoColummnWrapper = styled.div`
 const MainWrapper = styled.div`
   width: 100%;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.mainColumn')};
+    width: ${size('layout.col8')};
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-right: ${size('spacing.xLarge')};
@@ -23,7 +23,7 @@ const MainWrapper = styled.div`
 const ColumnWrapper = styled.aside`
   display: none;
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.sideColumn')};
+    width: ${size('layout.col4')};
     display: block;
   }
 `;

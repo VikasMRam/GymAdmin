@@ -29,7 +29,6 @@ const ColumnWrapper = styled.aside`
     position: relative;
     display: block;
     margin-right: ${size('spacing.xLarge')};
-    width: ${size('layout.sideColumnSmall')};
     padding-bottom: ${size('spacing.xLarge')};
   }
 `;

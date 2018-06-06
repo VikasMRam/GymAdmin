@@ -11,10 +11,10 @@ const Content = styled.main`
   padding: 0 ${size('spacing.large')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: 0;
-    width: ${size('layout.mainColumn')};
+    width: ${size('layout.col8')};
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('maxWidth')};
+    width: ${size('layout.col12')};
   }
 `;
 
