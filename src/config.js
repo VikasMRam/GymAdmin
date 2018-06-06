@@ -39,7 +39,7 @@ const config = {
 
   production: {
     isDev: false,
-    eventServerUrl: 'https://events.seniorly.com/events/new',
+    eventServerUrl: 'https://event.seniorly.com/events/new',
     gAnalyticsKey: 'UA-55078261-1',
   },
 };
