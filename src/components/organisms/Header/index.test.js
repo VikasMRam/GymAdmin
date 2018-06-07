@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import { shallow, mount } from 'enzyme';
-import { MemoryRouter } from 'react-router';
-import configureStore from 'redux-mock-store';
-import { Provider } from 'react-redux';
+import React from 'react';
+import { shallow } from 'enzyme';
+import sinon from 'sinon';
 
-import Header, { HeaderMenu, HeaderMenuItem, SeniorlyIconMenu } from '.';
+import Header, { HeaderMenu, HeaderMenuItem, SeniorlyIconMenu, HeaderItems } from '.';
 
 const headerItems = [
   { name: 'List on Seniorly', url: '#' },
@@ -24,45 +22,7 @@ const menuItems = [
   { name: 'Sign Out', url: '#' },
 ];
 
-const wrap = (props = {}) =>
-  shallow(<Header headerItems={headerItems} menuItems={menuItems} {...props} />);
-
-const setupGoogleMock = () => {
-  /** * Mock Google Maps JavaScript API ** */
-  // https://github.com/kenny-hibino/react-places-autocomplete/issues/189
-  const google = {
-    maps: {
-      places: {
-        AutocompleteService: () => {},
-        PlacesServiceStatus: {
-          INVALID_REQUEST: 'INVALID_REQUEST',
-          NOT_FOUND: 'NOT_FOUND',
-          OK: 'OK',
-          OVER_QUERY_LIMIT: 'OVER_QUERY_LIMIT',
-          REQUEST_DENIED: 'REQUEST_DENIED',
-          UNKNOWN_ERROR: 'UNKNOWN_ERROR',
-          ZERO_RESULTS: 'ZERO_RESULTS',
-        },
-      },
-      Geocoder: () => {},
-      GeocoderStatus: {
-        ERROR: 'ERROR',
-        INVALID_REQUEST: 'INVALID_REQUEST',
-        OK: 'OK',
-        OVER_QUERY_LIMIT: 'OVER_QUERY_LIMIT',
-        REQUEST_DENIED: 'REQUEST_DENIED',
-        UNKNOWN_ERROR: 'UNKNOWN_ERROR',
-        ZERO_RESULTS: 'ZERO_RESULTS',
-      },
-    },
-  };
-  global.window.google = google;
-};
-
-// in test file.
-beforeAll(() => {
-  setupGoogleMock();
-});
+const wrap = (props = {}) => shallow(<Header headerItems={headerItems} menuItems={menuItems} {...props} />);
 
 it('renders children when passed in', () => {
   const wrapper = wrap({ children: 'test' });
@@ -86,44 +46,40 @@ it('renders menu when flag is set', () => {
   expect(wrapper.find(HeaderMenuItem)).toHaveLength(menuItems.length);
 });
 
-// Initialize mockstore with empty state
-const middlewares = [];
-const mockStore = configureStore(middlewares);
-const initialState = {};
-const store = mockStore(initialState);
-
-class HeaderWithState extends Component {
-  state = {
-    menuOpen: false,
-  };
-  toggleMenu = () => {
-    this.setState({
-      menuOpen: !this.state.menuOpen,
-    });
-  };
-  render() {
-    return (
-      <Provider store={store}>
-        <MemoryRouter>
-          <Header
-            menuOpen={this.state.menuOpen}
-            onMenuIconClick={this.toggleMenu}
-            headerItems={headerItems}
-            menuItems={menuItems}
-          />
-        </MemoryRouter>
-      </Provider>
-    );
-  }
-}
-
 it('toggles menu when clicked on Menu Icon', () => {
-  const wrapper = mount(<HeaderWithState />);
+  const onMenuIconClick = sinon.spy();
+  const props = {
+    onMenuIconClick,
+  };
+  const wrapper = wrap(props);
   const iconMenu = wrapper.find(SeniorlyIconMenu);
 
-  expect(wrapper.state()).toEqual({ menuOpen: false });
   iconMenu.simulate('click');
-  expect(wrapper.state()).toEqual({ menuOpen: true });
-  iconMenu.simulate('click');
-  expect(wrapper.state()).toEqual({ menuOpen: false });
+  expect(onMenuIconClick.calledOnce);
+});
+
+it('closes menu when clicked on menu item', () => {
+  const onMenuItemClick = sinon.spy();
+  const props = {
+    menuOpen: true,
+    onMenuItemClick,
+  };
+  const wrapper = wrap(props);
+  const menuItem = wrapper.find(HeaderMenuItem).first();
+
+  menuItem.simulate('click');
+  expect(onMenuItemClick.calledOnce);
+});
+
+it('closes menu when focus changes to element outside dropdown', () => {
+  const onHeaderBlur = sinon.spy();
+  const props = {
+    menuOpen: true,
+    onHeaderBlur,
+  };
+  const wrapper = wrap(props);
+  const headerItems = wrapper.find(HeaderItems);
+
+  headerItems.simulate('click');
+  expect(onHeaderBlur.calledOnce);
 });
