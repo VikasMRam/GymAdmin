@@ -1,9 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
+import { size } from 'sly/components/themes';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import { Paragraph, Heading } from 'sly/components/atoms';
 
+const StyledHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.large')}; 
+`;
+
+const StyledArticle = styled.article`
+  margin-bottom: ${size('spacing.xLarge')};
+  &:last-of-type {
+    margin-bottom: 0;
+    p {
+      margin-bottom: ${size('spacing.regular')};
+    }
+  }
+`;
 
 const CommunityDetails = ({
   communityName, communityDescription, staffDescription, residentDescription, ownerExperience,
@@ -11,37 +26,37 @@ const CommunityDetails = ({
   return (
     <CollapsibleBlock>
       {communityDescription ? (
-        <article>
+        <StyledArticle>
           <Paragraph
             dangerouslySetInnerHTML={{ __html: communityDescription }}
           />
-        </article>
+        </StyledArticle>
       ) : (
         'No details are available'
       )}
       {ownerExperience && (
-        <article>
-          <Heading level="subtitle" size="subtitle">
+        <StyledArticle>
+          <StyledHeading level="subtitle" size="subtitle">
             Owners Story
-          </Heading>
+          </StyledHeading>
           <Paragraph>{ownerExperience}</Paragraph>
-        </article>
+        </StyledArticle>
       )}
       {staffDescription && (
-        <article>
-          <Heading level="subtitle" size="subtitle">
+        <StyledArticle>
+          <StyledHeading level="subtitle" size="subtitle">
             About the Staff at {communityName}
-          </Heading>
+          </StyledHeading>
           <Paragraph>{staffDescription}</Paragraph>
-        </article>
+        </StyledArticle>
       )}
       {residentDescription && (
-        <article>
-          <Heading level="subtitle" size="subtitle">
+        <StyledArticle>
+          <StyledHeading level="subtitle" size="subtitle">
             About the Residents at {communityName}
-          </Heading>
+          </StyledHeading>
           <Paragraph>{residentDescription}</Paragraph>
-        </article>
+        </StyledArticle>
       )}
     </CollapsibleBlock>
   );
