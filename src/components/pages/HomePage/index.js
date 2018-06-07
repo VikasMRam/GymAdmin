@@ -6,7 +6,7 @@ import { palette } from 'styled-theme';
 import { size, assetPath } from 'sly/components/themes';
 
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
-import { Image, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
+import { Image, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import DefaultHeaderTemplate from 'sly/components/templates/DefaultHeaderTemplate';
 import Footer from 'sly/components/organisms/Footer';
 import Modal from 'sly/components/molecules/Modal';
@@ -47,8 +47,13 @@ const SearchBoxWrapper = styled.div`
 `;
 const StyledHeading = styled(Heading)`
   text-align: center;
-  margin-bottom: ${size('spacing.xxLarge')};
+  margin-bottom: ${size('spacing.regular')};
 `;
+const StyledLabel = styled(Label)`
+  text-align: center;
+  margin-bottom: ${size('spacing.large')};
+`;
+
 const StyledSection = styled(Section)`
   text-align: center;
   margin: ${size('spacing.huge')} auto;
@@ -319,6 +324,9 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
           <StyledHeading level="hero" size="hero" palette="white">
             Find a Home to Love
           </StyledHeading>
+          <StyledLabel palette="white">
+            Your search for housing and care has never been easier
+          </StyledLabel>
           <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
       </HeroWrapper>
