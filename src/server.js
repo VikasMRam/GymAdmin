@@ -69,6 +69,12 @@ app.use(async (req, res, next) => {
     res.header('Set-Cookie',`sly_uuid=${sly_uuid};Max-Age=27000000;Domain=${cookieDomain};Path=/;`);
     set_uuid = true;
   }
+  let sly_sid = req.cookies.sly_sid;
+  if (sly_sid === undefined) {
+    sly_sid = require('crypto').randomBytes(16).toString('hex');
+    res.header('Set-Cookie',`sly_sid=${sly_sid};Max-Age=3600;Domain=${cookieDomain};Path=/;`);
+  }
+
 
   res.header('Cache-Control', 'max-age=0, private, must-revalidate');
   res.header('Cache-Control', 'no-cache="set-cookie"');
