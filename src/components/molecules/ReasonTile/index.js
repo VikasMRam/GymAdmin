@@ -62,7 +62,8 @@ export const ItemDescription = styled.div`
   padding: ${size('spacing.large')};
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   border-top: 0;
-  border-radius: ${size('spacing.small')};
+  border-bottom-left-radius: ${size('spacing.small')};
+  border-bottom-right-radius: ${size('spacing.small')};
   display: flex;
   flex: 1 0 auto;
   flex-direction: column;
