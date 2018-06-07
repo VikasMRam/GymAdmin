@@ -45,15 +45,19 @@ const MorePictures = ({ gallery, onPictureClick }) => {
   const { images } = gallery;
   const imageComponents = images.map(image => (
     <Lazy
-      component="div"
       ltIE9
+      component="div"
       key={image.id}
       onClick={() => onPictureClick && onPictureClick(image)}
     >
       <PictureTile src={image.sd} aspectRatio="4:3" />
     </Lazy>
   ));
-  return <Wrapper hasOnPictureClick={onPictureClick}>{imageComponents}</Wrapper>;
+  return (
+    <Wrapper hasOnPictureClick={onPictureClick}>
+      {imageComponents}
+    </Wrapper>
+  );
 };
 
 MorePictures.propTypes = {
