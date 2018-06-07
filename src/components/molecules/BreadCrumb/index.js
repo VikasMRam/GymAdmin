@@ -6,7 +6,7 @@ import { size } from 'sly/components/themes';
 import { Link } from 'sly/components/atoms';
 
 const Wrapper = styled.nav`
-  margin-bottom: ${size('spacing.regular')};
+  margin-bottom: ${size('spacing.large')};
 
   ol {
     list-style-type: none;

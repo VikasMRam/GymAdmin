@@ -7,6 +7,10 @@ import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpe
 
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
+import SlyEvent from "sly/services/helpers/events";
+import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
+import { size } from 'sly/components/themes';
+
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import StickyFooter from 'sly/components/molecules/StickyFooter';
@@ -26,12 +30,18 @@ import MorePictures from 'sly/components/organisms/MorePictures';
 import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import Button from 'sly/components/atoms/Button';
-import SlyEvent from "sly/services/helpers/events";
 
 const BackToSearch = styled.div`
   text-align: center
+`;
+
+const NameHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.small')};
+`;
+
+const AddressHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 export default class CommunityDetailPage extends Component {
@@ -210,8 +220,8 @@ export default class CommunityDetailPage extends Component {
             />
           }
           <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} innerRef={this.breadCrumbRef} />
-          <Heading level="hero" size="hero">{name}</Heading>
-          <Heading level="subtitle" size="subtitle">{formattedAddress}</Heading>
+          <NameHeading level="hero" size="hero">{name}</NameHeading>
+          <AddressHeading level="subtitle" size="subtitle">{formattedAddress}</AddressHeading>
           <CommunitySummary
             innerRef={this.communitySummaryRef}
             pricingAndFloorPlansRef={this.pricingAndFloorPlansRef}
