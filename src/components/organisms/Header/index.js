@@ -63,7 +63,7 @@ export const HeaderMenu = styled.div`
   width: 100%;
   position: absolute;
   top: ${size('header.menu.position.top.mobile')};
-  background: white;
+  background: ${palette('white', 0)};
   z-index: ${key('zIndexes.header')};
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
 
@@ -97,7 +97,7 @@ const MarginnedHR = styled(Hr)`
   }
 `;
 
-const HeaderItems = styled.div`
+export const HeaderItems = styled.div`
   display: none;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -113,7 +113,7 @@ const HeaderItem = styled(Link)`
   padding: ${size('spacing.large')};
   font-size: ${size('text.caption')};
   &:first-child {
-    padding-left: 0px; 
+    padding-left: 0px;
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -122,7 +122,7 @@ const HeaderItem = styled(Link)`
 `;
 
 const Header = ({
-  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur
+  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur,
 }) => {
   const headerItemComponents = headerItems.map(item => (
     <HeaderItem to={item.url} palette="slate" key={item.name}>
@@ -150,9 +150,17 @@ const Header = ({
       </HeaderMenuItem>
     );
   });
+  const headerMenuRef = React.createRef();
+  const handleHeaderMenuBlur = (e) => {
+    // trigger blur event handler only if focus is on an element outside dropdown, mind it
+    if (menuOpen && headerMenuRef.current && !headerMenuRef.current.contains(e.relatedTarget)) {
+      onHeaderBlur();
+    }
+  };
+
   return (
     // tabIndex necessary for onBlur to work
-    <HeaderWrapper tabIndex={-1}>
+    <HeaderWrapper tabIndex="-1" onBlur={handleHeaderMenuBlur}>
       <SeniorlyLogoWrapper>
         <Link href="/">
           <Logo />
@@ -175,7 +183,7 @@ const Header = ({
       {menuItemsPresent && (
         <MenuIcon icon="menu" size="regular" onClick={onMenuIconClick} />
       )}
-      {menuOpen && <HeaderMenu onClick={onMenuItemClick}>{headerMenuItemComponents}</HeaderMenu>}
+      {menuOpen && <HeaderMenu innerRef={headerMenuRef} onClick={onMenuItemClick}>{headerMenuItemComponents}</HeaderMenu>}
     </HeaderWrapper>
   );
 };

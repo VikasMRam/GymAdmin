@@ -20,7 +20,7 @@ const HeaderContainer = ({
       onMenuIconClick={dispatchToggleAction}
       onMenuItemClick={dispatchToggleAction}
       onLocationSearch={onLocationSearch}
-      onHeaderBlur={() => { dropdownOpen && dispatchToggleAction(); }}
+      onHeaderBlur={dispatchToggleAction}
       headerItems={headerItems}
       menuItems={menuItems}
       menuItemHrIndices={menuItemHrIndices}
