@@ -24,7 +24,7 @@ const config = {
     eventServerUrl: 'http://localhost:8888/events/new',
     cookieDomain: process.env.DOMAIN,
     publicPath,
-    olarkSiteId: '9319-500-10-7635',
+    olarkSiteId: '',
   },
 
   test: {},
@@ -32,12 +32,14 @@ const config = {
 
   staging: {
     isDev: false,
+    eventServerUrl: 'http://event.myseniorly.com/events/new',
   },
 
   production: {
     isDev: false,
     eventServerUrl: 'https://event.seniorly.com/events/new',
     gAnalyticsKey: 'UA-55078261-1',
+    olarkSiteId: '9319-500-10-7635',
   },
 };
 
