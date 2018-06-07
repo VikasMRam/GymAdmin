@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Heading } from 'sly/components/atoms';
+import { Heading, Block } from 'sly/components/atoms';
 import RoomTile from 'sly/components/molecules/RoomTile';
 import PriceBar from 'sly/components/molecules/PriceBar';
 import EstimatedCost from 'sly/components/molecules/EstimatedCost';
@@ -19,18 +19,13 @@ const Item = styled.div`
     width: auto;
   }
 `;
-const LocalitiesWrapper = styled.div`
-  // TODO: WTF
-  width: 95%;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: 70%;
-  }
+
+const StyledPriceBar = styled(PriceBar)`
+  margin-bottom: ${size('spacing.small')};
 `;
-const SpacingBottomRegularWrapper = styled.div`
-  margin-bottom: ${size('spacing.regular')};
-`;
+
 const StyledArticle = styled.article`
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     div:nth-child(3n) {
@@ -38,6 +33,29 @@ const StyledArticle = styled.article`
     }
   }
 `;
+
+const CompareHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.large')};
+`;
+
+const PriceLabel = styled.div`
+  margin-bottom: ${size('spacing.small')};
+`;
+
+const findPercentage = (price, maxPrice) => ((price / maxPrice) * 100).toFixed(2);
+
+const sortProperties = (obj) => {
+  const sortable = [];
+  Object.keys(obj).forEach((key) => {
+    // each item is an array in format [key, value]
+    sortable.push([key, obj[key]]);
+  });
+
+  // sort items by value
+  sortable.sort((a, b) => a[1] - b[1]);
+  // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
+  return sortable;
+};
 
 export default class PricingAndAvailability extends Component {
     static propTypes = {
@@ -70,23 +88,6 @@ export default class PricingAndAvailability extends Component {
       roomPrices: [],
     };
 
-    static findPercentage(price, maxPrice) {
-      return +((price / maxPrice) * 100).toFixed(2);
-    }
-
-    static sortProperties(obj) {
-      const sortable = [];
-      Object.keys(obj).forEach((key) => {
-        // each item is an array in format [key, value]
-        sortable.push([key, obj[key]]);
-      });
-
-      // sort items by value
-      sortable.sort((a, b) => a[1] - b[1]);
-      // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
-      return sortable;
-    }
-
     render() {
       const {
         community,
@@ -109,7 +110,7 @@ export default class PricingAndAvailability extends Component {
       let maxPrice = 0;
       let estimatedPriceBase = 0;
       if (estimatedPrice) {
-        sortedEstimatedPrice = this.constructor.sortProperties(estimatedPrice);
+        sortedEstimatedPrice = sortProperties(estimatedPrice);
         // remove items with 0 price
         sortedEstimatedPrice = sortedEstimatedPrice.filter(price => price[1] > 0);
         if (sortedEstimatedPrice.length) {
@@ -123,6 +124,7 @@ export default class PricingAndAvailability extends Component {
         }
         estimatedPriceBase = estimatedPrice.providedAverage || estimatedPrice.estimatedAverage;
       }
+
       roomPrices.sort((a, b) => a.price - b.price);
 
       return (
@@ -147,15 +149,16 @@ export default class PricingAndAvailability extends Component {
           </StyledArticle>
           {sortedEstimatedPrice.length > 0 &&
             <article id="pricing-and-floor-plans-comparison">
-              <Heading level="subtitle" size="subtitle">Compare to Local Assisted Living Costs</Heading>
-              <LocalitiesWrapper>
-                {sortedEstimatedPrice.map((object, i) => (
-                  <SpacingBottomRegularWrapper key={i}>
-                    {estimatedPriceLabelMap[object[0]]}
-                    <PriceBar width={this.constructor.findPercentage(object[1], maxPrice)} price={object[1]} />
-                  </SpacingBottomRegularWrapper>
-                ))}
-              </LocalitiesWrapper>
+              <CompareHeading level="subtitle" size="subtitle">Compare to Local Assisted Living Costs</CompareHeading>
+              {sortedEstimatedPrice.map((object, i) => (
+                <Fragment>
+                  <PriceLabel>{estimatedPriceLabelMap[object[0]]}</PriceLabel>
+                  <StyledPriceBar 
+                    width={findPercentage(object[1], maxPrice)} 
+                    price={object[1]} 
+                  />
+                </Fragment>
+              ))}
             </article>
           }
         </section>

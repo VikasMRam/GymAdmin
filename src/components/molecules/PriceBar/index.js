@@ -14,11 +14,11 @@ const TwoColumnWrapper = styled.div`
 `;
 
 const PriceBar = ({
-  width, price,
+  width, price, ...props
 }) => {
   return (
-    <TwoColumnWrapper>
-      <Bar width={width} />
+    <TwoColumnWrapper {...props}>
+      <Bar width={width/2.5} />
       <TextWrapper>
         <Block size="caption">
           <NumberFormat value={price} displayType="text" thousandSeparator prefix="$" />

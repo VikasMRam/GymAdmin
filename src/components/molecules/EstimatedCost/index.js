@@ -22,6 +22,10 @@ const EstimatedCostWrapper = styled.div`
   }
 `;
 
+const StyledBlock = styled(Block)`
+  margin-bottom: 0;
+`;
+
 const percentageOf = (num, percentage) => {
   return (percentage / 100) * num;
 };
@@ -42,9 +46,9 @@ const EstimatedCost = ({
         <Heading level="subtitle" size="subtitle">
           Estimated cost from <NumberFormat value={from} displayType="text" thousandSeparator prefix="$" /> to <NumberFormat value={to} displayType="text" thousandSeparator prefix="$" /> per month*
         </Heading>
-        <Block size="caption">
+        <StyledBlock size="caption">
           *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services.
-        </Block>
+        </StyledBlock>
       </EstimatedCostWrapper>
       <div>
         <Button onClick={getPricing}>Get Detailed Pricing</Button>
