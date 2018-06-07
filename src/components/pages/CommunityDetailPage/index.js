@@ -38,6 +38,7 @@ const BackToSearch = styled.div`
 
 const NameHeading = styled(Heading)`
   margin-bottom: ${size('spacing.small')};
+  line-height: ${size('lineHeight.minimal')};
 `;
 
 const AddressHeading = styled(Heading)`

@@ -244,6 +244,7 @@ theme.sizes = {
     subtitle: '1.3',
     title   : '1.28',
     hero    : '1.2',
+    minimal : '1.125',
   },
 
   carousel: {
