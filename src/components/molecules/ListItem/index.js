@@ -7,6 +7,7 @@ import { Icon } from 'sly/components/atoms';
 
 const ListItemWrapper = styled.li`
   display: flex;
+  margin-bottom: ${size('spacing.regular')};
 `;
 
 const ListItemIconDiv = styled.div`

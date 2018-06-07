@@ -270,7 +270,7 @@ export default class CommunityDetailPage extends Component {
               />
             </CollapsibleSection>
           }
-          <CollapsibleSection title="Care Services">
+          <CollapsibleSection paddedContent={true} title="Care Services">
             <CareServicesList
               communityName={name}
               careServices={careServices}
@@ -278,6 +278,7 @@ export default class CommunityDetailPage extends Component {
             />
           </CollapsibleSection>
           <CollapsibleSection
+            paddedContent={true}
             title="Amenities & Features"
             innerRef={this.amenitiesAndFeaturesRef}
           >

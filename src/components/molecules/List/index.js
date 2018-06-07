@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
@@ -22,17 +22,21 @@ const ListWrapper = styled.ul`
   }
 `;
 
+const StyledHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.large')};
+`;
+
 const List = ({
   columns, heading, items,
 }) => (
-  <div>
+  <Fragment>
     {heading &&
-      <Heading level="subtitle" size="subtitle">{heading}</Heading>
+      <StyledHeading level="subtitle" size="subtitle">{heading}</StyledHeading>
     }
     <ListWrapper columns={columns}>
       {items.map((item, i) => (<ListItem key={i}>{item}</ListItem>))}
     </ListWrapper>
-  </div>
+  </Fragment>
 );
 
 List.propTypes = {

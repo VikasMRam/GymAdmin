@@ -8,7 +8,11 @@ import { bool, string, node, oneOf, object } from 'prop-types';
 import { size } from 'sly/components/themes';
 import { Hr, Heading, Icon } from 'sly/components/atoms';
 
-const marginBottom = p => (p.collapsed ? 0 : size('spacing.xLarge'));
+const marginBottom = p => p.collapsed 
+  ? 0 
+  : p.paddedContent 
+    ? size('spacing.large') 
+    : size('spacing.xLarge');
 
 const Section = styled.section`
   padding-bottom: ${marginBottom};
@@ -75,12 +79,14 @@ export default class CollapsibleSection extends Component {
     size: oneOf(['small', 'regular', 'large']),
     innerRef: object,
     noHr: bool,
+    paddedContent: bool,
   };
 
   static defaultProps = {
     collapsedDefault: false,
     size: 'regular',
     noHr: false,
+    paddedContent: false,
   };
 
   state = {
@@ -105,6 +111,7 @@ export default class CollapsibleSection extends Component {
       collapsedDefault,
       size,
       innerRef,
+      paddedContent,
       // TODO: Add Stories and Test for noHr
       noHr,
       ...props
@@ -113,7 +120,11 @@ export default class CollapsibleSection extends Component {
     return (
       <Measure onResize={this.onResize}>
         {({ measureRef }) => (
-          <Section collapsed={collapsed} size={size} innerRef={innerRef}>
+          <Section 
+                paddedContent={paddedContent} 
+                collapsed={collapsed} 
+                size={size} 
+                innerRef={innerRef}>
             {!noHr && <StyledHr />}
             <Header onClick={this.toggle} transparent ghost noHr={noHr}>
               <StyledHeading level={getHeadingLevel(size)}  size={getHeadingSize(size)}>
