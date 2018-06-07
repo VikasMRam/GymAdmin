@@ -8,7 +8,7 @@ import EstimatedCostContainer from 'sly/containers/EstimatedCostContainer';
 import RoomTile from 'sly/components/molecules/RoomTile';
 import PriceBar from 'sly/components/molecules/PriceBar';
 
-import PricingAndAvailability from '.';
+import PricingAndAvailability, { findPercentage, sortProperties } from '.';
 
 const wrap = (props = {}) => mount(() =>
   <Provider store={createStore(state=>state)}>
@@ -147,13 +147,13 @@ const address = {
 
 describe('PricingAndAvailability', () => {
   it('verify findPercentage', () => {
-    expect(PricingAndAvailability.findPercentage(10, 100)).toBe(10);
-    expect(PricingAndAvailability.findPercentage(55, 100)).toBe(55);
-    expect(PricingAndAvailability.findPercentage(4000, 6669)).toBe(59.98);
+    expect(findPercentage(10, 100)).toBe('10.00');
+    expect(findPercentage(55, 100)).toBe('55.00');
+    expect(findPercentage(4000, 6669)).toBe('59.98');
   });
 
   it('verify sortProperties', () => {
-    expect(PricingAndAvailability.sortProperties(properties.case1)).toEqual(sortedProperties.case1);
+    expect(sortProperties(properties.case1)).toEqual(sortedProperties.case1);
   });
 
   // TODO: fix this tests using shallow
