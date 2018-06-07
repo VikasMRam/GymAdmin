@@ -71,7 +71,7 @@ app.use(async (req, res, next) => {
     slySID = require('crypto').randomBytes(16).toString('hex');
   }
 
-  res.header('Set-Cookie',[`sly_uuid=${slyUUID};Max-Age=27000000;Domain=${cookieDomain};Path=/;`, `sly_sid${slySID};Max-Age=3600;Domain=${cookieDomain};Path=/;`]);
+  res.header('Set-Cookie',[`sly_uuid=${slyUUID};Max-Age=27000000;Domain=${cookieDomain};Path=/;`, `sly_sid=${slySID};Max-Age=3600;Domain=${cookieDomain};Path=/;`]);
   res.header('Cache-Control', ['max-age=0, private, must-revalidate', 'no-cache="set-cookie"']);
 
   if (req.headers.cookie) {
