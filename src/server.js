@@ -60,26 +60,24 @@ if (publicPath.match(/^\//)) {
 
 app.use(async (req, res, next) => {
   const api = apiService.create();
-  /* @fonz This could be made  less amateurish */
-  const sly_uuid_c = req.cookies.sly_uuid;
-  let sly_uuid = null;
-  let set_uuid = false;
-  if (sly_uuid_c === undefined) {
-    sly_uuid = v4();
-    set_uuid = true;
+  let slyUUID = req.cookies.sly_uuid;
+  let setUUID = false;
+  if (slyUUID === undefined || slyUUID === null) {
+    slyUUID = v4();
+    setUUID = true;
   }
-  let sly_sid = req.cookies.sly_sid;
-  if (sly_sid === undefined) {
-    sly_sid = require('crypto').randomBytes(16).toString('hex');
+  let slySID = req.cookies.sly_sid;
+  if (slySID === undefined || slySID === null) {
+    slySID = require('crypto').randomBytes(16).toString('hex');
   }
 
-  res.header('Set-Cookie',[`sly_uuid=${sly_uuid};Max-Age=27000000;Domain=${cookieDomain};Path=/;`, `sly_sid=${sly_sid};Max-Age=3600;Domain=${cookieDomain};Path=/;`]);
+  res.header('Set-Cookie',[`sly_uuid=${slyUUID};Max-Age=27000000;Domain=${cookieDomain};Path=/;`, `sly_sid${slySID};Max-Age=3600;Domain=${cookieDomain};Path=/;`]);
   res.header('Cache-Control', ['max-age=0, private, must-revalidate', 'no-cache="set-cookie"']);
 
   if (req.headers.cookie) {
     api.setCookie(req.headers.cookie);
-  } else if (set_uuid){
-    api.setCookie(`sly_uuid=${sly_uuid}`);
+  } else if (setUUID){
+    api.setCookie(`sly_uuid=${slyUUID}`);
   }
   /* End of possible temp code */
 
