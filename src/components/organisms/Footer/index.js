@@ -48,44 +48,22 @@ const SeniorlyWhiteIcon = styled(Icon)`
   }
 `;
 
-const groups = {
-  Company: [
-    { name: 'Our History', url: '/about' },
-    { name: 'The Team', url: '/about#/#sly-team' },
-    { name: 'Career', url: 'https://angel.co/seniorly/jobs', target: '_blank' },
-    { name: 'Press', url: '/about#/#press' },
-    { name: 'Contact', url: '/contact' },
-    { name: 'Terms', url: '/tos' },
-    { name: 'Privacy', url: '/privacy' },
-  ],
-  Listings: [
-    { name: 'For Referral Agents', url: '/providers/crm' },
-    { name: 'List Your Property', url: '/providers' },
-    { name: 'How It Works', url: '/how-it-works' },
-  ],
-  Resources: [
-    { name: 'Articles', url: '/resources' },
-    { name: 'Moving Center', url: '/resources/tags/moving+center' },
-    { name: 'Assisted Living', url: '/assisted-living' },
-    { name: 'Independent Living', url: '/assisted-living' },
-    { name: 'Alzheimer\'s Care', url: '/memory-care' },
-    { name: 'Respite Care', url: '/respite-care' },
-    { name: 'CCRC', url: '/continuing-care-retirement-community' },
-  ],
-};
-
-
 const GroupDiv = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.col2')};
+    margin-right: ${size('spacing.xLarge')};
+    &:first-child {
+      a {
+        text-align: center;
+      }
+    }
     &:last-child {
       margin-right: 0px
     }
-    width: ${size('layout.col3')};
-    margin-right: ${size('spacing.xLarge')};
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col4')};
+    width: ${size('layout.col3')};
   }
 `;
 
@@ -165,6 +143,32 @@ const Join = styled.div`
     margin: ${size('spacing.regular')} 0;
   }
 `;
+
+const groups = {
+  Company: [
+    { name: 'Our History', url: '/about' },
+    { name: 'The Team', url: '/about#/#sly-team' },
+    { name: 'Career', url: 'https://angel.co/seniorly/jobs', target: '_blank' },
+    { name: 'Press', url: '/about#/#press' },
+    { name: 'Contact', url: '/contact' },
+    { name: 'Terms', url: '/tos' },
+    { name: 'Privacy', url: '/privacy' },
+  ],
+  Listings: [
+    { name: 'For Referral Agents', url: '/providers/crm' },
+    { name: 'List Your Property', url: '/providers' },
+    { name: 'How It Works', url: '/how-it-works' },
+  ],
+  Resources: [
+    { name: 'Articles', url: '/resources' },
+    { name: 'Moving Center', url: '/resources/tags/moving+center' },
+    { name: 'Assisted Living', url: '/assisted-living' },
+    { name: 'Independent Living', url: '/assisted-living' },
+    { name: 'Alzheimer\'s Care', url: '/memory-care' },
+    { name: 'Respite Care', url: '/respite-care' },
+    { name: 'CCRC', url: '/continuing-care-retirement-community' },
+  ],
+};
 
 const Footer = () => {
   const currentYear = (new Date()).getFullYear();
