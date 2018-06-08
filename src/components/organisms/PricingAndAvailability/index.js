@@ -42,7 +42,7 @@ const PriceLabel = styled.div`
   margin-bottom: ${size('spacing.small')};
 `;
 
-export const findPercentage = (price, maxPrice) => ((price / maxPrice) * 100).toFixed(2);
+export const findPercentage = (price, maxPrice) => ((price / maxPrice) * 100);
 
 export const sortProperties = (obj) => {
   const sortable = [];

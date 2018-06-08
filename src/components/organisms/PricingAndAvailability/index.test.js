@@ -147,9 +147,9 @@ const address = {
 
 describe('PricingAndAvailability', () => {
   it('verify findPercentage', () => {
-    expect(findPercentage(10, 100)).toBe('10.00');
-    expect(findPercentage(55, 100)).toBe('55.00');
-    expect(findPercentage(4000, 6669)).toBe('59.98');
+    expect(findPercentage(10, 100)).toBe(10);
+    expect(findPercentage(55, 100).toFixed(2)).toBe('55.00');
+    expect(findPercentage(4000, 6669).toFixed(2)).toBe('59.98');
   });
 
   it('verify sortProperties', () => {
