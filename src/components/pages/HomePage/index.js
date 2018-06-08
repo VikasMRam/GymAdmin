@@ -209,22 +209,22 @@ const secondRowDiscoverHomes = [
 const usefulInformationTiles = [
   {
     to: '/independent-living',
-    image: assetPath('images/home/useful-info/independent-living.jpeg'),
+    image: assetPath('images/home/useful-info/independent-living.jpg'),
     title: 'Independent Living',
   },
   {
     to: '/assisted-living',
-    image: assetPath('images/home/useful-info/assisted-living.jpeg'),
+    image: assetPath('images/home/useful-info/assisted-living.jpg'),
     title: 'Assisted Living',
   },
   {
     to: '/alzheimers-care',
-    image: assetPath('images/home/useful-info/memory-care.jpeg'),
+    image: assetPath('images/home/useful-info/memory-care.jpg'),
     title: 'Memory Care',
   },
   {
     to: '/board-and-care-home',
-    image: assetPath('images/home/useful-info/board-and-care-residential.jpeg'),
+    image: assetPath('images/home/useful-info/board-and-care.jpg'),
     title: 'Board & Care Residential',
   },
   /* {
@@ -234,12 +234,12 @@ const usefulInformationTiles = [
   }, */
   {
     to: '/continuing-care-retirement-community',
-    image: assetPath('images/home/useful-info/ccrc-life-plan.jpeg'),
+    image: assetPath('images/home/useful-info/ccrc.jpeg'),
     title: 'CCRC / Life Plan',
   },
   {
     to: '/resources',
-    image: assetPath('images/home/useful-info/more-resources.jpeg'),
+    image: assetPath('images/home/useful-info/more-resources.jpg'),
     title: 'More Resources',
   },
 ];
