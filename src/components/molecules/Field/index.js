@@ -48,6 +48,7 @@ const Field = ({
   label,
   type,
   placeholder,
+  className,
   ...props
 }) => {
   const inputProps = {
@@ -62,7 +63,7 @@ const Field = ({
   const InputComponent = getInputComponent(type);
   const renderInputFirst = type === 'checkbox' || type === 'radio';
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       {renderInputFirst && <InputComponent {...inputProps} />}
       {label && (
         <Label invalid={invalid} htmlFor={inputProps.id}>

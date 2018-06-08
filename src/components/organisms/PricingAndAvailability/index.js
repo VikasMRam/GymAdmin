@@ -9,6 +9,7 @@ import EstimatedCost from 'sly/components/molecules/EstimatedCost';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import ConciergeController from 'sly/controllers/ConciergeController';
+import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
 
 const Item = styled.div`
   display: inline-block;
@@ -147,6 +148,11 @@ export default class PricingAndAvailability extends Component {
               </Item>
             ))}
           </StyledArticle>
+          <ConciergeController community={community} expressConversionMode>
+            {({ concierge }) =>
+              <GetCurrentAvailabilityFormContainer concierge={concierge} community={community} />
+            }
+          </ConciergeController>
           {sortedEstimatedPrice.length > 0 &&
             <article id="pricing-and-floor-plans-comparison">
               <CompareHeading level="subtitle" size="subtitle">Compare to Local Assisted Living Costs</CompareHeading>

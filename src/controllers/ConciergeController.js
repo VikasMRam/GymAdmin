@@ -42,6 +42,11 @@ class ConciergeController extends Component {
     community: communityPropType.isRequired,
     concierge: object.isRequired,
     children: func.isRequired,
+    expressConversionMode: bool,
+  };
+
+  static defaultProps = {
+    expressConversionMode: false,
   };
 
   getPricing = () => {
@@ -51,7 +56,6 @@ class ConciergeController extends Component {
     SlyEvent.getInstance().sendEvent(event);
     getDetailedPricing({ callbackRequested, advancedInfoSent });
   }
-
 
   submitAdvancedInfo = data => {
     const { submit, community, next } = this.props;
@@ -67,35 +71,41 @@ class ConciergeController extends Component {
     }).then(this.next);
   }
 
-  submitConversion = data => {
-    const { submit, community } = this.props;
+  submitConversion = (data) => {
+    const {
+      submit, community, expressConversionMode, concierge,
+    } = this.props;
+    const { callbackRequested } = concierge;
 
-    let event = {action:'contactCommunity',category:'requestCallback',label:community.id};
+    const event = { action: 'contactCommunity', category: 'requestCallback', label: community.id };
     SlyEvent.getInstance().sendEvent(event);
 
-    submit({
-      action: REQUEST_CALLBACK,
-      value: {
-        user: { ...data },
-        propertyIds: [community.id],
-      }
-    }).then(this.next);
+    if (!expressConversionMode || (expressConversionMode && !callbackRequested)) {
+      submit({
+        action: REQUEST_CALLBACK,
+        value: {
+          user: { ...data },
+          propertyIds: [community.id],
+        }
+      }).then(this.next);
+    } else {
+      this.next();
+    }
   }
 
   /*
    * IF NOT gotUserDetails OR NOT conversionSent
    *   currentStep = conversion
-   * ELSE IF NOT advancedSent
+   * ELSE IF NOT advancedSent AND NOT expressConversionMode
    *   currentStep = advanced
-   * ELSE IF advancedSent
+   * ELSE IF advancedSent OR expressConversionMode
    *   currentStep = thankyou
    */
-
   next = () => {
-    const { concierge, getDetailedPricing, community, next, gotoStep, submit } = this.props;
+    const { concierge, getDetailedPricing, community, next, gotoStep, submit, expressConversionMode } = this.props;
     const { callbackRequested, advancedInfoSent, currentStep } = concierge;
 
-    if (callbackRequested && advancedInfoSent) {
+    if (expressConversionMode || (callbackRequested && advancedInfoSent)) {
       gotoStep({ step: THANKYOU });
     } else {
       next({ callbackRequested, advancedInfoSent });

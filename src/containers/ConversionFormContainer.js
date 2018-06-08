@@ -38,24 +38,24 @@ class ConversionFormContainer extends Component {
 
   render() {
     const { concierge, userDetails, ...props } = this.props;
-    const { email, fullName, phone } = userDetails; 
+    const { email, fullName, phone } = userDetails;
     const initialValues = {
       email,
       phone,
       full_name: fullName,
     };
     return (
-      <ReduxForm 
-        initialValues={initialValues} 
-        onSubmit={concierge.submitConversion} 
-        {...props} 
+      <ReduxForm
+        initialValues={initialValues}
+        onSubmit={concierge.submitConversion}
+        {...props}
       />
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  userDetails: (getDetail(state, 'userAction') || {}).userDetails || {}, 
+  userDetails: (getDetail(state, 'userAction') || {}).userDetails || {},
 });
 
 const mapDispatchToProps = dispatch => ({
