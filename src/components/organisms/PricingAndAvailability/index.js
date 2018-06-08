@@ -42,7 +42,7 @@ const PriceLabel = styled.div`
   margin-bottom: ${size('spacing.small')};
 `;
 
-export const findPercentage = (price, maxPrice) => ((price / maxPrice) * 100).toFixed(2);
+export const findPercentage = (price, maxPrice) => ((price / maxPrice) * 100);
 
 export const sortProperties = (obj) => {
   const sortable = [];
@@ -151,7 +151,7 @@ export default class PricingAndAvailability extends Component {
             <article id="pricing-and-floor-plans-comparison">
               <CompareHeading level="subtitle" size="subtitle">Compare to Local Assisted Living Costs</CompareHeading>
               {sortedEstimatedPrice.map((object, i) => (
-                <Fragment>
+                <Fragment key={`${object[0]}_${i}`}>
                   <PriceLabel>{estimatedPriceLabelMap[object[0]]}</PriceLabel>
                   <StyledPriceBar 
                     width={findPercentage(object[1], maxPrice)} 
