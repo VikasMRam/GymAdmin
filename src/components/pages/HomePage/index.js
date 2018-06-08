@@ -234,7 +234,7 @@ const usefulInformationTiles = [
   }, */
   {
     to: '/continuing-care-retirement-community',
-    image: assetPath('images/home/useful-info/ccrc.jpeg'),
+    image: assetPath('images/home/useful-info/ccrc.jpg'),
     title: 'CCRC / Life Plan',
   },
   {
