@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Heading, Block } from 'sly/components/atoms';
+import { Heading, Box } from 'sly/components/atoms';
 import RoomTile from 'sly/components/molecules/RoomTile';
 import PriceBar from 'sly/components/molecules/PriceBar';
 import EstimatedCost from 'sly/components/molecules/EstimatedCost';
@@ -10,6 +10,7 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
+import Thankyou from 'sly/components/molecules/Thankyou';
 
 const Item = styled.div`
   display: inline-block;
@@ -33,6 +34,9 @@ const StyledArticle = styled.article`
       margin-right: 0;
     }
   }
+`;
+const StyledBox = styled(Box)`
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const CompareHeading = styled(Heading)`
@@ -149,8 +153,13 @@ export default class PricingAndAvailability extends Component {
             ))}
           </StyledArticle>
           <ConciergeController community={community} expressConversionMode>
-            {({ concierge }) =>
-              <GetCurrentAvailabilityFormContainer concierge={concierge} community={community} />
+            {({ concierge }) => {
+                const { callbackRequested } = concierge.get();
+                if (callbackRequested) {
+                  return <StyledBox><Thankyou community={community} /></StyledBox>;
+                }
+                return <GetCurrentAvailabilityFormContainer concierge={concierge} community={community} />;
+              }
             }
           </ConciergeController>
           {sortedEstimatedPrice.length > 0 &&
@@ -159,9 +168,9 @@ export default class PricingAndAvailability extends Component {
               {sortedEstimatedPrice.map((object, i) => (
                 <Fragment key={`${object[0]}_${i}`}>
                   <PriceLabel>{estimatedPriceLabelMap[object[0]]}</PriceLabel>
-                  <StyledPriceBar 
-                    width={findPercentage(object[1], maxPrice)} 
-                    price={object[1]} 
+                  <StyledPriceBar
+                    width={findPercentage(object[1], maxPrice)}
+                    price={object[1]}
                   />
                 </Fragment>
               ))}

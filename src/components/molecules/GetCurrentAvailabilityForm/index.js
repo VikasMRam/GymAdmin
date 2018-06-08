@@ -12,7 +12,6 @@ import ReduxField from 'sly/components/organisms/ReduxField';
 const StyledBox = styled(Box)`
   margin-bottom: ${size('spacing.xLarge')};
   padding: ${size('spacing.xLarge')};
-  padding-bottom: 0;
 `;
 const TwoColumnWrapper = styled.div`
   display: flex;
@@ -23,7 +22,10 @@ const TwoColumnWrapper = styled.div`
 `;
 const StyledReduxField = styled(ReduxField)`
   margin-right: ${size('spacing.large')};
-  margin-bottom: ${size('spacing.xLarge')};
+  margin-bottom: ${size('spacing.large')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-bottom: 0;
+  }
   width: 100%;
 `;
 const StyledHeading = styled(Heading)`
