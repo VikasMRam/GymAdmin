@@ -139,6 +139,7 @@ theme.sizes = {
   picture: {
     tiny: {
       width: '9.375rem',   // 150px
+      height: '4.5rem',    // 72 px
     },
     small: {
       width : '15.375rem',   // 246px

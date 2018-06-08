@@ -146,7 +146,12 @@ const MSCColumnWrapper = ColumnWrapper.extend`
 const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
-/* const CWTColumnWrapper = ColumnWrapper.extend`
+const CWTImage = styled(Image)`
+  margin-bottom: ${size('spacing.regular')};
+  height: ${size('picture.tiny.height')};
+`;
+const CWTColumnWrapper = ColumnWrapper.extend`
+  margin-bottom: ${size('spacing.xxLarge')};
   > * {
     margin-right: ${size('spacing.large')};
   }
@@ -157,7 +162,7 @@ const StyledBlock = styled(Block)`
       margin-right: ${size('spacing.huge')};
     }
   }
-`; */
+`;
 // this is required for IE as it won't consider inline elements as flex children
 const StyledLink = styled(Link)`
   display: block;
@@ -436,17 +441,22 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
           </ImageOverlayContentTile>
         </TwoColumnWrapper>
       </StyledSection>
-      {/* <StyledHr />
-      <StyledSection title="Communities We Trust">
-        <br />
+      <StyledHr />
+      <StyledSection title="Companies We Trust">
         <CWTColumnWrapper>
-          <StyledImage src={assetPath('images/home/communities-we-trust/bhsl.png')} />
-          <Image src={assetPath('images/home/communities-we-trust/brookdale.png')} />
-          <Image src={assetPath('images/home/communities-we-trust/integral.png')} />
-          <Image src={assetPath('images/home/communities-we-trust/pacifica.png')} />
-          <Image src={assetPath('images/home/communities-we-trust/Lyft.png')} />
+          <CWTImage src={assetPath('images/home/companies-we-trust/HomeCareAssistance_BW.png')} alt="Home Care Assistance Logo" />
+          <CWTImage src={assetPath('images/home/companies-we-trust/Lyft_BW.png')} alt="Lyft Logo" />
+          <CWTImage src={assetPath('images/home/companies-we-trust/Berkeley_BW.png')} alt="Berkeley Logo" />
+          <CWTImage src={assetPath('images/home/companies-we-trust/FCA_BW.png')} alt="Family Caregiver Alliance Logo" />
+          <CWTImage src={assetPath('images/home/companies-we-trust/BlueHarborSeniorLiving_BW.png')} alt="Blue Harbor Senior Living Logo" />
         </CWTColumnWrapper>
-      </StyledSection> */}
+        <CWTColumnWrapper>
+          <CWTImage src={assetPath('images/home/companies-we-trust/Brookdale_BW.png')} alt="Brookdale Senior Living Logo"  />
+          <CWTImage src={assetPath('images/home/companies-we-trust/SunriseSeniorLiving_BW.png')} alt="SunriseSenior Living Logo"  />
+          <CWTImage src={assetPath('images/home/companies-we-trust/IntegralSeniorLiving_BW.png')} alt="Integral Senior Living Logo"  />
+          <CWTImage src={assetPath('images/home/companies-we-trust/PacificaSeniorLiving_BW.png')} alt="Pacifica Senior Living Logo" />
+        </CWTColumnWrapper>
+      </StyledSection>
     </BasePageTemplate>
   );
 };
