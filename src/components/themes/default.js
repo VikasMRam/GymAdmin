@@ -74,6 +74,7 @@ theme.sizes = {
       },
       heroImage: {
         height: '40rem',   // 640px
+        mobileHeight: '30rem', // 480px
       },
     },
   },

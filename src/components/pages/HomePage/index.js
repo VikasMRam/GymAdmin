@@ -19,7 +19,7 @@ import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 const HeroWrapper = styled.div`
   position: relative;
   background-color: ${palette('grayscale', 0)};
-  height: calc(${size('header.home.heroImage.height')}/2);
+  height: calc(${size('header.home.heroImage.mobileHeight')});
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     height: ${size('header.home.heroImage.height')};
@@ -52,6 +52,17 @@ const StyledHeading = styled(Heading)`
 const StyledLabel = styled(Label)`
   text-align: center;
   margin-bottom: ${size('spacing.large')};
+`;
+const ImageCreditDiv = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-bottom: ${size('spacing.large')};
+  margin-right: ${size('spacing.large')};
+`
+const ImageCreditLabel = styled.label`
+  font-size: ${size('text', 'tiny')};
+  color: ${palette('white', 0)};
 `;
 
 const StyledSection = styled(Section)`
@@ -324,7 +335,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <DefaultHeaderTemplate onLocationSearch={onLocationSearch} />
       <HeroWrapper>
-        <StyledImage src={assetPath('images/home/cover3.jpg')} alt="hero image" />
+        <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
         <SearchBoxWrapper>
           <StyledHeading level="hero" size="hero" palette="white">
             Find a Home to Love
@@ -334,6 +345,11 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
           </StyledLabel>
           <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
+        <ImageCreditDiv>
+          <ImageCreditLabel palette="white">
+            Sagebrook Senior Living San Francisco
+          </ImageCreditLabel>
+        </ImageCreditDiv>
       </HeroWrapper>
     </Fragment>
   );
