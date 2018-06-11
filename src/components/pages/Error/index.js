@@ -8,7 +8,7 @@ import Heading from "sly/components/atoms/Heading";
 
 import Link from "sly/components/atoms/Link";
 import BasePageTemplate from "sly/components/templates/BasePageTemplate";
-import DefaultHeaderTemplate from 'sly/components/templates/DefaultHeaderTemplate';
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from "sly/components/organisms/Footer";
 
 
@@ -64,7 +64,7 @@ export default class ErrorPage extends Component {
     const { errorCode } = this.props;
 
     return (
-      <BasePageTemplate header={<DefaultHeaderTemplate onLocationSearch={this.onLocationSearch} />}  footer={<Footer/>}>
+      <BasePageTemplate header={<HeaderContainer onLocationSearch={this.onLocationSearch} />}  footer={<Footer/>}>
         <Wrapper>
           <IWrapper>{getTextError(errorCode)}</IWrapper>
           <div>

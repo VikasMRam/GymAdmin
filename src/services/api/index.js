@@ -86,6 +86,7 @@ api.create = (settings = {}) => ({
   },
 
   requestAuthToken() {
+    this.unsetToken();
     return fetch(authTokenUrl, { credentials: 'same-origin' })
       .then(checkStatus)
       .then(parseJSON)
@@ -93,18 +94,18 @@ api.create = (settings = {}) => ({
   },
 
   request(endpoint, settings) {
-    // FIXME: More specific way of doing this
-    let tries = 2;
-    const aTry = () =>
-      api.request(endpoint, merge({}, this.settings, settings)).catch((error) => {
-        if ([401, 403].includes(error.response.status) && tries--) {
-          this.unsetToken();
-          return this.requestAuthToken().then(aTry);
+    const doRequest = () => api
+      .request(endpoint, merge({}, this.settings, settings));
+
+    return doRequest() 
+      .catch(error => {
+        if ([401, 403].includes(error.response.status)) {
+          return this.requestAuthToken().then(doRequest).catch(error => {
+            console.log('second error', error);
+          });
         }
         throw error;
       });
-
-    return aTry();
   },
 
   post(endpoint, data, settings) {

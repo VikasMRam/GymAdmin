@@ -5,7 +5,6 @@ import { env } from 'sly/config';
 import { entitiesReceive } from './actions';
 
 const middleware = store => next => (action) => {
-
   const { payload:rawEntities, meta } = action;
 
   if (meta && meta.entities) {

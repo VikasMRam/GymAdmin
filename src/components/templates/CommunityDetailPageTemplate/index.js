@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { size } from 'sly/components/themes';
 
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
-import DefaultHeaderTemplate from 'sly/components/templates/DefaultHeaderTemplate';
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 
 const TwoColummnWrapper = styled.div`
@@ -35,7 +35,7 @@ const CommunityDetailPageTemplate = ({
   onLocationSearch,
 }) => (
   <BasePageTemplate
-    header={<DefaultHeaderTemplate onLocationSearch={onLocationSearch} />}
+    header={<HeaderContainer onLocationSearch={onLocationSearch} />}
     footer={<Footer />}
     hasStickyFooter
   >
