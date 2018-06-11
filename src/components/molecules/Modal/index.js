@@ -135,21 +135,11 @@ const CloseButton = styled(IconButton)`
 const Heading = styled.div`
   width: 100%;
   padding-bottom: ${size('spacing.xLarge')};
-  ${switchProp('layout', {
-    double: css`@media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-      padding: ${size('spacing.xxxLarge')};
-      width: ${size('modal.single')};
-    }`,
-    gallery: css`
-      padding: 0;
-      position: fixed;
-      left: ${size('spacing.xLarge')};
-      top: ${size('spacing.large')};
-      z-index: ${key('zIndexes.modal.galleryLayoutHeading')};`,
-    sidebar: css`
-      padding-bottom: ${size('spacing.regular')};
-    `,
-  })}
+  padding: 0;
+  position: fixed;
+  left: ${size('spacing.xLarge')};
+  top: ${size('spacing.large')};
+  z-index: ${key('zIndexes.modal.galleryLayoutHeading')};
 `;
 
 const Content = styled.div`
@@ -170,11 +160,13 @@ export default class Modal extends React.Component {
     closeable: bool,
     onClose: func.isRequired,
     transparent: bool,
+    closeButtonPalette: oneOf(['white', 'slate']),
   };
 
   static defaultProps = {
     layout: 'single',
     transparent: false,
+    closeButtonPalette: 'white',
   };
 
   componentDidMount() {
@@ -183,7 +175,7 @@ export default class Modal extends React.Component {
 
   render() {
     const {
-      heading, children, closeable, layout, onClose, transparent,
+      heading, children, closeable, layout, onClose, transparent, closeButtonPalette,
     } = this.props;
     const iconClose = (
       <CloseButton
@@ -191,7 +183,7 @@ export default class Modal extends React.Component {
         iconOnly
         layout={layout}
         onClick={onClose}
-        palette={transparent ? 'white' : 'slate'}
+        palette={closeButtonPalette}
       />
     );
 
@@ -204,7 +196,7 @@ export default class Modal extends React.Component {
           onClose={onClose}
           {...this.props}
         >
-          {(closeable || heading) && (layout === 'gallery') && (
+          {(closeable || heading) && (
             <Heading layout={layout}>
               {closeable && iconClose}
               {heading}
@@ -213,12 +205,6 @@ export default class Modal extends React.Component {
           {/* apply centering css positioning only to modal content as in gallery
               layout the close button should be fixed at screen top left corner */}
           <ModalContext layout={layout} transparent={transparent}>
-            {(closeable || heading) && (layout !== 'gallery') && (
-              <Heading layout={layout}>
-                {closeable && iconClose}
-                {heading}
-              </Heading>
-            )}
             <Content layout={layout}>
               {children}
             </Content>

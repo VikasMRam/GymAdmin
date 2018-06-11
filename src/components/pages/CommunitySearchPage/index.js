@@ -85,6 +85,7 @@ const CommunitySearchPage = ({
         onClose={onToggleModalFilterPanel}
         layout="sidebar"
         isOpen={isModalFilterPanelVisible}
+        closeButtonPalette="slate"
       >
         <CommunityFilterList
           onFieldChange={onParamsChange}
