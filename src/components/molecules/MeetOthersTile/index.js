@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   }
   text-align: left;
 `;
-const StyledImage = styled(Image)`
+export const StyledImage = styled(Image)`
   border-radius: ${size('border.large')};
   margin-bottom: ${size('spacing.xLarge')};
   width: 100%;
@@ -21,7 +21,7 @@ const StyledImage = styled(Image)`
     width: ${size('picture.regular.width')};
   }
 `;
-const StyledHeading = styled(Heading)`
+export const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
 `;
 
