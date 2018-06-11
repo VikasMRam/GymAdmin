@@ -3,6 +3,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
+import { connect } from 'react-redux';
+import { parse as cookieParse } from 'cookie';
 
 import { isBrowser } from 'sly/config';
 // https://github.com/diegohaz/arc/wiki/Styling
@@ -10,6 +12,7 @@ import theme from './themes/default';
 import setGlobalStyles from './themes/setGlobalStyles';
 
 import { assetPath } from 'sly/components/themes';
+// import AppController from 'sly/controllers/Appcontroller';
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
@@ -38,7 +41,14 @@ export default class App extends Component {
   });
 
   componentDidMount() {
+    const { fetchUser } = this.props;
     smoothscroll.polyfill();
+    const cookie = cookieParse(document.cookie);
+    console.log('cookie', cookie);
+    fetchUser('420bcebc618dea1dea7279387fce2c29');
+    fetchUser('169c45506b4c45e0ad0c0fd314688036');
+    fetchUser(cookie.sly_uuid);
+    fetchUser();
   }
 
   routes = [
@@ -96,9 +106,11 @@ export default class App extends Component {
             <Switch>
               <Route
                 path={`/:toc(${careTypes})/:state/:city/filters`}
-                render={({ match }) => {
-                      return <Redirect to={`/${match.params.toc}/${match.params.state}/${match.params.city}`} />;
-                    }}
+                render={({ match }) => (
+                  <Redirect 
+                    to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
+                  />
+                )}
               />
               {this.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />

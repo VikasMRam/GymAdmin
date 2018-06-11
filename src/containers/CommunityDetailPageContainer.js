@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import { object, number, func, bool } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
+
 import {
-  getDetail, getHomePageMediaGalleryCurrentSlideIndex, isHomePageMediaGalleryFullscreenActive,
+  getDetail,
+  getHomePageMediaGalleryCurrentSlideIndex,
+  isHomePageMediaGalleryFullscreenActive,
   isCommunityDetailPageStickyHeaderActive,
 } from 'sly/store/selectors';
+
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
