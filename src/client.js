@@ -18,7 +18,7 @@ const serverState = window.__SERVER_STATE__;
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState, { api: api.create({ credentials: 'include' }) });
 
-const fetchUser = uuid => store.dispatch(resourceDetailReadRequest('userAction'));
+const fetchUser = uuid => store.dispatch(resourceDetailReadRequest('user'));
 const renderApp = () => (
   <ServerStateProvider state={serverState}>
     <Provider store={store}>

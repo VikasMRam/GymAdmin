@@ -4,8 +4,6 @@ import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
 import { connect } from 'react-redux';
-import { parse as cookieParse } from 'cookie';
-
 import { isBrowser } from 'sly/config';
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';
@@ -43,12 +41,7 @@ export default class App extends Component {
   componentDidMount() {
     const { fetchUser } = this.props;
     smoothscroll.polyfill();
-    const cookie = cookieParse(document.cookie);
-    console.log('cookie', cookie);
-    fetchUser('420bcebc618dea1dea7279387fce2c29');
-    fetchUser('169c45506b4c45e0ad0c0fd314688036');
-    fetchUser(cookie.sly_uuid);
-    fetchUser();
+    fetchUser('me');
   }
 
   routes = [

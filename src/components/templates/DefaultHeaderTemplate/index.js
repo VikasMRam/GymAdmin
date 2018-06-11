@@ -12,6 +12,7 @@ const headerItems = [
   { name: 'Our History', url: '/about' },
   { name: 'Sign in', url: '/signin' },
 ];
+
 const menuItems = [
   { name: 'Home', url: '/' },
   { name: 'Resources', url: '/resources' },
