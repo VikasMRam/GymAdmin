@@ -99,9 +99,10 @@ api.create = (settings = {}) => ({
 
     return doRequest() 
       .catch(error => {
-        console.log('request error', error);
         if ([401, 403].includes(error.response.status)) {
-          return this.requestAuthToken().then(doRequest);
+          return this.requestAuthToken().then(doRequest).catch(error => {
+            console.log('second error', error);
+          });
         }
         throw error;
       });

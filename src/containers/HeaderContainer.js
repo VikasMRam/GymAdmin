@@ -37,7 +37,7 @@ const loginHeaderItems = user => user
 
 const loginMenuItems = user => loginHeaderItems(user)
   .concat(user
-    ? [{ name: 'Log out', url: '/logout' }]
+    ? [{ name: 'Log out', url: '/signout' }]
     : []
   );
 
@@ -59,8 +59,6 @@ class HeaderContainer extends Component {
       onLocationSearch,
       user,
     } = this.props;
-
-    console.log('user', user);
 
     const headerItems = [ 
       ...defaultHeaderItems,
@@ -90,7 +88,9 @@ class HeaderContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     dropdownOpen: isHeaderDropdownOpen(state),
-    user: getDetail(state, 'user', 'me'),
+    // this will break as soon as we are requesting other users
+    // TODO: make the me resource remember it's id
+    user: getDetail(state, 'user'),
   };
 };
 
