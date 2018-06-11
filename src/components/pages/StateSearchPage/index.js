@@ -14,7 +14,6 @@ import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
-import Modal from 'sly/components/molecules/Modal';
 
 const TopWrapper = styled.div`
   padding-bottom: ${size('spacing.xLarge')};
