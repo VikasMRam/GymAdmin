@@ -83,26 +83,31 @@ export const tocs = [
     label: 'All Communities',
     value: 'retirement-community',
     segment: 'retirement-community',
+    searchLabel: 'Retirement Communities',
   },
   {
     label: 'Assisted Living',
     value: 'assisted-living',
     segment: 'assisted-living',
+    searchLabel: 'assisted living communities',
   },
   {
     label: 'Independent Living',
     value: 'independent-living',
     segment: 'independent-living',
+    searchLabel: 'independent living communities',
   },
   {
     label: 'Memory Care',
     value: 'alzheimers-care',
     segment: 'alzheimers-care',
+    searchLabel: 'alzheimers care communities',
   },
   {
     label: 'Continuing Care Retirement Communities',
     value: 'continuing-care-retirement-community',
     segment: 'continuing-care-retirement-community',
+    searchLabel: 'CCRCs',
   },
 ];
 
@@ -171,7 +176,7 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
 
   const selected = !Object.keys(nextFilters)
     .some(key => currentFilters[key] !== nextFilters[key]);
-  
+
   if (selected) {
     Object.keys(nextFilters)
       .forEach(filter => delete qs[filter]);
@@ -229,4 +234,12 @@ export const getEvtHandler = (paramsToRemove, origFn) => {
   return (uiEvt) => {
     origFn({ origUiEvt: uiEvt, paramsToRemove });
   };
+};
+
+export const getTocSearchLabel = (toc) => {
+  let actualToc = tocs.find(elem => (elem.value === toc));
+  if (typeof actualToc === 'undefined'){
+    return 'retirement communities';
+  }
+  return actualToc.searchLabel;
 };
