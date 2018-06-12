@@ -50,7 +50,7 @@ const AddressHeading = styled(Heading)`
 
 export default class CommunityDetailPage extends Component {
   static propTypes = {
-    user: object.isRequired,
+    user: object,
     community: object.isRequired,
     onLocationSearch: func,
     mediaGallerySlideIndex: number,
@@ -213,8 +213,6 @@ export default class CommunityDetailPage extends Component {
       </Fragment>
     );
 
-    console.log('user', user);
-
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -271,13 +269,13 @@ export default class CommunityDetailPage extends Component {
             innerRef={this.pricingAndFloorPlansRef}
           >
             <ConciergeController community={community}>
-              {({ getPricing }) => (
+              {({ concierge }) => (
                 <PricingAndAvailability
                   community={community}
                   address={address}
                   estimatedPrice={rgsAux.estimatedPrice}
                   roomPrices={roomPrices}
-                  onInquireOrBookClicked={getPricing}
+                  onInquireOrBookClicked={concierge.getPricing}
                 />
               )}
             </ConciergeController>
@@ -336,14 +334,14 @@ export default class CommunityDetailPage extends Component {
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
         <ConciergeController community={community}>
-          {({ getPricing }) => (
+          {({ concierge }) => (
             <StickyFooter
               footerInfo={{
                 title: 'Contact Property',
                 name: community.name,
                 ctaTitle: 'Contact',
               }}
-              onFooterClick={getPricing}
+              onFooterClick={concierge.getPricing}
             />
           )}
         </ConciergeController>
