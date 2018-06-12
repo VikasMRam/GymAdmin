@@ -6,6 +6,7 @@ import { palette } from 'styled-theme';
 import { size } from 'sly/components/themes';
 
 import { titleize } from 'sly/services/helpers/strings';
+import { getTocSearchLabel } from 'sly/services/helpers/search';
 import { getHelmetForSearchPage } from 'sly/services/helpers/html_headers';
 
 import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
@@ -52,7 +53,7 @@ const CommunitySearchPage = ({
 }) => {
   const listSize = requestMeta['filtered-count'];
   const city = titleize(searchParams.city);
-  const toc = titleize(searchParams.toc).toLowerCase();
+  const tocLabel = getTocSearchLabel(searchParams.toc);
   let latitude = 0;
   let longitude = 0;
   if (communityList.length > 0) {
@@ -106,7 +107,7 @@ const CommunitySearchPage = ({
       >
         {!isMapView && (
           <StyledHeading level={'hero'} size={'title'}>
-            {listSize} {toc} communities near {city}
+            {listSize} {tocLabel} near {city}
           </StyledHeading>
         )}
         <TopWrapper>
