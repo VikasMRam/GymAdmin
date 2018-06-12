@@ -5,11 +5,13 @@ import unset from 'lodash/unset';
 export default (state={}, { type, payload }) => {
   switch(type) {
     case SET: {
-      const { key, value } = payload;
+      const { key: innerKey, value, controller } = payload;
+      const key = `${controller}.${innerKey}`;
       set(state, key, value);
     }
     case UNSET: {
-      const { key } = payload;
+      const { key: innerKey, controller } = payload;
+      const key = `${controller}.${innerKey}`;
       unset(state, key);
     }
   }

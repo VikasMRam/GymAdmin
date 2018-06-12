@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { string, func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 import get from 'lodash/get';
@@ -8,6 +7,8 @@ import {
   resourceCreateRequest,
 } from 'sly/store/resource/actions';
 
+import { getDetail } from 'sly/store/selectors';
+import { connectController } from 'sly/controllers';
 import SlyEvent from 'sly/services/helpers/events';
 import { next, gotoStep, close, getDetailedPricing } from 'sly/store/concierge/actions';
 import { community as communityPropType } from 'sly/propTypes/community';
@@ -18,17 +19,6 @@ import { THANKYOU } from 'sly/store/concierge/constants';
 import {
   resourceDetailReadRequest,
 } from 'sly/store/resource/actions';
-
-//function connectController(controllerKey, mapStateToProps, mapDispatchToProps) {
-//  return function controllerCreator(WrappedComponent) {
-//    class Controller extends Component {
-//      render() {
-//        return React.createElement(WrappedComponent, this.props);
-//      }
-//    };
-//    return connect(mapStateToProps, mapDispatchToProps)(Controller);
-//  }
-//}
 
 // TODO: Make an abstraction for Controllers
 // This outlines the idea of a 'Controller', which passes
@@ -120,30 +110,53 @@ class ConciergeController extends Component {
 
   render() {
     const { children, concierge, close, ...props } = this.props;
-    const { next, getPricing, submitAdvancedInfo } = this;
+    const { next, getPricing, submitConversion, submitAdvancedInfo } = this;
     return children({
-      concierge: this,
+      concierge,
+      getPricing,
+      submitConversion,
     });
   }
 }
 
-const mapStateToProps = (state, { community }) => {
-  const concierge = conciergeSelector(state, community.id);
+const isCallback = slug => contact =>
+  contact.slug === slug
+  && contact.contactType === REQUEST_CALLBACK;
+
+const isAssessment = ({
+  typeOfCare,
+  typeOfRoom,
+  timeToMove,
+  budget
+}) => typeOfCare && typeOfRoom && timeToMove && budget;
+
+const mapStateToProps = (state, { concierge, community }) => {
+  const { currentStep, modalIsOpen } = concierge;
+  const userActions = getDetail(state, 'userAction') || {};
+  const callbackRequested = (userActions.profilesContacted || [])
+    .some(isCallback(community.id));
+  const advancedInfoSent = isAssessment(userActions.userDetails || {});
   return {
-    concierge,
+    concierge: {
+      currentStep,
+      modalIsOpen,
+      callbackRequested,
+      advancedInfoSent,
+    },
     community,
   };
 };
 
 const submit = (data) => resourceCreateRequest('userAction', data);
 
-export default connect(
+export default connectController(
+  'concierge',
   mapStateToProps,
   {
     next,
     gotoStep,
     close,
     getDetailedPricing,
-    submit
-  }
+    submit,
+  },
 )(ConciergeController);

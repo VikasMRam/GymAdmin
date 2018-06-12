@@ -137,9 +137,9 @@ export default class PricingAndAvailability extends Component {
           <StyledArticle id="pricing-and-floor-plans-price-tiles">
             {!roomPrices.length && estimatedPriceBase &&
               <ConciergeController community={community}>
-                {({ concierge }) =>
+                {({ getPricing }) =>
                   <EstimatedCost
-                    getPricing={concierge.getPricing}
+                    getPricing={getPricing}
                     community={community}
                     price={estimatedPriceBase}
                   />
@@ -153,12 +153,21 @@ export default class PricingAndAvailability extends Component {
             ))}
           </StyledArticle>
           <ConciergeController community={community} expressConversionMode>
-            {({ concierge }) => {
-                const { callbackRequested } = concierge.get();
-                if (callbackRequested) {
-                  return <StyledBox><Thankyou community={community} /></StyledBox>;
+            {({ concierge, submitConversion }) => {
+                if (concierge.callbackRequested) {
+                  return (
+                    <StyledBox>
+                      <Thankyou community={community} />
+                    </StyledBox>
+                  );
+                } else {
+                  return (
+                    <GetCurrentAvailabilityFormContainer 
+                      submitConversion={submitConversion} 
+                      community={community} 
+                    />
+                  );
                 }
-                return <GetCurrentAvailabilityFormContainer concierge={concierge} community={community} />;
               }
             }
           </ConciergeController>
