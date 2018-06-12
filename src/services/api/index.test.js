@@ -103,28 +103,6 @@ describe('api', () => {
       expect(api.create({ foo: 'bar' }).settings).toEqual({ foo: 'bar' });
     });
 
-    test('setToken', () => {
-      const obj = api.create({ headers: { foo: 'bar' } });
-      obj.setToken('token');
-      expect(obj.settings).toEqual({
-        headers: {
-          foo: 'bar',
-          Authorization: 'Bearer token',
-        },
-      });
-    });
-
-    test('unsetToken', () => {
-      const obj = api.create({
-        headers: {
-          foo: 'bar',
-          Authorization: 'Bearer token',
-        },
-      });
-      obj.unsetToken();
-      expect(obj.settings).toEqual({ headers: { foo: 'bar' } });
-    });
-
     test('request', () => {
       const obj = api.create({ foo: 'bar' });
       expect(api.request).not.toBeCalled();
