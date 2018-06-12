@@ -90,7 +90,7 @@ const mapStateToProps = (state) => {
     dropdownOpen: isHeaderDropdownOpen(state),
     // this will break as soon as we are requesting other users
     // TODO: make the me resource remember it's id
-    user: getDetail(state, 'user'),
+    user: getDetail(state, 'user', 'me'),
   };
 };
 

@@ -16,9 +16,20 @@ const middleware = store => next => (action) => {
       endpoint: key,
     });
 
+    // hack as id is not 'me' 
     store.dispatch(entitiesReceive(entities));
     const data = result[key].data;
     const ids = data.map(({id})=>id);
+
+    if (meta.entities === 'user' && meta.request.needle === 'me') {
+      const { user } = entities; 
+      const [id] = ids;
+      store.dispatch(entitiesReceive({
+        user: {
+          me: user[id],
+        }
+      }));
+    }
     return next({ ...action, payload: { ids, meta: rawEntities.meta }});
   }
 

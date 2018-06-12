@@ -83,9 +83,7 @@ api.create = (settings = {}) => ({
     return doRequest() 
       .catch(error => {
         if ([401, 403].includes(error.response.status)) {
-          return this.requestAuthToken().then(doRequest).catch(error => {
-            console.log('second error', error);
-          });
+          return this.requestAuthToken().then(doRequest);
         }
         throw error;
       });

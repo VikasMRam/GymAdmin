@@ -41,7 +41,10 @@ export default class App extends Component {
   componentDidMount() {
     const { fetchUser } = this.props;
     smoothscroll.polyfill();
-    fetchUser();
+    fetchUser()
+      .catch(error => {
+        console.error('Not logged in');
+      });
   }
 
   routes = [

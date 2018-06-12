@@ -15,7 +15,7 @@ import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import StickyFooter from 'sly/components/molecules/StickyFooter';
 import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
-import { Heading, Hr } from 'sly/components/atoms';
+import { Link, Heading, Hr } from 'sly/components/atoms';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
 import CareServicesList from 'sly/components/organisms/CareServicesList';
@@ -39,6 +39,9 @@ const BackToSearch = styled.div`
 const NameHeading = styled(Heading)`
   margin-bottom: ${size('spacing.small')};
   line-height: ${size('lineHeight.minimal')};
+
+  a { display: none; }
+  &:hover { a { display: unset; } }
 `;
 
 const AddressHeading = styled(Heading)`
@@ -47,6 +50,7 @@ const AddressHeading = styled(Heading)`
 
 export default class CommunityDetailPage extends Component {
   static propTypes = {
+    user: object.isRequired,
     community: object.isRequired,
     onLocationSearch: func,
     mediaGallerySlideIndex: number,
@@ -107,9 +111,16 @@ export default class CommunityDetailPage extends Component {
 
   render() {
     const {
-      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, onLocationSearch,
-      onMediaGallerySlideChange, onMediaGalleryToggleFullscreen, isStickyHeaderVisible,
+      mediaGallerySlideIndex,
+      isMediaGalleryFullscreenActive,
+      community,
+      onLocationSearch,
+      onMediaGallerySlideChange,
+      onMediaGalleryToggleFullscreen,
+      isStickyHeaderVisible,
+      user
     } = this.props;
+
     const {
       name,
       startingRate,
@@ -123,17 +134,21 @@ export default class CommunityDetailPage extends Component {
       gallery = {},
       videoGallery = {},
       twilioNumber,
-      user,
+      user: communityUser,
     } = community;
+
+    const { careServices, serviceHighlights, communityPhone } = propInfo;
+
     const images = gallery.images || [];
     const videos = videoGallery.videos || [];
-    const { careServices, serviceHighlights, communityPhone } = propInfo;
+
     const {
       communityDescription,
       staffDescription,
       residentDescription,
       ownerExperience,
     } = propInfo;
+
     const {
       communityHighlights,
       personalSpace,
@@ -145,6 +160,7 @@ export default class CommunityDetailPage extends Component {
       languages,
       languagesOther,
     } = propInfo;
+
     // TODO: move this to a container for PropertyReviews handling posts
     const onLeaveReview = () => {};
     // TODO: move this to a container PricingAndAvailability for handling bookings
@@ -197,6 +213,8 @@ export default class CommunityDetailPage extends Component {
       </Fragment>
     );
 
+    console.log('user', user);
+
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -221,7 +239,17 @@ export default class CommunityDetailPage extends Component {
             />
           }
           <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} innerRef={this.breadCrumbRef} />
-          <NameHeading level="hero" size="hero">{name}</NameHeading>
+
+          <NameHeading level="hero" size="hero">
+            {name}{' '} 
+            {(user && user.admin) &&
+              <Link 
+                  to={`/mydashboard#/mydashboard/communities/${community.id}/about`}>
+               (Edit) 
+              </Link>
+            }
+          </NameHeading>
+
           <AddressHeading level="subtitle" size="subtitle">{formattedAddress}</AddressHeading>
           <CommunitySummary
             innerRef={this.communitySummaryRef}
@@ -231,24 +259,25 @@ export default class CommunityDetailPage extends Component {
             twilioNumber={twilioNumber}
             reviewsValue={reviewsValue}
             phoneNumber={communityPhone}
-            user={user}
+            user={communityUser}
             amenityScore={rgsAux.amenityScore}
             startingRate={startingRate}
             communityHighlights={communityHighlights}
             reviews={reviews}
           />
+
           <CollapsibleSection
             title="Pricing & Floor Plans"
             innerRef={this.pricingAndFloorPlansRef}
           >
             <ConciergeController community={community}>
-              {({ concierge }) => (
+              {({ getPricing }) => (
                 <PricingAndAvailability
                   community={community}
                   address={address}
                   estimatedPrice={rgsAux.estimatedPrice}
                   roomPrices={roomPrices}
-                  onInquireOrBookClicked={concierge.getPricing}
+                  onInquireOrBookClicked={getPricing}
                 />
               )}
             </ConciergeController>
@@ -307,14 +336,14 @@ export default class CommunityDetailPage extends Component {
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
         <ConciergeController community={community}>
-          {({ concierge }) => (
+          {({ getPricing }) => (
             <StickyFooter
               footerInfo={{
                 title: 'Contact Property',
                 name: community.name,
                 ctaTitle: 'Contact',
               }}
-              onFooterClick={concierge.getPricing}
+              onFooterClick={getPricing}
             />
           )}
         </ConciergeController>

@@ -64,7 +64,13 @@ class CommunityDetailPageContainer extends Component {
 
   render() {
     const {
-      mediaGallerySlideIndex, isMediaGalleryFullscreenActive, community, errorCode, history, isStickyHeaderVisible,
+      mediaGallerySlideIndex,
+      isMediaGalleryFullscreenActive,
+      user,
+      community,
+      errorCode,
+      history,
+      isStickyHeaderVisible,
     } = this.props;
 
     if (errorCode) {
@@ -85,6 +91,7 @@ class CommunityDetailPageContainer extends Component {
 
     return (
       <CommunityDetailPage
+        user={user}
         community={community}
         mediaGallerySlideIndex={mediaGallerySlideIndex}
         onLocationSearch={this.handleOnLocationSearch}
@@ -105,6 +112,7 @@ const mapStateToProps = (state, { match }) => {
   const isMediaGalleryFullscreenActive = isHomePageMediaGalleryFullscreenActive(state);
   const isStickyHeaderVisible = isCommunityDetailPageStickyHeaderActive(state);
   return {
+    user: getDetail(state, 'user', 'me'),
     community: getDetail(state, 'community', communitySlug),
     mediaGallerySlideIndex,
     isMediaGalleryFullscreenActive,
