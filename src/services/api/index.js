@@ -64,20 +64,6 @@ api.request = (endpoint, settings = {}) => {
 api.create = (settings = {}) => ({
   settings,
 
-  setToken(token) {
-    this.settings.headers = {
-      ...this.settings.headers,
-      Authorization: `Bearer ${token}`,
-    };
-  },
-
-  unsetToken() {
-    this.settings.headers = {
-      ...this.settings.headers,
-      Authorization: undefined,
-    };
-  },
-
   setCookie(cookie) {
     this.settings.headers = {
       ...this.settings.headers,
@@ -86,11 +72,8 @@ api.create = (settings = {}) => ({
   },
 
   requestAuthToken() {
-    this.unsetToken();
     return fetch(authTokenUrl, { credentials: 'same-origin' })
-      .then(checkStatus)
-      .then(parseJSON)
-      .then(json => this.setToken(json.jwt_token));
+      .then(checkStatus);
   },
 
   request(endpoint, settings) {
