@@ -37,6 +37,9 @@ export default class Concierge extends Component {
       community,
       className,
       concierge,
+      close,
+      submitConversion,
+      submitAdvancedInfo,
       ...props
     } = this.props;
 
@@ -51,6 +54,7 @@ export default class Concierge extends Component {
         )}
         {!callbackRequested && (
           <ConversionFormContainer
+            submitConversion={submitConversion}
             community={community}
             concierge={concierge}
           />
@@ -58,12 +62,15 @@ export default class Concierge extends Component {
         {appElement && StepComponent && modalIsOpen && (
           <Modal
             appElement={appElement}
-            onClose={concierge.close}
+            onClose={close}
             isOpen={modalIsOpen}
-            closeable {...props}>
+            closeable >
             <StepComponent
               community={community}
               concierge={concierge}
+              submitConversion={submitConversion}
+              submitAdvancedInfo={submitAdvancedInfo}
+              onClose={close}
               {...props}
             />
           </Modal>

@@ -5,7 +5,6 @@ import { reducer as thunk } from 'redux-saga-thunk';
 import entities from './entities/reducer';
 import modal from './modal/reducer';
 import resource from './resource/reducer';
-import concierge from './concierge/reducer';
 import header from './header/reducer';
 import searchBox from './searchBox/reducer';
 import controller from './controller/reducer';
@@ -18,7 +17,6 @@ const reducers = {
   thunk,
   entities,
   modal,
-  concierge,
   resource,
   header,
   searchBox,

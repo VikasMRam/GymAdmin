@@ -90,11 +90,13 @@ export default function withServerState({
       ...getMapDispatchToProps(dispatch, props),
       fetchData: (nextProps=props) => fetchData(dispatch, nextProps),
       handleError,
-      ChildComponent,
     });
 
     const connector = connect(
-      mapStateToProps,
+      (state, ownProps) => ({
+        ...mapStateToProps(state, ownProps), 
+        ChildComponent,
+      }),
       childMapDispatchToProps,
     );
 

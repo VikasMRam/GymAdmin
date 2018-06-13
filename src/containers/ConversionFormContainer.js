@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 
 import { getDetail } from 'sly/store/selectors';
 
@@ -33,11 +33,11 @@ const ReduxForm = reduxForm({
 class ConversionFormContainer extends Component {
   static propTypes = {
     community: object.isRequired,
-    concierge: object.isRequired,
+    submitConversion: func.isRequired,
   };
 
   render() {
-    const { concierge, userDetails, ...props } = this.props;
+    const { submitConversion, userDetails, ...props } = this.props;
     const { email, fullName, phone } = userDetails;
     const initialValues = {
       email,
@@ -47,7 +47,7 @@ class ConversionFormContainer extends Component {
     return (
       <ReduxForm
         initialValues={initialValues}
-        onSubmit={concierge.submitConversion}
+        onSubmit={submitConversion}
         {...props}
       />
     );
@@ -58,11 +58,5 @@ const mapStateToProps = (state, ownProps) => ({
   userDetails: (getDetail(state, 'userAction') || {}).userDetails || {},
 });
 
-const mapDispatchToProps = dispatch => ({
-  submit: data => {
-    return dispatch(resourceCreateRequest('userAction', data));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ConversionFormContainer);
+export default connect(mapStateToProps)(ConversionFormContainer);
 

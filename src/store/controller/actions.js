@@ -1,12 +1,12 @@
 export const SET = 'controller/SET';
-export const set = ({ key, value }) => ({
+export const set = ({ data, controller }) => ({
   type: SET,
-  payload: { key, value },
+  payload: { data, controller },
 });
 
 export const UNSET = 'controller/UNSET';
-export const unset = ({ key }) => ({
+export const unset = ({ key, controller }) => ({
   type: UNSET,
-  payload: { key },
+  payload: { key, controller },
 });
 
