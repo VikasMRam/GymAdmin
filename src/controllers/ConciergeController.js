@@ -14,15 +14,13 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
 
 import {
-  CONVERSION_FORM,
-  ADVANCED_INFO,
-  // SIMILAR_COMMUNITIES,
-  THANKYOU,
-} from 'sly/store/controller/constants';
-
-import {
   resourceDetailReadRequest,
 } from 'sly/store/resource/actions';
+
+const CONVERSION_FORM = 'conversionForm';
+const ADVANCED_INFO = 'advancedInfo';
+const SIMILAR_COMMUNITIES = 'similarCommunities';
+const THANKYOU = 'thankyou';
 
 const steps = [
   CONVERSION_FORM,
@@ -31,12 +29,14 @@ const steps = [
   THANKYOU,
 ];
 
-class ConciergeController extends Component {
+export class ConciergeController extends Component {
   static propTypes = {
     community: communityPropType.isRequired,
     concierge: object.isRequired,
     children: func.isRequired,
     expressConversionMode: bool,
+    set: func.isRequired,
+    unset: func.isRequired, 
   };
 
   static defaultProps = {
@@ -212,7 +212,7 @@ const mapStateToProps = (state, { concierge, community }) => {
   };
 };
 
-const submit = (data) => resourceCreateRequest('userAction', data);
+const submit = data => resourceCreateRequest('userAction', data);
 
 export default connectController(
   'concierge',
