@@ -15,9 +15,10 @@ import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import serializeError from 'serialize-error';
 
-import { port, host, basename, publicPath, isDev, cookieDomain, } from 'sly/config';
+import { port, host, basename, publicPath, isDev, cookieDomain } from 'sly/config';
 import configureStore from 'sly/store/configure';
 import apiService from 'sly/services/api';
+import ExperimentsApi from 'sly/services/experiments/api';
 import App from 'sly/components/App';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
@@ -83,7 +84,18 @@ app.use(async (req, res, next) => {
   /* End of possible temp code */
 
   const location = req.url;
-  const store = configureStore({}, { api });
+  const experimentsApi = new ExperimentsApi();
+  const experiments = experimentsApi.all();
+  const experimentsResults = {};
+  Object.keys(experiments).forEach((i) => {
+    const part = slySID.substr(0, 4);
+    const segment = Math.floor((parseInt(part, 16) / 65537) / (1 / experiments[i].length));
+    const variant = experiments[i][segment];
+
+    experimentsResults[i] = variant;
+  });
+
+  const store = configureStore({ experiments: experimentsResults }, { api });
   const sheet = new ServerStyleSheet();
   const context = {};
 
