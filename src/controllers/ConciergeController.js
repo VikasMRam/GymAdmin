@@ -17,10 +17,10 @@ import {
   resourceDetailReadRequest,
 } from 'sly/store/resource/actions';
 
-const CONVERSION_FORM = 'conversionForm';
-const ADVANCED_INFO = 'advancedInfo';
-const SIMILAR_COMMUNITIES = 'similarCommunities';
-const THANKYOU = 'thankyou';
+export const CONVERSION_FORM = 'conversionForm';
+export const ADVANCED_INFO = 'advancedInfo';
+export const SIMILAR_COMMUNITIES = 'similarCommunities';
+export const THANKYOU = 'thankyou';
 
 const steps = [
   CONVERSION_FORM,
@@ -36,7 +36,6 @@ export class ConciergeController extends Component {
     children: func.isRequired,
     expressConversionMode: bool,
     set: func.isRequired,
-    unset: func.isRequired, 
   };
 
   static defaultProps = {
@@ -46,7 +45,6 @@ export class ConciergeController extends Component {
   getPricing = () => {
     const { 
       concierge,
-      getDetailedPricing,
       community,
       set
     } = this.props;
@@ -71,20 +69,6 @@ export class ConciergeController extends Component {
         : CONVERSION_FORM;
 
     set({ currentStep, modalIsOpen: true });
-  };
-
-  submitAdvancedInfo = data => {
-    const { submit, community } = this.props;
-    const { message, ...rest } = data;
-
-    submit({
-      action: ASSESSMENT,
-      value: {
-        user: { ...rest },
-        message,
-        propertyIds: [community.id],
-      }
-    }).then(this.next);
   };
 
   submitConversion = (data) => {
@@ -115,6 +99,20 @@ export class ConciergeController extends Component {
     }
   };
 
+  submitAdvancedInfo = data => {
+    const { submit, community } = this.props;
+    const { message, ...rest } = data;
+
+    submit({
+      action: ASSESSMENT,
+      value: {
+        user: { ...rest },
+        message,
+        propertyIds: [community.id],
+      }
+    }).then(this.next);
+  };
+
   /*
    * IF NOT gotUserDetails OR NOT conversionSent
    *   currentStep = conversion
@@ -126,11 +124,8 @@ export class ConciergeController extends Component {
   next = () => {
     const { 
       concierge,
-      community,
       expressConversionMode,
       getDetailedPricing,
-      gotoStep,
-      submit,
       set,
     } = this.props;
 
@@ -144,6 +139,7 @@ export class ConciergeController extends Component {
     } else {
       const stepIndex = steps.indexOf(currentStep);
       const nextStepIndex = stepIndex + 1;
+
       if(nextStepIndex < steps.length) {
         set({
           currentStep: steps[nextStepIndex],
@@ -156,10 +152,6 @@ export class ConciergeController extends Component {
       }
     }
   }
-
-  get = path => path
-    ? get(this.props.concierge, path)
-    : this.props.concierge;
 
   close = () => {
     const { set } = this.props;
@@ -195,16 +187,18 @@ const isAssessment = ({
   typeOfRoom,
   timeToMove,
   budget
-}) => typeOfCare && typeOfRoom && timeToMove && budget;
+}) => !!(typeOfCare && typeOfRoom && timeToMove && budget);
 
 const mapStateToProps = (state, { concierge, community }) => {
   const userActions = getDetail(state, 'userAction') || {};
   const callbackRequested = (userActions.profilesContacted || [])
     .some(isCallback(community.id));
   const advancedInfoSent = isAssessment(userActions.userDetails || {});
+
   return {
     concierge: {
-      ...concierge,
+      currentStep: concierge.currentStep || CONVERSION_FORM,
+      modalIsOpen: concierge.modalIsOpen || false,
       callbackRequested,
       advancedInfoSent,
     },
