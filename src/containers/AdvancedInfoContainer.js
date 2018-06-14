@@ -22,7 +22,7 @@ const ReduxForm = reduxForm({
     type_of_care: [],
     type_of_room: [],
     time_to_move: [],
-    budget: 5.5,
+    budget: [],
   },
 })(AdvancedInfoForm);
 
@@ -35,8 +35,8 @@ export default class AdvancedInfoFormContainer extends Component {
   render() {
     const { submitAdvancedInfo, ...props } = this.props;
     return (
-      <ReduxForm 
-        onSubmit={submitAdvancedInfo} 
+      <ReduxForm
+        onSubmit={submitAdvancedInfo}
         {...props}
       />
     );

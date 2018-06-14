@@ -17,31 +17,36 @@ const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
+const StyledReduxField = styled(ReduxField)`
+  display: flex;
+  align-items: baseline;
+`;
+
 const typeOfCareOptions = [
   { value: 'none', label: 'None' },
   { value: 'assisted', label: 'Assisted' },
   { value: 'memory', label: 'Dementia' },
 ];
-
 const typeOfRoomOptions = [
   { value: 'shared', label: 'Shared Suite' },
   { value: 'studio', label: 'Studio' },
   { value: 'bedroom', label: '1+ Bedroom' },
 ];
-
 const timeToMoveOptions = [
   { value: 0, label: 'Now' },
   { value: 3, label: '1-3 Months' },
   { value: 6, label: '3-6 Months' },
   { value: 12, label: '12+ Months' },
 ];
-
-const moneyValue = val => `$${val}K`;
-const messageRecipient = (user, community) =>
-  [(user && user.name) || 'the agent', community && community.name].join(' of ');
+const budgetOptions = [
+  { value: '< 2500', label: 'Under 2500' },
+  { value: '2500-4000', label: '2500-4000' },
+  { value: '4000-6000', label: '4000-6000' },
+  { value: '> 6000', label: 'Over 6000' },
+];
 
 const AdvancedInfoForm = ({
-  handleSubmit, submitting, user, community,
+  handleSubmit, submitting, community,
 }) => (
   <Form onSubmit={handleSubmit}>
     <Heading level="subtitle" size="subtitle">To connect to {community.name}...</Heading>
@@ -74,18 +79,21 @@ const AdvancedInfoForm = ({
     <Field
       name="budget"
       label="What is your budget?"
-      type="slider"
-      responsive
-      min={0}
-      max={11}
-      step={0.5}
-      valueWidth="regular"
-      valueParse={moneyValue}
+      type="singlechoice"
+      options={budgetOptions}
+      width="100%"
       component={ReduxField}
     />
     <Field
+      name="medical_coverage"
+      label="I have medicaid coverage"
+      type="checkbox"
+      responsive
+      component={StyledReduxField}
+    />
+    <Field
       name="message"
-      label={`Add any additional requests below:`}
+      label="Add any additional requests below:"
       type="textarea"
       component={ReduxField}
     />
