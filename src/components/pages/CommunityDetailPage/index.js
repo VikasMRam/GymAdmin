@@ -269,13 +269,13 @@ export default class CommunityDetailPage extends Component {
             innerRef={this.pricingAndFloorPlansRef}
           >
             <ConciergeController community={community}>
-              {({ concierge }) => (
+              {({ concierge, getPricing }) => (
                 <PricingAndAvailability
                   community={community}
                   address={address}
                   estimatedPrice={rgsAux.estimatedPrice}
                   roomPrices={roomPrices}
-                  onInquireOrBookClicked={concierge.getPricing}
+                  onInquireOrBookClicked={getPricing}
                 />
               )}
             </ConciergeController>
@@ -334,14 +334,14 @@ export default class CommunityDetailPage extends Component {
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
         <ConciergeController community={community}>
-          {({ concierge }) => (
+          {({ concierge, getPricing }) => (
             <StickyFooter
               footerInfo={{
                 title: 'Contact Property',
                 name: community.name,
                 ctaTitle: 'Contact',
               }}
-              onFooterClick={concierge.getPricing}
+              onFooterClick={getPricing}
             />
           )}
         </ConciergeController>

@@ -34,39 +34,43 @@ export default class Concierge extends Component {
 
   render() {
     const {
-      onClose,
-      next,
       community,
       className,
       concierge,
+      close,
+      submitConversion,
+      submitAdvancedInfo,
       ...props
     } = this.props;
 
-    const { modalIsOpen, currentStep, callbackRequested } = concierge.get();
+    const { modalIsOpen, currentStep, callbackRequested } = concierge;
 
     const StepComponent = steps[currentStep];
 
     return (
       <Wrapper className={className}>
         {callbackRequested && (
-          <Thankyou community={community} onClose={concierge.onClose} />
+          <Thankyou community={community} />
         )}
         {!callbackRequested && (
           <ConversionFormContainer
+            submitConversion={submitConversion}
             community={community}
             concierge={concierge}
-            next={next}
           />
         )}
         {appElement && StepComponent && modalIsOpen && (
           <Modal
             appElement={appElement}
-            onClose={concierge.close}
+            onClose={close}
             isOpen={modalIsOpen}
-            closeable {...props}>
+            closeable >
             <StepComponent
               community={community}
               concierge={concierge}
+              submitConversion={submitConversion}
+              submitAdvancedInfo={submitAdvancedInfo}
+              onClose={close}
               {...props}
             />
           </Modal>

@@ -20,7 +20,7 @@ const ReduxForm = reduxForm({
 })(GetCurrentAvailabilityForm);
 
 const GetCurrentAvailabilityFormContainer = ({
-  userDetails, concierge, community,
+  userDetails, submitConversion, community,
 }) => {
   const { email } = userDetails;
   const initialValues = { email };
@@ -28,7 +28,7 @@ const GetCurrentAvailabilityFormContainer = ({
   return (
     <ReduxForm
       initialValues={initialValues}
-      onSubmit={concierge.submitConversion}
+      onSubmit={submitConversion}
       community={community}
     />
   );
@@ -36,20 +36,13 @@ const GetCurrentAvailabilityFormContainer = ({
 
 GetCurrentAvailabilityFormContainer.propTypes = {
   community: object.isRequired,
-  concierge: object.isRequired,
+  submitConversion: func.isRequired,
   userDetails: object,
-  submit: func.isRequired,
 };
 
 const mapStateToProps = state => ({
   userDetails: (getDetail(state, 'userAction') || {}).userDetails || {},
 });
 
-const mapDispatchToProps = dispatch => ({
-  submit: (data) => {
-    return dispatch(resourceCreateRequest('userAction', data));
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(GetCurrentAvailabilityFormContainer);
+export default connect(mapStateToProps)(GetCurrentAvailabilityFormContainer);
 

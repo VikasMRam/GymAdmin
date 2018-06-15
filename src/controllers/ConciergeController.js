@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { string, func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 import get from 'lodash/get';
@@ -8,41 +7,35 @@ import {
   resourceCreateRequest,
 } from 'sly/store/resource/actions';
 
+import { getDetail } from 'sly/store/selectors';
+import { connectController } from 'sly/controllers';
 import SlyEvent from 'sly/services/helpers/events';
-import { next, gotoStep, close, getDetailedPricing } from 'sly/store/concierge/actions';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
-import { conciergeSelector } from 'sly/store/concierge/selectors';
-import { THANKYOU } from 'sly/store/concierge/constants';
 
 import {
   resourceDetailReadRequest,
 } from 'sly/store/resource/actions';
 
-//function connectController(controllerKey, mapStateToProps, mapDispatchToProps) {
-//  return function controllerCreator(WrappedComponent) {
-//    class Controller extends Component {
-//      render() {
-//        return React.createElement(WrappedComponent, this.props);
-//      }
-//    };
-//    return connect(mapStateToProps, mapDispatchToProps)(Controller);
-//  }
-//}
+export const CONVERSION_FORM = 'conversionForm';
+export const ADVANCED_INFO = 'advancedInfo';
+export const SIMILAR_COMMUNITIES = 'similarCommunities';
+export const THANKYOU = 'thankyou';
 
-// TODO: Make an abstraction for Controllers
-// This outlines the idea of a 'Controller', which passes
-// itself down, once created the abstraction with a simple setter
-// and getter to the store, it will be useful to avoid all the
-// synchronous mess in the reducer, actions and selectors.
-class ConciergeController extends Component {
+const steps = [
+  CONVERSION_FORM,
+  ADVANCED_INFO,
+  // SIMILAR_COMMUNITIES,
+  THANKYOU,
+];
+
+export class ConciergeController extends Component {
   static propTypes = {
-    next: func.isRequired,
-    close: func.isRequired,
     community: communityPropType.isRequired,
     concierge: object.isRequired,
     children: func.isRequired,
     expressConversionMode: bool,
+    set: func.isRequired,
   };
 
   static defaultProps = {
@@ -50,34 +43,50 @@ class ConciergeController extends Component {
   };
 
   getPricing = () => {
-    const { concierge, getDetailedPricing, community } = this.props;
-    const { callbackRequested, advancedInfoSent } = concierge;
-    let event = {action:'submit',category:'requestavailability',label:community.id};
+    const { 
+      concierge,
+      community,
+      set
+    } = this.props;
+
+    const { 
+      callbackRequested,
+      advancedInfoSent
+    } = concierge;
+
+    const event = {
+      action: 'submit',
+      category: 'requestavailability',
+      label: community.id
+    };
+
     SlyEvent.getInstance().sendEvent(event);
-    getDetailedPricing({ callbackRequested, advancedInfoSent });
-  }
 
-  submitAdvancedInfo = data => {
-    const { submit, community, next } = this.props;
-    const { message, ...rest } = data;
+    const currentStep = (callbackRequested && advancedInfoSent)
+      ? THANKYOU
+      : callbackRequested
+        ? ADVANCED_INFO
+        : CONVERSION_FORM;
 
-    submit({
-      action: ASSESSMENT,
-      value: {
-        user: { ...rest },
-        message,
-        propertyIds: [community.id],
-      }
-    }).then(this.next);
-  }
+    set({ currentStep, modalIsOpen: true });
+  };
 
   submitConversion = (data) => {
     const {
-      submit, community, expressConversionMode, concierge,
+      submit,
+      community,
+      expressConversionMode,
+      concierge,
     } = this.props;
+
     const { callbackRequested } = concierge;
 
-    const event = { action: 'contactCommunity', category: 'requestCallback', label: community.id };
+    const event = { 
+      action: 'contactCommunity',
+      category: 'requestCallback',
+      label: community.id
+    };
+
     SlyEvent.getInstance().sendEvent(event);
 
     if (!expressConversionMode || (expressConversionMode && !callbackRequested)) {
@@ -91,7 +100,21 @@ class ConciergeController extends Component {
     } else {
       this.next();
     }
-  }
+  };
+
+  submitAdvancedInfo = data => {
+    const { submit, community } = this.props;
+    const { message, ...rest } = data;
+
+    submit({
+      action: ASSESSMENT,
+      value: {
+        user: { ...rest },
+        message,
+        propertyIds: [community.id],
+      }
+    }).then(this.next);
+  };
 
   /*
    * IF NOT gotUserDetails OR NOT conversionSent
@@ -102,48 +125,94 @@ class ConciergeController extends Component {
    *   currentStep = thankyou
    */
   next = () => {
-    const { concierge, getDetailedPricing, community, next, gotoStep, submit, expressConversionMode } = this.props;
+    const { 
+      concierge,
+      expressConversionMode,
+      getDetailedPricing,
+      set,
+    } = this.props;
+
     const { callbackRequested, advancedInfoSent, currentStep } = concierge;
 
     if (expressConversionMode || (callbackRequested && advancedInfoSent)) {
-      gotoStep({ step: THANKYOU });
+      set({ 
+        currentStep: THANKYOU,
+        modalIsOpen: true,
+      });
     } else {
-      next({ callbackRequested, advancedInfoSent });
+      const stepIndex = steps.indexOf(currentStep);
+      const nextStepIndex = stepIndex + 1;
+
+      if(nextStepIndex < steps.length) {
+        set({
+          currentStep: steps[nextStepIndex],
+          modalIsOpen: true,
+        });
+      } else {
+        set({
+          modalIsOpen: false,
+        });
+      }
     }
   }
 
-  get = path => path
-    ? get(this.props.concierge, path)
-    : this.props.concierge;
-
-  close = () => this.props.close();
+  close = () => {
+    const { set } = this.props;
+    set({ modalIsOpen: false });
+  };
 
   render() {
-    const { children, concierge, close, ...props } = this.props;
-    const { next, getPricing, submitAdvancedInfo } = this;
+    const { children, concierge } = this.props;
+
+    const { 
+      getPricing,
+      submitConversion,
+      submitAdvancedInfo,
+      close,
+    } = this;
+
     return children({
-      concierge: this,
+      concierge,
+      getPricing,
+      submitConversion,
+      submitAdvancedInfo,
+      close,
     });
   }
 }
 
-const mapStateToProps = (state, { community }) => {
-  const concierge = conciergeSelector(state, community.id);
+const isCallback = slug => contact =>
+  contact.slug === slug
+  && contact.contactType === REQUEST_CALLBACK;
+
+const isAssessment = ({
+  typeOfCare,
+  typeOfRoom,
+  timeToMove,
+  budget
+}) => !!(typeOfCare && typeOfRoom && timeToMove && budget);
+
+const mapStateToProps = (state, { concierge, community }) => {
+  const userActions = getDetail(state, 'userAction') || {};
+  const callbackRequested = (userActions.profilesContacted || [])
+    .some(isCallback(community.id));
+  const advancedInfoSent = isAssessment(userActions.userDetails || {});
+
   return {
-    concierge,
+    concierge: {
+      currentStep: concierge.currentStep || CONVERSION_FORM,
+      modalIsOpen: concierge.modalIsOpen || false,
+      callbackRequested,
+      advancedInfoSent,
+    },
     community,
   };
 };
 
-const submit = (data) => resourceCreateRequest('userAction', data);
+const submit = data => resourceCreateRequest('userAction', data);
 
-export default connect(
+export default connectController(
+  'concierge',
   mapStateToProps,
-  {
-    next,
-    gotoStep,
-    close,
-    getDetailedPricing,
-    submit
-  }
+  { submit },
 )(ConciergeController);

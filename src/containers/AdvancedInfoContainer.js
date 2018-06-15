@@ -29,14 +29,14 @@ const ReduxForm = reduxForm({
 export default class AdvancedInfoFormContainer extends Component {
   static propTypes = {
     community: object.isRequired,
-    concierge: object.isRequired,
+    submitAdvancedInfo: func.isRequired,
   };
 
   render() {
-    const { concierge, ...props } = this.props;
+    const { submitAdvancedInfo, ...props } = this.props;
     return (
       <ReduxForm
-        onSubmit={concierge.submitAdvancedInfo}
+        onSubmit={submitAdvancedInfo}
         {...props}
       />
     );
