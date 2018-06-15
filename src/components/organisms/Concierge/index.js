@@ -9,12 +9,14 @@ import Modal from 'sly/components/molecules/Modal';
 import ConversionFormContainer from 'sly/containers/ConversionFormContainer';
 import AdvancedInfoContainer from 'sly/containers/AdvancedInfoContainer';
 import SimilarCommunitiesContainer from 'sly/containers/SimilarCommunitiesContainer';
+import WhenFormContainer from 'sly/containers/WhenFormContainer';
 import Thankyou from 'sly/components/molecules/Thankyou';
 
 const steps = {
   conversionForm:     ConversionFormContainer,
   advancedInfo:       AdvancedInfoContainer,
   // similarCommunities: SimilarCommunitiesContainer,
+  whenForm:           WhenFormContainer,
   thankyou:           Thankyou,
 };
 
@@ -25,7 +27,6 @@ const Wrapper = styled.div`
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   padding: ${size('spacing.xLarge')};
 `;
-
 export default class Concierge extends Component {
   static propTypes = {
     community: object.isRequired,

@@ -20,12 +20,14 @@ import {
 export const CONVERSION_FORM = 'conversionForm';
 export const ADVANCED_INFO = 'advancedInfo';
 export const SIMILAR_COMMUNITIES = 'similarCommunities';
+export const WHEN_FORM = 'whenForm';
 export const THANKYOU = 'thankyou';
 
 const steps = [
   CONVERSION_FORM,
   ADVANCED_INFO,
   // SIMILAR_COMMUNITIES,
+  WHEN_FORM,
   THANKYOU,
 ];
 
@@ -46,7 +48,7 @@ export class ConciergeController extends Component {
     const { 
       concierge,
       community,
-      set
+      set,
     } = this.props;
 
     const { 
@@ -61,6 +63,19 @@ export class ConciergeController extends Component {
     };
 
     SlyEvent.getInstance().sendEvent(event);
+
+
+
+
+
+
+    return set({
+      currentStep: WHEN_FORM,
+      modalIsOpen: true,
+    });
+
+
+
 
     const currentStep = (callbackRequested && advancedInfoSent)
       ? THANKYOU
@@ -133,6 +148,25 @@ export class ConciergeController extends Component {
     } = this.props;
 
     const { callbackRequested, advancedInfoSent, currentStep } = concierge;
+
+
+
+
+
+
+
+
+
+
+    return set({
+      currentStep: WHEN_FORM,
+      modalIsOpen: true,
+    });
+
+
+
+
+
 
     if (expressConversionMode || (callbackRequested && advancedInfoSent)) {
       set({ 
