@@ -6,7 +6,7 @@ import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
 
 import SlyEvent from '../services/helpers/events';
 
-import ConciergeControllerContainer, { 
+import ConciergeControllerContainer, {
   ConciergeController,
   CONVERSION_FORM,
   ADVANCED_INFO,
@@ -18,7 +18,7 @@ jest.mock('../services/helpers/events');
 describe('ConciergeController', function() {
   const mockStore = configureStore();
   const initStore = (props={}, conciergeProps={}) => mockStore({
-    controller: { concierge: { ...conciergeProps } }, 
+    controller: { concierge: { ...conciergeProps } },
     ...props,
   });
 
@@ -77,13 +77,13 @@ describe('ConciergeController', function() {
   describe('Container', () => {
     const wrap = (community, store) => shallow(
       <ConciergeControllerContainer
-        community={community} 
+        community={community}
         store={store}
         children={spy} />
     ).dive().dive();
 
     it('should pass default values', () => {
-      const store = initStore({ resource, entities }); 
+      const store = initStore({ resource, entities });
       wrap(community, store);
       const { modalIsOpen, currentStep } = childProps().concierge;
       expect(modalIsOpen).toBe(false);
@@ -91,7 +91,7 @@ describe('ConciergeController', function() {
     });
 
     it('should know when a community has been converted', () => {
-      const store = initStore({ resource, entities }); 
+      const store = initStore({ resource, entities });
 
       wrap(community, store);
       expect(childProps().concierge.callbackRequested).toBe(true);
@@ -124,9 +124,9 @@ describe('ConciergeController', function() {
 
     SlyEvent.getInstance.mockImplementation(() => events);
 
-    let promise; 
+    let promise;
     const submit = jest.fn().mockImplementation(() => promise);
-    const lastSubmit = () => submit.mock.calls.pop()[0]; 
+    const lastSubmit = () => submit.mock.calls.pop()[0];
     const lastSubmitResult = () => submit.mock.results.pop()[0];
 
     beforeEach(() => {
@@ -134,7 +134,7 @@ describe('ConciergeController', function() {
       sendEvent.mockRestore();
     });
 
-    const setPricingEvent = { 
+    const setPricingEvent = {
       action: 'submit',
       category: 'requestavailability',
       label: 'my-community',
@@ -146,46 +146,140 @@ describe('ConciergeController', function() {
     };
 
     const wrap = (props={}) => shallow(
-      <ConciergeController 
+      <ConciergeController
         {...props}
         set={set}
-        children={spy} 
+        children={spy}
       />
-    ); 
+    );
 
     it('should prompt the user if is not converted', () => {
-      wrap({ community, concierge: {} }); 
-      childProps().getPricing(); 
+      wrap({ community, concierge: {} });
+      childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(lastSet()).toEqual({
-        currentStep: CONVERSION_FORM,  
+        currentStep: CONVERSION_FORM,
         modalIsOpen: true,
       });
     });
 
     it('should ask for advancedInfo', () => {
       wrap({ community, concierge: {
-        callbackRequested: true, 
-      }}); 
-      childProps().getPricing(); 
+        callbackRequested: true,
+      }});
+      childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(lastSet()).toEqual({
-        currentStep: ADVANCED_INFO,  
+        currentStep: ADVANCED_INFO,
         modalIsOpen: true,
       });
     });
 
     it('should show thank you', () => {
       wrap({ community, concierge: {
-        callbackRequested: true, 
+        callbackRequested: true,
         advancedInfoSent: true,
-      }}); 
-      childProps().getPricing(); 
+      }});
+      childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(lastSet()).toEqual({
-        currentStep: THANKYOU,  
+        currentStep: THANKYOU,
         modalIsOpen: true,
       });
+    });
+
+    it('should submit conversion', () => {
+      let wrapper = wrap({
+        expressConversionMode: false,
+        community,
+        submit,
+        concierge: {}
+      });
+
+      const then = jest.fn();
+      promise = { then };
+
+      const data = { data: 'DATA' };
+      
+      childProps().submitConversion(data);
+    
+      expect(lastEvent()).toEqual({
+        action: 'contactCommunity',
+        category: 'requestCallback',
+        label: 'my-community',
+      });
+      
+      expect(lastSubmit()).toEqual({
+        action: 'LEAD/REQUEST_CALLBACK',
+        value: {
+          user: { data: 'DATA' },
+          propertyIds: [ 'my-community' ],
+        },
+      });
+
+      expect(then).toHaveBeenCalledWith(wrapper.instance().next);
+    });
+
+    it('should submit conversion in express mode and when callback is not requested', () => {
+      let wrapper = wrap({
+        expressConversionMode: true,
+        community,
+        submit,
+        concierge: { callbackRequested: false }
+      });
+
+      const then = jest.fn();
+      promise = { then };
+
+      const data = { data: 'DATA' };
+      
+      childProps().submitConversion(data);
+    
+      expect(lastEvent()).toEqual({
+        action: 'contactCommunity',
+        category: 'requestCallback',
+        label: 'my-community',
+      });
+      
+      expect(lastSubmit()).toEqual({
+        action: 'LEAD/REQUEST_CALLBACK',
+        value: {
+          user: { data: 'DATA' },
+          propertyIds: [ 'my-community' ],
+        },
+      });
+
+      expect(then).toHaveBeenCalledWith(wrapper.instance().next);
+    });
+
+    it('should not submit conversion when in express mode and when callback was sent', () => {
+      let wrapper = wrap({
+        expressConversionMode: true,
+        community,
+        submit,
+        concierge: { callbackRequested: true }
+      });
+
+      wrapper.instance().next = jest.fn();
+      wrapper.update();
+
+      const then = jest.fn();
+      promise = { then };
+
+      const data = { data: 'DATA' };
+      
+      childProps().submitConversion(data);
+    
+      expect(lastEvent()).toEqual({
+        action: 'contactCommunity',
+        category: 'requestCallback',
+        label: 'my-community',
+      });
+
+      expect(submit).not.toHaveBeenCalled();
+      
+      expect(then).not.toHaveBeenCalled();
+      expect(wrapper.instance().next).toHaveBeenCalled();
     });
 
     it('should submit advanced info', () => {
@@ -203,6 +297,6 @@ describe('ConciergeController', function() {
       });
       expect(then).toHaveBeenCalledWith(wrapper.instance().next);
     });
+
   });
 });
-

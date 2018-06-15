@@ -73,7 +73,10 @@ export class ConciergeController extends Component {
 
   submitConversion = (data) => {
     const {
-      submit, community, expressConversionMode, concierge,
+      submit,
+      community,
+      expressConversionMode,
+      concierge,
     } = this.props;
 
     const { callbackRequested } = concierge;
