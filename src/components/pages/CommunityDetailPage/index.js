@@ -260,6 +260,7 @@ export default class CommunityDetailPage extends Component {
             user={communityUser}
             amenityScore={rgsAux.amenityScore}
             startingRate={startingRate}
+            providedAverage={rgsAux.providedAverage}
             communityHighlights={communityHighlights}
             reviews={reviews}
           />

@@ -17,6 +17,7 @@ export default class communitySummary extends React.Component {
     amenityScore: string,
     communityHighlights: arrayOf(string),
     startingRate: number,
+    providedAverage: number,
     reviewsValue : number,
     innerRef: object,
     pricingAndFloorPlansRef: object.isRequired,
@@ -41,9 +42,11 @@ export default class communitySummary extends React.Component {
 
   render() {
     const {
-      twilioNumber, phoneNumber, user, amenityScore, communityHighlights, startingRate, reviewsValue, innerRef,
+      twilioNumber, phoneNumber, user, amenityScore, communityHighlights, startingRate, providedAverage, reviewsValue, innerRef,
     } = this.props;
+
     const highlights = [];
+
     let receptionNumber = phoneNumber;
     if ((receptionNumber === undefined || receptionNumber === '') && user) {
       receptionNumber = user.phoneNumber;
@@ -53,7 +56,6 @@ export default class communitySummary extends React.Component {
     if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
       conciergeNumber = twilioNumber.numbers[0];
     }
-
 
     highlights.push((
       <span>
@@ -112,7 +114,10 @@ export default class communitySummary extends React.Component {
     if (startingRate) {
       highlights.push((
         <span>
-          Pricing starts from&nbsp;
+          { providedAverage
+              ? 'Pricing starts from '
+              : 'Estimated Pricing: ' 
+          }
           <Link
             href={`#${this.constructor.sectionIdMaps.pricingAndFloorPlans}`}
             onClick={e => this.constructor.scrollToSection(e, this.props.pricingAndFloorPlansRef)}
