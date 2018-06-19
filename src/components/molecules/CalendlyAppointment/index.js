@@ -11,7 +11,6 @@ if(isBrowser) {
 
 export default class CalendlyAppointment  extends Component {
   componentDidMount() {
-    debugger;
     Calendly.initInlineWidgets();
   }
 
@@ -28,7 +27,7 @@ export default class CalendlyAppointment  extends Component {
     return (
       <div
         className="calendly-inline-widget"
-        data-url="https://calendly.com/seniorly_test"
+        data-url="https://calendly.com/seniorly_test/30min"
         style={style}
       />
     );
