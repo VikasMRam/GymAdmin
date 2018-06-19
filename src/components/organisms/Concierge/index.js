@@ -11,9 +11,11 @@ import AdvancedInfoContainer from 'sly/containers/AdvancedInfoContainer';
 import SimilarCommunitiesContainer from 'sly/containers/SimilarCommunitiesContainer';
 import WhenFormContainer from 'sly/containers/WhenFormContainer';
 import Thankyou from 'sly/components/molecules/Thankyou';
+import CalendlyAppointment from 'sly/components/molecules/CalendlyAppointment';
 
 const steps = {
   conversionForm:     ConversionFormContainer,
+  calendlyAppointment: CalendlyAppointment,
   advancedInfo:       AdvancedInfoContainer,
   // similarCommunities: SimilarCommunitiesContainer,
   whenForm:           WhenFormContainer,
@@ -27,6 +29,7 @@ const Wrapper = styled.div`
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   padding: ${size('spacing.xLarge')};
 `;
+
 export default class Concierge extends Component {
   static propTypes = {
     community: object.isRequired,
