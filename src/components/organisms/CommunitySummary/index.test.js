@@ -89,7 +89,7 @@ it('renders amenityScore', () => {
 
 it('renders startingRate', () => {
   const wrapper = wrap({
-    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
+    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, providedAverage: 1,
   });
   testStartingRate(wrapper);
 });
@@ -120,6 +120,7 @@ it('renders all properties', () => {
     communityReviewsRef,
     pricingAndFloorPlansRef,
     amenitiesAndFeaturesRef,
+    providedAverage: 1, 
   });
 
   testTwilioNumber(wrapper);
