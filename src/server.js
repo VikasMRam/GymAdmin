@@ -18,7 +18,6 @@ import serializeError from 'serialize-error';
 import { port, host, basename, publicPath, isDev, cookieDomain } from 'sly/config';
 import configureStore from 'sly/store/configure';
 import apiService from 'sly/services/api';
-import ExperimentsApi from 'sly/services/experiments/api';
 import App from 'sly/components/App';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
@@ -52,6 +51,8 @@ const renderHtml = ({ serverState, initialState, content, sheet, assets }) => {
   return `<!doctype html>\n${renderToStaticMarkup(html)}`;
 };
 
+const experiments = require('sly/../experiments.json');
+
 const app = express();
 app.disable('x-powered-by');
 app.use(cookieParser());
@@ -84,8 +85,6 @@ app.use(async (req, res, next) => {
   /* End of possible temp code */
 
   const location = req.url;
-  const experimentsApi = new ExperimentsApi();
-  const experiments = experimentsApi.all();
   const experimentsResults = {};
   Object.keys(experiments).forEach((i) => {
     const part = slySID.substr(0, 4);
