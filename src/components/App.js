@@ -3,8 +3,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
-import { connect } from 'react-redux';
-import { isBrowser } from 'sly/config';
+import { func } from 'prop-types';
+
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from './themes/default';
 import setGlobalStyles from './themes/setGlobalStyles';
@@ -33,6 +33,9 @@ export default class App extends Component {
   static childContextTypes = {
     routes: routesPropType,
   };
+  static propTypes = {
+    fetchUser: func,
+  }
 
   getChildContext = () => ({
     routes: this.routes,
@@ -103,7 +106,7 @@ export default class App extends Component {
               <Route
                 path={`/:toc(${careTypes})/:state/:city/filters`}
                 render={({ match }) => (
-                  <Redirect 
+                  <Redirect
                     to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
                   />
                 )}
