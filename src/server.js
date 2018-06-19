@@ -85,16 +85,19 @@ app.use(async (req, res, next) => {
   /* End of possible temp code */
 
   const location = req.url;
-  const experimentsResults = {};
-  Object.keys(experiments).forEach((i) => {
-    const part = slySID.substr(0, 4);
-    const segment = Math.floor((parseInt(part, 16) / 65537) / (1 / experiments[i].length));
-    const variant = experiments[i][segment];
+  const experimentNames = Object.keys(experiments);
+  const userExperiments = experimentNames
+    .reduce((cumul, key, i) => {
+      const channel = i % 8;
+      const part = slySID.substr(channel * 4, 4);
+      const segment = Math.floor((parseInt(part, 16) / 65536) / (1 / experiments[key].length));
+      const variant = experiments[key][segment];
+      const modifiedCumul = { ...cumul };
+      modifiedCumul[key] = variant;
+      return modifiedCumul;
+    }, {});
 
-    experimentsResults[i] = variant;
-  });
-
-  const store = configureStore({ experiments: experimentsResults }, { api });
+  const store = configureStore({ experiments: userExperiments }, { api });
   const sheet = new ServerStyleSheet();
   const context = {};
 
