@@ -34,6 +34,8 @@ const origin = window && window.location.origin;
 
 if (origin.indexOf(host) !== -1) {
   render(renderApp(), root);
+} else {
+  console.warn('Javascript not loading because CORS: got', origin, 'but was expecting', host);
 }
 
 if (module.hot) {
