@@ -51,12 +51,17 @@ class Experiment extends Component {
       console.info(`[Experiments] failed evaluating experiment ${name}. defaultVaraint will be selected.`);
     }
     const childrenArray = Array.isArray(children) ? children : [children];
-    const variantChildren = childrenArray.filter(c => c.props.name === selectedVariant);
-    if (variantChildren.length === 0 && isDev) {
-      console.info(`[Experiments] experiment ${name} has no valid Variant ${selectedVariant}.`);
-      return null;
+    let [variant] = childrenArray;
+    if (selectedVariant) {
+      const variantChildren = childrenArray.filter(c => c.props.name === selectedVariant);
+      if (variantChildren.length === 0 && isDev) {
+        console.info(`[Experiments] experiment ${name} has no valid Variant ${selectedVariant}.`);
+        return null;
+      }
+      variant = variantChildren[0] || null;
+    } else if (isDev) {
+      console.info(`[Experiments] experiment ${name} has no default variant. first variant will be selected.`);
     }
-    const variant = variantChildren[0] || null;
     if (isDev) {
       console.info(`[Experiments] experiment ${name} has variant ${selectedVariant}.`);
     }
