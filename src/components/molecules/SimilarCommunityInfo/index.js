@@ -70,14 +70,28 @@ export default class SimilarCommunityInfo extends Component {
     similarProperty: PropTypes.object.isRequired,
   };
 
-  renderRate = ({ startingRate }) => startingRate ? (
+  renderEstimatedRate = startingRate => startingRate ? (
     <Rate>
-      <NumberFormat value={startingRate} displayType={'text'} thousandSeparator={true} prefix={'$'} />
+      {'Estimated '}
+      <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />
+      {'/mo'}
+    </Rate>
+  ) : null;
+
+  renderProviderRate = startingRate  => startingRate ? (
+    <Rate>
+      <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />
       {' per month'}
     </Rate>
-  ): null;
+  ) : null;
 
-  renderReviews = ({ numReviews, reviewsValue }) => { 
+  renderRate = ({ estimated, startingRate }) => estimated ? (
+    this.renderEstimatedRate(startingRate)
+  ) : (
+    this.renderProviderRate(startingRate)
+  )
+
+  renderReviews = ({ numReviews, reviewsValue }) => {
     if (numReviews > 0) {
       return (
         <span>
@@ -99,6 +113,7 @@ export default class SimilarCommunityInfo extends Component {
 
     const {
       name,
+      estimated,
       startingRate,
       reviewsValue,
       numReviews,
