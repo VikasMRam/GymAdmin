@@ -30,6 +30,7 @@ const config = {
 
   test: {
     isTest: true,
+    isDev: false,
   },
   development: {},
 
