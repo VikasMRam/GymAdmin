@@ -1,13 +1,13 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 import Modal from 'sly/components/molecules/Modal';
-import MediaGallery from 'sly/components/molecules/MediaGallery';
 import FullscreenMediaGallery from '.';
+import { StyledMediaGallery } from '.';
 
-const wrap = (props = {}) => mount(<FullscreenMediaGallery {...props} />);
+const wrap = (props = {}) => shallow(<FullscreenMediaGallery {...props} />);
 
 const onClose = jest.fn();
 const onSlideChange = jest.fn();
@@ -44,7 +44,8 @@ describe('FullscreenMediaGallery', () => {
     const wrapper = wrap({
       images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false, onSlideChange,
     });
-    expect(wrapper.find(Modal)).toHaveLength(1);
-    expect(wrapper.find(MediaGallery)).toHaveLength(1);
+    const modal = wrapper.find(Modal);
+    expect(modal.exists()).toBe(true);
+    expect(modal.find(StyledMediaGallery).exists()).toBe(true);
   });
 });
