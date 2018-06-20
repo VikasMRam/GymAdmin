@@ -78,7 +78,7 @@ export default class App extends Component {
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <Helmet titleTemplate="%s | Seniorly">
           <title>Find Local Senior Housing & Senior Care Services</title>
-          <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best Senior Home by comparing pricing, availabilities, and amenities with Seniorly!" />
+          <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best Senior Home by comparing pricing, availability, and amenities with Seniorly!" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
           <meta content="Seniorly Inc." property="author" />
