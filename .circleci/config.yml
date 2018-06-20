@@ -78,11 +78,12 @@ jobs:
             if [[ "$CIRCLE_BRANCH" = "master" ]]; then
               git describe --tags > ./VERSION
               cat VERSION
+              export STAGED="--staged"
             fi
       - run:
           name: Deploy to EB
           command: |
-            export DEPLOY_FAILED=$(eb deploy slyreact-$SLY_ENV -v | tee /dev/tty | grep -c "ERROR")
+            export DEPLOY_FAILED=$(eb deploy slyreact-$SLY_ENV -v $STAGED | tee /dev/tty | grep -c "ERROR")
             if [ "$DEPLOY_FAILED" -gt 0 ]; then
               exit 1
             fi
