@@ -77,7 +77,6 @@ jobs:
           command: |
             if [[ "$CIRCLE_BRANCH" = "master" ]]; then
               git describe --tags > ./VERSION
-              ls ./
               cat VERSION
             fi
       - run:
