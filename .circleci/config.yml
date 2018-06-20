@@ -72,6 +72,9 @@ jobs:
           name: Install awscli
           command: |
             sudo pip install awsebcli --upgrade
+      -run:
+          name: Put version in VERSION file
+          command: git describe --tags > VERSION
       - run:
           name: Deploy to EB if branch is Master
           command: |
