@@ -74,9 +74,12 @@ jobs:
             sudo pip install awsebcli --upgrade
       - run:
           name: Put version in VERSION file
-          command: git describe --tags > ./VERSION
+          command: |
+            if [[ "$CIRCLE_BRANCH" = "master" ]]; then
+              git describe --tags > ./VERSION
+            fi
       - run:
-          name: Deploy to EB if branch is Master
+          name: Deploy to EB
           command: |
             export DEPLOY_FAILED=$(eb deploy slyreact-$SLY_ENV -v | tee /dev/tty | grep -c "ERROR")
             if [ "$DEPLOY_FAILED" -gt 0 ]; then
