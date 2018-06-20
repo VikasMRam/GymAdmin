@@ -1,5 +1,6 @@
 // https://github.com/diegohaz/arc/wiki/Webpack
 const path = require('path');
+const fs = require('fs');
 const devServer = require('@webpack-blocks/dev-server2');
 const splitVendor = require('webpack-blocks-split-vendor');
 const happypack = require('webpack-blocks-happypack');
@@ -33,6 +34,7 @@ const BASENAME = process.env.BASENAME || '';
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
 const DOMAIN = process.env.DOMAIN || 'lvh.me';
+const VERSION = fs.readFileSync('./VERSION', 'utf8');
 
 const SOURCE = process.env.SOURCE || 'src';
 
@@ -111,6 +113,7 @@ const base = () =>
       'process.env.API_URL': API_URL,
       'process.env.AUTH_URL': AUTH_URL,
       'process.env.DOMAIN': DOMAIN,
+      'process.env.VERSION': VERSION,
     }),
     addPlugins([new webpack.ProgressPlugin()]),
     happypack([babel()]),

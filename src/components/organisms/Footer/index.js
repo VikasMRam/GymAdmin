@@ -5,6 +5,8 @@ import { palette } from 'styled-theme';
 import { size } from 'sly/components/themes';
 import { Icon, Link, Hr } from 'sly/components/atoms';
 
+import config from 'sly/config';
+
 const FooterWrapper = styled.div`
   background-color: ${palette('grayscale', 2)};
   color: ${palette('white', 0)};
@@ -170,6 +172,10 @@ const groups = {
   ],
 };
 
+const Version = styled.span`
+  opacity: 0.5;
+`;
+
 const Footer = () => {
   const currentYear = (new Date()).getFullYear();
   const groupComponents = Object.keys(groups).map((group) => {
@@ -209,7 +215,7 @@ const Footer = () => {
         <Join>
           Join Our Community
         </Join>
-        <TradeMark>&copy; Seniorly {currentYear}</TradeMark>
+        <TradeMark>&copy; Seniorly {currentYear} <Version>{config.version}</Version></TradeMark>
       </FooterBottomWrapper>
     </FooterWrapper>
   );
