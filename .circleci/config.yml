@@ -78,6 +78,7 @@ jobs:
             if [[ "$CIRCLE_BRANCH" = "master" ]]; then
               git describe --tags > ./VERSION
               cat VERSION
+              git add ./VERSION
               export STAGED="--staged"
             fi
       - run:
