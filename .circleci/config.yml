@@ -40,7 +40,9 @@ jobs:
       # run tests!
       - run:
           name: "JS Test Suite"
-          command: JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml" npm test -- --ci --testResultsProcessor="jest-junit"
+          command: |
+            export JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml"
+            npm test -- --ci --testResultsProcessor="jest-junit"
 
       - store_test_results:
           path: /tmp/test-results
