@@ -27,6 +27,9 @@ const validate = createValidator({
 const ReduxForm = reduxForm({
   form: 'ConversionForm',
   destroyOnUnmount: false,
+  // required to refresh when initialValues change. Ref: https://redux-form.com/6.7.0/examples/initializefromstate/
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: true,
   validate,
 })(ConversionForm);
 
