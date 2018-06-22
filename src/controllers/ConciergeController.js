@@ -43,15 +43,16 @@ export class ConciergeController extends Component {
   };
 
   getPricing = () => {
-    const { 
+    const {
       concierge,
       community,
-      set
+      set,
     } = this.props;
 
-    const { 
+    const {
       callbackRequested,
-      advancedInfoSent
+      advancedInfoSent,
+      userDetailsHasOnlyEmail,
     } = concierge;
 
     const event = {
@@ -64,7 +65,7 @@ export class ConciergeController extends Component {
 
     const currentStep = (callbackRequested && advancedInfoSent)
       ? THANKYOU
-      : callbackRequested
+      : callbackRequested && !userDetailsHasOnlyEmail
         ? ADVANCED_INFO
         : CONVERSION_FORM;
 
@@ -81,7 +82,7 @@ export class ConciergeController extends Component {
 
     const { callbackRequested } = concierge;
 
-    const event = { 
+    const event = {
       action: 'contactCommunity',
       category: 'requestCallback',
       label: community.id
@@ -125,7 +126,7 @@ export class ConciergeController extends Component {
    *   currentStep = thankyou
    */
   next = () => {
-    const { 
+    const {
       concierge,
       expressConversionMode,
       getDetailedPricing,
@@ -135,7 +136,7 @@ export class ConciergeController extends Component {
     const { callbackRequested, advancedInfoSent, currentStep } = concierge;
 
     if (expressConversionMode || (callbackRequested && advancedInfoSent)) {
-      set({ 
+      set({
         currentStep: THANKYOU,
         modalIsOpen: true,
       });
@@ -164,7 +165,7 @@ export class ConciergeController extends Component {
   render() {
     const { children, concierge } = this.props;
 
-    const { 
+    const {
       getPricing,
       submitConversion,
       submitAdvancedInfo,
@@ -192,11 +193,15 @@ const isAssessment = ({
   budget
 }) => !!(typeOfCare && typeOfRoom && timeToMove && budget);
 
+const hasOnlyEmail = userDetails =>
+  (!(userDetails.fullName || '').length || !(userDetails.phone || '').length) && (userDetails.email || '').length;
+
 const mapStateToProps = (state, { concierge, community }) => {
   const userActions = getDetail(state, 'userAction') || {};
   const callbackRequested = (userActions.profilesContacted || [])
     .some(isCallback(community.id));
   const advancedInfoSent = isAssessment(userActions.userDetails || {});
+  const userDetailsHasOnlyEmail = hasOnlyEmail(userActions.userDetails || {});
 
   return {
     concierge: {
@@ -204,6 +209,7 @@ const mapStateToProps = (state, { concierge, community }) => {
       modalIsOpen: concierge.modalIsOpen || false,
       callbackRequested,
       advancedInfoSent,
+      userDetailsHasOnlyEmail,
     },
     community,
   };
