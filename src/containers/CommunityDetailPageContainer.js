@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, number, func, bool } from 'prop-types';
+import { object, number, func, bool, string } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
 
@@ -29,6 +29,9 @@ class CommunityDetailPageContainer extends Component {
     toggleFullscreenMediaGallery: func,
     isStickyHeaderVisible: bool,
     toggleStickyHeader: func,
+    user: object,
+    isQuestionModalOpenValue: bool,
+    setIsQuestionModalOpenValue: func,
   };
 
   handleMediaGallerySlideChange = (slideIndex) => {
@@ -78,7 +81,7 @@ class CommunityDetailPageContainer extends Component {
     }
 
     if (!community) {
-      return <div></div>;
+      return <div />;
     }
 
     // If request url does not match resource url from api, perform 302 redirect
@@ -130,7 +133,7 @@ const mapDispatchToProps = (dispatch) => {
 const fetchData = (dispatch, { match }) =>
   Promise.all([
     dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
-      include: 'similar-communities',
+      include: 'similar-communities,questions',
     })),
     dispatch(resourceDetailReadRequest('userAction')),
   ]);

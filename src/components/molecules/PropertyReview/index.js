@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { size } from 'sly/components/themes';
 import Rating from 'sly/components/molecules/Rating';
 import Hr from 'sly/components/atoms/Hr';
+import { formatDate } from 'sly/services/helpers/date';
 
 const RatingHeadingDiv = styled.div`
   display: flex;
@@ -25,16 +26,6 @@ const PaddedHR = styled(Hr)`
   margin-top: ${size('spacing.xLarge')};
   margin-bottom: ${size('spacing.xLarge')};
 `;
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  const locale = 'en-us';
-  const month = date.toLocaleString(locale, { month: 'short' });
-  let day = `${date.getDate()}`;
-  const year = date.getFullYear();
-  if (day.length < 2) day = `0${day}`;
-  return `${month} ${day}, ${year}`;
-}
 
 const PropertyReview = ({
   value, author, createdAt, comments,

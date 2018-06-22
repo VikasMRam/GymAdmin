@@ -51,6 +51,12 @@ export const isHomePageMediaGalleryFullscreenActive = state =>
 export const isCommunityDetailPageStickyHeaderActive = state =>
   communityDetailPage.isStickyHeaderVisible(state.communityDetailPage);
 
+export const isQuestionModalOpenSelector = state =>
+  communityDetailPage.isQuestionModalOpen(state.communityDetailPage);
+
+export const answerQuestionValueSelector = state =>
+  communityDetailPage.answerQuestionValue(state.communityDetailPage);
+
 export const isCommunitySearchPageModalFilterPanelActive = state =>
   communitySearchPage.isModalFilterPanelVisible(state.communitySearchPage);
 

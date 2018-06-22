@@ -1,13 +1,13 @@
 import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
-import { object, func, number, bool } from 'prop-types';
+import { object, func, number, bool, string } from 'prop-types';
 import Sticky from 'react-stickynode';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
-import SlyEvent from "sly/services/helpers/events";
+import SlyEvent from 'sly/services/helpers/events';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { size } from 'sly/components/themes';
 
@@ -29,6 +29,7 @@ import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGaller
 import MorePictures from 'sly/components/organisms/MorePictures';
 import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
+import CommunityQuestionAnswersContainer from 'sly/containers/CommunityQuestionAnswersContainer';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import Button from 'sly/components/atoms/Button';
 
@@ -118,10 +119,11 @@ export default class CommunityDetailPage extends Component {
       onMediaGallerySlideChange,
       onMediaGalleryToggleFullscreen,
       isStickyHeaderVisible,
-      user
+      user,
     } = this.props;
 
     const {
+      id,
       name,
       startingRate,
       propInfo,
@@ -135,6 +137,7 @@ export default class CommunityDetailPage extends Component {
       videoGallery = {},
       twilioNumber,
       user: communityUser,
+      questions,
     } = community;
 
     const { careServices, serviceHighlights, communityPhone } = propInfo;
@@ -330,6 +333,13 @@ export default class CommunityDetailPage extends Component {
               reviews={reviewsFinal}
               reviewRatings={ratingsArray}
               onLeaveReview={onLeaveReview}
+            />
+          </CollapsibleSection>
+          <CollapsibleSection title="Questions">
+            <CommunityQuestionAnswersContainer
+              communityName={name}
+              communitySlug={id}
+              questions={questions}
             />
           </CollapsibleSection>
           <Hr id="sticky-sidebar-boundary" />
