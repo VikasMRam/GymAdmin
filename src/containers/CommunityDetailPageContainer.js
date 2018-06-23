@@ -133,7 +133,7 @@ const mapDispatchToProps = (dispatch) => {
 const fetchData = (dispatch, { match }) =>
   Promise.all([
     dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
-      include: 'similar-communities,questions',
+      include: 'similar-communities,questions,agents',
     })),
     dispatch(resourceDetailReadRequest('userAction')),
   ]);
