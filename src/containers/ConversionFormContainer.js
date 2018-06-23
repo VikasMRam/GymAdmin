@@ -40,17 +40,19 @@ class ConversionFormContainer extends Component {
   };
 
   render() {
-    const { submitConversion, userDetails, ...props } = this.props;
+    const { submitConversion, userDetails, community, ...props } = this.props;
     const { email, fullName, phone } = userDetails;
     const initialValues = {
       email,
       phone,
       full_name: fullName,
     };
+    const { agents } = community;
     return (
       <ReduxForm
         initialValues={initialValues}
         onSubmit={submitConversion}
+        agent={agents[0]}
         {...props}
       />
     );
