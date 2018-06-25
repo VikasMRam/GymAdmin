@@ -41,16 +41,16 @@ const Wrapper = styled.div`
   }
 `;
 
-const MorePictures = ({ gallery, onPictureClick }) => {
+const MorePictures = ({ gallery, communityName, onPictureClick }) => {
   const { images } = gallery;
-  const imageComponents = images.map(image => (
+  const imageComponents = images.map((image, i) => (
     <Lazy
       ltIE9
       component="div"
       key={image.id}
       onClick={() => onPictureClick && onPictureClick(image)}
     >
-      <PictureTile src={image.sd} aspectRatio="4:3" />
+      <PictureTile src={image.sd} aspectRatio="4:3" alt={`${communityName} ${i + 1}`} />
     </Lazy>
   ));
   return (
@@ -67,6 +67,7 @@ MorePictures.propTypes = {
       sd: string.isRequired,
     })),
   }),
+  communityName: string.isRequired,
   onPictureClick: func,
 };
 
