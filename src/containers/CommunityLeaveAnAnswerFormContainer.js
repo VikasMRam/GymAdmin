@@ -67,7 +67,7 @@ const mapDispatchToProps = dispatch => ({
     return dispatch(resourceCreateRequest('answer', data));
   },
   loadCommunity: slug => dispatch(resourceDetailReadRequest('community', slug, {
-    include: 'similar-communities,questions',
+    include: 'similar-communities,questions,agents',
   })),
 });
 
