@@ -18,11 +18,15 @@ const AgentDiv = styled.div`
   }
 `;
 
-const TitleDiv = styled.div`
+const NameTextSpan = styled.span`
   margin-bottom: ${size('spacing.regular')};
 `;
 
 const TitleTextDiv = styled.div`
+  margin-bottom: ${size('spacing.regular')};
+`;
+
+const TitleDiv = styled.div`
   display: flex;
   flex-direction: column;
   > span {
@@ -38,7 +42,7 @@ const Title = ({
   name, title, rating, community,
 }) => (
   <TitleDiv>
-    <span>{name}</span>
+    <NameTextSpan>{name}</NameTextSpan>
     <CaptionSpan>
       {title && <TitleTextDiv>{title}</TitleTextDiv>}
       {title && community && ', '}
