@@ -44,6 +44,7 @@ export class ConciergeController extends Component {
       concierge,
       community,
       set,
+      experiements,
     } = this.props;
 
     const {
@@ -117,6 +118,7 @@ export class ConciergeController extends Component {
 
   launchCalendly = () => {
     const { set } = this.props;
+     
     set({
       currentStep: CALENDLY_APPOINTMENT,
       modalIsOpen: true,
@@ -211,10 +213,12 @@ const mapStateToProps = (state, { concierge, community }) => {
   const advancedInfoSent = isAssessment(userActions.userDetails || {});
   const userDetailsHasOnlyEmail = hasOnlyEmail(userActions.userDetails || {});
 
+
   return {
     concierge: {
       currentStep: concierge.currentStep || CONVERSION_FORM,
       modalIsOpen: concierge.modalIsOpen || false,
+      experiments: state.experiments,
       callbackRequested,
       advancedInfoSent,
       userDetailsHasOnlyEmail,
