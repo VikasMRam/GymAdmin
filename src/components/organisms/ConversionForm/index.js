@@ -8,7 +8,7 @@ import { size } from 'sly/components/themes';
 import { Experiment, Variant } from 'sly/services/experiments';
 
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { Button, Heading, Link } from 'sly/components/atoms';
+import { Button, Heading, Link, Hr } from 'sly/components/atoms';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 import AgentTile from 'sly/components/molecules/AgentTile';
 import { community as communityPropType } from 'sly/propTypes/community';
@@ -40,7 +40,7 @@ const AgentTileWrapper = styled.div`
 `;
 
 const SubHeading = styled.div`
-  margin-bottom: ${size('spacing.regular')};
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const ConversionForm = ({
@@ -57,6 +57,7 @@ const ConversionForm = ({
           {contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
         </Variant>
       </Experiment>
+      <Hr />
       <Field
         name="full_name"
         label="Full Name"
