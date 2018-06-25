@@ -33,7 +33,9 @@ const config = {
     isTest: true,
     isDev: false,
   },
-  development: {},
+  development: {
+    enableExperimentsDebugger: true,
+  },
 
   staging: {
     isDev: false,

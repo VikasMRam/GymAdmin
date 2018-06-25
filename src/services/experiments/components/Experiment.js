@@ -5,7 +5,7 @@ import { prop } from 'styled-tools';
 import { connect } from 'react-redux';
 import { palette } from 'styled-theme';
 
-import { isDev } from 'sly/config';
+import { enableExperimentsDebugger } from 'sly/config';
 import { size } from 'sly/components/themes';
 import { getExperiment } from 'sly/store/selectors';
 
@@ -47,27 +47,27 @@ class Experiment extends Component {
     if (disabled) {
       selectedVariant = defaultVariant;
     }
-    if (!variantKey && isDev) {
+    if (!variantKey && enableExperimentsDebugger) {
       console.info(`[Experiments] failed evaluating experiment ${name}. defaultVaraint will be selected.`);
     }
     const childrenArray = Array.isArray(children) ? children : [children];
     let [variant] = childrenArray;
     if (selectedVariant) {
       const variantChildren = childrenArray.filter(c => c.props.name === selectedVariant);
-      if (variantChildren.length === 0 && isDev) {
+      if (variantChildren.length === 0 && enableExperimentsDebugger) {
         console.info(`[Experiments] experiment ${name} has no valid Variant ${selectedVariant}.`);
         return null;
       }
       variant = variantChildren[0] || null;
-    } else if (isDev) {
+    } else if (enableExperimentsDebugger) {
       console.info(`[Experiments] experiment ${name} has no default variant. first variant will be selected.`);
     }
-    if (isDev) {
+    if (enableExperimentsDebugger) {
       console.info(`[Experiments] experiment ${name} has variant ${selectedVariant}.`);
     }
     this.selectedVariantRendered = true;
 
-    if (variant && isDev) {
+    if (variant && enableExperimentsDebugger) {
       const color = `#${Math.random().toString(16).slice(2, 8)}`;
       return (
         <DebugWrapper color={color}>
