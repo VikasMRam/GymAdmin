@@ -39,8 +39,12 @@ const AgentTileWrapper = styled.div`
   border-radius: ${size('spacing.tiny')};
 `;
 
+const SubHeading = styled.div`
+  margin-bottom: ${size('spacing.regular')};
+`;
+
 const ConversionForm = ({
-  handleSubmit, submitting, community, agent,
+  handleSubmit, submitting, community, agent, contact,
 }) => (
   <div>
     <StyledForm onSubmit={handleSubmit}>
@@ -50,6 +54,7 @@ const ConversionForm = ({
         </Variant>
         <Variant name="get_pricing_availability">
           <Heading level="title" size="title">Get Pricing & Availability</Heading>
+          {contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
         </Variant>
       </Experiment>
       <Field
@@ -77,13 +82,15 @@ const ConversionForm = ({
 
       <TosAndPrivacy />
     </StyledForm>
-    <AgentSectionWrapper>
-      <AgentSectionText>We have matched you with a Seniorly Local Guide to help you along the way</AgentSectionText>
-      <AgentSectionText><Link href="/how-it-works">Learn More</Link></AgentSectionText>
-      <AgentTileWrapper>
-        <AgentTile user={{ name: agent.name, title: 'Senior Living Expert', picture: agent.mainImage }} community={community} />
-      </AgentTileWrapper>
-    </AgentSectionWrapper>
+    {agent &&
+      <AgentSectionWrapper>
+        <AgentSectionText>We have matched you with a Seniorly Local Guide to help you along the way</AgentSectionText>
+        <AgentSectionText><Link href="/how-it-works">Learn More</Link></AgentSectionText>
+        <AgentTileWrapper>
+          <AgentTile user={{ name: agent.name, title: 'Senior Living Expert', picture: agent.mainImage }} community={community} />
+        </AgentTileWrapper>
+      </AgentSectionWrapper>
+    }
   </div>
 );
 
@@ -92,6 +99,7 @@ ConversionForm.propTypes = {
   community: communityPropType.isRequired,
   submitting: bool,
   agent: object,
+  contact: object,
 };
 
 export default ConversionForm;
