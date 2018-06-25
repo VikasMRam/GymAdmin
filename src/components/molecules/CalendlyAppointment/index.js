@@ -9,9 +9,36 @@ if(isBrowser) {
   document.body.appendChild(script);
 }
 
+const sf = [
+  'https://calendly.com/agentsf1',
+  'https://calendly.com/agentsf',
+];
+
+const la = [
+  'https://calendly.com/agentla1',
+  'https://calendly.com/agentla',
+];
+
+const getDataUrl = community => {
+  const which = Math.round(Math.random())
+  const isSf = community.url
+    .indexOf('california/san-francisco') !== -1;
+  return isSf
+    ? sf[which]
+    : la[which];
+}
+
 export default class CalendlyAppointment  extends Component {
   componentDidMount() {
-    Calendly.initInlineWidgets();
+    if(isBrowser) {
+      if (window.Calendly) {
+        Calendly.initInlineWidgets();
+      } else {
+        document.addEventListener('DOMContentLoaded', () => {
+          Calendly.initInlineWidgets();
+        });
+      }
+    }
   }
 
   shouldComponentUpdate() {
@@ -19,6 +46,8 @@ export default class CalendlyAppointment  extends Component {
   }
 
   render() {
+    const { community } = this.props;
+    
     const style = {
       minWidth: '320px',
       height: '900px',
@@ -27,7 +56,7 @@ export default class CalendlyAppointment  extends Component {
     return (
       <div
         className="calendly-inline-widget"
-        data-url="https://calendly.com/seniorly_test/30min"
+        data-url={getDataUrl(community)}
         style={style}
       />
     );

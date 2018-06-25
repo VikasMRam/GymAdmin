@@ -3,9 +3,7 @@ import { string, func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 import get from 'lodash/get';
 
-import {
-  resourceCreateRequest,
-} from 'sly/store/resource/actions';
+import { resourceCreateRequest } from 'sly/store/resource/actions';
 
 import { getDetail } from 'sly/store/selectors';
 import { connectController } from 'sly/controllers';
@@ -13,18 +11,15 @@ import SlyEvent from 'sly/services/helpers/events';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
 
-import {
-  resourceDetailReadRequest,
-} from 'sly/store/resource/actions';
+import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 
 export const CONVERSION_FORM = 'conversionForm';
 export const ADVANCED_INFO = 'advancedInfo';
 export const SIMILAR_COMMUNITIES = 'similarCommunities';
-export const WHEN_FORM = 'calendlyAppointment';
+export const CALENDLY_APPOINTMENT = 'calendlyAppointment';
 export const THANKYOU = 'thankyou';
 
 const steps = [
-  WHEN_FORM,
   CONVERSION_FORM,
   ADVANCED_INFO,
   // SIMILAR_COMMUNITIES,
@@ -50,19 +45,6 @@ export class ConciergeController extends Component {
       community,
       set,
     } = this.props;
-
-
-
-
-
-
-    return set({
-      currentStep: WHEN_FORM,
-      modalIsOpen: true,
-    });
-
-
-
 
     const {
       callbackRequested,
@@ -95,17 +77,6 @@ export class ConciergeController extends Component {
       concierge,
       set,
     } = this.props;
-
-
-
-
-    return set({
-      currentStep: WHEN_FORM,
-      modalIsOpen: true,
-    });
-
-
-
 
     const { callbackRequested } = concierge;
 
@@ -144,6 +115,14 @@ export class ConciergeController extends Component {
     }).then(this.next);
   };
 
+  launchCalendly = () => {
+    const { set } = this.props;
+    set({
+      currentStep: CALENDLY_APPOINTMENT,
+      modalIsOpen: true,
+    });
+  };
+
   /*
    * IF NOT gotUserDetails OR NOT conversionSent
    *   currentStep = conversion
@@ -161,25 +140,6 @@ export class ConciergeController extends Component {
     } = this.props;
 
     const { callbackRequested, advancedInfoSent, currentStep } = concierge;
-
-
-
-
-
-
-
-
-
-
-    return set({
-      currentStep: WHEN_FORM,
-      modalIsOpen: true,
-    });
-
-
-
-
-
 
     if (expressConversionMode || (callbackRequested && advancedInfoSent)) {
       set({
@@ -215,6 +175,7 @@ export class ConciergeController extends Component {
       getPricing,
       submitConversion,
       submitAdvancedInfo,
+      launchCalendly,
       close,
     } = this;
 
@@ -223,6 +184,7 @@ export class ConciergeController extends Component {
       getPricing,
       submitConversion,
       submitAdvancedInfo,
+      launchCalendly,
       close,
     });
   }

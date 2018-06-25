@@ -9,7 +9,6 @@ import { Label, Input, Block } from 'sly/components/atoms';
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 import CommunityChoice from 'sly/components/molecules/CommunityChoice';
 import Slider from 'sly/components/molecules/Slider';
-import Calendar from 'sly/components/molecules/Calendar';
 
 const getInputType = type => (type === 'email' ? 'text' : type);
 const getInputComponent = (type) => {
@@ -21,8 +20,6 @@ const getInputComponent = (type) => {
       return CommunityChoice;
     case 'slider':
       return Slider;
-    case 'datetime':
-      return Calendar;
     default:
       return Input;
   }
@@ -99,7 +96,6 @@ Field.propTypes = {
     'text',
     'email',
     'checkbox',
-    'datetime',
     'radio',
   ]),
   placeholder: string,
