@@ -79,7 +79,7 @@ const ConversionForm = ({
     </StyledForm>
     <AgentSectionWrapper>
       <AgentSectionText>We have matched you with a Seniorly Local Guide to help you along the way</AgentSectionText>
-      <AgentSectionText><Link href="/tos">Learn More</Link></AgentSectionText>
+      <AgentSectionText><Link href="/how-it-works">Learn More</Link></AgentSectionText>
       <AgentTileWrapper>
         <AgentTile user={{ name: agent.name, title: 'Senior Living Expert', picture: agent.mainImage }} community={community} />
       </AgentTileWrapper>
