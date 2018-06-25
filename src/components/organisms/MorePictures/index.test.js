@@ -18,8 +18,9 @@ const gallery = {
     },
   ],
 };
+const communityName = 'test';
 
-const wrap = () => shallow(<MorePictures gallery={gallery} />);
+const wrap = () => shallow(<MorePictures gallery={gallery} communityName={communityName} />);
 
 describe('MorePictures', () => {
   it('does not renders children when passed in', () => {
@@ -30,5 +31,14 @@ describe('MorePictures', () => {
   it('renders PictureTile properly', () => {
     const wrapper = wrap();
     expect(wrapper.find(PictureTile)).toHaveLength(2);
+  });
+
+  it('renders PictureTile with correct image alt', () => {
+    const wrapper = wrap();
+    const tiles = wrapper.find(PictureTile);
+
+    tiles.forEach((t, i) => {
+      expect(t.prop('alt')).toBe(`${communityName} ${i + 1}`);
+    });
   });
 });

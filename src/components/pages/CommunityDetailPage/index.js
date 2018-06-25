@@ -206,7 +206,7 @@ export default class CommunityDetailPage extends Component {
         </Section>
         {(images.length > 1) &&
           <Section title="More Pictures">
-            <MorePictures gallery={gallery} onPictureClick={this.handleMorePicturesClick} />
+            <MorePictures gallery={gallery} communityName={name} onPictureClick={this.handleMorePicturesClick} />
           </Section>
         }
 
@@ -242,11 +242,11 @@ export default class CommunityDetailPage extends Component {
           <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} innerRef={this.breadCrumbRef} />
 
           <NameHeading level="hero" size="hero">
-            {name}{' '} 
+            {name}{' '}
             {(user && user.admin) &&
-              <Link 
+              <Link
                   to={`/mydashboard#/mydashboard/communities/${community.id}/about`}>
-               (Edit) 
+               (Edit)
               </Link>
             }
           </NameHeading>
