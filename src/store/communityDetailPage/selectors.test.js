@@ -4,6 +4,8 @@ const initialState = {
   mediaGalleryCurrentSlideIndex: 0,
   mediaGalleryFullscreenActive: false,
   stickyHeaderVisible: false,
+  answerQuestion: null,
+  isQuestionModalOpen: false,
 };
 
 test('initialState', () => {
@@ -28,4 +30,17 @@ test('isStickyHeaderVisible', () => {
   expect(selectors.isStickyHeaderVisible(selectors.initialState)).toBe(false);
   expect(selectors.isStickyHeaderVisible({ stickyHeaderVisible: false })).toBe(false);
   expect(selectors.isStickyHeaderVisible({ stickyHeaderVisible: true })).toBe(true);
+});
+
+test('answerQuestion', () => {
+  expect(selectors.answerQuestionValue(undefined)).toBe(null);
+  expect(selectors.answerQuestionValue(selectors.initialState)).toBe(null);
+  expect(selectors.answerQuestionValue({ answerQuestion: { foo: 'bar' } }).foo).toBe('bar');
+});
+
+test('isQuestionModalOpen', () => {
+  expect(selectors.isQuestionModalOpen(undefined)).toBe(false);
+  expect(selectors.isQuestionModalOpen(selectors.initialState)).toBe(false);
+  expect(selectors.isQuestionModalOpen({ isQuestionModalOpen: false })).toBe(false);
+  expect(selectors.isQuestionModalOpen({ isQuestionModalOpen: true })).toBe(true);
 });

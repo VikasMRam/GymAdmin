@@ -3,6 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
+import config from 'sly/config';
+
 const Html = ({
   styles, assets, state, content,
 }) => {
@@ -13,6 +15,7 @@ const Html = ({
   return (
     <html lang="en" {...htmlAttrs}>
       <head>
+        <meta name="sly-version" content={config.version} />
         {helmet.title.toComponent()}
         {helmet.meta.toComponent()}
         {helmet.link.toComponent()}

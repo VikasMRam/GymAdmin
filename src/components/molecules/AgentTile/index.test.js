@@ -52,8 +52,9 @@ describe('AgentTile', () => {
     const wrapper = wrap({ user: userFull });
     const title = wrapper.find('Title').dive();
     const caption = title.find(CaptionSpan);
-    const captionContent = caption.prop('children');
-    expect(captionContent).toEqual([userFull.title, undefined, undefined]);
+    expect(caption.childAt(0).childAt(0).text()).toEqual(userFull.title);
+    expect(caption.childAt(1).text()).toEqual('');
+    expect(caption.childAt(2).childAt(0).text()).toEqual('');
     expect(caption.find('Link')).toHaveLength(0);
   });
 
@@ -61,8 +62,9 @@ describe('AgentTile', () => {
     const wrapper = wrap({ user: userFull, community });
     const title = wrapper.find('Title').dive();
     const caption = title.find(CaptionSpan);
-    const captionContent = caption.prop('children');
-    expect(captionContent.slice(0, 2)).toEqual([userFull.title, ', ']);
+    expect(caption.childAt(0).childAt(0).text()).toEqual(userFull.title);
+    expect(caption.childAt(1).text()).toEqual(', ');
+    expect(caption.childAt(2).childAt(0).text()).toEqual(community.name);
     expect(caption.find('Link')).toHaveLength(1);
   });
 });

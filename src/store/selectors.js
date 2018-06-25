@@ -1,4 +1,5 @@
 import * as resources from './resource/selectors';
+import * as experiments from './experiments/selectors';
 import * as entities from './entities/selectors';
 import * as header from './header/selectors';
 import * as searchBox from './searchBox/selectors';
@@ -26,6 +27,12 @@ export const getDetailMeta = (state, resource) =>
 export const getListMeta = (state, resource) =>
   resources.getList(state.resource, resource).meta;
 
+export const getExperiment = (state, experimentName) =>
+  experiments.getExperimentByName(state.experiments, experimentName);
+
+export const getExperiments = state =>
+  experiments.getExperiments(state.experiments);
+
 export const isHeaderDropdownOpen = state =>
   header.isDropdownOpen(state.header);
 
@@ -43,6 +50,12 @@ export const isHomePageMediaGalleryFullscreenActive = state =>
 
 export const isCommunityDetailPageStickyHeaderActive = state =>
   communityDetailPage.isStickyHeaderVisible(state.communityDetailPage);
+
+export const isQuestionModalOpenSelector = state =>
+  communityDetailPage.isQuestionModalOpen(state.communityDetailPage);
+
+export const answerQuestionValueSelector = state =>
+  communityDetailPage.answerQuestionValue(state.communityDetailPage);
 
 export const isCommunitySearchPageModalFilterPanelActive = state =>
   communitySearchPage.isModalFilterPanelVisible(state.communitySearchPage);

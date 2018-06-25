@@ -17,3 +17,15 @@ test('COMMUNITY_DETAIL_TOGGLE_STICKY_HEADER', () => {
     type: actions.COMMUNITY_DETAIL_TOGGLE_STICKY_HEADER,
   }));
 });
+
+test('COMMUNITY_DETAIL_CHANGE_QUESTION_MODAL_OPEN', () => {
+  expect(actions.setIsQuestionModalOpenValue()).toEqual(expect.objectContaining({
+    type: actions.COMMUNITY_DETAIL_CHANGE_QUESTION_MODAL_OPEN,
+  }));
+});
+
+test('COMMUNITY_DETAIL_ANSWER_QUESTION', () => {
+  expect(actions.answerQuestion()).toEqual(expect.objectContaining({
+    type: actions.COMMUNITY_DETAIL_ANSWER_QUESTION,
+  }));
+});

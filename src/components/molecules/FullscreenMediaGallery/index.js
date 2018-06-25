@@ -7,7 +7,7 @@ import { size } from 'sly/components/themes';
 import Modal from 'sly/components/molecules/Modal';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 
-const StyledMediaGallery = styled(MediaGallery)`
+export const StyledMediaGallery = styled(MediaGallery)`
   .media-carousel-control-prev, .media-carousel-control-next {
     margin-left: initial;
     margin-right: initial;

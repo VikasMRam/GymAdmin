@@ -27,6 +27,9 @@ const validate = createValidator({
 const ReduxForm = reduxForm({
   form: 'ConversionForm',
   destroyOnUnmount: false,
+  // required to refresh when initialValues change. Ref: https://redux-form.com/6.7.0/examples/initializefromstate/
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: true,
   validate,
 })(ConversionForm);
 
@@ -37,17 +40,20 @@ class ConversionFormContainer extends Component {
   };
 
   render() {
-    const { submitConversion, userDetails, ...props } = this.props;
+    const { submitConversion, userDetails, community, ...props } = this.props;
     const { email, fullName, phone } = userDetails;
     const initialValues = {
       email,
       phone,
       full_name: fullName,
     };
+    const { agents, contacts } = community;
     return (
       <ReduxForm
         initialValues={initialValues}
         onSubmit={submitConversion}
+        agent={agents[0]}
+        contact={contacts[0]}
         {...props}
       />
     );

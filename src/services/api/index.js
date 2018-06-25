@@ -80,7 +80,7 @@ api.create = (settings = {}) => ({
     const doRequest = () => api
       .request(endpoint, merge({}, this.settings, settings));
 
-    return doRequest() 
+    return doRequest()
       .catch(error => {
         if ([401, 403].includes(error.response.status)) {
           return this.requestAuthToken().then(doRequest);

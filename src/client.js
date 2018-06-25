@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ServerStateProvider } from 'react-router-server';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { basename } from 'sly/config';
+import { basename, host } from 'sly/config';
 import configureStore from 'sly/store/configure';
 import api from 'sly/services/api';
 import App from 'sly/components/App';
@@ -30,7 +30,13 @@ const renderApp = () => (
 );
 
 const root = document.getElementById('app');
-render(renderApp(), root);
+const origin = window && window.location.origin;
+
+if (origin.indexOf(host) !== -1) {
+  render(renderApp(), root);
+} else {
+  console.warn('Javascript not loading because CORS: got', origin, 'but was expecting', host);
+}
 
 if (module.hot) {
   module.hot.accept('components/App', () => {

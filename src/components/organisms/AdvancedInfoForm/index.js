@@ -39,10 +39,10 @@ const timeToMoveOptions = [
   { value: 12, label: '12+ Months' },
 ];
 const budgetOptions = [
-  { value: '< 2500', label: 'Under 2500' },
-  { value: '2500-4000', label: '2500-4000' },
-  { value: '4000-6000', label: '4000-6000' },
-  { value: '> 6000', label: 'Over 6000' },
+  { value: 2, label: 'Under $2000' },
+  { value: 4, label: '$2000-$4000' },
+  { value: 6, label: '$4000-$6000' },
+  { value: 10, label: 'Over $6000' },
 ];
 
 const AdvancedInfoForm = ({
@@ -78,7 +78,7 @@ const AdvancedInfoForm = ({
     />
     <Field
       name="budget"
-      label="What is your budget?"
+      label="What is your monthly budget?"
       type="singlechoice"
       options={budgetOptions}
       width="100%"

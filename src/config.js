@@ -26,12 +26,16 @@ const config = {
     cookieDomain: process.env.DOMAIN,
     publicPath,
     olarkSiteId: '',
+    version:  process.env.VERSION
   },
 
   test: {
     isTest: true,
+    isDev: false,
   },
-  development: {},
+  development: {
+    enableExperimentsDebugger: true,
+  },
 
   staging: {
     isDev: false,

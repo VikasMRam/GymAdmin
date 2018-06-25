@@ -15,7 +15,7 @@ import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import serializeError from 'serialize-error';
 
-import { port, host, basename, publicPath, isDev, cookieDomain, } from 'sly/config';
+import { port, host, basename, publicPath, isDev, cookieDomain } from 'sly/config';
 import configureStore from 'sly/store/configure';
 import apiService from 'sly/services/api';
 import App from 'sly/components/App';
@@ -51,6 +51,8 @@ const renderHtml = ({ serverState, initialState, content, sheet, assets }) => {
   return `<!doctype html>\n${renderToStaticMarkup(html)}`;
 };
 
+const experiments = require('sly/../experiments.json');
+
 const app = express();
 app.disable('x-powered-by');
 app.use(cookieParser());
@@ -83,7 +85,19 @@ app.use(async (req, res, next) => {
   /* End of possible temp code */
 
   const location = req.url;
-  const store = configureStore({}, { api });
+  const experimentNames = Object.keys(experiments);
+  const userExperiments = experimentNames
+    .reduce((cumul, key, i) => {
+      const channel = i % 8;
+      const part = slySID.substr(channel * 4, 4);
+      const segment = Math.floor((parseInt(part, 16) / 65536) / (1 / experiments[key].length));
+      const variant = experiments[key][segment];
+      const modifiedCumul = { ...cumul };
+      modifiedCumul[key] = variant;
+      return modifiedCumul;
+    }, {});
+
+  const store = configureStore({ experiments: userExperiments }, { api });
   const sheet = new ServerStyleSheet();
   const context = {};
 
