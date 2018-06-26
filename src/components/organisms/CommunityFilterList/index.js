@@ -23,7 +23,7 @@ import {
 const MapWrapper = styled.div`
   width: ${size('map.search.tiny.width')};
   height: ${size('map.search.tiny.height')};
-  background: ${palette('grayscale', 3)};
+  background: ${palette('grayscale', 2)};
 `;
 const MapContainerElement = styled.div`
   width: 100%;
