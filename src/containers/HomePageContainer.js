@@ -31,11 +31,19 @@ class HomePageContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
   };
 
-  handleOnLocationSearch = (result) => {
-    const event = {
-      action: 'submit', category: 'discoverHomeSeeMoreSearch', label: result.formatted_address,
-    };
+  handleOnLocationSearch = (result, isFromModal) => {
+    let event;
+    if (isFromModal) {
+      event = {
+        action: 'submit', category: 'discoverHomeSeeMoreSearch', label: result.formatted_address,
+      };
+    } else {
+      event = {
+        action: 'submit', category: 'homeHeroSearch', label: result.formatted_address,
+      };
+    }
     SlyEvent.getInstance().sendEvent(event);
+
     const { history } = this.props;
     const { activeDiscoverHome } = this.state;
     const searchParams = getSearchParamFromPlacesResponse(result);
