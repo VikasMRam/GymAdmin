@@ -138,6 +138,7 @@ export default class CommunityDetailPage extends Component {
       twilioNumber,
       user: communityUser,
       questions,
+      mainImage,
     } = community;
 
     const { careServices, serviceHighlights, communityPhone } = propInfo;
@@ -231,6 +232,7 @@ export default class CommunityDetailPage extends Component {
           {(images.length > 0 || videos.length > 0) &&
             <CommunityMediaGallery
               communityName={name}
+              communityMainImage={mainImage}
               currentSlide={mediaGallerySlideIndex}
               images={images}
               videos={videos}

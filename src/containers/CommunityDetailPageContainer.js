@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+
+import { Redirect } from 'react-router';
 import { object, number, func, bool, string } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
@@ -72,11 +74,29 @@ class CommunityDetailPageContainer extends Component {
       user,
       community,
       errorCode,
+      redirectUrl,
       history,
       isStickyHeaderVisible,
     } = this.props;
 
     if (errorCode) {
+
+      if (redirectUrl) { /* Slug has Changed */
+        const { location } = history;
+        const { pathname } = location;
+        //Replace last part of pathname
+        let fullPaths = pathname.split('/');
+        fullPaths[fullPaths.length - 1] = redirectUrl;
+        return <Redirect to={fullPaths.join('/')}/>
+      }
+      if ( errorCode === 404) { /* Not found so redirect to city page */
+        const { location } = history;
+        const { pathname } = location;
+        //Replace last part of pathname
+        let lastIdx = pathname.lastIndexOf('/');
+        return <Redirect to={pathname.substring(0,lastIdx)} state={{status:302}}/>
+      }
+
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
@@ -139,8 +159,18 @@ const fetchData = (dispatch, { match }) =>
   ]);
 
 const handleError = (err) => {
+
   if (err.response) {
+
     if (err.response.status !== 200) {
+
+      if (err.location) {
+        let redUrl = err.location.split('/');
+        return { errorCode: err.response.status,
+          redirectUrl:redUrl[redUrl.length - 1]
+        };
+
+      }
       return { errorCode: err.response.status };
     }
     return { errorCode: null };

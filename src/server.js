@@ -168,7 +168,11 @@ app.use((err, req, res, next) => {
 
 app.use((err, req, res, next) => {
   if (err) {
-    const json = JSON.stringify(serializeError(err));
+    const errorObj = {
+      url: req.originalUrl,
+      error: serializeError(err),
+    };
+    const json = JSON.stringify(errorObj);
     console.error(`${new Date().toISOString()} ${json}`);
   }
 });
