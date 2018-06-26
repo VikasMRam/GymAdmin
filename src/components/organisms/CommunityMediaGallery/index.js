@@ -1,5 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { string, arrayOf, shape, bool, number, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -21,25 +21,26 @@ const MorePicsMobile = styled(Button)`
   }
 `;
 
-export default class CommunityMediaGallery extends React.Component {
+export default class CommunityMediaGallery extends Component {
   static propTypes = {
-    communityName: PropTypes.string.isRequired,
-    images: PropTypes.arrayOf(PropTypes.shape({
-      sd: PropTypes.string.isRequired,
-      hd: PropTypes.string.isRequired,
-      thumb: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
+    communityName: string.isRequired,
+    communityMainImage: string,
+    images: arrayOf(shape({
+      sd: string.isRequired,
+      hd: string.isRequired,
+      thumb: string.isRequired,
+      url: string.isRequired,
     })),
-    videos: PropTypes.arrayOf(PropTypes.shape({
-      url: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      thumbUrl: PropTypes.string.isRequired,
+    videos: arrayOf(shape({
+      url: string.isRequired,
+      name: string.isRequired,
+      thumbUrl: string.isRequired,
     })),
-    ariaHideApp: PropTypes.bool,
-    currentSlide: PropTypes.number,
-    onSlideChange: PropTypes.func.isRequired,
-    isFullscreenMode: PropTypes.bool,
-    onToggleFullscreenMode: PropTypes.func,
+    ariaHideApp: bool,
+    currentSlide: number,
+    onSlideChange: func.isRequired,
+    isFullscreenMode: bool,
+    onToggleFullscreenMode: func,
   };
 
   static defaultProps = {
@@ -50,8 +51,16 @@ export default class CommunityMediaGallery extends React.Component {
 
   render() {
     const {
-      communityName, images, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
+      communityName, communityMainImage, images, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
     } = this.props;
+    // If there is a mainImage put it in front
+    const mainImageIndex = images.find((element) => {
+      return element.sd === communityMainImage;
+    });
+    if (mainImageIndex) {
+      const mainImage = images.splice(mainImageIndex, 1);
+      images.unshift(...mainImage);
+    }
     this.sdGalleryImages = videos.map((vid, i) => {
       // Important: create new object instance having src & alt as we will be modifying same object below
       return {
