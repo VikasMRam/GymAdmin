@@ -5,10 +5,15 @@ import { apiUrl, authTokenUrl } from 'sly/config';
 import genUri from './genUri';
 
 export const checkStatus = (response) => {
+
   if (response.ok) {
     return response;
   }
   const error = new Error(`${response.status} ${response.statusText}`);
+  if (response.headers && response.headers._headers && response.headers._headers.location ) {
+    error.location = response.headers._headers.location[0];
+  }
+
   error.response = response;
   throw error;
 };
@@ -29,6 +34,7 @@ export const parseSettings = ({
   const settings = merge(
     {
       body: data ? JSON.stringify(data) : undefined,
+      redirect:'manual',
       method,
       headers,
     },
