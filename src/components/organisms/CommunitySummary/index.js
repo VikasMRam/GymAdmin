@@ -1,9 +1,21 @@
 import React from 'react';
 import { arrayOf, string, number, object, shape } from 'prop-types';
 import NumberFormat from 'react-number-format';
+import { palette } from 'styled-theme';
+import styled from 'styled-components';
+import ReactTooltip from 'react-tooltip';
 
-import { Link, Icon, Tooltip } from 'sly/components/atoms';
+import { size } from 'sly/components/themes';
+import { Link } from 'sly/components/atoms';
 import List from 'sly/components/molecules/List';
+
+const TooltipContent = styled(ReactTooltip)`
+  padding: ${size('spacing.regular')};
+  color: ${palette('white', 0)} !important;
+  background-color: ${palette('grayscale', 0)} !important;
+  border-radius: ${size('spacing.tiny')};
+  font-size: ${size('text.caption')};
+`;
 
 export default class communitySummary extends React.Component {
   static propTypes = {
@@ -18,7 +30,7 @@ export default class communitySummary extends React.Component {
     communityHighlights: arrayOf(string),
     startingRate: number,
     providedAverage: number,
-    reviewsValue : number,
+    reviewsValue: number,
     innerRef: object,
     pricingAndFloorPlansRef: object.isRequired,
     amenitiesAndFeaturesRef: object.isRequired,
@@ -61,8 +73,11 @@ export default class communitySummary extends React.Component {
       <span>
         Pricing & Availability&nbsp;
         <Link href={`tel:${conciergeNumber}`}>
-          <NumberFormat value={conciergeNumber} format="(###) ###-####" displayType="text" />
+          <NumberFormat value={conciergeNumber} format="(###) ###-####" displayType="text" data-tip data-for="tooltipPhoneNumber" />
         </Link>
+        <TooltipContent id="tooltipPhoneNumber" place="bottom" effect="solid" type="light" multiline>
+          This phone number will connect you to the<br /> concierge team at Seniorly.
+        </TooltipContent>
       </span>
     ));
 
@@ -116,7 +131,7 @@ export default class communitySummary extends React.Component {
         <span>
           { providedAverage
               ? 'Pricing starts from '
-              : 'Estimated Pricing: ' 
+              : 'Estimated Pricing: '
           }
           <Link
             href={`#${this.constructor.sectionIdMaps.pricingAndFloorPlans}`}

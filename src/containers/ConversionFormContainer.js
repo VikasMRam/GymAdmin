@@ -54,6 +54,7 @@ class ConversionFormContainer extends Component {
         onSubmit={submitConversion}
         agent={agents[0]}
         contact={contacts[0]}
+        community={community}
         {...props}
       />
     );
