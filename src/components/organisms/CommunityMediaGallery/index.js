@@ -51,15 +51,16 @@ export default class CommunityMediaGallery extends Component {
 
   render() {
     const {
-      communityName, communityMainImage, images, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
+      communityName, communityMainImage, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
     } = this.props;
+    let { images } = this.props;
     // If there is a mainImage put it in front
-    const mainImageIndex = images.find((element) => {
+    const mainImage = images.find((element) => {
       return element.sd === communityMainImage;
     });
-    if (mainImageIndex) {
-      const mainImage = images.splice(mainImageIndex, 1);
-      images.unshift(...mainImage);
+    if (mainImage) {
+      images = images.filter(img => img.sd != mainImage.sd);
+      images.unshift(mainImage);
     }
     this.sdGalleryImages = videos.map((vid, i) => {
       // Important: create new object instance having src & alt as we will be modifying same object below
