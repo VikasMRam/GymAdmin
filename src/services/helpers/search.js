@@ -187,6 +187,10 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
     const qsString = stringify(qs);
     const qsPart = qsString ? `?${qsString}` : '';
     path = `/${toc}/${state}/${city}${qsPart}`;
+  } else if (state) {
+    const qsString = stringify(qs);
+    const qsPart = qsString ? `?${qsString}` : '';
+    path = `/${toc}/${state}${qsPart}`;
   }
 
   return {
