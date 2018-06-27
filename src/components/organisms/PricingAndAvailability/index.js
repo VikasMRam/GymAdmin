@@ -93,6 +93,14 @@ export default class PricingAndAvailability extends Component {
       roomPrices: [],
     };
 
+    renderEstimatedPricing = ({ roomsLength, estimatedBase }) => (roomsLength && estimatedBase)? (
+      <Rate>
+        {'Estimated '}
+        <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />
+        {'/mo'}
+      </Rate>
+    ) : null;
+
     render() {
       const {
         community,
@@ -135,16 +143,18 @@ export default class PricingAndAvailability extends Component {
       return (
         <section id="pricing-and-floor-plans">
           <StyledArticle id="pricing-and-floor-plans-price-tiles">
-            {!roomPrices.length && estimatedPriceBase &&
-              <ConciergeController community={community}>
-                {({ getPricing }) =>
-                  <EstimatedCost
-                    getPricing={getPricing}
-                    community={community}
-                    price={estimatedPriceBase}
-                  />
-                }
-              </ConciergeController>
+            {(!roomPrices.length && estimatedPriceBase) ?
+              (
+                <ConciergeController community={community}>
+                  {({getPricing}) =>
+                    <EstimatedCost
+                      getPricing={getPricing}
+                      community={community}
+                      price={estimatedPriceBase}
+                    />
+                  }
+                </ConciergeController>
+              ) : null
             }
             {roomPrices.map((object, i) => (
               <Item key={i}>
@@ -162,9 +172,9 @@ export default class PricingAndAvailability extends Component {
                   );
                 } else {
                   return (
-                    <GetCurrentAvailabilityFormContainer 
-                      submitConversion={submitConversion} 
-                      community={community} 
+                    <GetCurrentAvailabilityFormContainer
+                      submitConversion={submitConversion}
+                      community={community}
                     />
                   );
                 }

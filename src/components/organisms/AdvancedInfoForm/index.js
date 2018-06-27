@@ -86,7 +86,7 @@ const AdvancedInfoForm = ({
     />
     <Field
       name="medical_coverage"
-      label="I have medicaid coverage"
+      label="I'm only using Medicaid to pay."
       type="checkbox"
       responsive
       component={StyledReduxField}

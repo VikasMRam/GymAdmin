@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import { palette } from 'styled-theme';
 import Link from 'react-router-dom/Link';
+import Dotdotdot from 'react-dotdotdot';
 
 import { size } from 'sly/components/themes';
 import { Avatar } from 'sly/components/atoms';
@@ -12,37 +13,36 @@ import Rating from 'sly/components/molecules/Rating';
 const AgentDiv = styled.div`
   display: flex;
   align-items: center;
-  padding: ${size('spacing.large')};
+  padding: ${size('spacing.small')};
+  margin-left: ${size('spacing.regular')};
   > :first-child {
-    margin-right: ${size('spacing.large')};
+    margin-right: ${size('spacing.regular')};
   }
 `;
 
 const NameTextSpan = styled.span`
-  margin-bottom: ${size('spacing.regular')};
+  margin-bottom: ${size('spacing.small')};
 `;
 
 const TitleTextDiv = styled.div`
-  margin-bottom: ${size('spacing.regular')};
 `;
 
 const TitleDiv = styled.div`
   display: flex;
   flex-direction: column;
-  > span {
-    line-height: 1;
-  }
+  padding: ${size('spacing.small')};
 `;
 
 export const CaptionSpan = styled.span`
-  font-size: ${size('text.caption')};
 `;
 
 const Title = ({
   name, title, rating, community,
 }) => (
   <TitleDiv>
-    <NameTextSpan>{name}</NameTextSpan>
+    <NameTextSpan>
+      <Dotdotdot clamp={1}>{name}</Dotdotdot>
+    </NameTextSpan>
     <CaptionSpan>
       {title && <TitleTextDiv>{title}</TitleTextDiv>}
       {title && community && ', '}
