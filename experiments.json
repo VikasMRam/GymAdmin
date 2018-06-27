@@ -1,4 +1,5 @@
 {
   "Organisms_ConversionForm_Heading": ["get_pricing_availability", "property_manager"],
-  "Organisms_Concierge_Calendly": ["original_flow", "calendly_flow"]
+  "Organisms_Concierge_Calendly": ["original_flow", "calendly_flow"],
+  "Organisms_Footer_Calendly": ["original_flow", "calendly_flow"]
 }

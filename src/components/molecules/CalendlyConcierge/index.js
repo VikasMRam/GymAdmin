@@ -13,6 +13,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding: ${size('spacing.large')};
   width: 100%;
 `;
 
@@ -21,6 +22,7 @@ const StyledIcon = styled(Icon)`
 `;
 
 const StyledHeading = styled(Heading)`
+  text-align:center;
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -33,15 +35,16 @@ const StyledBlock = styled(Block)`
 const CalendlyConcierge = ({ launchCalendly }) => (
   <Wrapper>
     <StyledIcon icon="logo" size="xLarge" />
-    <StyledHeading>Get an appointment now!</StyledHeading>
+    <StyledHeading>Book an appointment!</StyledHeading>
     <StyledBlock>
-      If there's something strange in you neighborhood 
+      Let us help you tour
+      this community.
     </StyledBlock>
     <StyledBlock>
-      Who you gonna call?
+      This is a free service.
     </StyledBlock>
     <Button onClick={launchCalendly} kind="jumbo">
-      Book an Appointment
+      Book Now
     </Button>
   </Wrapper>
 );

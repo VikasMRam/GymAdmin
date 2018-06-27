@@ -10,13 +10,13 @@ if(isBrowser) {
 }
 
 const sf = [
-  'https://calendly.com/agentsf1',
-  'https://calendly.com/agentsf',
+  'https://calendly.com/agentsf1/15min',
+  'https://calendly.com/agentsf/15min',
 ];
 
 const la = [
-  'https://calendly.com/agentla1',
-  'https://calendly.com/agentla',
+  'https://calendly.com/agentla1/15min',
+  'https://calendly.com/agentla/15min',
 ];
 
 const getDataUrl = community => {
@@ -47,7 +47,7 @@ export default class CalendlyAppointment  extends Component {
 
   render() {
     const { community } = this.props;
-    
+
     const style = {
       minWidth: '320px',
       height: '900px',
