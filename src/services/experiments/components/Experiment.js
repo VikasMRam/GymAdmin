@@ -3,7 +3,6 @@ import { string, node, bool } from 'prop-types';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
 import { connect } from 'react-redux';
-import { palette } from 'styled-theme';
 
 import { enableExperimentsDebugger } from 'sly/config';
 import { size } from 'sly/components/themes';
@@ -16,14 +15,6 @@ const DebugWrapper = styled.div`
   :hover > span {
     display: block;
   }
-`;
-const DebugInfo = styled.span`
-  padding: ${size('spacing.tiny')} ${size('spacing.regular')};
-  color: ${palette('white', 0)};
-  background-color: ${prop('color')};
-  position: absolute;
-  left: -${size('border.regular')};
-  display: none;
 `;
 
 class Experiment extends Component {
@@ -70,10 +61,7 @@ class Experiment extends Component {
     if (variant && enableExperimentsDebugger) {
       const color = `#${Math.random().toString(16).slice(2, 8)}`;
       return (
-        <DebugWrapper color={color}>
-          <DebugInfo color={color}>
-            Experiment <b>{name}</b>: variant is <b>{selectedVariant}</b>
-          </DebugInfo>
+        <DebugWrapper color={color} title={`Experiment ${name}: variant is ${selectedVariant}`}>
           {variant}
         </DebugWrapper>
       );
