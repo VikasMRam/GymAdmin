@@ -39,7 +39,9 @@ const GetCurrentAvailabilityForm = ({
 
   return (
     <StyledBox>
-      <StyledHeading level="subtitle" size="subtitle">Get current availability at {name}</StyledHeading>
+      <StyledHeading level="subtitle" size="subtitle">
+        Get current availability at {name}
+      </StyledHeading>
       <form onSubmit={handleSubmit}>
         <TwoColumnWrapper>
           <Field

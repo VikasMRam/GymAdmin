@@ -32,6 +32,7 @@ import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswersContainer from 'sly/containers/CommunityQuestionAnswersContainer';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import Button from 'sly/components/atoms/Button';
+import {Experiment, Variant} from "sly/services/experiments";
 
 const BackToSearch = styled.div`
   text-align: center
@@ -139,6 +140,7 @@ export default class CommunityDetailPage extends Component {
       user: communityUser,
       questions,
       mainImage,
+      url
     } = community;
 
     const { careServices, serviceHighlights, communityPhone } = propInfo;
@@ -216,7 +218,8 @@ export default class CommunityDetailPage extends Component {
         </Section>
       </Fragment>
     );
-
+    const experimentDisabled =  url.indexOf('california/san-francisco/') === -1
+      && url.indexOf('california/los-angeles/') === -1;
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -347,15 +350,32 @@ export default class CommunityDetailPage extends Component {
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
         <ConciergeController community={community}>
-          {({ concierge, getPricing }) => (
-            <StickyFooter
-              footerInfo={{
-                title: 'Contact Property',
-                name: community.name,
-                ctaTitle: 'Contact',
-              }}
-              onFooterClick={getPricing}
-            />
+          {({ concierge, getPricing, launchCalendly }) => (
+            <Experiment name="Organisms_Footer_Calendly" disabled={experimentDisabled}>
+              <Variant name="original_flow">
+                <StickyFooter
+                  footerInfo={{
+                    title: 'Contact Property',
+                    name: community.name,
+                    ctaTitle: 'Contact',
+                  }}
+                  onFooterClick={getPricing}
+
+                />
+              </Variant>
+              <Variant name="calendly_flow">
+
+                <StickyFooter
+                  footerInfo={{
+                    title: 'Book an Appointment',
+                    name: community.name,
+                    ctaTitle: 'Book Now',
+                  }}
+                  onFooterClick={launchCalendly}
+                />
+              </Variant>
+            </Experiment>
+
           )}
         </ConciergeController>
       </Fragment>

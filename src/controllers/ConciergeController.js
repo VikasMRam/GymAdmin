@@ -3,9 +3,7 @@ import { string, func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 import get from 'lodash/get';
 
-import {
-  resourceCreateRequest,
-} from 'sly/store/resource/actions';
+import { resourceCreateRequest } from 'sly/store/resource/actions';
 
 import { getDetail } from 'sly/store/selectors';
 import { connectController } from 'sly/controllers';
@@ -13,13 +11,12 @@ import SlyEvent from 'sly/services/helpers/events';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
 
-import {
-  resourceDetailReadRequest,
-} from 'sly/store/resource/actions';
+import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 
 export const CONVERSION_FORM = 'conversionForm';
 export const ADVANCED_INFO = 'advancedInfo';
 export const SIMILAR_COMMUNITIES = 'similarCommunities';
+export const CALENDLY_APPOINTMENT = 'calendlyAppointment';
 export const THANKYOU = 'thankyou';
 
 const steps = [
@@ -47,6 +44,7 @@ export class ConciergeController extends Component {
       concierge,
       community,
       set,
+      experiements,
     } = this.props;
 
     const {
@@ -78,6 +76,7 @@ export class ConciergeController extends Component {
       community,
       expressConversionMode,
       concierge,
+      set,
     } = this.props;
 
     const { callbackRequested } = concierge;
@@ -115,6 +114,15 @@ export class ConciergeController extends Component {
         propertyIds: [community.id],
       }
     }).then(this.next);
+  };
+
+  launchCalendly = () => {
+    const { set } = this.props;
+     
+    set({
+      currentStep: CALENDLY_APPOINTMENT,
+      modalIsOpen: true,
+    });
   };
 
   /*
@@ -169,6 +177,7 @@ export class ConciergeController extends Component {
       getPricing,
       submitConversion,
       submitAdvancedInfo,
+      launchCalendly,
       close,
     } = this;
 
@@ -177,6 +186,7 @@ export class ConciergeController extends Component {
       getPricing,
       submitConversion,
       submitAdvancedInfo,
+      launchCalendly,
       close,
     });
   }
@@ -203,10 +213,12 @@ const mapStateToProps = (state, { concierge, community }) => {
   const advancedInfoSent = isAssessment(userActions.userDetails || {});
   const userDetailsHasOnlyEmail = hasOnlyEmail(userActions.userDetails || {});
 
+
   return {
     concierge: {
       currentStep: concierge.currentStep || CONVERSION_FORM,
       modalIsOpen: concierge.modalIsOpen || false,
+      experiments: state.experiments,
       callbackRequested,
       advancedInfoSent,
       userDetailsHasOnlyEmail,
