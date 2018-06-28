@@ -26,7 +26,8 @@ const config = {
     cookieDomain: process.env.DOMAIN,
     publicPath,
     olarkSiteId: '',
-    version:  process.env.VERSION
+    facebookPixelId: '586147298262302',
+    version: process.env.VERSION,
   },
 
   test: {
