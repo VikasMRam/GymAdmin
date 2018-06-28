@@ -34,7 +34,7 @@ const BASENAME = process.env.BASENAME || '';
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
 const DOMAIN = process.env.DOMAIN || 'lvh.me';
-const VERSION = fs.readFileSync('./VERSION', 'utf8');
+const VERSION = fs.readFileSync('./VERSION', 'utf8').trim();
 
 const SOURCE = process.env.SOURCE || 'src';
 
