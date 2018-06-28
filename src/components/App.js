@@ -135,7 +135,6 @@ export default class App extends Component {
         <noscript>
           <img height="1" width="1" src="https://www.facebook.com/tr?id=586147298262302&ev=PageView&noscript=1"/>
         </noscript>
-        {/* eslint-enable */}
         {/* End Facebook Pixel Code */}
       </Fragment>
     );
