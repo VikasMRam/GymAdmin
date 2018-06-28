@@ -143,7 +143,7 @@ export default class CommunityDetailPage extends Component {
       url
     } = community;
 
-    const { careServices, serviceHighlights, communityPhone } = propInfo;
+    const { careServices, licenseUrl, serviceHighlights, communityPhone } = propInfo;
 
     const images = gallery.images || [];
     const videos = videoGallery.videos || [];
@@ -265,6 +265,7 @@ export default class CommunityDetailPage extends Component {
             twilioNumber={twilioNumber}
             reviewsValue={reviewsValue}
             phoneNumber={communityPhone}
+            licenseUrl={licenseUrl}
             user={communityUser}
             amenityScore={rgsAux.amenityScore}
             startingRate={startingRate}
