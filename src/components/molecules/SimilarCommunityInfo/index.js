@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { palette } from 'styled-theme';
-import { prop } from 'styled-tools';
 import Dotdotdot from 'react-dotdotdot';
 
 import { size } from 'sly/components/themes';
-import { Heading, Block } from 'sly/components/atoms';
+import { Heading, Icon } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
 import NumberFormat from 'react-number-format';
 
@@ -65,6 +64,16 @@ const Description = styled.div`
   margin-top: ${size('spacing.small')};
 `;
 
+const IconTextWrapper = styled.div`
+  display: flex;
+  color: ${palette('grayscale', 1)};
+  margin-bottom: ${size('spacing.regular')};
+`;
+
+const StyledIcon = styled(Icon)`
+  margin-right: ${size('spacing.regular')};
+`;
+
 export default class SimilarCommunityInfo extends Component {
   static propTypes = {
     similarProperty: PropTypes.object.isRequired,
@@ -72,16 +81,13 @@ export default class SimilarCommunityInfo extends Component {
 
   renderEstimatedRate = startingRate => startingRate ? (
     <Rate>
-      {'Estimated '}
-      <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />
-      {'/mo'}
+      Estimated <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
     </Rate>
   ) : null;
 
-  renderProviderRate = startingRate  => startingRate ? (
+  renderProviderRate = startingRate => startingRate ? (
     <Rate>
-      <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />
-      {' per month'}
+      <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
     </Rate>
   ) : null;
 
@@ -126,22 +132,39 @@ export default class SimilarCommunityInfo extends Component {
       firstLineValue,
       secondLineValue,
     } = webViewInfo;
+    const roomTypes = secondLineValue.split(',');
+    const livingTypes = firstLineValue.split(',');
 
     // TODO : Get the following values from API Response
     return (
       <Wrapper {...props}>
         <StyledHeading level="subtitle" size="subtitle">{name}</StyledHeading>
-        <ClampedLine>
-          {addressString}
-        </ClampedLine>
         <RatingWrapper>
           {this.renderRate(community)}
           {this.renderReviews(community)}
         </RatingWrapper>
-
-        <ClampedLine>{firstLineValue}</ClampedLine>
-
-        <ClampedLine>Floor Plans: {secondLineValue}</ClampedLine>
+        <IconTextWrapper>
+          <StyledIcon icon="place" fill={palette('grayscale', 3)()} />
+          <ClampedLine>
+            {addressString}
+          </ClampedLine>
+        </IconTextWrapper>
+        <IconTextWrapper>
+          <StyledIcon icon="room" fill={palette('grayscale', 3)()} />
+          <ClampedLine title={roomTypes.join('.')}>
+            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+            {roomTypes.map((roomType, i) =>
+              <Fragment key={i}>{!!i && <Fragment>&nbsp;&nbsp;&middot;&nbsp;</Fragment>}{roomType}</Fragment>)}
+          </ClampedLine>
+        </IconTextWrapper>
+        <IconTextWrapper>
+          <StyledIcon icon="hospital" fill={palette('grayscale', 3)()} />
+          <ClampedLine title={livingTypes.join('.')}>
+            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+            {livingTypes.map((livingType, i) =>
+              <Fragment key={i}>{!!i && <Fragment>&nbsp;&nbsp;&middot;&nbsp;</Fragment>}{livingType}</Fragment>)}
+          </ClampedLine>
+        </IconTextWrapper>
 
         <Description palette="grayscale">
           <Dotdotdot clamp={2}>
