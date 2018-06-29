@@ -98,6 +98,7 @@ export default class CommunityDetailPage extends Component {
     const {
       community, onMediaGallerySlideChange, onMediaGalleryToggleFullscreen,
     } = this.props;
+    const { id } = community;
     const { gallery = {}, videoGallery = {} } = community;
     const images = gallery.images || [];
     const videos = videoGallery.videos || [];
@@ -105,9 +106,11 @@ export default class CommunityDetailPage extends Component {
     if (matchingIndex > -1) {
       matchingIndex = videos.length + matchingIndex;
       onMediaGallerySlideChange(matchingIndex);
-      onMediaGalleryToggleFullscreen();
+      onMediaGalleryToggleFullscreen(true);
     }
-    const event = { action: 'show', category: 'images', label: this.props.communityName };
+    const event = {
+      action: 'show', category: 'images', label: id, value: image.id,
+    };
     SlyEvent.getInstance().sendEvent(event);
   };
 
@@ -140,7 +143,7 @@ export default class CommunityDetailPage extends Component {
       user: communityUser,
       questions,
       mainImage,
-      url
+      url,
     } = community;
 
     const { careServices, licenseUrl, serviceHighlights, communityPhone } = propInfo;
@@ -218,7 +221,7 @@ export default class CommunityDetailPage extends Component {
         </Section>
       </Fragment>
     );
-    const experimentDisabled =  url.indexOf('california/san-francisco/') === -1
+    const experimentDisabled = url.indexOf('california/san-francisco/') === -1
       && url.indexOf('california/los-angeles/') === -1;
     return (
       <Fragment>
@@ -250,7 +253,8 @@ export default class CommunityDetailPage extends Component {
             {name}{' '}
             {(user && user.admin) &&
               <Link
-                  to={`/mydashboard#/mydashboard/communities/${community.id}/about`}>
+                to={`/mydashboard#/mydashboard/communities/${community.id}/about`}
+              >
                (Edit)
               </Link>
             }

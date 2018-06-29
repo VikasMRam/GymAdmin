@@ -99,15 +99,15 @@ export default class CommunityMediaGallery extends Component {
     // );
     const bottomLeftSection = () => (
       <span>
-        <MorePicsTablet ghost palette="slate" transparent={false} onClick={onToggleFullscreenMode}>See {this.sdGalleryImages.length - 1} more pictures</MorePicsTablet>
-        <MorePicsMobile ghost palette="slate" transparent={false} onClick={onToggleFullscreenMode}>View pictures</MorePicsMobile>
+        <MorePicsTablet ghost palette="slate" transparent={false} onClick={() => onToggleFullscreenMode()}>See {this.sdGalleryImages.length - 1} more pictures</MorePicsTablet>
+        <MorePicsMobile ghost palette="slate" transparent={false} onClick={() => onToggleFullscreenMode()}>View pictures</MorePicsMobile>
       </span>
     );
 
     return (
       <section>
         <MediaGallery
-          onSlideClick={onToggleFullscreenMode}
+          onSlideClick={() => onToggleFullscreenMode()}
           communityName={communityName}
           images={this.sdGalleryImages}
           bottomLeftSection={this.sdGalleryImages.length > 1 ? bottomLeftSection : null}
@@ -120,7 +120,7 @@ export default class CommunityMediaGallery extends Component {
           communityName={communityName}
           videos={this.formattedVideos}
           images={this.hdGalleryImages}
-          onClose={onToggleFullscreenMode}
+          onClose={() => onToggleFullscreenMode()}
           ariaHideApp={ariaHideApp}
           onSlideChange={onSlideChange}
         />

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
 import { Redirect } from 'react-router';
-import { object, number, func, bool, string } from 'prop-types';
+import { object, number, func, bool } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
+import SlyEvent from 'sly/services/helpers/events';
 
 import {
   getDetail,
@@ -41,11 +42,19 @@ class CommunityDetailPageContainer extends Component {
     gotoMediaGallerySlide(slideIndex);
   };
 
-  handleToggleMediaGalleryFullscreen = () => {
-    const { toggleFullscreenMediaGallery } = this.props;
+  handleToggleMediaGalleryFullscreen = (fromMorePictures) => {
+    const { toggleFullscreenMediaGallery, isMediaGalleryFullscreenActive, community } = this.props;
+    if (!fromMorePictures) {
+      const { id } = community;
+      const event = {
+        action: 'show', category: 'fullscreenMediaGallery', label: id,
+      };
+      if (isMediaGalleryFullscreenActive) {
+        event.action = 'hide';
+      }
+      SlyEvent.getInstance().sendEvent(event);
+    }
     /*
-    let event = {action:'show',category:'images',label:this.props.community.id};
-    SlyEvent.getInstance().sendEvent(event);
     let event = {action:'submit',category:'requestavailability',label:this.props.community.id};
     SlyEvent.getInstance().sendEvent(event);
     let event = {action:'submit',category:'requestavailability',label:this.props.community.id};
