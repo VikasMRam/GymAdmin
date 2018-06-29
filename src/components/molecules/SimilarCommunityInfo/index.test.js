@@ -27,15 +27,22 @@ describe('SimilarCommunityInfo', () => {
 
   it('renders similarProperty', () => {
     const wrapper = wrap();
-    expect(wrapper.childAt(0).contains('Rhoda Goldman Plaza')).toBe(true);
-    expect(wrapper.childAt(1).contains('601 Laguna Street, San Francisco, CA 94102')).toBe(true);
-    expect(wrapper.childAt(2)
+    expect(wrapper.childAt(0).contains(similarProperty.name)).toBe(true);
+    expect(parseInt(wrapper.childAt(1)
       .childAt(0)
       .childAt(0)
-      .html()).toEqual('<span>$4,500</span>');
-    expect(wrapper.childAt(3).contains('A, B')).toBe(true);
-    expect(wrapper.childAt(4).contains('Suite, One Bedroom')).toBe(true);
-    expect(wrapper.childAt(5).contains('description')).toBe(true);
+      .dive()
+      .text()
+      .match(/\d/g)
+      .join(''))).toEqual(similarProperty.startingRate);
+    expect(wrapper.childAt(2).contains(similarProperty.addressString)).toBe(true);
+    similarProperty.webViewInfo.secondLineValue.split(',').forEach((roomType) => {
+      expect(wrapper.childAt(3).contains(roomType)).toBe(true);
+    });
+    similarProperty.webViewInfo.firstLineValue.split(',').forEach((livingType) => {
+      expect(wrapper.childAt(4).contains(livingType)).toBe(true);
+    });
+    expect(wrapper.childAt(5).contains(similarProperty.description)).toBe(true);
 
     // expect(wrapper.find('Rating[size="medium"]')).toHaveLength(1);
   });

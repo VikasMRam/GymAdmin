@@ -129,7 +129,7 @@ theme.sizes = {
     },
     regular: {
       width : '16.875rem',   // 270px
-      height: '11.25rem',    // 180px
+      height: '13.125rem',   // 210px
     },
     large: {
       width : '21.4375rem',   // 343px
