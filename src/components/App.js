@@ -120,6 +120,8 @@ export default class App extends Component {
         </ThemeProvider>
 
         {/* Facebook Pixel Code */}
+
+        {/* eslint-disable */}
         <script dangerouslySetInnerHTML={{ __html: `
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -135,6 +137,8 @@ export default class App extends Component {
         <noscript>
           <img height="1" width="1" src="https://www.facebook.com/tr?id=586147298262302&ev=PageView&noscript=1"/>
         </noscript>
+        {/* eslint-enable */}
+
         {/* End Facebook Pixel Code */}
       </Fragment>
     );

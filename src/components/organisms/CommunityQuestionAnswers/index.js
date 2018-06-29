@@ -42,9 +42,13 @@ const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
 const CommuntityQuestionAndAnswer = ({
   communitySlug, communityName, questions, isQuestionModalOpenValue, setIsQuestionModalOpenValue, answerQuestion, answerQuestionValue,
 }) => {
+
   const questionsComponent = questions.sort(sortByCreatedAt).map((question) => {
+    if(typeof question.contents === 'undefined'){
+      question.contents = [];
+    }
     const answersCount = question.contents.length;
-    let answersCountText = 'Be the first to answer';
+    let answersCountText = 'No answers yet.';
     if (answersCount === 1) {
       answersCountText = '1 Answer';
     } else if (answersCount > 1) {
@@ -67,7 +71,8 @@ const CommuntityQuestionAndAnswer = ({
             {answersCountText}
           </AnswersCountTextDiv>
           {answersComponent}
-          <LeaveAnswerButton onClick={() => answerQuestion(question)}>Leave an Answer</LeaveAnswerButton>
+          {/* COMMENT TILL WE HAVE GUEST USER SIGN IN*/}
+          {/*<LeaveAnswerButton onClick={() => answerQuestion(question)}>Leave an Answer</LeaveAnswerButton>*/}
           <StyledHr />
         </AnswersDiv>
       </div>
@@ -76,8 +81,9 @@ const CommuntityQuestionAndAnswer = ({
   return (
     <div>
       {questionsComponent}
-      <div>What would you like to know about senior living options at {communityName}?</div>
-      <AskQuestionButton onClick={() => setIsQuestionModalOpenValue(true)}>Ask a Question</AskQuestionButton>
+      <div>What would you like to know about senior living options at {communityName}? Send a message on the right.</div>
+      {/* COMMENT TILL WE HAVE GUEST USER SIGN IN*/}
+      {/*<AskQuestionButton onClick={() => setIsQuestionModalOpenValue(true)}>Ask a Question</AskQuestionButton>*/}
       {isQuestionModalOpenValue &&
         <Modal
           appElement={appElement}
