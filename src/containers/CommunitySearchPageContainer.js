@@ -32,7 +32,7 @@ class CommunitySearchPageContainer extends Component {
   toggleMap = () => {
     const event = {
       changedParams: {
-        view: 'map', 'page-number': 0, 'page-size': 50, searchOnMove: true,
+        view: 'map', 'page-number': 0, 'page-size': 50, searchOnMove: true, radius: '10',
       },
     };
     if (this.props.searchParams && this.props.searchParams.view === 'map') {
