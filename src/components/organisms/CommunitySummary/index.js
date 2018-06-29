@@ -26,10 +26,12 @@ export default class communitySummary extends React.Component {
     twilioNumber: shape({
       numbers: arrayOf(number),
     }),
+    licenseUrl: string,
     amenityScore: string,
     communityHighlights: arrayOf(string),
     startingRate: number,
     providedAverage: number,
+
     reviewsValue: number,
     innerRef: object,
     pricingAndFloorPlansRef: object.isRequired,
@@ -54,7 +56,7 @@ export default class communitySummary extends React.Component {
 
   render() {
     const {
-      twilioNumber, phoneNumber, user, amenityScore, communityHighlights, startingRate, providedAverage, reviewsValue, innerRef,
+      twilioNumber, phoneNumber, user, licenseUrl, amenityScore, communityHighlights, startingRate, providedAverage, reviewsValue, innerRef,
     } = this.props;
 
     const highlights = [];
@@ -89,6 +91,16 @@ export default class communitySummary extends React.Component {
         </Link>
       </span>
     ));
+    if (licenseUrl) {
+      highlights.push((
+        <Link
+          href={licenseUrl}
+          target="_blank"
+        >
+          State Inspection Reports
+        </Link>
+      ));
+    }
 
     if (amenityScore) {
       const parsedAmenityScore = parseFloat(amenityScore);
