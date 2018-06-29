@@ -5,6 +5,7 @@ import { prop } from 'styled-tools';
 import { connect } from 'react-redux';
 
 import { enableExperimentsDebugger } from 'sly/config';
+import SlyEvent from 'sly/services/helpers/events';
 import { size } from 'sly/components/themes';
 import { getExperiment } from 'sly/store/selectors';
 
@@ -29,6 +30,30 @@ class Experiment extends Component {
   static defaultProp = {
     disabled: false,
   };
+
+  componentWillMount() {
+    this.sendExperimentEvent('launch_experiement');
+  }
+
+  componentDidMount() {
+    this.sendExperimentEvent('view_experiement');
+  }
+
+  componentWillUnmount() {
+    this.sendExperimentEvent('complete_experiement');
+  }
+
+  sendExperimentEvent(action) {
+    const {
+      disabled, name, variantKey, defaultVariant,
+    } = this.props;
+    if (!disabled) {
+      const event = {
+        action, category: name, label: 'experiments', value: (variantKey || defaultVariant),
+      };
+      SlyEvent.getInstance().sendEvent(event);
+    }
+  }
 
   render() {
     const {

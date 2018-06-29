@@ -1,7 +1,7 @@
 import ReactGA from 'react-ga';
 import cookie from 'react-cookie';
 import { stringify } from 'query-string';
-import { isServer, gAnalyticsKey, eventServerUrl, isDev } from 'sly/config';
+import { isServer, isTest, gAnalyticsKey, eventServerUrl, isDev } from 'sly/config';
 
 export default class SlyEvent {
   static seInstance = null;
@@ -9,7 +9,9 @@ export default class SlyEvent {
   static getInstance() {
     if (this.seInstance === null) {
       this.seInstance = new SlyEvent();
-      ReactGA.initialize(gAnalyticsKey);
+      if (!isTest) {
+        ReactGA.initialize(gAnalyticsKey);
+      }
     }
     return this.seInstance;
   }
@@ -35,7 +37,7 @@ export default class SlyEvent {
       t: Date.now(),
     };
 
-    if (isDev) {
+    if (isDev || isTest) {
       console.info('EVENT pageview', uri);
     } else {
       fetch(`${eventServerUrl}?${stringify(se)}`);
@@ -44,7 +46,7 @@ export default class SlyEvent {
   }
 
   sendEvent(event) {
-    if (isServer) {
+    if (isServer || isTest) {
       return;
     }
 
