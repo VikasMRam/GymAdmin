@@ -110,33 +110,6 @@ class CommunityDetailPageContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
   };
 
-  handleReviewLinkClick = (name) => {
-    const { community } = this.props;
-    const { id } = community;
-    const event = {
-      action: 'click', category: 'externalReview', label: id, value: name,
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleConciergeNumberClick = () => {
-    const { community } = this.props;
-    const { id } = community;
-    const event = {
-      action: 'click', category: 'conciergePhone', label: id,
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  handleReceptionNumberClick = () => {
-    const { community } = this.props;
-    const { id } = community;
-    const event = {
-      action: 'click', category: 'receptionPhone', label: id,
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
   render() {
     const {
       mediaGallerySlideIndex,
@@ -194,9 +167,6 @@ class CommunityDetailPageContainer extends Component {
         isStickyHeaderVisible={isStickyHeaderVisible}
         onToggleStickyHeader={this.handleToggleStickyHeader}
         onBackToSearchClicked={this.handleBackToSearchClick}
-        onReviewLinkClicked={this.handleReviewLinkClick}
-        onConciergeNumberClicked={this.handleConciergeNumberClick}
-        onReceptionNumberClicked={this.handleReceptionNumberClick}
       />
     );
   }
