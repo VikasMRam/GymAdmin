@@ -135,8 +135,8 @@ describe('ConciergeController', function() {
     });
 
     const setPricingEvent = {
-      action: 'submit',
-      category: 'requestavailability',
+      action: 'click',
+      category: 'getPricing',
       label: 'my-community',
     };
 
