@@ -14,12 +14,15 @@ const convertMapDispatchToObject = mapDispatchToProps => (dispatch, props) => {
       }, {});
 };
 
-export function connectController(controllerKey, parentMapStateToProps, parentDispatchToProps) {
+export function connectController(parentMapStateToProps, parentDispatchToProps) {
   return function controllerCreator(WrappedComponent) {
     class Controller extends Component {
       static displayName = `WrappedController(${WrappedComponent.name || 'Controller'})`;
       render = () => <WrappedComponent {...this.props} />;
     }
+
+    const rand = Math.floor(Math.random()*16777215).toString(16);
+    const controllerKey = `${WrappedComponent.name}_${rand}`;
 
     const mapDispatchToProps = (dispatch, ownProps) => ({
       ...convertMapDispatchToObject(parentDispatchToProps)(dispatch, ownProps), 
@@ -30,7 +33,7 @@ export function connectController(controllerKey, parentMapStateToProps, parentDi
     const mapStateToProps = (state, ownProps) => {
       return parentMapStateToProps(state, {
         ...ownProps,
-        [controllerKey]: get(state, ['controller', controllerKey]) || {},
+        controller: get(state, ['controller', controllerKey]) || {},
       });
     };
 

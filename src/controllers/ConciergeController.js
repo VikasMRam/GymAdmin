@@ -19,13 +19,6 @@ export const SIMILAR_COMMUNITIES = 'similarCommunities';
 export const CALENDLY_APPOINTMENT = 'calendlyAppointment';
 export const THANKYOU = 'thankyou';
 
-const steps = [
-  CONVERSION_FORM,
-  ADVANCED_INFO,
-  // SIMILAR_COMMUNITIES,
-  THANKYOU,
-];
-
 export class ConciergeController extends Component {
   static propTypes = {
     community: communityPropType.isRequired,
@@ -61,25 +54,15 @@ export class ConciergeController extends Component {
 
     SlyEvent.getInstance().sendEvent(event);
 
-    const currentStep = (callbackRequested && advancedInfoSent)
-      ? THANKYOU
-      : callbackRequested && !userDetailsHasOnlyEmail
-        ? ADVANCED_INFO
-        : CONVERSION_FORM;
-
-    set({ currentStep, modalIsOpen: true });
+    this.next();
   };
 
   submitConversion = (data) => {
     const {
       submit,
       community,
-      expressConversionMode,
       concierge,
-      set,
     } = this.props;
-
-    const { callbackRequested } = concierge;
 
     const event = {
       action: 'contactCommunity',
@@ -89,17 +72,13 @@ export class ConciergeController extends Component {
 
     SlyEvent.getInstance().sendEvent(event);
 
-    if (!expressConversionMode || (expressConversionMode && !callbackRequested)) {
-      submit({
-        action: REQUEST_CALLBACK,
-        value: {
-          user: { ...data },
-          propertyIds: [community.id],
-        }
-      }).then(this.next);
-    } else {
-      this.next();
-    }
+    submit({
+      action: REQUEST_CALLBACK,
+      value: {
+        user: { ...data },
+        propertyIds: [community.id],
+      }
+    }).then(this.next);
   };
 
   submitAdvancedInfo = data => {
@@ -141,28 +120,29 @@ export class ConciergeController extends Component {
       set,
     } = this.props;
 
-    const { callbackRequested, advancedInfoSent, currentStep } = concierge;
+    const { 
+      callbackRequested,
+      advancedInfoSent,
+      currentStep,
+      userDetailsHasOnlyEmail,
+    } = concierge;
 
     if (expressConversionMode || (callbackRequested && advancedInfoSent)) {
       set({
         currentStep: THANKYOU,
         modalIsOpen: true,
       });
+    } else if(!callbackRequested || userDetailsHasOnlyEmail) {
+      set({
+        currentStep: CONVERSION_FORM,
+        modalIsOpen: true,
+      });
     } else {
-      const stepIndex = steps.indexOf(currentStep);
-      const nextStepIndex = stepIndex + 1;
-
-      if(nextStepIndex < steps.length) {
-        set({
-          currentStep: steps[nextStepIndex],
-          modalIsOpen: true,
-        });
-      } else {
-        set({
-          modalIsOpen: false,
-        });
-      }
-    }
+      set({
+        currentStep: ADVANCED_INFO,
+        modalIsOpen: true,
+      });
+    } 
   }
 
   close = () => {
@@ -203,21 +183,21 @@ const isAssessment = ({
   budget
 }) => !!(typeOfCare && typeOfRoom && timeToMove && budget);
 
-const hasOnlyEmail = userDetails =>
-  (!(userDetails.fullName || '').length || !(userDetails.phone || '').length) && (userDetails.email || '').length;
+const hasOnlyEmail = userDetails => !userDetails.fullName 
+  || !userDetails.phone 
+  && userDetails.email;
 
-const mapStateToProps = (state, { concierge, community }) => {
+const mapStateToProps = (state, { controller, community }) => {
   const userActions = getDetail(state, 'userAction') || {};
   const callbackRequested = (userActions.profilesContacted || [])
     .some(isCallback(community.id));
   const advancedInfoSent = isAssessment(userActions.userDetails || {});
   const userDetailsHasOnlyEmail = hasOnlyEmail(userActions.userDetails || {});
 
-
   return {
     concierge: {
-      currentStep: concierge.currentStep || CONVERSION_FORM,
-      modalIsOpen: concierge.modalIsOpen || false,
+      currentStep: controller.currentStep || CONVERSION_FORM,
+      modalIsOpen: controller.modalIsOpen || false,
       experiments: state.experiments,
       callbackRequested,
       advancedInfoSent,
@@ -230,7 +210,6 @@ const mapStateToProps = (state, { concierge, community }) => {
 const submit = data => resourceCreateRequest('userAction', data);
 
 export default connectController(
-  'concierge',
   mapStateToProps,
   { submit },
 )(ConciergeController);

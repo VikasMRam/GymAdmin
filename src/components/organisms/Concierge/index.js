@@ -54,8 +54,11 @@ export default class Concierge extends Component {
     const StepComponent = steps[currentStep];
     
     const url = community.url;
-    const disabled = url.indexOf('california/san-francisco/') === -1
-      && url.indexOf('california/los-angeles/') === -1;
+
+    // const disabled = url.indexOf('california/san-francisco/') === -1
+    //   && url.indexOf('california/los-angeles/') === -1;
+    
+    const disabled = true;
 
     return (
       <Wrapper className={className}>

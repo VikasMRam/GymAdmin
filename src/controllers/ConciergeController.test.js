@@ -220,68 +220,6 @@ describe('ConciergeController', function() {
       expect(then).toHaveBeenCalledWith(wrapper.instance().next);
     });
 
-    it('should submit conversion in express mode and when callback is not requested', () => {
-      let wrapper = wrap({
-        expressConversionMode: true,
-        community,
-        submit,
-        concierge: { callbackRequested: false }
-      });
-
-      const then = jest.fn();
-      promise = { then };
-
-      const data = { data: 'DATA' };
-      
-      childProps().submitConversion(data);
-    
-      expect(lastEvent()).toEqual({
-        action: 'contactCommunity',
-        category: 'requestCallback',
-        label: 'my-community',
-      });
-      
-      expect(lastSubmit()).toEqual({
-        action: 'LEAD/REQUEST_CALLBACK',
-        value: {
-          user: { data: 'DATA' },
-          propertyIds: [ 'my-community' ],
-        },
-      });
-
-      expect(then).toHaveBeenCalledWith(wrapper.instance().next);
-    });
-
-    it('should not submit conversion when in express mode and when callback was sent', () => {
-      let wrapper = wrap({
-        expressConversionMode: true,
-        community,
-        submit,
-        concierge: { callbackRequested: true }
-      });
-
-      wrapper.instance().next = jest.fn();
-      wrapper.update();
-
-      const then = jest.fn();
-      promise = { then };
-
-      const data = { data: 'DATA' };
-      
-      childProps().submitConversion(data);
-    
-      expect(lastEvent()).toEqual({
-        action: 'contactCommunity',
-        category: 'requestCallback',
-        label: 'my-community',
-      });
-
-      expect(submit).not.toHaveBeenCalled();
-      
-      expect(then).not.toHaveBeenCalled();
-      expect(wrapper.instance().next).toHaveBeenCalled();
-    });
-
     it('should submit advanced info', () => {
       const wrapper = wrap({ community, submit, concierge: {} });
       const then = jest.fn();
@@ -298,5 +236,13 @@ describe('ConciergeController', function() {
       expect(then).toHaveBeenCalledWith(wrapper.instance().next);
     });
 
+    it('should shortcircuit next if express mode', () => {
+      const wrapper = wrap({ community, expressConversionMode: true, concierge: {} });
+      wrapper.instance().next();
+      expect(lastSet()).toEqual({
+        currentStep: THANKYOU,
+        modalIsOpen: true,
+      });
+    });
   });
 });
