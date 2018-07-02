@@ -75,8 +75,11 @@ class Experiment extends Component {
         return null;
       }
       variant = variantChildren[0] || null;
-    } else if (enableExperimentsDebugger) {
-      console.info(`[Experiments] experiment ${name} has no default variant. first variant will be selected.`);
+    } else {
+      selectedVariant = variant.props.name;
+      if (enableExperimentsDebugger) {
+        console.info(`[Experiments] experiment ${name} has no default variant. first variant will be selected.`);
+      }
     }
     if (enableExperimentsDebugger) {
       console.info(`[Experiments] experiment ${name} has variant ${selectedVariant}.`);
