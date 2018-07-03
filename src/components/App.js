@@ -10,7 +10,7 @@ import { func } from 'prop-types';
 import theme from './themes/default';
 import setGlobalStyles from './themes/setGlobalStyles';
 
-import { facebookPixelId } from 'sly/config';
+import { facebookPixelId, googleTagManagerId } from 'sly/config';
 import { assetPath } from 'sly/components/themes';
 // import AppController from 'sly/controllers/Appcontroller';
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
@@ -86,6 +86,17 @@ export default class App extends Component {
           <meta content="Seniorly Inc." property="author" />
           <meta content="English" property="language" />
           {/*
+            Google Tag Mabager
+          */}
+          <script  dangerouslySetInnerHTML={{ __html: `
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${googleTagManagerId}');`}}
+          />
+
+          {/*
             Open graph
           */}
           <meta property="og:site_name" content="Seniorly" />
@@ -119,9 +130,10 @@ export default class App extends Component {
           </Router>
         </ThemeProvider>
 
-        {/* Facebook Pixel Code */}
 
         {/* eslint-disable */}
+
+        {/* Facebook Pixel Code */}
         <script dangerouslySetInnerHTML={{ __html: `
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -137,9 +149,15 @@ export default class App extends Component {
         <noscript>
           <img height="1" width="1" src="https://www.facebook.com/tr?id=586147298262302&ev=PageView&noscript=1"/>
         </noscript>
-        {/* eslint-enable */}
-
         {/* End Facebook Pixel Code */}
+
+        {/* Google Tag Manager */}
+        <noscript>
+          <iframe src="https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}" height="0" width="0" />
+        </noscript>
+        {/* End Google Tag Manager */}
+
+        {/* eslint-enable */}
       </Fragment>
     );
   }

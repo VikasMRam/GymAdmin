@@ -27,7 +27,9 @@ const config = {
     publicPath,
     olarkSiteId: '',
     facebookPixelId: '586147298262302',
-    version: process.env.VERSION,
+    googleTagManagerId: 'GTM-NTC7HG2',
+
+version: process.env.VERSION,
   },
 
   test: {
@@ -48,6 +50,8 @@ const config = {
     eventServerUrl: 'https://event.seniorly.com/events/new',
     gAnalyticsKey: 'UA-55078261-1',
     olarkSiteId: '9319-500-10-7635',
+    facebookPixelId: '586147298262302',
+    googleTagManagerId: 'GTM-5888W7H',
   },
 };
 
