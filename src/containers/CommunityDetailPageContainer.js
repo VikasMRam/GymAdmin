@@ -110,6 +110,15 @@ class CommunityDetailPageContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
   };
 
+  handleReviewLinkClicked = (name) => {
+    const { community } = this.props;
+    const { id } = community;
+    const event = {
+      action: 'click', category: 'externalReview', label: id, value: name,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+  };
+
   render() {
     const {
       mediaGallerySlideIndex,
@@ -167,6 +176,7 @@ class CommunityDetailPageContainer extends Component {
         isStickyHeaderVisible={isStickyHeaderVisible}
         onToggleStickyHeader={this.handleToggleStickyHeader}
         onBackToSearchClicked={this.handleBackToSearchClick}
+        onReviewLinkClicked={this.handleReviewLinkClicked}
       />
     );
   }

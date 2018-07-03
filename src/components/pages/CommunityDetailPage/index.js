@@ -61,6 +61,7 @@ export default class CommunityDetailPage extends Component {
     isStickyHeaderVisible: bool,
     onToggleStickyHeader: func,
     onBackToSearchClicked: func,
+    onReviewLinkClicked: func,
   };
 
   componentDidMount() {
@@ -121,8 +122,6 @@ export default class CommunityDetailPage extends Component {
       isStickyHeaderVisible,
       user,
       onReviewLinkClicked,
-      onConciergeNumberClicked,
-      onReceptionNumberClicked,
     } = this.props;
 
     const {
