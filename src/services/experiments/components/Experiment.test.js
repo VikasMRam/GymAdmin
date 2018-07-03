@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { createStore } from 'redux';
 
-import Experiment from './Experiment';
+import { Experiment } from './Experiment';
 import Variant from './Variant';
 import experimentsReducer from 'sly/store/experiments/reducer';
 
@@ -24,25 +24,44 @@ describe('Experiments|Experiment', () => {
 
   it('renders default variant when disabled', () => {
     const wrapper = wrapWithVariants({ name: 'test1', disabled: true, defaultVariant: 'variant2' });
-    expect(wrapper.find(Variant).length).toBe(2);
-    expect(wrapper.dive().dive().text()).toBe('variant 2');
+    expect(wrapper.find(Variant).length).toBe(1);
+    expect(wrapper.dive().text()).toBe('variant 2');
   });
 
   it('renders first variant when disabled and no defaultVariant provided', () => {
     const wrapper = wrapWithVariants({ name: 'test1', disabled: true });
-    expect(wrapper.find(Variant).length).toBe(2);
-    expect(wrapper.dive().dive().text()).toBe('variant 1');
+    expect(wrapper.find(Variant).length).toBe(1);
+    expect(wrapper.dive().text()).toBe('variant 1');
   });
 
   it('renders first variant when enabled and no defaultVariant provided', () => {
     const wrapper = wrapWithVariants({ name: 'test1' });
-    expect(wrapper.find(Variant).length).toBe(2);
-    expect(wrapper.dive().dive().text()).toBe('variant 1');
+    expect(wrapper.find(Variant).length).toBe(1);
+    expect(wrapper.dive().text()).toBe('variant 1');
   });
 
   it('renders selected variant', () => {
     const wrapper = wrapWithVariants({ name: 'test2', defaultVariant: 'variant2' });
-    expect(wrapper.find(Variant).length).toBe(2);
-    expect(wrapper.dive().dive().text()).toBe('variant 2');
+    expect(wrapper.find(Variant).length).toBe(1);
+    expect(wrapper.dive().text()).toBe('variant 2');
+  });
+
+  it('renders variant specified through query params', () => {
+    const wrapper = wrapWithVariants({
+      name: 'test2', defaultVariant: 'variant2', location: {
+        search: '?experimentEvaluations=test2:variant1'
+      },
+    });
+    expect(wrapper.find(Variant).length).toBe(1);
+    expect(wrapper.dive().text()).toBe('variant 1');
+  });
+
+  it('renders no variant when invalid varaint specified through query params', () => {
+    const wrapper = wrapWithVariants({
+      name: 'test2', defaultVariant: 'variant2', location: {
+        search: '?experimentEvaluations=test2:variant3'
+      },
+    });
+    expect(wrapper.find(Variant).length).toBe(0);
   });
 });
