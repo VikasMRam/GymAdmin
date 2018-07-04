@@ -46,13 +46,11 @@ export class ConciergeController extends Component {
       userDetailsHasOnlyEmail,
     } = concierge;
 
-    const event = {
-      action: 'submit',
-      category: 'requestavailability',
+    SlyEvent.getInstance().sendEvent({
+      action: 'click',
+      category: 'getPricing',
       label: community.id
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
+    });
 
     this.next();
   };
@@ -64,13 +62,11 @@ export class ConciergeController extends Component {
       concierge,
     } = this.props;
 
-    const event = {
+    SlyEvent.getInstance().sendEvent({
       action: 'contactCommunity',
       category: 'requestCallback',
       label: community.id
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
+    });
 
     submit({
       action: REQUEST_CALLBACK,
@@ -85,6 +81,12 @@ export class ConciergeController extends Component {
     const { submit, community } = this.props;
     const { message, ...rest } = data;
 
+    SlyEvent.getInstance().sendEvent({
+      action: 'submit',
+      category: 'advancedInfo',
+      label: community.id
+    });
+
     submit({
       action: ASSESSMENT,
       value: {
@@ -98,6 +100,14 @@ export class ConciergeController extends Component {
   launchCalendly = () => {
     const { set } = this.props;
      
+    const event = {
+      action: 'contactCommunity',
+      category: 'calendly',
+      label: community.id
+    };
+
+    SlyEvent.getInstance().sendEvent(event);
+
     set({
       currentStep: CALENDLY_APPOINTMENT,
       modalIsOpen: true,
