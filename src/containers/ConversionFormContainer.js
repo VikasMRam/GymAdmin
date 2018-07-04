@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { object, func } from 'prop-types';
+import { object, func, bool } from 'prop-types';
 
 import { getDetail } from 'sly/store/selectors';
 
@@ -37,10 +37,11 @@ class ConversionFormContainer extends Component {
   static propTypes = {
     community: object.isRequired,
     submitConversion: func.isRequired,
+    express: bool.isRequired,
   };
 
   render() {
-    const { submitConversion, userDetails, community, ...props } = this.props;
+    const { submitConversion, userDetails, community, express, ...props } = this.props;
     const { email, fullName, phone } = userDetails;
     const initialValues = {
       email,
@@ -55,6 +56,7 @@ class ConversionFormContainer extends Component {
         agent={agents[0]}
         contact={contacts[0]}
         community={community}
+        express={express}
         {...props}
       />
     );

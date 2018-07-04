@@ -183,7 +183,9 @@ export default class PricingAndAvailability extends Component {
           </ConciergeController>
           {sortedEstimatedPrice.length > 0 &&
             <article id="pricing-and-floor-plans-comparison">
-              <CompareHeading level="subtitle" size="subtitle">Compare to Local Assisted Living Costs</CompareHeading>
+              <CompareHeading level="subtitle" size="subtitle">
+                Compare to Local Assisted Living Costs
+              </CompareHeading>
               {sortedEstimatedPrice.map((object, i) => (
                 <Fragment key={`${object[0]}_${i}`}>
                   <PriceLabel>{estimatedPriceLabelMap[object[0]]}</PriceLabel>

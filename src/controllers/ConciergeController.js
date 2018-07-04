@@ -14,6 +14,7 @@ import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 
 export const CONVERSION_FORM = 'conversionForm';
+export const EXPRESS_CONVERSION_FORM = 'expressConversionForm';
 export const ADVANCED_INFO = 'advancedInfo';
 export const SIMILAR_COMMUNITIES = 'similarCommunities';
 export const CALENDLY_APPOINTMENT = 'calendlyAppointment';
@@ -55,11 +56,12 @@ export class ConciergeController extends Component {
     this.next();
   };
 
-  submitConversion = (data) => {
+  submitConversion = (data, isExpress) => {
     const {
       submit,
       community,
       concierge,
+      expressConversionMode,
     } = this.props;
 
     SlyEvent.getInstance().sendEvent({
@@ -74,7 +76,7 @@ export class ConciergeController extends Component {
         user: { ...data },
         propertyIds: [community.id],
       }
-    }).then(this.next);
+    }).then(() => this.next(expressConversionMode || isExpress));
   };
 
   submitAdvancedInfo = data => {
@@ -122,37 +124,55 @@ export class ConciergeController extends Component {
    * ELSE IF advancedSent OR expressConversionMode
    *   currentStep = thankyou
    */
-  next = () => {
+  next = (isExpress) => {
     const {
       concierge,
-      expressConversionMode,
       getDetailedPricing,
       set,
     } = this.props;
 
-    const { 
+    const {
       callbackRequested,
       advancedInfoSent,
       currentStep,
       userDetailsHasOnlyEmail,
     } = concierge;
 
-    if (expressConversionMode || (callbackRequested && advancedInfoSent)) {
-      set({
+    const expressDone = (isExpress
+      && callbackRequested
+      && !userDetailsHasOnlyEmail
+    );
+
+    const normalDone = (!isExpress
+      && callbackRequested
+      && advancedInfoSent
+    );
+
+    if (expressDone || normalDone) {
+      return set({
         currentStep: THANKYOU,
         modalIsOpen: true,
       });
-    } else if(!callbackRequested || userDetailsHasOnlyEmail) {
-      set({
-        currentStep: CONVERSION_FORM,
+    }
+
+    if(isExpress) {
+      return set({
+        currentStep: EXPRESS_CONVERSION_FORM,
         modalIsOpen: true,
       });
-    } else {
+    } 
+
+    if (callbackRequested) {
       set({
         currentStep: ADVANCED_INFO,
         modalIsOpen: true,
       });
-    } 
+    } else {
+      set({
+        currentStep: CONVERSION_FORM,
+        modalIsOpen: true,
+      });
+    }
   }
 
   close = () => {
@@ -161,7 +181,11 @@ export class ConciergeController extends Component {
   };
 
   render() {
-    const { children, concierge } = this.props;
+    const { 
+      children,
+      concierge,
+      expressConversionMode,
+    } = this.props;
 
     const {
       getPricing,
@@ -173,6 +197,7 @@ export class ConciergeController extends Component {
 
     return children({
       concierge,
+      expressConversionMode,
       getPricing,
       submitConversion,
       submitAdvancedInfo,

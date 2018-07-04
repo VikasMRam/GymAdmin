@@ -8,7 +8,7 @@ import { size } from 'sly/components/themes';
 import { Experiment, Variant } from 'sly/services/experiments';
 
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { Button, Heading, Link, Hr } from 'sly/components/atoms';
+import { Button, Heading, Link, Hr, Block } from 'sly/components/atoms';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 import AgentTile from 'sly/components/molecules/AgentTile';
 import { community as communityPropType } from 'sly/propTypes/community';
@@ -43,34 +43,44 @@ const SubHeading = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
+
 const ConversionForm = ({
-  handleSubmit, submitting, community, agent, contact,
+  handleSubmit,
+  submitting,
+  community,
+  concierge,
+  express,
+  agent,
+  contact,
 }) => (
   <div>
-    <StyledForm onSubmit={handleSubmit}>
-      <Experiment disabled name="Organisms_ConversionForm_Heading" defaultVariant="get_pricing_availability">
-        <Variant name="property_manager">
-          <Heading level="title" size="title">Contact Property Manager</Heading>
-        </Variant>
-        <Variant name="get_pricing_availability">
-          <Heading level="title" size="title">Get Pricing & Availability</Heading>
-          {contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
-        </Variant>
-      </Experiment>
+    <StyledForm onSubmit={data => handleSubmit(data, express)}>
+      <Heading level="title" size="title">Get Pricing & Availability</Heading>
+      {contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
+
       <Hr />
+
+      {express && (
+        <Block>
+          A Seniorly Guide will contact you soon, we just need your name and number.
+        </Block>
+      )}
+
       <Field
         name="full_name"
         label="Full Name"
         placeholder="Jane Doe"
         component={ReduxField}
       />
-      <Field
-        name="email"
-        label="Email"
-        type="email"
-        placeholder="janedoe@gmail.com"
-        component={ReduxField}
-      />
+      {!express && (
+        <Field
+          name="email"
+          label="Email"
+          type="email"
+          placeholder="janedoe@gmail.com"
+          component={ReduxField}
+        />
+      )}
       <Field
         name="phone"
         label="Phone"

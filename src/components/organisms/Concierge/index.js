@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { object, func } from 'prop-types';
+import React, { Component, Fragment } from 'react';
+import { object, func, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import { isBrowser } from 'sly/config';
@@ -13,8 +13,16 @@ import CalendlyConcierge from 'sly/components/molecules/CalendlyConcierge';
 
 import { Experiment, Variant } from 'sly/services/experiments';
 
+const ExpressConversionFormContainer = props => (
+  <ConversionFormContainer
+    express={true}
+    {...props} 
+  />
+); 
+
 const steps = {
   conversionForm: ConversionFormContainer,
+  expressConversionForm: ExpressConversionFormContainer,
   advancedInfo: AdvancedInfoContainer,
   // similarCommunities: SimilarCommunitiesContainer,
   calendlyAppointment: CalendlyAppointment,
@@ -22,10 +30,6 @@ const steps = {
 };
 
 const appElement = isBrowser && document.querySelector('#app');
-
-const Wrapper = styled.div`
-  
-`;
 
 export default class Concierge extends Component {
   static propTypes = {
@@ -40,7 +44,6 @@ export default class Concierge extends Component {
   render() {
     const {
       community,
-      className,
       concierge,
       close,
       submitConversion,
@@ -55,13 +58,11 @@ export default class Concierge extends Component {
     
     const url = community.url;
 
-    // const disabled = url.indexOf('california/san-francisco/') === -1
-    //   && url.indexOf('california/los-angeles/') === -1;
+    const disabled = url.indexOf('california/san-francisco/') === -1
+      && url.indexOf('california/los-angeles/') === -1;
     
-    const disabled = true;
-
     return (
-      <Wrapper className={className}>
+      <Fragment>
         <Experiment name="Organisms_Concierge_Calendly" disabled={disabled}>
           <Variant name="original_flow">
             {callbackRequested && (
@@ -76,8 +77,8 @@ export default class Concierge extends Component {
             )}
           </Variant>
           <Variant name="calendly_flow">
-            <CalendlyConcierge launchCalendly={launchCalendly} />
-          </Variant>
+          <CalendlyConcierge launchCalendly={launchCalendly} />
+        </Variant>
         </Experiment>
 
         {appElement && StepComponent && modalIsOpen && (
@@ -97,7 +98,7 @@ export default class Concierge extends Component {
             />
           </Modal>
         )}
-      </Wrapper>
+      </Fragment>
     );
   }
 }

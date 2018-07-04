@@ -9,6 +9,7 @@ import SlyEvent from '../services/helpers/events';
 import ConciergeControllerContainer, {
   ConciergeController,
   CONVERSION_FORM,
+  EXPRESS_CONVERSION_FORM,
   ADVANCED_INFO,
   THANKYOU,
 } from './ConciergeController';
@@ -44,7 +45,7 @@ describe('ConciergeController', function() {
         profilesContacted: [
           { slug: 'my-community', contactType: REQUEST_CALLBACK },
         ],
-        userDetails: {},
+        userDetails: { email: 'xxx@xxx.xxx', fullName: 'Fonz', phone: '9087654321' },
       },
     },
   };
@@ -73,6 +74,13 @@ describe('ConciergeController', function() {
   beforeEach(() => {
     spy.mockClear();
   });
+
+  const getControllerAction = store => {
+    const { payload, ...lastAction } = store.getActions().pop();
+    expect(lastAction.type).toBe('controller/SET');
+    expect(payload.controller.indexOf('ConciergeController')).toBe(0);
+    return payload.data;
+  };
 
   describe('Container', () => {
     const wrap = (community, store) => shallow(
@@ -107,12 +115,29 @@ describe('ConciergeController', function() {
       wrap(community, initStore({ resource, entities }));
       expect(childProps().concierge.advancedInfoSent).toBe(false);
     });
+
+    it('should go to express conversion when express mode', () => {
+      const store = initStore({ resource, entities });
+      const wrapper = wrap(otherCommunity, store);
+      wrapper.instance().next(true);
+      expect(getControllerAction(store)).toEqual({
+        currentStep: EXPRESS_CONVERSION_FORM,
+        modalIsOpen: true,
+      });
+    });
+    
+    it('should shortcircuit to thankYou when in express mode', () => {
+      const store = initStore({ resource, entities }); 
+      const wrapper = wrap(community, store);
+      wrapper.instance().next(true);
+      expect(getControllerAction(store)).toEqual({
+        currentStep: THANKYOU,
+        modalIsOpen: true,
+      });
+    });
   });
   
   describe('Controller', () => {
-    const set = jest.fn();
-    const lastSet = () => set.mock.calls.pop()[0];
-
     const sendEvent = jest.fn();
     const events = {
       sendEvent,
@@ -129,9 +154,12 @@ describe('ConciergeController', function() {
     const lastSubmit = () => submit.mock.calls.pop()[0];
     const lastSubmitResult = () => submit.mock.results.pop()[0];
 
+    const set = jest.fn();
+    const lastSet = () => set.mock.calls.pop()[0];
+
     beforeEach(() => {
-      set.mockClear();
       sendEvent.mockRestore();
+      set.mockClear();
     });
 
     const setPricingEvent = {
@@ -154,7 +182,7 @@ describe('ConciergeController', function() {
     );
 
     it('should prompt the user if is not converted', () => {
-      wrap({ community, concierge: {} });
+      wrap({ community, concierge: { advancedInfoSent: false } });
       childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(lastSet()).toEqual({
@@ -195,10 +223,8 @@ describe('ConciergeController', function() {
         submit,
         concierge: {}
       });
-
       const then = jest.fn();
       promise = { then };
-
       const data = { data: 'DATA' };
       
       childProps().submitConversion(data);
@@ -217,9 +243,9 @@ describe('ConciergeController', function() {
         },
       });
 
-      expect(then).toHaveBeenCalledWith(wrapper.instance().next);
+      expect(then).toHaveBeenCalled();
     });
-
+    
     it('should submit advanced info', () => {
       const wrapper = wrap({ community, submit, concierge: {} });
       const then = jest.fn();
@@ -234,15 +260,6 @@ describe('ConciergeController', function() {
         }
       });
       expect(then).toHaveBeenCalledWith(wrapper.instance().next);
-    });
-
-    it('should shortcircuit next if express mode', () => {
-      const wrapper = wrap({ community, expressConversionMode: true, concierge: {} });
-      wrapper.instance().next();
-      expect(lastSet()).toEqual({
-        currentStep: THANKYOU,
-        modalIsOpen: true,
-      });
     });
   });
 });
