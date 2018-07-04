@@ -10,7 +10,7 @@ import { getTocSearchLabel } from 'sly/services/helpers/search';
 import { getHelmetForSearchPage } from 'sly/services/helpers/html_headers';
 
 import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
-import { Heading, Button } from 'sly/components/atoms';
+import { Heading, Button, Hr } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
 import SearchMap from 'sly/components/organisms/SearchMap';
@@ -19,8 +19,6 @@ import Modal from 'sly/components/molecules/Modal';
 
 const TopWrapper = styled.div`
   padding-bottom: ${size('spacing.xLarge')};
-  margin-bottom: ${size('spacing.xLarge')};
-  border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
@@ -36,6 +34,16 @@ const SearchMapContainer = styled(SearchMap)`
 `;
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
+`;
+
+const StyledHr = styled(Hr)`
+  // Hacky way to implement a Hr beyond the fixed width container
+  margin-left: -100%;
+  margin-right: -100%;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
 `;
 
 const CommunitySearchPage = ({
@@ -130,6 +138,7 @@ const CommunitySearchPage = ({
             Filters
           </IconButton>
         </TopWrapper>
+        <StyledHr />
 
         {!isMapView && (
           <CommunitySearchList
