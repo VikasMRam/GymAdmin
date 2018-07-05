@@ -155,7 +155,7 @@ export class ConciergeController extends Component {
       });
     }
 
-    if(isExpress) {
+    if(userDetailsHasOnlyEmail) {
       return set({
         currentStep: EXPRESS_CONVERSION_FORM,
         modalIsOpen: true,

@@ -64,8 +64,20 @@ describe('ConciergeController', function() {
     },
   };
 
+  const onlyEmailUserAction = {
+    xx: {
+      attributes: {
+        ...userAction.xx.attributes,
+        userDetails: {
+          email: 'xxx@xxx.xxx',
+        }
+      }
+    }
+  };
+
   const entities = { userAction };
   const avdInfoSentEntities = { userAction: avdInfoSentUserAction };
+  const emailOnlyEntities = { userAction: onlyEmailUserAction };
 
   const spy = jest.fn();
 
@@ -117,7 +129,7 @@ describe('ConciergeController', function() {
     });
 
     it('should go to express conversion when express mode', () => {
-      const store = initStore({ resource, entities });
+      const store = initStore({ resource, entities: emailOnlyEntities });
       const wrapper = wrap(otherCommunity, store);
       wrapper.instance().next(true);
       expect(getControllerAction(store)).toEqual({

@@ -43,6 +43,10 @@ const SubHeading = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
+const ExpressBlock = styled(Block)`
+  margin-bottom: ${size('spacing.large')};
+`;
+
 
 const ConversionForm = ({
   handleSubmit,
@@ -61,9 +65,9 @@ const ConversionForm = ({
       <Hr />
 
       {express && (
-        <Block>
+        <ExpressBlock>
           A Seniorly Guide will contact you soon, we just need your name and number.
-        </Block>
+        </ExpressBlock>
       )}
 
       <Field
