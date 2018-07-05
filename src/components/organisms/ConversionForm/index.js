@@ -44,7 +44,7 @@ const SubHeading = styled.div`
 `;
 
 const ExpressBlock = styled(Block)`
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 
