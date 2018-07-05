@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120px" height="120px" viewBox="0 0 120 120" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Present</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="120" height="120"></rect>
+    </defs>
+    <g id="Present" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g>
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+            <path d="M99.963584,27.7508258 C115.599736,45.1208188 113.204999,104.775396 104.014579,112.453419 C94.8241592,120.131442 10.5698933,109.804738 10.5698933,90.8039155 C10.5698933,71.803093 29.5894116,87.0973294 38.4435451,75.3824778 C47.2976786,63.6676261 8,33.9161717 8,17.3304991 C8,0.744826451 84.3274316,10.3808329 99.963584,27.7508258 Z" id="Blob" fill-opacity="0.2" fill="#5575B7" mask="url(#mask-2)"></path>
+            <g mask="url(#mask-2)">
+                <g transform="translate(22.000000, 48.000000)">
+                    <path d="M6,16 L2,16 C0.8954305,16 1.3527075e-16,15.1045695 0,14 L0,2 C-1.3527075e-16,0.8954305 0.8954305,2.02906125e-16 2,0 L74,0 C75.1045695,-2.02906125e-16 76,0.8954305 76,2 L76,14 C76,15.1045695 75.1045695,16 74,16 L70,16 L70,60 C70,62.209139 68.209139,64 66,64 L10,64 C7.790861,64 6,62.209139 6,60 L6,16 Z" id="Present" fill="#5575B7"></path>
+                    <rect id="Present-shadow" fill="#445882" x="6" y="16" width="64" height="4"></rect>
+                    <path d="M34,16 L30,16 L30,0 L46,0 L46,16 L42,16 L42,64 L34,64 L34,16 Z" id="Ribbon" fill="#FFF5EB"></path>
+                    <rect id="Ribbon-shadow" fill="#ECD8C4" x="34" y="16" width="8" height="4"></rect>
+                </g>
+            </g>
+            <g id="Bow" mask="url(#mask-2)">
+                <g transform="translate(28.000000, 25.000000)">
+                    <path d="M63.9910572,15 C63.9910572,10.581722 60.4104791,7 55.9936123,7 C53.6592795,7 51.5585362,8.00043478 50.0964945,9.59606278 L36,23 L36,16 L50.0964945,2.59606278 C51.5585362,1.00043478 53.6592795,0 55.9936123,0 C60.4104791,0 63.9910572,3.581722 63.9910572,8 C63.9910572,12.418278 64.0111785,15 63.9910572,15 Z" id="Combined-Shape" fill="#FFF5EB"></path>
+                    <path d="M27.9910572,15.0005648 C27.9910572,10.5821204 24.4104791,7.00026355 19.9936123,7.00026355 C17.6592795,7.00026355 15.5585362,8.000736 14.0964945,9.59642408 L0,23.000866 L4.26325641e-14,16.0006024 L14.0964945,2.59616053 C15.5585362,1.00047245 17.6592795,0 19.9936123,0 C24.4104791,0 27.9910572,3.58185686 27.9910572,8.00030121 C27.9910572,12.4187456 28.0111785,15.0005648 27.9910572,15.0005648 Z" id="Combined-Shape-Copy" fill="#FFF5EB" transform="translate(14.000000, 11.500433) scale(-1, 1) translate(-14.000000, -11.500433) "></path>
+                    <path d="M49.8990019,9.59606278 L64,23 L44,23 C39.581722,23 36,19.418278 36,15 C36,10.581722 39.581722,7 44,7 C46.3350785,7 48.436493,8.00043478 49.8990019,9.59606278 Z" id="Combined-Shape-Copy-4" fill="#ECD8C4" transform="translate(50.000000, 15.000000) scale(-1, 1) translate(-50.000000, -15.000000) "></path>
+                    <path d="M13.8990019,9.59606278 L28,23 L8,23 C3.581722,23 0,19.418278 0,15 C0,10.581722 3.581722,7 8,7 C10.3350785,7 12.436493,8.00043478 13.8990019,9.59606278 Z" id="Combined-Shape-Copy-5" fill="#ECD8C4"></path>
+                    <rect id="Rectangle-3-Copy-2" fill="#ECD8C4" x="28" y="16" width="8" height="7"></rect>
+                </g>
+            </g>
+            <g id="Confetti" mask="url(#mask-2)">
+                <g transform="translate(8.000000, 6.000000)">
+                    <rect id="Rectangle-4" stroke="none" fill="#FEC328" fill-rule="evenodd" transform="translate(10.535534, 16.535534) rotate(-45.000000) translate(-10.535534, -16.535534) " x="9.53553391" y="12.5355339" width="2" height="8" rx="1"></rect>
+                    <rect id="Rectangle-4-Copy-5" stroke="none" fill="#FEC328" fill-rule="evenodd" transform="translate(103.535534, 66.535534) rotate(-45.000000) translate(-103.535534, -66.535534) " x="102.535534" y="62.5355339" width="2" height="8" rx="1"></rect>
+                    <rect id="Rectangle-4-Copy-4" stroke="none" fill="#FEC328" fill-rule="evenodd" transform="translate(3.535534, 57.535534) scale(-1, 1) rotate(-45.000000) translate(-3.535534, -57.535534) " x="2.53553391" y="53.5355339" width="2" height="8" rx="1"></rect>
+                    <rect id="Rectangle-4-Copy" stroke="none" fill="#FEC328" fill-rule="evenodd" transform="translate(95.535534, 25.535534) rotate(-315.000000) translate(-95.535534, -25.535534) " x="94.5355339" y="21.5355339" width="2" height="8" rx="1"></rect>
+                    <circle id="Oval-5-Copy" stroke="#FEC328" stroke-width="2" fill="none" cx="44" cy="9" r="3"></circle>
+                    <circle id="Oval-5-Copy-3" stroke="#FEC328" stroke-width="2" fill="none" cx="101" cy="95" r="3"></circle>
+                    <circle id="Oval-5-Copy-2" stroke="#FEC328" stroke-width="2" fill="none" cx="10" cy="74" r="3"></circle>
+                    <rect id="Rectangle-6" stroke="none" fill="#5575B7" fill-rule="evenodd" transform="translate(22.828427, 2.828427) rotate(-315.000000) translate(-22.828427, -2.828427) " x="20.8284271" y="0.828427125" width="4" height="4"></rect>
+                    <rect id="Rectangle-6-Copy-2" stroke="none" fill="#5575B7" fill-rule="evenodd" transform="translate(94.828427, 79.828427) rotate(-315.000000) translate(-94.828427, -79.828427) " x="92.8284271" y="77.8284271" width="4" height="4"></rect>
+                    <rect id="Rectangle-6-Copy-5" stroke="none" fill="#5575B7" fill-rule="evenodd" transform="translate(5.828427, 100.828427) rotate(-315.000000) translate(-5.828427, -100.828427) " x="3.82842712" y="98.8284271" width="4" height="4"></rect>
+                    <rect id="Rectangle-6-Copy-3" stroke="none" fill="#5575B7" fill-rule="evenodd" transform="translate(93.828427, 8.828427) rotate(-315.000000) translate(-93.828427, -8.828427) " x="91.8284271" y="6.82842712" width="4" height="4"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

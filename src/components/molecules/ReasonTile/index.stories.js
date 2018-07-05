@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import ReasonTile from '.';
+import { assetPath } from "sly/components/themes";
 
 const onInquireOrBookClicked = () => {
   alert('open book modal');
@@ -8,11 +9,14 @@ const onInquireOrBookClicked = () => {
 
 storiesOf('Molecules|ReasonTile', module)
   .add('default', () =>(
-    <ReasonTile
-      image="https://d1qiigpe5txw4q.cloudfront.net/uploads/c12040412664de0a0c9443dc952ba53b/63047_SunriseofSanMateo_SanMateo_CA_AptBed_sd.jpg"
-      title="Seniorly is great"
-      text="Seniorly is great for a lot of reasons"
-      to="/hiw"
-    />))
+    <div style={{padding: '10px'}}>
+      <ReasonTile
+        image={assetPath('vectors/Support.svg')}
+        title="Seniorly is great"
+        text="Seniorly is great for a lot of reasons"
+        to="/hiw"
+      />
+    </div>
+  ));
 
 

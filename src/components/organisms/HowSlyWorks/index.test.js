@@ -12,8 +12,8 @@ describe('HowSeniorlyWorks', () => {
     expect(wrapper.contains('test')).toBe(false);
   });
 
-  it('renders 4 ReasonTiles', () => {
+  it('renders 3 ReasonTiles', () => {
     const wrapper = wrap();
-    expect(wrapper.find(ReasonTile)).toHaveLength(4);
+    expect(wrapper.find(ReasonTile)).toHaveLength(3);
   });
 });

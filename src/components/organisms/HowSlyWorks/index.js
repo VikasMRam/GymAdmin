@@ -1,55 +1,62 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { size } from 'sly/components/themes';
 import { assetPath } from "sly/components/themes";
 import ReasonTile from 'sly/components/molecules/ReasonTile';
 
 
 const reasons = [
   {
-    image: assetPath('images/how-sly-works/search-map.jpeg'),
-    title: 'Get the Info You Want',
-    text:
-      'Our powerful search engine is designed to give you unlimited access to all the information you want- pricing, floor plans, photos, ratings and more.',
+    image: assetPath('vectors/Support.svg'),
+    title: 'After you message a community:',
+    text: `
+      1. Seniorly Guide will reach out.\n
+      2. Connect with the community.\n
+      3. Get our support at every step.
+    `,
     to: '/how-it-works/consumers',
   },
 
   {
-    image: assetPath('images/how-sly-works/connect.jpeg'),
-    title: 'Community Connect',
-    text:
-      'We connect you directly to each senior community you choose and we guarantee no other properties will obtain your personal information.',
+    image: assetPath('vectors/Present.svg'),
+    title: 'How much does it cost?',
+    text: `This is 100% Free. We are compensated by the community you eventualy select.`,
     to: '/how-it-works/consumers',
   },
 
   {
-    image: assetPath('images/how-sly-works/support.jpeg'),
-    title: 'Access Local Support',
+    image: assetPath('vectors/Home.svg'),
+    title: 'Compare Other Communities!',
     text:
       'We’ve partnered with top senior living experts to  help you find local options, accompany you on tours, and coordinate the move.',
     to: '/how-it-works/consumers',
-
   },
-
-  {
-    image: assetPath('images/how-sly-works/personalized.jpeg'),
-    title: 'Personalized Service',
-    text:
-      'We listen in your time of need because we have been there. We are available to you via email, online chat, text message or telephone.',
-    to: '/how-it-works/consumers',
-  }
 ];
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: flex;
+    flex-direction: row;
+    > * {
+      margin-right: ${size('spacing.large')}; 
+
+      &:last-child {
+        margin-right: 0; 
+      }
+    }
+  }
 `;
 
 const HowSlyWorks = () => {
-  const reasonTiles = reasons.map((reason) => <ReasonTile key={reason.title} {...reason}/>);
   return (
     <Wrapper>
-      {reasonTiles}
+      {reasons.map((reason) => (
+        <ReasonTile 
+          key={reason.title} 
+          {...reason}
+        />
+      ))}
     </Wrapper>
   );
 };

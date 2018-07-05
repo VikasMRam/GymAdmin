@@ -1,86 +1,58 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
-import { Image, Block, Link } from 'sly/components/atoms';
+import { Illustration, Image, Block, Link } from 'sly/components/atoms';
+
 import Heading from 'sly/components/atoms/Heading';
 
 export const Wrapper = styled(Link)`
-  display: flex;
-  flex-direction: column;
-
-  transition: box-shadow ${key('transitions.default')},
-    opacity ${key('transitions.default')};
-  width: 100%;
+  margin-top: ${size('spacing.xxxLarge')};
+  display: block;
+  position: relative;
+  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border-radius: ${size('spacing.small')};
   margin-bottom: ${size('spacing.large')};
-
-  &:hover {
-    cursor: pointer;
-    box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')}
-      ${palette('grayscale', 1, true)};
-    opacity: 0.75;
-    background: ${palette('white', 0)};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('picture', 'regular', 'width')};
-    margin-bottom: ${size('spacing.large')};
-
-    :nth-child(odd) {
-      margin-right: ${size('spacing.xLarge')};
-    }
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('picture', 'small', 'width')};
-    margin-right: ${size('spacing.xLarge')};
-
-    :last-child {
-      margin-right: 0;
-    }
-  }
+  width: 100%;
 `;
 
 export const WrappedImage = styled(Image)`
-  width: 100%;
-  border-bottom: 0;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('picture', 'regular', 'width')};
-    height: ${size('picture', 'regular', 'height')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('picture', 'small', 'width')};
-    height: ${size('picture', 'small', 'height')};
-  }
+  background: white;
+  margin-top: -${size('spacing.xxxLarge')};
+  margin-left: ${size('spacing.xxLarge')};
 `;
 
 export const ItemDescription = styled.div`
-  padding: ${size('spacing.large')};
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
-  border-top: 0;
-  border-bottom-left-radius: ${size('spacing.small')};
-  border-bottom-right-radius: ${size('spacing.small')};
-  display: flex;
-  flex: 1 0 auto;
-  flex-direction: column;
+  margin: ${size('spacing.large')};
+  margin-top: 0;
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 export const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.regular')};
+  margin: ${size('spacing.regular')} 0;
+  line-height: ${size('lineHeight.body')};
+`;
+
+const TextBlock = styled(Block)`
+  line-height: ${size('lineHeight.body')};
 `;
 
 const ReasonTile = ({
   image, title, text, to, ...props
 }) => (
   <Wrapper to={to} {...props}>
-    <WrappedImage src={image} aspectRatio="4:3" />
+    <WrappedImage src={image} />
     <ItemDescription>
       <StyledHeading level="subtitle" size="subtitle">{title}</StyledHeading>
-      <Block>{text}</Block>
+      {text && text.split('\n')
+          .map((line, i) => (
+            <TextBlock key={`block_${i}`} size="subtitle" palette="grayscale">
+              {line}
+            </TextBlock>
+          ))
+      }
     </ItemDescription>
   </Wrapper>
 );
