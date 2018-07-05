@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon/24/Agent-checkmark</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="24" height="24"></rect>
+    </defs>
+    <g id="Icon/24/Agent-checkmark" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Agent-checkmark">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Mask" fill-opacity="0" fill="#D8D8D8" xlink:href="#path-1"></use>
+            <rect id="Rectangle-6" fill="#7CCDCC" mask="url(#mask-2)" x="2" y="2" width="20" height="20" rx="10"></rect>
+        </g>
+        <path d="M10,14.6568542 L16.363961,8.29289322 C16.7544853,7.90236893 17.3876503,7.90236893 17.7781746,8.29289322 C18.1686989,8.68341751 18.1686989,9.31658249 17.7781746,9.70710678 L10.7071068,16.7781746 C10.3165825,17.1686989 9.68341751,17.1686989 9.29289322,16.7781746 L6.29289322,13.7781746 C5.90236893,13.3876503 5.90236893,12.7544853 6.29289322,12.363961 C6.68341751,11.9734367 7.31658249,11.9734367 7.70710678,12.363961 L10,14.6568542 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+    </g>
+</svg>

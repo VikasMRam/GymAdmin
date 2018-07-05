@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Heading, Box } from 'sly/components/atoms';
+import { Heading, Box, Icon } from 'sly/components/atoms';
 import RoomTile from 'sly/components/molecules/RoomTile';
 import PriceBar from 'sly/components/molecules/PriceBar';
 import EstimatedCost from 'sly/components/molecules/EstimatedCost';
@@ -35,8 +35,18 @@ const StyledArticle = styled.article`
     }
   }
 `;
-const StyledBox = styled(Box)`
+
+const DoneBox = styled(Box)`
   margin-bottom: ${size('spacing.xLarge')};
+  display: flex;
+
+  > :first-child {
+    margin-right: ${size('spacing.regular')};
+  }
+`;
+
+const DoneText = styled.span`
+  font-weight: bold;
 `;
 
 const CompareHeading = styled(Heading)`
@@ -166,9 +176,12 @@ export default class PricingAndAvailability extends Component {
             {({ concierge, submitConversion }) => {
                 if (concierge.callbackRequested) {
                   return (
-                    <StyledBox>
-                      <Thankyou community={community} />
-                    </StyledBox>
+                    <DoneBox>
+                      <Icon icon='round-checkmark' /> 
+                      <DoneText>
+                        Your Seniorly Guide will reach out to you regarding this community.
+                      </DoneText>
+                    </DoneBox>
                   );
                 } else {
                   return (
