@@ -16,6 +16,8 @@ const validate = createValidator({
 const ReduxForm = reduxForm({
   form: 'GetCurrentAvailabilityForm',
   destroyOnUnmount: false,
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: true,
   validate,
 })(GetCurrentAvailabilityForm);
 
