@@ -6,7 +6,7 @@ import { size } from 'sly/components/themes';
 import { Thumbnail } from 'sly/components/atoms';
 
 const Wrapper = styled.ul`
-  overflow: scroll;
+  overflow-x: scroll;
   display: flex;
   margin: 0;
   padding: 0;
