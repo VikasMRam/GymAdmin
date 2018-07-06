@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, string, number, object, shape } from 'prop-types';
+import { arrayOf, string, number, object, shape, func } from 'prop-types';
 import NumberFormat from 'react-number-format';
 import { palette } from 'styled-theme';
 import styled from 'styled-components';
@@ -31,12 +31,13 @@ export default class communitySummary extends React.Component {
     communityHighlights: arrayOf(string),
     startingRate: number,
     providedAverage: number,
-
     reviewsValue: number,
     innerRef: object,
     pricingAndFloorPlansRef: object.isRequired,
     amenitiesAndFeaturesRef: object.isRequired,
     communityReviewsRef: object.isRequired,
+    onConciergeNumberClicked: func,
+    onReceptionNumberClicked: func,
   };
 
   static sectionIdMaps = {
@@ -56,7 +57,8 @@ export default class communitySummary extends React.Component {
 
   render() {
     const {
-      twilioNumber, phoneNumber, user, licenseUrl, amenityScore, communityHighlights, startingRate, providedAverage, reviewsValue, innerRef,
+      twilioNumber, phoneNumber, user, licenseUrl, amenityScore, communityHighlights, startingRate,
+      providedAverage, reviewsValue, innerRef, onConciergeNumberClicked, onReceptionNumberClicked,
     } = this.props;
 
     const highlights = [];
@@ -74,7 +76,7 @@ export default class communitySummary extends React.Component {
     highlights.push((
       <span>
         Pricing & Availability&nbsp;
-        <Link href={`tel:${conciergeNumber}`}>
+        <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
           <NumberFormat value={conciergeNumber} format="(###) ###-####" displayType="text" data-tip data-for="tooltipPhoneNumber" />
         </Link>
         <TooltipContent id="tooltipPhoneNumber" place="bottom" effect="solid" type="light" multiline>
@@ -86,7 +88,7 @@ export default class communitySummary extends React.Component {
     highlights.push((
       <span>
         Reception&nbsp;
-        <Link href={`tel:${receptionNumber}`}>
+        <Link href={`tel:${receptionNumber}`} onClick={onReceptionNumberClicked}>
           <NumberFormat value={receptionNumber} format="(###) ###-####" displayType="text" />
         </Link>
       </span>

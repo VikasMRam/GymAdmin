@@ -16,12 +16,11 @@ const images = gallery.images || [];
 const videos = videoGallery.videos || [];
 const onToggleFullscreenMode = jest.fn();
 const onSlideChange = jest.fn();
-const communityMainImage = images[(images.length/2)].sd;
 
 describe('CommunityMediaGallery', () => {
   it('default', () => {
     const wrapper = wrap({
-      communityName: name, communityMainImage, videos, images, ariaHideApp: false, onToggleFullscreenMode, onSlideChange,
+      communityName: name, videos, images, ariaHideApp: false, onToggleFullscreenMode, onSlideChange,
     });
     /* TEMPORARILY DISABLE THIS
     expect(wrapper.find(Icon).find({ icon: 'heart' })).toHaveLength(1);
@@ -31,10 +30,6 @@ describe('CommunityMediaGallery', () => {
     expect(mediaGallery).toHaveLength(1);
     const imgsProp = mediaGallery.prop('images');
     expect(imgsProp).toHaveLength(videos.length + images.length);
-    const firstImage = imgsProp.find((img) => {
-      return !img.hasOwnProperty('ofVideo');
-    });
-    expect(firstImage.sd).toBe(communityMainImage);
     expect(wrapper.find(FullscreenMediaGallery)).toHaveLength(1);
   });
 });

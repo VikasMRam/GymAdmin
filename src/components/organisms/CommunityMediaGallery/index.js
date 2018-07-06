@@ -24,7 +24,6 @@ const MorePicsMobile = styled(Button)`
 export default class CommunityMediaGallery extends Component {
   static propTypes = {
     communityName: string.isRequired,
-    communityMainImage: string,
     images: arrayOf(shape({
       sd: string.isRequired,
       hd: string.isRequired,
@@ -51,17 +50,9 @@ export default class CommunityMediaGallery extends Component {
 
   render() {
     const {
-      communityName, communityMainImage, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
+      communityName, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
     } = this.props;
-    let { images } = this.props;
-    // If there is a mainImage put it in front
-    const mainImage = images.find((element) => {
-      return element.sd === communityMainImage;
-    });
-    if (mainImage) {
-      images = images.filter(img => img.sd != mainImage.sd);
-      images.unshift(mainImage);
-    }
+    const { images } = this.props;
     this.sdGalleryImages = videos.map((vid, i) => {
       // Important: create new object instance having src & alt as we will be modifying same object below
       return {
@@ -107,7 +98,7 @@ export default class CommunityMediaGallery extends Component {
     return (
       <section>
         <MediaGallery
-          onSlideClick={() => onToggleFullscreenMode()}
+          onSlideClick={i => onToggleFullscreenMode(false, Object.prototype.hasOwnProperty.call(this.sdGalleryImages[i], 'ofVideo'))}
           communityName={communityName}
           images={this.sdGalleryImages}
           bottomLeftSection={this.sdGalleryImages.length > 1 ? bottomLeftSection : null}
@@ -120,7 +111,7 @@ export default class CommunityMediaGallery extends Component {
           communityName={communityName}
           videos={this.formattedVideos}
           images={this.hdGalleryImages}
-          onClose={() => onToggleFullscreenMode()}
+          onClose={() => onToggleFullscreenMode(false, Object.prototype.hasOwnProperty.call(this.sdGalleryImages[currentSlide], 'ofVideo'))}
           ariaHideApp={ariaHideApp}
           onSlideChange={onSlideChange}
         />

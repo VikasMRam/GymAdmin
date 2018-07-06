@@ -1,13 +1,12 @@
 import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
-import { object, func, number, bool, string } from 'prop-types';
+import { object, func, number, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
-import SlyEvent from 'sly/services/helpers/events';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { size } from 'sly/components/themes';
 
@@ -32,7 +31,7 @@ import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswersContainer from 'sly/containers/CommunityQuestionAnswersContainer';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import Button from 'sly/components/atoms/Button';
-import {Experiment, Variant} from "sly/services/experiments";
+import { Experiment, Variant } from "sly/services/experiments";
 
 const BackToSearch = styled.div`
   text-align: center
@@ -61,6 +60,10 @@ export default class CommunityDetailPage extends Component {
     onMediaGalleryToggleFullscreen: func,
     isStickyHeaderVisible: bool,
     onToggleStickyHeader: func,
+    onBackToSearchClicked: func,
+    onReviewLinkClicked: func,
+    onConciergeNumberClicked: func,
+    onReceptionNumberClicked: func,
   };
 
   componentDidMount() {
@@ -98,20 +101,15 @@ export default class CommunityDetailPage extends Component {
     const {
       community, onMediaGallerySlideChange, onMediaGalleryToggleFullscreen,
     } = this.props;
-    const { id } = community;
     const { gallery = {}, videoGallery = {} } = community;
     const images = gallery.images || [];
     const videos = videoGallery.videos || [];
     let matchingIndex = images.findIndex(i => image.id === i.id);
     if (matchingIndex > -1) {
       matchingIndex = videos.length + matchingIndex;
-      onMediaGallerySlideChange(matchingIndex);
+      onMediaGallerySlideChange(matchingIndex, true);
       onMediaGalleryToggleFullscreen(true);
     }
-    const event = {
-      action: 'show', category: 'images', label: id, value: image.id,
-    };
-    SlyEvent.getInstance().sendEvent(event);
   };
 
   render() {
@@ -122,8 +120,12 @@ export default class CommunityDetailPage extends Component {
       onLocationSearch,
       onMediaGallerySlideChange,
       onMediaGalleryToggleFullscreen,
+      onBackToSearchClicked,
       isStickyHeaderVisible,
       user,
+      onReviewLinkClicked,
+      onConciergeNumberClicked,
+      onReceptionNumberClicked,
     } = this.props;
 
     const {
@@ -146,9 +148,20 @@ export default class CommunityDetailPage extends Component {
       url,
     } = community;
 
-    const { careServices, licenseUrl, serviceHighlights, communityPhone } = propInfo;
+    const {
+      careServices, licenseUrl, serviceHighlights, communityPhone,
+    } = propInfo;
 
-    const images = gallery.images || [];
+    let images = gallery.images || [];
+    // If there is a mainImage put it in front
+    const communityMainImage = images.find((element) => {
+      return element.sd === mainImage;
+    });
+    if (communityMainImage) {
+      images = images.filter(img => img.sd !== communityMainImage.sd);
+      images.unshift(communityMainImage);
+      gallery.images = images;
+    }
     const videos = videoGallery.videos || [];
 
     const {
@@ -238,7 +251,6 @@ export default class CommunityDetailPage extends Component {
           {(images.length > 0 || videos.length > 0) &&
             <CommunityMediaGallery
               communityName={name}
-              communityMainImage={mainImage}
               currentSlide={mediaGallerySlideIndex}
               images={images}
               videos={videos}
@@ -276,6 +288,8 @@ export default class CommunityDetailPage extends Component {
             providedAverage={rgsAux.providedAverage}
             communityHighlights={communityHighlights}
             reviews={reviews}
+            onConciergeNumberClicked={onConciergeNumberClicked}
+            onReceptionNumberClicked={onReceptionNumberClicked}
           />
 
           <CollapsibleSection
@@ -297,7 +311,13 @@ export default class CommunityDetailPage extends Component {
           <CollapsibleSection title="Similar Communities">
             <SimilarCommunities similarProperties={similarProperties} />
             <BackToSearch>
-              <Button ghost href={getCitySearchUrl({ propInfo, address })}>Communities In {address.city}</Button>
+              <Button
+                ghost
+                onClick={onBackToSearchClicked}
+                href={getCitySearchUrl({ propInfo, address })}
+              >
+                Communities In {address.city}
+              </Button>
             </BackToSearch>
           </CollapsibleSection>
           {(communityDescription || rgsAux.slyCommunityDescription) &&
@@ -343,6 +363,7 @@ export default class CommunityDetailPage extends Component {
               reviews={reviewsFinal}
               reviewRatings={ratingsArray}
               onLeaveReview={onLeaveReview}
+              onReviewLinkClicked={onReviewLinkClicked}
             />
           </CollapsibleSection>
           <CollapsibleSection title="Questions">

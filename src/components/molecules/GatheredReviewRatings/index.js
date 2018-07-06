@@ -62,9 +62,11 @@ export default class GatheredReviewRatings extends Component {
       avgRating: number.isRequired,
     })).isRequired,
     onLeaveReview: func,
+    onReviewLinkClicked: func,
   };
+
   render() {
-    const { reviewRatings, onLeaveReview } = this.props;
+    const { reviewRatings, onLeaveReview, onReviewLinkClicked } = this.props;
     const ratings = reviewRatings.map((review, i) => {
       return (
         <ReviewDiv key={`${review.name}_${i}`}>
@@ -73,8 +75,13 @@ export default class GatheredReviewRatings extends Component {
             {' ('}{review.numReviews }{')'}
           </StartNumDiv>
           <ReviewProviderDiv>
-            <Link href={review.reviewsUrl} target="_blank" rel="nofollow">
-              {review.name}&#174;
+            <Link
+              onClick={() => onReviewLinkClicked(review.name)}
+              href={review.reviewsUrl}
+              target="_blank"
+              rel="nofollow"
+            >
+              {review.name}&reg;
             </Link>
           </ReviewProviderDiv>
         </ReviewDiv>

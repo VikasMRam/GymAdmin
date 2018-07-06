@@ -11,6 +11,7 @@ const PropertyReviews = ({
   reviewRatings,
   onLeaveReview,
   communityReviewsRef,
+  onReviewLinkClicked,
 }) => {
   let propertyReviews = null;
   if (hasSlyReviews) {
@@ -25,6 +26,7 @@ const PropertyReviews = ({
         <GatheredReviewRatings
           reviewRatings={reviewRatings}
           onLeaveReview={onLeaveReview}
+          onReviewLinkClicked={onReviewLinkClicked}
         />
       )}
     </article>
@@ -49,6 +51,7 @@ PropertyReviews.propTypes = {
   hasSlyReviews: bool.isRequired,
   hasWebReviews: bool.isRequired,
   communityReviewsRef: object,
+  onReviewLinkClicked: func,
 };
 
 export default PropertyReviews;
