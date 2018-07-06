@@ -63,8 +63,14 @@ class CommunityDetailPageContainer extends Component {
     if (!fromMorePictures && !isVideo) {
       const image = images[mediaGallerySlideIndex - videos.length];
       const event = {
-        action: 'show', category: 'fullscreenMediaGallery', label: id, value: image.id,
+        action: 'show', category: 'fullscreenMediaGallery', label: id,
       };
+      // means user clicked see more pics button
+      if (image) {
+        event.value = image.id;
+      } else {
+        event.value = 'seeMoreButton';
+      }
       if (isMediaGalleryFullscreenActive) {
         event.action = 'hide';
       }
