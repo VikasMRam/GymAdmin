@@ -7,7 +7,7 @@ const picture = 'https://avatars.githubusercontent.com/u/113003';
 const title = 'Property Manager';
 const community = {
   name: 'Rhoda Goldman Plaza',
-  uri: '/assisted-living/california/san-francisco/rhoda-goldman-plaza',
+  url: '/assisted-living/california/san-francisco/rhoda-goldman-plaza',
 };
 
 const userFull = {

@@ -1,14 +1,13 @@
 import React from 'react';
-import { string, shape } from 'prop-types';
-import styled, { css } from 'styled-components';
-import { ifProp } from 'styled-tools';
-import { palette } from 'styled-theme';
+import { string, shape, number } from 'prop-types';
+import styled from 'styled-components';
 import Link from 'react-router-dom/Link';
 import Dotdotdot from 'react-dotdotdot';
 
 import { size } from 'sly/components/themes';
 import { Avatar } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
+import { community as communityPropType } from 'sly/propTypes/community';
 
 const AgentDiv = styled.div`
   display: flex;
@@ -46,14 +45,22 @@ const Title = ({
     <CaptionSpan>
       {title && <TitleTextDiv>{title}</TitleTextDiv>}
       {title && community && ', '}
-      {community && <Link to={community.uri}>{community.name}</Link>}
+      {community && <Link to={community.url}>{community.name}</Link>}
     </CaptionSpan>
     {rating && <Rating size="small" value={rating} />}
   </TitleDiv>
 );
 
+
+Title.propTypes = {
+  name: string,
+  title: string,
+  rating: number,
+  community: communityPropType,
+};
+
 const AgentTile = ({
-  user, palette, community, ...props
+  user, palette, community,
 }) => (
   <AgentDiv>
     <Avatar user={user} palette={palette} />
@@ -67,10 +74,7 @@ AgentTile.propTypes = {
     name: string.isRequired,
     picture: string,
   }),
-  community: shape({
-    name: string.isRequired,
-    uri: string.isRequired,
-  }),
+  community: communityPropType,
 };
 
 AgentTile.defaultProps = {
