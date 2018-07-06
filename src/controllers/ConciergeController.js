@@ -115,7 +115,6 @@ export class ConciergeController extends Component {
         propertyIds: [community.id],
       }
     }).then(() => {
-      console.log('about to execute next', { isExpress });
       this.next(isExpress);
     });
   };
