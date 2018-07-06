@@ -11,7 +11,7 @@ const picture = 'https://avatars.githubusercontent.com/u/113003';
 const title = 'Property Manager';
 const community = {
   name: 'Rhoda Goldman Plaza',
-  uri: '/assisted-living/california/san-francisco/rhoda-goldman-plaza',
+  url: '/assisted-living/california/san-francisco/rhoda-goldman-plaza',
 };
 
 const userFull = {
@@ -35,7 +35,7 @@ describe('AgentTile', () => {
     const link = title.find('Link');
     expect(avatar.prop('user')).toEqual(userWithRating);
     expect(avatar.prop('palette')).toEqual('random');
-    expect(link.prop('to')).toEqual(community.uri);
+    expect(link.prop('to')).toEqual(community.url);
     expect(link.prop('children')).toEqual(community.name);
   });
 

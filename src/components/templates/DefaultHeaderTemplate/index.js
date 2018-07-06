@@ -7,7 +7,7 @@ const headerItems = [
   { name: 'Resources', url: '/resources' },
   // { name: 'Moving Center', url: '#' },
   // { name: 'News', url: '#' },
-  { name: 'Moving Center', url: '/resources/tags/moving+center' },
+  { name: 'How It Works', url: '/how-it-works' },
   { name: 'List Your Property', url: '/providers' },
   { name: 'Our History', url: '/about' },
   { name: 'Sign in', url: '/signin' },
@@ -16,7 +16,7 @@ const headerItems = [
 const menuItems = [
   { name: 'Home', url: '/' },
   { name: 'Resources', url: '/resources' },
-  { name: 'Moving Center', url: '/resources/tags/moving+center' },
+  { name: 'How It Works', url: '/how-it-works' },
   { name: 'Assisted Living', url: '/assisted-living' },
   { name: "Alzheimer's Care", url: '/alzheimers-care' },
   { name: 'Respite Care', url: '/respite-care' },

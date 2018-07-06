@@ -37,17 +37,50 @@ class CommunityDetailPageContainer extends Component {
     setIsQuestionModalOpenValue: func,
   };
 
-  handleMediaGallerySlideChange = (slideIndex) => {
-    const { gotoMediaGallerySlide } = this.props;
+  handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
+    const { gotoMediaGallerySlide, community } = this.props;
     gotoMediaGallerySlide(slideIndex);
+    if (fromMorePictures) {
+      const { id } = community;
+      const { gallery = {}, videoGallery = {} } = community;
+      const images = gallery.images || [];
+      const videos = videoGallery.videos || [];
+      const image = images[slideIndex - videos.length];
+      const event = {
+        action: 'show', category: 'images', label: id, value: image.id,
+      };
+      SlyEvent.getInstance().sendEvent(event);
+    }
   };
 
-  handleToggleMediaGalleryFullscreen = (fromMorePictures) => {
-    const { toggleFullscreenMediaGallery, isMediaGalleryFullscreenActive, community } = this.props;
-    if (!fromMorePictures) {
-      const { id } = community;
+  handleToggleMediaGalleryFullscreen = (fromMorePictures, isVideo, fromSeeMoreButton) => {
+    const {
+      toggleFullscreenMediaGallery, isMediaGalleryFullscreenActive, community, mediaGallerySlideIndex,
+    } = this.props;
+    const { id, gallery = {}, videoGallery = {} } = community;
+    const images = gallery.images || [];
+    const videos = videoGallery.videos || [];
+    if (fromSeeMoreButton) {
+      const event = {
+        action: 'show', category: 'fullscreenMediaGallery', label: id, value: 'seeMoreButton',
+      };
+      SlyEvent.getInstance().sendEvent(event);
+    } else if (!fromMorePictures && !isVideo) {
+      const image = images[mediaGallerySlideIndex - videos.length];
       const event = {
         action: 'show', category: 'fullscreenMediaGallery', label: id,
+      };
+      if (image) {
+        event.value = image.id;
+      }
+      if (isMediaGalleryFullscreenActive) {
+        event.action = 'hide';
+      }
+      SlyEvent.getInstance().sendEvent(event);
+    } else if (isVideo) {
+      const video = videos[mediaGallerySlideIndex];
+      const event = {
+        action: 'show', category: 'mediaGalleryVideo', label: id, value: video.id,
       };
       if (isMediaGalleryFullscreenActive) {
         event.action = 'hide';
@@ -74,6 +107,42 @@ class CommunityDetailPageContainer extends Component {
   handleToggleStickyHeader = () => {
     const { toggleStickyHeader } = this.props;
     toggleStickyHeader();
+  };
+
+  handleBackToSearchClick = () => {
+    const { community } = this.props;
+    const { id } = community;
+    const event = {
+      action: 'click', category: 'backToSearch', label: id,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+  };
+
+  handleReviewLinkClick = (name) => {
+    const { community } = this.props;
+    const { id } = community;
+    const event = {
+      action: 'click', category: 'externalReview', label: id, value: name,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+  };
+
+  handleConciergeNumberClick = () => {
+    const { community } = this.props;
+    const { id } = community;
+    const event = {
+      action: 'click', category: 'conciergePhone', label: id,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+  };
+
+  handleReceptionNumberClick = () => {
+    const { community } = this.props;
+    const { id } = community;
+    const event = {
+      action: 'click', category: 'receptionPhone', label: id,
+    };
+    SlyEvent.getInstance().sendEvent(event);
   };
 
   render() {
@@ -132,6 +201,10 @@ class CommunityDetailPageContainer extends Component {
         isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
         isStickyHeaderVisible={isStickyHeaderVisible}
         onToggleStickyHeader={this.handleToggleStickyHeader}
+        onBackToSearchClicked={this.handleBackToSearchClick}
+        onReviewLinkClicked={this.handleReviewLinkClick}
+        onConciergeNumberClicked={this.handleConciergeNumberClick}
+        onReceptionNumberClicked={this.handleReceptionNumberClick}
       />
     );
   }

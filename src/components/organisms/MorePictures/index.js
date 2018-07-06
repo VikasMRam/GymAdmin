@@ -50,7 +50,7 @@ const MorePictures = ({ gallery, communityName, onPictureClick }) => {
       key={image.id}
       onClick={() => onPictureClick && onPictureClick(image)}
     >
-      <PictureTile src={image.sd} aspectRatio="4:3" alt={`${communityName} ${i + 1}`} />
+      <PictureTile src={image.hd} aspectRatio="4:3" alt={`${communityName} ${i + 1}`} />
     </Lazy>
   ));
   return (

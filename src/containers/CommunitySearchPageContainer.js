@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { object, number, array, bool, func } from 'prop-types';
+import queryString from 'query-string';
 
 import withServerState from 'sly/store/withServerState';
+import SlyEvent from 'sly/services/helpers/events';
 
 import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList, getListMeta } from 'sly/store/selectors';
@@ -14,6 +16,7 @@ import {
   filterLinkPath,
   getSearchParams,
   getSearchParamFromPlacesResponse,
+  getFiltersApplied,
 } from 'sly/services/helpers/search';
 
 class CommunitySearchPageContainer extends Component {
@@ -28,6 +31,29 @@ class CommunitySearchPageContainer extends Component {
     toggleModalFilterPanel: func,
   }
 
+  componentDidUpdate() {
+    const { searchParams } = this.props;
+    const filters = getFiltersApplied(searchParams);
+    const cityState = (({ city, state }) => ({ city, state }))(searchParams);
+    const event = {
+      action: 'show', category: 'searchToc', label: searchParams.toc, value: queryString.stringify(cityState),
+    };
+    SlyEvent.getInstance().sendEvent(event);
+    if (searchParams.sort) {
+      const event = {
+        action: 'show', category: 'searchSort', label: searchParams.sort, value: queryString.stringify(cityState),
+      };
+      SlyEvent.getInstance().sendEvent(event);
+    }
+    filters.forEach((filter) => {
+      const filterName = filter.charAt(0).toUpperCase() + filter.slice(1);
+      const event = {
+        action: 'show', category: `search${filterName}`, label: searchParams[filter], value: queryString.stringify(cityState),
+      };
+      SlyEvent.getInstance().sendEvent(event);
+   });
+  }
+
   // TODO Define Search Parameters
   toggleMap = () => {
     const event = {
@@ -39,6 +65,12 @@ class CommunitySearchPageContainer extends Component {
       event.changedParams = { view: 'list', 'page-size': 15 };
     }
     this.changeSearchParams(event);
+
+    const slyEvent = {
+      action: 'show', category: 'searchPageView', label: event.changedParams.view,
+      value: this.props.location.pathname + this.props.location.search,
+    };
+    SlyEvent.getInstance().sendEvent(slyEvent);
   };
 
   changeSearchParams = ({ changedParams }) => {

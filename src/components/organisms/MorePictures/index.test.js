@@ -10,11 +10,15 @@ const gallery = {
       id: 'ddb49929f3915891cb67da8ad0ea663e',
       sd:
         'https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_sd.jpg',
+      hd:
+        'https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_hd.jpg',
     },
     {
       id: '7c580d1d286425f89fb2f6c5ab0b0cc0',
       sd:
         'https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20_sd.jpg',
+      hd:
+        'https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20_hd.jpg',
     },
   ],
 };
