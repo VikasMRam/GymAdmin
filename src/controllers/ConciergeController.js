@@ -11,6 +11,15 @@ import SlyEvent from 'sly/services/helpers/events';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
 
+import {
+  createValidator, 
+  createBooleanValidator,
+  required,
+  notProvided,
+  email,
+  usPhone,
+} from 'sly/services/validation';
+
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 
 export const CONVERSION_FORM = 'conversionForm';
@@ -20,17 +29,37 @@ export const SIMILAR_COMMUNITIES = 'similarCommunities';
 export const CALENDLY_APPOINTMENT = 'calendlyAppointment';
 export const THANKYOU = 'thankyou';
 
+const isAssessment = ({
+  typeOfCare,
+  typeOfRoom,
+  timeToMove,
+  budget
+}) => !!(typeOfCare && typeOfRoom && timeToMove && budget);
+
+const hasAllUserData = createBooleanValidator({
+  fullName: [required],
+  email: [required, email],
+  phone: [required, usPhone],
+});
+
+const hasUserData = createValidator({
+  fullName: [required],
+  email: [required, email],
+  phone: [required, usPhone],
+});
+
+const hasOnlyEmail = createBooleanValidator({
+  fullName: [notProvided],
+  email: [required, email],
+  phone: [notProvided],
+});
+
 export class ConciergeController extends Component {
   static propTypes = {
     community: communityPropType.isRequired,
     concierge: object.isRequired,
     children: func.isRequired,
-    expressConversionMode: bool,
     set: func.isRequired,
-  };
-
-  static defaultProps = {
-    expressConversionMode: false,
   };
 
   getPricing = () => {
@@ -38,13 +67,11 @@ export class ConciergeController extends Component {
       concierge,
       community,
       set,
-      experiements,
+      userDetails
     } = this.props;
 
     const {
       callbackRequested,
-      advancedInfoSent,
-      userDetailsHasOnlyEmail,
     } = concierge;
 
     SlyEvent.getInstance().sendEvent({
@@ -53,15 +80,26 @@ export class ConciergeController extends Component {
       label: community.id
     });
 
-    this.next();
+    if (!callbackRequested && hasAllUserData(userDetails)) {
+      this.submitRegularConversion();
+    } else {
+      this.next(false);
+    }
   };
 
-  submitConversion = (data, isExpress) => {
+  submitExpressConversion = data => {
+    this.doSubmitConversion(data, true);
+  };
+
+  submitRegularConversion = data => {
+    this.doSubmitConversion(data, false);
+  };
+
+  doSubmitConversion = (data={}, isExpress=false) => {
     const {
       submit,
       community,
       concierge,
-      expressConversionMode,
     } = this.props;
 
     SlyEvent.getInstance().sendEvent({
@@ -76,7 +114,10 @@ export class ConciergeController extends Component {
         user: { ...data },
         propertyIds: [community.id],
       }
-    }).then(() => this.next(expressConversionMode || isExpress));
+    }).then(() => {
+      console.log('about to execute next', { isExpress });
+      this.next(isExpress);
+    });
   };
 
   submitAdvancedInfo = data => {
@@ -96,7 +137,7 @@ export class ConciergeController extends Component {
         message,
         propertyIds: [community.id],
       }
-    }).then(this.next);
+    }).then(() => this.next(false));
   };
 
   launchCalendly = () => {
@@ -116,36 +157,27 @@ export class ConciergeController extends Component {
     });
   };
 
-  /*
-   * IF NOT gotUserDetails OR NOT conversionSent
-   *   currentStep = conversion
-   * ELSE IF NOT advancedSent AND NOT expressConversionMode
-   *   currentStep = advanced
-   * ELSE IF advancedSent OR expressConversionMode
-   *   currentStep = thankyou
-   */
   next = (isExpress) => {
     const {
       concierge,
       getDetailedPricing,
       set,
+      userDetails,
     } = this.props;
 
     const {
       callbackRequested,
-      advancedInfoSent,
       currentStep,
-      userDetailsHasOnlyEmail,
     } = concierge;
 
     const expressDone = (isExpress
       && callbackRequested
-      && !userDetailsHasOnlyEmail
+      && hasAllUserData(userDetails)
     );
 
     const normalDone = (!isExpress
       && callbackRequested
-      && advancedInfoSent
+      && isAssessment(userDetails) 
     );
 
     if (expressDone || normalDone) {
@@ -155,21 +187,23 @@ export class ConciergeController extends Component {
       });
     }
 
-    if(userDetailsHasOnlyEmail) {
+    const needMoreData = hasOnlyEmail(userDetails);
+
+    if(isExpress && hasOnlyEmail(userDetails)) {
       return set({
         currentStep: EXPRESS_CONVERSION_FORM,
         modalIsOpen: true,
       });
-    } 
+    }
 
-    if (callbackRequested) {
+    if (!callbackRequested || needMoreData) {
       set({
-        currentStep: ADVANCED_INFO,
+        currentStep: CONVERSION_FORM,
         modalIsOpen: true,
       });
     } else {
       set({
-        currentStep: CONVERSION_FORM,
+        currentStep: ADVANCED_INFO,
         modalIsOpen: true,
       });
     }
@@ -184,12 +218,12 @@ export class ConciergeController extends Component {
     const { 
       children,
       concierge,
-      expressConversionMode,
     } = this.props;
 
     const {
       getPricing,
-      submitConversion,
+      submitRegularConversion,
+      submitExpressConversion,
       submitAdvancedInfo,
       launchCalendly,
       close,
@@ -197,9 +231,9 @@ export class ConciergeController extends Component {
 
     return children({
       concierge,
-      expressConversionMode,
       getPricing,
-      submitConversion,
+      submitRegularConversion,
+      submitExpressConversion,
       submitAdvancedInfo,
       launchCalendly,
       close,
@@ -211,34 +245,20 @@ const isCallback = slug => contact =>
   contact.slug === slug
   && contact.contactType === REQUEST_CALLBACK;
 
-const isAssessment = ({
-  typeOfCare,
-  typeOfRoom,
-  timeToMove,
-  budget
-}) => !!(typeOfCare && typeOfRoom && timeToMove && budget);
-
-const hasOnlyEmail = userDetails => !userDetails.fullName 
-  || !userDetails.phone 
-  && userDetails.email;
-
 const mapStateToProps = (state, { controller, community }) => {
-  const userActions = getDetail(state, 'userAction') || {};
-  const callbackRequested = (userActions.profilesContacted || [])
-    .some(isCallback(community.id));
-  const advancedInfoSent = isAssessment(userActions.userDetails || {});
-  const userDetailsHasOnlyEmail = hasOnlyEmail(userActions.userDetails || {});
+  const { 
+    profilesContacted = [],
+    userDetails = {},
+  } = getDetail(state, 'userAction') || {};
 
   return {
+    community,
+    userDetails,
     concierge: {
       currentStep: controller.currentStep || CONVERSION_FORM,
       modalIsOpen: controller.modalIsOpen || false,
-      experiments: state.experiments,
-      callbackRequested,
-      advancedInfoSent,
-      userDetailsHasOnlyEmail,
+      callbackRequested: profilesContacted.some(isCallback(community.id)),
     },
-    community,
   };
 };
 
@@ -248,3 +268,4 @@ export default connectController(
   mapStateToProps,
   { submit },
 )(ConciergeController);
+

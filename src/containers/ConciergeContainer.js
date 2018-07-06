@@ -8,17 +8,25 @@ export default class ConciergeContainer extends Component {
     const { community, ...props } = this.props;
     return (
       <ConciergeController community={community}>
-        {({ concierge, submitConversion, submitAdvancedInfo, launchCalendly, close }) =>
+        {({
+          concierge,
+          submitExpressConversion,
+          submitRegularConversion,
+          submitAdvancedInfo,
+          launchCalendly,
+          close
+        }) => (
           <Concierge
             concierge={concierge}
             community={community}
-            submitConversion={submitConversion}
+            submitExpressConversion={submitExpressConversion}
+            submitRegularConversion={submitRegularConversion}
             submitAdvancedInfo={submitAdvancedInfo}
             launchCalendly={launchCalendly}
             close={close}
             {...props}
           />
-        }
+        )}
       </ConciergeController>
     );
   }

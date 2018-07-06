@@ -36,7 +36,8 @@ export default class Concierge extends Component {
     community: object.isRequired,
     concierge: object.isRequired,
     close: func.isRequired,
-    submitConversion: func.isRequired,
+    submitExpressConversion: func.isRequired,
+    submitRegularConversion: func.isRequired,
     submitAdvancedInfo: func.isRequired,
     launchCalendly: func.isRequired,
   };
@@ -46,7 +47,8 @@ export default class Concierge extends Component {
       community,
       concierge,
       close,
-      submitConversion,
+      submitRegularConversion,
+      submitExpressConversion,
       submitAdvancedInfo,
       launchCalendly,
       ...props
@@ -70,9 +72,11 @@ export default class Concierge extends Component {
             )}
             {!callbackRequested && (
               <ConversionFormContainer
-                submitConversion={submitConversion}
+                submitRegularConversion={submitRegularConversion}
+                submitExpressConversion={submitExpressConversion}
                 community={community}
                 concierge={concierge}
+                express={false}
               />
             )}
           </Variant>
@@ -91,7 +95,8 @@ export default class Concierge extends Component {
             <StepComponent
               community={community}
               concierge={concierge}
-              submitConversion={submitConversion}
+              submitRegularConversion={submitRegularConversion}
+              submitExpressConversion={submitExpressConversion}
               submitAdvancedInfo={submitAdvancedInfo}
               onClose={close}
               {...props}

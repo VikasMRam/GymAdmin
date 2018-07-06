@@ -120,14 +120,6 @@ describe('ConciergeController', function() {
       expect(childProps().concierge.callbackRequested).toBe(false);
     });
 
-    it('should know when advancedInfo has been sent', () => {
-      wrap(community, initStore({ resource, entities: avdInfoSentEntities }));
-      expect(childProps().concierge.advancedInfoSent).toBe(true);
-
-      wrap(community, initStore({ resource, entities }));
-      expect(childProps().concierge.advancedInfoSent).toBe(false);
-    });
-
     it('should go to express conversion when express mode', () => {
       const store = initStore({ resource, entities: emailOnlyEntities });
       const wrapper = wrap(otherCommunity, store);
@@ -204,7 +196,7 @@ describe('ConciergeController', function() {
     });
 
     it('should ask for advancedInfo', () => {
-      wrap({ community, concierge: {
+      wrap({ userDetails: {}, community, concierge: {
         callbackRequested: true,
       }});
       childProps().getPricing();
@@ -216,10 +208,14 @@ describe('ConciergeController', function() {
     });
 
     it('should show thank you', () => {
-      wrap({ community, concierge: {
-        callbackRequested: true,
-        advancedInfoSent: true,
-      }});
+      wrap({
+        userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
+        community,
+        concierge: {
+          callbackRequested: true,
+          advancedInfoSent: true,
+        }
+      });
       childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(lastSet()).toEqual({
@@ -229,17 +225,18 @@ describe('ConciergeController', function() {
     });
 
     it('should submit conversion', () => {
-      let wrapper = wrap({
-        expressConversionMode: false,
+      const wrapper = wrap({
         community,
         submit,
         concierge: {}
       });
+      const instance = wrapper.instance();
+      instance.next = jest.fn();
       const then = jest.fn();
       promise = { then };
       const data = { data: 'DATA' };
       
-      childProps().submitConversion(data);
+      childProps().submitRegularConversion(data);
     
       expect(lastEvent()).toEqual({
         action: 'contactCommunity',
@@ -255,11 +252,46 @@ describe('ConciergeController', function() {
         },
       });
 
-      expect(then).toHaveBeenCalled();
+      then.mock.calls.pop()[0]();
+      expect(instance.next).toHaveBeenCalledWith(false);
+    });
+    
+    it('should submit express conversion', () => {
+      const wrapper = wrap({
+        community,
+        submit,
+        concierge: {}
+      });
+      const instance = wrapper.instance();
+      instance.next = jest.fn();
+      const then = jest.fn();
+      promise = { then };
+      const data = { data: 'DATA' };
+      
+      childProps().submitExpressConversion(data);
+    
+      expect(lastEvent()).toEqual({
+        action: 'contactCommunity',
+        category: 'requestCallback',
+        label: 'my-community',
+      });
+      
+      expect(lastSubmit()).toEqual({
+        action: 'LEAD/REQUEST_CALLBACK',
+        value: {
+          user: { data: 'DATA' },
+          propertyIds: [ 'my-community' ],
+        },
+      });
+
+      then.mock.calls.pop()[0]();
+      expect(instance.next).toHaveBeenCalledWith(true);
     });
     
     it('should submit advanced info', () => {
       const wrapper = wrap({ community, submit, concierge: {} });
+      const instance = wrapper.instance();
+      instance.next = jest.fn();
       const then = jest.fn();
       promise = { then };
       childProps().submitAdvancedInfo(advancedInfoData);
@@ -271,7 +303,8 @@ describe('ConciergeController', function() {
           user: { user: 'USER' },
         }
       });
-      expect(then).toHaveBeenCalledWith(wrapper.instance().next);
+      then.mock.calls.pop()[0]();
+      expect(instance.next).toHaveBeenCalledWith(false);
     });
   });
 });

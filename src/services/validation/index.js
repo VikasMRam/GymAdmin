@@ -15,6 +15,8 @@ export const url = value => !isEmpty(value) && !isURL(value) && 'Invalid URL';
 
 export const required = value => isEmpty(value) && 'Required field';
 
+export const notProvided = value => !isEmpty(value) && 'Value should be empty';
+
 export const minLength = min => value =>
   !isEmpty(value) && value.length < min && `Must be at least ${min} characters`;
 
@@ -45,3 +47,9 @@ export const createValidator = rules => (data = {}) => {
   });
   return errors;
 };
+
+export const createBooleanValidator = rules => {
+  const validator = createValidator(rules);
+  return data => Object.keys(validator(data)).length === 0;
+};
+

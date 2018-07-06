@@ -172,8 +172,8 @@ export default class PricingAndAvailability extends Component {
               </Item>
             ))}
           </StyledArticle>
-          <ConciergeController community={community} expressConversionMode>
-            {({ concierge, submitConversion }) => {
+          <ConciergeController community={community}>
+            {({ concierge, submitExpressConversion }) => {
                 if (concierge.callbackRequested) {
                   return (
                     <DoneBox>
@@ -186,7 +186,7 @@ export default class PricingAndAvailability extends Component {
                 } else {
                   return (
                     <GetCurrentAvailabilityFormContainer
-                      submitConversion={submitConversion}
+                      submitExpressConversion={submitExpressConversion}
                       community={community}
                     />
                   );

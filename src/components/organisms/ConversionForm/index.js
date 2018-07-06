@@ -53,18 +53,18 @@ const ConversionForm = ({
   submitting,
   community,
   concierge,
-  express,
+  hasOnlyEmail,
   agent,
   contact,
 }) => (
   <div>
-    <StyledForm onSubmit={data => handleSubmit(data, express)}>
+    <StyledForm onSubmit={handleSubmit}>
       <Heading level="title" size="title">Get Pricing & Availability</Heading>
       {contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
 
       <Hr />
 
-      {express && (
+      {hasOnlyEmail && (
         <ExpressBlock>
           A Seniorly Guide will contact you soon, we just need your name and number.
         </ExpressBlock>
@@ -76,7 +76,7 @@ const ConversionForm = ({
         placeholder="Jane Doe"
         component={ReduxField}
       />
-      {!express && (
+      {!hasOnlyEmail && (
         <Field
           name="email"
           label="Email"
@@ -115,6 +115,7 @@ ConversionForm.propTypes = {
   submitting: bool,
   agent: object,
   contact: object,
+  hasOnlyEmail: bool,
 };
 
 export default ConversionForm;

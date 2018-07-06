@@ -5,7 +5,7 @@ import { reduxForm } from 'redux-form';
 import { createValidator, email, usPhone, required } from 'sly/services/validation';
 import ConversionForm from '.';
 
-const validate = createValidator({
+export const validate = createValidator({
   full_name: [required],
   email: [email, required],
   phone: [usPhone, required],

@@ -11,6 +11,8 @@ import {
 
 import {
   createValidator,
+  createBooleanValidator,
+  notProvided,
   required,
   email,
   usPhone,
@@ -22,6 +24,12 @@ const validate = createValidator({
   full_name: [required],
   email: [required, email],
   phone: [required, usPhone],
+});
+
+const hasOnlyEmail = createBooleanValidator({
+  fullName: [notProvided],
+  email: [required, email],
+  phone: [notProvided],
 });
 
 const ReduxForm = reduxForm({
@@ -36,12 +44,21 @@ const ReduxForm = reduxForm({
 class ConversionFormContainer extends Component {
   static propTypes = {
     community: object.isRequired,
-    submitConversion: func.isRequired,
+    submitExpressConversion: func.isRequired,
+    submitRegularConversion: func.isRequired,
     express: bool.isRequired,
   };
 
   render() {
-    const { submitConversion, userDetails, community, express, ...props } = this.props;
+    const {
+      submitExpressConversion,
+      submitRegularConversion,
+      userDetails,
+      community,
+      express,
+      ...props
+    } = this.props;
+
     const { email, fullName, phone } = userDetails;
     const initialValues = {
       email,
@@ -49,6 +66,10 @@ class ConversionFormContainer extends Component {
       full_name: fullName,
     };
     const { agents, contacts } = community;
+    const submitConversion = express
+      ? submitExpressConversion
+      : submitRegularConversion;
+
     return (
       <ReduxForm
         initialValues={initialValues}
@@ -56,7 +77,7 @@ class ConversionFormContainer extends Component {
         agent={agents[0]}
         contact={contacts[0]}
         community={community}
-        express={express}
+        hasOnlyEmail={hasOnlyEmail(userDetails)}
         {...props}
       />
     );

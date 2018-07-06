@@ -20,7 +20,7 @@ const ReduxForm = reduxForm({
 })(GetCurrentAvailabilityForm);
 
 const GetCurrentAvailabilityFormContainer = ({
-  userDetails, submitConversion, community,
+  userDetails, submitExpressConversion, community,
 }) => {
   const { email } = userDetails;
   const initialValues = { email };
@@ -28,7 +28,7 @@ const GetCurrentAvailabilityFormContainer = ({
   return (
     <ReduxForm
       initialValues={initialValues}
-      onSubmit={submitConversion}
+      onSubmit={submitExpressConversion}
       community={community}
     />
   );
@@ -36,7 +36,7 @@ const GetCurrentAvailabilityFormContainer = ({
 
 GetCurrentAvailabilityFormContainer.propTypes = {
   community: object.isRequired,
-  submitConversion: func.isRequired,
+  submitExpressConversion: func.isRequired,
   userDetails: object,
 };
 
