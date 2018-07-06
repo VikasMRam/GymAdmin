@@ -90,8 +90,8 @@ export default class CommunityMediaGallery extends Component {
     // );
     const bottomLeftSection = () => (
       <span>
-        <MorePicsTablet ghost palette="slate" transparent={false} onClick={() => onToggleFullscreenMode()}>See {this.sdGalleryImages.length - 1} more pictures</MorePicsTablet>
-        <MorePicsMobile ghost palette="slate" transparent={false} onClick={() => onToggleFullscreenMode()}>View pictures</MorePicsMobile>
+        <MorePicsTablet ghost palette="slate" transparent={false} onClick={() => onToggleFullscreenMode(false, false, true)}>See {this.sdGalleryImages.length - 1} more pictures</MorePicsTablet>
+        <MorePicsMobile ghost palette="slate" transparent={false} onClick={() => onToggleFullscreenMode(false, false, true)}>View pictures</MorePicsMobile>
       </span>
     );
 

@@ -53,23 +53,25 @@ class CommunityDetailPageContainer extends Component {
     }
   };
 
-  handleToggleMediaGalleryFullscreen = (fromMorePictures, isVideo) => {
+  handleToggleMediaGalleryFullscreen = (fromMorePictures, isVideo, fromSeeMoreButton) => {
     const {
       toggleFullscreenMediaGallery, isMediaGalleryFullscreenActive, community, mediaGallerySlideIndex,
     } = this.props;
     const { id, gallery = {}, videoGallery = {} } = community;
     const images = gallery.images || [];
     const videos = videoGallery.videos || [];
-    if (!fromMorePictures && !isVideo) {
+    if (fromSeeMoreButton) {
+      const event = {
+        action: 'show', category: 'fullscreenMediaGallery', label: id, value: 'seeMoreButton',
+      };
+      SlyEvent.getInstance().sendEvent(event);
+    } else if (!fromMorePictures && !isVideo) {
       const image = images[mediaGallerySlideIndex - videos.length];
       const event = {
         action: 'show', category: 'fullscreenMediaGallery', label: id,
       };
-      // means user clicked see more pics button
       if (image) {
         event.value = image.id;
-      } else {
-        event.value = 'seeMoreButton';
       }
       if (isMediaGalleryFullscreenActive) {
         event.action = 'hide';
