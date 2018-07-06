@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 
-import { enableExperimentsDebugger } from 'sly/config';
+import { enableExperimentsDebugger, isTest } from 'sly/config';
 import SlyEvent from 'sly/services/helpers/events';
 import { size } from 'sly/components/themes';
 import { getExperiment } from 'sly/store/selectors';
@@ -37,19 +37,21 @@ export class Experiment extends Component {
     this.sendExperimentEvent('launch_experiement');
     // read query string: ?experimentEvaluations=Organisms_Concierge_Calendly:original_flow,Organisms_Footer_Calendly:original_flow
     this.experimentsOverrides = {};
-    const { location } = this.props;
-    if (location) {
-      const { search } = location;
-      const qs = queryString.parse(search);
-      if (qs.experimentEvaluations) {
-        const qsParts = qs.experimentEvaluations.split(',');
-        this.experimentsOverrides = qsParts.reduce((obj, e) => {
-          const eParts = e.split(':');
-          if (eParts.length > 1) {
-            obj[eParts[0]] = eParts[1];
-          }
-          return obj;
-        }, {});
+    if (isTest) {
+      const { location } = this.props;
+      if (location) {
+        const { search } = location;
+        const qs = queryString.parse(search);
+        if (qs.experimentEvaluations) {
+          const qsParts = qs.experimentEvaluations.split(',');
+          this.experimentsOverrides = qsParts.reduce((obj, e) => {
+            const eParts = e.split(':');
+            if (eParts.length > 1) {
+              obj[eParts[0]] = eParts[1];
+            }
+            return obj;
+          }, {});
+        }
       }
     }
   }
