@@ -49,11 +49,13 @@ const Field = ({
   type,
   placeholder,
   className,
+  value,
   ...props
 }) => {
   const inputProps = {
-    id: name,
+    id: `${name}_${value}`,
     name,
+    value,
     type: getInputType(type),
     invalid,
     placeholder,
@@ -83,6 +85,8 @@ const Field = ({
 
 Field.propTypes = {
   name: string.isRequired,
+  value: string,
+  className: string,
   invalid: bool,
   error: string,
   label: string,

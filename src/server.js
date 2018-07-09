@@ -15,10 +15,13 @@ import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import serializeError from 'serialize-error';
 
-import { port, host, basename, publicPath, isDev, cookieDomain } from 'sly/config';
+import {
+  port, host, basename, publicPath, isDev, cookieDomain, externalWizardsPath,
+} from 'sly/config';
 import configureStore from 'sly/store/configure';
 import apiService from 'sly/services/api';
 import App from 'sly/components/App';
+import WizardApp from 'sly/external/wizards/WizardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 
@@ -34,11 +37,11 @@ const renderApp = ({ store, context, location, sheet }) => {
 };
 
 const renderHtml = ({ serverState, initialState, content, sheet, assets }) => {
-  const styles = sheet.getStyleElement();
+  const styles = sheet ? sheet.getStyleElement() : '';
 
   const state = `
-    window.__SERVER_STATE__ = ${serialize(serverState)};
-    window.__INITIAL_STATE__ = ${serialize(initialState)};
+    ${serverState ? `window.__SERVER_STATE__ = ${serialize(serverState)};` : ''}
+    ${initialState ? `window.__INITIAL_STATE__ = ${serialize(initialState)};` : ''}
   `;
 
   const props = {
@@ -60,6 +63,21 @@ app.use(cookieParser());
 if (publicPath.match(/^\//)) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
+
+app.get(`${externalWizardsPath}*`, (req, res, next) => {
+  const location = req.url;
+  const content = '';
+  const assets = {
+    js: [
+      path.join(publicPath, 'external/wizards.js'),
+    ],
+    css: [],
+  };
+  return res.send(renderHtml({
+    content,
+    assets,
+  }));
+});
 
 app.use(async (req, res, next) => {
   const api = apiService.create();
@@ -140,8 +158,6 @@ app.use(async (req, res, next) => {
 });
 
 const getErrorContent = (err) => {
-
-
   if (isDev) {
     const Redbox = require('redbox-react').RedBoxError;
     return <Redbox error={err} />;

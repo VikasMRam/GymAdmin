@@ -2,7 +2,7 @@
 const path = require('path');
 const fs = require('fs');
 const devServer = require('@webpack-blocks/dev-server2');
-const splitVendor = require('webpack-blocks-split-vendor');
+// const splitVendor = require('webpack-blocks-split-vendor');
 const happypack = require('webpack-blocks-happypack');
 const serverSourceMap = require('webpack-blocks-server-source-map');
 const nodeExternals = require('webpack-node-externals');
@@ -23,7 +23,7 @@ const {
 } = require('@webpack-blocks/webpack2');
 
 // defaults to dev env, otherwise specify with env vars
-const STORYBOOK_GIT_BRANCH = process.env.STORYBOOK_GIT_BRANCH;
+const { STORYBOOK_GIT_BRANCH } = process.env;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const SLY_ENV = process.env.SLY_ENV || 'development';
 const PUBLIC_PATH = process.env.PUBLIC_PATH || '/react-assets';
@@ -34,7 +34,8 @@ const BASENAME = process.env.BASENAME || '';
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
 const DOMAIN = process.env.DOMAIN || 'lvh.me';
-const VERSION = fs.readFileSync('./VERSION', 'utf8').trim();
+const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8').trim() : '';
+const EXTERNAL_WIZARDS_PATH = process.env.EXTERNAL_WIZARDS_PATH || '/widgets';
 
 const SOURCE = process.env.SOURCE || 'src';
 
@@ -55,10 +56,15 @@ console.info('Using config', JSON.stringify({
 
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
 const sourcePath = path.join(process.cwd(), SOURCE);
+const externalSourcePath = path.join(sourcePath, 'external');
 const outputPath = path.join(process.cwd(), 'dist/public');
 const assetsPath = path.join(process.cwd(), 'dist/assets.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');
+const externalEntryPoints = {
+  'external/widget': path.join(externalSourcePath, 'widget.js'),
+  'external/wizards': path.join(externalSourcePath, 'wizards/index.js'),
+};
 const devDomain = `http://${HOST}:${DEV_PORT}/`;
 
 const isDev = NODE_ENV === 'development';
@@ -81,6 +87,25 @@ const assets = () => () => ({
       {
         test: /\.(ico|png|jpe?g|svg|woff2?|ttf|eot)$/,
         loader: 'url-loader?limit=8000',
+      },
+    ],
+  },
+});
+
+const externalAssets = () => () => ({
+  module: {
+    rules: [
+      {
+        test: /\.(css)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'external/',
+        }
+      },
+      {
+        test: /\.(svg)$/,
+        loader: 'raw-loader',
       },
     ],
   },
@@ -114,10 +139,10 @@ const base = () =>
       'process.env.AUTH_URL': AUTH_URL,
       'process.env.DOMAIN': DOMAIN,
       'process.env.VERSION': VERSION,
+      'process.env.EXTERNAL_WIZARDS_PATH': EXTERNAL_WIZARDS_PATH,
     }),
     addPlugins([new webpack.ProgressPlugin()]),
     happypack([babel()]),
-    assets(),
     resolveModules(sourcePath),
 
     env('development', [
@@ -145,6 +170,7 @@ const server = createConfig([
     externals: [nodeExternals()],
     stats: 'errors-only',
   }),
+  assets(),
 
   env('development', [
     serverSourceMap(),
@@ -159,6 +185,47 @@ if (isDev || isStaging) {
   console.log('Will do sourcemaps');
 }
 
+const external = createConfig([
+  base(),
+
+  entryPoint(externalEntryPoints),
+
+  setOutput({
+    filename: '[name].js',
+  }),
+
+  defineConstants({
+    'process.env.EXTERNAL_ASSET_URL': (HOST.indexOf('://') > -1 ? HOST : `//${HOST}`) + path.join(PUBLIC_PATH, 'external'),
+    'process.env.EXTERNAL_WIZARDS_ROOT_URL': (HOST.indexOf('://') > -1 ? HOST : `//${HOST}`) + EXTERNAL_WIZARDS_PATH,
+  }),
+
+  when(isDev || isStaging, [sourceMaps()]),
+
+  externalAssets(),
+
+  env('development', [
+    devServer({
+      contentBase: 'public',
+      stats: 'errors-only',
+      historyApiFallback: { index: webpackPublicPath },
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      disableHostCheck: true,
+      host: '0.0.0.0',
+      port: DEV_PORT,
+    }),
+    addPlugins([new webpack.NamedModulesPlugin()]),
+  ]),
+
+  env('production', [
+    addPlugins([
+      new webpack.optimize.UglifyJsPlugin({
+        sourceMap: isStaging,
+        compress: { warnings: false },
+      }),
+    ]),
+  ]),
+]);
+
 const client = createConfig([
   base(),
 
@@ -169,9 +236,12 @@ const client = createConfig([
   addPlugins([
     new AssetsByTypePlugin({ path: assetsPath }),
     new ChildConfigPlugin(server),
+    new ChildConfigPlugin(external),
   ]),
 
   when(isDev || isStaging, [sourceMaps()]),
+
+  assets(),
 
   env('development', [
     devServer({
