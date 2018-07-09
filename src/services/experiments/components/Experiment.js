@@ -3,8 +3,10 @@ import { string, node, bool } from 'prop-types';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import queryString from 'query-string';
 
-import { enableExperimentsDebugger } from 'sly/config';
+import { enableExperimentsDebugger, isTest } from 'sly/config';
 import SlyEvent from 'sly/services/helpers/events';
 import { size } from 'sly/components/themes';
 import { getExperiment } from 'sly/store/selectors';
@@ -18,7 +20,7 @@ const DebugWrapper = styled.div`
   }
 `;
 
-class Experiment extends Component {
+export class Experiment extends Component {
   static propTypes = {
     name: string.isRequired,
     disabled: bool,
@@ -33,6 +35,25 @@ class Experiment extends Component {
 
   componentWillMount() {
     this.sendExperimentEvent('launch_experiement');
+    // read query string: ?experimentEvaluations=Organisms_Concierge_Calendly:original_flow,Organisms_Footer_Calendly:original_flow
+    this.experimentsOverrides = {};
+    if (isTest) {
+      const { location } = this.props;
+      if (location) {
+        const { search } = location;
+        const qs = queryString.parse(search);
+        if (qs.experimentEvaluations) {
+          const qsParts = qs.experimentEvaluations.split(',');
+          this.experimentsOverrides = qsParts.reduce((obj, e) => {
+            const eParts = e.split(':');
+            if (eParts.length > 1) {
+              obj[eParts[0]] = eParts[1];
+            }
+            return obj;
+          }, {});
+        }
+      }
+    }
   }
 
   componentDidMount() {
@@ -49,7 +70,7 @@ class Experiment extends Component {
     } = this.props;
     if (!disabled) {
       const event = {
-        action, category: name, label: 'experiments', value: (variantKey || defaultVariant),
+        action, category: name, label: 'experiments', value: this.selectedVariant,
       };
       SlyEvent.getInstance().sendEvent(event);
     }
@@ -59,37 +80,43 @@ class Experiment extends Component {
     const {
       children, name, variantKey, defaultVariant, disabled,
     } = this.props;
-    let selectedVariant = variantKey || defaultVariant;
+    this.selectedVariant = variantKey || defaultVariant;
     if (disabled) {
-      selectedVariant = defaultVariant;
+      this.selectedVariant = defaultVariant;
+    }
+    if (this.experimentsOverrides[name]) {
+      this.selectedVariant = this.experimentsOverrides[name];
+      if (enableExperimentsDebugger) {
+        console.info(`[Experiments] overriding experiment ${name} using query parameter. specified variant will be selected.`);
+      }
     }
     if (!variantKey && enableExperimentsDebugger) {
       console.info(`[Experiments] failed evaluating experiment ${name}. defaultVaraint will be selected.`);
     }
     const childrenArray = Array.isArray(children) ? children : [children];
     let [variant] = childrenArray;
-    if (selectedVariant) {
-      const variantChildren = childrenArray.filter(c => c.props.name === selectedVariant);
+    if (this.selectedVariant) {
+      const variantChildren = childrenArray.filter(c => c.props.name === this.selectedVariant);
       if (variantChildren.length === 0 && enableExperimentsDebugger) {
-        console.info(`[Experiments] experiment ${name} has no valid Variant ${selectedVariant}.`);
+        console.info(`[Experiments] experiment ${name} has no valid Variant ${this.selectedVariant}.`);
         return null;
       }
       variant = variantChildren[0] || null;
     } else {
-      selectedVariant = variant.props.name;
+      this.selectedVariant = variant.props.name;
       if (enableExperimentsDebugger) {
         console.info(`[Experiments] experiment ${name} has no default variant. first variant will be selected.`);
       }
     }
     if (enableExperimentsDebugger) {
-      console.info(`[Experiments] experiment ${name} has variant ${selectedVariant}.`);
+      console.info(`[Experiments] experiment ${name} has variant ${this.selectedVariant}.`);
     }
     this.selectedVariantRendered = true;
 
     if (variant && enableExperimentsDebugger) {
       const color = `#${Math.random().toString(16).slice(2, 8)}`;
       return (
-        <DebugWrapper color={color} title={`Experiment ${name}: variant is ${selectedVariant}`}>
+        <DebugWrapper color={color} title={`Experiment ${name}: variant is ${this.selectedVariant}`}>
           {variant}
         </DebugWrapper>
       );
@@ -108,4 +135,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(Experiment);
+export default withRouter(connect(mapStateToProps)(Experiment));
