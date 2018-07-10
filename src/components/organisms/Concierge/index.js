@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component, Fragment} from 'react';
 import { object, func } from 'prop-types';
 
-import styled from 'styled-components';
 
 import { isBrowser } from 'sly/config';
 import Modal from 'sly/components/molecules/Modal';
@@ -15,9 +14,9 @@ import Thankyou from 'sly/components/molecules/Thankyou';
 const ExpressConversionFormContainer = props => (
   <ConversionFormContainer
     express={true}
-    {...props} 
+    {...props}
   />
-); 
+);
 
 const steps = {
   conversionForm: ConversionFormContainer,
@@ -28,8 +27,7 @@ const steps = {
 };
 
 const appElement = isBrowser && document.querySelector('#app');
-const Wrapper = styled.div`
-`;
+
 
 export default class Concierge extends Component {
   static propTypes = {
@@ -57,7 +55,7 @@ export default class Concierge extends Component {
 
     const StepComponent = steps[currentStep];
     return (
-      <Wrapper className={className}>
+      <Fragment >
         {callbackRequested && (
           <Thankyou community={community} />
         )}
@@ -87,7 +85,7 @@ export default class Concierge extends Component {
             />
           </Modal>
         )}
-      </Wrapper>
+      </Fragment>
     );
   }
 }
