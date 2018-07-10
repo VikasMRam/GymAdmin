@@ -75,7 +75,11 @@ jobs:
       - run:
           name: Put version in VERSION file
           command: |
-            if [[ "$CIRCLE_BRANCH" = "master" ]]; then
+            if [[ -n "$CIRCLE_TAG" ]]; then
+              echo $CIRCLE_TAG > ./VERSION
+              cat ./VERSION
+              git add ./VERSION
+            elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
               git describe --tags > ./VERSION
               cat ./VERSION
               git add ./VERSION
@@ -83,7 +87,7 @@ jobs:
       - run:
           name: Deploy to EB
           command: |
-            if [[ "$CIRCLE_BRANCH" = "master" ]]; then
+            if [[ "$CIRCLE_BRANCH" = "master" ]] || [[ -n "$CIRCLE_TAG" ]]; then
               export STAGED="--staged"
             fi
             export DEPLOY_FAILED=$(eb deploy slyreact-$SLY_ENV -v $STAGED | tee /dev/tty | grep -c "ERROR")
