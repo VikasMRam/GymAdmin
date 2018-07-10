@@ -11,7 +11,8 @@ const defaultHeaderItems = [
   { name: 'Resources', url: '/resources' },
   // { name: 'Moving Center', url: '#' },
   // { name: 'News', url: '#' },
-  { name: 'Moving Center', url: '/resources/tags/moving+center' },
+  // { name: 'Moving Center', url: '/resources/tags/moving+center' },
+  { name: 'How It Works', url: '/how-it-works' },
   { name: 'List Your Property', url: '/providers' },
   { name: 'Our History', url: '/about' },
   // { name: 'Sign in', url: '/signin' },
@@ -20,7 +21,7 @@ const defaultHeaderItems = [
 const defaultMenuItems = [
   { name: 'Home', url: '/' },
   { name: 'Resources', url: '/resources' },
-  { name: 'Moving Center', url: '/resources/tags/moving+center' },
+  { name: 'How It Works', url: '/how-it-works' },
   { name: 'Assisted Living', url: '/assisted-living' },
   { name: "Alzheimer's Care", url: '/alzheimers-care' },
   { name: 'Respite Care', url: '/respite-care' },
@@ -60,7 +61,7 @@ class HeaderContainer extends Component {
       user,
     } = this.props;
 
-    const headerItems = [ 
+    const headerItems = [
       ...defaultHeaderItems,
       ...loginHeaderItems(user),
     ];
