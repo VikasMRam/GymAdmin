@@ -13,16 +13,15 @@ export default class ConciergeContainer extends Component {
           submitExpressConversion,
           submitRegularConversion,
           submitAdvancedInfo,
-          launchCalendly,
           close
         }) => (
+
           <Concierge
             concierge={concierge}
             community={community}
             submitExpressConversion={submitExpressConversion}
             submitRegularConversion={submitRegularConversion}
             submitAdvancedInfo={submitAdvancedInfo}
-            launchCalendly={launchCalendly}
             close={close}
             {...props}
           />
