@@ -82,7 +82,6 @@ const ImageWrapper = styled(Image)`
 `;
 
 const Info = styled(SimilarCommunityInfo)`
-  margin-top: ${size('spacing.regular')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex-grow: 1;
     margin-top: 0;

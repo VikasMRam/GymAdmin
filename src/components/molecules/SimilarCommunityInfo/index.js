@@ -22,10 +22,9 @@ const Wrapper = styled.div`
   font-size: ${size('text.body')};
   box-sizing: border-box;
   min-width: 0;
-  padding: ${size('spacing.large')};
+  padding: ${size('spacing.regular')};  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: 0;
-    padding-top: ${size('spacing.regular')};
   }
 `;
 
@@ -46,6 +45,7 @@ const RatingWrapper = styled.div`
 
 const Rate = styled.span`
   margin-right: ${size('spacing.regular')};
+  font-weight: bold;
 `;
 
 const StyledRating = styled(Rating)`
@@ -61,13 +61,12 @@ const ClampedLine = styled.div`
 const Description = styled.div`
   color: ${palette(0)};
   font-size: ${size('text.caption')};
-  margin-top: ${size('spacing.small')};
 `;
 
 const IconTextWrapper = styled.div`
   display: flex;
   color: ${palette('grayscale', 1)};
-  margin-bottom: ${size('spacing.regular')};
+  margin-bottom: ${size('spacing.small')};
 `;
 
 const StyledIcon = styled(Icon)`
