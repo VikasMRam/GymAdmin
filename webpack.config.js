@@ -1,6 +1,7 @@
 // https://github.com/diegohaz/arc/wiki/Webpack
 const path = require('path');
 const fs = require('fs');
+const UglifyJs = require('uglify-es');
 const devServer = require('@webpack-blocks/dev-server2');
 // const splitVendor = require('webpack-blocks-split-vendor');
 const happypack = require('webpack-blocks-happypack');
@@ -9,6 +10,7 @@ const nodeExternals = require('webpack-node-externals');
 const AssetsByTypePlugin = require('webpack-assets-by-type-plugin');
 const ChildConfigPlugin = require('webpack-child-config-plugin');
 const SpawnPlugin = require('webpack-spawn-plugin');
+const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 
 const {
   addPlugins,
@@ -61,10 +63,10 @@ const outputPath = path.join(process.cwd(), 'dist/public');
 const assetsPath = path.join(process.cwd(), 'dist/assets.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');
-const externalEntryPoints = {
-  'external/widget': path.join(externalSourcePath, 'widget.js'),
-  'external/wizards': path.join(externalSourcePath, 'wizards/index.js'),
-};
+const widgetEntryPath = path.join(externalSourcePath, 'widget.js');
+const widgetCssEntryPath = path.join(externalSourcePath, 'widget.css');
+const wizardsEntryPath = path.join(externalSourcePath, 'wizards/index.js');
+
 const devDomain = `http://${HOST}:${DEV_PORT}/`;
 
 const isDev = NODE_ENV === 'development';
@@ -188,7 +190,9 @@ if (isDev || isStaging) {
 const external = createConfig([
   base(),
 
-  entryPoint(externalEntryPoints),
+  entryPoint({
+    'external/wizards': wizardsEntryPath,
+  }),
 
   setOutput({
     filename: '[name].js',
@@ -213,7 +217,15 @@ const external = createConfig([
       host: '0.0.0.0',
       port: DEV_PORT,
     }),
-    addPlugins([new webpack.NamedModulesPlugin()]),
+    addPlugins([
+      new webpack.NamedModulesPlugin(),
+      new MergeIntoSingleFilePlugin({
+        files: {
+          'external/widget.js': [widgetEntryPath],
+          'external/widget.css': [widgetCssEntryPath],
+        }
+      }),
+    ]),
   ]),
 
   env('production', [
@@ -221,6 +233,21 @@ const external = createConfig([
       new webpack.optimize.UglifyJsPlugin({
         sourceMap: isStaging,
         compress: { warnings: false },
+      }),
+      new MergeIntoSingleFilePlugin({
+        files: {
+          'external/widget.js': [widgetEntryPath],
+          'external/widget.css': [widgetCssEntryPath],
+        },
+        transform: {
+          'external/widget.js': text => {
+            const { error, code } = UglifyJs.minify(text);
+            if (error) {
+              console.error(error);
+            }
+            return code;
+          }
+        },
       }),
     ]),
   ]),
@@ -268,3 +295,4 @@ const client = createConfig([
 ]);
 
 module.exports = client;
+
