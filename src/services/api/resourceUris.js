@@ -4,3 +4,4 @@ export const community = 'marketplace/communities';
 export const searchResource = 'platform/search-resources';
 export const question = 'platform/questions';
 export const answer = 'platform/answers';
+export const geoGuide = 'platform/geo-guides';

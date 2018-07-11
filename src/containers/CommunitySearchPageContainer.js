@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
 
-import { resourceListReadRequest } from 'sly/store/resource/actions';
+import {resourceDetailReadRequest, resourceListReadRequest} from 'sly/store/resource/actions';
 import { getList, getListMeta } from 'sly/store/selectors';
 import { isCommunitySearchPageModalFilterPanelActive } from 'sly/store/selectors';
 import ErrorPage from 'sly/components/pages/Error';
@@ -25,6 +25,7 @@ class CommunitySearchPageContainer extends Component {
     history: object.isRequired,
     location: object.isRequired,
     communityList: array.isRequired,
+    geoGuide: array,
     requestMeta: object.isRequired,
     errorCode: number,
     isModalFilterPanelVisible: bool,
@@ -109,18 +110,20 @@ class CommunitySearchPageContainer extends Component {
       searchParams,
       errorCode,
       communityList,
+      geoGuide,
       requestMeta,
       location,
       history,
       isModalFilterPanelVisible,
     } = this.props;
+
     // TODO Add Error Page
     if (errorCode) {
-      // location.push('/error');
       return <ErrorPage errorCode={errorCode} history={history} />;
-      // return null ;//<div>{error}</div>;
     }
+
     const isMapView = searchParams.view === 'map';
+    let gg = geoGuide && geoGuide.length > 0 ? geoGuide[0] : {};
     return (
       <CommunitySearchPage
         isMapView={isMapView}
@@ -131,6 +134,7 @@ class CommunitySearchPageContainer extends Component {
         onParamsRemove={this.removeSearchFilters}
         onLocationSearch={this.handleOnLocationSearch}
         communityList={communityList}
+        geoGuide={gg}
         location={location}
         isModalFilterPanelVisible={isModalFilterPanelVisible}
         onToggleModalFilterPanel={this.handleToggleModalFilterPanel}
@@ -146,6 +150,7 @@ const mapStateToProps = (state, { match, location }) => {
     searchParams,
     communityList: getList(state, 'searchResource'),
     requestMeta: getListMeta(state, 'searchResource'),
+    geoGuide: getList(state, 'geoGuide'),
     isModalFilterPanelVisible,
   };
 };
@@ -157,11 +162,19 @@ const mapDispatchToProps = (dispatch) => {
 
 const fetchData = (dispatch, { match, location }) => {
   const searchParams = getSearchParams(match, location);
-  return dispatch(resourceListReadRequest('searchResource', searchParams));
+  return Promise.all([
+    dispatch(resourceListReadRequest('searchResource', searchParams)),
+    dispatch(resourceListReadRequest('geoGuide', searchParams)),
+  ]);
+  // return dispatch(resourceListReadRequest('searchResource', searchParams));
 };
 
 const handleError = (err) => {
   if (err.response) {
+    if (err.response.url && err.response.url.match(/geo-guide/) ){
+      //Ignore
+      return;
+    }
     if (err.response.status !== 200) {
       return { errorCode: err.response.status };
     }

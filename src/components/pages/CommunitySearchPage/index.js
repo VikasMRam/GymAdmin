@@ -55,6 +55,7 @@ const CommunitySearchPage = ({
   searchParams,
   requestMeta,
   communityList,
+  geoGuide,
   location,
   isModalFilterPanelVisible,
   onToggleModalFilterPanel,
@@ -84,6 +85,71 @@ const CommunitySearchPage = ({
       onParamsRemove={onParamsRemove}
     />
   );
+  const TopContent = () => {
+    if (geoGuide && geoGuide.guideContent) {
+      let gg = geoGuide.guideContent;
+      if (gg.autoDescription) {
+        return (<Fragment>
+          <StyledHeading level={'hero'} size={'title'}>
+            {listSize} {tocLabel} near {city}
+          </StyledHeading>
+          <div dangerouslySetInnerHTML={{__html: gg.autoDescription}}/>
+        </Fragment>);
+      }
+
+    }
+
+    return (
+      <Fragment>
+        <StyledHeading level={'hero'} size={'title'}>
+          {listSize} {tocLabel} near {city}
+        </StyledHeading>
+      </Fragment>);
+  };
+
+  const ListContent = ()=> {
+    /**
+     * Order of appearance as in editor :
+     * description, <p>1</p>
+     guide, <p>2</p>
+     articles, <p>3</p>
+     resources, <p>4</p>
+     neighborhoods, <p>5</p>
+     hospitals, <p>6</p>
+     reviews, <p>7</p>
+     */
+    if (geoGuide && geoGuide.guideContent) {
+      let additionalDivs = [];
+      let gg = geoGuide.guideContent;
+      ['description','guide','articles','resources',
+      'neighborhoods','hospitals','reviews'].forEach((p)=>{
+        if (gg.hasOwnProperty(p)){
+          additionalDivs.push(<div dangerouslySetInnerHTML={{__html: gg[p]}} key={p}/>)
+        }
+      });
+
+        return <Fragment>
+          <CommunitySearchList
+            communityList={communityList}
+            onParamsChange={onParamsChange}
+            searchParams={searchParams}
+            requestMeta={requestMeta}
+            onParamsRemove={onParamsRemove}
+          />
+          {additionalDivs}
+
+        </Fragment>
+
+    }
+    //If No Geo Content just return same
+    return (<CommunitySearchList
+      communityList={communityList}
+      onParamsChange={onParamsChange}
+      searchParams={searchParams}
+      requestMeta={requestMeta}
+      onParamsRemove={onParamsRemove}
+    />);
+  };
 
   return (
     <Fragment>
@@ -114,9 +180,7 @@ const CommunitySearchPage = ({
         onLocationSearch={onLocationSearch}
       >
         {!isMapView && (
-          <StyledHeading level={'hero'} size={'title'}>
-            {listSize} {tocLabel} near {city}
-          </StyledHeading>
+          TopContent()
         )}
         <TopWrapper>
           {isMapView && (
@@ -141,13 +205,7 @@ const CommunitySearchPage = ({
         <StyledHr />
 
         {!isMapView && (
-          <CommunitySearchList
-            communityList={communityList}
-            onParamsChange={onParamsChange}
-            searchParams={searchParams}
-            requestMeta={requestMeta}
-            onParamsRemove={onParamsRemove}
-          />
+          ListContent()
         )}
         {isMapView && (
           <SearchMapContainer
@@ -165,6 +223,7 @@ const CommunitySearchPage = ({
 
 CommunitySearchPage.propTypes = {
   communityList: array.isRequired,
+  geoGuide: object,
   requestMeta: object.isRequired,
   isMapView: bool,
   toggleMap: func,

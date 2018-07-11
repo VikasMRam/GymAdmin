@@ -20,6 +20,7 @@ class StateSearchPageContainer extends Component {
     history: object.isRequired,
     location: object.isRequired,
     communityList: array.isRequired,
+    geoGuide: array,
     requestMeta: object.isRequired,
     errorCode: number,
   }
@@ -58,6 +59,7 @@ class StateSearchPageContainer extends Component {
       communityList,
       requestMeta,
       location,
+      geoGuide,
       history,
     } = this.props;
     // TODO Add Error Page
@@ -65,6 +67,8 @@ class StateSearchPageContainer extends Component {
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
     const isMapView = searchParams.view === 'map';
+    let gg = geoGuide && geoGuide.length > 0 ? geoGuide[0] : {};
+
     return (
       <StateSearchPage
         isMapView={isMapView}
@@ -74,6 +78,7 @@ class StateSearchPageContainer extends Component {
         onParamsChange={this.changeSearchParams}
         onLocationSearch={this.handleOnLocationSearch}
         communityList={communityList}
+        geoGuide={gg}
         location={location}
       />
     );
@@ -86,12 +91,16 @@ const mapStateToProps = (state, { match, location }) => {
     searchParams,
     communityList: getList(state, 'searchResource'),
     requestMeta: getListMeta(state, 'searchResource'),
+    geoGuide: getList(state, 'geoGuide'),
   };
 };
 
 const fetchData = (dispatch, { match, location }) => {
   const searchParams = getSearchParams(match, location);
-  return dispatch(resourceListReadRequest('searchResource', searchParams));
+  return Promise.all([
+    dispatch(resourceListReadRequest('searchResource', searchParams)),
+    dispatch(resourceListReadRequest('geoGuide', searchParams)),
+  ]);;
 };
 
 const handleError = (err) => {

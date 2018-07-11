@@ -36,6 +36,7 @@ const SearchMapContainer = styled(SearchMap)`
 export default class StateSearchPage extends Component {
   static propTypes = {
     communityList: array.isRequired,
+    geoGuide: object,
     requestMeta: object.isRequired,
     isMapView: bool,
     toggleMap: func,
@@ -56,6 +57,7 @@ export default class StateSearchPage extends Component {
       onParamsChange,
       requestMeta,
       communityList,
+      geoGuide,
       location,
     } = this.props;
     const listSize = requestMeta['filtered-count'];
@@ -71,6 +73,73 @@ export default class StateSearchPage extends Component {
       longitude = parseFloat(searchParams.longitude);
     }
 
+    const TopContent = () => {
+      if (geoGuide && geoGuide.guideContent) {
+        let gg = geoGuide.guideContent;
+        if (gg.autoDescription) {
+          return (<Fragment>
+            <Heading level="hero" size="title">
+              {listSize} communities in {state}
+            </Heading>
+            <div dangerouslySetInnerHTML={{__html: gg.autoDescription}}/>
+          </Fragment>);
+        }
+
+      }
+
+      return (
+        <Fragment>
+          <Heading level="hero" size="title">
+            {listSize} communities in {state}
+          </Heading>
+        </Fragment>);
+    };
+
+
+    const ListContent = ()=> {
+      /**
+       * Order of appearance as in editor :
+       * description, <p>1</p>
+       guide, <p>2</p>
+       hospitals, <p>3</p>
+       resources, <p>4</p>
+       neighborhoods, <p>5</p>
+       hospitals, <p>6</p>
+       reviews, <p>7</p>
+       */
+      if (geoGuide && geoGuide.guideContent) {
+        let additionalDivs = [];
+        let gg = geoGuide.guideContent;
+        ['description','guide','hospitals','transportation',
+          'sports','cultural','weather','reviews'].forEach((p)=>{
+          if (gg.hasOwnProperty(p)){
+            additionalDivs.push(<div dangerouslySetInnerHTML={{__html: gg[p]}} key={p}/>)
+          }
+        });
+
+        return <Fragment>
+          <CommunitySearchList
+            communityList={communityList}
+            onParamsChange={onParamsChange}
+            searchParams={searchParams}
+            requestMeta={requestMeta}
+
+          />
+          {additionalDivs}
+
+        </Fragment>
+
+      }
+      //If No Geo Content just return same
+      return (<CommunitySearchList
+        communityList={communityList}
+        onParamsChange={onParamsChange}
+        searchParams={searchParams}
+        requestMeta={requestMeta}
+      />);
+    };
+
+
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -80,10 +149,9 @@ export default class StateSearchPage extends Component {
           onLocationSearch={onLocationSearch}
         >
           {!isMapView && (
-            <Heading level="hero" size="title">
-              {listSize} communities in {state}
-            </Heading>
+            TopContent()
           )}
+
           <TopWrapper>
             {isMapView && (
               <IconButton icon="list" ghost transparent onClick={toggleMap}>
@@ -98,13 +166,7 @@ export default class StateSearchPage extends Component {
           </TopWrapper>
 
           {!isMapView && (
-            <CommunitySearchList
-              communityList={communityList}
-              onParamsChange={onParamsChange}
-              searchParams={searchParams}
-              requestMeta={requestMeta}
-
-            />
+            ListContent()
           )}
           {isMapView && (
             <SearchMapContainer
