@@ -10,7 +10,6 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
-import Thankyou from 'sly/components/molecules/Thankyou';
 
 const Item = styled.div`
   display: inline-block;

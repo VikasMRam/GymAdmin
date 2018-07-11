@@ -46,13 +46,9 @@ const ReasonTile = ({
     <WrappedImage src={image} />
     <ItemDescription>
       <StyledHeading level="subtitle" size="subtitle">{title}</StyledHeading>
-      {text && text.split('\n')
-          .map((line, i) => (
-            <TextBlock key={`block_${i}`} size="subtitle" palette="grayscale">
-              {line}
-            </TextBlock>
-          ))
-      }
+      <TextBlock size="subtitle" palette="grayscale">
+        {text}
+      </TextBlock>
     </ItemDescription>
   </Wrapper>
 );
