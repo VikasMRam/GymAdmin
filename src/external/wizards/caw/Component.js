@@ -1,23 +1,30 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
-import { string } from 'prop-types';
+import { bool, object, number, func } from 'prop-types';
+import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import { Button, Hr } from 'sly/components/atoms';
 
 import { Step1 } from './steps';
 
+const totalNumberofSteps = 2;
+const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
+
 const ProgressWrapper = styled.div`
-  background-color: ${palette('grayscale', 2)};
+  background-color: ${palette('primary', 3)};
 `;
 const ProgressBar = styled.div`
   background-color: ${palette('secondary', 0)};
   height: ${size('spacing.regular')};
-  width: 16%;
+  width: ${progressBarWidth}%;
 `;
 const CurrentStep = styled.p`
-  font-size: ${size('text.tiny')};
+  font-size: ${size('text.caption')};
+  ${ifProp('limitReached', `
+    color: ${palette('secondary', 0)};
+  `)};
 `;
 const StyledForm = styled.form`
   margin-bottom: ${size('spacing.xLarge')};
@@ -38,29 +45,33 @@ const StyledHr = styled(Hr)`
   margin-right: -${size('spacing.xxLarge')};
 `;
 
-const Component = ({ currentStep, invalid }) => {
+const Component = ({
+  currentStep, invalid, data, handleSubmit,
+}) => {
   let currentStepComponent = null;
   switch (currentStep) {
-    case 'STEP1':
-      currentStepComponent = <Step1 invalid={invalid} />;
+    case 1:
+      currentStepComponent = <Step1 invalid={invalid} data={data} />;
       break;
     default:
-      currentStepComponent = <Step1 invalid={invalid} />;
+      currentStepComponent = <Step1 invalid={invalid} data={data} />;
   }
 
   return (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <ProgressWrapper>
-        <ProgressBar />
+        <ProgressBar current={currentStep} limit={totalNumberofSteps} />
       </ProgressWrapper>
       <Wrapper>
-        <CurrentStep>Step 1 of 6</CurrentStep>
-        <StyledForm>
+        <CurrentStep limitReached={currentStep === totalNumberofSteps}>
+          Step {currentStep} of {totalNumberofSteps}
+        </CurrentStep>
+        <StyledForm onSubmit={handleSubmit}>
           {currentStepComponent}
           <StyledHr />
           <ButtonsWrapper>
-            <Button type="button" disabled>
+            <Button type="button" disabled={currentStep === 1}>
               Back
             </Button>
             <Button type="submit" disabled={invalid}>
@@ -74,7 +85,10 @@ const Component = ({ currentStep, invalid }) => {
 };
 
 Component.propTypes = {
-  currentStep: string,
+  currentStep: number,
+  invalid: bool,
+  data: object,
+  handleSubmit: func.isRequired,
 };
 
 export default Component;

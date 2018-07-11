@@ -43,7 +43,7 @@ html.seniorly-page-scroll-locked body {
   background-color: #fff;
   width: 100%;
   height: unset;
-  max-height: calc(100% - 8rem);
+  max-height: calc(100% - 3rem);
   border-radius: 3px;
   overflow: hidden;
 }

@@ -2,19 +2,37 @@ import React, { Fragment } from 'react';
 import { string } from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import { uniqueId } from 'lodash';
+import styled from 'styled-components';
+import { palette } from 'styled-theme';
+
+import { size } from 'sly/components/themes';
 
 import { Icon } from 'sly/components/atoms';
 
+const StyledIcon = styled(Icon)`
+  color: ${palette('grayscale', 2)};
+`;
+// TODO: is it better to make this tooltip as atom so that we don't have to copy styles in all required components?
+// will need replacing exsting tooltip atom, that's not used anywhere?
+const TooltipContent = styled(ReactTooltip)`
+  padding: ${size('spacing.regular')};
+  color: ${palette('white', 0)} !important;
+  background-color: ${palette('grayscale', 0)} !important;
+  border-radius: ${size('spacing.tiny')};
+  font-size: ${size('text.caption')};
+`;
+
+// TODO: add support for changing icon colour using prop
 const HelpBubble = ({ text }) => {
   const id = uniqueId('tooltipHelpBubble_');
 
   return (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <Icon icon="help" size="small" palette="grayscale" data-tip data-for={id} />
-      <ReactTooltip id={id} place="bottom" effect="solid" type="light" multiline>
+      <StyledIcon icon="help" size="small" data-tip data-for={id} />
+      <TooltipContent id={id} place="bottom" effect="solid" type="light" multiline>
         {text}
-      </ReactTooltip>
+      </TooltipContent>
     </Fragment>
   );
 };

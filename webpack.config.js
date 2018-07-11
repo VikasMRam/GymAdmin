@@ -135,6 +135,32 @@ const base = () =>
       }),
     ]),
   ]);
+const devCORS = () =>
+  group([
+    env('development', [
+      devServer({
+        contentBase: 'public',
+        stats: 'errors-only',
+        historyApiFallback: { index: webpackPublicPath },
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        disableHostCheck: true,
+        host: '0.0.0.0',
+        port: DEV_PORT,
+      }),
+      addPlugins([new webpack.NamedModulesPlugin()]),
+    ]),
+  ]);
+const uglifyJs = () =>
+  group([
+    env('production', [
+      addPlugins([
+        new webpack.optimize.UglifyJsPlugin({
+          sourceMap: isStaging,
+          compress: { warnings: false },
+        }),
+      ]),
+    ]),
+  ]);
 
 const server = createConfig([
   base(),
@@ -194,16 +220,11 @@ const external = createConfig([
 
   when(isDev || isStaging, [sourceMaps()]),
 
+  assets(),
+
+  devCORS(),
+
   env('development', [
-    devServer({
-      contentBase: 'public',
-      stats: 'errors-only',
-      historyApiFallback: { index: webpackPublicPath },
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      disableHostCheck: true,
-      host: '0.0.0.0',
-      port: DEV_PORT,
-    }),
     addPlugins([
       new webpack.NamedModulesPlugin(),
       new MergeIntoSingleFilePlugin({
@@ -217,6 +238,8 @@ const external = createConfig([
       }),
     ]),
   ]),
+
+  uglifyJs(),
 
   env('production', [
     addPlugins([
@@ -259,28 +282,13 @@ const client = createConfig([
 
   assets(),
 
-  env('development', [
-    devServer({
-      contentBase: 'public',
-      stats: 'errors-only',
-      historyApiFallback: { index: webpackPublicPath },
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      disableHostCheck: true,
-      host: '0.0.0.0',
-      port: DEV_PORT,
-    }),
-    addPlugins([new webpack.NamedModulesPlugin()]),
-  ]),
+  devCORS(),
 
-  env('production', [
-    //splitVendor(),
-    addPlugins([
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: isStaging,
-        compress: { warnings: false },
-      }),
-    ]),
-  ]),
+  uglifyJs(),
+
+  /* env('production', [
+    splitVendor(),
+  ]), */
 ]);
 
 module.exports = client;
