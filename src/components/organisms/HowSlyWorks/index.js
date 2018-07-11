@@ -51,7 +51,7 @@ const reasons = {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  ${ifProp({ layout: 'communitySection' }, css`
+  ${ifProp({ layout: 'section' }, css`
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       flex-direction: row;
       > * {
