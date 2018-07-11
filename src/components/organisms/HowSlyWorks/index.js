@@ -35,14 +35,15 @@ const reasons = [
 ];
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: flex;
     flex-direction: row;
     > * {
-      margin-right: ${size('spacing.large')}; 
+      margin-right: ${size('spacing.large')};
 
       &:last-child {
-        margin-right: 0; 
+        margin-right: 0;
       }
     }
   }
@@ -52,8 +53,8 @@ const HowSlyWorks = () => {
   return (
     <Wrapper>
       {reasons.map((reason) => (
-        <ReasonTile 
-          key={reason.title} 
+        <ReasonTile
+          key={reason.title}
           {...reason}
         />
       ))}
