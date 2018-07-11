@@ -61,9 +61,11 @@ export default class Concierge extends Component {
         )}
         {!callbackRequested && (
           <ConversionFormContainer
-            submitConversion={submitConversion}
+            submitRegularConversion={submitRegularConversion}
+            submitExpressConversion={submitExpressConversion}
             community={community}
             concierge={concierge}
+            express={false}
           />
         )}
 
