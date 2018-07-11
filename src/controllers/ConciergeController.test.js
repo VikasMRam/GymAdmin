@@ -11,7 +11,7 @@ import ConciergeControllerContainer, {
   CONVERSION_FORM,
   EXPRESS_CONVERSION_FORM,
   ADVANCED_INFO,
-  THANKYOU,
+  WHAT_NEXT,
 } from './ConciergeController';
 
 jest.mock('../services/helpers/events');
@@ -135,7 +135,7 @@ describe('ConciergeController', function() {
       const wrapper = wrap(community, store);
       wrapper.instance().next(true);
       expect(getControllerAction(store)).toEqual({
-        currentStep: THANKYOU,
+        currentStep: WHAT_NEXT,
         modalIsOpen: true,
       });
     });
@@ -219,7 +219,7 @@ describe('ConciergeController', function() {
       childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(lastSet()).toEqual({
-        currentStep: THANKYOU,
+        currentStep: WHAT_NEXT,
         modalIsOpen: true,
       });
     });

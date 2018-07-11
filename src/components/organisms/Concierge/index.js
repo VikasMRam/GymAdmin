@@ -8,8 +8,7 @@ import ConversionFormContainer from 'sly/containers/ConversionFormContainer';
 import AdvancedInfoContainer from 'sly/containers/AdvancedInfoContainer';
 // import SimilarCommunitiesContainer from 'sly/containers/SimilarCommunitiesContainer';
 import Thankyou from 'sly/components/molecules/Thankyou';
-
-
+import WhatNext from 'sly/components/organisms/WhatNext';
 
 const ExpressConversionFormContainer = props => (
   <ConversionFormContainer
@@ -22,6 +21,7 @@ const steps = {
   conversionForm: ConversionFormContainer,
   expressConversionForm: ExpressConversionFormContainer,
   advancedInfo: AdvancedInfoContainer,
+  whatNext: WhatNext,
   // similarCommunities: SimilarCommunitiesContainer,
   thankyou: Thankyou,
 };

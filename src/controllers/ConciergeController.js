@@ -27,7 +27,7 @@ export const EXPRESS_CONVERSION_FORM = 'expressConversionForm';
 export const ADVANCED_INFO = 'advancedInfo';
 export const SIMILAR_COMMUNITIES = 'similarCommunities';
 export const CALENDLY_APPOINTMENT = 'calendlyAppointment';
-export const THANKYOU = 'thankyou';
+export const WHAT_NEXT = 'whatNext';
 
 const isAssessment = ({
   typeOfCare,
@@ -181,7 +181,7 @@ export class ConciergeController extends Component {
 
     if (expressDone || normalDone) {
       return set({
-        currentStep: THANKYOU,
+        currentStep: WHAT_NEXT,
         modalIsOpen: true,
       });
     }
