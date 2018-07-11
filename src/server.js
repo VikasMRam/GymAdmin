@@ -15,13 +15,10 @@ import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import serializeError from 'serialize-error';
 
-import {
-  port, host, basename, publicPath, isDev, cookieDomain, externalWizardsPath,
-} from 'sly/config';
+import { port, host, basename, publicPath, isDev, cookieDomain, externalWizardsPath } from 'sly/config';
 import configureStore from 'sly/store/configure';
 import apiService from 'sly/services/api';
 import App from 'sly/components/App';
-import WizardApp from 'sly/external/wizards/WizardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 
@@ -64,8 +61,7 @@ if (publicPath.match(/^\//)) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
-app.get(`${externalWizardsPath}*`, (req, res, next) => {
-  const location = req.url;
+app.get(`${externalWizardsPath}*`, (req, res) => {
   const content = '';
   const assets = {
     js: [

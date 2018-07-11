@@ -2,6 +2,7 @@
 const path = require('path');
 const fs = require('fs');
 const UglifyJs = require('uglify-es');
+const cssmin = require('cssmin');
 const devServer = require('@webpack-blocks/dev-server2');
 // const splitVendor = require('webpack-blocks-split-vendor');
 const happypack = require('webpack-blocks-happypack');
@@ -94,25 +95,6 @@ const assets = () => () => ({
   },
 });
 
-const externalAssets = () => () => ({
-  module: {
-    rules: [
-      {
-        test: /\.(css)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]',
-          outputPath: 'external/',
-        }
-      },
-      {
-        test: /\.(svg)$/,
-        loader: 'raw-loader',
-      },
-    ],
-  },
-});
-
 const resolveModules = modules => () => ({
   resolve: {
     alias: {
@@ -187,6 +169,18 @@ if (isDev || isStaging) {
   console.log('Will do sourcemaps');
 }
 
+const replaceExternalConstants = (text) => {
+  let replacedText = text;
+  const replacements = {
+    'process.env.EXTERNAL_ASSET_URL': (HOST.indexOf('://') > -1 ? HOST : `//${HOST}`) + path.join(PUBLIC_PATH, 'external'),
+    'process.env.EXTERNAL_WIZARDS_ROOT_URL': (HOST.indexOf('://') > -1 ? HOST : `//${HOST}`) + EXTERNAL_WIZARDS_PATH,
+    'process.env.CLOSE_ICON_SVG': fs.readFileSync(`${externalSourcePath}/close-regular.svg`, 'utf8'),
+  };
+  Object.keys(replacements).forEach((match) => {
+    replacedText = replacedText.replace(match, replacements[match]);
+  });
+  return replacedText;
+};
 const external = createConfig([
   base(),
 
@@ -198,14 +192,7 @@ const external = createConfig([
     filename: '[name].js',
   }),
 
-  defineConstants({
-    'process.env.EXTERNAL_ASSET_URL': (HOST.indexOf('://') > -1 ? HOST : `//${HOST}`) + path.join(PUBLIC_PATH, 'external'),
-    'process.env.EXTERNAL_WIZARDS_ROOT_URL': (HOST.indexOf('://') > -1 ? HOST : `//${HOST}`) + EXTERNAL_WIZARDS_PATH,
-  }),
-
   when(isDev || isStaging, [sourceMaps()]),
-
-  externalAssets(),
 
   env('development', [
     devServer({
@@ -223,30 +210,32 @@ const external = createConfig([
         files: {
           'external/widget.js': [widgetEntryPath],
           'external/widget.css': [widgetCssEntryPath],
-        }
+        },
+        transform: {
+          'external/widget.js': text => replaceExternalConstants(text),
+        },
       }),
     ]),
   ]),
 
   env('production', [
     addPlugins([
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: isStaging,
-        compress: { warnings: false },
-      }),
       new MergeIntoSingleFilePlugin({
         files: {
           'external/widget.js': [widgetEntryPath],
           'external/widget.css': [widgetCssEntryPath],
         },
         transform: {
-          'external/widget.js': text => {
-            const { error, code } = UglifyJs.minify(text);
+          'external/widget.js': (text) => {
+            const { error, code } = UglifyJs.minify(replaceExternalConstants(text));
             if (error) {
               console.error(error);
             }
             return code;
-          }
+          },
+          'external/widget.css': (text) => {
+            return cssmin(text);
+          },
         },
       }),
     ]),
