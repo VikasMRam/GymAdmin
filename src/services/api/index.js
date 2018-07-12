@@ -14,6 +14,9 @@ export const checkStatus = (response) => {
     error.location = response.headers._headers.location[0];
   }
 
+  const { status, headers } = response
+  error.response = { status, headers };
+
   error.response = response;
   throw error;
 };
@@ -37,6 +40,7 @@ export const parseSettings = ({
       redirect:'manual',
       method,
       headers,
+      credentials: 'same-origin',
     },
     otherSettings
   );
