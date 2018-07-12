@@ -50,6 +50,7 @@ const BoxRadioButton = ({
     {checked && <StyledIcon icon="round-checkmark" />}
     <StyledField
       {...props}
+      hideErrors
       name={name}
       type="radio"
       component={ReduxField}

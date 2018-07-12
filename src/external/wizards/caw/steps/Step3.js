@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 import { object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
@@ -8,38 +7,31 @@ import { Heading } from 'sly/components/atoms';
 import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
 
 const options = [
-  'Myself',
-  'Parent',
-  'Grantparent',
-  'Spouse',
-  'Friend',
-  'Client',
+  'Renting',
+  'Buying',
 ];
 
 const StyledHeading = styled(Heading)`
   font-weight: normal;
-`;
-const Description = styled.p`
-  color: ${palette('grayscale', 0)};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 const BoxRadioButtonWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const Step1 = ({ data }) => (
+const Step3 = ({ data }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-    <StyledHeading>Who are you looking for?</StyledHeading>
-    <Description>This is an optional supportive sentance that can ideally at most two lines.</Description>
+    <StyledHeading>Are you interested in renting or buying into a retirement community?</StyledHeading>
     {
       options.map((option, i) => (
         <BoxRadioButtonWrapper key={i}>
           <BoxRadioButton
-            name="looking_for"
+            name="renting_or_buying"
             helpText="help text goes here"
             value={option}
             label={option}
-            checked={data.looking_for === option}
+            checked={data.renting_or_buying === option}
           />
         </BoxRadioButtonWrapper>
       ))
@@ -47,12 +39,12 @@ const Step1 = ({ data }) => (
   </Fragment>
 );
 
-Step1.propTypes = {
+Step3.propTypes = {
   data: object,
 };
 
-Step1.defaultProps = {
+Step3.defaultProps = {
   data: {},
 };
 
-export default Step1;
+export default Step3;

@@ -7,7 +7,7 @@ import { ifProp } from 'styled-tools';
 import { size } from 'sly/components/themes';
 import { Button, Hr } from 'sly/components/atoms';
 
-import { Step1, Step2 } from './steps';
+import { Step1, Step2, Step3 } from './steps';
 
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
 
@@ -21,9 +21,7 @@ const ProgressBar = styled.div`
 `;
 const CurrentStep = styled.p`
   font-size: ${size('text.caption')};
-  ${ifProp('limitReached', `
-    color: ${palette('secondary', 0)};
-  `)};
+  color: ${ifProp('limitReached', palette('secondary', 0), 'initial')};
 `;
 const StyledForm = styled.form`
   margin-bottom: ${size('spacing.xLarge')};
@@ -55,6 +53,9 @@ const Component = ({
     case 2:
       currentStepComponent = <Step2 invalid={invalid} data={data} />;
       break;
+    case 3:
+      currentStepComponent = <Step3 invalid={invalid} data={data} />;
+      break;
     default:
       currentStepComponent = <Step1 invalid={invalid} data={data} />;
   }
@@ -76,6 +77,7 @@ const Component = ({
             <ButtonsWrapper>
               <Button
                 type="button"
+                palette="grayscale"
                 disabled={currentStep === 1}
                 onClick={onBackButton}
               >

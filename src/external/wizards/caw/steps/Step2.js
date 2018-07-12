@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 import { object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
@@ -17,9 +16,6 @@ const options = [
   'Insulin injections',
   'short-term care',
 ];
-const convertToValue = (option) => {
-  return option.toLowerCase().replace(' ', '_');
-};
 
 const StyledHeading = styled(Heading)`
   font-weight: normal;
@@ -34,21 +30,17 @@ const Step2 = ({ data }) => (
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeading>Do you have any care needs?</StyledHeading>
     {
-      options.map((option, i) => {
-        const value = convertToValue(option);
-
-        return (
-          <BoxRadioButtonWrapper key={i}>
-            <BoxRadioButton
-              name="care_needs"
-              helpText="help text goes here"
-              value={value}
-              label={option}
-              checked={data.care_needs === value}
-            />
-          </BoxRadioButtonWrapper>
-        );
-      })
+      options.map((option, i) => (
+        <BoxRadioButtonWrapper key={i}>
+          <BoxRadioButton
+            name="care_needs"
+            helpText="help text goes here"
+            value={option}
+            label={option}
+            checked={data.care_needs === option}
+          />
+        </BoxRadioButtonWrapper>
+      ))
     }
   </Fragment>
 );

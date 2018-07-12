@@ -8,9 +8,11 @@ import { connectController } from 'sly/controllers';
 import { createValidator, required } from 'sly/services/validation';
 import CAWComponent from './Component';
 
-const totalNumberofSteps = 2;
+const totalNumberofSteps = 3;
 const validate = createValidator({
   looking_for: [required],
+  care_needs: [required],
+  renting_or_buying: [required],
 });
 const ReduxForm = reduxForm({
   form: 'CAWForm',

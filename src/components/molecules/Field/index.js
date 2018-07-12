@@ -50,6 +50,7 @@ const Field = ({
   placeholder,
   className,
   value,
+  hideErrors,
   ...props
 }) => {
   const inputProps = {
@@ -68,12 +69,12 @@ const Field = ({
     <Wrapper className={className}>
       {renderInputFirst && <InputComponent {...inputProps} />}
       {label && (
-        <Label invalid={invalid} htmlFor={inputProps.id}>
+        <Label invalid={!hideErrors && invalid} htmlFor={inputProps.id}>
           {label}
         </Label>
       )}
       {renderInputFirst || <InputComponent {...inputProps} />}
-      {invalid &&
+      {invalid && !hideErrors &&
         error && (
           <Error id={`${name}Error`} role="alert" palette="danger">
             {error}
@@ -89,6 +90,7 @@ Field.propTypes = {
   className: string,
   invalid: bool,
   error: string,
+  hideErrors: bool,
   label: string,
   type: oneOf([
     'textarea',
