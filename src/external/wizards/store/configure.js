@@ -3,7 +3,6 @@ import createSagaMiddleware from 'redux-saga';
 import { middleware as thunkMiddleware } from 'redux-saga-thunk';
 import { createLogger } from 'redux-logger';
 import reducer from './reducer';
-//import sagas from './resource/sagas';
 
 import { isDev, isBrowser } from 'sly/config';
 
@@ -14,7 +13,7 @@ const devtools =
 
 const loggerMiddleware = createLogger();
 
-const configureStore = (initialState, services = {}) => {
+const configureStore = (initialState) => {
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [
     thunkMiddleware, sagaMiddleware,
@@ -29,23 +28,7 @@ const configureStore = (initialState, services = {}) => {
     devtools(),
   ];
 
-  const store = createStore(reducer, initialState, compose(...enhancers));/*
-  let sagaTask = sagaMiddleware.run(sagas, services);
-
-  if (module.hot) {
-    module.hot.accept('./reducer', () => {
-      const nextReducer = require('./reducer').default;
-      store.replaceReducer(nextReducer);
-    });
-    module.hot.accept('./resource/sagas', () => {
-      const nextSagas = require('./resource/sagas').default;
-      sagaTask.cancel();
-      sagaTask.done.then(() => {
-        sagaTask = sagaMiddleware.run(nextSagas, services);
-      });
-    });
-  }*/
-
+  const store = createStore(reducer, initialState, compose(...enhancers));
   return store;
 };
 

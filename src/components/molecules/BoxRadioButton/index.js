@@ -43,7 +43,9 @@ const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.large')};
 `;
 
-const BoxRadioButton = ({ name, checked, ...props }) => (
+const BoxRadioButton = ({
+  name, checked, helpText, ...props
+}) => (
   <StyledBox checked={checked}>
     {checked && <StyledIcon icon="round-checkmark" />}
     <StyledField
@@ -52,13 +54,14 @@ const BoxRadioButton = ({ name, checked, ...props }) => (
       type="radio"
       component={ReduxField}
     />
-    <StyledHelpBubble text="help text here" />
+    {helpText && <StyledHelpBubble text={helpText} />}
   </StyledBox>
 );
 
 BoxRadioButton.propTypes = {
   name: string,
   checked: bool,
+  helpText: string,
 };
 
 export default BoxRadioButton;

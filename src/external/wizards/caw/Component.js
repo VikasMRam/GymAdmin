@@ -7,9 +7,8 @@ import { ifProp } from 'styled-tools';
 import { size } from 'sly/components/themes';
 import { Button, Hr } from 'sly/components/atoms';
 
-import { Step1 } from './steps';
+import { Step1, Step2 } from './steps';
 
-const totalNumberofSteps = 2;
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
 
 const ProgressWrapper = styled.div`
@@ -46,12 +45,15 @@ const StyledHr = styled(Hr)`
 `;
 
 const Component = ({
-  currentStep, invalid, data, handleSubmit,
+  currentStep, invalid, data, handleSubmit, totalNumberofSteps, onBackButton,
 }) => {
   let currentStepComponent = null;
   switch (currentStep) {
     case 1:
       currentStepComponent = <Step1 invalid={invalid} data={data} />;
+      break;
+    case 2:
+      currentStepComponent = <Step2 invalid={invalid} data={data} />;
       break;
     default:
       currentStepComponent = <Step1 invalid={invalid} data={data} />;
@@ -70,14 +72,20 @@ const Component = ({
         <StyledForm onSubmit={handleSubmit}>
           {currentStepComponent}
           <StyledHr />
-          <ButtonsWrapper>
-            <Button type="button" disabled={currentStep === 1}>
-              Back
-            </Button>
-            <Button type="submit" disabled={invalid}>
-              Continue
-            </Button>
-          </ButtonsWrapper>
+          {currentStep <= totalNumberofSteps && (
+            <ButtonsWrapper>
+              <Button
+                type="button"
+                disabled={currentStep === 1}
+                onClick={onBackButton}
+              >
+                Back
+              </Button>
+              <Button type="submit" disabled={invalid}>
+                Continue
+              </Button>
+            </ButtonsWrapper>
+          )}
         </StyledForm>
       </Wrapper>
     </Fragment>
@@ -86,9 +94,11 @@ const Component = ({
 
 Component.propTypes = {
   currentStep: number,
+  totalNumberofSteps: number,
   invalid: bool,
   data: object,
   handleSubmit: func.isRequired,
+  onBackButton: func.isRequired,
 };
 
 export default Component;

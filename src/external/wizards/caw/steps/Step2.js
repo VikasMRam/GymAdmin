@@ -8,12 +8,14 @@ import { Heading } from 'sly/components/atoms';
 import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
 
 const options = [
-  'Myself',
-  'Parent',
-  'Grantparent',
-  'Spouse',
-  'Friend',
-  'Client',
+  '24-hour supervision',
+  'Dimentia care',
+  'Bathing assistance',
+  'Eating assistance',
+  'Tansfer assistance',
+  'Medication management',
+  'Insulin injections',
+  'short-term care',
 ];
 const convertToValue = (option) => {
   return option.toLowerCase().replace(' ', '_');
@@ -21,19 +23,16 @@ const convertToValue = (option) => {
 
 const StyledHeading = styled(Heading)`
   font-weight: normal;
-`;
-const Description = styled.p`
-  color: ${palette('grayscale', 0)};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 const BoxRadioButtonWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const Step1 = ({ data }) => (
+const Step2 = ({ data }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-    <StyledHeading>Who are you looking for?</StyledHeading>
-    <Description>This is an optional supportive sentance that can ideally at most two lines.</Description>
+    <StyledHeading>Do you have any care needs?</StyledHeading>
     {
       options.map((option, i) => {
         const value = convertToValue(option);
@@ -41,11 +40,11 @@ const Step1 = ({ data }) => (
         return (
           <BoxRadioButtonWrapper key={i}>
             <BoxRadioButton
-              name="looking_for"
+              name="care_needs"
               helpText="help text goes here"
               value={value}
               label={option}
-              checked={data.looking_for === value}
+              checked={data.care_needs === value}
             />
           </BoxRadioButtonWrapper>
         );
@@ -54,12 +53,12 @@ const Step1 = ({ data }) => (
   </Fragment>
 );
 
-Step1.propTypes = {
+Step2.propTypes = {
   data: object,
 };
 
-Step1.defaultProps = {
+Step2.defaultProps = {
   data: {},
 };
 
-export default Step1;
+export default Step2;
