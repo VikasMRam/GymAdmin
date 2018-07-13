@@ -8,17 +8,24 @@ import { connectController } from 'sly/controllers';
 import { createValidator, required } from 'sly/services/validation';
 import CAWComponent from './Component';
 
-const totalNumberofSteps = 3;
+const totalNumberofSteps = 5;
 const validate = createValidator({
   looking_for: [required],
   care_needs: [required],
   renting_or_buying: [required],
+  monthly_budget: [required],
 });
 const ReduxForm = reduxForm({
   form: 'CAWForm',
   destroyOnUnmount: false,
   keepDirtyOnReinitialize: true,
   validate,
+  initialValues: {
+    looking_for: null,
+    care_needs: null,
+    renting_or_buying: null,
+    monthly_budget: 1,
+  },
 })(CAWComponent);
 
 class Controller extends Component {

@@ -29,12 +29,15 @@ const SearchTextBox = styled(Input)`
   height: ${size('element.large')};
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   border-radius: ${size('spacing.tiny')} 0 0 ${size('spacing.tiny')};
-  border-right: 0;
 
   ${switchProp('layout', {
     header: css`
       height: auto;
       border: none;
+      border-right: 0;
+    `,
+    homeHero: css`
+      border-right: 0;
     `,
   })}
 
@@ -42,7 +45,15 @@ const SearchTextBox = styled(Input)`
     height: ${size('element.large')};
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
     border-radius: ${size('spacing.tiny')} 0 0 ${size('spacing.tiny')};
-    border-right: 0;
+
+  ${switchProp('layout', {
+    header: css`
+      border-right: 0;
+    `,
+    homeHero: css`
+      border-right: 0;
+    `,
+  })}
   }
 `;
 
@@ -111,9 +122,9 @@ const GoogleLogo = styled(Image)`
   width: ${size('picture.tiny.width')};
   float: right;
 `;
-const baseSearchOptions = {types: ['(regions)']};
+const baseSearchOptions = { types: ['(regions)'] };
 const SearchBox = ({
-  layout, value, onChange, onSelect, onSeachButtonClick, onTextboxFocus,
+  layout, value, onChange, onSelect, onSeachButtonClick, onTextboxFocus, placeholder,
 }) => (
   <Wrapper layout={layout}>
     <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion>
@@ -123,15 +134,15 @@ const SearchBox = ({
           <SearchInputButtonWrapper>
             <SearchTextBox
               size="large"
-              {...getInputProps({
-                placeholder: 'Search by city or zip code',
-              })}
+              {...getInputProps({ placeholder })}
               layout={layout}
               onFocus={onTextboxFocus}
             />
-            <SearchButton layout={layout} onClick={onSeachButtonClick}>
-              <Icon icon="search" size="regular" palette="white" />
-            </SearchButton>
+            {layout !== 'boxWithoutButton' &&
+              <SearchButton layout={layout} onClick={onSeachButtonClick}>
+                <Icon icon="search" size="regular" palette="white" />
+              </SearchButton>
+            }
           </SearchInputButtonWrapper>
           {suggestions.length > 0 && (
             <SearchSuggestionsWrapper layout={layout}>
@@ -150,16 +161,18 @@ const SearchBox = ({
 );
 
 SearchBox.propTypes = {
-  layout: oneOf(['header', 'homeHero']),
+  layout: oneOf(['header', 'homeHero', 'boxWithoutButton']),
   value: string.isRequired,
   onChange: func.isRequired,
   onSelect: func.isRequired,
   onSeachButtonClick: func.isRequired,
   onTextboxFocus: func,
+  placeholder: string,
 };
 
 SearchBox.defaultProps = {
   layout: 'header',
+  placeholder: 'Search by city or zip code',
 };
 
 export default SearchBox;
