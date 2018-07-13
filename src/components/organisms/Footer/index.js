@@ -165,7 +165,7 @@ const groups = {
     { name: 'Articles', url: '/resources' },
     { name: 'Moving Center', url: '/resources/tags/moving+center' },
     { name: 'Assisted Living', url: '/assisted-living' },
-    { name: 'Independent Living', url: '/assisted-living' },
+    { name: 'Independent Living', url: '/independent-living' },
     { name: 'Alzheimer\'s Care', url: '/memory-care' },
     { name: 'Respite Care', url: '/respite-care' },
     { name: 'CCRC', url: '/continuing-care-retirement-community' },
