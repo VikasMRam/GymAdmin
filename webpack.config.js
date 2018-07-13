@@ -39,8 +39,10 @@ const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
 const DOMAIN = process.env.DOMAIN || 'lvh.me';
 const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8').trim() : '';
 const EXTERNAL_WIZARDS_PATH = process.env.EXTERNAL_WIZARDS_PATH || '/widgets';
-
 const SOURCE = process.env.SOURCE || 'src';
+// replacements for widgets.js
+const EXTERNAL_ASSET_URL = (HOST.indexOf('://') > -1 ? HOST : `//${HOST}`) + path.join(PUBLIC_PATH, 'external');
+const EXTERNAL_WIZARDS_ROOT_URL = (HOST.indexOf('://') > -1 ? HOST : `//${HOST}`) + EXTERNAL_WIZARDS_PATH;
 
 console.info('Using config', JSON.stringify({
   STORYBOOK_GIT_BRANCH,
@@ -55,11 +57,14 @@ console.info('Using config', JSON.stringify({
   AUTH_URL,
   DOMAIN,
   SOURCE,
+  EXTERNAL_ASSET_URL,
+  EXTERNAL_WIZARDS_ROOT_URL,
 }, null, 2));
 
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
 const sourcePath = path.join(process.cwd(), SOURCE);
 const externalSourcePath = path.join(sourcePath, 'external');
+const closeIconSvg = fs.readFileSync(`${externalSourcePath}/close-regular.svg`, 'utf8');
 const outputPath = path.join(process.cwd(), 'dist/public');
 const assetsPath = path.join(process.cwd(), 'dist/assets.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
@@ -196,15 +201,14 @@ if (isDev || isStaging) {
 }
 
 const replaceExternalConstants = (text) => {
-  let replacedText = text;
   const replacements = {
-    'process.env.EXTERNAL_ASSET_URL': (HOST.indexOf('://') > -1 ? HOST : `//${HOST}`) + path.join(PUBLIC_PATH, 'external'),
-    'process.env.EXTERNAL_WIZARDS_ROOT_URL': (HOST.indexOf('://') > -1 ? HOST : `//${HOST}`) + EXTERNAL_WIZARDS_PATH,
-    'process.env.CLOSE_ICON_SVG': fs.readFileSync(`${externalSourcePath}/close-regular.svg`, 'utf8'),
+    'process.env.EXTERNAL_ASSET_URL': EXTERNAL_ASSET_URL,
+    'process.env.EXTERNAL_WIZARDS_ROOT_URL': EXTERNAL_WIZARDS_ROOT_URL,
+    'process.env.CLOSE_ICON_SVG': closeIconSvg,
   };
-  Object.keys(replacements).forEach((match) => {
-    replacedText = replacedText.replace(match, replacements[match]);
-  });
+  const replacedText = Object.keys(replacements).reduce((previous, match) => {
+    return previous.replace(match, replacements[match]);
+  }, text);
   return replacedText;
 };
 const external = createConfig([
