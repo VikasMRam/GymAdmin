@@ -4,8 +4,8 @@
     cssId: 'seniorly-widget-style',
     scriptId: 'seniorly-widget-script',
     context: {
-      cssFileUrl: 'process.env.EXTERNAL_ASSET_URL/widget.css',
-      iframeUrl: 'process.env.EXTERNAL_WIZARDS_ROOT_URL',
+      cssFileUrl: `${process.env.EXTERNAL_ASSET_URL}/widget.css`,
+      iframeUrl: `${process.env.EXTERNAL_WIZARDS_ROOT_URL}`,
     },
     config: {},
     widgetClassName: {
@@ -162,7 +162,7 @@
       w.buildContent = function() {
         const t = document.createElement('button');
         t.type = 'button';
-        t.innerHTML = `process.env.CLOSE_ICON_SVG`;
+        t.innerHTML = `${process.env.CLOSE_ICON_SVG}`;
         return t;
       };
       return w;

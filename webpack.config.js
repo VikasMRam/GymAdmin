@@ -207,7 +207,7 @@ const replaceExternalConstants = (text) => {
     'process.env.CLOSE_ICON_SVG': closeIconSvg,
   };
   const replacedText = Object.keys(replacements).reduce((previous, match) => {
-    return previous.replace(match, replacements[match]);
+    return previous.replace(match, JSON.stringify(replacements[match]));
   }, text);
   return replacedText;
 };
