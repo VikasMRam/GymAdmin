@@ -1,14 +1,17 @@
 // https://github.com/diegohaz/arc/wiki/Webpack
 const path = require('path');
 const fs = require('fs');
+const UglifyJs = require('uglify-es');
+const cssmin = require('cssmin');
 const devServer = require('@webpack-blocks/dev-server2');
-const splitVendor = require('webpack-blocks-split-vendor');
+// const splitVendor = require('webpack-blocks-split-vendor');
 const happypack = require('webpack-blocks-happypack');
 const serverSourceMap = require('webpack-blocks-server-source-map');
 const nodeExternals = require('webpack-node-externals');
 const AssetsByTypePlugin = require('webpack-assets-by-type-plugin');
 const ChildConfigPlugin = require('webpack-child-config-plugin');
 const SpawnPlugin = require('webpack-spawn-plugin');
+const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 
 const {
   addPlugins,
@@ -23,20 +26,23 @@ const {
 } = require('@webpack-blocks/webpack2');
 
 // defaults to dev env, otherwise specify with env vars
-const STORYBOOK_GIT_BRANCH = process.env.STORYBOOK_GIT_BRANCH;
+const { STORYBOOK_GIT_BRANCH } = process.env;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const SLY_ENV = process.env.SLY_ENV || 'development';
 const PUBLIC_PATH = process.env.PUBLIC_PATH || '/react-assets';
-const HOST = process.env.HOST || 'www.lvh.me';
+const HOST = process.env.HOST || 'http://www.lvh.me';
 const PORT = process.env.PORT || 8000;
 const DEV_PORT = process.env.DEV_PORT || (+PORT + 1) || 8001;
 const BASENAME = process.env.BASENAME || '';
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
 const DOMAIN = process.env.DOMAIN || 'lvh.me';
-const VERSION = fs.readFileSync('./VERSION', 'utf8').trim();
-
+const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8').trim() : '';
+const EXTERNAL_WIZARDS_PATH = process.env.EXTERNAL_WIZARDS_PATH || '/widgets';
 const SOURCE = process.env.SOURCE || 'src';
+// replacements for widgets.js
+const EXTERNAL_ASSET_URL = HOST + path.join(PUBLIC_PATH, 'external');
+const EXTERNAL_WIZARDS_ROOT_URL = HOST + EXTERNAL_WIZARDS_PATH;
 
 console.info('Using config', JSON.stringify({
   STORYBOOK_GIT_BRANCH,
@@ -51,15 +57,23 @@ console.info('Using config', JSON.stringify({
   AUTH_URL,
   DOMAIN,
   SOURCE,
+  EXTERNAL_ASSET_URL,
+  EXTERNAL_WIZARDS_ROOT_URL,
 }, null, 2));
 
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
 const sourcePath = path.join(process.cwd(), SOURCE);
+const externalSourcePath = path.join(sourcePath, 'external');
+const closeIconSvg = fs.existsSync(`${externalSourcePath}/close-regular.svg`) ? fs.readFileSync(`${externalSourcePath}/close-regular.svg`, 'utf8') : '';
 const outputPath = path.join(process.cwd(), 'dist/public');
 const assetsPath = path.join(process.cwd(), 'dist/assets.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');
-const devDomain = `http://${HOST}:${DEV_PORT}/`;
+const widgetEntryPath = path.join(externalSourcePath, 'widget.js');
+const widgetCssEntryPath = path.join(externalSourcePath, 'widget.css');
+const wizardsEntryPath = path.join(externalSourcePath, 'wizards/index.js');
+
+const devDomain = `${HOST}:${DEV_PORT}/`;
 
 const isDev = NODE_ENV === 'development';
 const isStaging = SLY_ENV === 'staging';
@@ -114,16 +128,42 @@ const base = () =>
       'process.env.AUTH_URL': AUTH_URL,
       'process.env.DOMAIN': DOMAIN,
       'process.env.VERSION': VERSION,
+      'process.env.EXTERNAL_WIZARDS_PATH': EXTERNAL_WIZARDS_PATH,
     }),
     addPlugins([new webpack.ProgressPlugin()]),
     happypack([babel()]),
-    assets(),
     resolveModules(sourcePath),
 
     env('development', [
       setOutput({
         publicPath: devDomain,
       }),
+    ]),
+  ]);
+const devCORS = () =>
+  group([
+    env('development', [
+      devServer({
+        contentBase: 'public',
+        stats: 'errors-only',
+        historyApiFallback: { index: webpackPublicPath },
+        headers: { 'Access-Control-Allow-Origin': '*' },
+        disableHostCheck: true,
+        host: '0.0.0.0',
+        port: DEV_PORT,
+      }),
+      addPlugins([new webpack.NamedModulesPlugin()]),
+    ]),
+  ]);
+const uglifyJs = () =>
+  group([
+    env('production', [
+      addPlugins([
+        new webpack.optimize.UglifyJsPlugin({
+          sourceMap: isStaging,
+          compress: { warnings: false },
+        }),
+      ]),
     ]),
   ]);
 
@@ -145,6 +185,7 @@ const server = createConfig([
     externals: [nodeExternals()],
     stats: 'errors-only',
   }),
+  assets(),
 
   env('development', [
     serverSourceMap(),
@@ -159,6 +200,75 @@ if (isDev || isStaging) {
   console.log('Will do sourcemaps');
 }
 
+const replaceExternalConstants = (text) => {
+  const replacements = {
+    'process.env.EXTERNAL_ASSET_URL': EXTERNAL_ASSET_URL,
+    'process.env.EXTERNAL_WIZARDS_ROOT_URL': EXTERNAL_WIZARDS_ROOT_URL,
+    'process.env.CLOSE_ICON_SVG': closeIconSvg,
+  };
+  const replacedText = Object.keys(replacements).reduce((previous, match) => {
+    return previous.replace(match, JSON.stringify(replacements[match]));
+  }, text);
+  return replacedText;
+};
+const external = createConfig([
+  base(),
+
+  entryPoint({
+    'external/wizards': wizardsEntryPath,
+  }),
+
+  setOutput({
+    filename: '[name].js',
+  }),
+
+  when(isDev || isStaging, [sourceMaps()]),
+
+  assets(),
+
+  devCORS(),
+
+  env('development', [
+    addPlugins([
+      new webpack.NamedModulesPlugin(),
+      new MergeIntoSingleFilePlugin({
+        files: {
+          'external/widget.js': [widgetEntryPath],
+          'external/widget.css': [widgetCssEntryPath],
+        },
+        transform: {
+          'external/widget.js': text => replaceExternalConstants(text),
+        },
+      }),
+    ]),
+  ]),
+
+  uglifyJs(),
+
+  env('production', [
+    addPlugins([
+      new MergeIntoSingleFilePlugin({
+        files: {
+          'external/widget.js': [widgetEntryPath],
+          'external/widget.css': [widgetCssEntryPath],
+        },
+        transform: {
+          'external/widget.js': (text) => {
+            const { error, code } = UglifyJs.minify(replaceExternalConstants(text));
+            if (error) {
+              console.error(error);
+            }
+            return code;
+          },
+          'external/widget.css': (text) => {
+            return cssmin(text);
+          },
+        },
+      }),
+    ]),
+  ]),
+]);
+
 const client = createConfig([
   base(),
 
@@ -169,32 +279,21 @@ const client = createConfig([
   addPlugins([
     new AssetsByTypePlugin({ path: assetsPath }),
     new ChildConfigPlugin(server),
+    new ChildConfigPlugin(external),
   ]),
 
   when(isDev || isStaging, [sourceMaps()]),
 
-  env('development', [
-    devServer({
-      contentBase: 'public',
-      stats: 'errors-only',
-      historyApiFallback: { index: webpackPublicPath },
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      disableHostCheck: true,
-      host: '0.0.0.0',
-      port: DEV_PORT,
-    }),
-    addPlugins([new webpack.NamedModulesPlugin()]),
-  ]),
+  assets(),
 
-  env('production', [
-    //splitVendor(),
-    addPlugins([
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: isStaging,
-        compress: { warnings: false },
-      }),
-    ]),
-  ]),
+  devCORS(),
+
+  uglifyJs(),
+
+  /* env('production', [
+    splitVendor(),
+  ]), */
 ]);
 
 module.exports = client;
+

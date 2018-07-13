@@ -49,11 +49,14 @@ const Field = ({
   type,
   placeholder,
   className,
+  value,
+  hideErrors,
   ...props
 }) => {
   const inputProps = {
-    id: name,
+    id: `${name}_${value}`,
     name,
+    value,
     type: getInputType(type),
     invalid,
     placeholder,
@@ -66,12 +69,12 @@ const Field = ({
     <Wrapper className={className}>
       {renderInputFirst && <InputComponent {...inputProps} />}
       {label && (
-        <Label invalid={invalid} htmlFor={inputProps.id}>
+        <Label invalid={!hideErrors && invalid} htmlFor={inputProps.id}>
           {label}
         </Label>
       )}
       {renderInputFirst || <InputComponent {...inputProps} />}
-      {invalid &&
+      {invalid && !hideErrors &&
         error && (
           <Error id={`${name}Error`} role="alert" palette="danger">
             {error}
@@ -83,8 +86,11 @@ const Field = ({
 
 Field.propTypes = {
   name: string.isRequired,
+  value: string,
+  className: string,
   invalid: bool,
   error: string,
+  hideErrors: bool,
   label: string,
   type: oneOf([
     'textarea',

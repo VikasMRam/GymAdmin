@@ -25,6 +25,7 @@ const config = {
     eventServerUrl: 'http://localhost:8888/events/new',
     cookieDomain: process.env.DOMAIN,
     publicPath,
+    externalWizardsPath: process.env.EXTERNAL_WIZARDS_PATH,
     olarkSiteId: '',
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-NTC7HG2',

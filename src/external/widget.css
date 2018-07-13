@@ -1,0 +1,76 @@
+html.seniorly-page-scroll-locked body {
+  overflow: hidden;
+}
+.seniorly-overlay-widget {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  z-index: 9999;
+  background-color: #384c57;
+}
+
+.seniorly-close-overlay-widget {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.seniorly-widget {
+  font-size: 16px;
+  line-height: 1.2em;
+}
+
+.seniorly-badge-widget {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 0.9375rem;
+  z-index: 9998;
+  background: rgb(77, 80, 85);
+  padding: 0.625rem;
+  color: white;
+}
+
+.seniorly-popup-widget {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  background-color: #fff;
+  width: 100%;
+  height: unset;
+  max-height: calc(100% - 3rem);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 768px) {
+  .seniorly-popup-widget {
+    width: 30rem;
+  }
+}
+
+.seniorly-close-overlay-button-widget {
+  position: fixed;
+  left: 1.5rem;
+  top: 1rem;
+}
+
+.seniorly-close-overlay-button-widget > button {
+  border: 1px solid transparent;
+  cursor: pointer;
+  background-color: transparent;
+  user-select: none;
+  pointer-events: auto;
+  outline: none;
+}
+
+.seniorly-close-overlay-button-widget > button svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: white;
+}
