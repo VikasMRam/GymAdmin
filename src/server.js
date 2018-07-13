@@ -194,7 +194,7 @@ app.listen(port, (error) => {
   if (error) {
     console.error(error);
   } else {
-    console.info(`Server is running at ${boldBlue(`http://${host}:${port}${basename}`)}`);
+    console.info(`Server is running at ${boldBlue(`${host}:${port}${basename}`)}`);
   }
 });
 

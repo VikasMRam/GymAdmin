@@ -30,7 +30,7 @@ const { STORYBOOK_GIT_BRANCH } = process.env;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const SLY_ENV = process.env.SLY_ENV || 'development';
 const PUBLIC_PATH = process.env.PUBLIC_PATH || '/react-assets';
-const HOST = process.env.HOST || 'www.lvh.me';
+const HOST = process.env.HOST || 'http://www.lvh.me';
 const PORT = process.env.PORT || 8000;
 const DEV_PORT = process.env.DEV_PORT || (+PORT + 1) || 8001;
 const BASENAME = process.env.BASENAME || '';
@@ -41,8 +41,8 @@ const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8'
 const EXTERNAL_WIZARDS_PATH = process.env.EXTERNAL_WIZARDS_PATH || '/widgets';
 const SOURCE = process.env.SOURCE || 'src';
 // replacements for widgets.js
-const EXTERNAL_ASSET_URL = (HOST.indexOf('://') > -1 ? HOST : `//${HOST}`) + path.join(PUBLIC_PATH, 'external');
-const EXTERNAL_WIZARDS_ROOT_URL = (HOST.indexOf('://') > -1 ? HOST : `//${HOST}`) + EXTERNAL_WIZARDS_PATH;
+const EXTERNAL_ASSET_URL = HOST + path.join(PUBLIC_PATH, 'external');
+const EXTERNAL_WIZARDS_ROOT_URL = HOST + EXTERNAL_WIZARDS_PATH;
 
 console.info('Using config', JSON.stringify({
   STORYBOOK_GIT_BRANCH,
@@ -64,7 +64,7 @@ console.info('Using config', JSON.stringify({
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
 const sourcePath = path.join(process.cwd(), SOURCE);
 const externalSourcePath = path.join(sourcePath, 'external');
-const closeIconSvg = fs.readFileSync(`${externalSourcePath}/close-regular.svg`, 'utf8');
+const closeIconSvg = fs.existsSync(`${externalSourcePath}/close-regular.svg`) ? fs.readFileSync(`${externalSourcePath}/close-regular.svg`, 'utf8') : '';
 const outputPath = path.join(process.cwd(), 'dist/public');
 const assetsPath = path.join(process.cwd(), 'dist/assets.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
@@ -73,7 +73,7 @@ const widgetEntryPath = path.join(externalSourcePath, 'widget.js');
 const widgetCssEntryPath = path.join(externalSourcePath, 'widget.css');
 const wizardsEntryPath = path.join(externalSourcePath, 'wizards/index.js');
 
-const devDomain = `http://${HOST}:${DEV_PORT}/`;
+const devDomain = `${HOST}:${DEV_PORT}/`;
 
 const isDev = NODE_ENV === 'development';
 const isStaging = SLY_ENV === 'staging';
