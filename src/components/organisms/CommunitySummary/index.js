@@ -73,26 +73,35 @@ export default class communitySummary extends React.Component {
       conciergeNumber = twilioNumber.numbers[0];
     }
 
-    highlights.push((
-      <span>
-        Pricing & Availability&nbsp;
-        <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
-          <NumberFormat value={conciergeNumber} format="(###) ###-####" displayType="text" data-tip data-for="tooltipPhoneNumber" />
-        </Link>
-        <TooltipContent id="tooltipPhoneNumber" place="bottom" effect="solid" type="light" multiline>
-          This phone number will connect you to the<br /> concierge team at Seniorly.
-        </TooltipContent>
-      </span>
-    ));
+    if (false) {
+      highlights.push((
+        <span>
+          Pricing & Availability&nbsp;
+          <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
+            <NumberFormat
+              value={conciergeNumber}
+              format="(###) ###-####"
+              displayType="text"
+              data-tip
+              data-for="tooltipPhoneNumber"
+            />
+          </Link>
+          <TooltipContent id="tooltipPhoneNumber" place="bottom" effect="solid" type="light" multiline>
+            This phone number will connect you to the<br /> concierge team at Seniorly.
+          </TooltipContent>
+        </span>
+      ));
 
-    highlights.push((
-      <span>
-        Reception&nbsp;
-        <Link href={`tel:${receptionNumber}`} onClick={onReceptionNumberClicked}>
-          <NumberFormat value={receptionNumber} format="(###) ###-####" displayType="text" />
-        </Link>
-      </span>
-    ));
+      highlights.push((
+        <span>
+          Reception&nbsp;
+          <Link href={`tel:${receptionNumber}`} onClick={onReceptionNumberClicked}>
+            <NumberFormat value={receptionNumber} format="(###) ###-####" displayType="text" />
+          </Link>
+        </span>
+      ));
+    }
+
     if (licenseUrl) {
       highlights.push((
         <Link
