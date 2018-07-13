@@ -4,8 +4,8 @@
     cssId: 'seniorly-widget-style',
     scriptId: 'seniorly-widget-script',
     context: {
-      cssFileUrl: `${process.env.EXTERNAL_ASSET_URL}/widget.css`,
-      iframeUrl: `${process.env.EXTERNAL_WIZARDS_ROOT_URL}`,
+      cssFileUrl: process.env.EXTERNAL_ASSET_URL + '/widget.css',
+      iframeUrl: process.env.EXTERNAL_WIZARDS_ROOT_URL,
     },
     config: {},
     widgetClassName: {
