@@ -30,18 +30,18 @@ const amenitiesAndFeaturesRef = React.createRef();
 
 const wrap = (props = {}) => mount(<CommunitySummary {...props} />);
 
-const testTwilioNumber = (wrapper) => {
-  expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${twilioNumber.numbers[0]}` }).length).toBeGreaterThan(0);
-  expect(wrapper.text()).toContain('Pricing & Availability');
-};
-const testPhoneNumber = (wrapper) => {
-  expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${communityPhone}` }).length).toBeGreaterThan(0);
-  expect(wrapper.text()).toContain('Reception');
-};
-const testUserPhoneNumber = (wrapper) => {
-  expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${user.phoneNumber}` }).length).toBeGreaterThan(0);
-  expect(wrapper.text()).toContain('Reception');
-};
+// const testTwilioNumber = (wrapper) => {
+//   expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${twilioNumber.numbers[0]}` }).length).toBeGreaterThan(0);
+//   expect(wrapper.text()).toContain('Pricing & Availability');
+// };
+// const testPhoneNumber = (wrapper) => {
+//   expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${communityPhone}` }).length).toBeGreaterThan(0);
+//   expect(wrapper.text()).toContain('Reception');
+// };
+// const testUserPhoneNumber = (wrapper) => {
+//   expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${user.phoneNumber}` }).length).toBeGreaterThan(0);
+//   expect(wrapper.text()).toContain('Reception');
+// };
 const testAmenityScore = (wrapper) => {
   expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.amenitiesAndFeatures}` }).length).toBeGreaterThan(0);
   expect(wrapper.text()).toContain('Amenity Score');
@@ -59,26 +59,26 @@ const testReviews = (wrapper) => {
   expect(wrapper.text()).toContain('Rating 4.1-Star Average');
 };
 
-it('renders twilioNumber', () => {
-  const wrapper = wrap({
-    twilioNumber, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
-  });
-  testTwilioNumber(wrapper);
-});
-
-it('renders phoneNumber', () => {
-  const wrapper = wrap({
-    phoneNumber:communityPhone, user, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
-  });
-  testPhoneNumber(wrapper);
-});
-
-it('renders user phone number', () => {
-  const wrapper = wrap({
-    user, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
-  });
-  testUserPhoneNumber(wrapper);
-});
+// it('renders twilioNumber', () => {
+//   const wrapper = wrap({
+//     twilioNumber, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
+//   });
+//   testTwilioNumber(wrapper);
+// });
+//
+// it('renders phoneNumber', () => {
+//   const wrapper = wrap({
+//     phoneNumber:communityPhone, user, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
+//   });
+//   testPhoneNumber(wrapper);
+// });
+//
+// it('renders user phone number', () => {
+//   const wrapper = wrap({
+//     user, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
+//   });
+//   testUserPhoneNumber(wrapper);
+// });
 
 it('renders amenityScore', () => {
   const wrapper = wrap({
@@ -120,12 +120,12 @@ it('renders all properties', () => {
     communityReviewsRef,
     pricingAndFloorPlansRef,
     amenitiesAndFeaturesRef,
-    providedAverage: 1, 
+    providedAverage: 1,
   });
 
-  testTwilioNumber(wrapper);
-  testPhoneNumber(wrapper);
-  testUserPhoneNumber(wrapper);
+  // testTwilioNumber(wrapper);
+  // testPhoneNumber(wrapper);
+  // testUserPhoneNumber(wrapper);
   testAmenityScore(wrapper);
   testStartingRate(wrapper);
   testCommunityHighlights(wrapper);
