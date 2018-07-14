@@ -10,10 +10,22 @@ const Wrapper = styled.div`
   flex-direction: column;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    transform: scale(1);
     padding: ${size('spacing.large')};
     flex-direction: row;
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
     border-radius: ${size('spacing.tiny')};
+  }
+
+  &:hover {
+    cursor: pointer;
+    background: #fff;
+    box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('grayscale', 0)}80;
+  
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      transform: scale(1.002);
+      border-radius: ${size('spacing.small')};
+    }
   }
 `;
 
