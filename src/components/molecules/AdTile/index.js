@@ -1,4 +1,5 @@
 import React from 'react';
+import { bool, func } from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
@@ -13,7 +14,7 @@ const Wrapper = styled.div`
     transform: scale(1);
     padding: ${size('spacing.large')};
     flex-direction: row;
-    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+    border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('grayscale', 2)};
     border-radius: ${size('spacing.tiny')};
   }
 
@@ -63,9 +64,9 @@ const AdInfoUnorderedList = styled.div`
   margin-top: 0;
 `;
 
-const AdTile = () => {
+const AdTile = ({ borderless, onClick }) => {
   return (
-    <Wrapper>
+    <Wrapper onClick={onClick} borderless={borderless}>
       <AdImage >
         <StyledLogo icon="seniorly-white" size="xxLarge" />
       </AdImage>
@@ -79,6 +80,15 @@ const AdTile = () => {
       </AdInfo>
     </Wrapper>
   );
+};
+
+AdTile.propTypes = {
+  onClick: func,
+  borderless: bool,
+};
+
+AdTile.defaultProps = {
+  borderless: false,
 };
 
 export default AdTile;
