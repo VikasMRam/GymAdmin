@@ -8,11 +8,23 @@ import { Icon } from 'sly/components/atoms';
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.large')};
+    flex-direction: row;
+    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+    border-radius: ${size('spacing.tiny')};
+  }
 `;
 
 const AdImage = styled.div`
   background:  ${palette('secondary', 0)};
   height: ${size('tile', 'large', 'height')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('tile.regular.width')};
+    height: ${size('tile.regular.height')};
+  }
 `;
 
 const StyledLogo = styled(Icon)`
@@ -22,6 +34,10 @@ const StyledLogo = styled(Icon)`
 const AdInfo = styled.div`
   border: ${size('border.regular')} solid ${palette('grayscale', 0)};
   border-top: 0;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    border: 0;
+  }
 `;
 
 const AdInfoHeader = styled.div`
