@@ -12,6 +12,7 @@ import Heading from 'sly/components/atoms/Heading';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 
 import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
+import AdTile from 'sly/components/molecules/AdTile/index';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -22,6 +23,10 @@ const CommunityFilterBarWrapper = styled.div`
 `;
 const StyledLink = styled(Link)`
   display: block;
+  margin-bottom: ${size('spacing.large')};
+`;
+
+const AdTileWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -68,6 +73,7 @@ export default class CommunitySearchList extends Component {
         <CommunityFilterBarWrapper>
           <CommunityFilterBar searchParams={searchParams} {...props} />
         </CommunityFilterBarWrapper>
+        <AdTileWrapper><AdTile /></AdTileWrapper>
         {components}
         <Pagination onChange={this.onPageChange} current={current} total={total} />
         <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
