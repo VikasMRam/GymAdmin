@@ -52,7 +52,10 @@ export default class CommunitySearchList extends Component {
   };
 
   render() {
-    const { communityList, requestMeta, searchParams, ...props } = this.props;
+    const {
+      communityList, requestMeta, searchParams, ...props
+    } = this.props;
+    const adIndex = 2;
 
     if (communityList.length < 1) {
       return <Heading>It doesn&apos;t look like we have added communities in the area yet.</Heading>;
@@ -66,6 +69,7 @@ export default class CommunitySearchList extends Component {
         </StyledLink>
       );
     });
+    components.splice(adIndex, 0, <AdTileWrapper><AdTile /></AdTileWrapper>);
     const { current, total } = getPaginationData(requestMeta);
     return (
       <Fragment>
@@ -73,7 +77,6 @@ export default class CommunitySearchList extends Component {
         <CommunityFilterBarWrapper>
           <CommunityFilterBar searchParams={searchParams} {...props} />
         </CommunityFilterBarWrapper>
-        <AdTileWrapper><AdTile /></AdTileWrapper>
         {components}
         <Pagination onChange={this.onPageChange} current={current} total={total} />
         <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
