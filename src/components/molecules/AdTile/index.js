@@ -40,7 +40,7 @@ const AdImage = styled.div`
   }
 `;
 
-const StyledLogo = styled(Icon)`
+export const StyledIcon = styled(Icon)`
   margin: auto;
 `;
 
@@ -68,7 +68,7 @@ const AdTile = ({ borderless, onClick }) => {
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
       <AdImage >
-        <StyledLogo icon="seniorly-white" size="xxLarge" />
+        <StyledIcon icon="seniorly-white" size="xxLarge" />
       </AdImage>
       <AdInfo>
         <AdInfoHeader>Let the Seniorly Team Find Your Room</AdInfoHeader>
