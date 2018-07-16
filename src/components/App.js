@@ -10,7 +10,7 @@ import { func } from 'prop-types';
 import theme from './themes/default';
 import setGlobalStyles from './themes/setGlobalStyles';
 
-import { facebookPixelId, googleTagManagerId } from 'sly/config';
+import { facebookPixelId, googleTagManagerId, isProd } from 'sly/config';
 import { assetPath } from 'sly/components/themes';
 // import AppController from 'sly/controllers/Appcontroller';
 import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
@@ -164,6 +164,22 @@ export default class App extends Component {
           <iframe src={`https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}`} height="0" width="0" style={{display: 'none', visibility: 'hidden'}}/>
         </noscript>
         {/* End Google Tag Manager */}
+
+        {/* Begin Inspectlet Asynchronous Code */}
+        {
+          (isProd) && (
+            <script dangerouslySetInnerHTML={{ __html: `
+                (function() {
+                window.__insp = window.__insp || [];
+                __insp.push(['wid', 1731141391]);
+                var ldinsp = function(){
+                if(typeof window.__inspld != "undefined") return; window.__inspld = 1; var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js?wid=1731141391&r=' + Math.floor(new Date().getTime()/3600000); var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); };
+                setTimeout(ldinsp, 0);
+              })();`}}
+            />
+          )
+        }
+        {/* End Inspectlet Asynchronous Code */}
 
         {/* eslint-enable */}
       </Fragment>

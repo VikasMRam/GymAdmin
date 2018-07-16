@@ -13,6 +13,7 @@ const config = {
     slyEnv: process.env.SLY_ENV,
     isDev: process.env.NODE_ENV,
     isTest: false,
+    isProd: false,
     basename: process.env.BASENAME,
     host: process.env.HOST,
     port: process.env.PORT,
@@ -29,8 +30,7 @@ const config = {
     olarkSiteId: '',
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-NTC7HG2',
-
-version: process.env.VERSION,
+    version: process.env.VERSION,
   },
 
   test: {
@@ -48,6 +48,7 @@ version: process.env.VERSION,
 
   production: {
     isDev: false,
+    isProd: true,
     eventServerUrl: 'https://event.seniorly.com/events/new',
     gAnalyticsKey: 'UA-55078261-1',
     olarkSiteId: '9319-500-10-7635',
