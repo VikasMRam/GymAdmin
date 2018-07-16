@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, bool, oneOf } from 'prop-types';
+import { string, bool, oneOf, number, oneOfType } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -86,7 +86,10 @@ const Field = ({
 
 Field.propTypes = {
   name: string.isRequired,
-  value: string,
+  value: oneOfType([
+    string,
+    number,
+  ]),
   className: string,
   invalid: bool,
   error: string,

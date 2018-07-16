@@ -71,10 +71,10 @@ class SearchBoxContainer extends Component {
   };
 
   render() {
-    const { layout, address } = this.props;
+    const { layout, address, ...props } = this.props;
     const { isMounted } = this.state;
     if (!isMounted) {
-      return <div></div>;
+      return <div />;
     }
     return (
       <SearchBox
@@ -84,6 +84,7 @@ class SearchBoxContainer extends Component {
         onSelect={this.handleSelect}
         onSeachButtonClick={this.handleSearch}
         onTextboxFocus={this.handleTextboxFocus}
+        {...props}
       />
     );
   }
