@@ -18,6 +18,12 @@ const Wrapper = styled.div`
   ${switchProp('layout', {
     regular: css`
       width: ${size('profileTile.wrapper.regular.width')};
+      &:hover {
+        cursor: pointer;
+        background: #fff;
+        border: ${size('border.regular')} solid ${palette('secondary', 0)};
+        box-shadow: 0 ${size('spacing.regular')} ${size('spacing.large')} ${palette('grayscale', 0)}80;
+      }
 `,
     modal: css`
       width: ${size('profileTile.wrapper.modal.width')};
@@ -35,13 +41,13 @@ ${switchProp('layout', {
     regular: css`
         width: ${size('profileTile.image.regular.width')};
         height: ${size('profileTile.image.regular.height')};
-        margin: 24px;
+        margin: ${size('spacing.xLarge')};
 `,
     modal: css`
         width: ${size('profileTile.image.modal.width')};
         height: ${size('profileTile.image.modal.height')};
         margin: 36px;
-        margin-bottom: 16px;
+        margin-bottom: ${size('spacing.large')};
 `,
   })}
 `;
@@ -71,7 +77,7 @@ const InfoWrapper = styled.div`
   flex-direction: column;
   ${switchProp('layout', {
     regular: css`
-      margin: 24px;
+      margin: ${size('spacing.xLarge')};
       margin-top: 0;
     `,
     modal: css`
@@ -84,7 +90,7 @@ const InfoWrapper = styled.div`
 const HeadingWrapper = styled.div`
   font-size: ${size('text.subtitle')};
   font-weight: bold;
-  margin-bottom: 4px;
+  margin-bottom: ${size('spacing.small')};
 `;
 
 const SubHeadingWrapper = styled.div`
@@ -93,7 +99,7 @@ const SubHeadingWrapper = styled.div`
       
     `,
     modal: css`
-      margin-bottom: 16px;
+      margin-bottom: ${size('spacing.large')};
     `,
   })}
 `;
