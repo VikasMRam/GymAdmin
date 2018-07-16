@@ -69,7 +69,7 @@ export default class CommunitySearchList extends Component {
         </StyledLink>
       );
     });
-    components.splice(adIndex, 0, <AdTileWrapper><AdTile /></AdTileWrapper>);
+    // components.splice(adIndex, 0, <AdTileWrapper><AdTile /></AdTileWrapper>);
     const { current, total } = getPaginationData(requestMeta);
     return (
       <Fragment>
