@@ -458,19 +458,19 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
         </TwoColumnWrapper>
       </StyledSection>
       <StyledHr />
-      <StyledSection title="Companies We Trust">
+      <StyledSection title="Corporate Partners">
         <CWTColumnWrapper>
-          <CWTImage src={assetPath('images/home/companies-we-trust/HomeCareAssistance_BW.png')} alt="Home Care Assistance Logo" />
-          <CWTImage src={assetPath('images/home/companies-we-trust/Lyft_BW.png')} alt="Lyft Logo" />
-          <CWTImage src={assetPath('images/home/companies-we-trust/Berkeley_BW.png')} alt="Berkeley Logo" />
-          <CWTImage src={assetPath('images/home/companies-we-trust/FCA_BW.png')} alt="Family Caregiver Alliance Logo" />
-          <CWTImage src={assetPath('images/home/companies-we-trust/BlueHarborSeniorLiving_BW.png')} alt="Blue Harbor Senior Living Logo" />
+          <CWTImage src={assetPath('images/home/companies-we-trust/Brookdale_BW.png')} alt="Brookdale Senior Living Logo" />
+          <CWTImage src={assetPath('images/home/companies-we-trust/SunriseSeniorLiving_BW.png')} alt="SunriseSenior Living Logo" />
+          <CWTImage src={assetPath('images/home/companies-we-trust/HolidayRetirement_BW.png')} alt="Holidat Retirement" />
+          <CWTImage src={assetPath('images/home/companies-we-trust/PacificaSeniorLiving_BW.png')} alt="Pacifica Senior Living Logo" />
         </CWTColumnWrapper>
         <CWTColumnWrapper>
-          <CWTImage src={assetPath('images/home/companies-we-trust/Brookdale_BW.png')} alt="Brookdale Senior Living Logo"  />
-          <CWTImage src={assetPath('images/home/companies-we-trust/SunriseSeniorLiving_BW.png')} alt="SunriseSenior Living Logo"  />
-          <CWTImage src={assetPath('images/home/companies-we-trust/IntegralSeniorLiving_BW.png')} alt="Integral Senior Living Logo"  />
-          <CWTImage src={assetPath('images/home/companies-we-trust/PacificaSeniorLiving_BW.png')} alt="Pacifica Senior Living Logo" />
+          <CWTImage src={assetPath('images/home/companies-we-trust/HomeCareAssistance_BW.png')} alt="Home Care Assistance Logo" />
+          <CWTImage src={assetPath('images/home/companies-we-trust/FCA_BW.png')} alt="Family Caregiver Alliance Logo" />
+          <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
+          <CWTImage src={assetPath('images/home/companies-we-trust/SeniorCareAuthority_BW.png')} alt="SeniorCareAuthority Logo" />
+          <CWTImage src={assetPath('images/home/companies-we-trust/OasisSeniorAdvisors_BW.png')} alt="Oasis Senior Advisors Logo" />
         </CWTColumnWrapper>
       </StyledSection>
     </BasePageTemplate>
