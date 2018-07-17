@@ -29,7 +29,7 @@ const Wrapper = styled.div`
   })}
 `;
 
-const ImageWrapper = styled(Image)`
+export const ImageWrapper = styled(Image)`
   object-fit: cover;
   z-index: 0;
   display: block;
@@ -107,7 +107,7 @@ ProfileTile.propTypes = {
     imageUrl: string.isRequired,
     description: string,
   }),
-  layout: oneOf('regular', 'modal'),
+  layout: oneOf(['regular', 'modal']),
   onClick: func,
 };
 
