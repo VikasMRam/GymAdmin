@@ -170,7 +170,7 @@ theme.sizes = {
         width: '21rem',         // 336px
       },
       modal: {
-        width: '32.25rem',      // 516px
+        width: '27.75rem',      // 444px
       },
     },
     image: {
