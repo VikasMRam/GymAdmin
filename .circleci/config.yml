@@ -89,10 +89,10 @@ jobs:
           command: |
             if [[ "$CIRCLE_BRANCH" = "master" ]]; then
               export STAGED="--staged"
-              export DEPLOY_FAILED=$(eb deploy slyapi-$SLY_ENV --timeout 30  -v $STAGED | tee /dev/tty | grep -c "ERROR")
+              export DEPLOY_FAILED=$(eb deploy slyreact-$SLY_ENV --timeout 30  -v $STAGED | tee /dev/tty | grep -c "ERROR")
             else
               export V=$(cat ./VERSION)
-              export DEPLOY_FAILED=$(eb deploy  slyapi-$SLY_ENV --timeout 30 -l $V | tee /dev/tty | grep -c "ERROR")
+              export DEPLOY_FAILED=$(eb deploy  slyreact-$SLY_ENV --timeout 30 -l $V | tee /dev/tty | grep -c "ERROR")
             fi
 
             if [ "$DEPLOY_FAILED" -gt 0 ]; then
