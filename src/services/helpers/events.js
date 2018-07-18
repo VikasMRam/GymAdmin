@@ -10,7 +10,11 @@ export default class SlyEvent {
     if (this.seInstance === null) {
       this.seInstance = new SlyEvent();
       if (!isTest) {
+
         ReactGA.initialize(gAnalyticsKey);
+        let ga = ReactGA.ga();
+        ga('require', 'displayfeatures');
+        ga('set', 'dimension1',cookie.load('sly_uuid'));
       }
     }
     return this.seInstance;

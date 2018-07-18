@@ -9,6 +9,7 @@ import AdvancedInfoContainer from 'sly/containers/AdvancedInfoContainer';
 // import SimilarCommunitiesContainer from 'sly/containers/SimilarCommunitiesContainer';
 import Thankyou from 'sly/components/molecules/Thankyou';
 import WhatNext from 'sly/components/organisms/WhatNext';
+import { createBooleanValidator, email, required, usPhone } from "sly/services/validation";
 
 const ExpressConversionFormContainer = props => (
   <ConversionFormContainer
@@ -28,6 +29,11 @@ const steps = {
 
 const appElement = isBrowser && document.querySelector('#app');
 
+const hasAllUserData = createBooleanValidator({
+  fullName: [required],
+  email: [required, email],
+  phone: [required, usPhone],
+});
 
 export default class Concierge extends Component {
   static propTypes = {
@@ -45,6 +51,7 @@ export default class Concierge extends Component {
       community,
       concierge,
       close,
+      userDetails,
       submitRegularConversion,
       submitExpressConversion,
       submitAdvancedInfo,
@@ -56,10 +63,10 @@ export default class Concierge extends Component {
     const StepComponent = steps[currentStep];
     return (
       <Fragment >
-        {callbackRequested && (
+        {callbackRequested && hasAllUserData(userDetails) && (
           <Thankyou community={community} />
         )}
-        {!callbackRequested && (
+        {! (callbackRequested && hasAllUserData(userDetails)) && (
           <ConversionFormContainer
             submitRegularConversion={submitRegularConversion}
             submitExpressConversion={submitExpressConversion}

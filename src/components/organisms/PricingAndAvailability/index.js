@@ -10,6 +10,7 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
+import {createBooleanValidator, email, required, usPhone} from "sly/services/validation";
 
 const Item = styled.div`
   display: inline-block;
@@ -57,6 +58,12 @@ const PriceLabel = styled.div`
 `;
 
 export const findPercentage = (price, maxPrice) => ((price / maxPrice) * 100);
+
+const hasAllUserData = createBooleanValidator({
+  fullName: [required],
+  email: [required, email],
+  phone: [required, usPhone],
+});
 
 export const sortProperties = (obj) => {
   const sortable = [];
@@ -172,16 +179,30 @@ export default class PricingAndAvailability extends Component {
             ))}
           </StyledArticle>
           <ConciergeController community={community}>
-            {({ concierge, submitExpressConversion }) => {
+            {({ concierge, submitExpressConversion, userDetails }) => {
                 if (concierge.callbackRequested) {
-                  return (
-                    <DoneBox>
-                      <Icon icon='round-checkmark' /> 
-                      <DoneText>
-                        Your Seniorly Guide will reach out to you regarding this community.
-                      </DoneText>
-                    </DoneBox>
-                  );
+                  if (!hasAllUserData(userDetails)) {
+                    return (
+                      <DoneBox>
+                        <Icon icon='round-checkmark' />
+                        <DoneText>
+
+                          We received your request, check your inbox shortly.
+
+                        </DoneText>
+                      </DoneBox>
+                    );
+                  } else {
+                    return (
+                      <DoneBox>
+                        <Icon icon='round-checkmark' />
+                        <DoneText>
+                          Your Seniorly Guide will reach out to you regarding this community.
+                        </DoneText>
+                      </DoneBox>
+                    );
+                  }
+
                 } else {
                   return (
                     <GetCurrentAvailabilityFormContainer

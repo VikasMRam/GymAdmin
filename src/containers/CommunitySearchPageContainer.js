@@ -32,28 +32,13 @@ class CommunitySearchPageContainer extends Component {
     toggleModalFilterPanel: func,
   }
 
-  componentDidUpdate() {
-    const { searchParams } = this.props;
-    const filters = getFiltersApplied(searchParams);
-    const cityState = (({ city, state }) => ({ city, state }))(searchParams);
-    const event = {
-      action: 'show', category: 'searchToc', label: searchParams.toc, value: queryString.stringify(cityState),
-    };
-    SlyEvent.getInstance().sendEvent(event);
-    if (searchParams.sort) {
-      const event = {
-        action: 'show', category: 'searchSort', label: searchParams.sort, value: queryString.stringify(cityState),
-      };
-      SlyEvent.getInstance().sendEvent(event);
-    }
-    filters.forEach((filter) => {
-      const filterName = filter.charAt(0).toUpperCase() + filter.slice(1);
-      const event = {
-        action: 'show', category: `search${filterName}`, label: searchParams[filter], value: queryString.stringify(cityState),
-      };
-      SlyEvent.getInstance().sendEvent(event);
-   });
-  }
+  // componentDidUpdate() {
+  //   const { searchParams } = this.props;
+  //   const event = {
+  //     action: 'search', category: searchParams.toc, label:queryString.stringify(searchParams),
+  //   };
+  //   SlyEvent.getInstance().sendEvent(event);
+  // }
 
   // TODO Define Search Parameters
   toggleMap = () => {
@@ -67,16 +52,18 @@ class CommunitySearchPageContainer extends Component {
     }
     this.changeSearchParams(event);
 
-    const slyEvent = {
-      action: 'show', category: 'searchPageView', label: event.changedParams.view,
-      value: this.props.location.pathname + this.props.location.search,
-    };
-    SlyEvent.getInstance().sendEvent(slyEvent);
   };
 
   changeSearchParams = ({ changedParams }) => {
     const { searchParams, history } = this.props;
     const { path } = filterLinkPath(searchParams, changedParams);
+    // const filters = getFiltersApplied(searchParams);
+    // const cityState = (({ city, state }) => ({ city, state }))(searchParams);
+    const event = {
+      action: 'search', category: searchParams.toc, label:queryString.stringify(searchParams),
+    };
+    SlyEvent.getInstance().sendEvent(event);
+
     history.push(path);
   };
 
