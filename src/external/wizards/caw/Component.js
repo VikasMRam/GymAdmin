@@ -7,7 +7,7 @@ import { ifProp } from 'styled-tools';
 import { size } from 'sly/components/themes';
 import { Button, Hr } from 'sly/components/atoms';
 
-import { Step1, Step2, Step3, Step4, Step5 } from './steps';
+import { getStepComponent } from './helpers';
 
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
 
@@ -51,29 +51,9 @@ const BottomWrapper = styled.div`
 `;
 
 const Component = ({
-  currentStep, invalid, data, handleSubmit, totalNumberofSteps, onBackButton, change,
+  currentStep, invalid, data, handleSubmit, totalNumberofSteps, onBackButton, change, setStoreKey,
 }) => {
-  let currentStepComponent = null;
-  switch (currentStep) {
-    case 1:
-      currentStepComponent = <Step1 invalid={invalid} data={data} />;
-      break;
-    case 2:
-      currentStepComponent = <Step2 invalid={invalid} data={data} />;
-      break;
-    case 3:
-      currentStepComponent = <Step3 invalid={invalid} data={data} />;
-      break;
-    case 4:
-      currentStepComponent = <Step4 invalid={invalid} data={data} />;
-      break;
-    case 5:
-      currentStepComponent = <Step5 invalid={invalid} data={data} setData={change} />;
-      break;
-    default:
-      currentStepComponent = <Step1 invalid={invalid} data={data} />;
-  }
-
+  const CurrentStepComponent = getStepComponent(currentStep);
   return (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -85,11 +65,11 @@ const Component = ({
           Step {currentStep} of {totalNumberofSteps}
         </CurrentStep>
         <StyledForm onSubmit={handleSubmit}>
-          {currentStepComponent}
+          <CurrentStepComponent invalid={invalid} data={data} setFormKey={change} setStoreKey={setStoreKey} />
           <BottomWrapper>
             <StyledHr />
-            {currentStep <= totalNumberofSteps && (
-              <ButtonsWrapper>
+            <ButtonsWrapper>
+              {currentStep < totalNumberofSteps && (
                 <Button
                   type="button"
                   palette="grayscale"
@@ -98,11 +78,11 @@ const Component = ({
                 >
                   Back
                 </Button>
-                <Button type="submit" disabled={invalid}>
-                  Continue
-                </Button>
-              </ButtonsWrapper>
-            )}
+              )}
+              <Button type="submit" disabled={invalid}>
+                Continue
+              </Button>
+            </ButtonsWrapper>
           </BottomWrapper>
         </StyledForm>
       </Wrapper>
@@ -118,6 +98,7 @@ Component.propTypes = {
   handleSubmit: func.isRequired,
   onBackButton: func.isRequired,
   change: func,
+  setStoreKey: func,
 };
 
 export default Component;
