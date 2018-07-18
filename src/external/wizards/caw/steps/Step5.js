@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import { palette } from 'styled-theme';
+import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
@@ -15,21 +16,45 @@ const Description = styled.p`
   color: ${palette('grayscale', 0)};
 `;
 
-const Step5 = ({ data }) => (
-  <Fragment>
-    {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-    <StyledHeading>What city are you renting in?</StyledHeading>
-    <Description>Use the slider to adjust your budget.</Description>
-    <SearchBoxContainer layout="boxWithoutButton" placeholder="Search the city you are renting in..." />
-  </Fragment>
-);
+const noRender = () => null;
 
-Step5.propTypes = {
-  data: object,
-};
+class Step5 extends Component {
+  static propTypes = {
+    data: object,
+    setData: func,
+  };
 
-Step5.defaultProps = {
-  data: {},
-};
+  static defaultProps = {
+    data: {},
+  };
+
+  handleLocationChange = (result) => {
+    const { setData } = this.props;
+    setData('location', result.formatted_address);
+  };
+
+  handleChange = (addr) => {
+    const { setData } = this.props;
+    setData('location', addr);
+  };
+
+  render() {
+    return (
+      <Fragment>
+        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+        <StyledHeading>What city are you renting in?</StyledHeading>
+        <Description>Use the slider to adjust your budget.</Description>
+        <SearchBoxContainer
+          clearLocationOnBlur={false}
+          layout="boxWithoutButton"
+          placeholder="Search the city you are renting in..."
+          onLocationSearch={this.handleLocationChange}
+          onTextChange={this.handleChange}
+        />
+        <Field name="location" component={noRender} />
+      </Fragment>
+    );
+  }
+}
 
 export default Step5;
