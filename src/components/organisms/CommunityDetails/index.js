@@ -24,7 +24,7 @@ const CommunityDetails = ({
   communityName, communityDescription, staffDescription, residentDescription, ownerExperience,
 }) => {
   return (
-    <CollapsibleBlock>
+    <CollapsibleBlock collapsedDefault={false}>
       {communityDescription ? (
         <StyledArticle>
           <Paragraph
