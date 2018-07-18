@@ -21,7 +21,7 @@ const configureStore = (initialState, services = {}) => {
   ];
 
   if (isBrowser && isDev) {
-    // middlewares.push(loggerMiddleware);
+    middlewares.push(loggerMiddleware);
   }
 
   const enhancers = [
