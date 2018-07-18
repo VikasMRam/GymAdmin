@@ -33,7 +33,7 @@ const isAssessment = ({
   typeOfCare,
   typeOfRoom,
   timeToMove,
-  budget
+  budget,
 }) => !!(typeOfCare && typeOfRoom && timeToMove && budget);
 
 const hasAllUserData = createBooleanValidator({
@@ -270,7 +270,7 @@ const isCallback = slug => contact =>
 
 const mapStateToProps = (state, { controller, community }) => {
   const {
-    profilesContacted,
+    profilesContacted = [],
     userDetails = {},
   } = getDetail(state, 'userAction') || {};
 
