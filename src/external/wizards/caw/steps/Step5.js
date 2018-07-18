@@ -32,7 +32,9 @@ class Step5 extends Component {
 
   handleLocationChange = (result) => {
     const { setFormKey, setStoreKey } = this.props;
-    setStoreKey('locationSearchParams', getSearchParamFromPlacesResponse(result));
+    const searchParams = getSearchParamFromPlacesResponse(result);
+    delete searchParams.toc;
+    setStoreKey('locationSearchParams', searchParams);
     setFormKey('location', result.formatted_address);
   }
 

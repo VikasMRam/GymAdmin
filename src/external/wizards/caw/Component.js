@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+import { palette, key } from 'styled-theme';
 import { bool, object, number, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Button, Hr } from 'sly/components/atoms';
+import { Button, Hr, Heading, Icon } from 'sly/components/atoms';
 
 import { getStepComponent } from './helpers';
 
@@ -18,6 +18,7 @@ const ProgressBar = styled.div`
   background-color: ${palette('secondary', 0)};
   height: ${size('spacing.regular')};
   width: ${progressBarWidth}%;
+  transition: width ${key('transitions.slow.inOut')};
 `;
 const CurrentStep = styled.p`
   font-size: ${size('text.caption')};
@@ -49,43 +50,63 @@ const BottomWrapper = styled.div`
   bottom: 0;
   right: ${size('spacing.xxLarge')};
 `;
+const StyledHeading = styled(Heading)`
+  font-weight: normal;
+`;
+const SearchingWrapper = Wrapper.extend`
+  top: 50%;
+  transform: translate3d(0%, -50%, 0);
+  position: absolute;
+  text-align: center;
+`;
 
 const Component = ({
-  currentStep, invalid, data, handleSubmit, totalNumberofSteps, onBackButton, change, setStoreKey,
+  currentStep, invalid, data, handleSubmit, totalNumberofSteps, onBackButton, change, setStoreKey, searching,
 }) => {
   const CurrentStepComponent = getStepComponent(currentStep);
   return (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <ProgressWrapper>
-        <ProgressBar current={currentStep} limit={totalNumberofSteps} />
-      </ProgressWrapper>
-      <Wrapper>
-        <CurrentStep limitReached={currentStep === totalNumberofSteps}>
-          Step {currentStep} of {totalNumberofSteps}
-        </CurrentStep>
-        <StyledForm onSubmit={handleSubmit}>
-          <CurrentStepComponent invalid={invalid} data={data} setFormKey={change} setStoreKey={setStoreKey} />
-          <BottomWrapper>
-            <StyledHr />
-            <ButtonsWrapper>
-              {currentStep < totalNumberofSteps && (
-                <Button
-                  type="button"
-                  palette="grayscale"
-                  disabled={currentStep === 1}
-                  onClick={onBackButton}
-                >
-                  Back
-                </Button>
-              )}
-              <Button type="submit" disabled={invalid}>
-                Continue
-              </Button>
-            </ButtonsWrapper>
-          </BottomWrapper>
-        </StyledForm>
-      </Wrapper>
+      {searching &&
+        <SearchingWrapper>
+          <StyledHeading level="subtitle">Please wait while we search for your options.</StyledHeading>
+          {/* figure out way to show in correct size as per sketch */}
+          <Icon icon="search" palette="grayscale" />
+        </SearchingWrapper>
+      }
+      {!searching &&
+        <Fragment>
+          <ProgressWrapper>
+            <ProgressBar current={currentStep} limit={totalNumberofSteps} />
+          </ProgressWrapper>
+          <Wrapper>
+            <CurrentStep limitReached={currentStep === totalNumberofSteps}>
+              Step {currentStep} of {totalNumberofSteps}
+            </CurrentStep>
+            <StyledForm onSubmit={handleSubmit}>
+              <CurrentStepComponent invalid={invalid} data={data} setFormKey={change} setStoreKey={setStoreKey} />
+              <BottomWrapper>
+                <StyledHr />
+                <ButtonsWrapper>
+                  {currentStep < totalNumberofSteps && (
+                    <Button
+                      type="button"
+                      palette="grayscale"
+                      disabled={currentStep === 1}
+                      onClick={onBackButton}
+                    >
+                      Back
+                    </Button>
+                  )}
+                  <Button type="submit" disabled={invalid}>
+                    Continue
+                  </Button>
+                </ButtonsWrapper>
+              </BottomWrapper>
+            </StyledForm>
+          </Wrapper>
+        </Fragment>
+      }
     </Fragment>
   );
 };
@@ -99,6 +120,7 @@ Component.propTypes = {
   onBackButton: func.isRequired,
   change: func,
   setStoreKey: func,
+  searching: bool,
 };
 
 export default Component;
