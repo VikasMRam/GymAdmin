@@ -8,10 +8,11 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import { basename, host } from 'sly/config';
+import api from 'sly/services/api';
 import configureStore from './store/configure';
 import WizardApp from './WizardApp';
 
-const store = configureStore();
+const store = configureStore({}, { api: api.create({ credentials: 'include' }) });
 
 const renderApp = () => (
   <Provider store={store}>

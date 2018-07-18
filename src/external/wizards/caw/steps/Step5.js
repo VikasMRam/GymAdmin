@@ -5,6 +5,7 @@ import { palette } from 'styled-theme';
 import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
+import { getSearchParamFromPlacesResponse } from 'sly/services/helpers/search';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import { Heading } from 'sly/components/atoms';
 
@@ -21,7 +22,8 @@ const noRender = () => null;
 class Step5 extends Component {
   static propTypes = {
     data: object,
-    setData: func,
+    setFormKey: func,
+    setStoreKey: func,
   };
 
   static defaultProps = {
@@ -29,14 +31,16 @@ class Step5 extends Component {
   };
 
   handleLocationChange = (result) => {
-    const { setData } = this.props;
-    setData('location', result.formatted_address);
-  };
+    const { setFormKey, setStoreKey } = this.props;
+    setStoreKey('locationSearchParams', getSearchParamFromPlacesResponse(result));
+    setFormKey('location', result.formatted_address);
+  }
 
-  handleChange = (addr) => {
-    const { setData } = this.props;
-    setData('location', addr);
-  };
+  handleChange = () => {
+    const { setFormKey, setStoreKey } = this.props;
+    setFormKey('location', null);
+    setStoreKey('locationSearchParams', null);
+  }
 
   render() {
     return (

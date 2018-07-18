@@ -4,6 +4,7 @@ import { reduxForm } from 'redux-form';
 import { func, object } from 'prop-types';
 
 import { REQUEST_CALLBACK } from 'sly/services/api/actions';
+import { selectFormData } from 'sly/services/helpers/forms';
 
 import {
   resourceCreateRequest,
@@ -54,10 +55,6 @@ const mapDispatchToProps = (dispatch) => ({
     return dispatch(resourceCreateRequest('userAction', data));
   },
 });
-
-const selectFormData = (state, form) => (!state.form || !state.form[form])
-  ? null
-  : state.form[form].values;
 
 const mapStateToProps = state => ({
   user: selectFormData(state, 'ConversionForm'),
