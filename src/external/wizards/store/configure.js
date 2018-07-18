@@ -29,6 +29,14 @@ const configureStore = (initialState) => {
   ];
 
   const store = createStore(reducer, initialState, compose(...enhancers));
+
+  if (module.hot) {
+    module.hot.accept('./reducer', () => {
+      const nextReducer = require('./reducer').default;
+      store.replaceReducer(nextReducer);
+    });
+  }
+
   return store;
 };
 

@@ -51,7 +51,7 @@ const BottomWrapper = styled.div`
 `;
 
 const Component = ({
-  currentStep, invalid, data, handleSubmit, totalNumberofSteps, onBackButton,
+  currentStep, invalid, data, handleSubmit, totalNumberofSteps, onBackButton, change,
 }) => {
   let currentStepComponent = null;
   switch (currentStep) {
@@ -68,7 +68,7 @@ const Component = ({
       currentStepComponent = <Step4 invalid={invalid} data={data} />;
       break;
     case 5:
-      currentStepComponent = <Step5 invalid={invalid} data={data} />;
+      currentStepComponent = <Step5 invalid={invalid} data={data} setData={change} />;
       break;
     default:
       currentStepComponent = <Step1 invalid={invalid} data={data} />;
@@ -117,6 +117,7 @@ Component.propTypes = {
   data: object,
   handleSubmit: func.isRequired,
   onBackButton: func.isRequired,
+  change: func,
 };
 
 export default Component;

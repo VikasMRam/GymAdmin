@@ -5,7 +5,7 @@ import { number, func } from 'prop-types';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 
 import { connectController } from 'sly/controllers';
-import { createValidator, required } from 'sly/services/validation';
+import { createValidator, required, minLength } from 'sly/services/validation';
 import CAWComponent from './Component';
 
 const totalNumberofSteps = 5;
@@ -14,6 +14,7 @@ const validate = createValidator({
   care_needs: [required],
   renting_or_buying: [required],
   monthly_budget: [required],
+  location: [required, minLength(3)],
 });
 const ReduxForm = reduxForm({
   form: 'CAWForm',
@@ -25,6 +26,7 @@ const ReduxForm = reduxForm({
     care_needs: null,
     renting_or_buying: null,
     monthly_budget: 1,
+    location: null,
   },
 })(CAWComponent);
 
