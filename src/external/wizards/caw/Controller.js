@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-import { number, func, object, integer } from 'prop-types';
+import { number, func, object } from 'prop-types';
 
 import { resourceCreateRequest, resourceListReadRequest } from 'sly/store/resource/actions';
 
@@ -39,22 +39,26 @@ class Controller extends Component {
     set: func,
     locationSearchParams: object,
     searchCommunities: func,
-    searchResultCount: integer,
+    searchResultCount: number,
   };
 
   handleSubmit = (values, dispatch, props) => {
     const {
-      currentStep, totalNumberofSteps, set,
+      currentStep, totalNumberofSteps, set, locationSearchParams, searchCommunities,
     } = props;
-    const { locationSearchParams, searchCommunities } = this.props;
 
     if (currentStep === 5) {
-      searchCommunities(locationSearchParams).then((result) => {
-        set({
-          currentStep: currentStep + 1,
-          searchResultCount: result.data.length,
-        });
+      set({
+        searching: true,
       });
+      searchCommunities(locationSearchParams)
+        .then((result) => {
+          set({
+            currentStep: currentStep + 1,
+            searchResultCount: result.data.length,
+            searching: false,
+          });
+        });
     } else if (currentStep + 1 <= totalNumberofSteps) {
       set({
         currentStep: currentStep + 1,
@@ -96,6 +100,7 @@ const mapStateToProps = (state, { controller }) => {
     currentStep: controller.currentStep || 1,
     locationSearchParams: controller.locationSearchParams,
     searchResultCount: controller.searchResultCount,
+    searching: controller.searching,
     data: selectFormData(state, 'CAWForm', {}),
   };
 };
