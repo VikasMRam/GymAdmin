@@ -86,12 +86,28 @@ export class ConciergeController extends Component {
     }
   };
 
+  gotoAdvancedInfo = () => {
+    const {
+      set,
+      userDetails,
+    } = this.props;
+
+    if (!isAssessment(userDetails)) {
+      set({
+        currentStep: ADVANCED_INFO,
+        modalIsOpen: true,
+      });
+    } else {
+      this.next();
+    }
+  };
+
   submitExpressConversion = data => {
     const {
       community,
     } = this.props;
     console.log('Seeing submit express conversion',data);
-    if ( data.phone && data.phone.match(/\d+/)){
+    if (data.phone && data.phone.match(/\d+/)){
       SlyEvent.getInstance().sendEvent({
         action: 'contactCommunity',
         category: 'requestConsultation',
@@ -226,6 +242,7 @@ export class ConciergeController extends Component {
 
     const {
       getPricing,
+      gotoAdvancedInfo,
       submitRegularConversion,
       submitExpressConversion,
       submitAdvancedInfo,
@@ -236,6 +253,7 @@ export class ConciergeController extends Component {
       concierge,
       userDetails,
       getPricing,
+      gotoAdvancedInfo,
       submitRegularConversion,
       submitExpressConversion,
       submitAdvancedInfo,
