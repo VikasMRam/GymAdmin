@@ -26,7 +26,6 @@ export const CONVERSION_FORM = 'conversionForm';
 export const EXPRESS_CONVERSION_FORM = 'expressConversionForm';
 export const ADVANCED_INFO = 'advancedInfo';
 export const SIMILAR_COMMUNITIES = 'similarCommunities';
-export const CALENDLY_APPOINTMENT = 'calendlyAppointment';
 export const WHAT_NEXT = 'whatNext';
 
 const isAssessment = ({
@@ -160,23 +159,6 @@ export class ConciergeController extends Component {
     }).then(() => this.next(false));
   };
 
-  launchCalendly = () => {
-    const { set } = this.props;
-
-    const event = {
-      action: 'contactCommunity',
-      category: 'calendly',
-      label: community.id
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
-
-    set({
-      currentStep: CALENDLY_APPOINTMENT,
-      modalIsOpen: true,
-    });
-  };
-
   next = (isExpress) => {
     const {
       concierge,
@@ -247,7 +229,6 @@ export class ConciergeController extends Component {
       submitRegularConversion,
       submitExpressConversion,
       submitAdvancedInfo,
-      launchCalendly,
       close,
     } = this;
 
@@ -258,7 +239,6 @@ export class ConciergeController extends Component {
       submitRegularConversion,
       submitExpressConversion,
       submitAdvancedInfo,
-      launchCalendly,
       close,
     });
   }
