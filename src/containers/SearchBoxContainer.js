@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, func, object } from 'prop-types';
+import { string, func, object, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import { geocodeByAddress } from 'react-places-autocomplete';
 
@@ -18,6 +18,12 @@ class SearchBoxContainer extends Component {
     setLocation: func,
     onLocationSearch: func,
     clearLocation: func,
+    clearLocationOnBlur: bool,
+    onTextChange: func,
+  };
+
+  static defaultProps = {
+    clearLocationOnBlur: true,
   };
 
   constructor(props) {
@@ -43,7 +49,10 @@ class SearchBoxContainer extends Component {
   }
 
   handleChange = (address) => {
-    const { changeAddress } = this.props;
+    const { changeAddress, onTextChange } = this.props;
+    if (onTextChange) {
+      onTextChange(address);
+    }
     changeAddress(address);
   };
 
@@ -71,10 +80,25 @@ class SearchBoxContainer extends Component {
   };
 
   render() {
-    const { layout, address } = this.props;
+    const {
+      layout, address, clearLocationOnBlur, ...props
+    } = this.props;
     const { isMounted } = this.state;
     if (!isMounted) {
-      return <div></div>;
+      return <div />;
+    }
+    if (clearLocationOnBlur) {
+      return (
+        <SearchBox
+          layout={layout}
+          value={address}
+          onChange={this.handleChange}
+          onSelect={this.handleSelect}
+          onSeachButtonClick={this.handleSearch}
+          onTextboxFocus={this.handleTextboxFocus}
+          {...props}
+        />
+      );
     }
     return (
       <SearchBox
@@ -83,7 +107,7 @@ class SearchBoxContainer extends Component {
         onChange={this.handleChange}
         onSelect={this.handleSelect}
         onSeachButtonClick={this.handleSearch}
-        onTextboxFocus={this.handleTextboxFocus}
+        {...props}
       />
     );
   }

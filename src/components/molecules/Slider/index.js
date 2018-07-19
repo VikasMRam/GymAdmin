@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { string, number, bool, func, oneOf } from 'prop-types';
-import styled from 'styled-components';
-import { font, palette } from 'styled-theme';
-import { ifProp, prop } from 'styled-tools';
+import styled, { css } from 'styled-components';
+import { palette } from 'styled-theme';
+import { prop, switchProp, ifProp } from 'styled-tools';
+import { omit } from 'lodash';
 
 import { size } from 'sly/components/themes';
 
@@ -14,7 +15,6 @@ const hoverThumbColor = ({ disabled }) => !disabled && palette(0);
 
 const thumbHeight = size('slider.knobHeight');
 const thumbWidth = size('slider.knobWidth');
-const thumbPosition = size('slider.knob');
 const barHeight = size('spacing.small');
 
 const border = '0rem solid transparent';
@@ -30,6 +30,14 @@ const Wrapper = styled.div`
   font-size: ${size};
   color: ${palette('grayscale', 0)};
   background-color: transparent;
+  ${switchProp('valuePosition', {
+    bottom: css`
+      flex-flow: column;
+      align-items: flex-start;`,
+    top: css`
+      flex-flow: column-reverse;
+      align-items: flex-start;`,
+  })};
 `;
 
 const SliderBar = styled.input`
@@ -123,7 +131,8 @@ const SliderBar = styled.input`
 
 const Value = styled.span`
   text-align: right;
-  width: ${props => size('slider.valueWidth', prop('width')(props))(props)};
+  ${ifProp({ valuePosition: 'right' }, `
+    width: ${props => size('slider.valueWidth', prop('width')(props))(props)};`)}
 `;
 
 class Slider extends Component {
@@ -155,7 +164,6 @@ class Slider extends Component {
       step,
       onChange,
       onBlur,
-      type,
       ...props
     } = this.props;
 
@@ -171,9 +179,9 @@ class Slider extends Component {
           step={step}
           onChange={this.onChange}
           onBlur={this.onBlur}
-          {...props}
+          {...omit(props, 'type')}
         />
-        <Value width={valueWidth}>{valueParse(value)}</Value>
+        <Value {...props} width={valueWidth}>{valueParse(value)}</Value>
       </Wrapper>
     );
   }
@@ -181,6 +189,7 @@ class Slider extends Component {
 
 Slider.propTypes = {
   id: string,
+  type: string,
   min: number,
   max: number,
   step: number,
@@ -189,6 +198,9 @@ Slider.propTypes = {
   disabled: bool,
   valueParse: func,
   valueWidth: oneOf(['small', 'regular', 'large']),
+  valuePosition: oneOf(['right', 'top', 'bottom']),
+  onChange: func,
+  onBlur: func,
 };
 
 Slider.defaultProps = {
@@ -198,6 +210,7 @@ Slider.defaultProps = {
   palette: 'secondary',
   valueParse: val => val,
   valueWidth: 'regular',
+  valuePosition: 'right',
 };
 
 export default Slider;

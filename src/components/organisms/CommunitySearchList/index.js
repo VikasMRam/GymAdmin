@@ -12,6 +12,7 @@ import Heading from 'sly/components/atoms/Heading';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 
 import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
+import AdTile from 'sly/components/molecules/AdTile/index';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -22,6 +23,10 @@ const CommunityFilterBarWrapper = styled.div`
 `;
 const StyledLink = styled(Link)`
   display: block;
+  margin-bottom: ${size('spacing.large')};
+`;
+
+const AdTileWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -47,7 +52,10 @@ export default class CommunitySearchList extends Component {
   };
 
   render() {
-    const { communityList, requestMeta, searchParams, ...props } = this.props;
+    const {
+      communityList, requestMeta, searchParams, ...props
+    } = this.props;
+    const adIndex = 2;
 
     if (communityList.length < 1) {
       return <Heading>It doesn&apos;t look like we have added communities in the area yet.</Heading>;
@@ -61,6 +69,7 @@ export default class CommunitySearchList extends Component {
         </StyledLink>
       );
     });
+    // components.splice(adIndex, 0, <AdTileWrapper><AdTile /></AdTileWrapper>);
     const { current, total } = getPaginationData(requestMeta);
     return (
       <Fragment>

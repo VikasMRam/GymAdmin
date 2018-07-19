@@ -22,7 +22,9 @@ import App from 'sly/components/App';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 
-const renderApp = ({ store, context, location, sheet }) => {
+const renderApp = ({
+  store, context, location, sheet,
+}) => {
   const app = sheet.collectStyles((
     <Provider store={store}>
       <StaticRouter basename={basename} context={context} location={location}>
@@ -33,7 +35,9 @@ const renderApp = ({ store, context, location, sheet }) => {
   return renderToString(app);
 };
 
-const renderHtml = ({ serverState, initialState, content, sheet, assets }) => {
+const renderHtml = ({
+  serverState, initialState, content, sheet, assets,
+}) => {
   const styles = sheet ? sheet.getStyleElement() : '';
 
   const state = `
@@ -77,23 +81,51 @@ app.get(`${externalWizardsPath}*`, (req, res) => {
 
 app.use(async (req, res, next) => {
   const api = apiService.create();
+  const cookieArr = [];
   let slyUUID = req.cookies.sly_uuid;
   let setUUID = false;
   if (slyUUID === undefined || slyUUID === null) {
     slyUUID = v4();
     setUUID = true;
   }
+  cookieArr.push(`sly_uuid=${slyUUID};Max-Age=27000000;Domain=${cookieDomain};Path=/;`);
+
   let slySID = req.cookies.sly_sid;
   if (slySID === undefined || slySID === null) {
     slySID = require('crypto').randomBytes(16).toString('hex');
   }
+  cookieArr.push(`sly_sid=${slySID};Max-Age=3600;Domain=${cookieDomain};Path=/;`);
 
-  res.header('Set-Cookie',[`sly_uuid=${slyUUID};Max-Age=27000000;Domain=${cookieDomain};Path=/;`, `sly_sid=${slySID};Max-Age=3600;Domain=${cookieDomain};Path=/;`]);
+
+  let slyReferrer = req.cookies.referrer;
+  if (slyReferrer === undefined || slyReferrer === null) {
+    slyReferrer = req.headers.referer;
+    cookieArr.push(`referrer=${slyReferrer};Max-Age=27000000;Domain=${cookieDomain};Path=/;`);
+  }
+
+  const utmParams = ['utm_content', 'utm_medium', 'utm_source', 'utm_campaign', 'utm_term'];
+  const utm = req.cookies.utm;
+  if (utm === undefined || utm === null) {
+    let utmStr = '';
+    utmParams.forEach((elem) => {
+      if (req.query[elem] !== undefined) {
+        if (utmStr !== '') {
+          utmStr += ',';
+        }
+        utmStr = `${utmStr + elem}=${req.query[elem]}`;
+      }
+    });
+    if (utmStr !== '') {
+      cookieArr.push(`referrer=${utmStr};Max-Age=27000000;Domain=${cookieDomain};Path=/;`);
+    }
+  }
+
+  res.header('Set-Cookie', cookieArr);
   res.header('Cache-Control', ['max-age=0, private, must-revalidate', 'no-cache="set-cookie"']);
 
   if (req.headers.cookie) {
     api.setCookie(req.headers.cookie);
-  } else if (setUUID){
+  } else if (setUUID) {
     api.setCookie(`sly_uuid=${slyUUID}`);
   }
   /* End of possible temp code */
@@ -124,7 +156,7 @@ app.use(async (req, res, next) => {
     });
 
     if (serverState) {
-      Object.values(serverState).forEach(val => {
+      Object.values(serverState).forEach((val) => {
         if (val && val.stack) {
           throw val;
         }
@@ -157,9 +189,8 @@ const getErrorContent = (err) => {
   if (isDev) {
     const Redbox = require('redbox-react').RedBoxError;
     return <Redbox error={err} />;
-  } else {
-    return <Error />;
   }
+  return <Error />;
 };
 
 app.use((err, req, res, next) => {

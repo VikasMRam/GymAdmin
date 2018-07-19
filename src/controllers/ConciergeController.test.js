@@ -129,18 +129,18 @@ describe('ConciergeController', function() {
         modalIsOpen: true,
       });
     });
-    
-    it('should shortcircuit to thankYou when in express mode', () => {
-      const store = initStore({ resource, entities }); 
+
+    it('should not shortcircuit to thankYou when in express mode', () => {
+      const store = initStore({ resource, entities });
       const wrapper = wrap(community, store);
       wrapper.instance().next(true);
       expect(getControllerAction(store)).toEqual({
-        currentStep: WHAT_NEXT,
+        currentStep: ADVANCED_INFO,
         modalIsOpen: true,
       });
     });
   });
-  
+
   describe('Controller', () => {
     const sendEvent = jest.fn();
     const events = {
@@ -235,15 +235,15 @@ describe('ConciergeController', function() {
       const then = jest.fn();
       promise = { then };
       const data = { data: 'DATA' };
-      
+
       childProps().submitRegularConversion(data);
-    
+
       expect(lastEvent()).toEqual({
         action: 'contactCommunity',
         category: 'requestCallback',
         label: 'my-community',
       });
-      
+
       expect(lastSubmit()).toEqual({
         action: 'LEAD/REQUEST_CALLBACK',
         value: {
@@ -255,7 +255,7 @@ describe('ConciergeController', function() {
       then.mock.calls.pop()[0]();
       expect(instance.next).toHaveBeenCalledWith(false);
     });
-    
+
     it('should submit express conversion', () => {
       const wrapper = wrap({
         community,
@@ -267,15 +267,15 @@ describe('ConciergeController', function() {
       const then = jest.fn();
       promise = { then };
       const data = { data: 'DATA' };
-      
+
       childProps().submitExpressConversion(data);
-    
+
       expect(lastEvent()).toEqual({
         action: 'contactCommunity',
-        category: 'requestCallback',
+        category: 'requestPricing',
         label: 'my-community',
       });
-      
+
       expect(lastSubmit()).toEqual({
         action: 'LEAD/REQUEST_CALLBACK',
         value: {
@@ -287,7 +287,7 @@ describe('ConciergeController', function() {
       then.mock.calls.pop()[0]();
       expect(instance.next).toHaveBeenCalledWith(true);
     });
-    
+
     it('should submit advanced info', () => {
       const wrapper = wrap({ community, submit, concierge: {} });
       const instance = wrapper.instance();

@@ -10,6 +10,7 @@ export default class ConciergeContainer extends Component {
       <ConciergeController community={community}>
         {({
           concierge,
+          userDetails,
           submitExpressConversion,
           submitRegularConversion,
           submitAdvancedInfo,
@@ -19,6 +20,7 @@ export default class ConciergeContainer extends Component {
           <Concierge
             concierge={concierge}
             community={community}
+            userDetails={userDetails}
             submitExpressConversion={submitExpressConversion}
             submitRegularConversion={submitRegularConversion}
             submitAdvancedInfo={submitAdvancedInfo}

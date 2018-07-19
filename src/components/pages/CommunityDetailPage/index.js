@@ -31,6 +31,7 @@ import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswersContainer from 'sly/containers/CommunityQuestionAnswersContainer';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import Button from 'sly/components/atoms/Button';
+import CommunityLocalDetails from "sly/components/organisms/CommunityLocalDetails";
 
 const BackToSearch = styled.div`
   text-align: center
@@ -227,10 +228,14 @@ export default class CommunityDetailPage extends Component {
             <MorePictures gallery={gallery} communityName={name} onPictureClick={this.handleMorePicturesClick} />
           </Section>
         }
-
         <Section title="How Seniorly Works">
           <HowSlyWorks />
         </Section>
+        { (rgsAux && rgsAux.localDetails !=='') ?
+                (<Section title="Local Details">
+                  <CommunityLocalDetails localDetails={rgsAux.localDetails}/>
+                </Section>) : null
+        }
       </Fragment>
     );
     return (
@@ -317,11 +322,11 @@ export default class CommunityDetailPage extends Component {
               </Button>
             </BackToSearch>
           </CollapsibleSection>
-          {(communityDescription || rgsAux.slyCommunityDescription) &&
+          {(communityDescription || rgsAux.communityDescription) &&
             <CollapsibleSection title="Community Details">
               <CommunityDetails
                 communityName={name}
-                communityDescription={communityDescription || rgsAux.slyCommunityDescription}
+                communityDescription={communityDescription || rgsAux.communityDescription}
                 staffDescription={staffDescription}
                 residentDescription={residentDescription}
                 ownerExperience={ownerExperience}

@@ -293,6 +293,7 @@ theme.transitions = {
   slow   : {
     in : '.4s ease-in',
     out: '.4s ease-out',
+    inOut: '.4s ease-in-out',
   },
 };
 

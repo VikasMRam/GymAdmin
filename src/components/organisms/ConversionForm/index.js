@@ -59,14 +59,15 @@ const ConversionForm = ({
 }) => (
   <div>
     <StyledForm onSubmit={handleSubmit}>
-      <Heading level="title" size="title">Get Pricing & Availability</Heading>
-      {contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
+      {hasOnlyEmail && <Heading level="title" size="title">Get Connected Faster</Heading>}
+      {!hasOnlyEmail && <Heading level="title" size="title">Get Pricing & Availability</Heading>}
+      {!hasOnlyEmail && contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
 
       <Hr />
 
       {hasOnlyEmail && (
         <ExpressBlock>
-          A Seniorly Guide will contact you soon, we just need your name and number.
+          Our team will make sure you get the information you need quickly.
         </ExpressBlock>
       )}
 

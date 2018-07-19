@@ -12,6 +12,12 @@ const Form = styled.form`
   width: 100%;
 `;
 
+const StyledField = styled(Field)`
+  > div > * {
+    padding-left: 0;
+    padding-right: 0;
+  }
+`;
 const StyledButton = styled(Button)`
   width: 100%;
   margin-bottom: ${size('spacing.regular')};
@@ -40,8 +46,8 @@ const timeToMoveOptions = [
 ];
 const budgetOptions = [
   { value: 2, label: 'Under $2000' },
-  { value: 4, label: '$2000-$4000' },
-  { value: 6, label: '$4000-$6000' },
+  { value: 4, label: 'Up to $4000' },
+  { value: 6, label: 'Up to $6000' },
   { value: 10, label: 'Over $6000' },
 ];
 
@@ -76,7 +82,7 @@ const AdvancedInfoForm = ({
       width="100%"
       component={ReduxField}
     />
-    <Field
+    <StyledField
       name="budget"
       label="What is your monthly budget?"
       type="singlechoice"
