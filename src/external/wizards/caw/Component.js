@@ -61,7 +61,7 @@ const SearchingWrapper = Wrapper.extend`
 `;
 
 const Component = ({
-  currentStep, invalid, data, handleSubmit, totalNumberofSteps, onBackButton, change, setStoreKey, searching,
+  currentStep, invalid, data, handleSubmit, totalNumberofSteps, onBackButton, change, setStoreKey, searching, searchResultCount,
 }) => {
   const CurrentStepComponent = getStepComponent(currentStep);
   return (
@@ -84,7 +84,13 @@ const Component = ({
               Step {currentStep} of {totalNumberofSteps}
             </CurrentStep>
             <StyledForm onSubmit={handleSubmit}>
-              <CurrentStepComponent invalid={invalid} data={data} setFormKey={change} setStoreKey={setStoreKey} />
+              <CurrentStepComponent
+                invalid={invalid}
+                data={data}
+                setFormKey={change}
+                setStoreKey={setStoreKey}
+                searchResultCount={searchResultCount}
+              />
               <BottomWrapper>
                 <StyledHr />
                 <ButtonsWrapper>
@@ -99,7 +105,7 @@ const Component = ({
                     </Button>
                   )}
                   <Button type="submit" disabled={invalid}>
-                    Continue
+                    {currentStep === totalNumberofSteps ? 'See my options' : 'Continue'}
                   </Button>
                 </ButtonsWrapper>
               </BottomWrapper>
@@ -121,6 +127,7 @@ Component.propTypes = {
   change: func,
   setStoreKey: func,
   searching: bool,
+  searchResultCount: number,
 };
 
 export default Component;
