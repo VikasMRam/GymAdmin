@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
-import { Illustration, Image, Block, Link } from 'sly/components/atoms';
+import { Image, Block, Link } from 'sly/components/atoms';
 
 import Heading from 'sly/components/atoms/Heading';
 
