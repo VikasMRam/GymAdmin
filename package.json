@@ -8,7 +8,7 @@
     "start:prod": "npm run env:prod -- node .",
     "start:staging": "npm run env:staging -- node .",
     "predev": "npm run prebuild",
-    "dev": "npm run env:dev -- webpack-dev-server",
+    "dev": "npm run env:dev -- webpack-dev-server --compress",
     "prestaging": "npm run prebuild",
     "preprod": "npm run prebuild",
     "staging": "npm run build:staging && npm run start:staging",

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // https://github.com/diegohaz/arc/wiki/Webpack
 const path = require('path');
 const fs = require('fs');
@@ -40,8 +41,11 @@ const DOMAIN = process.env.DOMAIN || 'lvh.me';
 const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8').trim() : '';
 const EXTERNAL_WIZARDS_PATH = process.env.EXTERNAL_WIZARDS_PATH || '/widgets';
 const SOURCE = process.env.SOURCE || 'src';
+const devDomain = `${HOST}:${DEV_PORT}/`;
+const isDev = NODE_ENV === 'development';
+const isStaging = SLY_ENV === 'staging';
 // replacements for widgets.js
-const EXTERNAL_ASSET_URL = HOST + path.join(PUBLIC_PATH, 'external');
+const EXTERNAL_ASSET_URL = (isDev ? `${devDomain}external` : HOST + path.join(PUBLIC_PATH, 'external'));
 const EXTERNAL_WIZARDS_ROOT_URL = HOST + EXTERNAL_WIZARDS_PATH;
 
 console.info('Using config', JSON.stringify({
@@ -72,11 +76,7 @@ const serverEntryPath = path.join(sourcePath, 'server.js');
 const widgetEntryPath = path.join(externalSourcePath, 'widget.js');
 const widgetCssEntryPath = path.join(externalSourcePath, 'widget.css');
 const wizardsEntryPath = path.join(externalSourcePath, 'wizards/index.js');
-
-const devDomain = `${HOST}:${DEV_PORT}/`;
-
-const isDev = NODE_ENV === 'development';
-const isStaging = SLY_ENV === 'staging';
+const externalAssetsPath = path.join(process.cwd(), 'dist/external-assets.json');
 
 const when = (condition, setters) =>
   condition ? group(setters) : () => _ => _;
@@ -108,6 +108,23 @@ const resolveModules = modules => () => ({
     modules: [].concat(modules, 'node_modules'),
   },
 });
+
+function ModifyAssetsPlugin() {}
+ModifyAssetsPlugin.prototype.apply = (compiler) => {
+  compiler.plugin('done', () => {
+    const assets = require(assetsPath);
+    const externalAssets = {};
+    const newAssets = Object.keys(assets).reduce((previous, type) => {
+      externalAssets[type] = externalAssets[type] || [];
+      externalAssets[type] = assets[type].filter(asset => asset.match('external/'));
+      const newPrevious = previous;
+      newPrevious[type] = previous[type].filter(asset => !asset.match('external/'));
+      return newPrevious;
+    }, assets);
+    fs.writeFileSync(assetsPath, JSON.stringify(newAssets));
+    fs.writeFileSync(externalAssetsPath, JSON.stringify(externalAssets));
+  });
+};
 
 const base = () =>
   group([
@@ -176,7 +193,7 @@ const server = createConfig([
   }),
   addPlugins([
     new webpack.BannerPlugin({
-      banner: 'global.assets = require("./assets.json");',
+      banner: `global.assets = require("${assetsPath}");global.externalAssets = require("${externalAssetsPath}");`,
       raw: true,
     }),
   ]),
@@ -211,26 +228,17 @@ const replaceExternalConstants = (text) => {
   }, text);
   return replacedText;
 };
-const external = createConfig([
+
+const client = createConfig([
   base(),
 
   entryPoint({
+    client: clientEntryPath,
     'external/wizards': wizardsEntryPath,
   }),
 
-  setOutput({
-    filename: '[name].js',
-  }),
-
-  when(isDev || isStaging, [sourceMaps()]),
-
-  assets(),
-
-  devCORS(),
-
   env('development', [
     addPlugins([
-      new webpack.NamedModulesPlugin(),
       new MergeIntoSingleFilePlugin({
         files: {
           'external/widget.js': [widgetEntryPath],
@@ -242,9 +250,6 @@ const external = createConfig([
       }),
     ]),
   ]),
-
-  uglifyJs(),
-
   env('production', [
     addPlugins([
       new MergeIntoSingleFilePlugin({
@@ -267,19 +272,11 @@ const external = createConfig([
       }),
     ]),
   ]),
-]);
-
-const client = createConfig([
-  base(),
-
-  entryPoint({
-    client: clientEntryPath,
-  }),
 
   addPlugins([
     new AssetsByTypePlugin({ path: assetsPath }),
+    new ModifyAssetsPlugin(),
     new ChildConfigPlugin(server),
-    new ChildConfigPlugin(external),
   ]),
 
   when(isDev || isStaging, [sourceMaps()]),
