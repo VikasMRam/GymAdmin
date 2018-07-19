@@ -50,6 +50,7 @@ const ExpressBlock = styled(Block)`
 
 const ConversionForm = ({
   handleSubmit,
+  gotoWhatNext,
   submitting,
   community,
   concierge,
@@ -101,7 +102,7 @@ const ConversionForm = ({
     {agent &&
       <AgentSectionWrapper>
         <AgentSectionText>We have matched you with a Seniorly Local Guide to help you along the way</AgentSectionText>
-        <AgentSectionText><Link href="/how-it-works">Learn More</Link></AgentSectionText>
+        <AgentSectionText><Link onClick={gotoWhatNext}>Learn More</Link></AgentSectionText>
         <AgentTileWrapper>
           <AgentTile
             user={{ name: agent.user.name, title: 'Seniorly Local Guide', picture: agent.mainImage }}

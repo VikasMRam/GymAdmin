@@ -1,5 +1,5 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { func, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -34,28 +34,48 @@ const BackToSearch = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const WhatNext = ({ community, onClose }) => {
+const headings = {
+  whatNext: 'What Happens Next',
+  howItWorks: 'How Seniorly Works',
+};
+
+const WhatNext = ({ community, reasons, onClose }) => {
   const { address, propInfo } = community;
   const { city } = address;
 
   return (
     <Wrapper>
-      <StyledHeading>What Happens Next</StyledHeading>
-      <HowSlyWorks layout="modal" reasons="whatNext" />
+      <StyledHeading>{ headings[reasons] }</StyledHeading>
+      <HowSlyWorks layout="modal" reasons={reasons} />
 
-      <Button
-        kind="jumbo"
-        href={getCitySearchUrl({ propInfo, address })}
-      >
-        Click to Compare Communities
-      </Button>
+      { reasons === 'whatNext' && 
+        <Button
+          kind="jumbo"
+          href={getCitySearchUrl({ propInfo, address })}
+        >
+          Click to Compare Communities
+        </Button>
+      }
+      { reasons === 'howItWorks' && 
+        <Button
+          kind="jumbo"
+          onClick={onClose}
+        >
+          Click to Continue
+        </Button>
+      }
     </Wrapper>
   );
 };
 
 WhatNext.propTypes = {
+  reasons: oneOf(['howItWorks', 'whatNext']).isRequired,
   community: communityPropType.isRequired,
-  onClose: func,
+  onClose: func.isRequired,
+};
+
+WhatNext.defaultProps = {
+  reasons: 'whatNext',
 };
 
 export default WhatNext;

@@ -27,6 +27,7 @@ export const EXPRESS_CONVERSION_FORM = 'expressConversionForm';
 export const ADVANCED_INFO = 'advancedInfo';
 export const SIMILAR_COMMUNITIES = 'similarCommunities';
 export const WHAT_NEXT = 'whatNext';
+export const HOW_IT_WORKS = 'howItWorks';
 
 const isAssessment = ({
   typeOfCare,
@@ -101,6 +102,11 @@ export class ConciergeController extends Component {
       this.next();
     }
   };
+
+  gotoWhatNext = () => this.props.set({
+    currentStep: HOW_IT_WORKS,
+    modalIsOpen: true,
+  });
 
   submitExpressConversion = data => {
     const {
@@ -243,6 +249,7 @@ export class ConciergeController extends Component {
     const {
       getPricing,
       gotoAdvancedInfo,
+      gotoWhatNext,
       submitRegularConversion,
       submitExpressConversion,
       submitAdvancedInfo,
@@ -253,6 +260,7 @@ export class ConciergeController extends Component {
       concierge,
       userDetails,
       getPricing,
+      gotoWhatNext,
       gotoAdvancedInfo,
       submitRegularConversion,
       submitExpressConversion,

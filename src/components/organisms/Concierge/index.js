@@ -18,11 +18,14 @@ const ExpressConversionFormContainer = props => (
   />
 );
 
+const HowItWorks = props => <WhatNext reasons="howItWorks" {...props} />
+
 const steps = {
   conversionForm: ConversionFormContainer,
   expressConversionForm: ExpressConversionFormContainer,
   advancedInfo: AdvancedInfoContainer,
   whatNext: WhatNext,
+  howItWorks: HowItWorks,
   // similarCommunities: SimilarCommunitiesContainer,
   thankyou: Thankyou,
 };
@@ -52,6 +55,7 @@ export default class Concierge extends Component {
       concierge,
       close,
       userDetails,
+      gotoWhatNext,
       submitRegularConversion,
       submitExpressConversion,
       submitAdvancedInfo,
@@ -70,6 +74,7 @@ export default class Concierge extends Component {
           <ConversionFormContainer
             submitRegularConversion={submitRegularConversion}
             submitExpressConversion={submitExpressConversion}
+            gotoWhatNext={gotoWhatNext}
             community={community}
             concierge={concierge}
             express={false}
