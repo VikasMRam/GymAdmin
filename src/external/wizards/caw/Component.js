@@ -4,8 +4,8 @@ import { palette, key } from 'styled-theme';
 import { bool, object, number, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
-import { Button, Hr, Heading, Icon } from 'sly/components/atoms';
+import { size, assetPath } from 'sly/components/themes';
+import { Button, Hr, Heading, Image } from 'sly/components/atoms';
 
 import { getStepComponent } from './helpers';
 
@@ -70,8 +70,7 @@ const Component = ({
       {searching &&
         <SearchingWrapper>
           <StyledHeading level="subtitle">Please wait while we search for your options.</StyledHeading>
-          {/* figure out way to show in correct size as per sketch */}
-          <Icon icon="search" palette="grayscale" />
+          <Image src={assetPath('vectors/Search.svg')} />
         </SearchingWrapper>
       }
       {!searching &&
