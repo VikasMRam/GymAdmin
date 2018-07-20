@@ -15,6 +15,7 @@ import { community as communityPropType } from 'sly/propTypes/community';
 
 const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.regular')};
+  font-weight: normal;
 `;
 
 const StyledForm = styled.form`
@@ -61,8 +62,8 @@ const ConversionForm = ({
   <div>
     <StyledForm onSubmit={handleSubmit}>
       {hasOnlyEmail && <Heading level="title" size="title">Get Connected Faster</Heading>}
-      {!hasOnlyEmail && <Heading level="title" size="title">Get Pricing & Availability</Heading>}
-      {!hasOnlyEmail && contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
+      {!hasOnlyEmail && <Heading level="title" size="title">Complimentary Consultation</Heading>}
+      {!hasOnlyEmail && contact && <SubHeading>Seniorly Local Guides</SubHeading>}
 
       <Hr />
 
@@ -94,7 +95,7 @@ const ConversionForm = ({
         component={ReduxField}
       />
       <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-        Request Info
+        Request Consultation
       </StyledButton>
 
       <TosAndPrivacy />
@@ -102,12 +103,12 @@ const ConversionForm = ({
     {agent &&
       <AgentSectionWrapper>
         <AgentSectionText>We have matched you with a Seniorly Local Guide to help you along the way</AgentSectionText>
-        <AgentSectionText><Link onClick={gotoWhatNext}>Learn More</Link></AgentSectionText>
         <AgentTileWrapper>
           <AgentTile
             user={{ name: agent.user.name, title: 'Seniorly Local Guide', picture: agent.mainImage }}
           />
         </AgentTileWrapper>
+        <AgentSectionText><Link onClick={gotoWhatNext}>Learn More</Link></AgentSectionText>
       </AgentSectionWrapper>
     }
   </div>

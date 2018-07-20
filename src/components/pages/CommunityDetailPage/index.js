@@ -157,6 +157,16 @@ export default class CommunityDetailPage extends Component {
     const communityMainImage = images.find((element) => {
       return element.sd === mainImage;
     });
+
+    let receptionNumber = communityPhone;
+    if ((receptionNumber === undefined || receptionNumber === '') && user) {
+      receptionNumber = user.phoneNumber;
+    }
+
+    let conciergeNumber = receptionNumber;
+    if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
+      conciergeNumber = twilioNumber.numbers[0];
+    }
     if (communityMainImage) {
       images = images.filter(img => img.sd !== communityMainImage.sd);
       images.unshift(communityMainImage);
@@ -383,9 +393,10 @@ export default class CommunityDetailPage extends Component {
               footerInfo={{
                 title: 'Contact Property',
                 name: community.name,
-                ctaTitle: 'Contact',
+                ctaTitle: 'Speak to Local Expert',
+                link: `tel:${conciergeNumber}`
               }}
-              onFooterClick={getPricing}
+              onFooterClick={onConciergeNumberClicked}
 
             />
 

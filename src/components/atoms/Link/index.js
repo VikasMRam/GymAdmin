@@ -45,7 +45,7 @@ export default class Link extends Component {
   };
 
   static defaultProps = {
-    palette: 'primary',
+    palette: 'secondary',
   };
 
   static contextTypes = {

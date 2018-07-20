@@ -73,25 +73,25 @@ export default class communitySummary extends React.Component {
       conciergeNumber = twilioNumber.numbers[0];
     }
 
-    if (false) {
-      highlights.push((
-        <span>
-          Pricing & Availability&nbsp;
-          <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
-            <NumberFormat
-              value={conciergeNumber}
-              format="(###) ###-####"
-              displayType="text"
-              data-tip
-              data-for="tooltipPhoneNumber"
-            />
-          </Link>
-          <TooltipContent id="tooltipPhoneNumber" place="bottom" effect="solid" type="light" multiline>
-            This phone number will connect you to the<br /> concierge team at Seniorly.
-          </TooltipContent>
-        </span>
-      ));
 
+    highlights.push((
+      <span>
+        Speak to local expert&nbsp;
+        <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
+          <NumberFormat
+            value={conciergeNumber}
+            format="(###) ###-####"
+            displayType="text"
+            data-tip
+            data-for="tooltipPhoneNumber"
+          />
+        </Link>
+        <TooltipContent id="tooltipPhoneNumber" place="bottom" effect="solid" type="light" multiline>
+          This phone number will connect you to the<br /> concierge team at Seniorly.
+        </TooltipContent>
+      </span>
+    ));
+    if (false) {
       highlights.push((
         <span>
           Reception&nbsp;
