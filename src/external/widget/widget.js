@@ -129,7 +129,7 @@
       });
       w.buildContent = function() {
         const t = document.createElement('span');
-        t.innerHTML = 'powered by Seniorly';
+        t.innerHTML = 'Care Assesment Wizard<br>Powered by Seniorly';
         return t;
       };
       return w;

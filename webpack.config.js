@@ -67,16 +67,19 @@ console.info('Using config', JSON.stringify({
 
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
 const sourcePath = path.join(process.cwd(), SOURCE);
-const externalSourcePath = path.join(sourcePath, 'external');
-const closeIconSvg = fs.existsSync(`${externalSourcePath}/close-regular.svg`) ? fs.readFileSync(`${externalSourcePath}/close-regular.svg`, 'utf8') : '';
-const outputPath = path.join(process.cwd(), 'dist/public');
-const assetsPath = path.join(process.cwd(), 'dist/assets.json');
+const outputPath = path.join(process.cwd(), 'dist', 'public');
+const assetsPath = path.join(process.cwd(), 'dist', 'assets.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');
-const widgetEntryPath = path.join(externalSourcePath, 'widget.js');
-const widgetCssEntryPath = path.join(externalSourcePath, 'widget.css');
-const wizardsEntryPath = path.join(externalSourcePath, 'wizards/index.js');
-const externalAssetsPath = path.join(process.cwd(), 'dist/external-assets.json');
+// external scripts and assets
+const externalSourcePath = path.join(sourcePath, 'external');
+const externalWidgetSourcePath = path.join(externalSourcePath, 'widget');
+const externalWidgetEntryPath = path.join(externalWidgetSourcePath, 'widget.js');
+const externalWidgetCssEntryPath = path.join(externalWidgetSourcePath, 'widget.css');
+// todo: need better approach than hardcoding assets
+const closeIconSvg = fs.existsSync(`${externalWidgetSourcePath}/close-regular.svg`) ? fs.readFileSync(`${externalWidgetSourcePath}/close-regular.svg`, 'utf8') : '';
+const externalWizardsEntryPath = path.join(externalSourcePath, 'wizards', 'index.js');
+const externalAssetsPath = path.join(process.cwd(), 'dist', 'external-assets.json');
 
 const when = (condition, setters) =>
   condition ? group(setters) : () => _ => _;
@@ -228,50 +231,54 @@ const replaceExternalConstants = (text) => {
   }, text);
   return replacedText;
 };
+const externalWidget = () =>
+  group([
+    env('development', [
+      addPlugins([
+        new MergeIntoSingleFilePlugin({
+          files: {
+            'external/widget.js': [externalWidgetEntryPath],
+            'external/widget.css': [externalWidgetCssEntryPath],
+          },
+          transform: {
+            'external/widget.js': text => replaceExternalConstants(text),
+          },
+        }),
+      ]),
+    ]),
+    env('production', [
+      addPlugins([
+        new MergeIntoSingleFilePlugin({
+          files: {
+            'external/widget.js': [externalWidgetEntryPath],
+            'external/widget.css': [externalWidgetCssEntryPath],
+          },
+          transform: {
+            'external/widget.js': (text) => {
+              const { error, code } = UglifyJs.minify(replaceExternalConstants(text));
+              if (error) {
+                console.error(error);
+              }
+              return code;
+            },
+            'external/widget.css': (text) => {
+              return cssmin(text);
+            },
+          },
+        }),
+      ]),
+    ]),
+  ]);
 
 const client = createConfig([
   base(),
 
   entryPoint({
     client: clientEntryPath,
-    'external/wizards': wizardsEntryPath,
+    'external/wizards': externalWizardsEntryPath,
   }),
 
-  env('development', [
-    addPlugins([
-      new MergeIntoSingleFilePlugin({
-        files: {
-          'external/widget.js': [widgetEntryPath],
-          'external/widget.css': [widgetCssEntryPath],
-        },
-        transform: {
-          'external/widget.js': text => replaceExternalConstants(text),
-        },
-      }),
-    ]),
-  ]),
-  env('production', [
-    addPlugins([
-      new MergeIntoSingleFilePlugin({
-        files: {
-          'external/widget.js': [widgetEntryPath],
-          'external/widget.css': [widgetCssEntryPath],
-        },
-        transform: {
-          'external/widget.js': (text) => {
-            const { error, code } = UglifyJs.minify(replaceExternalConstants(text));
-            if (error) {
-              console.error(error);
-            }
-            return code;
-          },
-          'external/widget.css': (text) => {
-            return cssmin(text);
-          },
-        },
-      }),
-    ]),
-  ]),
+  externalWidget(),
 
   addPlugins([
     new AssetsByTypePlugin({ path: assetsPath }),
@@ -293,4 +300,3 @@ const client = createConfig([
 ]);
 
 module.exports = client;
-
