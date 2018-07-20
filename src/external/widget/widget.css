@@ -30,7 +30,7 @@ html.seniorly-page-scroll-locked body {
   right: 1.25rem;
   bottom: 0.9375rem;
   z-index: 9998;
-  background: rgb(77, 80, 85);
+  background: #7CCDCC;
   padding: 0.625rem;
   color: white;
 }
@@ -44,11 +44,11 @@ html.seniorly-page-scroll-locked body {
   width: 100%;
   height: unset;
   max-height: calc(100% - 3rem);
-  border-radius: 3px;
+  border-radius: 0.1875rem;
   overflow: hidden;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 48rem) {
   .seniorly-popup-widget {
     width: 30rem;
   }
@@ -61,7 +61,7 @@ html.seniorly-page-scroll-locked body {
 }
 
 .seniorly-close-overlay-button-widget > button {
-  border: 1px solid transparent;
+  border: 0.0625rem solid transparent;
   cursor: pointer;
   background-color: transparent;
   user-select: none;

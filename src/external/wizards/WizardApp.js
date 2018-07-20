@@ -7,6 +7,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 
+import { externalWizardsPath } from 'sly/config';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import WizardAppErrorPage from './WizardAppErrorPage';
 import Router from 'sly/components/molecules/Router';
@@ -26,7 +27,7 @@ export default class WizardApp extends Component {
 
   routes = [
     {
-      path: '/widgets/caw',
+      path: `${externalWizardsPath}/caw`,
       component: CAWController,
       exact: true,
     },
