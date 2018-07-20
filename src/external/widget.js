@@ -86,7 +86,6 @@
     },
   };
 
-  // temp
   const SeniorlyWidget = function(type, options) {
     this.widget = {};
     this.type = type;
