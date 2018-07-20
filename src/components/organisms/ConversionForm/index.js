@@ -92,7 +92,7 @@ const ConversionForm = ({
         component={ReduxField}
       />
       <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-        Send
+        {concierge.modalIsOpen ? 'Send' : 'Request Consultation'}
       </StyledButton>
 
       <TosAndPrivacy />
