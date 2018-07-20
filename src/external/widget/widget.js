@@ -19,13 +19,14 @@
       scrollLocked: 'seniorly-page-scroll-locked',
     },
     validWidgetConfig: {
-      type: ['badge'],
+      type: ['badge', 'popupOnClick'],
     },
     defaultWidgetConfig: {
       type: 'badge',
     },
     widgetConfigAttributes: {
-      type: 'data-widget-type'
+      type: 'data-widget-type',
+      triggerPopupWidget: 'data-open-seniorly-popup-onclick',
     },
     log: {
       prefix: '[Seniorly Widget]',
@@ -134,6 +135,20 @@
       };
       return w;
     },
+    popupOnClick: function() {
+      const w = new SeniorlyWidget('popupOnClick');
+      w.buildContent = function() {
+        var matches = document.querySelectorAll(`[${Seniorly.widgetConfigAttributes.triggerPopupWidget}]`);
+        matches.forEach(function(match) {
+          match.onclick = function() {
+            const w = Seniorly.widgets.popup();
+            w.build();
+            w.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
+          };
+        });
+      };
+      return w;
+    },
     overlay: function() {
       const w = new SeniorlyWidget('overlay', {
         afterInsert: function() {
@@ -161,7 +176,7 @@
       w.buildContent = function() {
         const t = document.createElement('button');
         t.type = 'button';
-        t.innerHTML = `${process.env.CLOSE_ICON_SVG}`;
+        t.innerHTML = process.env.CLOSE_ICON_SVG;
         return t;
       };
       return w;
@@ -190,7 +205,7 @@
     },
   };
 
-  document.onreadystatechange = () => {
+  document.onreadystatechange = function() {
     if (document.readyState === 'complete') {
       Seniorly.initWidget();
     }
