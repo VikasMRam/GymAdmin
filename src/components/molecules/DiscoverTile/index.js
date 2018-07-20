@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
-import { string, func } from 'prop-types';
+import { string, func, shape } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Image, Button } from 'sly/components/atoms';
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ImageWrapper = styled(Image)`
+export const ImageWrapper = styled(Image)`
   margin: 0 auto;
   margin-top: -100px;
   margin-bottom: ${size('spacing.large')};
@@ -47,23 +47,24 @@ const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const DiscoverTile = ({
-  imageUrl, heading, subheading, onClick,
-}) => {
+const DiscoverTile = ({ content, onClick }) => {
+  const { imageUrl, heading, subHeading } = content;
   return (
     <Wrapper onClick={onClick}>
       <ImageWrapper src={imageUrl} />
       <HeadingWrapper>{heading}</HeadingWrapper>
-      <SubheadingWrapper>{subheading}</SubheadingWrapper>
+      <SubheadingWrapper>{subHeading}</SubheadingWrapper>
       <StyledButton>Learn More</StyledButton>
     </Wrapper>
   );
 };
 
 DiscoverTile.propTypes = {
-  imageUrl: string,
-  heading: string,
-  subheading: string,
+  content: shape({
+    imageUrl: string,
+    heading: string,
+    subHeading: string,
+  }),
   onClick: func,
 };
 

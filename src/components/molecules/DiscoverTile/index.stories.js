@@ -7,7 +7,7 @@ import DiscoverTile from '.';
 const props = {
   imageUrl: assetPath('images/how-it-works/discover-1.png'),
   heading: 'Families',
-  subheading: 'Find an assisted living community to love from our thousands of listings',
+  subHeading: 'Find an assisted living community to love from our thousands of listings',
   onClick() {
     alert('Click on DiscoverTile')
   },
