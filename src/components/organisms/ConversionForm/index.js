@@ -57,21 +57,18 @@ const ConversionForm = ({
   concierge,
   hasOnlyEmail,
   agent,
-  contact,
+  contact
 }) => (
   <div>
     <StyledForm onSubmit={handleSubmit}>
-      {hasOnlyEmail && <Heading level="title" size="title">Get Connected Faster</Heading>}
-      {!hasOnlyEmail && <Heading level="title" size="title">Complimentary Consultation</Heading>}
-      {!hasOnlyEmail && contact && <SubHeading>Seniorly Local Guides</SubHeading>}
+
+      {concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">How Can We Contact You?</Heading>}
+      {concierge.modalIsOpen &&  <SubHeading>Our team is standing by to answer your questions</SubHeading>}
+      {!concierge.modalIsOpen && !hasOnlyEmail && <Heading level="subtitle" size="subtitle">Complimentary Consultation</Heading>}
+      {!concierge.modalIsOpen && !hasOnlyEmail && <SubHeading>Seniorly Local Guides</SubHeading>}
 
       <Hr />
 
-      {hasOnlyEmail && (
-        <ExpressBlock>
-          Our team will make sure you get the information you need quickly.
-        </ExpressBlock>
-      )}
 
       <Field
         name="full_name"
@@ -95,7 +92,7 @@ const ConversionForm = ({
         component={ReduxField}
       />
       <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-        Request Consultation
+        Send
       </StyledButton>
 
       <TosAndPrivacy />
