@@ -11,9 +11,9 @@ export const SearchPageTileTexts = {
 export const CommunityPageTileTexts = {
   title: 'Get Free Advice From A Local Agent',
   items: [
-    { index: 0, text: 'Get transparent insights about this community' },
-    { index: 1, text: 'Get details on other communities near you' },
-    { index: 2, text: 'Get help scheduling tours and moving in' },
+    { index: 0, text: 'Transparent insights on this community' },
+    { index: 1, text: 'Details on other communities near you' },
+    { index: 2, text: 'Help scheduling tours and moving in' },
   ],
   buttonText: 'Request Consultation',
 };

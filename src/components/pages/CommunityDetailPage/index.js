@@ -303,7 +303,7 @@ export default class CommunityDetailPage extends Component {
             user={communityUser}
             amenityScore={rgsAux.amenityScore}
             startingRate={startingRate}
-            providedAverage={rgsAux.providedAverage}
+            estimatedPrice={rgsAux.estimatedPrice}
             communityHighlights={communityHighlights}
             reviews={reviews}
             onConciergeNumberClicked={onConciergeNumberClicked}

@@ -63,7 +63,7 @@ const ConversionForm = ({
     <StyledForm onSubmit={handleSubmit}>
 
       {concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">How Can We Contact You?</Heading>}
-      {concierge.modalIsOpen &&  <SubHeading>We do not share your information with anyone else.</SubHeading>}
+      {concierge.modalIsOpen &&  <SubHeading>Our team is standing by to answer your questions.</SubHeading>}
       {!concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">Complimentary Consultation</Heading>}
       {!concierge.modalIsOpen &&  <SubHeading>with a local senior living expert</SubHeading>}
 
