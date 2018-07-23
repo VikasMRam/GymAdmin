@@ -2,20 +2,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { spy } from 'sinon';
 
+import { SearchPageTileTexts as searchAdProps } from 'sly/services/helpers/ad';
 import AdTile, { StyledIcon } from '.';
 
-const defaultProps = {
-  title: 'Let the Seniorly Team Find Your Room',
-  items: [
-    { index: 0, text: 'Get Special Pricing' },
-    { index: 1, text: 'Access to communities not yet listed' },
-    { index: 2, text: 'Concierge team ready to assist' },
-  ],
-  buttonText: 'Request Consultation',
-};
-
 const wrap = (props = {}) =>
-  shallow(<AdTile {...defaultProps} {...props} />);
+  shallow(<AdTile {...searchAdProps} {...props} />);
 
 describe('AdTile', () => {
   it('does not renders children when passed in', () => {
