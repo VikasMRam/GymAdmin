@@ -33,6 +33,8 @@ theme.sizes = {
 
   // only for tablet and wider
   layout: {
+    gutter:      '1.500rem', // 24px
+
     col1:        '4.125rem', // 66px
     col2:        '9.750rem', // 156px
     col3:       '15.375rem', // 246px
@@ -83,6 +85,7 @@ theme.sizes = {
     companiesWeTrust: {
       width: '33.625rem',   // 538px
     },
+    introMargin: '4.8125rem', // 77px
   },
 
   filtersMenu: {
