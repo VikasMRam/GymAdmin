@@ -67,8 +67,7 @@ const AdInfoUnorderedList = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  margin: ${size('spacing.large')};
-  margin-top: 0;
+  margin: 0 ${size('spacing.large')};
 `;
 
 const AdTile = ({
