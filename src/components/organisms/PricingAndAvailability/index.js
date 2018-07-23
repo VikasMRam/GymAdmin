@@ -167,7 +167,7 @@ export default class PricingAndAvailability extends Component {
           </StyledArticle>
           <ConciergeController community={community}>
             {({ concierge, submitExpressConversion, userDetails }) => {
-                if (concierge.callbackRequested) {
+                if (concierge.contactRequested) {
                   if (!hasAllUserData(userDetails)) {
                     return (
                       <DoneBox>
