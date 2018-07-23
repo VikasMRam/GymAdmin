@@ -100,7 +100,7 @@ export default class Pagination extends Component {
     const { current, onChange } = this.props;
     const sel = current === index;
     const palette = sel
-      ? 'primary'
+      ? 'secondary'
       : 'grayscale';
     const click = () => !sel && onChange(index);
     return (

@@ -13,6 +13,7 @@ export default class ConciergeContainer extends Component {
           userDetails,
           submitExpressConversion,
           submitRegularConversion,
+          gotoWhatNext,
           submitAdvancedInfo,
           close
         }) => (
@@ -21,6 +22,7 @@ export default class ConciergeContainer extends Component {
             concierge={concierge}
             community={community}
             userDetails={userDetails}
+            gotoWhatNext={gotoWhatNext}
             submitExpressConversion={submitExpressConversion}
             submitRegularConversion={submitRegularConversion}
             submitAdvancedInfo={submitAdvancedInfo}

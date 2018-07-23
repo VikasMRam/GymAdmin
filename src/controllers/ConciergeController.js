@@ -26,8 +26,8 @@ export const CONVERSION_FORM = 'conversionForm';
 export const EXPRESS_CONVERSION_FORM = 'expressConversionForm';
 export const ADVANCED_INFO = 'advancedInfo';
 export const SIMILAR_COMMUNITIES = 'similarCommunities';
-export const CALENDLY_APPOINTMENT = 'calendlyAppointment';
 export const WHAT_NEXT = 'whatNext';
+export const HOW_IT_WORKS = 'howItWorks';
 
 const isAssessment = ({
   typeOfCare,
@@ -87,12 +87,33 @@ export class ConciergeController extends Component {
     }
   };
 
+  gotoAdvancedInfo = () => {
+    const {
+      set,
+      userDetails,
+    } = this.props;
+
+    if (!isAssessment(userDetails)) {
+      set({
+        currentStep: ADVANCED_INFO,
+        modalIsOpen: true,
+      });
+    } else {
+      this.next();
+    }
+  };
+
+  gotoWhatNext = () => this.props.set({
+    currentStep: HOW_IT_WORKS,
+    modalIsOpen: true,
+  });
+
   submitExpressConversion = data => {
     const {
       community,
     } = this.props;
     console.log('Seeing submit express conversion',data);
-    if ( data.phone && data.phone.match(/\d+/)){
+    if (data.phone && data.phone.match(/\d+/)){
       SlyEvent.getInstance().sendEvent({
         action: 'contactCommunity',
         category: 'requestConsultation',
@@ -158,23 +179,6 @@ export class ConciergeController extends Component {
         propertyIds: [community.id],
       }
     }).then(() => this.next(false));
-  };
-
-  launchCalendly = () => {
-    const { set } = this.props;
-
-    const event = {
-      action: 'contactCommunity',
-      category: 'calendly',
-      label: community.id
-    };
-
-    SlyEvent.getInstance().sendEvent(event);
-
-    set({
-      currentStep: CALENDLY_APPOINTMENT,
-      modalIsOpen: true,
-    });
   };
 
   next = (isExpress) => {
@@ -244,10 +248,11 @@ export class ConciergeController extends Component {
 
     const {
       getPricing,
+      gotoAdvancedInfo,
+      gotoWhatNext,
       submitRegularConversion,
       submitExpressConversion,
       submitAdvancedInfo,
-      launchCalendly,
       close,
     } = this;
 
@@ -255,10 +260,11 @@ export class ConciergeController extends Component {
       concierge,
       userDetails,
       getPricing,
+      gotoWhatNext,
+      gotoAdvancedInfo,
       submitRegularConversion,
       submitExpressConversion,
       submitAdvancedInfo,
-      launchCalendly,
       close,
     });
   }

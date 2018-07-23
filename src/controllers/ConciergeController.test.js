@@ -195,6 +195,15 @@ describe('ConciergeController', function() {
       });
     });
 
+    it('should ask for advanced info when explicitly called', () => {
+      wrap({ community, userDetails: {}, concierge: {} });
+      childProps().gotoAdvancedInfo();
+      expect(lastSet()).toEqual({
+        currentStep: ADVANCED_INFO,
+        modalIsOpen: true,
+      });
+    });
+
     it('should ask for advancedInfo', () => {
       wrap({ userDetails: {}, community, concierge: {
         callbackRequested: true,

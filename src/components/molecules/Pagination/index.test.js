@@ -13,7 +13,7 @@ const small = {
   current: 0,
   range: 5,
   total: 5,
-  onChange 
+  onChange
 };
 
 const large = {
@@ -30,13 +30,13 @@ describe('Pagination', () => {
     for (let i = 0; i < 5; ++i) {
       const button = wrapper.childAt(i);
       expect(button.prop('children')).toEqual(i + 1);
-      button.simulate('click'); 
+      button.simulate('click');
       if (i) {
         expect(onChange).lastCalledWith(i);
       } else {
         expect(onChange).toHaveBeenCalledTimes(0);
       }
-      expect(button.prop('palette')).toEqual(i === 0 ? 'primary' : 'grayscale');
+      expect(button.prop('palette')).toEqual(i === 0 ? 'secondary' : 'grayscale');
     }
   });
 
@@ -94,7 +94,7 @@ describe('Pagination', () => {
 
     const fiftyOne = wrapper.childAt(5);
     expect(fiftyOne.prop('ghost')).toEqual(false);
-    expect(fiftyOne.prop('palette')).toEqual('primary');
+    expect(fiftyOne.prop('palette')).toEqual('secondary');
     onChange.mockReset();
     fiftyOne.simulate('click');
     expect(onChange).toHaveBeenCalledTimes(0);

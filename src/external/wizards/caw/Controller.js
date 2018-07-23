@@ -5,7 +5,7 @@ import { number, func, object } from 'prop-types';
 import { resourceCreateRequest, resourceListReadRequest } from 'sly/store/resource/actions';
 
 import { connectController } from 'sly/controllers';
-import { createValidator, required, minLength } from 'sly/services/validation';
+import { createValidator, required, minLength, usPhone, email } from 'sly/services/validation';
 import { selectFormData } from 'sly/services/helpers/forms';
 
 import CAWComponent from './Component';
@@ -17,6 +17,9 @@ const validate = createValidator({
   renting_or_buying: [required],
   monthly_budget: [required],
   location: [required, minLength(3)],
+  name: [required],
+  email: [required, email],
+  phone: [required, usPhone],
 });
 const ReduxForm = reduxForm({
   form: 'CAWForm',
@@ -29,6 +32,9 @@ const ReduxForm = reduxForm({
     renting_or_buying: null,
     monthly_budget: 1,
     location: null,
+    name: null,
+    email: null,
+    phone: null,
   },
 })(CAWComponent);
 

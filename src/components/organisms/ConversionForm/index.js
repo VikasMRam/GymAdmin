@@ -15,6 +15,7 @@ import { community as communityPropType } from 'sly/propTypes/community';
 
 const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.regular')};
+  font-weight: normal;
 `;
 
 const StyledForm = styled.form`
@@ -50,26 +51,24 @@ const ExpressBlock = styled(Block)`
 
 const ConversionForm = ({
   handleSubmit,
+  gotoWhatNext,
   submitting,
   community,
   concierge,
   hasOnlyEmail,
   agent,
-  contact,
+  contact
 }) => (
   <div>
     <StyledForm onSubmit={handleSubmit}>
-      {hasOnlyEmail && <Heading level="title" size="title">Get Connected Faster</Heading>}
-      {!hasOnlyEmail && <Heading level="title" size="title">Get Pricing & Availability</Heading>}
-      {!hasOnlyEmail && contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
+
+      {concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">How Can We Contact You?</Heading>}
+      {concierge.modalIsOpen &&  <SubHeading>Our team is standing by to answer your questions</SubHeading>}
+      {!concierge.modalIsOpen && !hasOnlyEmail && <Heading level="subtitle" size="subtitle">Complimentary Consultation</Heading>}
+      {!concierge.modalIsOpen && !hasOnlyEmail && <SubHeading>Seniorly Local Guides</SubHeading>}
 
       <Hr />
 
-      {hasOnlyEmail && (
-        <ExpressBlock>
-          Our team will make sure you get the information you need quickly.
-        </ExpressBlock>
-      )}
 
       <Field
         name="full_name"
@@ -93,7 +92,7 @@ const ConversionForm = ({
         component={ReduxField}
       />
       <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-        Request Info
+        {concierge.modalIsOpen ? 'Send' : 'Request Consultation'}
       </StyledButton>
 
       <TosAndPrivacy />
@@ -101,12 +100,12 @@ const ConversionForm = ({
     {agent &&
       <AgentSectionWrapper>
         <AgentSectionText>We have matched you with a Seniorly Local Guide to help you along the way</AgentSectionText>
-        <AgentSectionText><Link href="/how-it-works">Learn More</Link></AgentSectionText>
         <AgentTileWrapper>
           <AgentTile
             user={{ name: agent.user.name, title: 'Seniorly Local Guide', picture: agent.mainImage }}
           />
         </AgentTileWrapper>
+        <AgentSectionText><Link onClick={gotoWhatNext}>Learn More</Link></AgentSectionText>
       </AgentSectionWrapper>
     }
   </div>

@@ -52,11 +52,10 @@ const budgetOptions = [
 ];
 
 const AdvancedInfoForm = ({
-  handleSubmit, submitting, community,
+  handleSubmit, submitting,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <Heading level="subtitle" size="subtitle">To connect to {community.name}...</Heading>
-    <Block>{community.description}</Block>
+    <Heading level="subtitle" size="subtitle">Give us a few more details so we can help:</Heading>
 
     <Field
       name="type_of_care"
@@ -84,7 +83,7 @@ const AdvancedInfoForm = ({
     />
     <StyledField
       name="budget"
-      label="What is your monthly budget?"
+      label="Do you have a monthly rental budget?"
       type="singlechoice"
       options={budgetOptions}
       width="100%"
@@ -105,7 +104,7 @@ const AdvancedInfoForm = ({
     />
 
     <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-      Send
+      Get Connected
     </StyledButton>
   </Form>
 );
