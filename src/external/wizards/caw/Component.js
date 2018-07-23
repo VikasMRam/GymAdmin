@@ -58,6 +58,7 @@ const SearchingWrapper = Wrapper.extend`
   transform: translate3d(0%, -50%, 0);
   position: absolute;
   text-align: center;
+  width: 100%;
 `;
 
 const Component = ({
@@ -103,7 +104,7 @@ const Component = ({
                       Back
                     </Button>
                   )}
-                  <Button type="submit" disabled={invalid}>
+                  <Button type="button" disabled={invalid} onClick={handleSubmit}>
                     {currentStep === totalNumberofSteps ? 'See my options' : 'Continue'}
                   </Button>
                 </ButtonsWrapper>
