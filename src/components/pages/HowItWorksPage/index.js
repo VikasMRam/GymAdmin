@@ -67,29 +67,43 @@ const StyledLabel = styled(Label)`
   margin-bottom: ${size('spacing.large')};
 `;
 
+const DescriptionWrapper = styled.div`
+  width: 1248px;
+  height: 408px;
+  background-color: #EAF1F4;
+`;
+
+const DescriptionText = styled.div`
+
+`;
+
 const HowItWorksPage = ({ onLocationSearch, hasStickyFooter }) => {
-  const HeaderContent = (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <HeaderContainer onLocationSearch={onLocationSearch} />
-      <HeroWrapper>
-        <StyledImage src={assetPath('images/how-it-works/hero.png')} alt="A Home To Love" />
-        <SearchBoxWrapper>
-          <StyledHeading level="hero" size="hero" palette="white">
-            Find a Home to Love
-          </StyledHeading>
-          <StyledLabel palette="white">
-            Your search for housing and care has never been easier
-          </StyledLabel>
-        </SearchBoxWrapper>
-      </HeroWrapper>
-    </Fragment>
-  );
   return (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <StyledHeader>{HeaderContent}</StyledHeader>
-      <Content><div>Hello</div></Content>
+      <StyledHeader>
+        <HeaderContainer onLocationSearch={onLocationSearch} />
+        <HeroWrapper>
+          <StyledImage src={assetPath('images/how-it-works/hero.png')} alt="A Home To Love" />
+          <SearchBoxWrapper>
+            <StyledHeading level="hero" size="hero" palette="white">
+              Find a Home to Love
+            </StyledHeading>
+            <StyledLabel palette="white">
+              Your search for housing and care has never been easier
+            </StyledLabel>
+          </SearchBoxWrapper>
+          <DescriptionWrapper>
+            <Content>
+              Seniorly is committed to connecting our aging citizens with a home to love.
+              We do this through a personalized experience built on industry expertise and powerful technology.
+            </Content>
+          </DescriptionWrapper>
+        </HeroWrapper>
+      </StyledHeader>
+      <Content>
+        Hello
+      </Content>
       <footer><Footer /></footer>
       <ChatBoxContainer pageWithStickyFooter={hasStickyFooter} />
     </Fragment>
