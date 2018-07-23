@@ -61,7 +61,7 @@ const AdInfoHeader = styled.div`
   margin-top: 0;
 `;
 
-const AdInfoUnorderedList = styled.div`
+const AdInfoUnorderedList = styled.ul`
   margin: ${size('spacing.large')};
   margin-top: 0;
 `;
