@@ -4,8 +4,17 @@ import { spy } from 'sinon';
 
 import AdTile, { StyledIcon } from '.';
 
+const defaultProps = {
+  title: 'Let the Seniorly Team Find Your Room',
+  items: [
+    { index: 0, text: 'Get Special Pricing' },
+    { index: 1, text: 'Access to communities not yet listed' },
+    { index: 2, text: 'Concierge team ready to assist' },
+  ],
+};
+
 const wrap = (props = {}) =>
-  shallow(<AdTile {...props} />);
+  shallow(<AdTile {...defaultProps} {...props} />);
 
 describe('AdTile', () => {
   it('does not renders children when passed in', () => {

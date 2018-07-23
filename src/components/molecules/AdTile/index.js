@@ -1,5 +1,5 @@
 import React from 'react';
-import { bool, func } from 'prop-types';
+import { bool, func, string, shape, arrayOf, number } from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
@@ -32,7 +32,7 @@ const Wrapper = styled.div`
 
 const AdImage = styled.div`
   display: flex;
-  background:  ${palette('secondary', 0)};
+  background:  ${palette('primary', 0)};
   height: ${size('tile', 'large', 'height')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -65,19 +65,21 @@ const AdInfoUnorderedList = styled.div`
   margin-top: 0;
 `;
 
-const AdTile = ({ borderless, onClick }) => {
+const AdTile = ({
+  borderless, onClick, title, items,
+}) => {
+  const itemComponents = items.map(item => <li key={item.index}>{item.text}</li>);
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
       <AdImage >
         <StyledIcon icon="seniorly-white" size="xxLarge" />
       </AdImage>
       <AdInfo>
-        <AdInfoHeader>Let the Seniorly Team Find Your Room</AdInfoHeader>
-        <AdInfoUnorderedList>
-          <li>Get Special Pricing</li>
-          <li>Access to communities not yet listed</li>
-          <li>Concierge team ready to assist</li>
-        </AdInfoUnorderedList>
+        {title && <AdInfoHeader>{title}</AdInfoHeader>}
+        {items && items.length > 0 &&
+          <AdInfoUnorderedList>
+            {itemComponents}
+          </AdInfoUnorderedList>}
       </AdInfo>
     </Wrapper>
   );
@@ -86,6 +88,11 @@ const AdTile = ({ borderless, onClick }) => {
 AdTile.propTypes = {
   onClick: func,
   borderless: bool,
+  title: string,
+  items: arrayOf(shape({
+    index: number,
+    text: string,
+  })),
 };
 
 AdTile.defaultProps = {
