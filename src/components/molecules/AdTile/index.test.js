@@ -11,6 +11,7 @@ const defaultProps = {
     { index: 1, text: 'Access to communities not yet listed' },
     { index: 2, text: 'Concierge team ready to assist' },
   ],
+  buttonText: 'Request Consultation',
 };
 
 const wrap = (props = {}) =>
