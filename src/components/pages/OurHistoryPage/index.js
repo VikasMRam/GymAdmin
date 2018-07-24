@@ -78,21 +78,20 @@ const PressHeading = styled.div`
 `;
 
 const PressTilesWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  column-gap: ${size('spacing.xLarge')};
+  column-width: ${size('picture.xLarge.width')};
 `;
 
 const PressTileWrapper = styled.div`
   width: ${size('picture.xLarge.width')};
-  margin-right: ${size('spacing.xLarge')};
   margin-bottom: ${size('spacing.xLarge')};
-  
-  :nth-child(2n) {
-    margin-right: 0;
-  }
+  column-break-inside: avoid;
+
 `;
 
-const OurHistoryPage = ({ profiles, press, activeProfile, setModalProfile }) => {
+const OurHistoryPage = ({
+  profiles, press, activeProfile, setModalProfile,
+}) => {
   const imagePath = assetPath('images/our-history/hero.png');
   const intro = (
     <Fragment>
