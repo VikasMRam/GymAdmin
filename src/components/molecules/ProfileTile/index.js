@@ -18,7 +18,7 @@ const Wrapper = styled.div`
         width: ${size('profileTile.wrapper.regular.width')};
         &:hover {
           cursor: pointer;
-          background: #fff;
+          background: ${palette('white', 0)};
           border: ${size('border.regular')} solid ${palette('secondary', 0)};
           box-shadow: 0 ${size('spacing.regular')} ${size('spacing.large')} ${palette('grayscale', 0)}80;
         }
