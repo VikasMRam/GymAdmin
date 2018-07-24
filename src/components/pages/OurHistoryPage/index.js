@@ -9,21 +9,27 @@ import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSec
 import { TeamMembersData } from 'sly/services/helpers/our_team';
 
 const IntroText = styled.div`
-  width: ${size('layout.col9')};
   font-size: ${size('spacing.xLarge')};
-  margin-right: ${size('layout.gutter')};
+  @media screen and (min-width: ${size('breakpoints.laptop')}) {
+    width: ${size('layout.col9')};
+    margin-right: ${size('layout.gutter')};
+  }
 `;
 
 const IntroLogo = styled.div`
-  width: ${size('layout.col3')};
   padding-right: ${size('spacing.xxxLarge')};
   text-align: right;
+  @media screen and (min-width: ${size('breakpoints.laptop')}) {
+    width: ${size('layout.col3')};
+  }
 `;
 
 const DescriptionText = styled.div`
-  width: ${size('layout.col8')};
-  margin-right: ${size('layout.gutter')};
   color: ${palette('grayscale', 1)};
+  @media screen and (min-width: ${size('breakpoints.laptop')}) {
+    width: ${size('layout.col8')};
+    margin-right: ${size('layout.gutter')};
+  }
 `;
 
 const DescriptionImage = styled.div`
