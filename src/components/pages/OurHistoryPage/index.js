@@ -6,6 +6,7 @@ import { size, assetPath } from 'sly/components/themes';
 import { Image, Icon, Hr } from 'sly/components/atoms';
 import Modal from 'sly/components/molecules/Modal';
 import ProfileTile from 'sly/components/molecules/ProfileTile';
+import PressTile from 'sly/components/molecules/PressTile';
 import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
 
 const IntroText = styled.div`
@@ -57,15 +58,35 @@ const TeamMemberTilesWrapper = styled.div`
 `;
 
 const ProfileTileWrapper = styled.div`
-  margin-right: 24px;
-  margin-bottom: 24px;
+  margin-right: ${size('spacing.xLarge')};
+  margin-bottom: ${size('spacing.xLarge')};
   
   :nth-child(3n) {
     margin-right: 0;
   }
 `;
 
-const OurHistoryPage = ({ profiles, activeProfile, setModalProfile }) => {
+const PressHeading = styled.div`
+  font-size: 30px;
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
+const PressTilesWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const PressTileWrapper = styled.div`
+  width: ${size('picture.xLarge.width')};
+  margin-right: ${size('spacing.xLarge')};
+  margin-bottom: ${size('spacing.xLarge')};
+  
+  :nth-child(2n) {
+    margin-right: 0;
+  }
+`;
+
+const OurHistoryPage = ({ profiles, press, activeProfile, setModalProfile }) => {
   const imagePath = assetPath('images/our-history/hero.png');
   const intro = (
     <Fragment>
@@ -104,12 +125,24 @@ const OurHistoryPage = ({ profiles, activeProfile, setModalProfile }) => {
       </ProfileTileWrapper>
     );
   });
+  const pressTiles = press.map((item, index) => {
+    const props = { ...item };
+    props.imageUrl = assetPath(item.imageUrl);
+    return (
+      <PressTileWrapper key={index} >
+        <PressTile {...props} />
+      </PressTileWrapper>
+    );
+  });
   const content = (
     <Fragment>
       <StyledHr />
       <ContentHeading>Meet Our Team</ContentHeading>
       <ContentSubheading>We are doing this for our parents and grandparents, and we are <br />committed to making life better for them however we can.</ContentSubheading>
       <TeamMemberTilesWrapper>{TeamMemberTiles}</TeamMemberTilesWrapper>
+      <StyledHr />
+      <PressHeading>Seniorly in the Press</PressHeading>
+      <PressTilesWrapper>{pressTiles}</PressTilesWrapper>
       <Modal layout="searchBox" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
         {activeProfile && <ProfileTile profile={activeProfile} layout="modal" />}
       </Modal>
