@@ -167,6 +167,7 @@ const groups = {
     { name: 'Assisted Living', url: '/assisted-living' },
     { name: 'Independent Living', url: '/independent-living' },
     { name: 'Alzheimer\'s Care', url: '/memory-care' },
+    { name: 'Home Care', url: '/in-home-care' },
     { name: 'Respite Care', url: '/respite-care' },
     { name: 'CCRC', url: '/continuing-care-retirement-community' },
   ],
