@@ -1,10 +1,10 @@
 import React from 'react';
-import { bool, func } from 'prop-types';
+import { bool, func, string, shape, arrayOf, number } from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
-import { Icon } from 'sly/components/atoms';
+import { Icon, Button } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 
   &:hover {
     cursor: pointer;
-    background: #fff;
+    background: ${palette('white', 0)};
     box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('grayscale', 0)}80;
   
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -58,26 +58,34 @@ const AdInfoHeader = styled.div`
   font-size: ${size('text.subtitle')};
   font-weight: bold;
   margin: ${size('spacing.large')};
+  margin-top: 0;
 `;
 
-const AdInfoUnorderedList = styled.div`
+const AdInfoUnorderedList = styled.ul`
   margin: ${size('spacing.large')};
   margin-top: 0;
 `;
 
-const AdTile = ({ borderless, onClick }) => {
+const StyledButton = styled(Button)`
+  margin: 0 ${size('spacing.large')};
+`;
+
+const AdTile = ({
+  borderless, onClick, title, items, buttonText,
+}) => {
+  const itemComponents = items.map(item => <li key={item.index}>{item.text}</li>);
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
       <AdImage >
         <StyledIcon icon="seniorly-white" size="xxLarge" />
       </AdImage>
       <AdInfo>
-        <AdInfoHeader>Let the Seniorly Team Find Your Room</AdInfoHeader>
-        <AdInfoUnorderedList>
-          <li>Get Special Pricing</li>
-          <li>Access to communities not yet listed</li>
-          <li>Concierge team ready to assist</li>
-        </AdInfoUnorderedList>
+        {title && <AdInfoHeader>{title}</AdInfoHeader>}
+        {items && items.length > 0 &&
+          <AdInfoUnorderedList>
+            {itemComponents}
+          </AdInfoUnorderedList>}
+        <StyledButton>{buttonText}</StyledButton>
       </AdInfo>
     </Wrapper>
   );
@@ -86,6 +94,12 @@ const AdTile = ({ borderless, onClick }) => {
 AdTile.propTypes = {
   onClick: func,
   borderless: bool,
+  title: string,
+  items: arrayOf(shape({
+    index: number,
+    text: string,
+  })),
+  buttonText: string.isRequired,
 };
 
 AdTile.defaultProps = {

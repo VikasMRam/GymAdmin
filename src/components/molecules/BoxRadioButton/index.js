@@ -26,7 +26,7 @@ const StyledField = styled(Field)`
   }
 `;
 const StyledBox = styled(Box)`
-  border-color: ${ifProp('checked', palette('secondary', 0), palette('primary', 3))};
+  border-color: ${ifProp('checked', palette('secondary', 0), palette('grayscale', 2))};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -44,15 +44,16 @@ const StyledIcon = styled(Icon)`
 `;
 
 const BoxRadioButton = ({
-  name, checked, helpText, ...props
+  name, checked, helpText, multiSelect, ...props
 }) => (
   <StyledBox checked={checked}>
-    {checked && <StyledIcon icon="round-checkmark" />}
+    {checked && !multiSelect && <StyledIcon icon="round-checkmark" />}
+    {checked && multiSelect && <StyledIcon icon="checkbox" />}
     <StyledField
       {...props}
       hideErrors
       name={name}
-      type="radio"
+      type={!multiSelect ? 'radio' : 'checkbox'}
       component={ReduxField}
     />
     {helpText && <StyledHelpBubble text={helpText} />}
@@ -60,7 +61,8 @@ const BoxRadioButton = ({
 );
 
 BoxRadioButton.propTypes = {
-  name: string,
+  name: string.isRequired,
+  multiSelect: bool,
   checked: bool,
   helpText: string,
 };

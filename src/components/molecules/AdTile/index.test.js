@@ -2,10 +2,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { spy } from 'sinon';
 
+import { SearchPageTileTexts as searchAdProps } from 'sly/services/helpers/ad';
 import AdTile, { StyledIcon } from '.';
 
 const wrap = (props = {}) =>
-  shallow(<AdTile {...props} />);
+  shallow(<AdTile {...searchAdProps} {...props} />);
 
 describe('AdTile', () => {
   it('does not renders children when passed in', () => {

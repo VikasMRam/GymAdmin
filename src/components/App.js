@@ -18,6 +18,7 @@ import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageCont
 import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
 import HowItWorksPage from 'sly/components/pages/HowItWorksPage'
+import AgentsProfilePageController from 'sly/controllers/AgentsProfilePageController';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
@@ -68,6 +69,11 @@ export default class App extends Component {
       path: `/:toc(${careTypes})/:state`,
       component: StateSearchPageContainer,
     },
+    // {
+    //   path: '/agents',
+    //   component: AgentsProfilePageController,
+    //   exact: true,
+    // },
     {
       path: '/how-it-works',
       component: HowItWorksPage,

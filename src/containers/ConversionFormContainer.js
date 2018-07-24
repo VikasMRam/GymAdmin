@@ -48,6 +48,9 @@ class ConversionFormContainer extends Component {
     submitRegularConversion: func.isRequired,
     express: bool.isRequired,
   };
+  static defaultProps = {
+    express: false
+  };
 
   render() {
     const {

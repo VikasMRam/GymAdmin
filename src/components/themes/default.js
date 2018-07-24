@@ -167,6 +167,27 @@ theme.sizes = {
     },
   },
 
+  profileTile: {
+    wrapper: {
+      regular: {
+        width: '21rem',         // 336px
+      },
+      modal: {
+        width: '27.75rem',      // 444px
+      },
+    },
+    image: {
+      regular: {
+        width: '18rem',         // 288px
+        height: '11.9375rem',   // 191px
+      },
+      modal: {
+        width: '27.75rem',      // 444px
+        height: '15.625rem',    // 250px
+      },
+    },
+  },
+
   map: {
     propertyDetail: {
       small: {

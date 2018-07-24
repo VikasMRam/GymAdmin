@@ -62,15 +62,15 @@ export default class Concierge extends Component {
       ...props
     } = this.props;
 
-    const { modalIsOpen, currentStep, callbackRequested } = concierge;
+    const { modalIsOpen, currentStep, contactRequested, consultationRequested } = concierge;
 
     const StepComponent = steps[currentStep];
     return (
       <Fragment >
-        {callbackRequested && hasAllUserData(userDetails) && (
+        { (contactRequested || consultationRequested) && hasAllUserData(userDetails) && (
           <Thankyou community={community} />
         )}
-        {! (callbackRequested && hasAllUserData(userDetails)) && (
+        {! (consultationRequested && hasAllUserData(userDetails)) && (
           <ConversionFormContainer
             submitRegularConversion={submitRegularConversion}
             submitExpressConversion={submitExpressConversion}

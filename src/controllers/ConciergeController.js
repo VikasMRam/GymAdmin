@@ -9,7 +9,7 @@ import { getDetail } from 'sly/store/selectors';
 import { connectController } from 'sly/controllers';
 import SlyEvent from 'sly/services/helpers/events';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
+import { ASSESSMENT, REQUEST_CALLBACK, REQUEST_CONSULTATION, REQUEST_PRICING, REQUEST_AVAILABILITY  } from 'sly/services/api/actions';
 
 import {
   createValidator,
@@ -71,7 +71,7 @@ export class ConciergeController extends Component {
     } = this.props;
 
     const {
-      callbackRequested,
+      pricingRequested,
     } = concierge;
 
     SlyEvent.getInstance().sendEvent({
@@ -80,8 +80,8 @@ export class ConciergeController extends Component {
       label: community.id
     });
 
-    if (!callbackRequested && hasAllUserData(userDetails)) {
-      this.submitRegularConversion();
+    if (!pricingRequested && hasAllUserData(userDetails)) {
+      this.doSubmitConversion(userDetails,REQUEST_PRICING, true);
     } else {
       this.next(false);
     }
@@ -111,39 +111,55 @@ export class ConciergeController extends Component {
   submitExpressConversion = data => {
     const {
       community,
+      concierge
+
     } = this.props;
-    console.log('Seeing submit express conversion',data);
     if (data.phone && data.phone.match(/\d+/)){
+      let eventCategory = concierge.modalIsOpen ? 'requestAvailabilityConsultation' : 'requestConsultation';
       SlyEvent.getInstance().sendEvent({
         action: 'contactCommunity',
-        category: 'requestConsultation',
+        category: eventCategory,
         label: community.id
       });
+      this.doSubmitConversion(data,REQUEST_CONSULTATION, true);
     } else {
       SlyEvent.getInstance().sendEvent({
         action: 'contactCommunity',
-        category: 'requestPricing',
+        category: 'requestAvailability',
         label: community.id
       });
+      this.doSubmitConversion(data,REQUEST_AVAILABILITY, true);
     }
 
-    this.doSubmitConversion(data, true);
+
   };
 
   submitRegularConversion = data => {
     const {
       community,
+      concierge
     } = this.props;
-    console.log('Seeing submit regular conversion',data);
+    let eventCategory = 'requestConsultation';
+    if (!concierge.pricingRequested && !concierge.availabilityRequested) {
+      eventCategory = 'requestConsultation';
+      //Regular advanced info
+    } else if(concierge.modalIsOpen && concierge.pricingRequested) {
+      //Pricing advanced info
+      eventCategory = 'requestConsultationPricing';
+    } else if (concierge.modalIsOpen && concierge.availabilityRequested) {
+      //Availability Advanced Info
+      eventCategory = 'requestConsultationAvailability';
+    }
+
     SlyEvent.getInstance().sendEvent({
       action: 'contactCommunity',
-      category: 'requestCallback',
+      category: eventCategory,
       label: community.id
     });
-    this.doSubmitConversion(data, false);
+    this.doSubmitConversion(data,REQUEST_CONSULTATION, false);
   };
 
-  doSubmitConversion = (data={}, isExpress=false) => {
+  doSubmitConversion = (data={}, action, isExpress=false) => {
     const {
       submit,
       community,
@@ -151,23 +167,36 @@ export class ConciergeController extends Component {
     } = this.props;
 
     submit({
-      action: REQUEST_CALLBACK,
+      action,
       value: {
         user: { ...data },
         propertyIds: [community.id],
       }
     }).then(() => {
+
       this.next(isExpress);
     });
   };
 
   submitAdvancedInfo = data => {
-    const { submit, community } = this.props;
+    const { submit, community, concierge } = this.props;
     const { message, ...rest } = data;
+    let eventCategory = 'advancedInfo';
+    //Not a 100% correct.
+    if (!concierge.pricingRequested && !concierge.availabilityRequested) {
+      eventCategory = 'advancedInfo';
+      //Regular advanced info
+    } else if(concierge.pricingRequested) {
+      //Pricing advanced info
+      eventCategory = 'advancedInfoPricing';
+    } else if (concierge.availabilityRequested) {
+      //Availability Advanced Info
+      eventCategory = 'advancedInfoAvailability';
+    }
 
     SlyEvent.getInstance().sendEvent({
       action: 'submit',
-      category: 'advancedInfo',
+      category: eventCategory,
       label: community.id
     });
 
@@ -189,20 +218,23 @@ export class ConciergeController extends Component {
       userDetails,
     } = this.props;
 
+
     const {
-      callbackRequested,
+      contactRequested,
       currentStep,
+      consultationRequested,
     } = concierge;
 
     const expressDone = (isExpress
-      && callbackRequested
+      && ( contactRequested || consultationRequested )
       && hasAllUserData(userDetails)
       && isAssessment(userDetails)
     );
 
     const normalDone = (!isExpress
-      && callbackRequested
+      && ( contactRequested || consultationRequested )
       && isAssessment(userDetails)
+      && hasAllUserData(userDetails)
     );
 
     if (expressDone || normalDone) {
@@ -212,27 +244,23 @@ export class ConciergeController extends Component {
       });
     }
 
-    const needMoreData = hasOnlyEmail(userDetails);
 
-    if(isExpress && hasOnlyEmail(userDetails)) {
+    if(!isAssessment(userDetails)) {
       return set({
-        currentStep: EXPRESS_CONVERSION_FORM,
-        modalIsOpen: true,
-      });
-    }
-
-    if (!callbackRequested || needMoreData) {
-      set({
-        currentStep: CONVERSION_FORM,
-        modalIsOpen: true,
-      });
-    } else {
-      set({
         currentStep: ADVANCED_INFO,
         modalIsOpen: true,
       });
     }
-  }
+
+    if (!hasAllUserData(userDetails)) {
+      return set({
+        currentStep: CONVERSION_FORM,
+        modalIsOpen: true,
+      });
+    }
+
+
+  };
 
   close = () => {
     const { set } = this.props;
@@ -270,13 +298,22 @@ export class ConciergeController extends Component {
   }
 }
 
-const isCallback = slug => contact =>
+const isCallbackorPricingAvailReq = slug => contact =>
   contact.slug === slug
-  && contact.contactType === REQUEST_CALLBACK;
+  && (contact.contactType === REQUEST_CALLBACK || contact.contactType === REQUEST_PRICING || contact.contactType == REQUEST_AVAILABILITY) ;
+
+const isPricingReq = slug => contact =>
+  contact.slug === slug
+  && (contact.contactType === REQUEST_PRICING) ;
+
+const isAvailReq = slug => contact =>
+  contact.slug === slug
+  && (contact.contactType === REQUEST_AVAILABILITY) ;
 
 const mapStateToProps = (state, { controller, community }) => {
   const {
     profilesContacted,
+    consultationRequested,
     userDetails = {},
   } = getDetail(state, 'userAction') || {};
 
@@ -286,7 +323,10 @@ const mapStateToProps = (state, { controller, community }) => {
     concierge: {
       currentStep: controller.currentStep || CONVERSION_FORM,
       modalIsOpen: controller.modalIsOpen || false,
-      callbackRequested: (profilesContacted || []).some(isCallback(community.id)),
+      consultationRequested,
+      pricingRequested: (profilesContacted || []).some(isPricingReq(community.id)),
+      availabilityRequested: (profilesContacted || []).some(isAvailReq(community.id)),
+      contactRequested: (profilesContacted || []).some(isCallbackorPricingAvailReq(community.id)),
     },
   };
 };

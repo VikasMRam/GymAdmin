@@ -38,7 +38,7 @@ export default class WizardApp extends Component {
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <ThemeProvider theme={theme}>
-          <Router>
+          <Router enableEvents={false}>
             <Switch>
               {this.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <WizardAppErrorPage {...routeProps} errorCode={404} />} />
