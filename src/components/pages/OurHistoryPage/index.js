@@ -53,12 +53,14 @@ const ContentSubheading = styled.div`
 
 const TeamMemberTilesWrapper = styled.div`
   display: flex;
+  flex-wrap: wrap;
 `;
 
 const ProfileTileWrapper = styled.div`
   margin-right: 24px;
+  margin-bottom: 24px;
   
-  :nth-child(3) {
+  :nth-child(3n) {
     margin-right: 0;
   }
 `;
