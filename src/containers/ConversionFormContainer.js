@@ -48,11 +48,15 @@ class ConversionFormContainer extends Component {
     submitRegularConversion: func.isRequired,
     express: bool.isRequired,
   };
+  static defaultProps = {
+    express: false
+  };
 
   render() {
     const {
       submitExpressConversion,
       submitRegularConversion,
+      gotoWhatNext,
       userDetails,
       community,
       express,
@@ -76,6 +80,7 @@ class ConversionFormContainer extends Component {
         onSubmit={submitConversion}
         agent={agents[0]}
         contact={contacts[0]}
+        gotoWhatNext={gotoWhatNext}
         community={community}
         hasOnlyEmail={hasOnlyEmail(userDetails)}
         {...props}

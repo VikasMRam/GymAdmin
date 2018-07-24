@@ -33,11 +33,12 @@ const Step2 = ({ data }) => (
       options.map((option, i) => (
         <BoxRadioButtonWrapper key={i}>
           <BoxRadioButton
-            name="care_needs"
+            multiSelect
+            name={`care_needs[${option}]`}
             helpText="help text goes here"
             value={option}
             label={option}
-            checked={data.care_needs === option}
+            checked={data.care_needs && data.care_needs[option]}
           />
         </BoxRadioButtonWrapper>
       ))

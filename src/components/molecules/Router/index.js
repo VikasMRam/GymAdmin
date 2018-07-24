@@ -1,7 +1,7 @@
 import { Component } from 'react';
-import { object, node } from 'prop-types';
+import { object, node, bool } from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import queryString from 'query-string'; 
+import queryString from 'query-string';
 
 import SlyEvent from 'sly/services/helpers/events';
 
@@ -11,21 +11,30 @@ const searchWhitelist = [
 ];
 
 const bumpOnSearch = (prev, next) => searchWhitelist
-  .some(key => next[key] !== prev[key]); 
+  .some(key => next[key] !== prev[key]);
 
 export class Router extends Component {
   static propTypes = {
     location: object,
     children: node,
+    enableEvents: bool,
   }
 
-  componentDidMount(nextProps) {
+  static defaultProps = {
+    enableEvents: true,
+  }
+
+  componentDidMount() {
     const { pathname, search } = this.props.location;
-    SlyEvent.getInstance().sendPageView(pathname, search);
+    const { enableEvents } = this.props;
+    if (enableEvents) {
+      SlyEvent.getInstance().sendPageView(pathname, search);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.location !== nextProps.location) {
+    const { enableEvents } = this.props;
+    if (enableEvents && this.props.location !== nextProps.location) {
       const { pathname, search } = nextProps.location;
       SlyEvent.getInstance().sendPageView(pathname, search);
     }

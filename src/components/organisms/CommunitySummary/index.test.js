@@ -48,8 +48,17 @@ const testAmenityScore = (wrapper) => {
 };
 const testStartingRate = (wrapper) => {
   expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.pricingAndFloorPlans}` }).length).toBeGreaterThan(0);
-  expect(wrapper.text()).toContain('Pricing starts from');
+  expect(wrapper.text()).toContain('Pricing starts from:');
 };
+const testEstimatedRate = (wrapper) => {
+  expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.pricingAndFloorPlans}` }).length).toBeGreaterThan(0);
+  expect(wrapper.text()).toContain('Estimated Pricing:');
+};
+const testProvidedRate = (wrapper) => {
+  expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.pricingAndFloorPlans}` }).length).toBeGreaterThan(0);
+  expect(wrapper.text()).toContain('Pricing Starts from:');
+};
+
 const testCommunityHighlights = (wrapper) => {
   expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.amenitiesAndFeatures}` }).length).toBeGreaterThan(0);
   expect(wrapper.text()).toContain("Alzheimer's & Dementia support");
@@ -89,7 +98,20 @@ it('renders amenityScore', () => {
 
 it('renders startingRate', () => {
   const wrapper = wrap({
-    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, providedAverage: 1,
+    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: {estimatedAverage:1},
+  });
+  testStartingRate(wrapper);
+});
+
+it('renders estimatedPricing', () => {
+  const wrapper = wrap({
+    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: {estimatedAverage:1},
+  });
+  testStartingRate(wrapper);
+});
+it('renders providedPricing', () => {
+  const wrapper = wrap({
+    communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: {providedAverage:1},
   });
   testStartingRate(wrapper);
 });

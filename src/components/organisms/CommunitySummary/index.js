@@ -30,7 +30,7 @@ export default class communitySummary extends React.Component {
     amenityScore: string,
     communityHighlights: arrayOf(string),
     startingRate: number,
-    providedAverage: number,
+    estimatedPrice: object,
     reviewsValue: number,
     innerRef: object,
     pricingAndFloorPlansRef: object.isRequired,
@@ -58,7 +58,7 @@ export default class communitySummary extends React.Component {
   render() {
     const {
       twilioNumber, phoneNumber, user, licenseUrl, amenityScore, communityHighlights, startingRate,
-      providedAverage, reviewsValue, innerRef, onConciergeNumberClicked, onReceptionNumberClicked,
+      estimatedPrice, reviewsValue, innerRef, onConciergeNumberClicked, onReceptionNumberClicked,
     } = this.props;
 
     const highlights = [];
@@ -72,26 +72,36 @@ export default class communitySummary extends React.Component {
     if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
       conciergeNumber = twilioNumber.numbers[0];
     }
+    const hasPricing = ( (estimatedPrice && (estimatedPrice.estimatedAverage || estimatedPrice.providedAverage )) || startingRate);
+    let shownPricing = '';
+    if (estimatedPrice) {
+      shownPricing = estimatedPrice.estimatedAverage;
+      if (estimatedPrice.providedAverage) {
+        shownPricing = estimatedPrice.providedAverage;
+      }
+    }
+    if (startingRate) {
+      shownPricing = startingRate;
+    }
 
+    highlights.push((
+      <span>
+        Speak to local expert&nbsp;
+        <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
+          <NumberFormat
+            value={conciergeNumber}
+            format="(###) ###-####"
+            displayType="text"
+            data-tip
+            data-for="tooltipPhoneNumber"
+          />
+        </Link>
+        <TooltipContent id="tooltipPhoneNumber" place="bottom" effect="solid" type="light" multiline>
+          This phone number will connect you to the<br /> concierge team at Seniorly.
+        </TooltipContent>
+      </span>
+    ));
     if (false) {
-      highlights.push((
-        <span>
-          Pricing & Availability&nbsp;
-          <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
-            <NumberFormat
-              value={conciergeNumber}
-              format="(###) ###-####"
-              displayType="text"
-              data-tip
-              data-for="tooltipPhoneNumber"
-            />
-          </Link>
-          <TooltipContent id="tooltipPhoneNumber" place="bottom" effect="solid" type="light" multiline>
-            This phone number will connect you to the<br /> concierge team at Seniorly.
-          </TooltipContent>
-        </span>
-      ));
-
       highlights.push((
         <span>
           Reception&nbsp;
@@ -149,21 +159,22 @@ export default class communitySummary extends React.Component {
         Available Floor Plans
       </Link>
     ));
-    if (startingRate) {
+    if (hasPricing) {
       highlights.push((
         <span>
-          { providedAverage
-              ? 'Pricing starts from '
+          { (startingRate || (estimatedPrice && estimatedPrice.providedAverage))
+              ? 'Pricing starts from: '
               : 'Estimated Pricing: '
           }
           <Link
             href={`#${this.constructor.sectionIdMaps.pricingAndFloorPlans}`}
             onClick={e => this.constructor.scrollToSection(e, this.props.pricingAndFloorPlansRef)}
           >
-            <NumberFormat value={startingRate} thousandSeparator displayType="text" prefix="$" />
+            <NumberFormat value={shownPricing} thousandSeparator displayType="text" prefix="$" />
           </Link>
         </span>
       ));
+
     }
     if (reviewsValue > 0) {
       highlights.push((

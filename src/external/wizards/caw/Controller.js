@@ -5,8 +5,9 @@ import { number, func, object } from 'prop-types';
 import { resourceCreateRequest, resourceListReadRequest } from 'sly/store/resource/actions';
 
 import { connectController } from 'sly/controllers';
-import { createValidator, required, minLength } from 'sly/services/validation';
+import { createValidator, required, minLength, usPhone, email } from 'sly/services/validation';
 import { selectFormData } from 'sly/services/helpers/forms';
+import { CAW_PROGRESS } from 'sly/services/api/actions';
 
 import CAWComponent from './Component';
 
@@ -17,6 +18,9 @@ const validate = createValidator({
   renting_or_buying: [required],
   monthly_budget: [required],
   location: [required, minLength(3)],
+  name: [required],
+  email: [required, email],
+  phone: [required, usPhone],
 });
 const ReduxForm = reduxForm({
   form: 'CAWForm',
@@ -25,10 +29,13 @@ const ReduxForm = reduxForm({
   validate,
   initialValues: {
     looking_for: null,
-    care_needs: null,
+    care_needs: {},
     renting_or_buying: null,
-    monthly_budget: 1,
+    monthly_budget: 0,
     location: null,
+    name: null,
+    email: null,
+    phone: null,
   },
 })(CAWComponent);
 
@@ -44,10 +51,25 @@ class Controller extends Component {
 
   handleSubmit = (values, dispatch, props) => {
     const {
-      currentStep, totalNumberofSteps, set, locationSearchParams, searchCommunities,
+      currentStep, totalNumberofSteps, set, locationSearchParams, searchCommunities, postUserAction, data,
     } = props;
 
-    if (currentStep === 5) {
+    if (currentStep === totalNumberofSteps) {
+      const { email, name, phone } = data;
+      const transformedCareNeeds = Object.keys(data.care_needs).filter(key => data.care_needs[key]);
+      data.care_needs = transformedCareNeeds;
+      const payload = {
+        action: CAW_PROGRESS,
+        value: {
+          user: { email, name, phone },
+          wizard_progress: {
+            current_step: currentStep,
+          },
+          careAssessment: data,
+        },
+      };
+      dispatch(postUserAction(payload));
+    } else if (currentStep === 5) {
       set({
         searching: true,
       });
@@ -108,7 +130,7 @@ const mapStateToProps = (state, { controller }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     searchCommunities: searchParams => dispatch(resourceListReadRequest('searchResource', searchParams)),
-    submit: data => resourceCreateRequest('userAction', data),
+    postUserAction: data => resourceCreateRequest('userAction', data),
   };
 };
 

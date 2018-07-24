@@ -67,15 +67,10 @@ if (publicPath.match(/^\//)) {
 
 app.get(`${externalWizardsPath}*`, (req, res) => {
   const content = '';
-  const assets = {
-    js: [
-      path.join(publicPath, 'external/wizards.js'),
-    ],
-    css: [],
-  };
+  const { externalAssets } = global;
   return res.send(renderHtml({
     content,
-    assets,
+    assets: externalAssets,
   }));
 });
 
@@ -103,6 +98,7 @@ app.use(async (req, res, next) => {
     cookieArr.push(`referrer=${slyReferrer};Max-Age=27000000;Domain=${cookieDomain};Path=/;`);
   }
 
+
   const utmParams = ['utm_content', 'utm_medium', 'utm_source', 'utm_campaign', 'utm_term'];
   const utm = req.cookies.utm;
   if (utm === undefined || utm === null) {
@@ -112,11 +108,11 @@ app.use(async (req, res, next) => {
         if (utmStr !== '') {
           utmStr += ',';
         }
-        utmStr = `${utmStr + elem}=${req.query[elem]}`;
+        utmStr = `${utmStr + elem}:${req.query[elem]}`;
       }
     });
     if (utmStr !== '') {
-      cookieArr.push(`referrer=${utmStr};Max-Age=27000000;Domain=${cookieDomain};Path=/;`);
+      cookieArr.push(`utm=${utmStr};Max-Age=27000000;Domain=${cookieDomain};Path=/;`);
     }
   }
 

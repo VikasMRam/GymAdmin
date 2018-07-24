@@ -4,8 +4,8 @@ import { palette, key } from 'styled-theme';
 import { bool, object, number, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
-import { Button, Hr, Heading, Icon } from 'sly/components/atoms';
+import { size, assetPath } from 'sly/components/themes';
+import { Button, Hr, Heading, Image } from 'sly/components/atoms';
 
 import { getStepComponent } from './helpers';
 
@@ -58,10 +58,11 @@ const SearchingWrapper = Wrapper.extend`
   transform: translate3d(0%, -50%, 0);
   position: absolute;
   text-align: center;
+  width: 100%;
 `;
 
 const Component = ({
-  currentStep, invalid, data, handleSubmit, totalNumberofSteps, onBackButton, change, setStoreKey, searching,
+  currentStep, invalid, data, handleSubmit, totalNumberofSteps, onBackButton, change, setStoreKey, searching, searchResultCount,
 }) => {
   const CurrentStepComponent = getStepComponent(currentStep);
   return (
@@ -70,8 +71,7 @@ const Component = ({
       {searching &&
         <SearchingWrapper>
           <StyledHeading level="subtitle">Please wait while we search for your options.</StyledHeading>
-          {/* figure out way to show in correct size as per sketch */}
-          <Icon icon="search" palette="grayscale" />
+          <Image src={assetPath('vectors/Search.svg')} />
         </SearchingWrapper>
       }
       {!searching &&
@@ -84,7 +84,13 @@ const Component = ({
               Step {currentStep} of {totalNumberofSteps}
             </CurrentStep>
             <StyledForm onSubmit={handleSubmit}>
-              <CurrentStepComponent invalid={invalid} data={data} setFormKey={change} setStoreKey={setStoreKey} />
+              <CurrentStepComponent
+                invalid={invalid}
+                data={data}
+                setFormKey={change}
+                setStoreKey={setStoreKey}
+                searchResultCount={searchResultCount}
+              />
               <BottomWrapper>
                 <StyledHr />
                 <ButtonsWrapper>
@@ -98,8 +104,8 @@ const Component = ({
                       Back
                     </Button>
                   )}
-                  <Button type="submit" disabled={invalid}>
-                    Continue
+                  <Button type="button" disabled={invalid} onClick={handleSubmit}>
+                    {currentStep === totalNumberofSteps ? 'See my options' : 'Continue'}
                   </Button>
                 </ButtonsWrapper>
               </BottomWrapper>
@@ -121,6 +127,7 @@ Component.propTypes = {
   change: func,
   setStoreKey: func,
   searching: bool,
+  searchResultCount: number,
 };
 
 export default Component;

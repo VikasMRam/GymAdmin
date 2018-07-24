@@ -32,6 +32,8 @@ import CommunityQuestionAnswersContainer from 'sly/containers/CommunityQuestionA
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import Button from 'sly/components/atoms/Button';
 import CommunityLocalDetails from "sly/components/organisms/CommunityLocalDetails";
+import AdTile from 'sly/components/molecules/AdTile';
+import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -47,6 +49,10 @@ const NameHeading = styled(Heading)`
 
 const AddressHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
+`;
+
+const AdTileWrapper = styled.div`
+  margin-bottom: ${size('spacing.large')};
 `;
 
 export default class CommunityDetailPage extends Component {
@@ -157,6 +163,16 @@ export default class CommunityDetailPage extends Component {
     const communityMainImage = images.find((element) => {
       return element.sd === mainImage;
     });
+
+    let receptionNumber = communityPhone;
+    if ((receptionNumber === undefined || receptionNumber === '') && user) {
+      receptionNumber = user.phoneNumber;
+    }
+
+    let conciergeNumber = receptionNumber;
+    if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
+      conciergeNumber = twilioNumber.numbers[0];
+    }
     if (communityMainImage) {
       images = images.filter(img => img.sd !== communityMainImage.sd);
       images.unshift(communityMainImage);
@@ -287,7 +303,7 @@ export default class CommunityDetailPage extends Component {
             user={communityUser}
             amenityScore={rgsAux.amenityScore}
             startingRate={startingRate}
-            providedAverage={rgsAux.providedAverage}
+            estimatedPrice={rgsAux.estimatedPrice}
             communityHighlights={communityHighlights}
             reviews={reviews}
             onConciergeNumberClicked={onConciergeNumberClicked}
@@ -312,6 +328,14 @@ export default class CommunityDetailPage extends Component {
           </CollapsibleSection>
           <CollapsibleSection title="Similar Communities">
             <SimilarCommunities similarProperties={similarProperties} />
+            <ConciergeController community={community}>
+              {({ gotoAdvancedInfo }) => (
+                <AdTileWrapper>
+                  <AdTile {...adProps} onClick={() => gotoAdvancedInfo()} />
+                </AdTileWrapper>
+                )
+              }
+            </ConciergeController>
             <BackToSearch>
               <Button
                 ghost
@@ -383,9 +407,10 @@ export default class CommunityDetailPage extends Component {
               footerInfo={{
                 title: 'Contact Property',
                 name: community.name,
-                ctaTitle: 'Contact',
+                ctaTitle: 'Speak to Local Expert',
+                link: `tel:${conciergeNumber}`
               }}
-              onFooterClick={getPricing}
+              onFooterClick={onConciergeNumberClicked}
 
             />
 
