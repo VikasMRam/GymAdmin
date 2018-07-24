@@ -4,9 +4,9 @@ import { palette } from 'styled-theme';
 
 import { size, assetPath } from 'sly/components/themes';
 import { Image, Icon, Hr } from 'sly/components/atoms';
+import Modal from 'sly/components/molecules/Modal';
 import ProfileTile from 'sly/components/molecules/ProfileTile';
 import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
-import { TeamMembersData } from 'sly/services/helpers/our_team';
 
 const IntroText = styled.div`
   width: ${size('layout.col9')};
@@ -51,7 +51,19 @@ const ContentSubheading = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const OurHistoryPage = () => {
+const TeamMemberTilesWrapper = styled.div`
+  display: flex;
+`;
+
+const ProfileTileWrapper = styled.div`
+  margin-right: 24px;
+  
+  :nth-child(3) {
+    margin-right: 0;
+  }
+`;
+
+const OurHistoryPage = ({ profiles, activeProfile, setModalProfile }) => {
   const imagePath = assetPath('images/our-history/hero.png');
   const intro = (
     <Fragment>
@@ -81,16 +93,18 @@ const OurHistoryPage = () => {
       </DescriptionImage>
     </Fragment>
   );
-  const TeamMembers = TeamMembersData.map(profile => <ProfileTile profile={profile} />);
+  const TeamMemberTiles = profiles.map(profile => <ProfileTileWrapper key={profile.heading}><ProfileTile profile={profile} onClick={() => setModalProfile(profile)} /></ProfileTileWrapper>);
   const content = (
     <Fragment>
       <StyledHr />
       <ContentHeading>Meet Our Team</ContentHeading>
       <ContentSubheading>We are doing this for our parents and grandparents, and we are <br />committed to making life better for them however we can.</ContentSubheading>
-      {TeamMembers}
+      <TeamMemberTilesWrapper>{TeamMemberTiles}</TeamMemberTilesWrapper>
+      <Modal layout="searchBox" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
+        {activeProfile && <ProfileTile profile={activeProfile} layout="modal" />}
+      </Modal>
     </Fragment>
   );
-
   return (
     <OverlappingSectionsTemplate
       imagePath={imagePath}
