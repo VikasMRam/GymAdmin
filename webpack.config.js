@@ -115,7 +115,7 @@ const resolveModules = modules => () => ({
 function ModifyAssetsPlugin() {}
 ModifyAssetsPlugin.prototype.apply = (compiler) => {
   compiler.plugin('done', () => {
-    const assets = require(assetsPath);
+    const assets = JSON.parse(fs.readFileSync(assetsPath));
     const externalAssets = {};
     const newAssets = Object.keys(assets).reduce((previous, type) => {
       externalAssets[type] = externalAssets[type] || [];
@@ -171,6 +171,7 @@ const devCORS = () =>
         disableHostCheck: true,
         host: '0.0.0.0',
         port: DEV_PORT,
+        compress: true,
       }),
       addPlugins([new webpack.NamedModulesPlugin()]),
     ]),
