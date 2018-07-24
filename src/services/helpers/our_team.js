@@ -2,7 +2,7 @@ export const TeamMembersData = [
   {
     heading: 'Arthur Bretschneider',
     subHeading: 'Founder & CEO',
-    imageUrl: 'https://d3tqosv1ilj4q.cloudfront.net/assets/team/Arthur-a2b97989c2264366a85578f9a9103196.jpg',
+    imageUrl: 'images/our-team/arthur.png',
     description: `Arthur is a third generation senior housing operator. After selling his family’s senior housing company,
       he held two financial analyst roles in real estate and finance companies. He then founded a consulting firm, assisting 
       real estate developers and other financial institutions in entering the senior housing market. While pursuing his MBA
@@ -14,7 +14,7 @@ export const TeamMembersData = [
   {
     heading: 'Sushanth Ramakrishna',
     subHeading: 'Founder & CTO',
-    imageUrl: 'https://d3tqosv1ilj4q.cloudfront.net/assets/team/Sushanth-42b544d44dc1ba0c742858962d8a15d2.jpg',
+    imageUrl: 'images/our-team/sushanth.png',
     description: `Sushanth is a software engineer who has worked at both startups and large corporations with products used by a 
       few hundred to a few million users. He met Arthur at business school at Berkeley-Haas and wanted to bridge the obvious 
       technology gap he saw in the senior care industry. Through Seniorly, he aims to use technology to lighten the load for
@@ -25,7 +25,7 @@ export const TeamMembersData = [
   {
     heading: 'Kunal Shah',
     subHeading: 'Co-Founder & Engineering',
-    imageUrl: 'https://d3tqosv1ilj4q.cloudfront.net/assets/team/Kunal-6aae7913a768924f0aabd6a43ee55abe.jpg',
+    imageUrl: 'images/our-team/kunal.png',
     description: `Born in India, Kunal moved to America to pursue a bachelor's degree in Computer Engineering from Illinois 
       Institute of Technology and a master's degree in Information Networking from Carnegie Mellon University. He worked at Cisco 
       for 5 years, where he learned to build large-scale, industry-quality Content Delivery Networks. In 2011, he joined Adap.tv, 
@@ -36,7 +36,7 @@ export const TeamMembersData = [
   {
     heading: 'Marlena del Hierro',
     subHeading: 'Operations Manager',
-    imageUrl: 'https://d3tqosv1ilj4q.cloudfront.net/assets/team/Marlena-52de14972db70ba540966fa2e069bbbe.jpg',
+    imageUrl: 'images/our-team/marlena.png',
     description: `A Southern California transplant, Marlena has always loved spending most of her days outside, scuba diving, 
       snowboarding in Tahoe, playing soccer, or going for a run! Her family has always been her biggest fans, and they inspire 
       her every day to treat others with kindness and empathy. Her passion focuses on caring for elders with the development
@@ -47,7 +47,7 @@ export const TeamMembersData = [
   {
     heading: 'Stephen Anderson',
     subHeading: 'Head Of Growth',
-    imageUrl: 'https://d3tqosv1ilj4q.cloudfront.net/assets/team/Stephen-86730f6a58a7e7894ee402d5ea7dcdf4.jpg',
+    imageUrl: 'images/our-team/stephen.png',
     description: `Stephen has been a digital marketing, sales and operations leader. A strategist at heart, he has built high 
       performing solutions for brands large and small across challenging industries such as Insurance, Travel and Personal Finance. 
       At Seniorly, Stephen draws on this experience to help families and senior living communities connect with the best possible
@@ -58,7 +58,7 @@ export const TeamMembersData = [
   {
     heading: 'Erica Powell',
     subHeading: 'Customer Success',
-    imageUrl: 'https://d3tqosv1ilj4q.cloudfront.net/assets/team/Erica-e90d3a20a3f0ed582e8b2ec869237305.jpg',
+    imageUrl: 'images/our-team/erica.png',
     description: `Originally from Milwaukee, Wisconsin Erica moved to San Francisco after graduating from University of Wisconsin 
       with a degree in Psychology and Criminal Justice. Erica previously worked as a behavioral technician at a psychiatry clinic 
       to support people with severe anxiety and depression. She has also worked in treatment foster homes as a youth support specialist 
@@ -69,7 +69,7 @@ export const TeamMembersData = [
   {
     heading: 'Andrew Barrett',
     subHeading: 'Director of Content',
-    imageUrl: 'https://d3tqosv1ilj4q.cloudfront.net/assets/team/Andrew-145d314a83def4ebd24955e2afb1be1a.jpg',
+    imageUrl: 'images/our-team/andrew.png',
     description: `Andrew has been a content creator and marketer for over ten years, primarily in the entertainment space, having 
       worked with such global clients as Showtime Networks, Tom Cruise, Jukin Media and Cinedigm. After the death of his father, he 
       discovered the lack of innovation online in the senior living sector and this prompted him to change career paths. Now enjoying 
@@ -80,7 +80,7 @@ export const TeamMembersData = [
   {
     heading: 'Stephanie Filas',
     subHeading: 'Account Manager',
-    imageUrl: 'https://d3tqosv1ilj4q.cloudfront.net/assets/team/Stephanie-88d1a4833101f872c2c5888bea54b721.jpg',
+    imageUrl: 'images/our-team/stephanie.png',
     description: `Originally from Twin Falls, Idaho, Stephanie moved to the Bay Area for school where she studied Communications 
       at Saint Mary's College of California. While there, she discovered a passion for helping older adults after working with an 
       in-home care agency promoting educational events focused around Alzheimer's Awareness in her community. Most recently she was 
@@ -90,7 +90,7 @@ export const TeamMembersData = [
   {
     heading: 'Alfonso de la Osa',
     subHeading: 'Lead Developer',
-    imageUrl: 'https://d3tqosv1ilj4q.cloudfront.net/assets/team/Alfonso-286219af2ee35b701159cbb0e39e49d3.jpg',
+    imageUrl: 'images/our-team/fonz.png',
     description: `After short stint into Graphic Design, Alfonso dusted off the skills he had learned playing on an IBM PC 5155 
       with his brother. Since then he has been coding in different industries like eMail ISPs and 3D scanning. Most recently, 
       Alfonso worked in Fintech for Essentia Analytics and Credit Suisse specializing in Front End development. He is thrilled to 

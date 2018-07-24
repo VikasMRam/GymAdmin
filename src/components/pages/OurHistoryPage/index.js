@@ -95,7 +95,15 @@ const OurHistoryPage = ({ profiles, activeProfile, setModalProfile }) => {
       </DescriptionImage>
     </Fragment>
   );
-  const TeamMemberTiles = profiles.map(profile => <ProfileTileWrapper key={profile.heading}><ProfileTile profile={profile} onClick={() => setModalProfile(profile)} /></ProfileTileWrapper>);
+  const TeamMemberTiles = profiles.map((member) => {
+    const profile = { ...member };
+    profile.imageUrl = assetPath(member.imageUrl);
+    return (
+      <ProfileTileWrapper key={profile.heading}>
+        <ProfileTile profile={profile} onClick={() => setModalProfile(profile)} />
+      </ProfileTileWrapper>
+    );
+  });
   const content = (
     <Fragment>
       <StyledHr />
