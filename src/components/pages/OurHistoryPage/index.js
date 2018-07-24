@@ -48,6 +48,10 @@ const StyledHr = styled(Hr)`
   margin: 72px 0;
 `;
 
+const ContentWrapper = styled.div`
+  margin-bottom: 72px;
+`;
+
 const ContentHeading = styled.div`
   font-size: 30px;
   margin-bottom: ${size('spacing.regular')};
@@ -140,7 +144,7 @@ const OurHistoryPage = ({
     );
   });
   const content = (
-    <Fragment>
+    <ContentWrapper>
       <StyledHr />
       <ContentHeading>Meet Our Team</ContentHeading>
       <ContentSubheading>We are doing this for our parents and grandparents, and we are <br />committed to making life better for them however we can.</ContentSubheading>
@@ -151,7 +155,7 @@ const OurHistoryPage = ({
       <Modal layout="searchBox" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
         {activeProfile && <ProfileTile profile={activeProfile} layout="modal" />}
       </Modal>
-    </Fragment>
+    </ContentWrapper>
   );
   return (
     <OverlappingSectionsTemplate
