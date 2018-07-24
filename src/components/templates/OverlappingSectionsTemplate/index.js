@@ -15,6 +15,7 @@ const HeroWrapper = styled.div`
   background-color: ${palette('grayscale', 0)};
   height: ${size('header.home.heroImage.height')};
 `;
+
 const StyledImage = styled(Image)`
   object-fit: cover;
   width: 100%;
@@ -23,10 +24,16 @@ const StyledImage = styled(Image)`
 `;
 
 const Grid = styled.div`
-  margin-top: -${size('home.introMargin')};
-  display: grid;
-  grid-template-columns: auto ${size('spacing.huge')} ${size('layout.col12')} ${size('spacing.huge')} auto;
-  grid-template-rows: auto auto auto;
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: grid;
+    margin-top: -${size('home.introMargin')};
+    grid-template-columns: auto ${size('layout.col12')} auto;
+    grid-template-rows: auto auto auto;
+  }
+  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+    grid-template-columns: auto ${size('spacing.huge')} ${size('layout.col12')} ${size('spacing.huge')} auto;
+    grid-template-rows: auto auto auto;
+  }
 `;
 
 const backgrounds = {
@@ -35,25 +42,44 @@ const backgrounds = {
 };
 
 const Background = styled.div`
-  grid-column: ${prop('row')} / span 3;
-  grid-row: ${prop('row')} / span 2;
   background: ${p => backgrounds[p.background]};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    grid-column: 1 / span 2;
+    grid-row: ${prop('row')} / span 2;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+    grid-column: ${prop('row')} / span 3;
+  }
 `;
 
 const Intro = styled.div`
   margin: ${size('home.introMargin')} 0;
-  width: ${size('layout.col12')};
-  grid-column: 3 / span 1;
-  grid-row: 1 / span 1;
-  display: flex;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: flex;
+    grid-column: 2 / span 1;
+    grid-row: 1 / span 1;
+  }
+  
+  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+    grid-column: 3 / span 1;
+  }
 `;
 
 const Description = styled.div`
-  display: flex;
-  width: ${size('layout.col12')};
   margin-top: ${size('spacing.huge')};
-  grid-column: 3 / span 1;
-  grid-row: 2 / span 2;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: flex;
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 2;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+    grid-column: 3 / span 1;
+  }
 `;
 
 const OverlappingSectionsTemplate = ({ onLocationSearch, imagePath, intro, description, content }) => {
