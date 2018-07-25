@@ -95,7 +95,7 @@ class Controller extends Component {
         .then((result) => {
           set({
             currentStep: currentStep + 1,
-            searchResultCount: result.data.length,
+            searchResultCount: result.meta['filtered-count'],
             searching: false,
           });
         });
