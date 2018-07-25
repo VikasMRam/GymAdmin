@@ -6,6 +6,7 @@
     context: {
       cssFileUrl: process.env.EXTERNAL_ASSET_URL + '/widget.css',
       iframeUrl: process.env.EXTERNAL_WIZARDS_ROOT_URL,
+      env: process.env.SLY_ENV,
     },
     config: {},
     widgetClassName: {
@@ -36,15 +37,16 @@
       warn: (msg) => {
         console.warn(`${Seniorly.log.prefix} ${msg}`);
       },
-      log: (msg) => {
-        console.log(`${Seniorly.log.prefix} ${msg}`);
+      debug: (msg) => {
+        if (Seniorly.context.env === 'development') {
+          console.log(`${Seniorly.log.prefix} ${msg}`);
+        }
       },
     },
     widgetInstances: {},
 
     populateContextAndConfig: function() {
       const script = document.getElementById(this.scriptId);
-      this.context.scriptSrc = script.src;
       this.context.pageRoot = document.getElementsByTagName('html')[0];
       this.config.type = script.getAttribute(this.widgetConfigAttributes.type) || this.defaultWidgetConfig.type;
     },
@@ -205,9 +207,40 @@
     },
   };
 
+  Seniorly.startListeningForMessages = function() {
+    // create IE + others compatible event handler
+    var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
+    var eventer = window[eventMethod];
+    var messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
+
+    eventer(messageEvent, Seniorly.processMessages, false);
+  };
+  Seniorly.processMessages = function(e) {
+    // don't even try to process messages sent from unknown sources
+    if (Seniorly.context.iframeUrl.indexOf(e.origin) === -1) {
+      return;
+    }
+
+    // since some old browsers support only string messages try decoding messsge.
+    // if decoding fails log and continue
+    try {
+      var message = JSON.parse(e.data);
+      switch(message.action) {
+        case 'closePopup':
+          Seniorly.widgetInstances['overlay'].destroy();
+          break;
+        default:
+          Seniorly.log.debug('Unknown action in message from popup');
+      }
+    } catch (e) {
+      Seniorly.log.warn('Failed to decode message from popup');
+    }
+  };
+
   document.onreadystatechange = function() {
     if (document.readyState === 'complete') {
       Seniorly.initWidget();
+      Seniorly.startListeningForMessages();
     }
   };
 }).call(this);

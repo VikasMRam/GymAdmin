@@ -227,6 +227,7 @@ const replaceExternalConstants = (text) => {
     'process.env.EXTERNAL_ASSET_URL': EXTERNAL_ASSET_URL,
     'process.env.EXTERNAL_WIZARDS_ROOT_URL': EXTERNAL_WIZARDS_ROOT_URL,
     'process.env.CLOSE_ICON_SVG': closeIconSvg,
+    'process.env.SLY_ENV': SLY_ENV,
   };
   const replacedText = Object.keys(replacements).reduce((previous, match) => {
     return previous.replace(match, JSON.stringify(replacements[match]));

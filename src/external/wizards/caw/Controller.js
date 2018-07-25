@@ -46,13 +46,15 @@ class Controller extends Component {
     set: func,
     locationSearchParams: object,
     searchCommunities: func,
+    postUserAction: func,
     searchResultCount: number,
+    data: object,
   };
 
-  handleSubmit = (values, dispatch, props) => {
+  handleSeeMore = () => {
     const {
-      currentStep, totalNumberofSteps, set, locationSearchParams, searchCommunities, postUserAction, data,
-    } = props;
+      currentStep, totalNumberofSteps, postUserAction, data,
+    } = this.props;
 
     if (currentStep === totalNumberofSteps) {
       const newData = { ...data };
@@ -72,8 +74,20 @@ class Controller extends Component {
           careAssessment,
         },
       };
-      dispatch(postUserAction(payload));
-    } else if (currentStep === 5) {
+      postUserAction(payload).then(() => {
+        if (window.parent) {
+          window.parent.postMessage(JSON.stringify({ action: 'closePopup' }), '*');
+        }
+      });
+    }
+  }
+
+  handleSubmit = (values, dispatch, props) => {
+    const {
+      currentStep, totalNumberofSteps, set, locationSearchParams, searchCommunities,
+    } = props;
+
+    if (currentStep === 5) {
       set({
         searching: true,
       });
@@ -109,11 +123,14 @@ class Controller extends Component {
   }
 
   render() {
+    const { locationSearchParams } = this.props;
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
         onBackButton={this.handleBackButton}
         setStoreKey={this.handleSetStoreKey}
+        onSeeMore={this.handleSeeMore}
+        locationSearchParams={locationSearchParams}
         {...this.props}
       />
     );
@@ -134,7 +151,7 @@ const mapStateToProps = (state, { controller }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     searchCommunities: searchParams => dispatch(resourceListReadRequest('searchResource', searchParams)),
-    postUserAction: data => resourceCreateRequest('userAction', data),
+    postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
   };
 };
 
