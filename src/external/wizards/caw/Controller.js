@@ -55,17 +55,21 @@ class Controller extends Component {
     } = props;
 
     if (currentStep === totalNumberofSteps) {
-      const { email, name, phone } = data;
-      const transformedCareNeeds = Object.keys(data.care_needs).filter(key => data.care_needs[key]);
-      data.care_needs = transformedCareNeeds;
+      const newData = { ...data };
+      const {
+        email, name, phone, ...careAssessment
+      } = newData;
+      const user = { email, name, phone };
+      const transformedCareNeeds = Object.keys(careAssessment.care_needs).filter(key => careAssessment.care_needs[key]);
+      careAssessment.care_needs = transformedCareNeeds;
       const payload = {
         action: CAW_PROGRESS,
         value: {
-          user: { email, name, phone },
+          user,
           wizard_progress: {
             current_step: currentStep,
           },
-          careAssessment: data,
+          careAssessment,
         },
       };
       dispatch(postUserAction(payload));
