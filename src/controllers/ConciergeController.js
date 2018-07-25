@@ -31,10 +31,9 @@ export const HOW_IT_WORKS = 'howItWorks';
 
 const isAssessment = ({
   typeOfCare,
-  typeOfRoom,
   timeToMove,
   budget
-}) => !!(typeOfCare && typeOfRoom && timeToMove && budget);
+}) => !!(typeOfCare && timeToMove && budget);
 
 const hasAllUserData = createBooleanValidator({
   fullName: [required],

@@ -43,7 +43,7 @@ const typeOfRoomOptions = [
   { value: 'bedroom', label: '1+ Bedroom' },
 ];
 const timeToMoveOptions = [
-  { value: 0, label: 'Now' },
+  { value: 1, label: 'Now' },
   { value: 3, label: '1-3 Months' },
   { value: 6, label: '3+ Months' },
   // { value: 12, label: '12+ Months' },
