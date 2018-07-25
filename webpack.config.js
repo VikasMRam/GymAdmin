@@ -115,6 +115,7 @@ const resolveModules = modules => () => ({
 function ModifyAssetsPlugin() {}
 ModifyAssetsPlugin.prototype.apply = (compiler) => {
   compiler.plugin('done', () => {
+    // always get latest file from disk; require has caching and hence it won't fetch latest file content
     const assets = JSON.parse(fs.readFileSync(assetsPath));
     const externalAssets = {};
     const newAssets = Object.keys(assets).reduce((previous, type) => {
