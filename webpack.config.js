@@ -115,7 +115,8 @@ const resolveModules = modules => () => ({
 function ModifyAssetsPlugin() {}
 ModifyAssetsPlugin.prototype.apply = (compiler) => {
   compiler.plugin('done', () => {
-    const assets = require(assetsPath);
+    // always get latest file from disk; require has caching and hence it won't fetch latest file content
+    const assets = JSON.parse(fs.readFileSync(assetsPath));
     const externalAssets = {};
     const newAssets = Object.keys(assets).reduce((previous, type) => {
       externalAssets[type] = externalAssets[type] || [];
@@ -171,6 +172,7 @@ const devCORS = () =>
         disableHostCheck: true,
         host: '0.0.0.0',
         port: DEV_PORT,
+        compress: true,
       }),
       addPlugins([new webpack.NamedModulesPlugin()]),
     ]),
@@ -225,6 +227,7 @@ const replaceExternalConstants = (text) => {
     'process.env.EXTERNAL_ASSET_URL': EXTERNAL_ASSET_URL,
     'process.env.EXTERNAL_WIZARDS_ROOT_URL': EXTERNAL_WIZARDS_ROOT_URL,
     'process.env.CLOSE_ICON_SVG': closeIconSvg,
+    'process.env.SLY_ENV': SLY_ENV,
   };
   const replacedText = Object.keys(replacements).reduce((previous, match) => {
     return previous.replace(match, JSON.stringify(replacements[match]));

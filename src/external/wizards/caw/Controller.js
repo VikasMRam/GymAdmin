@@ -46,30 +46,48 @@ class Controller extends Component {
     set: func,
     locationSearchParams: object,
     searchCommunities: func,
+    postUserAction: func,
     searchResultCount: number,
+    data: object,
   };
 
-  handleSubmit = (values, dispatch, props) => {
+  handleSeeMore = () => {
     const {
-      currentStep, totalNumberofSteps, set, locationSearchParams, searchCommunities, postUserAction, data,
-    } = props;
+      currentStep, totalNumberofSteps, postUserAction, data,
+    } = this.props;
 
     if (currentStep === totalNumberofSteps) {
-      const { email, name, phone } = data;
-      const transformedCareNeeds = Object.keys(data.care_needs).filter(key => data.care_needs[key]);
-      data.care_needs = transformedCareNeeds;
+      const newData = { ...data };
+      const {
+        email, name, phone, ...careAssessment
+      } = newData;
+      const user = { email, name, phone };
+      const transformedCareNeeds = Object.keys(careAssessment.care_needs).filter(key => careAssessment.care_needs[key]);
+      careAssessment.care_needs = transformedCareNeeds;
       const payload = {
         action: CAW_PROGRESS,
         value: {
-          user: { email, name, phone },
+          user,
           wizard_progress: {
             current_step: currentStep,
           },
-          careAssessment: data,
+          careAssessment,
         },
       };
-      dispatch(postUserAction(payload));
-    } else if (currentStep === 5) {
+      postUserAction(payload).then(() => {
+        if (window.parent) {
+          window.parent.postMessage(JSON.stringify({ action: 'closePopup' }), '*');
+        }
+      });
+    }
+  }
+
+  handleSubmit = (values, dispatch, props) => {
+    const {
+      currentStep, totalNumberofSteps, set, locationSearchParams, searchCommunities,
+    } = props;
+
+    if (currentStep === 5) {
       set({
         searching: true,
       });
@@ -77,7 +95,7 @@ class Controller extends Component {
         .then((result) => {
           set({
             currentStep: currentStep + 1,
-            searchResultCount: result.data.length,
+            searchResultCount: result.meta['filtered-count'],
             searching: false,
           });
         });
@@ -105,11 +123,14 @@ class Controller extends Component {
   }
 
   render() {
+    const { locationSearchParams } = this.props;
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
         onBackButton={this.handleBackButton}
         setStoreKey={this.handleSetStoreKey}
+        onSeeMore={this.handleSeeMore}
+        locationSearchParams={locationSearchParams}
         {...this.props}
       />
     );
@@ -130,7 +151,7 @@ const mapStateToProps = (state, { controller }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     searchCommunities: searchParams => dispatch(resourceListReadRequest('searchResource', searchParams)),
-    postUserAction: data => resourceCreateRequest('userAction', data),
+    postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
   };
 };
 

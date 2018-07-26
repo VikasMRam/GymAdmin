@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
-import { bool, object, number, func } from 'prop-types';
+import { bool, object, number, func, shape, string } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, assetPath } from 'sly/components/themes';
@@ -62,7 +62,7 @@ const SearchingWrapper = Wrapper.extend`
 `;
 
 const Component = ({
-  currentStep, invalid, data, handleSubmit, totalNumberofSteps, onBackButton, change, setStoreKey, searching, searchResultCount,
+  currentStep, invalid, data, handleSubmit, onSeeMore, totalNumberofSteps, onBackButton, change, setStoreKey, searching, searchResultCount, locationSearchParams,
 }) => {
   const CurrentStepComponent = getStepComponent(currentStep);
   return (
@@ -104,9 +104,23 @@ const Component = ({
                       Back
                     </Button>
                   )}
-                  <Button type="button" disabled={invalid} onClick={handleSubmit}>
-                    {currentStep === totalNumberofSteps ? 'See my options' : 'Continue'}
-                  </Button>
+                  {currentStep !== totalNumberofSteps &&
+                    <Button type="button" disabled={invalid} onClick={handleSubmit}>
+                      Continue
+                    </Button>
+                  }
+                  {currentStep === totalNumberofSteps &&
+                    // it's important to make this a regular href than opens new tab since
+                    // by default browsers block popups opened using window.open
+                    <Button
+                      href={`https://www.seniorly.com/assisted-living/${locationSearchParams.state}/${locationSearchParams.city}`}
+                      target="_blank"
+                      disabled={invalid}
+                      onClick={onSeeMore}
+                    >
+                      See my options
+                    </Button>
+                  }
                 </ButtonsWrapper>
               </BottomWrapper>
             </StyledForm>
@@ -124,10 +138,15 @@ Component.propTypes = {
   data: object,
   handleSubmit: func.isRequired,
   onBackButton: func.isRequired,
+  onSeeMore: func.isRequired,
   change: func,
   setStoreKey: func,
   searching: bool,
   searchResultCount: number,
+  locationSearchParams: shape({
+    state: string.isRequired,
+    city: string.isRequired,
+  }),
 };
 
 export default Component;

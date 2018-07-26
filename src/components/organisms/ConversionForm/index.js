@@ -63,9 +63,10 @@ const ConversionForm = ({
     <StyledForm onSubmit={handleSubmit}>
 
       {concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">How Can We Contact You?</Heading>}
-      {concierge.modalIsOpen &&  <SubHeading>Our team is standing by to answer your questions.</SubHeading>}
+      {concierge.modalIsOpen && hasOnlyEmail && <SubHeading>Our team is standing by to answer your questions</SubHeading>}
+      {concierge.modalIsOpen && !hasOnlyEmail && <SubHeading>Our team is preparing your custom pricing information.</SubHeading>}
       {!concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">Complimentary Consultation</Heading>}
-      {!concierge.modalIsOpen &&  <SubHeading>with a local senior living expert</SubHeading>}
+      {!concierge.modalIsOpen && <SubHeading>with a local senior living expert</SubHeading>}
 
       <Hr />
 
@@ -92,7 +93,7 @@ const ConversionForm = ({
         component={ReduxField}
       />
       <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-        {concierge.modalIsOpen ? 'Send' : 'Request Consultation'}
+        {concierge.modalIsOpen ? (hasOnlyEmail ? 'Send' : 'Get Pricing') : 'Request Consultation'}
       </StyledButton>
 
       <TosAndPrivacy />
