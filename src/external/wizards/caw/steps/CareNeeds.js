@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 import { object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
@@ -8,38 +7,38 @@ import { Heading } from 'sly/components/atoms';
 import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
 
 const options = [
-  'Myself',
-  'Parent',
-  'Grantparent',
-  'Spouse',
-  'Friend',
-  'Client',
+  '24-hour supervision',
+  'Dimentia care',
+  'Bathing assistance',
+  'Eating assistance',
+  'Tansfer assistance',
+  'Medication management',
+  'Insulin injections',
+  'short-term care',
 ];
 
 const StyledHeading = styled(Heading)`
   font-weight: normal;
-`;
-const Description = styled.p`
-  color: ${palette('grayscale', 0)};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 const BoxRadioButtonWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const Step1 = ({ data }) => (
+const CareNeeds = ({ data }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-    <StyledHeading>Who are you looking for?</StyledHeading>
-    <Description>This is an optional supportive sentance that can ideally at most two lines.</Description>
+    <StyledHeading>Do you have any care needs?</StyledHeading>
     {
       options.map((option, i) => (
         <BoxRadioButtonWrapper key={i}>
           <BoxRadioButton
-            name="looking_for"
+            multiSelect
+            name={`care_needs[${option}]`}
             helpText="help text goes here"
             value={option}
             label={option}
-            checked={data.looking_for === option}
+            checked={data.care_needs && data.care_needs[option]}
           />
         </BoxRadioButtonWrapper>
       ))
@@ -47,12 +46,12 @@ const Step1 = ({ data }) => (
   </Fragment>
 );
 
-Step1.propTypes = {
+CareNeeds.propTypes = {
   data: object,
 };
 
-Step1.defaultProps = {
+CareNeeds.defaultProps = {
   data: {},
 };
 
-export default Step1;
+export default CareNeeds;

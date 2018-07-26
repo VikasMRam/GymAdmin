@@ -7,14 +7,8 @@ import { Heading } from 'sly/components/atoms';
 import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
 
 const options = [
-  '24-hour supervision',
-  'Dimentia care',
-  'Bathing assistance',
-  'Eating assistance',
-  'Tansfer assistance',
-  'Medication management',
-  'Insulin injections',
-  'short-term care',
+  'Renting',
+  'Buying',
 ];
 
 const StyledHeading = styled(Heading)`
@@ -25,20 +19,19 @@ const BoxRadioButtonWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const Step2 = ({ data }) => (
+const BuyingOrRenting = ({ data }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-    <StyledHeading>Do you have any care needs?</StyledHeading>
+    <StyledHeading>Are you interested in renting or buying into a retirement community?</StyledHeading>
     {
       options.map((option, i) => (
         <BoxRadioButtonWrapper key={i}>
           <BoxRadioButton
-            multiSelect
-            name={`care_needs[${option}]`}
+            name="renting_or_buying"
             helpText="help text goes here"
             value={option}
             label={option}
-            checked={data.care_needs && data.care_needs[option]}
+            checked={data.renting_or_buying === option}
           />
         </BoxRadioButtonWrapper>
       ))
@@ -46,12 +39,12 @@ const Step2 = ({ data }) => (
   </Fragment>
 );
 
-Step2.propTypes = {
+BuyingOrRenting.propTypes = {
   data: object,
 };
 
-Step2.defaultProps = {
+BuyingOrRenting.defaultProps = {
   data: {},
 };
 
-export default Step2;
+export default BuyingOrRenting;
