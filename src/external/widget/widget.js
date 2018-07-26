@@ -1,4 +1,3 @@
-/* eslint-disable */
 (function () {
   function getParams(scriptName) {
     // find all script tags
@@ -56,13 +55,16 @@
     log: {
       prefix: '[Seniorly Widget]',
       error: function(msg) {
+        // eslint-disable-next-line no-console
         console.error(Seniorly.log.prefix + ' ' + msg);
       },
       warn: function(msg) {
+        // eslint-disable-next-line no-console
         console.warn(Seniorly.log.prefix + ' ' + msg);
       },
       debug: function(msg) {
         if (Seniorly.context.env === 'development') {
+          // eslint-disable-next-line no-console
           console.log(Seniorly.log.prefix + ' ' + msg);
         }
       },
