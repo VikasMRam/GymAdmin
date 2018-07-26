@@ -123,7 +123,7 @@ export default class StateSearchPage extends Component {
             onParamsChange={onParamsChange}
             searchParams={searchParams}
             requestMeta={requestMeta}
-
+            onAdTileClick={onAdTileClick}
           />
           {additionalDivs}
 
@@ -136,6 +136,7 @@ export default class StateSearchPage extends Component {
         onParamsChange={onParamsChange}
         searchParams={searchParams}
         requestMeta={requestMeta}
+        onAdTileClick={onAdTileClick}
       />);
     };
 
