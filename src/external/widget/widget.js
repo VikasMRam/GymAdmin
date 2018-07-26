@@ -1,4 +1,29 @@
 (function () {
+  // IE polyfill for classList
+  function hasClass(el, className) {
+    if (el.classList) {
+      return el.classList.contains(className);
+    }
+    return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
+  }
+
+  function addClass(el, className) {
+    if (el.classList) {
+      el.classList.add(className);
+    } else if (!hasClass(el, className)) {
+      el.className += " " + className;
+    }
+  }
+
+  function removeClass(el, className) {
+    if (el.classList) {
+      el.classList.remove(className);
+    } else if (hasClass(el, className)) {
+      var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+      el.className = el.className.replace(reg, ' ');
+    }
+  }
+
   function getParams(scriptName) {
     // find all script tags
     var scripts = document.getElementsByTagName('script');
@@ -75,6 +100,7 @@
       Seniorly.context.pageRoot = document.getElementsByTagName('html')[0];
 
       var params = getParams(Seniorly.context.jsFileUrl);
+      Seniorly.config.type = Seniorly.defaultWidgetConfig.type;
       if (params) {
         Seniorly.config.type =
           params[Seniorly.configQueryParamKeys.type] || Seniorly.defaultWidgetConfig.type;
@@ -139,32 +165,40 @@
       * destroy - removes widget from document body. returns the removed node object.
   */
   var SeniorlyWidget = function(type, options) {
-    this.widget = {};
+    this.widget = null;
     this.type = type;
     this.options = options || {};
   };
   SeniorlyWidget.prototype.build = function() {
-    this.widget = document.createElement('div');
-    this.widget.className = 'seniorly-widget ' + Seniorly.widgetClassName[this.type];
-    this.widget.onclick = this.options.onClick;
     var childContent = this.buildContent(this.type);
-    if (childContent) {
-      this.widget.appendChild(childContent);
+    if (childContent || Seniorly.widgetClassName[this.type]) {
+      this.widget = document.createElement('div');
+      this.widget.className = 'seniorly-widget ' + Seniorly.widgetClassName[this.type];
+      this.widget.onclick = this.options.onClick;
+      if (childContent) {
+        this.widget.appendChild(childContent);
+      }
     }
     return this.widget;
   };
   SeniorlyWidget.prototype.buildContent = function() {};
   SeniorlyWidget.prototype.insert = function(parent) {
-    var newNode = parent ? parent.appendChild(this.widget) :
+    var newNode = null;
+    if (this.widget) {
+      newNode = parent ? parent.appendChild(this.widget) :
       document.body.insertBefore(this.widget, document.body.firstChild);
+      Seniorly.widgetInstances[this.type] = this;
+    }
     if (this.options.afterInsert) {
       this.options.afterInsert();
     }
-    Seniorly.widgetInstances[this.type] = this;
     return newNode;
   };
   SeniorlyWidget.prototype.destroy = function() {
-    var oldNode = document.body.removeChild(this.widget);
+    var oldNode = null;
+    if (this.widget) {
+      oldNode = document.body.removeChild(this.widget);
+    }
     if (this.options.afterDestory) {
       this.options.afterDestory();
     }
@@ -191,7 +225,8 @@
       var w = new SeniorlyWidget('popupOnClick');
       w.buildContent = function() {
         var matches = document.querySelectorAll('[' + Seniorly.widgetConfigAttributes.triggerPopupWidget + ']');
-        matches.forEach(function(match) {
+        // old browsers don't have forEach method on Nodelist so...
+        Array.prototype.forEach.call(matches, function(match) {
           match.onclick = function() {
             var w = Seniorly.widgets.popup();
             w.build();
@@ -204,10 +239,10 @@
     overlay: function() {
       var w = new SeniorlyWidget('overlay', {
         afterInsert: function() {
-          Seniorly.context.pageRoot.classList.add(Seniorly.altClassNames.scrollLocked);
+          addClass(Seniorly.context.pageRoot, Seniorly.altClassNames.scrollLocked);
         },
         afterDestory: function() {
-          Seniorly.context.pageRoot.classList.remove(Seniorly.altClassNames.scrollLocked);
+          removeClass(Seniorly.context.pageRoot, Seniorly.altClassNames.scrollLocked);
         }
       });
       return w;
