@@ -56,9 +56,13 @@ class Controller extends Component {
 
   componentWillMount() {
     this.flowName = defaultStepOrder;
-    const params = queryString.parse(this.props.location.search);
-    if (params.order && stepOrders[params.order]) {
-      this.flowName = params.order;
+
+    const { location } = this.props;
+    if (location && location.search) {
+      const params = queryString.parse(location.search);
+      if (params.order && stepOrders[params.order]) {
+        this.flowName = params.order;
+      }
     }
 
     this.flow = stepOrders[this.flowName];
