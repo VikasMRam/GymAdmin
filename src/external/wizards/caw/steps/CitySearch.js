@@ -19,7 +19,7 @@ const Description = styled.p`
 
 const noRender = () => null;
 
-class Step5 extends Component {
+class CitySearch extends Component {
   static propTypes = {
     data: object,
     setFormKey: func,
@@ -63,4 +63,4 @@ class Step5 extends Component {
   }
 }
 
-export default Step5;
+export default CitySearch;

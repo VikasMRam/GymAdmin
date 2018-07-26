@@ -26,7 +26,7 @@ const MoneyValue = styled(Heading)`
 const moneyValue = val =>
   <MoneyValue>Up to <NumberFormat value={val} displayType="text" thousandSeparator prefix="$" /></MoneyValue>;
 
-const Step4 = ({ data }) => (
+const MonthlyBudget = ({ data }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeading>What is your monthly budget for rent and care?</StyledHeading>
@@ -47,12 +47,12 @@ const Step4 = ({ data }) => (
   </Fragment>
 );
 
-Step4.propTypes = {
+MonthlyBudget.propTypes = {
   data: object,
 };
 
-Step4.defaultProps = {
+MonthlyBudget.defaultProps = {
   data: {},
 };
 
-export default Step4;
+export default MonthlyBudget;

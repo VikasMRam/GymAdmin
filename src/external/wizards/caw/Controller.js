@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
-import { number, func, object } from 'prop-types';
+import { number, func, object, shape, string } from 'prop-types';
+import queryString from 'query-string';
 
 import { resourceCreateRequest, resourceListReadRequest } from 'sly/store/resource/actions';
 
@@ -10,8 +11,8 @@ import { selectFormData } from 'sly/services/helpers/forms';
 import { CAW_PROGRESS } from 'sly/services/api/actions';
 
 import CAWComponent from './Component';
+import { stepOrders, defaultStepOrder } from './helpers';
 
-const totalNumberofSteps = 6;
 const validate = createValidator({
   looking_for: [required],
   care_needs: [required],
@@ -42,21 +43,33 @@ const ReduxForm = reduxForm({
 class Controller extends Component {
   static propTypes = {
     currentStep: number,
-    totalNumberofSteps: number,
     set: func,
     locationSearchParams: object,
     searchCommunities: func,
     postUserAction: func,
     searchResultCount: number,
     data: object,
+    location: shape({
+      search: string,
+    }),
   };
+
+  componentWillMount() {
+    this.flowName = defaultStepOrder;
+    const params = queryString.parse(this.props.location.search);
+    if (params.order && stepOrders[params.order]) {
+      this.flowName = params.order;
+    }
+
+    this.flow = stepOrders[this.flowName];
+  }
 
   handleSeeMore = () => {
     const {
-      currentStep, totalNumberofSteps, postUserAction, data,
+      currentStep, postUserAction, data,
     } = this.props;
 
-    if (currentStep === totalNumberofSteps) {
+    if (currentStep === this.flow.length) {
       const newData = { ...data };
       const {
         email, name, phone, ...careAssessment
@@ -69,7 +82,7 @@ class Controller extends Component {
         value: {
           user,
           wizard_progress: {
-            current_step: currentStep,
+            current_step: this.flow[currentStep - 1],
           },
           careAssessment,
         },
@@ -84,10 +97,10 @@ class Controller extends Component {
 
   handleSubmit = (values, dispatch, props) => {
     const {
-      currentStep, totalNumberofSteps, set, locationSearchParams, searchCommunities,
+      currentStep, set, locationSearchParams, searchCommunities,
     } = props;
 
-    if (currentStep === 5) {
+    if (this.flow[currentStep - 1] === 'CitySearch') {
       set({
         searching: true,
       });
@@ -99,7 +112,7 @@ class Controller extends Component {
             searching: false,
           });
         });
-    } else if (currentStep + 1 <= totalNumberofSteps) {
+    } else if (currentStep + 1 <= this.flow.length) {
       set({
         currentStep: currentStep + 1,
       });
@@ -131,6 +144,8 @@ class Controller extends Component {
         setStoreKey={this.handleSetStoreKey}
         onSeeMore={this.handleSeeMore}
         locationSearchParams={locationSearchParams}
+        flow={this.flowName}
+        totalNumberofSteps={this.flow.length}
         {...this.props}
       />
     );
@@ -139,7 +154,6 @@ class Controller extends Component {
 
 const mapStateToProps = (state, { controller }) => {
   return {
-    totalNumberofSteps,
     currentStep: controller.currentStep || 1,
     locationSearchParams: controller.locationSearchParams,
     searchResultCount: controller.searchResultCount,
