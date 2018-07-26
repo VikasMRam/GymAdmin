@@ -92,6 +92,10 @@ class CommunitySearchPageContainer extends Component {
     toggleModalFilterPanel();
   };
 
+  handleOnAdTileClick = () => {
+    this.changeSearchParams({ changedParams: { modal: 'cawWizard' } });
+  }
+
   render() {
     const {
       searchParams,
@@ -125,6 +129,7 @@ class CommunitySearchPageContainer extends Component {
         location={location}
         isModalFilterPanelVisible={isModalFilterPanelVisible}
         onToggleModalFilterPanel={this.handleToggleModalFilterPanel}
+        onAdTileClick={this.handleOnAdTileClick}
       />
     );
   }
