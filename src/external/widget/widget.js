@@ -27,7 +27,7 @@
       jsFileUrl: process.env.EXTERNAL_ASSET_URL + '/widget.js',
       iframeUrl: process.env.EXTERNAL_WIZARDS_ROOT_URL,
       env: process.env.SLY_ENV,
-      version: process.env.VERSION,
+      version: process.env.VERSION
     },
     config: {},
     widgetClassName: {
@@ -35,22 +35,22 @@
       overlay: 'seniorly-overlay-widget',
       closeOverlay: 'seniorly-close-overlay-widget',
       closeOverlayButton: 'seniorly-close-overlay-button-widget',
-      popup: 'seniorly-popup-widget',
+      popup: 'seniorly-popup-widget'
     },
     altClassNames: {
-      scrollLocked: 'seniorly-page-scroll-locked',
+      scrollLocked: 'seniorly-page-scroll-locked'
     },
     validWidgetConfig: {
-      type: ['badge', 'popupOnClick'],
+      type: ['badge', 'popupOnClick']
     },
     defaultWidgetConfig: {
-      type: 'popupOnClick',
+      type: 'popupOnClick'
     },
     widgetConfigAttributes: {
-      triggerPopupWidget: 'data-seniorly-popup-onclick',
+      triggerPopupWidget: 'data-seniorly-popup-onclick'
     },
     configQueryParamKeys: {
-      type: 'widget_type',
+      type: 'widget_type'
     },
     log: {
       prefix: '[Seniorly Widget]',
@@ -67,7 +67,7 @@
           // eslint-disable-next-line no-console
           console.log(Seniorly.log.prefix + ' ' + msg);
         }
-      },
+      }
     },
     widgetInstances: {},
 
@@ -117,13 +117,13 @@
         widget.build();
         widget.insert();
       }
-    },
+    }
   };
   // the public object available in global scope
   this.SeniorlyWidget = {
     version: Seniorly.context.version,
     created: new Date().toString(),
-    config: Seniorly.config,
+    config: Seniorly.config
   };
 
   /*

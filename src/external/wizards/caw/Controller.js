@@ -159,4 +159,3 @@ export default connectController(
   mapStateToProps,
   mapDispatchToProps,
 )(Controller);
-
