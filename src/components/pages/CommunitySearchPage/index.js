@@ -16,6 +16,7 @@ import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 import Modal from 'sly/components/molecules/Modal';
+import Thankyou from 'sly/components/molecules/Thankyou';
 
 const TopWrapper = styled.div`
   padding-bottom: ${size('spacing.xLarge')};
@@ -150,7 +151,7 @@ const CommunitySearchPage = ({
       onParamsRemove={onParamsRemove}
     />);
   };
-
+  
   return (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -216,6 +217,7 @@ const CommunitySearchPage = ({
             onParamsChange={onParamsChange}
           />
         )}
+        { searchParams.modal === 'thankyou' && <Modal closeable isOpen onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}><Thankyou /></Modal>}
       </CommunitySearchPageTemplate>
     </Fragment>
   );
