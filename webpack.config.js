@@ -45,7 +45,7 @@ const devDomain = `${HOST}:${DEV_PORT}/`;
 const isDev = NODE_ENV === 'development';
 const isStaging = SLY_ENV === 'staging';
 // replacements for widgets.js
-const EXTERNAL_ASSET_URL = (isDev ? `${devDomain}external` : path.join(PUBLIC_PATH, 'external'));
+const EXTERNAL_ASSET_URL = (isDev ? `${devDomain}external` : `${PUBLIC_PATH}/external`);
 const EXTERNAL_WIZARDS_ROOT_URL = HOST + EXTERNAL_WIZARDS_PATH;
 
 console.info('Using config', JSON.stringify({
