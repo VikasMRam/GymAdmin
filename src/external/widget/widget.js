@@ -80,7 +80,7 @@
     },
 
     validateConfig: function() {
-      let hasError = false;
+      var hasError = false;
       Object.keys(Seniorly.config).forEach(function(config) {
         if (!Seniorly.validWidgetConfig[config] ||
           Seniorly.validWidgetConfig[config].indexOf(Seniorly.config[config]) === -1) {
@@ -234,7 +234,7 @@
     popup: function() {
       var w = new SeniorlyWidget('popup');
       w.buildContent = function() {
-        let w = Seniorly.widgets.overlay();
+        var w = Seniorly.widgets.overlay();
         w.build();
         w.insert();
         w = Seniorly.widgets.closeOverlay();
