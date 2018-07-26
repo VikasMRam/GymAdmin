@@ -54,6 +54,7 @@ html.seniorly-page-scroll-locked body {
 @media screen and (min-width: 48rem) {
   .seniorly-popup-widget {
     width: 30rem;
+    max-height: 45rem;
   }
 }
 
