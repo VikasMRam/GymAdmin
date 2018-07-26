@@ -30,13 +30,13 @@ const MonthlyBudget = ({ data }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeading>What is your monthly budget for rent and care?</StyledHeading>
-    <Description>Use the slider to adjust your budget.</Description>
+    <Description>Note: The average monthly budget in US is roughly $3,750</Description>
     <Field
       name="monthly_budget"
       type="slider"
       component={ReduxField}
       responsive
-      min={1}
+      min={2000}
       max={10000}
       step={1}
       value={data.monthly_budget}

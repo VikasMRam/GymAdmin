@@ -56,8 +56,7 @@ const Thankyou = ({ community, onClose }) => {
       <StyledIcon icon="logo" size="xLarge" />
       <StyledHeading>Thank you!</StyledHeading>
       <StyledBlock>
-        Your Seniorly Guide will reach out to you. They ensure you connect with the community and
-        you are feeling supported throughout this entire process. There is no cost to you!
+        A Seniorly Guide will reach out to you with local expertise and support to ensure you find the right fit for your needs. There is no cost to you!
       </StyledBlock>
       {backToSearch}
       {/*{<AgentTile community={ {...community, uri:'#' } } user={{name:'Test'}}/>}*/}

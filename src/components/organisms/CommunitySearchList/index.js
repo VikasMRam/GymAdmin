@@ -71,7 +71,7 @@ export default class CommunitySearchList extends Component {
         </StyledLink>
       );
     });
-    components.splice(adIndex, 0, <AdTileWrapper key="ad" ><AdTile {...searchAdProps} onClick={() => onAdTileClick()} /></AdTileWrapper>);
+    // components.splice(adIndex, 0, <AdTileWrapper key="ad" ><AdTile {...searchAdProps} onClick={() => onAdTileClick()} /></AdTileWrapper>);
     const { current, total } = getPaginationData(requestMeta);
     return (
       <Fragment>

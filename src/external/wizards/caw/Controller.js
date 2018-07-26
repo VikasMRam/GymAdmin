@@ -32,9 +32,9 @@ const ReduxForm = reduxForm({
     looking_for: null,
     care_needs: {},
     renting_or_buying: null,
-    monthly_budget: 0,
+    monthly_budget: 2000,
     location: null,
-    name: null,
+    full_name: null,
     email: null,
     phone: null,
   },
@@ -76,9 +76,10 @@ class Controller extends Component {
     if (currentStep === this.flow.length) {
       const newData = { ...data };
       const {
-        email, name, phone, ...careAssessment
+        email, full_name, phone, ...careAssessment
       } = newData;
-      const user = { email, name, phone };
+
+      const user = { email, full_name, phone };
       const transformedCareNeeds = Object.keys(careAssessment.care_needs).filter(key => careAssessment.care_needs[key]);
       careAssessment.care_needs = transformedCareNeeds;
       const payload = {

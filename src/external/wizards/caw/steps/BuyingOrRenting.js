@@ -28,7 +28,7 @@ const BuyingOrRenting = ({ data }) => (
         <BoxRadioButtonWrapper key={i}>
           <BoxRadioButton
             name="renting_or_buying"
-            helpText="help text goes here"
+            helpText=""
             value={option}
             label={option}
             checked={data.renting_or_buying === option}

@@ -9,9 +9,9 @@ import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
 
 const options = [
   'Myself',
-  'Parent',
-  'Grantparent',
   'Spouse',
+  'Parent',
+  'Grandparent',
   'Friend',
   'Client',
 ];
@@ -30,13 +30,13 @@ const LookingFor = ({ data }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeading>Who are you looking for?</StyledHeading>
-    <Description>This is an optional supportive sentance that can ideally at most two lines.</Description>
+    <Description></Description>
     {
       options.map((option, i) => (
         <BoxRadioButtonWrapper key={i}>
           <BoxRadioButton
             name="looking_for"
-            helpText="help text goes here"
+            helpText=""
             value={option}
             label={option}
             checked={data.looking_for === option}
