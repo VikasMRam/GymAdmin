@@ -178,7 +178,7 @@
           var w = Seniorly.widgets.popup();
           w.build();
           w.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
-        },
+        }
       });
       w.buildContent = function() {
         var t = document.createElement('span');
@@ -208,7 +208,7 @@
         },
         afterDestory: function() {
           Seniorly.context.pageRoot.classList.remove(Seniorly.altClassNames.scrollLocked);
-        },
+        }
       });
       return w;
     },
@@ -216,14 +216,14 @@
       return new SeniorlyWidget('closeOverlay', {
         onClick: function() {
           Seniorly.widgetInstances['overlay'].destroy();
-        },
+        }
       });
     },
     closeOverlayButton: function() {
       var w = new SeniorlyWidget('closeOverlayButton', {
         onClick: function() {
           Seniorly.widgetInstances['overlay'].destroy();
-        },
+        }
       })
       w.buildContent = function() {
         var t = document.createElement('button');
@@ -254,7 +254,7 @@
         return t;
       };
       return w;
-    },
+    }
   };
 
   Seniorly.startListeningForMessages = function() {
