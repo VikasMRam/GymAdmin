@@ -190,7 +190,7 @@
     popupOnClick: function() {
       var w = new SeniorlyWidget('popupOnClick');
       w.buildContent = function() {
-        var matches = document.querySelectorAll(`[${Seniorly.widgetConfigAttributes.triggerPopupWidget}]`);
+        var matches = document.querySelectorAll('[' + Seniorly.widgetConfigAttributes.triggerPopupWidget + ']');
         matches.forEach(function(match) {
           match.onclick = function() {
             var w = Seniorly.widgets.popup();
