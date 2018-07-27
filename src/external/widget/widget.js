@@ -63,16 +63,17 @@
       popup: 'seniorly-popup-widget'
     },
     altClassNames: {
-      scrollLocked: 'seniorly-page-scroll-locked'
+      scrollLocked: 'seniorly-page-scroll-locked',
+      popupOnClickorInline: 'seniorly-popup-or-inline-widget'
     },
     validWidgetConfig: {
-      type: ['badge', 'popupOnClick']
+      type: ['badge', 'popupOnClickorInline']
     },
     defaultWidgetConfig: {
-      type: 'popupOnClick'
+      type: 'popupOnClickorInline'
     },
     widgetConfigAttributes: {
-      triggerPopupWidget: 'data-seniorly-popup-onclick'
+      popupOnClickorInline: 'data-seniorly-widget'
     },
     configQueryParamKeys: {
       type: 'widget_type'
@@ -94,6 +95,8 @@
         }
       }
     },
+    // for storing references to instances of widgets. is a hash having widget type
+    // as key and array of instances as value
     widgetInstances: {},
 
     populateContextAndConfig: function() {
@@ -187,7 +190,10 @@
     if (this.widget) {
       newNode = parent ? parent.appendChild(this.widget) :
       document.body.insertBefore(this.widget, document.body.firstChild);
-      Seniorly.widgetInstances[this.type] = this;
+      if (!Seniorly.widgetInstances[this.type]) {
+        Seniorly.widgetInstances[this.type] = [];
+      }
+      Seniorly.widgetInstances[this.type].push(this);
     }
     if (this.options.afterInsert) {
       this.options.afterInsert();
@@ -199,10 +205,29 @@
     if (this.widget) {
       oldNode = document.body.removeChild(this.widget);
     }
+    // find this instance and remove it from active instances
+    for (var i = 0; i < Seniorly.widgetInstances[this.type].length; i++) {
+      // comparison by reference is exactly what we want here
+      if (Seniorly.widgetInstances[this.type][i] === this) {
+        Seniorly.widgetInstances[this.type].splice(i, 1);
+        break;
+      }
+    }
     if (this.options.afterDestory) {
       this.options.afterDestory();
     }
     return oldNode;
+  };
+
+  Seniorly.helpers = {
+    generateIframe: function(widgetType) {
+      var t = document.createElement('iframe');
+      t.src = Seniorly.context.iframeUrl + '/caw?formWidgetType=' + widgetType;
+      t.width = '100%';
+      t.height = '100%';
+      t.frameBorder = '0';
+      return t;
+    }
   };
 
   Seniorly.widgets = {
@@ -221,17 +246,25 @@
       };
       return w;
     },
-    popupOnClick: function() {
-      var w = new SeniorlyWidget('popupOnClick');
+    popupOnClickorInline: function() {
+      var w = new SeniorlyWidget('popupOnClickorInline');
       w.buildContent = function() {
-        var matches = document.querySelectorAll('[' + Seniorly.widgetConfigAttributes.triggerPopupWidget + ']');
+        var matches = document.querySelectorAll('[' + Seniorly.widgetConfigAttributes.popupOnClickorInline + ']');
         // old browsers don't have forEach method on Nodelist so...
         Array.prototype.forEach.call(matches, function(match) {
-          match.onclick = function() {
-            var w = Seniorly.widgets.popup();
-            w.build();
-            w.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
-          };
+          var type = match.getAttribute(Seniorly.widgetConfigAttributes.popupOnClickorInline);
+          if (type === 'modal') {
+            match.onclick = function() {
+              var w = Seniorly.widgets.popup();
+              w.build();
+              w.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
+            };
+          } else if (type === 'inline') {
+            var i = Seniorly.helpers.generateIframe('popupOnClickorInline');
+            match.innerHTML = '';
+            match.appendChild(i);
+            addClass(match, Seniorly.altClassNames.popupOnClickorInline);
+          }
         });
       };
       return w;
@@ -250,14 +283,16 @@
     closeOverlay: function() {
       return new SeniorlyWidget('closeOverlay', {
         onClick: function() {
-          Seniorly.widgetInstances['overlay'].destroy();
+          // it's a fair assumption that only one instance of overlay widget will be active
+          Seniorly.widgetInstances['overlay'][0].destroy();
         }
       });
     },
     closeOverlayButton: function() {
       var w = new SeniorlyWidget('closeOverlayButton', {
         onClick: function() {
-          Seniorly.widgetInstances['overlay'].destroy();
+          // it's a fair assumption that only one instance of overlay widget will be active
+          Seniorly.widgetInstances['overlay'][0].destroy();
         }
       })
       w.buildContent = function() {
@@ -280,13 +315,7 @@
         w = Seniorly.widgets.closeOverlayButton();
         w.build();
         w.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
-
-        var t = document.createElement('iframe');
-        t.src = Seniorly.context.iframeUrl + '/caw';
-        t.width = '100%';
-        t.height = '100%';
-        t.frameBorder = '0';
-        return t;
+        return Seniorly.helpers.generateIframe('popup');
       };
       return w;
     }
@@ -312,13 +341,17 @@
       var message = JSON.parse(e.data);
       switch(message.action) {
         case 'closePopup':
-          Seniorly.widgetInstances['overlay'].destroy();
+          if (Seniorly.widgetInstances['overlay'] &&
+            Seniorly.widgetInstances['overlay'].length) {
+            Seniorly.widgetInstances['overlay'].pop().destroy();
+          }
           break;
         default:
           Seniorly.log.debug('Unknown action in message from popup');
       }
     } catch (e) {
       Seniorly.log.warn('Failed to decode message from popup');
+      Seniorly.log.debug('Got error ' + e);
     }
   };
 

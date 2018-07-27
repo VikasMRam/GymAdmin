@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
+import { reduxForm, reset } from 'redux-form';
 import { number, func, object, shape, string } from 'prop-types';
 import queryString from 'query-string';
 
@@ -13,18 +13,19 @@ import { CAW_PROGRESS } from 'sly/services/api/actions';
 import CAWComponent from './Component';
 import { stepOrders, defaultStepOrder } from './helpers';
 
+const formName = 'CAWForm';
 const validate = createValidator({
   looking_for: [required],
   care_needs: [required],
   renting_or_buying: [required],
   monthly_budget: [required],
   location: [required, minLength(3)],
-  name: [required],
+  full_name: [required],
   email: [required, email],
   phone: [required, usPhone],
 });
 const ReduxForm = reduxForm({
-  form: 'CAWForm',
+  form: formName,
   destroyOnUnmount: false,
   keepDirtyOnReinitialize: true,
   validate,
@@ -52,6 +53,7 @@ class Controller extends Component {
     location: shape({
       search: string,
     }),
+    dispatchResetForm: func,
   };
 
   componentWillMount() {
@@ -63,6 +65,9 @@ class Controller extends Component {
       if (params.order && stepOrders[params.order]) {
         this.flowName = params.order;
       }
+      if (params.formWidgetType) {
+        this.widgetType = params.formWidgetType;
+      }
     }
 
     this.flow = stepOrders[this.flowName];
@@ -70,7 +75,7 @@ class Controller extends Component {
 
   handleSeeMore = () => {
     const {
-      currentStep, postUserAction, data,
+      currentStep, postUserAction, data, dispatchResetForm, set,
     } = this.props;
 
     if (currentStep === this.flow.length) {
@@ -93,8 +98,13 @@ class Controller extends Component {
         },
       };
       postUserAction(payload).then(() => {
-        if (window.parent) {
+        if (window.parent && this.widgetType === 'popup') {
           window.parent.postMessage(JSON.stringify({ action: 'closePopup' }), '*');
+        } else {
+          dispatchResetForm();
+          set({
+            currentStep: 1,
+          });
         }
       });
     }
@@ -163,7 +173,7 @@ const mapStateToProps = (state, { controller }) => {
     locationSearchParams: controller.locationSearchParams,
     searchResultCount: controller.searchResultCount,
     searching: controller.searching,
-    data: selectFormData(state, 'CAWForm', {}),
+    data: selectFormData(state, formName, {}),
   };
 };
 
@@ -171,6 +181,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     searchCommunities: searchParams => dispatch(resourceListReadRequest('searchResource', searchParams)),
     postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
+    dispatchResetForm: () => dispatch(reset(formName)),
   };
 };
 
