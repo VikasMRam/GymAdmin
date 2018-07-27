@@ -11,7 +11,7 @@ import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSec
 
 const IntroText = styled.div`
   font-size: ${size('spacing.xLarge')};
-  @media screen and (min-width: ${size('breakpoints.laptop')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('layout.col9')};
     margin-right: ${size('layout.gutter')};
   }
@@ -20,14 +20,14 @@ const IntroText = styled.div`
 const IntroLogo = styled.div`
   padding-right: ${size('spacing.xxxLarge')};
   text-align: right;
-  @media screen and (min-width: ${size('breakpoints.laptop')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('layout.col3')};
   }
 `;
 
 const DescriptionText = styled.div`
   color: ${palette('grayscale', 1)};
-  @media screen and (min-width: ${size('breakpoints.laptop')}) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('layout.col8')};
     margin-right: ${size('layout.gutter')};
   }
@@ -70,9 +70,19 @@ const TeamMemberTilesWrapper = styled.div`
 const ProfileTileWrapper = styled.div`
   margin-right: ${size('spacing.xLarge')};
   margin-bottom: ${size('spacing.xLarge')};
-  
-  :nth-child(3n) {
-    margin-right: 0;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    :nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    :nth-child(2n) {
+      margin-right: ${size('spacing.xLarge')};
+    }
+    :nth-child(3n) {
+      margin-right: 0;
+    }
   }
 `;
 
@@ -152,7 +162,7 @@ const OurHistoryPage = ({
       <StyledHr />
       <PressHeading>Seniorly in the Press</PressHeading>
       <PressTilesWrapper>{pressTiles}</PressTilesWrapper>
-      <Modal layout="searchBox" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
+      <Modal layout="single" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
         {activeProfile && <ProfileTile profile={activeProfile} layout="modal" />}
       </Modal>
     </ContentWrapper>
