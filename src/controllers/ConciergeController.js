@@ -92,6 +92,12 @@ export class ConciergeController extends Component {
       userDetails,
     } = this.props;
 
+    SlyEvent.getInstance().sendEvent({
+      action: 'click',
+      category: 'adRequestConsultation',
+      label: 'profilePage'
+    });
+
     if (!isAssessment(userDetails)) {
       set({
         currentStep: ADVANCED_INFO,
@@ -224,21 +230,22 @@ export class ConciergeController extends Component {
       consultationRequested,
     } = concierge;
 
-    const expressDone = (isExpress
-      && ( contactRequested || consultationRequested )
-      && hasAllUserData(userDetails)
-      && isAssessment(userDetails)
-    );
-
-    const normalDone = (!isExpress
-      && ( contactRequested || consultationRequested )
+    const Done = (
+      ( contactRequested || consultationRequested )
       && isAssessment(userDetails)
       && hasAllUserData(userDetails)
     );
 
-    if (expressDone || normalDone) {
+    if (Done) {
       return set({
         currentStep: WHAT_NEXT,
+        modalIsOpen: true,
+      });
+    }
+
+    if (!hasAllUserData(userDetails)) {
+      return set({
+        currentStep: CONVERSION_FORM,
         modalIsOpen: true,
       });
     }
@@ -251,12 +258,7 @@ export class ConciergeController extends Component {
       });
     }
 
-    if (!hasAllUserData(userDetails)) {
-      return set({
-        currentStep: CONVERSION_FORM,
-        modalIsOpen: true,
-      });
-    }
+
 
 
   };

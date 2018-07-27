@@ -103,6 +103,7 @@ export default class PricingAndAvailability extends Component {
       }),
       getDetailedPricing: PropTypes.func,
       onInquireOrBookClicked: PropTypes.func,
+      onLiveChatClicked: PropTypes.func,
     };
 
     static defaultProps = {
@@ -120,11 +121,13 @@ export default class PricingAndAvailability extends Component {
     render() {
       const {
         community,
+        isCCRC,
         roomPrices,
         address,
         estimatedPrice,
         getDetailedPricing,
         onInquireOrBookClicked,
+        onLiveChatClicked,
       } = this.props;
 
       const estimatedPriceLabelMap = {
@@ -202,7 +205,7 @@ export default class PricingAndAvailability extends Component {
             }
           </ConciergeController>
           <StyledArticle id="pricing-and-floor-plans-price-tiles">
-            {(!roomPrices.length && estimatedPriceBase) ?
+            {(!roomPrices.length && !isCCRC && estimatedPriceBase) ?
               (
                 <ConciergeController community={community}>
                   {({getPricing}) =>
@@ -210,6 +213,7 @@ export default class PricingAndAvailability extends Component {
                       getPricing={getPricing}
                       community={community}
                       price={estimatedPriceBase}
+                      onLiveChatClicked={onLiveChatClicked}
                     />
                   }
                 </ConciergeController>

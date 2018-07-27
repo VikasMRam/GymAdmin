@@ -64,7 +64,7 @@ const AdvancedInfoForm = ({
   handleSubmit, submitting,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <StyledHeading level="subtitle" size="subtitle">Give us a few more details so we can help:</StyledHeading>
+    <StyledHeading level="subtitle" size="subtitle">Help us customize your search:</StyledHeading>
 
     <Field
       name="type_of_care"
@@ -122,7 +122,7 @@ const AdvancedInfoForm = ({
     />
 
     <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-      Get Connected
+      Submit
     </StyledButton>
   </Form>
 );
