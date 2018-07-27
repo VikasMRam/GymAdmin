@@ -131,12 +131,12 @@ describe('ConciergeController', function() {
     //   });
     // });
 
-    it('should go to advanced Info mode when express mode', () => {
+    it('should go to conversion form mode when express mode', () => {
       const store = initStore({ resource, entities: emailOnlyEntities });
       const wrapper = wrap(otherCommunity, store);
       wrapper.instance().next(true);
       expect(getControllerAction(store)).toEqual({
-        currentStep: ADVANCED_INFO,
+        currentStep: CONVERSION_FORM,
         modalIsOpen: true,
       });
     });
@@ -146,7 +146,7 @@ describe('ConciergeController', function() {
       const wrapper = wrap(community, store);
       wrapper.instance().next(true);
       expect(getControllerAction(store)).toEqual({
-        currentStep: ADVANCED_INFO,
+        currentStep: CONVERSION_FORM,
         modalIsOpen: true,
       });
     });
@@ -216,14 +216,14 @@ describe('ConciergeController', function() {
       });
     });
 
-    it('should ask for advancedInfo', () => {
+    it('should ask for conversionForm', () => {
       wrap({ userDetails: {}, community, concierge: {
         contactRequested: true,
       }});
       childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(lastSet()).toEqual({
-        currentStep: ADVANCED_INFO,
+        currentStep: CONVERSION_FORM,
         modalIsOpen: true,
       });
     });

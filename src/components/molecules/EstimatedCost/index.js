@@ -26,17 +26,18 @@ const StyledBlock = styled(Block)`
   margin-bottom: 0;
 `;
 
-const DesktopButton = styled(Button)`
+export const DesktopButton = styled(Button)`
   display: none;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: inline-flex;
   }
-`
-const MobileButton = styled(Button)`
+`;
+
+export const MobileButton = styled(Button)`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: none;
   }
-`
+`;
 
 const percentageOf = (num, percentage) => {
   return (percentage / 100) * num;

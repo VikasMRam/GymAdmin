@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import sinon from 'sinon';
 
-import EstimatedCost from '.';
+import EstimatedCost, {DesktopButton, MobileButton}  from '.';
 
 const wrap = (props = {}) => mount(<EstimatedCost {...props} />);
 
@@ -25,7 +25,13 @@ describe('EstimatedCost', () => {
 
   it('verify onGetDetailedPricingClicked callback', () => {
     const wrapper = wrap({ price, community, getPricing: onGetDetailedPricingClickedSpy });
-    wrapper.find('Button').simulate('click');
+    wrapper.find(DesktopButton).simulate('click');
+    expect(onGetDetailedPricingClickedSpy).toHaveBeenCalled();
+  });
+
+  it('verify onLiveChatClicked callback', () => {
+    const wrapper = wrap({ price, community, onLiveChatClicked: onGetDetailedPricingClickedSpy });
+    wrapper.find(MobileButton).simulate('click');
     expect(onGetDetailedPricingClickedSpy).toHaveBeenCalled();
   });
 });
