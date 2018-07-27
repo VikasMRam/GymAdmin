@@ -57,7 +57,7 @@ export default class communitySummary extends React.Component {
 
   render() {
     const {
-      twilioNumber, phoneNumber, user, licenseUrl, amenityScore, communityHighlights, startingRate,
+      isCCRC, twilioNumber, phoneNumber, user, licenseUrl, amenityScore, communityHighlights, startingRate,
       estimatedPrice, reviewsValue, innerRef, onConciergeNumberClicked, onReceptionNumberClicked,
     } = this.props;
 
@@ -73,6 +73,7 @@ export default class communitySummary extends React.Component {
       conciergeNumber = twilioNumber.numbers[0];
     }
     const hasPricing = ( (estimatedPrice && (estimatedPrice.estimatedAverage || estimatedPrice.providedAverage )) || startingRate);
+
     let shownPricing = '';
     if (estimatedPrice) {
       shownPricing = estimatedPrice.estimatedAverage;
@@ -86,7 +87,7 @@ export default class communitySummary extends React.Component {
 
     highlights.push((
       <span>
-        Speak to local expert&nbsp;
+        Call free local advisor&nbsp;
         <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
           <NumberFormat
             value={conciergeNumber}
@@ -159,7 +160,7 @@ export default class communitySummary extends React.Component {
         Available Floor Plans
       </Link>
     ));
-    if (hasPricing) {
+    if (!isCCRC && hasPricing) {
       highlights.push((
         <span>
           { (startingRate || (estimatedPrice && estimatedPrice.providedAverage))

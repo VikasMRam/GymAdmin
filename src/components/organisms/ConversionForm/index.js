@@ -62,11 +62,10 @@ const ConversionForm = ({
   <div>
     <StyledForm onSubmit={handleSubmit}>
 
-      {concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">How Can We Contact You?</Heading>}
-      {concierge.modalIsOpen && hasOnlyEmail && <SubHeading>Our team is standing by to answer your questions</SubHeading>}
-      {concierge.modalIsOpen && !hasOnlyEmail && <SubHeading>Our team is preparing your custom pricing information.</SubHeading>}
-      {!concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">Complimentary Consultation</Heading>}
-      {!concierge.modalIsOpen && <SubHeading>with a local senior living expert</SubHeading>}
+      {concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">We Are Ready To Give You Pricing</Heading>}
+      {concierge.modalIsOpen && <SubHeading>We only share your information with our local guide and the community.</SubHeading>}
+      {!concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">Get Free Support</Heading>}
+      {!concierge.modalIsOpen && <SubHeading>from a local senior living expert</SubHeading>}
 
       <Hr />
 
@@ -93,14 +92,14 @@ const ConversionForm = ({
         component={ReduxField}
       />
       <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-        {concierge.modalIsOpen ? (hasOnlyEmail ? 'Send' : 'Get Pricing') : 'Request Consultation'}
+        {concierge.modalIsOpen ? 'Get Pricing' : 'Request Now'}
       </StyledButton>
 
       <TosAndPrivacy />
     </StyledForm>
     {agent &&
       <AgentSectionWrapper>
-        <AgentSectionText>We have matched you with a Seniorly Local Guide to help you along the way</AgentSectionText>
+        <AgentSectionText>Our Seniorly Guide is selected to assist you on your local search</AgentSectionText>
         <AgentTileWrapper>
           <AgentTile
             user={{ name: agent.user.name, title: 'Seniorly Local Guide', picture: agent.mainImage }}

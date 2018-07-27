@@ -26,12 +26,25 @@ const StyledBlock = styled(Block)`
   margin-bottom: 0;
 `;
 
+export const DesktopButton = styled(Button)`
+  display: none;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: inline-flex;
+  }
+`;
+
+export const MobileButton = styled(Button)`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: none;
+  }
+`;
+
 const percentageOf = (num, percentage) => {
   return (percentage / 100) * num;
 };
 
 const EstimatedCost = ({
-  price, community, getPricing,
+  price, community, getPricing, onLiveChatClicked,
 }) => {
   let from = 0;
   let to = 0;
@@ -50,9 +63,9 @@ const EstimatedCost = ({
           *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.
         </StyledBlock>
       </EstimatedCostWrapper>
-      <div>
-        <Button onClick={getPricing}>Get Detailed Pricing</Button>
-      </div>
+      <DesktopButton onClick={getPricing}>Get Detailed Pricing</DesktopButton>
+      <MobileButton onClick={onLiveChatClicked}>Get Detailed Pricing</MobileButton>
+
     </StyledBox>
   );
 };

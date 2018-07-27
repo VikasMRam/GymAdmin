@@ -60,16 +60,20 @@ const ModalContext = styled.article`
   display: flex;
   flex-direction: column;
   outline: none;
-  padding: ${size('spacing.xxxLarge')};
+  padding: ${size('spacing.xLarge')};
   width: 100%;
   height: 100%;
   height: unset;
-  top: calc(50% - 1rem);
+  top: calc(50% + 2rem);
   left: calc(50% - 1rem);
   right: auto;
   bottom: auto;
   margin: 1rem calc(-50% + 1rem) 1rem 1rem;
   max-height: calc(100% - 1rem);
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      padding: ${size('spacing.xxxLarge')};
+      top: calc(50% - 1rem);
+  };
 
   ${switchProp('layout', {
     single: css`
@@ -142,7 +146,6 @@ const CloseButton = styled(IconButton)`
 `;
 
 const Heading = styled.div`
-  width: 100%;
   padding-bottom: ${size('spacing.xLarge')};
   padding: 0;
   position: fixed;
