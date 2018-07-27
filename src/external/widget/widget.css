@@ -37,7 +37,7 @@ html.seniorly-page-scroll-locked body {
 
 .seniorly-popup-widget {
   position: absolute;
-  top: 50%;
+  top: calc(50% + 2rem);
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
   -webkit-transform: translateY(-50%) translateX(-50%);
@@ -55,6 +55,7 @@ html.seniorly-page-scroll-locked body {
   .seniorly-popup-widget {
     width: 30rem;
     max-height: 45rem;
+    top: 50%;
   }
 }
 
