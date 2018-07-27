@@ -117,6 +117,15 @@ const ModalContext = styled.article`
         width: auto;
       }
     `,
+    wizard: css`
+      padding: 0;
+      overflow: auto;
+      border-radius: ${size('spacing.small')};
+      height: 90%;
+      @media screen and (min-width: ${size('breakpoint.tablet')}) {
+        width: ${size('modal.single')};
+      }
+    `,
   })}
 `;
 
@@ -154,7 +163,7 @@ const Content = styled.div`
 
 export default class Modal extends React.Component {
   static propTypes = {
-    layout: oneOf(['single', 'double', 'gallery', 'sidebar', 'searchBox']).isRequired,
+    layout: oneOf(['single', 'double', 'gallery', 'sidebar', 'searchBox', 'wizard']).isRequired,
     heading: node,
     children: node,
     closeable: bool,

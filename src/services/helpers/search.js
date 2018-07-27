@@ -76,6 +76,7 @@ const searchParamsWhitelist = [
   'latitude',
   'longitude',
   'searchOnMove',
+  'modal',
 ];
 
 export const tocs = [
@@ -201,7 +202,7 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
 
 export const getSearchParams = ({ params }, location) => {
   const qs = parse(location.search);
-
+  
   return filterSearchParams({
     ...params,
     ...qs,

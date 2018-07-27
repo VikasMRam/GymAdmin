@@ -41,6 +41,7 @@ export default class CommunitySearchList extends Component {
     requestMeta: object.isRequired,
     searchParams: object.isRequired,
     onParamsChange: func.isRequired,
+    onAdTileClick: func.isRequired,
     communityList: arrayOf(object).isRequired,
   };
 
@@ -54,7 +55,7 @@ export default class CommunitySearchList extends Component {
 
   render() {
     const {
-      communityList, requestMeta, searchParams, ...props
+      communityList, requestMeta, searchParams, onAdTileClick, ...props
     } = this.props;
     const adIndex = 2;
 
@@ -70,7 +71,7 @@ export default class CommunitySearchList extends Component {
         </StyledLink>
       );
     });
-    // components.splice(adIndex, 0, <AdTileWrapper key="ad" ><AdTile {...searchAdProps} /></AdTileWrapper>);
+    // components.splice(adIndex, 0, <AdTileWrapper key="ad" ><AdTile {...searchAdProps} onClick={() => onAdTileClick()} /></AdTileWrapper>);
     const { current, total } = getPaginationData(requestMeta);
     return (
       <Fragment>

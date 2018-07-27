@@ -93,9 +93,9 @@ app.use(async (req, res, next) => {
 
 
   let slyReferrer = req.cookies.referrer;
-  if (slyReferrer === undefined || slyReferrer === null) {
-    slyReferrer = req.headers.referer;
-    cookieArr.push(`referrer=${slyReferrer};Max-Age=27000000;Domain=${cookieDomain};Path=/;`);
+  let slyHeaderReferrer = req.headers.referer;
+  if ((slyHeaderReferrer !== undefined) && (slyReferrer === undefined || slyReferrer === null)) {
+    cookieArr.push(`referrer=${slyHeaderReferrer};Max-Age=27000000;Domain=${cookieDomain};Path=/;`);
   }
 
 

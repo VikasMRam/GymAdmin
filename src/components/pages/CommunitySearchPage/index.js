@@ -16,6 +16,11 @@ import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 import Modal from 'sly/components/molecules/Modal';
+import Thankyou from 'sly/components/molecules/Thankyou';
+
+import CAWController from 'sly/external/wizards/caw/Controller';
+import WhatNext from "sly/components/organisms/WhatNext";
+import HowSlyWorks from "sly/components/organisms/HowSlyWorks";
 
 const TopWrapper = styled.div`
   padding-bottom: ${size('spacing.xLarge')};
@@ -46,6 +51,10 @@ const StyledHr = styled(Hr)`
   }
 `;
 
+const StyledButton= styled(Button)`
+  margin-bottom: ${size('spacing.large')};
+`;
+
 const CommunitySearchPage = ({
   isMapView,
   toggleMap,
@@ -59,6 +68,7 @@ const CommunitySearchPage = ({
   location,
   isModalFilterPanelVisible,
   onToggleModalFilterPanel,
+  onAdTileClick,
 }) => {
   const listSize = requestMeta['filtered-count'];
   const city = titleize(searchParams.city);
@@ -135,6 +145,7 @@ const CommunitySearchPage = ({
             searchParams={searchParams}
             requestMeta={requestMeta}
             onParamsRemove={onParamsRemove}
+            onAdTileClick={onAdTileClick}
           />
           {additionalDivs}
 
@@ -148,6 +159,7 @@ const CommunitySearchPage = ({
       searchParams={searchParams}
       requestMeta={requestMeta}
       onParamsRemove={onParamsRemove}
+      onAdTileClick={onAdTileClick}
     />);
   };
 
@@ -216,6 +228,13 @@ const CommunitySearchPage = ({
             onParamsChange={onParamsChange}
           />
         )}
+        { searchParams.modal === 'thankyou' && <Modal closeable isOpen onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}><Thankyou /><StyledButton
+          kind="jumbo"
+          onClick={() => onParamsRemove({ paramsToRemove: ['modal'] })}
+        >
+          Click to Continue
+        </StyledButton><HowSlyWorks layout="modal" reasons="howItWorks"/></Modal>}
+        { searchParams.modal === 'cawWizard' && <Modal closeable isOpen layout="wizard" onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}><CAWController /></Modal>}
       </CommunitySearchPageTemplate>
     </Fragment>
   );
@@ -234,6 +253,7 @@ CommunitySearchPage.propTypes = {
   searchParams: object,
   isModalFilterPanelVisible: bool,
   onToggleModalFilterPanel: func,
+  onAdTileClick: func,
 };
 
 export default CommunitySearchPage;

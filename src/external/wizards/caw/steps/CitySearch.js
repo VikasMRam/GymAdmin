@@ -19,7 +19,7 @@ const Description = styled.p`
 
 const noRender = () => null;
 
-class Step5 extends Component {
+class CitySearch extends Component {
   static propTypes = {
     data: object,
     setFormKey: func,
@@ -48,12 +48,11 @@ class Step5 extends Component {
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-        <StyledHeading>What city are you renting in?</StyledHeading>
-        <Description>Use the slider to adjust your budget.</Description>
+        <StyledHeading>In what city do you need care?</StyledHeading>
         <SearchBoxContainer
           clearLocationOnBlur={false}
           layout="boxWithoutButton"
-          placeholder="Search the city you are renting in..."
+          placeholder="Enter city name..."
           onLocationSearch={this.handleLocationChange}
           onTextChange={this.handleChange}
         />
@@ -63,4 +62,4 @@ class Step5 extends Component {
   }
 }
 
-export default Step5;
+export default CitySearch;

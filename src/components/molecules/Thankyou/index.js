@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { func } from 'prop-types';
 import styled from 'styled-components';
 
@@ -35,23 +35,30 @@ const BackToSearch = styled.div`
 `;
 
 const Thankyou = ({ community, onClose }) => {
-  const { address, propInfo } = community;
-  const { city } = address;
+  let backToSearch = null;
+  if (community) {
+    const { address, propInfo } = community;
+    const { city } = address;
+    backToSearch = (
+      <Fragment>
+        <StyledBlock>
+          While you wait, compare your selection with other communities nearby
+        </StyledBlock>
+        <BackToSearch>
+          <Button ghost href={getCitySearchUrl({ propInfo, address })}>Communities In {city}</Button>
+        </BackToSearch>
+      </Fragment>
+    );
+  }
 
   return (
     <Wrapper>
       <StyledIcon icon="logo" size="xLarge" />
       <StyledHeading>Thank you!</StyledHeading>
       <StyledBlock>
-        Your Seniorly Guide will reach out to you. They ensure you connect with the community and
-        you are feeling supported throughout this entire process. There is no cost to you!
+        A Seniorly Guide will reach out to you with local expertise and support to ensure you find the right fit for your needs. There is no cost to you!
       </StyledBlock>
-      <StyledBlock>
-        While you wait, compare your selection with other communities nearby
-      </StyledBlock>
-      <BackToSearch>
-        <Button ghost href={getCitySearchUrl({ propInfo, address })}>Communities In {city}</Button>
-      </BackToSearch>
+      {backToSearch}
       {/*{<AgentTile community={ {...community, uri:'#' } } user={{name:'Test'}}/>}*/}
       {onClose && <Button onClick={onClose} kind="jumbo">Done</Button>}
     </Wrapper>
@@ -59,7 +66,7 @@ const Thankyou = ({ community, onClose }) => {
 };
 
 Thankyou.propTypes = {
-  community: communityPropType.isRequired,
+  community: communityPropType,
   onClose: func,
 };
 

@@ -19,7 +19,7 @@ const BoxRadioButtonWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const Step3 = ({ data }) => (
+const BuyingOrRenting = ({ data }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeading>Are you interested in renting or buying into a retirement community?</StyledHeading>
@@ -28,7 +28,7 @@ const Step3 = ({ data }) => (
         <BoxRadioButtonWrapper key={i}>
           <BoxRadioButton
             name="renting_or_buying"
-            helpText="help text goes here"
+            helpText=""
             value={option}
             label={option}
             checked={data.renting_or_buying === option}
@@ -39,12 +39,12 @@ const Step3 = ({ data }) => (
   </Fragment>
 );
 
-Step3.propTypes = {
+BuyingOrRenting.propTypes = {
   data: object,
 };
 
-Step3.defaultProps = {
+BuyingOrRenting.defaultProps = {
   data: {},
 };
 
-export default Step3;
+export default BuyingOrRenting;

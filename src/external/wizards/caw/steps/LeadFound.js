@@ -12,12 +12,12 @@ const StyledHeading = styled(Heading)`
   margin-bottom: calc(${size('spacing.xxLarge')} + ${size('spacing.regular')});
 `;
 
-const Step6 = ({ searchResultCount }) => (
+const LeadFound = ({ searchResultCount }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeading>We found {searchResultCount} options near you. Sign up to view your options.</StyledHeading>
     <Field
-      name="name"
+      name="full_name"
       placeholder="Name"
       type="text"
       component={ReduxField}
@@ -37,14 +37,14 @@ const Step6 = ({ searchResultCount }) => (
   </Fragment>
 );
 
-Step6.propTypes = {
+LeadFound.propTypes = {
   data: object,
   searchResultCount: number,
 };
 
-Step6.defaultProps = {
+LeadFound.defaultProps = {
   data: {},
   searchResultCount: 0,
 };
 
-export default Step6;
+export default LeadFound;

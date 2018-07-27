@@ -1,13 +1,15 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
-import { bool, object, number, func, shape, string } from 'prop-types';
+import { bool, object, number, func, shape, string, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
+import { host } from 'sly/config'
 import { size, assetPath } from 'sly/components/themes';
 import { Button, Hr, Heading, Image } from 'sly/components/atoms';
 
-import { getStepComponent } from './helpers';
+import { stepOrders } from './helpers';
+import { getStepComponent } from './steps';
 
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
 
@@ -62,9 +64,10 @@ const SearchingWrapper = Wrapper.extend`
 `;
 
 const Component = ({
-  currentStep, invalid, data, handleSubmit, onSeeMore, totalNumberofSteps, onBackButton, change, setStoreKey, searching, searchResultCount, locationSearchParams,
+  currentStep, invalid, data, handleSubmit, onSeeMore, totalNumberofSteps, onBackButton, change, setStoreKey,
+  searching, searchResultCount, locationSearchParams, flow,
 }) => {
-  const CurrentStepComponent = getStepComponent(currentStep);
+  const CurrentStepComponent = getStepComponent(stepOrders[flow][currentStep - 1]);
   return (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -113,7 +116,7 @@ const Component = ({
                     // it's important to make this a regular href than opens new tab since
                     // by default browsers block popups opened using window.open
                     <Button
-                      href={`https://www.seniorly.com/assisted-living/${locationSearchParams.state}/${locationSearchParams.city}`}
+                      href={`${host}/assisted-living/${locationSearchParams.state}/${locationSearchParams.city}?modal=thankyou`}
                       target="_blank"
                       disabled={invalid}
                       onClick={onSeeMore}
@@ -147,6 +150,7 @@ Component.propTypes = {
     state: string.isRequired,
     city: string.isRequired,
   }),
+  flow: oneOf(Object.keys(stepOrders)),
 };
 
 export default Component;

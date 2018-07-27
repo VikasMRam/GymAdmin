@@ -45,7 +45,7 @@ const devDomain = `${HOST}:${DEV_PORT}/`;
 const isDev = NODE_ENV === 'development';
 const isStaging = SLY_ENV === 'staging';
 // replacements for widgets.js
-const EXTERNAL_ASSET_URL = (isDev ? `${devDomain}external` : HOST + path.join(PUBLIC_PATH, 'external'));
+const EXTERNAL_ASSET_URL = (isDev ? `${devDomain}external` : `${PUBLIC_PATH}/external`);
 const EXTERNAL_WIZARDS_ROOT_URL = HOST + EXTERNAL_WIZARDS_PATH;
 
 console.info('Using config', JSON.stringify({
@@ -228,9 +228,10 @@ const replaceExternalConstants = (text) => {
     'process.env.EXTERNAL_WIZARDS_ROOT_URL': EXTERNAL_WIZARDS_ROOT_URL,
     'process.env.CLOSE_ICON_SVG': closeIconSvg,
     'process.env.SLY_ENV': SLY_ENV,
+    'process.env.VERSION': VERSION,
   };
   const replacedText = Object.keys(replacements).reduce((previous, match) => {
-    return previous.replace(match, JSON.stringify(replacements[match]));
+    return previous.replace(new RegExp(match, 'g'), JSON.stringify(replacements[match]));
   }, text);
   return replacedText;
 };
