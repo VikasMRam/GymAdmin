@@ -146,7 +146,7 @@ describe('ConciergeController', function() {
       const wrapper = wrap(community, store);
       wrapper.instance().next(true);
       expect(getControllerAction(store)).toEqual({
-        currentStep: CONVERSION_FORM,
+        currentStep: ADVANCED_INFO,
         modalIsOpen: true,
       });
     });
