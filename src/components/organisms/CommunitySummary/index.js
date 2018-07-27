@@ -87,7 +87,7 @@ export default class communitySummary extends React.Component {
 
     highlights.push((
       <span>
-        Call free local advisort&nbsp;
+        Call free local advisor&nbsp;
         <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
           <NumberFormat
             value={conciergeNumber}
