@@ -42,6 +42,7 @@ export default class StateSearchPage extends Component {
     toggleMap: func,
     onParamsChange: func,
     onLocationSearch: func,
+    onAdTileClick: func,
     location: object,
     searchParams: object,
   };
@@ -53,6 +54,7 @@ export default class StateSearchPage extends Component {
       isMapView,
       toggleMap,
       onLocationSearch,
+      onAdTileClick,
       searchParams,
       onParamsChange,
       requestMeta,

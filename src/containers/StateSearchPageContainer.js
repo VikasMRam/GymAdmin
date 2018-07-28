@@ -52,6 +52,10 @@ class StateSearchPageContainer extends Component {
     history.push(path);
   };
 
+  handleOnAdTileClick = () => {
+    this.changeSearchParams({ changedParams: { modal: 'cawWizard' } });
+  }
+
   render() {
     const {
       searchParams,
@@ -77,6 +81,7 @@ class StateSearchPageContainer extends Component {
         searchParams={searchParams}
         onParamsChange={this.changeSearchParams}
         onLocationSearch={this.handleOnLocationSearch}
+        onAdTileClick={this.handleOnAdTileClick}
         communityList={communityList}
         geoGuide={gg}
         location={location}
