@@ -8,7 +8,6 @@ import { size, assetPath } from 'sly/components/themes';
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
 import { Image, Label, Heading, Hr, Link, Block, Button, Icon } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
-import Footer from 'sly/components/organisms/Footer';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 
 const HeroWrapper = styled.div`
@@ -82,7 +81,7 @@ const Description = styled.div`
   }
 `;
 
-const OverlappingSectionsTemplate = ({ onLocationSearch, imagePath, intro, description, content }) => {
+const OverlappingSectionsTemplate = ({ onLocationSearch, imagePath, intro, description, content, footer }) => {
   const Top = () => {
     return (
       <Fragment>
@@ -109,7 +108,7 @@ const OverlappingSectionsTemplate = ({ onLocationSearch, imagePath, intro, descr
   return (
     <BasePageTemplate
       header={<Top />}
-      footer={<Footer />}
+      footer={footer}
     >
       {content}
     </BasePageTemplate>

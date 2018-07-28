@@ -8,6 +8,8 @@ import Modal from 'sly/components/molecules/Modal';
 import ProfileTile from 'sly/components/molecules/ProfileTile';
 import PressTile from 'sly/components/molecules/PressTile';
 import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
+import Footer from 'sly/components/organisms/Footer';
+
 
 const IntroText = styled.div`
   font-size: ${size('spacing.xLarge')};
@@ -173,6 +175,7 @@ const OurHistoryPage = ({
       intro={intro}
       description={description}
       content={content}
+      footer={<Footer />}
     />
   );
 };

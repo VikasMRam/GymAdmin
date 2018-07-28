@@ -3,11 +3,15 @@ import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
 import { size, assetPath } from 'sly/components/themes';
-import { Icon, Hr } from 'sly/components/atoms';
+import { Icon, Hr, Heading, Block, Link } from 'sly/components/atoms';
 import DiscoverTile from 'sly/components/molecules/DiscoverTile';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
 import { discoverTileContents, secondContents } from 'sly/services/helpers/how_it_works';
+import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
+import { MostSearchedCities } from 'sly/services/helpers/homepage';
+import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
+import Footer from 'sly/components/organisms/Footer';
 
 const IntroText = styled.div`
   font-size: ${size('spacing.xLarge')};
@@ -73,11 +77,80 @@ const SecondContentTileWrapper = styled.div`
 
 `;
 
+const BlueBGWrapper = styled.div`
+background-color: #E1EAEF;
+`;
+
+const BottomContent = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: flex;
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 2;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+    grid-column: 3 / span 1;
+  }
+`;
+
+const BottomContentHeading = styled.div`
+  margin: 0 auto;
+  margin-top: 72px;
+  margin-bottom: 24px;
+  font-size: 30px;
+`;
+
+const SearchBoxContainerWrapper = styled.div`
+  margin: 0 auto;
+  margin-bottom: 72px;
+`;
+
+const CityTileHeading = styled.div`
+  margin: 0 auto;
+  margin-bottom: 24px;
+  font-size: 18px;
+  font-weight: bold;
+`;
+
+const CityTilesWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 72px;
+`;
+
+const CityTileWrapper = styled(Link)`
+  // this is required for IE as it won't consider inline elements as flex children
+  display: block;
+  margin-right: 24px;
+  margin-bottom: 24px;
+
+  :nth-child(4n) {
+    margin-right: 0;
+  }
+`;
+
+// Copied from OverlappingSectionsTemplate
+const Grid = styled.div`
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: grid;
+    margin-top: -${size('home.introMargin')};
+    grid-template-columns: auto ${size('layout.col12')} auto;
+    grid-template-rows: auto auto auto;
+  }
+  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+    grid-template-columns: auto ${size('spacing.huge')} ${size('layout.col12')} ${size('spacing.huge')} auto;
+    grid-template-rows: auto auto auto;
+  }
+`;
+
 function onClick() {
   alert('Click on DiscoverTile');
 }
 
-const HowItWorksPage = () => {
+const HowItWorksPage = ({ onLocationSearch }) => {
   const imagePath = assetPath('images/how-it-works/hero.png');
   const intro = (
     <Fragment>
@@ -119,12 +192,38 @@ const HowItWorksPage = () => {
       <SecondContentTilesWrapper>{secondContentTiles}</SecondContentTilesWrapper>
     </ContentWrapper>
   );
+  const Bottom = () => {
+    const mostSearchedCitiesComponents = MostSearchedCities.map(mostSearchedCity => (
+      <CityTileWrapper key={mostSearchedCity.title} to={mostSearchedCity.to}>
+        <ImageOverlayContentTile size="small" image={mostSearchedCity.image}>
+          <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
+          <Block palette="white">{mostSearchedCity.title}</Block>
+        </ImageOverlayContentTile>
+      </CityTileWrapper>
+    ));
+    return (
+      <Fragment>
+        <BlueBGWrapper>
+          <Grid>
+            <BottomContent>
+              <BottomContentHeading>Ready to find a new home?</BottomContentHeading>
+              <SearchBoxContainerWrapper><SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} /></SearchBoxContainerWrapper>
+              <CityTileHeading>Or Explore Our Most Seached Cities</CityTileHeading>
+              <CityTilesWrapper>{mostSearchedCitiesComponents}</CityTilesWrapper>
+            </BottomContent>
+          </Grid>
+        </BlueBGWrapper>
+        <Footer />
+      </Fragment>
+    );
+  };
   return (
     <OverlappingSectionsTemplate
       imagePath={imagePath}
       intro={intro}
       description={null}
       content={content}
+      footer={<Bottom />}
     />
   );
 };
