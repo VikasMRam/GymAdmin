@@ -11,16 +11,21 @@ import ReduxField from 'sly/components/organisms/ReduxField';
 
 const StyledHeading = styled(Heading)`
   font-weight: normal;
-  margin-bottom: ${size('spacing.xLarge')};
+  margin-bottom: ${size('spacing.regular')};
 `;
 const Description = styled.p`
   color: ${palette('grayscale', 0)};
-  margin-bottom: ${size('spacing.xxLarge')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 const MoneyValue = styled(Heading)`
   font-weight: normal;
   color: ${palette('secondary', 0)};
   margin-bottom: ${size('spacing.large')};
+`;
+
+const StyledReduxField = styled(ReduxField)`
+  display: flex;
+  align-items: baseline;
 `;
 
 const moneyValue = val =>
@@ -30,6 +35,7 @@ const MonthlyBudget = ({ data }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeading>What is your monthly budget for rent and care?</StyledHeading>
+    <Description> Monthly budget is an important criteria for narrowing down your search.</Description>
     <Description>Note: The average monthly budget in US is roughly $3,750</Description>
     <Field
       name="monthly_budget"
@@ -43,6 +49,13 @@ const MonthlyBudget = ({ data }) => (
       valuePosition="top"
       valueWidth="regular"
       valueParse={moneyValue}
+    />
+    <Field
+      name="medicaid_coverage"
+      label="I'm only using Medicaid to pay."
+      type="checkbox"
+      responsive
+      component={StyledReduxField}
     />
   </Fragment>
 );

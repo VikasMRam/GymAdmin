@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
+import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
@@ -20,16 +21,21 @@ const options = [
 
 const StyledHeading = styled(Heading)`
   font-weight: normal;
-  margin-bottom: ${size('spacing.xLarge')};
+  margin-bottom: ${size('spacing.regular')};
 `;
 const BoxRadioButtonWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
+`;
+const Description = styled.p`
+  color: ${palette('grayscale', 0)};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const CareNeeds = ({ data }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeading>Do you have any care needs?</StyledHeading>
+    <Description>Select all that apply</Description>
     {
       options.map((option, i) => (
         <BoxRadioButtonWrapper key={i}>
