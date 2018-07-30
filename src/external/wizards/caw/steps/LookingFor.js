@@ -18,6 +18,10 @@ const options = [
 const StyledHeading = styled(Heading)`
   font-weight: normal;
 `;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 const BoxRadioButtonWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
