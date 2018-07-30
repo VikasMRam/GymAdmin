@@ -11,7 +11,7 @@ import { Box, Icon } from 'sly/components/atoms';
 import HelpBubble from 'sly/components/molecules/HelpBubble';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
-const StyledField = styled(Field)`
+export const StyledField = styled(Field)`
   width: 100%;
   margin: 0;
 
@@ -34,12 +34,12 @@ const StyledBox = styled(Box)`
   margin: 0;
   padding: 0 ${size('spacing.large')};
 `;
-const StyledHelpBubble = styled(HelpBubble)`
+export const StyledHelpBubble = styled(HelpBubble)`
   span {
     color: red;
   }
 `;
-const StyledIcon = styled(Icon)`
+export const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.large')};
 `;
 
