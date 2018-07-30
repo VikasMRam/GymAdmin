@@ -7,15 +7,15 @@ import { Heading } from 'sly/components/atoms';
 import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
 
 const options = [
-  {label:'24-hour supervision', helpText:'Provide 24 hour supervision'},
-  {label:'Memory care', helpText:'Needs include Alzheimer\'s or other Dementias'},
-  {label:'Bathing assistance', helpText:'Provide 24 hour supervision'},
-  {label:'Eating assistance', helpText:'More'},
-  {label:'Transfer assistance', helpText:'Provide 24 hour supervision'},
-  // {label:'Medication anagement', helpText:'Provide 24 hour supervision'},
-  // {label:'Insulin Injections', helpText:'Provide 24 hour supervision'},
-  {label:'Short-Term care', helpText:'Provide 24 hour supervision'},
-  {label:'Other', helpText:'Provide 24 hour supervision'},
+  { label: '24-hour supervision', helpText: 'Provide 24 hour supervision' },
+  { label: 'Memory care', helpText: 'Needs include Alzheimer\'s or other Dementias' },
+  { label: 'Bathing assistance', helpText: 'Provide 24 hour supervision' },
+  { label: 'Eating assistance', helpText: 'More' },
+  { label: 'Transfer assistance', helpText: 'Provide 24 hour supervision' },
+  // { label: 'Medication anagement', helpText: 'Provide 24 hour supervision' },
+  // { label: 'Insulin Injections', helpText: 'Provide 24 hour supervision' },
+  { label: 'Short-Term care', helpText: 'Provide 24 hour supervision' },
+  { label: 'Other', helpText: 'Provide 24 hour supervision' },
 ];
 
 const StyledHeading = styled(Heading)`
@@ -36,7 +36,6 @@ const CareNeeds = ({ data }) => (
           <BoxRadioButton
             multiSelect
             name={`care_needs[${option.label}]`}
-            helpText=''
             value={option.label}
             label={option.label}
             checked={data.care_needs && data.care_needs[option.label]}

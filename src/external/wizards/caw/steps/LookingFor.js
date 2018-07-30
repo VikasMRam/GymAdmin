@@ -19,9 +19,6 @@ const options = [
 const StyledHeading = styled(Heading)`
   font-weight: normal;
 `;
-const Description = styled.p`
-  color: ${palette('grayscale', 0)};
-`;
 const BoxRadioButtonWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
@@ -30,7 +27,6 @@ const LookingFor = ({ data }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeading>Who are you looking for?</StyledHeading>
-    <Description></Description>
     {
       options.map((option, i) => (
         <BoxRadioButtonWrapper key={i}>

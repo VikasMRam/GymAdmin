@@ -1,7 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
-import { palette } from 'styled-theme';
 import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
@@ -12,9 +11,6 @@ import { Heading } from 'sly/components/atoms';
 const StyledHeading = styled(Heading)`
   font-weight: normal;
   margin-bottom: ${size('spacing.xLarge')};
-`;
-const Description = styled.p`
-  color: ${palette('grayscale', 0)};
 `;
 
 const noRender = () => null;
