@@ -69,6 +69,7 @@ export default class CommunityDetailPage extends Component {
     onBackToSearchClicked: func,
     onReviewLinkClicked: func,
     onConciergeNumberClicked: func,
+    onLiveChatClicked: func,
     onReceptionNumberClicked: func,
   };
 
@@ -131,6 +132,7 @@ export default class CommunityDetailPage extends Component {
       user,
       onReviewLinkClicked,
       onConciergeNumberClicked,
+      onLiveChatClicked,
       onReceptionNumberClicked,
     } = this.props;
 
@@ -157,6 +159,7 @@ export default class CommunityDetailPage extends Component {
     const {
       careServices, licenseUrl, serviceHighlights, communityPhone,
     } = propInfo;
+
 
     let images = gallery.images || [];
     // If there is a mainImage put it in front
@@ -185,6 +188,7 @@ export default class CommunityDetailPage extends Component {
       staffDescription,
       residentDescription,
       ownerExperience,
+      typeCare,
     } = propInfo;
 
     const {
@@ -207,6 +211,8 @@ export default class CommunityDetailPage extends Component {
     const reviewsFinal = reviews || [];
     const serviceHighlightsFinal = serviceHighlights || [];
     const roomPrices = floorPlans.map(({ info }) => info);
+    const isCCRC = (typeCare.indexOf('Continuing Care Retirement Community(CCRC)') !== -1);
+
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
     const formattedAddress = `${address.line1}, ${address.line2}, ${
@@ -296,6 +302,7 @@ export default class CommunityDetailPage extends Component {
             pricingAndFloorPlansRef={this.pricingAndFloorPlansRef}
             amenitiesAndFeaturesRef={this.amenitiesAndFeaturesRef}
             communityReviewsRef={this.communityReviewsRef}
+            isCCRC={isCCRC}
             twilioNumber={twilioNumber}
             reviewsValue={reviewsValue}
             phoneNumber={communityPhone}
@@ -315,13 +322,15 @@ export default class CommunityDetailPage extends Component {
             innerRef={this.pricingAndFloorPlansRef}
           >
             <ConciergeController community={community}>
-              {({ concierge, getPricing }) => (
+              {({ concierge, getPricing}) => (
                 <PricingAndAvailability
                   community={community}
+                  isCCRC={isCCRC}
                   address={address}
                   estimatedPrice={rgsAux.estimatedPrice}
                   roomPrices={roomPrices}
                   onInquireOrBookClicked={getPricing}
+                  onLiveChatClicked={onLiveChatClicked}
                 />
               )}
             </ConciergeController>
@@ -407,10 +416,10 @@ export default class CommunityDetailPage extends Component {
               footerInfo={{
                 title: 'Contact Property',
                 name: community.name,
-                ctaTitle: 'Speak to Local Expert',
-                link: `tel:${conciergeNumber}`
+                ctaTitle: 'Get Pricing',
+                link: 'javascript:void(0);',
               }}
-              onFooterClick={onConciergeNumberClicked}
+              onFooterClick={onLiveChatClicked}
 
             />
 

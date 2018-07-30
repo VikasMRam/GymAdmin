@@ -136,6 +136,16 @@ class CommunityDetailPageContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
   };
 
+  handleLiveChatClick = () => {
+    const { community } = this.props;
+    const { id } = community;
+    const event = {
+      action: 'click', category: 'liveChat', label: id,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+    olark && olark('api.box.expand');
+  };
+
   handleReceptionNumberClick = () => {
     const { community } = this.props;
     const { id } = community;
@@ -204,6 +214,7 @@ class CommunityDetailPageContainer extends Component {
         onBackToSearchClicked={this.handleBackToSearchClick}
         onReviewLinkClicked={this.handleReviewLinkClick}
         onConciergeNumberClicked={this.handleConciergeNumberClick}
+        onLiveChatClicked={this.handleLiveChatClick}
         onReceptionNumberClicked={this.handleReceptionNumberClick}
       />
     );
