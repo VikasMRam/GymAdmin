@@ -66,7 +66,7 @@ jobs:
       - run:
           name: Send deploy start notification
           command: |
-            export GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: %H%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
+            export GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: <$CIRCLE_COMPARE_URL|%H>%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
             ./.circleci/push-slack-notification.sh -t "starting deploy to slyreact-$SLY_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$GIT_COMMIT_DESC" -c "#66d3e4"
       - run:
@@ -109,14 +109,14 @@ jobs:
       - run:
           name: Send deploy success notification
           command: |
-            export GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: %H%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
+            export GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: <$CIRCLE_COMPARE_URL|%H>%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
             ./.circleci/push-slack-notification.sh -t "successfully deployed to slyreact-$SLY_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$GIT_COMMIT_DESC" -c "#42c88a"
       - run:
           name: Send deploy failed notification
           when: on_fail
           command: |
-            export GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: %H%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
+            export GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: <$CIRCLE_COMPARE_URL|%H>%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
             ./.circleci/push-slack-notification.sh -t "failed deploying to slyreact-$SLY_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$GIT_COMMIT_DESC" -c "#ed5c5c"
 workflows:
