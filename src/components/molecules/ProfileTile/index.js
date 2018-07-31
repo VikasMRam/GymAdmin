@@ -24,9 +24,6 @@ const Wrapper = styled.div`
         box-shadow: 0 ${size('spacing.regular')} ${size('spacing.large')} ${palette('grayscale', 0)}80;
       }
     `,
-    modal: css`
-      width: ${size('profileTile.wrapper.modal.width')} + calc(${size('spacing.huge')} * 2);
-    `,
   })}
 `;
 
