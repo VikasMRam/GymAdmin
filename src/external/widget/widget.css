@@ -3,6 +3,7 @@ html.seniorly-page-scroll-locked body {
   /* for ios to prevent body scroll */
   position: fixed;
 }
+
 .seniorly-overlay-widget {
   position: fixed;
   top: 0;
@@ -50,7 +51,7 @@ html.seniorly-page-scroll-locked body {
   height: calc(100% - 2rem);
   max-height: 45rem;
   border-radius: 0.1875rem;
-  overflow:auto;
+  overflow: hidden;
   -webkit-overflow-scrolling: touch;
 }
 
