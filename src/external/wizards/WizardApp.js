@@ -2,6 +2,7 @@
 import React, { Component, Fragment } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
+import Helmet from 'react-helmet';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from 'sly/components/themes/default';
@@ -41,6 +42,12 @@ export default class WizardApp extends Component {
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+        <Helmet>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+          <meta content="Seniorly Inc." property="author" />
+          <meta content="English" property="language" />
+        </Helmet>
         <ThemeProvider theme={theme}>
           <Router enableEvents={false}>
             <Switch>
