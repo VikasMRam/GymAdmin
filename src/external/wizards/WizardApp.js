@@ -6,16 +6,16 @@ import Helmet from 'react-helmet';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from 'sly/components/themes/default';
-import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 
 import { externalWizardsPath, authTokenUrl } from 'sly/config';
 import { routes as routesPropType } from 'sly/propTypes/routes';
-import WizardAppErrorPage from './WizardAppErrorPage';
 import Router from 'sly/components/molecules/Router';
+import WizardAppErrorPage from './WizardAppErrorPage';
+import addGlobalStyles from './setGlobalStyles';
 
 import { Controller as CAWController } from './caw';
 
-setGlobalStyles();
+addGlobalStyles();
 
 export default class WizardApp extends Component {
   static childContextTypes = {
