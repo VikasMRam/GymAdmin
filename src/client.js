@@ -10,6 +10,7 @@ import { ServerStateProvider } from 'react-router-server';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { basename, host } from 'sly/config';
+import { getOrigin } from 'sly/services/helpers/url';
 import configureStore from 'sly/store/configure';
 import api from 'sly/services/api';
 import App from 'sly/components/App';
@@ -30,7 +31,7 @@ const renderApp = () => (
 );
 
 const root = document.getElementById('app');
-const origin = window && window.location.origin;
+const origin = getOrigin();
 
 if (origin.indexOf(host) !== -1) {
   render(renderApp(), root);

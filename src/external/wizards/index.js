@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import { basename, host } from 'sly/config';
+import { getOrigin } from 'sly/services/helpers/url';
 import api from 'sly/services/api';
 import configureStore from './store/configure';
 import WizardApp from './WizardApp';
@@ -23,7 +24,7 @@ const renderApp = () => (
 );
 
 const root = document.getElementById('app');
-const origin = window && window.location.origin;
+const origin = getOrigin();
 
 if (origin.indexOf(host) !== -1) {
   render(renderApp(), root);
