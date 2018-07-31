@@ -1,14 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
-import { palette } from 'styled-theme';
-
-import { size, assetPath } from 'sly/components/themes';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 48px 0;
 `;
 
 const Question = styled.div`

@@ -63,6 +63,7 @@ const HeroSubheading = styled(Label)`
 const SecondContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin: ${size('spacing.massive')} 0;
 `;
 
 const SecondContentHeading = styled.div`
@@ -93,21 +94,21 @@ const BlueBRWrapper = styled.div`
 const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: ${size('spacing.massive')};
-  padding-bottom: ${size('spacing.xLarge')};
+  padding: ${size('spacing.massive')} 0;
 `;
 
 const BottomHeading = styled.div`
   font-size: 30px;
   margin: 0 auto;
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const FAQTilesWrapper = styled.div`
-
+  margin: 0 180px;
 `;
 
-const FAQTileWrapper = styled.div`
-  margin: 0 180px;
+const XXXLargeHr = styled(Hr)`
+  margin: ${size('spacing.xxxLarge')} 0;
 `;
 
 const TabsWrapper = styled.div`
@@ -178,10 +179,10 @@ const HowItWorksSecondPage = ({
 
   const faqTiles = FAQ.map((item, index) => {
     return (
-      <FAQTileWrapper key={item.question} >
-        <FAQTile {...item} />
-        {index !== FAQ.length - 1 && <Hr />}
-      </FAQTileWrapper>
+      <Fragment>
+        <FAQTile {...item} key={item.question} />
+        {index !== FAQ.length - 1 && <XXXLargeHr />}
+      </Fragment>
     );
   });
 
