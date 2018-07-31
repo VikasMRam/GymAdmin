@@ -174,3 +174,15 @@ export const getCitySearchUrl = ({ propInfo, address }) => {
   const tocBc = tocPaths(propInfo.typeCare);
   return `${tocBc.path}/${urlize(stateNames[address.state])}/${urlize(address.city)}?latitude=${address.latitude}&longitude=${address.longitude}`;
 };
+
+export const getOrigin = () => {
+  if (!window) {
+    return '';
+  }
+  // window.location.origin is not present in ie, opera and some mobile browsers
+  if (!window.location.origin) {
+    const port = window.location.port ? `:${window.location.port}` : '';
+    window.location.origin = `${window.location.protocol}//${window.location.hostname}${port}`;
+  }
+  return window.location.origin;
+};
