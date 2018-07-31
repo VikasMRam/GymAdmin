@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   padding: ${size('spacing.xLarge')};
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('grayscale', 2)};
   border-radius: ${size('spacing.tiny')};
+  height: 100%;
 `;
 
 const HeadingContentWrapper = styled.div`

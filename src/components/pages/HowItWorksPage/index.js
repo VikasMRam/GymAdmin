@@ -61,20 +61,24 @@ const DiscoverTileWrapper = styled.div`
 `;
 
 const SecondContentHeading = styled.div`
+  margin: 0 auto;
   font-size: 30px;
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const SecondContentTilesWrapper = styled.div`
-  column-gap: ${size('spacing.xLarge')};
-  column-width: ${size('picture.xLarge.width')};
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 const SecondContentTileWrapper = styled.div`
   width: ${size('picture.xLarge.width')};
+  margin-right: ${size('spacing.xLarge')};
   margin-bottom: ${size('spacing.xLarge')};
-  column-break-inside: avoid;
 
+  :nth-child(2n){
+    margin-right: 0;
+  }
 `;
 
 const BlueBGWrapper = styled.div`

@@ -161,6 +161,10 @@ theme.sizes = {
       width : '32.25rem',   // 516px
       height: '17.5rem',    // 280px
     },
+    xxLarge: {
+      width : '32.25rem',   // 516px
+      height: '21.4375rem', // 343px
+    },
     proportions: {
       '16:9': '56.25%',
       '4:3' : '75%',
@@ -244,6 +248,7 @@ theme.sizes = {
     xxLarge : '2.000rem',   // 32px
     xxxLarge: '3.000rem',   // 48px
     huge    : '4.000rem',   // 64px
+    massive : '4.500rem',   // 72px
   },
 
   icon: {

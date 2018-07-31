@@ -19,7 +19,7 @@ import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
 import AgentsProfilePageController from 'sly/controllers/AgentsProfilePageController';
 import OurHistoryPageController from 'sly/controllers/OurHistoryPageController';
-import HowItWorksPage from 'sly/components/pages/HowItWorksPage';
+import HowItWorksPageContainer from 'sly/containers/HowItWorksPageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
@@ -32,6 +32,13 @@ const careTypes = [
   'independent-living',
   'alzheimers-care',
   'continuing-care-retirement-community'
+].join('|');
+
+const howItWorksTypes = [
+  '',
+  'for-families',
+  'for-communities',
+  'for-agents',
 ].join('|');
 
 export default class App extends Component {
@@ -76,8 +83,8 @@ export default class App extends Component {
     //   exact: true,
     // },
     {
-      path: '/how-it-works',
-      component: HowItWorksPage,
+      path: `/how-it-works`,
+      component: HowItWorksPageContainer,
       exact: true,
     },
     {
