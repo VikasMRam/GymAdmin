@@ -92,8 +92,6 @@ const BlueBRWrapper = styled.div`
 `;
 
 const BottomWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
   padding: ${size('spacing.massive')} 0;
 `;
 
@@ -101,6 +99,7 @@ const BottomHeading = styled.div`
   font-size: 30px;
   margin: 0 auto;
   margin-bottom: ${size('spacing.xLarge')};
+  text-align: center;
 `;
 
 const FAQTilesWrapper = styled.div`

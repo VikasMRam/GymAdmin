@@ -1,11 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string } from 'prop-types';
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
 
 const Question = styled.div`
   font-size: 18px;
@@ -18,10 +13,10 @@ const Answer = styled.div`
 `;
 
 const FAQTile = ({ question, answer }) => (
-  <Wrapper>
+  <Fragment>
     <Question>{question}</Question>
     <Answer>{answer}</Answer>
-  </Wrapper>
+  </Fragment>
 );
 
 FAQTile.propTypes = {
