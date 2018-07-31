@@ -33,6 +33,7 @@ const StyledBox = styled(Box)`
   width: 100%;
   margin: 0;
   padding: 0 ${size('spacing.large')};
+  border-radius: ${size('spacing.small')};
 `;
 export const StyledHelpBubble = styled(HelpBubble)`
   span {

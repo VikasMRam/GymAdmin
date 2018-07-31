@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
+import { reduxForm, reset } from 'redux-form';
 import { number, func, object, shape, string } from 'prop-types';
 import queryString from 'query-string';
 
@@ -11,20 +11,21 @@ import { selectFormData } from 'sly/services/helpers/forms';
 import { CAW_PROGRESS } from 'sly/services/api/actions';
 
 import CAWComponent from './Component';
-import { stepOrders, defaultStepOrder } from './helpers';
+import { stepOrders, defaultStepOrder, inputBasedNextSteps } from './helpers';
 
+const formName = 'CAWForm';
 const validate = createValidator({
   looking_for: [required],
   care_needs: [required],
   renting_or_buying: [required],
   monthly_budget: [required],
   location: [required, minLength(3)],
-  name: [required],
+  full_name: [required],
   email: [required, email],
   phone: [required, usPhone],
 });
 const ReduxForm = reduxForm({
-  form: 'CAWForm',
+  form: formName,
   destroyOnUnmount: false,
   keepDirtyOnReinitialize: true,
   validate,
@@ -42,16 +43,18 @@ const ReduxForm = reduxForm({
 
 class Controller extends Component {
   static propTypes = {
-    currentStep: number,
-    set: func,
+    currentStep: number.isRequired,
+    set: func.isRequired,
     locationSearchParams: object,
     searchCommunities: func,
-    postUserAction: func,
+    postUserAction: func.isRequired,
     searchResultCount: number,
     data: object,
     location: shape({
       search: string,
     }),
+    dispatchResetForm: func.isRequired,
+    progressPath: object.isRequired,
   };
 
   componentWillMount() {
@@ -63,6 +66,9 @@ class Controller extends Component {
       if (params.order && stepOrders[params.order]) {
         this.flowName = params.order;
       }
+      if (params.formWidgetType) {
+        this.widgetType = params.formWidgetType;
+      }
     }
 
     this.flow = stepOrders[this.flowName];
@@ -70,7 +76,7 @@ class Controller extends Component {
 
   handleSeeMore = () => {
     const {
-      currentStep, postUserAction, data,
+      currentStep, postUserAction, data, dispatchResetForm, set,
     } = this.props;
 
     if (currentStep === this.flow.length) {
@@ -93,8 +99,14 @@ class Controller extends Component {
         },
       };
       postUserAction(payload).then(() => {
-        if (window.parent) {
+        if (window.parent && this.widgetType === 'popup') {
           window.parent.postMessage(JSON.stringify({ action: 'closePopup' }), '*');
+        } else {
+          dispatchResetForm();
+          set({
+            currentStep: null,
+            progressPath: null,
+          });
         }
       });
     }
@@ -102,33 +114,58 @@ class Controller extends Component {
 
   handleSubmit = (values, dispatch, props) => {
     const {
-      currentStep, set, locationSearchParams, searchCommunities,
+      currentStep, set, locationSearchParams, searchCommunities, progressPath,
     } = props;
+    const currentStepName = this.flow[currentStep - 1];
 
-    if (this.flow[currentStep - 1] === 'CitySearch') {
+    if (currentStepName === 'CitySearch') {
       set({
         searching: true,
       });
       searchCommunities(locationSearchParams)
         .then((result) => {
+          progressPath.add(currentStep);
           set({
+            progressPath,
             currentStep: currentStep + 1,
             searchResultCount: result.meta['filtered-count'],
             searching: false,
           });
         });
     } else if (currentStep + 1 <= this.flow.length) {
+      let nextStep = currentStep + 1;
+
+      if (inputBasedNextSteps[this.flowName]) {
+        const conditions = inputBasedNextSteps[this.flowName][currentStepName];
+        if (conditions) {
+          let matchingConditionNextStep = false;
+          for (let i = 0; i < conditions.length; i += 1) {
+            if (conditions[i].condition(values)) {
+              matchingConditionNextStep = conditions[i].nextStep;
+              break;
+            }
+          }
+          if (matchingConditionNextStep) {
+            nextStep = this.flow.indexOf(matchingConditionNextStep) + 1;
+          }
+        }
+      }
+      progressPath.add(currentStep);
       set({
-        currentStep: currentStep + 1,
+        currentStep: nextStep,
+        progressPath,
       });
     }
   }
 
   handleBackButton = () => {
-    const { currentStep, set } = this.props;
+    const { currentStep, set, progressPath } = this.props;
     if (currentStep > 1) {
+      const progressPathArr = Array.from(progressPath);
+      const prevStep = progressPathArr.pop();
       set({
-        currentStep: currentStep - 1,
+        currentStep: prevStep,
+        progressPath: new Set(progressPathArr),
       });
     }
   }
@@ -159,11 +196,12 @@ class Controller extends Component {
 
 const mapStateToProps = (state, { controller }) => {
   return {
+    progressPath: controller.progressPath || new Set([1]),
     currentStep: controller.currentStep || 1,
     locationSearchParams: controller.locationSearchParams,
     searchResultCount: controller.searchResultCount,
     searching: controller.searching,
-    data: selectFormData(state, 'CAWForm', {}),
+    data: selectFormData(state, formName, {}),
   };
 };
 
@@ -171,6 +209,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     searchCommunities: searchParams => dispatch(resourceListReadRequest('searchResource', searchParams)),
     postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
+    dispatchResetForm: () => dispatch(reset(formName)),
   };
 };
 

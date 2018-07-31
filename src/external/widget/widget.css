@@ -82,3 +82,13 @@ html.seniorly-page-scroll-locked body {
   height: 1.5rem;
   color: white;
 }
+
+.seniorly-popup-or-inline-widget {
+  border: 1px solid #c5d0d5;
+  min-height: 30rem;
+  position: relative;
+}
+
+.seniorly-popup-or-inline-widget > iframe {
+  position: absolute;
+}
