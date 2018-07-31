@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { string, func } from 'prop-types';
 import { palette } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
 import { Image, Label, Heading, Hr } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import HowItWorksInfoTile from 'sly/components/molecules/HowItWorksInfoTile';
-import { ForFamilies, secondContents, FAQ } from 'sly/services/helpers/how_it_works';
+import { secondContents, FAQ } from 'sly/services/helpers/how_it_works';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import FAQTile from 'sly/components/molecules/FAQTile';
 
@@ -114,13 +114,15 @@ const FAQTileWrapper = styled.div`
   margin: 0 180px;
 `;
 
-const HowIt = ({ heading, subheading, onLocationSearch }) => {
+const HowItWorksSecondPage = ({
+  heading, subheading, imageUrl, contents, onLocationSearch,
+}) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <HeaderContainer onLocationSearch={onLocationSearch} />
       <HeroWrapper>
-        <HeroBackgroundImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
+        <HeroBackgroundImage src={imageUrl} alt="A Home To Love" />
         <HeroTextWrapper>
           <HeroHeading level="hero" size="hero" palette="white">
             {heading}
@@ -133,7 +135,7 @@ const HowIt = ({ heading, subheading, onLocationSearch }) => {
     </Fragment>
   );
 
-  const ForFamiliesComponents = ForFamilies.map((content, index) => {
+  const ForFamiliesComponents = contents.map((content, index) => {
     const invert = index % 2 === 1;
     return (<HowItWorksInfoTile {...content} invert={invert} />);
   });
@@ -184,10 +186,10 @@ const HowIt = ({ heading, subheading, onLocationSearch }) => {
   );
 };
 
-HowIt.propTypes = {
+HowItWorksSecondPage.propTypes = {
   heading: string,
   subheading: string,
   onLocationSearch: func,
 };
 
-export default HowIt;
+export default HowItWorksSecondPage;

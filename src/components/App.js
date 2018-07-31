@@ -35,7 +35,6 @@ const careTypes = [
 ].join('|');
 
 const howItWorksTypes = [
-  '',
   'for-families',
   'for-communities',
   'for-agents',
@@ -83,7 +82,11 @@ export default class App extends Component {
     //   exact: true,
     // },
     {
-      path: `/how-it-works`,
+      path: `/how-it-works/:type(${howItWorksTypes})`,
+      component: HowItWorksPageContainer,
+    },
+    {
+      path: '/how-it-works',
       component: HowItWorksPageContainer,
       exact: true,
     },
