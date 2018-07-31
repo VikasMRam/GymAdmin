@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { string, func } from 'prop-types';
+import { string, func, arrayOf, object } from 'prop-types';
 import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
@@ -13,6 +13,20 @@ import HowItWorksInfoTile from 'sly/components/molecules/HowItWorksInfoTile';
 import { secondContents, FAQ } from 'sly/services/helpers/how_it_works';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import FAQTile from 'sly/components/molecules/FAQTile';
+
+// Copied from BasePageTemplate
+const FixedWidthContainer = styled.main`
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 ${size('spacing.large')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: 0;
+    width: ${size('layout.col8')};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('layout.col12')};
+  }
+`;
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -32,12 +46,8 @@ const HeroBackgroundImage = styled(Image)`
   display: block;
 `;
 const HeroTextWrapper = styled.div`
-  margin: auto;
-  width: 90%;
   position: absolute;
-  top: 50%;
-  left: 40%;
-  transform: translate(-50%, -50%);
+  top: 40%;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('header.home.heroSearchBox.width')};
@@ -77,28 +87,14 @@ const SecondContentTileWrapper = styled.div`
 `;
 
 const BlueBRWrapper = styled.div`
-  background-color: #E1EAEF;
-`;
-
-// Copied from BasePageTemplate
-const FixedWidthContainer = styled.main`
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 ${size('spacing.large')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: 0;
-    width: ${size('layout.col8')};
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col12')};
-  }
+  background-color: ${palette('secondary', 3)};
 `;
 
 const BottomWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 72px;
-  padding-bottom: 24px;
+  padding-top: ${size('spacing.massive')};
+  padding-bottom: ${size('spacing.xLarge')};
 `;
 
 const BottomHeading = styled.div`
@@ -114,30 +110,62 @@ const FAQTileWrapper = styled.div`
   margin: 0 180px;
 `;
 
+const TabsWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: inherit;
+
+  display: flex;
+  border: ${size('border.regular')} solid ${palette('secondary', 3)};
+  border-radius: ${size('spacing.small')};
+`;
+
+const Tab = styled.div`
+  background-color: ${p => p.active ? palette('white', 0) : palette('grayscale', 3)};
+  padding: ${size('spacing.xLarge')} 0;
+  flex-grow: 1;
+  font-size: ${size('spacing.subtitle')};
+  font-weight: bold;
+  text-align: center;
+  color: ${p => p.active ? palette('black', 0) : palette('grayscale', 1)};
+
+  :hover {
+    cursor: ${p => !p.active ? 'pointer' : ''};
+  }
+`;
+
 const HowItWorksSecondPage = ({
-  heading, subheading, imageUrl, contents, onLocationSearch,
+  heading, subheading, imageUrl, contents, tabs, onTabClick, activeType, onLocationSearch,
 }) => {
+  const tabComponents = tabs.map((tab) => {
+    return <Tab active={tab.key === activeType} key={tab.key} onClick={() => onTabClick(tab)} >{tab.text}</Tab>;
+  });
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <HeaderContainer onLocationSearch={onLocationSearch} />
       <HeroWrapper>
         <HeroBackgroundImage src={imageUrl} alt="A Home To Love" />
-        <HeroTextWrapper>
-          <HeroHeading level="hero" size="hero" palette="white">
-            {heading}
-          </HeroHeading>
-          <HeroSubheading palette="white">
-            {subheading}
-          </HeroSubheading>
-        </HeroTextWrapper>
+        <FixedWidthContainer>
+          <HeroTextWrapper>
+            <HeroHeading level="hero" size="hero" palette="white">
+              {heading}
+            </HeroHeading>
+            <HeroSubheading palette="white">
+              {subheading}
+            </HeroSubheading>
+          </HeroTextWrapper>
+          <TabsWrapper>
+            {tabComponents}
+          </TabsWrapper>
+        </FixedWidthContainer>
       </HeroWrapper>
     </Fragment>
   );
 
   const ForFamiliesComponents = contents.map((content, index) => {
     const invert = index % 2 === 1;
-    return (<HowItWorksInfoTile {...content} invert={invert} />);
+    return (<HowItWorksInfoTile {...content} key={content.heading} invert={invert} />);
   });
 
   const secondContentTiles = secondContents.map((item) => {
@@ -189,6 +217,11 @@ const HowItWorksSecondPage = ({
 HowItWorksSecondPage.propTypes = {
   heading: string,
   subheading: string,
+  imageUrl: string,
+  contents: arrayOf(object),
+  tabs: arrayOf(object),
+  activeType: string,
+  onTabClick: func,
   onLocationSearch: func,
 };
 

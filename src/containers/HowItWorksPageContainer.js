@@ -30,16 +30,37 @@ contentMap['for-agents'] = {
   imageUrl: assetPath('images/how-it-works/hero.png'),
 };
 
-const HowItWorksPageContainer = ({ match }) => {
+const tabs = [
+  {
+    key: 'for-families',
+    text: 'For Families',
+    url: '/how-it-works/for-families',
+  },
+  {
+    key: 'for-communities',
+    text: 'For Communities',
+    url: '/how-it-works/for-communities',
+  },
+  {
+    key: 'for-agents',
+    text: 'For Agents',
+    url: '/how-it-works/for-agents',
+  },
+];
+
+const HowItWorksPageContainer = ({ match, history }) => {
   if (match.params && match.params.type) {
-    const content = contentMap[match.params.type];
-    return <HowItWorksSecondPage {...content} />;
+    const { type } = match.params;
+    const content = contentMap[type];
+    const onTabClick = tab => history.push(tab.url);
+    return <HowItWorksSecondPage {...content} tabs={tabs} activeType={type} onTabClick={onTabClick} />;
   }
   return <HowItWorksPage />;
 };
 
 HowItWorksPageContainer.propTypes = {
   match: object,
+  history: object,
 };
 
 export default HowItWorksPageContainer;
