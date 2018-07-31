@@ -1,5 +1,7 @@
 html.seniorly-page-scroll-locked body {
   overflow: hidden;
+  /* for ios to prevent body scroll */
+  position: fixed;
 }
 .seniorly-overlay-widget {
   position: fixed;
