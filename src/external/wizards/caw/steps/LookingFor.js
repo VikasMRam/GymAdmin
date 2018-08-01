@@ -6,6 +6,8 @@ import { size } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
 import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
 
+import { stepInputFieldNames } from '../helpers';
+
 const options = [
   'Myself',
   'Spouse',
@@ -31,11 +33,10 @@ const LookingFor = ({ data }) => (
       options.map((option, i) => (
         <BoxRadioButtonWrapper key={i}>
           <BoxRadioButton
-            name="looking_for"
-            helpText=""
+            name={stepInputFieldNames.LookingFor[0]}
             value={option}
             label={option}
-            checked={data.looking_for === option}
+            checked={data[stepInputFieldNames.LookingFor[0]] === option}
           />
         </BoxRadioButtonWrapper>
       ))

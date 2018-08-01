@@ -9,6 +9,8 @@ import { size } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
+import { stepInputFieldNames } from '../helpers';
+
 const StyledHeading = styled(Heading)`
   font-weight: normal;
   margin-bottom: ${size('spacing.regular')};
@@ -38,20 +40,20 @@ const MonthlyBudget = ({ data }) => (
     <Description> Monthly budget is an important criteria for narrowing down your search.</Description>
     <Description>Note: The average monthly budget in US is roughly $3,750</Description>
     <Field
-      name="monthly_budget"
+      name={stepInputFieldNames.MonthlyBudget[0]}
       type="slider"
       component={ReduxField}
       responsive
       min={2000}
       max={10000}
       step={1}
-      value={data.monthly_budget}
+      value={data[stepInputFieldNames.MonthlyBudget[0]]}
       valuePosition="top"
       valueWidth="regular"
       valueParse={moneyValue}
     />
     <Field
-      name="medicaid_coverage"
+      name={stepInputFieldNames.MonthlyBudget[1]}
       label="I'm only using Medicaid to pay."
       type="checkbox"
       responsive

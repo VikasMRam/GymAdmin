@@ -8,6 +8,8 @@ import { getSearchParamFromPlacesResponse } from 'sly/services/helpers/search';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import { Heading } from 'sly/components/atoms';
 
+import { stepInputFieldNames } from '../helpers';
+
 const StyledHeading = styled(Heading)`
   font-weight: normal;
   margin-bottom: ${size('spacing.xLarge')};
@@ -52,7 +54,7 @@ class CitySearch extends Component {
           onLocationSearch={this.handleLocationChange}
           onTextChange={this.handleChange}
         />
-        <Field name="location" component={noRender} />
+        <Field name={[stepInputFieldNames.CitySearch[0]]} component={noRender} />
       </Fragment>
     );
   }

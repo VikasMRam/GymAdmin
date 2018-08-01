@@ -9,6 +9,8 @@ import { Heading } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 
+import { stepInputFieldNames } from '../helpers';
+
 const StyledHeading = styled(Heading)`
   font-weight: normal;
   margin-bottom: ${size('spacing.regular')};
@@ -24,19 +26,19 @@ const LeadFound = ({ searchResultCount }) => (
     <StyledHeading>We found {searchResultCount} options near you. Sign up to view your options.</StyledHeading>
     <Description>Sign up to view your options and pricing - FREE Service.</Description>
     <Field
-      name="full_name"
+      name={stepInputFieldNames.LeadFound[0]}
       placeholder="Name"
       type="text"
       component={ReduxField}
     />
     <Field
-      name="email"
+      name={stepInputFieldNames.LeadFound[1]}
       placeholder="Email"
       type="email"
       component={ReduxField}
     />
     <Field
-      name="phone"
+      name={stepInputFieldNames.LeadFound[2]}
       placeholder="Phone"
       type="text"
       component={ReduxField}
