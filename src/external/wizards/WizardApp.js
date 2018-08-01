@@ -49,7 +49,7 @@ export default class WizardApp extends Component {
           <meta content="English" property="language" />
         </Helmet>
         <ThemeProvider theme={theme}>
-          <Router enableEvents={false}>
+          <Router>
             <Switch>
               {this.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <WizardAppErrorPage {...routeProps} errorCode={404} />} />

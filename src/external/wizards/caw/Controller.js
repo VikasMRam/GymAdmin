@@ -67,8 +67,8 @@ class Controller extends Component {
       if (params.order && stepOrders[params.order]) {
         this.flowName = params.order;
       }
-      if (params.formWidgetType) {
-        this.widgetType = params.formWidgetType;
+      if (params.fromWidgetType) {
+        this.widgetType = params.fromWidgetType;
       }
       if (params.city && params.state) {
         this.providedLocationSearchParams = { city: params.city, state: params.state };
