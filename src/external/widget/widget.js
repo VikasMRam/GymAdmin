@@ -222,7 +222,7 @@
   Seniorly.helpers = {
     generateIframe: function(widgetType) {
       var t = document.createElement('iframe');
-      t.src = Seniorly.context.iframeUrl + '/caw?formWidgetType=' + widgetType;
+      t.src = Seniorly.context.iframeUrl + '/caw?fromWidgetType=' + widgetType;
       t.width = '100%';
       t.height = '100%';
       t.frameBorder = '0';
