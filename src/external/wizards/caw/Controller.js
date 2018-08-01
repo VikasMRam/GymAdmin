@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm, reset } from 'redux-form';
-import { number, func, object, shape, string } from 'prop-types';
+import { number, func, object, shape, string, bool } from 'prop-types';
 import queryString from 'query-string';
 
 import { resourceCreateRequest, resourceListReadRequest } from 'sly/store/resource/actions';
@@ -55,6 +55,7 @@ class Controller extends Component {
     }),
     dispatchResetForm: func.isRequired,
     progressPath: object.isRequired,
+    searching: bool,
   };
 
   componentWillMount() {
@@ -69,9 +70,17 @@ class Controller extends Component {
       if (params.formWidgetType) {
         this.widgetType = params.formWidgetType;
       }
+      if (params.city && params.state) {
+        this.providedLocationSearchParams = { city: params.city, state: params.state };
+      }
     }
 
     this.flow = stepOrders[this.flowName];
+    const searchStepIndex = this.flow.indexOf('CitySearch');
+    if (searchStepIndex !== -1 && this.providedLocationSearchParams) {
+      this.flow.splice(searchStepIndex, 1);
+      this.doSearch();
+    }
   }
 
   handleSeeMore = () => {
@@ -112,26 +121,36 @@ class Controller extends Component {
     }
   }
 
-  handleSubmit = (values, dispatch, props) => {
+  doSearch() {
     const {
-      currentStep, set, locationSearchParams, searchCommunities, progressPath,
-    } = props;
+      currentStep, set, locationSearchParams, searchCommunities,
+    } = this.props;
+
+    set({
+      searching: true,
+    });
+    searchCommunities(locationSearchParams || this.providedLocationSearchParams)
+      .then((result) => {
+        const newState = {
+          searchResultCount: result.meta['filtered-count'],
+          searching: false,
+        };
+        if (!this.providedLocationSearchParams) {
+          newState.currentStep = currentStep + 1;
+        } else {
+          newState.locationSearchParams = this.providedLocationSearchParams;
+        }
+
+        set(newState);
+      });
+  }
+
+  handleSubmit = (values, dispatch, props) => {
+    const { currentStep, set, progressPath } = props;
     const currentStepName = this.flow[currentStep - 1];
 
-    if (currentStepName === 'CitySearch') {
-      set({
-        searching: true,
-      });
-      searchCommunities(locationSearchParams)
-        .then((result) => {
-          progressPath.add(currentStep);
-          set({
-            progressPath,
-            currentStep: currentStep + 1,
-            searchResultCount: result.meta['filtered-count'],
-            searching: false,
-          });
-        });
+    if (this.flow[currentStep - 1] === 'CitySearch') {
+      this.doSearch();
     } else if (currentStep + 1 <= this.flow.length) {
       let nextStep = currentStep + 1;
 
