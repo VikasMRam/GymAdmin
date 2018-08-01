@@ -21,24 +21,19 @@ class AgentsProfilePageController extends Component {
     });
   }
 
-  processAgents = (agents) => {
-    const profiles = [];
-    agents.forEach((agent) => {
-      const profile = {
+  render() {
+    const { activeProfile, agents } = this.props;
+    const profiles = agents.reduce((profiles, agent) => {
+      profiles.push({
         id: agent.id,
         heading: agent.name,
         subHeading: '',
         description: agent.agentBio,
         imageUrl: agent.mainImage,
-      };
-      profiles.push(profile);
-    });
-    return profiles;
-  }
+      });
+      return profiles;
+    }, []);
 
-  render() {
-    const { activeProfile, agents } = this.props;
-    const profiles = this.processAgents(agents);
     return <AgentsProfilePage profiles={profiles} activeProfile={activeProfile} setModalProfile={this.handleModalProfile} />;
   }
 }
