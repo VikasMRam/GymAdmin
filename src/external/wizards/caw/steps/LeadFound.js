@@ -41,7 +41,7 @@ const LeadFound = ({ searchResultCount }) => (
       type="text"
       component={ReduxField}
     />
-    <TosAndPrivacy />
+    <TosAndPrivacy openLinkInNewTab />
   </Fragment>
 );
 
