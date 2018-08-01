@@ -100,7 +100,6 @@ const AgentsProfilePage = ({
       <ProfileTile key={profile.id} profile={profile} onClick={() => setModalProfile(profile)} />
     </ContentTileWrapper>
   ));
-  // setModalProfile(profiles[0]);
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
