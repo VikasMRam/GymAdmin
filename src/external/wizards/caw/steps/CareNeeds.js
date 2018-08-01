@@ -7,9 +7,11 @@ import { size } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
 import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
 
+import { stepInputFieldNames } from '../helpers';
+
 const options = [
   { label: '24-hour supervision', helpText: 'Provide 24 hour supervision' },
-  { label: 'Memory care', helpText: 'Needs include Alzheimer\'s or other Dementias' },
+  { label: 'Memory care', helpText: "Needs include Alzheimer's or other Dementias" },
   { label: 'Bathing assistance', helpText: 'Provide 24 hour supervision' },
   { label: 'Eating assistance', helpText: 'More' },
   { label: 'Transfer assistance', helpText: 'Provide 24 hour supervision' },
@@ -41,10 +43,10 @@ const CareNeeds = ({ data }) => (
         <BoxRadioButtonWrapper key={i}>
           <BoxRadioButton
             multiSelect
-            name={`care_needs[${option.label}]`}
+            name={`${stepInputFieldNames.CareNeeds[0]}[${option.label}]`}
             value={option.label}
             label={option.label}
-            checked={data.care_needs && data.care_needs[option.label]}
+            checked={data[stepInputFieldNames.CareNeeds[0]] && data[stepInputFieldNames.CareNeeds[0]][option.label]}
           />
         </BoxRadioButtonWrapper>
       ))

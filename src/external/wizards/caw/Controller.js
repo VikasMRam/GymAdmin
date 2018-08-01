@@ -4,41 +4,27 @@ import { number, func, object, shape, string, bool } from 'prop-types';
 import queryString from 'query-string';
 
 import { resourceCreateRequest, resourceListReadRequest } from 'sly/store/resource/actions';
+import SlyEvent from 'sly/services/helpers/events';
 
 import { connectController } from 'sly/controllers';
-import { createValidator, required, minLength, usPhone, email } from 'sly/services/validation';
+import { createValidator } from 'sly/services/validation';
 import { selectFormData } from 'sly/services/helpers/forms';
 import { CAW_PROGRESS } from 'sly/services/api/actions';
 
 import CAWComponent from './Component';
-import { stepOrders, defaultStepOrder, inputBasedNextSteps } from './helpers';
+import {
+  stepOrders, defaultStepOrder, inputBasedNextSteps, getStepInputFieldValidations,
+  getStepInputFieldDefaultValues, stepInputFieldNames, converStepInputToString,
+} from './helpers';
 
 const formName = 'CAWForm';
-const validate = createValidator({
-  looking_for: [required],
-  care_needs: [required],
-  renting_or_buying: [required],
-  monthly_budget: [required],
-  location: [required, minLength(3)],
-  full_name: [required],
-  email: [required, email],
-  phone: [required, usPhone],
-});
+const validate = createValidator(getStepInputFieldValidations());
 const ReduxForm = reduxForm({
   form: formName,
   destroyOnUnmount: false,
   keepDirtyOnReinitialize: true,
   validate,
-  initialValues: {
-    looking_for: null,
-    care_needs: {},
-    renting_or_buying: null,
-    monthly_budget: 2000,
-    location: null,
-    full_name: null,
-    email: null,
-    phone: null,
-  },
+  initialValues: getStepInputFieldDefaultValues(),
 })(CAWComponent);
 
 class Controller extends Component {
@@ -148,6 +134,25 @@ class Controller extends Component {
   handleSubmit = (values, dispatch, props) => {
     const { currentStep, set, progressPath } = props;
     const currentStepName = this.flow[currentStep - 1];
+
+    let concatedValues = '';
+    if (currentStepName === 'CareNeeds') {
+      const transformedCareNeeds = Object.keys(values[stepInputFieldNames.CareNeeds])
+        .filter(key => values[stepInputFieldNames.CareNeeds][key]);
+      concatedValues = converStepInputToString(transformedCareNeeds);
+    } else {
+      concatedValues = stepInputFieldNames[currentStepName]
+        .reduce((prev, value) => {
+          if (values[value]) {
+            return `${prev}${prev.length ? '|' : ''}${converStepInputToString(values[value])}`;
+          }
+          return prev;
+        }, '');
+    }
+    const event = {
+      action: `step_${currentStepName}`, category: 'cawizard', label: concatedValues,
+    };
+    SlyEvent.getInstance().sendEvent(event);
 
     if (this.flow[currentStep - 1] === 'CitySearch') {
       this.doSearch();
