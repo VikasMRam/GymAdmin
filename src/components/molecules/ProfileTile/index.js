@@ -30,11 +30,14 @@ const Wrapper = styled.div`
 `;
 
 export const ImageWrapper = styled(Image)`
-  object-fit: cover;
   z-index: 0;
   display: block;
 
-${switchProp('layout', {
+  > img {
+    object-fit: contain;
+  }
+
+  ${switchProp('layout', {
     regular: css`
         width: ${size('profileTile.image.regular.width')};
         height: ${size('profileTile.image.regular.height')};

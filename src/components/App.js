@@ -68,11 +68,11 @@ export default class App extends Component {
       path: `/:toc(${careTypes})/:state`,
       component: StateSearchPageContainer,
     },
-    // {
-    //   path: '/agents',
-    //   component: AgentsProfilePageController,
-    //   exact: true,
-    // },
+    {
+      path: '/agents',
+      component: AgentsProfilePageController,
+      exact: true,
+    },
     {
       path: '/',
       component: HomePageContainer,
