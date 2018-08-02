@@ -95,7 +95,7 @@ const BottomContent = styled.div`
     grid-row: 2 / span 2;
   }
 
-  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     grid-column: 3 / span 1;
   }
 `;
@@ -144,7 +144,7 @@ const Grid = styled.div`
     grid-template-columns: auto ${size('layout.col12')} auto;
     grid-template-rows: auto auto auto;
   }
-  @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
+  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     grid-template-columns: auto ${size('spacing.huge')} ${size('layout.col12')} ${size('spacing.huge')} auto;
     grid-template-rows: auto auto auto;
   }

@@ -24,11 +24,10 @@ theme.fonts = {
 theme.sizes = {
   // pixel measurements
   breakpoint: {
-    mobile     : '375px',
-    tablet     : '768px',
-    laptop     : '1104px',
-    doubleModal: '1200px',
-    laptopLarge: '1440px',
+    mobile           : '375px',
+    tablet           : '768px',
+    laptop           : '1104px',
+    laptopLarge      : '1200px',
   },
 
   // only for tablet and wider
