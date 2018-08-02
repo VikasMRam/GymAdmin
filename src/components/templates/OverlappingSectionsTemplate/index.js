@@ -81,7 +81,7 @@ const Description = styled.div`
   }
 `;
 
-const OverlappingSectionsTemplate = ({ onLocationSearch, imagePath, intro, description, content, footer }) => {
+const OverlappingSectionsTemplate = ({ onLocationSearch, imagePath, intro, description, children, footer }) => {
   const Top = () => {
     return (
       <Fragment>
@@ -110,7 +110,7 @@ const OverlappingSectionsTemplate = ({ onLocationSearch, imagePath, intro, descr
       header={<Top />}
       footer={footer}
     >
-      {content}
+      {children}
     </BasePageTemplate>
   );
 };

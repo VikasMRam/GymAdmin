@@ -183,19 +183,6 @@ const HowItWorksPage = ({ onLocationSearch }) => {
       </SecondContentTileWrapper>
     );
   });
-  const content = (
-    <ContentWrapper>
-      <ContentHeading>Who is Seniorly for?</ContentHeading>
-      <ContentSubheading>For families to help their aging relatives find a home to love.
-        <br />For senior communities to connect with highly qualified prospects.
-        <br />For referral agents to partner with us to help families locally.
-      </ContentSubheading>
-      <DiscoverTilesWrapper>{discoverTiles}</DiscoverTilesWrapper>
-      <StyledHr />
-      <SecondContentHeading>A Powerful and Easy Online Listing Platform For All</SecondContentHeading>
-      <SecondContentTilesWrapper>{secondContentTiles}</SecondContentTilesWrapper>
-    </ContentWrapper>
-  );
   const Bottom = () => {
     const mostSearchedCitiesComponents = MostSearchedCities.map(mostSearchedCity => (
       <CityTileWrapper key={mostSearchedCity.title} to={mostSearchedCity.to}>
@@ -226,9 +213,20 @@ const HowItWorksPage = ({ onLocationSearch }) => {
       imagePath={imagePath}
       intro={intro}
       description={null}
-      content={content}
       footer={<Bottom />}
-    />
+    >
+      <ContentWrapper>
+        <ContentHeading>Who is Seniorly for?</ContentHeading>
+        <ContentSubheading>For families to help their aging relatives find a home to love.
+          <br />For senior communities to connect with highly qualified prospects.
+          <br />For referral agents to partner with us to help families locally.
+        </ContentSubheading>
+        <DiscoverTilesWrapper>{discoverTiles}</DiscoverTilesWrapper>
+        <StyledHr />
+        <SecondContentHeading>A Powerful and Easy Online Listing Platform For All</SecondContentHeading>
+        <SecondContentTilesWrapper>{secondContentTiles}</SecondContentTilesWrapper>
+      </ContentWrapper>
+    </OverlappingSectionsTemplate>
   );
 };
 

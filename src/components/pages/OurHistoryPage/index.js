@@ -144,34 +144,32 @@ const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
 
   const member = profiles.filter(p => p.slug === match.params.member).pop();
 
-  const content = (
-    <ContentWrapper>
-      <StyledHr />
-      <ContentHeading>Meet Our Team</ContentHeading>
-      <ContentSubheading>We are doing this for our parents and grandparents, and we are <br />committed to making life better for them however we can.</ContentSubheading>
-      <TeamMemberTilesWrapper>{TeamMemberTiles}</TeamMemberTilesWrapper>
-      <StyledHr />
-      <PressHeading>Seniorly in the Press</PressHeading>
-      <PressTilesWrapper>{pressTiles}</PressTilesWrapper>
-
-      <Modal
-        layout="single"
-        closeable
-        onClose={() => push(ourHistoryUri())}
-        isOpen={!!member}
-      >
-        <ProfileTile layout="modal" {...member} />
-      </Modal>
-    </ContentWrapper>
-  );
   return (
     <OverlappingSectionsTemplate
       imagePath={imagePath}
       intro={intro}
       description={description}
-      content={content}
       footer={<Footer />}
-    />
+    >
+      <ContentWrapper>
+        <StyledHr />
+        <ContentHeading>Meet Our Team</ContentHeading>
+        <ContentSubheading>We are doing this for our parents and grandparents, and we are <br />committed to making life better for them however we can.</ContentSubheading>
+        <TeamMemberTilesWrapper>{TeamMemberTiles}</TeamMemberTilesWrapper>
+        <StyledHr />
+        <PressHeading>Seniorly in the Press</PressHeading>
+        <PressTilesWrapper>{pressTiles}</PressTilesWrapper>
+
+        <Modal
+          layout="single"
+          closeable
+          onClose={() => push(ourHistoryUri())}
+          isOpen={!!member}
+        >
+          <ProfileTile layout="modal" {...member} />
+        </Modal>
+      </ContentWrapper>
+    </OverlappingSectionsTemplate>
   );
 };
 
