@@ -69,23 +69,8 @@ const TeamMemberTilesWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-const ProfileTileWrapper = styled.div`
-  margin-right: ${size('spacing.xLarge')};
-  margin-bottom: ${size('spacing.xLarge')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    :nth-child(2n) {
-      margin-right: 0;
-    }
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    :nth-child(2n) {
-      margin-right: ${size('spacing.xLarge')};
-    }
-    :nth-child(3n) {
-      margin-right: 0;
-    }
-  }
+const StyledProfileTile = styled(ProfileTile)`
+  margin: calc(${size('spacing.xLarge')} / 2);
 `;
 
 const PressHeading = styled.div`
@@ -99,7 +84,6 @@ const PressTilesWrapper = styled.div`
 `;
 
 const PressTileWrapper = styled.div`
-  width: ${size('picture.xLarge.width')};
   margin-bottom: ${size('spacing.xLarge')};
   column-break-inside: avoid;
 
@@ -137,15 +121,13 @@ const OurHistoryPage = ({
       </DescriptionImage>
     </Fragment>
   );
-  const TeamMemberTiles = profiles.map((member) => {
-    const profile = { ...member };
-    profile.imageUrl = assetPath(member.imageUrl);
-    return (
-      <ProfileTileWrapper key={profile.heading}>
-        <ProfileTile profile={profile} onClick={() => setModalProfile(profile)} />
-      </ProfileTileWrapper>
-    );
-  });
+
+  const TeamMemberTiles = profiles
+    .map(p => <StyledProfileTile
+      key={p.heading}
+      onClick={() => setModalProfile(p)} 
+      {...p} />);
+
   const pressTiles = press.map((item, index) => {
     const props = { ...item };
     props.imageUrl = assetPath(item.imageUrl);
@@ -165,7 +147,7 @@ const OurHistoryPage = ({
       <PressHeading>Seniorly in the Press</PressHeading>
       <PressTilesWrapper>{pressTiles}</PressTilesWrapper>
       <Modal layout="single" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
-        {activeProfile && <ProfileTile profile={activeProfile} layout="modal" />}
+        {activeProfile && <ProfileTile layout="modal" {...activeProfile} />}
       </Modal>
     </ContentWrapper>
   );

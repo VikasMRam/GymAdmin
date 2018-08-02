@@ -4,7 +4,7 @@ import { palette } from 'styled-theme';
 import { switchProp } from 'styled-tools';
 import { string, shape, oneOf, func } from 'prop-types';
 
-import { size } from 'sly/components/themes';
+import { size, assetPath } from 'sly/components/themes';
 import { Image } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
@@ -65,21 +65,23 @@ const DescriptionWrapper = styled.div`
   color: ${palette('grayscale', 1)};
 `;
 
-const ProfileTile = ({ profile, layout, onClick }) => {
-  const {
-    heading, subHeading, imageUrl, description,
-  } = profile;
-  return (
-    <Wrapper layout={layout} onClick={onClick}>
-      <ImageWrapper src={imageUrl} aspectRatio="16:9" layout={layout} />
-      <InfoWrapper layout={layout}>
-        <HeadingWrapper>{heading}</HeadingWrapper>
-        <SubHeadingWrapper layout={layout}>{subHeading}</SubHeadingWrapper >
-        { layout === 'modal' && <DescriptionWrapper>{description}</DescriptionWrapper>}
-      </InfoWrapper>
-    </Wrapper>
-  );
-};
+const ProfileTile = ({
+  heading,
+  subHeading,
+  imageUrl,
+  description,
+  layout,
+  onClick
+}) => (
+  <Wrapper layout={layout} onClick={onClick}>
+    <ImageWrapper src={assetPath(imageUrl)} aspectRatio="16:9" layout={layout} />
+    <InfoWrapper layout={layout}>
+      <HeadingWrapper>{heading}</HeadingWrapper>
+      <SubHeadingWrapper layout={layout}>{subHeading}</SubHeadingWrapper >
+      { layout === 'modal' && <DescriptionWrapper>{description}</DescriptionWrapper>}
+    </InfoWrapper>
+  </Wrapper>
+);
 
 ProfileTile.propTypes = {
   profile: shape({

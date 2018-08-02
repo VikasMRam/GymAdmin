@@ -15,6 +15,7 @@ class OurHistoryPageController extends Component {
 
   handleModalProfile = (profile) => {
     const { set } = this.props;
+    console.log(profile);
     set({
       activeProfile: profile,
     });
