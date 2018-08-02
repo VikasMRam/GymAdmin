@@ -18,7 +18,7 @@ import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageCont
 import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
 import AgentsProfilePageController from 'sly/controllers/AgentsProfilePageController';
-import OurHistoryPageController from 'sly/controllers/OurHistoryPageController';
+import OurHistoryPage from 'sly/components/pages/OurHistoryPage';
 import HowItWorksPageContainer from 'sly/containers/HowItWorksPageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
@@ -91,8 +91,8 @@ export default class App extends Component {
       exact: true,
     },
     {
-      path: '/our-history',
-      component: OurHistoryPageController,
+      path: '/our-history/:member?',
+      component: OurHistoryPage,
       exact: true,
     },
     {

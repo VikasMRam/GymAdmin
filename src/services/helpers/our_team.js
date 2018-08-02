@@ -1,6 +1,7 @@
 export const TeamMembersData = [
   {
     heading: 'Arthur Bretschneider',
+    slug: 'arthur-bretschneider',
     subHeading: 'Founder & CEO',
     imageUrl: 'images/our-team/arthur.png',
     description: `Arthur is a third generation senior housing operator. After selling his family’s senior housing company,
@@ -13,6 +14,7 @@ export const TeamMembersData = [
   },
   {
     heading: 'Sushanth Ramakrishna',
+    slug: 'sushanth-ramakrishna',
     subHeading: 'Founder & CTO',
     imageUrl: 'images/our-team/sushanth.png',
     description: `Sushanth is a software engineer who has worked at both startups and large corporations with products used by a 
@@ -24,6 +26,7 @@ export const TeamMembersData = [
   },
   {
     heading: 'Kunal Shah',
+    slug: 'kunal-shah',
     subHeading: 'Co-Founder & Engineering',
     imageUrl: 'images/our-team/kunal.png',
     description: `Born in India, Kunal moved to America to pursue a bachelor's degree in Computer Engineering from Illinois 
@@ -35,6 +38,7 @@ export const TeamMembersData = [
   },
   {
     heading: 'Marlena del Hierro',
+    slug: 'marlena-del-hierro',
     subHeading: 'Operations Manager',
     imageUrl: 'images/our-team/marlena.png',
     description: `A Southern California transplant, Marlena has always loved spending most of her days outside, scuba diving, 
@@ -46,6 +50,7 @@ export const TeamMembersData = [
   },
   {
     heading: 'Stephen Anderson',
+    slug: 'stephen-anderson',
     subHeading: 'Head Of Growth',
     imageUrl: 'images/our-team/stephen.png',
     description: `Stephen has been a digital marketing, sales and operations leader. A strategist at heart, he has built high 
@@ -57,6 +62,7 @@ export const TeamMembersData = [
   },
   {
     heading: 'Erica Powell',
+    slug: 'erica-powell',
     subHeading: 'Customer Success',
     imageUrl: 'images/our-team/erica.png',
     description: `Originally from Milwaukee, Wisconsin Erica moved to San Francisco after graduating from University of Wisconsin 
@@ -68,6 +74,7 @@ export const TeamMembersData = [
   },
   {
     heading: 'Andrew Barrett',
+    slug: 'andrew-barrett',
     subHeading: 'Director of Content',
     imageUrl: 'images/our-team/andrew.png',
     description: `Andrew has been a content creator and marketer for over ten years, primarily in the entertainment space, having 
@@ -79,6 +86,7 @@ export const TeamMembersData = [
   },
   {
     heading: 'Stephanie Filas',
+    slug: 'stephanie-filas',
     subHeading: 'Account Manager',
     imageUrl: 'images/our-team/stephanie.png',
     description: `Originally from Twin Falls, Idaho, Stephanie moved to the Bay Area for school where she studied Communications 
@@ -89,6 +97,7 @@ export const TeamMembersData = [
   },
   {
     heading: 'Alfonso de la Osa',
+    slug: 'alfonso-delaosa',
     subHeading: 'Lead Developer',
     imageUrl: 'images/our-team/fonz.png',
     description: `After short stint into Graphic Design, Alfonso dusted off the skills he had learned playing on an IBM PC 5155 

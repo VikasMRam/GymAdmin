@@ -5,9 +5,9 @@ import { switchProp } from 'styled-tools';
 import { string, shape, oneOf, func } from 'prop-types';
 
 import { size, assetPath } from 'sly/components/themes';
-import { Image } from 'sly/components/atoms';
+import { Image, Link } from 'sly/components/atoms';
 
-const Wrapper = styled.div`
+const Wrapper = styled(Link)`
   display: flex;
   flex-direction: column;
 
@@ -71,9 +71,9 @@ const ProfileTile = ({
   imageUrl,
   description,
   layout,
-  onClick
+  ...props
 }) => (
-  <Wrapper layout={layout} onClick={onClick}>
+  <Wrapper layout={layout} {...props}>
     <ImageWrapper src={assetPath(imageUrl)} aspectRatio="16:9" layout={layout} />
     <InfoWrapper layout={layout}>
       <HeadingWrapper>{heading}</HeadingWrapper>

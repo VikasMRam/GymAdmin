@@ -10,6 +10,12 @@ import PressTile from 'sly/components/molecules/PressTile';
 import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
 import Footer from 'sly/components/organisms/Footer';
 
+import { TeamMembersData as profiles } from 'sly/services/helpers/our_team';
+import { PressTileContents as press } from 'sly/services/helpers/press';
+
+const ourHistoryUri = member => member
+  ? `/our-history/${member}`
+  : `/our-history`;
 
 const IntroText = styled.div`
   font-size: ${size('spacing.xLarge')};
@@ -86,12 +92,10 @@ const PressTilesWrapper = styled.div`
 const PressTileWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
   column-break-inside: avoid;
-
 `;
 
-const OurHistoryPage = ({
-  profiles, press, activeProfile, setModalProfile,
-}) => {
+const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
+  const { push } = history;
   const imagePath = assetPath('images/our-history/hero.png');
   const intro = (
     <Fragment>
@@ -125,7 +129,7 @@ const OurHistoryPage = ({
   const TeamMemberTiles = profiles
     .map(p => <StyledProfileTile
       key={p.heading}
-      onClick={() => setModalProfile(p)} 
+      to={ourHistoryUri(p.slug)}
       {...p} />);
 
   const pressTiles = press.map((item, index) => {
@@ -137,6 +141,9 @@ const OurHistoryPage = ({
       </PressTileWrapper>
     );
   });
+
+  const member = profiles.filter(p => p.slug === match.params.member).pop();
+
   const content = (
     <ContentWrapper>
       <StyledHr />
@@ -146,8 +153,14 @@ const OurHistoryPage = ({
       <StyledHr />
       <PressHeading>Seniorly in the Press</PressHeading>
       <PressTilesWrapper>{pressTiles}</PressTilesWrapper>
-      <Modal layout="single" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
-        {activeProfile && <ProfileTile layout="modal" {...activeProfile} />}
+
+      <Modal
+        layout="single"
+        closeable
+        onClose={() => push(ourHistoryUri())}
+        isOpen={!!member}
+      >
+        <ProfileTile layout="modal" {...member} />
       </Modal>
     </ContentWrapper>
   );
