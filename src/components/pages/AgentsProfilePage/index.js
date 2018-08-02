@@ -93,13 +93,22 @@ const ContentTileWrapper = styled.div`
 `;
 
 const AgentsProfilePage = ({
-  profiles, activeProfile, setModalProfile, onLocationSearch,
+  regionProfiles, activeProfile, setModalProfile, onLocationSearch,
 }) => {
-  const agentsProfile = profiles.map(profile => (
-    <ContentTileWrapper>
-      <ProfileTile key={profile.id} profile={profile} onClick={() => setModalProfile(profile)} />
-    </ContentTileWrapper>
-  ));
+  const agentsSectionComponents = Object.keys(regionProfiles).map((region) => {
+    const agentsProfile = regionProfiles[region].map(profile => (
+      <ContentTileWrapper>
+        <ProfileTile key={profile.id} profile={profile} onClick={() => setModalProfile(profile)} />
+      </ContentTileWrapper>
+    ));
+    return (
+      <StyledSection title={region}>
+        <ContentTilesWrapper>
+          {agentsProfile}
+        </ContentTilesWrapper>
+      </StyledSection>
+    );
+  });
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -125,11 +134,7 @@ const AgentsProfilePage = ({
       header={HeaderContent}
       footer={<Footer />}
     >
-      <StyledSection title="West Coast">
-        <ContentTilesWrapper>
-          {agentsProfile}
-        </ContentTilesWrapper>
-      </StyledSection>
+      {agentsSectionComponents}
       <Modal layout="searchBox" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
         {activeProfile && <ProfileTile profile={activeProfile} layout="modal" />}
       </Modal>
@@ -138,7 +143,7 @@ const AgentsProfilePage = ({
 };
 
 AgentsProfilePage.propTypes = {
-  profiles: array,
+  regionProfiles: object,
   activeProfile: object,
   onLocationSearch: func,
   setModalProfile: func,
