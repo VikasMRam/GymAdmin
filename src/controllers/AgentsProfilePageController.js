@@ -6,6 +6,13 @@ import { connectController } from 'sly/controllers';
 import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList } from 'sly/store/selectors';
 
+const agentStateRegionMap = {
+  CA: 'West Coast',
+  WA: 'West Coast',
+  OR: 'West Coast',
+  AZ: 'West Coast',
+};
+
 class AgentsProfilePageController extends Component {
   static propTypes = {
     activeProfile: object,
@@ -23,18 +30,33 @@ class AgentsProfilePageController extends Component {
 
   render() {
     const { activeProfile, agents } = this.props;
-    const profiles = agents.reduce((profiles, agent) => {
-      profiles.push({
+    const notFoundRegions = [];
+    const regionProfiles = agents.reduce((regionProfilesMap, agent) => {
+      const profile = {
         id: agent.id,
         heading: agent.name,
         subHeading: '',
         description: agent.agentBio,
         imageUrl: agent.mainImage,
-      });
-      return profiles;
-    }, []);
-
-    return <AgentsProfilePage profiles={profiles} activeProfile={activeProfile} setModalProfile={this.handleModalProfile} />;
+      };
+      const region = agentStateRegionMap[agent.address.state];
+      if (region) {
+        if (regionProfilesMap[region]) {
+          regionProfilesMap[region].push(profile);
+        } else {
+          regionProfilesMap[region] = [profile];
+        }
+      } else {
+        notFoundRegions.push(agent.address.state);
+      }
+      return regionProfilesMap;
+    }, {});
+    const uniqueArray = notFoundRegions.filter((item, pos) => {
+      return notFoundRegions.indexOf(item) === pos;
+    });
+    console.log('States not Mapped to Region');
+    console.log(uniqueArray);
+    return <AgentsProfilePage regionProfiles={regionProfiles} activeProfile={activeProfile} setModalProfile={this.handleModalProfile} />;
   }
 }
 

@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
   ${switchProp('layout', {
     regular: css`
-      border: ${size('border.regular')} solid ${palette('primary', 3)};
+      border: ${size('border.regular')} solid ${palette('secondary', 3)};
       border-radius: ${size('spacing.small')};
         width: ${size('profileTile.wrapper.regular.width')};
         &:hover {
