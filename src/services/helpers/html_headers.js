@@ -144,7 +144,7 @@ export const getHelmetForSearchPage = ({
   return (
     <Helmet>
       <title>{title}</title>
-
+      <meta name="description" content={description} />
       <meta content={description} property="og:description" />
       <meta content={`${title} | Seniorly`} property="og:title" />
 
