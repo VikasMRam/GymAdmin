@@ -130,7 +130,7 @@ const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
     .map(p => <StyledProfileTile
       key={p.heading}
       to={ourHistoryUri(p.slug)}
-      {...p} />);
+      profile={p} />);
 
   const pressTiles = press.map((item, index) => {
     const props = { ...item };
@@ -163,10 +163,10 @@ const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
         <Modal
           layout="single"
           closeable
-          onClose={() => push(ourHistoryUri())}
           isOpen={!!member}
+          onClose={() => push(ourHistoryUri())}
         >
-          <ProfileTile layout="modal" {...member} />
+          <ProfileTile layout="modal" profile={member} />
         </Modal>
       </ContentWrapper>
     </OverlappingSectionsTemplate>

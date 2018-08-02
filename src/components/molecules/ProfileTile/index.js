@@ -66,22 +66,28 @@ const DescriptionWrapper = styled.div`
 `;
 
 const ProfileTile = ({
-  heading,
-  subHeading,
-  imageUrl,
-  description,
   layout,
+  profile={},
   ...props
-}) => (
-  <Wrapper layout={layout} {...props}>
-    <ImageWrapper src={assetPath(imageUrl)} aspectRatio="16:9" layout={layout} />
-    <InfoWrapper layout={layout}>
-      <HeadingWrapper>{heading}</HeadingWrapper>
-      <SubHeadingWrapper layout={layout}>{subHeading}</SubHeadingWrapper >
-      { layout === 'modal' && <DescriptionWrapper>{description}</DescriptionWrapper>}
-    </InfoWrapper>
-  </Wrapper>
-);
+}) => {
+  const {
+    heading,
+    subHeading,
+    imageUrl,
+    description,
+  } = (profile);
+
+  return(
+    <Wrapper layout={layout} {...props}>
+      <ImageWrapper src={assetPath(imageUrl)} aspectRatio="16:9" layout={layout} />
+      <InfoWrapper layout={layout}>
+        <HeadingWrapper>{heading}</HeadingWrapper>
+        <SubHeadingWrapper layout={layout}>{subHeading}</SubHeadingWrapper >
+        { layout === 'modal' && <DescriptionWrapper>{description}</DescriptionWrapper>}
+      </InfoWrapper>
+    </Wrapper>
+  );
+}
 
 ProfileTile.propTypes = {
   profile: shape({
