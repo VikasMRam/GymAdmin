@@ -8,16 +8,16 @@ import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
 
 import { stepInputFieldNames } from '../helpers';
 
-const options = [
+export const options = [
   'Renting',
   'Buying',
 ];
 
-const StyledHeading = styled(Heading)`
+export const StyledHeading = styled(Heading)`
   font-weight: normal;
   margin-bottom: ${size('spacing.xLarge')};
 `;
-const BoxRadioButtonWrapper = styled.div`
+export const BoxRadioButtonWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
 
