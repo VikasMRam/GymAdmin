@@ -73,7 +73,9 @@
       type: 'popupOnClickorInline'
     },
     widgetConfigAttributes: {
-      popupOnClickorInline: 'data-seniorly-widget'
+      popupOnClickorInline: 'data-seniorly-widget',
+      state: 'data-seniorly-state',
+      city: 'data-seniorly-city'
     },
     configQueryParamKeys: {
       type: 'widget_type'
@@ -220,9 +222,18 @@
   };
 
   Seniorly.helpers = {
-    generateIframe: function(widgetType) {
+    serialize: function(obj) {
+      var str = [];
+      for (var p in obj) {
+        str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+      }
+      return str.join('&');
+    },
+    generateIframe: function(widgetType, params) {
       var t = document.createElement('iframe');
-      t.src = Seniorly.context.iframeUrl + '/caw?fromWidgetType=' + widgetType;
+      var qs = Seniorly.helpers.serialize(params);
+      t.src = Seniorly.context.iframeUrl + '/caw?fromWidgetType=' + widgetType +
+        (qs.length ? '&' + qs : '');
       t.width = '100%';
       t.height = '100%';
       t.frameBorder = '0';
@@ -253,14 +264,24 @@
         // old browsers don't have forEach method on Nodelist so...
         Array.prototype.forEach.call(matches, function(match) {
           var type = match.getAttribute(Seniorly.widgetConfigAttributes.popupOnClickorInline);
+          var params = {};
+          var state = match.getAttribute(Seniorly.widgetConfigAttributes.state);
+          var city = match.getAttribute(Seniorly.widgetConfigAttributes.city);
+          if (state) {
+            params.state = state;
+          }
+          if (city) {
+            params.city = city;
+          }
+
           if (type === 'modal') {
             match.onclick = function() {
-              var w = Seniorly.widgets.popup();
+              var w = Seniorly.widgets.popup(params);
               w.build();
               w.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
             };
           } else if (type === 'inline') {
-            var i = Seniorly.helpers.generateIframe('popupOnClickorInline');
+            var i = Seniorly.helpers.generateIframe('popupOnClickorInline', params);
             match.innerHTML = '';
             match.appendChild(i);
             addClass(match, Seniorly.altClassNames.popupOnClickorInline);
@@ -303,19 +324,22 @@
       };
       return w;
     },
-    popup: function() {
-      var w = new SeniorlyWidget('popup');
+    popup: function(params) {
+      var options = {
+        iframeParams: params
+      };
+      var w = new SeniorlyWidget('popup', options);
       w.buildContent = function() {
-        var w = Seniorly.widgets.overlay();
-        w.build();
-        w.insert();
-        w = Seniorly.widgets.closeOverlay();
-        w.build();
-        w.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
-        w = Seniorly.widgets.closeOverlayButton();
-        w.build();
-        w.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
-        return Seniorly.helpers.generateIframe('popup');
+        var w2 = Seniorly.widgets.overlay();
+        w2.build();
+        w2.insert();
+        w2 = Seniorly.widgets.closeOverlay();
+        w2.build();
+        w2.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
+        w2 = Seniorly.widgets.closeOverlayButton();
+        w2.build();
+        w2.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
+        return Seniorly.helpers.generateIframe('popup', w.options.iframeParams);
       };
       return w;
     }

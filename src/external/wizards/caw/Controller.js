@@ -128,6 +128,11 @@ class Controller extends Component {
         }
 
         set(newState);
+      })
+      .catch(() => {
+        set({
+          searching: false,
+        });
       });
   }
 
