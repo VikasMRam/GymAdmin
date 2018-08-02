@@ -54,7 +54,7 @@ class CitySearch extends Component {
           onLocationSearch={this.handleLocationChange}
           onTextChange={this.handleChange}
         />
-        <Field name={[stepInputFieldNames.CitySearch[0]]} component={noRender} />
+        <Field name={stepInputFieldNames.CitySearch[0]} component={noRender} />
       </Fragment>
     );
   }
