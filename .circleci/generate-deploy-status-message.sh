@@ -1,4 +1,4 @@
-VERSION_FILE="../VERSION"
+VERSION_FILE="$CIRCLE_WORKING_DIRECTORY/VERSION"
 
 GIT_COMMIT_DESC=$(git log --format=oneline --pretty=format:"Commit SHA: <$CIRCLE_COMPARE_URL|%H>%nAuthor: %an%nCommitted on: %cd%nCommit message: %s" -n 1 $CIRCLE_SHA1)
 CURRENT_VERSION="unknown"

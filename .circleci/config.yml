@@ -64,16 +64,6 @@ jobs:
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
       - checkout
       - run:
-          name: Send deploy start notification
-          command: |
-            export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            ./.circleci/push-slack-notification.sh -t "starting deploy to slyreact-$SLY_ENV" \
-              -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#66d3e4"
-      - run:
-          name: Install awscli
-          command: |
-            sudo pip install awsebcli --upgrade
-      - run:
           name: Put version in VERSION file
           command: |
             if [[ -n "$CIRCLE_TAG" ]]; then
@@ -85,6 +75,16 @@ jobs:
               cat ./VERSION
               git add ./VERSION
             fi
+      - run:
+          name: Send deploy start notification
+          command: |
+            export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
+            ./.circleci/push-slack-notification.sh -t "starting deploy to slyreact-$SLY_ENV" \
+              -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#66d3e4"
+      - run:
+          name: Install awscli
+          command: |
+            sudo pip install awsebcli --upgrade
       - run:
           name: Deploy to EB
           command: |
