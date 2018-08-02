@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 import { object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
 import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
+
+import { stepInputFieldNames } from '../helpers';
 
 const options = [
   'Myself',
@@ -19,9 +20,7 @@ const options = [
 const StyledHeading = styled(Heading)`
   font-weight: normal;
 `;
-const Description = styled.p`
-  color: ${palette('grayscale', 0)};
-`;
+
 const BoxRadioButtonWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
@@ -30,16 +29,14 @@ const LookingFor = ({ data }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeading>Who are you looking for?</StyledHeading>
-    <Description></Description>
     {
       options.map((option, i) => (
         <BoxRadioButtonWrapper key={i}>
           <BoxRadioButton
-            name="looking_for"
-            helpText=""
+            name={stepInputFieldNames.LookingFor[0]}
             value={option}
             label={option}
-            checked={data.looking_for === option}
+            checked={data[stepInputFieldNames.LookingFor[0]] === option}
           />
         </BoxRadioButtonWrapper>
       ))

@@ -63,16 +63,19 @@
       popup: 'seniorly-popup-widget'
     },
     altClassNames: {
-      scrollLocked: 'seniorly-page-scroll-locked'
+      scrollLocked: 'seniorly-page-scroll-locked',
+      popupOnClickorInline: 'seniorly-popup-or-inline-widget'
     },
     validWidgetConfig: {
-      type: ['badge', 'popupOnClick']
+      type: ['badge', 'popupOnClickorInline']
     },
     defaultWidgetConfig: {
-      type: 'popupOnClick'
+      type: 'popupOnClickorInline'
     },
     widgetConfigAttributes: {
-      triggerPopupWidget: 'data-seniorly-popup-onclick'
+      popupOnClickorInline: 'data-seniorly-widget',
+      state: 'data-seniorly-state',
+      city: 'data-seniorly-city'
     },
     configQueryParamKeys: {
       type: 'widget_type'
@@ -94,6 +97,8 @@
         }
       }
     },
+    // for storing references to instances of widgets. is a hash having widget type
+    // as key and array of instances as value
     widgetInstances: {},
 
     populateContextAndConfig: function() {
@@ -187,7 +192,10 @@
     if (this.widget) {
       newNode = parent ? parent.appendChild(this.widget) :
       document.body.insertBefore(this.widget, document.body.firstChild);
-      Seniorly.widgetInstances[this.type] = this;
+      if (!Seniorly.widgetInstances[this.type]) {
+        Seniorly.widgetInstances[this.type] = [];
+      }
+      Seniorly.widgetInstances[this.type].push(this);
     }
     if (this.options.afterInsert) {
       this.options.afterInsert();
@@ -199,10 +207,38 @@
     if (this.widget) {
       oldNode = document.body.removeChild(this.widget);
     }
+    // find this instance and remove it from active instances
+    for (var i = 0; i < Seniorly.widgetInstances[this.type].length; i++) {
+      // comparison by reference is exactly what we want here
+      if (Seniorly.widgetInstances[this.type][i] === this) {
+        Seniorly.widgetInstances[this.type].splice(i, 1);
+        break;
+      }
+    }
     if (this.options.afterDestory) {
       this.options.afterDestory();
     }
     return oldNode;
+  };
+
+  Seniorly.helpers = {
+    serialize: function(obj) {
+      var str = [];
+      for (var p in obj) {
+        str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
+      }
+      return str.join('&');
+    },
+    generateIframe: function(widgetType, params) {
+      var t = document.createElement('iframe');
+      var qs = Seniorly.helpers.serialize(params);
+      t.src = Seniorly.context.iframeUrl + '/caw?fromWidgetType=' + widgetType +
+        (qs.length ? '&' + qs : '');
+      t.width = '100%';
+      t.height = '100%';
+      t.frameBorder = '0';
+      return t;
+    }
   };
 
   Seniorly.widgets = {
@@ -221,17 +257,35 @@
       };
       return w;
     },
-    popupOnClick: function() {
-      var w = new SeniorlyWidget('popupOnClick');
+    popupOnClickorInline: function() {
+      var w = new SeniorlyWidget('popupOnClickorInline');
       w.buildContent = function() {
-        var matches = document.querySelectorAll('[' + Seniorly.widgetConfigAttributes.triggerPopupWidget + ']');
+        var matches = document.querySelectorAll('[' + Seniorly.widgetConfigAttributes.popupOnClickorInline + ']');
         // old browsers don't have forEach method on Nodelist so...
         Array.prototype.forEach.call(matches, function(match) {
-          match.onclick = function() {
-            var w = Seniorly.widgets.popup();
-            w.build();
-            w.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
-          };
+          var type = match.getAttribute(Seniorly.widgetConfigAttributes.popupOnClickorInline);
+          var params = {};
+          var state = match.getAttribute(Seniorly.widgetConfigAttributes.state);
+          var city = match.getAttribute(Seniorly.widgetConfigAttributes.city);
+          if (state) {
+            params.state = state;
+          }
+          if (city) {
+            params.city = city;
+          }
+
+          if (type === 'modal') {
+            match.onclick = function() {
+              var w = Seniorly.widgets.popup(params);
+              w.build();
+              w.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
+            };
+          } else if (type === 'inline') {
+            var i = Seniorly.helpers.generateIframe('popupOnClickorInline', params);
+            match.innerHTML = '';
+            match.appendChild(i);
+            addClass(match, Seniorly.altClassNames.popupOnClickorInline);
+          }
         });
       };
       return w;
@@ -250,14 +304,16 @@
     closeOverlay: function() {
       return new SeniorlyWidget('closeOverlay', {
         onClick: function() {
-          Seniorly.widgetInstances['overlay'].destroy();
+          // it's a fair assumption that only one instance of overlay widget will be active
+          Seniorly.widgetInstances['overlay'][0].destroy();
         }
       });
     },
     closeOverlayButton: function() {
       var w = new SeniorlyWidget('closeOverlayButton', {
         onClick: function() {
-          Seniorly.widgetInstances['overlay'].destroy();
+          // it's a fair assumption that only one instance of overlay widget will be active
+          Seniorly.widgetInstances['overlay'][0].destroy();
         }
       })
       w.buildContent = function() {
@@ -268,25 +324,22 @@
       };
       return w;
     },
-    popup: function() {
-      var w = new SeniorlyWidget('popup');
+    popup: function(params) {
+      var options = {
+        iframeParams: params
+      };
+      var w = new SeniorlyWidget('popup', options);
       w.buildContent = function() {
-        var w = Seniorly.widgets.overlay();
-        w.build();
-        w.insert();
-        w = Seniorly.widgets.closeOverlay();
-        w.build();
-        w.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
-        w = Seniorly.widgets.closeOverlayButton();
-        w.build();
-        w.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
-
-        var t = document.createElement('iframe');
-        t.src = Seniorly.context.iframeUrl + '/caw';
-        t.width = '100%';
-        t.height = '100%';
-        t.frameBorder = '0';
-        return t;
+        var w2 = Seniorly.widgets.overlay();
+        w2.build();
+        w2.insert();
+        w2 = Seniorly.widgets.closeOverlay();
+        w2.build();
+        w2.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
+        w2 = Seniorly.widgets.closeOverlayButton();
+        w2.build();
+        w2.insert(document.getElementsByClassName(Seniorly.widgetClassName.overlay)[0]);
+        return Seniorly.helpers.generateIframe('popup', w.options.iframeParams);
       };
       return w;
     }
@@ -312,13 +365,17 @@
       var message = JSON.parse(e.data);
       switch(message.action) {
         case 'closePopup':
-          Seniorly.widgetInstances['overlay'].destroy();
+          if (Seniorly.widgetInstances['overlay'] &&
+            Seniorly.widgetInstances['overlay'].length) {
+            Seniorly.widgetInstances['overlay'].pop().destroy();
+          }
           break;
         default:
           Seniorly.log.debug('Unknown action in message from popup');
       }
     } catch (e) {
       Seniorly.log.warn('Failed to decode message from popup');
+      Seniorly.log.debug('Got error ' + e);
     }
   };
 

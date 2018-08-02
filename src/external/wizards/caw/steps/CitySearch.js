@@ -1,7 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
-import { palette } from 'styled-theme';
 import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
@@ -9,12 +8,11 @@ import { getSearchParamFromPlacesResponse } from 'sly/services/helpers/search';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import { Heading } from 'sly/components/atoms';
 
+import { stepInputFieldNames } from '../helpers';
+
 const StyledHeading = styled(Heading)`
   font-weight: normal;
   margin-bottom: ${size('spacing.xLarge')};
-`;
-const Description = styled.p`
-  color: ${palette('grayscale', 0)};
 `;
 
 const noRender = () => null;
@@ -56,7 +54,7 @@ class CitySearch extends Component {
           onLocationSearch={this.handleLocationChange}
           onTextChange={this.handleChange}
         />
-        <Field name="location" component={noRender} />
+        <Field name={stepInputFieldNames.CitySearch[0]} component={noRender} />
       </Fragment>
     );
   }

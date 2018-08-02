@@ -28,7 +28,6 @@ const Wrapper = styled(Link)`
 `;
 
 export const ImageWrapper = styled(Image)`
-  object-fit: cover;
   z-index: 0;
   display: block;
 

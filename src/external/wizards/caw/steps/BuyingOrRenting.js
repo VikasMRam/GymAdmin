@@ -6,16 +6,18 @@ import { size } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
 import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
 
-const options = [
+import { stepInputFieldNames } from '../helpers';
+
+export const options = [
   'Renting',
   'Buying',
 ];
 
-const StyledHeading = styled(Heading)`
+export const StyledHeading = styled(Heading)`
   font-weight: normal;
   margin-bottom: ${size('spacing.xLarge')};
 `;
-const BoxRadioButtonWrapper = styled.div`
+export const BoxRadioButtonWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
 
@@ -27,11 +29,10 @@ const BuyingOrRenting = ({ data }) => (
       options.map((option, i) => (
         <BoxRadioButtonWrapper key={i}>
           <BoxRadioButton
-            name="renting_or_buying"
-            helpText=""
+            name={stepInputFieldNames.BuyingOrRenting[0]}
             value={option}
             label={option}
-            checked={data.renting_or_buying === option}
+            checked={data[stepInputFieldNames.BuyingOrRenting[0]] === option}
           />
         </BoxRadioButtonWrapper>
       ))
