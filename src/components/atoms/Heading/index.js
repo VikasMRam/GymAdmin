@@ -6,7 +6,7 @@ import { prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 
-const fontSize = p => size('text', p.size);
+const fontSize = p => size('text', p.size || p.level);
 const lineHeight = p => size('lineHeight', p.size);
 
 const getTag = level => {
@@ -34,7 +34,7 @@ const Heading = styled(({
 `;
 
 Heading.propTypes = {
-  level: oneOf(['hero', 'title', 'subtitle']),
+  level: oneOf(['hero', 'title', 'subtitle']).isRequired,
   size: oneOf(['hero', 'title', 'subtitle']),
   children: node,
   palette: string,
@@ -43,7 +43,6 @@ Heading.propTypes = {
 
 Heading.defaultProps = {
   level: 'title',
-  size: 'title',
   palette: 'slate',
 };
 

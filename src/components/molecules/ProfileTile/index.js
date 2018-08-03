@@ -10,6 +10,11 @@ import { Image, Link } from 'sly/components/atoms';
 const Wrapper = styled(Link)`
   display: flex;
   flex-direction: column;
+  color: ${palette('slate', 0)};
+
+  &:hover {
+    color: ${palette('slate', 0)};
+  }
 
   ${switchProp('layout', {
     regular: css`
@@ -17,7 +22,6 @@ const Wrapper = styled(Link)`
       padding: ${size('spacing.xLarge')};
       border-radius: ${size('spacing.small')};
       // TODO: @pranesh-seniorly this should be flexbox and should figure out sizes by itsef
-      width: ${size('profileTile.wrapper.regular.width')};
       &:hover {
         cursor: pointer;
         background: ${palette('white', 0)};

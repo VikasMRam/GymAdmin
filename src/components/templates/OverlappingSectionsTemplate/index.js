@@ -23,8 +23,19 @@ const StyledImage = styled(Image)`
 `;
 
 const Grid = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: 0;
+    width: ${size('layout.col8')};
+  }
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: 100%;
     display: grid;
+    margin: unset;
     margin-top: -${size('home.introMargin')};
     grid-template-columns: auto ${size('layout.col12')} auto;
     grid-template-rows: auto auto auto;
@@ -41,9 +52,11 @@ const backgrounds = {
 };
 
 const Background = styled.div`
-  background: ${p => backgrounds[p.background]};
+  display: none;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: block;
+    background: ${p => backgrounds[p.background]};
     grid-column: 1 / span 2;
     grid-row: ${prop('row')} / span 2;
   }
