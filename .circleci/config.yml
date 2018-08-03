@@ -71,7 +71,10 @@ jobs:
               cat ./VERSION
               git add ./VERSION
             elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
-              git describe --tags > ./VERSION
+              export LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+              export LATEST_COMMIT=$(git rev-parse --short HEAD)
+              export NUMBER_OF_COMMITS=$(git rev-list --count HEAD ^$LATEST_TAG)
+              git for-each-ref --format="%(refname:short)-$NUMBER_OF_COMMITS-$LATEST_COMMIT" --sort=-authordate --count=1 refs/tags > ./VERSION
               cat ./VERSION
               git add ./VERSION
             fi
