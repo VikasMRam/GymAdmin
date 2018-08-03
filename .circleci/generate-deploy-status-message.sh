@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # replace ~ in path as shell won't automatically expand ~s
 CURRENT_WORKING_DIRECTORY="${CIRCLE_WORKING_DIRECTORY//\~/$HOME}"
 VERSION_FILE="$CURRENT_WORKING_DIRECTORY/VERSION"
