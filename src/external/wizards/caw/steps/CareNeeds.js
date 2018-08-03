@@ -9,7 +9,7 @@ import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
 
 import { stepInputFieldNames } from '../helpers';
 
-const options = [
+export const options = [
   { label: '24-hour supervision', helpText: 'Provide 24 hour supervision' },
   { label: 'Memory care', helpText: "Needs include Alzheimer's or other Dementias" },
   { label: 'Bathing assistance', helpText: 'Provide 24 hour supervision' },
@@ -21,14 +21,14 @@ const options = [
   { label: 'Other', helpText: 'Provide 24 hour supervision' },
 ];
 
-const StyledHeading = styled(Heading)`
+export const StyledHeading = styled(Heading)`
   font-weight: normal;
   margin-bottom: ${size('spacing.regular')};
 `;
-const BoxRadioButtonWrapper = styled.div`
+export const BoxRadioButtonWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
-const Description = styled.p`
+export const Description = styled.p`
   color: ${palette('grayscale', 0)};
   margin-bottom: ${size('spacing.xLarge')};
 `;
@@ -46,7 +46,8 @@ const CareNeeds = ({ data }) => (
             name={`${stepInputFieldNames.CareNeeds[0]}[${option.label}]`}
             value={option.label}
             label={option.label}
-            checked={data[stepInputFieldNames.CareNeeds[0]] && data[stepInputFieldNames.CareNeeds[0]][option.label]}
+            checked={Boolean(data[stepInputFieldNames.CareNeeds[0]]) &&
+              Boolean(data[stepInputFieldNames.CareNeeds[0]][option.label])}
           />
         </BoxRadioButtonWrapper>
       ))
