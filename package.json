@@ -23,7 +23,7 @@
     "env:prod": "cross-env NODE_ENV=production SLY_ENV=production",
     "env:staging": "cross-env NODE_ENV=production SLY_ENV=staging",
     "env:test": "cross-env NODE_ENV=test SLY_ENV=test",
-    "test": "npm run env:test -- jest --verbose",
+    "test": "npm run env:test -- jest",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
     "lint": "eslint src private webpack.config.js",
@@ -49,7 +49,8 @@
     "setupFiles": [
       "<rootDir>/private/jest/shim.js",
       "<rootDir>/private/jest/setupTests.js"
-    ]
+    ],
+    "verbose": true
   },
   "devDependencies": {
     "@storybook/addon-actions": "3.4.0-rc.2",
