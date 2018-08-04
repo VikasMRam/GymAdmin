@@ -32,6 +32,7 @@ const AgentSectionWrapper = styled.div`
 `;
 
 const AgentSectionText = styled.div`
+  font-weight: bold;  
   margin-bottom: ${size('spacing.regular')};
 `;
 
@@ -61,11 +62,21 @@ const ConversionForm = ({
 }) => (
   <div>
     <StyledForm onSubmit={handleSubmit}>
+      {agent &&
+        <div>
+          <AgentSectionText>We’ve paired you with a local expert who has visited this property</AgentSectionText>
+          <AgentTileWrapper>
+            <AgentTile
+              user={{ name: agent.user.name, title: 'Seniorly Local Guide', picture: agent.mainImage }}
+            />
+          </AgentTileWrapper>
+        </div>
+      }
 
-      {concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">We Are Ready To Give You Pricing</Heading>}
-      {concierge.modalIsOpen && <SubHeading>We only share your information with our local guide and the community.</SubHeading>}
-      {!concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">Get Free Support</Heading>}
-      {!concierge.modalIsOpen && <SubHeading>from a local senior living expert</SubHeading>}
+      {!agent && concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">Our Team Is Ready to Help</Heading>}
+      {!agent && concierge.modalIsOpen && <SubHeading>We only share your information with our local guide and the community.</SubHeading>}
+      {!agent && !concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">Get Free Support</Heading>}
+      {!agent && !concierge.modalIsOpen && <SubHeading>from a local senior living expert</SubHeading>}
 
       <Hr />
 
@@ -92,22 +103,11 @@ const ConversionForm = ({
         component={ReduxField}
       />
       <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-        {concierge.modalIsOpen ? 'Get Pricing' : 'Request Now'}
+        {concierge.modalIsOpen ? 'Get Connected' : 'Request Free Consultation'}
       </StyledButton>
 
       <TosAndPrivacy />
     </StyledForm>
-    {agent &&
-      <AgentSectionWrapper>
-        <AgentSectionText>Our Seniorly Guide is selected to assist you on your local search</AgentSectionText>
-        <AgentTileWrapper>
-          <AgentTile
-            user={{ name: agent.user.name, title: 'Seniorly Local Guide', picture: agent.mainImage }}
-          />
-        </AgentTileWrapper>
-        {!concierge.modalIsOpen && <AgentSectionText><Link onClick={gotoWhatNext}>Learn More</Link></AgentSectionText>}
-      </AgentSectionWrapper>
-    }
   </div>
 );
 
