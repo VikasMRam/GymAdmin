@@ -59,7 +59,6 @@ export default class CommunityDetailPage extends Component {
   static propTypes = {
     user: object,
     community: object.isRequired,
-    onLocationSearch: func,
     mediaGallerySlideIndex: number,
     isMediaGalleryFullscreenActive: bool,
     onMediaGallerySlideChange: func,
@@ -124,7 +123,6 @@ export default class CommunityDetailPage extends Component {
       mediaGallerySlideIndex,
       isMediaGalleryFullscreenActive,
       community,
-      onLocationSearch,
       onMediaGallerySlideChange,
       onMediaGalleryToggleFullscreen,
       onBackToSearchClicked,
@@ -270,7 +268,6 @@ export default class CommunityDetailPage extends Component {
         <CommunityDetailPageTemplate
           column={columnContent}
           bottom={bottomContent}
-          onLocationSearch={onLocationSearch}
         >
           {(images.length > 0 || videos.length > 0) &&
             <CommunityMediaGallery

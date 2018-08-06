@@ -32,10 +32,9 @@ const CommunityDetailPageTemplate = ({
   children,
   column,
   bottom,
-  onLocationSearch,
 }) => (
   <BasePageTemplate
-    header={<HeaderContainer onLocationSearch={onLocationSearch} />}
+    header={<HeaderContainer />}
     footer={<Footer />}
     hasStickyFooter
   >
@@ -51,7 +50,6 @@ CommunityDetailPageTemplate.propTypes = {
   children: any.isRequired,
   column: any.isRequired,
   bottom: any.isRequired,
-  onLocationSearch: func,
 };
 
 export default CommunityDetailPageTemplate;

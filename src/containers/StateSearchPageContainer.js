@@ -11,7 +11,6 @@ import StateSearchPage from 'sly/components/pages/StateSearchPage';
 import {
   filterLinkPath,
   getSearchParams,
-  getSearchParamFromPlacesResponse,
 } from 'sly/services/helpers/search';
 
 class StateSearchPageContainer extends Component {
@@ -44,14 +43,6 @@ class StateSearchPageContainer extends Component {
     history.push(path);
   };
 
-
-  handleOnLocationSearch = (result) => {
-    const { history } = this.props;
-    const searchParams = getSearchParamFromPlacesResponse(result);
-    const { path } = filterLinkPath(searchParams);
-    history.push(path);
-  };
-
   handleOnAdTileClick = () => {
     this.changeSearchParams({ changedParams: { modal: 'cawWizard' } });
   }
@@ -80,7 +71,6 @@ class StateSearchPageContainer extends Component {
         toggleMap={this.toggleMap}
         searchParams={searchParams}
         onParamsChange={this.changeSearchParams}
-        onLocationSearch={this.handleOnLocationSearch}
         onAdTileClick={this.handleOnAdTileClick}
         communityList={communityList}
         geoGuide={gg}

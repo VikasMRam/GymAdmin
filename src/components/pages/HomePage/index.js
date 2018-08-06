@@ -333,7 +333,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <HeaderContainer onLocationSearch={onLocationSearch} />
+      <HeaderContainer />
       <HeroWrapper>
         <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
         <SearchBoxWrapper>
