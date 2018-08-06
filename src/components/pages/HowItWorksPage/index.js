@@ -7,7 +7,7 @@ import { Icon, Hr, Heading, Block, Link } from 'sly/components/atoms';
 import DiscoverTile from 'sly/components/molecules/DiscoverTile';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
-import { discoverTileContents, secondContents } from 'sly/services/helpers/how_it_works';
+import { discoverTileContents, secondContents } from 'sly/services/helpers/howItWorks';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import { MostSearchedCities } from 'sly/services/helpers/homepage';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';

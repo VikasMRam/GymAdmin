@@ -10,7 +10,7 @@ import { Image, Label, Heading, Hr } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import HowItWorksInfoTile from 'sly/components/molecules/HowItWorksInfoTile';
-import { secondContents, FAQ } from 'sly/services/helpers/how_it_works';
+import { secondContents, FAQ } from 'sly/services/helpers/howItWorks';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import FAQTile from 'sly/components/molecules/FAQTile';
 
@@ -134,7 +134,7 @@ const Tab = styled.div`
   }
 `;
 
-const HowItWorksSecondPage = ({
+const HowItWorksDetailPage = ({
   heading, subheading, imageUrl, contents, tabs, onTabClick, activeType, onLocationSearch,
 }) => {
   const tabComponents = tabs.map((tab) => {
@@ -214,7 +214,7 @@ const HowItWorksSecondPage = ({
   );
 };
 
-HowItWorksSecondPage.propTypes = {
+HowItWorksDetailPage.propTypes = {
   heading: string,
   subheading: string,
   imageUrl: string,
@@ -225,4 +225,4 @@ HowItWorksSecondPage.propTypes = {
   onLocationSearch: func,
 };
 
-export default HowItWorksSecondPage;
+export default HowItWorksDetailPage;
