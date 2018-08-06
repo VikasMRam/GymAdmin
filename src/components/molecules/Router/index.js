@@ -10,6 +10,13 @@ const searchWhitelist = [
   'page-size',
 ];
 
+const pathnameBlacklist = [
+  /^\/our-history/,
+];
+
+const blacklisted = (from, to) => pathnameBlacklist
+  .some(re => from.match(re) && to.match(re));
+
 const bumpOnSearch = (prev, next) => searchWhitelist
   .some(key => next[key] !== prev[key]);
 
@@ -47,7 +54,9 @@ export class Router extends Component {
     const qs = queryString.parse(search);
     const prevQs = queryString.parse(prevSearch);
 
-    if (pathname !== prevPath || bumpOnSearch(prevQs, qs)) {
+    if ((!blacklisted(pathname, prevPath) 
+      && pathname !== prevPath
+    ) || bumpOnSearch(prevQs, qs)) {
       window && window.scrollTo(0, 0);
     }
   }

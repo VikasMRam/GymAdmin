@@ -41,7 +41,6 @@ export default class StateSearchPage extends Component {
     isMapView: bool,
     toggleMap: func,
     onParamsChange: func,
-    onLocationSearch: func,
     onAdTileClick: func,
     location: object,
     searchParams: object,
@@ -53,7 +52,6 @@ export default class StateSearchPage extends Component {
     const {
       isMapView,
       toggleMap,
-      onLocationSearch,
       onAdTileClick,
       searchParams,
       onParamsChange,
@@ -149,7 +147,6 @@ export default class StateSearchPage extends Component {
         {getHelmetForSearchPage({ ...searchParams, url: location, communityList })}
         <CommunitySearchPageTemplate
           column={<div></div>}
-          onLocationSearch={onLocationSearch}
         >
           {!isMapView && (
             TopContent()

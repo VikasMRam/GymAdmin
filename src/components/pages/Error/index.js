@@ -11,9 +11,6 @@ import BasePageTemplate from "sly/components/templates/BasePageTemplate";
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from "sly/components/organisms/Footer";
 
-
-import { filterLinkPath, getSearchParamFromPlacesResponse } from "sly/services/helpers/search";
-
 const Wrapper = styled.div`
   position: relative;
   background-color: ${palette('white', 0)};
@@ -52,19 +49,11 @@ export default class ErrorPage extends Component {
     errorCode:number.isRequired,
   };
 
-  onLocationSearch = (result) => {
-    const { history } = this.props;
-    const searchParams = getSearchParamFromPlacesResponse(result);
-    const { path } = filterLinkPath(searchParams);
-    history.push(path);
-    window.location.reload();
-  };
-
   render () {
     const { errorCode } = this.props;
 
     return (
-      <BasePageTemplate header={<HeaderContainer onLocationSearch={this.onLocationSearch} />}  footer={<Footer/>}>
+      <BasePageTemplate header={<HeaderContainer />}  footer={<Footer/>}>
         <Wrapper>
           <IWrapper>{getTextError(errorCode)}</IWrapper>
           <div>

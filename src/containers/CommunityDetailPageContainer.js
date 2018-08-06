@@ -16,7 +16,6 @@ import {
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 import { gotoSlide, toggleFullscreenMediaGallery, toggleStickyHeader } from 'sly/store/communityDetailPage/actions';
 
 import ErrorPage from 'sly/components/pages/Error';
@@ -95,13 +94,6 @@ class CommunityDetailPageContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
     */
     toggleFullscreenMediaGallery();
-  };
-
-  handleOnLocationSearch = (result) => {
-    const { history } = this.props;
-    const searchParams = getSearchParamFromPlacesResponse(result);
-    const { path } = filterLinkPath(searchParams);
-    history.push(path);
   };
 
   handleToggleStickyHeader = () => {
@@ -205,7 +197,6 @@ class CommunityDetailPageContainer extends Component {
         user={user}
         community={community}
         mediaGallerySlideIndex={mediaGallerySlideIndex}
-        onLocationSearch={this.handleOnLocationSearch}
         onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
         onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
         isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}

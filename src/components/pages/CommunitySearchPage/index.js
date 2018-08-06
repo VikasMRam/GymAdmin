@@ -60,7 +60,6 @@ const CommunitySearchPage = ({
   toggleMap,
   onParamsChange,
   onParamsRemove,
-  onLocationSearch,
   searchParams,
   requestMeta,
   communityList,
@@ -189,7 +188,6 @@ const CommunitySearchPage = ({
       </Modal>
       <CommunitySearchPageTemplate
         column={columnContent}
-        onLocationSearch={onLocationSearch}
       >
         {!isMapView && (
           TopContent()
@@ -248,7 +246,6 @@ CommunitySearchPage.propTypes = {
   toggleMap: func,
   onParamsChange: func,
   onParamsRemove: func,
-  onLocationSearch: func,
   location: object,
   searchParams: object,
   isModalFilterPanelVisible: bool,
