@@ -11,6 +11,7 @@ import HeaderContainer from 'sly/containers/HeaderContainer';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 
 const HeroWrapper = styled.div`
+  position: relative;
   background-color: ${palette('grayscale', 0)};
   height: ${size('header.home.heroImage.height')};
 `;
@@ -22,10 +23,40 @@ const StyledImage = styled(Image)`
   display: block;
 `;
 
+const Title = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+
+  > * {
+    padding: 0 ${size('spacing.large')};
+    width: 100%;
+
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      padding: 0;
+      width: ${size('layout.col8')};
+    }
+
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      width: ${size('layout.col12')};
+    }
+  }
+
+`;
+
 const Grid = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 0 ${size('spacing.large')};
+
+  position: relative;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: 0;
@@ -94,30 +125,45 @@ const Description = styled.div`
   }
 `;
 
-const OverlappingSectionsTemplate = ({ onLocationSearch, imagePath, intro, description, children, footer }) => {
-  const Top = () => {
-    return (
-      <Fragment>
-        <HeaderContainer onLocationSearch={onLocationSearch} />
-        <HeroWrapper>
-          <StyledImage
-            src={imagePath}
-            alt="A Home To Love"
-          />
-        </HeroWrapper>
-        <Grid>
-          <Background background="grayscale" row="1" />
-          <Background background="white" row="2" />
-          <Intro>
-            {intro}
-          </Intro>
-          <Description>
-            {description}
-          </Description>
-        </Grid>
-      </Fragment>
-    );
-  };
+const OverlappingSectionsTemplate = ({
+  title,
+  subtitle,
+  imagePath,
+  intro,
+  description,
+  children,
+  footer
+}) => {
+  const Top = () => (
+    <Fragment>
+      <HeaderContainer />
+      <HeroWrapper>
+        <StyledImage
+          src={assetPath(imagePath)}
+          alt={`${title} - ${subtitle}`}
+        />
+        {(title || subtitle) && (
+          <Title>
+            {title && <Heading level="hero" palette="white">
+              {title}
+            </Heading>}
+            {subtitle && <Block palette="white">{subtitle}</Block>}
+          </Title>
+        )}
+      </HeroWrapper>
+      <Grid>
+        <Background background="grayscale" row="1" />
+        <Background background="white" row="2" />
+        <Intro>
+          {intro}
+        </Intro>
+        <Description>
+          {description}
+        </Description>
+      </Grid>
+    </Fragment>
+  );
+
   return (
     <BasePageTemplate
       header={<Top />}

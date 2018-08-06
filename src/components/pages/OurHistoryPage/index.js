@@ -115,7 +115,6 @@ const PressTileWrapper = styled.div`
 
 const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
   const { push } = history;
-  const imagePath = assetPath('images/our-history/hero.png');
   const intro = (
     <Fragment>
       <IntroText>
@@ -163,7 +162,9 @@ const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
 
   return (
     <OverlappingSectionsTemplate
-      imagePath={imagePath}
+      imagePath="images/our-history/hero.png"
+      title="Our History"
+      subtitle="Helping Families and Individuals find the right Senior living options"
       intro={intro}
       description={description}
       footer={<Footer />}
