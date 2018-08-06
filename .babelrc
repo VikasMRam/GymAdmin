@@ -27,7 +27,7 @@
       "plugins": [
         "transform-react-remove-prop-types",
         ["styled-components", {
-          "displayName": false
+          "displayName": true
         }]
       ]
     },
@@ -35,7 +35,7 @@
       "plugins": [
         "transform-react-remove-prop-types",
         ["styled-components", {
-          "displayName": false
+          "displayName": true
         }]
       ]
     }
