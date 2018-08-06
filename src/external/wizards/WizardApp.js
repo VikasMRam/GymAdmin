@@ -7,7 +7,7 @@ import Helmet from 'react-helmet';
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from 'sly/components/themes/default';
 
-import { externalWizardsPath, authTokenUrl } from 'sly/config';
+import { externalWizardsPath } from 'sly/config';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Router from 'sly/components/molecules/Router';
 import WizardAppErrorPage from './WizardAppErrorPage';
@@ -25,10 +25,6 @@ export default class WizardApp extends Component {
   getChildContext = () => ({
     routes: this.routes,
   });
-
-  componentWillMount() {
-    fetch(authTokenUrl, { credentials: 'same-origin' });
-  }
 
   routes = [
     {
