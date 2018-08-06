@@ -24,15 +24,16 @@ theme.fonts = {
 theme.sizes = {
   // pixel measurements
   breakpoint: {
-    mobile     : '375px',
-    tablet     : '768px',
-    laptop     : '1104px',
-    doubleModal: '1200px',
-    laptopLarge: '1440px',
+    mobile           : '375px',
+    tablet           : '768px',
+    laptop           : '1104px',
+    laptopLarge      : '1200px',
   },
 
   // only for tablet and wider
   layout: {
+    gutter:      '1.500rem', // 24px
+
     col1:        '4.125rem', // 66px
     col2:        '9.750rem', // 156px
     col3:       '15.375rem', // 246px
@@ -83,6 +84,7 @@ theme.sizes = {
     companiesWeTrust: {
       width: '33.625rem',   // 538px
     },
+    introMargin: '4.8125rem', // 77px
   },
 
   filtersMenu: {
@@ -118,6 +120,7 @@ theme.sizes = {
     },
   },
 
+  // FIXME: remove this tiles should expand in avail space
   tile: {
     tiny: {
       width : '7rem',      // 112px
@@ -137,6 +140,7 @@ theme.sizes = {
     },
   },
 
+  // FIXME: remove this images should expand in avail space
   picture: {
     tiny: {
       width: '9.375rem',   // 150px
@@ -158,30 +162,13 @@ theme.sizes = {
       width : '32.25rem',   // 516px
       height: '17.5rem',    // 280px
     },
+    xxLarge: {
+      width : '32.25rem',   // 516px
+      height: '21.4375rem', // 343px
+    },
     proportions: {
       '16:9': '56.25%',
       '4:3' : '75%',
-    },
-  },
-
-  profileTile: {
-    wrapper: {
-      regular: {
-        width: '21rem',         // 336px
-      },
-      modal: {
-        width: '27.75rem',      // 444px
-      },
-    },
-    image: {
-      regular: {
-        width: '18rem',         // 288px
-        height: '11.9375rem',   // 191px
-      },
-      modal: {
-        width: '27.75rem',      // 444px
-        height: '15.625rem',    // 250px
-      },
     },
   },
 
@@ -241,6 +228,7 @@ theme.sizes = {
     xxLarge : '2.000rem',   // 32px
     xxxLarge: '3.000rem',   // 48px
     huge    : '4.000rem',   // 64px
+    massive : '4.500rem',   // 72px
   },
 
   icon: {

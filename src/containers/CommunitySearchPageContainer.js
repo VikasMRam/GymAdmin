@@ -15,8 +15,6 @@ import { toggleModalFilterPanel } from 'sly/store/communitySearchPage/actions';
 import {
   filterLinkPath,
   getSearchParams,
-  getSearchParamFromPlacesResponse,
-  getFiltersApplied,
 } from 'sly/services/helpers/search';
 
 class CommunitySearchPageContainer extends Component {
@@ -57,8 +55,6 @@ class CommunitySearchPageContainer extends Component {
   changeSearchParams = ({ changedParams }) => {
     const { searchParams, history } = this.props;
     const { path } = filterLinkPath(searchParams, changedParams);
-    // const filters = getFiltersApplied(searchParams);
-    // const cityState = (({ city, state }) => ({ city, state }))(searchParams);
     const event = {
       action: 'search', category: searchParams.toc, label:queryString.stringify(searchParams),
     };
@@ -77,13 +73,6 @@ class CommunitySearchPageContainer extends Component {
 
     const { path } = filterLinkPath(searchParams, changedParams);
 
-    history.push(path);
-  };
-
-  handleOnLocationSearch = (result) => {
-    const { history } = this.props;
-    const searchParams = getSearchParamFromPlacesResponse(result);
-    const { path } = filterLinkPath(searchParams);
     history.push(path);
   };
 
@@ -123,7 +112,6 @@ class CommunitySearchPageContainer extends Component {
         searchParams={searchParams}
         onParamsChange={this.changeSearchParams}
         onParamsRemove={this.removeSearchFilters}
-        onLocationSearch={this.handleOnLocationSearch}
         communityList={communityList}
         geoGuide={gg}
         location={location}

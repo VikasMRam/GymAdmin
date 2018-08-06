@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 import { func, bool, array, arrayOf, number, object } from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { getDetail } from 'sly/store/selectors';
 import Header from 'sly/components/organisms/Header';
 import { toggle } from 'sly/store/actions';
 import { isHeaderDropdownOpen } from 'sly/store/selectors';
+
+import {
+  filterLinkPath,
+  getSearchParamFromPlacesResponse,
+} from 'sly/services/helpers/search';
+
 
 const defaultHeaderItems = [
   { name: 'Resources', url: '/resources' },
@@ -53,6 +60,14 @@ class HeaderContainer extends Component {
     user: object,
   };
 
+  handleOnLocationSearch = (result) => {
+    const { history } = this.props;
+    const searchParams = getSearchParamFromPlacesResponse(result);
+    const { path } = filterLinkPath(searchParams);
+    history.push(path);
+  };
+
+
   render(){
     const {
       dispatchToggleAction,
@@ -76,7 +91,7 @@ class HeaderContainer extends Component {
         menuOpen={dropdownOpen}
         onMenuIconClick={dispatchToggleAction}
         onMenuItemClick={dispatchToggleAction}
-        onLocationSearch={onLocationSearch}
+        onLocationSearch={this.handleOnLocationSearch}
         onHeaderBlur={dispatchToggleAction}
         headerItems={headerItems}
         menuItems={menuItems}
@@ -101,4 +116,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderContainer));

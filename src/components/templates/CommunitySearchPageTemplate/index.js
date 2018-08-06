@@ -36,10 +36,9 @@ const ColumnWrapper = styled.aside`
 const CommunitySearchPageTemplate = ({
   children,
   column,
-  onLocationSearch,
 }) => (
   <BasePageTemplate
-    header={<HeaderContainer onLocationSearch={onLocationSearch} />}
+    header={<HeaderContainer />}
     footer={<Footer />}
   >
     <TwoColumnWrapper>
@@ -52,7 +51,6 @@ const CommunitySearchPageTemplate = ({
 CommunitySearchPageTemplate.propTypes = {
   children: any.isRequired,
   column: any.isRequired,
-  onLocationSearch: func,
 };
 
 export default CommunitySearchPageTemplate;

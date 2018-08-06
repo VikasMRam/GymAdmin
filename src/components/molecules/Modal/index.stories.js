@@ -26,14 +26,4 @@ storiesOf('Molecules|Modal', module)
         Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
       </Block>
     </Modal>
-  ))
-  .add('closeable double', () => (
-    <Modal onClose={action('closed')} layout="double" closeable isOpen>
-      Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
-    </Modal>
-  ))
-  .add('double closeable with heading', () => (
-    <Modal onClose={action('closed')} closeable heading={<h1>Hello</h1>} layout="double" isOpen>
-      Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
-    </Modal>
   ));

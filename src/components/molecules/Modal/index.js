@@ -8,8 +8,6 @@ import { ifProp, withProp, switchProp } from 'styled-tools';
 import { size } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 
-const doubleModalWidth = withProp('layout', layout => size('modal', layout));
-
 injectGlobal`
   body.ReactModal__Body--open {
     overflow: hidden;
@@ -87,24 +85,11 @@ const ModalContext = styled.article`
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
         width: ${size('modal.single')};
       }`,
-    double: css`
-      overflow: auto;
-      border-radius: ${size('spacing.small')};
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        width: ${size('modal.single')};
-      }
-
-      @media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-        padding: 0;
-        flex-direction: row;
-        width: ${doubleModalWidth};
-        overflow: unset;
-      }`,
     gallery: css`
       padding: 0;
       border-radius: ${size('spacing.small')};
       @media screen and (min-width: ${size('breakpoint.laptop')}) {
-        width: ${doubleModalWidth};
+        width: ${size('modal.gallery')};
         overflow: initial;
       }`,
     sidebar: css`
@@ -136,14 +121,6 @@ const StyledReactModal = styled(({ className, ...props }) => (
   <ModalBox overlayClassName={className} closeTimeoutMS={250} {...props} />
 ))`${overlayStyles};`;
 
-const CloseButton = styled(IconButton)`
-  ${switchProp('layout', {
-    double: css`@media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-      margin-bottom: ${size('spacing.xxLarge')};
-    }`,
-  })}
-`;
-
 const Heading = styled.div`
   padding-bottom: ${size('spacing.xLarge')};
   padding: 0;
@@ -153,19 +130,9 @@ const Heading = styled.div`
   z-index: ${key('zIndexes.modal.galleryLayoutHeading')};
 `;
 
-const Content = styled.div`
-  ${switchProp('layout', {
-    double: css`@media screen and (min-width: ${size('breakpoint.doubleModal')}) {
-      padding: ${size('spacing.xxxLarge')};
-      width: ${size('modal.single')};
-      overflow: auto;
-    }`,
-  })}
-`;
-
 export default class Modal extends React.Component {
   static propTypes = {
-    layout: oneOf(['single', 'double', 'gallery', 'sidebar', 'searchBox', 'wizard']).isRequired,
+    layout: oneOf(['single', 'gallery', 'sidebar', 'searchBox', 'wizard']).isRequired,
     heading: node,
     children: node,
     closeable: bool,
@@ -189,7 +156,7 @@ export default class Modal extends React.Component {
       heading, children, closeable, layout, onClose, transparent, closeButtonPalette,
     } = this.props;
     const iconClose = (
-      <CloseButton
+      <IconButton
         icon="close"
         iconOnly
         layout={layout}
@@ -216,9 +183,7 @@ export default class Modal extends React.Component {
           {/* apply centering css positioning only to modal content as in gallery
               layout the close button should be fixed at screen top left corner */}
           <ModalContext layout={layout} transparent={transparent}>
-            <Content layout={layout}>
-              {children}
-            </Content>
+            {children}
           </ModalContext>
         </StyledReactModal>
       </div>

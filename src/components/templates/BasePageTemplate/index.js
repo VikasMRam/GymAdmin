@@ -26,12 +26,11 @@ const StyledHeader = styled.header`
 `;
 
 const BasePageTemplate = ({
-  header, children, footer, hasStickyFooter,
+  header, children, footer, hasStickyFooter, className,
 }) => (
   <Fragment>
-    {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeader>{header}</StyledHeader>
-    <Content>{children}</Content>
+    <Content className={className}>{children}</Content>
     <footer>{footer}</footer>
     <ChatBoxContainer pageWithStickyFooter={hasStickyFooter} />
   </Fragment>

@@ -36,6 +36,7 @@ const config = {
   test: {
     isTest: true,
     isDev: false,
+    publicPath: '',
   },
   development: {
     enableExperimentsDebugger: true,
