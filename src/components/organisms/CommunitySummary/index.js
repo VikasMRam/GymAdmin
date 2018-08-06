@@ -38,6 +38,7 @@ export default class communitySummary extends React.Component {
     communityReviewsRef: object.isRequired,
     onConciergeNumberClicked: func,
     onReceptionNumberClicked: func,
+    onHowSeniorlyWorks: func,
   };
 
   static sectionIdMaps = {
@@ -58,7 +59,7 @@ export default class communitySummary extends React.Component {
   render() {
     const {
       isCCRC, twilioNumber, phoneNumber, user, licenseUrl, amenityScore, communityHighlights, startingRate,
-      estimatedPrice, reviewsValue, innerRef, onConciergeNumberClicked, onReceptionNumberClicked,
+      estimatedPrice, reviewsValue, innerRef, onConciergeNumberClicked, onReceptionNumberClicked, onHowSeniorlyWorks,
     } = this.props;
 
     const highlights = [];
@@ -87,7 +88,7 @@ export default class communitySummary extends React.Component {
 
     highlights.push((
       <span>
-        Call free local advisor&nbsp;
+        Call for pricing&nbsp;
         <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
           <NumberFormat
             value={conciergeNumber}
@@ -187,6 +188,10 @@ export default class communitySummary extends React.Component {
         </Link>
       ));
     }
+
+    highlights.push((
+      <Link onClick={onHowSeniorlyWorks}>How Seniorly Works</Link>
+    ));
 
 
     return (

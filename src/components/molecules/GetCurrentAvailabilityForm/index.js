@@ -40,7 +40,7 @@ const GetCurrentAvailabilityForm = ({
   return (
     <StyledBox>
       <StyledHeading level="subtitle" size="subtitle">
-        Ask about pricing at {name}
+        Our senior living expert has visited {name}
       </StyledHeading>
       <form onSubmit={handleSubmit}>
         <TwoColumnWrapper>

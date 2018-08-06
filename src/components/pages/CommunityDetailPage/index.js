@@ -294,25 +294,31 @@ export default class CommunityDetailPage extends Component {
           </NameHeading>
 
           <AddressHeading level="subtitle" size="subtitle">{formattedAddress}</AddressHeading>
-          <CommunitySummary
-            innerRef={this.communitySummaryRef}
-            pricingAndFloorPlansRef={this.pricingAndFloorPlansRef}
-            amenitiesAndFeaturesRef={this.amenitiesAndFeaturesRef}
-            communityReviewsRef={this.communityReviewsRef}
-            isCCRC={isCCRC}
-            twilioNumber={twilioNumber}
-            reviewsValue={reviewsValue}
-            phoneNumber={communityPhone}
-            licenseUrl={licenseUrl}
-            user={communityUser}
-            amenityScore={rgsAux.amenityScore}
-            startingRate={startingRate}
-            estimatedPrice={rgsAux.estimatedPrice}
-            communityHighlights={communityHighlights}
-            reviews={reviews}
-            onConciergeNumberClicked={onConciergeNumberClicked}
-            onReceptionNumberClicked={onReceptionNumberClicked}
-          />
+          <ConciergeController community={community}>
+            {({ gotoWhatNext }) => (
+              <CommunitySummary
+                innerRef={this.communitySummaryRef}
+                pricingAndFloorPlansRef={this.pricingAndFloorPlansRef}
+                amenitiesAndFeaturesRef={this.amenitiesAndFeaturesRef}
+                communityReviewsRef={this.communityReviewsRef}
+                isCCRC={isCCRC}
+                twilioNumber={twilioNumber}
+                reviewsValue={reviewsValue}
+                phoneNumber={communityPhone}
+                licenseUrl={licenseUrl}
+                user={communityUser}
+                amenityScore={rgsAux.amenityScore}
+                startingRate={startingRate}
+                estimatedPrice={rgsAux.estimatedPrice}
+                communityHighlights={communityHighlights}
+                reviews={reviews}
+                onConciergeNumberClicked={onConciergeNumberClicked}
+                onReceptionNumberClicked={onReceptionNumberClicked}
+                onHowSeniorlyWorks={gotoWhatNext}
+              />
+              )
+            }
+          </ConciergeController>
 
           <CollapsibleSection
             title="Pricing & Floor Plans"

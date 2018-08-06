@@ -64,7 +64,7 @@ const AdvancedInfoForm = ({
   handleSubmit, submitting,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <StyledHeading level="subtitle" size="subtitle">Help us customize your search:</StyledHeading>
+    <StyledHeading level="subtitle" size="subtitle">Please share a few more details of your search:</StyledHeading>
 
     <Field
       name="type_of_care"
