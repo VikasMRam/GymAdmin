@@ -25,7 +25,7 @@ export function connectController(parentMapStateToProps, parentDispatchToProps) 
     const controllerKey = `${WrappedComponent.name}_${rand}`;
 
     const mapDispatchToProps = (dispatch, ownProps) => ({
-      ...convertMapDispatchToObject(parentDispatchToProps)(dispatch, ownProps), 
+      ...convertMapDispatchToObject(parentDispatchToProps)(dispatch, ownProps),
       set: (data) => dispatch(set({ data, controller: controllerKey })),
       unset: (key) => dispatch(unset({ key, controller: controllerKey })),
     });

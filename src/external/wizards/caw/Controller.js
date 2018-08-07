@@ -47,7 +47,8 @@ class Controller extends Component {
   componentWillMount() {
     this.flowName = defaultStepOrder;
 
-    const { location } = this.props;
+    const { location, locationSearchParams } = this.props;
+    // get query params passed
     if (location && location.search) {
       const params = queryString.parse(location.search);
       if (params.order && stepOrders[params.order]) {
@@ -59,6 +60,10 @@ class Controller extends Component {
       if (params.city && params.state) {
         this.providedLocationSearchParams = { city: params.city, state: params.state };
       }
+    }
+    // get ones passed as prop
+    if (locationSearchParams) {
+      this.providedLocationSearchParams = locationSearchParams;
     }
 
     this.flow = stepOrders[this.flowName];
@@ -93,17 +98,18 @@ class Controller extends Component {
           careAssessment,
         },
       };
-      postUserAction(payload).then(() => {
-        if (window.parent && this.widgetType === 'popup') {
-          window.parent.postMessage(JSON.stringify({ action: 'closePopup' }), '*');
-        } else {
-          dispatchResetForm();
-          set({
-            currentStep: null,
-            progressPath: null,
-          });
-        }
-      });
+      postUserAction(payload)
+        .then(() => {
+          if (window.parent && this.widgetType === 'popup') {
+            window.parent.postMessage(JSON.stringify({ action: 'closePopup' }), '*');
+          } else {
+            dispatchResetForm();
+            set({
+              currentStep: null,
+              progressPath: null,
+            });
+          }
+        });
     }
   }
 
@@ -159,11 +165,10 @@ class Controller extends Component {
     };
     SlyEvent.getInstance().sendEvent(event);
 
+    let nextStep = currentStep + 1;
     if (this.flow[currentStep - 1] === 'CitySearch') {
       this.doSearch();
     } else if (currentStep + 1 <= this.flow.length) {
-      let nextStep = currentStep + 1;
-
       if (inputBasedNextSteps[this.flowName]) {
         const conditions = inputBasedNextSteps[this.flowName][currentStepName];
         if (conditions) {
@@ -179,12 +184,12 @@ class Controller extends Component {
           }
         }
       }
-      progressPath.add(currentStep);
-      set({
-        currentStep: nextStep,
-        progressPath,
-      });
     }
+    progressPath.add(currentStep);
+    set({
+      currentStep: nextStep,
+      progressPath,
+    });
   }
 
   handleBackButton = () => {
@@ -223,11 +228,11 @@ class Controller extends Component {
   }
 }
 
-const mapStateToProps = (state, { controller }) => {
+const mapStateToProps = (state, { controller, ...ownProps }) => {
   return {
     progressPath: controller.progressPath || new Set([1]),
-    currentStep: controller.currentStep || 1,
-    locationSearchParams: controller.locationSearchParams,
+    currentStep: controller.currentStep || ownProps.currentStep || 1,
+    locationSearchParams: controller.locationSearchParams || ownProps.locationSearchParams,
     searchResultCount: controller.searchResultCount,
     searching: controller.searching,
     data: selectFormData(state, formName, {}),
