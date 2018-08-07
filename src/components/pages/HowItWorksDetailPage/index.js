@@ -137,9 +137,14 @@ const Tab = styled(Link)`
 const HowItWorksDetailPage = ({
   heading, subheading, heroImageUrl, contents, tabs, onTabClick, activeType, onLocationSearch,
 }) => {
-  const tabComponents = Object.entries(tabs).map(([key, tab]) => {
-    return <Tab active={key === activeType} key={tab.id} to={tab.tabUrl}>{tab.tabText}</Tab>;
-  });
+  const tabComponents = Object.entries(tabs)
+    .map(([key, tab]) => {
+      return (
+        <Tab active={key === activeType} key={key} to={tab.url}>
+          {tab.tabText}
+        </Tab>
+      );
+    });
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
