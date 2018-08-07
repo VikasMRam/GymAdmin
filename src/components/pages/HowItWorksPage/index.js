@@ -7,7 +7,7 @@ import { Icon, Hr, Heading, Block, Link } from 'sly/components/atoms';
 import DiscoverTile from 'sly/components/molecules/DiscoverTile';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
-import { discoverTileContents, secondContents } from 'sly/services/helpers/howItWorks';
+import { howItWorksContents, secondContents } from 'sly/services/helpers/howItWorks';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import { MostSearchedCities } from 'sly/services/helpers/homepage';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
@@ -60,7 +60,7 @@ const DiscoverTiles = styled.div`
     margin-bottom: ${size('spacing.xLarge')};
 
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      width: calc(100% / 2 - ${size('spacing.xLarge')});
+      width: calc(100% / 3 - ${size('spacing.xLarge')});
       margin-right: ${size('spacing.xLarge')};
     }
 
@@ -175,14 +175,16 @@ const HowItWorksPage = ({ history, onLocationSearch }) => {
       </IntroLogo>
     </Fragment>
   );
-  const discoverTiles = discoverTileContents
-    .map((data, index) => ( 
+
+  const discoverTiles = Object.entries(howItWorksContents)
+    .map(([key, data], index) => ( 
       <DiscoverTile
         key={index}
         content={data}
-        onClick={() => history.push(hiwDetailUrl(data))}
+        to={data.url}
       />
     ));
+
   const secondContentTiles = secondContents.map((item, index) => {
     return (
       <SecondContentTileWrapper key={index} >
@@ -190,6 +192,7 @@ const HowItWorksPage = ({ history, onLocationSearch }) => {
       </SecondContentTileWrapper>
     );
   });
+
   const Bottom = () => {
     const mostSearchedCitiesComponents = MostSearchedCities.map(mostSearchedCity => (
       <CityTileWrapper key={mostSearchedCity.title} to={mostSearchedCity.to}>
@@ -199,6 +202,7 @@ const HowItWorksPage = ({ history, onLocationSearch }) => {
         </ImageOverlayContentTile>
       </CityTileWrapper>
     ));
+
     return (
       <Fragment>
         <BlueBGWrapper>
@@ -217,6 +221,7 @@ const HowItWorksPage = ({ history, onLocationSearch }) => {
       </Fragment>
     );
   };
+
   return (
     <OverlappingSectionsTemplate
       imagePath={imagePath}

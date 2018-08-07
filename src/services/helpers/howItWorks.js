@@ -1,20 +1,40 @@
-export const discoverTileContents = [
-  {
-    imageUrl: 'images/how-it-works/discover-1.png',
-    heading: 'Families',
-    subHeading: 'Find an assisted living community to love from our thousands of listings',
+export const howItWorksContents = {
+  consumers: {
+    badgeName: 'Families',
+    badgeImageUrl: 'images/how-it-works/discover-1.png',
+    badgeText: 'Connect with customers that are qualified and motivated',
+    heading: 'Find a Home to Love',
+    subheading: `Follow the simple steps below to search, compare, and connect 
+        with the senior living community that matches your needs.`,
+    contents: ForFamilies,
+    heroImageUrl: 'images/how-it-works/for-families.png',
+    tabText: 'For Families',
+    url: '/how-it-works/consumers',
   },
-  {
-    imageUrl: 'images/how-it-works/discover-2.png',
-    heading: 'Communities',
-    subHeading: 'Connect with customers that are qualified and motivated',
+  providers: {
+    badgeName: 'Communities',
+    badgeImageUrl: 'images/how-it-works/discover-2.png',
+    badgeText: 'Connect with customers that are qualified and motivated',
+    heading: 'List Your Community',
+    subheading: `Follow the simple steps below to search, compare, and connect 
+        with the senior living community that matches your needs.`,
+    contents: ForFamilies,
+    heroImageUrl: 'images/how-it-works/hero.png',
+    tabText: 'For Communities',
+    url: '/how-it-works/providers',
   },
-  {
-    imageUrl: 'images/how-it-works/discover-3.png',
-    heading: 'Agents',
-    subHeading: 'Connect with families that want local experts to help with their search',
+  agents: {
+    badgeName: 'Agents',
+    badgeImageUrl: 'images/how-it-works/discover-3.png',
+    badgeText: 'Connect with families that want local experts to help with their search',
+    heading: 'For Agents',
+    subheading: 'Foo !== Bar',
+    contents: ForFamilies,
+    heroImageUrl: 'images/how-it-works/hero.png',
+    tabText: 'For Agents',
+    url: '/how-it-works/for-agents',
   },
-];
+};
 
 export const secondContents = [
   {

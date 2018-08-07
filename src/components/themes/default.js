@@ -107,6 +107,7 @@ theme.sizes = {
     xLarge  : '3.250rem',   // 52px
     xxLarge : '4.500rem',   // 72px
     textarea: '7.500rem',   // 120px
+    huge    : '9.000rem',   // 144px
   },
 
   slider: {
