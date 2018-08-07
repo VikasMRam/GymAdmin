@@ -81,7 +81,7 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const TeamMemberTilesWrapper = styled.div`
+const TeamMemberTiles = styled.div`
   margin-bottom: ${size('spacing.huge')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
@@ -142,7 +142,7 @@ const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
     </Fragment>
   );
 
-  const TeamMemberTiles = profiles
+  const teamMemberTiles = profiles
     .map(p => <StyledProfileTile
       key={p.heading}
       to={ourHistoryUri(p.slug)}
@@ -173,7 +173,7 @@ const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
         <StyledHr />
         <Heading>Meet Our Team</Heading>
         <StyledBlock>We are doing this for our parents and grandparents, and we are committed to making life better for them however we can.</StyledBlock>
-        <TeamMemberTilesWrapper>{TeamMemberTiles}</TeamMemberTilesWrapper>
+        <TeamMemberTiles>{teamMemberTiles}</TeamMemberTiles>
 
         <StyledHr />
 

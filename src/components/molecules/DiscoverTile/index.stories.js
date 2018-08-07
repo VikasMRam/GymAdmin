@@ -16,5 +16,9 @@ function onClick() {
 
 storiesOf('Molecules|DiscoverTile', module)
   .add('default', () => (
-    <DiscoverTile content={content} onClick={onClick} />
+    <div style={{
+        padding: "50px",
+    }}>
+      <DiscoverTile content={content} onClick={onClick} />
+    </div>
   ));

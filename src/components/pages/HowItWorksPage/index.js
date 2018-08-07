@@ -30,7 +30,7 @@ const IntroLogo = styled.div`
 `;
 
 const StyledHr = styled(Hr)`
-  margin: 72px 0;
+  margin-bottom: ${size('spacing.huge')};
 `;
 
 const ContentWrapper = styled.div`
@@ -47,16 +47,26 @@ const ContentSubheading = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const DiscoverTilesWrapper = styled.div`
-  display: flex;
-`;
+const DiscoverTiles = styled.div`
+  margin-bottom: ${size('spacing.huge')};
 
-const DiscoverTileWrapper = styled.div`
-  margin-right: ${size('spacing.xLarge')};
-  margin-bottom: ${size('spacing.xLarge')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -${size('spacing.xLarge')};
+  }
 
-  :nth-child(3n) {
-    margin-right: 0;
+  > * {
+    margin-bottom: ${size('spacing.xLarge')};
+
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      width: calc(100% / 2 - ${size('spacing.xLarge')});
+      margin-right: ${size('spacing.xLarge')};
+    }
+
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      width: calc(100% / 3 - ${size('spacing.xLarge')});
+    }
   }
 `;
 
@@ -150,32 +160,29 @@ const Grid = styled.div`
   }
 `;
 
-function onClick() {
-  alert('Click on DiscoverTile');
-}
+const hiwDetailUrl = data => `/how-it-works/${data.slug}`;
 
-const HowItWorksPage = ({ onLocationSearch }) => {
+const HowItWorksPage = ({ history, onLocationSearch }) => {
   const imagePath = assetPath('images/how-it-works/hero.png');
   const intro = (
     <Fragment>
       <IntroText>
         Seniorly is committed to connecting our aging citizens with a home to love.
-        We do this through a personalized experience built on industry expertise and powerful technology.
+        We achieve this through a personalized experience built on industry expertise and powerful technology.
       </IntroText>
       <IntroLogo>
         <Icon icon="logo" size="xxLarge" />
       </IntroLogo>
     </Fragment>
   );
-  const discoverTiles = discoverTileContents.map((data, index) => {
-    const content = { ...data };
-    content.imageUrl = assetPath(data.imageUrl);
-    return (
-      <DiscoverTileWrapper key={index}>
-        <DiscoverTile content={content} onClick={onClick} />
-      </DiscoverTileWrapper>
-    );
-  });
+  const discoverTiles = discoverTileContents
+    .map((data, index) => ( 
+      <DiscoverTile
+        key={index}
+        content={data}
+        onClick={() => history.push(hiwDetailUrl(data))}
+      />
+    ));
   const secondContentTiles = secondContents.map((item, index) => {
     return (
       <SecondContentTileWrapper key={index} >
@@ -198,8 +205,10 @@ const HowItWorksPage = ({ onLocationSearch }) => {
           <Grid>
             <BottomContent>
               <BottomContentHeading>Ready to find a new home?</BottomContentHeading>
-              <SearchBoxContainerWrapper><SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} /></SearchBoxContainerWrapper>
-              <CityTileHeading>Or Explore Our Most Seached Cities</CityTileHeading>
+              <SearchBoxContainerWrapper>
+                <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
+              </SearchBoxContainerWrapper>
+              <CityTileHeading>Or Explore Our Most Searched Cities</CityTileHeading>
               <CityTilesWrapper>{mostSearchedCitiesComponents}</CityTilesWrapper>
             </BottomContent>
           </Grid>
@@ -221,7 +230,7 @@ const HowItWorksPage = ({ onLocationSearch }) => {
           <br />For senior communities to connect with highly qualified prospects.
           <br />For referral agents to partner with us to help families locally.
         </ContentSubheading>
-        <DiscoverTilesWrapper>{discoverTiles}</DiscoverTilesWrapper>
+        <DiscoverTiles>{discoverTiles}</DiscoverTiles>
         <StyledHr />
         <SecondContentHeading>A Powerful and Easy Online Listing Platform For All</SecondContentHeading>
         <SecondContentTilesWrapper>{secondContentTiles}</SecondContentTilesWrapper>

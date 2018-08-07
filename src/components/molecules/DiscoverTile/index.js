@@ -1,25 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+import { palette, key } from 'styled-theme';
 import { string, func, shape } from 'prop-types';
 
-import { size } from 'sly/components/themes';
+import { size, assetPath } from 'sly/components/themes';
 import { Image, Button } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
-  width: ${size('picture.regular.width')};
 
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   border-radius: ${size('spacing.tiny')};
-  padding: 0 24px;
-  margin-top: 100px;
+  padding: ${size('spacing.large')}; 
+
+  transition: box-shadow ${key('transitions.default')}
+    , opacity ${key('transitions.default')}
+    , transform ${key('transitions.default')};
 
   &:hover {
     cursor: pointer;
     background: #fff;
-    box-shadow: 0 ${size('spacing.regular')} ${size('spacing.large')} ${palette('grayscale', 0)}80;
+    box-shadow:
+      0
+      ${size('spacing.small')}
+      ${size('spacing.large')}
+      ${palette('grayscale', 0)}80;
+    transform: scale(1.002);
+    border-radius: ${size('spacing.small')};
   }
 `;
 
@@ -47,11 +56,11 @@ const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const DiscoverTile = ({ content, onClick }) => {
+const DiscoverTile = ({ content, onClick, ...props }) => {
   const { imageUrl, heading, subHeading } = content;
   return (
-    <Wrapper onClick={onClick}>
-      <ImageWrapper src={imageUrl} />
+    <Wrapper onClick={onClick} {...props}>
+      <ImageWrapper src={assetPath(imageUrl)} />
       <HeadingWrapper>{heading}</HeadingWrapper>
       <SubheadingWrapper>{subHeading}</SubheadingWrapper>
       <StyledButton>Learn More</StyledButton>
