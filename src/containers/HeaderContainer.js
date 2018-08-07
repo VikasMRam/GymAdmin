@@ -8,12 +8,6 @@ import Header from 'sly/components/organisms/Header';
 import { toggle } from 'sly/store/actions';
 import { isHeaderDropdownOpen } from 'sly/store/selectors';
 
-import {
-  filterLinkPath,
-  getSearchParamFromPlacesResponse,
-} from 'sly/services/helpers/search';
-
-
 const defaultHeaderItems = [
   { name: 'Resources', url: '/resources' },
   // { name: 'Moving Center', url: '#' },
@@ -54,25 +48,15 @@ const menuItemHrIndices = [7, 10];
 class HeaderContainer extends Component {
   static propTypes = {
     dispatchToggleAction: func,
-    onLocationSearch: func,
     dropdownOpen: bool,
     menuItemHrIndices: arrayOf(number),
     user: object,
   };
 
-  handleOnLocationSearch = (result) => {
-    const { history } = this.props;
-    const searchParams = getSearchParamFromPlacesResponse(result);
-    const { path } = filterLinkPath(searchParams);
-    history.push(path);
-  };
-
-
   render(){
     const {
       dispatchToggleAction,
       dropdownOpen,
-      onLocationSearch,
       user,
     } = this.props;
 
@@ -91,7 +75,6 @@ class HeaderContainer extends Component {
         menuOpen={dropdownOpen}
         onMenuIconClick={dispatchToggleAction}
         onMenuItemClick={dispatchToggleAction}
-        onLocationSearch={this.handleOnLocationSearch}
         onHeaderBlur={dispatchToggleAction}
         headerItems={headerItems}
         menuItems={menuItems}

@@ -1,31 +1,46 @@
 import React from 'react';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+import { palette, key } from 'styled-theme';
 import { string, func, shape } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import { Image, Button } from 'sly/components/atoms';
+import { size, assetPath } from 'sly/components/themes';
+import { Image, Button, Link } from 'sly/components/atoms';
 
-const Wrapper = styled.div`
+const Wrapper = styled(Link)`
+  margin-top: ${size('element.xxLarge')};
   display: flex;
   flex-direction: column;
-  width: ${size('picture.regular.width')};
+
+  color: ${palette('slate', 0)};
 
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   border-radius: ${size('spacing.tiny')};
-  padding: 0 24px;
-  margin-top: 100px;
+  padding: ${size('spacing.large')}; 
+  padding-top: 0;
+
+  transition: box-shadow ${key('transitions.default')}
+    , opacity ${key('transitions.default')}
+    , transform ${key('transitions.default')};
 
   &:hover {
+    color: ${palette('slate', 0)};
     cursor: pointer;
     background: #fff;
-    box-shadow: 0 ${size('spacing.regular')} ${size('spacing.large')} ${palette('grayscale', 0)}80;
+    box-shadow:
+      0
+      ${size('spacing.small')}
+      ${size('spacing.large')}
+      ${palette('grayscale', 0)}80;
+    transform: scale(1.002);
+    border-radius: ${size('spacing.small')};
   }
 `;
 
 export const ImageWrapper = styled(Image)`
   margin: 0 auto;
-  margin-top: -100px;
+  width: ${size('element.huge')};
+  height: ${size('element.huge')};
+  margin-top: -${size('element.xxLarge')};
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -37,24 +52,31 @@ const HeadingWrapper = styled.div`
 `;
 
 const SubheadingWrapper = styled.div`
+  flex: 1 0;
   font-size: ${size('text.subtitle')};
-  margin-bottom: ${size('spacing.xxxLarge')};
+  margin-bottom: ${size('spacing.large')};
   text-align: center;
 `;
 
 const StyledButton = styled(Button)`
+  flex: 0 0 ${size('element.regular')};
   margin: 0 auto;
   margin-bottom: ${size('spacing.large')};
 `;
 
-const DiscoverTile = ({ content, onClick }) => {
-  const { imageUrl, heading, subHeading } = content;
+const DiscoverTile = ({ content, ...props }) => {
+  const {
+    badgeImageUrl,
+    badgeName,
+    badgeText
+  } = content;
+
   return (
-    <Wrapper onClick={onClick}>
-      <ImageWrapper src={imageUrl} />
-      <HeadingWrapper>{heading}</HeadingWrapper>
-      <SubheadingWrapper>{subHeading}</SubheadingWrapper>
-      <StyledButton>Learn More</StyledButton>
+    <Wrapper {...props}>
+      <ImageWrapper src={assetPath(badgeImageUrl)} />
+      <HeadingWrapper>{badgeName}</HeadingWrapper>
+      <SubheadingWrapper>{badgeText}</SubheadingWrapper>
+      <StyledButton palette="primary">Learn More</StyledButton>
     </Wrapper>
   );
 };

@@ -2,12 +2,18 @@ import React, { Component } from 'react';
 import { string, func, object, bool } from 'prop-types';
 import { connect } from 'react-redux';
 import { geocodeByAddress } from 'react-places-autocomplete';
+import { withRouter } from 'react-router-dom';
 
 import { gMapsApiKey } from 'sly/config';
 import { changeAddress, setLocation, clearLocation } from 'sly/store/actions';
 import { searchBoxAddress, searchBoxLocation } from 'sly/store/selectors';
 
 import SearchBox from 'sly/components/molecules/SearchBox';
+
+import {
+  filterLinkPath,
+  getSearchParamFromPlacesResponse,
+} from 'sly/services/helpers/search';
 
 class SearchBoxContainer extends Component {
   static propTypes = {
@@ -16,7 +22,6 @@ class SearchBoxContainer extends Component {
     location: object,
     changeAddress: func,
     setLocation: func,
-    onLocationSearch: func,
     clearLocation: func,
     clearLocationOnBlur: bool,
     onTextChange: func,
@@ -57,20 +62,20 @@ class SearchBoxContainer extends Component {
   };
 
   handleSelect = (address) => {
-    const { setLocation, onLocationSearch } = this.props;
+    const { setLocation } = this.props;
     geocodeByAddress(address)
       .then(results => results[0])
       .then((result) => {
         setLocation(result);
-        onLocationSearch(result);
+        this.handleOnLocationSearch(result);
       })
       .catch(error => console.error('Error', error));
   }
 
   handleSearch = () => {
-    const { location, onLocationSearch } = this.props;
+    const { location } = this.props;
     if (location) {
-      onLocationSearch(location);
+      this.handleOnLocationSearch(location);
     }
   };
 
@@ -79,6 +84,13 @@ class SearchBoxContainer extends Component {
     clearLocation();
   };
 
+  handleOnLocationSearch = (result) => {
+    const { history } = this.props;
+    const searchParams = getSearchParamFromPlacesResponse(result);
+    const { path } = filterLinkPath(searchParams);
+    history.push(path);
+  };
+ 
   render() {
     const {
       layout, address, clearLocationOnBlur, ...props
@@ -128,4 +140,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBoxContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchBoxContainer));
