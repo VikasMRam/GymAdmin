@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { string, func, arrayOf, object } from 'prop-types';
 import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+import { size, assetPath } from 'sly/components/themes';
 
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
-import { Image, Label, Heading, Hr } from 'sly/components/atoms';
+import { Image, Link, Label, Heading, Hr } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import HowItWorksInfoTile from 'sly/components/molecules/HowItWorksInfoTile';
@@ -120,7 +120,7 @@ const TabsWrapper = styled.div`
   border-radius: ${size('spacing.small')};
 `;
 
-const Tab = styled.div`
+const Tab = styled(Link)`
   background-color: ${p => p.active ? palette('white', 0) : palette('grayscale', 3)};
   padding: ${size('spacing.xLarge')} 0;
   flex-grow: 1;
@@ -135,17 +135,17 @@ const Tab = styled.div`
 `;
 
 const HowItWorksDetailPage = ({
-  heading, subheading, imageUrl, contents, tabs, onTabClick, activeType, onLocationSearch,
+  heading, subheading, heroImageUrl, contents, tabs, onTabClick, activeType, onLocationSearch,
 }) => {
-  const tabComponents = tabs.map((tab) => {
-    return <Tab active={tab.key === activeType} key={tab.key} onClick={() => onTabClick(tab)} >{tab.text}</Tab>;
+  const tabComponents = Object.entries(tabs).map(([key, tab]) => {
+    return <Tab active={key === activeType} key={tab.id} to={tab.tabUrl}>{tab.tabText}</Tab>;
   });
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <HeaderContainer onLocationSearch={onLocationSearch} />
       <HeroWrapper>
-        <HeroBackgroundImage src={imageUrl} alt="A Home To Love" />
+        <HeroBackgroundImage src={assetPath(heroImageUrl)} alt="A Home To Love" />
         <FixedWidthContainer>
           <HeroTextWrapper>
             <HeroHeading level="hero" size="hero" palette="white">
