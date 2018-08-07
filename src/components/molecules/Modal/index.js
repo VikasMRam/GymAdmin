@@ -109,7 +109,7 @@ const ModalContext = styled.article`
     `,
     wizard: css`
       padding: 0!important;
-      overflow: auto;
+      overflow: hidden;
       border-radius: ${size('spacing.small')};
       height: 90%;
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
