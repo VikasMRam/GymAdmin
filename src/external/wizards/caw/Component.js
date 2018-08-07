@@ -57,10 +57,15 @@ const StyledHeading = styled(Heading)`
 `;
 const SearchingWrapper = Wrapper.extend`
   top: 50%;
-  transform: translate3d(0%, -50%, 0);
+  transform: translate(0%, -50%);
   position: absolute;
   text-align: center;
   width: 100%;
+`;
+const ScrollWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 `;
 
 const Component = ({
@@ -69,7 +74,7 @@ const Component = ({
 }) => {
   const CurrentStepComponent = getStepComponent(stepOrders[flow][currentStep - 1]);
   return (
-    <Fragment>
+    <ScrollWrapper>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       {searching &&
         <SearchingWrapper>
@@ -130,7 +135,7 @@ const Component = ({
           </Wrapper>
         </Fragment>
       }
-    </Fragment>
+    </ScrollWrapper>
   );
 };
 
