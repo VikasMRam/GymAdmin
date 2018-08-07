@@ -16,6 +16,8 @@ injectGlobal`
 
 const overlayStyles = css`
   position: fixed;
+  // for old browsers
+  background-color: ${palette('slate', 0)};
   background-color: ${palette('slate', 0)}e5;
   top: 0;
   right: 0;
@@ -69,7 +71,7 @@ const ModalContext = styled.article`
   margin: 1rem calc(-50% + 1rem) 1rem 1rem;
   max-height: calc(100% - 2rem);
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      padding: ${size('spacing.xxxLarge')};
+    padding: ${size('spacing.xxxLarge')};
   };
 
   ${switchProp('layout', {
@@ -106,8 +108,8 @@ const ModalContext = styled.article`
       }
     `,
     wizard: css`
-      padding: 0;
-      overflow: auto;
+      padding: 0!important;
+      overflow: hidden;
       border-radius: ${size('spacing.small')};
       height: 90%;
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
