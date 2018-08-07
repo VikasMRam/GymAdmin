@@ -83,7 +83,7 @@ class CommunitySearchPageContainer extends Component {
 
   handleOnAdTileClick = () => {
     this.changeSearchParams({ changedParams: { modal: 'cawWizard' } });
-  }
+  };
 
   render() {
     const {
