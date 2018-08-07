@@ -143,7 +143,7 @@ class Controller extends Component {
   }
 
   handleSubmit = (values, dispatch, props) => {
-    const { currentStep, set, progressPath } = props;
+    const { currentStep, set, progressPath, locationSearchParams } = props;
     const currentStepName = this.flow[currentStep - 1];
 
     let concatedValues = '';

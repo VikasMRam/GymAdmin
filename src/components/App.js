@@ -17,6 +17,7 @@ import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageCont
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
+import PromoPageContainer from 'sly/containers/PromoPageContainer';
 import AgentsProfilePageController from 'sly/controllers/AgentsProfilePageController';
 import OurHistoryPage from 'sly/components/pages/OurHistoryPage';
 import HowItWorksPage from 'sly/components/pages/HowItWorksPage';
@@ -39,6 +40,11 @@ const howItWorksTypes = [
   'consumers',
   'providers',
   'agents',
+].join('|');
+
+const promoTypes = [
+  'promo',
+  'rebate',
 ].join('|');
 
 export default class App extends Component {
@@ -94,6 +100,11 @@ export default class App extends Component {
     {
       path: '/our-history/:member?',
       component: OurHistoryPage,
+      exact: true,
+    },
+    {
+      path: `/:promo(${promoTypes})`,
+      component: PromoPageContainer,
       exact: true,
     },
     {
