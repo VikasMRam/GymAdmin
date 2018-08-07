@@ -43,8 +43,8 @@ const StyledHeading = styled(Heading)`
 
 const StyledHr = styled(Hr)`
   // Hacky way to implement a Hr beyond the fixed width container
-  margin-left: -100%;
-  margin-right: -100%;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
