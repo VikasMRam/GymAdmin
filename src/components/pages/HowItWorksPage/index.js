@@ -3,14 +3,13 @@ import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
 import { size, assetPath } from 'sly/components/themes';
-import { Icon, Hr, Heading, Block, Link } from 'sly/components/atoms';
+import { Icon, Hr, Heading, Block, Link, Image } from 'sly/components/atoms';
 import DiscoverTile from 'sly/components/molecules/DiscoverTile';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
 import { howItWorksContents, secondContents } from 'sly/services/helpers/howItWorks';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import { MostSearchedCities } from 'sly/services/helpers/homepage';
-import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import Footer from 'sly/components/organisms/Footer';
 
 const IntroText = styled.div`
@@ -33,10 +32,6 @@ const StyledHr = styled(Hr)`
   margin-bottom: ${size('spacing.huge')};
 `;
 
-const ContentWrapper = styled.div`
-  margin-bottom: 72px;
-`;
-
 const ContentHeading = styled.div`
   font-size: 30px;
   margin-bottom: ${size('spacing.regular')};
@@ -48,7 +43,7 @@ const ContentSubheading = styled.div`
 `;
 
 const DiscoverTiles = styled.div`
-  margin-bottom: ${size('spacing.huge')};
+  margin-bottom: ${size('spacing.xxxLarge')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
@@ -63,107 +58,117 @@ const DiscoverTiles = styled.div`
       width: calc(100% / 3 - ${size('spacing.xLarge')});
       margin-right: ${size('spacing.xLarge')};
     }
-
-    @media screen and (min-width: ${size('breakpoint.laptop')}) {
-      width: calc(100% / 3 - ${size('spacing.xLarge')});
-    }
   }
 `;
 
 const SecondContentHeading = styled.div`
   margin: 0 auto;
-  font-size: 30px;
+  font-size: ${size('text.title')};
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const SecondContentTilesWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const SecondContentTileWrapper = styled.div`
-  width: ${size('picture.xLarge.width')};
-  margin-right: ${size('spacing.xLarge')};
+const SecondContentTiles = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
 
-  :nth-child(2n){
-    margin-right: 0;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -${size('spacing.xLarge')};
   }
-`;
 
-const BlueBGWrapper = styled.div`
-background-color: #E1EAEF;
+  > * {
+    margin-bottom: ${size('spacing.xLarge')};
+
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      width: calc(100% / 2 - ${size('spacing.xLarge')});
+      margin-right: ${size('spacing.xLarge')};
+    }
+  }
 `;
 
 const BottomContent = styled.div`
+  background-color: ${palette('secondary', 3)};
+  padding-top: ${size('spacing.huge')};
+`;
+
+const CenterBottom = styled.div`
+  margin: 0 ${size('spacing.large')};
   display: flex;
   flex-direction: column;
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: flex;
-    grid-column: 2 / span 1;
-    grid-row: 2 / span 2;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin: 0 auto;  
+    width: ${size('layout.col8')};
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    grid-column: 3 / span 1;
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('layout.col12')};
   }
 `;
 
 const BottomContentHeading = styled.div`
   margin: 0 auto;
-  margin-top: 72px;
-  margin-bottom: 24px;
-  font-size: 30px;
+  margin-bottom: ${size('spacing.large')};
+  font-size: ${size('text.title')};
 `;
 
-const SearchBoxContainerWrapper = styled.div`
+const StyledSearchBoxContainer = styled(SearchBoxContainer)`
   margin: 0 auto;
-  margin-bottom: 72px;
+  margin-bottom: ${size('spacing.xxLarge')};
 `;
 
 const CityTileHeading = styled.div`
   margin: 0 auto;
-  margin-bottom: 24px;
-  font-size: 18px;
+  margin-bottom: ${size('spacing.large')};
+  font-size: ${size('text.subtitle')};
   font-weight: bold;
 `;
 
-const CityTilesWrapper = styled.div`
+const CityTiles = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -${size('spacing.xLarge')};
+  }
+
+  > * {
+    margin-bottom: ${size('spacing.xLarge')};
+
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      width: calc(100% / 2 - ${size('spacing.xLarge')});
+      margin-right: ${size('spacing.xLarge')};
+    }
+
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      width: calc(100% / 4 - ${size('spacing.xLarge')});
+    }
+  }
+`;
+
+const ImageContent = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 72px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const CityTileWrapper = styled(Link)`
-  // this is required for IE as it won't consider inline elements as flex children
   display: block;
-  margin-right: 24px;
-  margin-bottom: 24px;
-
-  :nth-child(4n) {
-    margin-right: 0;
-  }
+  overflow: hidden;
+  border-radius: ${size('spacing.small')};
 `;
 
-// Copied from OverlappingSectionsTemplate
-const Grid = styled.div`
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: grid;
-    margin-top: -${size('home.introMargin')};
-    grid-template-columns: auto ${size('layout.col12')} auto;
-    grid-template-rows: auto auto auto;
-  }
-  @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
-    grid-template-columns: auto ${size('spacing.huge')} ${size('layout.col12')} ${size('spacing.huge')} auto;
-    grid-template-rows: auto auto auto;
-  }
-`;
 
 const hiwDetailUrl = data => `/how-it-works/${data.slug}`;
 
-const HowItWorksPage = ({ history, onLocationSearch }) => {
-  const imagePath = assetPath('images/how-it-works/hero.png');
+const HowItWorksPage = ({ history }) => {
   const intro = (
     <Fragment>
       <IntroText>
@@ -187,36 +192,36 @@ const HowItWorksPage = ({ history, onLocationSearch }) => {
 
   const secondContentTiles = secondContents.map((item, index) => {
     return (
-      <SecondContentTileWrapper key={index} >
-        <IconInfoTile {...item} />
-      </SecondContentTileWrapper>
+      <IconInfoTile
+        key={index}
+        {...item}
+      />
     );
   });
 
   const Bottom = () => {
-    const mostSearchedCitiesComponents = MostSearchedCities.map(mostSearchedCity => (
-      <CityTileWrapper key={mostSearchedCity.title} to={mostSearchedCity.to}>
-        <ImageOverlayContentTile size="small" image={mostSearchedCity.image}>
-          <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
-          <Block palette="white">{mostSearchedCity.title}</Block>
-        </ImageOverlayContentTile>
-      </CityTileWrapper>
-    ));
+    const mostSearchedCitiesComponents = MostSearchedCities
+      .map(mostSearchedCity => (
+        <CityTileWrapper key={mostSearchedCity.title} to={mostSearchedCity.to}>
+          <Image aspectRatio="16:9" src={mostSearchedCity.image}>
+            <ImageContent>
+              <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
+              <Block palette="white">{mostSearchedCity.title}</Block>
+            </ImageContent>
+          </Image>
+        </CityTileWrapper>
+      ));
 
     return (
       <Fragment>
-        <BlueBGWrapper>
-          <Grid>
-            <BottomContent>
-              <BottomContentHeading>Ready to find a new home?</BottomContentHeading>
-              <SearchBoxContainerWrapper>
-                <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
-              </SearchBoxContainerWrapper>
-              <CityTileHeading>Or Explore Our Most Searched Cities</CityTileHeading>
-              <CityTilesWrapper>{mostSearchedCitiesComponents}</CityTilesWrapper>
-            </BottomContent>
-          </Grid>
-        </BlueBGWrapper>
+        <BottomContent>
+          <CenterBottom>
+            <BottomContentHeading>Ready to find a new home?</BottomContentHeading>
+            <StyledSearchBoxContainer layout="homeHero" />
+            <CityTileHeading>Or Explore Our Most Searched Cities</CityTileHeading>
+            <CityTiles>{mostSearchedCitiesComponents}</CityTiles>
+          </CenterBottom>
+        </BottomContent>
         <Footer />
       </Fragment>
     );
@@ -224,22 +229,20 @@ const HowItWorksPage = ({ history, onLocationSearch }) => {
 
   return (
     <OverlappingSectionsTemplate
-      imagePath={imagePath}
+      imagePath="images/how-it-works/hero.png"
       intro={intro}
       description={null}
       footer={<Bottom />}
     >
-      <ContentWrapper>
-        <ContentHeading>Who is Seniorly for?</ContentHeading>
-        <ContentSubheading>For families to help their aging relatives find a home to love.
-          <br />For senior communities to connect with highly qualified prospects.
-          <br />For referral agents to partner with us to help families locally.
-        </ContentSubheading>
-        <DiscoverTiles>{discoverTiles}</DiscoverTiles>
-        <StyledHr />
-        <SecondContentHeading>A Powerful and Easy Online Listing Platform For All</SecondContentHeading>
-        <SecondContentTilesWrapper>{secondContentTiles}</SecondContentTilesWrapper>
-      </ContentWrapper>
+      <ContentHeading>Who is Seniorly for?</ContentHeading>
+      <ContentSubheading>For families to help their aging relatives find a home to love.
+        <br />For senior communities to connect with highly qualified prospects.
+        <br />For referral agents to partner with us to help families locally.
+      </ContentSubheading>
+      <DiscoverTiles>{discoverTiles}</DiscoverTiles>
+      <StyledHr />
+      <SecondContentHeading>A Powerful and Easy Online Listing Platform For All</SecondContentHeading>
+      <SecondContentTiles>{secondContentTiles}</SecondContentTiles>
     </OverlappingSectionsTemplate>
   );
 };

@@ -124,9 +124,9 @@ const GoogleLogo = styled(Image)`
 `;
 const baseSearchOptions = { types: ['(regions)'] };
 const SearchBox = ({
-  layout, value, onChange, onSelect, onSeachButtonClick, onTextboxFocus, placeholder,
+  layout, value, onChange, onSelect, onSeachButtonClick, onTextboxFocus, placeholder, ...props,
 }) => (
-  <Wrapper layout={layout}>
+  <Wrapper layout={layout} {...props}>
     <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion>
       {({ getInputProps, suggestions, getSuggestionItemProps }) => (
         <Fragment>
