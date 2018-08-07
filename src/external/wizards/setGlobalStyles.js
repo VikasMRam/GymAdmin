@@ -4,7 +4,7 @@ import { injectGlobal } from 'styled-components';
 export default function addGlobalStyles() {
   setGlobalStyles();
   injectGlobal`
-    html, body {
+    html, body, #app {
       width: 100%;
       height: 100%;
     }

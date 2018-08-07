@@ -45,7 +45,10 @@ const StyledHr = styled(Hr)`
   margin-right: -${size('spacing.xxLarge')};
 `;
 const BottomWrapper = styled.div`
-  position: fixed;
+  // parent elements will have transform; hence this will behave like fixed.
+  // don't make it fixed, transform with fixed has wierd behaviour in ff.
+  // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/10183406/
+  position: absolute;
   width: 100%;
   background-color: ${palette('white', 0)};
   padding-bottom: ${size('spacing.xLarge')};
@@ -66,7 +69,6 @@ const ScrollWrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow: auto;
-  position: relative;
 `;
 
 const Component = ({
