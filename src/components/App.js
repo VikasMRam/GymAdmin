@@ -47,7 +47,7 @@ const promoTypes = [
   'rebate',
 ].join('|');
 
-const TempAbout = ({ ...props }) => (
+const TempHowItWorks = ({ ...props }) => (
   <HowItWorksDetailPageContainer
     {...props}
     match={{params:{type: 'consumers'}}}
@@ -96,21 +96,16 @@ export default class App extends Component {
       exact: true,
     },
     {
-      path: '/about',
-      component: TempAbout,
-      exact: true,
-    },
-    {
       path: `/how-it-works/:type(${howItWorksTypes})`,
       component: HowItWorksDetailPageContainer,
     },
     {
       path: '/how-it-works',
-      component: HowItWorksPage,
+      component: TempHowItWorks,
       exact: true,
     },
     {
-      path: '/our-history/:member?',
+      path: '/about/:member?',
       component: OurHistoryPage,
       exact: true,
     },
