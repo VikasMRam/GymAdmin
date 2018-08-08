@@ -184,7 +184,7 @@ const HowItWorksPage = ({ history }) => {
   );
 
   const discoverTiles = Object.entries(howItWorksContents)
-    .map(([key, data], index) => ( 
+    .map(([key, data], index) => (
       <DiscoverTile
         key={index}
         content={data}

@@ -148,7 +148,7 @@ export const howItWorksContents = {
         with the senior living community that matches your needs.`,
     contents: Consumers,
     cards: consumerCards,
-    heroImageUrl: 'images/how-it-works/for-families.png',
+    heroImageUrl: 'images/how-it-works/hiw-consumers-1.jpg',
     tabText: 'For Families',
     url: '/how-it-works/consumers',
   },

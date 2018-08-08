@@ -110,7 +110,7 @@ const AgentsProfilePage = ({
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <HeaderContainer onLocationSearch={onLocationSearch} />
       <HeroWrapper>
-        <HeroBackgroundImage src={assetPath('images/our-history.png')} alt="A Home To Love" />
+        <HeroBackgroundImage src={assetPath('images/agent-hero.jpg')} alt="A Home To Love" />
         <FixedWidthContainer>
           <HeroTextWrapper>
             <HeroHeading level="hero" size="hero" palette="white">
