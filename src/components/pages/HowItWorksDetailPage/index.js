@@ -66,10 +66,10 @@ const BlueBRWrapper = styled.div`
 
 const BottomWrapper = styled.div`
   padding: ${size('spacing.massive')} 0;
-`;
-
-const FAQTilesWrapper = styled.div`
-  margin: 0 180px;
+  margin: 0 auto;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.col8')};
+  }
 `;
 
 const XXXLargeHr = styled(Hr)`
@@ -171,14 +171,14 @@ const Bottom = () => {
       <FixedWidthContainer>
         <BottomWrapper>
           <StyledHeading>FAQ</StyledHeading>
-          <FAQTilesWrapper>
-            {FAQ.map((item, index) => (
-              <Fragment key={item.question}>
-                <FAQTile {...item} />
-              </Fragment>
-            ))}
-            <XXXLargeHr />
-          </FAQTilesWrapper>
+          {FAQ.map((item, index) => (
+            <Fragment key={item.question}>
+              <FAQTile {...item} />
+              {index !== FAQ.length -1 &&
+                <XXXLargeHr />
+              }
+            </Fragment>
+          ))}
         </BottomWrapper>
       </FixedWidthContainer>
       <Footer />
@@ -244,3 +244,4 @@ HowItWorksDetailPage.propTypes = {
 };
 
 export default HowItWorksDetailPage;
+
