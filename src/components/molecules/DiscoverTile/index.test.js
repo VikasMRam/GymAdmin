@@ -7,7 +7,7 @@ import DiscoverTile, { ImageWrapper } from '.';
 const content = {
   badgeName: 'Families',
   badgeText: 'Find an assisted living community to love from our thousands of listings',
-  badgeImageUrl: assetPath('images/how-it-works/discover-1.png'),
+  badgeImageUrl: 'images/how-it-works/discover-1.png',
 };
 
 const wrap = (props = {}) => shallow(<DiscoverTile content={content} {...props} />);
@@ -22,6 +22,6 @@ describe('DiscoverTile', () => {
     const wrapper = wrap();
     expect(wrapper.contains(content.badgeName)).toEqual(true);
     expect(wrapper.contains(content.badgeText)).toEqual(true);
-    expect(wrapper.find(ImageWrapper).prop('src')).toEqual(content.badgeImageUrl);
+    expect(wrapper.find(ImageWrapper).prop('src')).toEqual(assetPath(content.badgeImageUrl));
   });
 });
