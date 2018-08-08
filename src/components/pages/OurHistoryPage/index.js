@@ -14,8 +14,8 @@ import { TeamMembersData as profiles } from 'sly/services/helpers/our_team';
 import { PressTileContents as press } from 'sly/services/helpers/press';
 
 const ourHistoryUri = member => member
-  ? `/our-history/${member}`
-  : `/our-history`;
+  ? `/about/${member}`
+  : `/about`;
 
 const IntroText = styled.div`
   font-size: ${size('spacing.xLarge')};
@@ -134,8 +134,6 @@ const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
       />
       <DescriptionText>
         Our CEO, Arthur Bretschneider, is a third-generation senior living operator.  He learned from his father, who learned from his father, how to create a personalized living experience that is respectful of someone’s history, attentive to their care needs, and focused on building community.  A lot has changed for senior housing since his grandfather was a pioneer in 1950s. The senior living industry has grown rapidly giving consumers the ability to move into new homes that match their unique wants and needs to enable them to thrive. Despite this positive new reality, finding the right senior living options is a process that is often difficult, confusing, and frustrating. So, Arthur took on the challenge to solve this problem.
-        <br /><br />
-        While at Berkeley Haas School of Business, he presented the challenge to his friend Sushanth Ramakrishna. At the time, “Sush” was a software engineer at Salesforce. He was raised to believe community is more important than the individual. His parents and older brother, through their personal examples of serving as doctors and civil servants, instilled in him the joy of pursuing something greater than himself. Throughout his life, Sush saw the vast disparity in access to technology for a large percentage of the population and felt a desire to change that.  He knew that technology was a key part of the solution Arthur was seeking. After discussing this in great detail with Kunal Shah, his undergraduate roommate that he recruited on this journey, Sush joined Arthur officially in 2014 when they became the founders of Seniorly.
         <br /><br />
         Our company is headquartered in San Francisco, a place where technology, innovation, diversity, and passion come together. We also seek knowledge and collaboration from around the world via our offices in Bangalore and London. We pride ourselves on our diversity both in professional expertise and personal culture. We believe that in honoring our aging family members we are building the best way for us all to age. Each member at Seniorly has a personal connection and commitment to our mission. Together, we have created a simple and personalized solution proven to help our parents and loved ones in the next stage of their lives to find a new home to love.
       </DescriptionText>
