@@ -4,7 +4,7 @@ import { palette } from 'styled-theme';
 import { switchProp } from 'styled-tools';
 import { string, shape, oneOf, func } from 'prop-types';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import { Image, Link } from 'sly/components/atoms';
 
 const Wrapper = styled(Link)`
@@ -79,10 +79,10 @@ const ProfileTile = ({
     imageUrl,
     description,
   } = (profile);
-
+  
   return(
     <Wrapper layout={layout} {...props}>
-      <ImageWrapper src={assetPath(imageUrl)} aspectRatio="16:9" layout={layout} />
+      <ImageWrapper src={imageUrl} aspectRatio="16:9" layout={layout} />
       <InfoWrapper layout={layout}>
         <HeadingWrapper>{heading}</HeadingWrapper>
         <SubHeadingWrapper layout={layout}>{subHeading}</SubHeadingWrapper >

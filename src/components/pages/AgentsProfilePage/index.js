@@ -69,27 +69,25 @@ const StyledSection = styled(Section)`
 `;
 
 const ContentTilesWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  margin-bottom: ${size('spacing.huge')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -${size('spacing.xLarge')};
+  }
 `;
 
-const ContentTileWrapper = styled.div`
-  margin-right: ${size('spacing.xLarge')};
-  margin-bottom: ${size('spacing.xLarge')};
+const StyledProfileTile = styled(ProfileTile)`
+margin-bottom: ${size('spacing.xLarge')};
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    :nth-child(2n) {
-      margin-right: 0;
-    }
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    :nth-child(2n) {
-      margin-right: ${size('spacing.xLarge')};
-    }
-    :nth-child(3n) {
-      margin-right: 0;
-    }
-  }
+@media screen and (min-width: ${size('breakpoint.tablet')}) {
+  width: calc(100% / 2 - ${size('spacing.xLarge')});
+  margin-right: ${size('spacing.xLarge')};
+}
+
+@media screen and (min-width: ${size('breakpoint.laptop')}) {
+  width: calc(100% / 3 - ${size('spacing.xLarge')});
+}
 `;
 
 const AgentsProfilePage = ({
@@ -97,9 +95,7 @@ const AgentsProfilePage = ({
 }) => {
   const agentsSectionComponents = Object.keys(regionProfiles).map((region) => {
     const agentsProfile = regionProfiles[region].map(profile => (
-      <ContentTileWrapper>
-        <ProfileTile key={profile.id} profile={profile} onClick={() => setModalProfile(profile)} />
-      </ContentTileWrapper>
+      <StyledProfileTile key={profile.id} profile={profile} onClick={() => setModalProfile(profile)} />
     ));
     return (
       <StyledSection title={region}>

@@ -28,7 +28,7 @@ describe('ProfileTile', () => {
     const wrapper = wrap();
     expect(wrapper.contains(profile.heading)).toEqual(true);
     expect(wrapper.contains(profile.subHeading)).toEqual(true);
-    expect(wrapper.find(ImageWrapper).prop('src')).toEqual('/' + profile.imageUrl);
+    expect(wrapper.find(ImageWrapper).prop('src')).toEqual(profile.imageUrl);
     expect(wrapper.contains(profile.description)).toEqual(false);
   });
 
@@ -36,7 +36,7 @@ describe('ProfileTile', () => {
     const wrapper = wrap({ layout: 'modal' });
     expect(wrapper.contains(profile.heading)).toEqual(true);
     expect(wrapper.contains(profile.subHeading)).toEqual(true);
-    expect(wrapper.find(ImageWrapper).prop('src')).toEqual('/' + profile.imageUrl);    
+    expect(wrapper.find(ImageWrapper).prop('src')).toEqual(profile.imageUrl);    
     expect(wrapper.contains(profile.description)).toEqual(true);
   });
 });
