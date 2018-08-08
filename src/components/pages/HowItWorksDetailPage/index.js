@@ -10,8 +10,8 @@ import { Image, Link, Label, Heading, Hr } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import HowItWorksInfoTile from 'sly/components/molecules/HowItWorksInfoTile';
-import { secondContents, FAQ } from 'sly/services/helpers/howItWorks';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
+import { FAQ } from 'sly/services/helpers/howItWorks';
 import FAQTile from 'sly/components/molecules/FAQTile';
 
 // Copied from BasePageTemplate
@@ -60,46 +60,12 @@ const HeroSubheading = styled(Label)`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const SecondContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin: ${size('spacing.massive')} 0;
-`;
-
-const SecondContentHeading = styled.div`
-  margin: 0 auto;
-  font-size: 30px;
-  margin-bottom: ${size('spacing.xLarge')};
-`;
-
-const SecondContentTilesWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`;
-
-const SecondContentTileWrapper = styled.div`
-  width: ${size('picture.xLarge.width')};
-  margin-right: ${size('spacing.xLarge')};
-  margin-bottom: ${size('spacing.xLarge')};
-
-  :nth-child(2n){
-    margin-right: 0;
-  }
-`;
-
 const BlueBRWrapper = styled.div`
   background-color: ${palette('secondary', 3)};
 `;
 
 const BottomWrapper = styled.div`
   padding: ${size('spacing.massive')} 0;
-`;
-
-const BottomHeading = styled.div`
-  font-size: 30px;
-  margin: 0 auto;
-  margin-bottom: ${size('spacing.xLarge')};
-  text-align: center;
 `;
 
 const FAQTilesWrapper = styled.div`
@@ -134,87 +100,134 @@ const Tab = styled(Link)`
   }
 `;
 
-const HowItWorksDetailPage = ({
-  heading, subheading, heroImageUrl, contents, tabs, onTabClick, activeType, onLocationSearch,
-}) => {
-  const tabComponents = Object.entries(tabs)
-    .map(([key, tab]) => {
-      return (
-        <Tab active={key === activeType} key={key} to={tab.url}>
-          {tab.tabText}
-        </Tab>
-      );
-    });
-  const HeaderContent = (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <HeaderContainer onLocationSearch={onLocationSearch} />
-      <HeroWrapper>
-        <HeroBackgroundImage src={assetPath(heroImageUrl)} alt="A Home To Love" />
-        <FixedWidthContainer>
-          <HeroTextWrapper>
-            <HeroHeading level="hero" size="hero" palette="white">
-              {heading}
-            </HeroHeading>
-            <HeroSubheading palette="white">
-              {subheading}
-            </HeroSubheading>
-          </HeroTextWrapper>
-          <TabsWrapper>
-            {tabComponents}
-          </TabsWrapper>
-        </FixedWidthContainer>
-      </HeroWrapper>
-    </Fragment>
-  );
+const Header = ({ heroImageUrl, heading, subheading, children }) => (
+  <Fragment>
+    {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+    <HeaderContainer />
+    <HeroWrapper>
+      <HeroBackgroundImage src={assetPath(heroImageUrl)} alt="A Home To Love" />
+      <FixedWidthContainer>
+        <HeroTextWrapper>
+          <HeroHeading level="hero" size="hero" palette="white">
+            {heading}
+          </HeroHeading>
+          <HeroSubheading palette="white">
+            {subheading}
+          </HeroSubheading>
+        </HeroTextWrapper>
+        {/*<TabsWrapper>
+          {children}
+        </TabsWrapper>*/}
+      </FixedWidthContainer>
+    </HeroWrapper>
+  </Fragment>
+);
 
-  const ForFamiliesComponents = contents.map((content, index) => {
+const ForFamiliesComponents = ({ contents }) => contents
+  .map((content, index) => {
     const invert = index % 2 === 1;
-    return (<HowItWorksInfoTile {...content} key={content.heading} invert={invert} />);
-  });
-
-  const secondContentTiles = secondContents.map((item) => {
     return (
-      <SecondContentTileWrapper key={item.heading} >
-        <IconInfoTile {...item} />
-      </SecondContentTileWrapper>
+      <HowItWorksInfoTile
+        key={content.heading}
+        invert={invert}
+        {...content}
+      />
     );
   });
 
-  const faqTiles = FAQ.map((item, index) => {
-    return (
-      <Fragment>
-        <FAQTile {...item} key={item.question} />
-        {index !== FAQ.length - 1 && <XXXLargeHr />}
-      </Fragment>
-    );
-  });
+const CardsSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: ${size('spacing.massive')} 0;
+`;
 
-  const Bottom = () => {
-    return (
-      <BlueBRWrapper>
-        <FixedWidthContainer>
-          <BottomWrapper>
-            <BottomHeading>FAQ</BottomHeading>
-            <FAQTilesWrapper>{faqTiles}</FAQTilesWrapper>
-          </BottomWrapper>
-        </FixedWidthContainer>
-        <Footer />
-      </BlueBRWrapper>
-    );
-  };
+const StyledHeading = styled(Heading)`
+  text-align: center;
+  margin-bottom: ${size('spacing.large')};
+`;
 
+const CardTiles = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -${size('spacing.xLarge')};
+  }
+
+  > * {
+    margin-bottom: ${size('spacing.xLarge')};
+
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      width: calc(100% / 2 - ${size('spacing.xLarge')});
+      margin-right: ${size('spacing.xLarge')};
+    }
+  }
+`;
+
+const Bottom = () => {
+  return (
+    <BlueBRWrapper>
+      <FixedWidthContainer>
+        <BottomWrapper>
+          <StyledHeading>FAQ</StyledHeading>
+          <FAQTilesWrapper>
+            {FAQ.map((item, index) => (
+              <Fragment key={item.question}>
+                <FAQTile {...item} />
+              </Fragment>
+            ))}
+            <XXXLargeHr />
+          </FAQTilesWrapper>
+        </BottomWrapper>
+      </FixedWidthContainer>
+      <Footer />
+    </BlueBRWrapper>
+  );
+};
+
+const HowItWorksDetailPage = ({
+  heading,
+  subheading,
+  heroImageUrl,
+  tabs,
+  contents,
+  cards,
+  onTabClick,
+  activeType,
+  onLocationSearch,
+}) => {
+  const header = (
+    <Header heroImageUrl={heroImageUrl} heading={heading} subheading={subheading}>
+      {Object.entries(tabs)
+        .map(([key, tab]) => {
+          return (
+            <Tab active={(key === activeType).toString()} key={key} to={tab.url}>
+              {tab.tabText}
+            </Tab>
+          );
+        })
+      }
+    </Header>
+  );
   return (
     <BasePageTemplate
-      header={HeaderContent}
+      header={header}
       footer={<Bottom />}
     >
-      {ForFamiliesComponents}
+      <ForFamiliesComponents contents={contents} />
       <Hr />
-      <SecondContentWrapper>
-        <SecondContentHeading>Why Use Seniorly</SecondContentHeading>
-        <SecondContentTilesWrapper>{secondContentTiles}</SecondContentTilesWrapper>
-      </SecondContentWrapper>
+      <CardsSection>
+        <StyledHeading>Why Use Seniorly</StyledHeading>
+        <CardTiles>
+          {cards.map((item, index) => (
+            <IconInfoTile
+              key={index}
+              {...item}
+            />
+          ))}
+        </CardTiles>
+      </CardsSection>
     </BasePageTemplate>
   );
 };
@@ -224,7 +237,7 @@ HowItWorksDetailPage.propTypes = {
   subheading: string,
   imageUrl: string,
   contents: arrayOf(object),
-  tabs: arrayOf(object),
+  tabs: object,
   activeType: string,
   onTabClick: func,
   onLocationSearch: func,

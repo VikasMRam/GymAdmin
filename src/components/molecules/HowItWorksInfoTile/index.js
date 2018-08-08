@@ -4,53 +4,71 @@ import { string, bool } from 'prop-types';
 import { palette } from 'styled-theme';
 
 import { size, assetPath } from 'sly/components/themes';
-import { Icon, Image } from 'sly/components/atoms';
+import { Heading, Block, Icon, Image } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
-  padding-top: ${size('spacing.massive')};
   padding-bottom: ${size('spacing.huge')};
-  // border: ${size('border.regular')} solid ${palette('grayscale', 2)};
-  // border-radius: ${size('spacing.tiny')};
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    flex-direction: row;
+  }
 `;
 
-const ImageWrapper = styled(Image)`
+const ImageWrapper = styled.div`
   order: ${p => p.invert ? 1 : 0};
-  width: ${size('picture.xLarge.width')};
-  height: ${size('picture.xLarge.height')};
-  margin-right: ${p => p.invert ? 0 : size('spacing.xLarge')};
-  margin-left: ${p => p.invert ? size('spacing.xLarge') : 0};
+
+  width: 100%;
+  max-width: ${size('layout.col6')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    max-width: unset;
+    flex-shrink: 0;
+    width: ${size('layout.col6')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    margin-right: ${p => p.invert ? 0 : size('spacing.xLarge')};
+    margin-left: ${p => p.invert ? size('spacing.xLarge') : 0};
+  }
+`;
+
+const StyledImage = styled(Image)`
+  display: block;
+  width: 100%;
 `;
 
 const InfoContentWrapper = styled.div`
   order: ${p => p.invert ? 0 : 1};
   display: flex;
   flex-direction: column;
-  margin-top: calc(${size('spacing.huge')} + ${size('spacing.small')});
 `;
 
 export const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.xLarge')};
 `;
 
-const HeadingWrapper = styled.div`
-  font-size: ${size('text.title')};
+const HeadingWrapper = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const ContentWrapper = styled.div`
-  font-size: ${size('text.subtitle')};
-`;
-
 const HowItWorksInfoTile = ({
-  heading, content, invert,
+  imageUrl,
+  heading,
+  content,
+  invert,
 }) => {
   return (
     <Wrapper>
-      <ImageWrapper invert={invert} src={assetPath('images/how-it-works/macBook-regular.jpg')} />
+      <ImageWrapper>
+        <StyledImage invert={invert} src={assetPath(imageUrl)} />
+      </ImageWrapper>
       <InfoContentWrapper invert={invert}>
         <HeadingWrapper>{heading}</HeadingWrapper>
-        <ContentWrapper>{content}</ContentWrapper>
+        <Block size="subtitle">{content}</Block>
       </InfoContentWrapper>
     </Wrapper>
   );

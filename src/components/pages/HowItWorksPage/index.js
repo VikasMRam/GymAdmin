@@ -244,7 +244,14 @@ const HowItWorksPage = ({ history }) => {
       <DiscoverTiles>{discoverTiles}</DiscoverTiles>
       <StyledHr />
       <SecondContentHeading>A Powerful and Easy Online Listing Platform For All</SecondContentHeading>
-      <SecondContentTiles>{secondContentTiles}</SecondContentTiles>
+      <SecondContentTiles>
+        {secondContents.map((item, index) => (
+          <IconInfoTile
+            key={index}
+            {...item}
+          />
+        ))}
+      </SecondContentTiles>
     </OverlappingSectionsTemplate>
   );
 };

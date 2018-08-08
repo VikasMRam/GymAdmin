@@ -30,30 +30,78 @@ export const secondContents = [
   },
 ];
 
-export const ForFamilies = [
+export const consumerCards = [
   {
+    icon: 'search-dark',
+    heading: 'Unparalleled Search Experience',
+    content: `Our powerful search platform makes it easy for you to discover the communities
+    that fit your needs. We have created an online experience that allows you to filter by
+    location, budget, type of care needed, pet policies and more.  Be sure to take advantage
+    of all the free information and resources throughout our website.`,
+  },
+  {
+    icon: 'logo-dark',
+    heading: 'Personalized Support',
+    content: `We provide you with all of the information you are seeking and we never require
+    you to give any personal details to access it.  When you create a profile, you’ll benefit
+    from our ability to save your searches and preferences for future visits.`,
+  },
+  {
+    icon: 'verified-dark',
+    heading: 'Secure Billing on Your Terms',
+    content: `We’ve developed a secure, safe credit or debit card payment solution for housing
+    fees and other products and services you select.  There is no additional charge to use this
+    feature.`,
+  },
+  {
+    icon: 'happy-dark',
+    heading: 'Peace of Mind',
+    content: `There are many expenses associated with moving into a new home.  We’ve created
+    a way to provide some relief from managing every expenditure.`,
+  },
+  {
+    icon: 'card-dark',
+    heading: 'Use Credit/Debit Card',
+    content: `You can now pay for your senior care services by credit or debit card directly
+    through Seniorly using our secure payment platform at no additional charge.`,
+  },
+  {
+    icon: 'favourite-dark',
+    heading: 'Satisfaction Guarantee',
+    content: `If you are not 100% in love with the community you have selected, we will be there
+    to help you find the right one and locate additional services or support that may be missing.`,
+  },
+];
+
+export const Consumers = [
+  {
+    imageUrl: 'images/how-it-works/screenshot.jpg',
     heading: 'Use our powerful search platform',
     content: `We have built a best-in-class search platform that has been proven to provide the most useful results.
       Enter the city or zip code of where you are looking for housing and let the search platform do the rest.
       You will have access to all details without having to provide any personal information.`,
   },
   {
+    imageUrl: 'images/how-it-works/iphone-login.jpg',
     heading: 'Create your free, secure and personal account',
     content: `Signing in will further customize your experience by saving your previous searches and preferences.
       Oh, and we take privacy seriously. We will never share your contact information without your express consent.`,
   },
   {
+    imageUrl: 'images/how-it-works/filters.jpg',
     heading: 'Customize your search criteria',
     content: `Use our search filters for price, care needs, room type and more to create the most personalized
       experience and results. We know from experience how vital it is for this process to be customized to your needs.`,
   },
   {
+    imageUrl: 'images/how-it-works/compare.jpg',
     heading: 'Compare and choose the homes you’ll love',
     content: `Our results pages are built to empower you with all the information you seek to compare communities.
       If something is missing or you need more information, we are a mouse click, email (ask@seniorly.com) or phone call
       away (855-866-4515).`,
   },
   {
+    imageUrl: 'vectors/Payments.svg',
     heading: 'Pay for services on our secure platform',
     content: `Our billing system allows you to pay online with a credit or debit card, gives you access to special
       discounts from approved products and services, and allows you to easily add services with one bill.`,
@@ -98,7 +146,8 @@ export const howItWorksContents = {
     heading: 'Find a Home to Love',
     subheading: `Follow the simple steps below to search, compare, and connect
         with the senior living community that matches your needs.`,
-    contents: ForFamilies,
+    contents: Consumers,
+    cards: consumerCards,
     heroImageUrl: 'images/how-it-works/for-families.png',
     tabText: 'For Families',
     url: '/how-it-works/consumers',
@@ -110,7 +159,7 @@ export const howItWorksContents = {
     heading: 'List Your Community',
     subheading: `Follow the simple steps below to search, compare, and connect
         with the senior living community that matches your needs.`,
-    contents: ForFamilies,
+    contents: Consumers,
     heroImageUrl: 'images/how-it-works/hero.png',
     tabText: 'For Communities',
     url: '/how-it-works/providers',
@@ -121,7 +170,7 @@ export const howItWorksContents = {
     badgeText: 'Connect with families that want local experts to help with their search',
     heading: 'For Agents',
     subheading: 'Foo !== Bar',
-    contents: ForFamilies,
+    contents: Consumers,
     heroImageUrl: 'images/how-it-works/hero.png',
     tabText: 'For Agents',
     url: '/how-it-works/for-agents',

@@ -10,7 +10,6 @@ import { assetPath } from 'sly/components/themes';
 const HowItWorksDetailPageContainer = ({ match, history }) => {
   const { type } = match.params;
   const content = howItWorksContents[type];
-  console.log({type, content});
   const onTabClick = tab => history.push(tab.url);
 
   return (
