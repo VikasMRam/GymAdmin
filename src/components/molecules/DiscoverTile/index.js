@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
 import { string, func, shape } from 'prop-types';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import { Image, Button, Link } from 'sly/components/atoms';
 
 const Wrapper = styled(Link)`
@@ -15,7 +15,7 @@ const Wrapper = styled(Link)`
 
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   border-radius: ${size('spacing.tiny')};
-  padding: ${size('spacing.large')}; 
+  padding: ${size('spacing.large')};
   padding-top: 0;
 
   transition: box-shadow ${key('transitions.default')}
@@ -25,7 +25,7 @@ const Wrapper = styled(Link)`
   &:hover {
     color: ${palette('slate', 0)};
     cursor: pointer;
-    background: #fff;
+    background: ${palette('white', 0)};
     box-shadow:
       0
       ${size('spacing.small')}
@@ -68,12 +68,12 @@ const DiscoverTile = ({ content, ...props }) => {
   const {
     badgeImageUrl,
     badgeName,
-    badgeText
+    badgeText,
   } = content;
 
   return (
     <Wrapper {...props}>
-      <ImageWrapper src={assetPath(badgeImageUrl)} />
+      <ImageWrapper src={badgeImageUrl} />
       <HeadingWrapper>{badgeName}</HeadingWrapper>
       <SubheadingWrapper>{badgeText}</SubheadingWrapper>
       <StyledButton palette="primary">Learn More</StyledButton>
@@ -83,9 +83,9 @@ const DiscoverTile = ({ content, ...props }) => {
 
 DiscoverTile.propTypes = {
   content: shape({
-    imageUrl: string,
-    heading: string,
-    subHeading: string,
+    badgeImageUrl: string,
+    badgeName: string,
+    badgeText: string,
   }),
   onClick: func,
 };
