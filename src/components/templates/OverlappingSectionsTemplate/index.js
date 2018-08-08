@@ -12,7 +12,7 @@ import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 
 const HeroWrapper = styled.div`
   position: relative;
-  background-color: ${palette('grayscale', 0)};
+  background-color: ${palette('slate', 0)};
   height: ${size('header.home.heroImage.height')};
 `;
 
@@ -21,6 +21,7 @@ const StyledImage = styled(Image)`
   width: 100%;
   height: 100%;
   display: block;
+  opacity: 0.5;
 `;
 
 const Title = styled.div`

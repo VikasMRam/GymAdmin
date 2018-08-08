@@ -47,6 +47,13 @@ const promoTypes = [
   'rebate',
 ].join('|');
 
+const TempHowItWorks = ({ ...props }) => (
+  <HowItWorksDetailPageContainer
+    {...props}
+    match={{params:{type: 'consumers'}}}
+  />
+);
+
 export default class App extends Component {
   static childContextTypes = {
     routes: routesPropType,
@@ -94,11 +101,11 @@ export default class App extends Component {
     },
     {
       path: '/how-it-works',
-      component: HowItWorksPage,
+      component: TempHowItWorks,
       exact: true,
     },
     {
-      path: '/our-history/:member?',
+      path: '/about/:member?',
       component: OurHistoryPage,
       exact: true,
     },

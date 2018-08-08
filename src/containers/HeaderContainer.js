@@ -13,9 +13,9 @@ const defaultHeaderItems = [
   // { name: 'Moving Center', url: '#' },
   // { name: 'News', url: '#' },
   // { name: 'Moving Center', url: '/resources/tags/moving+center' },
-  { name: 'How It Works', url: '/how-it-works' },
+  { name: 'How It Works', url: '/about' },
   { name: 'List Your Property', url: '/providers' },
-  { name: 'Our History', url: '/about' },
+  { name: 'Our History', url: '/our-history' },
   // { name: 'Sign in', url: '/signin' },
 ];
 

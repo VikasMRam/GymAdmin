@@ -30,7 +30,7 @@ const FixedWidthContainer = styled.main`
 
 const HeroWrapper = styled.div`
   position: relative;
-  background-color: ${palette('grayscale', 0)};
+  background-color: ${palette('slate', 0)};
   height: calc(${size('header.home.heroImage.mobileHeight')});
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -41,7 +41,7 @@ const HeroBackgroundImage = styled(Image)`
   object-fit: cover;
   width: 100%;
   height: 100%;
-  opacity: 0.8;
+  opacity: 0.5;
   z-index: 0;
   display: block;
 `;

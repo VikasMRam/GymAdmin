@@ -64,12 +64,12 @@ const ModalContext = styled.article`
   width: 100%;
   height: 100%;
   height: unset;
-  top: calc(50% + 1rem);
-  left: calc(50% - 1rem);
+  top: calc(50% );
+  left: calc(50% );
   right: auto;
   bottom: auto;
-  margin: 1rem calc(-50% + 1rem) 1rem 1rem;
-  max-height: calc(100% - 2rem);
+  margin: 1rem calc(-50% ) 1rem 1rem;
+  max-height: calc(100% );
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: ${size('spacing.xxxLarge')};
   };
