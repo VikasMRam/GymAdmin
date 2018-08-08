@@ -5,9 +5,9 @@ import { assetPath } from 'sly/components/themes';
 import DiscoverTile from '.';
 
 const content = {
-  imageUrl: assetPath('images/how-it-works/discover-1.png'),
-  heading: 'Families',
-  subHeading: 'Find an assisted living community to love from our thousands of listings',
+  badgeImageUrl: assetPath('images/how-it-works/discover-1.png'),
+  badgeName: 'Families',
+  badgeText: 'Find an assisted living community to love from our thousands of listings',
 };
 
 function onClick() {
