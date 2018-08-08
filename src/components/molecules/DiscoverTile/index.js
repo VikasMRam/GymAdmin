@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
 import { string, func, shape } from 'prop-types';
 
-import { size } from 'sly/components/themes';
+import { size, assetPath } from 'sly/components/themes';
 import { Image, Button, Link } from 'sly/components/atoms';
 
 const Wrapper = styled(Link)`
@@ -15,7 +15,7 @@ const Wrapper = styled(Link)`
 
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   border-radius: ${size('spacing.tiny')};
-  padding: 0 ${size('spacing.large')}; 
+  padding: 0 ${size('spacing.large')};
   padding-bottom: ${size('spacing.xLarge')};
 
   transition: box-shadow ${key('transitions.default')}
@@ -63,7 +63,7 @@ const DiscoverTile = ({ content, ...props }) => {
 
   return (
     <Wrapper {...props}>
-      <ImageWrapper src={badgeImageUrl} />
+      <ImageWrapper src={assetPath(badgeImageUrl)} />
       <HeadingWrapper>{badgeName}</HeadingWrapper>
       <SubheadingWrapper>{badgeText}</SubheadingWrapper>
       <Button palette="primary">Learn More</Button>
