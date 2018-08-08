@@ -7,16 +7,16 @@ import { size } from 'sly/components/themes';
 import { Image, Button, Link } from 'sly/components/atoms';
 
 const Wrapper = styled(Link)`
+  display: block;
   margin-top: ${size('element.xxLarge')};
-  display: flex;
-  flex-direction: column;
+  text-align: center;
 
   color: ${palette('slate', 0)};
 
   border: ${size('border.regular')} solid ${palette('grayscale', 2)};
   border-radius: ${size('spacing.tiny')};
-  padding: ${size('spacing.large')};
-  padding-top: 0;
+  padding: 0 ${size('spacing.large')}; 
+  padding-bottom: ${size('spacing.xLarge')};
 
   transition: box-shadow ${key('transitions.default')}
     , opacity ${key('transitions.default')}
@@ -37,30 +37,20 @@ const Wrapper = styled(Link)`
 `;
 
 export const ImageWrapper = styled(Image)`
-  margin: 0 auto;
   width: ${size('element.huge')};
   height: ${size('element.huge')};
   margin-top: -${size('element.xxLarge')};
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.regular')};
 `;
 
 const HeadingWrapper = styled.div`
-  margin: 0 auto;
   font-size: ${size('text.subtitle')};
   font-weight: bold;
   margin-bottom: ${size('spacing.regular')};
 `;
 
 const SubheadingWrapper = styled.div`
-  flex: 1 0;
   font-size: ${size('text.subtitle')};
-  margin-bottom: ${size('spacing.large')};
-  text-align: center;
-`;
-
-const StyledButton = styled(Button)`
-  flex: 0 0 ${size('element.regular')};
-  margin: 0 auto;
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -76,7 +66,7 @@ const DiscoverTile = ({ content, ...props }) => {
       <ImageWrapper src={badgeImageUrl} />
       <HeadingWrapper>{badgeName}</HeadingWrapper>
       <SubheadingWrapper>{badgeText}</SubheadingWrapper>
-      <StyledButton palette="primary">Learn More</StyledButton>
+      <Button palette="primary">Learn More</Button>
     </Wrapper>
   );
 };

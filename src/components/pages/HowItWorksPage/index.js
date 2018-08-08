@@ -43,10 +43,12 @@ const ContentSubheading = styled.div`
 `;
 
 const DiscoverTiles = styled.div`
+  display: flex;
+  flex-direction: column;
   margin-bottom: ${size('spacing.xxxLarge')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     margin-right: -${size('spacing.xLarge')};
   }
