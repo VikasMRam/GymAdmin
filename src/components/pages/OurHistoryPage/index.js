@@ -143,10 +143,10 @@ const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
   );
 
   const teamMemberTiles = profiles
-    .map(p => <StyledProfileTile
-      key={p.heading}
-      to={ourHistoryUri(p.slug)}
-      profile={p} />);
+  .map(p => <StyledProfileTile
+    key={p.heading}
+    to={ourHistoryUri(p.slug)}
+    profile={p} />);
 
   const pressTiles = press.map((item, index) => {
     const props = { ...item };
@@ -180,14 +180,16 @@ const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
         <StyledHeading>Seniorly in the Press</StyledHeading>
         <PressTilesWrapper>{pressTiles}</PressTilesWrapper>
 
-        <Modal
-          layout="single"
-          closeable
-          isOpen={!!member}
-          onClose={() => push(ourHistoryUri())}
-        >
-          <ProfileTile layout="modal" profile={member} to={ourHistoryUri()} />
-        </Modal>
+        {member &&
+          <Modal
+            layout="single"
+            closeable
+            isOpen={!!member}
+            onClose={() => push(ourHistoryUri())}
+          >
+            <ProfileTile layout="modal" profile={member} to={ourHistoryUri()} />
+          </Modal>
+        }
       </ContentWrapper>
     </OverlappingSectionsTemplate>
   );

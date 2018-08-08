@@ -5,12 +5,22 @@ import AgentsProfilePage from 'sly/components/pages/AgentsProfilePage';
 import { connectController } from 'sly/controllers';
 import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList } from 'sly/store/selectors';
+import { agents } from 'sly/services/helpers/agents';
 
 const agentStateRegionMap = {
   CA: 'West Coast',
   WA: 'West Coast',
   OR: 'West Coast',
   AZ: 'West Coast',
+  GA: 'South East',
+  KS: 'Mid-West',
+  OH: 'Mid-West',
+  CO: 'West Coast',
+  FL: 'South-East',
+  NY: 'East Coast',
+  TX: 'South-West',
+  ME: 'East Coast',
+  PA: 'East Coast',
 };
 
 class AgentsProfilePageController extends Component {
@@ -29,13 +39,13 @@ class AgentsProfilePageController extends Component {
   }
 
   render() {
-    const { activeProfile, agents } = this.props;
+    const { activeProfile } = this.props;
     const notFoundRegions = [];
     const regionProfiles = agents.reduce((regionProfilesMap, agent) => {
       const profile = {
         id: agent.id,
-        heading: agent.name,
-        subHeading: '',
+        heading: agent.user.name,
+        subHeading: agent.name,
         description: agent.agentBio,
         imageUrl: agent.mainImage,
       };
@@ -63,12 +73,12 @@ class AgentsProfilePageController extends Component {
 const mapStateToProps = (state, { controller }) => {
   return {
     activeProfile: controller.activeProfile || null,
-    agents: getList(state, 'agent'),
+    // agents: getList(state, 'agent'),
   };
 };
 
 const fetchData = (dispatch) => {
-  return dispatch(resourceListReadRequest('agent'));
+  // return dispatch(resourceListReadRequest('agent'));
 };
 
 export default connectController(mapStateToProps, fetchData)(AgentsProfilePageController);
