@@ -39,7 +39,7 @@ const ButtonWrapper = styled.div`
 `;
 const StyledBox = styled(Box)`
   padding: ${size('spacing.xLarge')};
-  border-color: ${palette('primary', 3)};
+  border-color: ${palette('secondary', 3)};
   border-top: 0;
 `;
 const TwoColumnWrapper = styled.div`
