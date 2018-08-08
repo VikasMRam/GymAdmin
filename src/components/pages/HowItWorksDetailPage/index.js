@@ -67,12 +67,13 @@ const BlueBRWrapper = styled.div`
 const BottomWrapper = styled.div`
   padding: ${size('spacing.massive')} 0;
   margin: 0 auto;
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.col8')};
   }
 `;
 
-const XXXLargeHr = styled(Hr)`
+const FAQHr = styled(Hr)`
   margin: ${size('spacing.xxxLarge')} 0;
 `;
 
@@ -124,21 +125,22 @@ const Header = ({ heroImageUrl, heading, subheading, children }) => (
 );
 
 const ForFamiliesComponents = ({ contents }) => contents
-  .map((content, index) => {
-    const invert = index % 2 === 1;
-    return (
-      <HowItWorksInfoTile
-        key={content.heading}
-        invert={invert}
-        {...content}
-      />
-    );
-  });
+  .map((content, index) => (
+    <HowItWorksInfoTile
+      key={content.heading}
+      invert={index % 2 === 1}
+      {...content}
+    />
+  ));
+
+const StyledHr = styled(Hr)`
+  margin-bottom: ${size('spacing.xxxLarge')};
+`;
 
 const CardsSection = styled.div`
   display: flex;
   flex-direction: column;
-  margin: ${size('spacing.massive')} 0;
+  margin-bottom: ${size('spacing.xxxLarge')};
 `;
 
 const StyledHeading = styled(Heading)`
@@ -147,8 +149,6 @@ const StyledHeading = styled(Heading)`
 `;
 
 const CardTiles = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
-
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: flex;
     flex-wrap: wrap;
@@ -175,7 +175,7 @@ const Bottom = () => {
             <Fragment key={item.question}>
               <FAQTile {...item} />
               {index !== FAQ.length -1 &&
-                <XXXLargeHr />
+                <FAQHr />
               }
             </Fragment>
           ))}
@@ -216,7 +216,7 @@ const HowItWorksDetailPage = ({
       footer={<Bottom />}
     >
       <ForFamiliesComponents contents={contents} />
-      <Hr />
+      <StyledHr />
       <CardsSection>
         <StyledHeading>Why Use Seniorly</StyledHeading>
         <CardTiles>

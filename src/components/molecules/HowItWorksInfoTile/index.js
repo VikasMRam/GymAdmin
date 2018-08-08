@@ -63,8 +63,8 @@ const HowItWorksInfoTile = ({
 }) => {
   return (
     <Wrapper>
-      <ImageWrapper>
-        <StyledImage invert={invert} src={assetPath(imageUrl)} />
+      <ImageWrapper invert={invert}>
+        <StyledImage src={assetPath(imageUrl)} />
       </ImageWrapper>
       <InfoContentWrapper invert={invert}>
         <HeadingWrapper>{heading}</HeadingWrapper>
