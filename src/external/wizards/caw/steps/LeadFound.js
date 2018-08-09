@@ -24,7 +24,7 @@ const LeadFound = ({ searchResultCount }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeading>We found {searchResultCount} options near you. Sign up to view your options.</StyledHeading>
-    <Description>Sign up to view your options and pricing - FREE Service.</Description>
+    <Description>Sign up to view your options and pricing - This is a FREE Service.</Description>
     <Field
       name={stepInputFieldNames.LeadFound[0]}
       placeholder="Name"

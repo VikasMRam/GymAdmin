@@ -336,7 +336,9 @@ const PromoPage = ({ isModalOpen, isWizardActive, onLocationSearch, setActiveDis
         <HeroWrapper>
           <SearchBoxWrapper>
             <StyledHeading level="hero" size="hero" palette="white">
-              The #1 company to find Senior Housing in San Francisco
+              The #1 company to find Senior Housing in
+              <br/>
+              San Francisco
             </StyledHeading>
             <StyledHeading level="title" size="title" palette="white">
               $150 off first month's rent.
