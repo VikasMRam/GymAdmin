@@ -131,7 +131,7 @@ const AgentsProfilePage = ({
       footer={<Footer />}
     >
       {agentsSectionComponents}
-      <Modal layout="searchBox" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
+      <Modal layout="single" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
         {activeProfile && <ProfileTile profile={activeProfile} layout="modal" />}
       </Modal>
     </BasePageTemplate>

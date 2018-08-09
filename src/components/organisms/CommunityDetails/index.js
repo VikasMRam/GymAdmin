@@ -27,9 +27,9 @@ const CommunityDetails = ({
     <CollapsibleBlock collapsedDefault={false}>
       {communityDescription ? (
         <StyledArticle>
-          <Paragraph
-            dangerouslySetInnerHTML={{ __html: communityDescription }}
-          />
+          {communityDescription.split('\n\n')
+            .map((paragraph, index) => <Paragraph>{paragraph}</Paragraph>)
+          }
         </StyledArticle>
       ) : (
         'No details are available'
@@ -39,7 +39,9 @@ const CommunityDetails = ({
           <StyledHeading level="subtitle" size="subtitle">
             Owners Story
           </StyledHeading>
-          <Paragraph>{ownerExperience}</Paragraph>
+          {ownerExperience.split('\n\n')
+            .map((paragraph, index) => <Paragraph>{paragraph}</Paragraph>)
+          }
         </StyledArticle>
       )}
       {staffDescription && (
@@ -47,7 +49,9 @@ const CommunityDetails = ({
           <StyledHeading level="subtitle" size="subtitle">
             About the Staff at {communityName}
           </StyledHeading>
-          <Paragraph>{staffDescription}</Paragraph>
+          {staffDescription.split('\n\n')
+            .map((paragraph, index) => <Paragraph>{paragraph}</Paragraph>)
+          }
         </StyledArticle>
       )}
       {residentDescription && (
@@ -55,7 +59,9 @@ const CommunityDetails = ({
           <StyledHeading level="subtitle" size="subtitle">
             About the Residents at {communityName}
           </StyledHeading>
-          <Paragraph>{residentDescription}</Paragraph>
+          {residentDescription.split('\n\n')
+            .map((paragraph, index) => <Paragraph>{paragraph}</Paragraph>)
+          }
         </StyledArticle>
       )}
     </CollapsibleBlock>
