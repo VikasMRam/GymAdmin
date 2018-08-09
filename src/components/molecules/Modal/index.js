@@ -14,26 +14,6 @@ injectGlobal`
   }
 `;
 
-const overlayStyles = css`
-  position: fixed;
-  // for old browsers
-  background-color: ${palette('slate', 0)};
-  background-color: ${palette('slate', 0)}e5;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  z-index: ${key('zIndexes.modal.overlay')};
-  transition: opacity 250ms ease-in-out;
-  opacity: 0;
-  &[class*='after-open'] {
-    opacity: 1;
-  }
-  &[class*='before-close'] {
-    opacity: 0;
-  }
-`;
-
 const ModalBox = styled(ReactModal)`
   background-color: ${ifProp('transparent', 'transparent', palette('white', 0))};
   outline: none;
@@ -53,6 +33,28 @@ const ModalBox = styled(ReactModal)`
   }
 `;
 
+const StyledReactModal = styled(({ className, ...props }) => (
+  <ModalBox overlayClassName={className} closeTimeoutMS={250} {...props} />
+))`
+  position: fixed;
+  // for old browsers
+  background-color: ${palette('slate', 0)};
+  background-color: ${palette('slate', 0)}e5;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: ${key('zIndexes.modal.overlay')};
+  transition: opacity 250ms ease-in-out;
+  opacity: 0;
+  &[class*='after-open'] {
+    opacity: 1;
+  }
+  &[class*='before-close'] {
+    opacity: 0;
+  }
+`;
+
 const ModalContext = styled.article`
   background-color: ${ifProp('transparent', 'transparent', palette('white', 0))};
   color: ${ifProp('transparent', palette('white', 0), palette('slate', 0))};
@@ -69,7 +71,7 @@ const ModalContext = styled.article`
   right: auto;
   bottom: auto;
   margin: 1rem calc(-50% + 1rem) 1rem 1rem;
-  max-height: calc(100% - 2rem);
+  max-height: calc(100% - 4rem);
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: ${size('spacing.xxxLarge')};
   };
@@ -119,10 +121,6 @@ const ModalContext = styled.article`
     `,
   })}
 `;
-
-const StyledReactModal = styled(({ className, ...props }) => (
-  <ModalBox overlayClassName={className} closeTimeoutMS={250} {...props} />
-))`${overlayStyles};`;
 
 const Heading = styled.div`
   padding-bottom: ${size('spacing.xLarge')};
