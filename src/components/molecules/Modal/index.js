@@ -64,12 +64,12 @@ const ModalContext = styled.article`
   width: 100%;
   height: 100%;
   height: unset;
-  top: calc(50% );
-  left: calc(50% );
+  top: calc(50% + 1rem);
+  left: calc(50% - 1rem);
   right: auto;
   bottom: auto;
-  margin: 1rem calc(-50% ) 1rem 1rem;
-  max-height: calc(100% );
+  margin: 1rem calc(-50% + 1rem) 1rem 1rem;
+  max-height: calc(100% - 2rem);
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: ${size('spacing.xxxLarge')};
   };
@@ -103,6 +103,7 @@ const ModalContext = styled.article`
       padding: ${size('spacing.xLarge')};
       width: 100%;
       overflow: auto;
+      display: block;
       @media screen and (min-width: ${size('breakpoint.mobile')}) {
         width: auto;
       }
