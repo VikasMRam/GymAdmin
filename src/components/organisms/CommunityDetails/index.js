@@ -7,7 +7,7 @@ import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 import { Paragraph, Heading } from 'sly/components/atoms';
 
 const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.large')}; 
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const StyledArticle = styled.article`
@@ -28,7 +28,7 @@ const CommunityDetails = ({
       {communityDescription ? (
         <StyledArticle>
           {communityDescription.split('\n\n')
-            .map((paragraph, index) => <Paragraph>{paragraph}</Paragraph>)
+            .map((paragraph, index) => <Paragraph key={`p_${index}`}>{paragraph}</Paragraph>)
           }
         </StyledArticle>
       ) : (
@@ -40,7 +40,7 @@ const CommunityDetails = ({
             Owners Story
           </StyledHeading>
           {ownerExperience.split('\n\n')
-            .map((paragraph, index) => <Paragraph>{paragraph}</Paragraph>)
+            .map((paragraph, index) => <Paragraph key={`p_${index}`}>{paragraph}</Paragraph>)
           }
         </StyledArticle>
       )}
@@ -50,7 +50,7 @@ const CommunityDetails = ({
             About the Staff at {communityName}
           </StyledHeading>
           {staffDescription.split('\n\n')
-            .map((paragraph, index) => <Paragraph>{paragraph}</Paragraph>)
+            .map((paragraph, index) => <Paragraph key={`p_${index}`}>{paragraph}</Paragraph>)
           }
         </StyledArticle>
       )}
@@ -60,7 +60,7 @@ const CommunityDetails = ({
             About the Residents at {communityName}
           </StyledHeading>
           {residentDescription.split('\n\n')
-            .map((paragraph, index) => <Paragraph>{paragraph}</Paragraph>)
+            .map((paragraph, index) => <Paragraph key={`p_${index}`}>{paragraph}</Paragraph>)
           }
         </StyledArticle>
       )}
