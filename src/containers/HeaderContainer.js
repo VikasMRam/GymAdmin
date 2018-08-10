@@ -15,7 +15,7 @@ const defaultHeaderItems = [
   // { name: 'Moving Center', url: '/resources/tags/moving+center' },
   { name: 'How It Works', url: '/how-it-works' },
   { name: 'List Your Property', url: '/providers' },
-  { name: 'Our History', url: '/about' },
+  { name: 'Our Company', url: '/about' },
   // { name: 'Sign in', url: '/signin' },
 ];
 
@@ -26,7 +26,7 @@ const defaultMenuItems = [
   { name: 'Assisted Living', url: '/assisted-living' },
   { name: "Alzheimer's Care", url: '/alzheimers-care' },
   { name: 'Respite Care', url: '/respite-care' },
-  { name: 'Our History', url: '/about' },
+  { name: 'Our Company', url: '/about' },
   { name: 'Contact', url: '/contact' },
   { name: 'Careers', url: 'https://angel.co/seniorly/jobs' },
   { name: 'List on Seniorly', url: '/providers' },

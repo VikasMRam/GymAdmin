@@ -19,7 +19,6 @@ const Wrapper = styled.div`
 `;
 
 const ImageWrapper = styled.div`
-  order: ${p => p.invert ? 1 : 0};
 
   width: 100%;
   max-width: ${size('layout.col6')};
@@ -31,6 +30,7 @@ const ImageWrapper = styled.div`
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    order: ${p => p.invert ? 1 : 0};
     margin-right: ${p => p.invert ? 0 : size('spacing.xLarge')};
     margin-left: ${p => p.invert ? size('spacing.xLarge') : 0};
   }
@@ -42,9 +42,12 @@ const StyledImage = styled(Image)`
 `;
 
 const InfoContentWrapper = styled.div`
-  order: ${p => p.invert ? 0 : 1};
   display: flex;
   flex-direction: column;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    order: ${p => p.invert ? 0 : 1};
+  }
 `;
 
 export const StyledIcon = styled(Icon)`

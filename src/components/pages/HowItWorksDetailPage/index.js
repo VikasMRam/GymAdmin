@@ -6,7 +6,7 @@ import { palette } from 'styled-theme';
 import { size, assetPath } from 'sly/components/themes';
 
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
-import { Image, Link, Label, Heading, Hr } from 'sly/components/atoms';
+import { Image, Link, Block, Heading, Hr } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import HowItWorksInfoTile from 'sly/components/molecules/HowItWorksInfoTile';
@@ -15,7 +15,7 @@ import { FAQ } from 'sly/services/helpers/howItWorks';
 import FAQTile from 'sly/components/molecules/FAQTile';
 
 // Copied from BasePageTemplate
-const FixedWidthContainer = styled.main`
+const FixedWidthContainer = styled.div`
   width: 100%;
   margin: 0 auto;
   padding: 0 ${size('spacing.large')};
@@ -31,12 +31,18 @@ const FixedWidthContainer = styled.main`
 const HeroWrapper = styled.div`
   position: relative;
   background-color: ${palette('slate', 0)};
-  height: calc(${size('header.home.heroImage.mobileHeight')});
+  height: 40vh;
+  max-height: ${size('layout.col5')};
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    height: ${size('header.home.heroImage.height')};
+  > * {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
   }
 `;
+
 const HeroBackgroundImage = styled(Image)`
   object-fit: cover;
   width: 100%;
@@ -45,19 +51,27 @@ const HeroBackgroundImage = styled(Image)`
   z-index: 0;
   display: block;
 `;
-const HeroTextWrapper = styled.div`
-  position: absolute;
-  top: 40%;
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('header.home.heroSearchBox.width')};
-  }
+const HeroTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
 `;
+
 const HeroHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
 `;
-const HeroSubheading = styled(Label)`
+
+const HeroSubheading = styled(Block)`
   margin-bottom: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding-right: ${size('layout.col2')};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding-right: ${size('layout.col6')};
+  }
 `;
 
 const BlueBRWrapper = styled.div`
@@ -107,19 +121,19 @@ const Header = ({ heroImageUrl, heading, subheading, children }) => (
     <HeaderContainer />
     <HeroWrapper>
       <HeroBackgroundImage src={assetPath(heroImageUrl)} alt="A Home To Love" />
-      <FixedWidthContainer>
-        <HeroTextWrapper>
+      <HeroTextWrapper>
+        <FixedWidthContainer>
           <HeroHeading level="hero" size="hero" palette="white">
             {heading}
           </HeroHeading>
-          <HeroSubheading palette="white">
+          <HeroSubheading size="subtitle" palette="white">
             {subheading}
           </HeroSubheading>
-        </HeroTextWrapper>
-        {/*<TabsWrapper>
-          {children}
-        </TabsWrapper>*/}
-      </FixedWidthContainer>
+        </FixedWidthContainer>
+      </HeroTextWrapper>
+      {/*<TabsWrapper>
+        {children}
+      </TabsWrapper>*/}
     </HeroWrapper>
   </Fragment>
 );

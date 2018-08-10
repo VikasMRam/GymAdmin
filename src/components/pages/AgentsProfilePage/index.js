@@ -6,12 +6,77 @@ import { palette } from 'styled-theme';
 import { size, assetPath } from 'sly/components/themes';
 
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
-import { Image, Label, Heading } from 'sly/components/atoms';
+import { Link, Image, Block, Heading } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ProfileTile from 'sly/components/molecules/ProfileTile';
 import Footer from 'sly/components/organisms/Footer';
 import Modal from 'sly/components/molecules/Modal';
+import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import Section from 'sly/components/molecules/Section';
+
+const mostSearchedCities = [
+  {
+    to: '/assisted-living/california/san-francisco',
+    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    subtitle: 'San Francisco, CA',
+    title: '95+ communities',
+  },
+  {
+    to: '/assisted-living/california/los-angeles',
+    image: assetPath('images/cities/LosAngeles.jpeg'),
+    subtitle: 'Los Angeles, CA',
+    title: '105+ communities',
+  },
+  {
+    to: '/assisted-living/california/san-diego',
+    image: assetPath('images/cities/SanDiego.jpeg'),
+    subtitle: 'San Diego, CA',
+    title: '75+ communities',
+  },
+  {
+    to: '/assisted-living/texas/dallas',
+    image: assetPath('images/cities/Dallas.jpeg'),
+    subtitle: 'Dallas, TX',
+    title: '90+ communities',
+  },
+  {
+    to: '/assisted-living/texas/houston',
+    image: assetPath('images/cities/Houston.jpeg'),
+    subtitle: 'Houston, TX',
+    title: '72+ communities',
+  },
+  {
+    to: '/assisted-living/arizona/phoenix',
+    image: assetPath('images/cities/Pheonix.jpeg'),
+    subtitle: 'Phoenix, AZ',
+    title: '151+ communities',
+  },
+  {
+    to: '/assisted-living/florida/orlando',
+    image: assetPath('images/cities/Orlando.jpeg'),
+    subtitle: 'Orlando, FL',
+    title: '60+ communities',
+  },
+  {
+    to: '/assisted-living/florida/miami',
+    image: assetPath('images/cities/Miami.jpeg'),
+    subtitle: 'Miami, FL',
+    title: '150+ communities',
+  },
+];
+
+const StyledLink = styled(Link)`
+  display: block;
+`;
+
+const mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
+  <StyledLink key={mostSearchedCity.title} to={mostSearchedCity.to}>
+    <ImageOverlayContentTile size="small" image={mostSearchedCity.image}>
+      <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
+      <Block palette="white">{mostSearchedCity.title}</Block>
+    </ImageOverlayContentTile>
+  </StyledLink>
+));
 
 // Copied from BasePageTemplate
 const FixedWidthContainer = styled.main`
@@ -30,12 +95,18 @@ const FixedWidthContainer = styled.main`
 const HeroWrapper = styled.div`
   position: relative;
   background-color: ${palette('slate', 0)};
-  height: calc(${size('header.home.heroImage.mobileHeight')});
+  height: 40vh;
+  max-height: ${size('layout.col5')};
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    height: ${size('header.home.heroImage.height')};
+  > * {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
   }
 `;
+
 const HeroBackgroundImage = styled(Image)`
   object-fit: cover;
   width: 100%;
@@ -44,19 +115,26 @@ const HeroBackgroundImage = styled(Image)`
   z-index: 0;
   display: block;
 `;
-const HeroTextWrapper = styled.div`
-  position: absolute;
-  top: 40%;
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('header.home.heroSearchBox.width')};
-  }
+const HeroTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
+
 const HeroHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
 `;
-const HeroSubheading = styled(Label)`
+
+const HeroSubheading = styled(Block)`
   margin-bottom: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding-right: ${size('layout.col2')};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding-right: ${size('layout.col6')};
+  }
 `;
 
 const StyledSection = styled(Section)`
@@ -65,6 +143,43 @@ const StyledSection = styled(Section)`
 
   & > h2 {
     margin-bottom: ${size('spacing.xLarge')};
+  }
+`;
+
+const ColumnWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+
+  > * {
+    margin-bottom: ${size('spacing.xLarge')};
+  }
+  > *:last-child {
+    margin-right: 0;
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+`;
+
+const MSCColumnWrapper = ColumnWrapper.extend`
+  > * {
+    margin-bottom: ${size('spacing.large')};
+  }
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    > *:nth-child(odd) {
+      margin-right: ${size('spacing.xLarge')};
+    }
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    > * {
+      margin-right: ${size('spacing.xLarge')};
+    }
+    > *:nth-child(4n) {
+      margin-right: 0;
+    }
   }
 `;
 
@@ -111,16 +226,16 @@ const AgentsProfilePage = ({
       <HeaderContainer onLocationSearch={onLocationSearch} />
       <HeroWrapper>
         <HeroBackgroundImage src={assetPath('images/agent-hero.jpg')} alt="A Home To Love" />
-        <FixedWidthContainer>
-          <HeroTextWrapper>
+        <HeroTextWrapper>
+          <FixedWidthContainer>
             <HeroHeading level="hero" size="hero" palette="white">
-              Agents
+              Our Seniorly Guides
             </HeroHeading>
-            <HeroSubheading palette="white">
-              List of Agents
+            <HeroSubheading palette="white" size="subtitle">
+              We partner with local senior living experts across the country.  These local experts help thousands of families every year.
             </HeroSubheading>
-          </HeroTextWrapper>
-        </FixedWidthContainer>
+          </FixedWidthContainer>
+        </HeroTextWrapper>
       </HeroWrapper>
     </Fragment>
   );
@@ -131,6 +246,11 @@ const AgentsProfilePage = ({
       footer={<Footer />}
     >
       {agentsSectionComponents}
+      <StyledSection title="Most Searched Cities">
+        <MSCColumnWrapper>
+          {mostSearchedCitiesComponents}
+        </MSCColumnWrapper>
+      </StyledSection>
       <Modal layout="single" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
         {activeProfile && <ProfileTile profile={activeProfile} layout="modal" />}
       </Modal>

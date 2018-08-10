@@ -148,8 +148,8 @@ const Join = styled.div`
 
 const groups = {
   Company: [
-    { name: 'Our History', url: '/about' },
-    { name: 'The Team', url: '/about#/#sly-team' },
+    { name: 'Our Company', url: '/about' },
+    { name: 'Seniorly Guides', url: '/agents' },
     { name: 'Career', url: 'https://angel.co/seniorly/jobs', target: '_blank' },
     { name: 'Press', url: '/about#/#press' },
     { name: 'Contact', url: '/contact' },

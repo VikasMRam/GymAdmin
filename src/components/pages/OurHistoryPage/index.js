@@ -54,7 +54,7 @@ const BabyArthurImage = styled(Image)`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-right: ${size('layout.col1')};
-    float: none; 
+    float: none;
     order: 2;
   }
 `;
@@ -160,8 +160,8 @@ const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
 
   return (
     <OverlappingSectionsTemplate
-      imagePath="images/our-history/hero.png"
-      title="Our History"
+      imagePath="images/our-history/hero.jpg"
+      title="Our Company"
       subtitle="Helping Families and Individuals find the right Senior living options"
       intro={intro}
       description={description}

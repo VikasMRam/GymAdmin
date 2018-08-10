@@ -101,6 +101,11 @@ export const Consumers = [
       away (855-866-4515).`,
   },
   {
+    imageUrl: 'images/how-it-works/screenshot.jpg',
+    heading: 'Get Support and Answers from our Seniorly Guides',
+    content: 'Nobody should have to go it alone, trying to navigate all of the choices and challenges.  Our Seniorly Guides are local experts who know all of the communities in your desired city, can personally take you on tours and serve as your advocate for all your unanswered questions.',
+  },
+  {
     imageUrl: 'vectors/Payments.svg',
     heading: 'Pay for services on our secure platform',
     content: `Our billing system allows you to pay online with a credit or debit card, gives you access to special

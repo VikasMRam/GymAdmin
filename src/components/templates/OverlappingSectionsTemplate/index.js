@@ -10,45 +10,47 @@ import { Image, Label, Heading, Hr, Link, Block, Button, Icon } from 'sly/compon
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 
+const FixedWidthContainer = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 ${size('spacing.large')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: 0;
+    width: ${size('layout.col8')};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('layout.col12')};
+  }
+`;
+
 const HeroWrapper = styled.div`
   position: relative;
   background-color: ${palette('slate', 0)};
-  height: ${size('header.home.heroImage.height')};
+  height: 40vh;
+  max-height: ${size('layout.col5')};
+
+  > * {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
-const StyledImage = styled(Image)`
+const HeroBackgroundImage = styled(Image)`
   object-fit: cover;
   width: 100%;
   height: 100%;
-  display: block;
   opacity: 0.5;
+  z-index: 0;
+  display: block;
 `;
 
-const Title = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+const HeroTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-
-
-  > * {
-    padding: 0 ${size('spacing.large')};
-    width: 100%;
-
-    @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      padding: 0;
-      width: ${size('layout.col8')};
-    }
-
-    @media screen and (min-width: ${size('breakpoint.laptop')}) {
-      width: ${size('layout.col12')};
-    }
-  }
 
 `;
 
@@ -106,7 +108,7 @@ const Intro = styled.div`
     grid-column: 2 / span 1;
     grid-row: 1 / span 1;
   }
-  
+
   @media screen and (min-width: ${size('breakpoint.laptopLarge')}) {
     grid-column: 3 / span 1;
   }
@@ -139,17 +141,17 @@ const OverlappingSectionsTemplate = ({
     <Fragment>
       <HeaderContainer />
       <HeroWrapper>
-        <StyledImage
+        <HeroBackgroundImage
           src={assetPath(imagePath)}
           alt={`${title} - ${subtitle}`}
         />
         {(title || subtitle) && (
-          <Title>
-            {title && <Heading level="hero" palette="white">
-              {title}
-            </Heading>}
-            {subtitle && <Block palette="white">{subtitle}</Block>}
-          </Title>
+          <HeroTextWrapper>
+            <FixedWidthContainer>
+              {title && <Heading level="hero" palette="white">{title}</Heading>}
+              {subtitle && <Block size="subtitle" palette="white">{subtitle}</Block>}
+            </FixedWidthContainer>
+          </HeroTextWrapper>
         )}
       </HeroWrapper>
       <Grid>
