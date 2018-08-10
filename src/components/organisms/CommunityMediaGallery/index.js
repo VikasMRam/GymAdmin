@@ -3,7 +3,7 @@ import { string, arrayOf, shape, bool, number, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import { Button } from 'sly/components/atoms';
+import { Button, Link } from 'sly/components/atoms';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
 
@@ -35,6 +35,7 @@ export default class CommunityMediaGallery extends Component {
       name: string.isRequired,
       thumbUrl: string.isRequired,
     })),
+    websiteUrl : string,
     ariaHideApp: bool,
     currentSlide: number,
     onSlideChange: func.isRequired,
@@ -50,7 +51,7 @@ export default class CommunityMediaGallery extends Component {
 
   render() {
     const {
-      communityName, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
+      communityName, videos, websiteUrl, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
     } = this.props;
     const { images } = this.props;
     this.sdGalleryImages = videos.map((vid, i) => {
@@ -95,6 +96,10 @@ export default class CommunityMediaGallery extends Component {
       </span>
     );
 
+    const copyright = () => (
+      websiteUrl ? <Link palette='grayscale' href={websiteUrl} target="_blank"> Image source </Link> : null
+    );
+
     return (
       <section>
         <MediaGallery
@@ -102,6 +107,7 @@ export default class CommunityMediaGallery extends Component {
           communityName={communityName}
           images={this.sdGalleryImages}
           bottomLeftSection={this.sdGalleryImages.length > 1 ? bottomLeftSection : null}
+          copyright={copyright()}
           currentSlide={currentSlide}
           onSlideChange={onSlideChange}
         />

@@ -21,10 +21,11 @@ const StyledArticle = styled.article`
 `;
 
 const CommunityDetails = ({
-  communityName, communityDescription, staffDescription, residentDescription, ownerExperience,
+  communityName, communityDescription, staffDescription, residentDescription, ownerExperience, contract,
 }) => {
   return (
     <CollapsibleBlock collapsedDefault={false}>
+
       {communityDescription ? (
         <StyledArticle>
           {communityDescription.split('\n\n')
@@ -64,6 +65,14 @@ const CommunityDetails = ({
           }
         </StyledArticle>
       )}
+      { !contract && (
+        <StyledArticle>
+          <Paragraph>
+            Seniorly is not affiliated with the owner or operator(s) of {communityName}.
+            The information regarding {communityName} has not been verified or approved by the owner or operator.
+          </Paragraph>
+        </StyledArticle>
+      )}
     </CollapsibleBlock>
   );
 };
@@ -74,6 +83,7 @@ CommunityDetails.propTypes = {
   staffDescription: PropTypes.string,
   residentDescription: PropTypes.string,
   ownerExperience: PropTypes.string,
+  contract: PropTypes.bool,
 };
 
 export default CommunityDetails;

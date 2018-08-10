@@ -155,7 +155,7 @@ export default class CommunityDetailPage extends Component {
     } = community;
 
     const {
-      careServices, licenseUrl, serviceHighlights, communityPhone,
+      careServices, licenseUrl, websiteUrl, serviceHighlights, communityPhone,
     } = propInfo;
 
 
@@ -275,6 +275,7 @@ export default class CommunityDetailPage extends Component {
               currentSlide={mediaGallerySlideIndex}
               images={images}
               videos={videos}
+              websiteUrl={websiteUrl}
               onSlideChange={onMediaGallerySlideChange}
               isFullscreenMode={isMediaGalleryFullscreenActive}
               onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
@@ -306,6 +307,7 @@ export default class CommunityDetailPage extends Component {
                 reviewsValue={reviewsValue}
                 phoneNumber={communityPhone}
                 licenseUrl={licenseUrl}
+                websiteUrl={websiteUrl}
                 user={communityUser}
                 amenityScore={rgsAux.amenityScore}
                 startingRate={startingRate}
@@ -366,6 +368,7 @@ export default class CommunityDetailPage extends Component {
                 staffDescription={staffDescription}
                 residentDescription={residentDescription}
                 ownerExperience={ownerExperience}
+                contract={community.contacts && community.contacts.length > 0} // TODO: cheange to use contract info once api sends it
               />
             </CollapsibleSection>
           }

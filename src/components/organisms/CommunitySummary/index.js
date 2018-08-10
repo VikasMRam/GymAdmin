@@ -58,7 +58,7 @@ export default class communitySummary extends React.Component {
 
   render() {
     const {
-      isCCRC, twilioNumber, phoneNumber, user, licenseUrl, amenityScore, communityHighlights, startingRate,
+      isCCRC, twilioNumber, phoneNumber, user, licenseUrl, websiteUrl, amenityScore, communityHighlights, startingRate,
       estimatedPrice, reviewsValue, innerRef, onConciergeNumberClicked, onReceptionNumberClicked, onHowSeniorlyWorks,
     } = this.props;
 
@@ -121,6 +121,17 @@ export default class communitySummary extends React.Component {
           target="_blank"
         >
           State Inspection Reports
+        </Link>
+      ));
+    }
+
+    if (websiteUrl) {
+      highlights.push((
+        <Link
+          href={websiteUrl}
+          target="_blank"
+        >
+          Property Website
         </Link>
       ));
     }

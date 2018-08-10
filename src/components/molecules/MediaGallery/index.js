@@ -67,6 +67,18 @@ const BottomLeftWrapper = styled.span`
   position: absolute;
   z-index: 1;
 `;
+
+const CopyrightWrapper = styled.div`
+  background: ${palette('black', 0)}80;
+  color: ${palette('grayscale', 2)};
+  font-size: ${size('text.tiny')};
+  padding: ${size('spacing.small')} ${size('spacing.regular')};
+  right: ${size('spacing.large')};
+  bottom: ${size('spacing.large')};
+  position: absolute;
+  z-index: 1;
+`;
+
 const sliderRootElementStyle = {
   height: 'inherit',
   lineHeight: 0,
@@ -239,7 +251,7 @@ export default class MediaGallery extends Component {
 
   render() {
     const {
-      currentSlide, videos, images, topRightSection, bottomLeftSection, showThumbnails, onSlideClick, onSlideChange,
+      currentSlide, videos, images, topRightSection, bottomLeftSection, copyright, showThumbnails, onSlideClick, onSlideChange,
     } = this.props;
     const thumbnails = [];
     const formattedVideos = videos.map((video) => {
@@ -320,6 +332,12 @@ export default class MediaGallery extends Component {
               {bottomLeftSection(this.allMedia[currentSlide])}
             </BottomLeftWrapper>
           }
+          {copyright &&
+            <CopyrightWrapper>
+              {copyright}
+            </CopyrightWrapper>
+          }
+
         </CarouselWrapper>
         {showThumbnails &&
           <ThumbnailScroller
