@@ -64,8 +64,6 @@ class AgentsProfilePageController extends Component {
     const uniqueArray = notFoundRegions.filter((item, pos) => {
       return notFoundRegions.indexOf(item) === pos;
     });
-    console.log('States not Mapped to Region');
-    console.log(uniqueArray);
     return <AgentsProfilePage regionProfiles={regionProfiles} activeProfile={activeProfile} setModalProfile={this.handleModalProfile} />;
   }
 }

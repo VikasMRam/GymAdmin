@@ -21,18 +21,23 @@ const StyledArticle = styled.article`
 `;
 
 const CommunityDetails = ({
-  communityName, communityDescription, staffDescription, residentDescription, ownerExperience, contract,
+  communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, ownerExperience, contract,
 }) => {
   return (
     <CollapsibleBlock collapsedDefault={false}>
 
-      {communityDescription ? (
+      {communityDescription && (
         <StyledArticle>
           {communityDescription.split('\n\n')
             .map((paragraph, index) => <Paragraph key={`p_${index}`}>{paragraph}</Paragraph>)
           }
         </StyledArticle>
-      ) : (
+      )}
+      {(!communityDescription && rgsAuxDescription) ? (
+        <Paragraph
+          dangerouslySetInnerHTML={{ __html: rgsAuxDescription }}
+        />
+        ) : (
         'No details are available'
       )}
       {ownerExperience && (
@@ -80,6 +85,7 @@ const CommunityDetails = ({
 CommunityDetails.propTypes = {
   communityName: PropTypes.string.isRequired,
   communityDescription: PropTypes.string,
+  rgsAuxDescription: PropTypes.string,
   staffDescription: PropTypes.string,
   residentDescription: PropTypes.string,
   ownerExperience: PropTypes.string,

@@ -79,13 +79,12 @@ const ProfileTile = ({
     imageUrl,
     description,
   } = (profile);
-  
+
   return(
     <Wrapper layout={layout} {...props}>
       <ImageWrapper src={imageUrl} aspectRatio="16:9" layout={layout} />
       <InfoWrapper layout={layout}>
         <HeadingWrapper>{heading}</HeadingWrapper>
-        <SubHeadingWrapper layout={layout}>{subHeading}</SubHeadingWrapper >
         { layout === 'modal' && <DescriptionWrapper>{description}</DescriptionWrapper>}
       </InfoWrapper>
     </Wrapper>
