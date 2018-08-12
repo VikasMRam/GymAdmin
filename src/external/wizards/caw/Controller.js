@@ -72,6 +72,7 @@ class Controller extends Component {
       this.flow.splice(searchStepIndex, 1);
       this.doSearch();
     }
+
   }
 
   handleSeeMore = () => {
@@ -117,7 +118,7 @@ class Controller extends Component {
     const {
       currentStep, set, locationSearchParams, searchCommunities,
     } = this.props;
-
+    console.log("do search");
     set({
       searching: true,
     });

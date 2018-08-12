@@ -45,7 +45,6 @@ class AgentsProfilePageController extends Component {
       const profile = {
         id: agent.id,
         heading: agent.user.name,
-        subHeading: agent.name,
         description: agent.agentBio,
         imageUrl: agent.mainImage,
       };
