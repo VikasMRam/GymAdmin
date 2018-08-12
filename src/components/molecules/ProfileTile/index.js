@@ -70,7 +70,7 @@ const DescriptionWrapper = styled.div`
 
 const ProfileTile = ({
   layout,
-  profile={},
+  profile = {},
   ...props
 }) => {
   const {
@@ -80,16 +80,17 @@ const ProfileTile = ({
     description,
   } = (profile);
 
-  return(
+  return (
     <Wrapper layout={layout} {...props}>
       <ImageWrapper src={imageUrl} aspectRatio="16:9" layout={layout} />
       <InfoWrapper layout={layout}>
         <HeadingWrapper>{heading}</HeadingWrapper>
+        <SubHeadingWrapper>{subHeading}</SubHeadingWrapper>
         { layout === 'modal' && <DescriptionWrapper>{description}</DescriptionWrapper>}
       </InfoWrapper>
     </Wrapper>
   );
-}
+};
 
 ProfileTile.propTypes = {
   profile: shape({

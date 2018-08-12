@@ -25,6 +25,8 @@ class SearchBoxContainer extends Component {
     clearLocation: func,
     clearLocationOnBlur: bool,
     onTextChange: func,
+    onLocationSearch: func,
+    history: object,
   };
 
   static defaultProps = {
@@ -85,12 +87,17 @@ class SearchBoxContainer extends Component {
   };
 
   handleOnLocationSearch = (result) => {
-    const { history } = this.props;
-    const searchParams = getSearchParamFromPlacesResponse(result);
-    const { path } = filterLinkPath(searchParams);
-    history.push(path);
+    const { onLocationSearch } = this.props;
+    if (onLocationSearch) {
+      onLocationSearch(result);
+    } else {
+      const { history } = this.props;
+      const searchParams = getSearchParamFromPlacesResponse(result);
+      const { path } = filterLinkPath(searchParams);
+      history.push(path);
+    }
   };
- 
+
   render() {
     const {
       layout, address, clearLocationOnBlur, ...props
