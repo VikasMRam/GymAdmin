@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { string, arrayOf, shape, bool, number, func } from 'prop-types';
 import styled from 'styled-components';
+import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 import { Button, Link } from 'sly/components/atoms';
@@ -20,6 +21,12 @@ const MorePicsMobile = styled(Button)`
     display: none;
   }
 `;
+const BottomRightWrapper = styled.span`
+  background: ${palette('black', 0)}80;
+  color: ${palette('grayscale', 2)};
+  font-size: ${size('text.tiny')};
+  padding: ${size('spacing.small')} ${size('spacing.regular')};
+`;
 
 export default class CommunityMediaGallery extends Component {
   static propTypes = {
@@ -35,7 +42,7 @@ export default class CommunityMediaGallery extends Component {
       name: string.isRequired,
       thumbUrl: string.isRequired,
     })),
-    websiteUrl : string,
+    websiteUrl: string,
     ariaHideApp: bool,
     currentSlide: number,
     onSlideChange: func.isRequired,
@@ -51,8 +58,9 @@ export default class CommunityMediaGallery extends Component {
 
   render() {
     const {
-      communityName, videos, websiteUrl, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
+      communityName, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
     } = this.props;
+    let { websiteUrl } = this.props;
     const { images } = this.props;
     this.sdGalleryImages = videos.map((vid, i) => {
       // Important: create new object instance having src & alt as we will be modifying same object below
@@ -96,8 +104,14 @@ export default class CommunityMediaGallery extends Component {
       </span>
     );
 
-    const copyright = () => (
-      websiteUrl ? <Link palette='grayscale' href={websiteUrl} target="_blank"> Image source </Link> : null
+    if (websiteUrl && !websiteUrl.includes('//')) {
+      websiteUrl = `//${websiteUrl}`;
+    }
+    const bottomRightSection = () => (
+      websiteUrl ?
+        <BottomRightWrapper>
+          <Link palette="grayscale" href={websiteUrl} target="_blank"> Image source </Link>
+        </BottomRightWrapper> : null
     );
 
     return (
@@ -107,7 +121,7 @@ export default class CommunityMediaGallery extends Component {
           communityName={communityName}
           images={this.sdGalleryImages}
           bottomLeftSection={this.sdGalleryImages.length > 1 ? bottomLeftSection : null}
-          copyright={copyright()}
+          bottomRightSection={bottomRightSection}
           currentSlide={currentSlide}
           onSlideChange={onSlideChange}
         />
