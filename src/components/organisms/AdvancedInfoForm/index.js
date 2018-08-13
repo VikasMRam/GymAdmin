@@ -61,10 +61,10 @@ const paymentOptions = [
 ]
 
 const AdvancedInfoForm = ({
-  handleSubmit, submitting,
+  handleSubmit, submitting, community,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <StyledHeading level="subtitle" size="subtitle">Please share a few more details of your search:</StyledHeading>
+    <StyledHeading level="subtitle" size="subtitle">To connect to {community.name}...</StyledHeading>
 
     <Field
       name="type_of_care"

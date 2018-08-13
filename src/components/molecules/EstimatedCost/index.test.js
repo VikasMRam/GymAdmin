@@ -24,13 +24,13 @@ describe('EstimatedCost', () => {
   });
 
   it('verify onGetDetailedPricingClicked callback', () => {
-    const wrapper = wrap({ price, community, onLiveChatClicked: onGetDetailedPricingClickedSpy });
+    const wrapper = wrap({ price, community, getPricing: onGetDetailedPricingClickedSpy });
     wrapper.find(DesktopButton).simulate('click');
     expect(onGetDetailedPricingClickedSpy).toHaveBeenCalled();
   });
 
   it('verify onLiveChatClicked callback', () => {
-    const wrapper = wrap({ price, community, onLiveChatClicked: onGetDetailedPricingClickedSpy });
+    const wrapper = wrap({ price, community, getPricing: onGetDetailedPricingClickedSpy });
     wrapper.find(MobileButton).simulate('click');
     expect(onGetDetailedPricingClickedSpy).toHaveBeenCalled();
   });

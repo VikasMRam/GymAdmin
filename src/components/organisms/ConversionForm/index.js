@@ -62,24 +62,16 @@ const ConversionForm = ({
 }) => (
   <div>
     <StyledForm onSubmit={handleSubmit}>
-      {agent &&
-        <div>
-          <AgentSectionText>We’ve paired you with a local expert who has visited this property</AgentSectionText>
-          <AgentTileWrapper>
-            <AgentTile
-              user={{ name: agent.user.name, title: 'Seniorly Local Guide', picture: agent.mainImage }}
-            />
-          </AgentTileWrapper>
-        </div>
-      }
-
-      {!agent && concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">Our Team Is Ready to Help</Heading>}
-      {!agent && concierge.modalIsOpen && <SubHeading>We only share your information with our local guide and the community.</SubHeading>}
-      {!agent && !concierge.modalIsOpen && <Heading level="subtitle" size="subtitle">Get Free Support</Heading>}
-      {!agent && !concierge.modalIsOpen && <SubHeading>from a local senior living expert</SubHeading>}
+      <Heading level="title" size="title">Get Pricing & Availability</Heading>
+      {contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
 
       <Hr />
 
+      {hasOnlyEmail && (
+        <ExpressBlock>
+          A Seniorly Guide will contact you soon, we just need your name and number.
+        </ExpressBlock>
+      )}
 
       <Field
         name="full_name"
@@ -103,11 +95,22 @@ const ConversionForm = ({
         component={ReduxField}
       />
       <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-        {concierge.modalIsOpen ? 'Get Connected' : 'Get Pricing'}
+        Request Info
       </StyledButton>
 
       <TosAndPrivacy />
     </StyledForm>
+    {agent &&
+      <AgentSectionWrapper>
+        <AgentSectionText>We have matched you with a Seniorly Local Guide to help you along the way</AgentSectionText>
+        <AgentSectionText><Link href="/how-it-works">Learn More</Link></AgentSectionText>
+        <AgentTileWrapper>
+          <AgentTile
+            user={{ name: agent.user.name, title: 'Seniorly Local Guide', picture: agent.mainImage }}
+          />
+        </AgentTileWrapper>
+      </AgentSectionWrapper>
+    }
   </div>
 );
 

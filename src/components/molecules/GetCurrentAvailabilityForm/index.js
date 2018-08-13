@@ -40,7 +40,7 @@ const GetCurrentAvailabilityForm = ({
   return (
     <StyledBox>
       <StyledHeading level="subtitle" size="subtitle">
-        Our senior living expert has visited {name}
+        Ask about availability at {name}
       </StyledHeading>
       <form onSubmit={handleSubmit}>
         <TwoColumnWrapper>
@@ -50,7 +50,7 @@ const GetCurrentAvailabilityForm = ({
             placeholder="Your email"
             component={StyledReduxField}
           />
-          <Button type="submit" disabled={submitting}>Get Pricing</Button>
+          <Button type="submit" disabled={submitting}>Get Availability</Button>
         </TwoColumnWrapper>
       </form>
     </StyledBox>

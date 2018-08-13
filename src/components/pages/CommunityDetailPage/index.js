@@ -423,10 +423,9 @@ export default class CommunityDetailPage extends Component {
               footerInfo={{
                 title: 'Contact Property',
                 name: community.name,
-                ctaTitle: 'Get Pricing',
-                link: 'javascript:void(0);',
+                ctaTitle: 'Contact',
               }}
-              onFooterClick={onLiveChatClicked}
+              onFooterClick={getPricing}
 
             />
 

@@ -162,6 +162,19 @@ export default class PricingAndAvailability extends Component {
       return (
         <section id="pricing-and-floor-plans">
           <StyledArticle id="pricing-and-floor-plans-price-tiles">
+            {(!roomPrices.length && estimatedPriceBase) ?
+              (
+                <ConciergeController community={community}>
+                  {({getPricing}) =>
+                    <EstimatedCost
+                      getPricing={getPricing}
+                      community={community}
+                      price={estimatedPriceBase}
+                    />
+                  }
+                </ConciergeController>
+              ) : null
+            }
             {roomPrices.map((object, i) => (
               <Item key={i}>
                 <RoomTile onInquireOrBookClicked={onInquireOrBookClicked} {...object} />
@@ -204,22 +217,7 @@ export default class PricingAndAvailability extends Component {
               }
             }
           </ConciergeController>
-          <StyledArticle id="pricing-and-floor-plans-price-tiles">
-            {(!roomPrices.length && !isCCRC && estimatedPriceBase) ?
-              (
-                <ConciergeController community={community}>
-                  {({getPricing}) =>
-                    <EstimatedCost
-                      getPricing={getPricing}
-                      community={community}
-                      price={estimatedPriceBase}
-                      onLiveChatClicked={onLiveChatClicked}
-                    />
-                  }
-                </ConciergeController>
-              ) : null
-            }
-          </StyledArticle>
+
           {sortedEstimatedPrice.length > 0 &&
             <article id="pricing-and-floor-plans-comparison">
               <CompareHeading level="subtitle" size="subtitle">

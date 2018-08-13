@@ -88,7 +88,7 @@ export default class communitySummary extends React.Component {
 
     highlights.push((
       <span>
-        Call for pricing&nbsp;
+        Pricing & Availability&nbsp;
         <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
           <NumberFormat
             value={conciergeNumber}
@@ -103,16 +103,16 @@ export default class communitySummary extends React.Component {
         </TooltipContent>
       </span>
     ));
-    if (false) {
-      highlights.push((
-        <span>
-          Reception&nbsp;
-          <Link href={`tel:${receptionNumber}`} onClick={onReceptionNumberClicked}>
-            <NumberFormat value={receptionNumber} format="(###) ###-####" displayType="text" />
-          </Link>
-        </span>
-      ));
-    }
+
+    highlights.push((
+      <span>
+        Reception&nbsp;
+        <Link href={`tel:${receptionNumber}`} onClick={onReceptionNumberClicked}>
+          <NumberFormat value={receptionNumber} format="(###) ###-####" displayType="text" />
+        </Link>
+      </span>
+    ));
+
 
     if (licenseUrl) {
       highlights.push((
