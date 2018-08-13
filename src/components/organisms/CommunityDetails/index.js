@@ -20,6 +20,7 @@ const StyledArticle = styled.article`
   }
 `;
 
+
 const CommunityDetails = ({
   communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, ownerExperience, contract,
 }) => {
@@ -33,13 +34,12 @@ const CommunityDetails = ({
           }
         </StyledArticle>
       )}
-      {(!communityDescription && rgsAuxDescription) ? (
+      {(!communityDescription && rgsAuxDescription &&
         <Paragraph
           dangerouslySetInnerHTML={{ __html: rgsAuxDescription }}
         />
-        ) : (
-        'No details are available'
       )}
+      {(!communityDescription && !rgsAuxDescription && 'No details are available')}
       {ownerExperience && (
         <StyledArticle>
           <StyledHeading level="subtitle" size="subtitle">

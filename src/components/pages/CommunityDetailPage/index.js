@@ -365,7 +365,7 @@ export default class CommunityDetailPage extends Component {
               <CommunityDetails
                 communityName={name}
                 communityDescription={communityDescription}
-                rgsAuxDesription = {rgsAux.communityDescription}
+                rgsAuxDescription={rgsAux.communityDescription}
                 staffDescription={staffDescription}
                 residentDescription={residentDescription}
                 ownerExperience={ownerExperience}
