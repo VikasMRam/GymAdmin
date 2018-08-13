@@ -68,11 +68,7 @@ const BottomLeftWrapper = styled.span`
   z-index: 1;
 `;
 
-const CopyrightWrapper = styled.div`
-  background: ${palette('black', 0)}80;
-  color: ${palette('grayscale', 2)};
-  font-size: ${size('text.tiny')};
-  padding: ${size('spacing.small')} ${size('spacing.regular')};
+const BottomRightWrapper = styled.span`
   right: ${size('spacing.large')};
   bottom: ${size('spacing.large')};
   position: absolute;
@@ -135,6 +131,7 @@ export default class MediaGallery extends Component {
     currentSlide: PropTypes.number,
     topRightSection: PropTypes.func,
     bottomLeftSection: PropTypes.func,
+    bottomRightSection: PropTypes.func,
     transparent: PropTypes.bool,
     onSlideClick: PropTypes.func,
     onSlideChange: PropTypes.func.isRequired,
@@ -251,7 +248,7 @@ export default class MediaGallery extends Component {
 
   render() {
     const {
-      currentSlide, videos, images, topRightSection, bottomLeftSection, copyright, showThumbnails, onSlideClick, onSlideChange,
+      currentSlide, videos, images, topRightSection, bottomLeftSection, bottomRightSection, showThumbnails, onSlideClick, onSlideChange,
     } = this.props;
     const thumbnails = [];
     const formattedVideos = videos.map((video) => {
@@ -332,12 +329,11 @@ export default class MediaGallery extends Component {
               {bottomLeftSection(this.allMedia[currentSlide])}
             </BottomLeftWrapper>
           }
-          {copyright &&
-            <CopyrightWrapper>
-              {copyright}
-            </CopyrightWrapper>
+          {bottomRightSection &&
+            <BottomRightWrapper>
+              {bottomRightSection(this.allMedia[currentSlide])}
+            </BottomRightWrapper>
           }
-
         </CarouselWrapper>
         {showThumbnails &&
           <ThumbnailScroller
