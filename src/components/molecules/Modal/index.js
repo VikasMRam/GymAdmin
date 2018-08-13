@@ -92,6 +92,7 @@ const ModalContext = styled.article`
     gallery: css`
       padding: 0;
       border-radius: ${size('spacing.small')};
+      max-height: 100%;
       @media screen and (min-width: ${size('breakpoint.laptop')}) {
         width: ${size('modal.gallery')};
         overflow: initial;
