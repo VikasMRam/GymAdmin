@@ -10,9 +10,6 @@ import { Button, Block, Icon, Heading } from 'sly/components/atoms';
 import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
   width: 100%;
 `;
 
@@ -21,6 +18,7 @@ const StyledIcon = styled(Icon)`
 `;
 
 const StyledHeading = styled(Heading)`
+  text-align: center;
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -48,7 +46,7 @@ const WhatNext = ({ community, reasons, onClose }) => {
       <StyledHeading>{ headings[reasons] }</StyledHeading>
       <HowSlyWorks layout="modal" reasons={reasons} />
 
-      { reasons === 'whatNext' && 
+      { reasons === 'whatNext' &&
         <Button
           kind="jumbo"
           href={getCitySearchUrl({ propInfo, address })}
@@ -56,7 +54,7 @@ const WhatNext = ({ community, reasons, onClose }) => {
           Click to Compare Communities
         </Button>
       }
-      { reasons === 'howItWorks' && 
+      { reasons === 'howItWorks' &&
         <Button
           kind="jumbo"
           onClick={onClose}

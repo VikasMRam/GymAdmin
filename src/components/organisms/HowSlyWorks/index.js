@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { oneOf } from 'prop-types';
-import { ifProp } from 'styled-tools';
+import { switchProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import { assetPath } from "sly/components/themes";
@@ -51,18 +51,20 @@ const reasons = {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  ${ifProp({ layout: 'section' }, css`
-    @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      flex-direction: row;
-      > * {
-        margin-right: ${size('spacing.large')};
+  ${switchProp('layout', {
+    section: css`
+      @media screen and (min-width: ${size('breakpoint.tablet')}) {
+        flex-direction: row;
+        > * {
+          margin-right: ${size('spacing.large')};
 
-        &:last-child {
-          margin-right: 0;
+          &:last-child {
+            margin-right: 0;
+          }
         }
       }
-    }
-  `)};
+    `,
+  })};
 `;
 
 const HowSlyWorks = ({ reasons: key, ...props }) => {
