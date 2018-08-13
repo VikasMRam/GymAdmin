@@ -40,7 +40,7 @@ export const agents = [
       "name":"Marcy Baskin"}},
   {
     "id":"mary-schleeter-and-diane-houlton",
-    "name":"Diane Houlton \\u0026 Mary Schleeter",
+    "name":"Diane Houlton & Mary Schleeter",
     "agentBio":"Diane Houlton is a gerontologist, placement specialist and co-founder of Aging Plan-it.  After earning a bachelor’s degree in Journalism at Sacramento State University, she later received three associate’s degrees at American River College, and a master’s degree in gerontology from San Francisco State University in 2014.  In preparation to work in the field of aging, she completed internships in assisted living facilities, Del Oro Caregiver Resource Center, and a year as a long-term care ombudsman.  She holds a license as an administrator for residential care facilities for the elderly.  A member of the Gerontological Society of America and the American Society on Aging, Diane writes a blog at www.fixedpurpose.com with information on successful aging.  In addition, Diane was a Girl Scout volunteer in Rocklin for 19 years and is a proud Air Force daughter, wife and mother. \n\nMary Schleeter was a family caregiver and she personally understands the everyday challenges families experience with their loved ones.  While studying Gerontology, Mary held internships and volunteer positions in the areas of aging and mental health, hospice and geriatric care management.  Prior to becoming a gerontologist, Mary worked for over 20 years in the corporate world of finance, fraud investigations, technology, management and marketing. Mary is an adjunct professor at American River College in the Gerontology Department.  She is also serving as a commissioner on the Sacramento County Adult and Aging Commission. Both Diane and Mary have been a partner of Seniorly since 2017. ",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/b05851d7cbbffbed602a796339f3e3d1/Diane%2520Houlton_sd.jpg",
     "status":1,
@@ -50,7 +50,7 @@ export const agents = [
       "state":"CA"},
     "user":{
       "id":"fbee17558d329fe1d5ac8925b438c887",
-      "name":"Diane Houlton \\u0026 Mary Schleeter"}},
+      "name":"Diane Houlton & Mary Schleeter"}},
   {
     "id":"jeralyn-bieniek",
     "name":"Jeralyn Bieniek",
@@ -106,7 +106,7 @@ export const agents = [
   {
     "id":"assisted-living-locators-washington-dc-patricia-russell",
     "name":"Patricia Russell",
-    "agentBio":"Patricia Russell shares her passion to serve the elderly community. She earned her B.S.N. Degree in Nursing and Masters of Jurisprudence in Health Law with an assorted background knowledge in State, and Federal Regulations. Her dedication to a career in healthcare originates in a profound desire to effect positive change through service. Her 25 year professional progression—from Director of Nursing to Senior Nurse Executive in nursing homes and patient rehabilitation centers for preventative and interventional care—illustrates not only Patricia’s deep connection to patient welfare but also her developed sensitivity to the discrete needs of individuals living with cognitive and physical challenges.\nPatricia is excited to continued service with Assisted Living Locator: Washington, DC and Northern \\u0026 Southern Maryland areas. Patricia Russell partnered with Seniorly in 2018.",
+    "agentBio":"Patricia Russell shares her passion to serve the elderly community. She earned her B.S.N. Degree in Nursing and Masters of Jurisprudence in Health Law with an assorted background knowledge in State, and Federal Regulations. Her dedication to a career in healthcare originates in a profound desire to effect positive change through service. Her 25 year professional progression—from Director of Nursing to Senior Nurse Executive in nursing homes and patient rehabilitation centers for preventative and interventional care—illustrates not only Patricia’s deep connection to patient welfare but also her developed sensitivity to the discrete needs of individuals living with cognitive and physical challenges.\nPatricia is excited to continued service with Assisted Living Locator: Washington, DC and Northern & Southern Maryland areas. Patricia Russell partnered with Seniorly in 2018.",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/6e89bbea270341f2cb3a540bbcf5dad9/Patricia%2520Russell%25204x4_sd.jpg",
     "status":1,
     "address":{
@@ -184,7 +184,7 @@ export const agents = [
   {
     "id":"assisted-living-locator-mesa-az-angela-olea",
     "name":"Angela Olea",
-    "agentBio":"Angela Olea is a highly passionate, innovative and accomplished business leader in the senior care industry. She is a respected authority on elder care and senior placement, serving as a guest speaker at state and national aging conferences. Angela has been matchmaking seniors with caring providers for over a decade. \\u2028\\u2028A registered nurse, Angela initially launched Assisted Living Locators in response to seeing patients have unnecessary readmissions and a lack of community support. In an effort to evoke positive change and ease of care transition for patients, she created a National Readmissions Prevention Specialized Program for community care providers to reduce hospital readmissions. \\u2028\\u2028Passionate senior care advocate and a leader determined to treat the elderly with the dignity they deserve – these are the company goals Angela strives to achieve every day.\\u2028Under her stewardship, Assisted Living Locators is setting the standard for care transition. Angela Olea partnered with Seniorly in 2018.",
+    "agentBio":"Angela Olea is a highly passionate, innovative and accomplished business leader in the senior care industry. She is a respected authority on elder care and senior placement, serving as a guest speaker at state and national aging conferences. Angela has been matchmaking seniors with caring providers for over a decade. A registered nurse, Angela initially launched Assisted Living Locators in response to seeing patients have unnecessary readmissions and a lack of community support. In an effort to evoke positive change and ease of care transition for patients, she created a National Readmissions Prevention Specialized Program for community care providers to reduce hospital readmissions. Passionate senior care advocate and a leader determined to treat the elderly with the dignity they deserve – these are the company goals Angela strives to achieve every day.Under her stewardship, Assisted Living Locators is setting the standard for care transition. Angela Olea partnered with Seniorly in 2018.",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/95f6165b6bc0fededcd5627f5b754584/1%2520Angela%25204x4_sd.jpg",
     "status":1,
     "address":{
@@ -249,7 +249,7 @@ export const agents = [
   {
     "id":"assisted-living-locators-wichita-ks-john-weber",
     "name":"John Weber",
-    "agentBio":"John has spent his entire career providing exceptional service to his clients.  He worked for over 25 years in all facets of the Human Resource’s field, including talent management and talent development.  He is very community minded and has served on several Boards.  John is highly trained in the ability to find the needs of the client and providing the best solution.\n\nJohn is a very devoted to his family.    Over the last two years, John has become very educated with the difficult transitional phase of finding assisted living for his father and uncle \\u0026 aunt.  This is what led to John’s decision to start this Franchise and help families find solutions.\n\nHe has lived in Kansas all his life and is very familiar with the Kansas area.  He loves to spend time with his family and plays several sports including golf, tennis and handball.  \nJohn is elated to be the first Assisted Living Locators franchise in Kansas and looks forward to servicing the needs of the families and seniors in the area. John Weber partnered with Seniorly in 2018. ",
+    "agentBio":"John has spent his entire career providing exceptional service to his clients.  He worked for over 25 years in all facets of the Human Resource’s field, including talent management and talent development.  He is very community minded and has served on several Boards.  John is highly trained in the ability to find the needs of the client and providing the best solution.\n\nJohn is a very devoted to his family.    Over the last two years, John has become very educated with the difficult transitional phase of finding assisted living for his father and uncle & aunt.  This is what led to John’s decision to start this Franchise and help families find solutions.\n\nHe has lived in Kansas all his life and is very familiar with the Kansas area.  He loves to spend time with his family and plays several sports including golf, tennis and handball.  \nJohn is elated to be the first Assisted Living Locators franchise in Kansas and looks forward to servicing the needs of the families and seniors in the area. John Weber partnered with Seniorly in 2018. ",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/c629df5ffe0a2e342358651873b943a6/John%2520Weber%25204x4_sd.jpg",
     "status":1,
     "address":{
@@ -404,8 +404,8 @@ export const agents = [
       "name":"John Brophy"}},
   {
     "id":"senior-care-referral-services-of-oklahoma",
-    "name":"Rick \\u0026 Denise Guttenberger",
-    "agentBio":"Rick \\u0026 Denise Guttenberger started their business in 2014 after a 30+ year career in the hotel \\u0026 hospitality industry for Rick.  Faced with the daunting task of trying to determine care options for loved ones, the Guttenbergers realized that a trusted, local company was needed to help families understand all of the various communities, their pricing, and their care level differences.  Rick \\u0026 Denise spent months touring every licensed residential care community and can speak to families about each place with personal, first hand knowledge.  \n\nSenior Care Referral Services of Oklahoma is now the leading LOCAL senior care referral company in the state of Oklahoma.  Serving the greater Oklahoma City and Tulsa metro areas, the company was established to help families who are faced with making care choices for loved ones navigate the many options of senior care and help them understand the costs and benefits of each choice.  Our service is free to our clients as we are paid by the senior care providers we recommend......independent living, assisted living, memory care, residential care homes, and respite care communities. Rick \\u0026 Denise Guttenberger partnered with Seniorly in 2018.",
+    "name":"Rick & Denise Guttenberger",
+    "agentBio":"Rick & Denise Guttenberger started their business in 2014 after a 30+ year career in the hotel & hospitality industry for Rick.  Faced with the daunting task of trying to determine care options for loved ones, the Guttenbergers realized that a trusted, local company was needed to help families understand all of the various communities, their pricing, and their care level differences.  Rick & Denise spent months touring every licensed residential care community and can speak to families about each place with personal, first hand knowledge.  \n\nSenior Care Referral Services of Oklahoma is now the leading LOCAL senior care referral company in the state of Oklahoma.  Serving the greater Oklahoma City and Tulsa metro areas, the company was established to help families who are faced with making care choices for loved ones navigate the many options of senior care and help them understand the costs and benefits of each choice.  Our service is free to our clients as we are paid by the senior care providers we recommend......independent living, assisted living, memory care, residential care homes, and respite care communities. Rick & Denise Guttenberger partnered with Seniorly in 2018.",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/16631bbcf4e6b52aa0235d28b2faf16d/Rick%2520and%2520Denise%2520Guttenberger%2520Square%2520Profile%2520Pic%2520July%25202018_sd.jpg",
     "status":1,
     "address":{
@@ -414,7 +414,7 @@ export const agents = [
       "state":"OK"},
     "user":{
     "id":"665cfb1c853aedb698beb9cce8b37603",
-      "name":"Rick \\u0026 Denise Guttenberger"}},
+      "name":"Rick & Denise Guttenberger"}},
   {
     "id":"oasis-senior-advisor-chicago-julianne",
     "name":"Julianne Rizzo",
@@ -482,7 +482,7 @@ export const agents = [
       "name":"Lori Le Grand"}},
   {
     "id":"oasis-cleveland-west-oh-holly-and-rick-adkins",
-    "name":"Holly Adkins \\u0026 Rick Adkins",
+    "name":"Holly Adkins & Rick Adkins",
     "agentBio":"Holly Adkins and Rick Adkins have lived in the Bay Village and Cleveland area for most of their lives. They have raised three successful children, and now live on their own with their wonderful Chocolate Labrador Retriever named Bailey. Until they have grandchildren, she is the apple of their eye. They love to lie on the beach and read, garden, and run (with Bailey), and are active in their church.\n\nRick has been an accountant throughout his career and Holly has had a variety of experiences, from being a telephone operator to teaching preschool. In the past seven years, they have had the opportunity to help both their parents find senior housing, unfortunately in dramatically different circumstances. Holly’s mom became ill and had to make the transition to a temporary care facility. They were under a time crunch, and yet had to do all the research and all the visits. It would have been helpful to have someone who was plugged into the area to help them make an educated decision. Rick's parents had more time, but they moved to Florida. His sister assisted them, but did it primarily via the internet. That was so impersonal; they believe that the personal touch along with expertise in the area will ease your burden when making these types of tough decisions. \n\nThat is why Holly and Rick joined Oasis. Their mission is to be a helping hand to those of you going through this difficult decision. They can help to lower the stress and give you an empathetic touch as you go through this stressful time. It would be their great honor to help you with your decision. Holly and Rick Adkins partnered with Seniorly in 2018.\n\n\n\n",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/59e2bcdbeb21538fdd3dcbaf211ba122/Screen%2520Shot%25202018-07-18%2520at%25203.38.57%2520PM_sd.png",
     "status":1,
@@ -492,7 +492,7 @@ export const agents = [
       "state":"OH"},
     "user":{
     "id":"5d612247dc39093f85e4e7ae44666a28",
-      "name":"Holly Adkins \\u0026 Rick Adkins"}},
+      "name":"Holly Adkins & Rick Adkins"}},
   {
     "id":"oasis-chicago-north-shore-il-leslie-olesen",
     "name":"Leslie Olesen",
@@ -638,7 +638,7 @@ export const agents = [
       "name":"Nina Seng"}},
   {
     "id":"mark-and-karyn-wolff",
-    "name":"Mark \\u0026 Karyn Wolff",
+    "name":"Mark & Karyn Wolff",
     "agentBio":"Mark and Karyn Wolff spend countless hours inspecting and rating residential locations including smaller care homes, medium-sized and larger care communities.   Inspections means meeting the staff and reviewing regulator reports to advise you of any citations or deficiency that may have been issued against a particular location.  As Senior Care Advisors, they will meet personally with you to discuss options and will accompany you on visits to locations to ensure all your questions are answered and even assist with negotiations. Mark and Karyn will only show you the best locations based on their proprietary rating system, and the hallmark of their service commitment is that they will be by your side every step of the way. Mark and Karyn Wolff partnered with Seniorly in 2017.",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/77449ed8954b7aaea43c51e4e79b1deb/mark_sd.jpg",
     "status":1,
@@ -648,10 +648,10 @@ export const agents = [
       "state":"CA"},
     "user":{
     "id":"65864ab8b58948586daa222cab8a8c9f",
-      "name":"Mark \\u0026 Karyn Wolff"}},
+      "name":"Mark & Karyn Wolff"}},
   {
     "id":"oasis-jacksonville",
-    "name":"David Stieglitz \\u0026 Becky Harkness",
+    "name":"David Stieglitz & Becky Harkness",
     "agentBio":"Dave Stieglitz is passionate about the lost art of customer service! 'It is critically important to connect with people to understand their needs before you can provide service. Accomplishing this with compassion and integrity is what drives him. He looks forward to the opportunity to be of service during this critical time for you and your family.'\n\nDave had a very successful 30+ year career in the hospitality industry, delivering high-quality customer service on a daily basis. Along the way, he mentored many subordinates into leadership positions of their own and was elected by his peers to State and National leadership positions within the industry. Dave has also served on various charitable boards, raising hundreds of thousands of dollars for Children’s Miracle Network and Special Olympics. His faith and family are the most important. Beyond that, he enjoys most all sports, carpentry and continuing education. \n\nBecky Harkness earned her bachelor’s degree in rehabilitative services and one of her favorite jobs was working in the activities department in a memory care unit while attending FSU. She enjoyed figuring out what made each resident happy and then helping them enjoy each moment. After college, Becky worked at a private club for 10 years as a membership manager and loved the relationships she built with the members. After her second child was born, it was an easy decision to stop working and enjoy her children. Around that time, Becky's grandparents moved to Florida. It was such a gift to spend quality time with them and help them in a caregiving role. This left her with such a love, appreciation for, and understanding of older adults. She was blessed to be with them as they aged and moved from independent living to assisted living, and two of them to a memory care facility. Finding the right facility is everything. Her family was very happy with our selections, and she too wants to help you make the right decision as well.\n\nNow that her children are independent teenagers, she is ready to go back to work. Becky wants to combine her appreciation for older adults and the strong desire for everyone to be in their perfect home, with her determined skills to make it so. It’s not just about a job, but a passion for helping people and developing relationships. She is eager to give families peace of mind during this overwhelming process. You can trust that she will work hard to find you the best home for your loved one, with the right needs and desires for them. She is very excited to join David and Melanie’s Oasis team in Jacksonville. Becky lived here for 30 years and knows this city well. She looks forward to working with you, and helping you or your loved one transition into a new home that will help them thrive! Dave Stieglitz and Becky Harkness partnered with Seniorly in 2018.\n",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/c44f7ae386b38d03e651d8bcc1c21351/unnamed_sd.jpg",
     "status":1,
@@ -661,7 +661,7 @@ export const agents = [
       "state":"FL"},
     "user":{
     "id":"4f74a1afdb899994acc5be195fce63dc",
-      "name":"David Stieglitz \\u0026 Becky Harkness"}},
+      "name":"David Stieglitz & Becky Harkness"}},
   {
     "id":"parents-changing-spaces-llc",
     "name":"Cindy Morley",
@@ -677,7 +677,7 @@ export const agents = [
       "name":"Cindy Morley"}},
   {
     "id":"senior-care-authority-phoenix-matt-and-souban-houn-cairns",
-    "name":"Matt \\u0026 Souban Houn Cairns",
+    "name":"Matt & Souban Houn Cairns",
     "agentBio":"Matt and Souban Houn-Cairns are a family operated business that has over 30 years of combined healthcare experience in assisting some of the largest healthcare vendors, healthcare systems, and policy makers achieve their end goals. Throughout their careers, the main focus has been to take a patient centered approach to improving patient care while reducing costs. Their combined professional and academic healthcare experience makes us perfectly suited for navigating the complex healthcare environment, communities, financial and technological resources to help families find the right, individualized care solutions for their loved ones. \n\nSouban Houn-Cairns received her Bachelors in Business Management from Arizona State University and Masters in Healthcare Informatics from Grand Canyon University. She completed her master program’s capstone project on Care Transitions, where she studied the unique challenges that present during transfer of care of the elderly, particularly those with complex health issues or have unique mental, physical and social needs.\n\nSouban has over 18 years experience in healthcare consulting with expertise in implementing evidence-based care and best practices. In her previous role as senior consultant at one of the largest healthcare consulting firm in the country, Souban has managed and supported complex project implementations across both large and small healthcare systems. Most recently, Souban designed and implemented healthcare technology solutions to ensure accuracy in documentation and accessibility in patient information to drive better patient care at one of the most prestigious academic institution in New York.\n\nMatt received his Bachelors in Business Management from Nichols College and was Project Director for one of the most successful federally funded Challenge Grants that bridged the gap of the continuum of care across hospitals systems, long-term care, home health and health information exchanges.\n\nAs a Healthcare Consulting professional, Matt specialized in managing projects that directly impact acute and post acute care, clinical decision support tools, and collaboration of clinical stakeholders across Health Care Systems. As part of the federally approved grant, Matt was directly responsible for improving post acute care transitions by impacting communications from hospital to post acute facilities. The project focused on introducing technology that captured Assisted Daily Living (ADL) scores that were disseminated through the healthcare community to drive down ED and hospital Admissions.  Matt brings extensive, on-the-ground experience in implementation of clinical technologies in the health systems across acute and post acute care.\n\nTogether, their mission is to help families find appropriate care for their loved ones and we do it through innovation and collaboration with the local communities, healthcare stakeholders and families.  Matt and Souban Houn-Cairns partnered with Seniorly in 2018.\n\n",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/9b895d801d654d3a904dd3540f582379/souban-houn-cairns-senior-care-consultant_sd.jpg",
     "status":1,
@@ -687,7 +687,7 @@ export const agents = [
       "state":"AZ"},
     "user":{
     "id":"47595fc4116feb3762d5f04dccd2031c",
-      "name":"Matt \\u0026 Souban Houn Cairns"}},
+      "name":"Matt & Souban Houn Cairns"}},
   {
     "id":"assisted-living-locators-indianapolis-in-dave-holder",
     "name":"Dave Holder",
@@ -703,8 +703,8 @@ export const agents = [
       "name":"Dave Holder"}},
   {
     "id":"senior-care-authority-gary-and-mickie-blizzard",
-    "name":"Gary \\u0026 Mickie Blizzard",
-    "agentBio":"Gary and Mickie Blizzard help families negotiate the challenges of finding exceptional senior care and residences in the North Houston area.  They make the process of looking for assisted living and other care services less daunting by saving families time, money, and added stress.  Their company provides expert guidance concerning your loved one including finding the best places to live, receiving the proper care, and navigating a complex health care system.\n\nGary and Mickie both have extensive experience serving others and are driven by a desire to help families make informed life-changing aging decisions.  They provide support and guidance to those facing the often difficult choices in finding the best care solutions that will help their loved ones thrive with safety and dignity.\\u2028\n“It shouldn’t be this hard for families to find the best senior living options, especially when the stakes are so high,” say the long-time Houston area residents. “However, there are over 100 options in North Houston for assisted living alone, with wildly varying degrees of quality and service.  Our goal is to make the advocacy and guidance we would want for our own family accessible to seniors throughout North Houston.”\n\nGary \\u0026 Mickie spend a great deal of time touring and reviewing the local living communities — including assisted living, independent living, dementia and memory care, and residential care homes — to help clients make the best possible decision for their loved ones.\nWhen asked about their approach, Mickie says, “We get to do a lot of listening, understanding each family’s unique circumstances. This allows us to make the process less overwhelming by providing them with a short-list of the best care options to meet their needs. We then tour communities with the family, assist with negotiations and paperwork, and follow up with the senior after they’ve moved in.”\nThey work at no cost to the family, receiving a commission similar to a realtor or apartment locator from the location chosen by the family. When not serving seniors, they enjoy time with their two teenage children and actively serving in their church as well as in the local school district.  Gary and Mickie Blizzard partnered with Seniorly in 2018.",
+    "name":"Gary & Mickie Blizzard",
+    "agentBio":"Gary and Mickie Blizzard help families negotiate the challenges of finding exceptional senior care and residences in the North Houston area.  They make the process of looking for assisted living and other care services less daunting by saving families time, money, and added stress.  Their company provides expert guidance concerning your loved one including finding the best places to live, receiving the proper care, and navigating a complex health care system.\n\nGary and Mickie both have extensive experience serving others and are driven by a desire to help families make informed life-changing aging decisions.  They provide support and guidance to those facing the often difficult choices in finding the best care solutions that will help their loved ones thrive with safety and dignity.\n“It shouldn’t be this hard for families to find the best senior living options, especially when the stakes are so high,” say the long-time Houston area residents. “However, there are over 100 options in North Houston for assisted living alone, with wildly varying degrees of quality and service.  Our goal is to make the advocacy and guidance we would want for our own family accessible to seniors throughout North Houston.”\n\nGary & Mickie spend a great deal of time touring and reviewing the local living communities — including assisted living, independent living, dementia and memory care, and residential care homes — to help clients make the best possible decision for their loved ones.\nWhen asked about their approach, Mickie says, “We get to do a lot of listening, understanding each family’s unique circumstances. This allows us to make the process less overwhelming by providing them with a short-list of the best care options to meet their needs. We then tour communities with the family, assist with negotiations and paperwork, and follow up with the senior after they’ve moved in.”\nThey work at no cost to the family, receiving a commission similar to a realtor or apartment locator from the location chosen by the family. When not serving seniors, they enjoy time with their two teenage children and actively serving in their church as well as in the local school district.  Gary and Mickie Blizzard partnered with Seniorly in 2018.",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/ab29a0a11ab1d07062bcc22f482a9bd4/Gary%2520%26%2520Mickie_sd.jpg",
     "status":1,
     "address":{
@@ -713,10 +713,10 @@ export const agents = [
       "state":"TX"},
     "user":{
     "id":"4a0046ae28a5cc4ebe63ace938060cb4",
-      "name":"Gary \\u0026 Mickie Blizzard"}},
+      "name":"Gary & Mickie Blizzard"}},
   {
     "id":"assisted-living-locators-bergen-county-nj-joseph-chu",
-    "name":"Joe \\u0026 Suhee Chu",
+    "name":"Joe & Suhee Chu",
     "agentBio":"Joseph and Suhee Chu are the owners of New Jersey’s first Assisted Living Locators franchise.\n\n Joe is a “Jersey Boy” who grew up in Bergen County, spending much of his time in the Jersey malls and diners.  He received his BA in History from Northwestern University and MDIV from Trinity Evangelical Divinity School.  Working as a Pastor for over 20 years, Joe has dedicated his life to helping others which brought him to Assisted Living Locators.\n\nSuhee grew up in Asia and Europe, and is fluent in Korean and Russian.  Previously she worked in the public relations industry.  Joe and Suhee were married in Tenafly and now live in Paramus with their two children. \n\nJoe and Suhee help seniors and families navigate the system and identify the best senior care options for their loved ones. They have a network of fully vetted assisted living solutions and services throughout Northern New Jersey that share one common characteristic -- excellence in care. Joseph and Suhee Chu partnered with Seniorly in 2018.\n",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/9b97e4a363fa1817670a22ab7f6c3016/chu%2520group%25204x4_sd.jpg",
     "status":1,
@@ -726,7 +726,7 @@ export const agents = [
       "state":"NJ"},
     "user":{
     "id":"902b0a1d7317456049b04db33bdf34fb",
-      "name":"Joe \\u0026 Suhee Chu"}},
+      "name":"Joe & Suhee Chu"}},
   {
     "id":"oasis-silicon-valley-ca-mike-scoggin",
     "name":"Mike Scoggin",
@@ -743,7 +743,7 @@ export const agents = [
   {
     "id":"assisted-living-locators-rock-hill-sc-david-spafford",
     "name":"David Spafford",
-    "agentBio":"David Spafford and his wife Chandler Spafford are proud owners of Assisted Living Locators franchise serving Rock Hill, SC.  They are excited to connect and support seniors and families in this community.\n\nAfter a 22-year successful career in the Consumer-Packaged Goods (CPG) industry, Dave is looking forward to providing care and guidance to South Carolina seniors and their families to find the perfect place to call home. His wife, Chandler, also remains active in the CPG industry focusing on the needs of continence-stricken adults and has a great passion for helping others.  \n\nAs an Assisted Living Locators Eldercare Advisor, Dave can help navigate the system and identify the best senior care options for your loved ones. He has a network of fully vetted assisted living solutions and services throughout the Rock Hill, SC community that share one common characteristic -- excellence in care. You can depend on Dave to assist you with the right decisions for you and your family.\\u2028 David Spafford partnered with Seniorly in 2018.",
+    "agentBio":"David Spafford and his wife Chandler Spafford are proud owners of Assisted Living Locators franchise serving Rock Hill, SC.  They are excited to connect and support seniors and families in this community.\n\nAfter a 22-year successful career in the Consumer-Packaged Goods (CPG) industry, Dave is looking forward to providing care and guidance to South Carolina seniors and their families to find the perfect place to call home. His wife, Chandler, also remains active in the CPG industry focusing on the needs of continence-stricken adults and has a great passion for helping others.  \n\nAs an Assisted Living Locators Eldercare Advisor, Dave can help navigate the system and identify the best senior care options for your loved ones. He has a network of fully vetted assisted living solutions and services throughout the Rock Hill, SC community that share one common characteristic -- excellence in care. You can depend on Dave to assist you with the right decisions for you and your family. David Spafford partnered with Seniorly in 2018.",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/c156e973efd8ff08846475ce005066aa/Dave%2520Spafford%25204x4_sd.jpg",
     "status":1,
     "address":{
@@ -756,7 +756,7 @@ export const agents = [
   {
     "id":"assisted-living-locators-inland-empire-ca-vincent-bonnemere",
     "name":"Vincent Bonnemere",
-    "agentBio":"Vincent Bonnemere is the owner of Assisted Living Locators West Inland Empire in Southern California.  He is also a charter member of the National Placement \\u0026 Referral Alliance.   The NPRA Believes that Families Have Choices\nVince worked in the retail industry for over 30 years where he excelled at customer service and believes these skills were the main factor for his longevity in an industry that traditionally sees much turnover. \nVince’s assignment included training, developing, strategizing, and driving results in over 90 retail store locations. As an Operations Executive, Vince used his creative problem-solving skills and out of the box thinking to successfully negotiate business deals with his retail stores many stakeholders.  \nWhen the opportunity came for a career change, Vince looked to the top two things he is passionate about: people and problem solving. Assisted Living Locators checked both boxes. Vince believes finding the perfect community for his clients will leverage his exceptional customer service and problem-solving skills.  Vince enjoys spending time and creating memories with his wife and their children. Vincent Bonnemere partnered with Seniorly in 2018.",
+    "agentBio":"Vincent Bonnemere is the owner of Assisted Living Locators West Inland Empire in Southern California.  He is also a charter member of the National Placement & Referral Alliance.   The NPRA Believes that Families Have Choices\nVince worked in the retail industry for over 30 years where he excelled at customer service and believes these skills were the main factor for his longevity in an industry that traditionally sees much turnover. \nVince’s assignment included training, developing, strategizing, and driving results in over 90 retail store locations. As an Operations Executive, Vince used his creative problem-solving skills and out of the box thinking to successfully negotiate business deals with his retail stores many stakeholders.  \nWhen the opportunity came for a career change, Vince looked to the top two things he is passionate about: people and problem solving. Assisted Living Locators checked both boxes. Vince believes finding the perfect community for his clients will leverage his exceptional customer service and problem-solving skills.  Vince enjoys spending time and creating memories with his wife and their children. Vincent Bonnemere partnered with Seniorly in 2018.",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/e23be2416f015075837b9aff1d4d4fe5/Vince%25204x4_sd.jpg",
     "status":1,
     "address":{
@@ -807,8 +807,8 @@ export const agents = [
       "name":"Jeffrey Horwitz"}},
   {
     "id":"senior-home-transitions",
-    "name":"Frank Pascoe \\u0026 Mary Pascoe",
-    "agentBio":"Frank Pascoe has been in the senior health care industry since 1976. His experience managing senior health care communities brings a vast amount of experience and knowledge that he uses to help his client find the best senior community for their financial capability as well as their personal needs for care and social activities.\n\nHe has been a Licensed Nursing Home Administrator in PA, MA, AZ and FL, as well as a certified administrator of Assisted Living in a number of states. Frank’s passion through the years has been the residents that he served. He chooses to help families because, during his career, he saw seniors pick the right place and flourish. However, sadly, also saw others move into communities that were not a good fit. He understands that hands-on personal guidance can make an incredible difference and assist families in making the right choices. Frank firmly believes that all of a senior’s years should be their best years.\n\nFrank’s knowledge will help you navigate the choices, costs, and processes of finding the senior community best suited for you or your loved one. He will also help negotiate the best deal for you once you choose the perfect community. Frank Pascoe \\u0026 Mary Pascoe partnered with Seniorly in 2018.\n\n",
+    "name":"Frank Pascoe & Mary Pascoe",
+    "agentBio":"Frank Pascoe has been in the senior health care industry since 1976. His experience managing senior health care communities brings a vast amount of experience and knowledge that he uses to help his client find the best senior community for their financial capability as well as their personal needs for care and social activities.\n\nHe has been a Licensed Nursing Home Administrator in PA, MA, AZ and FL, as well as a certified administrator of Assisted Living in a number of states. Frank’s passion through the years has been the residents that he served. He chooses to help families because, during his career, he saw seniors pick the right place and flourish. However, sadly, also saw others move into communities that were not a good fit. He understands that hands-on personal guidance can make an incredible difference and assist families in making the right choices. Frank firmly believes that all of a senior’s years should be their best years.\n\nFrank’s knowledge will help you navigate the choices, costs, and processes of finding the senior community best suited for you or your loved one. He will also help negotiate the best deal for you once you choose the perfect community. Frank Pascoe & Mary Pascoe partnered with Seniorly in 2018.\n\n",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/69562f70e7c3619755721c63d99bab1e/frank-pascoe-senior-living-placement-assistance-services-seniorlyl_sd.jpg",
     "status":1,
     "address":{
@@ -817,7 +817,7 @@ export const agents = [
       "state":"FL"},
     "user":{
     "id":"54cfe9f09faa7b8df84d0dd5b1c6eea8",
-      "name":"Frank Pascoe \\u0026 Mary Pascoe"}},
+      "name":"Frank Pascoe & Mary Pascoe"}},
   {
     "id":"premier-placement-service-jim-cassin",
     "name":"James Cassin",
@@ -1041,7 +1041,7 @@ export const agents = [
       "name":"Kristen Thaxton"}},
   {
     "id":"oasis-denver-metro-daphne-jean-and-lisa-theard",
-    "name":"Daphne Jean \\u0026 Lisa Theard",
+    "name":"Daphne Jean & Lisa Theard",
     "agentBio":"Daphne Jean and Lisa Theard understand the emotional struggles, financial pressures and other difficulties involved when deciding whether to move a loved one from their home to the safety of a community, whether that be independent or assisted living or more involved care, such as long-term and memory care locations.  Daphne was raised in Atlanta, Georgia and moved to St. Louis, Missouri after college.  Her passion for community service led her to the Greater St. Louis Literacy Council as a volunteer instructor. Lisa was born in New Jersey and moved to Colorado when her father retired from the military. While she was working in corporate America, her dad suffered a stroke and was diagnosed with Alzheimer’s Disease. From then on, Lisa became heavily involved in his care and the complexities that came with it. They are here to help you through, step by step. Daphne Jean and Lisa Theard partnered with Seniorly in 2018. ",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/99ae88dbcd4cef84ec2027c7bbfdbb38/OasisDenver_Seniorly_sd.png",
     "status":1,
@@ -1051,7 +1051,7 @@ export const agents = [
       "state":"CO"},
     "user":{
     "id":"2a03b285d134958535f724dfec8fca7b",
-      "name":"Daphne Jean \\u0026 Lisa Theard"}},
+      "name":"Daphne Jean & Lisa Theard"}},
   {
     "id":"oasis-rochester-ny-lane-keating",
     "name":"Lane Keating",
@@ -1081,7 +1081,7 @@ export const agents = [
   {
     "id":"joseph-judy-gallagher",
     "name":"Joe And Judy Gallagher",
-    "agentBio":"Joe Gallagher is a native of Richmond, Virginia, and entered the workforce in manufacturing. He not only created products for 30 years, but teams, as he climbed the ladder and took on leadership roles and corporate titles. As Joe moved around the country, he discovered that most of all he liked team building and helping others to be their best. Upon returning to Richmond so that his family could be with aging family members, He found that his background of being the son of a nurse certainly came in handy. The pastoral care work in his private life increased and his joy increased along with it. Joe and Judy believe that Oasis Senior Advisors is the perfect blend of their live's two journeys. Joseph \\u0026 Judy Gallagher partnered with Seniorly in 2017.",
+    "agentBio":"Joe Gallagher is a native of Richmond, Virginia, and entered the workforce in manufacturing. He not only created products for 30 years, but teams, as he climbed the ladder and took on leadership roles and corporate titles. As Joe moved around the country, he discovered that most of all he liked team building and helping others to be their best. Upon returning to Richmond so that his family could be with aging family members, He found that his background of being the son of a nurse certainly came in handy. The pastoral care work in his private life increased and his joy increased along with it. Joe and Judy believe that Oasis Senior Advisors is the perfect blend of their live's two journeys. Joseph & Judy Gallagher partnered with Seniorly in 2017.",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/0dd1194be294f8abb194e8558d635347/Joseph_Judy_Gallagher_Seniorly_sd.jpg",
     "status":1,
     "address":{
@@ -1146,7 +1146,7 @@ export const agents = [
   {
     "id":"senior-care-authority-central-texas-stacy-marlin",
     "name":"Stacy Marlin",
-    "agentBio":"Stacy Marlin has found a way to use her experience to help others who are facing life changing decisions for themselves or a family member after working for more than 20 years in the healthcare industry. “I have been looking for a career that would allow me to use the knowledge, skills, and experience I gained in healthcare to help seniors in need. Senior Care Authority has given me the opportunity to use my strengths and help families during a difficult times.”\n\nStacy was born and raised in Central Texas. She attended Texas A\\u0026M University and earned a Bachelor of Science in Health. After working in healthcare for many years, she decided to return to school and earn her Bachelor of Science in Nursing. Through her own family experiences, she has been faced with complex decisions for her father, who was battling cancer, and her grandmother, who could no longer remain safely at home. Stacy understands the struggles and challenges families face in making these decisions. Her goal is to help families make this process more bearable by being by their side and sharing her expertise to find the best fit for each person.\n\nStacy’s background in healthcare positions her well for assisting seniors and their families to make good choices. She now spends much of her time touring and reviewing local living communities – including assisted living, independent living, memory care, and residential care homes. She personally meets with each family to assess their needs, accompanies them on tours of pre-approved facilities, assists them with their negotiations and paperwork, and follows up with the client once the placement has been made. Stacy Marlin partnered with Seniorly in 2018.\n",
+    "agentBio":"Stacy Marlin has found a way to use her experience to help others who are facing life changing decisions for themselves or a family member after working for more than 20 years in the healthcare industry. “I have been looking for a career that would allow me to use the knowledge, skills, and experience I gained in healthcare to help seniors in need. Senior Care Authority has given me the opportunity to use my strengths and help families during a difficult times.”\n\nStacy was born and raised in Central Texas. She attended Texas A&M University and earned a Bachelor of Science in Health. After working in healthcare for many years, she decided to return to school and earn her Bachelor of Science in Nursing. Through her own family experiences, she has been faced with complex decisions for her father, who was battling cancer, and her grandmother, who could no longer remain safely at home. Stacy understands the struggles and challenges families face in making these decisions. Her goal is to help families make this process more bearable by being by their side and sharing her expertise to find the best fit for each person.\n\nStacy’s background in healthcare positions her well for assisting seniors and their families to make good choices. She now spends much of her time touring and reviewing local living communities – including assisted living, independent living, memory care, and residential care homes. She personally meets with each family to assess their needs, accompanies them on tours of pre-approved facilities, assists them with their negotiations and paperwork, and follows up with the client once the placement has been made. Stacy Marlin partnered with Seniorly in 2018.\n",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/dbbda128a4b84a408943b8e936d7adb4/stacy_y_marlin_sd.jpg",
     "status":1,
     "address":{
@@ -1405,8 +1405,8 @@ export const agents = [
       "name":"Jenanne Faust"}},
   {
     "id":"karl-winkelman-and-kathy-winkelman",
-    "name":"Karl \\u0026 Kathy Winkleman",
-    "agentBio":"Karl and Kathy Winkelman are a married couple for over 38 years with three sons and two grandsons. They have lived in the Bay Area for over 47 years. Karl Winkelman, an innovative leader and strategist, has held executive leadership positions throughout his entire corporate career. As a former CEO and President of InPrint Corporation and Vice President of Sales for ARC Northern California Division, a Fortune 1000 Company he is recognized as a business leader and has proven success in his career. He has expertise in building new programs, identifying new trends, emerging markets, and introducing state of the art technology solutions to customers which has attributed greatly to his and their success. He also believes in building value for his clients. From this unique vantage point, Karl wanted to continue to leverage his business expertise and apply his skills into an industry that he is passionate about. “I had personal experience with my Mom and Dad in 2000, where I had to find two communities because I was contacted by a social worker from Adult Protective Services. If I would have had an Elder Care Specialist, if I knew what I know now, I would have been able to direct them to the same community. I also would have saved time, money and the emotional stress. Now we can help families walk through this with ease and we look forward to it.' Karl is a graduate of Santa Clara University with a BA in Economics and an MBA. “Senior Care Authority is a nationwide Franchise that provides another opportunity for continued meaningful business career, to have an expanding staff, and run a respected and much-needed business,” Winkelman said.\nKarl and Katherine Winkelman are currently owners of Senior Care Authority South Bay and have been in this industry since 2012. SCA is a well-known and respected entity offering expertise in the Senior Care Industry through trained Advisors providing personal care and going the extra mile for clients. SCA provides several forms of up to date education and information through one on one care, newsletters and podcasts to make this transition as easy as possible. Karl and Katherine provide an elder care referral service for the growing senior population in Santa Clara County and Santa Cruz County, doing business as Senior Care Authority South Bay. “Transitioning to an assisted living facility or nursing home can be difficult, but with the guidance of Senior Care Authority, it doesn’t have to be”, he said. Kathy is a “people person,” has expertise in building and managing programs, projects, volunteers and staff for various organizations within the education, retail, nonprofit, and healthcare industries. She is recognized in her community and among her peers for being a mentor, creative and collaborative leader and teacher, and someone who brings enjoyment for working with people and projects. She has an entrepreneurial spirit and she is excited about the work she does with her husband Karl as a co-owner of Senior Care Authority South Bay. She has worked in the healthcare field at Good Samaritan Hospital. She received a BA in History, and an MBA, from Santa Clara University. Karl \\u0026 Kathy Winkelman partnered with Seniorly in 2017.",
+    "name":"Karl & Kathy Winkleman",
+    "agentBio":"Karl and Kathy Winkelman are a married couple for over 38 years with three sons and two grandsons. They have lived in the Bay Area for over 47 years. Karl Winkelman, an innovative leader and strategist, has held executive leadership positions throughout his entire corporate career. As a former CEO and President of InPrint Corporation and Vice President of Sales for ARC Northern California Division, a Fortune 1000 Company he is recognized as a business leader and has proven success in his career. He has expertise in building new programs, identifying new trends, emerging markets, and introducing state of the art technology solutions to customers which has attributed greatly to his and their success. He also believes in building value for his clients. From this unique vantage point, Karl wanted to continue to leverage his business expertise and apply his skills into an industry that he is passionate about. “I had personal experience with my Mom and Dad in 2000, where I had to find two communities because I was contacted by a social worker from Adult Protective Services. If I would have had an Elder Care Specialist, if I knew what I know now, I would have been able to direct them to the same community. I also would have saved time, money and the emotional stress. Now we can help families walk through this with ease and we look forward to it.' Karl is a graduate of Santa Clara University with a BA in Economics and an MBA. “Senior Care Authority is a nationwide Franchise that provides another opportunity for continued meaningful business career, to have an expanding staff, and run a respected and much-needed business,” Winkelman said.\nKarl and Katherine Winkelman are currently owners of Senior Care Authority South Bay and have been in this industry since 2012. SCA is a well-known and respected entity offering expertise in the Senior Care Industry through trained Advisors providing personal care and going the extra mile for clients. SCA provides several forms of up to date education and information through one on one care, newsletters and podcasts to make this transition as easy as possible. Karl and Katherine provide an elder care referral service for the growing senior population in Santa Clara County and Santa Cruz County, doing business as Senior Care Authority South Bay. “Transitioning to an assisted living facility or nursing home can be difficult, but with the guidance of Senior Care Authority, it doesn’t have to be”, he said. Kathy is a “people person,” has expertise in building and managing programs, projects, volunteers and staff for various organizations within the education, retail, nonprofit, and healthcare industries. She is recognized in her community and among her peers for being a mentor, creative and collaborative leader and teacher, and someone who brings enjoyment for working with people and projects. She has an entrepreneurial spirit and she is excited about the work she does with her husband Karl as a co-owner of Senior Care Authority South Bay. She has worked in the healthcare field at Good Samaritan Hospital. She received a BA in History, and an MBA, from Santa Clara University. Karl & Kathy Winkelman partnered with Seniorly in 2017.",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/0b3b0866bbf4b6be785a5a004ca48207/Karl%2520and%2520Kathy_sd.jpg",
     "status":1,
     "address":{
@@ -1415,7 +1415,7 @@ export const agents = [
       "state":"CA"},
     "user":{
     "id":"2eb0d6253bc97b08d151d2d436e24052",
-      "name":"Karl \\u0026 Kathy Winkleman"}},
+      "name":"Karl & Kathy Winkleman"}},
   {
     "id":"roger-sunner",
     "name":"Roger Sunner",
@@ -1470,7 +1470,7 @@ export const agents = [
       "name":"Stephanie Merritt"}},
   {
     "id":"oasis-fairfield-county-ct-paul-and-susan",
-    "name":"Paul Doyle \\u0026 Susan Doyle",
+    "name":"Paul Doyle & Susan Doyle",
     "agentBio":"Susan Doyle and Paul Doyle are experts in Senior Living matters and will work with your family face-to-face, in a caring and compassionate atmosphere you won’t find anywhere else. \n\nRaised in the suburbs of NYC, they have been very appreciative of the opportunities their upbringing afforded them and actively look for opportunities to give back. We run their own parish’s Midnight Run homeless ministry, and is on the Midnight Run board. Susan has been a teacher in our parish CCD program for years, and has also worked at Catholic Charities. \n\nSusan and Paul are proud parents of four wonderful kids. Paul has spent the last 25 years making sports documentaries, while Susan worked at Citibank before focusing all her energy on raising their kids; as their nest emptied, she transitioned into teaching nursery school.\n\nMost recently, they have been swamped with the same eldercare issues many families face as the responsibility for caregiving moved from one generation to the next.  Susan Doyle and Paul Doyle partnered with Seniorly in 2018.",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/ecb065005b672d7eb4b87347e412f965/TheDoyles_Seniorly_sd.jpg",
     "status":1,
@@ -1480,7 +1480,7 @@ export const agents = [
       "state":"CT"},
     "user":{
     "id":"03d6fad906469e91ecfc1ef3ecbca2ba",
-      "name":"Paul Doyle \\u0026 Susan Doyle"}},
+      "name":"Paul Doyle & Susan Doyle"}},
   {
     "id":"oasis-contra-costa-ca-susan-tamaoki",
     "name":"Susan Tamaoki",
@@ -1587,8 +1587,8 @@ export const agents = [
       "name":"John Alagood"}},
   {
     "id":"assisted-living-locators-tyrone-ga-ralph-booker",
-    "name":"Ralph \\u0026 Betty Booker",
-    "agentBio":"Ralph \\u0026 Betty Booker are the owners of Assisted Living Locators of Peachtree City.  Ralph Booker is a results-oriented sales professional with extensive experience in territory management, forecasting and sales planning. Self-starter with proven success in identifying growth opportunities and maintaining strong business alliances. Visionary with the ability to project market needs, develop new product call points and extend market penetration. I have over thirty years of sales and sales management with; Eveready Battery Company, Pepsi Cola, Nabisco Biscuit Company, Miller Brewing Company, Novartis Healthcare, Nestle Health Science as well Executive Director of the Eastside Family YMCA, Oklahoma City.\n\nBetty has worked in the capacity of customer service for a number of large companies of over a decade to include Eveready Battery Company and the Overhead Corporation. In her role as the lead customer service associate, she provided first contact hands-on care for internal as well as external customers. Upon leaving Overhead Corporation she accepted her most important role to date as a Stay at Home mom to Tifani, Alexandria, and Zachary that has lasted the past two decades. Included in that two decades of service, she was one of the lead volunteers at each of the schools for our children and 2010 she was named the volunteer of the year at our church. She is uniquely qualified to understand and balance the needs of the family with those of the person needing care.  Ralph \\u0026 Betty Booker partnered with Seniorly in 2018. \n",
+    "name":"Ralph & Betty Booker",
+    "agentBio":"Ralph & Betty Booker are the owners of Assisted Living Locators of Peachtree City.  Ralph Booker is a results-oriented sales professional with extensive experience in territory management, forecasting and sales planning. Self-starter with proven success in identifying growth opportunities and maintaining strong business alliances. Visionary with the ability to project market needs, develop new product call points and extend market penetration. I have over thirty years of sales and sales management with; Eveready Battery Company, Pepsi Cola, Nabisco Biscuit Company, Miller Brewing Company, Novartis Healthcare, Nestle Health Science as well Executive Director of the Eastside Family YMCA, Oklahoma City.\n\nBetty has worked in the capacity of customer service for a number of large companies of over a decade to include Eveready Battery Company and the Overhead Corporation. In her role as the lead customer service associate, she provided first contact hands-on care for internal as well as external customers. Upon leaving Overhead Corporation she accepted her most important role to date as a Stay at Home mom to Tifani, Alexandria, and Zachary that has lasted the past two decades. Included in that two decades of service, she was one of the lead volunteers at each of the schools for our children and 2010 she was named the volunteer of the year at our church. She is uniquely qualified to understand and balance the needs of the family with those of the person needing care.  Ralph & Betty Booker partnered with Seniorly in 2018. \n",
     "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/48a8a46c6ca15beed8db817213d52a6c/bookers%25204x4_sd.jpg",
     "status":1,
     "address":{
@@ -1597,7 +1597,7 @@ export const agents = [
       "state":"GA"},
     "user":{
     "id":"12c7a506154b36e7becd7a6c9bd16927",
-      "name":"Ralph \\u0026 Betty Booker"}},
+      "name":"Ralph & Betty Booker"}},
   {
     "id":"assisted-living-locators-starla-bryant",
     "name":"Starla Bryant",
