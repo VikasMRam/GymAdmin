@@ -37,7 +37,7 @@ const MonthlyBudget = ({ data }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <StyledHeading>What is your monthly budget for rent and care?</StyledHeading>
-    <Description> Monthly budget is an important criteria for narrowing down your search.</Description>
+    <Description> Monthly budget is an important criteria for narrowing down your search. Slide bar below.</Description>
     <Description>Note: The average monthly budget in US is roughly $3,750</Description>
     <Field
       name={stepInputFieldNames.MonthlyBudget[0]}

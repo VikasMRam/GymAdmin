@@ -42,7 +42,7 @@ export const getStepInputFieldDefaultValues = () => {
   defaultValues[stepInputFieldNames.LookingFor[0]] = null;
   defaultValues[stepInputFieldNames.CareNeeds[0]] = {};
   defaultValues[stepInputFieldNames.BuyingOrRenting[0]] = null;
-  defaultValues[stepInputFieldNames.MonthlyBudget[0]] = 2000;
+  defaultValues[stepInputFieldNames.MonthlyBudget[0]] = 3500;
   defaultValues[stepInputFieldNames.CitySearch[0]] = null;
   defaultValues[stepInputFieldNames.LeadFound[0]] = null;
   defaultValues[stepInputFieldNames.LeadFound[1]] = null;

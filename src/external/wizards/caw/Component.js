@@ -6,7 +6,8 @@ import { ifProp } from 'styled-tools';
 
 import { host } from 'sly/config'
 import { size, assetPath } from 'sly/components/themes';
-import { Button, Hr, Heading, Image } from 'sly/components/atoms';
+import { Button, Hr, Heading, Image, Link} from 'sly/components/atoms';
+import Logo from 'sly/components/atoms/Logo';
 
 import { stepOrders } from './helpers';
 import { getStepComponent } from './steps';
@@ -70,6 +71,14 @@ const ScrollWrapper = styled.div`
   height: 100%;
   overflow: auto;
 `;
+const SeniorlyLogoWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-right: ${size('spacing.large')};
+  a {
+    line-height: 0
+    }
+`;
 
 const Component = ({
   currentStep, invalid, data, handleSubmit, onSeeMore, totalNumberofSteps, onBackButton, change, setStoreKey,
@@ -91,9 +100,13 @@ const Component = ({
             <ProgressBar current={currentStep} limit={totalNumberofSteps} />
           </ProgressWrapper>
           <Wrapper>
-            <CurrentStep limitReached={currentStep === totalNumberofSteps}>
-              Step {currentStep} of {totalNumberofSteps}
-            </CurrentStep>
+
+            <SeniorlyLogoWrapper>
+              <CurrentStep limitReached={currentStep === totalNumberofSteps}>
+                Step {currentStep} of {totalNumberofSteps}
+              </CurrentStep>
+              <Logo />
+            </SeniorlyLogoWrapper>
             <StyledForm onSubmit={handleSubmit}>
               <CurrentStepComponent
                 invalid={invalid}
