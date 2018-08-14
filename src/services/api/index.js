@@ -74,10 +74,10 @@ api.request = (endpoint, settings = {}) => {
 api.create = (settings = {}) => ({
   settings,
 
-  setCookie(cookie) {
+  setHeader(name, value) {
     this.settings.headers = {
       ...this.settings.headers,
-      Cookie: cookie,
+      [name]: value,
     };
   },
 
