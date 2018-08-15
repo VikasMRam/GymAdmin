@@ -226,12 +226,15 @@ const CommunitySearchPage = ({
             onParamsChange={onParamsChange}
           />
         )}
-        { searchParams.modal === 'thankyou' && <Modal closeable isOpen onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}><Thankyou /><StyledButton
+        { searchParams.modal === 'thankyou' &&
+        <Modal closeable isOpen onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}>
+          <Thankyou />
+          <StyledButton
           kind="jumbo"
-          onClick={() => onParamsRemove({ paramsToRemove: ['modal'] })}
-        >
-          Click to Continue
-        </StyledButton><HowSlyWorks layout="modal" reasons="howItWorks"/></Modal>}
+          onClick={() => onParamsRemove({ paramsToRemove: ['modal'] })}>
+            Click to Continue
+          </StyledButton>
+        </Modal>}
         { searchParams.modal === 'cawWizard' && <Modal closeable isOpen layout="wizard" onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}><CAWController /></Modal>}
       </CommunitySearchPageTemplate>
     </Fragment>
