@@ -118,7 +118,6 @@ class Controller extends Component {
     const {
       currentStep, set, locationSearchParams, searchCommunities,
     } = this.props;
-    console.log("do search");
     set({
       searching: true,
     });
