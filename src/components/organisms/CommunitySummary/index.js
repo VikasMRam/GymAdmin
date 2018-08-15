@@ -125,17 +125,6 @@ export default class communitySummary extends React.Component {
       ));
     }
 
-    if (websiteUrl) {
-      highlights.push((
-        <Link
-          href={websiteUrl}
-          target="_blank"
-        >
-          Property Website
-        </Link>
-      ));
-    }
-
     if (amenityScore) {
       const parsedAmenityScore = parseFloat(amenityScore);
       if (parsedAmenityScore) {
@@ -203,6 +192,17 @@ export default class communitySummary extends React.Component {
     highlights.push((
       <Link onClick={onHowSeniorlyWorks}>How Seniorly Works</Link>
     ));
+
+    if (websiteUrl) {
+      highlights.push((
+        <Link
+          href={websiteUrl}
+          target="_blank"
+        >
+          Property Website
+        </Link>
+      ));
+    }
 
 
     return (
