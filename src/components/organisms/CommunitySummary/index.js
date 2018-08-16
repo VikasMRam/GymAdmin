@@ -195,7 +195,7 @@ export default class communitySummary extends React.Component {
     ));
 
     if (websiteUrl) {
-      if (websiteUrl && !websiteUrl.includes('//')) {
+      if (!websiteUrl.includes('//')) {
         websiteUrl = `//${websiteUrl}`;
       }
       highlights.push((

@@ -21,6 +21,15 @@ import apiService from 'sly/services/api';
 import App from 'sly/components/App';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
+import crypto from 'crypto';
+
+const utmParams = [
+  'utm_content',
+  'utm_medium',
+  'utm_source',
+  'utm_campaign',
+  'utm_term'
+];
 
 const renderApp = ({
   store, context, location, sheet,
@@ -57,6 +66,13 @@ const renderHtml = ({
 
 const experiments = require('sly/../experiments.json');
 
+const createSetCookie = (res, cookies) => (key, value, maxAge=27000000) => {
+  res.cookie(key, value, { domain: cookieDomain, maxAge });
+  cookies.push(`${key}=${value}`);
+};
+
+const makeSid = () => crypto.randomBytes(16).toString('hex')
+
 const app = express();
 app.disable('x-powered-by');
 app.use(cookieParser());
@@ -76,57 +92,47 @@ app.get(`${externalWizardsPath}*`, (req, res) => {
 
 app.use(async (req, res, next) => {
   const api = apiService.create();
-  const cookieArr = [];
-  let slyUUID = req.cookies.sly_uuid;
-  let setUUID = false;
-  if (slyUUID === undefined || slyUUID === null) {
-    slyUUID = v4();
-    setUUID = true;
-  }
-  cookieArr.push(`sly_uuid=${slyUUID};Max-Age=27000000;Domain=${cookieDomain};Path=/;`);
 
-  let slySID = req.cookies.sly_sid;
-  if (slySID === undefined || slySID === null) {
-    slySID = require('crypto').randomBytes(16).toString('hex');
-  }
-  cookieArr.push(`sly_sid=${slySID};Max-Age=3600;Domain=${cookieDomain};Path=/;`);
+  const cookies = [req.headers.cookie];
+  const setCookie = createSetCookie(res, cookies);
 
-
-  let slyReferrer = req.cookies.referrer;
-  let slyHeaderReferrer = req.headers.referer;
-  if ((slyHeaderReferrer !== undefined) && (slyReferrer === undefined || slyReferrer === null)) {
-    cookieArr.push(`referrer=${slyHeaderReferrer};Max-Age=27000000;Domain=${cookieDomain};Path=/;`);
+  if (!req.cookies.sly_uuid) {
+    setCookie('sly_uuid', v4());
   }
 
+  const slySID = req.cookies.sly_sid || makeSid();
 
-  const utmParams = ['utm_content', 'utm_medium', 'utm_source', 'utm_campaign', 'utm_term'];
-  const utm = req.cookies.utm;
-  if (utm === undefined || utm === null) {
-    let utmStr = '';
-    utmParams.forEach((elem) => {
-      if (req.query[elem] !== undefined) {
-        if (utmStr !== '') {
-          utmStr += ',';
-        }
-        utmStr = `${utmStr + elem}:${req.query[elem]}`;
-      }
-    });
-    if (utmStr !== '') {
-      cookieArr.push(`utm=${utmStr};Max-Age=27000000;Domain=${cookieDomain};Path=/;`);
+  if (!req.cookies.sly_sid) {
+    setCookie('sly_sid', slySID, 3600);
+  }
+
+  if (!req.cookies.referrer && req.headers.referer) {
+    setCookie('referrer', req.headers.referer);
+  }
+
+  const utmStr = utmParams.reduce((cumul, key) => {
+    if (req.query[key]) {
+      cumul.push(`${key}:${req.query[key]}`);
     }
+    return cumul;
+  }, []).join(',');
+
+  if (!req.cookies.utm && utmStr) {
+    setCookie('utm', utmStr);
   }
 
-  res.header('Set-Cookie', cookieArr);
-  res.header('Cache-Control', ['max-age=0, private, must-revalidate', 'no-cache="set-cookie"']);
+  res.header('Cache-Control', [
+    'max-age=0, private, must-revalidate',
+    'no-cache="set-cookie"'
+  ]);
 
-  if (req.headers.cookie) {
-    api.setCookie(req.headers.cookie);
-  } else if (setUUID) {
-    api.setCookie(`sly_uuid=${slyUUID}`);
-  }
-  /* End of possible temp code */
+  api.setHeader('cookie', cookies.join('; '));
+  api.setHeader('user-agent', req.headers['user-agent']);
+  api.setHeader('x-is-sly-ssr', 'true');
+  api.setHeader('x-forwarded-for',
+       req.headers['x-forwarded-for']
+    || req.connection.remoteAddress);
 
-  const location = req.url;
   const experimentNames = Object.keys(experiments);
   const userExperiments = experimentNames
     .reduce((cumul, key, i) => {
@@ -147,7 +153,7 @@ app.use(async (req, res, next) => {
     const { state: serverState, html: content } = await renderApp({
       store,
       context,
-      location,
+      location: req.url,
       sheet,
     });
 
