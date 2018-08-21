@@ -12,6 +12,8 @@ import SlyEvent from 'sly/services/helpers/events';
 import { size } from 'sly/components/themes';
 import { getExperiment } from 'sly/store/selectors';
 
+import { selectedExperimentVariants } from 'sly/services/experiments/helpers';
+
 const DebugWrapper = styled.div`
   position: relative;
   outline: ${size('border.regular')} solid ${prop('color')};
@@ -112,7 +114,9 @@ export class Experiment extends Component {
       console.info(`[Experiments] experiment ${name} has variant ${this.selectedVariant}.`);
     }
     this.selectedVariantRendered = true;
-
+    if (!disabled) {
+      selectedExperimentVariants[name] = this.selectedVariant;
+    }
     if (variant && enableExperimentsDebugger) {
       const color = `#${Math.random().toString(16).slice(2, 8)}`;
       return (
