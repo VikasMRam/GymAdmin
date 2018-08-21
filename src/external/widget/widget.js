@@ -75,7 +75,11 @@
     widgetConfigAttributes: {
       popupOnClickorInline: 'data-seniorly-widget',
       state: 'data-seniorly-state',
-      city: 'data-seniorly-city'
+      city: 'data-seniorly-city',
+      campaign: 'data-seniorly-campaign',
+      source: 'data-seniorly-source',
+      medium: 'data-seniorly-medium',
+      pixel: 'data-seniorly-pixel'
     },
     configQueryParamKeys: {
       type: 'widget_type'
@@ -267,11 +271,27 @@
           var params = {};
           var state = match.getAttribute(Seniorly.widgetConfigAttributes.state);
           var city = match.getAttribute(Seniorly.widgetConfigAttributes.city);
+          var pixel = match.getAttribute(Seniorly.widgetConfigAttributes.pixel);
+          var campaign = match.getAttribute(Seniorly.widgetConfigAttributes.campaign);
+          var source = match.getAttribute(Seniorly.widgetConfigAttributes.source);
+          var medium = match.getAttribute(Seniorly.widgetConfigAttributes.medium);
           if (state) {
             params.state = state;
           }
           if (city) {
             params.city = city;
+          }
+          if (pixel) {
+            params.city = pixel;
+          }
+          if (campaign) {
+            params.campaign = campaign;
+          }
+          if (source) {
+            params.source = source;
+          }
+          if (medium) {
+            params.medium = medium;
           }
 
           if (type === 'modal') {
