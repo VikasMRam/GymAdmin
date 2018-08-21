@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, node, bool } from 'prop-types';
+import { string, node, bool, object } from 'prop-types';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
 import { connect } from 'react-redux';
@@ -11,6 +11,8 @@ import { enableExperimentsDebugger, isTest } from 'sly/config';
 import SlyEvent from 'sly/services/helpers/events';
 import { size } from 'sly/components/themes';
 import { getExperiment } from 'sly/store/selectors';
+
+import { selectedExperimentVariants } from 'sly/services/experiments/helpers';
 
 const DebugWrapper = styled.div`
   position: relative;
@@ -28,6 +30,7 @@ export class Experiment extends Component {
     defaultVariant: string,
     variantKey: string,
     children: node,
+    location: object,
   };
 
   static defaultProp = {
@@ -55,7 +58,6 @@ export class Experiment extends Component {
         }
       }
     }
-
   }
 
   componentDidMount() {
@@ -67,9 +69,7 @@ export class Experiment extends Component {
   }
 
   sendExperimentEvent(action) {
-    const {
-      disabled, name, variantKey, defaultVariant,
-    } = this.props;
+    const { disabled, name } = this.props;
     if (!disabled) {
       const event = {
         action, category: name, label: 'experiments', value: this.selectedVariant,
@@ -114,7 +114,9 @@ export class Experiment extends Component {
       console.info(`[Experiments] experiment ${name} has variant ${this.selectedVariant}.`);
     }
     this.selectedVariantRendered = true;
-
+    if (!disabled) {
+      selectedExperimentVariants[name] = this.selectedVariant;
+    }
     if (variant && enableExperimentsDebugger) {
       const color = `#${Math.random().toString(16).slice(2, 8)}`;
       return (
