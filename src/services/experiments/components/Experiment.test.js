@@ -48,8 +48,10 @@ describe('Experiments|Experiment', () => {
 
   it('renders variant specified through query params', () => {
     const wrapper = wrapWithVariants({
-      name: 'test2', defaultVariant: 'variant2', location: {
-        search: '?experimentEvaluations=test2:variant1'
+      name: 'test2',
+      defaultVariant: 'variant2',
+      location: {
+        search: '?experimentEvaluations=test2:variant1',
       },
     });
     expect(wrapper.find(Variant).length).toBe(1);
@@ -58,8 +60,10 @@ describe('Experiments|Experiment', () => {
 
   it('renders no variant when invalid varaint specified through query params', () => {
     const wrapper = wrapWithVariants({
-      name: 'test2', defaultVariant: 'variant2', location: {
-        search: '?experimentEvaluations=test2:variant3'
+      name: 'test2',
+      defaultVariant: 'variant2',
+      location: {
+        search: '?experimentEvaluations=test2:variant3',
       },
     });
     expect(wrapper.find(Variant).length).toBe(0);
