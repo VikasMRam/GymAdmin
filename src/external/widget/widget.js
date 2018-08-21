@@ -282,7 +282,7 @@
             params.city = city;
           }
           if (pixel) {
-            params.city = pixel;
+            params.pixel = pixel;
           }
           if (campaign) {
             params.campaign = campaign;

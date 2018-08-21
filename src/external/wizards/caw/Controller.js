@@ -64,8 +64,8 @@ class Controller extends Component {
       if (params.city && params.state) {
         this.providedLocationSearchParams = { city: params.city, state: params.state };
       }
-      if (params.utm_campaign) {
-        this.providedUtmParams = { campaign: params.utm_campaign, source: params.utm_source || 'external' , medium: params.utm_medium || 'widget' };
+      if (params.campaign) {
+        this.providedUtmParams = { campaign: params.campaign, source: params.source || 'external', medium: params.medium || 'widget' };
       }
       if (params.pixel) {
         this.providedPixel = decodeURIComponent(params.pixel);
