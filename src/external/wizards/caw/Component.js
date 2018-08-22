@@ -82,7 +82,7 @@ const SeniorlyLogoWrapper = styled.div`
 
 const Component = ({
   currentStep, invalid, data, handleSubmit, onSeeMore, totalNumberofSteps, onBackButton, change, setStoreKey,
-  searching, searchResultCount, locationSearchParams, flow,
+  searching, searchResultCount, href, flow,
 }) => {
   const CurrentStepComponent = getStepComponent(stepOrders[flow][currentStep - 1]);
   return (
@@ -137,7 +137,7 @@ const Component = ({
                     // it's important to make this a regular href than opens new tab since
                     // by default browsers block popups opened using window.open
                     <Button
-                      href={`${host}/assisted-living/${locationSearchParams.state}/${locationSearchParams.city}?modal=thankyou`}
+                      href={href}
                       target="_blank"
                       disabled={invalid}
                       onClick={onSeeMore}
@@ -167,10 +167,7 @@ Component.propTypes = {
   setStoreKey: func,
   searching: bool,
   searchResultCount: number,
-  locationSearchParams: shape({
-    state: string.isRequired,
-    city: string.isRequired,
-  }),
+  href: string.isRequired,
   flow: oneOf(Object.keys(stepOrders)),
 };
 

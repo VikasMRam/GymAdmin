@@ -3,6 +3,8 @@ import { reduxForm, reset } from 'redux-form';
 import { number, func, object, shape, string, bool } from 'prop-types';
 import queryString from 'query-string';
 
+import { host } from 'sly/config';
+
 import { resourceCreateRequest, resourceListReadRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
 
@@ -32,6 +34,8 @@ class Controller extends Component {
     currentStep: number.isRequired,
     set: func.isRequired,
     locationSearchParams: object,
+    utmParams: object,
+    pixel: string,
     searchCommunities: func,
     postUserAction: func.isRequired,
     searchResultCount: number,
@@ -47,7 +51,7 @@ class Controller extends Component {
   componentWillMount() {
     this.flowName = defaultStepOrder;
 
-    const { location, locationSearchParams } = this.props;
+    const { location, locationSearchParams, utmParams, pixel } = this.props;
     // get query params passed
     if (location && location.search) {
       const params = queryString.parse(location.search);
@@ -60,10 +64,24 @@ class Controller extends Component {
       if (params.city && params.state) {
         this.providedLocationSearchParams = { city: params.city, state: params.state };
       }
+      if (params.campaign) {
+        this.providedUtmParams = { campaign: params.campaign, source: params.source || 'external', medium: params.medium || 'widget' };
+      }
+      if (params.pixel) {
+        this.providedPixel = decodeURIComponent(params.pixel);
+      }
     }
     // get ones passed as prop
     if (locationSearchParams) {
       this.providedLocationSearchParams = locationSearchParams;
+    }
+
+    if (utmParams) {
+      this.providedUtmParams = utmParams;
+    }
+
+    if (pixel) {
+      this.providedPixel = decodeURIComponent(pixel);
     }
 
     this.flow = stepOrders[this.flowName];
@@ -99,6 +117,8 @@ class Controller extends Component {
           careAssessment,
         },
       };
+
+
       postUserAction(payload)
         .then(() => {
           if (window.parent && this.widgetType === 'popup') {
@@ -111,6 +131,17 @@ class Controller extends Component {
             });
           }
         });
+
+      // Fire pixel
+      if (this.providedPixel) {
+        fetch(this.providedPixel);
+      }
+
+      const currentStepName = this.flow[currentStep - 1];
+      const event = {
+        action: `step_${currentStepName}`, category: 'cawizard', label: 'complete',
+      };
+      SlyEvent.getInstance().sendEvent(event);
     }
   }
 
@@ -132,6 +163,12 @@ class Controller extends Component {
         } else {
           newState.locationSearchParams = this.providedLocationSearchParams;
         }
+        let href = `${host}/assisted-living/${locationSearchParams.state}/${locationSearchParams.city}?modal=thankyou`;
+        const utm = this.providedUtmParams;
+        if (utm) {
+          href = `${href}&utm_campaign=${utm.campaign}&utm_source=${utm.source}&utm_medium=${utm.medium}`;
+        }
+        newState.href = href;
 
         set(newState);
       })
@@ -143,7 +180,7 @@ class Controller extends Component {
   }
 
   handleSubmit = (values, dispatch, props) => {
-    const { currentStep, set, progressPath, locationSearchParams } = props;
+    const { currentStep, set, progressPath } = props;
     const currentStepName = this.flow[currentStep - 1];
 
     let concatedValues = '';
@@ -212,14 +249,14 @@ class Controller extends Component {
   }
 
   render() {
-    const { locationSearchParams } = this.props;
+    const { href } = this.props;
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
         onBackButton={this.handleBackButton}
         setStoreKey={this.handleSetStoreKey}
         onSeeMore={this.handleSeeMore}
-        locationSearchParams={locationSearchParams}
+        href={href}
         flow={this.flowName}
         totalNumberofSteps={this.flow.length}
         {...this.props}
@@ -233,6 +270,7 @@ const mapStateToProps = (state, { controller, ...ownProps }) => {
     progressPath: controller.progressPath || new Set([1]),
     currentStep: controller.currentStep || ownProps.currentStep || 1,
     locationSearchParams: controller.locationSearchParams || ownProps.locationSearchParams,
+    href: controller.href || '',
     searchResultCount: controller.searchResultCount,
     searching: controller.searching,
     data: selectFormData(state, formName, {}),
