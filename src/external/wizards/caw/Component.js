@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
-import { bool, object, number, func, shape, string, oneOf } from 'prop-types';
+import { bool, object, number, func, string, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { host } from 'sly/config'
 import { size, assetPath } from 'sly/components/themes';
-import { Button, Hr, Heading, Image, Link} from 'sly/components/atoms';
+import { Button, Hr, Heading, Image } from 'sly/components/atoms';
 import Logo from 'sly/components/atoms/Logo';
 
 import { stepOrders } from './helpers';
