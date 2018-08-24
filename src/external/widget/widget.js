@@ -73,7 +73,7 @@
       type: 'popupOnClickorInline'
     },
     widgetConfigAttributes: {
-      popupOnClickorInline: 'data-seniorly-widget',
+      type: 'data-seniorly-widget',
       state: 'data-seniorly-state',
       city: 'data-seniorly-city',
       campaign: 'data-seniorly-campaign',
@@ -264,35 +264,20 @@
     popupOnClickorInline: function() {
       var w = new SeniorlyWidget('popupOnClickorInline');
       w.buildContent = function() {
-        var matches = document.querySelectorAll('[' + Seniorly.widgetConfigAttributes.popupOnClickorInline + ']');
+        var matches = document.querySelectorAll('[' + Seniorly.widgetConfigAttributes.type + ']');
         // old browsers don't have forEach method on Nodelist so...
         Array.prototype.forEach.call(matches, function(match) {
-          var type = match.getAttribute(Seniorly.widgetConfigAttributes.popupOnClickorInline);
+          var skipAttributes = ['type'];
+          var type = match.getAttribute(Seniorly.widgetConfigAttributes.type);
           var params = {};
-          var state = match.getAttribute(Seniorly.widgetConfigAttributes.state);
-          var city = match.getAttribute(Seniorly.widgetConfigAttributes.city);
-          var pixel = match.getAttribute(Seniorly.widgetConfigAttributes.pixel);
-          var campaign = match.getAttribute(Seniorly.widgetConfigAttributes.campaign);
-          var source = match.getAttribute(Seniorly.widgetConfigAttributes.source);
-          var medium = match.getAttribute(Seniorly.widgetConfigAttributes.medium);
-          if (state) {
-            params.state = state;
-          }
-          if (city) {
-            params.city = city;
-          }
-          if (pixel) {
-            params.pixel = pixel;
-          }
-          if (campaign) {
-            params.campaign = campaign;
-          }
-          if (source) {
-            params.source = source;
-          }
-          if (medium) {
-            params.medium = medium;
-          }
+          Object.keys(Seniorly.widgetConfigAttributes).forEach(function(attr) {
+            if (skipAttributes.indexOf(attr) === -1) {
+              var av = match.getAttribute(Seniorly.widgetConfigAttributes[attr]);
+              if (av) {
+                params[attr] = av;
+              }
+            }
+          });
 
           if (type === 'modal') {
             match.onclick = function() {
