@@ -46,12 +46,15 @@ class Controller extends Component {
     dispatchResetForm: func.isRequired,
     progressPath: object.isRequired,
     searching: bool,
+    href: string,
   };
 
   componentWillMount() {
     this.flowName = defaultStepOrder;
 
-    const { location, locationSearchParams, utmParams, pixel } = this.props;
+    const {
+      location, locationSearchParams, utmParams, pixel,
+    } = this.props;
     // get query params passed
     if (location && location.search) {
       const params = queryString.parse(location.search);
@@ -65,7 +68,11 @@ class Controller extends Component {
         this.providedLocationSearchParams = { city: params.city, state: params.state };
       }
       if (params.campaign) {
-        this.providedUtmParams = { campaign: params.campaign, source: params.source || 'external', medium: params.medium || 'widget' };
+        this.providedUtmParams = {
+          campaign: params.campaign,
+          source: params.source || 'external',
+          medium: params.medium || 'widget',
+        };
       }
       if (params.pixel) {
         this.providedPixel = decodeURIComponent(params.pixel);
@@ -90,7 +97,6 @@ class Controller extends Component {
       this.flow.splice(searchStepIndex, 1);
       this.doSearch();
     }
-
   }
 
   handleSeeMore = () => {
@@ -117,7 +123,6 @@ class Controller extends Component {
           careAssessment,
         },
       };
-
 
       postUserAction(payload)
         .then(() => {
