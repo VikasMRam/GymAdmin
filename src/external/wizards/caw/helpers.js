@@ -57,6 +57,9 @@ export const converStepInputToString = (inp) => {
     case 'object':
       return JSON.stringify(inp);
     default:
+      if (inp.toString) {
+        return inp.toString();
+      }
       return inp;
   }
 };
