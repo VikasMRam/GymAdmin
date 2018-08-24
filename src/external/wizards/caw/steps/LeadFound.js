@@ -11,11 +11,11 @@ import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 
 import { stepInputFieldNames } from '../helpers';
 
-const StyledHeading = styled(Heading)`
+export const StyledHeading = styled(Heading)`
   font-weight: normal;
   margin-bottom: ${size('spacing.regular')};
 `;
-const Description = styled.p`
+export const Description = styled.p`
   color: ${palette('grayscale', 0)};
   margin-bottom: ${size('spacing.xLarge')};
 `;
