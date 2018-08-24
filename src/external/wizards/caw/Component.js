@@ -13,7 +13,7 @@ import { getStepComponent } from './steps';
 
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
 
-const ProgressWrapper = styled.div`
+export const ProgressWrapper = styled.div`
   background-color: ${palette('primary', 3)};
 `;
 const ProgressBar = styled.div`
@@ -22,7 +22,7 @@ const ProgressBar = styled.div`
   width: ${progressBarWidth}%;
   transition: width ${key('transitions.slow.inOut')};
 `;
-const CurrentStep = styled.p`
+export const CurrentStep = styled.p`
   font-size: ${size('text.caption')};
   color: ${ifProp('limitReached', palette('secondary', 0), 'initial')};
 `;
@@ -32,7 +32,7 @@ const StyledForm = styled.form`
 const Wrapper = styled.div`
   padding: ${size('spacing.large')} ${size('spacing.xxLarge')} 0 ${size('spacing.xxLarge')};
 `;
-const ButtonsWrapper = styled.div`
+export const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
 
@@ -99,7 +99,6 @@ const Component = ({
             <ProgressBar current={currentStep} limit={totalNumberofSteps} />
           </ProgressWrapper>
           <Wrapper>
-
             <SeniorlyLogoWrapper>
               <CurrentStep limitReached={currentStep === totalNumberofSteps}>
                 Step {currentStep} of {totalNumberofSteps}
@@ -155,8 +154,8 @@ const Component = ({
 };
 
 Component.propTypes = {
-  currentStep: number,
-  totalNumberofSteps: number,
+  currentStep: number.isRequired,
+  totalNumberofSteps: number.isRequired,
   invalid: bool,
   data: object,
   handleSubmit: func.isRequired,
