@@ -73,10 +73,10 @@ const ScrollWrapper = styled.div`
 const SeniorlyLogoWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-right: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.large')};
   a {
-    line-height: 0
-    }
+    line-height: 0;
+  }
 `;
 
 const Component = ({
