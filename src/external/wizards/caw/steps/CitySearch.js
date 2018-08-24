@@ -10,7 +10,7 @@ import { Heading } from 'sly/components/atoms';
 
 import { stepInputFieldNames } from '../helpers';
 
-const StyledHeading = styled(Heading)`
+export const StyledHeading = styled(Heading)`
   font-weight: normal;
   margin-bottom: ${size('spacing.xLarge')};
 `;
