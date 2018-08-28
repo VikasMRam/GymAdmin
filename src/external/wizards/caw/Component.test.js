@@ -3,17 +3,30 @@ import { shallow } from 'enzyme';
 
 import { Button } from 'sly/components/atoms';
 
-import Component, { ProgressWrapper, CurrentStep, ButtonsWrapper } from './Component';
+import Component, { ProgressWrapper, CurrentStep, ButtonsWrapper, SearchingWrapper } from './Component';
 
 const wrap = (props = {}) => shallow(<Component {...props} />);
 const totalNumberofSteps = 4;
-const currentStep = 1;
-const handleSubmit = () => null;
-const onBackButton = () => null;
-const onSeeMore = () => null;
-const buttonTexts = ['Back', 'Continue'];
-const href = 'http://www.lvh.me/assisted-living/california/san-francisco';
+let currentStep = 1;
+const handleSubmit = () => jest.fn();
+const onBackButton = () => jest.fn();
+const onSeeMore = () => jest.fn();
+const buttonTextsInProgress = ['Back', 'Continue'];
+const buttonTextFinal = 'See my options';
+const href = 'http://www.lvh.me/assisted-living/california/san-francisco?modal=thankyou';
 const flow = 'flow2';
+
+const getButtons = (wrapper, isFinal = false) => {
+  const bwrap = wrapper.find(ButtonsWrapper);
+  const buttons = bwrap.find(Button);
+  expect(bwrap).toHaveLength(1);
+  if (isFinal) {
+    expect(buttons).toHaveLength(1);
+  } else {
+    expect(buttons).toHaveLength(2);
+  }
+  return buttons;
+};
 
 describe('Component', () => {
   it('renders', () => {
@@ -21,16 +34,69 @@ describe('Component', () => {
       currentStep, totalNumberofSteps, handleSubmit, onBackButton, onSeeMore, href, flow,
     });
     const cstep = wrapper.find(CurrentStep);
-    const bwrap = wrapper.find(ButtonsWrapper);
-    const buttons = bwrap.find(Button);
+    const buttons = getButtons(wrapper);
 
     expect(wrapper.find(ProgressWrapper)).toHaveLength(1);
     expect(cstep).toHaveLength(1);
     expect(cstep.dive().text()).toContain(`Step ${currentStep} of ${totalNumberofSteps}`);
-    expect(bwrap).toHaveLength(1);
-    expect(buttons).toHaveLength(2);
+
     buttons.forEach((button, i) => {
-      expect(button.dive().dive().text()).toBe(buttonTexts[i]);
+      expect(button.dive().dive().text()).toBe(buttonTextsInProgress[i]);
+      if (i === 0) {
+        expect(button.prop('disabled')).toBeTruthy();
+      } else {
+        expect(button.prop('disabled')).toBeFalsy();
+      }
     });
+  });
+
+  it('shows searching when flag set', () => {
+    const wrapper = wrap({
+      currentStep, totalNumberofSteps, handleSubmit, onBackButton, onSeeMore, href, flow, searching: true,
+    });
+    expect(wrapper.find(SearchingWrapper)).toHaveLength(1);
+    expect(wrapper.find(ProgressWrapper)).toHaveLength(0);
+  });
+
+  it('back button becomes active after first step', () => {
+    currentStep += 1;
+    const wrapper = wrap({
+      currentStep, totalNumberofSteps, handleSubmit, onBackButton, onSeeMore, href, flow,
+    });
+    const buttons = getButtons(wrapper);
+    expect(buttons.first().prop('disabled')).toBeFalsy();
+  });
+
+  it('current step desription is updated', () => {
+    const wrapper = wrap({
+      currentStep, totalNumberofSteps, handleSubmit, onBackButton, onSeeMore, href, flow,
+    });
+    const cstep = wrapper.find(CurrentStep);
+    expect(cstep.dive().text()).toContain(`Step ${currentStep} of ${totalNumberofSteps}`);
+  });
+
+  it('submit button becomes active for valid form', () => {
+    const wrapper = wrap({
+      currentStep, totalNumberofSteps, handleSubmit, onBackButton, onSeeMore, href, flow, invalid: false,
+    });
+    const buttons = getButtons(wrapper);
+    expect(buttons.at(1).prop('disabled')).toBeFalsy();
+  });
+
+  it('submit button becomes inactive for invalid form', () => {
+    const wrapper = wrap({
+      currentStep, totalNumberofSteps, handleSubmit, onBackButton, onSeeMore, href, flow, invalid: true,
+    });
+    const buttons = getButtons(wrapper);
+    expect(buttons.at(1).prop('disabled')).toBeTruthy();
+  });
+
+  it('final step buttons are shown', () => {
+    const wrapper = wrap({
+      currentStep: totalNumberofSteps, totalNumberofSteps, handleSubmit, onBackButton, onSeeMore, href, flow,
+    });
+    const button = getButtons(wrapper, true);
+    expect(button.dive().dive().text()).toBe(buttonTextFinal);
+    expect(button.prop('href')).toBe(href);
   });
 });

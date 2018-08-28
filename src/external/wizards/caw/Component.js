@@ -58,7 +58,7 @@ const BottomWrapper = styled.div`
 const StyledHeading = styled(Heading)`
   font-weight: normal;
 `;
-const SearchingWrapper = Wrapper.extend`
+export const SearchingWrapper = Wrapper.extend`
   top: 50%;
   transform: translate(0%, -50%);
   position: absolute;
@@ -167,6 +167,12 @@ Component.propTypes = {
   searchResultCount: number,
   href: string.isRequired,
   flow: oneOf(Object.keys(stepOrders)),
+};
+
+Component.defaultPropTypes = {
+  invalid: false,
+  data: {},
+  searching: false,
 };
 
 export default Component;
