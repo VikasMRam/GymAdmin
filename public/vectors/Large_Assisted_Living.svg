@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240px" height="180px" viewBox="0 0 240 180" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>Large Assisted Living Illustration 240</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="60.8960963%" y1="100%" x2="60.8960963%" y2="68.8615075%" id="linearGradient-1">
+            <stop stop-color="#3EA216" stop-opacity="0.2" offset="0%"></stop>
+            <stop stop-color="#6ACAE3" stop-opacity="0.2" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Large-Assisted-Living-Illustration-240" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M20.1182721,137.167248 C-4.74615316,117.760572 40.8492042,91.2699087 75.0591007,73.5340933 C109.268997,55.798278 169.276228,14.6097942 187.426199,20.5876019 C205.576169,26.5654097 225.877564,112.942588 180.254097,143.925879 C134.630631,174.909171 44.9826974,156.573924 20.1182721,137.167248 Z" id="Blob-Copy" fill="url(#linearGradient-1)"></path>
+        <g id="Group" transform="translate(40.000000, 55.000000)" fill-rule="nonzero">
+            <rect id="Rectangle" fill="#F48933" x="60" y="21" width="36" height="12"></rect>
+            <polygon id="Rectangle-Copy" fill="#F48933" points="12 21 24 21 24 33 0 33"></polygon>
+            <polygon id="Rectangle-Copy-2" fill="#F48933" points="144 21 156 33 132 33 132 21"></polygon>
+            <polygon id="Rectangle-13" fill="#FFF5EB" points="24 17 42 5 60 17 60 85 24 85"></polygon>
+            <path d="M60,17 L42,5 L24,17 L18,17 L42,0 L66,17 L60,17 Z" id="Combined-Shape" fill="#F48933"></path>
+            <path d="M132,17 L114,5 L96,17 L90,17 L114,0 L138,17 L132,17 Z" id="Combined-Shape-Copy" fill="#F48933"></path>
+            <polygon id="Rectangle-13-Copy-5" fill="#FFF5EB" points="96 17 114 5 132 17 132 85 96 85"></polygon>
+            <rect id="Rectangle-3" fill="#F48933" x="37" y="65" width="10" height="20"></rect>
+            <rect id="Rectangle-3-Copy" fill="#F48933" x="109" y="65" width="10" height="20"></rect>
+            <rect id="Rectangle-13-Copy-4" fill="#FFF5EB" x="60" y="33" width="36" height="48"></rect>
+            <rect id="Rectangle-4" fill="#ECD8C4" x="94" y="33" width="2" height="48"></rect>
+            <rect id="Rectangle-4-Copy" fill="#ECD8C4" x="60" y="33" width="2" height="48"></rect>
+            <rect id="Rectangle-13-Copy-2" fill="#FFF5EB" x="132" y="33" width="12" height="48"></rect>
+            <rect id="Rectangle-13-Copy-3" fill="#FFF5EB" x="12" y="33" width="12" height="48"></rect>
+            <rect id="Rectangle-4-Copy-3" fill="#ECD8C4" x="22" y="33" width="2" height="48"></rect>
+            <rect id="Rectangle-4-Copy-2" fill="#ECD8C4" x="132" y="33" width="2" height="48"></rect>
+            <path d="M28,33 L32,33 L32,45 L28,45 L28,33 Z M36,17 L40,17 L40,29 L36,29 L36,17 Z M36,33 L40,33 L40,45 L36,45 L36,33 Z M44,17 L48,17 L48,29 L44,29 L44,17 Z M44,33 L48,33 L48,45 L44,45 L44,33 Z M52,33 L56,33 L56,45 L52,45 L52,33 Z M28,49 L32,49 L32,61 L28,61 L28,49 Z M28,65 L32,65 L32,77 L28,77 L28,65 Z M36,49 L40,49 L40,61 L36,61 L36,49 Z M44,49 L48,49 L48,61 L44,61 L44,49 Z M52,49 L56,49 L56,61 L52,61 L52,49 Z M52,65 L56,65 L56,77 L52,77 L52,65 Z M16,41 L20,41 L20,53 L16,53 L16,41 Z M16,61 L20,61 L20,73 L16,73 L16,61 Z M64,41 L68,41 L68,53 L64,53 L64,41 Z M72,41 L76,41 L76,53 L72,53 L72,41 Z M64,61 L68,61 L68,73 L64,73 L64,61 Z M72,61 L76,61 L76,73 L72,73 L72,61 Z M80,41 L84,41 L84,53 L80,53 L80,41 Z M80,61 L84,61 L84,73 L80,73 L80,61 Z M88,41 L92,41 L92,53 L88,53 L88,41 Z M88,61 L92,61 L92,73 L88,73 L88,61 Z M100,33 L104,33 L104,45 L100,45 L100,33 Z M108,17 L112,17 L112,29 L108,29 L108,17 Z M108,33 L112,33 L112,45 L108,45 L108,33 Z M116,17 L120,17 L120,29 L116,29 L116,17 Z M116,33 L120,33 L120,45 L116,45 L116,33 Z M124,33 L128,33 L128,45 L124,45 L124,33 Z M100,49 L104,49 L104,61 L100,61 L100,49 Z M100,65 L104,65 L104,77 L100,77 L100,65 Z M108,49 L112,49 L112,61 L108,61 L108,49 Z M116,49 L120,49 L120,61 L116,61 L116,49 Z M124,49 L128,49 L128,61 L124,61 L124,49 Z M124,65 L128,65 L128,77 L124,77 L124,65 Z M136,41 L140,41 L140,53 L136,53 L136,41 Z M136,61 L140,61 L140,73 L136,73 L136,61 Z" id="Combined-Shape" fill-opacity="0.5" fill="#F48933"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240px" height="180px" viewBox="0 0 240 180" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>Board and Care Illustration 240</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="56.2962288%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#6ACAE3" stop-opacity="0.2" offset="0%"></stop>
+            <stop stop-color="#3EA216" stop-opacity="0.2" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Board-and-Care-Illustration-240" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M50.7909932,134.022423 C35.4491273,113.222578 8.02718291,43.4609749 34.4995949,30.3366337 C60.9720069,17.2122925 207.699799,29.4814164 207.699799,71.8756021 C207.699799,114.269788 187.813024,158.687581 144.822661,160.072521 C101.832298,161.457462 66.1328591,154.822268 50.7909932,134.022423 Z" id="Blob" fill="url(#linearGradient-1)"></path>
+        <g id="Group" transform="translate(51.000000, 58.000000)" fill-rule="nonzero">
+            <polygon id="Rectangle-11-Copy-2" fill="#785D7A" points="50 14 112 14 138 38 50 38"></polygon>
+            <polygon id="Rectangle-11" fill="#FFF5EB" points="8 28 34 0 60 28 60 82 8 82"></polygon>
+            <polygon id="Combined-Shape" fill="#A07CA3" transform="translate(34.000000, 52.500000) rotate(-180.000000) translate(-34.000000, -52.500000) " points="16 51 52 51 50 54 18 54"></polygon>
+            <path d="M60,28 L34,7 L8,28 L0,28 L34,0 L68,28 L60,28 Z" id="Combined-Shape" fill="#A07CA3"></path>
+            <rect id="Rectangle-3-Copy" fill="#785D7A" x="28" y="58" width="12" height="24"></rect>
+            <rect id="Rectangle-11-Copy" fill="#FFF5EB" x="60" y="38" width="72" height="36"></rect>
+            <path d="M72,42 L84,42 L84,62 L72,62 L72,42 Z M92,42 L104,42 L104,62 L92,62 L92,42 Z M112,42 L124,42 L124,62 L112,62 L112,42 Z" id="Combined-Shape" fill-opacity="0.25" fill="#785D7A"></path>
+            <rect id="Rectangle-5" fill="#A07CA3" x="72" y="62" width="12" height="2"></rect>
+            <rect id="Rectangle-5-Copy" fill="#A07CA3" x="92" y="62" width="12" height="2"></rect>
+            <rect id="Rectangle-5-Copy-2" fill="#A07CA3" x="112" y="62" width="12" height="2"></rect>
+            <circle id="Oval-5" stroke="#A07CA3" stroke-width="2" fill-opacity="0.25" fill="#785D7A" cx="34" cy="29" r="7"></circle>
+            <rect id="Rectangle" fill="#A07CA3" x="33" y="22" width="2" height="15"></rect>
+            <rect id="Rectangle" fill="#A07CA3" transform="translate(34.000000, 29.500000) rotate(-270.000000) translate(-34.000000, -29.500000) " x="33" y="22" width="2" height="15"></rect>
+            <rect id="Rectangle-6" fill="#ECD8C4" x="48" y="54" width="2" height="28"></rect>
+            <rect id="Rectangle-6-Copy-2" fill="#ECD8C4" x="60" y="38" width="2" height="36"></rect>
+            <rect id="Rectangle-6-Copy" fill="#ECD8C4" x="18" y="54" width="2" height="28"></rect>
+            <rect id="Rectangle-12" fill="#FFF5EB" x="84" y="7" width="8" height="16"></rect>
+            <rect id="Rectangle-14" fill="#785D7A" x="84" y="7" width="8" height="3"></rect>
+        </g>
+    </g>
+</svg>

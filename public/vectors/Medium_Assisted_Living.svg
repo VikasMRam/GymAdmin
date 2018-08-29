@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="240px" height="180px" viewBox="0 0 240 180" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>Medium Assisted Living Illustration 240</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="60.3837251%" y1="40.9560886%" x2="70.9373042%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#6ACAE3" stop-opacity="0.2" offset="0%"></stop>
+            <stop stop-color="#3EA216" stop-opacity="0.2" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Medium-Assisted-Living-Illustration-240" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M212.999941,136.032457 C212.944984,172.310824 166.358282,165.465879 133.014003,158.272836 C99.669724,151.079793 33.6011995,148.151671 27.4831071,129.542078 C21.3650148,110.932484 74.4555411,13.5032826 124.437496,16.0489924 C174.419452,18.5947023 213.054899,99.7540901 212.999941,136.032457 Z" id="Blob-Copy" fill="url(#linearGradient-1)"></path>
+        <g id="Group" transform="translate(66.000000, 56.000000)" fill-rule="nonzero">
+            <rect id="Rectangle-7-Copy" fill="#FFF5EB" x="54" y="6" width="52" height="72"></rect>
+            <rect id="Rectangle-7" fill="#FFF5EB" x="2" y="12" width="52" height="72"></rect>
+            <rect id="Rectangle-3-Copy" fill="#5575B7" x="22" y="60" width="12" height="24"></rect>
+            <path d="M54,3 L54,0 L106,0 L106,3 L108,3 L106,6 L54,6 L52,3 L54,3 Z" id="Combined-Shape" fill="#5575B7"></path>
+            <rect id="Rectangle-9" fill="#ECD8C4" x="54" y="6" width="2" height="72"></rect>
+            <path d="M4,11 L4,8 L56,8 L56,11 L58,11 L56,14 L4,14 L2,11 L4,11 Z" id="Combined-Shape" fill="#ECD8C4"></path>
+            <path d="M2,11 L2,8 L54,8 L54,11 L56,11 L54,14 L2,14 L0,11 L2,11 Z" id="Combined-Shape" fill="#5575B7"></path>
+            <path d="M58,70 L70,70 L70,72 L58,72 L58,70 Z M58,48 L70,48 L70,50 L58,50 L58,48 Z M74,70 L86,70 L86,72 L74,72 L74,70 Z M74,48 L86,48 L86,50 L74,50 L74,48 Z M90,70 L102,70 L102,72 L90,72 L90,70 Z M90,48 L102,48 L102,50 L90,50 L90,48 Z M58,26 L70,26 L70,28 L58,28 L58,26 Z M74,26 L86,26 L86,28 L74,28 L74,26 Z M90,26 L102,26 L102,28 L90,28 L90,26 Z M6,76 L18,76 L18,78 L6,78 L6,76 Z M6,54 L18,54 L18,56 L6,56 L6,54 Z M38,76 L50,76 L50,78 L38,78 L38,76 Z M38,54 L50,54 L50,56 L38,56 L38,54 Z M6,31 L18,31 L18,33 L6,33 L6,31 Z M38,31 L50,31 L50,33 L38,33 L38,31 Z M22,31 L34,31 L34,33 L22,33 L22,31 Z M22,54 L34,54 L34,56 L22,56 L22,54 Z" id="Combined-Shape" fill-opacity="0.5" fill="#5575B7"></path>
+            <path d="M58,58 L70,58 L70,70 L58,70 L58,58 Z M58,36 L70,36 L70,48 L58,48 L58,36 Z M74,58 L86,58 L86,70 L74,70 L74,58 Z M74,36 L86,36 L86,48 L74,48 L74,36 Z M90,58 L102,58 L102,70 L90,70 L90,58 Z M90,36 L102,36 L102,48 L90,48 L90,36 Z M58,14 L70,14 L70,26 L58,26 L58,14 Z M74,14 L86,14 L86,26 L74,26 L74,14 Z M90,14 L102,14 L102,26 L90,26 L90,14 Z M6,64 L18,64 L18,76 L6,76 L6,64 Z M6,42 L18,42 L18,54 L6,54 L6,42 Z M38,64 L50,64 L50,76 L38,76 L38,64 Z M38,42 L50,42 L50,54 L38,54 L38,42 Z M6,19 L18,19 L18,31 L6,31 L6,19 Z M38,19 L50,19 L50,31 L38,31 L38,19 Z M22,19 L34,19 L34,31 L22,31 L22,19 Z M22,42 L34,42 L34,54 L22,54 L22,42 Z" id="Combined-Shape" fill-opacity="0.25" fill="#5575B7"></path>
+        </g>
+    </g>
+</svg>

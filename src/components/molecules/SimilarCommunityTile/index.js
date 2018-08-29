@@ -3,10 +3,16 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+import { size, assetPath } from 'sly/components/themes';
 import { Lazy } from 'react-lazy';
 import { Image, Button } from 'sly/components/atoms';
 import SimilarCommunityInfo from 'sly/components/molecules/SimilarCommunityInfo';
+
+const communityDefaultImages = {
+  'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
+  '20 - 51 Beds': assetPath('vectors/Medium_Assisted_Living.svg'),
+  '51 +': assetPath('vectors/Large_Assisted_Living.svg'),
+};
 
 // TODO : Tech Debt - Similar Code as of RoomTile Molecule. Find how to reuse
 
@@ -77,6 +83,7 @@ const ImageWrapper = styled(Image)`
       width: ${size('tile.regular.width')};
       height: ${size('tile.regular.height')};
       max-width: none;
+      background: ${palette('white', 0)};
     }
   }
 `;
@@ -90,12 +97,15 @@ const Info = styled(SimilarCommunityInfo)`
 `;
 
 const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
-  const { imageUrl } = similarProperty;
+  let { imageUrl } = similarProperty;
+  if (!imageUrl || imageUrl.indexOf('maps.googleapis.com/maps/api/streetview') > -1) {
+    imageUrl = communityDefaultImages[similarProperty.communitySize];
+  }
 
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
       <StyledLazy component="div" ltIE9>
-        <ImageWrapper src={imageUrl} aspectRatio='16:9'>
+        <ImageWrapper src={imageUrl} aspectRatio="16:9">
           <Button onClick={onClick}>See More Details</Button>
         </ImageWrapper>
       </StyledLazy>
