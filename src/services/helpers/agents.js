@@ -1662,5 +1662,126 @@ export const agents = [
       "state":"CA"},
     "user":{
     "id":"4706b976369ee0feaefb3d57ee411d15",
-      "name":"Chris Gutierrez"}}
+      "name":"Chris Gutierrez"}},
+  {
+    "id":"oasis-fort-worth-tx-karen-deshotels",
+    "name":"Oasis Senior Advisors (Karen DesHotels)",
+    "agentBio":"Karen DesHotels was born and raised in Fort Worth, where she resides with her husband and three children. They enjoy spending time with their horses and watching their son play baseball. Prior to joining Oasis Senior Advisors, she spent over 20 years in education, and for 12 of those years she worked as a school counselor. Today, she continues to assist people by working with seniors and families to identify their needs and match them with their ideal Independent, Assisted Living or Memory Care community. Karen has experienced firsthand the stress and heartache that declining health and memory issues can place on a family. She is committed to easing this emotional struggle. Empowering clients to maintain their dignity and quality of life is a privilege, an honor, and a responsibility that she takes very seriously.\n If you or a loved one are in need of guidance or insight on how to navigate the best quality of life options, her mission is to be there by your side, acting as guide and resource during your transition. Karen DesHotels partnered with Seniorly in 2018.",
+    "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/35fa8de6fe95fd9a3647d81bb057b2f7/Screen%2520Shot%25202018-08-21%2520at%25208.58.53%2520AM_sd.png",
+    "status":1,
+    "address":{
+      "id":"bc81a77da43e734341086538dfb9f741",
+      "city":"Fort Worth",
+      "state":"TX"},
+    "user":{
+      "id":"a5859afa2985b7642522e332aca9b29f",
+      "name":"Karen Des Hotels"}},
+  {
+    "id":"a-senior-care-solutions-cheryl-lourenco",
+    "name":"A+ Senior Care Solutions (Cheryl Lourenco)",
+    "agentBio":"Cheryl Lourenco is the founder of A+ Senior Care Solutions.  She has 20 plus years of experience working with Independent & Assisted Living, Dementia & Alzheimer’s care, Residential Care Homes. In-Home Care, Hospice Care, Veterans Aid and Attendance, numerous State and Local agencies and several programs for the elderly.  She is willing and able to assist you or your referral to navigate through the journey of senior care.  She also welcomes the opportunity to speak at your clubs or organization, providing education and referrals for senior services and programs.  Please feel free to contact her at any time.  Cheryl Lourenco partnered with Seniorly in 2018.",
+    "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/70ab1b3a1541a56c5f81a5984c77385c/cheryl%2520bio_sd.jpg",
+    "status":1,
+    "address":{
+      "id":"b0e611c3a8cf7a237e4381bb8168be51",
+      "city":"Hughson",
+      "state":"CA"},
+    "user":{
+      "id":"225f7ac53e38485b9c02e6ac366fcac6",
+      "name":"Cheryl Lourenco"}},
+  {
+    "id":"turning-point-senior-care-solutions-in-emee-miller",
+    "name":"Turning Point Senior Care Solutions, IN (Emee Miller)",
+    "agentBio":"Emee Gaither Miller was born in Mexico City, Mexico, raised in Stamford, Connecticut, attended Marietta College in Marietta, Ohio graduating with a B.A in Art History. With a love of art and artists! landed my first job out of college at Christie's Art Auction House in New York City working initially as a Scribe (manual inventory records) and then working as the Auctioneer's assistant.\nIn 1983 a college friend Bob was visiting NYC and called to reconnect. We did. In 1984 Bob and I were married and moved to South Bend, where Bob began his career as a Stock Broker. Today he owns his own firm Robert B. Miller Financial. Initially I took a job at Edgerton's Travel with the idea we could leave South Bend often and travel. Well.... traveled solo as Bob was hitting the pavement forming his business.\nIn our 34 years together, we have raised 3 children who are all grown. As our children naturally became independent, in 2012 after 4 years of helping Helen, an elder friend, manage breast cancer and a brain tumor I became acutely aware of senior care. Senior care and quality of life have become the focus of my life and the creation of Turning Point Senior Care Solutions, a service which lifts the 'fog' of senior services, programs and living choices in the Greater South Bend area. Emee Miller has been a partner of Seniorly since 2018.",
+    "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/34145cad9c787d30ccad5d97a49f094c/Emee-Miller-Professional-Head-Shot-200x300_sd.jpg",
+    "status":1,
+    "address":{
+      "id":"aa7f658c3b65793fcfb16e03b9a1f9b9",
+      "city":"South Bend",
+      "state":"IN"},
+    "user":{
+      "id":"2249e3ed18610b2c18cbe1c67db1f945",
+      "name":"Emee Miller "}},
+  {
+    "id":"assisted-living-locators-scottsdale-az-rachel-wasserstrom",
+    "name":"Assisted Living Locators Scottsdale, AZ (Rachel Wasserstrom)",
+    "agentBio":"Rachel Wasserstrom has lived in Arizona for the past twelve years. " +
+    "Rachel attended Arizona State University graduating with a BS in dietetics. Rachel is originally from Buffalo," +
+    " NY and enjoys the Arizona sunshine! She has been working in healthcare for the past nine years and understands " +
+    "the importance of the service that Assisted Living Locators provides. She has the knowledge and passion it takes to " +
+    "provide every family with the assistance, resources and support they need during the transition period. Rachel Wasserstrom partnered with Seniorly in 2018.",
+    "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/e2a8d8539c4d0c2748058deca788608c/Rachel%2520Wasserstrom%25204x4_sd.jpg",
+    "status":1,
+    "address":{
+      "id":"880bb3ddc17f553834d1d913b7c2ddb1",
+      "city":"Scottsdale",
+      "state":"AZ"},
+    "user":{
+      "id":"6a872730670448071b9b3726bdd0994d",
+      "name":"Rachel Wasserstrom"}},
+  {
+    "id":"senior-care-authority-richmond-va-lisa-h-isbell",
+    "name":"Senior Care Authority Richmond, VA (Lisa H. Isbell)",
+    "agentBio":"Lisa H. Isbell has spent her career working with people and assisting them as they plan and prepare for various stages of life. After obtaining her undergraduate degree from Mary Washington College in Fredericksburg, Virginia, and her graduate degree from the University of Richmond, Lisa started her career in the corporate offices at Circuit City Stores, Inc. Realizing she preferred to be interacting with people and away from a desk, Lisa obtained her insurance license and started to work with seniors to navigate Medicare, long term care, and retirement planning. She became a Certified Senior Advisor and Registered Investment Advisor, operating her own business for over a decade before being asked to join a growing local church and help lead church operations. Over the next ten years, Lisa managed over 70 different departments and over 1500 volunteers in the church, leading countless events and outreach efforts locally, nationally and internationally. Seeking to work with seniors and their families again, Lisa opened Senior Care Authority of Central Virginia after experiencing care need situations with her own parents. Knowing that finding the right care for loved ones can be stressful and frustrating, Lisa and her team work patiently with families, helping them navigate residential and home care options. Working with a wide range of experts and local resources, Lisa and her team help make the transition to care a smooth one for seniors and their families. Lisa H. Isbell partnered with Seniorly in 2018.",
+    "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/6e0f43156f18de6b02b0ae6b050a4462/Screen%2520Shot%25202018-08-09%2520at%25205.16.04%2520PM_sd.png",
+    "status":1,
+    "address":{
+      "id":"897ea5a9ce3fd83f16d465f4ac805884",
+      "city":"Glen Allen",
+      "state":"VA"},
+    "user":{
+      "id":"ce6d301325f2b434688b34d277703917",
+      "name":"Lisa Isbell"}},
+  {
+    "id":"assisted-living-locators-pinellas-county-fl-lara-dickerson",
+    "name":"Assisted Living Locators Tampa Bay, FL (Lara Dickerson)",
+    "agentBio":"Lara Dickerson resides in the Tampa Bay area with her husband and two children.  Lara enjoyed a long and successful professional career in the fields of engineering, strategic purchasing and education.\nLara desired to build on her ability to educate and sought opportunities to give back to the community with a specific focus on assisting seniors.  She combines her business skills with compassion to help and educate each family she works with to resolve the challenges they face, ensuring that their loved ones receive appropriate care and meaningful life experiences as they age. \nIn addition to being an elder care advisor, Lara is also a professional guardian.  Through her extensive advocation for seniors, she recognizes and empathizes with the changing needs and circumstances of today’s seniors.  She has been serving the Tampa Bay area as an Eldercare Advisor for more than 5 years. \nLara’s goal is to provide high quality service to Tampa Bay’s senior community, while ensuring that they and their families receive the support, assistance, and compassion needed to manage the key life transition that they are facing.  Lara Dickerson partnered with Seniorly in 2018. ",
+    "mainImage":"https://maps.googleapis.com/maps/api/streetview?size=200x160&location=13575%2058th%20St.%20N.%20Ste%20203%2CClearwater%2CFL&fov=90&pitch=-10&key=AIzaSyBbN8J_ogumAythgDCzwXzbuIn6qP-w0fM",
+    "status":1,
+    "address":{
+      "id":"2f7c4e8354cc536ff6948720cfeeccb5",
+      "city":"Clearwater",
+      "state":"FL"},
+    "user":{
+      "id":"bc3b26f71602112c10732341d7445e46",
+      "name":"Lara Dickerson"}},
+  {
+    "id":"above-n-beyond-senior-placement-campbell",
+    "name":"Above N Beyond Senior Placement (Cheryl Comento)",
+    "agentBio":"Cheryl Comento is a Certified Senior Advisor who helps seniors and their families eliminate the confusion and worry over finding care options for a loved one. \nCheryl spent several years helping seniors downside for a move to a senior community.  In 2012 she switched her focus to helping seniors find a senior living community that fits their care, financial and social needs.\nShe is a member of the Santa Clara County Senior Agenda program, the Society of Certified Senior Advisors and The National Placement and Referral Alliance.  She is an active member of the senior care community and continues to expand her knowledge of issues relating to senior and aging.  Cheryl attended West Valley College and San Jose State University.\nShe currently makes her home in the South Bay along with her 3 rescued senior dogs. Cheryl Comento partnered with Seniorly in 2018.",
+    "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/7ab1c8dbb12d2e7f49501046577908ee/2%2520head%2520shot_sd.jpg",
+    "status":1,
+    "address":{
+      "id":"15aaf9083b4ba40d5002f53532b585b2",
+      "city":"Campbell",
+      "state":"CA"},
+    "user":{
+      "id":"64c66a01c29bc6f57ea21d1cc976bf23",
+      "name":"Cheryl Comento"}},
+  {
+    "id":"senior-living-connections-oh",
+    "name":"Senior Living Connections OH (Deana Wright)",
+    "agentBio":"Deana Wright loves seniors! She's been lucky enough to enjoy every day of the last 20+ years of her career in the senior living industry.   Her passion lies in making a difference in the lives of seniors.\nDeana is a former Nursing Home Administrator, Executive Director of assisted living communities, and has served as a SVP of operations for a national senior living provider. She currently owns a senior living advisor company assisting seniors and families with their search for assisted living.\nDeana knows there are a lot of senior living options and navigating those options can be overwhelming. She commends you on starting the process. Her role is to provide guidance from her experience in the industry to help simplify the process for you.  You will have her support and insight throughout your journey as you begin your search to find the best fit for yourself,  or your loved one. Deana Wright partnered with Seniorly in 2018.",
+    "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/28309e3b3da5c189283c10c2a6df39fd/Screen%2520Shot%25202018-07-19%2520at%25203.39.35%2520PM_sd.png",
+    "status":1,
+    "address":{
+      "id":"e70dbea65baac7dfd24eabf1f15f60ed",
+      "city":"Newark",
+      "state":"OH"},
+    "user":{
+      "id":"e11ef2cdeca28b84023f0a38394c3763",
+      "name":"Deana Wright"}},
+  {
+    "id":"a-caring-heart-senior-solutions-donlyn-young",
+    "name":"A Caring Heart Senior Solutions (Donlyn Young)",
+    "agentBio":"Donlyn Young first started to work with seniors when she was in high school and also did a variety of volunteer programs throughout my educational experience and have always had a heart for the senior population since navigating her own grandparents' aging experiences.  She going into her 12th year of helping families find the best care/placement options they can for their loved ones.  It's often a difficult and challenging time, but she is here to hold their hand throughout the entire process, including visiting after placement to see how they are doing.  Donlyn has her Master's in Clinical Psychology from Pepperdine University, which has been quite helpful in navigating family dynamics and going over clinical intakes of co-morbid diagnoses.  She takes a whole person- centered approach when considering options and also has her Residential Care Facility for the Elderly Administrator Certification (Certificate #6034279740 through the CA Department of Social Services). Donlyn Young partnered with Seniorly in 2018.",
+    "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/31ff57ea3eef8ee1a3ff68dfe8945e95/IMG_3215_sd.JPG",
+    "status":1,
+    "address":{
+      "id":"524cb3c59e6945c746127364ea149968",
+      "city":"Aliso Viejo",
+      "state":"CA"},
+    "user":{
+      "id":"c69894ab37fb889a7af10b803b85c228",
+      "name":"Donlyn Young"}},
 ];
