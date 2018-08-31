@@ -25,6 +25,7 @@ import HowItWorksDetailPageContainer from 'sly/containers/HowItWorksDetailPageCo
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
+import LegalPolicyPage from "sly/components/pages/LegalPolicyPage";
 
 setGlobalStyles();
 
@@ -45,6 +46,11 @@ const howItWorksTypes = [
 const promoTypes = [
   'promo',
   'rebate',
+].join('|');
+
+const legalPages = [
+  'privacy',
+  'tos'
 ].join('|');
 
 const TempHowItWorks = ({ ...props }) => (
@@ -117,6 +123,11 @@ export default class App extends Component {
     {
       path: '/',
       component: HomePageContainer,
+      exact: true,
+    },
+    {
+      path: `/:legalPage(${legalPages})`,
+      component: LegalPolicyPage,
       exact: true,
     },
   ];
