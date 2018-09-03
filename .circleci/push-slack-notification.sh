@@ -45,5 +45,5 @@ JSON_PAYLOAD_TMPL='{"attachments": [{"color": "%s", "title": "%s", "title_link":
 JSON_PAYLOAD=$(printf "$JSON_PAYLOAD_TMPL" "$TEXT_COLOR" "$MSG_TITLE" "$MSG_TITLE_LINK" "$MSG_BODY" "$TIMESTAMP")
 
 curl -X POST -H 'Content-type: application/json' \
-  --data "$JSON_PAYLOAD" \
+  --data "$JSON_PAYLOAD" --fail \
   "https://hooks.slack.com/services/$SLACK_DEPLOY_NOTIFICATION_API_KEY"
