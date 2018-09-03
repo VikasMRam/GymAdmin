@@ -5,7 +5,6 @@ import { apiUrl, authTokenUrl } from 'sly/config';
 import genUri from './genUri';
 
 export const checkStatus = (response) => {
-
   if (response.ok) {
     return response;
   }
@@ -21,7 +20,12 @@ export const checkStatus = (response) => {
   throw error;
 };
 
-export const parseJSON = response => response.json();
+export const parseJSON = response => response
+  .json()
+  .catch(error => {
+    error.response = response;
+    throw error;
+  });
 
 export const parseSettings = ({
   method = 'get',
