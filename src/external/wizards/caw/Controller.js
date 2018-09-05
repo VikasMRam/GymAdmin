@@ -144,25 +144,29 @@ class Controller extends Component {
         },
       };
 
+      const closePopup = () => {
+        if (window.parent && this.widgetType === 'popup') {
+          window.parent.postMessage(JSON.stringify({ action: 'closePopup' }), '*');
+        } else {
+          dispatchResetForm();
+          set({
+            currentStep: null,
+            progressPath: null,
+          });
+        }
+      };
+
       postUserAction(payload)
         .then(() => {
-          if (window.parent && this.widgetType === 'popup') {
-            window.parent.postMessage(JSON.stringify({ action: 'closePopup' }), '*');
+          // Fire pixel
+          if (this.providedPixel) {
+            fetch(this.providedPixel)
+              .then(closePopup());
           } else {
-            dispatchResetForm();
-            set({
-              currentStep: null,
-              progressPath: null,
-            });
+            closePopup();
           }
         });
 
-      // Fire pixel
-      if (this.providedPixel) {
-        //substitute information in pixel
-        this.providedPixel = this.providedPixel.replace("CLIENT_ID", this.clickID);
-        fetch(this.providedPixel);
-      }
 
       const currentStepName = this.flow[currentStep - 1];
       const event = {
