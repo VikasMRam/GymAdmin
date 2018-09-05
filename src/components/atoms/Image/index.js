@@ -38,6 +38,9 @@ export default class Image extends React.Component {
   };
 
   static generateAlt(src) {
+    if (typeof src === 'undefined') {
+      return 'Seniorly Image';
+    }
     const srcParts = src.split('/');
     return decodeURIComponent(srcParts.pop());
   }
@@ -76,7 +79,7 @@ export default class Image extends React.Component {
 
     const imageProps = {
       ...srcProps,
-      alt: alt || this.constructor.generateAlt(src)
+      alt: alt || this.constructor.generateAlt(src),
     };
 
     if (aspectRatio) {
