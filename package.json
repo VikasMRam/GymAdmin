@@ -142,6 +142,7 @@
     "styled-theme": "^0.3.0",
     "styled-tools": "^0.4.0",
     "uglify-es": "^3.3.9",
+    "universal-cookie": "^3.0.4",
     "url-loader": "^0.6.2",
     "uuid": "^3.2.1",
     "validator": "^9.0.0",

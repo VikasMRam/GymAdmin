@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { reduxForm, reset } from 'redux-form';
 import { number, func, object, shape, string, bool } from 'prop-types';
 import queryString from 'query-string';
+import Cookies from 'universal-cookie';
 
-import { host } from 'sly/config';
+import { host, cookieDomain } from 'sly/config';
 
 import { resourceCreateRequest, resourceListReadRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
@@ -51,7 +52,8 @@ class Controller extends Component {
 
   componentWillMount() {
     this.flowName = defaultStepOrder;
-    this.clickID = Math.random().toString().slice(2,11);
+    const clickID = Math.random().toString().slice(2,11);
+
 
 
     const {
@@ -74,7 +76,8 @@ class Controller extends Component {
           campaign: params.campaign,
           source: params.source || 'external',
           medium: params.medium || 'widget',
-          term: this.clickID,
+          term: clickID,
+
         };
       }
       if (params.pixel) {
@@ -88,11 +91,24 @@ class Controller extends Component {
 
     if (utmParams) {
       this.providedUtmParams = utmParams;
-      this.providedUtmParams.term = this.clickID;
+      this.providedUtmParams.term = clickID;
+
     }
 
     if (pixel) {
       this.providedPixel = decodeURIComponent(pixel);
+    }
+    if (this.providedPixel) {
+      //substitute information in pixel
+      this.providedPixel = this.providedPixel.replace("CLIENT_ID", clickID);
+    }
+
+    if (this.providedUtmParams) {
+      const utm = this.providedUtmParams;
+      const utmStr = `utm_campaign=${utm.campaign}&utm_source=${utm.source}&utm_medium=${utm.medium}&utm_term=${utm.term}`;
+      const cookies = new Cookies();
+      cookies.set('utm', utmStr, { domain: cookieDomain, maxAge: 27000000 });
+
     }
 
     this.flow = stepOrders[this.flowName];
