@@ -19,9 +19,9 @@ describe('checkStatus', () => {
 describe('parseJSON', () => {
   it('calls response.json', () => {
     const response = {
-      json: jest.fn(() => 'foo'),
+      json: jest.fn(() => Promise.resolve('foo')),
     };
-    expect(parseJSON(response)).toBe('foo');
+    return parseJSON(response).then(res => expect(res).toBe('foo'));
   });
 });
 
@@ -65,7 +65,7 @@ describe('api', () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: true,
-        json: jest.fn(),
+        json: jest.fn(() => Promise.resolve()),
       }));
   });
 
