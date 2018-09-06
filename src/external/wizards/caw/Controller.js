@@ -55,7 +55,6 @@ class Controller extends Component {
     const clickID = Math.random().toString().slice(2,11);
 
 
-
     const {
       location, locationSearchParams, utmParams, pixel,
     } = this.props;
@@ -107,7 +106,7 @@ class Controller extends Component {
       const utm = this.providedUtmParams;
       const utmStr = `utm_campaign=${utm.campaign}&utm_source=${utm.source}&utm_medium=${utm.medium}&utm_term=${utm.term}`;
       const cookies = new Cookies();
-      cookies.set('utm', utmStr, { domain: cookieDomain, maxAge: 27000000 });
+      cookies.set('utm', utmStr, { domain: cookieDomain, path: '/', maxAge: 27000000 });
 
     }
 
@@ -160,8 +159,8 @@ class Controller extends Component {
         .then(() => {
           // Fire pixel
           if (this.providedPixel) {
-            fetch(this.providedPixel)
-              .then(closePopup());
+            fetch(this.providedPixel, {mode: 'no-cors'})
+              .then(closePopup);
           } else {
             closePopup();
           }
