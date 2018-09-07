@@ -45,6 +45,23 @@
     return null;
   }
 
+  function getURLParams() {
+    // find all script tags
+    if (document.location && document.location.search) {
+      var qs =  document.location.search;
+      var pa = qs.split('?').pop().split('&');
+      // split each key=value into array, then construct js object
+      var p = {};
+      for (var j = 0; j < pa.length; j++) {
+        var kv = pa[j].split('=');
+        p[kv[0]] = kv[1];
+      }
+      return p;
+    }
+    // no match
+    return {};
+  }
+
   var Seniorly = {
     cssId: 'seniorly-widget-style',
     context: {
@@ -76,9 +93,9 @@
       type: 'data-seniorly-widget',
       state: 'data-seniorly-state',
       city: 'data-seniorly-city',
-      campaign: 'data-seniorly-campaign',
-      source: 'data-seniorly-source',
-      medium: 'data-seniorly-medium',
+      utm_campaign: 'data-seniorly-campaign',
+      utm_source: 'data-seniorly-source',
+      utm_medium: 'data-seniorly-medium',
       pixel: 'data-seniorly-pixel'
     },
     configQueryParamKeys: {
@@ -269,7 +286,7 @@
         Array.prototype.forEach.call(matches, function(match) {
           var skipAttributes = ['type'];
           var type = match.getAttribute(Seniorly.widgetConfigAttributes.type);
-          var params = {};
+          var params = getURLParams();
           Object.keys(Seniorly.widgetConfigAttributes).forEach(function(attr) {
             if (skipAttributes.indexOf(attr) === -1) {
               var av = match.getAttribute(Seniorly.widgetConfigAttributes[attr]);

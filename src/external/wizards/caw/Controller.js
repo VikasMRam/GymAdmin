@@ -52,11 +52,11 @@ class Controller extends Component {
 
   componentWillMount() {
     this.flowName = defaultStepOrder;
-    const clickID = Math.random().toString().slice(2,11);
+    let clickID = Math.random().toString().slice(2,11);
 
 
     const {
-      location, locationSearchParams, utmParams, pixel,
+      location, locationSearchParams
     } = this.props;
     // get query params passed
     if (location && location.search) {
@@ -70,44 +70,32 @@ class Controller extends Component {
       if (params.city && params.state) {
         this.providedLocationSearchParams = { city: params.city, state: params.state };
       }
-      if (params.campaign) {
+      if (params.clickid) {
+        clickID = params.clickid;
+      }
+      if (params.utm_campaign) {
         this.providedUtmParams = {
-          campaign: params.campaign,
-          source: params.source || 'external',
-          medium: params.medium || 'widget',
+          campaign: params.utm_campaign,
+          source: params.utm_source || 'external',
+          medium: params.utm_medium || 'widget',
           term: clickID,
 
         };
+        const utm = this.providedUtmParams;
+        const utmStr = `utm_campaign=${utm.campaign}&utm_source=${utm.source}&utm_medium=${utm.medium}&utm_term=${utm.term}`;
+        const cookies = new Cookies();
+        cookies.set('utm', utmStr, { domain: cookieDomain, path: '/', maxAge: 27000000 });
       }
+
       if (params.pixel) {
         this.providedPixel = decodeURIComponent(params.pixel);
+        //substitute information in pixel
+        this.providedPixel = this.providedPixel.replace("CLIENT_ID", clickID);
       }
     }
     // get ones passed as prop
     if (locationSearchParams) {
       this.providedLocationSearchParams = locationSearchParams;
-    }
-
-    if (utmParams) {
-      this.providedUtmParams = utmParams;
-      this.providedUtmParams.term = clickID;
-
-    }
-
-    if (pixel) {
-      this.providedPixel = decodeURIComponent(pixel);
-    }
-    if (this.providedPixel) {
-      //substitute information in pixel
-      this.providedPixel = this.providedPixel.replace("CLIENT_ID", clickID);
-    }
-
-    if (this.providedUtmParams) {
-      const utm = this.providedUtmParams;
-      const utmStr = `utm_campaign=${utm.campaign}&utm_source=${utm.source}&utm_medium=${utm.medium}&utm_term=${utm.term}`;
-      const cookies = new Cookies();
-      cookies.set('utm', utmStr, { domain: cookieDomain, path: '/', maxAge: 27000000 });
-
     }
 
     this.flow = stepOrders[this.flowName];
