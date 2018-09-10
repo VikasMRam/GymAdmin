@@ -98,6 +98,18 @@ export const TeamMembersData = [
       `,
   },
   {
+    heading: 'Emma Rodbro',
+    slug: 'emma-rodbro',
+    subHeading: 'Operations Specialist',
+    imageUrl: assetPath('images/our-team/emma.png'),
+    description: `Emma has been passionate about aging since she was a child and has tailored her education and career to
+      reflect that. Most recently, she graduated from the University of California, Berkeley with a Masters degree in Social Work
+      with a focus in aging. She also has a Bachelor's degree in Sociology and Public Health from Brown University. When she's not
+      advocating for older adults, Emma can be found training for a half marathon, planning her next international trip, or watching
+      musical theater.
+      `,
+  },
+  {
     heading: 'Alfonso de la Osa',
     slug: 'alfonso-delaosa',
     subHeading: 'Lead Developer',
@@ -109,5 +121,28 @@ export const TeamMembersData = [
       unusual to find Alfonso around a board game drinking wine. Or you may not find him at all because he's always travelling 
       with his fiancé.
       `,
+  },
+  {
+    heading: 'Pranesh Kumar',
+    slug: 'pranesh-kumar',
+    subHeading: 'Senior Software Engineer',
+    imageUrl: assetPath('images/our-team/pranesh.png'),
+    description: `Pranesh is a Full Stack Engineer who is Passionate about solving Real world Challenges using Technology.
+      After working in Organisations like CDAC Knowledge Park, Redmart and PinkBlue.in, he joined Seniorly to help out aged people
+      find home and care using technology and is thrilled to be a part of team that makes good impact on people's lives.
+      During his leisure time, you can find him reading tech articles, listening to music and checking out upcoming technologies.
+      `,
+  },
+  {
+    heading: 'Amal Francis',
+    slug: 'amal-francis',
+    subHeading: 'Software Engineer',
+    imageUrl: assetPath('images/our-team/amal.png'),
+    description: `Amal is a computer science engineer passionate about technology and software development.
+    Having previously worked in full stack development for SAAS product startups Shippable and Profoundis(now part of Fullcontact),
+    he is excited to join the Seniorly team and gain new knowledge building the product. He spends his free time with family and
+    playing video games on his custom build gaming rig, watching movies or learning about new technologies and occasionally
+    contributing to open source projects on GitHub.
+    `,
   },
 ];
