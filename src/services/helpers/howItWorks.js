@@ -107,9 +107,8 @@ export const Consumers = [
   },
   {
     imageUrl: 'vectors/Payments.svg',
-    heading: 'Pay for services on our secure platform',
-    content: `Our billing system allows you to pay online with a credit or debit card, gives you access to special
-      discounts from approved products and services, and allows you to easily add services with one bill.`,
+    heading: 'We offer you more options for paying your monthly rent',
+    content: `Once you select a community, chances are they will not accept a credit card to pay rent. We can help you with that. Our free billing system allows you to pay your rent and other select services with your credit card.`,
   },
 ];
 
