@@ -10,7 +10,8 @@ import { size } from 'sly/components/themes';
 
 const Wrapper = styled.div`
   display: flex;
-  margin-bottom: ${size('spacing.large')}
+  flex-wrap: wrap;
+  margin-bottom: ${size('spacing.regular')}
 `;
 
 const marginLeftNext = css`
@@ -38,6 +39,7 @@ const ChevronButton = styled(({ flip, ...props }) => (
 
 const PageButton = styled(Button)`
   margin-right: ${size('spacing.regular')};
+  margin-bottom: ${size('spacing.regular')};
   &:last-of-type {
     margin-right: 0;
   }
