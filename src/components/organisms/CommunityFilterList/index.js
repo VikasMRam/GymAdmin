@@ -34,19 +34,16 @@ const MapContainerElement = styled.div`
   }
 `;
 const StyledWrapper = styled.div`
-  padding: ${size('spacing.large')};
-  width: ${size('filtersMenu.width.mobile')};
+  padding-top: ${size('spacing.large')};
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('filtersMenu.width.laptop')};
+    width: ${size('layout.col4')};
   }
 `;
 
 const StyledBox = styled(Box)`
   padding: ${size('spacing.large')};
-  width: ${size('filtersMenu.width.mobile')};
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('filtersMenu.width.laptop')};
-  }
+  width: ${size('layout.col3')};
 `;
 
 const StyledLink = styled(Link)`
