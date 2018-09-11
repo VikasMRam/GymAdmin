@@ -152,7 +152,6 @@ class Controller extends Component {
           }
         });
 
-
       const currentStepName = this.flow[currentStep - 1];
       const event = {
         action: `step_${currentStepName}`, category: 'cawizard', label: 'complete',
@@ -168,8 +167,9 @@ class Controller extends Component {
     set({
       searching: true,
     });
-    searchCommunities(locationSearchParams || this.providedLocationSearchParams)
-      .then((result) => {
+    const p = searchCommunities(locationSearchParams || this.providedLocationSearchParams);
+    if (p.then) {
+      p.then((result) => {
         const newState = {
           searchResultCount: result.meta['filtered-count'],
           searching: false,
@@ -187,12 +187,12 @@ class Controller extends Component {
         newState.href = href;
 
         set(newState);
-      })
-      .catch(() => {
+      }).catch(() => {
         set({
           searching: false,
         });
       });
+    }
   }
 
   handleSubmit = (values, dispatch, props) => {
