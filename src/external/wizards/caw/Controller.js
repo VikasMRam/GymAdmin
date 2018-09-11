@@ -52,11 +52,10 @@ class Controller extends Component {
 
   componentWillMount() {
     this.flowName = defaultStepOrder;
-    let clickID = Math.random().toString().slice(2,11);
-
+    let clickID = Math.random().toString().slice(2, 11);
 
     const {
-      location, locationSearchParams
+      location, locationSearchParams,
     } = this.props;
     // get query params passed
     if (location && location.search) {
@@ -79,7 +78,6 @@ class Controller extends Component {
           source: params.utm_source || 'external',
           medium: params.utm_medium || 'widget',
           term: clickID,
-
         };
         const utm = this.providedUtmParams;
         const utmStr = `utm_campaign=${utm.campaign}&utm_source=${utm.source}&utm_medium=${utm.medium}&utm_term=${utm.term}`;
@@ -89,8 +87,8 @@ class Controller extends Component {
 
       if (params.pixel) {
         this.providedPixel = decodeURIComponent(params.pixel);
-        //substitute information in pixel
-        this.providedPixel = this.providedPixel.replace("CLIENT_ID", clickID);
+        // substitute information in pixel
+        this.providedPixel = this.providedPixel.replace('CLIENT_ID', clickID);
       }
     }
     // get ones passed as prop
@@ -147,7 +145,7 @@ class Controller extends Component {
         .then(() => {
           // Fire pixel
           if (this.providedPixel) {
-            fetch(this.providedPixel, {mode: 'no-cors'})
+            fetch(this.providedPixel, { mode: 'no-cors' })
               .then(closePopup);
           } else {
             closePopup();
