@@ -117,8 +117,10 @@ class Controller extends Component {
       } = newData;
 
       const user = { email, full_name, phone };
-      const transformedCareNeeds = Object.keys(careAssessment.care_needs).filter(key => careAssessment.care_needs[key]);
-      careAssessment.care_needs = transformedCareNeeds;
+      if (careAssessment.care_needs) {
+        const transformedCareNeeds = Object.keys(careAssessment.care_needs).filter(key => careAssessment.care_needs[key]);
+        careAssessment.care_needs = transformedCareNeeds;
+      }
       const payload = {
         action: CAW_PROGRESS,
         value: {
@@ -142,8 +144,9 @@ class Controller extends Component {
         }
       };
 
-      postUserAction(payload)
-        .then(() => {
+      const p = postUserAction(payload);
+      if (p.then) {
+        p.then(() => {
           // Fire pixel
           if (this.providedPixel) {
             fetch(this.providedPixel, { mode: 'no-cors' })
@@ -152,6 +155,7 @@ class Controller extends Component {
             closePopup();
           }
         });
+      }
 
       const currentStepName = this.flow[currentStep - 1];
       const event = {
