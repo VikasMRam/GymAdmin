@@ -4,7 +4,7 @@ import configureStore from 'redux-mock-store';
 import queryString from 'query-string';
 
 import { SET } from 'sly/store/controller/actions';
-import { RESOURCE_LIST_READ_REQUEST } from 'sly/store/resource/actions';
+import { RESOURCE_LIST_READ_REQUEST, RESOURCE_CREATE_REQUEST } from 'sly/store/resource/actions';
 
 import Controller from './Controller';
 import { stepOrders, defaultStepOrder } from './helpers';
@@ -110,7 +110,6 @@ describe('Controller', () => {
     };
     const locationPassed = {
       search: `?${queryString.stringify(params)}`,
-      searchCommunities: jest.fn().mockImplementation(() => Promise.resolve([])),
     };
     wrap(store, {
       location: locationPassed,
@@ -179,5 +178,35 @@ describe('Controller', () => {
     expect(newCurrentStep).toBe(currentStep + 1);
     const progressPathArr = Array.from(progressPath);
     expect(progressPathArr).toEqual(expectedProgressPath);
+  });
+
+  it('handleSeeMore does nothing when called from non last step', () => {
+    const store = initStore();
+    const wrapper = wrap(store);
+
+    wrapper.instance().handleSeeMore();
+
+    const lastAction = store.getActions().pop();
+    expect(lastAction).toBeFalsy();
+
+    const { currentStep } = wrapper.props();
+    expect(currentStep).toBe(1);
+  });
+
+  it('handleSeeMore creates userAction when called from last step', () => {
+    const stepOrderNames = Object.keys(stepOrders);
+    const locationPassed = {
+      search: `?order=${stepOrderNames[0]}`,
+    };
+    const store = initStore();
+    const wrapper = wrap(store, {
+      currentStep: stepOrders[stepOrderNames[0]].length,
+      location: locationPassed,
+    });
+
+    wrapper.instance().handleSeeMore();
+
+    const lastAction = store.getActions().pop();
+    expect(lastAction.type).toBe(RESOURCE_CREATE_REQUEST);
   });
 });
