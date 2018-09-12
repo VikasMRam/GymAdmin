@@ -121,4 +121,63 @@ describe('Controller', () => {
     const payloadData = lastAction.payload.params;
     expect(payloadData).toEqual(params);
   });
+
+  it('handleSubmit calls doSearch when on search step', () => {
+    const stepOrderNames = Object.keys(stepOrders);
+    const citySearchStep = stepOrders[stepOrderNames[0]].indexOf('CitySearch');
+    const locationPassed = {
+      search: `?order=${stepOrderNames[0]}`,
+    };
+    const currentStep = citySearchStep + 1;
+    const store = initStore();
+    const wrapper = wrap(store, {
+      currentStep,
+      location: locationPassed,
+    });
+    const expectedProgressPath = [1, currentStep];
+
+    let { currentStep: newCurrentStep } = wrapper.props();
+    expect(newCurrentStep).toBe(currentStep);
+
+    wrapper.instance().handleSubmit({}, jest.fn(), wrapper.props());
+
+    let lastAction = store.getActions().pop();
+    expect(lastAction.type).toBe(SET);
+    ({ currentStep: newCurrentStep } = lastAction.payload.data);
+    const { progressPath } = lastAction.payload.data;
+    expect(newCurrentStep).toBe(currentStep + 1);
+    const progressPathArr = Array.from(progressPath);
+    expect(progressPathArr).toEqual(expectedProgressPath);
+
+    lastAction = store.getActions().pop();
+    expect(lastAction.type).toBe(RESOURCE_LIST_READ_REQUEST);
+  });
+
+  it('handleSubmit does not call doSearch when not on search step', () => {
+    const stepOrderNames = Object.keys(stepOrders);
+    const citySearchStep = stepOrders[stepOrderNames[0]].indexOf('CitySearch');
+    const currentStep = citySearchStep - 1;
+    const locationPassed = {
+      search: `?order=${stepOrderNames[0]}`,
+    };
+    const store = initStore();
+    const wrapper = wrap(store, {
+      currentStep,
+      location: locationPassed,
+    });
+    const expectedProgressPath = [1, currentStep];
+
+    let { currentStep: newCurrentStep } = wrapper.props();
+    expect(newCurrentStep).toBe(currentStep);
+
+    wrapper.instance().handleSubmit({}, jest.fn(), wrapper.props());
+
+    const lastAction = store.getActions().pop();
+    expect(lastAction.type).toBe(SET);
+    ({ currentStep: newCurrentStep } = lastAction.payload.data);
+    const { progressPath } = lastAction.payload.data;
+    expect(newCurrentStep).toBe(currentStep + 1);
+    const progressPathArr = Array.from(progressPath);
+    expect(progressPathArr).toEqual(expectedProgressPath);
+  });
 });
