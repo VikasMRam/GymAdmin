@@ -9,6 +9,7 @@
     "start:staging": "npm run env:staging -- node .",
     "predev": "npm run prebuild",
     "dev": "npm run env:dev -- webpack-dev-server",
+    "dev:eb": "npm run storybook & npm run env:dev -- webpack-dev-server",
     "prestaging": "npm run prebuild",
     "preprod": "npm run prebuild",
     "staging": "npm run build:staging && npm run start:staging",
