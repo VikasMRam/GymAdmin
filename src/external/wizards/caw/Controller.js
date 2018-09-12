@@ -96,7 +96,8 @@ class Controller extends Component {
       this.providedLocationSearchParams = locationSearchParams;
     }
 
-    this.flow = stepOrders[this.flowName];
+    // important : create a copy since we might modify the array later
+    this.flow = stepOrders[this.flowName].slice();
     const searchStepIndex = this.flow.indexOf('CitySearch');
     if (searchStepIndex !== -1 && this.providedLocationSearchParams) {
       this.flow.splice(searchStepIndex, 1);
@@ -221,20 +222,19 @@ class Controller extends Component {
     let nextStep = currentStep + 1;
     if (this.flow[currentStep - 1] === 'CitySearch') {
       this.doSearch();
-    } else if (currentStep + 1 <= this.flow.length) {
-      if (inputBasedNextSteps[this.flowName]) {
-        const conditions = inputBasedNextSteps[this.flowName][currentStepName];
-        if (conditions) {
-          let matchingConditionNextStep = false;
-          for (let i = 0; i < conditions.length; i += 1) {
-            if (conditions[i].condition(values)) {
-              matchingConditionNextStep = conditions[i].nextStep;
-              break;
-            }
+    } else if (currentStep + 1 <= this.flow.length &&
+      inputBasedNextSteps[this.flowName]) {
+      const conditions = inputBasedNextSteps[this.flowName][currentStepName];
+      if (conditions) {
+        let matchingConditionNextStep = false;
+        for (let i = 0; i < conditions.length; i += 1) {
+          if (conditions[i].condition(values)) {
+            matchingConditionNextStep = conditions[i].nextStep;
+            break;
           }
-          if (matchingConditionNextStep) {
-            nextStep = this.flow.indexOf(matchingConditionNextStep) + 1;
-          }
+        }
+        if (matchingConditionNextStep) {
+          nextStep = this.flow.indexOf(matchingConditionNextStep) + 1;
         }
       }
     }
