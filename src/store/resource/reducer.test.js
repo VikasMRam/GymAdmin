@@ -13,10 +13,11 @@ const action = (type, payload, meta) => ({
   },
 });
 
-const state = resourceState => ({
+const state = (resourceState, inProgress = false) => ({
   ...initialState,
   resources: {
     ...getResourceState(initialState, 'resources'),
+    inProgress,
     ...resourceState,
   },
 });
@@ -45,14 +46,14 @@ describe('resource reducer', () => {
 
   describe('RESOURCE_LIST_READ_REQUEST', () => {
     it('keeps the list initial state', () => {
-      expect(reducer(initialState, action(actions.RESOURCE_LIST_READ_REQUEST))).toEqual(state());
+      expect(reducer(initialState, action(actions.RESOURCE_LIST_READ_REQUEST))).toEqual(state({}, true));
     });
 
     it('resets the list to initial state in an existing state', () => {
       expect(reducer(
         state({ list: [1, 2, 3] }),
         action(actions.RESOURCE_LIST_READ_REQUEST)
-      )).toEqual(state());
+      )).toEqual(state({}, true));
     });
   });
 
@@ -74,14 +75,14 @@ describe('resource reducer', () => {
 
   describe('RESOURCE_DETAIL_READ_REQUEST', () => {
     it('keeps the detail initial state', () => {
-      expect(reducer(initialState, action(actions.RESOURCE_DETAIL_READ_REQUEST))).toEqual(state());
+      expect(reducer(initialState, action(actions.RESOURCE_DETAIL_READ_REQUEST))).toEqual(state({}, true));
     });
 
     it('resets the detail to initial state in an existing state', () => {
       expect(reducer(
         state({ detail: 1 }),
         action(actions.RESOURCE_DETAIL_READ_REQUEST)
-      )).toEqual(state());
+      )).toEqual(state({}, true));
     });
   });
 
