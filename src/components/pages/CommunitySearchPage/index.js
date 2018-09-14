@@ -68,6 +68,7 @@ const CommunitySearchPage = ({
   isModalFilterPanelVisible,
   onToggleModalFilterPanel,
   onAdTileClick,
+  isFetchingResults,
 }) => {
   const listSize = requestMeta['filtered-count'];
   const city = titleize(searchParams.city);
@@ -137,7 +138,8 @@ const CommunitySearchPage = ({
         }
       });
 
-        return <Fragment>
+      return (
+        <Fragment>
           <CommunitySearchList
             communityList={communityList}
             onParamsChange={onParamsChange}
@@ -145,21 +147,24 @@ const CommunitySearchPage = ({
             requestMeta={requestMeta}
             onParamsRemove={onParamsRemove}
             onAdTileClick={onAdTileClick}
+            isFetchingResults={isFetchingResults}
           />
           {additionalDivs}
-
         </Fragment>
-
+      );
     }
-    //If No Geo Content just return same
-    return (<CommunitySearchList
-      communityList={communityList}
-      onParamsChange={onParamsChange}
-      searchParams={searchParams}
-      requestMeta={requestMeta}
-      onParamsRemove={onParamsRemove}
-      onAdTileClick={onAdTileClick}
-    />);
+    // If No Geo Content just return same
+    return (
+      <CommunitySearchList
+        communityList={communityList}
+        onParamsChange={onParamsChange}
+        searchParams={searchParams}
+        requestMeta={requestMeta}
+        onParamsRemove={onParamsRemove}
+        onAdTileClick={onAdTileClick}
+        isFetchingResults={isFetchingResults}
+      />
+    );
   };
 
   return (
@@ -189,9 +194,8 @@ const CommunitySearchPage = ({
       <CommunitySearchPageTemplate
         column={columnContent}
       >
-        {!isMapView && (
-          TopContent()
-        )}
+        {isFetchingResults && <StyledHeading level="hero" size="title">loading...</StyledHeading>}
+        {!isMapView && !isFetchingResults && TopContent()}
         <TopWrapper>
           {isMapView && (
             <IconButton icon="list" ghost transparent onClick={toggleMap}>
@@ -213,10 +217,7 @@ const CommunitySearchPage = ({
           </IconButton>
         </TopWrapper>
         <StyledHr />
-
-        {!isMapView && (
-          ListContent()
-        )}
+        {!isMapView && !isFetchingResults && ListContent()}
         {isMapView && (
           <SearchMapContainer
             latitude={latitude}
@@ -254,6 +255,7 @@ CommunitySearchPage.propTypes = {
   isModalFilterPanelVisible: bool,
   onToggleModalFilterPanel: func,
   onAdTileClick: func,
+  isFetchingResults: bool,
 };
 
 export default CommunitySearchPage;
