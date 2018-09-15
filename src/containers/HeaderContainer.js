@@ -9,18 +9,20 @@ import { toggle } from 'sly/store/actions';
 import { isHeaderDropdownOpen } from 'sly/store/selectors';
 
 const defaultHeaderItems = [
+  { name: '(855) 866 4515', url: 'tel:+18558664515'},
   { name: 'Resources', url: '/resources' },
   // { name: 'Moving Center', url: '#' },
   // { name: 'News', url: '#' },
   // { name: 'Moving Center', url: '/resources/tags/moving+center' },
   { name: 'How It Works', url: '/how-it-works' },
   { name: 'List Your Property', url: '/providers' },
-  { name: 'Our Company', url: '/about' },
+  // { name: 'Our Company', url: '/about' },
   // { name: 'Sign in', url: '/signin' },
 ];
 
 const defaultMenuItems = [
   { name: 'Home', url: '/' },
+  { name: '(866) 855 4515', url: 'tel:+1(866)855-4515'},
   { name: 'Resources', url: '/resources' },
   { name: 'How It Works', url: '/how-it-works' },
   { name: 'Assisted Living', url: '/assisted-living' },
