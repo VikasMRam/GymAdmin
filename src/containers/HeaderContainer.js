@@ -18,7 +18,7 @@ const defaultHeaderItems = [
 
 const defaultMenuItems = [
   { name: 'Home', url: '/' },
-  { name: '(866) 855 4515', url: 'tel:+1(866)855-4515'},
+  { name: '(855) 866 4515', url: 'tel:+18558664515'},
   { name: 'Resources', url: '/resources' },
   { name: 'How It Works', url: '/how-it-works' },
   { name: 'Assisted Living', url: '/assisted-living' },
