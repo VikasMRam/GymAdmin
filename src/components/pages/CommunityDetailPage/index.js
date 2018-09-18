@@ -340,26 +340,6 @@ export default class CommunityDetailPage extends Component {
               )}
             </ConciergeController>
           </CollapsibleSection>
-          <CollapsibleSection title="Similar Communities">
-            <SimilarCommunities similarProperties={similarProperties} />
-            <ConciergeController community={community}>
-              {({ gotoAdvancedInfo }) => (
-                <AdTileWrapper>
-                  <AdTile {...adProps} onClick={() => gotoAdvancedInfo()} />
-                </AdTileWrapper>
-                )
-              }
-            </ConciergeController>
-            <BackToSearch>
-              <Button
-                ghost
-                onClick={onBackToSearchClicked}
-                href={getCitySearchUrl({ propInfo, address })}
-              >
-                Communities In {address.city}
-              </Button>
-            </BackToSearch>
-          </CollapsibleSection>
           {(communityDescription || rgsAux.communityDescription) &&
             <CollapsibleSection title="Community Details">
               <CommunityDetails
@@ -414,6 +394,27 @@ export default class CommunityDetailPage extends Component {
               communitySlug={id}
               questions={questions}
             />
+          </CollapsibleSection>
+
+          <CollapsibleSection title="Similar Communities">
+            <SimilarCommunities similarProperties={similarProperties} />
+            <ConciergeController community={community}>
+              {({ gotoAdvancedInfo }) => (
+                <AdTileWrapper>
+                  <AdTile {...adProps} onClick={() => gotoAdvancedInfo()} />
+                </AdTileWrapper>
+              )
+              }
+            </ConciergeController>
+            <BackToSearch>
+              <Button
+                ghost
+                onClick={onBackToSearchClicked}
+                href={getCitySearchUrl({ propInfo, address })}
+              >
+                Communities In {address.city}
+              </Button>
+            </BackToSearch>
           </CollapsibleSection>
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>

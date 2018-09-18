@@ -105,14 +105,14 @@ export default class communitySummary extends React.Component {
       </span>
     ));
 
-    highlights.push((
-      <span>
-        Reception&nbsp;
-        <Link href={`tel:${receptionNumber}`} onClick={onReceptionNumberClicked}>
-          <NumberFormat value={receptionNumber} format="(###) ###-####" displayType="text" />
-        </Link>
-      </span>
-    ));
+    // highlights.push((
+    //   <span>
+    //     Reception&nbsp;
+    //     <Link href={`tel:${receptionNumber}`} onClick={onReceptionNumberClicked}>
+    //       <NumberFormat value={receptionNumber} format="(###) ###-####" displayType="text" />
+    //     </Link>
+    //   </span>
+    // ));
 
 
     if (licenseUrl) {
