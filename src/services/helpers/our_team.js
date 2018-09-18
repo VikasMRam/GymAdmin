@@ -101,7 +101,7 @@ export const TeamMembersData = [
     heading: 'Emma Rodbro',
     slug: 'emma-rodbro',
     subHeading: 'Operations Specialist',
-    imageUrl: assetPath('images/our-team/emma.png'),
+    imageUrl: assetPath('images/our-team/emma.jpg'),
     description: `Emma has been passionate about aging since she was a child and has tailored her education and career to
       reflect that. Most recently, she graduated from the University of California, Berkeley with a Masters degree in Social Work
       with a focus in aging. She also has a Bachelor's degree in Sociology and Public Health from Brown University. When she's not
