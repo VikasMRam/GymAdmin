@@ -27,6 +27,9 @@ export const getDetailMeta = (state, resource) =>
 export const getListMeta = (state, resource) =>
   resources.getList(state.resource, resource).meta;
 
+export const isResourceRequestInProgress = (state, resource) =>
+  resources.getResourceState(state.resource, resource).inProgress;
+
 export const getExperiment = (state, experimentName) =>
   experiments.getExperimentByName(state.experiments, experimentName);
 

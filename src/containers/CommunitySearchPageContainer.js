@@ -5,9 +5,9 @@ import queryString from 'query-string';
 import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
 
-import {resourceDetailReadRequest, resourceListReadRequest} from 'sly/store/resource/actions';
+import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList, getListMeta } from 'sly/store/selectors';
-import { isCommunitySearchPageModalFilterPanelActive } from 'sly/store/selectors';
+import { isCommunitySearchPageModalFilterPanelActive, isResourceRequestInProgress } from 'sly/store/selectors';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 import { toggleModalFilterPanel } from 'sly/store/communitySearchPage/actions';
@@ -28,6 +28,7 @@ class CommunitySearchPageContainer extends Component {
     errorCode: number,
     isModalFilterPanelVisible: bool,
     toggleModalFilterPanel: func,
+    isFetchingResults: bool,
   }
 
   // componentDidUpdate() {
@@ -49,14 +50,13 @@ class CommunitySearchPageContainer extends Component {
       event.changedParams = { view: 'list', 'page-size': 15 };
     }
     this.changeSearchParams(event);
-
   };
 
   changeSearchParams = ({ changedParams }) => {
     const { searchParams, history } = this.props;
     const { path } = filterLinkPath(searchParams, changedParams);
     const event = {
-      action: 'search', category: searchParams.toc, label:queryString.stringify(searchParams),
+      action: 'search', category: searchParams.toc, label: queryString.stringify(searchParams),
     };
     SlyEvent.getInstance().sendEvent(event);
 
@@ -95,6 +95,7 @@ class CommunitySearchPageContainer extends Component {
       location,
       history,
       isModalFilterPanelVisible,
+      isFetchingResults,
     } = this.props;
 
     // TODO Add Error Page
@@ -103,7 +104,7 @@ class CommunitySearchPageContainer extends Component {
     }
 
     const isMapView = searchParams.view === 'map';
-    let gg = geoGuide && geoGuide.length > 0 ? geoGuide[0] : {};
+    const gg = geoGuide && geoGuide.length > 0 ? geoGuide[0] : {};
     return (
       <CommunitySearchPage
         isMapView={isMapView}
@@ -118,6 +119,7 @@ class CommunitySearchPageContainer extends Component {
         isModalFilterPanelVisible={isModalFilterPanelVisible}
         onToggleModalFilterPanel={this.handleToggleModalFilterPanel}
         onAdTileClick={this.handleOnAdTileClick}
+        isFetchingResults={isFetchingResults}
       />
     );
   }
@@ -129,6 +131,7 @@ const mapStateToProps = (state, { match, location }) => {
   return {
     searchParams,
     communityList: getList(state, 'searchResource'),
+    isFetchingResults: isResourceRequestInProgress(state, 'searchResource'),
     requestMeta: getListMeta(state, 'searchResource'),
     geoGuide: getList(state, 'geoGuide'),
     isModalFilterPanelVisible,
@@ -151,8 +154,8 @@ const fetchData = (dispatch, { match, location }) => {
 
 const handleError = (err) => {
   if (err.response) {
-    if (err.response.url && err.response.url.match(/geo-guide/) ){
-      //Ignore
+    if (err.response.url && err.response.url.match(/geo-guide/)) {
+      // Ignore
       return;
     }
     if (err.response.status !== 200) {
