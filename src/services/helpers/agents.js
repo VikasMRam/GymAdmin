@@ -458,7 +458,7 @@ export const agents = [
     "id":"senior-care-authority-el-dorado-county-ca-maureen-simmons",
     "name":"Maureen Simmons",
     "agentBio":"Maureen Simmons has always been passionate about helping others during challenging times. Growing up in the heart of LA, she spent many hours helping homeless women transition into shelters. While attending UC Santa Barbara, she not only continued her outreach to the homeless but also started visiting residents in nearby nursing homes. \n\nAs Maureen searched for assisted living for two family members, she learned first hand what a stressful process it entails. Realizing the need for educating families about long term care options, she embraced the opportunity to work as a Senior Care Authority Advisor demonstrating her natural ability to find the best solutions for her clients. \n\nMaureen knows it all starts with understanding the specific needs of each family. “I am in a unique position to guide families in the right direction because in addition to having toured the homes and communities, I keep current with the state inspections. I am an advocate for families in helping them find the most appropriate care for their loved ones and providing peace of mind with the outcome.”\n\nAfter a series of health challenges with several family members, Maureen had to find Memory Care for her sister and then again for her uncle who had experienced elder abuse from an at-home caregiver. 'I just remember having so many questions and concerns and feeling so lost during the process. It was overwhelming, to say the least.'\n\nRealizing the need for educating families about long-term care options, Maureen embraced the opportunity to work as a Senior Care Authority Advisor with those seeking to find the best care for their loved ones. 'I want to make a difference during this difficult transition and it all starts with building a relationship and trust.' She spends many hours researching and touring various facilities in the area to ensure her clients have peace of mind and they are treated with the dignity they deserve.\n\nMaureen is always happy to help with all the necessary services related to assisted living facilities or residential care home for your loved ones in El Dorado County. Maureen Simmons partnered with Seniorly in 2018.",
-    "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/0b0b8c6e17c9f42376e41a10e28c9bf7/Maureen_Simmons_01_photo_Seniorly_sd.jpg",
+    "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/3acbcb6d6e46d914fd4de9b9c53593c7/Maureen_sd.JPG",
     "status":1,
     "address":{
     "id":"fc471ea2be3ae340efdda70ae5ad7538",
@@ -1624,19 +1624,6 @@ export const agents = [
     "user":{
     "id":"6f7a92a47eb27e75ce68a9e249891428",
       "name":"Catharine Shepard"}},
-  {
-    "id":"vibralife-of-katy",
-    "name":"Seniorly Concierge",
-    "agentBio":null,
-    "mainImage":"https://d1qiigpe5txw4q.cloudfront.net/uploads/2d535cc9ae9367ad39525ce3f59c75b2/VibraLifeofKaty_Photos_01_Seniorly_sd.jpg",
-    "status":2,
-    "address":{
-    "id":"2f3da6ca218da7ba14d986ecba964c03",
-      "city":"Katy",
-      "state":"TX"},
-    "user":{
-    "id":"153287712bb403c018c7fc92298e778e",
-      "name":"Seniorly Concierge"}},
   {
     "id":"senior-living-decisions-co-jim-ver-meer",
     "name":"Jim Ver Meer",
