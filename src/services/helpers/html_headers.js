@@ -152,6 +152,10 @@ export const getHelmetForSearchPage = ({
       <meta content={`${title} | Seniorly`} property="twitter:title" />
       <link rel="canonical" href={canonicalUrl} />
 
+      {
+        url.search && url.search.length > 0 && <meta name="robots" content="noindex"/>
+      }
+
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
       {ldCommunities.length > 0 &&
         <script type="application/ld+json">{`${JSON.stringify(ldCommunities, stringifyReplacer)}`}</script>
