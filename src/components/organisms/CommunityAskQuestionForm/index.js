@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, string, bool } from 'prop-types';
+import { func, string, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -14,11 +14,25 @@ const StyledButton = styled(Button)`
 
 
 const CommunityAskQuestionForm = ({
-  handleSubmit, pristine, submitting, communityName,
+  handleSubmit, pristine, submitting, communityName, user, error,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
       <Heading level="title" size="title">Ask our experts about {communityName}</Heading>
+      {user === undefined && <Field
+        name="name"
+        label=""
+        type="text"
+        placeholder="Type your Name here..."
+        component={ReduxField}
+      />}
+      {user === undefined && <Field
+        name="email"
+        label=""
+        type="text"
+        placeholder="Type your Email here..."
+        component={ReduxField}
+      />}
       <Field
         name="question"
         label=""
@@ -26,6 +40,7 @@ const CommunityAskQuestionForm = ({
         placeholder="Type your Question here..."
         component={ReduxField}
       />
+      {error && <strong>{error}</strong>}
       <StyledButton type="submit" kind="jumbo" disabled={pristine || submitting}>
         Submit Question
       </StyledButton>
@@ -40,6 +55,8 @@ CommunityAskQuestionForm.propTypes = {
   communityName: string.isRequired,
   pristine: bool,
   submitting: bool,
+  user: object,
+  error: string,
 };
 
 export default CommunityAskQuestionForm;
