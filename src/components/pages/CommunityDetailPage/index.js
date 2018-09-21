@@ -2,6 +2,7 @@ import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
 import { object, func, number, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
+import { Lazy } from 'react-lazy';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 
@@ -238,10 +239,12 @@ export default class CommunityDetailPage extends Component {
         { getHelmetForCommunityPage(community) }
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <Section title={`Map View of ${name}`}>
-          <CommunityMap
-            community={community}
-            similarProperties={similarProperties}
-          />
+          <Lazy ltIE9 component="div">
+            <CommunityMap
+              community={community}
+              similarProperties={similarProperties}
+            />
+          </Lazy>
         </Section>
         {(images.length > 1) &&
           <Section title="More Pictures">
