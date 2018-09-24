@@ -6,3 +6,4 @@ export const question = 'platform/questions';
 export const answer = 'platform/answers';
 export const geoGuide = 'platform/geo-guides';
 export const agent = 'marketplace/agents';
+export const content = 'platform/contents';
