@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { object, func, int } from 'prop-types';
 
-import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceUpdateRequest } from 'sly/store/resource/actions';
 import withServerState from 'sly/store/withServerState';
 
 class ContentApprovalContainer extends Component {
-  propTypes = {
+  static propTypes = {
     match: object,
     approveContent: func,
     errorCode: int,
@@ -20,10 +19,9 @@ class ContentApprovalContainer extends Component {
   }
 
   componentWillReceiveProps() {
-    const { user, match, approveContent, errorCode } = this.props;
+    const { match, approveContent, errorCode } = this.props;
     const { params } = match;
     const { contentSlug } = params;
-    console.log(user)
     if (errorCode === 401) {
       // Could not make history push to rail's signin
       window.location.href = '/signin';
@@ -50,10 +48,10 @@ class ContentApprovalContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = () => {
   // const { match, location } = props;
   return {
-    user: getDetail(state, 'user', 'me'),
+    // user: getDetail(state, 'user', 'me'),
   };
 };
 

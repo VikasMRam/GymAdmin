@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
-import { string, func, number } from 'prop-types';
+import { reduxForm, SubmissionError } from 'redux-form';
+import { string, func } from 'prop-types';
 
 // import { getDetail } from 'sly/store/selectors';
 
@@ -41,9 +41,26 @@ class CommunityLeaveAnAnswerFormContainer extends Component {
       questionId,
       answer: values.answer,
     };
-    leaveAnAnswer(payload).then(() => {
+    return leaveAnAnswer(payload).then(() => {
       answerQuestion(null);
       loadCommunity(communitySlug);
+    }).catch((r) => {
+      const { status } = r.response;
+      let errorMessage = null;
+      switch (status) {
+        case 401: {
+          errorMessage = 'Please Sign in to Answer the Question';
+          break;
+        }
+        case 409: {
+          errorMessage = 'User Already Registered. Please Login to Proceed';
+          break;
+        }
+        default: {
+          errorMessage = `Unknown Error. Error Status: ${status}`;
+        }
+      }
+      throw new SubmissionError({ answer: errorMessage });
     });
   }
 

@@ -19,14 +19,14 @@ const CommunityAskQuestionForm = ({
   return (
     <form onSubmit={handleSubmit}>
       <Heading level="title" size="title">Ask our experts about {communityName}</Heading>
-      {user === undefined && <Field
+      {!user && <Field
         name="name"
         label=""
         type="text"
         placeholder="Type your Name here..."
         component={ReduxField}
       />}
-      {user === undefined && <Field
+      {!user && <Field
         name="email"
         label=""
         type="text"
