@@ -396,6 +396,7 @@ export default class CommunityDetailPage extends Component {
               communityName={name}
               communitySlug={id}
               questions={questions}
+              user={user}
             />
           </CollapsibleSection>
 

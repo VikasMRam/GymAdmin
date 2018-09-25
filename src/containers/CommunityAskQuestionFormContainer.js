@@ -71,7 +71,7 @@ class CommunityAskQuestionFormContainer extends Component {
   }
 
   render() {
-    const { ...props } = this.props;
+    const { user, ...props } = this.props;
     const initialValues = {
       question: '',
       name: '',
@@ -81,6 +81,7 @@ class CommunityAskQuestionFormContainer extends Component {
       <ReduxForm
         initialValues={initialValues}
         onSubmit={this.handleOnSubmit}
+        user={user}
         {...props}
       />
     );
