@@ -26,7 +26,7 @@ import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
 import LegalPolicyPage from "sly/components/pages/LegalPolicyPage";
-import ContentApprovalContainer from 'sly/containers/ContentApprovalContainer';
+import EntityApprovalContainer from 'sly/containers/EntityApprovalContainer';
 
 setGlobalStyles();
 
@@ -132,8 +132,8 @@ export default class App extends Component {
       exact: true,
     },
     {
-      path: '/content/:contentSlug/approve',
-      component: ContentApprovalContainer,
+      path: '/:entity/:entitySlug/approve',
+      component: EntityApprovalContainer,
       exact: true,
     },
   ];

@@ -4,10 +4,10 @@ import { object, func, int } from 'prop-types';
 import { resourceDetailReadRequest, resourceUpdateRequest } from 'sly/store/resource/actions';
 import withServerState from 'sly/store/withServerState';
 
-class ContentApprovalContainer extends Component {
+class EntityApprovalContainer extends Component {
   static propTypes = {
     match: object,
-    approveContent: func,
+    approveEntity: func,
     errorCode: int,
   }
 
@@ -19,21 +19,21 @@ class ContentApprovalContainer extends Component {
   }
 
   componentWillReceiveProps() {
-    const { match, approveContent, errorCode } = this.props;
+    const { match, approveEntity, errorCode } = this.props;
     const { params } = match;
-    const { contentSlug } = params;
+    const { entitySlug, entity } = params;
     if (errorCode === 401) {
       // Could not make history push to rail's signin
       window.location.href = '/signin';
     }
-    approveContent(contentSlug).then(() => {
+    approveEntity(entity, entitySlug).then(() => {
       this.setState({ message: 'Success' });
     }).catch((err) => {
       // console.log(err.response);
       const { response } = err;
       const { status } = response;
       if (status === 405) {
-        this.setState({ message: 'Content Already Approved' });
+        this.setState({ message: `${entity} Already Approved` });
       } else if (status === 403) {
         this.setState({ message: 'User Not Admin' });
       } else {
@@ -57,7 +57,7 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    approveContent: contentSlug => dispatch(resourceUpdateRequest('content', `${contentSlug}/`, { approve: true })),
+    approveEntity: (entity, entitySlug) => dispatch(resourceUpdateRequest(entity, `${entitySlug}/`, { approve: true })),
   };
 };
 
@@ -78,4 +78,4 @@ export default withServerState({
   mapDispatchToProps,
   fetchData,
   handleError,
-})(ContentApprovalContainer);
+})(EntityApprovalContainer);
