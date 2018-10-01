@@ -1,8 +1,15 @@
 import React from 'react';
 import { arrayOf, shape, string, number, func, bool, object } from 'prop-types';
 
+import Button from 'sly/components/atoms/Button';
+import Modal from 'sly/components/molecules/Modal';
 import PropertyReview from 'sly/components/molecules/PropertyReview';
 import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
+
+import { isBrowser } from 'sly/config';
+import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
+
+const appElement = isBrowser && document.querySelector('#app');
 
 const PropertyReviews = ({
   hasSlyReviews,
@@ -12,6 +19,11 @@ const PropertyReviews = ({
   onLeaveReview,
   communityReviewsRef,
   onReviewLinkClicked,
+  searchParams,
+  changeSearchParams,
+  user,
+  communitySlug,
+  communityName,
 }) => {
   let propertyReviews = null;
   if (hasSlyReviews) {
@@ -19,6 +31,7 @@ const PropertyReviews = ({
       return <PropertyReview {...review} key={review.id} />;
     });
   }
+  const { modal } = searchParams;
   return (
     <article ref={communityReviewsRef}>
       {propertyReviews}
@@ -29,6 +42,15 @@ const PropertyReviews = ({
           onReviewLinkClicked={onReviewLinkClicked}
         />
       )}
+      <Button onClick={() => changeSearchParams({ changedParams: { modal: 'addRating' } })} >Leave a Review</Button>
+      <Modal
+        appElement={appElement}
+        onClose={() => changeSearchParams({ changedParams: { modal: null } })}
+        isOpen={modal === 'addRating'}
+        closeable
+      >
+        <CommunityAddRatingFormContainer user={user} communitySlug={communitySlug} communityName={communityName} />
+      </Modal>
     </article>
   );
 };
@@ -52,6 +74,11 @@ PropertyReviews.propTypes = {
   hasWebReviews: bool.isRequired,
   communityReviewsRef: object,
   onReviewLinkClicked: func,
+  searchParams: object,
+  changeSearchParams: func,
+  user: object,
+  communitySlug: string,
+  communityName: string,
 };
 
 export default PropertyReviews;

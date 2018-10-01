@@ -13,6 +13,8 @@ import {
   isCommunityDetailPageStickyHeaderActive,
 } from 'sly/store/selectors';
 
+import { getSearchParams, filterLinkPath } from 'sly/services/helpers/search';
+
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
@@ -34,6 +36,18 @@ class CommunityDetailPageContainer extends Component {
     user: object,
     isQuestionModalOpenValue: bool,
     setIsQuestionModalOpenValue: func,
+    searchParams: object,
+  };
+
+  changeSearchParams = ({ changedParams }) => {
+    const { searchParams, history } = this.props;
+    const { path } = filterLinkPath(searchParams, changedParams);
+    // const event = {
+    //   action: 'search', category: searchParams.toc, label: queryString.stringify(searchParams),
+    // };
+    // SlyEvent.getInstance().sendEvent(event);
+
+    history.push(path);
   };
 
   handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
@@ -157,6 +171,7 @@ class CommunityDetailPageContainer extends Component {
       redirectUrl,
       history,
       isStickyHeaderVisible,
+      searchParams,
     } = this.props;
 
     if (errorCode) {
@@ -207,13 +222,16 @@ class CommunityDetailPageContainer extends Component {
         onConciergeNumberClicked={this.handleConciergeNumberClick}
         onLiveChatClicked={this.handleLiveChatClick}
         onReceptionNumberClicked={this.handleReceptionNumberClick}
+        searchParams={searchParams}
+        changeSearchParams={this.changeSearchParams}
       />
     );
   }
 }
 
 const getCommunitySlug = match => match.params.communitySlug;
-const mapStateToProps = (state, { match }) => {
+const mapStateToProps = (state, { match, location }) => {
+  const searchParams = getSearchParams(match, location);
   const communitySlug = getCommunitySlug(match);
   const mediaGallerySlideIndex = getHomePageMediaGalleryCurrentSlideIndex(state);
   const isMediaGalleryFullscreenActive = isHomePageMediaGalleryFullscreenActive(state);
@@ -224,6 +242,7 @@ const mapStateToProps = (state, { match }) => {
     mediaGallerySlideIndex,
     isMediaGalleryFullscreenActive,
     isStickyHeaderVisible,
+    searchParams,
   };
 };
 const mapDispatchToProps = (dispatch) => {

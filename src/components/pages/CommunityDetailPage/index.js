@@ -71,6 +71,8 @@ export default class CommunityDetailPage extends Component {
     onConciergeNumberClicked: func,
     onLiveChatClicked: func,
     onReceptionNumberClicked: func,
+    searchParams: object,
+    changeSearchParams: func,
   };
 
   componentDidMount() {
@@ -133,6 +135,8 @@ export default class CommunityDetailPage extends Component {
       onConciergeNumberClicked,
       onLiveChatClicked,
       onReceptionNumberClicked,
+      searchParams,
+      changeSearchParams,
     } = this.props;
 
     const {
@@ -389,6 +393,11 @@ export default class CommunityDetailPage extends Component {
               reviewRatings={ratingsArray}
               onLeaveReview={onLeaveReview}
               onReviewLinkClicked={onReviewLinkClicked}
+              searchParams={searchParams}
+              changeSearchParams={changeSearchParams}
+              user={user}
+              communitySlug={id}
+              communityName={name}
             />
           </CollapsibleSection>
           <CollapsibleSection title="Questions">
