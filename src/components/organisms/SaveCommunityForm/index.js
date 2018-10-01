@@ -14,10 +14,20 @@ const StyledHeading = styled(Heading)`
 `;
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: column;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    flex-direction: row;
+  }
 `;
 const StyledImage = styled(Image)`
-  max-width: 40%;
   object-fit: cover;
+  height: ${size('carousel.mobile')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    height: unset;
+    max-width: 40%;
+  }
 `;
 const ContentWrapper = styled.div`
   padding: ${size('spacing.xxLarge')};

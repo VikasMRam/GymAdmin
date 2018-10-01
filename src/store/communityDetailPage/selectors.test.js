@@ -6,6 +6,7 @@ const initialState = {
   stickyHeaderVisible: false,
   answerQuestion: null,
   isQuestionModalOpen: false,
+  favouriteModalActive: false,
 };
 
 test('initialState', () => {
@@ -43,4 +44,11 @@ test('isQuestionModalOpen', () => {
   expect(selectors.isQuestionModalOpen(selectors.initialState)).toBe(false);
   expect(selectors.isQuestionModalOpen({ isQuestionModalOpen: false })).toBe(false);
   expect(selectors.isQuestionModalOpen({ isQuestionModalOpen: true })).toBe(true);
+});
+
+test('isFavouriteModalActive', () => {
+  expect(selectors.isFavouriteModalActive(undefined)).toBe(false);
+  expect(selectors.isFavouriteModalActive(selectors.initialState)).toBe(false);
+  expect(selectors.isFavouriteModalActive({ favouriteModalActive: false })).toBe(false);
+  expect(selectors.isFavouriteModalActive({ favouriteModalActive: true })).toBe(true);
 });

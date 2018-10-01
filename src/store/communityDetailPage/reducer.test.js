@@ -8,6 +8,7 @@ const nextState = {
   stickyHeaderVisible: false,
   isQuestionModalOpen: false,
   answerQuestion: null,
+  favouriteModalActive: false,
 };
 const fullscreenState = {
   mediaGalleryCurrentSlideIndex: 0,
@@ -15,6 +16,7 @@ const fullscreenState = {
   stickyHeaderVisible: false,
   isQuestionModalOpen: false,
   answerQuestion: null,
+  favouriteModalActive: false,
 };
 const stickyHeaderState = {
   mediaGalleryCurrentSlideIndex: 0,
@@ -22,6 +24,15 @@ const stickyHeaderState = {
   stickyHeaderVisible: true,
   isQuestionModalOpen: false,
   answerQuestion: null,
+  favouriteModalActive: false,
+};
+const favouriteModalState = {
+  mediaGalleryCurrentSlideIndex: 0,
+  mediaGalleryFullscreenActive: false,
+  stickyHeaderVisible: false,
+  isQuestionModalOpen: false,
+  answerQuestion: null,
+  favouriteModalActive: true,
 };
 
 it('returns the initial state', () => {
@@ -66,4 +77,11 @@ it('handles COMMUNITY_DETAIL_ANSWER_QUESTION', () => {
     payload: { foo: 'bar' },
   };
   expect(reducer(initialState, action).answerQuestion).toEqual({ foo: 'bar' });
+});
+
+it('handles COMMUNITY_DETAIL_TOGGLE_FAVOURITE_MODAL_OPEN', () => {
+  const action = {
+    type: actions.COMMUNITY_DETAIL_TOGGLE_FAVOURITE_MODAL_OPEN,
+  };
+  expect(reducer(initialState, action)).toEqual({ ...favouriteModalState });
 });

@@ -29,3 +29,9 @@ test('COMMUNITY_DETAIL_ANSWER_QUESTION', () => {
     type: actions.COMMUNITY_DETAIL_ANSWER_QUESTION,
   }));
 });
+
+test('COMMUNITY_DETAIL_TOGGLE_FAVOURITE_MODAL_OPEN', () => {
+  expect(actions.toggleFavouriteModal()).toEqual(expect.objectContaining({
+    type: actions.COMMUNITY_DETAIL_TOGGLE_FAVOURITE_MODAL_OPEN,
+  }));
+});
