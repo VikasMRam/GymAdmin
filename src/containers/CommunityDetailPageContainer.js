@@ -39,6 +39,10 @@ class CommunityDetailPageContainer extends Component {
     searchParams: object,
   };
 
+  setModal = (value) => {
+    this.changeSearchParams({ changedParams: { modal: value } });
+  }
+
   changeSearchParams = ({ changedParams }) => {
     const { searchParams, history } = this.props;
     const { path } = filterLinkPath(searchParams, changedParams);
@@ -224,6 +228,7 @@ class CommunityDetailPageContainer extends Component {
         onReceptionNumberClicked={this.handleReceptionNumberClick}
         searchParams={searchParams}
         changeSearchParams={this.changeSearchParams}
+        setModal={this.setModal}
       />
     );
   }

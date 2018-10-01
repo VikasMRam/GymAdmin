@@ -73,6 +73,7 @@ export default class CommunityDetailPage extends Component {
     onReceptionNumberClicked: func,
     searchParams: object,
     changeSearchParams: func,
+    setModal: func,
   };
 
   componentDidMount() {
@@ -137,6 +138,7 @@ export default class CommunityDetailPage extends Component {
       onReceptionNumberClicked,
       searchParams,
       changeSearchParams,
+      setModal,
     } = this.props;
 
     const {
@@ -205,6 +207,7 @@ export default class CommunityDetailPage extends Component {
       languages,
       languagesOther,
     } = propInfo;
+    const { modal } = searchParams;
 
     // TODO: move this to a container for PropertyReviews handling posts
     const onLeaveReview = () => {};
@@ -393,8 +396,8 @@ export default class CommunityDetailPage extends Component {
               reviewRatings={ratingsArray}
               onLeaveReview={onLeaveReview}
               onReviewLinkClicked={onReviewLinkClicked}
-              searchParams={searchParams}
-              changeSearchParams={changeSearchParams}
+              isAskRatingModalOpen={modal === 'addRating'}
+              setModal={setModal}
               user={user}
               communitySlug={id}
               communityName={name}
@@ -406,6 +409,8 @@ export default class CommunityDetailPage extends Component {
               communitySlug={id}
               questions={questions}
               user={user}
+              searchParams={searchParams}
+              setModal={setModal}
             />
           </CollapsibleSection>
 

@@ -19,8 +19,8 @@ const PropertyReviews = ({
   onLeaveReview,
   communityReviewsRef,
   onReviewLinkClicked,
-  searchParams,
-  changeSearchParams,
+  isAskRatingModalOpen,
+  setModal,
   user,
   communitySlug,
   communityName,
@@ -31,7 +31,6 @@ const PropertyReviews = ({
       return <PropertyReview {...review} key={review.id} />;
     });
   }
-  const { modal } = searchParams;
   return (
     <article ref={communityReviewsRef}>
       {propertyReviews}
@@ -42,11 +41,11 @@ const PropertyReviews = ({
           onReviewLinkClicked={onReviewLinkClicked}
         />
       )}
-      <Button onClick={() => changeSearchParams({ changedParams: { modal: 'addRating' } })} >Leave a Review</Button>
+      <Button onClick={() => setModal('addRating')} >Leave a Review</Button>
       <Modal
         appElement={appElement}
-        onClose={() => changeSearchParams({ changedParams: { modal: null } })}
-        isOpen={modal === 'addRating'}
+        onClose={() => setModal(null)}
+        isOpen={isAskRatingModalOpen}
         closeable
       >
         <CommunityAddRatingFormContainer user={user} communitySlug={communitySlug} communityName={communityName} />
@@ -74,8 +73,8 @@ PropertyReviews.propTypes = {
   hasWebReviews: bool.isRequired,
   communityReviewsRef: object,
   onReviewLinkClicked: func,
-  searchParams: object,
-  changeSearchParams: func,
+  isAskRatingModalOpen: bool,
+  setModal: func,
   user: object,
   communitySlug: string,
   communityName: string,
