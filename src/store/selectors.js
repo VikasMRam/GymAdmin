@@ -60,6 +60,9 @@ export const isQuestionModalOpenSelector = state =>
 export const answerQuestionValueSelector = state =>
   communityDetailPage.answerQuestionValue(state.communityDetailPage);
 
+export const isFavouriteModalActive = state =>
+  communityDetailPage.isFavouriteModalActive(state.communityDetailPage);
+
 export const isCommunitySearchPageModalFilterPanelActive = state =>
   communitySearchPage.isModalFilterPanelVisible(state.communitySearchPage);
 

@@ -11,6 +11,7 @@ theme.palette = {
   primary  : ['#7ccdcc', '#65c0bf', '#b0e1e0', '#f4ffff'],
   grayscale: ['#8f9ca4', '#9ca8af', '#c5d0d5', '#f2f6f7', '#68747a'],
   danger   : ['#cc5663'],
+  facebook : ['#4568B2'],
 };
 
 theme.reversePalette = reversePalette(theme.palette);
@@ -53,6 +54,7 @@ theme.sizes = {
 
   modal: {
     single : '35.25rem',   // 516px
+    double : '55rem',      // 880px
     gallery: '54.75rem',   // 876px
   },
 

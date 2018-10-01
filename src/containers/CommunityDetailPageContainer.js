@@ -11,12 +11,14 @@ import {
   getHomePageMediaGalleryCurrentSlideIndex,
   isHomePageMediaGalleryFullscreenActive,
   isCommunityDetailPageStickyHeaderActive,
+  isFavouriteModalActive,
 } from 'sly/store/selectors';
 
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { gotoSlide, toggleFullscreenMediaGallery, toggleStickyHeader } from 'sly/store/communityDetailPage/actions';
+import { gotoSlide, toggleFullscreenMediaGallery, toggleStickyHeader, toggleFavouriteModal }
+  from 'sly/store/communityDetailPage/actions';
 
 import ErrorPage from 'sly/components/pages/Error';
 
@@ -34,6 +36,8 @@ class CommunityDetailPageContainer extends Component {
     user: object,
     isQuestionModalOpenValue: bool,
     setIsQuestionModalOpenValue: func,
+    isFavouriteModalVisible: bool,
+    toggleFavouriteModal: func,
   };
 
   handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
@@ -147,6 +151,11 @@ class CommunityDetailPageContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
   };
 
+  handleMediaGalleryFavouriteClick = () => {
+    const { toggleFavouriteModal } = this.props;
+    toggleFavouriteModal();
+  };
+
   render() {
     const {
       mediaGallerySlideIndex,
@@ -157,6 +166,7 @@ class CommunityDetailPageContainer extends Component {
       redirectUrl,
       history,
       isStickyHeaderVisible,
+      isFavouriteModalVisible,
     } = this.props;
 
     if (errorCode) {
@@ -199,6 +209,7 @@ class CommunityDetailPageContainer extends Component {
         mediaGallerySlideIndex={mediaGallerySlideIndex}
         onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
         onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
+        onMediaGalleryFavouriteClick={this.handleMediaGalleryFavouriteClick}
         isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
         isStickyHeaderVisible={isStickyHeaderVisible}
         onToggleStickyHeader={this.handleToggleStickyHeader}
@@ -207,6 +218,7 @@ class CommunityDetailPageContainer extends Component {
         onConciergeNumberClicked={this.handleConciergeNumberClick}
         onLiveChatClicked={this.handleLiveChatClick}
         onReceptionNumberClicked={this.handleReceptionNumberClick}
+        isFavouriteModalVisible={isFavouriteModalVisible}
       />
     );
   }
@@ -218,12 +230,15 @@ const mapStateToProps = (state, { match }) => {
   const mediaGallerySlideIndex = getHomePageMediaGalleryCurrentSlideIndex(state);
   const isMediaGalleryFullscreenActive = isHomePageMediaGalleryFullscreenActive(state);
   const isStickyHeaderVisible = isCommunityDetailPageStickyHeaderActive(state);
+  const isFavouriteModalVisible = isFavouriteModalActive(state);
+
   return {
     user: getDetail(state, 'user', 'me'),
     community: getDetail(state, 'community', communitySlug),
     mediaGallerySlideIndex,
     isMediaGalleryFullscreenActive,
     isStickyHeaderVisible,
+    isFavouriteModalVisible,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -231,6 +246,7 @@ const mapDispatchToProps = (dispatch) => {
     gotoMediaGallerySlide: slideIndex => dispatch(gotoSlide(slideIndex)),
     toggleFullscreenMediaGallery: () => dispatch(toggleFullscreenMediaGallery()),
     toggleStickyHeader: () => dispatch(toggleStickyHeader()),
+    toggleFavouriteModal: () => dispatch(toggleFavouriteModal()),
   };
 };
 
