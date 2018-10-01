@@ -78,6 +78,7 @@ const searchParamsWhitelist = [
   'longitude',
   'searchOnMove',
   'modal',
+  'entityId',
 ];
 
 export const tocs = [

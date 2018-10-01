@@ -43,6 +43,14 @@ class CommunityDetailPageContainer extends Component {
     this.changeSearchParams({ changedParams: { modal: value } });
   }
 
+  setQuestionToAsk = (question) => {
+    if (question) {
+      this.changeSearchParams({ changedParams: { modal: 'answerQuestion', entityId: question.id } });
+    } else {
+      this.changeSearchParams({ changedParams: { modal: null, entityId: null } });
+    }
+  }
+
   changeSearchParams = ({ changedParams }) => {
     const { searchParams, history } = this.props;
     const { path } = filterLinkPath(searchParams, changedParams);
@@ -227,8 +235,8 @@ class CommunityDetailPageContainer extends Component {
         onLiveChatClicked={this.handleLiveChatClick}
         onReceptionNumberClicked={this.handleReceptionNumberClick}
         searchParams={searchParams}
-        changeSearchParams={this.changeSearchParams}
         setModal={this.setModal}
+        setQuestionToAsk={this.setQuestionToAsk}
       />
     );
   }
