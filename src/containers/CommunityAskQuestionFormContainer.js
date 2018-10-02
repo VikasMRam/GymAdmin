@@ -51,22 +51,12 @@ class CommunityAskQuestionFormContainer extends Component {
       // Hacky way. to push created question into array for rerender
       loadCommunity(communitySlug);
     }).catch((r) => {
-      const { status } = r.response;
-      let errorMessage = null;
-      switch (status) {
-        case 400: {
-          errorMessage = 'Name and Email are Mandatory';
-          break;
-        }
-        case 409: {
-          errorMessage = 'User Already Registered. Please Login to Proceed';
-          break;
-        }
-        default: {
-          errorMessage = `Unknown Error. Error Status: ${status}`;
-        }
-      }
-      throw new SubmissionError({ _error: errorMessage });
+      // TODO: Need to set a proper way to handle server side errors
+      const { response } = r;
+      return response.json().then((data) => {
+        const errorMessage = data.errors[0].detail;
+        throw new SubmissionError({ _error: errorMessage });
+      });
     });
   }
 

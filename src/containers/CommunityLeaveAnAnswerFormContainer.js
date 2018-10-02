@@ -45,22 +45,21 @@ class CommunityLeaveAnAnswerFormContainer extends Component {
       answerQuestion(null);
       loadCommunity(communitySlug);
     }).catch((r) => {
-      const { status } = r.response;
-      let errorMessage = null;
-      switch (status) {
-        case 401: {
-          errorMessage = 'Please Sign in to Answer the Question';
-          break;
+      // TODO: Need to set a proper way to handle server side errors
+      const { response } = r;
+      let errorMessage = 'Error Answering Question';
+      return response.json().then((data) => {
+        if (data.errors) {
+          errorMessage = data.errors[0].detail;
+        } else if (response.status === 401) {
+          errorMessage = 'Please Login to Answer this Question';
+        } else {
+          // Figure out why this error happened. Ideally post to event server
+          console.log(r.status);
+          console.log(data);
         }
-        case 409: {
-          errorMessage = 'User Already Registered. Please Login to Proceed';
-          break;
-        }
-        default: {
-          errorMessage = `Unknown Error. Error Status: ${status}`;
-        }
-      }
-      throw new SubmissionError({ answer: errorMessage });
+        throw new SubmissionError({ answer: errorMessage });
+      });
     });
   }
 
