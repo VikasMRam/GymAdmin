@@ -42,14 +42,16 @@ const PropertyReviews = ({
         />
       )}
       <Button onClick={() => setModal('addRating')} >Leave a Review</Button>
+      {isAskRatingModalOpen &&
       <Modal
         appElement={appElement}
         onClose={() => setModal(null)}
-        isOpen={isAskRatingModalOpen}
+        isOpen
         closeable
       >
         <CommunityAddRatingFormContainer user={user} communitySlug={communitySlug} communityName={communityName} />
       </Modal>
+      }
     </article>
   );
 };
