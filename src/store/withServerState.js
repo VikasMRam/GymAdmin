@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import { fetchState } from 'react-router-server';
 import { connect } from 'react-redux';
 import { func, bool } from 'prop-types';
+import { isEqual, omit } from 'lodash'; 
+import { parse as parseSearch } from 'query-string'; 
 
 import { isBrowser, isServer } from 'sly/config';
+
+const ensureArray = ary => Array.isArray(ary) ? ary : [ary];
 
 class ServerStateComponent extends Component {
   static propTypes = {
@@ -21,18 +25,21 @@ class ServerStateComponent extends Component {
       setServerState,
       hasServerState,
       cleanServerState,
+      history,
     } = this.props;
+
+    global.rhistory = history;
 
     const { match, location } = this.props;
 
     if(!hasServerState) {
       if (isServer) {
-        fetchData()
+        fetchData(this.props)
           .catch(handleError)
           .then(setServerState)
           .catch(setServerState);
       } else {
-        fetchData();
+        fetchData(this.props);
       }
     } else if (isBrowser) {
       cleanServerState();
@@ -40,9 +47,16 @@ class ServerStateComponent extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { fetchData } = this.props;
-    if (this.props.match !== nextProps.match) {
-      fetchData(nextProps);
+    if (this.props.match.url !== nextProps.match.url) {
+      nextProps.fetchData(nextProps);
+    } else {
+      const { ignoreSearch = [] } = nextProps;
+      const ignore = ensureArray(ignoreSearch);
+      const prev = omit(parseSearch(this.props.location.search), ignore);
+      const next = omit(parseSearch(nextProps.location.search), ignore);
+      if (!isEqual(prev, next)) {
+        nextProps.fetchData(nextProps);
+      }
     }
   }
 
