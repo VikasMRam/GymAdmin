@@ -67,19 +67,14 @@ export default class Concierge extends Component {
     const StepComponent = steps[currentStep];
     return (
       <Fragment >
-        { (contactRequested || consultationRequested) && hasAllUserData(userDetails) && (
-          <Thankyou community={community} />
-        )}
-        {! (consultationRequested && hasAllUserData(userDetails)) && (
-          <ConversionFormContainer
-            submitRegularConversion={submitRegularConversion}
-            submitExpressConversion={submitExpressConversion}
-            gotoWhatNext={gotoWhatNext}
-            community={community}
-            concierge={concierge}
-            express={false}
-          />
-        )}
+        <ConversionFormContainer
+          submitRegularConversion={submitRegularConversion}
+          submitExpressConversion={submitExpressConversion}
+          gotoWhatNext={gotoWhatNext}
+          community={community}
+          concierge={concierge}
+          express={false}
+        />
 
         {appElement && StepComponent && modalIsOpen && (
           <Modal
