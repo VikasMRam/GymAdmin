@@ -7,9 +7,9 @@ import RatingInput from '.';
 const wrap = (props = {}) => shallow(<RatingInput {...props} />);
 
 const element = {
-  offsetLeft: 100,
+  getBoundingClientRect: () => ({ left: 100 }),
   children: [{
-    offsetLeft: 150,
+    getBoundingClientRect: () => ({ left: 150 }),
     offsetWidth: 50,
   }],
 };
@@ -44,7 +44,7 @@ describe('RatingInput', () => {
     const props = rating.props();
     expect(props.palette).toEqual('grayscale');
     rating.simulate('click', {
-      clientX: 150, 
+      clientX: 150,
     });
     expect(onChange).not.toHaveBeenCalled();
   });
@@ -56,7 +56,7 @@ describe('RatingInput', () => {
 
     var rating = wrapper.find(Rating);
     rating.simulate('click', {
-      clientX: 150, 
+      clientX: 150,
     });
 
     rating = wrapper.find(Rating);
@@ -71,7 +71,7 @@ describe('RatingInput', () => {
 
     var rating = wrapper.find(Rating);
     rating.simulate('mouseover', {
-      clientX: 150, 
+      clientX: 150,
     });
 
     rating = wrapper.find(Rating);

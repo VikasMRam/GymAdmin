@@ -28,11 +28,17 @@ const CommunityAddRatingForm = ({
       />}
       {!user && <Field
         name="email"
-        label=""
-        type="text"
-        placeholder="Type your Email here..."
+        label="Email"
+        type="email"
+        placeholder="janedoe@gmail.com"
         component={ReduxField}
       />}
+      <Field
+        name="value"
+        label=""
+        type="rating"
+        component={ReduxField}
+      />
       <Field
         name="comments"
         label=""
@@ -40,18 +46,6 @@ const CommunityAddRatingForm = ({
         placeholder="Type your Comments here..."
         component={ReduxField}
       />
-      <Field
-        name="value"
-        label=""
-        type="select"
-        component={ReduxField}
-      >
-        <option value="5">5</option>
-        <option value="4">4</option>
-        <option value="3">3</option>
-        <option value="2">2</option>
-        <option value="1">1</option>
-      </Field>
       {error && <strong>{error}</strong>}
       <StyledButton type="submit" kind="jumbo" disabled={pristine || submitting}>
         Submit Rating
