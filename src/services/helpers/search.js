@@ -1,6 +1,4 @@
-import { stringify, parse } from 'query-string';
-
-import { urlize } from './url';
+import { urlize, objectToURLQueryParams, parseURLQueryParams } from './url';
 
 const fnExecutionTracker = {};
 
@@ -191,11 +189,11 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
     const qsPart = qsString ? `?${qsString}` : '';
     path = `/${toc}/${state}/${city}/${communitySlug}${qsPart}`;
   } else if (state && city) {
-    const qsString = stringify(qs);
+    const qsString = objectToURLQueryParams(qs);
     const qsPart = qsString ? `?${qsString}` : '';
     path = `/${toc}/${state}/${city}${qsPart}`;
   } else if (state) {
-    const qsString = stringify(qs);
+    const qsString = objectToURLQueryParams(qs);
     const qsPart = qsString ? `?${qsString}` : '';
     path = `/${toc}/${state}${qsPart}`;
   }
@@ -207,8 +205,8 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
 };
 
 export const getSearchParams = ({ params }, location) => {
-  const qs = parse(location.search);
-  
+  const qs = parseURLQueryParams(location.search);
+
   return filterSearchParams({
     ...params,
     ...qs,
@@ -216,7 +214,7 @@ export const getSearchParams = ({ params }, location) => {
 };
 
 export const getSearchParamFromPlacesResponse = ({ address_components, geometry }) => {
-  const cityFull = address_components.filter(e => e.types.indexOf('locality') > -1);
+  const cityFull = address_components.filter(e => e.types.indexOf('locality') > -1 || e.types.indexOf('administrative_area_level_3') > -1);
   const stateFull = address_components.filter(e => e.types.indexOf('administrative_area_level_1') > -1);
   if (cityFull.length > 0 && stateFull.length > 0) {
     const city = urlize(cityFull[0].long_name);
@@ -228,6 +226,12 @@ export const getSearchParamFromPlacesResponse = ({ address_components, geometry 
       city,
       latitude: lat(),
       longitude: lng(),
+    };
+  } else if (stateFull.length > 0) {
+    const state = urlize(stateFull[0].long_name);
+    return {
+      toc: 'assisted-living',
+      state
     };
   }
   return { toc: 'assisted-living' };

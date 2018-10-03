@@ -13,11 +13,10 @@ const action = (type, payload, meta) => ({
   },
 });
 
-const state = (resourceState, inProgress = false) => ({
+const state = (resourceState) => ({
   ...initialState,
   resources: {
     ...getResourceState(initialState, 'resources'),
-    inProgress,
     ...resourceState,
   },
 });

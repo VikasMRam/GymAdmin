@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
-import { Button, Link } from 'sly/components/atoms';
+import { Button, Link, Icon } from 'sly/components/atoms';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
 
@@ -27,6 +27,11 @@ const BottomRightWrapper = styled.span`
   font-size: ${size('text.tiny')};
   padding: ${size('spacing.small')} ${size('spacing.regular')};
 `;
+const StyledButton = styled(Button)`
+  span {
+    margin-right: ${size('spacing.regular')};
+  }
+`;
 
 export default class CommunityMediaGallery extends Component {
   static propTypes = {
@@ -48,17 +53,22 @@ export default class CommunityMediaGallery extends Component {
     onSlideChange: func.isRequired,
     isFullscreenMode: bool,
     onToggleFullscreenMode: func,
+    onFavouriteClick: func,
+    isFavouriteEnabled: bool,
+    isFavourited: bool,
   };
 
   static defaultProps = {
     currentSlide: 0,
     isFullscreenMode: false,
+    isFavouriteEnabled: true,
+    isFavourited: false,
   };
-
 
   render() {
     const {
       communityName, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
+      onFavouriteClick, isFavouriteEnabled, isFavourited,
     } = this.props;
     let { websiteUrl } = this.props;
     const { images } = this.props;
@@ -91,12 +101,21 @@ export default class CommunityMediaGallery extends Component {
 
       return { ...vid, src, thumb: vid.thumbUrl };
     });
-    // const topRightSection = () => (
-    //   <span>
-    //     {/*<StyledButton ghost palette="slate"><Icon icon="heart" size="regular" palette="slate" /></StyledButton>*/}
-    //     {/*<StyledButton ghost palette="slate"><Icon icon="share" size="regular" palette="slate" /></StyledButton>*/}
-    //   </span>
-    // );
+    const topRightSection = () => (
+      <span>
+        {/* <StyledButton ghost palette="slate"><Icon icon="share" size="regular" palette="slate" /></StyledButton> */}
+        {isFavouriteEnabled && !isFavourited &&
+          <StyledButton ghost palette="slate" onClick={onFavouriteClick}>
+            <Icon icon="favourite-empty" size="regular" palette="slate" /> Save
+          </StyledButton>
+        }
+        {isFavouriteEnabled && isFavourited &&
+          <StyledButton ghost palette="slate" onClick={onFavouriteClick}>
+            <Icon icon="favourite-dark" size="regular" palette="primary" /> Save
+          </StyledButton>
+        }
+      </span>
+    );
     const bottomLeftSection = () => (
       <span>
         <MorePicsTablet ghost palette="slate" transparent={false} onClick={() => onToggleFullscreenMode(false, false, true)}>See {this.sdGalleryImages.length - 1} more pictures</MorePicsTablet>
@@ -120,6 +139,7 @@ export default class CommunityMediaGallery extends Component {
           onSlideClick={i => onToggleFullscreenMode(false, Object.prototype.hasOwnProperty.call(this.sdGalleryImages[i], 'ofVideo'))}
           communityName={communityName}
           images={this.sdGalleryImages}
+          topRightSection={topRightSection}
           bottomLeftSection={this.sdGalleryImages.length > 1 ? bottomLeftSection : null}
           bottomRightSection={bottomRightSection}
           currentSlide={currentSlide}

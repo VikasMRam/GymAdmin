@@ -85,7 +85,7 @@ export default class App extends Component {
   routes = [
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
-      component: CommunityDetailPageContainer,
+      component: props => <CommunityDetailPageContainer ignoreSearch="modal" {...props} />,
       exact: true,
     },
     {

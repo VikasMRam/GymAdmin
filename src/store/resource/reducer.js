@@ -37,7 +37,6 @@ const updateOrDeleteReducer = (state, { type, payload, meta }) => {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          inProgress: false,
           list: [
             ...list.slice(0, index),
             needleIsObject ? { ...list[index], ...payload } : payload,
@@ -50,7 +49,6 @@ const updateOrDeleteReducer = (state, { type, payload, meta }) => {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          inProgress: false,
           list: [...list.slice(0, index), ...list.slice(index + 1)],
         },
       };
@@ -73,7 +71,6 @@ export default (state = initialState, { type, payload, meta }) => {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          inProgress: false,
           detail: {
             ...payload,
             id: payload.ids[0],
@@ -86,7 +83,6 @@ export default (state = initialState, { type, payload, meta }) => {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          inProgress: true,
           list: getList(initialState, resource),
         },
       };
@@ -95,7 +91,6 @@ export default (state = initialState, { type, payload, meta }) => {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          inProgress: false,
           list: payload,
         },
       };
@@ -105,7 +100,6 @@ export default (state = initialState, { type, payload, meta }) => {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          inProgress: true,
           detail: getDetail(initialState, resource),
         },
       };
@@ -114,7 +108,6 @@ export default (state = initialState, { type, payload, meta }) => {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          inProgress: false,
           detail: {
             ...payload,
             id: payload.ids[0],

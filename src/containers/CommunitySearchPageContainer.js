@@ -7,7 +7,7 @@ import SlyEvent from 'sly/services/helpers/events';
 
 import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList, getListMeta } from 'sly/store/selectors';
-import { isCommunitySearchPageModalFilterPanelActive, isResourceRequestInProgress } from 'sly/store/selectors';
+import { isCommunitySearchPageModalFilterPanelActive, isResourceListRequestInProgress } from 'sly/store/selectors';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 import { toggleModalFilterPanel } from 'sly/store/communitySearchPage/actions';
@@ -131,7 +131,7 @@ const mapStateToProps = (state, { match, location }) => {
   return {
     searchParams,
     communityList: getList(state, 'searchResource'),
-    isFetchingResults: isResourceRequestInProgress(state, 'searchResource'),
+    isFetchingResults: isResourceListRequestInProgress(state, 'searchResource'),
     requestMeta: getListMeta(state, 'searchResource'),
     geoGuide: getList(state, 'geoGuide'),
     isModalFilterPanelVisible,

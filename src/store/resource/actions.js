@@ -1,16 +1,17 @@
+import { getThunkName } from './';
+
 // https://github.com/diegohaz/arc/wiki/Actions
 // https://github.com/diegohaz/arc/wiki/Example-redux-modules#resource
 export const RESOURCE_CREATE_REQUEST = 'RESOURCE_CREATE_REQUEST';
 export const RESOURCE_CREATE_SUCCESS = 'RESOURCE_CREATE_SUCCESS';
 export const RESOURCE_CREATE_FAILURE = 'RESOURCE_CREATE_FAILURE';
 
-
 export const resourceCreateRequest = (resource, data) => ({
   type: RESOURCE_CREATE_REQUEST,
   payload: { data },
   meta: {
     resource,
-    thunk: `${resource}Create`,
+    thunk: getThunkName(resource, 'create'),
   },
 });
 
@@ -45,7 +46,7 @@ export const resourceListReadRequest = (resource, params) => ({
   payload: { params },
   meta: {
     resource,
-    thunk: `${resource}ListRead`,
+    thunk: getThunkName(resource, 'listRead'),
   },
 });
 
@@ -80,7 +81,7 @@ export const resourceDetailReadRequest = (resource, needle, params) => ({
   payload: { needle, params },
   meta: {
     resource,
-    thunk: `${resource}DetailRead`,
+    thunk: getThunkName(resource, 'detailRead'),
   },
 });
 
@@ -120,7 +121,7 @@ export const resourceUpdateRequest = (resource, needle, data) => ({
   payload: { needle, data },
   meta: {
     resource,
-    thunk: `${resource}Update`,
+    thunk: getThunkName(resource, 'update'),
   },
 });
 
@@ -155,7 +156,7 @@ export const resourceDeleteRequest = (resource, needle) => ({
   payload: { needle },
   meta: {
     resource,
-    thunk: `${resource}Delete`,
+    thunk: getThunkName(resource, 'delete'),
   },
 });
 
