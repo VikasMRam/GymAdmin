@@ -19,6 +19,8 @@ import {
   isResourceListRequestComplete,
 } from 'sly/store/selectors';
 
+import { getSearchParams, filterLinkPath } from 'sly/services/helpers/search';
+
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
 import { resourceDetailReadRequest, resourceListReadRequest, resourceCreateRequest, resourceUpdateRequest }
@@ -44,6 +46,7 @@ class CommunityDetailPageContainer extends Component {
     user: object,
     isQuestionModalOpenValue: bool,
     setIsQuestionModalOpenValue: func,
+    searchParams: object,
     isFavouriteModalVisible: bool,
     createUserSave: func,
     updateUserSave: func,
@@ -51,8 +54,30 @@ class CommunityDetailPageContainer extends Component {
     getCommunityUserSave: func,
     isGetCommunityUserSaveComplete: bool,
     isGetCommunityUserSaveInProgress: bool,
-    searchParams: object,
     location: object,
+  };
+
+  setModal = (value) => {
+    this.changeSearchParams({ changedParams: { modal: value } });
+  }
+
+  setQuestionToAsk = (question) => {
+    if (question) {
+      this.changeSearchParams({ changedParams: { modal: 'answerQuestion', entityId: question.id } });
+    } else {
+      this.changeSearchParams({ changedParams: { modal: null, entityId: null } });
+    }
+  }
+
+  changeSearchParams = ({ changedParams }) => {
+    const { searchParams, history } = this.props;
+    const { path } = filterLinkPath(searchParams, changedParams);
+    // const event = {
+    //   action: 'search', category: searchParams.toc, label: queryString.stringify(searchParams),
+    // };
+    // SlyEvent.getInstance().sendEvent(event);
+
+    history.push(path);    
   };
 
   componentDidMount() {
@@ -298,6 +323,8 @@ class CommunityDetailPageContainer extends Component {
         onConciergeNumberClicked={this.handleConciergeNumberClick}
         onLiveChatClicked={this.handleLiveChatClick}
         onReceptionNumberClicked={this.handleReceptionNumberClick}
+        setModal={this.setModal}
+        setQuestionToAsk={this.setQuestionToAsk}
         isFavouriteModalVisible={isFavouriteModalVisible}
         isUserSaveCreateFailure={isUserSaveCreateFailure}
         isGetCommunityUserSaveComplete={isGetCommunityUserSaveComplete}
@@ -309,8 +336,9 @@ class CommunityDetailPageContainer extends Component {
   }
 }
 
-const getCommunitySlug = match => match.params.communitySlug;
-const mapStateToProps = (state, { match, location }) => {
+  const getCommunitySlug = match => match.params.communitySlug;
+  const mapStateToProps = (state, { match, location }) => {
+  const searchParams = getSearchParams(match, location);
   const communitySlug = getCommunitySlug(match);
   const mediaGallerySlideIndex = getHomePageMediaGalleryCurrentSlideIndex(state);
   const isMediaGalleryFullscreenActive = isHomePageMediaGalleryFullscreenActive(state);

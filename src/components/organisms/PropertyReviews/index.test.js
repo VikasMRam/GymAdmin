@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 
 import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
 import PropertyReview from 'sly/components/molecules/PropertyReview';
+import Modal from 'sly/components/molecules/Modal';
 import PropertyReviews from '.';
 
 const reviewRating = {
@@ -26,12 +27,19 @@ function onLeaveReview() {
 
 const reviewRatings = [reviewRating, reviewRating];
 const reviews = [review, review, review];
+const user = {
+  id: 1,
+  name: 'Pranesh Kumar',
+};
 
 const wrap = (props = {}) =>
   shallow(<PropertyReviews
     reviewRatings={reviewRatings}
     reviews={reviews}
     onLeaveReview={onLeaveReview}
+    communitySlug="abc"
+    communityName="Rhoda Goldman Plaza"
+    user={user}
     {...props}
   />);
 
@@ -51,12 +59,6 @@ describe('PropertyReviews', () => {
     expect(wrapper.find(PropertyReview)).toHaveLength(3);
   });
 
-  it('renders Property review', () => {
-    const wrapper = wrap({ hasSlyReviews: true, hasWebReviews: true });
-    expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);
-    expect(wrapper.find(PropertyReview)).toHaveLength(3);
-  });
-
   it('renders Seniorly Reviews only when hasSlyReviews is true', () => {
     const wrapper = wrap({ hasSlyReviews: true, hasWebReviews: false });
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(0);
@@ -67,5 +69,15 @@ describe('PropertyReviews', () => {
     const wrapper = wrap({ hasSlyReviews: false, hasWebReviews: true });
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);
     expect(wrapper.find(PropertyReview)).toHaveLength(0);
+  });
+
+  it('renders Modal when isAskRatingModalOpen is true', () => {
+    const wrapper = wrap({ hasSlyReviews: false, hasWebReviews: false, isAskRatingModalOpen: true });
+    expect(wrapper.find(Modal)).toHaveLength(1);
+  });
+
+  it('does not renders Modal when isAskRatingModalOpen is false', () => {
+    const wrapper = wrap({ hasSlyReviews: false, hasWebReviews: false, isAskRatingModalOpen: false });
+    expect(wrapper.find(Modal)).toHaveLength(0);
   });
 });

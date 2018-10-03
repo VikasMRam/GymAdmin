@@ -64,6 +64,7 @@ const searchParamsWhitelist = [
   'toc',
   'state',
   'city',
+  'communitySlug',
   'size',
   'budget',
   'sort',
@@ -75,6 +76,7 @@ const searchParamsWhitelist = [
   'longitude',
   'searchOnMove',
   'modal',
+  'entityId',
 ];
 
 export const tocs = [
@@ -170,7 +172,7 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
   });
 
   const {
-    toc, state, city, ...qs
+    toc, state, city, communitySlug, ...qs
   } = filters;
 
   const selected = !Object.keys(nextFilters)
@@ -182,7 +184,11 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
   }
 
   let path = `/${toc}`;
-  if (state && city) {
+  if (state && city && communitySlug) {
+    const qsString = stringify(qs);
+    const qsPart = qsString ? `?${qsString}` : '';
+    path = `/${toc}/${state}/${city}/${communitySlug}${qsPart}`;
+  } else if (state && city) {
     const qsString = objectToURLQueryParams(qs);
     const qsPart = qsString ? `?${qsString}` : '';
     path = `/${toc}/${state}/${city}${qsPart}`;

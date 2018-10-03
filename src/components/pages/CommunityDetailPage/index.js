@@ -29,7 +29,7 @@ import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGaller
 import MorePictures from 'sly/components/organisms/MorePictures';
 import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
-import CommunityQuestionAnswersContainer from 'sly/containers/CommunityQuestionAnswersContainer';
+import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import Button from 'sly/components/atoms/Button';
 import CommunityLocalDetails from "sly/components/organisms/CommunityLocalDetails";
@@ -81,6 +81,8 @@ export default class CommunityDetailPage extends Component {
     onConciergeNumberClicked: func,
     onLiveChatClicked: func,
     onReceptionNumberClicked: func,
+    setModal: func,
+    setQuestionToAsk: func,
     isUserSaveCreateFailure: bool,
     isGetCommunityUserSaveComplete: bool,
     userSave: object,
@@ -149,6 +151,8 @@ export default class CommunityDetailPage extends Component {
       onConciergeNumberClicked,
       onLiveChatClicked,
       onReceptionNumberClicked,
+      setModal,
+      setQuestionToAsk,
       isUserSaveCreateFailure,
       isGetCommunityUserSaveComplete,
       userSave,
@@ -222,6 +226,15 @@ export default class CommunityDetailPage extends Component {
       languages,
       languagesOther,
     } = propInfo;
+    const { modal, entityId } = searchParams;
+    let questionToAnswer = null;
+    if (modal === 'answerQuestion' && entityId) {
+      questionToAnswer = questions.find(question => question.id === entityId);
+    }
+    // To clear the flag incase the question is not found
+    if (questionToAnswer === undefined && entityId) {
+      setQuestionToAsk(null);
+    }
 
     // TODO: move this to a container for PropertyReviews handling posts
     const onLeaveReview = () => {};
@@ -413,13 +426,23 @@ export default class CommunityDetailPage extends Component {
               reviewRatings={ratingsArray}
               onLeaveReview={onLeaveReview}
               onReviewLinkClicked={onReviewLinkClicked}
+              isAskRatingModalOpen={modal === 'addRating'}
+              setModal={setModal}
+              user={user}
+              communitySlug={id}
+              communityName={name}
             />
           </CollapsibleSection>
           <CollapsibleSection title="Questions">
-            <CommunityQuestionAnswersContainer
+            <CommunityQuestionAnswers
               communityName={name}
               communitySlug={id}
               questions={questions}
+              setIsQuestionModalOpenValue={value => setModal(value ? 'askQuestion' : null)}
+              isQuestionModalOpenValue={modal === 'askQuestion'}
+              answerQuestion={setQuestionToAsk}
+              answerQuestionValue={questionToAnswer}
+              user={user}
             />
           </CollapsibleSection>
 

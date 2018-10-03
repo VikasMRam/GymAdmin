@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
-import { string, func, number } from 'prop-types';
+import { reduxForm, SubmissionError } from 'redux-form';
+import { string, func } from 'prop-types';
 
 // import { getDetail } from 'sly/store/selectors';
 
@@ -41,9 +41,25 @@ class CommunityLeaveAnAnswerFormContainer extends Component {
       questionId,
       answer: values.answer,
     };
-    leaveAnAnswer(payload).then(() => {
+    return leaveAnAnswer(payload).then(() => {
       answerQuestion(null);
       loadCommunity(communitySlug);
+    }).catch((r) => {
+      // TODO: Need to set a proper way to handle server side errors
+      const { response } = r;
+      let errorMessage = 'Error Answering Question';
+      return response.json().then((data) => {
+        if (data.errors) {
+          errorMessage = data.errors[0].detail;
+        } else if (response.status === 401) {
+          errorMessage = 'Please Login to Answer this Question';
+        } else {
+          // Figure out why this error happened. Ideally post to event server
+          console.log(r.status);
+          console.log(data);
+        }
+        throw new SubmissionError({ answer: errorMessage });
+      });
     });
   }
 

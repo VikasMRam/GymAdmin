@@ -51,7 +51,9 @@ const Link = styled.a`
   color: ${palette('secondary', 2)};
 `;
 
-const DisclaimerDiv = styled.div``;
+const DisclaimerDiv = styled.div`
+  margin-bottom: ${size('spacing.large')};
+`;
 
 export default class GatheredReviewRatings extends Component {
   static propTypes = {

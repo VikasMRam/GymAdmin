@@ -11,13 +11,14 @@ import { Heading, Button } from 'sly/components/atoms';
 const QuestionTextDiv = styled.div`
   margin-top: ${size('spacing.large')};
 `;
+QuestionTextDiv.displayName = 'QuestionTextDiv';
 
 const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
 const CommunityLeaveAnAnswerForm = ({
-  handleSubmit, pristine, submitting, questionText,
+  handleSubmit, pristine, submitting, questionText, error,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -30,6 +31,7 @@ const CommunityLeaveAnAnswerForm = ({
         placeholder="Enter your answer here..."
         component={ReduxField}
       />
+      {error && <strong>{error}</strong>}
       <StyledButton type="submit" kind="jumbo" disabled={pristine || submitting}>
         Submit Answer
       </StyledButton>
@@ -44,6 +46,7 @@ CommunityLeaveAnAnswerForm.propTypes = {
   questionText: string.isRequired,
   pristine: bool,
   submitting: bool,
+  error: string,
 };
 
 export default CommunityLeaveAnAnswerForm;

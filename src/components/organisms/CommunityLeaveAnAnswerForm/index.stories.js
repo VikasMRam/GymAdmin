@@ -15,8 +15,11 @@ const CommunityLeaveAnAnswerFormContainer = reduxForm({
   },
 })(CommunityLeaveAnAnswerForm);
 
+const questionText = 'How was your Experience in Rhoda Goldman Plaza?';
+
 storiesOf('Organisms|CommunityLeaveAnAnswerForm', module).add('default', () => (
   <CommunityLeaveAnAnswerFormContainer
+    questionText={questionText}
     handleSubmit={withPreventDefault(action('form submitted'))}
   />
 ));

@@ -1,8 +1,15 @@
 import React from 'react';
 import { arrayOf, shape, string, number, func, bool, object } from 'prop-types';
 
+import Button from 'sly/components/atoms/Button';
+import Modal from 'sly/components/molecules/Modal';
 import PropertyReview from 'sly/components/molecules/PropertyReview';
 import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
+
+import { isBrowser } from 'sly/config';
+import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
+
+const appElement = isBrowser && document.querySelector('#app');
 
 const PropertyReviews = ({
   hasSlyReviews,
@@ -12,6 +19,11 @@ const PropertyReviews = ({
   onLeaveReview,
   communityReviewsRef,
   onReviewLinkClicked,
+  isAskRatingModalOpen,
+  setModal,
+  user,
+  communitySlug,
+  communityName,
 }) => {
   let propertyReviews = null;
   if (hasSlyReviews) {
@@ -29,6 +41,17 @@ const PropertyReviews = ({
           onReviewLinkClicked={onReviewLinkClicked}
         />
       )}
+      <Button onClick={() => setModal('addRating')} >Leave a Review</Button>
+      {isAskRatingModalOpen &&
+      <Modal
+        appElement={appElement}
+        onClose={() => setModal(null)}
+        isOpen
+        closeable
+      >
+        <CommunityAddRatingFormContainer user={user} communitySlug={communitySlug} communityName={communityName} />
+      </Modal>
+      }
     </article>
   );
 };
@@ -52,6 +75,11 @@ PropertyReviews.propTypes = {
   hasWebReviews: bool.isRequired,
   communityReviewsRef: object,
   onReviewLinkClicked: func,
+  isAskRatingModalOpen: bool,
+  setModal: func,
+  user: object,
+  communitySlug: string,
+  communityName: string,
 };
 
 export default PropertyReviews;

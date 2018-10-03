@@ -40,11 +40,10 @@ const appElement = isBrowser && document.querySelector('#app');
 const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
 
 const CommuntityQuestionAndAnswer = ({
-  communitySlug, communityName, questions, isQuestionModalOpenValue, setIsQuestionModalOpenValue, answerQuestion, answerQuestionValue,
+  user, communitySlug, communityName, questions, isQuestionModalOpenValue, setIsQuestionModalOpenValue, answerQuestion, answerQuestionValue,
 }) => {
-
   const questionsComponent = questions.sort(sortByCreatedAt).map((question) => {
-    if(typeof question.contents === 'undefined'){
+    if (typeof question.contents === 'undefined') {
       question.contents = [];
     }
     const answersCount = question.contents.length;
@@ -71,8 +70,7 @@ const CommuntityQuestionAndAnswer = ({
             {answersCountText}
           </AnswersCountTextDiv>
           {answersComponent}
-          {/* COMMENT TILL WE HAVE GUEST USER SIGN IN*/}
-          {/*<LeaveAnswerButton onClick={() => answerQuestion(question)}>Leave an Answer</LeaveAnswerButton>*/}
+          <LeaveAnswerButton onClick={() => answerQuestion(question)}>Leave an Answer</LeaveAnswerButton>
           <StyledHr />
         </AnswersDiv>
       </div>
@@ -82,8 +80,7 @@ const CommuntityQuestionAndAnswer = ({
     <div>
       {questionsComponent}
       <div>What would you like to know about senior living options at {communityName}? Send a message on the right.</div>
-      {/* COMMENT TILL WE HAVE GUEST USER SIGN IN*/}
-      {/*<AskQuestionButton onClick={() => setIsQuestionModalOpenValue(true)}>Ask a Question</AskQuestionButton>*/}
+      <AskQuestionButton onClick={() => setIsQuestionModalOpenValue(true)}>Ask a Question</AskQuestionButton>
       {isQuestionModalOpenValue &&
         <Modal
           appElement={appElement}
@@ -91,7 +88,7 @@ const CommuntityQuestionAndAnswer = ({
           isOpen
           closeable
         >
-          <CommunityAskQuestionFormContainer communityName={communityName} communitySlug={communitySlug} setIsQuestionModalOpenValue={setIsQuestionModalOpenValue} />
+          <CommunityAskQuestionFormContainer communityName={communityName} communitySlug={communitySlug} setIsQuestionModalOpenValue={setIsQuestionModalOpenValue} user={user} />
         </Modal>
       }
       {(answerQuestionValue !== null && answerQuestionValue !== undefined) &&
@@ -116,6 +113,7 @@ CommuntityQuestionAndAnswer.propTypes = {
   setIsQuestionModalOpenValue: func,
   answerQuestion: func,
   answerQuestionValue: object,
+  user: object,
 };
 
 export default CommuntityQuestionAndAnswer;

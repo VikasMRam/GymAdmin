@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { string, func, object } from 'prop-types';
 
-// import { getDetail } from 'sly/store/selectors';
-
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 
 import {
@@ -12,43 +10,46 @@ import {
   required,
 } from 'sly/services/validation';
 
-import CommunityAskQuestionForm from 'sly/components/organisms/CommunityAskQuestionForm';
+import CommunityAddRatingForm from 'sly/components/organisms/CommunityAddRatingForm';
 
 const validate = createValidator({
-  question: [required],
+  comments: [required],
+  value: [required],
   name: [required],
   email: [required],
 });
 
 const ReduxForm = reduxForm({
-  form: 'CommunityAskQuestionForm',
+  form: 'CommunityAddRatingForm',
   destroyOnUnmount: false,
   validate,
-})(CommunityAskQuestionForm);
+})(CommunityAddRatingForm);
 
-class CommunityAskQuestionFormContainer extends Component {
+class CommunityAddRatingFormContainer extends Component {
   static propTypes = {
     user: object,
     communitySlug: string.isRequired,
-    askQuestion: func,
+    addRating: func,
     loadCommunity: func,
-    setIsQuestionModalOpenValue: func,
+    setModal: func,
   };
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, askQuestion, loadCommunity, setIsQuestionModalOpenValue,
+      communitySlug, addRating, loadCommunity,
     } = this.props;
-    const { question, name, email } = values;
+    const {
+      comments, value, name, email,
+    } = values;
     const payload = {
       communitySlug,
-      question,
+      comments,
+      value: parseFloat(value),
       name,
       email,
     };
-    return askQuestion(payload).then(() => {
-      setIsQuestionModalOpenValue(false);
-      // Hacky way. to push created question into array for rerender
+    return addRating(payload).then(() => {
+      this.setModalParam(null);
       loadCommunity(communitySlug);
     }).catch((r) => {
       // TODO: Need to set a proper way to handle server side errors
@@ -61,11 +62,12 @@ class CommunityAskQuestionFormContainer extends Component {
   }
 
   render() {
-    const { user, ...props } = this.props;
+    const {
+      user, ...props
+    } = this.props;
     const initialValues = {
-      question: '',
-      name: '',
-      email: '',
+      comments: '',
+      value: 5,
     };
     return (
       <ReduxForm
@@ -79,13 +81,13 @@ class CommunityAskQuestionFormContainer extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  askQuestion: (data) => {
-    return dispatch(resourceCreateRequest('question', data));
-  },
+  addRating: data => dispatch(resourceCreateRequest('rating', data)),
   loadCommunity: slug => dispatch(resourceDetailReadRequest('community', slug, {
     include: 'similar-communities,questions,agents',
   })),
 });
 
-export default connect(null, mapDispatchToProps)(CommunityAskQuestionFormContainer);
-
+export default connect(
+  null,
+  mapDispatchToProps,
+)(CommunityAddRatingFormContainer);

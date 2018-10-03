@@ -13,12 +13,12 @@ const StyledButton = styled(Button)`
 `;
 
 
-const CommunityAskQuestionForm = ({
+const CommunityAddRatingForm = ({
   handleSubmit, pristine, submitting, communityName, user, error,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <Heading level="title" size="title">Ask our experts about {communityName}</Heading>
+      <Heading level="title" size="title">Write a review for {communityName}</Heading>
       {!user && <Field
         name="name"
         label=""
@@ -34,15 +34,27 @@ const CommunityAskQuestionForm = ({
         component={ReduxField}
       />}
       <Field
-        name="question"
+        name="comments"
         label=""
         type="textarea"
-        placeholder="Type your Question here..."
+        placeholder="Type your Comments here..."
         component={ReduxField}
       />
+      <Field
+        name="value"
+        label=""
+        type="select"
+        component={ReduxField}
+      >
+        <option value="5">5</option>
+        <option value="4">4</option>
+        <option value="3">3</option>
+        <option value="2">2</option>
+        <option value="1">1</option>
+      </Field>
       {error && <strong>{error}</strong>}
       <StyledButton type="submit" kind="jumbo" disabled={pristine || submitting}>
-        Submit Question
+        Submit Rating
       </StyledButton>
 
       {/* <TosAndPrivacy /> */}
@@ -50,7 +62,7 @@ const CommunityAskQuestionForm = ({
   );
 };
 
-CommunityAskQuestionForm.propTypes = {
+CommunityAddRatingForm.propTypes = {
   handleSubmit: func.isRequired,
   communityName: string.isRequired,
   pristine: bool,
@@ -59,4 +71,4 @@ CommunityAskQuestionForm.propTypes = {
   error: string,
 };
 
-export default CommunityAskQuestionForm;
+export default CommunityAddRatingForm;

@@ -5,28 +5,32 @@ import { reduxForm } from 'redux-form';
 
 import { withPreventDefault } from 'sly/services/helpers/forms';
 
-import CommunityAskQuestionForm from '.';
+import CommunityAddRatingForm from '.';
 
 const CommunityAskQuestionFormContainer = reduxForm({
-  form: 'CommunityAskQuestionForm',
+  form: 'CommunityAddRatingForm',
   destroyOnUnmount: false,
   initialValues: {
     question: '',
   },
-})(CommunityAskQuestionForm);
+})(CommunityAddRatingForm);
 
 const user = {
   id: 1,
   name: 'Pranesh Kumar',
 };
 
-storiesOf('Organisms|CommunityAskQuestionForm', module).add('default', () => (
+const communityName = 'Rhoda Goldman Plaza';
+
+storiesOf('Organisms|CommunityAddRatingForm', module).add('default', () => (
   <CommunityAskQuestionFormContainer
     handleSubmit={withPreventDefault(action('form submitted'))}
+    communityName={communityName}
     user={user}
   />
 )).add('Guest User', () => (
   <CommunityAskQuestionFormContainer
+    communityName={communityName}
     handleSubmit={withPreventDefault(action('form submitted'))}
   />
 ));
