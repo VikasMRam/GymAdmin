@@ -28,7 +28,7 @@ const CommunityAddRatingForm = ({
       />}
       {!user && <Field
         name="email"
-        label="Email"
+        label=""
         type="email"
         placeholder="janedoe@gmail.com"
         component={ReduxField}

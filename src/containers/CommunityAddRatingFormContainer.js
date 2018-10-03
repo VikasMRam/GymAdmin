@@ -8,15 +8,17 @@ import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/reso
 import {
   createValidator,
   required,
+  email,
+  notZero,
 } from 'sly/services/validation';
 
 import CommunityAddRatingForm from 'sly/components/organisms/CommunityAddRatingForm';
 
 const validate = createValidator({
   comments: [required],
-  value: [required],
+  value: [required, notZero],
   name: [required],
-  email: [required],
+  email: [required, email],
 });
 
 const ReduxForm = reduxForm({
@@ -67,7 +69,7 @@ class CommunityAddRatingFormContainer extends Component {
     } = this.props;
     const initialValues = {
       comments: '',
-      value: 5,
+      value: 0,
     };
     return (
       <ReduxForm

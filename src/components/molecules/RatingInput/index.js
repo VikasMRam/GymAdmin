@@ -50,8 +50,7 @@ export default class RatingInput extends Component {
   };
 
   resetValue = () => {
-    const { value, defaultValue } = this.props;
-    this.setState({ value: value || defaultValue });
+    this.setState({ value: getDefaultValue(this.props) });
   };
 
   onClick = (event) => {
