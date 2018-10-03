@@ -108,7 +108,7 @@ export default function withServerState({
 
     const connector = connect(
       (state, ownProps) => ({
-        ...mapStateToProps(state, ownProps), 
+        ...mapStateToProps(state, ownProps),
         ChildComponent,
       }),
       childMapDispatchToProps,

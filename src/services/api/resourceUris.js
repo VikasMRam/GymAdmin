@@ -1,5 +1,6 @@
 export const user = 'platform/users';
 export const userAction = 'platform/user-actions';
+export const userSave = 'platform/user-saves';
 export const community = 'marketplace/communities';
 export const searchResource = 'platform/search-resources';
 export const question = 'platform/questions';

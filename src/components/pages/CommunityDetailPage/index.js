@@ -37,6 +37,7 @@ import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
 import SaveCommunityForm from 'sly/components/organisms/SaveCommunityForm';
+import ToastNotification from 'sly/components/molecules/ToastNotification';
 
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
 
@@ -81,6 +82,9 @@ export default class CommunityDetailPage extends Component {
     onLiveChatClicked: func,
     onReceptionNumberClicked: func,
     isFavouriteModalVisible: bool,
+    isUserSaveCreateFailure: bool,
+    isGetCommunityUserSaveComplete: bool,
+    userSave: object,
   };
 
   componentDidMount() {
@@ -145,6 +149,9 @@ export default class CommunityDetailPage extends Component {
       onLiveChatClicked,
       onReceptionNumberClicked,
       isFavouriteModalVisible,
+      isUserSaveCreateFailure,
+      isGetCommunityUserSaveComplete,
+      userSave,
     } = this.props;
 
     const {
@@ -294,6 +301,8 @@ export default class CommunityDetailPage extends Component {
               onSlideChange={onMediaGallerySlideChange}
               isFullscreenMode={isMediaGalleryFullscreenActive}
               onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
+              isFavouriteEnabled={isGetCommunityUserSaveComplete}
+              isFavourited={userSave !== undefined}
               onFavouriteClick={onMediaGalleryFavouriteClick}
             />
           }
@@ -465,6 +474,9 @@ export default class CommunityDetailPage extends Component {
             <SaveCommunityForm mainImage={mainImage} />
           }
         </Modal>
+        <ToastNotification isOpen={isUserSaveCreateFailure} status="error">
+          Failed to save community. Please try again.
+        </ToastNotification>
       </Fragment>
     );
   }

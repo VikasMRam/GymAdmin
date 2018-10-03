@@ -5,18 +5,24 @@ import { object, number, func, bool } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
+import { UserSaveCommunityEntityType, UserSaveDeleteStatus, UserSaveInitStatus } from 'sly/services/helpers/user_save';
 
 import {
   getDetail,
+  getList,
   getHomePageMediaGalleryCurrentSlideIndex,
   isHomePageMediaGalleryFullscreenActive,
   isCommunityDetailPageStickyHeaderActive,
   isFavouriteModalActive,
+  isResourceCreateRequestFailure,
+  isResourceListRequestInProgress,
+  isResourceListRequestComplete,
 } from 'sly/store/selectors';
 
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
-import { resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { resourceDetailReadRequest, resourceListReadRequest, resourceCreateRequest, resourceUpdateRequest }
+  from 'sly/store/resource/actions';
 import { gotoSlide, toggleFullscreenMediaGallery, toggleStickyHeader, toggleFavouriteModal }
   from 'sly/store/communityDetailPage/actions';
 
@@ -25,6 +31,7 @@ import ErrorPage from 'sly/components/pages/Error';
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
     community: object,
+    userSaveForCommunity: object,
     errorCode: number,
     history: object,
     mediaGallerySlideIndex: number,
@@ -38,7 +45,32 @@ class CommunityDetailPageContainer extends Component {
     setIsQuestionModalOpenValue: func,
     isFavouriteModalVisible: bool,
     toggleFavouriteModal: func,
+    createUserSave: func,
+    updateUserSave: func,
+    isUserSaveCreateFailure: bool,
+    getCommunityUserSave: func,
+    isGetCommunityUserSaveComplete: bool,
+    isGetCommunityUserSaveInProgress: bool,
   };
+
+  componentDidMount() {
+    const { getCommunityUserSave, user, community } = this.props;
+
+    if (user) {
+      getCommunityUserSave(community.id);
+    }
+  }
+
+  componentDidUpdate() {
+    const {
+      getCommunityUserSave, user, community, isGetCommunityUserSaveInProgress,
+      isGetCommunityUserSaveComplete,
+    } = this.props;
+
+    if (!isGetCommunityUserSaveComplete && !isGetCommunityUserSaveInProgress && user) {
+      getCommunityUserSave(community.id);
+    }
+  }
 
   handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
     const { gotoMediaGallerySlide, community } = this.props;
@@ -152,8 +184,26 @@ class CommunityDetailPageContainer extends Component {
   };
 
   handleMediaGalleryFavouriteClick = () => {
-    const { toggleFavouriteModal } = this.props;
-    toggleFavouriteModal();
+    const {
+      toggleFavouriteModal, createUserSave, community, user, userSaveForCommunity, updateUserSave,
+    } = this.props;
+    if (user) {
+      if (!userSaveForCommunity && userSaveForCommunity.status !== UserSaveDeleteStatus) {
+        const { id } = community;
+        const payload = {
+          entityType: UserSaveCommunityEntityType,
+          entitySlug: id,
+        };
+
+        createUserSave(payload).then(toggleFavouriteModal);
+      } else if (userSaveForCommunity.status === UserSaveDeleteStatus) {
+        updateUserSave(userSaveForCommunity.id, UserSaveInitStatus).then(toggleFavouriteModal);
+      } else {
+        updateUserSave(userSaveForCommunity.id, UserSaveDeleteStatus);
+      }
+    } else {
+      toggleFavouriteModal();
+    }
   };
 
   render() {
@@ -162,11 +212,14 @@ class CommunityDetailPageContainer extends Component {
       isMediaGalleryFullscreenActive,
       user,
       community,
+      userSaveForCommunity,
       errorCode,
       redirectUrl,
       history,
       isStickyHeaderVisible,
       isFavouriteModalVisible,
+      isUserSaveCreateFailure,
+      isGetCommunityUserSaveComplete,
     } = this.props;
 
     if (errorCode) {
@@ -202,6 +255,11 @@ class CommunityDetailPageContainer extends Component {
       history.push(url);
     }
 
+    let userSave = userSaveForCommunity;
+    if (userSave) {
+      userSave = userSave.status !== UserSaveDeleteStatus ? userSave : null;
+    }
+
     return (
       <CommunityDetailPage
         user={user}
@@ -219,6 +277,9 @@ class CommunityDetailPageContainer extends Component {
         onLiveChatClicked={this.handleLiveChatClick}
         onReceptionNumberClicked={this.handleReceptionNumberClick}
         isFavouriteModalVisible={isFavouriteModalVisible}
+        isUserSaveCreateFailure={isUserSaveCreateFailure}
+        isGetCommunityUserSaveComplete={isGetCommunityUserSaveComplete}
+        userSave={userSave}
       />
     );
   }
@@ -231,14 +292,21 @@ const mapStateToProps = (state, { match }) => {
   const isMediaGalleryFullscreenActive = isHomePageMediaGalleryFullscreenActive(state);
   const isStickyHeaderVisible = isCommunityDetailPageStickyHeaderActive(state);
   const isFavouriteModalVisible = isFavouriteModalActive(state);
+  const isUserSaveCreateFailure = isResourceCreateRequestFailure(state, 'userSave');
+  const isGetCommunityUserSaveComplete = isResourceListRequestComplete(state, 'userSave');
+  const isGetCommunityUserSaveInProgress = isResourceListRequestInProgress(state, 'userSave');
 
   return {
     user: getDetail(state, 'user', 'me'),
     community: getDetail(state, 'community', communitySlug),
+    userSaveForCommunity: getList(state, 'userSave')[0],
     mediaGallerySlideIndex,
     isMediaGalleryFullscreenActive,
     isStickyHeaderVisible,
     isFavouriteModalVisible,
+    isUserSaveCreateFailure,
+    isGetCommunityUserSaveComplete,
+    isGetCommunityUserSaveInProgress,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -247,6 +315,14 @@ const mapDispatchToProps = (dispatch) => {
     toggleFullscreenMediaGallery: () => dispatch(toggleFullscreenMediaGallery()),
     toggleStickyHeader: () => dispatch(toggleStickyHeader()),
     toggleFavouriteModal: () => dispatch(toggleFavouriteModal()),
+    createUserSave: data => dispatch(resourceCreateRequest('userSave', data)),
+    updateUserSave: (id, status) => dispatch(resourceUpdateRequest('userSave', id, {
+      status,
+    })),
+    getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
+      entityType: UserSaveCommunityEntityType,
+      entitySlug: slug,
+    })),
   };
 };
 
