@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-
 import { Redirect } from 'react-router';
 import { object, number, func, bool } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
+
 import { UserSaveCommunityEntityType, UserSaveDeleteStatus, UserSaveInitStatus } from 'sly/services/helpers/user_save';
+import { getSearchParams } from 'sly/services/helpers/search';
 
 import {
   getDetail,
@@ -13,7 +14,6 @@ import {
   getHomePageMediaGalleryCurrentSlideIndex,
   isHomePageMediaGalleryFullscreenActive,
   isCommunityDetailPageStickyHeaderActive,
-  isFavouriteModalActive,
   isResourceCreateRequestFailure,
   isResourceListRequestInProgress,
   isResourceListRequestComplete,
@@ -23,8 +23,9 @@ import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
 import { resourceDetailReadRequest, resourceListReadRequest, resourceCreateRequest, resourceUpdateRequest }
   from 'sly/store/resource/actions';
-import { gotoSlide, toggleFullscreenMediaGallery, toggleStickyHeader, toggleFavouriteModal }
+import { gotoSlide, toggleFullscreenMediaGallery, toggleStickyHeader }
   from 'sly/store/communityDetailPage/actions';
+import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
 
 import ErrorPage from 'sly/components/pages/Error';
 
@@ -44,13 +45,14 @@ class CommunityDetailPageContainer extends Component {
     isQuestionModalOpenValue: bool,
     setIsQuestionModalOpenValue: func,
     isFavouriteModalVisible: bool,
-    toggleFavouriteModal: func,
     createUserSave: func,
     updateUserSave: func,
     isUserSaveCreateFailure: bool,
     getCommunityUserSave: func,
     isGetCommunityUserSaveComplete: bool,
     isGetCommunityUserSaveInProgress: bool,
+    searchParams: object,
+    location: object,
   };
 
   componentDidMount() {
@@ -183,9 +185,18 @@ class CommunityDetailPageContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
   };
 
+  changeSearchParams = ({ changedParams }) => {
+    const { history, location } = this.props;
+    const { pathname, search } = location;
+
+    const newParams = { ...parseURLQueryParams(search), ...changedParams };
+    const path = `${pathname}?${objectToURLQueryParams(newParams)}`;
+    history.push(path);
+  };
+
   handleMediaGalleryFavouriteClick = () => {
     const {
-      toggleFavouriteModal, createUserSave, community, user, userSaveForCommunity, updateUserSave,
+      createUserSave, community, user, userSaveForCommunity, updateUserSave,
     } = this.props;
     if (user) {
       if (!userSaveForCommunity && userSaveForCommunity.status !== UserSaveDeleteStatus) {
@@ -195,15 +206,25 @@ class CommunityDetailPageContainer extends Component {
           entitySlug: id,
         };
 
-        createUserSave(payload).then(toggleFavouriteModal);
+        createUserSave(payload).then(() => this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } }));
       } else if (userSaveForCommunity.status === UserSaveDeleteStatus) {
-        updateUserSave(userSaveForCommunity.id, UserSaveInitStatus).then(toggleFavouriteModal);
+        updateUserSave(userSaveForCommunity.id, UserSaveInitStatus)
+          .then(() => this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } }));
       } else {
         updateUserSave(userSaveForCommunity.id, UserSaveDeleteStatus);
       }
     } else {
-      toggleFavouriteModal();
+      this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } })
     }
+  };
+
+  handleParamsRemove = ({ paramsToRemove }) => {
+    const changedParams = paramsToRemove.reduce((obj, p) => {
+      const nobj = obj;
+      nobj[p] = undefined;
+      return nobj;
+    }, {});
+    this.changeSearchParams({ changedParams });
   };
 
   render() {
@@ -220,6 +241,7 @@ class CommunityDetailPageContainer extends Component {
       isFavouriteModalVisible,
       isUserSaveCreateFailure,
       isGetCommunityUserSaveComplete,
+      searchParams,
     } = this.props;
 
     if (errorCode) {
@@ -280,21 +302,23 @@ class CommunityDetailPageContainer extends Component {
         isUserSaveCreateFailure={isUserSaveCreateFailure}
         isGetCommunityUserSaveComplete={isGetCommunityUserSaveComplete}
         userSave={userSave}
+        searchParams={searchParams}
+        onParamsRemove={this.handleParamsRemove}
       />
     );
   }
 }
 
 const getCommunitySlug = match => match.params.communitySlug;
-const mapStateToProps = (state, { match }) => {
+const mapStateToProps = (state, { match, location }) => {
   const communitySlug = getCommunitySlug(match);
   const mediaGallerySlideIndex = getHomePageMediaGalleryCurrentSlideIndex(state);
   const isMediaGalleryFullscreenActive = isHomePageMediaGalleryFullscreenActive(state);
   const isStickyHeaderVisible = isCommunityDetailPageStickyHeaderActive(state);
-  const isFavouriteModalVisible = isFavouriteModalActive(state);
   const isUserSaveCreateFailure = isResourceCreateRequestFailure(state, 'userSave');
   const isGetCommunityUserSaveComplete = isResourceListRequestComplete(state, 'userSave');
   const isGetCommunityUserSaveInProgress = isResourceListRequestInProgress(state, 'userSave');
+  const searchParams = getSearchParams(match, location);
 
   return {
     user: getDetail(state, 'user', 'me'),
@@ -303,10 +327,10 @@ const mapStateToProps = (state, { match }) => {
     mediaGallerySlideIndex,
     isMediaGalleryFullscreenActive,
     isStickyHeaderVisible,
-    isFavouriteModalVisible,
     isUserSaveCreateFailure,
     isGetCommunityUserSaveComplete,
     isGetCommunityUserSaveInProgress,
+    searchParams,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -314,7 +338,6 @@ const mapDispatchToProps = (dispatch) => {
     gotoMediaGallerySlide: slideIndex => dispatch(gotoSlide(slideIndex)),
     toggleFullscreenMediaGallery: () => dispatch(toggleFullscreenMediaGallery()),
     toggleStickyHeader: () => dispatch(toggleStickyHeader()),
-    toggleFavouriteModal: () => dispatch(toggleFavouriteModal()),
     createUserSave: data => dispatch(resourceCreateRequest('userSave', data)),
     updateUserSave: (id, status) => dispatch(resourceUpdateRequest('userSave', id, {
       status,

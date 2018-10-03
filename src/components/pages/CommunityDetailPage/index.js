@@ -81,10 +81,11 @@ export default class CommunityDetailPage extends Component {
     onConciergeNumberClicked: func,
     onLiveChatClicked: func,
     onReceptionNumberClicked: func,
-    isFavouriteModalVisible: bool,
     isUserSaveCreateFailure: bool,
     isGetCommunityUserSaveComplete: bool,
     userSave: object,
+    searchParams: object,
+    onParamsRemove: func,
   };
 
   componentDidMount() {
@@ -148,10 +149,11 @@ export default class CommunityDetailPage extends Component {
       onConciergeNumberClicked,
       onLiveChatClicked,
       onReceptionNumberClicked,
-      isFavouriteModalVisible,
       isUserSaveCreateFailure,
       isGetCommunityUserSaveComplete,
       userSave,
+      searchParams,
+      onParamsRemove,
     } = this.props;
 
     const {
@@ -302,7 +304,7 @@ export default class CommunityDetailPage extends Component {
               isFullscreenMode={isMediaGalleryFullscreenActive}
               onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
               isFavouriteEnabled={isGetCommunityUserSaveComplete}
-              isFavourited={userSave !== undefined}
+              isFavourited={!!userSave}
               onFavouriteClick={onMediaGalleryFavouriteClick}
             />
           }
@@ -461,8 +463,8 @@ export default class CommunityDetailPage extends Component {
           closeable
           noPadding={user != null}
           layout={user == null ? 'single' : 'double'}
-          isOpen={isFavouriteModalVisible}
-          onClose={onMediaGalleryFavouriteClick}
+          isOpen={searchParams.modal === 'addToFavourite'}
+          onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}
         >
           {user == null &&
             <Fragment>

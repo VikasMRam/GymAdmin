@@ -31,22 +31,22 @@ export const getListMeta = (state, resource) =>
 
 export const isResourceListRequestInProgress = (state, resource) => {
   const thunkName = getThunkName(resource, 'listRead');
-  return state.thunk && state.thunk.pending[thunkName];
+  return state.thunk && !!state.thunk.pending[thunkName];
 };
 
 export const isResourceListRequestFailure = (state, resource) => {
   const thunkName = getThunkName(resource, 'listRead');
-  return state.thunk && state.thunk.failure[thunkName];
+  return state.thunk && !!state.thunk.failure[thunkName];
 };
 
 export const isResourceListRequestComplete = (state, resource) => {
   const thunkName = getThunkName(resource, 'listRead');
-  return state.thunk && state.thunk.complete[thunkName];
+  return state.thunk && !!state.thunk.complete[thunkName];
 };
 
 export const isResourceCreateRequestFailure = (state, resource) => {
   const thunkName = getThunkName(resource, 'create');
-  return state.thunk && state.thunk.failure[thunkName];
+  return state.thunk && !!state.thunk.failure[thunkName];
 };
 
 export const getExperiment = (state, experimentName) =>
@@ -78,9 +78,6 @@ export const isQuestionModalOpenSelector = state =>
 
 export const answerQuestionValueSelector = state =>
   communityDetailPage.answerQuestionValue(state.communityDetailPage);
-
-export const isFavouriteModalActive = state =>
-  communityDetailPage.isFavouriteModalActive(state.communityDetailPage);
 
 export const isCommunitySearchPageModalFilterPanelActive = state =>
   communitySearchPage.isModalFilterPanelVisible(state.communitySearchPage);
