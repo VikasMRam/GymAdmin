@@ -34,6 +34,11 @@ import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import Button from 'sly/components/atoms/Button';
 import CommunityLocalDetails from "sly/components/organisms/CommunityLocalDetails";
 import AdTile from 'sly/components/molecules/AdTile';
+import Modal from 'sly/components/molecules/Modal';
+import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
+import SaveCommunityForm from 'sly/components/organisms/SaveCommunityForm';
+import ToastNotification from 'sly/components/molecules/ToastNotification';
+
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
 
 const BackToSearch = styled.div`
@@ -56,6 +61,10 @@ const AdTileWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
+const StyledHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.xLarge')}
+`;
+
 export default class CommunityDetailPage extends Component {
   static propTypes = {
     user: object,
@@ -64,6 +73,7 @@ export default class CommunityDetailPage extends Component {
     isMediaGalleryFullscreenActive: bool,
     onMediaGallerySlideChange: func,
     onMediaGalleryToggleFullscreen: func,
+    onMediaGalleryFavouriteClick: func,
     isStickyHeaderVisible: bool,
     onToggleStickyHeader: func,
     onBackToSearchClicked: func,
@@ -71,6 +81,11 @@ export default class CommunityDetailPage extends Component {
     onConciergeNumberClicked: func,
     onLiveChatClicked: func,
     onReceptionNumberClicked: func,
+    isUserSaveCreateFailure: bool,
+    isGetCommunityUserSaveComplete: bool,
+    userSave: object,
+    searchParams: object,
+    onParamsRemove: func,
   };
 
   componentDidMount() {
@@ -126,6 +141,7 @@ export default class CommunityDetailPage extends Component {
       community,
       onMediaGallerySlideChange,
       onMediaGalleryToggleFullscreen,
+      onMediaGalleryFavouriteClick,
       onBackToSearchClicked,
       isStickyHeaderVisible,
       user,
@@ -133,6 +149,11 @@ export default class CommunityDetailPage extends Component {
       onConciergeNumberClicked,
       onLiveChatClicked,
       onReceptionNumberClicked,
+      isUserSaveCreateFailure,
+      isGetCommunityUserSaveComplete,
+      userSave,
+      searchParams,
+      onParamsRemove,
     } = this.props;
 
     const {
@@ -282,6 +303,9 @@ export default class CommunityDetailPage extends Component {
               onSlideChange={onMediaGallerySlideChange}
               isFullscreenMode={isMediaGalleryFullscreenActive}
               onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
+              isFavouriteEnabled={isGetCommunityUserSaveComplete}
+              isFavourited={!!userSave}
+              onFavouriteClick={onMediaGalleryFavouriteClick}
             />
           }
           <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} innerRef={this.breadCrumbRef} />
@@ -435,6 +459,26 @@ export default class CommunityDetailPage extends Component {
 
           )}
         </ConciergeController>
+        <Modal
+          closeable
+          noPadding={user != null}
+          layout={user == null ? 'single' : 'double'}
+          isOpen={searchParams.modal === 'addToFavourite'}
+          onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}
+        >
+          {user == null &&
+            <Fragment>
+              <StyledHeading size="subtitle">Add to your favourites list</StyledHeading>
+              <JoinSlyButtons />
+            </Fragment>
+          }
+          {user != null &&
+            <SaveCommunityForm mainImage={mainImage} />
+          }
+        </Modal>
+        <ToastNotification isOpen={isUserSaveCreateFailure} status="error">
+          Failed to save community. Please try again.
+        </ToastNotification>
       </Fragment>
     );
   }

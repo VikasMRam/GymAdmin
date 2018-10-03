@@ -1,28 +1,38 @@
 import React, { Component } from 'react';
-
 import { Redirect } from 'react-router';
 import { object, number, func, bool } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
 
+import { UserSaveCommunityEntityType, UserSaveDeleteStatus, UserSaveInitStatus } from 'sly/services/helpers/user_save';
+import { getSearchParams } from 'sly/services/helpers/search';
+
 import {
   getDetail,
+  getList,
   getHomePageMediaGalleryCurrentSlideIndex,
   isHomePageMediaGalleryFullscreenActive,
   isCommunityDetailPageStickyHeaderActive,
+  isResourceCreateRequestFailure,
+  isResourceListRequestInProgress,
+  isResourceListRequestComplete,
 } from 'sly/store/selectors';
 
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 
-import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { gotoSlide, toggleFullscreenMediaGallery, toggleStickyHeader } from 'sly/store/communityDetailPage/actions';
+import { resourceDetailReadRequest, resourceListReadRequest, resourceCreateRequest, resourceUpdateRequest }
+  from 'sly/store/resource/actions';
+import { gotoSlide, toggleFullscreenMediaGallery, toggleStickyHeader }
+  from 'sly/store/communityDetailPage/actions';
+import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
 
 import ErrorPage from 'sly/components/pages/Error';
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
     community: object,
+    userSaveForCommunity: object,
     errorCode: number,
     history: object,
     mediaGallerySlideIndex: number,
@@ -34,7 +44,35 @@ class CommunityDetailPageContainer extends Component {
     user: object,
     isQuestionModalOpenValue: bool,
     setIsQuestionModalOpenValue: func,
+    isFavouriteModalVisible: bool,
+    createUserSave: func,
+    updateUserSave: func,
+    isUserSaveCreateFailure: bool,
+    getCommunityUserSave: func,
+    isGetCommunityUserSaveComplete: bool,
+    isGetCommunityUserSaveInProgress: bool,
+    searchParams: object,
+    location: object,
   };
+
+  componentDidMount() {
+    const { getCommunityUserSave, user, community } = this.props;
+
+    if (user) {
+      getCommunityUserSave(community.id);
+    }
+  }
+
+  componentDidUpdate() {
+    const {
+      getCommunityUserSave, user, community, isGetCommunityUserSaveInProgress,
+      isGetCommunityUserSaveComplete,
+    } = this.props;
+
+    if (!isGetCommunityUserSaveComplete && !isGetCommunityUserSaveInProgress && user) {
+      getCommunityUserSave(community.id);
+    }
+  }
 
   handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
     const { gotoMediaGallerySlide, community } = this.props;
@@ -147,16 +185,63 @@ class CommunityDetailPageContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
   };
 
+  changeSearchParams = ({ changedParams }) => {
+    const { history, location } = this.props;
+    const { pathname, search } = location;
+
+    const newParams = { ...parseURLQueryParams(search), ...changedParams };
+    const path = `${pathname}?${objectToURLQueryParams(newParams)}`;
+    history.push(path);
+  };
+
+  handleMediaGalleryFavouriteClick = () => {
+    const {
+      createUserSave, community, user, userSaveForCommunity, updateUserSave,
+    } = this.props;
+    if (user) {
+      if (!userSaveForCommunity && userSaveForCommunity.status !== UserSaveDeleteStatus) {
+        const { id } = community;
+        const payload = {
+          entityType: UserSaveCommunityEntityType,
+          entitySlug: id,
+        };
+
+        createUserSave(payload).then(() => this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } }));
+      } else if (userSaveForCommunity.status === UserSaveDeleteStatus) {
+        updateUserSave(userSaveForCommunity.id, UserSaveInitStatus)
+          .then(() => this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } }));
+      } else {
+        updateUserSave(userSaveForCommunity.id, UserSaveDeleteStatus);
+      }
+    } else {
+      this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } })
+    }
+  };
+
+  handleParamsRemove = ({ paramsToRemove }) => {
+    const changedParams = paramsToRemove.reduce((obj, p) => {
+      const nobj = obj;
+      nobj[p] = undefined;
+      return nobj;
+    }, {});
+    this.changeSearchParams({ changedParams });
+  };
+
   render() {
     const {
       mediaGallerySlideIndex,
       isMediaGalleryFullscreenActive,
       user,
       community,
+      userSaveForCommunity,
       errorCode,
       redirectUrl,
       history,
       isStickyHeaderVisible,
+      isFavouriteModalVisible,
+      isUserSaveCreateFailure,
+      isGetCommunityUserSaveComplete,
+      searchParams,
     } = this.props;
 
     if (errorCode) {
@@ -192,6 +277,11 @@ class CommunityDetailPageContainer extends Component {
       history.push(url);
     }
 
+    let userSave = userSaveForCommunity;
+    if (userSave) {
+      userSave = userSave.status !== UserSaveDeleteStatus ? userSave : null;
+    }
+
     return (
       <CommunityDetailPage
         user={user}
@@ -199,6 +289,7 @@ class CommunityDetailPageContainer extends Component {
         mediaGallerySlideIndex={mediaGallerySlideIndex}
         onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
         onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
+        onMediaGalleryFavouriteClick={this.handleMediaGalleryFavouriteClick}
         isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
         isStickyHeaderVisible={isStickyHeaderVisible}
         onToggleStickyHeader={this.handleToggleStickyHeader}
@@ -207,23 +298,39 @@ class CommunityDetailPageContainer extends Component {
         onConciergeNumberClicked={this.handleConciergeNumberClick}
         onLiveChatClicked={this.handleLiveChatClick}
         onReceptionNumberClicked={this.handleReceptionNumberClick}
+        isFavouriteModalVisible={isFavouriteModalVisible}
+        isUserSaveCreateFailure={isUserSaveCreateFailure}
+        isGetCommunityUserSaveComplete={isGetCommunityUserSaveComplete}
+        userSave={userSave}
+        searchParams={searchParams}
+        onParamsRemove={this.handleParamsRemove}
       />
     );
   }
 }
 
 const getCommunitySlug = match => match.params.communitySlug;
-const mapStateToProps = (state, { match }) => {
+const mapStateToProps = (state, { match, location }) => {
   const communitySlug = getCommunitySlug(match);
   const mediaGallerySlideIndex = getHomePageMediaGalleryCurrentSlideIndex(state);
   const isMediaGalleryFullscreenActive = isHomePageMediaGalleryFullscreenActive(state);
   const isStickyHeaderVisible = isCommunityDetailPageStickyHeaderActive(state);
+  const isUserSaveCreateFailure = isResourceCreateRequestFailure(state, 'userSave');
+  const isGetCommunityUserSaveComplete = isResourceListRequestComplete(state, 'userSave');
+  const isGetCommunityUserSaveInProgress = isResourceListRequestInProgress(state, 'userSave');
+  const searchParams = getSearchParams(match, location);
+
   return {
     user: getDetail(state, 'user', 'me'),
     community: getDetail(state, 'community', communitySlug),
+    userSaveForCommunity: getList(state, 'userSave')[0],
     mediaGallerySlideIndex,
     isMediaGalleryFullscreenActive,
     isStickyHeaderVisible,
+    isUserSaveCreateFailure,
+    isGetCommunityUserSaveComplete,
+    isGetCommunityUserSaveInProgress,
+    searchParams,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -231,6 +338,14 @@ const mapDispatchToProps = (dispatch) => {
     gotoMediaGallerySlide: slideIndex => dispatch(gotoSlide(slideIndex)),
     toggleFullscreenMediaGallery: () => dispatch(toggleFullscreenMediaGallery()),
     toggleStickyHeader: () => dispatch(toggleStickyHeader()),
+    createUserSave: data => dispatch(resourceCreateRequest('userSave', data)),
+    updateUserSave: (id, status) => dispatch(resourceUpdateRequest('userSave', id, {
+      status,
+    })),
+    getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
+      entityType: UserSaveCommunityEntityType,
+      entitySlug: slug,
+    })),
   };
 };
 

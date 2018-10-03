@@ -62,7 +62,7 @@ const ModalContext = styled.article`
   display: flex;
   flex-direction: column;
   outline: none;
-  padding: ${size('spacing.xLarge')};
+  padding: ${ifProp('noPadding', 0, size('spacing.xLarge'))};
   width: 100%;
   height: 100%;
   height: unset;
@@ -73,7 +73,7 @@ const ModalContext = styled.article`
   margin: 1rem calc(-50% + 1rem) 1rem 1rem;
   max-height: calc(100% - 4rem);
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: ${size('spacing.xxxLarge')};
+    padding: ${ifProp('noPadding', 0, size('spacing.xxxLarge'))};
   };
 
   ${switchProp('layout', {
@@ -82,6 +82,12 @@ const ModalContext = styled.article`
       border-radius: ${size('spacing.small')};
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
         width: ${size('modal.single')};
+      }`,
+    double: css`
+      overflow: auto;
+      border-radius: ${size('spacing.small')};
+      @media screen and (min-width: ${size('breakpoint.tablet')}) {
+        width: ${size('modal.double')};
       }`,
     searchBox: css`
       // same as single without overflow auto
@@ -134,18 +140,20 @@ const Heading = styled.div`
 
 export default class Modal extends React.Component {
   static propTypes = {
-    layout: oneOf(['single', 'gallery', 'sidebar', 'searchBox', 'wizard']).isRequired,
+    layout: oneOf(['single', 'double', 'gallery', 'sidebar', 'searchBox', 'wizard']).isRequired,
     heading: node,
     children: node,
     closeable: bool,
     onClose: func.isRequired,
     transparent: bool,
+    noPadding: bool,
     closeButtonPalette: oneOf(['white', 'slate']),
   };
 
   static defaultProps = {
     layout: 'single',
     transparent: false,
+    noPadding: false,
     closeButtonPalette: 'white',
   };
 
@@ -156,6 +164,7 @@ export default class Modal extends React.Component {
   render() {
     const {
       heading, children, closeable, layout, onClose, transparent, closeButtonPalette,
+      noPadding,
     } = this.props;
     const iconClose = (
       <IconButton
@@ -182,9 +191,7 @@ export default class Modal extends React.Component {
               {heading}
             </Heading>
           )}
-          {/* apply centering css positioning only to modal content as in gallery
-              layout the close button should be fixed at screen top left corner */}
-          <ModalContext layout={layout} transparent={transparent}>
+          <ModalContext layout={layout} transparent={transparent} noPadding={noPadding}>
             {children}
           </ModalContext>
         </StyledReactModal>

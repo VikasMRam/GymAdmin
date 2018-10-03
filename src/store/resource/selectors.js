@@ -3,7 +3,6 @@
 export const initialState = {};
 
 export const initialResourceState = {
-  inProgress: false,
   list: {
     ids: [],
     meta: {},

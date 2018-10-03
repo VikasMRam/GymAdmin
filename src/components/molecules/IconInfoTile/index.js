@@ -55,7 +55,7 @@ IconInfoTile.propTypes = {
 };
 
 IconInfoTile.defaultProps = {
-  iconPalette: 'black',
+  iconPalette: 'slate',
   borderless: false,
 };
 

@@ -4,7 +4,6 @@ import * as selectors from './selectors';
 
 const altState = {
   resources: {
-    inProgress: false,
     list: [1, 2, 3],
     detail: 1,
   },
@@ -16,7 +15,6 @@ test('initialState', () => {
 
 test('initialResourceState', () => {
   expect(selectors.initialResourceState).toEqual({
-    inProgress: false,
     list: { ids: [], meta: {} },
     detail: { id: null, ids: [], meta: {} },
   });

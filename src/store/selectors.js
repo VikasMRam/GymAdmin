@@ -7,6 +7,8 @@ import * as communityDetailPage from './communityDetailPage/selectors';
 import * as communitySearchPage from './communitySearchPage/selectors';
 import * as chatBox from './chatBox/selectors';
 
+import { getThunkName } from './resource';
+
 export const getDetail = (state, resource, id) =>
   entities.getDetail(
     state.entities,
@@ -27,8 +29,25 @@ export const getDetailMeta = (state, resource) =>
 export const getListMeta = (state, resource) =>
   resources.getList(state.resource, resource).meta;
 
-export const isResourceRequestInProgress = (state, resource) =>
-  resources.getResourceState(state.resource, resource).inProgress;
+export const isResourceListRequestInProgress = (state, resource) => {
+  const thunkName = getThunkName(resource, 'listRead');
+  return state.thunk && !!state.thunk.pending[thunkName];
+};
+
+export const isResourceListRequestFailure = (state, resource) => {
+  const thunkName = getThunkName(resource, 'listRead');
+  return state.thunk && !!state.thunk.failure[thunkName];
+};
+
+export const isResourceListRequestComplete = (state, resource) => {
+  const thunkName = getThunkName(resource, 'listRead');
+  return state.thunk && !!state.thunk.complete[thunkName];
+};
+
+export const isResourceCreateRequestFailure = (state, resource) => {
+  const thunkName = getThunkName(resource, 'create');
+  return state.thunk && !!state.thunk.failure[thunkName];
+};
 
 export const getExperiment = (state, experimentName) =>
   experiments.getExperimentByName(state.experiments, experimentName);

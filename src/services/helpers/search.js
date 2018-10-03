@@ -1,6 +1,4 @@
-import { stringify, parse } from 'query-string';
-
-import { urlize } from './url';
+import { urlize, objectToURLQueryParams, parseURLQueryParams } from './url';
 
 const fnExecutionTracker = {};
 
@@ -185,11 +183,11 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
 
   let path = `/${toc}`;
   if (state && city) {
-    const qsString = stringify(qs);
+    const qsString = objectToURLQueryParams(qs);
     const qsPart = qsString ? `?${qsString}` : '';
     path = `/${toc}/${state}/${city}${qsPart}`;
   } else if (state) {
-    const qsString = stringify(qs);
+    const qsString = objectToURLQueryParams(qs);
     const qsPart = qsString ? `?${qsString}` : '';
     path = `/${toc}/${state}${qsPart}`;
   }
@@ -201,7 +199,7 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
 };
 
 export const getSearchParams = ({ params }, location) => {
-  const qs = parse(location.search);
+  const qs = parseURLQueryParams(location.search);
 
   return filterSearchParams({
     ...params,
