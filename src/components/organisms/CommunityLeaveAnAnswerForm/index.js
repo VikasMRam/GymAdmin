@@ -11,6 +11,7 @@ import { Heading, Button } from 'sly/components/atoms';
 const QuestionTextDiv = styled.div`
   margin-top: ${size('spacing.large')};
 `;
+QuestionTextDiv.displayName = 'QuestionTextDiv';
 
 const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.regular')};
