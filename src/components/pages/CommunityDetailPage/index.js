@@ -11,11 +11,12 @@ import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetai
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { size } from 'sly/components/themes';
 
+import { Link, Heading, Hr, Block } from 'sly/components/atoms';
+
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import StickyFooter from 'sly/components/molecules/StickyFooter';
 import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
-import { Link, Heading, Hr } from 'sly/components/atoms';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
 import CareServicesList from 'sly/components/organisms/CareServicesList';
@@ -65,6 +66,19 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')}
 `;
 
+const ButtonsWrapper = styled.div`
+  display: flex;
+
+  > * {
+    flex: 3;
+  }
+`;
+
+const StyledDoneButton = styled(Button)`
+  flex: 1;
+  margin-right: ${size('spacing.large')};
+`;
+
 export default class CommunityDetailPage extends Component {
   static propTypes = {
     user: object,
@@ -88,6 +102,8 @@ export default class CommunityDetailPage extends Component {
     userSave: object,
     searchParams: object,
     onParamsRemove: func,
+    onSubmitSaveCommunityForm: func,
+    isUserSaveUpdateComplete: bool,
   };
 
   componentDidMount() {
@@ -158,6 +174,8 @@ export default class CommunityDetailPage extends Component {
       userSave,
       searchParams,
       onParamsRemove,
+      onSubmitSaveCommunityForm,
+      isUserSaveUpdateComplete,
     } = this.props;
 
     const {
@@ -316,7 +334,8 @@ export default class CommunityDetailPage extends Component {
               onSlideChange={onMediaGallerySlideChange}
               isFullscreenMode={isMediaGalleryFullscreenActive}
               onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
-              isFavouriteEnabled={isGetCommunityUserSaveComplete}
+              // isFavouriteEnabled={user !== null && isGetCommunityUserSaveComplete}
+              isFavouriteEnabled={false}
               isFavourited={!!userSave}
               onFavouriteClick={onMediaGalleryFavouriteClick}
             />
@@ -482,21 +501,45 @@ export default class CommunityDetailPage extends Component {
 
           )}
         </ConciergeController>
+        {/* TODO: create component for this modal */}
         <Modal
           closeable
-          noPadding={user != null}
-          layout={user == null ? 'single' : 'double'}
+          noPadding={user != null && !isUserSaveUpdateComplete}
+          layout={user == null || isUserSaveUpdateComplete ? 'single' : 'double'}
           isOpen={searchParams.modal === 'addToFavourite'}
           onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}
         >
-          {user == null &&
+          {!isUserSaveUpdateComplete && user == null &&
             <Fragment>
               <StyledHeading size="subtitle">Add to your favourites list</StyledHeading>
               <JoinSlyButtons />
             </Fragment>
           }
-          {user != null &&
-            <SaveCommunityForm mainImage={mainImage} />
+          {!isUserSaveUpdateComplete && user != null &&
+            <SaveCommunityForm mainImage={mainImage} submitForm={onSubmitSaveCommunityForm} />
+          }
+          {isUserSaveUpdateComplete &&
+            <Fragment>
+              <StyledHeading size="subtitle">Community Saved!</StyledHeading>
+              <Block>You can view your saved communities from your dashboard</Block>
+              <br />
+              <ButtonsWrapper>
+                <StyledDoneButton
+                  onClick={() => onParamsRemove({ paramsToRemove: ['modal'] })}
+                  palette="secondary"
+                  ghost
+                >
+                  Done
+                </StyledDoneButton>
+                <Button href="/mydashboard">
+                  Go to my dashboard
+                </Button>
+              </ButtonsWrapper>
+              <br /><br /><br />
+              <Hr />
+              <StyledHeading size="subtitle">Similar communities nearby</StyledHeading>
+              <SimilarCommunities similarProperties={similarProperties} />
+            </Fragment>
           }
         </Modal>
         <ToastNotification isOpen={isUserSaveCreateFailure} status="error">

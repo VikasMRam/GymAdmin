@@ -101,31 +101,31 @@ describe('resource reducer', () => {
   describe('RESOURCE_UPDATE_SUCCESS', () => {
     it('updates non-object data', () => {
       expect(reducer(
-        state({ list: [4, 5, 6] }),
-        action(actions.RESOURCE_UPDATE_SUCCESS, 8, { request: { needle: 5 } })
-      )).toEqual(state({ list: [4, 8, 6] }));
+        state({ list: { ids: [4, 5, 6] } }),
+        action(actions.RESOURCE_UPDATE_SUCCESS, { ids: [8] }, { request: { needle: 5 } })
+      )).toEqual(state({ list: { ids: [4, 8, 6] } }));
     });
 
     it('updates an object data', () => {
       expect(reducer(
-        state({ list: [{ id: 1, title: 'test' }, { id: 2, title: 'test2' }] }),
+        state({ list: { ids: [{ id: 1, title: 'test' }, { id: 2, title: 'test2' }] } }),
         action(
           actions.RESOURCE_UPDATE_SUCCESS,
-          { title: 'test3' },
+          { ids: [{ id: 2, title: 'test3' }] },
           { request: { needle: { id: 2 } } }
         )
-      )).toEqual(state({ list: [{ id: 1, title: 'test' }, { id: 2, title: 'test3' }] }));
+      )).toEqual(state({ list: { ids: [{ id: 1, title: 'test' }, { id: 2, title: 'test3' }] } }));
     });
 
     it('does nothing when data is not in state', () => {
       expect(reducer(
-        state({ list: [{ id: 1, title: 'test' }, { id: 2, title: 'test2' }] }),
+        state({ list: { ids: [{ id: 1, title: 'test' }, { id: 2, title: 'test2' }] } }),
         action(
           actions.RESOURCE_UPDATE_SUCCESS,
           { title: 'test3' },
           { request: { needle: { id: 3 } } }
         )
-      )).toEqual(state({ list: [{ id: 1, title: 'test' }, { id: 2, title: 'test2' }] }));
+      )).toEqual(state({ list: { ids: [{ id: 1, title: 'test' }, { id: 2, title: 'test2' }] } }));
     });
   });
 
@@ -136,11 +136,11 @@ describe('resource reducer', () => {
 
     it('removes from list in existing state', () => {
       expect(reducer(
-        state({ list: [1, 2, 3] }),
+        state({ list: { ids: [1, 2, 3] } }),
         action(actions.RESOURCE_DELETE_SUCCESS, undefined, {
           request: { needle: 2 },
         })
-      )).toEqual(state({ list: [1, 3] }));
+      )).toEqual(state({ list: { ids: [1, 3] } }));
     });
   });
 });

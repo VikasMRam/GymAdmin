@@ -16,6 +16,7 @@ import {
   isResourceCreateRequestFailure,
   isResourceListRequestInProgress,
   isResourceListRequestComplete,
+  isResourceUpdateRequestComplete,
 } from 'sly/store/selectors';
 
 import { getSearchParams, filterLinkPath } from 'sly/services/helpers/search';
@@ -54,6 +55,7 @@ class CommunityDetailPageContainer extends Component {
     isGetCommunityUserSaveComplete: bool,
     isGetCommunityUserSaveInProgress: bool,
     location: object,
+    isUserSaveUpdateComplete: bool,
   };
 
   setModal = (value) => {
@@ -223,7 +225,7 @@ class CommunityDetailPageContainer extends Component {
       createUserSave, community, user, userSaveForCommunity, updateUserSave,
     } = this.props;
     if (user) {
-      if (!userSaveForCommunity && userSaveForCommunity.status !== UserSaveDeleteStatus) {
+      if (!userSaveForCommunity) {
         const { id } = community;
         const payload = {
           entityType: UserSaveCommunityEntityType,
@@ -232,13 +234,16 @@ class CommunityDetailPageContainer extends Component {
 
         createUserSave(payload).then(() => this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } }));
       } else if (userSaveForCommunity.status === UserSaveDeleteStatus) {
-        updateUserSave(userSaveForCommunity.id, UserSaveInitStatus)
-          .then(() => this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } }));
+        updateUserSave(userSaveForCommunity.id, {
+          status: UserSaveInitStatus,
+        }).then(() => this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } }));
       } else {
-        updateUserSave(userSaveForCommunity.id, UserSaveDeleteStatus);
+        updateUserSave(userSaveForCommunity.id, {
+          status: UserSaveDeleteStatus,
+        });
       }
     } else {
-      this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } })
+      this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } });
     }
   };
 
@@ -249,6 +254,16 @@ class CommunityDetailPageContainer extends Component {
       return nobj;
     }, {});
     this.changeSearchParams({ changedParams });
+  };
+
+  handleSubmitSaveCommunityForm = (data) => {
+    const { updateUserSave, userSaveForCommunity } = this.props;
+
+    if (data.note && userSaveForCommunity) {
+      updateUserSave(userSaveForCommunity.id, {
+        note: data.note,
+      });
+    }
   };
 
   render() {
@@ -266,6 +281,7 @@ class CommunityDetailPageContainer extends Component {
       isUserSaveCreateFailure,
       isGetCommunityUserSaveComplete,
       searchParams,
+      isUserSaveUpdateComplete,
     } = this.props;
 
     if (errorCode) {
@@ -330,6 +346,8 @@ class CommunityDetailPageContainer extends Component {
         userSave={userSave}
         searchParams={searchParams}
         onParamsRemove={this.handleParamsRemove}
+        onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
+        isUserSaveUpdateComplete={isUserSaveUpdateComplete}
       />
     );
   }
@@ -344,6 +362,7 @@ const mapStateToProps = (state, { match, location }) => {
   const isStickyHeaderVisible = isCommunityDetailPageStickyHeaderActive(state);
   const isUserSaveCreateFailure = isResourceCreateRequestFailure(state, 'userSave');
   const isGetCommunityUserSaveComplete = isResourceListRequestComplete(state, 'userSave');
+  const isUserSaveUpdateComplete = isResourceUpdateRequestComplete(state, 'userSave');
   const isGetCommunityUserSaveInProgress = isResourceListRequestInProgress(state, 'userSave');
 
   return {
@@ -356,6 +375,7 @@ const mapStateToProps = (state, { match, location }) => {
     isUserSaveCreateFailure,
     isGetCommunityUserSaveComplete,
     isGetCommunityUserSaveInProgress,
+    isUserSaveUpdateComplete,
     searchParams,
   };
 };
@@ -366,9 +386,7 @@ const mapDispatchToProps = (dispatch) => {
     toggleFullscreenMediaGallery: () => dispatch(toggleFullscreenMediaGallery()),
     toggleStickyHeader: () => dispatch(toggleStickyHeader()),
     createUserSave: data => dispatch(resourceCreateRequest('userSave', data)),
-    updateUserSave: (id, status) => dispatch(resourceUpdateRequest('userSave', id, {
-      status,
-    })),
+    updateUserSave: (id, data) => dispatch(resourceUpdateRequest('userSave', id, data)),
     getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
       entityType: UserSaveCommunityEntityType,
       entitySlug: slug,

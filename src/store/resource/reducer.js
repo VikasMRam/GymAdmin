@@ -25,11 +25,19 @@ const updateOrDeleteReducer = (state, { type, payload, meta }) => {
   const needle = get(meta, 'request.needle');
   const needleIsObject = typeof needle === 'object';
   const list = getList(state, resource);
-  const index = needleIsObject ? findIndex(list, needle) : list.indexOf(needle);
+  const index = needleIsObject ? findIndex(list.ids, needle) : list.ids.indexOf(needle);
 
   if (index < 0) {
     return state;
   }
+
+  let newIds = [...list.ids.slice(0, index)];
+  if (needleIsObject) {
+    newIds = [...newIds, ...list.ids[index], ...payload.ids];
+  } else if (payload) {
+    newIds = [...newIds, ...payload.ids];
+  }
+  newIds = [...newIds, ...list.ids.slice(index + 1)];
 
   switch (type) {
     case RESOURCE_UPDATE_SUCCESS:
@@ -37,11 +45,9 @@ const updateOrDeleteReducer = (state, { type, payload, meta }) => {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          list: [
-            ...list.slice(0, index),
-            needleIsObject ? { ...list[index], ...payload } : payload,
-            ...list.slice(index + 1),
-          ],
+          list: {
+            ids: newIds,
+          },
         },
       };
     case RESOURCE_DELETE_SUCCESS:
@@ -49,7 +55,9 @@ const updateOrDeleteReducer = (state, { type, payload, meta }) => {
         ...state,
         [resource]: {
           ...getResourceState(state, resource),
-          list: [...list.slice(0, index), ...list.slice(index + 1)],
+          list: {
+            ids: [...list.ids.slice(0, index), ...list.ids.slice(index + 1)],
+          },
         },
       };
     // istanbul ignore next
