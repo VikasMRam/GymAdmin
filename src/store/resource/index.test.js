@@ -85,21 +85,22 @@ describe('resource integration tests', () => {
   // });
 
   test('resourceUpdateRequest', async () => {
-    const { getState, dispatch } = getStore({ resources: { list: [1, 2, 3] } });
+    const { getState, dispatch } = getStore({ resources: { list: { ids: [1, 2, 3] } } });
 
-    expect(getList(getState(), 'resources')).toEqual([1, 2, 3]);
+    expect(getList(getState(), 'resources').ids).toEqual([1, 2, 3]);
 
-    dispatch(resourceUpdateRequest('resources', 1, 4));
+    dispatch(resourceUpdateRequest('resources', 1, { ids: [4] }));
     await delay();
-    expect(getList(getState(), 'resources')).toEqual([4, 2, 3]);
 
-    dispatch(resourceUpdateRequest('resources', 4, { title: 'foo' }));
-    await delay();
-    expect(getList(getState(), 'resources')).toEqual([{ title: 'foo' }, 2, 3]);
+    expect(getList(getState(), 'resources').ids).toEqual([4, 2, 3]);
 
-    dispatch(resourceUpdateRequest('resources', { title: 'foo' }, { foo: 'bar' }));
+    dispatch(resourceUpdateRequest('resources', 4, { ids: [{ title: 'foo' }] }));
     await delay();
-    expect(getList(getState(), 'resources')).toEqual([
+    expect(getList(getState(), 'resources').ids).toEqual([{ title: 'foo' }, 2, 3]);
+
+    dispatch(resourceUpdateRequest('resources', { title: 'foo' }, { ids: [{ foo: 'bar', title: 'foo' }] }));
+    await delay();
+    expect(getList(getState(), 'resources').ids).toEqual([
       { title: 'foo', foo: 'bar' },
       2,
       3,
@@ -108,13 +109,13 @@ describe('resource integration tests', () => {
 
   it('resourceDeleteRequest', async () => {
     const { getState, dispatch } = getStore({
-      resources: { list: [1, 2, { foo: 'bar' }] },
+      resources: { list: { ids: [1, 2, { foo: 'bar' }] } },
     });
 
-    expect(getList(getState(), 'resources')).toEqual([1, 2, { foo: 'bar' }]);
+    expect(getList(getState(), 'resources').ids).toEqual([1, 2, { foo: 'bar' }]);
 
     dispatch(resourceDeleteRequest('resources', 1));
     await delay();
-    expect(getList(getState(), 'resources')).toEqual([2, { foo: 'bar' }]);
+    expect(getList(getState(), 'resources').ids).toEqual([2, { foo: 'bar' }]);
   });
 });

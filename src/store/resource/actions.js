@@ -1,4 +1,4 @@
-import { getThunkName } from './';
+import { getThunkName } from './helpers';
 
 // https://github.com/diegohaz/arc/wiki/Actions
 // https://github.com/diegohaz/arc/wiki/Example-redux-modules#resource

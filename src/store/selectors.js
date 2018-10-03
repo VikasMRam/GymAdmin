@@ -7,7 +7,7 @@ import * as communityDetailPage from './communityDetailPage/selectors';
 import * as communitySearchPage from './communitySearchPage/selectors';
 import * as chatBox from './chatBox/selectors';
 
-import { getThunkName } from './resource';
+import { getThunkName } from './resource/helpers';
 
 export const getDetail = (state, resource, id) =>
   entities.getDetail(
@@ -47,6 +47,11 @@ export const isResourceListRequestComplete = (state, resource) => {
 export const isResourceCreateRequestFailure = (state, resource) => {
   const thunkName = getThunkName(resource, 'create');
   return state.thunk && !!state.thunk.failure[thunkName];
+};
+
+export const isResourceUpdateRequestComplete = (state, resource) => {
+  const thunkName = getThunkName(resource, 'update');
+  return state.thunk && !!state.thunk.complete[thunkName];
 };
 
 export const getExperiment = (state, experimentName) =>
