@@ -334,8 +334,7 @@ export default class CommunityDetailPage extends Component {
               onSlideChange={onMediaGallerySlideChange}
               isFullscreenMode={isMediaGalleryFullscreenActive}
               onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
-              // isFavouriteEnabled={user !== null && isGetCommunityUserSaveComplete}
-              isFavouriteEnabled={false}
+              isFavouriteEnabled={user !== null && isGetCommunityUserSaveComplete}
               isFavourited={!!userSave}
               onFavouriteClick={onMediaGalleryFavouriteClick}
             />

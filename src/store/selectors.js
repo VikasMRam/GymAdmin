@@ -3,7 +3,6 @@ import * as experiments from './experiments/selectors';
 import * as entities from './entities/selectors';
 import * as header from './header/selectors';
 import * as searchBox from './searchBox/selectors';
-import * as communityDetailPage from './communityDetailPage/selectors';
 import * as communitySearchPage from './communitySearchPage/selectors';
 import * as chatBox from './chatBox/selectors';
 
@@ -103,21 +102,6 @@ export const searchBoxAddress = state =>
 
 export const searchBoxLocation = state =>
   searchBox.searchBoxLocation(state.searchBox);
-
-export const getHomePageMediaGalleryCurrentSlideIndex = state =>
-  communityDetailPage.currentMediaGallerySlideIndex(state.communityDetailPage);
-
-export const isHomePageMediaGalleryFullscreenActive = state =>
-  communityDetailPage.isMediaGalleryFullscreenActive(state.communityDetailPage);
-
-export const isCommunityDetailPageStickyHeaderActive = state =>
-  communityDetailPage.isStickyHeaderVisible(state.communityDetailPage);
-
-export const isQuestionModalOpenSelector = state =>
-  communityDetailPage.isQuestionModalOpen(state.communityDetailPage);
-
-export const answerQuestionValueSelector = state =>
-  communityDetailPage.answerQuestionValue(state.communityDetailPage);
 
 export const isCommunitySearchPageModalFilterPanelActive = state =>
   communitySearchPage.isModalFilterPanelVisible(state.communitySearchPage);

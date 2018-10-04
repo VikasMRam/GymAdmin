@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { fetchState } from 'react-router-server';
 import { connect } from 'react-redux';
 import { func, bool } from 'prop-types';
-import { isEqual, omit } from 'lodash'; 
-import { parse as parseSearch } from 'query-string'; 
+import { isEqual, omit } from 'lodash';
+import { parse as parseSearch } from 'query-string';
 
 import { isBrowser, isServer } from 'sly/config';
 
@@ -86,7 +86,7 @@ const promiseNoop = Promise.resolve;
 export default function withServerState({
   fetchData=promiseNoop,
   handleError=passthrouh,
-  mapStateToProps=null,
+  mapStateToProps=(_, props) => props,
   mapDispatchToProps=noop
 }) {
   return (ChildComponent) => {
