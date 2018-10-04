@@ -49,7 +49,7 @@ const PropertyReviews = ({
         isOpen
         closeable
       >
-        <CommunityAddRatingFormContainer user={user} communitySlug={communitySlug} communityName={communityName} />
+        <CommunityAddRatingFormContainer user={user} communitySlug={communitySlug} communityName={communityName} setModal={setModal} />
       </Modal>
       }
     </article>
