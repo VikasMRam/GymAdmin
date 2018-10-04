@@ -44,14 +44,49 @@ export const isResourceListRequestComplete = (state, resource) => {
   return state.thunk && !!state.thunk.complete[thunkName];
 };
 
+export const isResourceDetailRequestInProgress = (state, resource) => {
+  const thunkName = getThunkName(resource, 'detailRead');
+  return state.thunk && !!state.thunk.pending[thunkName];
+};
+
+export const isResourceDetailRequestComplete = (state, resource) => {
+  const thunkName = getThunkName(resource, 'detailRead');
+  return state.thunk && !!state.thunk.complete[thunkName];
+};
+
+export const isResourceDetailRequestDone = (state, resource) => {
+  const thunkName = getThunkName(resource, 'detailRead');
+  return state.thunk && !!state.thunk.done[thunkName];
+};
+
+export const isResourceDetailRequestFailure = (state, resource) => {
+  const thunkName = getThunkName(resource, 'detailRead');
+  return state.thunk && !!state.thunk.failure[thunkName];
+};
+
 export const isResourceCreateRequestFailure = (state, resource) => {
   const thunkName = getThunkName(resource, 'create');
   return state.thunk && !!state.thunk.failure[thunkName];
 };
 
+export const isResourceUpdateRequestInProgress = (state, resource) => {
+  const thunkName = getThunkName(resource, 'update');
+  return state.thunk && !!state.thunk.pending[thunkName];
+};
+
 export const isResourceUpdateRequestComplete = (state, resource) => {
   const thunkName = getThunkName(resource, 'update');
   return state.thunk && !!state.thunk.complete[thunkName];
+};
+
+export const isResourceUpdateRequestDone = (state, resource) => {
+  const thunkName = getThunkName(resource, 'update');
+  return state.thunk && !!state.thunk.done[thunkName];
+};
+
+export const isResourceUpdateRequestFailure = (state, resource) => {
+  const thunkName = getThunkName(resource, 'update');
+  return state.thunk && !!state.thunk.failure[thunkName];
 };
 
 export const getExperiment = (state, experimentName) =>
