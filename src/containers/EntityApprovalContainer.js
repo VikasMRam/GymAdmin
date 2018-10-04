@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { object, func, int } from 'prop-types';
+import { connect } from 'react-redux';
+import { object, func, bool } from 'prop-types';
 
-import { resourceDetailReadRequest, resourceUpdateRequest } from 'sly/store/resource/actions';
-import withServerState from 'sly/store/withServerState';
+import { resourceUpdateRequest } from 'sly/store/resource/actions';
+import { isResourceDetailRequestComplete, isResourceUpdateRequestComplete, isResourceDetailRequestDone } from 'sly/store/selectors';
 
 class EntityApprovalContainer extends Component {
   static propTypes = {
-    match: object,
-    approveEntity: func,
-    errorCode: int,
+    match: object.isRequired,
+    approveEntity: func.isRequired,
+    userFetchComplete: bool.isRequired,
+    userFetchDone: bool.isRequired,
+    entityUpdateComplete: bool.isRequired,
   }
 
   constructor(props) {
@@ -18,40 +21,47 @@ class EntityApprovalContainer extends Component {
     };
   }
 
-  componentWillReceiveProps() {
-    const { match, approveEntity, errorCode } = this.props;
+  render() {
+    const {
+      match, approveEntity, userFetchComplete, userFetchDone, entityUpdateComplete,
+    } = this.props;
     const { params } = match;
     const { entitySlug, entity } = params;
-    if (errorCode === 401) {
-      // Could not make history push to rail's signin
-      window.location.href = '/signin';
-    }
-    approveEntity(entity, entitySlug).then(() => {
-      this.setState({ message: 'Success' });
-    }).catch((err) => {
-      // console.log(err.response);
-      const { response } = err;
-      const { status } = response;
-      if (status === 405) {
-        this.setState({ message: `${entity} Already Approved` });
-      } else if (status === 403) {
-        this.setState({ message: 'User Not Admin' });
-      } else {
-        this.setState({ message: 'Failure' });
-      }
-    });
-  }
 
-  render() {
+    if (userFetchComplete) {
+      if (!userFetchDone) {
+        // Could not make history push to rail's signin
+        window.location.href = '/signin';
+      } else if (!entityUpdateComplete) {
+        approveEntity(entity, entitySlug).then(() => {
+          this.setState({ message: 'Success' });
+        }).catch((err) => {
+          // console.log(err.response);
+          const { response } = err;
+          const { status } = response;
+          if (status === 405) {
+            this.setState({ message: `${entity} Already Approved` });
+          } else if (status === 403) {
+            this.setState({ message: 'User Not Admin' });
+          } else {
+            this.setState({ message: 'Failure' });
+          }
+        });
+      }
+    }
+
     const { message } = this.state;
     return <div>{message}</div>;
   }
 }
 
-const mapStateToProps = () => {
-  // const { match, location } = props;
+const mapStateToProps = (state, { match }) => {
+  const { params } = match;
+  const { entity } = params;
   return {
-    // user: getDetail(state, 'user', 'me'),
+    userFetchComplete: isResourceDetailRequestComplete(state, 'user'),
+    userFetchDone: isResourceDetailRequestDone(state, 'user'),
+    entityUpdateComplete: isResourceUpdateRequestComplete(state, entity),
   };
 };
 
@@ -61,21 +71,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const fetchData = dispatch => dispatch(resourceDetailReadRequest('user', 'me'));
-
-const handleError = (err) => {
-  if (err.response) {
-    if (err.response.status !== 200) {
-      return { errorCode: err.response.status };
-    }
-    return { errorCode: null };
-  }
-  throw err;
-};
-
-export default withServerState({
-  mapStateToProps,
-  mapDispatchToProps,
-  fetchData,
-  handleError,
-})(EntityApprovalContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(EntityApprovalContainer);
