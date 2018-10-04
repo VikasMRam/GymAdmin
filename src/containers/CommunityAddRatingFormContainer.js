@@ -38,7 +38,7 @@ class CommunityAddRatingFormContainer extends Component {
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, addRating, loadCommunity,
+      communitySlug, addRating, loadCommunity, setModal,
     } = this.props;
     const {
       comments, value, name, email,
@@ -51,7 +51,7 @@ class CommunityAddRatingFormContainer extends Component {
       email,
     };
     return addRating(payload).then(() => {
-      this.setModalParam(null);
+      setModal(null);
       loadCommunity(communitySlug);
     }).catch((r) => {
       // TODO: Need to set a proper way to handle server side errors

@@ -109,6 +109,7 @@ Field.propTypes = {
     'email',
     'checkbox',
     'radio',
+    'rating',
   ]),
   placeholder: string,
 };
