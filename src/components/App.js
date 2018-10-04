@@ -13,14 +13,13 @@ import setGlobalStyles from './themes/setGlobalStyles';
 import { facebookPixelId, googleTagManagerId, isProd } from 'sly/config';
 import { assetPath } from 'sly/components/themes';
 // import AppController from 'sly/controllers/Appcontroller';
-import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
+import CommunityDetailPageController from 'sly/controllers/CommunityDetailPageController';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
 import PromoPageContainer from 'sly/containers/PromoPageContainer';
 import AgentsProfilePageController from 'sly/controllers/AgentsProfilePageController';
 import OurHistoryPage from 'sly/components/pages/OurHistoryPage';
-import HowItWorksPage from 'sly/components/pages/HowItWorksPage';
 import HowItWorksDetailPageContainer from 'sly/containers/HowItWorksDetailPageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
@@ -35,7 +34,7 @@ const careTypes = [
   'assisted-living',
   'independent-living',
   'alzheimers-care',
-  'continuing-care-retirement-community'
+  'continuing-care-retirement-community',
 ].join('|');
 
 const howItWorksTypes = [
@@ -57,7 +56,7 @@ const legalPages = [
 const TempHowItWorks = ({ ...props }) => (
   <HowItWorksDetailPageContainer
     {...props}
-    match={{params:{type: 'consumers'}}}
+    match={{ params: { type: 'consumers' } }}
   />
 );
 
@@ -77,15 +76,14 @@ export default class App extends Component {
     const { fetchUser } = this.props;
     smoothscroll.polyfill();
     fetchUser()
-      .catch(error => {
-        console.error('Not logged in');
-      });
+      // eslint-disable-next-line no-console
+      .catch(() => console.error('Not logged in'));
   }
 
   routes = [
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
-      component: props => <CommunityDetailPageContainer ignoreSearch="modal" {...props} />,
+      component: props => <CommunityDetailPageController ignoreSearch="modal" {...props} />,
       exact: true,
     },
     {
@@ -153,12 +151,14 @@ export default class App extends Component {
           {/*
             Google Tag Mabager
           */}
-          <script  dangerouslySetInnerHTML={{ __html: `
+          <script dangerouslySetInnerHTML={{
+            __html: `
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','${googleTagManagerId}');`}}
+            })(window,document,'script','dataLayer','${googleTagManagerId}');`,
+          }}
           />
 
           {/*

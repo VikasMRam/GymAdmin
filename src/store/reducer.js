@@ -9,7 +9,6 @@ import experiments from './experiments/reducer';
 import header from './header/reducer';
 import searchBox from './searchBox/reducer';
 import controller from './controller/reducer';
-import communityDetailPage from './communityDetailPage/reducer';
 import communitySearchPage from './communitySearchPage/reducer';
 import chatBox from './chatBox/reducer';
 
@@ -23,7 +22,6 @@ const reducers = {
   header,
   searchBox,
   controller,
-  communityDetailPage,
   communitySearchPage,
   chatBox,
 };

@@ -1,51 +1,41 @@
 import React, { Component } from 'react';
+import { func, object, bool, number, string } from 'prop-types';
 import { Redirect } from 'react-router';
-import { object, number, func, bool } from 'prop-types';
 
+import { connectController } from 'sly/controllers';
 import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
-
+import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
 import { UserSaveCommunityEntityType, UserSaveDeleteStatus, UserSaveInitStatus } from 'sly/services/helpers/user_save';
+import { getSearchParams } from 'sly/services/helpers/search';
 
 import {
   getDetail,
   getList,
-  getHomePageMediaGalleryCurrentSlideIndex,
-  isHomePageMediaGalleryFullscreenActive,
-  isCommunityDetailPageStickyHeaderActive,
   isResourceCreateRequestFailure,
   isResourceListRequestInProgress,
   isResourceListRequestComplete,
   isResourceUpdateRequestComplete,
 } from 'sly/store/selectors';
-
-import { getSearchParams, filterLinkPath } from 'sly/services/helpers/search';
-
-import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
-
 import { resourceDetailReadRequest, resourceListReadRequest, resourceCreateRequest, resourceUpdateRequest }
   from 'sly/store/resource/actions';
-import { gotoSlide, toggleFullscreenMediaGallery, toggleStickyHeader }
-  from 'sly/store/communityDetailPage/actions';
-import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
 
+import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
 
-class CommunityDetailPageContainer extends Component {
+class CommunityDetailPageController extends Component {
   static propTypes = {
+    set: func,
     community: object,
     userSaveForCommunity: object,
     errorCode: number,
     history: object,
+    location: object,
     mediaGallerySlideIndex: number,
     isMediaGalleryFullscreenActive: bool,
-    gotoMediaGallerySlide: func,
-    toggleFullscreenMediaGallery: func,
     isStickyHeaderVisible: bool,
-    toggleStickyHeader: func,
     user: object,
     isQuestionModalOpenValue: bool,
-    setIsQuestionModalOpenValue: func,
     searchParams: object,
     isFavouriteModalVisible: bool,
     createUserSave: func,
@@ -54,9 +44,28 @@ class CommunityDetailPageContainer extends Component {
     getCommunityUserSave: func,
     isGetCommunityUserSaveComplete: bool,
     isGetCommunityUserSaveInProgress: bool,
-    location: object,
     isUserSaveUpdateComplete: bool,
+    redirectUrl: string,
   };
+
+  componentDidMount() {
+    const { getCommunityUserSave, user, community } = this.props;
+
+    if (user && community) {
+      getCommunityUserSave(community.id);
+    }
+  }
+
+  componentDidUpdate() {
+    const {
+      getCommunityUserSave, user, community, isGetCommunityUserSaveInProgress,
+      isGetCommunityUserSaveComplete,
+    } = this.props;
+
+    if (!isGetCommunityUserSaveComplete && !isGetCommunityUserSaveInProgress && user && community) {
+      getCommunityUserSave(community.id);
+    }
+  }
 
   setModal = (value) => {
     this.changeSearchParams({ changedParams: { modal: value } });
@@ -71,98 +80,25 @@ class CommunityDetailPageContainer extends Component {
   }
 
   changeSearchParams = ({ changedParams }) => {
-    const { searchParams, history } = this.props;
-    const { path } = filterLinkPath(searchParams, changedParams);
-    // const event = {
-    //   action: 'search', category: searchParams.toc, label: queryString.stringify(searchParams),
-    // };
-    // SlyEvent.getInstance().sendEvent(event);
+    const { history, location } = this.props;
+    const { pathname, search } = location;
 
+    const newParams = { ...parseURLQueryParams(search), ...changedParams };
+    const path = `${pathname}?${objectToURLQueryParams(newParams)}`;
     history.push(path);
   };
 
-  componentDidMount() {
-    const { getCommunityUserSave, user, community } = this.props;
-
-    if (user) {
-      getCommunityUserSave(community.id);
-    }
-  }
-
-  componentDidUpdate() {
-    const {
-      getCommunityUserSave, user, community, isGetCommunityUserSaveInProgress,
-      isGetCommunityUserSaveComplete,
-    } = this.props;
-
-    if (!isGetCommunityUserSaveComplete && !isGetCommunityUserSaveInProgress && user) {
-      getCommunityUserSave(community.id);
-    }
-  }
-
-  handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
-    const { gotoMediaGallerySlide, community } = this.props;
-    gotoMediaGallerySlide(slideIndex);
-    if (fromMorePictures) {
-      const { id } = community;
-      const { gallery = {}, videoGallery = {} } = community;
-      const images = gallery.images || [];
-      const videos = videoGallery.videos || [];
-      const image = images[slideIndex - videos.length];
-      const event = {
-        action: 'show', category: 'images', label: id, value: image.id,
-      };
-      SlyEvent.getInstance().sendEvent(event);
-    }
-  };
-
-  handleToggleMediaGalleryFullscreen = (fromMorePictures, isVideo, fromSeeMoreButton) => {
-    const {
-      toggleFullscreenMediaGallery, isMediaGalleryFullscreenActive, community, mediaGallerySlideIndex,
-    } = this.props;
-    const { id, gallery = {}, videoGallery = {} } = community;
-    const images = gallery.images || [];
-    const videos = videoGallery.videos || [];
-    if (fromSeeMoreButton) {
-      const event = {
-        action: 'show', category: 'fullscreenMediaGallery', label: id, value: 'seeMoreButton',
-      };
-      SlyEvent.getInstance().sendEvent(event);
-    } else if (!fromMorePictures && !isVideo) {
-      const image = images[mediaGallerySlideIndex - videos.length];
-      const event = {
-        action: 'show', category: 'fullscreenMediaGallery', label: id,
-      };
-      if (image) {
-        event.value = image.id;
-      }
-      if (isMediaGalleryFullscreenActive) {
-        event.action = 'hide';
-      }
-      SlyEvent.getInstance().sendEvent(event);
-    } else if (isVideo) {
-      const video = videos[mediaGallerySlideIndex];
-      const event = {
-        action: 'show', category: 'mediaGalleryVideo', label: id, value: video.id,
-      };
-      if (isMediaGalleryFullscreenActive) {
-        event.action = 'hide';
-      }
-      SlyEvent.getInstance().sendEvent(event);
-    }
-    /*
-    let event = {action:'submit',category:'requestavailability',label:this.props.community.id};
-    SlyEvent.getInstance().sendEvent(event);
-    let event = {action:'submit',category:'requestavailability',label:this.props.community.id};
-    let event = {action:'contactCommunity',category:'requestCallback',label:this.props.community.id};
-    SlyEvent.getInstance().sendEvent(event);
-    */
-    toggleFullscreenMediaGallery();
-  };
-
-  handleToggleStickyHeader = () => {
-    const { toggleStickyHeader } = this.props;
-    toggleStickyHeader();
+  handleParamsRemove = ({ paramsToRemove }) => {
+    const { set } = this.props;
+    const changedParams = paramsToRemove.reduce((obj, p) => {
+      const nobj = obj;
+      nobj[p] = undefined;
+      return nobj;
+    }, {});
+    this.changeSearchParams({ changedParams });
+    set({
+      userSaveUpdated: false,
+    });
   };
 
   handleBackToSearchClick = () => {
@@ -199,7 +135,7 @@ class CommunityDetailPageContainer extends Component {
       action: 'click', category: 'liveChat', label: id,
     };
     SlyEvent.getInstance().sendEvent(event);
-    olark && olark('api.box.expand');
+    window && window.olark && window.olark('api.box.expand');
   };
 
   handleReceptionNumberClick = () => {
@@ -211,18 +147,83 @@ class CommunityDetailPageContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
   };
 
-  changeSearchParams = ({ changedParams }) => {
-    const { history, location } = this.props;
-    const { pathname, search } = location;
+  handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
+    const { set, community } = this.props;
+    if (fromMorePictures) {
+      const { id } = community;
+      const { gallery = {}, videoGallery = {} } = community;
+      const images = gallery.images || [];
+      const videos = videoGallery.videos || [];
+      const image = images[slideIndex - videos.length];
+      const event = {
+        action: 'show', category: 'images', label: id, value: image.id,
+      };
+      SlyEvent.getInstance().sendEvent(event);
+    }
+    set({
+      mediaGallerySlideIndex: slideIndex,
+    });
+  };
 
-    const newParams = { ...parseURLQueryParams(search), ...changedParams };
-    const path = `${pathname}?${objectToURLQueryParams(newParams)}`;
-    history.push(path);
+  handleToggleMediaGalleryFullscreen = (fromMorePictures, isVideo, fromSeeMoreButton) => {
+    const {
+      set, isMediaGalleryFullscreenActive, community, mediaGallerySlideIndex,
+    } = this.props;
+    const { id, gallery = {}, videoGallery = {} } = community;
+    const images = gallery.images || [];
+    const videos = videoGallery.videos || [];
+    if (fromSeeMoreButton) {
+      const event = {
+        action: 'show', category: 'fullscreenMediaGallery', label: id, value: 'seeMoreButton',
+      };
+      SlyEvent.getInstance().sendEvent(event);
+    } else if (!fromMorePictures && !isVideo) {
+      const image = images[mediaGallerySlideIndex - videos.length];
+      const event = {
+        action: 'show', category: 'fullscreenMediaGallery', label: id,
+      };
+      if (image) {
+        event.value = image.id;
+      }
+      if (isMediaGalleryFullscreenActive) {
+        event.action = 'hide';
+      }
+      SlyEvent.getInstance().sendEvent(event);
+    } else if (isVideo) {
+      const video = videos[mediaGallerySlideIndex];
+      if (video) {
+        const event = {
+          action: 'show', category: 'mediaGalleryVideo', label: id, value: video.id,
+        };
+        if (isMediaGalleryFullscreenActive) {
+          event.action = 'hide';
+        }
+        SlyEvent.getInstance().sendEvent(event);
+      }
+    }
+    /*
+    let event = {action:'submit',category:'requestavailability',label:this.props.community.id};
+    SlyEvent.getInstance().sendEvent(event);
+    let event = {action:'submit',category:'requestavailability',label:this.props.community.id};
+    let event = {action:'contactCommunity',category:'requestCallback',label:this.props.community.id};
+    SlyEvent.getInstance().sendEvent(event);
+    */
+    set({
+      isMediaGalleryFullscreenActive: !isMediaGalleryFullscreenActive,
+    });
+  };
+
+  handleToggleStickyHeader = () => {
+    const { set, isStickyHeaderVisible } = this.props;
+    set({
+      isStickyHeaderVisible: !isStickyHeaderVisible,
+    });
   };
 
   handleMediaGalleryFavouriteClick = () => {
     const {
       createUserSave, community, user, userSaveForCommunity, updateUserSave,
+      getCommunityUserSave,
     } = this.props;
     if (user) {
       if (!userSaveForCommunity) {
@@ -232,36 +233,36 @@ class CommunityDetailPageContainer extends Component {
           entitySlug: id,
         };
 
-        createUserSave(payload).then(() => this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } }));
+        createUserSave(payload).then(() => {
+          this.setModal('addToFavourite');
+          getCommunityUserSave(community.id);
+        });
       } else if (userSaveForCommunity.status === UserSaveDeleteStatus) {
         updateUserSave(userSaveForCommunity.id, {
           status: UserSaveInitStatus,
-        }).then(() => this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } }));
+        }).then(() => {
+          this.setModal('addToFavourite');
+        });
       } else {
         updateUserSave(userSaveForCommunity.id, {
           status: UserSaveDeleteStatus,
         });
       }
     } else {
-      this.changeSearchParams({ changedParams: { modal: 'addToFavourite' } });
+      this.setModal('addToFavourite');
     }
   };
 
-  handleParamsRemove = ({ paramsToRemove }) => {
-    const changedParams = paramsToRemove.reduce((obj, p) => {
-      const nobj = obj;
-      nobj[p] = undefined;
-      return nobj;
-    }, {});
-    this.changeSearchParams({ changedParams });
-  };
-
   handleSubmitSaveCommunityForm = (data) => {
-    const { updateUserSave, userSaveForCommunity } = this.props;
+    const { updateUserSave, userSaveForCommunity, set } = this.props;
 
-    if (data.note && userSaveForCommunity) {
+    if (userSaveForCommunity) {
       updateUserSave(userSaveForCommunity.id, {
         note: data.note,
+      }).then(() => {
+        set({
+          userSaveUpdated: true,
+        });
       });
     }
   };
@@ -285,28 +286,27 @@ class CommunityDetailPageContainer extends Component {
     } = this.props;
 
     if (errorCode) {
-
       if (redirectUrl) { /* Slug has Changed */
         const { location } = history;
         const { pathname } = location;
-        //Replace last part of pathname
-        let fullPaths = pathname.split('/');
+        // Replace last part of pathname
+        const fullPaths = pathname.split('/');
         fullPaths[fullPaths.length - 1] = redirectUrl;
-        return <Redirect to={fullPaths.join('/')}/>
+        return <Redirect to={fullPaths.join('/')} />;
       }
-      if ( errorCode === 404) { /* Not found so redirect to city page */
+      if (errorCode === 404) { /* Not found so redirect to city page */
         const { location } = history;
         const { pathname } = location;
-        //Replace last part of pathname
-        let lastIdx = pathname.lastIndexOf('/');
-        return <Redirect to={pathname.substring(0,lastIdx)} state={{status:302}}/>
+        // Replace last part of pathname
+        const lastIdx = pathname.lastIndexOf('/');
+        return <Redirect to={pathname.substring(0, lastIdx)} state={{ status: 302 }} />;
       }
 
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
     if (!community) {
-      return <div />;
+      return null;
     }
 
     // If request url does not match resource url from api, perform 302 redirect
@@ -353,16 +353,30 @@ class CommunityDetailPageContainer extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createUserSave: data => dispatch(resourceCreateRequest('userSave', data)),
+    updateUserSave: (id, data) => dispatch(resourceUpdateRequest('userSave', id, data)),
+    getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
+      entityType: UserSaveCommunityEntityType,
+      entitySlug: slug,
+    })),
+  };
+};
+
 const getCommunitySlug = match => match.params.communitySlug;
-const mapStateToProps = (state, { match, location }) => {
+const mapStateToProps = (state, { match, location, controller }) => {
+  // default state for ssr
+  const {
+    mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false, isStickyHeaderVisible = false,
+    userSaveUpdated = false,
+  } = controller;
+
   const searchParams = getSearchParams(match, location);
   const communitySlug = getCommunitySlug(match);
-  const mediaGallerySlideIndex = getHomePageMediaGalleryCurrentSlideIndex(state);
-  const isMediaGalleryFullscreenActive = isHomePageMediaGalleryFullscreenActive(state);
-  const isStickyHeaderVisible = isCommunityDetailPageStickyHeaderActive(state);
   const isUserSaveCreateFailure = isResourceCreateRequestFailure(state, 'userSave');
   const isGetCommunityUserSaveComplete = isResourceListRequestComplete(state, 'userSave');
-  const isUserSaveUpdateComplete = isResourceUpdateRequestComplete(state, 'userSave');
+  const isUserSaveUpdateComplete = userSaveUpdated && isResourceUpdateRequestComplete(state, 'userSave');
   const isGetCommunityUserSaveInProgress = isResourceListRequestInProgress(state, 'userSave');
 
   return {
@@ -380,20 +394,6 @@ const mapStateToProps = (state, { match, location }) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    gotoMediaGallerySlide: slideIndex => dispatch(gotoSlide(slideIndex)),
-    toggleFullscreenMediaGallery: () => dispatch(toggleFullscreenMediaGallery()),
-    toggleStickyHeader: () => dispatch(toggleStickyHeader()),
-    createUserSave: data => dispatch(resourceCreateRequest('userSave', data)),
-    updateUserSave: (id, data) => dispatch(resourceUpdateRequest('userSave', id, data)),
-    getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
-      entityType: UserSaveCommunityEntityType,
-      entitySlug: slug,
-    })),
-  };
-};
-
 const fetchData = (dispatch, { match }) =>
   Promise.all([
     dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
@@ -403,17 +403,14 @@ const fetchData = (dispatch, { match }) =>
   ]);
 
 const handleError = (err) => {
-
   if (err.response) {
-
     if (err.response.status !== 200) {
-
       if (err.location) {
-        let redUrl = err.location.split('/');
-        return { errorCode: err.response.status,
-          redirectUrl:redUrl[redUrl.length - 1]
+        const redUrl = err.location.split('/');
+        return {
+          errorCode: err.response.status,
+          redirectUrl: redUrl[redUrl.length - 1],
         };
-
       }
       return { errorCode: err.response.status };
     }
@@ -423,8 +420,9 @@ const handleError = (err) => {
 };
 
 export default withServerState({
-  mapStateToProps,
-  mapDispatchToProps,
   fetchData,
   handleError,
-})(CommunityDetailPageContainer);
+})(connectController(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CommunityDetailPageController));
