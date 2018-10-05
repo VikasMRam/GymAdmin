@@ -22,14 +22,9 @@ const Wrapper = styled.div`
 `;
 
 const ImageWrapper = styled(Image)`
-  width: ${size('tile.small.width')};
-  height: ${size('tile.small.height')};
-  padding-top: unset;
   margin-bottom: ${size('spacing.large')};
 
   > img {
-    width: ${size('tile.small.width')};
-    height: ${size('tile.small.height')};
     border-radius: ${size('border.xxLarge')};
   }
 `;
@@ -81,7 +76,7 @@ const SimilarCommunityNearbyTile = ({
   image, name, estimatedRate, startingRate, reviewsValue, numReviews,
 }) => (
   <Wrapper>
-    <ImageWrapper src={image} aspectRatio="16:9" />
+    <ImageWrapper src={image} aspectRatio="4:3" />
     <Name>{name}</Name>
     {renderRate(estimatedRate, startingRate)}
     {renderReviews(numReviews, reviewsValue)}
