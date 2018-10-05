@@ -155,6 +155,7 @@ const groups = {
     { name: 'Contact', url: '/contact' },
     { name: 'Terms', url: '/tos' },
     { name: 'Privacy', url: '/privacy' },
+    { name: 'Sitemap', url: '/sitemaps'},
   ],
   Listings: [
     { name: 'For Referral Agents', url: '/providers/crm' },
