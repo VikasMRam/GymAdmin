@@ -24,6 +24,7 @@ import PropertyReviews from 'sly/components/organisms/PropertyReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailability';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
+import SimilarCommunitiesNearby from 'sly/components/organisms/SimilarCommunitiesNearby';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
@@ -537,7 +538,7 @@ export default class CommunityDetailPage extends Component {
               <br /><br /><br />
               <Hr />
               <StyledHeading size="subtitle">Similar communities nearby</StyledHeading>
-              <SimilarCommunities similarProperties={similarProperties} />
+              <SimilarCommunitiesNearby similarCommunities={similarProperties} />
             </Fragment>
           }
         </Modal>
