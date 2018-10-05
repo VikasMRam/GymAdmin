@@ -41,6 +41,7 @@ import SaveCommunityForm from 'sly/components/organisms/SaveCommunityForm';
 import ToastNotification from 'sly/components/molecules/ToastNotification';
 
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
+import SavedCommunitiesPopup from 'sly/components/organisms/SavedCommunititesPopup/index';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -544,6 +545,7 @@ export default class CommunityDetailPage extends Component {
         <ToastNotification isOpen={isUserSaveCreateFailure} status="error">
           Failed to save community. Please try again.
         </ToastNotification>
+        <SavedCommunitiesPopup />
       </Fragment>
     );
   }
