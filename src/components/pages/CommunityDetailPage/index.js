@@ -456,7 +456,7 @@ export default class CommunityDetailPage extends Component {
               communityName={name}
               communitySlug={id}
               questions={questions}
-              setIsQuestionModalOpenValue={value => setModal(value ? 'askQuestion' : null)}
+              setModal={setModal}
               isQuestionModalOpenValue={modal === 'askQuestion'}
               answerQuestion={setQuestionToAsk}
               answerQuestionValue={questionToAnswer}

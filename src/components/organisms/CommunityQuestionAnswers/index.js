@@ -40,7 +40,7 @@ const appElement = isBrowser && document.querySelector('#app');
 const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
 
 const CommuntityQuestionAndAnswer = ({
-  user, communitySlug, communityName, questions, isQuestionModalOpenValue, setIsQuestionModalOpenValue, answerQuestion, answerQuestionValue,
+  user, communitySlug, communityName, questions, isQuestionModalOpenValue, setModal, answerQuestion, answerQuestionValue,
 }) => {
   const questionsComponent = questions.sort(sortByCreatedAt).map((question) => {
     if (typeof question.contents === 'undefined') {
@@ -80,15 +80,15 @@ const CommuntityQuestionAndAnswer = ({
     <div>
       {questionsComponent}
       <div>What would you like to know about senior living options at {communityName}? Send a message on the right.</div>
-      <AskQuestionButton onClick={() => setIsQuestionModalOpenValue(true)}>Ask a Question</AskQuestionButton>
+      <AskQuestionButton onClick={() => setModal('askQuestion')}>Ask a Question</AskQuestionButton>
       {isQuestionModalOpenValue &&
         <Modal
           appElement={appElement}
-          onClose={() => setIsQuestionModalOpenValue(false)}
+          onClose={() => setModal(null)}
           isOpen
           closeable
         >
-          <CommunityAskQuestionFormContainer communityName={communityName} communitySlug={communitySlug} setIsQuestionModalOpenValue={setIsQuestionModalOpenValue} user={user} />
+          <CommunityAskQuestionFormContainer communityName={communityName} communitySlug={communitySlug} setModal={setModal} user={user} />
         </Modal>
       }
       {(answerQuestionValue !== null && answerQuestionValue !== undefined) &&
@@ -110,7 +110,7 @@ CommuntityQuestionAndAnswer.propTypes = {
   communitySlug: string.isRequired,
   questions: arrayOf(shape).isRequired,
   isQuestionModalOpenValue: bool,
-  setIsQuestionModalOpenValue: func,
+  setModal: func,
   answerQuestion: func,
   answerQuestionValue: object,
   user: object,

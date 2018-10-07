@@ -32,12 +32,12 @@ class CommunityAskQuestionFormContainer extends Component {
     communitySlug: string.isRequired,
     askQuestion: func,
     loadCommunity: func,
-    setIsQuestionModalOpenValue: func,
+    setModal: func,
   };
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, askQuestion, loadCommunity, setIsQuestionModalOpenValue,
+      communitySlug, askQuestion, loadCommunity, setModal,
     } = this.props;
     const { question, name, email } = values;
     const payload = {
@@ -47,7 +47,7 @@ class CommunityAskQuestionFormContainer extends Component {
       email,
     };
     return askQuestion(payload).then(() => {
-      setIsQuestionModalOpenValue(false);
+      setModal('thankyou');
       // Hacky way. to push created question into array for rerender
       loadCommunity(communitySlug);
     }).catch((r) => {

@@ -51,7 +51,7 @@ class CommunityAddRatingFormContainer extends Component {
       email,
     };
     return addRating(payload).then(() => {
-      setModal(null);
+      setModal('thankyou');
       loadCommunity(communitySlug);
     }).catch((r) => {
       // TODO: Need to set a proper way to handle server side errors
