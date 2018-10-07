@@ -5,6 +5,7 @@ import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ADD_TO_FAVOURITE } from 'sly/services/helpers/modalTypeConstants';
 
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
@@ -444,7 +445,7 @@ export default class CommunityDetailPage extends Component {
               reviewRatings={ratingsArray}
               onLeaveReview={onLeaveReview}
               onReviewLinkClicked={onReviewLinkClicked}
-              isAskRatingModalOpen={modal === 'addRating'}
+              isAskRatingModalOpen={modal === ADD_RATING}
               setModal={setModal}
               user={user}
               communitySlug={id}
@@ -457,7 +458,7 @@ export default class CommunityDetailPage extends Component {
               communitySlug={id}
               questions={questions}
               setModal={setModal}
-              isQuestionModalOpenValue={modal === 'askQuestion'}
+              isQuestionModalOpenValue={modal === ASK_QUESTION}
               answerQuestion={setQuestionToAsk}
               answerQuestionValue={questionToAnswer}
               user={user}
@@ -505,7 +506,7 @@ export default class CommunityDetailPage extends Component {
           closeable
           noPadding={user != null && !isUserSaveUpdateComplete}
           layout={user == null || isUserSaveUpdateComplete ? 'single' : 'double'}
-          isOpen={searchParams.modal === 'addToFavourite'}
+          isOpen={searchParams.modal === ADD_TO_FAVOURITE}
           onClose={() => setModal(null)}
         >
           {!isUserSaveUpdateComplete && user == null &&
@@ -543,7 +544,7 @@ export default class CommunityDetailPage extends Component {
         </Modal>
         <Modal
           closeable
-          isOpen={searchParams.modal === 'thankyou'}
+          isOpen={searchParams.modal === THANK_YOU}
           onClose={() => setModal(null)}
         >
           <Thankyou />

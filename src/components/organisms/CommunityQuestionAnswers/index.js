@@ -12,6 +12,7 @@ import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAn
 import Hr from 'sly/components/atoms/Hr';
 import Button from 'sly/components/atoms/Button';
 import { isBrowser } from 'sly/config';
+import { ASK_QUESTION } from 'sly/services/helpers/modalTypeConstants';
 
 const AnswersDiv = styled.div`
   margin-left: ${size('spacing.huge')};
@@ -77,7 +78,7 @@ const CommuntityQuestionAndAnswer = ({
     <div>
       {questionsComponent}
       <div>What would you like to know about senior living options at {communityName}? Send a message on the right.</div>
-      <AskQuestionButton onClick={() => setModal('askQuestion')}>Ask a Question</AskQuestionButton>
+      <AskQuestionButton onClick={() => setModal(ASK_QUESTION)}>Ask a Question</AskQuestionButton>
       {isQuestionModalOpenValue &&
         <Modal
           appElement={appElement}
