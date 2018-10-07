@@ -43,9 +43,6 @@ const CommuntityQuestionAndAnswer = ({
   user, communitySlug, communityName, questions, isQuestionModalOpenValue, setModal, answerQuestion, answerQuestionValue,
 }) => {
   const questionsComponent = questions.sort(sortByCreatedAt).map((question) => {
-    if (typeof question.contents === 'undefined') {
-      question.contents = [];
-    }
     const answersCount = question.contents.length;
     let answersCountText = 'No answers yet.';
     if (answersCount === 1) {
@@ -114,6 +111,10 @@ CommuntityQuestionAndAnswer.propTypes = {
   answerQuestion: func,
   answerQuestionValue: object,
   user: object,
+};
+
+CommuntityQuestionAndAnswer.defaultProp = {
+  questions: [],
 };
 
 export default CommuntityQuestionAndAnswer;
