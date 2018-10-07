@@ -39,6 +39,7 @@ import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
 import SaveCommunityForm from 'sly/components/organisms/SaveCommunityForm';
+import Thankyou from 'sly/components/molecules/Thankyou/index';
 import ToastNotification from 'sly/components/molecules/ToastNotification';
 
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
@@ -102,7 +103,6 @@ export default class CommunityDetailPage extends Component {
     isGetCommunityUserSaveComplete: bool,
     userSave: object,
     searchParams: object,
-    onParamsRemove: func,
     onSubmitSaveCommunityForm: func,
     isUserSaveUpdateComplete: bool,
   };
@@ -174,7 +174,6 @@ export default class CommunityDetailPage extends Component {
       isGetCommunityUserSaveComplete,
       userSave,
       searchParams,
-      onParamsRemove,
       onSubmitSaveCommunityForm,
       isUserSaveUpdateComplete,
     } = this.props;
@@ -507,7 +506,7 @@ export default class CommunityDetailPage extends Component {
           noPadding={user != null && !isUserSaveUpdateComplete}
           layout={user == null || isUserSaveUpdateComplete ? 'single' : 'double'}
           isOpen={searchParams.modal === 'addToFavourite'}
-          onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}
+          onClose={() => setModal(null)}
         >
           {!isUserSaveUpdateComplete && user == null &&
             <Fragment>
@@ -525,7 +524,7 @@ export default class CommunityDetailPage extends Component {
               <br />
               <ButtonsWrapper>
                 <StyledDoneButton
-                  onClick={() => onParamsRemove({ paramsToRemove: ['modal'] })}
+                  onClick={() => setModal(null)}
                   palette="secondary"
                   ghost
                 >
@@ -541,6 +540,13 @@ export default class CommunityDetailPage extends Component {
               <SimilarCommunitiesNearby similarCommunities={similarProperties} />
             </Fragment>
           }
+        </Modal>
+        <Modal
+          closeable
+          isOpen={searchParams.modal === 'thankyou'}
+          onClose={() => setModal(null)}
+        >
+          <Thankyou />
         </Modal>
         <ToastNotification isOpen={isUserSaveCreateFailure} status="error">
           Failed to save community. Please try again.

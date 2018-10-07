@@ -68,7 +68,11 @@ class CommunityDetailPageController extends Component {
   }
 
   setModal = (value) => {
-    this.changeSearchParams({ changedParams: { modal: value } });
+    if (value) {
+      this.changeSearchParams({ changedParams: { modal: value } });
+    } else {
+      this.handleParamsRemove({ paramsToRemove: ['modal'] });
+    }
   }
 
   setQuestionToAsk = (question) => {
