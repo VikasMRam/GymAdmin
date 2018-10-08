@@ -363,8 +363,8 @@ const mapDispatchToProps = (dispatch) => {
     createUserSave: data => dispatch(resourceCreateRequest('userSave', data)),
     updateUserSave: (id, data) => dispatch(resourceUpdateRequest('userSave', id, data)),
     getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
-      entityType: UserSaveCommunityEntityType,
-      entitySlug: slug,
+      'filter[entity_type]': UserSaveCommunityEntityType,
+      'filter[entity_slug]': slug,
     })),
   };
 };

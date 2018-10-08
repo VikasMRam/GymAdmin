@@ -15,7 +15,7 @@ export default function(resource, id, params) {
     id = null;
   }
   let idString = id ? `/${id}` : '';
-  let queryString = params ? `?${stringify(params)}` : '';
+  let queryString = params ? `?${stringify(params, { encode: false })}` : '';
   return `/${resourceUri(resource)}${idString}${queryString}`;
 };
 
