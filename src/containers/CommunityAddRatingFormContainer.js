@@ -13,6 +13,7 @@ import {
 } from 'sly/services/validation';
 
 import CommunityAddRatingForm from 'sly/components/organisms/CommunityAddRatingForm';
+import { THANK_YOU } from 'sly/constants/modalType';
 
 const validate = createValidator({
   comments: [required],
@@ -51,7 +52,7 @@ class CommunityAddRatingFormContainer extends Component {
       email,
     };
     return addRating(payload).then(() => {
-      setModal('thankyou');
+      setModal(THANK_YOU);
       loadCommunity(communitySlug);
     }).catch((r) => {
       // TODO: Need to set a proper way to handle server side errors

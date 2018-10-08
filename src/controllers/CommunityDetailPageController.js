@@ -22,6 +22,7 @@ import { resourceDetailReadRequest, resourceListReadRequest, resourceCreateReque
 
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
+import { ADD_TO_FAVOURITE } from 'sly/constants/modalType';
 
 class CommunityDetailPageController extends Component {
   static propTypes = {
@@ -238,14 +239,14 @@ class CommunityDetailPageController extends Component {
         };
 
         createUserSave(payload).then(() => {
-          this.setModal('addToFavourite');
+          this.setModal(ADD_TO_FAVOURITE);
           getCommunityUserSave(community.id);
         });
       } else if (userSaveForCommunity.status === UserSaveDeleteStatus) {
         updateUserSave(userSaveForCommunity.id, {
           status: UserSaveInitStatus,
         }).then(() => {
-          this.setModal('addToFavourite');
+          this.setModal(ADD_TO_FAVOURITE);
         });
       } else {
         updateUserSave(userSaveForCommunity.id, {
@@ -253,7 +254,7 @@ class CommunityDetailPageController extends Component {
         });
       }
     } else {
-      this.setModal('addToFavourite');
+      this.setModal(ADD_TO_FAVOURITE);
     }
   };
 
