@@ -10,6 +10,7 @@ const savedCommunity = {
   name: 'Victorian Manor',
   note: 'test note',
 };
+const onFavouriteClickedSpy = jest.fn();
 
 const wrap = (props = {}) =>
   shallow(<SavedCommunityTile {...props} />);
@@ -37,5 +38,15 @@ describe('SavedCommunityTile', () => {
     expect(wrapper.find(Heading)).toHaveLength(1);
     expect(wrapper.find(Heading).dive().dive().text()).toContain(savedCommunity.name);
     expect(wrapper.find('Note')).toHaveLength(0);
+  });
+
+  it('verify onFavouriteClicked callback', () => {
+    const wrapper = wrap({
+      image: savedCommunity.imageUrl,
+      name: savedCommunity.name,
+      onFavouriteClicked: onFavouriteClickedSpy,
+    });
+    wrapper.find('StyledIcon').simulate('click');
+    expect(onFavouriteClickedSpy).toHaveBeenCalled();
   });
 });

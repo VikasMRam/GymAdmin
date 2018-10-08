@@ -126,8 +126,12 @@ theme.sizes = {
   // FIXME: remove this tiles should expand in avail space
   tile: {
     tiny: {
-      width : '7rem',      // 112px
-      height: '5.25rem',   // 84px
+      width : '7rem',        // 112px
+      height: '5.25rem',     // 84px
+    },
+    little: {
+      width:  '10.9375rem',  // 175px
+      height: '7.375rem',    // 118px
     },
     small: {
       width : '13.500rem',   // 216px
