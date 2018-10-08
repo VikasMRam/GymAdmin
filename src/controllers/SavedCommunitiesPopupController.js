@@ -57,7 +57,7 @@ class SavedCommunitiesPopupController extends Component {
 
   render() {
     const {
-      userSaves, searchParams, isLoading, isLoadSuccess, deleteUserSave,
+      userSaves, searchParams, isLoading, isLoadSuccess, getUserSaves, deleteUserSave,
     } = this.props;
     if (searchParams.modal === SAVED_COMMUNITIES) {
       const savedCommunities = userSaves.reduce((result, userSave) => {
@@ -70,7 +70,16 @@ class SavedCommunitiesPopupController extends Component {
         });
         return result;
       }, []);
-      return <SavedCommunitiesPopup isLoading={isLoading} isLoadSuccess={isLoadSuccess} savedCommunities={savedCommunities} onCloseButtonClick={() => this.setModal()} onFavouriteClicked={deleteUserSave} />;
+      return (
+        <SavedCommunitiesPopup
+          isLoading={isLoading}
+          isLoadSuccess={isLoadSuccess}
+          savedCommunities={savedCommunities}
+          onCloseButtonClick={() => this.setModal(null)}
+          onFavouriteClicked={userSave => deleteUserSave(userSave).then(() => { getUserSaves(); })}
+          getUserSaves={getUserSaves}
+        />
+      );
     }
     return null;
   }
