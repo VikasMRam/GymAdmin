@@ -5,6 +5,7 @@ import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ADD_TO_FAVOURITE } from 'sly/constants/modalType';
 
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
@@ -24,6 +25,7 @@ import PropertyReviews from 'sly/components/organisms/PropertyReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailability';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
+import SimilarCommunitiesNearby from 'sly/components/organisms/SimilarCommunitiesNearby';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
@@ -38,6 +40,7 @@ import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
 import SaveCommunityForm from 'sly/components/organisms/SaveCommunityForm';
+import Thankyou from 'sly/components/molecules/Thankyou/index';
 import ToastNotification from 'sly/components/molecules/ToastNotification';
 
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
@@ -102,7 +105,6 @@ export default class CommunityDetailPage extends Component {
     isGetCommunityUserSaveComplete: bool,
     userSave: object,
     searchParams: object,
-    onParamsRemove: func,
     onSubmitSaveCommunityForm: func,
     isUserSaveUpdateComplete: bool,
   };
@@ -174,7 +176,6 @@ export default class CommunityDetailPage extends Component {
       isGetCommunityUserSaveComplete,
       userSave,
       searchParams,
-      onParamsRemove,
       onSubmitSaveCommunityForm,
       isUserSaveUpdateComplete,
     } = this.props;
@@ -445,7 +446,7 @@ export default class CommunityDetailPage extends Component {
               reviewRatings={ratingsArray}
               onLeaveReview={onLeaveReview}
               onReviewLinkClicked={onReviewLinkClicked}
-              isAskRatingModalOpen={modal === 'addRating'}
+              isAskRatingModalOpen={modal === ADD_RATING}
               setModal={setModal}
               user={user}
               communitySlug={id}
@@ -457,8 +458,8 @@ export default class CommunityDetailPage extends Component {
               communityName={name}
               communitySlug={id}
               questions={questions}
-              setIsQuestionModalOpenValue={value => setModal(value ? 'askQuestion' : null)}
-              isQuestionModalOpenValue={modal === 'askQuestion'}
+              setModal={setModal}
+              isQuestionModalOpenValue={modal === ASK_QUESTION}
               answerQuestion={setQuestionToAsk}
               answerQuestionValue={questionToAnswer}
               user={user}
@@ -506,8 +507,8 @@ export default class CommunityDetailPage extends Component {
           closeable
           noPadding={user != null && !isUserSaveUpdateComplete}
           layout={user == null || isUserSaveUpdateComplete ? 'single' : 'double'}
-          isOpen={searchParams.modal === 'addToFavourite'}
-          onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}
+          isOpen={searchParams.modal === ADD_TO_FAVOURITE}
+          onClose={() => setModal(null)}
         >
           {!isUserSaveUpdateComplete && user == null &&
             <Fragment>
@@ -525,7 +526,7 @@ export default class CommunityDetailPage extends Component {
               <br />
               <ButtonsWrapper>
                 <StyledDoneButton
-                  onClick={() => onParamsRemove({ paramsToRemove: ['modal'] })}
+                  onClick={() => setModal(null)}
                   palette="secondary"
                   ghost
                 >
@@ -538,9 +539,16 @@ export default class CommunityDetailPage extends Component {
               <br /><br /><br />
               <Hr />
               <StyledHeading size="subtitle">Similar communities nearby</StyledHeading>
-              <SimilarCommunities similarProperties={similarProperties} />
+              <SimilarCommunitiesNearby similarCommunities={similarProperties} />
             </Fragment>
           }
+        </Modal>
+        <Modal
+          closeable
+          isOpen={searchParams.modal === THANK_YOU}
+          onClose={() => setModal(null)}
+        >
+          <Thankyou />
         </Modal>
         <ToastNotification isOpen={isUserSaveCreateFailure} status="error">
           Failed to save community. Please try again.

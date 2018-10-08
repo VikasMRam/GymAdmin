@@ -66,7 +66,7 @@ export const consumerCards = [
     through Seniorly using our secure payment platform at no additional charge.`,
   },
   {
-    icon: 'favourite-dark',
+    icon: 'favourite-light',
     heading: 'Satisfaction Guarantee',
     content: `If you are not 100% in love with the community you have selected, we will be there
     to help you find the right one and locate additional services or support that may be missing.`,

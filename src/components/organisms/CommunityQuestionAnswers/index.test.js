@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import CommuntityQuestionAndAnswer, { AskQuestionButton, LeaveAnswerButton, AnswersCountTextDiv } from 'sly/components/organisms/CommunityQuestionAnswers';
+import CommuntityQuestionAndAnswer, { AskQuestionButton, LeaveAnswerButton, AnswersCountTextDiv } from 'sly/components/organisms/CommunityQuestionAnswers/index';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import CommunityQuestion from 'sly/components/molecules/CommunityQuestion';
@@ -11,7 +11,7 @@ import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
 const communityName = 'Rhoda Goldman Plaza';
 const communitySlug = 'rhoda-goldman-plaza';
 const questions = [];
-const onAskQuestionButtonClick = sinon.spy();
+const setModal = sinon.spy();
 const onLeaveAnswerButtonClick = sinon.spy();
 
 const defaultProps = {
@@ -104,10 +104,10 @@ describe('CommuntityQuestionAndAnswer', () => {
   });
 
   it('verify click on Ask a Question Button', () => {
-    const wrapper = wrap({ setIsQuestionModalOpenValue: onAskQuestionButtonClick });
+    const wrapper = wrap({ setModal });
     const askQuestionButton = wrapper.find(AskQuestionButton);
     askQuestionButton.simulate('click');
-    expect(onAskQuestionButtonClick.getCalls()).toHaveLength(1);
+    expect(setModal.getCalls()).toHaveLength(1);
   });
 
   it('verify render Question', () => {

@@ -1,7 +1,6 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
-import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 
@@ -19,8 +18,8 @@ import Modal from 'sly/components/molecules/Modal';
 import Thankyou from 'sly/components/molecules/Thankyou';
 
 import CAWController from 'sly/external/wizards/caw/Controller';
-import WhatNext from "sly/components/organisms/WhatNext";
-import HowSlyWorks from "sly/components/organisms/HowSlyWorks";
+
+import { THANK_YOU, CAW_WIZARD } from 'sly/constants/modalType';
 
 const TopWrapper = styled.div`
   padding-bottom: ${size('spacing.xLarge')};
@@ -227,16 +226,17 @@ const CommunitySearchPage = ({
             onParamsChange={onParamsChange}
           />
         )}
-        { searchParams.modal === 'thankyou' &&
+        { searchParams.modal === THANK_YOU &&
         <Modal closeable isOpen onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}>
           <Thankyou />
           <StyledButton
-          kind="jumbo"
-          onClick={() => onParamsRemove({ paramsToRemove: ['modal'] })}>
-            Click to Continue
+            kind="jumbo"
+            onClick={() => onParamsRemove({ paramsToRemove: ['modal'] })}
+          >
+              Click to Continue
           </StyledButton>
         </Modal>}
-        { searchParams.modal === 'cawWizard' && <Modal closeable isOpen layout="wizard" onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}><CAWController /></Modal>}
+        { searchParams.modal === CAW_WIZARD && <Modal closeable isOpen layout="wizard" onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}><CAWController /></Modal>}
       </CommunitySearchPageTemplate>
     </Fragment>
   );

@@ -111,7 +111,7 @@ export default class CommunityMediaGallery extends Component {
         }
         {isFavouriteEnabled && isFavourited &&
           <StyledButton ghost palette="slate" onClick={onFavouriteClick}>
-            <Icon icon="favourite-dark" size="regular" palette="primary" /> Save
+            <Icon icon="favourite-light" size="regular" palette="primary" /> Save
           </StyledButton>
         }
       </span>
