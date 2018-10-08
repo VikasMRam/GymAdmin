@@ -11,13 +11,13 @@ const Wrapper = styled.div`
   position: fixed;
   top: 0;
   right: 0;
-  background-color: white;
-  height:100%;
+  background-color: ${palette('white', 0)};
+  height: 100%;
   z-index: ${key('zIndexes.modal.overlay')};
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col5')}; 
+    width: ${size('layout.col5')};
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
-    box-shadow: -4px 0px 8px 0 ${palette('black', 0)}10;
+    box-shadow: -${size('spacing.small')} 0 ${size('spacing.regular')} 0 ${palette('black', 0)}10;
   }
 `;
 
