@@ -9,7 +9,7 @@ import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRating
 import { isBrowser } from 'sly/config';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 
-import { ADD_RATING } from 'sly/services/helpers/modalTypeConstants';
+import { ADD_RATING } from 'sly/constants/modalType';
 
 const appElement = isBrowser && document.querySelector('#app');
 

@@ -12,7 +12,7 @@ import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAn
 import Hr from 'sly/components/atoms/Hr';
 import Button from 'sly/components/atoms/Button';
 import { isBrowser } from 'sly/config';
-import { ASK_QUESTION } from 'sly/services/helpers/modalTypeConstants';
+import { ASK_QUESTION } from 'sly/constants/modalType';
 
 const AnswersDiv = styled.div`
   margin-left: ${size('spacing.huge')};

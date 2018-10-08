@@ -19,7 +19,7 @@ import Thankyou from 'sly/components/molecules/Thankyou';
 
 import CAWController from 'sly/external/wizards/caw/Controller';
 
-import { THANK_YOU, CAW_WIZARD } from 'sly/services/helpers/modalTypeConstants';
+import { THANK_YOU, CAW_WIZARD } from 'sly/constants/modalType';
 
 const TopWrapper = styled.div`
   padding-bottom: ${size('spacing.xLarge')};

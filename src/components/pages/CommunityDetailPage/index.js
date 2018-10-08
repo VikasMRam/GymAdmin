@@ -5,7 +5,7 @@ import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ADD_TO_FAVOURITE } from 'sly/services/helpers/modalTypeConstants';
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ADD_TO_FAVOURITE } from 'sly/constants/modalType';
 
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
