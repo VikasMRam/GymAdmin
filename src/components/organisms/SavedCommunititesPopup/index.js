@@ -63,13 +63,13 @@ const StyledHr = styled(Hr)`
 `;
 
 const SavedCommunitiesPopup = ({
-  savedCommunities, isLoading, isLoadSuccess, onCloseButtonClick,
+  savedCommunities, isLoading, isLoadSuccess, onCloseButtonClick, onFavouriteClicked,
 }) => {
   let savedCommunitiesComponent = 'Loading...';
   if (!isLoading) {
     if (isLoadSuccess) {
       if (savedCommunities.length > 0) {
-        savedCommunitiesComponent = savedCommunities.map(savedCommunity => <SavedCommunityTileWrapper key={savedCommunity.id}><SavedCommunityTile {...savedCommunity} /></SavedCommunityTileWrapper>);
+        savedCommunitiesComponent = savedCommunities.map(savedCommunity => <SavedCommunityTileWrapper key={savedCommunity.id}><SavedCommunityTile {...savedCommunity} onFavouriteClicked={() => onFavouriteClicked(savedCommunity)} /></SavedCommunityTileWrapper>);
       } else {
         savedCommunitiesComponent = 'There are no Saved Communities.';
       }
@@ -95,6 +95,7 @@ const SavedCommunitiesPopup = ({
 SavedCommunitiesPopup.propTypes = {
   savedCommunities: array,
   onCloseButtonClick: func.isRequired,
+  onFavouriteClicked: func.isRequired,
   isLoading: bool,
   isLoadSuccess: bool,
 };
