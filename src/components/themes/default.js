@@ -309,4 +309,7 @@ theme.zIndexes = {
   savedCommunityPopup: 10005,
 };
 
+// timeout to hide toast notifications, in milliseconds
+theme.toastNotificationTimeout = 30000;
+
 export default theme;
