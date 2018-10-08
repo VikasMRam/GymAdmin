@@ -13,6 +13,7 @@ import {
 } from 'sly/services/validation';
 
 import CommunityAskQuestionForm from 'sly/components/organisms/CommunityAskQuestionForm';
+import { THANK_YOU } from 'sly/constants/modalType';
 
 const validate = createValidator({
   question: [required],
@@ -32,12 +33,12 @@ class CommunityAskQuestionFormContainer extends Component {
     communitySlug: string.isRequired,
     askQuestion: func,
     loadCommunity: func,
-    setIsQuestionModalOpenValue: func,
+    setModal: func,
   };
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, askQuestion, loadCommunity, setIsQuestionModalOpenValue,
+      communitySlug, askQuestion, loadCommunity, setModal,
     } = this.props;
     const { question, name, email } = values;
     const payload = {
@@ -47,7 +48,7 @@ class CommunityAskQuestionFormContainer extends Component {
       email,
     };
     return askQuestion(payload).then(() => {
-      setIsQuestionModalOpenValue(false);
+      setModal(THANK_YOU);
       // Hacky way. to push created question into array for rerender
       loadCommunity(communitySlug);
     }).catch((r) => {
