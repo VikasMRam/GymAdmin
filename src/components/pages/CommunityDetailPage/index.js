@@ -44,7 +44,7 @@ import Thankyou from 'sly/components/molecules/Thankyou/index';
 import ToastNotification from 'sly/components/molecules/ToastNotification';
 
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
-import SavedCommunitiesPopup from 'sly/components/organisms/SavedCommunititesPopup/index';
+import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -315,6 +315,11 @@ export default class CommunityDetailPage extends Component {
         }
       </Fragment>
     );
+    const data = {
+      name: 'Rhoda Goldman Plaz',
+      image: 'https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_sd.jpg',
+      note: 'Test Note',
+    };
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -553,7 +558,7 @@ export default class CommunityDetailPage extends Component {
         <ToastNotification isOpen={isUserSaveCreateFailure} status="error">
           Failed to save community. Please try again.
         </ToastNotification>
-        <SavedCommunitiesPopup />
+        <SavedCommunitiesPopupController />
       </Fragment>
     );
   }

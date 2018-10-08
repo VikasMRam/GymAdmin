@@ -306,6 +306,7 @@ theme.zIndexes = {
   header            : 10001,
   searchSuggestions : 10002,
   toastNotifications: 10003,
+  savedCommunityPopup: 10005,
 };
 
 export default theme;
