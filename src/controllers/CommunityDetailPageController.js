@@ -6,7 +6,8 @@ import { connectController } from 'sly/controllers';
 import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
 import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
-import { UserSaveCommunityEntityType, UserSaveDeleteStatus, UserSaveInitStatus } from 'sly/services/helpers/user_save';
+import { USER_SAVE_COMMUNITY_ENTITY_TYPE, USER_SAVE_DELETE_STATUS, USER_SAVE_INIT_STATUS } from 'sly/constants/userSave';
+import { ADD_TO_FAVOURITE } from 'sly/constants/modalType';
 import { getSearchParams } from 'sly/services/helpers/search';
 
 import {
@@ -22,7 +23,6 @@ import { resourceDetailReadRequest, resourceListReadRequest, resourceCreateReque
 
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
-import { ADD_TO_FAVOURITE } from 'sly/constants/modalType';
 
 class CommunityDetailPageController extends Component {
   static propTypes = {
@@ -234,7 +234,7 @@ class CommunityDetailPageController extends Component {
       if (!userSaveForCommunity) {
         const { id } = community;
         const payload = {
-          entityType: UserSaveCommunityEntityType,
+          entityType: USER_SAVE_COMMUNITY_ENTITY_TYPE,
           entitySlug: id,
         };
 
@@ -242,15 +242,15 @@ class CommunityDetailPageController extends Component {
           this.setModal(ADD_TO_FAVOURITE);
           getCommunityUserSave(community.id);
         });
-      } else if (userSaveForCommunity.status === UserSaveDeleteStatus) {
+      } else if (userSaveForCommunity.status === USER_SAVE_DELETE_STATUS) {
         updateUserSave(userSaveForCommunity.id, {
-          status: UserSaveInitStatus,
+          status: USER_SAVE_INIT_STATUS,
         }).then(() => {
           this.setModal(ADD_TO_FAVOURITE);
         });
       } else {
         updateUserSave(userSaveForCommunity.id, {
-          status: UserSaveDeleteStatus,
+          status: USER_SAVE_DELETE_STATUS,
         });
       }
     } else {
@@ -324,7 +324,7 @@ class CommunityDetailPageController extends Component {
 
     let userSave = userSaveForCommunity;
     if (userSave) {
-      userSave = userSave.status !== UserSaveDeleteStatus ? userSave : null;
+      userSave = userSave.status !== USER_SAVE_DELETE_STATUS ? userSave : null;
     }
 
     return (
@@ -358,16 +358,14 @@ class CommunityDetailPageController extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    createUserSave: data => dispatch(resourceCreateRequest('userSave', data)),
-    updateUserSave: (id, data) => dispatch(resourceUpdateRequest('userSave', id, data)),
-    getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
-      'filter[entity_type]': UserSaveCommunityEntityType,
-      'filter[entity_slug]': slug,
-    })),
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  createUserSave: data => dispatch(resourceCreateRequest('userSave', data)),
+  updateUserSave: (id, data) => dispatch(resourceUpdateRequest('userSave', id, data)),
+  getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
+    'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
+    'filter[entity_slug]': slug,
+  })),
+});
 
 const getCommunitySlug = match => match.params.communitySlug;
 const mapStateToProps = (state, { match, location, controller }) => {
