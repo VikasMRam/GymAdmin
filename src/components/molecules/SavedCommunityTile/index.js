@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { string } from 'prop-types';
+import { string, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 
@@ -20,8 +20,8 @@ const Wrapper = styled.div`
 `;
 
 const ImageWrapper = styled(Image)`
-  width: ${size('tile.small.width')};
-  height: ${size('tile.small.height')};
+  width: ${size('tile.little.width')};
+  height: ${size('tile.little.height')};
   margin-right: ${size('spacing.regular')};
   padding-top: unset;
 
@@ -40,13 +40,15 @@ const StyledIcon = styled(Icon)`
   position: absolute;
   z-index: 1;
   top: ${size('spacing.regular')};
-  margin-left: calc(${size('tile.small.width')} - ${size('icon.regular')}  - ${size('spacing.regular')});
+  margin-left: calc(${size('tile.little.width')} - ${size('icon.regular')}  - ${size('spacing.regular')});
 `;
 StyledIcon.displayName = 'StyledIcon';
 
-const SavedCommunityTile = ({ image, name, note }) => (
+const SavedCommunityTile = ({
+  image, name, note, onFavouriteClicked,
+}) => (
   <Wrapper>
-    <StyledIcon icon="favourite-dark" size="regular" palette="primary" />
+    <StyledIcon icon="favourite-dark" size="regular" palette="primary" onClick={onFavouriteClicked} />
     <ImageWrapper src={image} aspectRatio="4:3" />
     <div>
       <Heading size="subtitle">{name}</Heading>
@@ -59,6 +61,7 @@ SavedCommunityTile.propTypes = {
   image: string.isRequired,
   name: string.isRequired,
   note: string,
+  onFavouriteClicked: func,
 };
 
 export default SavedCommunityTile;
