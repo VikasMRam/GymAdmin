@@ -45,7 +45,7 @@ const ToastNotification = ({
 ToastNotification.propTypes = {
   status: oneOf(['default', 'error']).isRequired,
   children: node.isRequired,
-  onClose: func.isRequired,
+  onClose: func,
   closeable: bool,
   isOpen: bool,
   closeButtonPalette: oneOf(['white', 'slate']),
