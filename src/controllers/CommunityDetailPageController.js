@@ -17,6 +17,7 @@ import {
   isResourceListRequestInProgress,
   isResourceListRequestComplete,
   isResourceUpdateRequestComplete,
+  isResourceUpdateRequestFailure,
 } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceListReadRequest, resourceCreateRequest, resourceUpdateRequest }
   from 'sly/store/resource/actions';
@@ -377,7 +378,8 @@ const mapStateToProps = (state, { match, location, controller }) => {
 
   const searchParams = getSearchParams(match, location);
   const communitySlug = getCommunitySlug(match);
-  const isUserSaveCreateFailure = isResourceCreateRequestFailure(state, 'userSave');
+  const isUserSaveCreateFailure = isResourceCreateRequestFailure(state, 'userSave') ||
+    isResourceUpdateRequestFailure(state, 'userSave');
   const isGetCommunityUserSaveComplete = isResourceListRequestComplete(state, 'userSave');
   const isUserSaveUpdateComplete = userSaveUpdated && isResourceUpdateRequestComplete(state, 'userSave');
   const isGetCommunityUserSaveInProgress = isResourceListRequestInProgress(state, 'userSave');
