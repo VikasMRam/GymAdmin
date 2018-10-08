@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { array, func } from 'prop-types';
+import { array, func, bool } from 'prop-types';
 import { palette, key } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
@@ -62,11 +62,22 @@ const StyledHr = styled(Hr)`
   }
 `;
 
-const SavedCommunitiesPopup = ({ savedCommunities, onCloseButtonClick }) => {
-  let savedCommunitiesComponent = 'There are no Saved Communities.';
-  if (savedCommunities.length > 0) {
-    savedCommunitiesComponent = savedCommunities.map(savedCommunity => <SavedCommunityTileWrapper key={savedCommunity.id}><SavedCommunityTile {...savedCommunity} /></SavedCommunityTileWrapper>);
+const SavedCommunitiesPopup = ({
+  savedCommunities, isLoading, isLoadSuccess, onCloseButtonClick,
+}) => {
+  let savedCommunitiesComponent = 'Loading...';
+  if (!isLoading) {
+    if (isLoadSuccess) {
+      if (savedCommunities.length > 0) {
+        savedCommunitiesComponent = savedCommunities.map(savedCommunity => <SavedCommunityTileWrapper key={savedCommunity.id}><SavedCommunityTile {...savedCommunity} /></SavedCommunityTileWrapper>);
+      } else {
+        savedCommunitiesComponent = 'There are no Saved Communities.';
+      }
+    } else {
+      savedCommunitiesComponent = 'Loading Saved Communities Failed.';
+    }
   }
+
   return (
     <Wrapper>
       <HeadingWrapper>
@@ -84,6 +95,8 @@ const SavedCommunitiesPopup = ({ savedCommunities, onCloseButtonClick }) => {
 SavedCommunitiesPopup.propTypes = {
   savedCommunities: array,
   onCloseButtonClick: func.isRequired,
+  isLoading: bool,
+  isLoadSuccess: bool,
 };
 
 SavedCommunitiesPopup.defaultProps = {

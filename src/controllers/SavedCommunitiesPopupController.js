@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { func, array, object } from 'prop-types';
+import { func, array, object, bool } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import { connectController } from 'sly/controllers/index';
 import { resourceListReadRequest } from 'sly/store/resource/actions';
 import SavedCommunitiesPopup from 'sly/components/organisms/SavedCommunititesPopup/index';
 import { USER_SAVE_COMMUNITY_ENTITY_TYPE, USER_SAVE_INIT_STATUS } from 'sly/constants/userSave';
-import { getList } from 'sly/store/selectors';
+import { getList, isResourceListRequestComplete, isResourceListRequestFailure } from 'sly/store/selectors';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
 import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
@@ -17,6 +17,10 @@ class SavedCommunitiesPopupController extends Component {
     getUserSaves: func,
     set: func,
     searchParams: object,
+    history: object,
+    location: object,
+    isLoading: bool,
+    isLoadSuccess: bool,
   };
 
   componentDidMount() {
@@ -51,7 +55,9 @@ class SavedCommunitiesPopupController extends Component {
   };
 
   render() {
-    const { userSaves, searchParams } = this.props;
+    const {
+      userSaves, searchParams, isLoading, isLoadSuccess,
+    } = this.props;
     if (searchParams.modal === SAVED_COMMUNITIES) {
       const savedCommunities = userSaves.reduce((result, userSave) => {
         const { id, info } = userSave;
@@ -63,7 +69,7 @@ class SavedCommunitiesPopupController extends Component {
         });
         return result;
       }, []);
-      return <SavedCommunitiesPopup savedCommunities={savedCommunities} onCloseButtonClick={() => this.setModal()} />;
+      return <SavedCommunitiesPopup isLoading={isLoading} isLoadSuccess={isLoadSuccess} savedCommunities={savedCommunities} onCloseButtonClick={() => this.setModal()} />;
     }
     return null;
   }
@@ -73,6 +79,8 @@ const mapStateToProps = (state, { match, location }) => {
   return {
     searchParams: getSearchParams(match, location),
     userSaves: getList(state, 'userSave'),
+    isLoading: !isResourceListRequestComplete(state, 'userSave'),
+    isLoadSuccess: !isResourceListRequestFailure(state, 'userSave'),
   };
 };
 
