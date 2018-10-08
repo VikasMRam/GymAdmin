@@ -17,6 +17,8 @@ class SavedCommunitiesPopupController extends Component {
     getUserSaves: func,
     set: func,
     searchParams: object,
+    history: object,
+    location: object,
   };
 
   componentDidMount() {
