@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { func, bool, array, arrayOf, number, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -7,18 +7,20 @@ import { getDetail } from 'sly/store/selectors';
 import Header from 'sly/components/organisms/Header';
 import { toggle } from 'sly/store/actions';
 import { isHeaderDropdownOpen } from 'sly/store/selectors';
+import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
 
 const defaultHeaderItems = [
-  { name: '(855) 866-4515', url: 'tel:+18558664515'},
+  { name: '(855) 866-4515', url: 'tel:+18558664515' },
   { name: 'Resources', url: '/resources' },
   { name: 'How It Works', url: '/how-it-works' },
+  { name: 'Saved', url: '?modal=savedCommunities' },
   { name: 'List Your Property', url: '/providers' },
   // { name: 'Sign in', url: '/signin' },
 ];
 
 const defaultMenuItems = [
   { name: 'Home', url: '/' },
-  { name: '(855) 866-4515', url: 'tel:+18558664515'},
+  { name: '(855) 866-4515', url: 'tel:+18558664515' },
   { name: 'Resources', url: '/resources' },
   { name: 'How It Works', url: '/how-it-works' },
   { name: 'Assisted Living', url: '/assisted-living' },
@@ -69,15 +71,18 @@ class HeaderContainer extends Component {
     ];
 
     return (
-      <Header
-        menuOpen={dropdownOpen}
-        onMenuIconClick={dispatchToggleAction}
-        onMenuItemClick={dispatchToggleAction}
-        onHeaderBlur={dispatchToggleAction}
-        headerItems={headerItems}
-        menuItems={menuItems}
-        menuItemHrIndices={menuItemHrIndices}
-      />
+      <Fragment>
+        <Header
+          menuOpen={dropdownOpen}
+          onMenuIconClick={dispatchToggleAction}
+          onMenuItemClick={dispatchToggleAction}
+          onHeaderBlur={dispatchToggleAction}
+          headerItems={headerItems}
+          menuItems={menuItems}
+          menuItemHrIndices={menuItemHrIndices}
+        />
+        <SavedCommunitiesPopupController />
+      </Fragment>
     );
   }
 }
