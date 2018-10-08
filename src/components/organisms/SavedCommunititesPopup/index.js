@@ -49,6 +49,7 @@ const CloseIcon = styled(Icon)`
     margin-bottom: initial;
   }
 `;
+CloseIcon.displayName = 'SavedCommunitiesPopup_CloseIcon';
 const CommunitiesListWrapper = styled.div`
   padding: ${size('spacing.xLarge')};
 `;
