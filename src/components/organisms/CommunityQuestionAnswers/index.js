@@ -114,7 +114,7 @@ CommuntityQuestionAndAnswer.propTypes = {
   user: object,
 };
 
-CommuntityQuestionAndAnswer.defaultProp = {
+CommuntityQuestionAndAnswer.defaultProps = {
   questions: [],
 };
 
