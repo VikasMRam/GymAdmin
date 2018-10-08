@@ -15,6 +15,7 @@ import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
+import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -472,6 +473,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
           <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
         </CWTColumnWrapper>
       </StyledSection>
+      <SavedCommunitiesPopupController />
     </BasePageTemplate>
   );
 };
