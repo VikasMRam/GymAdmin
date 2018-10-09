@@ -1,13 +1,15 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { object, func, array } from 'prop-types';
+import { object, func } from 'prop-types';
 import { palette } from 'styled-theme';
 
 import { size, assetPath } from 'sly/components/themes';
 
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
 import { Link, Image, Block, Heading } from 'sly/components/atoms';
-import HeaderContainer from 'sly/containers/HeaderContainer';
+
+import HeaderController from 'sly/controllers/HeaderController';
+
 import ProfileTile from 'sly/components/molecules/ProfileTile';
 import Footer from 'sly/components/organisms/Footer';
 import Modal from 'sly/components/molecules/Modal';
@@ -206,7 +208,7 @@ margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const AgentsProfilePage = ({
-  regionProfiles, activeProfile, setModalProfile, onLocationSearch,
+  regionProfiles, activeProfile, setModalProfile,
 }) => {
   const agentsSectionComponents = Object.keys(regionProfiles).map((region) => {
     const agentsProfile = regionProfiles[region].map(profile => (
@@ -223,7 +225,7 @@ const AgentsProfilePage = ({
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <HeaderContainer onLocationSearch={onLocationSearch} />
+      <HeaderController />
       <HeroWrapper>
         <HeroBackgroundImage src={assetPath('images/agent-hero.jpg')} alt="A Home To Love" />
         <HeroTextWrapper>
@@ -261,7 +263,6 @@ const AgentsProfilePage = ({
 AgentsProfilePage.propTypes = {
   regionProfiles: object,
   activeProfile: object,
-  onLocationSearch: func,
   setModalProfile: func,
 };
 

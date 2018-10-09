@@ -4,11 +4,12 @@ import { palette } from "styled-theme";
 import { size } from "sly/components/themes";
 import { Component } from "react";
 import { number } from 'prop-types';
-import Heading from "sly/components/atoms/Heading";
 
+import HeaderController from 'sly/controllers/HeaderController';
+
+import Heading from "sly/components/atoms/Heading";
 import Link from "sly/components/atoms/Link";
 import BasePageTemplate from "sly/components/templates/BasePageTemplate";
-import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from "sly/components/organisms/Footer";
 
 const Wrapper = styled.div`
@@ -17,13 +18,13 @@ const Wrapper = styled.div`
   margin: calc(${size('breakpoint.tablet')}/4) auto;
   content-align: center;
   text-align: center;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {    
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width:${size('breakpoint.tablet')};
   }
 `;
 const IWrapper = styled(Heading)`
   margin-bottom: ${size('spacing.xxLarge')};
-  
+
 `;
 
 const getTextError= (errorCode) => {
@@ -53,7 +54,7 @@ export default class ErrorPage extends Component {
     const { errorCode } = this.props;
 
     return (
-      <BasePageTemplate header={<HeaderContainer />}  footer={<Footer/>}>
+      <BasePageTemplate header={<HeaderController />}  footer={<Footer/>}>
         <Wrapper>
           <IWrapper>{getTextError(errorCode)}</IWrapper>
           <div>

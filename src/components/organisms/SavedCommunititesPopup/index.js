@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { array, func, bool } from 'prop-types';
 import { palette, key } from 'styled-theme';
+import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import { Icon, Hr } from 'sly/components/atoms/index';
@@ -14,6 +15,8 @@ const Wrapper = styled.div`
   background-color: ${palette('white', 0)};
   height: 100%;
   z-index: ${key('zIndexes.modal.overlay')};
+  transform: ${ifProp('isOpen', 'translate3d(0, 0, 0)', 'translate3d(100%, 0, 0)')};
+  transition: all ${key('transitions.slow.inOut')};
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('layout.col5')};
     border: ${size('border.regular')} solid ${palette('grayscale', 2)};
@@ -64,7 +67,7 @@ const StyledHr = styled(Hr)`
 `;
 
 const SavedCommunitiesPopup = ({
-  savedCommunities, isLoading, isLoadSuccess, onCloseButtonClick, onFavouriteClicked,
+  savedCommunities, isLoading, isLoadSuccess, onCloseButtonClick, onFavouriteClicked, isOpen,
 }) => {
   let savedCommunitiesComponent = 'Loading...';
   if (!isLoading) {
@@ -80,7 +83,7 @@ const SavedCommunitiesPopup = ({
   }
 
   return (
-    <Wrapper>
+    <Wrapper isOpen={isOpen}>
       <HeadingWrapper>
         <HeadingDiv>Saved Communities</HeadingDiv>
         <CloseIcon icon="close" onClick={onCloseButtonClick} />
@@ -99,10 +102,12 @@ SavedCommunitiesPopup.propTypes = {
   onFavouriteClicked: func.isRequired,
   isLoading: bool,
   isLoadSuccess: bool,
+  isOpen: bool,
 };
 
 SavedCommunitiesPopup.defaultProps = {
   savedCommunities: [],
+  isOpen: true,
 };
 
 export default SavedCommunitiesPopup;

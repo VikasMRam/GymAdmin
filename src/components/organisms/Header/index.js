@@ -124,7 +124,11 @@ const HeaderItem = styled(Link)`
 const Header = ({
   menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur,
 }) => {
-  const headerItemComponents = headerItems.map(item => (
+  const headerItemComponents = headerItems.map(item => item.onClick ? (
+    <HeaderItem onClick={item.onClick} palette="slate" key={item.name}>
+      {item.name}
+    </HeaderItem>
+  ) : (
     <HeaderItem to={item.url} palette="slate" key={item.name}>
       {item.name}
     </HeaderItem>
@@ -197,6 +201,7 @@ Header.propTypes = {
   headerItems: arrayOf(shape({
     name: string,
     url: string,
+    onClick: func,
   })).isRequired,
   menuItems: arrayOf(shape({
     name: string,

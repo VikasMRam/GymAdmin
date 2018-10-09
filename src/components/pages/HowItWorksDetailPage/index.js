@@ -5,9 +5,10 @@ import { palette } from 'styled-theme';
 
 import { size, assetPath } from 'sly/components/themes';
 
+import HeaderController from 'sly/controllers/HeaderController';
+
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
 import { Image, Link, Block, Heading, Hr } from 'sly/components/atoms';
-import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import HowItWorksInfoTile from 'sly/components/molecules/HowItWorksInfoTile';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
@@ -118,7 +119,7 @@ const Tab = styled(Link)`
 const Header = ({ heroImageUrl, heading, subheading, children }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-    <HeaderContainer />
+    <HeaderController />
     <HeroWrapper>
       <HeroBackgroundImage src={assetPath(heroImageUrl)} alt="A Home To Love" />
       <HeroTextWrapper>

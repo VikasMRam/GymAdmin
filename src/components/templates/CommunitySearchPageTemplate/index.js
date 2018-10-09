@@ -4,8 +4,9 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 
+import HeaderController from 'sly/controllers/HeaderController';
+
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
-import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 
 const TwoColumnWrapper = styled.div`
@@ -38,7 +39,7 @@ const CommunitySearchPageTemplate = ({
   column,
 }) => (
   <BasePageTemplate
-    header={<HeaderContainer />}
+    header={<HeaderController />}
     footer={<Footer />}
   >
     <TwoColumnWrapper>
