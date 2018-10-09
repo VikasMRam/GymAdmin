@@ -14,8 +14,6 @@ import {
   getDetail,
   getList,
   isResourceCreateRequestFailure,
-  isResourceListRequestInProgress,
-  isResourceListRequestComplete,
   isResourceUpdateRequestComplete,
   isResourceUpdateRequestFailure,
 } from 'sly/store/selectors';
@@ -44,28 +42,41 @@ class CommunityDetailPageController extends Component {
     updateUserSave: func,
     isUserSaveCreateFailure: bool,
     getCommunityUserSave: func,
-    isGetCommunityUserSaveComplete: bool,
-    isGetCommunityUserSaveInProgress: bool,
+    isLoadingUserSaves: bool,
+    isLoadUserSavesSuccess: bool,
     isUserSaveUpdateComplete: bool,
     redirectUrl: string,
   };
 
   componentDidMount() {
-    const { getCommunityUserSave, user, community } = this.props;
+    const {
+      getCommunityUserSave, user, community, set,
+    } = this.props;
 
     if (user && community) {
-      getCommunityUserSave(community.id);
+      set({
+        isLoadingUserSaves: true,
+      });
+      getCommunityUserSave(community.id).then(() => set({
+        isLoadUserSavesSuccess: true,
+        isLoadingUserSaves: false,
+      }));
     }
   }
 
   componentDidUpdate() {
     const {
-      getCommunityUserSave, user, community, isGetCommunityUserSaveInProgress,
-      isGetCommunityUserSaveComplete,
+      getCommunityUserSave, user, community, isLoadingUserSaves, isLoadUserSavesSuccess, set,
     } = this.props;
 
-    if (!isGetCommunityUserSaveComplete && !isGetCommunityUserSaveInProgress && user && community) {
-      getCommunityUserSave(community.id);
+    if (!isLoadUserSavesSuccess && !isLoadingUserSaves && user && community) {
+      set({
+        isLoadingUserSaves: true,
+      });
+      getCommunityUserSave(community.id).then(() => set({
+        isLoadUserSavesSuccess: true,
+        isLoadingUserSaves: false,
+      }));
     }
   }
 
@@ -286,7 +297,7 @@ class CommunityDetailPageController extends Component {
       isStickyHeaderVisible,
       isFavouriteModalVisible,
       isUserSaveCreateFailure,
-      isGetCommunityUserSaveComplete,
+      isLoadUserSavesSuccess,
       searchParams,
       isUserSaveUpdateComplete,
     } = this.props;
@@ -348,7 +359,7 @@ class CommunityDetailPageController extends Component {
         setQuestionToAsk={this.setQuestionToAsk}
         isFavouriteModalVisible={isFavouriteModalVisible}
         isUserSaveCreateFailure={isUserSaveCreateFailure}
-        isGetCommunityUserSaveComplete={isGetCommunityUserSaveComplete}
+        isGetCommunityUserSaveComplete={isLoadUserSavesSuccess}
         userSave={userSave}
         searchParams={searchParams}
         onParamsRemove={this.handleParamsRemove}
@@ -373,16 +384,14 @@ const mapStateToProps = (state, { match, location, controller }) => {
   // default state for ssr
   const {
     mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false, isStickyHeaderVisible = false,
-    userSaveUpdated = false,
+    userSaveUpdated = false, isLoadingUserSaves = false, isLoadUserSavesSuccess = false,
   } = controller;
 
   const searchParams = getSearchParams(match, location);
   const communitySlug = getCommunitySlug(match);
   const isUserSaveCreateFailure = isResourceCreateRequestFailure(state, 'userSave') ||
     isResourceUpdateRequestFailure(state, 'userSave');
-  const isGetCommunityUserSaveComplete = isResourceListRequestComplete(state, 'userSave');
   const isUserSaveUpdateComplete = userSaveUpdated && isResourceUpdateRequestComplete(state, 'userSave');
-  const isGetCommunityUserSaveInProgress = isResourceListRequestInProgress(state, 'userSave');
   const userSaveForCommunity = getList(state, 'userSave').find(userSave =>
     userSave.entityType === USER_SAVE_COMMUNITY_ENTITY_TYPE && userSave.entitySlug === communitySlug);
 
@@ -394,8 +403,8 @@ const mapStateToProps = (state, { match, location, controller }) => {
     isMediaGalleryFullscreenActive,
     isStickyHeaderVisible,
     isUserSaveCreateFailure,
-    isGetCommunityUserSaveComplete,
-    isGetCommunityUserSaveInProgress,
+    isLoadingUserSaves,
+    isLoadUserSavesSuccess,
     isUserSaveUpdateComplete,
     searchParams,
   };
