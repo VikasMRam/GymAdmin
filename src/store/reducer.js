@@ -6,7 +6,6 @@ import entities from './entities/reducer';
 import modal from './modal/reducer';
 import resource from './resource/reducer';
 import experiments from './experiments/reducer';
-import header from './header/reducer';
 import searchBox from './searchBox/reducer';
 import controller from './controller/reducer';
 import communitySearchPage from './communitySearchPage/reducer';
@@ -19,7 +18,6 @@ const reducers = {
   modal,
   resource,
   experiments,
-  header,
   searchBox,
   controller,
   communitySearchPage,

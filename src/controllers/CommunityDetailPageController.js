@@ -75,7 +75,7 @@ class CommunityDetailPageController extends Component {
     } else {
       this.handleParamsRemove({ paramsToRemove: ['modal'] });
     }
-  }
+  };
 
   setQuestionToAsk = (question) => {
     if (question) {
@@ -83,7 +83,7 @@ class CommunityDetailPageController extends Component {
     } else {
       this.changeSearchParams({ changedParams: { modal: null, entityId: null } });
     }
-  }
+  };
 
   changeSearchParams = ({ changedParams }) => {
     const { history, location } = this.props;

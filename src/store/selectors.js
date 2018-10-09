@@ -1,7 +1,6 @@
 import * as resources from './resource/selectors';
 import * as experiments from './experiments/selectors';
 import * as entities from './entities/selectors';
-import * as header from './header/selectors';
 import * as searchBox from './searchBox/selectors';
 import * as communitySearchPage from './communitySearchPage/selectors';
 import * as chatBox from './chatBox/selectors';
@@ -93,9 +92,6 @@ export const getExperiment = (state, experimentName) =>
 
 export const getExperiments = state =>
   experiments.getExperiments(state.experiments);
-
-export const isHeaderDropdownOpen = state =>
-  header.isDropdownOpen(state.header);
 
 export const searchBoxAddress = state =>
   searchBox.searchBoxAddress(state.searchBox);

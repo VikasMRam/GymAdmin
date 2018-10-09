@@ -5,6 +5,10 @@ import get from 'lodash/get';
 import { set, unset } from 'sly/store/controller/actions';
 
 const convertMapDispatchToObject = mapDispatchToProps => (dispatch, props) => {
+  if (!mapDispatchToProps) {
+    return {};
+  }
+
   return typeof mapDispatchToProps === 'function'
     ? mapDispatchToProps(dispatch, props)
     : Object.keys(mapDispatchToProps)

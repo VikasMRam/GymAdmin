@@ -5,9 +5,11 @@ import { palette } from 'styled-theme';
 
 import { size, assetPath } from 'sly/components/themes';
 
+import HeaderController from 'sly/controllers/HeaderController';
+
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
+
 import { Image, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
-import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import Modal from 'sly/components/molecules/Modal';
 import Section from 'sly/components/molecules/Section';
@@ -333,7 +335,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <HeaderContainer />
+      <HeaderController />
       <HeroWrapper>
         <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
         <SearchBoxWrapper>

@@ -1,19 +1,21 @@
 import React, { Component, Fragment } from 'react';
-import { func, bool, array, arrayOf, number, object } from 'prop-types';
-import { connect } from 'react-redux';
+import { func, bool, arrayOf, number, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
+import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
+import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
+
+import { connectController } from 'sly/controllers';
 import { getDetail } from 'sly/store/selectors';
+
 import Header from 'sly/components/organisms/Header';
-import { toggle } from 'sly/store/actions';
-import { isHeaderDropdownOpen } from 'sly/store/selectors';
 import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
 
 const defaultHeaderItems = [
   { name: '(855) 866-4515', url: 'tel:+18558664515' },
   { name: 'Resources', url: '/resources' },
   { name: 'How It Works', url: '/how-it-works' },
-  { name: 'Saved', url: '?modal=savedCommunities' },
+  { name: 'Saved' },
   { name: 'List Your Property', url: '/providers' },
   // { name: 'Sign in', url: '/signin' },
 ];
@@ -40,25 +42,64 @@ const loginHeaderItems = user => user
 const loginMenuItems = user => loginHeaderItems(user)
   .concat(user
     ? [{ name: 'Log out', url: '/signout' }]
-    : []
-  );
+    : []);
 
 const menuItemHrIndices = [7, 10];
 
-class HeaderContainer extends Component {
+class HeaderController extends Component {
   static propTypes = {
-    dispatchToggleAction: func,
     dropdownOpen: bool,
     menuItemHrIndices: arrayOf(number),
     user: object,
+    set: func,
+    history: object,
+    location: object,
   };
 
-  render(){
+  setModal = (value) => {
+    if (value) {
+      this.changeSearchParams({ changedParams: { modal: value } });
+    } else {
+      this.handleParamsRemove({ paramsToRemove: ['modal'] });
+    }
+  };
+
+  handleMenuItemClick = () => {
+    const { dropdownOpen, set } = this.props;
+
+    set({
+      dropdownOpen: !dropdownOpen,
+    });
+  };
+
+  changeSearchParams = ({ changedParams }) => {
+    const { history, location } = this.props;
+    const { pathname, search } = location;
+
+    const newParams = { ...parseURLQueryParams(search), ...changedParams };
+    const path = `${pathname}?${objectToURLQueryParams(newParams)}`;
+    history.push(path);
+  };
+
+  handleParamsRemove = ({ paramsToRemove }) => {
+    const changedParams = paramsToRemove.reduce((obj, p) => {
+      const nobj = obj;
+      nobj[p] = undefined;
+      return nobj;
+    }, {});
+    this.changeSearchParams({ changedParams });
+  };
+
+  render() {
     const {
-      dispatchToggleAction,
       dropdownOpen,
       user,
     } = this.props;
+
+    const savedHeaderItem = defaultHeaderItems.find(item => item.name === 'Saved');
+    if (savedHeaderItem) {
+      savedHeaderItem.onClick = () => this.setModal(SAVED_COMMUNITIES);
+    }
 
     const headerItems = [
       ...defaultHeaderItems,
@@ -74,9 +115,9 @@ class HeaderContainer extends Component {
       <Fragment>
         <Header
           menuOpen={dropdownOpen}
-          onMenuIconClick={dispatchToggleAction}
-          onMenuItemClick={dispatchToggleAction}
-          onHeaderBlur={dispatchToggleAction}
+          onMenuIconClick={this.handleMenuItemClick}
+          onMenuItemClick={this.handleMenuItemClick}
+          onHeaderBlur={this.handleMenuItemClick}
           headerItems={headerItems}
           menuItems={menuItems}
           menuItemHrIndices={menuItemHrIndices}
@@ -87,19 +128,15 @@ class HeaderContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, { controller }) => {
+  const { dropdownOpen } = controller;
+
   return {
-    dropdownOpen: isHeaderDropdownOpen(state),
+    dropdownOpen,
     // this will break as soon as we are requesting other users
     // TODO: make the me resource remember it's id
     user: getDetail(state, 'user', 'me'),
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    dispatchToggleAction: () => dispatch(toggle()),
-  };
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderContainer));
+export default withRouter(connectController(mapStateToProps)(HeaderController));
