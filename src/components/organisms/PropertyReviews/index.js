@@ -14,7 +14,6 @@ import { ADD_RATING } from 'sly/constants/modalType';
 const appElement = isBrowser && document.querySelector('#app');
 
 const PropertyReviews = ({
-  hasSlyReviews,
   hasWebReviews,
   reviews,
   reviewRatings,
@@ -28,7 +27,7 @@ const PropertyReviews = ({
   communityName,
 }) => {
   let propertyReviews = null;
-  if (hasSlyReviews) {
+  if (reviews.length > 0) {
     propertyReviews = reviews.map((review) => {
       return <PropertyReview {...review} key={review.id} />;
     });
@@ -73,7 +72,6 @@ PropertyReviews.propTypes = {
     avgRating: number.isRequired,
   })).isRequired,
   onLeaveReview: func.isRequired,
-  hasSlyReviews: bool.isRequired,
   hasWebReviews: bool.isRequired,
   communityReviewsRef: object,
   onReviewLinkClicked: func,

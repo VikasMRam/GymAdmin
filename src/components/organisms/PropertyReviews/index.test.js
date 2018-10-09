@@ -46,7 +46,6 @@ const wrap = (props = {}) =>
 describe('PropertyReviews', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({
-      hasSlyReviews: true,
       hasWebReviews: true,
       children: 'test',
     });
@@ -54,30 +53,30 @@ describe('PropertyReviews', () => {
   });
 
   it('renders Property review', () => {
-    const wrapper = wrap({ hasSlyReviews: true, hasWebReviews: true });
+    const wrapper = wrap({ hasWebReviews: true });
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);
     expect(wrapper.find(PropertyReview)).toHaveLength(3);
   });
 
-  it('renders Seniorly Reviews only when hasSlyReviews is true', () => {
-    const wrapper = wrap({ hasSlyReviews: true, hasWebReviews: false });
+  it('renders Seniorly Reviews only when length of reviews > 0', () => {
+    const wrapper = wrap({ hasWebReviews: false });
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(0);
     expect(wrapper.find(PropertyReview)).toHaveLength(3);
   });
 
   it('renders Web Reviews only when hasWebReviews is true', () => {
-    const wrapper = wrap({ hasSlyReviews: false, hasWebReviews: true });
+    const wrapper = wrap({ hasWebReviews: true });
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);
-    expect(wrapper.find(PropertyReview)).toHaveLength(0);
+    expect(wrapper.find(PropertyReview)).toHaveLength(3);
   });
 
   it('renders Modal when isAskRatingModalOpen is true', () => {
-    const wrapper = wrap({ hasSlyReviews: false, hasWebReviews: false, isAskRatingModalOpen: true });
+    const wrapper = wrap({ hasWebReviews: false, isAskRatingModalOpen: true });
     expect(wrapper.find(Modal)).toHaveLength(1);
   });
 
   it('does not renders Modal when isAskRatingModalOpen is false', () => {
-    const wrapper = wrap({ hasSlyReviews: false, hasWebReviews: false, isAskRatingModalOpen: false });
+    const wrapper = wrap({ hasWebReviews: false, isAskRatingModalOpen: false });
     expect(wrapper.find(Modal)).toHaveLength(0);
   });
 });
