@@ -12,6 +12,7 @@ test('resourceCreateRequest', () => {
     },
     meta: expect.objectContaining({
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -27,6 +28,7 @@ test('resourceCreateSuccess', () => {
     meta: expect.objectContaining({
       request: 'request',
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -39,6 +41,7 @@ test('resourceCreateFailure', () => {
     meta: expect.objectContaining({
       request: 'request',
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -53,6 +56,7 @@ test('resourceListReadRequest', () => {
     },
     meta: expect.objectContaining({
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -64,6 +68,7 @@ test('resourceListReadSuccess', () => {
     meta: expect.objectContaining({
       request: 'request',
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -76,6 +81,7 @@ test('resourceListReadFailure', () => {
     meta: expect.objectContaining({
       request: 'request',
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -88,6 +94,7 @@ test('resourceDetailReadRequest', () => {
     },
     meta: expect.objectContaining({
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -103,6 +110,7 @@ test('resourceDetailReadSuccess', () => {
     meta: expect.objectContaining({
       request: 'request',
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -115,6 +123,7 @@ test('resourceDetailReadFailure', () => {
     meta: expect.objectContaining({
       request: 'request',
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -130,6 +139,7 @@ test('resourceUpdateRequest', () => {
     },
     meta: expect.objectContaining({
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -145,6 +155,7 @@ test('resourceUpdateSuccess', () => {
     meta: expect.objectContaining({
       request: 'request',
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -157,6 +168,7 @@ test('resourceUpdateFailure', () => {
     meta: expect.objectContaining({
       request: 'request',
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -169,6 +181,7 @@ test('resourceDeleteRequest', () => {
     },
     meta: expect.objectContaining({
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -179,6 +192,7 @@ test('resourceDeleteSuccess', () => {
     meta: expect.objectContaining({
       request: 'request',
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });
@@ -191,6 +205,7 @@ test('resourceDeleteFailure', () => {
     meta: expect.objectContaining({
       request: 'request',
       resource: 'resources',
+      resourceKey: 'resources',
     }),
   }));
 });

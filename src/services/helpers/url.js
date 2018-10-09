@@ -189,5 +189,5 @@ export const getOrigin = () => {
   return window.location.origin;
 };
 
-export const objectToURLQueryParams = obj => stringify(obj);
+export const objectToURLQueryParams = (obj, options) => stringify(obj, options);
 export const parseURLQueryParams = obj => parse(obj);
