@@ -29,11 +29,11 @@ class SavedCommunitiesPopupController extends Component {
     const { getUserSaves, searchParams, set } = this.props;
     if (searchParams.modal === SAVED_COMMUNITIES) {
       set({
-        isLoadingUserSaves: true,
+        isLoading: true,
       });
       getUserSaves().then(() => set({
-        isLoadUserSavesSuccess: true,
-        isLoadingUserSaves: false,
+        isLoadSuccess: true,
+        isLoading: false,
       }));
     }
   }
@@ -44,11 +44,11 @@ class SavedCommunitiesPopupController extends Component {
     } = this.props;
     if (!isLoadSuccess && !isLoading && searchParams.modal === SAVED_COMMUNITIES) {
       set({
-        isLoadingUserSaves: true,
+        isLoading: true,
       });
       getUserSaves().then(() => set({
-        isLoadUserSavesSuccess: true,
-        isLoadingUserSaves: false,
+        isLoadSuccess: true,
+        isLoading: false,
       }));
     }
   }
@@ -108,12 +108,17 @@ class SavedCommunitiesPopupController extends Component {
   }
 }
 
-const mapStateToProps = (state, { match, location, controller }) => ({
-  searchParams: getSearchParams(match, location),
-  userSaves: getList(state, 'userSave'),
-  isLoading: controller.isLoadingUserSaves,
-  isLoadSuccess: controller.isLoadUserSavesSuccess,
-});
+const mapStateToProps = (state, { match, location, controller }) => {
+  // default state for ssr
+  const { isLoading = false, isLoadSuccess = false } = controller;
+
+  return {
+    searchParams: getSearchParams(match, location),
+    userSaves: getList(state, 'userSave'),
+    isLoading,
+    isLoadSuccess,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
