@@ -392,7 +392,10 @@ const mapStateToProps = (state, { match, location, controller }) => {
   const isUserSaveCreateFailure = isResourceCreateRequestFailure(state, 'userSave') ||
     isResourceUpdateRequestFailure(state, 'userSave');
   const isUserSaveUpdateComplete = userSaveUpdated && isResourceUpdateRequestComplete(state, 'userSave');
-  const userSaveForCommunity = getList(state, 'userSave').find(userSave =>
+  const userSaveForCommunity = getList(state, 'userSave', {
+    'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
+    'filter[entity_slug]': communitySlug,
+  }).find(userSave =>
     userSave.entityType === USER_SAVE_COMMUNITY_ENTITY_TYPE && userSave.entitySlug === communitySlug);
 
   return {

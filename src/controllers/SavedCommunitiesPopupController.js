@@ -114,7 +114,10 @@ const mapStateToProps = (state, { match, location, controller }) => {
 
   return {
     searchParams: getSearchParams(match, location),
-    userSaves: getList(state, 'userSave'),
+    userSaves: getList(state, 'userSave', {
+      'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
+      'filter[status]': USER_SAVE_INIT_STATUS,
+    }),
     isLoading,
     isLoadSuccess,
   };

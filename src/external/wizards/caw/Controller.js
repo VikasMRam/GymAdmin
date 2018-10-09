@@ -184,7 +184,9 @@ class Controller extends Component {
         } else {
           newState.locationSearchParams = this.providedLocationSearchParams;
         }
-        let href = `${host}/assisted-living/${locationSearchParams.state}/${locationSearchParams.city}?modal=thankyou`;
+        const state = this.providedLocationSearchParams ? this.providedLocationSearchParams.state : locationSearchParams.state;
+        const city = this.providedLocationSearchParams ? this.providedLocationSearchParams.city : locationSearchParams.city;
+        let href = `${host}/assisted-living/${state}/${city}?modal=thankyou`;
         const utm = this.providedUtmParams;
         if (utm) {
           href = `${href}&utm_campaign=${utm.campaign}&utm_source=${utm.source}&utm_medium=${utm.medium}&utm_term=${utm.term}`;
@@ -192,7 +194,10 @@ class Controller extends Component {
         newState.href = href;
 
         set(newState);
-      }).catch(() => {
+      }).catch((err) => {
+        // todo: use correct method for surfacing errors
+        // eslint-disable-next-line no-console
+        console.error(err);
         set({
           searching: false,
         });
