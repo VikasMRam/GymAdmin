@@ -46,6 +46,7 @@ class CommunityDetailPageController extends Component {
     isLoadUserSavesSuccess: bool,
     isUserSaveUpdateComplete: bool,
     redirectUrl: string,
+    getUserSaves: func,
   };
 
   componentDidMount() {
@@ -240,7 +241,7 @@ class CommunityDetailPageController extends Component {
   handleMediaGalleryFavouriteClick = () => {
     const {
       createUserSave, community, user, userSaveForCommunity, updateUserSave,
-      getCommunityUserSave,
+      getCommunityUserSave, getUserSaves,
     } = this.props;
     if (user) {
       if (!userSaveForCommunity) {
@@ -253,16 +254,23 @@ class CommunityDetailPageController extends Component {
         createUserSave(payload).then(() => {
           this.setModal(ADD_TO_FAVOURITE);
           getCommunityUserSave(community.id);
+          // refresh user saves for sidebar
+          getUserSaves();
         });
       } else if (userSaveForCommunity.status === USER_SAVE_DELETE_STATUS) {
         updateUserSave(userSaveForCommunity.id, {
           status: USER_SAVE_INIT_STATUS,
         }).then(() => {
           this.setModal(ADD_TO_FAVOURITE);
+          // refresh user saves for sidebar
+          getUserSaves();
         });
       } else {
         updateUserSave(userSaveForCommunity.id, {
           status: USER_SAVE_DELETE_STATUS,
+        }).then(() => {
+          // refresh user saves for sidebar
+          getUserSaves();
         });
       }
     } else {
@@ -376,6 +384,10 @@ const mapDispatchToProps = dispatch => ({
   getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
     'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
     'filter[entity_slug]': slug,
+  })),
+  getUserSaves: () => dispatch(resourceListReadRequest('userSave', {
+    'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
+    'filter[status]': USER_SAVE_INIT_STATUS,
   })),
 });
 
