@@ -22,7 +22,7 @@ const Wrapper = styled.div`
     cursor: pointer;
     background: ${palette('white', 0)};
     box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('grayscale', 0)}80;
-  
+
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       transform: scale(1.002);
       border-radius: ${size('spacing.small')};
@@ -48,26 +48,22 @@ export const StyledIcon = styled(Icon)`
 const AdInfo = styled.div`
   border: ${size('border.regular')} solid ${palette('grayscale', 0)};
   border-top: 0;
+  padding: ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     border: 0;
+    padding: 0 ${size('spacing.large')};
   }
 `;
 
 const AdInfoHeader = styled.div`
   font-size: ${size('text.subtitle')};
   font-weight: bold;
-  margin: ${size('spacing.large')};
-  margin-top: 0;
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const AdInfoUnorderedList = styled.ul`
-  margin: ${size('spacing.large')};
-  margin-top: 0;
-`;
-
-const StyledButton = styled(Button)`
-  margin: 0 ${size('spacing.large')};
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const AdTile = ({
@@ -85,7 +81,7 @@ const AdTile = ({
           <AdInfoUnorderedList>
             {itemComponents}
           </AdInfoUnorderedList>}
-        <StyledButton>{buttonText}</StyledButton>
+        <Button>{buttonText}</Button>
       </AdInfo>
     </Wrapper>
   );
