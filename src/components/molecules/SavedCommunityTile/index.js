@@ -42,6 +42,10 @@ const StyledIcon = styled(Icon)`
   z-index: 1;
   top: ${size('spacing.regular')};
   margin-left: calc(${size('tile.little.width')} - ${size('icon.regular')}  - ${size('spacing.regular')});
+
+  :hover {
+    cursor: pointer;
+  }
 `;
 StyledIcon.displayName = 'StyledIcon';
 
