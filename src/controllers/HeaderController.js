@@ -11,14 +11,23 @@ import { getDetail } from 'sly/store/selectors';
 import Header from 'sly/components/organisms/Header';
 import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
 
-const defaultHeaderItems = [
-  { name: '(855) 866-4515', url: 'tel:+18558664515' },
-  { name: 'Resources', url: '/resources' },
-  { name: 'How It Works', url: '/how-it-works' },
-  { name: 'Saved' },
-  { name: 'List Your Property', url: '/providers' },
-  // { name: 'Sign in', url: '/signin' },
-];
+const defaultHeaderItems = (user) => {
+  let i = [
+    { name: '(855) 866-4515', url: 'tel:+18558664515' },
+    { name: 'Resources', url: '/resources' },
+    { name: 'How It Works', url: '/how-it-works' },
+  ];
+  if (user) {
+    i = [...i, { name: 'Saved' }];
+  }
+  i = [
+    ...i,
+    { name: 'List Your Property', url: '/providers' },
+    // { name: 'Sign in', url: '/signin' },
+  ];
+
+  return i;
+};
 
 const defaultMenuItems = [
   { name: 'Home', url: '/' },
@@ -95,14 +104,15 @@ class HeaderController extends Component {
       dropdownOpen,
       user,
     } = this.props;
+    const hItems = defaultHeaderItems(user);
 
-    const savedHeaderItem = defaultHeaderItems.find(item => item.name === 'Saved');
+    const savedHeaderItem = hItems.find(item => item.name === 'Saved');
     if (savedHeaderItem) {
       savedHeaderItem.onClick = () => this.setModal(SAVED_COMMUNITIES);
     }
 
     const headerItems = [
-      ...defaultHeaderItems,
+      ...hItems,
       ...loginHeaderItems(user),
     ];
 
