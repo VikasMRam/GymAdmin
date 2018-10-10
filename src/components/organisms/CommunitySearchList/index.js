@@ -176,6 +176,7 @@ export default class CommunitySearchList extends Component {
             <MSCColumnWrapper>
               {usefulInformationTilesComponents}
             </MSCColumnWrapper>
+            <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
           </Fragment>
         }
         {communityList.length > 0 &&

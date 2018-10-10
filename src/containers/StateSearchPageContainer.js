@@ -84,9 +84,9 @@ const mapStateToProps = (state, { match, location }) => {
   const searchParams = getSearchParams(match, location);
   return {
     searchParams,
-    communityList: getList(state, 'searchResource'),
-    requestMeta: getListMeta(state, 'searchResource'),
-    geoGuide: getList(state, 'geoGuide'),
+    communityList: getList(state, 'searchResource', searchParams),
+    requestMeta: getListMeta(state, 'searchResource', searchParams),
+    geoGuide: getList(state, 'geoGuide', searchParams),
   };
 };
 
