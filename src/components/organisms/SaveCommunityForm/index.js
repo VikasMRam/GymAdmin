@@ -63,10 +63,10 @@ formComponent.propTypes = {
 
 const ReduxForm = reduxForm({
   form: 'SaveCommunityForm',
-  destroyOnUnmount: false,
+  destroyOnUnmount: true,
   // required to refresh when initialValues change. Ref: https://redux-form.com/6.7.0/examples/initializefromstate/
   enableReinitialize: true,
-  keepDirtyOnReinitialize: true,
+  keepDirtyOnReinitialize: false,
 })(formComponent);
 
 const SaveCommunityForm = ({ submitForm, ...props }) => (
