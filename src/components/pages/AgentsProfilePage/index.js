@@ -71,15 +71,6 @@ const StyledLink = styled(Link)`
   display: block;
 `;
 
-const mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
-  <StyledLink key={mostSearchedCity.title} to={mostSearchedCity.to}>
-    <ImageOverlayContentTile size="small" image={mostSearchedCity.image}>
-      <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
-      <Block palette="white">{mostSearchedCity.title}</Block>
-    </ImageOverlayContentTile>
-  </StyledLink>
-));
-
 // Copied from BasePageTemplate
 const FixedWidthContainer = styled.main`
   width: 100%;
@@ -241,6 +232,14 @@ const AgentsProfilePage = ({
       </HeroWrapper>
     </Fragment>
   );
+  const mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
+    <StyledLink key={mostSearchedCity.title} to={mostSearchedCity.to}>
+      <ImageOverlayContentTile size="small" image={mostSearchedCity.image}>
+        <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
+        <Block palette="white">{mostSearchedCity.title}</Block>
+      </ImageOverlayContentTile>
+    </StyledLink>
+  ));
 
   return (
     <BasePageTemplate
