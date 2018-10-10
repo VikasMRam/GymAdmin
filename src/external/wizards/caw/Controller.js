@@ -282,7 +282,7 @@ class Controller extends Component {
         setStoreKey={this.handleSetStoreKey}
         onSeeMore={this.handleSeeMore}
         href={href}
-        flow={this.flowName}
+        flow={this.flow}
         totalNumberofSteps={this.flow.length}
         {...this.props}
       />

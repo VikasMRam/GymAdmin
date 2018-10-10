@@ -1,14 +1,13 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { palette, key } from 'styled-theme';
-import { bool, object, number, func, string, oneOf } from 'prop-types';
+import { bool, object, number, func, string, arrayOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, assetPath } from 'sly/components/themes';
 import { Button, Hr, Heading, Image } from 'sly/components/atoms';
 import Logo from 'sly/components/atoms/Logo';
 
-import { stepOrders } from './helpers';
 import { getStepComponent } from './steps';
 
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
@@ -83,7 +82,7 @@ const Component = ({
   currentStep, invalid, data, handleSubmit, onSeeMore, totalNumberofSteps, onBackButton, change, setStoreKey,
   searching, searchResultCount, href, flow,
 }) => {
-  const CurrentStepComponent = getStepComponent(stepOrders[flow][currentStep - 1]);
+  const CurrentStepComponent = getStepComponent(flow[currentStep - 1]);
   return (
     <ScrollWrapper>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -166,7 +165,7 @@ Component.propTypes = {
   searching: bool,
   searchResultCount: number,
   href: string.isRequired,
-  flow: oneOf(Object.keys(stepOrders)),
+  flow: arrayOf(string),
 };
 
 Component.defaultPropTypes = {
