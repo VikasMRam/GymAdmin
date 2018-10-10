@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Heading } from 'sly/components/atoms';
+import { Block } from 'sly/components/atoms';
 
 import SavedCommunityTile from '.';
 
@@ -23,8 +23,8 @@ describe('SavedCommunityTile', () => {
       note: savedCommunity.note,
     });
     expect(wrapper.find('StyledIcon')).toHaveLength(1);
-    expect(wrapper.find(Heading)).toHaveLength(1);
-    expect(wrapper.find(Heading).dive().dive().text()).toContain(savedCommunity.name);
+    expect(wrapper.find(Block)).toHaveLength(1);
+    expect(wrapper.find(Block).dive().text()).toContain(savedCommunity.name);
     expect(wrapper.find('Note')).toHaveLength(1);
     expect(wrapper.find('Note').dive().text()).toContain(savedCommunity.note);
   });
@@ -35,8 +35,8 @@ describe('SavedCommunityTile', () => {
       name: savedCommunity.name,
     });
     expect(wrapper.find('StyledIcon')).toHaveLength(1);
-    expect(wrapper.find(Heading)).toHaveLength(1);
-    expect(wrapper.find(Heading).dive().dive().text()).toContain(savedCommunity.name);
+    expect(wrapper.find(Block)).toHaveLength(1);
+    expect(wrapper.find(Block).dive().text()).toContain(savedCommunity.name);
     expect(wrapper.find('Note')).toHaveLength(0);
   });
 
