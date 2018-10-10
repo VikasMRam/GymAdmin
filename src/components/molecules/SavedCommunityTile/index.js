@@ -4,7 +4,7 @@ import { string, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 
-import { Image, Heading, Icon } from 'sly/components/atoms';
+import { Image, Block, Icon } from 'sly/components/atoms';
 
 const clamp = css`
   display: block;
@@ -33,6 +33,7 @@ ImageWrapper.displayName = 'ImageWrapper';
 
 const Note = styled.div`
   ${clamp};
+  font-size: ${size('text.tiny')};
 `;
 Note.displayName = 'Note';
 
@@ -41,6 +42,10 @@ const StyledIcon = styled(Icon)`
   z-index: 1;
   top: ${size('spacing.regular')};
   margin-left: calc(${size('tile.little.width')} - ${size('icon.regular')}  - ${size('spacing.regular')});
+
+  :hover {
+    cursor: pointer;
+  }
 `;
 StyledIcon.displayName = 'StyledIcon';
 
@@ -48,10 +53,12 @@ const SavedCommunityTile = ({
   image, name, note, onFavouriteClicked,
 }) => (
   <Wrapper>
-    <StyledIcon icon="favourite-dark" size="regular" palette="primary" onClick={onFavouriteClicked} />
-    <ImageWrapper src={image} aspectRatio="4:3" />
     <div>
-      <Heading size="subtitle">{name}</Heading>
+      <StyledIcon icon="favourite-dark" size="regular" palette="primary" onClick={onFavouriteClicked} />
+      <ImageWrapper src={image} aspectRatio="4:3" />
+    </div>
+    <div>
+      <Block>{name}</Block>
       {note && <Note>{note}</Note>}
     </div>
   </Wrapper>

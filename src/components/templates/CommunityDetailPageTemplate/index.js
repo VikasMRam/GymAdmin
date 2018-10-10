@@ -1,11 +1,12 @@
 import React from 'react';
-import { any, func } from 'prop-types';
+import { any } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 
+import HeaderController from 'sly/controllers/HeaderController';
+
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
-import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 
 const TwoColummnWrapper = styled.div`
@@ -34,7 +35,7 @@ const CommunityDetailPageTemplate = ({
   bottom,
 }) => (
   <BasePageTemplate
-    header={<HeaderContainer />}
+    header={<HeaderController />}
     footer={<Footer />}
     hasStickyFooter
   >

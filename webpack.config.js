@@ -41,6 +41,7 @@ const DOMAIN = process.env.DOMAIN || 'lvh.me';
 const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8').trim() : '';
 const EXTERNAL_WIZARDS_PATH = process.env.EXTERNAL_WIZARDS_PATH || '/external/wizards';
 const SOURCE = process.env.SOURCE || 'src';
+const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 const devDomain = `${HOST}:${DEV_PORT}/`;
 const isDev = NODE_ENV === 'development';
 const isStaging = SLY_ENV === 'staging';
@@ -60,6 +61,7 @@ console.info('Using config', JSON.stringify({
   API_URL,
   AUTH_URL,
   DOMAIN,
+  GOOGLE_MAPS_API_KEY,
   SOURCE,
   EXTERNAL_ASSET_URL,
   EXTERNAL_WIZARDS_ROOT_URL,
@@ -148,6 +150,7 @@ const base = () =>
       'process.env.API_URL': API_URL,
       'process.env.AUTH_URL': AUTH_URL,
       'process.env.DOMAIN': DOMAIN,
+      'process.env.GOOGLE_MAPS_API_KEY': GOOGLE_MAPS_API_KEY,
       'process.env.VERSION': VERSION,
       'process.env.EXTERNAL_WIZARDS_PATH': EXTERNAL_WIZARDS_PATH,
     }),

@@ -22,6 +22,7 @@ import {
 
 const updateOrDeleteReducer = (state, { type, payload, meta }) => {
   const resource = get(meta, 'resource');
+  const resourceKey = get(meta, 'resourceKey');
   const needle = get(meta, 'request.needle');
   const needleIsObject = typeof needle === 'object';
   const list = getList(state, resource);
@@ -43,7 +44,7 @@ const updateOrDeleteReducer = (state, { type, payload, meta }) => {
     case RESOURCE_UPDATE_SUCCESS:
       return {
         ...state,
-        [resource]: {
+        [resourceKey]: {
           ...getResourceState(state, resource),
           list: {
             ids: newIds,
@@ -53,7 +54,7 @@ const updateOrDeleteReducer = (state, { type, payload, meta }) => {
     case RESOURCE_DELETE_SUCCESS:
       return {
         ...state,
-        [resource]: {
+        [resourceKey]: {
           ...getResourceState(state, resource),
           list: {
             ids: [...list.ids.slice(0, index), ...list.ids.slice(index + 1)],
@@ -68,6 +69,7 @@ const updateOrDeleteReducer = (state, { type, payload, meta }) => {
 
 export default (state = initialState, { type, payload, meta }) => {
   const resource = get(meta, 'resource');
+  const resourceKey = get(meta, 'resourceKey');
 
   if (!resource) {
     return state;
@@ -77,7 +79,7 @@ export default (state = initialState, { type, payload, meta }) => {
     case RESOURCE_CREATE_SUCCESS:
       return {
         ...state,
-        [resource]: {
+        [resourceKey]: {
           ...getResourceState(state, resource),
           detail: {
             ...payload,
@@ -89,7 +91,7 @@ export default (state = initialState, { type, payload, meta }) => {
     case RESOURCE_LIST_READ_REQUEST:
       return {
         ...state,
-        [resource]: {
+        [resourceKey]: {
           ...getResourceState(state, resource),
           list: getList(initialState, resource),
         },
@@ -97,7 +99,7 @@ export default (state = initialState, { type, payload, meta }) => {
     case RESOURCE_LIST_READ_SUCCESS:
       return {
         ...state,
-        [resource]: {
+        [resourceKey]: {
           ...getResourceState(state, resource),
           list: payload,
         },
@@ -106,7 +108,7 @@ export default (state = initialState, { type, payload, meta }) => {
     case RESOURCE_DETAIL_READ_REQUEST:
       return {
         ...state,
-        [resource]: {
+        [resourceKey]: {
           ...getResourceState(state, resource),
           detail: getDetail(initialState, resource),
         },
@@ -114,7 +116,7 @@ export default (state = initialState, { type, payload, meta }) => {
     case RESOURCE_DETAIL_READ_SUCCESS:
       return {
         ...state,
-        [resource]: {
+        [resourceKey]: {
           ...getResourceState(state, resource),
           detail: {
             ...payload,

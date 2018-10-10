@@ -1,14 +1,14 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { bool, func } from 'prop-types';
 import { prop } from 'styled-tools';
 import { palette } from 'styled-theme';
 
 import { size, assetPath } from 'sly/components/themes';
+
+import HeaderController from 'sly/controllers/HeaderController';
+
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
-import { Image, Label, Heading, Hr, Link, Block, Button, Icon } from 'sly/components/atoms';
-import HeaderContainer from 'sly/containers/HeaderContainer';
-import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
+import { Image, Heading, Block } from 'sly/components/atoms';
 
 const FixedWidthContainer = styled.div`
   width: 100%;
@@ -139,7 +139,7 @@ const OverlappingSectionsTemplate = ({
 }) => {
   const Top = () => (
     <Fragment>
-      <HeaderContainer />
+      <HeaderController />
       <HeroWrapper>
         <HeroBackgroundImage
           src={assetPath(imagePath)}

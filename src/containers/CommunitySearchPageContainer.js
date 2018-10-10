@@ -130,10 +130,10 @@ const mapStateToProps = (state, { match, location }) => {
   const isModalFilterPanelVisible = isCommunitySearchPageModalFilterPanelActive(state);
   return {
     searchParams,
-    communityList: getList(state, 'searchResource'),
+    communityList: getList(state, 'searchResource', searchParams),
     isFetchingResults: isResourceListRequestInProgress(state, 'searchResource'),
-    requestMeta: getListMeta(state, 'searchResource'),
-    geoGuide: getList(state, 'geoGuide'),
+    requestMeta: getListMeta(state, 'searchResource', searchParams),
+    geoGuide: getList(state, 'geoGuide', searchParams),
     isModalFilterPanelVisible,
   };
 };

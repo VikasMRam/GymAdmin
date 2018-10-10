@@ -9,6 +9,7 @@ const action = (type, payload, meta) => ({
   payload,
   meta: {
     resource: 'resources',
+    resourceKey: 'resources',
     ...meta,
   },
 });

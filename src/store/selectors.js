@@ -1,32 +1,31 @@
 import * as resources from './resource/selectors';
 import * as experiments from './experiments/selectors';
 import * as entities from './entities/selectors';
-import * as header from './header/selectors';
 import * as searchBox from './searchBox/selectors';
 import * as communitySearchPage from './communitySearchPage/selectors';
 import * as chatBox from './chatBox/selectors';
 
 import { getThunkName } from './resource/helpers';
 
-export const getDetail = (state, resource, id) =>
+export const getDetail = (state, resource, id, queryParms) =>
   entities.getDetail(
     state.entities,
     resource,
-    id || resources.getDetail(state.resource, resource).id
+    id || resources.getDetail(state.resource, resource, queryParms).id
   );
 
-export const getList = (state, resource) =>
+export const getList = (state, resource, queryParms) =>
   entities.getList(
     state.entities,
     resource,
-    resources.getList(state.resource, resource).ids
+    resources.getList(state.resource, resource, queryParms).ids
   );
 
-export const getDetailMeta = (state, resource) =>
-  resources.getDetail(state.resource, resource).meta;
+export const getDetailMeta = (state, resource, queryParms) =>
+  resources.getDetail(state.resource, resource, queryParms).meta;
 
-export const getListMeta = (state, resource) =>
-  resources.getList(state.resource, resource).meta;
+export const getListMeta = (state, resource, queryParms) =>
+  resources.getList(state.resource, resource, queryParms).meta;
 
 export const isResourceListRequestInProgress = (state, resource) => {
   const thunkName = getThunkName(resource, 'listRead');
@@ -93,9 +92,6 @@ export const getExperiment = (state, experimentName) =>
 
 export const getExperiments = state =>
   experiments.getExperiments(state.experiments);
-
-export const isHeaderDropdownOpen = state =>
-  header.isDropdownOpen(state.header);
 
 export const searchBoxAddress = state =>
   searchBox.searchBoxAddress(state.searchBox);

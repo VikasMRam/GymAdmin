@@ -1,4 +1,22 @@
+import get from 'lodash/get';
+
 import { getThunkName } from './helpers';
+
+const generateResourceKey = (resource, request) => {
+  let resourceKey = resource;
+  const uri = get(request, 'uri');
+
+  if (uri) {
+    const qsPos = uri.indexOf('?');
+    const qStr = qsPos !== -1 ? uri.substring(qsPos) : null;
+
+    if (qStr) {
+      resourceKey = `${resource}${qStr.replace('?', '_')}`;
+    }
+  }
+
+  return resourceKey;
+};
 
 // https://github.com/diegohaz/arc/wiki/Actions
 // https://github.com/diegohaz/arc/wiki/Example-redux-modules#resource
@@ -11,6 +29,7 @@ export const resourceCreateRequest = (resource, data) => ({
   payload: { data },
   meta: {
     resource,
+    resourceKey: generateResourceKey(resource),
     thunk: getThunkName(resource, 'create'),
   },
 });
@@ -22,6 +41,7 @@ export const resourceCreateSuccess = (resource, detail, request, thunk) => ({
     request,
     thunk,
     resource,
+    resourceKey: generateResourceKey(resource, request),
     entities: resource,
   },
 });
@@ -33,6 +53,7 @@ export const resourceCreateFailure = (resource, error, request, thunk) => ({
   meta: {
     request,
     resource,
+    resourceKey: generateResourceKey(resource, request),
     thunk,
   },
 });
@@ -46,6 +67,7 @@ export const resourceListReadRequest = (resource, params) => ({
   payload: { params },
   meta: {
     resource,
+    resourceKey: generateResourceKey(resource),
     thunk: getThunkName(resource, 'listRead'),
   },
 });
@@ -57,6 +79,7 @@ export const resourceListReadSuccess = (resource, list, request, thunk) => ({
     request,
     thunk,
     resource,
+    resourceKey: generateResourceKey(resource, request),
     entities: resource,
   },
 });
@@ -67,6 +90,7 @@ export const resourceListReadFailure = (resource, error, request, thunk) => ({
   payload: error,
   meta: {
     request,
+    resourceKey: generateResourceKey(resource, request),
     thunk,
     resource,
   },
@@ -81,6 +105,7 @@ export const resourceDetailReadRequest = (resource, needle, params) => ({
   payload: { needle, params },
   meta: {
     resource,
+    resourceKey: generateResourceKey(resource),
     thunk: getThunkName(resource, 'detailRead'),
   },
 });
@@ -97,6 +122,7 @@ export const resourceDetailReadSuccess = (
     request,
     thunk,
     resource,
+    resourceKey: generateResourceKey(resource, request),
     entities: resource,
   },
 });
@@ -107,6 +133,7 @@ export const resourceDetailReadFailure = (resource, error, request, thunk) => ({
   payload: error,
   meta: {
     request,
+    resourceKey: generateResourceKey(resource, request),
     thunk,
     resource,
   },
@@ -121,6 +148,7 @@ export const resourceUpdateRequest = (resource, needle, data) => ({
   payload: { needle, data },
   meta: {
     resource,
+    resourceKey: generateResourceKey(resource),
     thunk: getThunkName(resource, 'update'),
   },
 });
@@ -132,6 +160,7 @@ export const resourceUpdateSuccess = (resource, detail, request, thunk) => ({
     request,
     thunk,
     resource,
+    resourceKey: generateResourceKey(resource, request),
     entities: resource,
   },
 });
@@ -142,6 +171,7 @@ export const resourceUpdateFailure = (resource, error, request, thunk) => ({
   payload: error,
   meta: {
     request,
+    resourceKey: generateResourceKey(resource, request),
     thunk,
     resource,
   },
@@ -156,6 +186,7 @@ export const resourceDeleteRequest = (resource, needle) => ({
   payload: { needle },
   meta: {
     resource,
+    resourceKey: generateResourceKey(resource),
     thunk: getThunkName(resource, 'delete'),
   },
 });
@@ -164,6 +195,7 @@ export const resourceDeleteSuccess = (resource, request, thunk) => ({
   type: RESOURCE_DELETE_SUCCESS,
   meta: {
     request,
+    resourceKey: generateResourceKey(resource, request),
     thunk,
     resource,
   },
@@ -175,6 +207,7 @@ export const resourceDeleteFailure = (resource, error, request, thunk) => ({
   payload: error,
   meta: {
     request,
+    resourceKey: generateResourceKey(resource, request),
     thunk,
     resource,
   },

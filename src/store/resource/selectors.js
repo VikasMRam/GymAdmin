@@ -1,3 +1,5 @@
+import { objectToURLQueryParams } from 'sly/services/helpers/url';
+
 // https://github.com/diegohaz/arc/wiki/Selectors
 // https://github.com/diegohaz/arc/wiki/Example-redux-modules#resource
 export const initialState = {};
@@ -14,11 +16,18 @@ export const initialResourceState = {
   },
 };
 
-export const getResourceState = (state = initialState, resource) =>
-  state[resource] || initialResourceState;
+export const getResourceState = (state = initialState, resource, queryParams) => {
+  let resourceKey = resource;
 
-export const getList = (state = initialState, resource) =>
-  getResourceState(state, resource).list;
+  if (queryParams) {
+    resourceKey = `${resource}_${objectToURLQueryParams(queryParams, { encode: false })}`;
+  }
 
-export const getDetail = (state = initialState, resource) =>
-  getResourceState(state, resource).detail;
+  return state[resourceKey] || initialResourceState;
+};
+
+export const getList = (state = initialState, resource, queryParams) =>
+  getResourceState(state, resource, queryParams).list;
+
+export const getDetail = (state = initialState, resource, queryParams) =>
+  getResourceState(state, resource, queryParams).detail;
