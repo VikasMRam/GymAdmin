@@ -83,6 +83,9 @@ export default class SlyEvent {
     } else {
       fetch(`${eventServerUrl}?${stringify(se)}`);
       ReactGA.event(gaEvent);
+      if (typeof window.dataLayer !== 'undefined'){
+        window.dataLayer.push(gaEvent);
+      }
     }
   }
 }
