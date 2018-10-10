@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
+import { palette } from 'styled-theme';
 import { array, bool, func, object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
@@ -54,6 +55,30 @@ const StyledButton= styled(Button)`
   margin-bottom: ${size('spacing.large')};
 `;
 
+const LegacyContent = styled.div`
+  a {
+    text-decoration: none;
+    color: ${palette(0)};
+
+    &:hover {
+      color: ${palette(2)};
+      cursor: pointer;
+    }
+
+    &:active {
+      color: ${palette(0)};
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+`;
+
+LegacyContent.defaultProps = {
+  palette: 'secondary',
+};
+
 const CommunitySearchPage = ({
   isMapView,
   toggleMap,
@@ -102,7 +127,7 @@ const CommunitySearchPage = ({
           <StyledHeading level={'hero'} size={'title'}>
             {listSize} {tocLabel} near {city}
           </StyledHeading>
-          <div dangerouslySetInnerHTML={{__html: gg.autoDescription}}/>
+          <LegacyContent dangerouslySetInnerHTML={{__html: gg.autoDescription}}/>
         </Fragment>);
       }
 
@@ -133,7 +158,7 @@ const CommunitySearchPage = ({
       ['description','guide','articles','resources',
       'neighborhoods','hospitals','reviews'].forEach((p)=>{
         if (gg.hasOwnProperty(p)){
-          additionalDivs.push(<div dangerouslySetInnerHTML={{__html: gg[p]}} key={p}/>)
+          additionalDivs.push(<LegacyContent dangerouslySetInnerHTML={{__html: gg[p]}} key={p}/>)
         }
       });
 
