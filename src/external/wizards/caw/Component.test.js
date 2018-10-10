@@ -14,7 +14,7 @@ const onSeeMore = () => jest.fn();
 const buttonTextsInProgress = ['Back', 'Continue'];
 const buttonTextFinal = 'See my options';
 const href = 'http://www.lvh.me/assisted-living/california/san-francisco?modal=thankyou';
-const flow = 'flow2';
+const flow = ['CitySearch', 'LookingFor', 'CareNeeds', 'BuyingOrRenting', 'MonthlyBudget', 'LeadFound'];
 
 const getButtons = (wrapper, isFinal = false) => {
   const bwrap = wrapper.find(ButtonsWrapper);

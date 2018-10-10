@@ -33,7 +33,7 @@ describe('Controller', () => {
 
     expect(currentStep).toBe(1);
     expect(href).toBe('');
-    expect(flow).toBe(defaultStepOrder);
+    expect(flow).toEqual(stepOrders[defaultStepOrder]);
     expect(totalNumberofSteps).toBe(stepOrders[defaultStepOrder].length);
     expect(data).toEqual({});
     expect(searching).toBeFalsy();
@@ -70,7 +70,7 @@ describe('Controller', () => {
     const { currentStep, flow } = wrapper.props();
 
     expect(currentStep).toBe(1);
-    expect(flow).toBe(stepOrder);
+    expect(flow).toEqual(stepOrders[stepOrder]);
   });
 
   it('handleBackButton not change step when called from first step', () => {
