@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   right: 0;
   background-color: ${palette('white', 0)};
   height: 100%;
+  overflow: auto;
   z-index: ${key('zIndexes.modal.overlay')};
   transform: ${ifProp('isOpen', 'translate3d(0, 0, 0)', 'translate3d(100%, 0, 0)')};
   transition: all ${key('transitions.slow.inOut')};
