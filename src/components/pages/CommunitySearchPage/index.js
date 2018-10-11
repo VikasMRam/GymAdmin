@@ -261,7 +261,10 @@ const CommunitySearchPage = ({
               Click to Continue
           </StyledButton>
         </Modal>}
-        { searchParams.modal === CAW_WIZARD && <Modal closeable isOpen layout="wizard" onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}><CAWController /></Modal>}
+        { searchParams.modal === CAW_WIZARD &&
+        <Modal closeable isOpen layout="wizard" onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}>
+          <CAWController locationSearchParams={{ city: searchParams.city, state: searchParams.state }} />
+        </Modal>}
       </CommunitySearchPageTemplate>
     </Fragment>
   );
