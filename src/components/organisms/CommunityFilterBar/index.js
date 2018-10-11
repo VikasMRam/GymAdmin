@@ -31,8 +31,10 @@ export const ClearAllButton = styled(Button)`
 
 const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
   const { size, budget } = searchParams;
-  const budgetLabel = budget ? budgets.find(object => object.value === budget).label : null;
-  const sizeLabel = size ? sizes.find(object => object.value === size).label : null;
+  const matchingBudget = budget ? budgets.find(object => object.value === budget) : null;
+  const budgetLabel = matchingBudget ? matchingBudget.label : null;
+  const matchingSize = size ? sizes.find(object => object.value === size) : null;
+  const sizeLabel = matchingSize ? matchingSize.label : null;
 
   const filtersApplied = getFiltersApplied(searchParams);
 
