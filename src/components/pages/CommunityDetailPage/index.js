@@ -263,7 +263,7 @@ export default class CommunityDetailPage extends Component {
     const reviewsFinal = reviews || [];
     const serviceHighlightsFinal = serviceHighlights || [];
     const roomPrices = floorPlans.map(({ info }) => info);
-    const isCCRC = (typeCare.indexOf('Continuing Care Retirement Community(CCRC)') !== -1);
+    const isCCRC = typeCare && (typeCare.indexOf('Continuing Care Retirement Community(CCRC)') !== -1);
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
