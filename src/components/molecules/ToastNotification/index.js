@@ -24,7 +24,7 @@ const Wrapper = styled.div`
     error: css`background-color: ${palette('danger', 0)};`,
   })};
   color: ${palette('white', 0)};
-  transition: all ${ifProp('isOpen', key('transitions.slow.out'), key('transitions.slow.in'))};
+  transition: all ${ifProp('isOpen', key('transitions.slow.in'), key('transitions.slow.out'))};
 `;
 
 const ToastNotification = ({
