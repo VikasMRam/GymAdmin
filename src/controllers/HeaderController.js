@@ -46,7 +46,8 @@ const defaultMenuItems = [
 
 const loginHeaderItems = user => user
   ? [{ name: 'Dashboard', url: '/mydashboard' }]
-  : [{ name: 'Sign in' }];
+  // TODO: uncomment after login api merged : [{ name: 'Sign in' }];
+  : [{ name: 'Sign in', url: '/signin' }];
 
 const loginMenuItems = user => loginHeaderItems(user)
   .concat(user
@@ -89,6 +90,7 @@ class HeaderController extends Component {
     if (savedHeaderItem) {
       savedHeaderItem.onClick = () => setModal(history, location, SAVED_COMMUNITIES);
     }
+    /* TODO: uncomment after login api merged
     let loginItem = lhItems.find(item => item.name === 'Sign in');
     if (loginItem) {
       loginItem.onClick = () => setModal(history, location, MODAL_TYPE_LOG_IN);
@@ -96,7 +98,7 @@ class HeaderController extends Component {
     loginItem = lmItems.find(item => item.name === 'Sign in');
     if (loginItem) {
       loginItem.onClick = () => setModal(history, location, MODAL_TYPE_LOG_IN);
-    }
+    } */
 
     const headerItems = [
       ...hItems,
