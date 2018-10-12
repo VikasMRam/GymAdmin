@@ -5,7 +5,7 @@ import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ADD_TO_FAVOURITE } from 'sly/constants/modalType';
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ADD_TO_FAVOURITE, ANSWER_QUESTION } from 'sly/constants/modalType';
 
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
@@ -247,7 +247,7 @@ export default class CommunityDetailPage extends Component {
     } = propInfo;
     const { modal, entityId } = searchParams;
     let questionToAnswer = null;
-    if (modal === 'answerQuestion' && entityId) {
+    if (modal === ANSWER_QUESTION && entityId) {
       questionToAnswer = questions.find(question => question.id === entityId);
     }
     // To clear the flag incase the question is not found
@@ -314,11 +314,6 @@ export default class CommunityDetailPage extends Component {
         }
       </Fragment>
     );
-    const data = {
-      name: 'Rhoda Goldman Plaz',
-      image: 'https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_sd.jpg',
-      note: 'Test Note',
-    };
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
