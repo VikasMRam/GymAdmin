@@ -11,7 +11,6 @@ import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuesti
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import Hr from 'sly/components/atoms/Hr';
 import Button from 'sly/components/atoms/Button';
-import { isBrowser } from 'sly/config';
 import { ASK_QUESTION } from 'sly/constants/modalType';
 
 const AnswersDiv = styled.div`
@@ -35,8 +34,6 @@ export const AskQuestionButton = styled(Button)`
 export const LeaveAnswerButton = styled(Button)`
   margin-top: ${size('spacing.large')};
 `;
-
-const appElement = isBrowser && document.querySelector('#app');
 
 const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
 
@@ -84,7 +81,6 @@ const CommuntityQuestionAndAnswer = ({
       <AskQuestionButton onClick={() => setModal(ASK_QUESTION)}>Ask a Question</AskQuestionButton>
       {isQuestionModalOpenValue &&
         <Modal
-          appElement={appElement}
           onClose={() => setModal(null)}
           isOpen
           closeable
@@ -94,7 +90,6 @@ const CommuntityQuestionAndAnswer = ({
       }
       {(answerQuestionValue !== null && answerQuestionValue !== undefined) &&
         <Modal
-          appElement={appElement}
           onClose={() => answerQuestion(null)}
           isOpen
           closeable
