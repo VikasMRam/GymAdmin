@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { isBrowser } from 'sly/config';
-
 import { setModal } from 'sly/services/helpers/url';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { MODAL_TYPE_LOG_IN, MODAL_TYPE_SIGN_UP, MODAL_TYPE_JOIN_SLY }
@@ -19,13 +17,11 @@ const steps = {};
 steps[MODAL_TYPE_JOIN_SLY] = JoinSlyButtons;
 steps[MODAL_TYPE_LOG_IN] = LoginFormContainer;
 steps[MODAL_TYPE_SIGN_UP] = SignupFormContainer;
-const defaultStep = MODAL_TYPE_JOIN_SLY;
 const modalTypes = {
   landing: MODAL_TYPE_JOIN_SLY,
   login: MODAL_TYPE_LOG_IN,
   signup: MODAL_TYPE_SIGN_UP,
 };
-const appElement = isBrowser && document.querySelector('#app');
 
 export class AuthController extends Component {
   static propTypes = {
@@ -56,7 +52,7 @@ export class AuthController extends Component {
 
   render() {
     const { searchParams, history, location } = this.props;
-    const currentStep = searchParams.modal || defaultStep;
+    const currentStep = searchParams.modal;
 
     const StepComponent = steps[currentStep];
     if (!StepComponent) {
@@ -83,7 +79,6 @@ export class AuthController extends Component {
     return (
       <Modal
         closeable
-        appElement={appElement}
         isOpen={Object.values(modalTypes).includes(searchParams.modal)}
         onClose={() => setModal(history, location)}
       >
