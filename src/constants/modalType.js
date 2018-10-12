@@ -13,3 +13,9 @@ export const CAW_WIZARD = 'cawWizard';
 export const SAVED_COMMUNITIES = 'savedCommunities';
 
 export const CONCIERGE = 'concierge';
+
+export const MODAL_TYPE_LOG_IN = 'auth-login';
+
+export const MODAL_TYPE_SIGN_UP = 'auth-signup';
+
+export const MODAL_TYPE_JOIN_SLY = 'auth';

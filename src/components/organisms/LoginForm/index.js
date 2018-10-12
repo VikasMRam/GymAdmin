@@ -2,19 +2,20 @@ import React from 'react';
 import { func, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
+import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
 
 import ReduxField from 'sly/components/organisms/ReduxField';
 
-import { Heading, Button, Block, Hr, Link } from 'sly/components/atoms';
+import { Heading, Button, Block, Hr } from 'sly/components/atoms';
 
 const Form = styled.form`
   width: 100%;
 `;
 
 const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const StyledButton = styled(Button)`
@@ -32,9 +33,17 @@ const StyledReduxField = styled(ReduxField)`
   align-items: baseline;
 `;
 
+const Signup = styled.span`
+  color: ${palette('secondary', 0)};
+
+  :hover {
+    cursor: pointer;
+  }
+`;
+
 const LoginForm = ({ handleSubmit, submitting, onSignupClicked }) => (
   <Form onSubmit={handleSubmit}>
-    <StyledHeading level="subtitle" size="subtitle">Log in</StyledHeading>
+    <StyledHeading>Log in</StyledHeading>
     <Field
       name="email"
       label="Email Address"
@@ -60,7 +69,7 @@ const LoginForm = ({ handleSubmit, submitting, onSignupClicked }) => (
       Log in
     </StyledButton>
     <StyledHr />
-    <Block>Don&apos;t have an account? <Link to="/" onClick={onSignupClicked}>Sign up</Link></Block>
+    <Block>Don&apos;t have an account? <Signup onClick={onSignupClicked}>Sign up</Signup></Block>
   </Form>
 );
 

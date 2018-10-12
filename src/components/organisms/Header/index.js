@@ -124,12 +124,8 @@ const HeaderItem = styled(Link)`
 const Header = ({
   menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur,
 }) => {
-  const headerItemComponents = headerItems.map(item => item.onClick ? (
-    <HeaderItem onClick={item.onClick} palette="slate" key={item.name}>
-      {item.name}
-    </HeaderItem>
-  ) : (
-    <HeaderItem to={item.url} palette="slate" key={item.name}>
+  const headerItemComponents = headerItems.map(item => (
+    <HeaderItem onClick={item.onClick} to={item.url} palette="slate" key={item.name}>
       {item.name}
     </HeaderItem>
   ));
@@ -142,14 +138,14 @@ const Header = ({
       return (
         <div key={item.name}>
           <MarginnedHR />
-          <HeaderMenuItem to={item.url} palette="slate">
+          <HeaderMenuItem to={item.url} palette="slate" onClick={item.onClick}>
             {item.name}
           </HeaderMenuItem>
         </div>
       );
     }
     return (
-      <HeaderMenuItem to={item.url} palette="slate" key={item.name}>
+      <HeaderMenuItem to={item.url} palette="slate" key={item.name} onClick={item.onClick}>
         {item.name}
       </HeaderMenuItem>
     );
@@ -206,6 +202,7 @@ Header.propTypes = {
   menuItems: arrayOf(shape({
     name: string,
     url: string,
+    onClick: func,
   })),
   menuItemHrIndices: arrayOf(number),
 };

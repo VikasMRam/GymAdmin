@@ -2,14 +2,16 @@ import React, { Component, Fragment } from 'react';
 import { func, bool, arrayOf, number, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
-import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
+import { setModal } from 'sly/services/helpers/url';
+import { SAVED_COMMUNITIES, MODAL_TYPE_LOG_IN } from 'sly/constants/modalType';
 
 import { connectController } from 'sly/controllers';
 import { getDetail } from 'sly/store/selectors';
+import { getSearchParams } from 'sly/services/helpers/search';
 
 import Header from 'sly/components/organisms/Header';
 import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
+import AuthController from 'sly/controllers/AuthController';
 
 const defaultHeaderItems = (user) => {
   let i = [
@@ -23,7 +25,6 @@ const defaultHeaderItems = (user) => {
   i = [
     ...i,
     { name: 'List Your Property', url: '/providers' },
-    // { name: 'Sign in', url: '/signin' },
   ];
 
   return i;
@@ -41,11 +42,11 @@ const defaultMenuItems = [
   { name: 'Contact', url: '/contact' },
   { name: 'Careers', url: 'https://angel.co/seniorly/jobs' },
   { name: 'List on Seniorly', url: '/providers' },
-  // { name: 'Sign Out', url: '#' },
 ];
 
 const loginHeaderItems = user => user
   ? [{ name: 'Dashboard', url: '/mydashboard' }]
+  // TODO: uncomment after login api merged : [{ name: 'Sign in' }];
   : [{ name: 'Sign in', url: '/signin' }];
 
 const loginMenuItems = user => loginHeaderItems(user)
@@ -63,14 +64,7 @@ class HeaderController extends Component {
     set: func,
     history: object,
     location: object,
-  };
-
-  setModal = (value) => {
-    if (value) {
-      this.changeSearchParams({ changedParams: { modal: value } });
-    } else {
-      this.handleParamsRemove({ paramsToRemove: ['modal'] });
-    }
+    searchParams: object,
   };
 
   handleMenuItemClick = () => {
@@ -81,44 +75,39 @@ class HeaderController extends Component {
     });
   };
 
-  changeSearchParams = ({ changedParams }) => {
-    const { history, location } = this.props;
-    const { pathname, search } = location;
-
-    const newParams = { ...parseURLQueryParams(search), ...changedParams };
-    const path = `${pathname}?${objectToURLQueryParams(newParams)}`;
-    history.push(path);
-  };
-
-  handleParamsRemove = ({ paramsToRemove }) => {
-    const changedParams = paramsToRemove.reduce((obj, p) => {
-      const nobj = obj;
-      nobj[p] = undefined;
-      return nobj;
-    }, {});
-    this.changeSearchParams({ changedParams });
-  };
-
   render() {
     const {
       dropdownOpen,
       user,
+      history,
+      location,
     } = this.props;
     const hItems = defaultHeaderItems(user);
+    const lhItems = loginHeaderItems(user);
+    const lmItems = loginMenuItems(user);
 
     const savedHeaderItem = hItems.find(item => item.name === 'Saved');
     if (savedHeaderItem) {
-      savedHeaderItem.onClick = () => this.setModal(SAVED_COMMUNITIES);
+      savedHeaderItem.onClick = () => setModal(history, location, SAVED_COMMUNITIES);
     }
+    /* TODO: uncomment after login api merged
+    let loginItem = lhItems.find(item => item.name === 'Sign in');
+    if (loginItem) {
+      loginItem.onClick = () => setModal(history, location, MODAL_TYPE_LOG_IN);
+    }
+    loginItem = lmItems.find(item => item.name === 'Sign in');
+    if (loginItem) {
+      loginItem.onClick = () => setModal(history, location, MODAL_TYPE_LOG_IN);
+    } */
 
     const headerItems = [
       ...hItems,
-      ...loginHeaderItems(user),
+      ...lhItems,
     ];
 
     const menuItems = [
       ...defaultMenuItems,
-      ...loginMenuItems(user),
+      ...lmItems,
     ];
 
     return (
@@ -133,20 +122,18 @@ class HeaderController extends Component {
           menuItemHrIndices={menuItemHrIndices}
         />
         <SavedCommunitiesPopupController />
+        <AuthController />
       </Fragment>
     );
   }
 }
 
-const mapStateToProps = (state, { controller }) => {
-  const { dropdownOpen } = controller;
-
-  return {
-    dropdownOpen,
-    // this will break as soon as we are requesting other users
-    // TODO: make the me resource remember it's id
-    user: getDetail(state, 'user', 'me'),
-  };
-};
+const mapStateToProps = (state, { match, location, controller }) => ({
+  searchParams: getSearchParams(match, location),
+  dropdownOpen: controller.dropdownOpen,
+  // this will break as soon as we are requesting other users
+  // TODO: make the me resource remember it's id
+  user: getDetail(state, 'user', 'me'),
+});
 
 export default withRouter(connectController(mapStateToProps)(HeaderController));

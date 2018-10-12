@@ -3,7 +3,9 @@ import { node, bool, func, oneOf } from 'prop-types';
 import styled, { css, injectGlobal } from 'styled-components';
 import ReactModal from 'react-modal';
 import { palette, key } from 'styled-theme';
-import { ifProp, withProp, switchProp } from 'styled-tools';
+import { ifProp, switchProp } from 'styled-tools';
+
+import { isBrowser, isTest } from 'sly/config';
 
 import { size } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
@@ -157,8 +159,10 @@ export default class Modal extends React.Component {
     closeButtonPalette: 'white',
   };
 
-  componentDidMount() {
-    ReactModal.setAppElement(document.getElementById('app'));
+  componentWillMount() {
+    if (isBrowser && !isTest) {
+      ReactModal.setAppElement('#app');
+    }
   }
 
   render() {
