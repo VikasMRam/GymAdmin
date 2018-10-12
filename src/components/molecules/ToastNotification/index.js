@@ -9,20 +9,22 @@ import IconButton from 'sly/components/molecules/IconButton';
 
 const Wrapper = styled.div`
   z-index: ${key('zIndexes.toastNotifications')};
-  display: ${ifProp('isOpen', 'flex', 'none')};
+  visibility: ${ifProp('isOpen', 'shown', 'hidden')};
+  display: flex;
   align-items: center;
   justify-content: space-between;
   position: fixed;
   white-space: nowrap;
   bottom: ${size('spacing.large')};
-  right: ${size('spacing.large')};
+  right: ${ifProp('isOpen', size('spacing.large'), '-100%')};
   padding: ${size('spacing.small')} ${size('spacing.large')};
   border-radius: ${size('spacing.small')};
   ${switchProp('status', {
     default: css`background-color: ${palette('slate', 0)};`,
     error: css`background-color: ${palette('danger', 0)};`,
   })};
-  color: ${palette('white', 0)}
+  color: ${palette('white', 0)};
+  transition: all ${ifProp('isOpen', key('transitions.slow.out'), key('transitions.slow.in'))};
 `;
 
 const ToastNotification = ({

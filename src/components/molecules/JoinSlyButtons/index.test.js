@@ -43,6 +43,17 @@ describe('JoinSlyButtons', () => {
     expect(onEmailSignupClickedSpy).toHaveBeenCalled();
   });
 
+  it('call callback on continue with facebook click', () => {
+    const onContinueWithFacebookClickedSpy = jest.fn();
+    const wrapper = wrap({
+      onContinueWithFacebookClicked: onContinueWithFacebookClickedSpy,
+    });
+    const button = wrapper.find('FacebookButton');
+
+    expect(button).toHaveLength(1);
+    button.simulate('click');
+    expect(onContinueWithFacebookClickedSpy).toHaveBeenCalled();
+  });
 
   it('shows correct heading', () => {
     const wrapper = wrap({

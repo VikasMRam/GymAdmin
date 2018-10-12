@@ -1,0 +1,14 @@
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+
+import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+
+import CommunitySaved from '.';
+
+const { similarProperties } = RhodaGoldmanPlaza;
+
+storiesOf('Organisms|CommunitySaved', module)
+  .add('default', () => (
+    <CommunitySaved similarCommunities={similarProperties} onDoneButtonClicked={action('done button clicked')} />
+  ));
