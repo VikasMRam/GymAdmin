@@ -6,12 +6,9 @@ import Modal from 'sly/components/molecules/Modal';
 import PropertyReview from 'sly/components/molecules/PropertyReview';
 import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
 
-import { isBrowser } from 'sly/config';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 
 import { ADD_RATING } from 'sly/constants/modalType';
-
-const appElement = isBrowser && document.querySelector('#app');
 
 const PropertyReviews = ({
   hasWebReviews,
@@ -45,7 +42,6 @@ const PropertyReviews = ({
       <Button onClick={() => setModal(ADD_RATING)} >Leave a Review</Button>
       {isAskRatingModalOpen &&
       <Modal
-        appElement={appElement}
         onClose={() => setModal(null)}
         isOpen
         closeable
