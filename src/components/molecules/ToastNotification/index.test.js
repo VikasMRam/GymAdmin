@@ -7,8 +7,6 @@ import ToastNotification from '.';
 
 const wrap = (props = {}) => shallow(<ToastNotification {...props} />);
 
-const onClose = jest.fn();
-
 describe('ToastNotification', () => {
   it('renders with default status', () => {
     const wrapper = wrap({ status: 'default', children: 'test children' });
@@ -26,8 +24,9 @@ describe('ToastNotification', () => {
   });
 
   it('onClose is called', () => {
-    const wrapper = wrap({ status: 'default', children: '', onClose });
+    const onCloseSpy = jest.fn();
+    const wrapper = wrap({ status: 'default', children: '', onClose: onCloseSpy });
     wrapper.find(IconButton).simulate('click');
-    expect(onClose).toHaveBeenCalled();
+    expect(onCloseSpy).toHaveBeenCalled();
   });
 });

@@ -12,7 +12,7 @@ import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetai
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { size } from 'sly/components/themes';
 
-import { Link, Heading, Hr, Block } from 'sly/components/atoms';
+import { Link, Heading, Hr, Button } from 'sly/components/atoms';
 
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
@@ -25,7 +25,6 @@ import PropertyReviews from 'sly/components/organisms/PropertyReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailability';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
-import SimilarCommunitiesNearby from 'sly/components/organisms/SimilarCommunitiesNearby';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
@@ -34,8 +33,8 @@ import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import Button from 'sly/components/atoms/Button';
 import CommunityLocalDetails from "sly/components/organisms/CommunityLocalDetails";
+import CommunitySaved from "sly/components/organisms/CommunitySaved";
 import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
@@ -65,23 +64,6 @@ const AdTileWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.xLarge')}
-`;
-
-const ButtonsWrapper = styled.div`
-  display: flex;
-
-  > * {
-    flex: 3;
-  }
-`;
-
-const StyledDoneButton = styled(Button)`
-  flex: 1;
-  margin-right: ${size('spacing.large')};
-`;
-
 export default class CommunityDetailPage extends Component {
   static propTypes = {
     user: object,
@@ -101,11 +83,14 @@ export default class CommunityDetailPage extends Component {
     setModal: func,
     setQuestionToAsk: func,
     isUserSaveCreateFailure: bool,
+    isUserSaveDeleteFailure: bool,
     isGetCommunityUserSaveComplete: bool,
     userSave: object,
     searchParams: object,
     onSubmitSaveCommunityForm: func,
     isUserSaveUpdateComplete: bool,
+    onUserSaveCreateFailureNotificationClose: func,
+    onUserSaveDeleteFailureNotificationClose: func,
   };
 
   componentDidMount() {
@@ -172,11 +157,14 @@ export default class CommunityDetailPage extends Component {
       setModal,
       setQuestionToAsk,
       isUserSaveCreateFailure,
+      isUserSaveDeleteFailure,
       isGetCommunityUserSaveComplete,
       userSave,
       searchParams,
       onSubmitSaveCommunityForm,
       isUserSaveUpdateComplete,
+      onUserSaveCreateFailureNotificationClose,
+      onUserSaveDeleteFailureNotificationClose,
     } = this.props;
 
     const {
@@ -512,50 +500,34 @@ export default class CommunityDetailPage extends Component {
           noPadding={user != null && !isUserSaveUpdateComplete}
           layout={user == null || isUserSaveUpdateComplete ? 'single' : 'double'}
           isOpen={searchParams.modal === ADD_TO_FAVOURITE}
-          onClose={() => setModal(null)}
+          onClose={() => setModal()}
         >
-          {!isUserSaveUpdateComplete && user == null &&
-            <Fragment>
-              <StyledHeading size="subtitle">Add to your favourites list</StyledHeading>
-              <JoinSlyButtons />
-            </Fragment>
-          }
+          {!isUserSaveUpdateComplete && user == null && <JoinSlyButtons heading="Add to your favourites list" />}
           {!isUserSaveUpdateComplete && user != null &&
-            <SaveCommunityForm mainImage={mainImage} submitForm={onSubmitSaveCommunityForm} />
-          }
+            <SaveCommunityForm mainImage={mainImage} submitForm={onSubmitSaveCommunityForm} />}
           {isUserSaveUpdateComplete &&
-            <Fragment>
-              <StyledHeading size="subtitle">Community Saved!</StyledHeading>
-              <Block>You can view your saved communities from your dashboard</Block>
-              <br />
-              <ButtonsWrapper>
-                <StyledDoneButton
-                  onClick={() => setModal(null)}
-                  palette="secondary"
-                  ghost
-                >
-                  Done
-                </StyledDoneButton>
-                <Button href="/mydashboard">
-                  Go to my dashboard
-                </Button>
-              </ButtonsWrapper>
-              <br /><br /><br />
-              <Hr />
-              <StyledHeading size="subtitle">Similar communities nearby</StyledHeading>
-              <SimilarCommunitiesNearby similarCommunities={similarProperties} />
-            </Fragment>
-          }
+            <CommunitySaved similarCommunities={similarProperties} onDoneButtonClicked={() => setModal()} />}
         </Modal>
         <Modal
           closeable
           isOpen={searchParams.modal === THANK_YOU}
-          onClose={() => setModal(null)}
+          onClose={() => setModal()}
         >
           <Thankyou />
         </Modal>
-        <ToastNotification isOpen={isUserSaveCreateFailure} status="error">
+        <ToastNotification
+          isOpen={isUserSaveCreateFailure}
+          onClose={onUserSaveCreateFailureNotificationClose}
+          status="error"
+        >
           Failed to save community. Please try again.
+        </ToastNotification>
+        <ToastNotification
+          isOpen={isUserSaveDeleteFailure}
+          onClose={onUserSaveDeleteFailureNotificationClose}
+          status="error"
+        >
+          Failed to remove saved community. Please try again.
         </ToastNotification>
       </Fragment>
     );

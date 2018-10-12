@@ -48,11 +48,17 @@ const Login = styled.span`
 `;
 Login.displayName = 'Login';
 
-const JoinSlyButtons = ({ onLoginClicked, onEmailSignupClicked, heading }) => (
+const JoinSlyButtons = ({
+  onLoginClicked, onEmailSignupClicked, onContinueWithFacebookClicked, heading,
+}) => (
   <section>
     <StyledHeading>{heading}</StyledHeading>
-    <FacebookButton palette="facebook"><Icon icon="facebook" size="regular" /> Continue with Facebook</FacebookButton>
-    <GoogleButton transparent><Icon icon="google" size="regular" /> Continue with Google</GoogleButton>
+    <FacebookButton palette="facebook" onClick={onContinueWithFacebookClicked}>
+      <Icon icon="facebook" size="regular" /> Continue with Facebook
+    </FacebookButton>
+    <GoogleButton transparent>
+      <Icon icon="google" size="regular" /> Continue with Google
+    </GoogleButton>
     <StyledHr />
     <StyledButton onClick={onEmailSignupClicked}>Sign up with Email</StyledButton>
     <Hr />
@@ -65,6 +71,7 @@ const JoinSlyButtons = ({ onLoginClicked, onEmailSignupClicked, heading }) => (
 JoinSlyButtons.propTypes = {
   onLoginClicked: func,
   onEmailSignupClicked: func,
+  onContinueWithFacebookClicked: func,
   heading: string,
 };
 
