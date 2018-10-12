@@ -15,7 +15,7 @@ const Form = styled.form`
 `;
 
 const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const StyledButton = styled(Button)`
@@ -33,9 +33,17 @@ const StyledHr = styled(Hr)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
+const Login = styled.span`
+  color: ${palette('secondary', 0)};
+
+  :hover {
+    cursor: pointer;
+  }
+`;
+
 const SignupForm = ({ handleSubmit, submitting, onLoginClicked }) => (
   <Form onSubmit={handleSubmit}>
-    <StyledHeading level="subtitle" size="subtitle">Sign Up</StyledHeading>
+    <StyledHeading>Sign Up</StyledHeading>
     <Field
       name="email"
       label="Email Address"
@@ -55,7 +63,7 @@ const SignupForm = ({ handleSubmit, submitting, onLoginClicked }) => (
     </StyledButton>
     <StyledBlock>By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.</StyledBlock>
     <StyledHr />
-    <Block>Already have a Seniorly account? <Link to="/" onClick={onLoginClicked}>Log In</Link></Block>
+    <Block>Already have a Seniorly account? <Login onClick={onLoginClicked}>Log In</Login></Block>
   </Form>
 );
 
