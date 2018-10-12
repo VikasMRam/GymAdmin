@@ -278,6 +278,9 @@ class CommunityDetailPageController extends Component {
         updateUserSave(userSaveForCommunity.id, {
           status: USER_SAVE_DELETE_STATUS,
         }).then(() => {
+          set({
+            isUserSaveDeleteSuccess: true,
+          });
           // refresh user saves for sidebar
           getUserSaves();
         }, () => {
@@ -321,6 +324,14 @@ class CommunityDetailPageController extends Component {
     });
   }
 
+  handleUserSaveDeleteSuccessNotificationClose = () => {
+    const { set } = this.props;
+
+    set({
+      isUserSaveDeleteSuccess: false,
+    });
+  }
+
   render() {
     const {
       mediaGallerySlideIndex,
@@ -338,6 +349,7 @@ class CommunityDetailPageController extends Component {
       searchParams,
       isUserSaveUpdateComplete,
       isUserSaveDeleteFailure,
+      isUserSaveDeleteSuccess,
     } = this.props;
 
     if (errorCode) {
@@ -404,8 +416,10 @@ class CommunityDetailPageController extends Component {
         onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
         isUserSaveUpdateComplete={isUserSaveUpdateComplete}
         isUserSaveDeleteFailure={isUserSaveDeleteFailure}
+        isUserSaveDeleteSuccess={isUserSaveDeleteSuccess}
         onUserSaveCreateFailureNotificationClose={this.handleUserSaveCreateFailureNotificationClose}
         onUserSaveDeleteFailureNotificationClose={this.handleUserSaveDeleteFailureNotificationClose}
+        onUserSaveDeleteSuccessNotificationClose={this.handleUserSaveDeleteSuccessNotificationClose}
       />
     );
   }
@@ -430,7 +444,7 @@ const mapStateToProps = (state, { match, location, controller }) => {
   const {
     mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false, isStickyHeaderVisible = false,
     userSaveUpdated = false, isLoadingUserSaves = false, isLoadUserSavesSuccess = false, isUserSaveCreateFailure = false,
-    isUserSaveDeleteFailure = false,
+    isUserSaveDeleteFailure = false, isUserSaveDeleteSuccess = false,
   } = controller;
 
   const searchParams = getSearchParams(match, location);
@@ -453,6 +467,7 @@ const mapStateToProps = (state, { match, location, controller }) => {
     isLoadingUserSaves,
     isLoadUserSavesSuccess,
     isUserSaveUpdateComplete,
+    isUserSaveDeleteSuccess,
     isUserSaveDeleteFailure,
     searchParams,
   };

@@ -84,6 +84,7 @@ export default class CommunityDetailPage extends Component {
     setQuestionToAsk: func,
     isUserSaveCreateFailure: bool,
     isUserSaveDeleteFailure: bool,
+    isUserSaveDeleteSuccess: bool,
     isGetCommunityUserSaveComplete: bool,
     userSave: object,
     searchParams: object,
@@ -91,6 +92,7 @@ export default class CommunityDetailPage extends Component {
     isUserSaveUpdateComplete: bool,
     onUserSaveCreateFailureNotificationClose: func,
     onUserSaveDeleteFailureNotificationClose: func,
+    onUserSaveDeleteSuccessNotificationClose: func,
   };
 
   componentDidMount() {
@@ -158,6 +160,7 @@ export default class CommunityDetailPage extends Component {
       setQuestionToAsk,
       isUserSaveCreateFailure,
       isUserSaveDeleteFailure,
+      isUserSaveDeleteSuccess,
       isGetCommunityUserSaveComplete,
       userSave,
       searchParams,
@@ -165,6 +168,7 @@ export default class CommunityDetailPage extends Component {
       isUserSaveUpdateComplete,
       onUserSaveCreateFailureNotificationClose,
       onUserSaveDeleteFailureNotificationClose,
+      onUserSaveDeleteSuccessNotificationClose,
     } = this.props;
 
     const {
@@ -515,6 +519,12 @@ export default class CommunityDetailPage extends Component {
         >
           <Thankyou />
         </Modal>
+        <ToastNotification
+          isOpen={isUserSaveDeleteSuccess}
+          onClose={onUserSaveDeleteSuccessNotificationClose}
+        >
+          Community Removed.
+        </ToastNotification>
         <ToastNotification
           isOpen={isUserSaveCreateFailure}
           onClose={onUserSaveCreateFailureNotificationClose}
