@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { string, func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 import get from 'lodash/get';
+import { withRouter } from 'react-router';
 
 import { resourceCreateRequest } from 'sly/store/resource/actions';
+import { getSearchParams } from 'sly/services/helpers/search';
 
 import { getDetail } from 'sly/store/selectors';
 import { connectController } from 'sly/controllers';
 import SlyEvent from 'sly/services/helpers/events';
+import { getSetModal } from 'sly/services/helpers/modal';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { ASSESSMENT, REQUEST_CALLBACK, REQUEST_CONSULTATION, REQUEST_PRICING, REQUEST_AVAILABILITY  } from 'sly/services/api/actions';
 
@@ -20,7 +23,7 @@ import {
   usPhone,
 } from 'sly/services/validation';
 
-import { resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { CONCIERGE } from 'sly/constants/modalType';
 
 export const CONVERSION_FORM = 'conversionForm';
 export const EXPRESS_CONVERSION_FORM = 'expressConversionForm';
@@ -59,14 +62,14 @@ export class ConciergeController extends Component {
     concierge: object.isRequired,
     children: func.isRequired,
     set: func.isRequired,
+    setModal: func.isRequired,
   };
 
   getPricing = () => {
     const {
       concierge,
       community,
-      set,
-      userDetails
+      userDetails,
     } = this.props;
 
     const {
@@ -90,6 +93,7 @@ export class ConciergeController extends Component {
     const {
       set,
       userDetails,
+      setModal,
     } = this.props;
 
     SlyEvent.getInstance().sendEvent({
@@ -101,17 +105,20 @@ export class ConciergeController extends Component {
     if (!isAssessment(userDetails)) {
       set({
         currentStep: ADVANCED_INFO,
-        modalIsOpen: true,
       });
+      setModal(CONCIERGE);
     } else {
       this.next();
     }
   };
 
-  gotoWhatNext = () => this.props.set({
-    currentStep: HOW_IT_WORKS,
-    modalIsOpen: true,
-  });
+  gotoWhatNext = () => {
+    const { set, setModal } = this.props;
+    set({
+      currentStep: HOW_IT_WORKS,
+    });
+    setModal(CONCIERGE);
+  }
 
   submitExpressConversion = data => {
     const {
@@ -220,6 +227,7 @@ export class ConciergeController extends Component {
       concierge,
       getDetailedPricing,
       set,
+      setModal,
       userDetails,
     } = this.props;
 
@@ -237,35 +245,30 @@ export class ConciergeController extends Component {
     );
 
     if (Done) {
+      setModal(CONCIERGE);
       return set({
         currentStep: WHAT_NEXT,
-        modalIsOpen: true,
       });
     }
 
     if (!hasAllUserData(userDetails)) {
+      setModal(CONCIERGE);
       return set({
         currentStep: CONVERSION_FORM,
-        modalIsOpen: true,
       });
     }
 
-
-    if(!isAssessment(userDetails)) {
+    if (!isAssessment(userDetails)) {
+      setModal(CONCIERGE);
       return set({
         currentStep: ADVANCED_INFO,
-        modalIsOpen: true,
       });
     }
-
-
-
-
   };
 
   close = () => {
-    const { set } = this.props;
-    set({ modalIsOpen: false });
+    const { setModal } = this.props;
+    setModal(null);
   };
 
   render() {
@@ -311,19 +314,25 @@ const isAvailReq = slug => contact =>
   contact.slug === slug
   && (contact.contactType === REQUEST_AVAILABILITY) ;
 
-const mapStateToProps = (state, { controller, community }) => {
+const mapStateToProps = (state, props) => {
+  const {
+    controller, community, match, history, location,
+  } = props;
   const {
     profilesContacted,
     consultationRequested,
     userDetails = {},
   } = getDetail(state, 'userAction') || {};
-
+  const searchParams = getSearchParams(match, location);
+  const { modal } = searchParams;
+  const setModal = getSetModal({ history, location });
   return {
     community,
     userDetails,
+    setModal,
     concierge: {
       currentStep: controller.currentStep || CONVERSION_FORM,
-      modalIsOpen: controller.modalIsOpen || false,
+      modalIsOpen: modal === CONCIERGE,
       consultationRequested,
       pricingRequested: (profilesContacted || []).some(isPricingReq(community.id)),
       availabilityRequested: (profilesContacted || []).some(isAvailReq(community.id)),
@@ -334,8 +343,8 @@ const mapStateToProps = (state, { controller, community }) => {
 
 const submit = data => resourceCreateRequest('userAction', data);
 
-export default connectController(
+export default withRouter(connectController(
   mapStateToProps,
   { submit },
-)(ConciergeController);
+)(ConciergeController));
 

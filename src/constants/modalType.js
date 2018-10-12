@@ -11,3 +11,5 @@ export const ADD_TO_FAVOURITE = 'addToFavourite';
 export const CAW_WIZARD = 'cawWizard';
 
 export const SAVED_COMMUNITIES = 'savedCommunities';
+
+export const CONCIERGE = 'concierge';
