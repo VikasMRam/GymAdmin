@@ -316,20 +316,16 @@ const isAvailReq = slug => contact =>
 
 const mapStateToProps = (state, props) => {
   const {
-    controller, community, match, history, location,
+    controller, community, modal,
   } = props;
   const {
     profilesContacted,
     consultationRequested,
     userDetails = {},
   } = getDetail(state, 'userAction') || {};
-  const searchParams = getSearchParams(match, location);
-  const { modal } = searchParams;
-  const setModal = getSetModal({ history, location });
   return {
     community,
     userDetails,
-    setModal,
     concierge: {
       currentStep: controller.currentStep || CONVERSION_FORM,
       modalIsOpen: modal === CONCIERGE,
@@ -343,8 +339,7 @@ const mapStateToProps = (state, props) => {
 
 const submit = data => resourceCreateRequest('userAction', data);
 
-export default withRouter(connectController(
+export default connectController(
   mapStateToProps,
   { submit },
-)(ConciergeController));
-
+)(ConciergeController);

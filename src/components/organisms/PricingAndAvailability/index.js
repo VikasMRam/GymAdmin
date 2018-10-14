@@ -128,6 +128,8 @@ export default class PricingAndAvailability extends Component {
         getDetailedPricing,
         onInquireOrBookClicked,
         onLiveChatClicked,
+        modal,
+        setModal,
       } = this.props;
 
       const estimatedPriceLabelMap = {
@@ -164,7 +166,7 @@ export default class PricingAndAvailability extends Component {
           <StyledArticle id="pricing-and-floor-plans-price-tiles">
             {(!roomPrices.length && estimatedPriceBase) ?
               (
-                <ConciergeController community={community}>
+                <ConciergeController community={community} modal={modal} setModal={setModal}>
                   {({getPricing}) =>
                     <EstimatedCost
                       getPricing={getPricing}
@@ -181,7 +183,7 @@ export default class PricingAndAvailability extends Component {
               </Item>
             ))}
           </StyledArticle>
-          <ConciergeController community={community}>
+          <ConciergeController community={community} modal={modal} setModal={setModal}>
             {({ concierge, submitExpressConversion, userDetails }) => {
                 if (concierge.contactRequested) {
                   if (!hasAllUserData(userDetails)) {

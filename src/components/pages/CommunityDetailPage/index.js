@@ -284,7 +284,7 @@ export default class CommunityDetailPage extends Component {
         top={isStickyHeaderVisible ? 84 : 24}
         bottomBoundary="#sticky-sidebar-boundary"
       >
-        <ConciergeContainer community={community} />
+        <ConciergeContainer community={community} modal={modal} setModal={setModal} />
       </Sticky>
     );
     const bottomContent = (
@@ -354,7 +354,7 @@ export default class CommunityDetailPage extends Component {
           </NameHeading>
 
           <AddressHeading level="subtitle" size="subtitle">{formattedAddress}</AddressHeading>
-          <ConciergeController community={community}>
+          <ConciergeController community={community} modal={modal} setModal={setModal}>
             {({ gotoWhatNext }) => (
               <CommunitySummary
                 innerRef={this.communitySummaryRef}
@@ -385,7 +385,7 @@ export default class CommunityDetailPage extends Component {
             title="Pricing & Floor Plans"
             innerRef={this.pricingAndFloorPlansRef}
           >
-            <ConciergeController community={community}>
+            <ConciergeController community={community} modal={modal} setModal={setModal}>
               {({ concierge, getPricing}) => (
                 <PricingAndAvailability
                   community={community}
@@ -395,6 +395,8 @@ export default class CommunityDetailPage extends Component {
                   roomPrices={roomPrices}
                   onInquireOrBookClicked={getPricing}
                   onLiveChatClicked={onLiveChatClicked}
+                  modal={modal}
+                  setModal={setModal}
                 />
               )}
             </ConciergeController>
@@ -467,7 +469,7 @@ export default class CommunityDetailPage extends Component {
 
           <CollapsibleSection title="Similar Communities">
             <SimilarCommunities similarProperties={similarProperties} />
-            <ConciergeController community={community}>
+            <ConciergeController community={community} modal={modal} setModal={setModal}>
               {({ gotoAdvancedInfo }) => (
                 <AdTileWrapper>
                   <AdTile {...adProps} onClick={() => gotoAdvancedInfo()} />
@@ -487,7 +489,7 @@ export default class CommunityDetailPage extends Component {
           </CollapsibleSection>
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
-        <ConciergeController community={community}>
+        <ConciergeController community={community} modal={modal} setModal={setModal}>
           {({ concierge, getPricing }) => (
             <StickyFooter
               footerInfo={{

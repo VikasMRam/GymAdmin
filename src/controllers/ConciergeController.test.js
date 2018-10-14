@@ -3,6 +3,7 @@ import configureStore from 'redux-mock-store';
 import { shallow, mount } from 'enzyme';
 
 import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
+import { CONCIERGE } from 'sly/constants/modalType';
 
 import SlyEvent from '../services/helpers/events';
 
@@ -16,7 +17,7 @@ import ConciergeControllerContainer, {
 
 jest.mock('../services/helpers/events');
 
-describe('ConciergeController', function() {
+describe('ConciergeController', () => {
   const mockStore = configureStore();
   const initStore = (props={}, conciergeProps={}) => mockStore({
     controller: { concierge: { ...conciergeProps } },
@@ -80,6 +81,7 @@ describe('ConciergeController', function() {
   const emailOnlyEntities = { userAction: onlyEmailUserAction };
 
   const spy = jest.fn();
+  const setModal = jest.fn();
 
   const childProps = () => spy.mock.calls.pop()[0];
 
@@ -99,14 +101,17 @@ describe('ConciergeController', function() {
       <ConciergeControllerContainer
         community={community}
         store={store}
-        children={spy} />
+        children={spy}
+        setModal={setModal}
+      />
     ).dive().dive();
 
     it('should pass default values', () => {
       const store = initStore({ resource, entities });
       wrap(community, store);
-      const { modalIsOpen, currentStep } = childProps().concierge;
-      expect(modalIsOpen).toBe(false);
+      const { currentStep } = childProps().concierge;
+      // expect(setModal).toBeCalledWith(CONCIERGE);
+      expect(setModal).not.toBeCalled();
       expect(currentStep).toBe(CONVERSION_FORM);
     });
 
@@ -137,8 +142,8 @@ describe('ConciergeController', function() {
       wrapper.instance().next(true);
       expect(getControllerAction(store)).toEqual({
         currentStep: CONVERSION_FORM,
-        modalIsOpen: true,
       });
+      expect(setModal).toBeCalledWith(CONCIERGE);
     });
 
     it('should not shortcircuit to thankYou when in express mode', () => {
@@ -147,8 +152,8 @@ describe('ConciergeController', function() {
       wrapper.instance().next(true);
       expect(getControllerAction(store)).toEqual({
         currentStep: ADVANCED_INFO,
-        modalIsOpen: true,
       });
+      expect(setModal).toBeCalledWith(CONCIERGE);
     });
   });
 
@@ -193,6 +198,7 @@ describe('ConciergeController', function() {
         {...props}
         set={set}
         children={spy}
+        setModal={setModal}
       />
     );
 
@@ -203,8 +209,8 @@ describe('ConciergeController', function() {
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(lastSet()).toEqual({
         currentStep: CONVERSION_FORM,
-        modalIsOpen: true,
       });
+      expect(setModal).toBeCalledWith(CONCIERGE);
     });
 
     it('should ask for advanced info when explicitly called', () => {
@@ -212,8 +218,8 @@ describe('ConciergeController', function() {
       childProps().gotoAdvancedInfo();
       expect(lastSet()).toEqual({
         currentStep: ADVANCED_INFO,
-        modalIsOpen: true,
       });
+      expect(setModal).toBeCalledWith(CONCIERGE);
     });
 
     it('should ask for conversionForm', () => {
@@ -224,8 +230,8 @@ describe('ConciergeController', function() {
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(lastSet()).toEqual({
         currentStep: CONVERSION_FORM,
-        modalIsOpen: true,
       });
+      expect(setModal).toBeCalledWith(CONCIERGE);
     });
 
     it('should show thank you', () => {
@@ -241,8 +247,8 @@ describe('ConciergeController', function() {
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(lastSet()).toEqual({
         currentStep: CONVERSION_FORM,
-        modalIsOpen: true,
       });
+      expect(setModal).toBeCalledWith(CONCIERGE);
     });
 
     //TODO REENABLE
