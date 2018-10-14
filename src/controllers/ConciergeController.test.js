@@ -110,7 +110,6 @@ describe('ConciergeController', () => {
       const store = initStore({ resource, entities });
       wrap(community, store);
       const { currentStep } = childProps().concierge;
-      // expect(setModal).toBeCalledWith(CONCIERGE);
       expect(setModal).not.toBeCalled();
       expect(currentStep).toBe(CONVERSION_FORM);
     });
