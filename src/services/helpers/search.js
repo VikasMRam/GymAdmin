@@ -77,6 +77,7 @@ const searchParamsWhitelist = [
   'searchOnMove',
   'modal',
   'entityId',
+  'currentStep',
 ];
 
 export const tocs = [

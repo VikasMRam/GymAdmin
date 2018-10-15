@@ -5,7 +5,7 @@ import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ADD_TO_FAVOURITE } from 'sly/constants/modalType';
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ADD_TO_FAVOURITE, ANSWER_QUESTION } from 'sly/constants/modalType';
 
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
@@ -88,6 +88,7 @@ export default class CommunityDetailPage extends Component {
     isGetCommunityUserSaveComplete: bool,
     userSave: object,
     searchParams: object,
+    setQueryParams: func,
     onSubmitSaveCommunityForm: func,
     isUserSaveUpdateComplete: bool,
     onUserSaveCreateFailureNotificationClose: func,
@@ -164,6 +165,7 @@ export default class CommunityDetailPage extends Component {
       isGetCommunityUserSaveComplete,
       userSave,
       searchParams,
+      setQueryParams,
       onSubmitSaveCommunityForm,
       isUserSaveUpdateComplete,
       onUserSaveCreateFailureNotificationClose,
@@ -237,9 +239,9 @@ export default class CommunityDetailPage extends Component {
       languages,
       languagesOther,
     } = propInfo;
-    const { modal, entityId } = searchParams;
+    const { modal, entityId, currentStep } = searchParams;
     let questionToAnswer = null;
-    if (modal === 'answerQuestion' && entityId) {
+    if (modal === ANSWER_QUESTION && entityId) {
       questionToAnswer = questions.find(question => question.id === entityId);
     }
     // To clear the flag incase the question is not found
@@ -276,7 +278,7 @@ export default class CommunityDetailPage extends Component {
         top={isStickyHeaderVisible ? 84 : 24}
         bottomBoundary="#sticky-sidebar-boundary"
       >
-        <ConciergeContainer community={community} />
+        <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
       </Sticky>
     );
     const bottomContent = (
@@ -306,11 +308,6 @@ export default class CommunityDetailPage extends Component {
         }
       </Fragment>
     );
-    const data = {
-      name: 'Rhoda Goldman Plaz',
-      image: 'https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_sd.jpg',
-      note: 'Test Note',
-    };
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -351,7 +348,7 @@ export default class CommunityDetailPage extends Component {
           </NameHeading>
 
           <AddressHeading level="subtitle" size="subtitle">{formattedAddress}</AddressHeading>
-          <ConciergeController community={community}>
+          <ConciergeController community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
             {({ gotoWhatNext }) => (
               <CommunitySummary
                 innerRef={this.communitySummaryRef}
@@ -382,7 +379,7 @@ export default class CommunityDetailPage extends Component {
             title="Pricing & Floor Plans"
             innerRef={this.pricingAndFloorPlansRef}
           >
-            <ConciergeController community={community}>
+            <ConciergeController community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
               {({ concierge, getPricing}) => (
                 <PricingAndAvailability
                   community={community}
@@ -392,6 +389,8 @@ export default class CommunityDetailPage extends Component {
                   roomPrices={roomPrices}
                   onInquireOrBookClicked={getPricing}
                   onLiveChatClicked={onLiveChatClicked}
+                  queryParams={{ modal, currentStep }}
+                  setQueryParams={setQueryParams}
                 />
               )}
             </ConciergeController>
@@ -464,7 +463,7 @@ export default class CommunityDetailPage extends Component {
 
           <CollapsibleSection title="Similar Communities">
             <SimilarCommunities similarProperties={similarProperties} />
-            <ConciergeController community={community}>
+            <ConciergeController community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
               {({ gotoAdvancedInfo }) => (
                 <AdTileWrapper>
                   <AdTile {...adProps} onClick={() => gotoAdvancedInfo()} />
@@ -484,7 +483,7 @@ export default class CommunityDetailPage extends Component {
           </CollapsibleSection>
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
-        <ConciergeController community={community}>
+        <ConciergeController community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
           {({ concierge, getPricing }) => (
             <StickyFooter
               footerInfo={{

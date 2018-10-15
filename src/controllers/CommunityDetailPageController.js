@@ -20,6 +20,7 @@ import { resourceDetailReadRequest, resourceListReadRequest, resourceCreateReque
 
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
+import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 
 class CommunityDetailPageController extends Component {
   static propTypes = {
@@ -46,6 +47,7 @@ class CommunityDetailPageController extends Component {
     isUserSaveUpdateComplete: bool,
     redirectUrl: string,
     getUserSaves: func,
+    setQueryParams: func,
   };
 
   componentDidMount() {
@@ -347,6 +349,7 @@ class CommunityDetailPageController extends Component {
       isUserSaveCreateFailure,
       isLoadUserSavesSuccess,
       searchParams,
+      setQueryParams,
       isUserSaveUpdateComplete,
       isUserSaveDeleteFailure,
       isUserSaveDeleteSuccess,
@@ -412,6 +415,7 @@ class CommunityDetailPageController extends Component {
         isGetCommunityUserSaveComplete={isLoadUserSavesSuccess}
         userSave={userSave}
         searchParams={searchParams}
+        setQueryParams={setQueryParams}
         onParamsRemove={this.handleParamsRemove}
         onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
         isUserSaveUpdateComplete={isUserSaveUpdateComplete}
@@ -439,7 +443,9 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const getCommunitySlug = match => match.params.communitySlug;
-const mapStateToProps = (state, { match, location, controller }) => {
+const mapStateToProps = (state, {
+  match, location, history, controller,
+}) => {
   // default state for ssr
   const {
     mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false, isStickyHeaderVisible = false,
@@ -455,7 +461,7 @@ const mapStateToProps = (state, { match, location, controller }) => {
     'filter[entity_slug]': communitySlug,
   }).find(userSave =>
     userSave.entityType === USER_SAVE_COMMUNITY_ENTITY_TYPE && userSave.entitySlug === communitySlug);
-
+  const setQueryParams = getQueryParamsSetter({ history, location });
   return {
     user: getDetail(state, 'user', 'me'),
     community: getDetail(state, 'community', communitySlug),
@@ -470,6 +476,7 @@ const mapStateToProps = (state, { match, location, controller }) => {
     isUserSaveDeleteSuccess,
     isUserSaveDeleteFailure,
     searchParams,
+    setQueryParams,
   };
 };
 
