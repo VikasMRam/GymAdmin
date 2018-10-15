@@ -9,3 +9,4 @@ export const geoGuide = 'platform/geo-guides';
 export const agent = 'marketplace/agents';
 export const content = 'platform/contents';
 export const rating = 'platform/ratings';
+export const register = 'platform/auth/register';

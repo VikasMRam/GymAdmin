@@ -107,6 +107,7 @@ Field.propTypes = {
     'slider',
     'text',
     'email',
+    'password',
     'checkbox',
     'radio',
     'rating',
