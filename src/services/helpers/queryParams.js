@@ -1,6 +1,6 @@
 import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
 
-export const getQueryParamsSetter = ({ history, location }) => {
+export const getQueryParamsSetter = (history, location) => {
   const changeSearchParams = ({ changedParams }) => {
     const { pathname, search } = location;
     const newParams = { ...parseURLQueryParams(search), ...changedParams };

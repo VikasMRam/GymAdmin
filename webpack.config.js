@@ -27,7 +27,7 @@ const {
 } = require('@webpack-blocks/webpack2');
 
 // defaults to dev env, otherwise specify with env vars
-const { STORYBOOK_GIT_BRANCH } = process.env;
+const { STORYBOOK_GIT_BRANCH, GOOGLE_MAPS_API_KEY } = process.env;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const SLY_ENV = process.env.SLY_ENV || 'development';
 const PUBLIC_PATH = process.env.PUBLIC_PATH || '/react-assets';
@@ -41,7 +41,6 @@ const DOMAIN = process.env.DOMAIN || 'lvh.me';
 const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8').trim() : '';
 const EXTERNAL_WIZARDS_PATH = process.env.EXTERNAL_WIZARDS_PATH || '/external/wizards';
 const SOURCE = process.env.SOURCE || 'src';
-const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 const devDomain = `${HOST}:${DEV_PORT}/`;
 const isDev = NODE_ENV === 'development';
 const isStaging = SLY_ENV === 'staging';

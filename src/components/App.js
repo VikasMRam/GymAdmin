@@ -7,10 +7,10 @@ import smoothscroll from 'smoothscroll-polyfill';
 import { func } from 'prop-types';
 
 // https://github.com/diegohaz/arc/wiki/Styling
-import theme from './themes/default';
-import setGlobalStyles from './themes/setGlobalStyles';
+import theme from 'sly/components/themes/default';
+import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 
-import { facebookPixelId, googleTagManagerId, isProd } from 'sly/config';
+import { facebookPixelId, googleTagManagerId, isProd, facebookAppId } from 'sly/config';
 import { assetPath } from 'sly/components/themes';
 // import AppController from 'sly/controllers/Appcontroller';
 import CommunityDetailPageController from 'sly/controllers/CommunityDetailPageController';
@@ -50,7 +50,7 @@ const promoTypes = [
 
 const legalPages = [
   'privacy',
-  'tos'
+  'tos',
 ].join('|');
 
 const TempHowItWorks = ({ ...props }) => (
@@ -195,8 +195,8 @@ export default class App extends Component {
           </Router>
         </ThemeProvider>
 
-
         {/* eslint-disable */}
+
         {/* Facebook Pixel Code */}
         <script dangerouslySetInnerHTML={{ __html: `
           !function(f,b,e,v,n,t,s)
@@ -216,7 +216,6 @@ export default class App extends Component {
         {/* End Facebook Pixel Code */}
 
         {/* Google Tag Manager */}
-
         <script  dangerouslySetInnerHTML={{ __html: `
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -244,6 +243,27 @@ export default class App extends Component {
           )
         }
         {/* End Inspectlet Asynchronous Code */}
+
+        {/* Begin Facebook SDK Code */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId            : '${facebookAppId}',
+              autoLogAppEvents : true,
+              xfbml            : true,
+              version          : 'v3.1'
+            });
+          };
+
+          (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));`}}
+        />
+        {/* End Facebook SDK Code */}
 
         {/* eslint-enable */}
       </Fragment>

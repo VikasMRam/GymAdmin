@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { setModal } from 'sly/services/helpers/url';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { MODAL_TYPE_LOG_IN, MODAL_TYPE_SIGN_UP, MODAL_TYPE_JOIN_SLY }
   from 'sly/constants/modalType';
+import { getDetail } from 'sly/store/selectors';
+import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 
 import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
 import Modal from 'sly/components/molecules/Modal';
@@ -26,36 +27,44 @@ const modalTypes = {
 export class AuthController extends Component {
   static propTypes = {
     searchParams: object,
-    history: object,
-    location: object,
+    user: object,
+    setQueryParams: func,
   };
 
   handleLoginClick = () => {
-    const { history, location } = this.props;
-
-    setModal(history, location, modalTypes.login);
+    const { setQueryParams } = this.props;
+    setQueryParams({ modal: modalTypes.login });
   }
 
   handleSignupClick = () => {
-    const { history, location } = this.props;
-
-    setModal(history, location, modalTypes.signup);
+    const { setQueryParams } = this.props;
+    setQueryParams({ modal: modalTypes.signup });
   }
 
   handleLoginSubmit = () => {
 
   }
 
-  handleSignupSubmit = () => {
+  handleSignupSuccess = () => {
+    this.handleLoginClick();
+  }
 
+  handleContinueWithFacebookClick = () => {
+    if (window.FB) {
+      window.FB.login((response) => {
+        console.log(response);
+      }, { scope: 'public_profile,email' });
+    }
   }
 
   render() {
-    const { searchParams, history, location } = this.props;
+    const {
+      searchParams, setQueryParams, user,
+    } = this.props;
     const currentStep = searchParams.modal;
 
     const StepComponent = steps[currentStep];
-    if (!StepComponent) {
+    if (!StepComponent || user) {
       return null;
     }
 
@@ -64,13 +73,14 @@ export class AuthController extends Component {
       case modalTypes.landing:
         componentProps.onLoginClicked = this.handleLoginClick;
         componentProps.onEmailSignupClicked = this.handleSignupClick;
+        componentProps.onContinueWithFacebookClicked = this.handleContinueWithFacebookClick;
         break;
       case modalTypes.login:
         componentProps.submit = this.handleLoginSubmit;
         componentProps.onSignupClicked = this.handleSignupClick;
         break;
       case modalTypes.signup:
-        componentProps.submit = this.handleSignupSubmit;
+        componentProps.onSubmitSuccess = this.handleSignupSuccess;
         componentProps.onLoginClicked = this.handleLoginClick;
         break;
       default:
@@ -80,7 +90,7 @@ export class AuthController extends Component {
       <Modal
         closeable
         isOpen={Object.values(modalTypes).includes(searchParams.modal)}
-        onClose={() => setModal(history, location)}
+        onClose={() => setQueryParams({ modal: null })}
       >
         <StepComponent {...componentProps} />
       </Modal>
@@ -88,7 +98,9 @@ export class AuthController extends Component {
   }
 }
 
-const mapStateToProps = (state, { match, location }) => ({
+const mapStateToProps = (state, { match, history, location }) => ({
+  setQueryParams: getQueryParamsSetter(history, location),
+  user: getDetail(state, 'user', 'me'),
   searchParams: getSearchParams(match, location),
 });
 

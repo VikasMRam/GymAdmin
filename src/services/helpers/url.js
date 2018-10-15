@@ -191,28 +191,3 @@ export const getOrigin = () => {
 
 export const objectToURLQueryParams = (obj, options) => stringify(obj, options);
 export const parseURLQueryParams = obj => parse(obj);
-
-const changeSearchParams = (history, location, changedParams) => {
-  const { pathname, search } = location;
-
-  const newParams = { ...parseURLQueryParams(search), ...changedParams };
-  const path = `${pathname}?${objectToURLQueryParams(newParams)}`;
-  history.push(path);
-};
-
-const handleParamsRemove = (history, location, paramsToRemove) => {
-  const changedParams = paramsToRemove.reduce((obj, p) => {
-    const nobj = obj;
-    nobj[p] = undefined;
-    return nobj;
-  }, {});
-  changeSearchParams(history, location, changedParams);
-};
-
-export const setModal = (history, location, value) => {
-  if (value) {
-    changeSearchParams(history, location, { modal: value });
-  } else {
-    handleParamsRemove(history, location, ['modal']);
-  }
-};

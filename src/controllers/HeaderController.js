@@ -2,12 +2,12 @@ import React, { Component, Fragment } from 'react';
 import { func, bool, arrayOf, number, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { setModal } from 'sly/services/helpers/url';
-import { SAVED_COMMUNITIES, MODAL_TYPE_LOG_IN } from 'sly/constants/modalType';
+import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
 
 import { connectController } from 'sly/controllers';
 import { getDetail } from 'sly/store/selectors';
 import { getSearchParams } from 'sly/services/helpers/search';
+import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 
 import Header from 'sly/components/organisms/Header';
 import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
@@ -62,8 +62,7 @@ class HeaderController extends Component {
     menuItemHrIndices: arrayOf(number),
     user: object,
     set: func,
-    history: object,
-    location: object,
+    setQueryParams: func,
     searchParams: object,
   };
 
@@ -79,8 +78,7 @@ class HeaderController extends Component {
     const {
       dropdownOpen,
       user,
-      history,
-      location,
+      setQueryParams,
     } = this.props;
     const hItems = defaultHeaderItems(user);
     const lhItems = loginHeaderItems(user);
@@ -88,16 +86,16 @@ class HeaderController extends Component {
 
     const savedHeaderItem = hItems.find(item => item.name === 'Saved');
     if (savedHeaderItem) {
-      savedHeaderItem.onClick = () => setModal(history, location, SAVED_COMMUNITIES);
+      savedHeaderItem.onClick = () => setQueryParams({ modal: SAVED_COMMUNITIES });
     }
     /* TODO: uncomment after login api merged
     let loginItem = lhItems.find(item => item.name === 'Sign in');
     if (loginItem) {
-      loginItem.onClick = () => setModal(history, location, MODAL_TYPE_LOG_IN);
+      loginItem.onClick = () => setQueryParams({ modal: MODAL_TYPE_LOG_IN });
     }
     loginItem = lmItems.find(item => item.name === 'Sign in');
     if (loginItem) {
-      loginItem.onClick = () => setModal(history, location, MODAL_TYPE_LOG_IN);
+      loginItem.onClick = () => setQueryParams({ modal: MODAL_TYPE_LOG_IN });
     } */
 
     const headerItems = [
@@ -128,7 +126,10 @@ class HeaderController extends Component {
   }
 }
 
-const mapStateToProps = (state, { match, location, controller }) => ({
+const mapStateToProps = (state, {
+  match, history, location, controller,
+}) => ({
+  setQueryParams: getQueryParamsSetter(history, location),
   searchParams: getSearchParams(match, location),
   dropdownOpen: controller.dropdownOpen,
   // this will break as soon as we are requesting other users

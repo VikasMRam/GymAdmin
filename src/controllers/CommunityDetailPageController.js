@@ -461,7 +461,7 @@ const mapStateToProps = (state, {
     'filter[entity_slug]': communitySlug,
   }).find(userSave =>
     userSave.entityType === USER_SAVE_COMMUNITY_ENTITY_TYPE && userSave.entitySlug === communitySlug);
-  const setQueryParams = getQueryParamsSetter({ history, location });
+  const setQueryParams = getQueryParamsSetter(history, location);
   return {
     user: getDetail(state, 'user', 'me'),
     community: getDetail(state, 'community', communitySlug),

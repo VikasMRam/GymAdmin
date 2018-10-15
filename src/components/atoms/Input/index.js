@@ -66,7 +66,7 @@ const Input = ({ ...props }) => {
 };
 
 Input.propTypes = {
-  type: oneOf(['textarea', 'select', 'text', 'checkbox', 'radio']),
+  type: oneOf(['textarea', 'select', 'text', 'checkbox', 'radio', 'password']),
   size: oneOf(['small', 'regular', 'large', 'xLarge']),
   invalid: bool,
 };
