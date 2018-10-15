@@ -89,12 +89,19 @@ describe('ConciergeController', () => {
     spy.mockClear();
   });
 
-  const getControllerAction = store => {
-    const { payload, ...lastAction } = store.getActions().pop();
-    expect(lastAction.type).toBe('controller/SET');
-    expect(payload.controller.indexOf('ConciergeController')).toBe(0);
-    return payload.data;
-  };
+  // Logic to get Data from controller for Asserting
+  //
+  // const getControllerAction = store => {
+  //   const { payload, ...lastAction } = store.getActions().pop();
+  //   expect(lastAction.type).toBe('controller/SET');
+  //   expect(payload.controller.indexOf('ConciergeController')).toBe(0);
+  //   return payload.data;
+  // };
+  //
+  // USAGE :
+  //   expect(getControllerAction(store)).toEqual({
+  //   currentStep: CONVERSION_FORM,
+  // });
 
   describe('Container', () => {
     const wrap = (community, store) => shallow(
@@ -140,9 +147,6 @@ describe('ConciergeController', () => {
       const store = initStore({ resource, entities: emailOnlyEntities });
       const wrapper = wrap(otherCommunity, store);
       wrapper.instance().next(true);
-      // expect(getControllerAction(store)).toEqual({
-      //   currentStep: CONVERSION_FORM,
-      // });
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
 
