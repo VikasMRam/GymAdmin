@@ -81,7 +81,7 @@ describe('ConciergeController', () => {
   const emailOnlyEntities = { userAction: onlyEmailUserAction };
 
   const spy = jest.fn();
-  const setModal = jest.fn();
+  const setQueryParams = jest.fn();
 
   const childProps = () => spy.mock.calls.pop()[0];
 
@@ -102,7 +102,8 @@ describe('ConciergeController', () => {
         community={community}
         store={store}
         children={spy}
-        setModal={setModal}
+        queryParams={{}}
+        setQueryParams={setQueryParams}
       />
     ).dive().dive();
 
@@ -110,7 +111,7 @@ describe('ConciergeController', () => {
       const store = initStore({ resource, entities });
       wrap(community, store);
       const { currentStep } = childProps().concierge;
-      expect(setModal).not.toBeCalled();
+      expect(setQueryParams).not.toBeCalled();
       expect(currentStep).toBe(CONVERSION_FORM);
     });
 
@@ -139,20 +140,17 @@ describe('ConciergeController', () => {
       const store = initStore({ resource, entities: emailOnlyEntities });
       const wrapper = wrap(otherCommunity, store);
       wrapper.instance().next(true);
-      expect(getControllerAction(store)).toEqual({
-        currentStep: CONVERSION_FORM,
-      });
-      expect(setModal).toBeCalledWith(CONCIERGE);
+      // expect(getControllerAction(store)).toEqual({
+      //   currentStep: CONVERSION_FORM,
+      // });
+      expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
 
     it('should not shortcircuit to thankYou when in express mode', () => {
       const store = initStore({ resource, entities });
       const wrapper = wrap(community, store);
       wrapper.instance().next(true);
-      expect(getControllerAction(store)).toEqual({
-        currentStep: ADVANCED_INFO,
-      });
-      expect(setModal).toBeCalledWith(CONCIERGE);
+      expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
     });
   });
 
@@ -197,7 +195,8 @@ describe('ConciergeController', () => {
         {...props}
         set={set}
         children={spy}
-        setModal={setModal}
+        queryParams={{}}
+        setQueryParams={setQueryParams}
       />
     );
 
@@ -206,19 +205,13 @@ describe('ConciergeController', () => {
         community, concierge: { advancedInfoSent: true } });
       childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
-      expect(lastSet()).toEqual({
-        currentStep: CONVERSION_FORM,
-      });
-      expect(setModal).toBeCalledWith(CONCIERGE);
+      expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
 
     it('should ask for advanced info when explicitly called', () => {
       wrap({ community, userDetails: {}, concierge: {} });
       childProps().gotoAdvancedInfo();
-      expect(lastSet()).toEqual({
-        currentStep: ADVANCED_INFO,
-      });
-      expect(setModal).toBeCalledWith(CONCIERGE);
+      expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
     });
 
     it('should ask for conversionForm', () => {
@@ -227,10 +220,7 @@ describe('ConciergeController', () => {
       }});
       childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
-      expect(lastSet()).toEqual({
-        currentStep: CONVERSION_FORM,
-      });
-      expect(setModal).toBeCalledWith(CONCIERGE);
+      expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
 
     it('should show thank you', () => {
@@ -244,10 +234,7 @@ describe('ConciergeController', () => {
       });
       childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
-      expect(lastSet()).toEqual({
-        currentStep: CONVERSION_FORM,
-      });
-      expect(setModal).toBeCalledWith(CONCIERGE);
+      expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
 
     //TODO REENABLE

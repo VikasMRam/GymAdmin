@@ -10,7 +10,6 @@ import { getSearchParams } from 'sly/services/helpers/search';
 import { getDetail } from 'sly/store/selectors';
 import { connectController } from 'sly/controllers';
 import SlyEvent from 'sly/services/helpers/events';
-import { getSetModal } from 'sly/services/helpers/modal';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { ASSESSMENT, REQUEST_CALLBACK, REQUEST_CONSULTATION, REQUEST_PRICING, REQUEST_AVAILABILITY  } from 'sly/services/api/actions';
 
@@ -62,7 +61,8 @@ export class ConciergeController extends Component {
     concierge: object.isRequired,
     children: func.isRequired,
     set: func.isRequired,
-    setModal: func.isRequired,
+    queryParams: object,
+    setQueryParams: func.isRequired,
   };
 
   getPricing = () => {
@@ -91,9 +91,8 @@ export class ConciergeController extends Component {
 
   gotoAdvancedInfo = () => {
     const {
-      set,
       userDetails,
-      setModal,
+      setQueryParams,
     } = this.props;
 
     SlyEvent.getInstance().sendEvent({
@@ -103,30 +102,24 @@ export class ConciergeController extends Component {
     });
 
     if (!isAssessment(userDetails)) {
-      set({
-        currentStep: ADVANCED_INFO,
-      });
-      setModal(CONCIERGE);
+      setQueryParams({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
     } else {
       this.next();
     }
   };
 
   gotoWhatNext = () => {
-    const { set, setModal } = this.props;
-    set({
-      currentStep: HOW_IT_WORKS,
-    });
-    setModal(CONCIERGE);
+    const { setQueryParams } = this.props;
+    setQueryParams({ modal: CONCIERGE, currentStep: HOW_IT_WORKS });
   }
 
-  submitExpressConversion = data => {
+  submitExpressConversion = (data) => {
     const {
       community,
       concierge
 
     } = this.props;
-    if (data.phone && data.phone.match(/\d+/)){
+    if (data.phone && data.phone.match(/\d+/)) {
       let eventCategory = concierge.modalIsOpen ? 'requestAvailabilityConsultation' : 'requestConsultation';
       SlyEvent.getInstance().sendEvent({
         action: 'contactCommunity',
@@ -146,7 +139,7 @@ export class ConciergeController extends Component {
 
   };
 
-  submitRegularConversion = data => {
+  submitRegularConversion = (data) => {
     const {
       community,
       concierge
@@ -190,7 +183,7 @@ export class ConciergeController extends Component {
     });
   };
 
-  submitAdvancedInfo = data => {
+  submitAdvancedInfo = (data) => {
     const { submit, community, concierge } = this.props;
     const { message, ...rest } = data;
     let eventCategory = 'advancedInfo';
@@ -226,15 +219,13 @@ export class ConciergeController extends Component {
     const {
       concierge,
       getDetailedPricing,
-      set,
-      setModal,
+      setQueryParams,
       userDetails,
     } = this.props;
 
 
     const {
       contactRequested,
-      currentStep,
       consultationRequested,
     } = concierge;
 
@@ -245,30 +236,21 @@ export class ConciergeController extends Component {
     );
 
     if (Done) {
-      setModal(CONCIERGE);
-      return set({
-        currentStep: WHAT_NEXT,
-      });
+      setQueryParams({ modal: CONCIERGE, currentStep: WHAT_NEXT });
     }
 
     if (!hasAllUserData(userDetails)) {
-      setModal(CONCIERGE);
-      return set({
-        currentStep: CONVERSION_FORM,
-      });
+      setQueryParams({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     }
 
     if (!isAssessment(userDetails)) {
-      setModal(CONCIERGE);
-      return set({
-        currentStep: ADVANCED_INFO,
-      });
+      setQueryParams({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
     }
   };
 
   close = () => {
-    const { setModal } = this.props;
-    setModal(null);
+    const { setQueryParams } = this.props;
+    setQueryParams({ modal: null, currentStep: null });
   };
 
   render() {
@@ -315,20 +297,19 @@ const isAvailReq = slug => contact =>
   && (contact.contactType === REQUEST_AVAILABILITY) ;
 
 const mapStateToProps = (state, props) => {
-  const {
-    controller, community, modal,
-  } = props;
+  const { community, queryParams } = props;
   const {
     profilesContacted,
     consultationRequested,
     userDetails = {},
   } = getDetail(state, 'userAction') || {};
+  const { modal, currentStep } = queryParams;
   return {
     community,
     userDetails,
     concierge: {
-      currentStep: controller.currentStep || CONVERSION_FORM,
-      modalIsOpen: modal === CONCIERGE,
+      currentStep: currentStep || CONVERSION_FORM,
+      modalIsOpen: modal === CONCIERGE || false,
       consultationRequested,
       pricingRequested: (profilesContacted || []).some(isPricingReq(community.id)),
       availabilityRequested: (profilesContacted || []).some(isAvailReq(community.id)),

@@ -104,6 +104,7 @@ export default class CommunityDetailPage extends Component {
     isGetCommunityUserSaveComplete: bool,
     userSave: object,
     searchParams: object,
+    setQueryParams: func,
     onSubmitSaveCommunityForm: func,
     isUserSaveUpdateComplete: bool,
   };
@@ -175,6 +176,7 @@ export default class CommunityDetailPage extends Component {
       isGetCommunityUserSaveComplete,
       userSave,
       searchParams,
+      setQueryParams,
       onSubmitSaveCommunityForm,
       isUserSaveUpdateComplete,
     } = this.props;
@@ -245,7 +247,7 @@ export default class CommunityDetailPage extends Component {
       languages,
       languagesOther,
     } = propInfo;
-    const { modal, entityId } = searchParams;
+    const { modal, entityId, currentStep } = searchParams;
     let questionToAnswer = null;
     if (modal === ANSWER_QUESTION && entityId) {
       questionToAnswer = questions.find(question => question.id === entityId);
@@ -284,7 +286,7 @@ export default class CommunityDetailPage extends Component {
         top={isStickyHeaderVisible ? 84 : 24}
         bottomBoundary="#sticky-sidebar-boundary"
       >
-        <ConciergeContainer community={community} modal={modal} setModal={setModal} />
+        <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
       </Sticky>
     );
     const bottomContent = (
@@ -354,7 +356,7 @@ export default class CommunityDetailPage extends Component {
           </NameHeading>
 
           <AddressHeading level="subtitle" size="subtitle">{formattedAddress}</AddressHeading>
-          <ConciergeController community={community} modal={modal} setModal={setModal}>
+          <ConciergeController community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
             {({ gotoWhatNext }) => (
               <CommunitySummary
                 innerRef={this.communitySummaryRef}
@@ -385,7 +387,7 @@ export default class CommunityDetailPage extends Component {
             title="Pricing & Floor Plans"
             innerRef={this.pricingAndFloorPlansRef}
           >
-            <ConciergeController community={community} modal={modal} setModal={setModal}>
+            <ConciergeController community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
               {({ concierge, getPricing}) => (
                 <PricingAndAvailability
                   community={community}
@@ -395,8 +397,8 @@ export default class CommunityDetailPage extends Component {
                   roomPrices={roomPrices}
                   onInquireOrBookClicked={getPricing}
                   onLiveChatClicked={onLiveChatClicked}
-                  modal={modal}
-                  setModal={setModal}
+                  queryParams={{ modal, currentStep }}
+                  setQueryParams={setQueryParams}
                 />
               )}
             </ConciergeController>
@@ -469,7 +471,7 @@ export default class CommunityDetailPage extends Component {
 
           <CollapsibleSection title="Similar Communities">
             <SimilarCommunities similarProperties={similarProperties} />
-            <ConciergeController community={community} modal={modal} setModal={setModal}>
+            <ConciergeController community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
               {({ gotoAdvancedInfo }) => (
                 <AdTileWrapper>
                   <AdTile {...adProps} onClick={() => gotoAdvancedInfo()} />
@@ -489,7 +491,7 @@ export default class CommunityDetailPage extends Component {
           </CollapsibleSection>
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
-        <ConciergeController community={community} modal={modal} setModal={setModal}>
+        <ConciergeController community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
           {({ concierge, getPricing }) => (
             <StickyFooter
               footerInfo={{
