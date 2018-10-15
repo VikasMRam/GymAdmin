@@ -22,6 +22,7 @@ class SavedCommunitiesPopupController extends Component {
     setQueryParams: func,
     isLoading: bool,
     isLoadSuccess: bool,
+    isUserSaveDeleteSuccess: bool,
   };
 
   componentDidMount() {
@@ -52,10 +53,23 @@ class SavedCommunitiesPopupController extends Component {
     }
   }
 
+  handleUserSaveDeleteSuccessNotificationClose = () => {
+    const { set } = this.props;
+    set({ isUserSaveDeleteSuccess: false });
+  }
+
+  handleFavouriteClicked = (userSave) => {
+    const { set, deleteUserSave, getUserSaves } = this.props;
+
+    deleteUserSave(userSave).then(() => {
+      getUserSaves();
+      set({ isUserSaveDeleteSuccess: true });
+    });
+  }
+
   render() {
     const {
-      userSaves, searchParams, isLoading, isLoadSuccess, getUserSaves, deleteUserSave,
-      setQueryParams,
+      userSaves, searchParams, isLoading, isLoadSuccess, setQueryParams, isUserSaveDeleteSuccess,
     } = this.props;
 
     const savedCommunities = userSaves.reduce((result, userSave) => {
@@ -75,8 +89,10 @@ class SavedCommunitiesPopupController extends Component {
         isLoadSuccess={isLoadSuccess}
         savedCommunities={savedCommunities}
         onCloseButtonClick={() => setQueryParams({ modal: null })}
-        onFavouriteClicked={userSave => deleteUserSave(userSave).then(() => { getUserSaves(); })}
+        onFavouriteClicked={this.handleFavouriteClicked}
         isOpen={searchParams.modal === SAVED_COMMUNITIES}
+        isUserSaveDeleteSuccess={isUserSaveDeleteSuccess}
+        onUserSaveDeleteSuccessNotificationClose={this.handleUserSaveDeleteSuccessNotificationClose}
       />
     );
   }
@@ -86,7 +102,7 @@ const mapStateToProps = (state, {
   match, history, location, controller,
 }) => {
   // default state for ssr
-  const { isLoading = false, isLoadSuccess = false } = controller;
+  const { isLoading = false, isLoadSuccess = false, isUserSaveDeleteSuccess = false } = controller;
 
   return {
     setQueryParams: getQueryParamsSetter(history, location),
@@ -97,6 +113,7 @@ const mapStateToProps = (state, {
     }),
     isLoading,
     isLoadSuccess,
+    isUserSaveDeleteSuccess,
   };
 };
 
