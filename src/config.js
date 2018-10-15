@@ -31,6 +31,7 @@ const config = {
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-NTC7HG2',
     version: process.env.VERSION,
+    facebookAppId: '624602444328776',
   },
 
   test: {
@@ -45,6 +46,7 @@ const config = {
   staging: {
     isDev: false,
     eventServerUrl: 'http://event.myseniorly.com/events/new',
+    facebookAppId: '614862451969442',
   },
 
   production: {
@@ -55,6 +57,7 @@ const config = {
     olarkSiteId: '9319-500-10-7635',
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-5888W7H',
+    facebookAppId: '1609538575934980',
   },
 };
 
