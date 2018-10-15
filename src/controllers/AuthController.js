@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { setModal } from 'sly/services/helpers/url';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { MODAL_TYPE_LOG_IN, MODAL_TYPE_SIGN_UP, MODAL_TYPE_JOIN_SLY }
   from 'sly/constants/modalType';
 import { getDetail } from 'sly/store/selectors';
+import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 
 import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
 import Modal from 'sly/components/molecules/Modal';
@@ -27,21 +27,18 @@ const modalTypes = {
 export class AuthController extends Component {
   static propTypes = {
     searchParams: object,
-    history: object,
-    location: object,
     user: object,
+    setQueryParams: func,
   };
 
   handleLoginClick = () => {
-    const { history, location } = this.props;
-
-    setModal(history, location, modalTypes.login);
+    const { setQueryParams } = this.props;
+    setQueryParams({ modal: modalTypes.login });
   }
 
   handleSignupClick = () => {
-    const { history, location } = this.props;
-
-    setModal(history, location, modalTypes.signup);
+    const { setQueryParams } = this.props;
+    setQueryParams({ modal: modalTypes.signup });
   }
 
   handleLoginSubmit = () => {
@@ -62,7 +59,7 @@ export class AuthController extends Component {
 
   render() {
     const {
-      searchParams, history, location, user,
+      searchParams, setQueryParams, user,
     } = this.props;
     const currentStep = searchParams.modal;
 
@@ -93,7 +90,7 @@ export class AuthController extends Component {
       <Modal
         closeable
         isOpen={Object.values(modalTypes).includes(searchParams.modal)}
-        onClose={() => setModal(history, location)}
+        onClose={() => setQueryParams({ modal: null })}
       >
         <StepComponent {...componentProps} />
       </Modal>
@@ -101,7 +98,8 @@ export class AuthController extends Component {
   }
 }
 
-const mapStateToProps = (state, { match, location }) => ({
+const mapStateToProps = (state, { match, history, location }) => ({
+  setQueryParams: getQueryParamsSetter(history, location),
   user: getDetail(state, 'user', 'me'),
   searchParams: getSearchParams(match, location),
 });
