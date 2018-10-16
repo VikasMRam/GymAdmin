@@ -3,6 +3,7 @@ import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
+import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 
@@ -21,6 +22,7 @@ const StyledHeading = styled(Heading)`
 const StyledButton = styled(Button)`
   width: 100%;
   margin-bottom: ${size('spacing.regular')};
+  margin-bottom: ${ifProp('error', size('spacing.large'), 'initial')};
 `;
 
 const StyledHr = styled(Hr)`
@@ -41,7 +43,9 @@ const Signup = styled.span`
   }
 `;
 
-const LoginForm = ({ handleSubmit, submitting, onSignupClicked, error }) => (
+const LoginForm = ({
+  handleSubmit, submitting, onSignupClicked, error,
+}) => (
   <Form onSubmit={handleSubmit}>
     <StyledHeading>Log in</StyledHeading>
     <Field
@@ -65,7 +69,7 @@ const LoginForm = ({ handleSubmit, submitting, onSignupClicked, error }) => (
       responsive
       component={StyledReduxField}
     />
-    <StyledButton type="submit" kind="jumbo" disabled={submitting}>
+    <StyledButton error={error} type="submit" kind="jumbo" disabled={submitting}>
       Log in
     </StyledButton>
     {error && <Block palette="danger">{error}</Block>}

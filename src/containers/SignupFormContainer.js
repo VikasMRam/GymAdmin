@@ -13,7 +13,7 @@ const validate = createValidator({
   password: [required],
 });
 const ReduxForm = reduxForm({
-  form: 'signupForm',
+  form: 'SignupForm',
   validate,
 })(SignupForm);
 
@@ -32,22 +32,20 @@ class SignupFormContainer extends Component {
       // TODO: Need to set a proper way to handle server side errors
       const { response } = e;
       return response.json().then((data) => {
-        const errorMessage = data.errors[0].detail;
+        const errorMessage = Object.values(data.errors).join('. ');
         throw new SubmissionError({ _error: errorMessage });
       });
     });
   }
 
   render() {
-    return <ReduxForm onSubmit={this.handleSubmit} />;
+    return <ReduxForm onSubmit={this.handleSubmit} {...this.props} />;
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   submit: data => dispatch(resourceCreateRequest('register', data)),
-  clearSubmitErrors: () => dispatch(clearSubmitErrors('signupForm')),
+  clearSubmitErrors: () => dispatch(clearSubmitErrors('SignupForm')),
 });
 
-const mapStateToProps = state => state;
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignupFormContainer);
+export default connect(null, mapDispatchToProps)(SignupFormContainer);

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { reduxForm, SubmissionError } from 'redux-form';
+import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { createValidator, required, email } from 'sly/services/validation';
 
 import LoginForm from 'sly/components/organisms/LoginForm';
-import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { resourceCreateRequest } from 'sly/store/resource/actions';
 
 const validate = createValidator({
   email: [required, email],
@@ -20,16 +20,17 @@ const ReduxForm = reduxForm({
 class LoginFormContainer extends Component {
   static propTypes = {
     login: func,
-    fetchUser: func,
+    clearSubmitErrors: func,
+    onSubmitSuccess: func,
   };
+
   handleOnSubmit = (values) => {
-    const { login, fetchUser } = this.props;
+    const { login, onSubmitSuccess, clearSubmitErrors } = this.props;
     const { email, password } = values;
     const payload = { email, password };
-    return login(payload).then(() => {
-      // Close Modal
-      fetchUser();
-    }).catch((r) => {
+
+    clearSubmitErrors();
+    return login(payload).then(onSubmitSuccess).catch((r) => {
       // TODO: Need to set a proper way to handle server side errors
       const { response } = r;
       return response.json().then(() => {
@@ -38,11 +39,11 @@ class LoginFormContainer extends Component {
     });
   }
 
-  render(props) {
+  render() {
     return (
       <ReduxForm
         onSubmit={this.handleOnSubmit}
-        {...props}
+        {...this.props}
       />
     );
   }
@@ -50,7 +51,7 @@ class LoginFormContainer extends Component {
 
 const mapDispatchToProps = dispatch => ({
   login: data => dispatch(resourceCreateRequest('login', data)),
-  fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me')),
+  clearSubmitErrors: () => dispatch(clearSubmitErrors('LoginForm')),
 });
 
 export default connect(null, mapDispatchToProps)(LoginFormContainer);

@@ -3,10 +3,13 @@
 import normalize from 'json-api-normalizer';
 import { entitiesReceive } from './actions';
 
+const entitiesToSkip = ['register', 'login'];
+
 const middleware = store => next => (action) => {
   const { payload: rawEntities, meta } = action;
 
-  if (meta && meta.entities) {
+  // skip for api routes that won't return in json api format
+  if (meta && meta.entities && entitiesToSkip.indexOf(meta.resource) === -1) {
     const { uri } = meta.request;
     const qsPos = uri.indexOf('?');
     const key = qsPos !== -1 ? uri.substring(0, qsPos) : uri;

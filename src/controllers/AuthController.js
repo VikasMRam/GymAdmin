@@ -8,6 +8,7 @@ import { MODAL_TYPE_LOG_IN, MODAL_TYPE_SIGN_UP, MODAL_TYPE_JOIN_SLY }
   from 'sly/constants/modalType';
 import { getDetail } from 'sly/store/selectors';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
+import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 
 import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
 import Modal from 'sly/components/molecules/Modal';
@@ -18,31 +19,29 @@ const steps = {};
 steps[MODAL_TYPE_JOIN_SLY] = JoinSlyButtons;
 steps[MODAL_TYPE_LOG_IN] = LoginFormContainer;
 steps[MODAL_TYPE_SIGN_UP] = SignupFormContainer;
-const modalTypes = {
-  landing: MODAL_TYPE_JOIN_SLY,
-  login: MODAL_TYPE_LOG_IN,
-  signup: MODAL_TYPE_SIGN_UP,
-};
 
 export class AuthController extends Component {
   static propTypes = {
     searchParams: object,
     user: object,
     setQueryParams: func,
+    fetchUser: func,
   };
 
   handleLoginClick = () => {
     const { setQueryParams } = this.props;
-    setQueryParams({ modal: modalTypes.login });
+    setQueryParams({ modal: MODAL_TYPE_LOG_IN });
   }
 
   handleSignupClick = () => {
     const { setQueryParams } = this.props;
-    setQueryParams({ modal: modalTypes.signup });
+    setQueryParams({ modal: MODAL_TYPE_SIGN_UP });
   }
 
-  handleLoginSubmit = () => {
-
+  handleLoginSuccess = () => {
+    const { setQueryParams, fetchUser } = this.props;
+    fetchUser();
+    setQueryParams({ modal: null });
   }
 
   handleSignupSuccess = () => {
@@ -70,16 +69,16 @@ export class AuthController extends Component {
 
     const componentProps = {};
     switch (currentStep) {
-      case modalTypes.landing:
+      case MODAL_TYPE_JOIN_SLY:
         componentProps.onLoginClicked = this.handleLoginClick;
         componentProps.onEmailSignupClicked = this.handleSignupClick;
         componentProps.onContinueWithFacebookClicked = this.handleContinueWithFacebookClick;
         break;
-      case modalTypes.login:
-        componentProps.submit = this.handleLoginSubmit;
+      case MODAL_TYPE_LOG_IN:
+        componentProps.onSubmitSuccess = this.handleLoginSuccess;
         componentProps.onSignupClicked = this.handleSignupClick;
         break;
-      case modalTypes.signup:
+      case MODAL_TYPE_SIGN_UP:
         componentProps.onSubmitSuccess = this.handleSignupSuccess;
         componentProps.onLoginClicked = this.handleLoginClick;
         break;
@@ -89,7 +88,7 @@ export class AuthController extends Component {
     return (
       <Modal
         closeable
-        isOpen={Object.values(modalTypes).includes(searchParams.modal)}
+        isOpen={Object.keys(steps).includes(searchParams.modal)}
         onClose={() => setQueryParams({ modal: null })}
       >
         <StepComponent {...componentProps} />
@@ -104,4 +103,8 @@ const mapStateToProps = (state, { match, history, location }) => ({
   searchParams: getSearchParams(match, location),
 });
 
-export default withRouter(connect(mapStateToProps)(AuthController));
+const mapDispatchToProps = dispatch => ({
+  fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me')),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthController));
