@@ -77,6 +77,10 @@ export default (state = initialState, { type, payload, meta }) => {
 
   switch (type) {
     case RESOURCE_CREATE_SUCCESS:
+      // skip for api routes that won't return in json api format
+      if (!payload.ids) {
+        return state;
+      }
       return {
         ...state,
         [resourceKey]: {
