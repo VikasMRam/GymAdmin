@@ -12,6 +12,8 @@ import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import Header from 'sly/components/organisms/Header';
 import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
 import AuthController from 'sly/controllers/AuthController';
+import { resourceDeleteRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { entitiesReceive } from 'sly/store/actions';
 
 const defaultHeaderItems = (user) => {
   let i = [
@@ -51,7 +53,7 @@ const loginHeaderItems = user => user
 
 const loginMenuItems = user => loginHeaderItems(user)
   .concat(user
-    ? [{ name: 'Log out', url: '/signout' }]
+    ? [{ name: 'Log out' }]
     : []);
 
 const menuItemHrIndices = [7, 10];
@@ -64,6 +66,8 @@ class HeaderController extends Component {
     set: func,
     setQueryParams: func,
     searchParams: object,
+    logoutUser: func,
+    fetchUser: func,
   };
 
   handleMenuItemClick = () => {
@@ -79,6 +83,8 @@ class HeaderController extends Component {
       dropdownOpen,
       user,
       setQueryParams,
+      logoutUser,
+      fetchUser,
     } = this.props;
     const hItems = defaultHeaderItems(user);
     const lhItems = loginHeaderItems(user);
@@ -87,6 +93,12 @@ class HeaderController extends Component {
     const savedHeaderItem = hItems.find(item => item.name === 'Saved');
     if (savedHeaderItem) {
       savedHeaderItem.onClick = () => setQueryParams({ modal: SAVED_COMMUNITIES });
+    }
+    const logoutLeftMenuItem = lmItems.find(item => item.name === 'Log out');
+    if (logoutLeftMenuItem) {
+      logoutLeftMenuItem.onClick = () => {
+        logoutUser().then(() => fetchUser());
+      };
     }
     /* TODO: uncomment after login api merged
     let loginItem = lhItems.find(item => item.name === 'Sign in');
@@ -137,4 +149,12 @@ const mapStateToProps = (state, {
   user: getDetail(state, 'user', 'me'),
 });
 
-export default withRouter(connectController(mapStateToProps)(HeaderController));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logoutUser: () => dispatch(resourceDeleteRequest('logout')),
+    fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me'))
+      .catch(() => dispatch(entitiesReceive({ user: { me: null } }))),
+  };
+};
+
+export default withRouter(connectController(mapStateToProps, mapDispatchToProps)(HeaderController));
