@@ -50,13 +50,14 @@ Login.displayName = 'Login';
 
 const JoinSlyButtons = ({
   onLoginClicked, onEmailSignupClicked, onContinueWithFacebookClicked, heading,
+  onContinueWithGoogleClicked,
 }) => (
   <section>
     <StyledHeading>{heading}</StyledHeading>
     <FacebookButton palette="facebook" onClick={onContinueWithFacebookClicked}>
       <Icon icon="facebook" size="regular" /> Continue with Facebook
     </FacebookButton>
-    <GoogleButton transparent>
+    <GoogleButton transparent onClick={onContinueWithGoogleClicked}>
       <Icon icon="google" size="regular" /> Continue with Google
     </GoogleButton>
     <StyledHr />
@@ -72,6 +73,7 @@ JoinSlyButtons.propTypes = {
   onLoginClicked: func,
   onEmailSignupClicked: func,
   onContinueWithFacebookClicked: func,
+  onContinueWithGoogleClicked: func,
   heading: string,
 };
 

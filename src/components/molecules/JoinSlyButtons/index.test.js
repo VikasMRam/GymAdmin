@@ -55,6 +55,19 @@ describe('JoinSlyButtons', () => {
     expect(onContinueWithFacebookClickedSpy).toHaveBeenCalled();
   });
 
+  it('call callback on continue with google click', () => {
+    const onContinueWithGoogleClickedSpy = jest.fn();
+    const wrapper = wrap({
+      onContinueWithGoogleClicked: onContinueWithGoogleClickedSpy,
+    });
+    const button = wrapper.find('GoogleButton');
+
+    expect(button).toHaveLength(1);
+    button.simulate('click');
+    expect(onContinueWithGoogleClickedSpy).toHaveBeenCalled();
+  });
+
+
   it('shows correct heading', () => {
     const wrapper = wrap({
       heading: 'test heading',
