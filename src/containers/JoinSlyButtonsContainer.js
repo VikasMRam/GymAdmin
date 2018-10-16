@@ -14,6 +14,16 @@ class JoinSlyButtonsContainer extends Component {
     onEmailSignupClicked: func,
   };
 
+  componentDidMount() {
+    if (window.gapi) {
+      window.gapi.load('auth2', () => {
+        if (!window.gapi.auth2.getAuthInstance()) {
+          window.gapi.auth2.init();
+        }
+      });
+    }
+  }
+
   handleContinueWithFacebookClick = () => {
     if (window.FB) {
       window.FB.login((response) => {
@@ -23,7 +33,10 @@ class JoinSlyButtonsContainer extends Component {
   }
 
   handleContinueWithGoogleClick = () => {
-
+    if (window.gapi) {
+      const auth2 = window.gapi.auth2.getAuthInstance();
+      auth2.signIn().then(res => console.log(res.getBasicProfile()), err => console.log(err));
+    }
   }
 
   render() {
