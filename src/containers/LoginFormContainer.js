@@ -4,9 +4,9 @@ import { func } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { createValidator, required, email } from 'sly/services/validation';
+import { resourceCreateRequest } from 'sly/store/resource/actions';
 
 import LoginForm from 'sly/components/organisms/LoginForm';
-import { resourceCreateRequest } from 'sly/store/resource/actions';
 
 const validate = createValidator({
   email: [required, email],

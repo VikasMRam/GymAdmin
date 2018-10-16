@@ -10,13 +10,13 @@ import { getDetail } from 'sly/store/selectors';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 
-import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
 import Modal from 'sly/components/molecules/Modal';
 import LoginFormContainer from 'sly/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/containers/SignupFormContainer';
+import JoinSlyButtonsContainer from 'sly/containers/JoinSlyButtonsContainer';
 
 const steps = {};
-steps[MODAL_TYPE_JOIN_SLY] = JoinSlyButtons;
+steps[MODAL_TYPE_JOIN_SLY] = JoinSlyButtonsContainer;
 steps[MODAL_TYPE_LOG_IN] = LoginFormContainer;
 steps[MODAL_TYPE_SIGN_UP] = SignupFormContainer;
 
@@ -48,14 +48,6 @@ export class AuthController extends Component {
     this.handleLoginClick();
   }
 
-  handleContinueWithFacebookClick = () => {
-    if (window.FB) {
-      window.FB.login((response) => {
-        console.log(response);
-      }, { scope: 'public_profile,email' });
-    }
-  }
-
   render() {
     const {
       searchParams, setQueryParams, user,
@@ -72,7 +64,6 @@ export class AuthController extends Component {
       case MODAL_TYPE_JOIN_SLY:
         componentProps.onLoginClicked = this.handleLoginClick;
         componentProps.onEmailSignupClicked = this.handleSignupClick;
-        componentProps.onContinueWithFacebookClicked = this.handleContinueWithFacebookClick;
         break;
       case MODAL_TYPE_LOG_IN:
         componentProps.onSubmitSuccess = this.handleLoginSuccess;
