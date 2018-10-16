@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, bool } from 'prop-types';
+import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
@@ -41,7 +41,7 @@ const Signup = styled.span`
   }
 `;
 
-const LoginForm = ({ handleSubmit, submitting, onSignupClicked }) => (
+const LoginForm = ({ handleSubmit, submitting, onSignupClicked, error }) => (
   <Form onSubmit={handleSubmit}>
     <StyledHeading>Log in</StyledHeading>
     <Field
@@ -54,7 +54,7 @@ const LoginForm = ({ handleSubmit, submitting, onSignupClicked }) => (
     <Field
       name="password"
       label="Password"
-      type="text"
+      type="password"
       placeholder="Password"
       component={ReduxField}
     />
@@ -68,6 +68,7 @@ const LoginForm = ({ handleSubmit, submitting, onSignupClicked }) => (
     <StyledButton type="submit" kind="jumbo" disabled={submitting}>
       Log in
     </StyledButton>
+    {error && <Block palette="danger">{error}</Block>}
     <StyledHr />
     <Block>Don&apos;t have an account? <Signup onClick={onSignupClicked}>Sign up</Signup></Block>
   </Form>
@@ -77,6 +78,7 @@ LoginForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
   onSignupClicked: func,
+  error: string,
 };
 
 export default LoginForm;
