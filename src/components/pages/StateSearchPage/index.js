@@ -12,6 +12,7 @@ import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearc
 import { Heading, Button } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
+import { getTocSearchLabel } from 'sly/services/helpers/search';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 
@@ -62,6 +63,7 @@ export default class StateSearchPage extends Component {
     } = this.props;
     const listSize = requestMeta['filtered-count'];
     const state = titleize(searchParams.state);
+    const tocLabel = getTocSearchLabel(searchParams.toc);
 
     let latitude = 0;
     let longitude = 0;
@@ -79,7 +81,7 @@ export default class StateSearchPage extends Component {
         if (gg.autoDescription) {
           return (<Fragment>
             <Heading level="hero" size="title">
-              {listSize} communities in {state}
+              {listSize} {tocLabel} in {state}
             </Heading>
             <div dangerouslySetInnerHTML={{__html: gg.autoDescription}}/>
           </Fragment>);
@@ -90,7 +92,7 @@ export default class StateSearchPage extends Component {
       return (
         <Fragment>
           <Heading level="hero" size="title">
-            {listSize} communities in {state}
+            {listSize} {tocLabel} in {state}
           </Heading>
         </Fragment>);
     };

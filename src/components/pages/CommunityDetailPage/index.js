@@ -86,6 +86,7 @@ export default class CommunityDetailPage extends Component {
   static propTypes = {
     user: object,
     community: object.isRequired,
+    location: object.isRequired,
     mediaGallerySlideIndex: number,
     isMediaGalleryFullscreenActive: bool,
     onMediaGallerySlideChange: func,
@@ -159,6 +160,7 @@ export default class CommunityDetailPage extends Component {
       mediaGallerySlideIndex,
       isMediaGalleryFullscreenActive,
       community,
+      location,
       onMediaGallerySlideChange,
       onMediaGalleryToggleFullscreen,
       onMediaGalleryFavouriteClick,
@@ -289,7 +291,7 @@ export default class CommunityDetailPage extends Component {
     );
     const bottomContent = (
       <Fragment>
-        { getHelmetForCommunityPage(community) }
+        { getHelmetForCommunityPage(community, location) }
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <Section title={`Map View of ${name}`}>
           <Lazy ltIE9 component="div">
@@ -301,7 +303,7 @@ export default class CommunityDetailPage extends Component {
         </Section>
         {(images.length > 1) &&
           <Section title="More Pictures">
-            <MorePictures gallery={gallery} communityName={name} onPictureClick={this.handleMorePicturesClick} />
+            <MorePictures gallery={gallery} communityName={name} city={address.city} state={address.state} onPictureClick={this.handleMorePicturesClick} />
           </Section>
         }
         <Section title="How Seniorly Works">
@@ -333,6 +335,8 @@ export default class CommunityDetailPage extends Component {
           {(images.length > 0 || videos.length > 0) &&
             <CommunityMediaGallery
               communityName={name}
+              city={address.city}
+              state={address.state}
               currentSlide={mediaGallerySlideIndex}
               images={images}
               videos={videos}

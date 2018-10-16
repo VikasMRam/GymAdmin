@@ -41,7 +41,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const MorePictures = ({ gallery, communityName, onPictureClick }) => {
+const MorePictures = ({ gallery, communityName, city, state, onPictureClick }) => {
   const { images } = gallery;
   const imageComponents = images.map((image, i) => (
     <Lazy
@@ -50,7 +50,7 @@ const MorePictures = ({ gallery, communityName, onPictureClick }) => {
       key={image.id}
       onClick={() => onPictureClick && onPictureClick(image)}
     >
-      <PictureTile src={image.hd} aspectRatio="4:3" alt={`${communityName} ${i + 1}`} />
+      <PictureTile src={image.hd} aspectRatio="4:3" alt={`${communityName} ${city} ${state} ${i + 1}`} />
     </Lazy>
   ));
   return (
@@ -68,6 +68,8 @@ MorePictures.propTypes = {
     })),
   }),
   communityName: string.isRequired,
+  city: string,
+  state: string,
   onPictureClick: func,
 };
 

@@ -155,7 +155,7 @@ const groups = {
     { name: 'Contact', url: '/contact' },
     { name: 'Terms', url: '/tos' },
     { name: 'Privacy', url: '/privacy' },
-    { name: 'Sitemap', url: '/sitemaps'},
+    { name: 'Sitemap', url: '/sitemap'},
   ],
   Listings: [
     { name: 'For Referral Agents', url: '/providers/crm' },
@@ -167,7 +167,7 @@ const groups = {
     { name: 'Moving Center', url: '/resources/tags/moving+center' },
     { name: 'Assisted Living', url: '/assisted-living' },
     { name: 'Independent Living', url: '/independent-living' },
-    { name: 'Alzheimer\'s Care', url: '/memory-care' },
+    { name: 'Memory Care', url: '/memory-care' },
     { name: 'Home Care', url: '/in-home-care' },
     { name: 'Respite Care', url: '/respite-care' },
     { name: 'CCRC', url: '/continuing-care-retirement-community' },
