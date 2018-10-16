@@ -1,23 +1,16 @@
 import React, { Component } from 'react';
-import { string, func, bool, object } from 'prop-types';
-import styled from 'styled-components';
-import get from 'lodash/get';
-import { withRouter } from 'react-router';
+import { string, func, object } from 'prop-types';
 
 import { resourceCreateRequest } from 'sly/store/resource/actions';
-import { getSearchParams } from 'sly/services/helpers/search';
 
 import { getDetail } from 'sly/store/selectors';
 import { connectController } from 'sly/controllers';
 import SlyEvent from 'sly/services/helpers/events';
-import { community as communityPropType } from 'sly/propTypes/community';
-import { ASSESSMENT, REQUEST_CALLBACK, REQUEST_CONSULTATION, REQUEST_PRICING, REQUEST_AVAILABILITY  } from 'sly/services/api/actions';
+import { ASSESSMENT, REQUEST_CALLBACK, REQUEST_CONSULTATION, REQUEST_PRICING, REQUEST_AVAILABILITY } from 'sly/services/api/actions';
 
 import {
-  createValidator,
   createBooleanValidator,
   required,
-  notProvided,
   email,
   usPhone,
 } from 'sly/services/validation';
@@ -34,7 +27,7 @@ export const HOW_IT_WORKS = 'howItWorks';
 const isAssessment = ({
   typeOfCare,
   timeToMove,
-  budget
+  budget,
 }) => !!(typeOfCare && timeToMove && budget);
 
 const hasAllUserData = createBooleanValidator({
@@ -43,32 +36,36 @@ const hasAllUserData = createBooleanValidator({
   phone: [required, usPhone],
 });
 
-const hasUserData = createValidator({
-  fullName: [required],
-  email: [required, email],
-  phone: [required, usPhone],
-});
+// const hasUserData = createValidator({
+//   fullName: [required],
+//   email: [required, email],
+//   phone: [required, usPhone],
+// });
 
-const hasOnlyEmail = createBooleanValidator({
-  fullName: [notProvided],
-  email: [required, email],
-  phone: [notProvided],
-});
+// const hasOnlyEmail = createBooleanValidator({
+//   fullName: [notProvided],
+//   email: [required, email],
+//   phone: [notProvided],
+// });
 
 export class ConciergeController extends Component {
   static propTypes = {
-    community: communityPropType.isRequired,
+    communitySlug: string,
+    pathName: string,
     concierge: object.isRequired,
     children: func.isRequired,
     set: func.isRequired,
     queryParams: object,
     setQueryParams: func.isRequired,
+    submit: func,
+    userDetails: object,
   };
 
   getPricing = () => {
     const {
       concierge,
-      community,
+      communitySlug,
+      pathName,
       userDetails,
     } = this.props;
 
@@ -79,11 +76,11 @@ export class ConciergeController extends Component {
     SlyEvent.getInstance().sendEvent({
       action: 'click',
       category: 'getPricing',
-      label: community.id
+      label: communitySlug || pathName,
     });
 
     if (!pricingRequested && hasAllUserData(userDetails)) {
-      this.doSubmitConversion(userDetails,REQUEST_PRICING, true);
+      this.doSubmitConversion(userDetails, REQUEST_PRICING, true);
     } else {
       this.next(false);
     }
@@ -98,7 +95,7 @@ export class ConciergeController extends Component {
     SlyEvent.getInstance().sendEvent({
       action: 'click',
       category: 'adRequestConsultation',
-      label: 'profilePage'
+      label: 'profilePage',
     });
 
     if (!isAssessment(userDetails)) {
@@ -115,110 +112,118 @@ export class ConciergeController extends Component {
 
   submitExpressConversion = (data) => {
     const {
-      community,
-      concierge
-
+      communitySlug,
+      pathName,
+      concierge,
     } = this.props;
     if (data.phone && data.phone.match(/\d+/)) {
-      let eventCategory = concierge.modalIsOpen ? 'requestAvailabilityConsultation' : 'requestConsultation';
+      const eventCategory = concierge.modalIsOpen ? 'requestAvailabilityConsultation' : 'requestConsultation';
       SlyEvent.getInstance().sendEvent({
         action: 'contactCommunity',
         category: eventCategory,
-        label: community.id
+        label: communitySlug || pathName,
       });
-      this.doSubmitConversion(data,REQUEST_CONSULTATION, true);
+      this.doSubmitConversion(data, REQUEST_CONSULTATION, true);
     } else {
       SlyEvent.getInstance().sendEvent({
         action: 'contactCommunity',
         category: 'requestAvailability',
-        label: community.id
+        label: communitySlug || pathName,
       });
-      this.doSubmitConversion(data,REQUEST_AVAILABILITY, true);
+      this.doSubmitConversion(data, REQUEST_AVAILABILITY, true);
     }
-
-
   };
 
   submitRegularConversion = (data) => {
     const {
-      community,
-      concierge
+      communitySlug,
+      pathName,
+      concierge,
     } = this.props;
     let eventCategory = 'requestConsultation';
     if (!concierge.pricingRequested && !concierge.availabilityRequested) {
       eventCategory = 'requestConsultation';
-      //Regular advanced info
-    } else if(concierge.modalIsOpen && concierge.pricingRequested) {
-      //Pricing advanced info
+      // Regular advanced info
+    } else if (concierge.modalIsOpen && concierge.pricingRequested) {
+      // Pricing advanced info
       eventCategory = 'requestConsultationPricing';
     } else if (concierge.modalIsOpen && concierge.availabilityRequested) {
-      //Availability Advanced Info
+      // Availability Advanced Info
       eventCategory = 'requestConsultationAvailability';
     }
 
     SlyEvent.getInstance().sendEvent({
       action: 'contactCommunity',
       category: eventCategory,
-      label: community.id
+      label: communitySlug || pathName,
     });
-    this.doSubmitConversion(data,REQUEST_CONSULTATION, false);
+    this.doSubmitConversion(data, REQUEST_CONSULTATION, false);
   };
 
-  doSubmitConversion = (data={}, action, isExpress=false) => {
+  doSubmitConversion = (data = {}, action, isExpress = false) => {
     const {
       submit,
-      community,
-      concierge,
+      communitySlug,
+      pathName,
     } = this.props;
-
+    const value = {
+      user: { ...data },
+    };
+    if (communitySlug) {
+      value.propertyIds = [communitySlug];
+    } else if (pathName) {
+      value.pathName = pathName;
+    }
     submit({
       action,
-      value: {
-        user: { ...data },
-        propertyIds: [community.id],
-      }
+      value,
     }).then(() => {
-
       this.next(isExpress);
     });
   };
 
   submitAdvancedInfo = (data) => {
-    const { submit, community, concierge } = this.props;
+    const {
+      submit, communitySlug, pathName, concierge,
+    } = this.props;
     const { message, ...rest } = data;
     let eventCategory = 'advancedInfo';
-    //Not a 100% correct.
+    // Not a 100% correct.
     if (!concierge.pricingRequested && !concierge.availabilityRequested) {
       eventCategory = 'advancedInfo';
-      //Regular advanced info
-    } else if(concierge.pricingRequested) {
-      //Pricing advanced info
+      // Regular advanced info
+    } else if (concierge.pricingRequested) {
+      // Pricing advanced info
       eventCategory = 'advancedInfoPricing';
     } else if (concierge.availabilityRequested) {
-      //Availability Advanced Info
+      // Availability Advanced Info
       eventCategory = 'advancedInfoAvailability';
     }
 
     SlyEvent.getInstance().sendEvent({
       action: 'submit',
       category: eventCategory,
-      label: community.id
+      label: communitySlug || pathName,
     });
 
+    const value = {
+      user: { ...rest },
+      message,
+    };
+    if (communitySlug) {
+      value.propertyIds = [communitySlug];
+    } else if (pathName) {
+      value.pathName = pathName;
+    }
     submit({
       action: ASSESSMENT,
-      value: {
-        user: { ...rest },
-        message,
-        propertyIds: [community.id],
-      }
+      value,
     }).then(() => this.next(false));
   };
 
-  next = (isExpress) => {
+  next = () => {
     const {
       concierge,
-      getDetailedPricing,
       setQueryParams,
       userDetails,
     } = this.props;
@@ -230,7 +235,7 @@ export class ConciergeController extends Component {
     } = concierge;
 
     const Done = (
-      ( contactRequested || consultationRequested )
+      (contactRequested || consultationRequested)
       && isAssessment(userDetails)
       && hasAllUserData(userDetails)
     );
@@ -286,18 +291,18 @@ export class ConciergeController extends Component {
 
 const isCallbackorPricingAvailReq = slug => contact =>
   contact.slug === slug
-  && (contact.contactType === REQUEST_CALLBACK || contact.contactType === REQUEST_PRICING || contact.contactType == REQUEST_AVAILABILITY) ;
+  && (contact.contactType === REQUEST_CALLBACK || contact.contactType === REQUEST_PRICING || contact.contactType === REQUEST_AVAILABILITY);
 
 const isPricingReq = slug => contact =>
   contact.slug === slug
-  && (contact.contactType === REQUEST_PRICING) ;
+  && (contact.contactType === REQUEST_PRICING);
 
 const isAvailReq = slug => contact =>
   contact.slug === slug
-  && (contact.contactType === REQUEST_AVAILABILITY) ;
+  && (contact.contactType === REQUEST_AVAILABILITY);
 
 const mapStateToProps = (state, props) => {
-  const { community, queryParams } = props;
+  const { communitySlug, queryParams } = props;
   const {
     profilesContacted,
     consultationRequested,
@@ -305,15 +310,15 @@ const mapStateToProps = (state, props) => {
   } = getDetail(state, 'userAction') || {};
   const { modal, currentStep } = queryParams;
   return {
-    community,
+    communitySlug,
     userDetails,
     concierge: {
       currentStep: currentStep || CONVERSION_FORM,
       modalIsOpen: modal === CONCIERGE || false,
       consultationRequested,
-      pricingRequested: (profilesContacted || []).some(isPricingReq(community.id)),
-      availabilityRequested: (profilesContacted || []).some(isAvailReq(community.id)),
-      contactRequested: (profilesContacted || []).some(isCallbackorPricingAvailReq(community.id)),
+      pricingRequested: (profilesContacted || []).some(isPricingReq(communitySlug)),
+      availabilityRequested: (profilesContacted || []).some(isAvailReq(communitySlug)),
+      contactRequested: (profilesContacted || []).some(isCallbackorPricingAvailReq(communitySlug)),
     },
   };
 };

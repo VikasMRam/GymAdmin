@@ -28,7 +28,7 @@ const ReduxForm = reduxForm({
 
 export default class AdvancedInfoFormContainer extends Component {
   static propTypes = {
-    community: object.isRequired,
+    community: object,
     submitAdvancedInfo: func.isRequired,
   };
 

@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import { object, func } from 'prop-types';
+import { object, func, string } from 'prop-types';
+import { connect } from 'react-redux';
 
 import SlyEvent from 'sly/services/helpers/events';
 import HomePage from 'sly/components/pages/HomePage';
-import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
+import { getSearchParamFromPlacesResponse, filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
+import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 
 class HomePageContainer extends Component {
   static propTypes = {
     history: object,
     setLocation: func,
+    pathName: string,
+    searchParams: object,
+    setQueryParams: func,
   };
 
   state = {
@@ -53,14 +58,32 @@ class HomePageContainer extends Component {
 
   render() {
     const { activeDiscoverHome } = this.state;
+    const { searchParams, setQueryParams, pathName } = this.props;
+    const { modal, currentStep } = searchParams;
+    console.log(this.props)
     return (
       <HomePage
         isModalOpen={activeDiscoverHome !== null}
         setActiveDiscoverHome={this.setActiveDiscoverHome}
         onLocationSearch={this.handleOnLocationSearch}
+        queryParams={{ modal, currentStep }}
+        setQueryParams={setQueryParams}
+        pathName={pathName}
       />
     );
   }
 }
 
-export default HomePageContainer;
+const mapStateToProps = (state, {
+  match, location, history,
+}) => {
+  const searchParams = getSearchParams(match, location);
+  const setQueryParams = getQueryParamsSetter(history, location);
+  const { pathname } = location;
+  return {
+    searchParams,
+    setQueryParams,
+    pathName: pathname,
+  };
+};
+export default connect(mapStateToProps, null)(HomePageContainer);

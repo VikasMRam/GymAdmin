@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { bool, func } from 'prop-types';
+import { bool, func, string, object } from 'prop-types';
 import { palette } from 'styled-theme';
 
 import { size, assetPath } from 'sly/components/themes';
@@ -17,6 +17,7 @@ import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
+import ConciergeContainer from 'sly/containers/ConciergeContainer';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -61,7 +62,7 @@ const ImageCreditDiv = styled.div`
   right: 0;
   margin-bottom: ${size('spacing.large')};
   margin-right: ${size('spacing.large')};
-`
+`;
 const ImageCreditLabel = styled.label`
   font-size: ${size('text', 'tiny')};
   color: ${palette('white', 0)};
@@ -331,7 +332,9 @@ const familiesWeHaveHelpedTiles = [
   },
 ];
 
-const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
+const HomePage = ({
+  isModalOpen, onLocationSearch, setActiveDiscoverHome, queryParams, setQueryParams, pathName,
+}) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -474,6 +477,7 @@ const HomePage = ({ isModalOpen, onLocationSearch, setActiveDiscoverHome }) => {
           <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
         </CWTColumnWrapper>
       </StyledSection>
+      <ConciergeContainer pathName={pathName} queryParams={queryParams} setQueryParams={setQueryParams} />
     </BasePageTemplate>
   );
 };
@@ -482,6 +486,9 @@ HomePage.propTypes = {
   isModalOpen: bool,
   onLocationSearch: func,
   setActiveDiscoverHome: func,
+  pathName: string,
+  queryParams: object,
+  setQueryParams: func,
 };
 
 export default HomePage;

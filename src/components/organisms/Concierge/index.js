@@ -40,7 +40,7 @@ const hasAllUserData = createBooleanValidator({
 
 export default class Concierge extends Component {
   static propTypes = {
-    community: object.isRequired,
+    community: object,
     concierge: object.isRequired,
     close: func.isRequired,
     submitExpressConversion: func.isRequired,

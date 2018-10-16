@@ -38,18 +38,23 @@ const headings = {
 };
 
 const WhatNext = ({ community, reasons, onClose }) => {
-  const { address, propInfo } = community;
-  const { city } = address;
+  let communityAddress = null;
+  let communityPropInfo = null;
+  if (community) {
+    const { address, propInfo } = community;
+    communityAddress = address;
+    communityPropInfo = propInfo;
+  }
 
   return (
     <Wrapper>
       <StyledHeading>{ headings[reasons] }</StyledHeading>
       <HowSlyWorks layout="modal" reasons={reasons} />
 
-      { reasons === 'whatNext' &&
+      { reasons === 'whatNext' && communityAddress !== null && communityPropInfo !== null &&
         <Button
           kind="jumbo"
-          href={getCitySearchUrl({ propInfo, address })}
+          href={getCitySearchUrl({ propInfo: communityPropInfo, address: communityAddress })}
         >
           Click to Compare Communities
         </Button>
@@ -68,7 +73,7 @@ const WhatNext = ({ community, reasons, onClose }) => {
 
 WhatNext.propTypes = {
   reasons: oneOf(['howItWorks', 'whatNext']).isRequired,
-  community: communityPropType.isRequired,
+  community: communityPropType,
   onClose: func.isRequired,
 };
 
