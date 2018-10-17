@@ -5,7 +5,6 @@ import get from 'lodash/get';
 import { withRouter } from 'react-router';
 
 import { resourceCreateRequest } from 'sly/store/resource/actions';
-import { getSearchParams } from 'sly/services/helpers/search';
 
 import { getDetail } from 'sly/store/selectors';
 import { connectController } from 'sly/controllers';

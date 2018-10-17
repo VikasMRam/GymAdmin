@@ -4,7 +4,7 @@ import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { parseURLQueryParams } from 'sly/services/helpers/url';
+import { getSearchParams } from 'sly/services/helpers/search';
 import { createValidator, required } from 'sly/services/validation';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 
@@ -55,8 +55,8 @@ class PasswordResetPageContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, { location }) => ({
-  searchParams: parseURLQueryParams(location.search),
+const mapStateToProps = (state, { match, location }) => ({
+  searchParams: getSearchParams(match, location),
 });
 
 const mapDispatchToProps = dispatch => ({

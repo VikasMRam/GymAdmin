@@ -76,6 +76,7 @@ const searchParamsWhitelist = [
   'longitude',
   'searchOnMove',
   'modal',
+  'token',
   'entityId',
   'currentStep',
 ];
