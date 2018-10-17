@@ -89,16 +89,31 @@ const getSortHandler = (origFn) => {
   };
 };
 
-const generateRadioLink = (elem, type, path, selected) => (
-  <StyledLink
-    to={path}
-    id={`${type}-${elem.value}`}
-    key={`${type}-${elem.value}`}
-    selected={selected}
-  >
-    <Radio checked={selected} />{elem.label}
-  </StyledLink>
-);
+const generateRadioLink = (elem, type, path, selected, nofollow) => {
+  if (nofollow === true) {
+    return (
+      <StyledLink
+        to={path}
+        id={`${type}-${elem.value}`}
+        key={`${type}-${elem.value}`}
+        selected={selected}
+        rel="nofollow"
+      >
+        <Radio checked={selected}/>{elem.label}
+      </StyledLink>
+    );
+  }
+  return (
+    <StyledLink
+      to={path}
+      id={`${type}-${elem.value}`}
+      key={`${type}-${elem.value}`}
+      selected={selected}
+    >
+      <Radio checked={selected} />{elem.label}
+    </StyledLink>
+  );
+};
 
 export const ClearAllButton = styled(Button)`
   color: ${palette('primary', 0)};
@@ -118,17 +133,19 @@ const CommunityFilterList = ({
   latitude,
   longitude,
 }) => {
+  const nofollow = searchParams.hasOwnProperty('budget') || searchParams.hasOwnProperty('size');
+
   const tocFields = tocs.map((elem) => {
     const { path, selected } = filterLinkPath(searchParams, { toc: elem.value });
     return generateRadioLink(elem, 'toc', path, selected);
   });
   const budgetFields = budgets.map((elem) => {
     const { path, selected } = filterLinkPath(searchParams, { budget: elem.value });
-    return generateRadioLink(elem, 'budget', path, selected);
+    return generateRadioLink(elem, 'budget', path, selected, nofollow);
   });
   const sizeFields = sizes.map((elem) => {
     const { path, selected } = filterLinkPath(searchParams, { size: elem.value });
-    return generateRadioLink(elem, 'size', path, selected);
+    return generateRadioLink(elem, 'size', path, selected, nofollow);
   });
   const { sort } = searchParams;
   const WrapperElement = (isModalView) ? StyledWrapper : StyledBox;

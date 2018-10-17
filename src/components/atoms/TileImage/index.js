@@ -18,14 +18,15 @@ const StyledImg = styled.img`
   }
 `;
 
-const TileImage = ({ tileSize, src, breakpoint }) => {
-  return <StyledImg tileSize={tileSize} src={src} breakpoint={breakpoint} />;
+const TileImage = ({ tileSize, src, breakpoint, alt }) => {
+  return <StyledImg tileSize={tileSize} src={src} breakpoint={breakpoint} alt={alt}/>;
 };
 
 TileImage.propTypes = {
   tileSize: string,
   src: string.isRequired,
   breakpoint: oneOf(['mobile', 'tablet']),
+  alt: string,
 };
 
 TileImage.defaultProps = {

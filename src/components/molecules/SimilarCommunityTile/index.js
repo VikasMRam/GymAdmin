@@ -97,7 +97,7 @@ const Info = styled(SimilarCommunityInfo)`
 `;
 
 const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
-  let { imageUrl } = similarProperty;
+  let { imageUrl, name } = similarProperty;
   if (!imageUrl || imageUrl.indexOf('maps.googleapis.com/maps/api/streetview') > -1) {
     imageUrl = communityDefaultImages[similarProperty.communitySize];
   }
@@ -105,7 +105,7 @@ const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
       <StyledLazy component="div" ltIE9>
-        <ImageWrapper src={imageUrl} aspectRatio="16:9">
+        <ImageWrapper src={imageUrl} aspectRatio="16:9" alt={`${name}`}>
           <Button onClick={onClick}>See More Details</Button>
         </ImageWrapper>
       </StyledLazy>

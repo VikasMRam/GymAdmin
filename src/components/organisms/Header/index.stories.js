@@ -11,7 +11,7 @@ const headerItems = [
 ];
 const menuItems = [
   { name: 'Assisted Living', url: '#' },
-  { name: "Alzheimer's Care", url: '#' },
+  { name: 'Memory Care', url: '#' },
   { name: 'Respite Care', url: '#' },
   { name: 'About Us', url: '#' },
   { name: 'Contact', url: '#' },

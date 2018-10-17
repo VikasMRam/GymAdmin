@@ -34,7 +34,7 @@ const careTypes = [
   'retirement-community',
   'assisted-living',
   'independent-living',
-  'alzheimers-care',
+  'memory-care',
   'continuing-care-retirement-community',
 ].join('|');
 

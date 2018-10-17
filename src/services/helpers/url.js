@@ -30,8 +30,8 @@ const tocPaths = (toc) => {
       case 'Memory Care':
       case 'Alzheimers Care':
         return {
-          path: '/alzheimers-care',
-          label: 'Alzheimers Care',
+          path: '/memory-care',
+          label: 'Memory Care',
         };
       default:
         return {
@@ -103,6 +103,64 @@ const stateNames = {
   WV: 'West Virginia',
   WI: 'Wisconsin',
   WY: 'Wyoming',
+};
+
+const stateAbbr = {
+  'Alabama': 'AL',
+  'Alaska': 'AK',
+  'Arizona': 'AZ',
+  'Arkansas': 'AR',
+  'American Samoa': 'AS',
+  'California': 'CA',
+  'Colorado': 'CO',
+  'Connecticut': 'CT',
+  'District Of Columbia': 'DC',
+  'Delaware': 'DE',
+  'Florida': 'FL',
+  'Georgia': 'GA',
+  'Guam': 'GU',
+  'Hawaii': 'HI',
+  'Idaho': 'ID',
+  'Illinois': 'IL',
+  'Indiana': 'IN',
+  'Iowa': 'IA',
+  'Kansas': 'KS',
+  'Kentucky': 'KY',
+  'Louisiana': 'LA',
+  'Maine': 'ME',
+  'Maryland': 'MD',
+  'Massachusetts': 'MA',
+  'Michigan': 'MI',
+  'Minnesota': 'MN',
+  'Mississippi': 'MS',
+  'Missouri': 'MO',
+  'Montana': 'MT',
+  'Nebraska': 'NE',
+  'Nevada': 'NV',
+  'New Hampshire': 'NH',
+  'New Jersey': 'NJ',
+  'New Mexico': 'NM',
+  'New York': 'NY',
+  'North Carolina': 'NC',
+  'North Dakota': 'ND',
+  'Ohio': 'OH',
+  'Oklahoma': 'OK',
+  'Oregon': 'OR',
+  'Pennsylvania': 'PA',
+  'Puerto Rico': 'PR',
+  'Rhode Island': 'RI',
+  'South Carolina': 'SC',
+  'South Dakota': 'SD',
+  'Tennessee': 'TN',
+  'Texas': 'TX',
+  'Utah': 'UT',
+  'Vermont': 'VT',
+  'Virginia': 'VA',
+  'U.S. Virgin Islands': 'VI',
+  'Washington': 'WA',
+  'West Virginia': 'WV',
+  'Wisconsin': 'WI',
+  'Wyoming': 'WY',
 };
 
 export const urlize = inString =>
@@ -191,3 +249,8 @@ export const getOrigin = () => {
 
 export const objectToURLQueryParams = (obj, options) => stringify(obj, options);
 export const parseURLQueryParams = obj => parse(obj);
+
+export const getStateAbbr = (state) => {
+  const st = titleize(state);
+  return stateAbbr[st];
+}
