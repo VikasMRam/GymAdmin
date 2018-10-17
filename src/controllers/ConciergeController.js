@@ -168,11 +168,12 @@ export class ConciergeController extends Component {
     } = this.props;
     const value = {
       user: { ...data },
+      propertyIds: [],
     };
     if (communitySlug) {
       value.propertyIds = [communitySlug];
     } else if (pathName) {
-      value.pathName = pathName;
+      value.referrer = pathName;
     }
     submit({
       action,
@@ -208,12 +209,13 @@ export class ConciergeController extends Component {
 
     const value = {
       user: { ...rest },
+      propertyIds: [],
       message,
     };
     if (communitySlug) {
       value.propertyIds = [communitySlug];
     } else if (pathName) {
-      value.pathName = pathName;
+      value.referrer = pathName;
     }
     submit({
       action: ASSESSMENT,
