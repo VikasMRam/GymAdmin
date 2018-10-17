@@ -98,7 +98,7 @@ const usefulInformationTiles = [
     title: 'Assisted Living',
   },
   {
-    to: '/alzheimers-care',
+    to: '/memory-care',
     image: assetPath('images/home/useful-info/memory-care.jpg'),
     title: 'Memory Care',
   },

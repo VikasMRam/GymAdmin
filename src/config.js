@@ -32,6 +32,7 @@ const config = {
     googleTagManagerId: 'GTM-NTC7HG2',
     version: process.env.VERSION,
     facebookAppId: '624602444328776',
+    googleAppId: '',
   },
 
   test: {

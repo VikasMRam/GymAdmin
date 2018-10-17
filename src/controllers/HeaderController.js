@@ -36,7 +36,7 @@ const defaultMenuItems = [
   { name: 'Resources', url: '/resources' },
   { name: 'How It Works', url: '/how-it-works' },
   { name: 'Assisted Living', url: '/assisted-living' },
-  { name: "Alzheimer's Care", url: '/alzheimers-care' },
+  { name: 'Memory Care', url: '/memory-care' },
   { name: 'Respite Care', url: '/respite-care' },
   { name: 'Our Company', url: '/about' },
   { name: 'Contact', url: '/contact' },
@@ -127,7 +127,7 @@ class HeaderController extends Component {
 }
 
 const mapStateToProps = (state, {
-  match, history, location, controller,
+  history, match, location, controller,
 }) => ({
   setQueryParams: getQueryParamsSetter(history, location),
   searchParams: getSearchParams(match, location),

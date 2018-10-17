@@ -10,7 +10,7 @@ import { func } from 'prop-types';
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 
-import { facebookPixelId, googleTagManagerId, isProd, facebookAppId } from 'sly/config';
+import { facebookPixelId, googleTagManagerId, isProd, facebookAppId, googleAppId } from 'sly/config';
 import { assetPath } from 'sly/components/themes';
 // import AppController from 'sly/controllers/Appcontroller';
 import CommunityDetailPageController from 'sly/controllers/CommunityDetailPageController';
@@ -20,6 +20,7 @@ import HomePageContainer from 'sly/containers/HomePageContainer';
 import PromoPageContainer from 'sly/containers/PromoPageContainer';
 import AgentsProfilePageController from 'sly/controllers/AgentsProfilePageController';
 import OurHistoryPage from 'sly/components/pages/OurHistoryPage';
+import PasswordResetPageContainer from 'sly/containers/PasswordResetPageContainer';
 import HowItWorksDetailPageContainer from 'sly/containers/HowItWorksDetailPageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
@@ -33,7 +34,7 @@ const careTypes = [
   'retirement-community',
   'assisted-living',
   'independent-living',
-  'alzheimers-care',
+  'memory-care',
   'continuing-care-retirement-community',
 ].join('|');
 
@@ -134,6 +135,11 @@ export default class App extends Component {
       component: EntityApprovalContainer,
       exact: true,
     },
+    {
+      path: '/users/password-reset',
+      component: PasswordResetPageContainer,
+      exact: true,
+    },
   ];
 
   render() {
@@ -174,6 +180,11 @@ export default class App extends Component {
           <meta content="summary" property="twitter:card" />
           <meta content="https://www.seniorly.com" property="twitter:site" />
           <meta content="@seniorly" property="twitter:creator" />
+
+          {/*
+            Google Platform Library
+          */}
+          <meta name="google-signin-client_id" content={`${googleAppId}.apps.googleusercontent.com`} />
 
           <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
         </Helmet>
@@ -264,6 +275,10 @@ export default class App extends Component {
           }(document, 'script', 'facebook-jssdk'));`}}
         />
         {/* End Facebook SDK Code */}
+
+        {/* Begin Google Platform Library Code */}
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        {/* End Google Platform Library Code */}
 
         {/* eslint-enable */}
       </Fragment>

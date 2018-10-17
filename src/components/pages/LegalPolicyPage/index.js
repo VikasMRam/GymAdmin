@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
 
@@ -63,20 +64,26 @@ const LegalPolicyPage = ({ match }) => {
   );
 
 
-
   return (
-    <OverlappingSectionsTemplate
-      imagePath="images/our-history/hero.jpg"
-      title={title}
-      subtitle="Helping Families and Individuals find the right Senior living options"
-      description={description}
-      footer={<Footer />}
-    >
-      <ContentWrapper>
-        <StyledHr />
+    <Fragment>
 
-      </ContentWrapper>
-    </OverlappingSectionsTemplate>
+      <Helmet>
+        <meta name="robots" content="noindex"/>
+      </Helmet>
+
+      <OverlappingSectionsTemplate
+        imagePath="images/our-history/hero.jpg"
+        title={title}
+        subtitle="Helping Families and Individuals find the right Senior living options"
+        description={description}
+        footer={<Footer />}
+      >
+        <ContentWrapper>
+          <StyledHr />
+
+        </ContentWrapper>
+      </OverlappingSectionsTemplate>
+    </Fragment>
   );
 };
 

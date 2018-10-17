@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import { host } from 'sly/config';
 import { tocs } from 'sly/services/helpers/search';
 import { titleize } from 'sly/services/helpers/strings';
+import { getStateAbbr} from 'sly/services/helpers/url';
 
 
 const stringifyReplacer = (k, v) => {
@@ -40,7 +41,7 @@ const getSDForCommunity = ({
   if (numReviews && numReviews > 0) {
     const aggregatedRating = {};
     aggregatedRating['@type'] = 'AggregateRating';
-    aggregatedRating.ratingValue = reviewsValue;
+    (reviewsValue < 1) ? aggregatedRating.ratingValue = 1 : aggregatedRating.ratingValue = reviewsValue;
     aggregatedRating.ratingCount = numReviews;
     ld.aggregateRating = aggregatedRating;
   }
@@ -91,7 +92,7 @@ const getSDForSearchResource = ({
   if (numReviews && numReviews > 0) {
     const aggregatedRating = {};
     aggregatedRating['@type'] = 'AggregateRating';
-    aggregatedRating.ratingValue = reviewsValue;
+    (reviewsValue < 1) ? aggregatedRating.ratingValue = 1 : aggregatedRating.ratingValue = reviewsValue;
     aggregatedRating.ratingCount = numReviews;
     ld.aggregateRating = aggregatedRating;
   }
@@ -111,9 +112,8 @@ const getSDForSearchResource = ({
   return ld;
 };
 
-
 export const getHelmetForSearchPage = ({
-  url, city, state, toc, listSize, communityList
+  url, city, state, toc, latitude, longitude, listSize, communityList
 }) => {
   let actualToc = tocs.find(elem => (elem.value === toc));
   if (typeof actualToc === 'undefined'){
@@ -124,11 +124,11 @@ export const getHelmetForSearchPage = ({
     };
   }
 
-  let locationStr = city ? `${titleize(city)}, ${titleize(state)}` : `${titleize(state)}`;
-  let numResultsStr = (listSize && listSize > 0) ? `${listSize} results` : `results`;
-  const title = `${actualToc.label} in ${locationStr} - Price & Compare ${numResultsStr} `;
+  let locationStr = city ? `${titleize(city)}, ${getStateAbbr(state)}` : `${titleize(state)}`;
+  let numResultsStr = (listSize && listSize > 5) ? `${listSize}` : 'Best';
+  const title = `${numResultsStr} ${actualToc.label} in ${locationStr} `;
 
-  const description = `Find ${numResultsStr} for ${actualToc.label} in  ${locationStr}. Get pricing information, see picture, read reviews and get help from local senior care service experts.`;
+  const description = `${actualToc.label} in ${locationStr}. Get pricing information, see picture, read reviews and get help from local senior care service experts.`;
   const canonicalUrl = `${host}${url.pathname}`;
   const ld = {};
   ld['@context'] = 'http://schema.org';
@@ -138,6 +138,18 @@ export const getHelmetForSearchPage = ({
   const ldCommunities = [];
   if (communityList.length > 0) {
     communityList.map(e => ldCommunities.push(getSDForSearchResource({ ...e })));
+  }
+
+  const ldCity = {};
+  ldCity['@context'] = 'http://schema.org';
+  ldCity['@type'] = 'City';
+  ldCity.name = titleize(city);
+  if (latitude && longitude) {
+    const geo = {};
+    geo['@type'] = 'GeoCoordinates';
+    geo.latitude = latitude;
+    geo.longitude = longitude;
+    ldCity.geo = geo;
   }
 
 
@@ -160,15 +172,19 @@ export const getHelmetForSearchPage = ({
       {ldCommunities.length > 0 &&
         <script type="application/ld+json">{`${JSON.stringify(ldCommunities, stringifyReplacer)}`}</script>
       }
+      <script type="application/ld+json">{`${JSON.stringify(ldCity, stringifyReplacer)}`}</script>
     </Helmet>
   );
 };
 
 
-export const getHelmetForCommunityPage = (community) => {
+export const getHelmetForCommunityPage = (community, location) => {
   const {
     name, address, propInfo, url, gallery = {}, videoGallery = {},
   } = community;
+  const {
+    search
+  } = location
   let toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
   if (typeof toc === 'undefined'){
     toc = {
@@ -209,6 +225,9 @@ export const getHelmetForCommunityPage = (community) => {
 
 
       <link rel="canonical" href={url} />
+      {
+        search && search.length > 0 && <meta name="robots" content="noindex"/>
+      }
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
     </Helmet>
   );

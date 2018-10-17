@@ -23,8 +23,10 @@ const gallery = {
   ],
 };
 const communityName = 'test';
+const state = 'ca';
+const city = 'sf';
 
-const wrap = () => shallow(<MorePictures gallery={gallery} communityName={communityName} />);
+const wrap = () => shallow(<MorePictures gallery={gallery} communityName={communityName} city={city} state={state} />);
 
 describe('MorePictures', () => {
   it('does not renders children when passed in', () => {
@@ -42,7 +44,7 @@ describe('MorePictures', () => {
     const tiles = wrapper.find(PictureTile);
 
     tiles.forEach((t, i) => {
-      expect(t.prop('alt')).toBe(`${communityName} ${i + 1}`);
+      expect(t.prop('alt')).toBe(`${communityName} ${city} ${state} ${i + 1}`);
     });
   });
 });

@@ -64,7 +64,7 @@ const RoomTile = ({
           component="div"
           ltIE9
         >
-          <TileImage tileSize="small" src={image || defaultImage} />
+          <TileImage tileSize="small" src={image || defaultImage} alt={`${roomType} ${shareType}`} />
         </Lazy>
         <Button onClick={onInquireOrBookClicked}>Inquire or book a tour</Button>
       </ImageButtonContainer>

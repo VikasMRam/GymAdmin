@@ -221,7 +221,7 @@ const secondRowDiscoverHomes = [
     description: 'For those with Alzheimer’s, Dementia and more',
     image: assetPath('images/home/discover-home/shared-rooms-tile.jpeg'),
     buttonText: 'See more',
-    searchParams: { toc: 'alzheimers-care' },
+    searchParams: { toc: 'memory-care' },
   },
 ];
 
@@ -237,7 +237,7 @@ const usefulInformationTiles = [
     title: 'Assisted Living',
   },
   {
-    to: '/alzheimers-care',
+    to: '/memory-care',
     image: assetPath('images/home/useful-info/memory-care.jpg'),
     title: 'Memory Care',
   },

@@ -67,7 +67,7 @@ export default class CommunityMediaGallery extends Component {
 
   render() {
     const {
-      communityName, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
+      communityName, city, state, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
       onFavouriteClick, isFavouriteEnabled, isFavourited,
     } = this.props;
     let { websiteUrl } = this.props;
@@ -75,14 +75,14 @@ export default class CommunityMediaGallery extends Component {
     this.sdGalleryImages = videos.map((vid, i) => {
       // Important: create new object instance having src & alt as we will be modifying same object below
       return {
-        ...vid, src: vid.thumbUrl, thumb: vid.thumbUrl, ofVideo: i, alt: `${communityName} ${i + 1}`,
+        ...vid, src: vid.thumbUrl, thumb: vid.thumbUrl, ofVideo: i, alt: `${communityName}, ${city}, ${state} ${i + 1}`,
       };
     });
     this.sdGalleryImages = this.sdGalleryImages.concat(images.map((img, i) => {
-      return { ...img, src: img.sd, alt: `${communityName} ${this.sdGalleryImages.length + i + 1}` };
+      return { ...img, src: img.sd, alt: `${communityName}, ${city}, ${state} ${this.sdGalleryImages.length + i + 1}` };
     }));
     this.hdGalleryImages = images.map((img, i) => {
-      return { ...img, src: img.hd, alt: `${communityName} ${i + 1}` };
+      return { ...img, src: img.hd, alt: `${communityName}, ${city}, ${state}  ${i + 1}` };
     });
     this.formattedVideos = videos.map((vid) => {
       const src = [];

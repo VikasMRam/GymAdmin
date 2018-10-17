@@ -43,8 +43,13 @@ const Signup = styled.span`
   }
 `;
 
+const ForgotPassword = Signup.extend`
+  float: right;
+`;
+
 const LoginForm = ({
   handleSubmit, submitting, onSignupClicked, error,
+  onForgotPasswordClicked,
 }) => (
   <Form onSubmit={handleSubmit}>
     <StyledHeading>Log in</StyledHeading>
@@ -55,6 +60,7 @@ const LoginForm = ({
       placeholder="Email Address"
       component={ReduxField}
     />
+    <ForgotPassword onClick={onForgotPasswordClicked}>Forgot password?</ForgotPassword>
     <Field
       name="password"
       label="Password"
@@ -80,6 +86,7 @@ const LoginForm = ({
 
 LoginForm.propTypes = {
   handleSubmit: func.isRequired,
+  onForgotPasswordClicked: func,
   submitting: bool,
   onSignupClicked: func,
   error: string,
