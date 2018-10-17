@@ -27,10 +27,7 @@ class ResetPasswordFormContainer extends Component {
   handleSubmit = (data) => {
     const { submit, clearSubmitErrors, onSubmitSuccess } = this.props;
     clearSubmitErrors();
-    return submit(data).then(() => {
-      console.log("Submit success")
-      onSubmitSuccess()
-    }).catch((e) => {
+    return submit(data).then(onSubmitSuccess).catch((e) => {
       // TODO: Need to set a proper way to handle server side errors
       const { response } = e;
       return response.json().then((data) => {
