@@ -127,7 +127,7 @@ class HeaderController extends Component {
 }
 
 const mapStateToProps = (state, {
-  match, history, location, controller,
+  history, match, location, controller,
 }) => ({
   setQueryParams: getQueryParamsSetter(history, location),
   searchParams: getSearchParams(match, location),

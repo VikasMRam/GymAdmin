@@ -99,7 +99,7 @@ class SavedCommunitiesPopupController extends Component {
 }
 
 const mapStateToProps = (state, {
-  match, history, location, controller,
+  history, match, location, controller,
 }) => {
   // default state for ssr
   const { isLoading = false, isLoadSuccess = false, isUserSaveDeleteSuccess = false } = controller;
