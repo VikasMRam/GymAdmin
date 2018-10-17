@@ -131,7 +131,7 @@ AdvancedInfoForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
   user: shape({ name: string.isRequired }),
-  community: shape({ name: string.isRequired }).isRequired,
+  community: shape({ name: string.isRequired }),
 };
 
 export default AdvancedInfoForm;
