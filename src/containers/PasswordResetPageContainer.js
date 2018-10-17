@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
-import { func } from 'prop-types';
+import { func, object } from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
+import { parseURLQueryParams } from 'sly/services/helpers/url';
 import { createValidator, required } from 'sly/services/validation';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 
@@ -21,12 +23,16 @@ class PasswordResetPageContainer extends Component {
     resetPassword: func,
     clearSubmitErrors: func,
     onSubmitSuccess: func,
+    searchParams: object,
   };
 
   handleOnSubmit = (values) => {
-    const { resetPassword, onSubmitSuccess, clearSubmitErrors } = this.props;
+    const {
+      resetPassword, onSubmitSuccess, clearSubmitErrors, searchParams,
+    } = this.props;
     const { password } = values;
-    const payload = { password };
+    const { token } = searchParams;
+    const payload = { token, password };
 
     clearSubmitErrors();
     return resetPassword(payload).then(onSubmitSuccess).catch((r) => {
@@ -49,9 +55,13 @@ class PasswordResetPageContainer extends Component {
   }
 }
 
+const mapStateToProps = (state, { location }) => ({
+  searchParams: parseURLQueryParams(location.search),
+});
+
 const mapDispatchToProps = dispatch => ({
   resetPassword: data => dispatch(resourceCreateRequest('passwordReset', data)),
   clearSubmitErrors: () => dispatch(clearSubmitErrors('PasswordResetForm')),
 });
 
-export default connect(null, mapDispatchToProps)(PasswordResetPageContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PasswordResetPageContainer));
