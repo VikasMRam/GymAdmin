@@ -41,14 +41,15 @@ export class AuthController extends Component {
     setQueryParams({ modal: MODAL_TYPE_SIGN_UP });
   }
 
+  gotoResetPassword = () => {
+    const { setQueryParams } = this.props;
+    setQueryParams({ modal: MODAL_TYPE_RESET_PASSWORD });
+  }
+
   handleLoginSuccess = () => {
     const { setQueryParams, fetchUser } = this.props;
     fetchUser();
     setQueryParams({ modal: null });
-  }
-
-  handleSignupSuccess = () => {
-    this.handleLoginClick();
   }
 
   render() {
@@ -71,9 +72,10 @@ export class AuthController extends Component {
       case MODAL_TYPE_LOG_IN:
         componentProps.onSubmitSuccess = this.handleLoginSuccess;
         componentProps.onSignupClicked = this.handleSignupClick;
+        componentProps.onForgotPasswordClicked = this.gotoResetPassword;
         break;
       case MODAL_TYPE_SIGN_UP:
-        componentProps.onSubmitSuccess = this.handleSignupSuccess;
+        componentProps.onSubmitSuccess = this.handleLoginClick;
         componentProps.onLoginClicked = this.handleLoginClick;
         break;
       case MODAL_TYPE_RESET_PASSWORD:
