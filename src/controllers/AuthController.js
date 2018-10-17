@@ -39,12 +39,12 @@ export class AuthController extends Component {
     set({ toastMessage });
   }
 
-  handleLoginClick = () => {
+  gotoLogin = () => {
     const { setQueryParams } = this.props;
     setQueryParams({ modal: MODAL_TYPE_LOG_IN });
   }
 
-  handleSignupClick = () => {
+  gotoSignup = () => {
     const { setQueryParams } = this.props;
     setQueryParams({ modal: MODAL_TYPE_SIGN_UP });
   }
@@ -60,13 +60,11 @@ export class AuthController extends Component {
     setQueryParams({ modal: null });
   }
 
-  handleSignupSuccess = () => {
-    this.handleLoginClick();
-  }
-
   handleResetPasswordSuccess = (json) => {
-    this.setToastMessage(json.message);
-    this.handleLoginClick();
+    if (json) {
+      this.setToastMessage(json.message);
+    }
+    this.gotoLogin();
   }
 
   render() {
@@ -83,21 +81,21 @@ export class AuthController extends Component {
     const componentProps = {};
     switch (currentStep) {
       case MODAL_TYPE_JOIN_SLY:
-        componentProps.onLoginClicked = this.handleLoginClick;
-        componentProps.onEmailSignupClicked = this.handleSignupClick;
+        componentProps.onLoginClicked = this.gotoLogin;
+        componentProps.onEmailSignupClicked = this.gotoSignup;
         break;
       case MODAL_TYPE_LOG_IN:
         componentProps.onSubmitSuccess = this.handleLoginSuccess;
-        componentProps.onSignupClicked = this.handleSignupClick;
+        componentProps.onSignupClicked = this.gotoSignup;
         componentProps.onForgotPasswordClicked = this.gotoResetPassword;
         break;
       case MODAL_TYPE_SIGN_UP:
-        componentProps.onSubmitSuccess = this.handleLoginClick;
-        componentProps.onLoginClicked = this.handleLoginClick;
+        componentProps.onSubmitSuccess = this.gotoLogin;
+        componentProps.onLoginClicked = this.gotoLogin;
         break;
       case MODAL_TYPE_RESET_PASSWORD:
         componentProps.onSubmitSuccess = this.handleResetPasswordSuccess;
-        componentProps.onLoginClicked = this.handleLoginClick;
+        componentProps.onLoginClicked = this.gotoLogin;
         break;
       default:
     }
@@ -111,7 +109,12 @@ export class AuthController extends Component {
         >
           <StepComponent {...componentProps} />
         </Modal>
-        <ToastNotification isOpen={toastMessage !== ''} onClose={() => this.setToastMessage('')}>{toastMessage}</ToastNotification>
+        <ToastNotification
+          isOpen={toastMessage !== ''}
+          onClose={() => this.setToastMessage('')}
+        >
+          {toastMessage}
+        </ToastNotification>
       </Fragment>
     );
   }

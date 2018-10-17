@@ -35,7 +35,7 @@ class JoinSlyButtonsContainer extends Component {
   handleContinueWithGoogleClick = () => {
     if (window.gapi) {
       const auth2 = window.gapi.auth2.getAuthInstance();
-      auth2.signIn().then(res => console.log(res.getBasicProfile()), err => console.log(err));
+      auth2.signIn().then(res => console.log(res), err => console.log(err));
     }
   }
 

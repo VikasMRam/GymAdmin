@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { createValidator, required } from 'sly/services/validation';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
+import { MODAL_TYPE_LOG_IN } from 'sly/constants/modalType';
 
 import PasswordResetPage from 'sly/components/pages/PasswordResetPage';
 
@@ -20,22 +21,24 @@ const ReduxForm = reduxForm({
 
 class PasswordResetPageContainer extends Component {
   static propTypes = {
+    history: object,
     resetPassword: func,
     clearSubmitErrors: func,
-    onSubmitSuccess: func,
     searchParams: object,
   };
 
   handleOnSubmit = (values) => {
     const {
-      resetPassword, onSubmitSuccess, clearSubmitErrors, searchParams,
+      resetPassword, clearSubmitErrors, searchParams, history,
     } = this.props;
     const { password } = values;
     const { token } = searchParams;
     const payload = { token, password };
 
     clearSubmitErrors();
-    return resetPassword(payload).then(onSubmitSuccess).catch((r) => {
+    return resetPassword(payload).then(() => {
+      history.push(`/?modal=${MODAL_TYPE_LOG_IN}`);
+    }).catch((r) => {
       // TODO: Need to set a proper way to handle server side errors
       const { response } = r;
       return response.json().then((data) => {
@@ -55,7 +58,8 @@ class PasswordResetPageContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, { match, location }) => ({
+const mapStateToProps = (state, { history, match, location }) => ({
+  history,
   searchParams: getSearchParams(match, location),
 });
 
