@@ -7,7 +7,7 @@ export default class ConciergeContainer extends Component {
   render() {
     const { community, pathName, queryParams, setQueryParams, ...props } = this.props;
     return (
-      <ConciergeController pathName={pathName} community={community} queryParams={queryParams} setQueryParams={setQueryParams}>
+      <ConciergeController communitySlug={community.id} pathName={pathName} queryParams={queryParams} setQueryParams={setQueryParams}>
         {({
           concierge,
           userDetails,

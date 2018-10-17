@@ -352,7 +352,7 @@ export default class CommunityDetailPage extends Component {
           </NameHeading>
 
           <AddressHeading level="subtitle" size="subtitle">{formattedAddress}</AddressHeading>
-          <ConciergeController community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
+          <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
             {({ gotoWhatNext }) => (
               <CommunitySummary
                 innerRef={this.communitySummaryRef}
@@ -383,7 +383,7 @@ export default class CommunityDetailPage extends Component {
             title="Pricing & Floor Plans"
             innerRef={this.pricingAndFloorPlansRef}
           >
-            <ConciergeController community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
+            <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
               {({ concierge, getPricing}) => (
                 <PricingAndAvailability
                   community={community}
@@ -467,7 +467,7 @@ export default class CommunityDetailPage extends Component {
 
           <CollapsibleSection title="Similar Communities">
             <SimilarCommunities similarProperties={similarProperties} />
-            <ConciergeController community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
+            <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
               {({ gotoAdvancedInfo }) => (
                 <AdTileWrapper>
                   <AdTile {...adProps} onClick={() => gotoAdvancedInfo()} />
@@ -487,7 +487,7 @@ export default class CommunityDetailPage extends Component {
           </CollapsibleSection>
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
-        <ConciergeController community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
+        <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
           {({ concierge, getPricing }) => (
             <StickyFooter
               footerInfo={{

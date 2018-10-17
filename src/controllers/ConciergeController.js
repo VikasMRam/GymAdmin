@@ -170,6 +170,7 @@ export class ConciergeController extends Component {
       user: { ...data },
       propertyIds: [],
     };
+    console.log(communitySlug);
     if (communitySlug) {
       value.propertyIds = [communitySlug];
     } else if (pathName) {
@@ -212,6 +213,7 @@ export class ConciergeController extends Component {
       propertyIds: [],
       message,
     };
+    console.log(communitySlug);
     if (communitySlug) {
       value.propertyIds = [communitySlug];
     } else if (pathName) {
