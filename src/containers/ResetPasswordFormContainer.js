@@ -22,12 +22,18 @@ class ResetPasswordFormContainer extends Component {
     clearSubmitErrors: func,
     submitFailed: bool,
     onSubmitSuccess: func,
+    setToastMessage: func,
   };
 
   handleSubmit = (data) => {
-    const { submit, clearSubmitErrors, onSubmitSuccess } = this.props;
+    const {
+      submit, clearSubmitErrors, onSubmitSuccess, setToastMessage,
+    } = this.props;
     clearSubmitErrors();
-    return submit(data).then(onSubmitSuccess).catch((e) => {
+    return submit(data).then((json) => {
+      onSubmitSuccess();
+      setToastMessage(json.message);
+    }).catch((e) => {
       // TODO: Need to set a proper way to handle server side errors
       const { response } = e;
       return response.json().then((data) => {

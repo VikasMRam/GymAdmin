@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { object, func } from 'prop-types';
+import React, { Component, Fragment } from 'react';
+import { object, func, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import { getSearchParams } from 'sly/services/helpers/search';
@@ -16,6 +15,8 @@ import LoginFormContainer from 'sly/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/containers/SignupFormContainer';
 import JoinSlyButtonsContainer from 'sly/containers/JoinSlyButtonsContainer';
 import ResetPasswordFormContainer from 'sly/containers/ResetPasswordFormContainer';
+import ToastNotification from 'sly/components/molecules/ToastNotification';
+import { connectController } from './index';
 
 const steps = {};
 steps[MODAL_TYPE_JOIN_SLY] = JoinSlyButtonsContainer;
@@ -29,7 +30,14 @@ export class AuthController extends Component {
     user: object,
     setQueryParams: func,
     fetchUser: func,
+    set: func,
+    toastMessage: string,
   };
+
+  setToastMessage = (toastMessage) => {
+    const { set } = this.props;
+    set({ toastMessage });
+  }
 
   handleLoginClick = () => {
     const { setQueryParams } = this.props;
@@ -52,9 +60,13 @@ export class AuthController extends Component {
     setQueryParams({ modal: null });
   }
 
+  handleSignupSuccess = () => {
+    this.handleLoginClick();
+  }
+
   render() {
     const {
-      searchParams, setQueryParams, user,
+      searchParams, setQueryParams, user, toastMessage,
     } = this.props;
     const currentStep = searchParams.modal;
 
@@ -64,6 +76,7 @@ export class AuthController extends Component {
     }
 
     const componentProps = {};
+    componentProps.setToastMessage = this.setToastMessage;
     switch (currentStep) {
       case MODAL_TYPE_JOIN_SLY:
         componentProps.onLoginClicked = this.handleLoginClick;
@@ -86,25 +99,31 @@ export class AuthController extends Component {
     }
 
     return (
-      <Modal
-        closeable
-        isOpen={Object.keys(steps).includes(searchParams.modal)}
-        onClose={() => setQueryParams({ modal: null })}
-      >
-        <StepComponent {...componentProps} />
-      </Modal>
+      <Fragment>
+        <Modal
+          closeable
+          isOpen={Object.keys(steps).includes(searchParams.modal)}
+          onClose={() => setQueryParams({ modal: null })}
+        >
+          <StepComponent {...componentProps} />
+        </Modal>
+        <ToastNotification isOpen={toastMessage !== ''} onClose={() => this.setToastMessage('')}>{toastMessage}</ToastNotification>
+      </Fragment>
     );
   }
 }
 
-const mapStateToProps = (state, { history, match, location }) => ({
+const mapStateToProps = (state, {
+  controller, history, match, location,
+}) => ({
   setQueryParams: getQueryParamsSetter(history, location),
   user: getDetail(state, 'user', 'me'),
   searchParams: getSearchParams(match, location),
+  toastMessage: controller.toastMessage || '',
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me')),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthController));
+export default withRouter(connectController(mapStateToProps, mapDispatchToProps)(AuthController));
