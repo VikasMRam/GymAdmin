@@ -20,6 +20,7 @@ import HomePageContainer from 'sly/containers/HomePageContainer';
 import PromoPageContainer from 'sly/containers/PromoPageContainer';
 import AgentsProfilePageController from 'sly/controllers/AgentsProfilePageController';
 import OurHistoryPage from 'sly/components/pages/OurHistoryPage';
+import PasswordResetPageContainer from 'sly/containers/PasswordResetPageContainer';
 import HowItWorksDetailPageContainer from 'sly/containers/HowItWorksDetailPageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
@@ -132,6 +133,11 @@ export default class App extends Component {
     {
       path: '/:entity/:entitySlug/approve',
       component: EntityApprovalContainer,
+      exact: true,
+    },
+    {
+      path: '/users/password-reset',
+      component: PasswordResetPageContainer,
       exact: true,
     },
   ];

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { any, bool } from 'prop-types';
+import { any, bool, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -41,6 +41,7 @@ BasePageTemplate.propTypes = {
   footer: any.isRequired,
   children: any.isRequired,
   hasStickyFooter: bool,
+  className: string,
 };
 
 export default BasePageTemplate;
