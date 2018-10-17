@@ -60,7 +60,6 @@ class HomePageContainer extends Component {
     const { activeDiscoverHome } = this.state;
     const { searchParams, setQueryParams, pathName } = this.props;
     const { modal, currentStep } = searchParams;
-    console.log(this.props)
     return (
       <HomePage
         isModalOpen={activeDiscoverHome !== null}
