@@ -64,6 +64,11 @@ export class AuthController extends Component {
     this.handleLoginClick();
   }
 
+  handleResetPasswordSuccess = (json) => {
+    this.setToastMessage(json.message);
+    this.handleLoginClick();
+  }
+
   render() {
     const {
       searchParams, setQueryParams, user, toastMessage,
@@ -76,7 +81,6 @@ export class AuthController extends Component {
     }
 
     const componentProps = {};
-    componentProps.setToastMessage = this.setToastMessage;
     switch (currentStep) {
       case MODAL_TYPE_JOIN_SLY:
         componentProps.onLoginClicked = this.handleLoginClick;
@@ -92,7 +96,7 @@ export class AuthController extends Component {
         componentProps.onLoginClicked = this.handleLoginClick;
         break;
       case MODAL_TYPE_RESET_PASSWORD:
-        componentProps.onSubmitSuccess = this.handleLoginClick;
+        componentProps.onSubmitSuccess = this.handleResetPasswordSuccess;
         componentProps.onLoginClicked = this.handleLoginClick;
         break;
       default:
