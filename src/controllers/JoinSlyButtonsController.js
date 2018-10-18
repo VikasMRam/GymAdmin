@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { func, string } from 'prop-types';
 
-import { LOGIN_PROVIDER_GOOGLE } from 'sly/constants/loginProviders';
+import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/constants/loginProviders';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 import { connectController } from 'sly/controllers';
@@ -47,6 +47,30 @@ class JoinSlyButtonsController extends Component {
     );
   }
 
+  onFacebookConnected = (resp) => {
+    const { thirdpartyLogin, onConnectSuccess } = this.props;
+    const { accessToken } = resp;
+
+    window.FB.api('/me', { fields: 'name, email' }, (resp) => {
+      // in case of fb accounts having unconfirmed emails api won't return it
+      if (resp.email) {
+        const data = {
+          token: accessToken,
+          provider: LOGIN_PROVIDER_FACEBOOK,
+          name: resp.name,
+          email: resp.email,
+        };
+
+        thirdpartyLogin(data).then(
+          onConnectSuccess,
+          () => this.setSocialLoginError('Failed to authorize with Facebook. Please try again.')
+        );
+      } else {
+        this.setSocialLoginError('Failed to fetch required info from Facebook. Please try again.');
+      }
+    });
+  }
+
   setSocialLoginError = (msg) => {
     const { set } = this.props;
     set({
@@ -59,11 +83,11 @@ class JoinSlyButtonsController extends Component {
     if (window.FB) {
       window.FB.login((response) => {
         if (response.authResponse) {
-          console.log(response);
+          this.onFacebookConnected(response.authResponse);
         } else {
           this.setSocialLoginError('Failed to connect with Facebook. Please try again.');
         }
-      }, { scope: 'public_profile,email' });
+      }, { scope: 'email' });
     }
   }
 
