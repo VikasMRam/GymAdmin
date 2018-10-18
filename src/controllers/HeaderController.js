@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { func, bool, arrayOf, number, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
+import { SAVED_COMMUNITIES, MODAL_TYPE_LOG_IN } from 'sly/constants/modalType';
 
 import { connectController } from 'sly/controllers';
 import { getDetail } from 'sly/store/selectors';
@@ -48,8 +48,7 @@ const defaultMenuItems = [
 
 const loginHeaderItems = user => user
   ? [{ name: 'Dashboard', url: '/mydashboard' }]
-  // TODO: uncomment after login api merged : [{ name: 'Sign in' }];
-  : [{ name: 'Sign in', url: '/signin' }];
+  : [{ name: 'Sign in' }];
 
 const loginMenuItems = user => loginHeaderItems(user)
   .concat(user
@@ -100,7 +99,6 @@ class HeaderController extends Component {
         logoutUser().then(() => fetchUser());
       };
     }
-    /* TODO: uncomment after login api merged
     let loginItem = lhItems.find(item => item.name === 'Sign in');
     if (loginItem) {
       loginItem.onClick = () => setQueryParams({ modal: MODAL_TYPE_LOG_IN });
@@ -108,7 +106,7 @@ class HeaderController extends Component {
     loginItem = lmItems.find(item => item.name === 'Sign in');
     if (loginItem) {
       loginItem.onClick = () => setQueryParams({ modal: MODAL_TYPE_LOG_IN });
-    } */
+    }
 
     const headerItems = [
       ...hItems,
