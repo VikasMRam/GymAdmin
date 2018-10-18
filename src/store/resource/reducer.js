@@ -2,6 +2,7 @@
 // https://github.com/diegohaz/arc/wiki/Example-redux-modules#resource
 import findIndex from 'lodash/findIndex';
 import get from 'lodash/get';
+import omit from 'lodash/omit';
 
 import {
   initialState,
@@ -18,6 +19,7 @@ import {
   RESOURCE_DETAIL_READ_SUCCESS,
   RESOURCE_UPDATE_SUCCESS,
   RESOURCE_DELETE_SUCCESS,
+  RESOURCE_DETAIL_READ_FAILURE,
 } from './actions';
 
 const updateOrDeleteReducer = (state, { type, payload, meta }) => {
@@ -128,6 +130,9 @@ export default (state = initialState, { type, payload, meta }) => {
           },
         },
       };
+
+    case RESOURCE_DETAIL_READ_FAILURE:
+      return omit(state, resourceKey);
 
     case RESOURCE_UPDATE_SUCCESS:
     case RESOURCE_DELETE_SUCCESS: {
