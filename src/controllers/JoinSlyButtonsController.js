@@ -58,7 +58,11 @@ class JoinSlyButtonsController extends Component {
     this.setSocialLoginError('');
     if (window.FB) {
       window.FB.login((response) => {
-        console.log(response);
+        if (response.authResponse) {
+          console.log(response);
+        } else {
+          this.setSocialLoginError('Failed to connect with Facebook. Please try again.');
+        }
       }, { scope: 'public_profile,email' });
     }
   }

@@ -14,6 +14,7 @@ import { Heading, Button, Block, Hr } from 'sly/components/atoms';
 const Form = styled.form`
   width: 100%;
 `;
+Form.displayName = 'Form';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
@@ -23,6 +24,7 @@ const StyledButton = styled(Button)`
   width: 100%;
   margin-bottom: ${size('spacing.regular')};
 `;
+StyledButton.displayName = 'StyledButton';
 
 const StyledBlock = styled(Block)`
   color: ${palette('grayscale', 1)};
@@ -42,6 +44,7 @@ const Login = styled.span`
     cursor: pointer;
   }
 `;
+Login.displayName = 'Login';
 
 const SignupForm = ({
   handleSubmit, submitting, error, onLoginClicked,
