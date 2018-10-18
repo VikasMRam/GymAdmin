@@ -43,6 +43,19 @@ class StateSearchPageContainer extends Component {
     history.push(path);
   };
 
+  removeSearchFilters = ({ paramsToRemove }) => {
+    const { searchParams, history } = this.props;
+
+    const changedParams = paramsToRemove.reduce((cumul, param) => {
+      cumul[param] = undefined;
+      return cumul;
+    }, {});
+
+    const { path } = filterLinkPath(searchParams, changedParams);
+
+    history.push(path);
+  };
+
   handleOnAdTileClick = () => {
     this.changeSearchParams({ changedParams: { modal: 'cawWizard' } });
   }
@@ -71,6 +84,7 @@ class StateSearchPageContainer extends Component {
         toggleMap={this.toggleMap}
         searchParams={searchParams}
         onParamsChange={this.changeSearchParams}
+        onParamsRemove={this.removeSearchFilters}
         onAdTileClick={this.handleOnAdTileClick}
         communityList={communityList}
         geoGuide={gg}
