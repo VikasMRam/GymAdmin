@@ -21,8 +21,7 @@ const StyledHeading = styled(Heading)`
 
 const StyledButton = styled(Button)`
   width: 100%;
-  margin-bottom: ${size('spacing.regular')};
-  margin-bottom: ${ifProp('error', size('spacing.large'), 'initial')};
+  margin-bottom: ${ifProp('error', size('spacing.large'), size('spacing.regular'))};
 `;
 
 const StyledHr = styled(Hr)`

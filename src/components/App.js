@@ -184,7 +184,7 @@ export default class App extends Component {
           {/*
             Google Platform Library
           */}
-          <meta name="google-signin-client_id" content={`${googleAppId}.apps.googleusercontent.com`} />
+          <meta name="google-signin-client_id" content={googleAppId} />
 
           <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
         </Helmet>

@@ -77,4 +77,14 @@ describe('JoinSlyButtons', () => {
     expect(heading).toHaveLength(1);
     expect(heading.dive().dive().dive().text()).toBe('test heading');
   });
+
+  it('shows social login errros', () => {
+    const wrapper = wrap({
+      socialLoginError: 'test error',
+    });
+    const err = wrapper.find('SocialLoginError');
+
+    expect(err).toHaveLength(1);
+    expect(err.dive().dive().text()).toBe('test error');
+  });
 });
