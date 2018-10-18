@@ -10,6 +10,7 @@ export const agent = 'marketplace/agents';
 export const content = 'platform/contents';
 export const rating = 'platform/ratings';
 export const login = 'platform/auth/login';
+export const thirdpartyLogin = 'platform/auth/third-party';
 export const logout = 'platform/auth/logout';
 export const register = 'platform/auth/register';
 export const recover = 'platform/auth/recover';

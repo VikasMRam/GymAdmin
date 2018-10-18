@@ -9,17 +9,17 @@ import { MODAL_TYPE_LOG_IN, MODAL_TYPE_SIGN_UP, MODAL_TYPE_JOIN_SLY, MODAL_TYPE_
 import { getDetail } from 'sly/store/selectors';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { connectController } from 'sly/controllers';
 
 import Modal from 'sly/components/molecules/Modal';
 import LoginFormContainer from 'sly/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/containers/SignupFormContainer';
-import JoinSlyButtonsContainer from 'sly/containers/JoinSlyButtonsContainer';
+import JoinSlyButtonsController from 'sly/controllers/JoinSlyButtonsController';
 import ResetPasswordFormContainer from 'sly/containers/ResetPasswordFormContainer';
 import ToastNotification from 'sly/components/molecules/ToastNotification';
-import { connectController } from './index';
 
 const steps = {};
-steps[MODAL_TYPE_JOIN_SLY] = JoinSlyButtonsContainer;
+steps[MODAL_TYPE_JOIN_SLY] = JoinSlyButtonsController;
 steps[MODAL_TYPE_LOG_IN] = LoginFormContainer;
 steps[MODAL_TYPE_SIGN_UP] = SignupFormContainer;
 steps[MODAL_TYPE_RESET_PASSWORD] = ResetPasswordFormContainer;
@@ -83,6 +83,7 @@ export class AuthController extends Component {
       case MODAL_TYPE_JOIN_SLY:
         componentProps.onLoginClicked = this.gotoLogin;
         componentProps.onEmailSignupClicked = this.gotoSignup;
+        componentProps.onConnectSuccess = this.handleLoginSuccess;
         break;
       case MODAL_TYPE_LOG_IN:
         componentProps.onSubmitSuccess = this.handleLoginSuccess;
