@@ -38,7 +38,7 @@ import CommunitySaved from "sly/components/organisms/CommunitySaved";
 import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
-import SaveCommunityForm from 'sly/components/organisms/SaveCommunityForm';
+import SaveCommunityFormContainer from 'sly/containers/SaveCommunityFormContainer';
 import Thankyou from 'sly/components/molecules/Thankyou/index';
 import ToastNotification from 'sly/components/molecules/ToastNotification';
 
@@ -511,7 +511,7 @@ export default class CommunityDetailPage extends Component {
         >
           {!isUserSaveUpdateComplete && user == null && <JoinSlyButtons heading="Add to your favourites list" />}
           {!isUserSaveUpdateComplete && user != null &&
-            <SaveCommunityForm mainImage={mainImage} submitForm={onSubmitSaveCommunityForm} />}
+            <SaveCommunityFormContainer mainImage={mainImage} submitForm={onSubmitSaveCommunityForm} />}
           {isUserSaveUpdateComplete &&
             <CommunitySaved similarCommunities={similarProperties} onDoneButtonClicked={() => setModal()} />}
         </Modal>

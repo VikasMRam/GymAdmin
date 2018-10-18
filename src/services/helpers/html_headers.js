@@ -140,16 +140,19 @@ export const getHelmetForSearchPage = ({
     communityList.map(e => ldCommunities.push(getSDForSearchResource({ ...e })));
   }
 
+
   const ldCity = {};
-  ldCity['@context'] = 'http://schema.org';
-  ldCity['@type'] = 'City';
-  ldCity.name = titleize(city);
-  if (latitude && longitude) {
-    const geo = {};
-    geo['@type'] = 'GeoCoordinates';
-    geo.latitude = latitude;
-    geo.longitude = longitude;
-    ldCity.geo = geo;
+  if (city) {
+    ldCity['@context'] = 'http://schema.org';
+    ldCity['@type'] = 'City';
+    ldCity.name = titleize(city);
+    if (latitude && longitude) {
+      const geo = {};
+      geo['@type'] = 'GeoCoordinates';
+      geo.latitude = latitude;
+      geo.longitude = longitude;
+      ldCity.geo = geo;
+    }
   }
 
 
@@ -172,7 +175,7 @@ export const getHelmetForSearchPage = ({
       {ldCommunities.length > 0 &&
         <script type="application/ld+json">{`${JSON.stringify(ldCommunities, stringifyReplacer)}`}</script>
       }
-      <script type="application/ld+json">{`${JSON.stringify(ldCity, stringifyReplacer)}`}</script>
+      {city && <script type="application/ld+json">{`${JSON.stringify(ldCity, stringifyReplacer)}`}</script>}
     </Helmet>
   );
 };

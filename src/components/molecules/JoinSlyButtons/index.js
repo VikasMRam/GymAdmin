@@ -48,18 +48,24 @@ const Login = styled.span`
 `;
 Login.displayName = 'Login';
 
+const SocialLoginError = styled(Block)`
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+SocialLoginError.displayName = 'SocialLoginError';
+
 const JoinSlyButtons = ({
   onLoginClicked, onEmailSignupClicked, onContinueWithFacebookClicked, heading,
-  onContinueWithGoogleClicked,
+  onContinueWithGoogleClicked, socialLoginError,
 }) => (
   <section>
     <StyledHeading>{heading}</StyledHeading>
     <FacebookButton palette="facebook" onClick={onContinueWithFacebookClicked}>
       <Icon icon="facebook" size="regular" /> Continue with Facebook
     </FacebookButton>
-    <GoogleButton transparent onClick={onContinueWithGoogleClicked}>
+    <GoogleButton transparent onClick={onContinueWithGoogleClicked} error={socialLoginError}>
       <Icon icon="google" size="regular" /> Continue with Google
     </GoogleButton>
+    {socialLoginError && <SocialLoginError palette="danger">{socialLoginError}</SocialLoginError>}
     <StyledHr />
     <StyledButton onClick={onEmailSignupClicked}>Sign up with Email</StyledButton>
     <Hr />
@@ -75,6 +81,7 @@ JoinSlyButtons.propTypes = {
   onContinueWithFacebookClicked: func,
   onContinueWithGoogleClicked: func,
   heading: string,
+  socialLoginError: string,
 };
 
 JoinSlyButtons.defaultProps = {

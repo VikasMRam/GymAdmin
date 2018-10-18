@@ -14,6 +14,7 @@ import { Heading, Button, Block, Hr } from 'sly/components/atoms';
 const Form = styled.form`
   width: 100%;
 `;
+Form.displayName = 'Form';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
@@ -21,9 +22,9 @@ const StyledHeading = styled(Heading)`
 
 const StyledButton = styled(Button)`
   width: 100%;
-  margin-bottom: ${size('spacing.regular')};
-  margin-bottom: ${ifProp('error', size('spacing.large'), 'initial')};
+  margin-bottom: ${ifProp('error', size('spacing.large'), size('spacing.regular'))};
 `;
+StyledButton.displayName = 'StyledButton';
 
 const StyledHr = styled(Hr)`
   margin-top: ${size('spacing.xLarge')};
@@ -42,6 +43,7 @@ const Signup = styled.span`
     cursor: pointer;
   }
 `;
+Signup.displayName = 'Signup';
 
 const ForgotPassword = Signup.extend`
   float: right;

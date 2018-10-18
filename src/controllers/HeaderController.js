@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { func, bool, arrayOf, number, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
+import { SAVED_COMMUNITIES, MODAL_TYPE_LOG_IN } from 'sly/constants/modalType';
 
 import { connectController } from 'sly/controllers';
 import { getDetail } from 'sly/store/selectors';
@@ -12,6 +12,8 @@ import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import Header from 'sly/components/organisms/Header';
 import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
 import AuthController from 'sly/controllers/AuthController';
+import { resourceDeleteRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { entitiesReceive } from 'sly/store/actions';
 
 const defaultHeaderItems = (user) => {
   let i = [
@@ -46,12 +48,11 @@ const defaultMenuItems = [
 
 const loginHeaderItems = user => user
   ? [{ name: 'Dashboard', url: '/mydashboard' }]
-  // TODO: uncomment after login api merged : [{ name: 'Sign in' }];
-  : [{ name: 'Sign in', url: '/signin' }];
+  : [{ name: 'Sign in' }];
 
 const loginMenuItems = user => loginHeaderItems(user)
   .concat(user
-    ? [{ name: 'Log out', url: '/signout' }]
+    ? [{ name: 'Log out' }]
     : []);
 
 const menuItemHrIndices = [7, 10];
@@ -64,6 +65,8 @@ class HeaderController extends Component {
     set: func,
     setQueryParams: func,
     searchParams: object,
+    logoutUser: func,
+    fetchUser: func,
   };
 
   handleMenuItemClick = () => {
@@ -79,6 +82,8 @@ class HeaderController extends Component {
       dropdownOpen,
       user,
       setQueryParams,
+      logoutUser,
+      fetchUser,
     } = this.props;
     const hItems = defaultHeaderItems(user);
     const lhItems = loginHeaderItems(user);
@@ -88,7 +93,12 @@ class HeaderController extends Component {
     if (savedHeaderItem) {
       savedHeaderItem.onClick = () => setQueryParams({ modal: SAVED_COMMUNITIES });
     }
-    /* TODO: uncomment after login api merged
+    const logoutLeftMenuItem = lmItems.find(item => item.name === 'Log out');
+    if (logoutLeftMenuItem) {
+      logoutLeftMenuItem.onClick = () => {
+        logoutUser().then(() => fetchUser());
+      };
+    }
     let loginItem = lhItems.find(item => item.name === 'Sign in');
     if (loginItem) {
       loginItem.onClick = () => setQueryParams({ modal: MODAL_TYPE_LOG_IN });
@@ -96,7 +106,7 @@ class HeaderController extends Component {
     loginItem = lmItems.find(item => item.name === 'Sign in');
     if (loginItem) {
       loginItem.onClick = () => setQueryParams({ modal: MODAL_TYPE_LOG_IN });
-    } */
+    }
 
     const headerItems = [
       ...hItems,
@@ -137,4 +147,13 @@ const mapStateToProps = (state, {
   user: getDetail(state, 'user', 'me'),
 });
 
-export default withRouter(connectController(mapStateToProps)(HeaderController));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logoutUser: () => dispatch(resourceDeleteRequest('logout')),
+    // TODO: FIXME: Temp solution to set the entity and resource of user me to null as the response is not jsonapi
+    fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me'))
+      .catch(() => dispatch(entitiesReceive({ user: { me: null } }))),
+  };
+};
+
+export default withRouter(connectController(mapStateToProps, mapDispatchToProps)(HeaderController));
