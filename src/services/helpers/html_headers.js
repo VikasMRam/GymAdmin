@@ -141,8 +141,8 @@ export const getHelmetForSearchPage = ({
   }
 
 
+  const ldCity = {};
   if (city) {
-    const ldCity = {};
     ldCity['@context'] = 'http://schema.org';
     ldCity['@type'] = 'City';
     ldCity.name = titleize(city);
@@ -154,8 +154,6 @@ export const getHelmetForSearchPage = ({
       ldCity.geo = geo;
     }
   }
-
-
 
 
   return (
