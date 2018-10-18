@@ -1,7 +1,7 @@
 import React from 'react';
 import { string, func, bool } from 'prop-types';
 import styled from 'styled-components';
-import { Field, reduxForm } from 'redux-form';
+import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
 
@@ -12,6 +12,7 @@ import ReduxField from 'sly/components/organisms/ReduxField';
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')}
 `;
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,6 +21,7 @@ const Wrapper = styled.div`
     flex-direction: row;
   }
 `;
+
 const StyledImage = styled(Image)`
   object-fit: cover;
   height: ${size('carousel.mobile')};
@@ -29,12 +31,14 @@ const StyledImage = styled(Image)`
     max-width: 40%;
   }
 `;
+StyledImage.displayName = 'StyledImage';
+
 const ContentWrapper = styled.div`
   padding: ${size('spacing.xxLarge')};
   width: 100%;
 `;
 
-const formComponent = ({ mainImage, submitting, handleSubmit }) => (
+const SaveCommunityForm = ({ mainImage, submitting, handleSubmit }) => (
   <Wrapper>
     <StyledImage src={mainImage} />
     <ContentWrapper>
@@ -55,29 +59,11 @@ const formComponent = ({ mainImage, submitting, handleSubmit }) => (
     </ContentWrapper>
   </Wrapper>
 );
-formComponent.propTypes = {
-  mainImage: string,
-  handleSubmit: func,
-  submitting: bool,
-};
-
-const ReduxForm = reduxForm({
-  form: 'SaveCommunityForm',
-  destroyOnUnmount: true,
-  // required to refresh when initialValues change. Ref: https://redux-form.com/6.7.0/examples/initializefromstate/
-  enableReinitialize: true,
-  keepDirtyOnReinitialize: false,
-})(formComponent);
-
-const SaveCommunityForm = ({ submitForm, ...props }) => (
-  <ReduxForm
-    onSubmit={submitForm}
-    {...props}
-  />
-);
 
 SaveCommunityForm.propTypes = {
-  submitForm: func.isRequired,
+  mainImage: string,
+  handleSubmit: func.isRequired,
+  submitting: bool,
 };
 
 export default SaveCommunityForm;
