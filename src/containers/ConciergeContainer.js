@@ -6,8 +6,9 @@ import ConciergeController from 'sly/controllers/ConciergeController';
 export default class ConciergeContainer extends Component {
   render() {
     const { community, pathName, queryParams, setQueryParams, ...props } = this.props;
+    const communitySlug = community ? community.id : undefined;
     return (
-      <ConciergeController communitySlug={community.id} pathName={pathName} queryParams={queryParams} setQueryParams={setQueryParams}>
+      <ConciergeController pathName={pathName} communitySlug={communitySlug} queryParams={queryParams} setQueryParams={setQueryParams}>
         {({
           concierge,
           userDetails,

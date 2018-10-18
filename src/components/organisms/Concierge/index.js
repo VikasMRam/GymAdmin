@@ -65,37 +65,44 @@ export default class Concierge extends Component {
     const { modalIsOpen, currentStep, contactRequested, consultationRequested } = concierge;
 
     const StepComponent = steps[currentStep];
-    return (
-      <Fragment >
-        <ConversionFormContainer
-          submitRegularConversion={submitRegularConversion}
-          submitExpressConversion={submitExpressConversion}
-          gotoWhatNext={gotoWhatNext}
-          community={community}
-          concierge={concierge}
-          express={false}
-        />
-
+    const modal = (
+      <Fragment>
         {appElement && StepComponent && modalIsOpen && (
-          <Modal
-            appElement={appElement}
+        <Modal
+          appElement={appElement}
+          onClose={close}
+          isOpen={modalIsOpen}
+          closeable
+        >
+          <StepComponent
+            community={community}
+            concierge={concierge}
+            submitRegularConversion={submitRegularConversion}
+            submitExpressConversion={submitExpressConversion}
+            submitAdvancedInfo={submitAdvancedInfo}
             onClose={close}
-            isOpen={modalIsOpen}
-            closeable
-          >
-            <StepComponent
-              community={community}
-              concierge={concierge}
-              submitRegularConversion={submitRegularConversion}
-              submitExpressConversion={submitExpressConversion}
-              submitAdvancedInfo={submitAdvancedInfo}
-              onClose={close}
-              {...props}
-            />
-          </Modal>
+            {...props}
+          />
+        </Modal>
         )}
-      </Fragment>
-    );
+      </Fragment>);
+    let result = modal;
+    if (community) {
+      result = (
+        <Fragment >
+          <ConversionFormContainer
+            submitRegularConversion={submitRegularConversion}
+            submitExpressConversion={submitExpressConversion}
+            gotoWhatNext={gotoWhatNext}
+            community={community}
+            concierge={concierge}
+            express={false}
+          />
+          {modal}
+        </Fragment>
+      );
+    }
+    return result;
   }
 }
 
