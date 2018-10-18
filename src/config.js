@@ -32,7 +32,7 @@ const config = {
     googleTagManagerId: 'GTM-NTC7HG2',
     version: process.env.VERSION,
     facebookAppId: '624602444328776',
-    googleAppId: '',
+    googleAppId: '522248695659-4c2mmjjj3soorpg7stig9u2ecpr6j0nf',
   },
 
   test: {
@@ -48,6 +48,7 @@ const config = {
     isDev: false,
     eventServerUrl: 'http://event.myseniorly.com/events/new',
     facebookAppId: '614862451969442',
+    googleAppId: '522248695659-ces03d2ptbgegiusk0c6v8j9abc7pdbf',
   },
 
   production: {
@@ -59,6 +60,7 @@ const config = {
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-5888W7H',
     facebookAppId: '1609538575934980',
+    googleAppId: '522248695659-kbpgg45i1pg4kt1ahsqm2trdr8cdms2k',
   },
 };
 
