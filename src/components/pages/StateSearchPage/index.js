@@ -42,6 +42,7 @@ export default class StateSearchPage extends Component {
     isMapView: bool,
     toggleMap: func,
     onParamsChange: func,
+    onParamsRemove: func,
     onAdTileClick: func,
     location: object,
     searchParams: object,
@@ -56,6 +57,7 @@ export default class StateSearchPage extends Component {
       onAdTileClick,
       searchParams,
       onParamsChange,
+      onParamsRemove,
       requestMeta,
       communityList,
       geoGuide,
@@ -123,6 +125,7 @@ export default class StateSearchPage extends Component {
           <CommunitySearchList
             communityList={communityList}
             onParamsChange={onParamsChange}
+            onParamsRemove={onParamsRemove}
             searchParams={searchParams}
             requestMeta={requestMeta}
             onAdTileClick={onAdTileClick}
@@ -136,6 +139,7 @@ export default class StateSearchPage extends Component {
       return (<CommunitySearchList
         communityList={communityList}
         onParamsChange={onParamsChange}
+        onParamsRemove={onParamsRemove}
         searchParams={searchParams}
         requestMeta={requestMeta}
         onAdTileClick={onAdTileClick}
