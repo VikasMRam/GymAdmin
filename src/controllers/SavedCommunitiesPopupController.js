@@ -75,10 +75,10 @@ class SavedCommunitiesPopupController extends Component {
     const savedCommunities = userSaves.reduce((result, userSave) => {
       const { id, info } = userSave;
       const {
-        name, address, mainImage, note,
+        name, address, mainImage, note, url,
       } = info;
       result.push({
-        id, name, address, image: mainImage, note,
+        id, name, address, image: mainImage, note, url,
       });
       return result;
     }, []);
