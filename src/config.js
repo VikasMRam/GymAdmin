@@ -31,8 +31,8 @@ const config = {
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-NTC7HG2',
     version: process.env.VERSION,
-    facebookAppId: '624602444328776',
-    googleAppId: '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com',
+    facebookAppId: process.env.FB_CLIENT_ID,
+    googleAppId: process.env.GOOGLE_CLIENT_ID,
   },
 
   test: {

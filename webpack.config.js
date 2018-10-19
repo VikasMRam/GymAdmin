@@ -44,6 +44,9 @@ const SOURCE = process.env.SOURCE || 'src';
 const devDomain = `${HOST}:${DEV_PORT}/`;
 const isDev = NODE_ENV === 'development';
 const isStaging = SLY_ENV === 'staging';
+const FB_CLIENT_ID = process.env.FB_CLIENT_ID || '624602444328776';
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com',
+
 // replacements for widgets.js
 const EXTERNAL_ASSET_URL = (isDev ? `${devDomain}external` : `${PUBLIC_PATH}/external`);
 const EXTERNAL_WIZARDS_ROOT_URL = HOST + EXTERNAL_WIZARDS_PATH;
@@ -64,6 +67,8 @@ console.info('Using config', JSON.stringify({
   SOURCE,
   EXTERNAL_ASSET_URL,
   EXTERNAL_WIZARDS_ROOT_URL,
+  FB_CLIENT_ID,
+  GOOGLE_CLIENT_ID,
 }, null, 2));
 
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
@@ -152,6 +157,8 @@ const base = () =>
       'process.env.GOOGLE_MAPS_API_KEY': GOOGLE_MAPS_API_KEY,
       'process.env.VERSION': VERSION,
       'process.env.EXTERNAL_WIZARDS_PATH': EXTERNAL_WIZARDS_PATH,
+      'process.env.FB_CLENT_ID': FB_CLIENT_ID,
+      'process.env.GOOGLE_CLENT_ID': GOOGLE_CLIENT_ID,
     }),
     addPlugins([new webpack.ProgressPlugin()]),
     happypack([babel()]),
