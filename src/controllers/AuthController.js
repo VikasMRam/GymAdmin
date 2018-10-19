@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { object, func, string } from 'prop-types';
-import { withRouter } from 'react-router-dom';
 
 import { getSearchParams } from 'sly/services/helpers/search';
 
@@ -134,4 +133,4 @@ const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me')),
 });
 
-export default withRouter(connectController(mapStateToProps, mapDispatchToProps)(AuthController));
+export default connectController(mapStateToProps, mapDispatchToProps)(AuthController);
