@@ -18,6 +18,7 @@ class JoinSlyButtonsController extends Component {
     socialLoginError: string,
     onConnectSuccess: func,
     set: func,
+    heading: string,
   };
 
   componentDidMount() {
@@ -103,7 +104,9 @@ class JoinSlyButtonsController extends Component {
   }
 
   render() {
-    const { onLoginClicked, onEmailSignupClicked, socialLoginError } = this.props;
+    const {
+      onLoginClicked, onEmailSignupClicked, socialLoginError, heading,
+    } = this.props;
 
     return (
       <JoinSlyButtons
@@ -112,6 +115,7 @@ class JoinSlyButtonsController extends Component {
         onLoginClicked={onLoginClicked}
         onEmailSignupClicked={onEmailSignupClicked}
         socialLoginError={socialLoginError}
+        heading={heading}
       />
     );
   }
