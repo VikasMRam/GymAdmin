@@ -24,8 +24,6 @@ describe('SavedCommunityTile', () => {
       note: savedCommunity.note,
       url: savedCommunity.url,
     });
-    console.log(wrapper.text())
-    console.log(wrapper.find(Link).dive())
     expect(wrapper.find('StyledIcon')).toHaveLength(1);
     expect(wrapper.find(Link)).toHaveLength(1);
     expect(wrapper.find(Link).contains(savedCommunity.name)).toBe(true);
