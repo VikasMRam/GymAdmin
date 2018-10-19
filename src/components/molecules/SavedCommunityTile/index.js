@@ -4,7 +4,7 @@ import { string, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 
-import { Image, Block, Icon } from 'sly/components/atoms';
+import { Image, Block, Icon, Link } from 'sly/components/atoms';
 
 const clamp = css`
   display: block;
@@ -50,7 +50,7 @@ const StyledIcon = styled(Icon)`
 StyledIcon.displayName = 'StyledIcon';
 
 const SavedCommunityTile = ({
-  image, name, note, onFavouriteClicked,
+  image, name, note, onFavouriteClicked, url,
 }) => (
   <Wrapper>
     <div>
@@ -58,7 +58,8 @@ const SavedCommunityTile = ({
       <ImageWrapper src={image} aspectRatio="4:3" />
     </div>
     <div>
-      <Block>{name}</Block>
+      {url && <Link key={name} to={url}>{name}</Link>}
+      {!url && <Block>{name}</Block>}
       {note && <Note>{note}</Note>}
     </div>
   </Wrapper>
@@ -69,6 +70,7 @@ SavedCommunityTile.propTypes = {
   name: string.isRequired,
   note: string,
   onFavouriteClicked: func,
+  url: string,
 };
 
 export default SavedCommunityTile;
