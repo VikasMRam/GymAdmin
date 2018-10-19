@@ -2,7 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { func, bool, arrayOf, number, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { SAVED_COMMUNITIES, MODAL_TYPE_LOG_IN } from 'sly/constants/modalType';
+import {
+  SAVED_COMMUNITIES, MODAL_TYPE_LOG_IN, MODAL_TYPE_JOIN_SLY,
+  ADD_TO_FAVOURITE,
+} from 'sly/constants/modalType';
 
 import { connectController } from 'sly/controllers';
 import { getDetail } from 'sly/store/selectors';
@@ -15,22 +18,13 @@ import AuthController from 'sly/controllers/AuthController';
 import { resourceDeleteRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { entitiesReceive } from 'sly/store/actions';
 
-const defaultHeaderItems = (user) => {
-  let i = [
-    { name: '(855) 866-4515', url: 'tel:+18558664515' },
-    { name: 'Resources', url: '/resources' },
-    { name: 'How It Works', url: '/how-it-works' },
-  ];
-  if (user) {
-    i = [...i, { name: 'Saved' }];
-  }
-  i = [
-    ...i,
-    { name: 'List Your Property', url: '/providers' },
-  ];
-
-  return i;
-};
+const defaultHeaderItems = [
+  { name: '(855) 866-4515', url: 'tel:+18558664515' },
+  { name: 'Resources', url: '/resources' },
+  { name: 'How It Works', url: '/how-it-works' },
+  { name: 'Saved' },
+  { name: 'List Your Property', url: '/providers' },
+];
 
 const defaultMenuItems = [
   { name: 'Home', url: '/' },
@@ -67,6 +61,9 @@ class HeaderController extends Component {
     searchParams: object,
     logoutUser: func,
     fetchUser: func,
+    history: object,
+    match: object,
+    location: object,
   };
 
   handleMenuItemClick = () => {
@@ -84,8 +81,19 @@ class HeaderController extends Component {
       setQueryParams,
       logoutUser,
       fetchUser,
+      history,
+      match,
+      location,
+      searchParams,
     } = this.props;
-    const hItems = defaultHeaderItems(user);
+    if (!user) {
+      if (searchParams.modal === SAVED_COMMUNITIES) {
+        location.search = location.search.replace(`=${SAVED_COMMUNITIES}`, `=${MODAL_TYPE_JOIN_SLY}`);
+      } else if (searchParams.modal === ADD_TO_FAVOURITE) {
+        location.search = location.search.replace(`=${ADD_TO_FAVOURITE}`, `=${MODAL_TYPE_JOIN_SLY}`);
+      }
+    }
+    const hItems = defaultHeaderItems;
     const lhItems = loginHeaderItems(user);
     const lmItems = loginMenuItems(user);
 
@@ -129,8 +137,8 @@ class HeaderController extends Component {
           menuItems={menuItems}
           menuItemHrIndices={menuItemHrIndices}
         />
-        <SavedCommunitiesPopupController />
-        <AuthController />
+        {user !== null && <SavedCommunitiesPopupController />}
+        <AuthController history={history} match={match} location={location} heading="Add to your favourites list" />
       </Fragment>
     );
   }
