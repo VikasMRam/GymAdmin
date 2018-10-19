@@ -92,7 +92,7 @@ export class AuthController extends Component {
         componentProps.onForgotPasswordClicked = this.gotoResetPassword;
         break;
       case MODAL_TYPE_SIGN_UP:
-        componentProps.onSubmitSuccess = this.gotoLogin;
+        componentProps.onSubmitSuccess = this.handleLoginSuccess;
         componentProps.onLoginClicked = this.gotoLogin;
         break;
       case MODAL_TYPE_RESET_PASSWORD:

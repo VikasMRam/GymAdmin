@@ -76,6 +76,7 @@ const SavedCommunitiesPopup = ({
   if (!isLoading) {
     if (isLoadSuccess) {
       if (savedCommunities.length > 0) {
+        console.log(savedCommunities);
         savedCommunitiesComponent = savedCommunities.map(savedCommunity => <SavedCommunityTileWrapper key={savedCommunity.id}><SavedCommunityTile {...savedCommunity} onFavouriteClicked={() => onFavouriteClicked(savedCommunity)} /></SavedCommunityTileWrapper>);
       } else {
         savedCommunitiesComponent = 'There are no Saved Communities.';
