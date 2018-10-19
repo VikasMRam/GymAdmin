@@ -45,7 +45,7 @@ const devDomain = `${HOST}:${DEV_PORT}/`;
 const isDev = NODE_ENV === 'development';
 const isStaging = SLY_ENV === 'staging';
 const FB_CLIENT_ID = process.env.FB_CLIENT_ID || '624602444328776';
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com',
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com';
 
 // replacements for widgets.js
 const EXTERNAL_ASSET_URL = (isDev ? `${devDomain}external` : `${PUBLIC_PATH}/external`);
