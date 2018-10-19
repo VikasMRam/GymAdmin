@@ -138,7 +138,12 @@ class HeaderController extends Component {
           menuItemHrIndices={menuItemHrIndices}
         />
         {user !== null && <SavedCommunitiesPopupController />}
-        <AuthController history={history} match={match} location={location} heading="Add to your favourites list" />
+        <AuthController
+          history={history}
+          match={match}
+          location={location}
+          heading={searchParams.modal === ADD_TO_FAVOURITE ? 'Add to your favorites list' : undefined}
+        />
       </Fragment>
     );
   }
