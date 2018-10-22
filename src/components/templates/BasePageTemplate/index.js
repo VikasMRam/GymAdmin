@@ -32,7 +32,7 @@ const BasePageTemplate = ({
     <StyledHeader>{header}</StyledHeader>
     <Content className={className}>{children}</Content>
     <footer>{footer}</footer>
-    <ChatBoxContainer pageWithStickyFooter={hasStickyFooter} />
+    { /*<ChatBoxContainer pageWithStickyFooter={hasStickyFooter} />*/ }
   </Fragment>
 );
 
