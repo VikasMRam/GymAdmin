@@ -42,7 +42,7 @@ StyledHr.displayName = 'StyledHr';
 const CommunitySaved = ({ similarCommunities, onDoneButtonClicked }) => (
   <Fragment>
     <StyledHeading size="subtitle">Community Saved!</StyledHeading>
-    <StyledBlock>You can view your saved communities from your dashboard</StyledBlock>
+    <StyledBlock>You can view your saved communities from the nav bar</StyledBlock>
     <ButtonsWrapper>
       <StyledDoneButton
         onClick={onDoneButtonClicked}
