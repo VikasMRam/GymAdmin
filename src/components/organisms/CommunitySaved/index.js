@@ -51,9 +51,9 @@ const CommunitySaved = ({ similarCommunities, onDoneButtonClicked }) => (
       >
         Done
       </StyledDoneButton>
-      <StyledGotoButton href="/mydashboard">
-        Go to my dashboard
-      </StyledGotoButton>
+      {/*<StyledGotoButton href="/mydashboard">*/}
+        {/*Go to my dashboard*/}
+      {/*</StyledGotoButton>*/}
     </ButtonsWrapper>
     <StyledHr />
     <StyledHeading size="subtitle">Similar communities nearby</StyledHeading>
