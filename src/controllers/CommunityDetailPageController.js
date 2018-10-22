@@ -396,7 +396,7 @@ class CommunityDetailPageController extends Component {
       <CommunityDetailPage
         user={user}
         community={community}
-        location ={location}
+        location={location}
         mediaGallerySlideIndex={mediaGallerySlideIndex}
         onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
         onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}

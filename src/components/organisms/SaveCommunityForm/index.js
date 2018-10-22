@@ -42,7 +42,7 @@ const SaveCommunityForm = ({ mainImage, submitting, handleSubmit }) => (
   <Wrapper>
     <StyledImage src={mainImage} />
     <ContentWrapper>
-      <StyledHeading size="subtitle">Add to your favourites list</StyledHeading>
+      <StyledHeading size="subtitle">Add to your favorites list</StyledHeading>
       <form onSubmit={handleSubmit}>
         <Field
           type="textarea"

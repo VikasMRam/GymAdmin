@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { object, func, string } from 'prop-types';
-import { withRouter } from 'react-router-dom';
 
 import { getSearchParams } from 'sly/services/helpers/search';
 
@@ -32,6 +31,7 @@ export class AuthController extends Component {
     fetchUser: func,
     set: func,
     toastMessage: string,
+    heading: string,
   };
 
   setToastMessage = (toastMessage) => {
@@ -69,7 +69,7 @@ export class AuthController extends Component {
 
   render() {
     const {
-      searchParams, setQueryParams, user, toastMessage,
+      searchParams, setQueryParams, user, toastMessage, heading,
     } = this.props;
     const currentStep = searchParams.modal;
 
@@ -84,6 +84,7 @@ export class AuthController extends Component {
         componentProps.onLoginClicked = this.gotoLogin;
         componentProps.onEmailSignupClicked = this.gotoSignup;
         componentProps.onConnectSuccess = this.handleLoginSuccess;
+        componentProps.heading = heading;
         break;
       case MODAL_TYPE_LOG_IN:
         componentProps.onSubmitSuccess = this.handleLoginSuccess;
@@ -91,7 +92,7 @@ export class AuthController extends Component {
         componentProps.onForgotPasswordClicked = this.gotoResetPassword;
         break;
       case MODAL_TYPE_SIGN_UP:
-        componentProps.onSubmitSuccess = this.gotoLogin;
+        componentProps.onSubmitSuccess = this.handleLoginSuccess;
         componentProps.onLoginClicked = this.gotoLogin;
         break;
       case MODAL_TYPE_RESET_PASSWORD:
@@ -122,16 +123,17 @@ export class AuthController extends Component {
 }
 
 const mapStateToProps = (state, {
-  controller, history, match, location,
+  controller, history, match, location, heading,
 }) => ({
   setQueryParams: getQueryParamsSetter(history, location),
   user: getDetail(state, 'user', 'me'),
   searchParams: getSearchParams(match, location),
   toastMessage: controller.toastMessage || '',
+  heading,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me')),
 });
 
-export default withRouter(connectController(mapStateToProps, mapDispatchToProps)(AuthController));
+export default connectController(mapStateToProps, mapDispatchToProps)(AuthController);

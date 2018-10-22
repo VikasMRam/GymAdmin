@@ -57,7 +57,7 @@ const Field = ({
   ...props
 }) => {
   const inputProps = {
-    id: `${name}_${value}`,
+    id: `${name}_${value || +new Date()}`,
     name,
     value,
     type: getInputType(type),

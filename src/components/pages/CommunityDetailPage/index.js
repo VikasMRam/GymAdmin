@@ -37,7 +37,6 @@ import CommunityLocalDetails from "sly/components/organisms/CommunityLocalDetail
 import CommunitySaved from "sly/components/organisms/CommunitySaved";
 import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
-import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
 import SaveCommunityFormContainer from 'sly/containers/SaveCommunityFormContainer';
 import Thankyou from 'sly/components/molecules/Thankyou/index';
 import ToastNotification from 'sly/components/molecules/ToastNotification';
@@ -333,7 +332,7 @@ export default class CommunityDetailPage extends Component {
               onSlideChange={onMediaGallerySlideChange}
               isFullscreenMode={isMediaGalleryFullscreenActive}
               onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
-              isFavouriteEnabled={user !== null && isGetCommunityUserSaveComplete}
+              isFavouriteEnabled={user === null || (user !== null && isGetCommunityUserSaveComplete)}
               isFavourited={!!userSave}
               onFavouriteClick={onMediaGalleryFavouriteClick}
             />
@@ -506,10 +505,10 @@ export default class CommunityDetailPage extends Component {
           closeable
           noPadding={user != null && !isUserSaveUpdateComplete}
           layout={user == null || isUserSaveUpdateComplete ? 'single' : 'double'}
-          isOpen={searchParams.modal === ADD_TO_FAVOURITE}
+          isOpen={searchParams.modal === ADD_TO_FAVOURITE &&
+            ((!isUserSaveUpdateComplete && user != null) || isUserSaveUpdateComplete)}
           onClose={() => setModal()}
         >
-          {!isUserSaveUpdateComplete && user == null && <JoinSlyButtons heading="Add to your favourites list" />}
           {!isUserSaveUpdateComplete && user != null &&
             <SaveCommunityFormContainer mainImage={mainImage} submitForm={onSubmitSaveCommunityForm} />}
           {isUserSaveUpdateComplete &&
