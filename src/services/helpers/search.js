@@ -87,30 +87,35 @@ export const tocs = [
     value: 'retirement-community',
     segment: 'retirement-community',
     searchLabel: 'Retirement Communities',
+    seoLabel: 'Retirement Communities',
   },
   {
     label: 'Assisted Living',
     value: 'assisted-living',
     segment: 'assisted-living',
     searchLabel: 'Assisted Living Communities',
+    seoLabel: 'Assisted Living Facilities',
   },
   {
     label: 'Independent Living',
     value: 'independent-living',
     segment: 'independent-living',
     searchLabel: 'Independent Living Communities',
+    seoLabel: 'Independent Living Communities',
   },
   {
     label: 'Memory Care',
     value: 'memory-care',
     segment: 'memory-care',
     searchLabel: 'Memory Care Communities',
+    seoLabel: 'Memory Care Facilities',
   },
   {
     label: 'Continuing Care Retirement Communities',
     value: 'continuing-care-retirement-community',
     segment: 'continuing-care-retirement-community',
     searchLabel: 'CCRCs',
+    seoLabel: 'Continuing Care Retirement Communities',
   },
 ];
 
