@@ -121,12 +121,13 @@ export const getHelmetForSearchPage = ({
       label: 'All Communities',
       value: 'retirement-community',
       segment: 'retirement-community',
+      seoLabel: 'Retirement Communities',
     };
   }
 
   let locationStr = city ? `${titleize(city)}, ${getStateAbbr(state)}` : `${titleize(state)}`;
   let numResultsStr = (listSize && listSize > 5) ? `${listSize}` : 'Best';
-  const title = `${numResultsStr} ${actualToc.label} in ${locationStr} `;
+  const title = `${numResultsStr} ${actualToc.seoLabel} in ${locationStr} `;
 
   const description = `${actualToc.label} in ${locationStr}. Get pricing information, see picture, read reviews and get help from local senior care service experts.`;
   const canonicalUrl = `${host}${url.pathname}`;
