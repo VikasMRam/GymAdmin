@@ -64,7 +64,7 @@ const AdvancedInfoForm = ({
   handleSubmit, submitting, community,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <StyledHeading level="subtitle" size="subtitle">To connect to {community.name}...</StyledHeading>
+    {community && <StyledHeading level="subtitle" size="subtitle">To connect to {community.name}...</StyledHeading>}
 
     <Field
       name="type_of_care"
@@ -131,7 +131,7 @@ AdvancedInfoForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
   user: shape({ name: string.isRequired }),
-  community: shape({ name: string.isRequired }).isRequired,
+  community: shape({ name: string.isRequired }),
 };
 
 export default AdvancedInfoForm;

@@ -104,9 +104,9 @@ describe('ConciergeController', () => {
   // });
 
   describe('Container', () => {
-    const wrap = (community, store) => shallow(
+    const wrap = (communitySlug, store) => shallow(
       <ConciergeControllerContainer
-        community={community}
+        communitySlug={communitySlug}
         store={store}
         children={spy}
         queryParams={{}}
@@ -116,7 +116,7 @@ describe('ConciergeController', () => {
 
     it('should pass default values', () => {
       const store = initStore({ resource, entities });
-      wrap(community, store);
+      wrap(community.id, store);
       const { currentStep } = childProps().concierge;
       expect(setQueryParams).not.toBeCalled();
       expect(currentStep).toBe(CONVERSION_FORM);
@@ -125,10 +125,10 @@ describe('ConciergeController', () => {
     it('should know when a community has been converted', () => {
       const store = initStore({ resource, entities });
 
-      wrap(community, store);
+      wrap(community.id, store);
       expect(childProps().concierge.contactRequested).toBe(true);
 
-      wrap(otherCommunity, store);
+      wrap(otherCommunity.id, store);
       expect(childProps().concierge.contactRequested).toBe(false);
     });
 
@@ -145,14 +145,14 @@ describe('ConciergeController', () => {
 
     it('should go to conversion form mode when express mode', () => {
       const store = initStore({ resource, entities: emailOnlyEntities });
-      const wrapper = wrap(otherCommunity, store);
+      const wrapper = wrap(otherCommunity.id, store);
       wrapper.instance().next(true);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
 
     it('should not shortcircuit to thankYou when in express mode', () => {
       const store = initStore({ resource, entities });
-      const wrapper = wrap(community, store);
+      const wrapper = wrap(community.id, store);
       wrapper.instance().next(true);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
     });
@@ -206,20 +206,20 @@ describe('ConciergeController', () => {
 
     it('should prompt the user if is not converted', () => {
       wrap({ userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
-        community, concierge: { advancedInfoSent: true } });
+        communitySlug: community.id, concierge: { advancedInfoSent: true } });
       childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
 
     it('should ask for advanced info when explicitly called', () => {
-      wrap({ community, userDetails: {}, concierge: {} });
+      wrap({ communitySlug: community.id, userDetails: {}, concierge: {} });
       childProps().gotoAdvancedInfo();
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
     });
 
     it('should ask for conversionForm', () => {
-      wrap({ userDetails: {}, community, concierge: {
+      wrap({ userDetails: {}, communitySlug: community.id, concierge: {
         contactRequested: true,
       }});
       childProps().getPricing();
@@ -230,7 +230,7 @@ describe('ConciergeController', () => {
     it('should show thank you', () => {
       wrap({
         userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
-        community,
+        communitySlug: community.id,
         concierge: {
           contactRequested: true,
           advancedInfoSent: true,
@@ -262,7 +262,7 @@ describe('ConciergeController', () => {
 
     it('should submit conversion', () => {
       const wrapper = wrap({
-        community,
+        communitySlug: community.id,
         submit,
         concierge: {}
       });
@@ -307,7 +307,7 @@ describe('ConciergeController', () => {
 
     it('should submit express conversion', () => {
       const wrapper = wrap({
-        community,
+        communitySlug: community.id,
         submit,
         concierge: {}
       });
@@ -338,7 +338,7 @@ describe('ConciergeController', () => {
     });
 
     it('should submit advanced info', () => {
-      const wrapper = wrap({ community, submit, concierge: {} });
+      const wrapper = wrap({ communitySlug: community.id, submit, concierge: {} });
       const instance = wrapper.instance();
       instance.next = jest.fn();
       const then = jest.fn();

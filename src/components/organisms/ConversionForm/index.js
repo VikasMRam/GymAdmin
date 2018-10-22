@@ -54,11 +54,10 @@ const ConversionForm = ({
   handleSubmit,
   gotoWhatNext,
   submitting,
-  community,
   concierge,
   hasOnlyEmail,
   agent,
-  contact
+  contact,
 }) => (
   <div>
     <StyledForm onSubmit={handleSubmit}>
@@ -116,7 +115,6 @@ const ConversionForm = ({
 
 ConversionForm.propTypes = {
   handleSubmit: func.isRequired,
-  community: communityPropType.isRequired,
   submitting: bool,
   agent: object,
   contact: object,

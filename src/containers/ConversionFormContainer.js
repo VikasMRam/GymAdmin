@@ -43,7 +43,7 @@ const ReduxForm = reduxForm({
 
 class ConversionFormContainer extends Component {
   static propTypes = {
-    community: object.isRequired,
+    community: object,
     submitExpressConversion: func.isRequired,
     submitRegularConversion: func.isRequired,
     express: bool.isRequired,
@@ -69,7 +69,12 @@ class ConversionFormContainer extends Component {
       phone,
       full_name: fullName,
     };
-    const { agents, contacts } = community;
+    let agent, contact = null;
+    if(community) {
+      const { agents, contacts } = community;
+      agent = agents[0];
+      contact = contacts[0];
+    }
     const submitConversion = express
       ? submitExpressConversion
       : submitRegularConversion;
@@ -78,8 +83,8 @@ class ConversionFormContainer extends Component {
       <ReduxForm
         initialValues={initialValues}
         onSubmit={submitConversion}
-        agent={agents[0]}
-        contact={contacts[0]}
+        agent={agent}
+        contact={contact}
         gotoWhatNext={gotoWhatNext}
         community={community}
         hasOnlyEmail={hasOnlyEmail(userDetails)}
