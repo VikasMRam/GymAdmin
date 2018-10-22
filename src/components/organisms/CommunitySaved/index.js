@@ -42,7 +42,7 @@ StyledHr.displayName = 'StyledHr';
 const CommunitySaved = ({ similarCommunities, onDoneButtonClicked }) => (
   <Fragment>
     <StyledHeading size="subtitle">Community Saved!</StyledHeading>
-    <StyledBlock>You can view your saved communities from your dashboard</StyledBlock>
+    <StyledBlock>You can view your saved communities from the nav bar</StyledBlock>
     <ButtonsWrapper>
       <StyledDoneButton
         onClick={onDoneButtonClicked}
@@ -51,9 +51,9 @@ const CommunitySaved = ({ similarCommunities, onDoneButtonClicked }) => (
       >
         Done
       </StyledDoneButton>
-      <StyledGotoButton href="/mydashboard">
-        Go to my dashboard
-      </StyledGotoButton>
+      {/*<StyledGotoButton href="/mydashboard">*/}
+        {/*Go to my dashboard*/}
+      {/*</StyledGotoButton>*/}
     </ButtonsWrapper>
     <StyledHr />
     <StyledHeading size="subtitle">Similar communities nearby</StyledHeading>
