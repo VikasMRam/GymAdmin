@@ -60,12 +60,13 @@ export class AuthController extends Component {
       setQueryParams, fetchUser, searchParams, history,
     } = this.props;
     const { redirectTo } = searchParams;
-    fetchUser();
-    if (redirectTo) {
-      history.push(redirectTo);
-    } else {
-      setQueryParams({ modal: null });
-    }
+    fetchUser().then(() => {
+      if (redirectTo) {
+        history.push(redirectTo);
+      } else {
+        setQueryParams({ modal: null });
+      }
+    });
   }
 
   handleResetPasswordSuccess = (json) => {
