@@ -5,7 +5,7 @@ import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ADD_TO_FAVOURITE, ANSWER_QUESTION } from 'sly/constants/modalType';
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ADD_TO_FAVOURITE, ANSWER_QUESTION, MODAL_TYPE_JOIN_SLY } from 'sly/constants/modalType';
 
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
@@ -243,7 +243,12 @@ export default class CommunityDetailPage extends Component {
     const { modal, entityId, currentStep } = searchParams;
     let questionToAnswer = null;
     if (modal === ANSWER_QUESTION && entityId) {
-      questionToAnswer = questions.find(question => question.id === entityId);
+      if (!user) {
+        // To redirect to Login if user not logged in
+        setQueryParams({ modal: MODAL_TYPE_JOIN_SLY, redirectTo: location.pathname + location.search });
+      } else {
+        questionToAnswer = questions.find(question => question.id === entityId);
+      }
     }
     // To clear the flag incase the question is not found
     if (questionToAnswer === undefined && entityId) {
