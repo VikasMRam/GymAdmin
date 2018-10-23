@@ -1,11 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import { func, bool, arrayOf, number, object } from 'prop-types';
+import { func, bool, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import {
-  SAVED_COMMUNITIES, MODAL_TYPE_LOG_IN, MODAL_TYPE_JOIN_SLY,
-  ADD_TO_FAVOURITE,
-} from 'sly/constants/modalType';
+import { SAVED_COMMUNITIES, MODAL_TYPE_LOG_IN } from 'sly/constants/modalType';
+import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 
 import { connectController } from 'sly/controllers';
 import { getDetail } from 'sly/store/selectors';
@@ -54,7 +52,6 @@ const menuItemHrIndices = [7, 10];
 class HeaderController extends Component {
   static propTypes = {
     dropdownOpen: bool,
-    menuItemHrIndices: arrayOf(number),
     user: object,
     set: func,
     setQueryParams: func,
@@ -86,13 +83,6 @@ class HeaderController extends Component {
       location,
       searchParams,
     } = this.props;
-    if (!user) {
-      if (searchParams.modal === SAVED_COMMUNITIES) {
-        location.search = location.search.replace(`=${SAVED_COMMUNITIES}`, `=${MODAL_TYPE_JOIN_SLY}`);
-      } else if (searchParams.modal === ADD_TO_FAVOURITE) {
-        location.search = location.search.replace(`=${ADD_TO_FAVOURITE}`, `=${MODAL_TYPE_JOIN_SLY}`);
-      }
-    }
     const hItems = defaultHeaderItems;
     const lhItems = loginHeaderItems(user);
     const lmItems = loginMenuItems(user);
@@ -126,6 +116,12 @@ class HeaderController extends Component {
       ...lmItems,
     ];
 
+    let heading;
+    if (searchParams.redirectTo && (searchParams.redirectTo.indexOf(ACTIONS_ADD_TO_FAVOURITE) > -1 ||
+      searchParams.redirectTo.indexOf(ACTIONS_REMOVE_FROM_FAVOURITE) > -1)) {
+      heading = 'Sign up to add to your favorites list';
+    }
+
     return (
       <Fragment>
         <Header
@@ -142,7 +138,7 @@ class HeaderController extends Component {
           history={history}
           match={match}
           location={location}
-          heading={searchParams.modal === ADD_TO_FAVOURITE ? 'Add to your favorites list' : undefined}
+          heading={heading}
         />
       </Fragment>
     );

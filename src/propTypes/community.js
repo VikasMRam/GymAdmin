@@ -1,11 +1,7 @@
 import {
-  object,
   string,
   number,
-  array,
   shape,
-  oneOf,
-  oneOfType,
 } from 'prop-types';
 
 export const propRatings = shape({
@@ -14,6 +10,8 @@ export const propRatings = shape({
 });
 
 export const community = shape({
+  id: string,
+  mainImage: string,
   url: string.isRequired,
   propRatings,
 });

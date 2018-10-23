@@ -61,6 +61,15 @@ const TempHowItWorks = ({ ...props }) => (
   />
 );
 
+const ignoreSearchPrams = [
+  'modal',
+  'action',
+  'entityId',
+  'currentStep',
+  'token',
+  'modal',
+];
+
 export default class App extends Component {
   static childContextTypes = {
     routes: routesPropType,
@@ -84,7 +93,7 @@ export default class App extends Component {
   routes = [
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
-      component: props => <CommunityDetailPageController ignoreSearch="modal" {...props} />,
+      component: props => <CommunityDetailPageController ignoreSearch={ignoreSearchPrams} {...props} />,
       exact: true,
     },
     {
