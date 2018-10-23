@@ -32,6 +32,7 @@ export class AuthController extends Component {
     set: func,
     toastMessage: string,
     heading: string,
+    history: object,
   };
 
   setToastMessage = (toastMessage) => {
@@ -55,9 +56,17 @@ export class AuthController extends Component {
   }
 
   handleLoginSuccess = () => {
-    const { setQueryParams, fetchUser } = this.props;
-    fetchUser();
-    setQueryParams({ modal: null });
+    const {
+      setQueryParams, fetchUser, searchParams, history,
+    } = this.props;
+    const { redirectTo } = searchParams;
+    fetchUser().then(() => {
+      if (redirectTo) {
+        history.push(redirectTo);
+      } else {
+        setQueryParams({ modal: null });
+      }
+    });
   }
 
   handleResetPasswordSuccess = (json) => {

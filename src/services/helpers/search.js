@@ -79,6 +79,7 @@ const searchParamsWhitelist = [
   'token',
   'entityId',
   'currentStep',
+  'redirectTo',
 ];
 
 export const tocs = [
