@@ -42,9 +42,9 @@ class SaveCommunityController extends Component {
     this.userSaveUpdateOrCreate();
   }
 
-  componentDidUpdate = () => {
-    this.userSaveUpdateOrCreate();
-  }
+  // componentDidUpdate = () => {
+  //   this.userSaveUpdateOrCreate();
+  // }
 
   userSaveUpdateOrCreate = () => {
     const {
@@ -69,7 +69,9 @@ class SaveCommunityController extends Component {
       } else if (this.isActivated) {
         this.saving = true;
         const redirectTo = location.pathname + location.search;
-        setQueryParams({ modal: MODAL_TYPE_JOIN_SLY, redirectTo });
+        setQueryParams({
+          modal: MODAL_TYPE_JOIN_SLY, redirectTo, action: null, entityId: null,
+        });
       }
     }
   }
