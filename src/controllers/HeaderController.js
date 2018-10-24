@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { func, bool, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { SAVED_COMMUNITIES, MODAL_TYPE_LOG_IN } from 'sly/constants/modalType';
+import { SAVED_COMMUNITIES, MODAL_TYPE_LOG_IN, MODAL_TYPE_JOIN_SLY } from 'sly/constants/modalType';
 
 import { connectController } from 'sly/controllers';
 import { getDetail } from 'sly/store/selectors';
@@ -84,7 +84,11 @@ class HeaderController extends Component {
 
     const savedHeaderItem = hItems.find(item => item.name === 'Saved');
     if (savedHeaderItem) {
-      savedHeaderItem.onClick = () => setQueryParams({ modal: SAVED_COMMUNITIES });
+      if (user) {
+        savedHeaderItem.onClick = () => setQueryParams({ modal: SAVED_COMMUNITIES });
+      } else {
+        savedHeaderItem.onClick = () => setQueryParams({ modal: MODAL_TYPE_JOIN_SLY });
+      }
     }
     const logoutLeftMenuItem = lmItems.find(item => item.name === 'Log out');
     if (logoutLeftMenuItem) {
