@@ -41,16 +41,11 @@ class SaveCommunityController extends Component {
   async componentDidMount() {
     const {
       user, userSave, searchParams, community, setQueryParams, location,
-      getCommunityUserSave,
     } = this.props;
-    const { id } = community;
-    const isActivated = (searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||
-      searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) && searchParams.entityId === id;
 
-    if (!this.saving && community && isActivated) {
+    if (!this.saving && community) {
       this.saving = true;
       if (user) {
-        await getCommunityUserSave(community.id);
         if (searchParams.action === ACTIONS_ADD_TO_FAVOURITE) {
           if (!userSave) {
             this.createUserSave();
