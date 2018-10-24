@@ -18,6 +18,7 @@ import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
+import AssistedLivingSeo from 'sly/components/organisms/AssistedLivingSeo';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -478,6 +479,7 @@ const HomePage = ({
         </CWTColumnWrapper>
       </StyledSection>
       <ConciergeContainer pathName={pathName} queryParams={queryParams} setQueryParams={setQueryParams} />
+      <AssistedLivingSeo />
     </BasePageTemplate>
   );
 };
