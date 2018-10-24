@@ -3,7 +3,6 @@ import { func, bool, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import { SAVED_COMMUNITIES, MODAL_TYPE_LOG_IN } from 'sly/constants/modalType';
-import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 
 import { connectController } from 'sly/controllers';
 import { getDetail } from 'sly/store/selectors';
@@ -78,10 +77,6 @@ class HeaderController extends Component {
       setQueryParams,
       logoutUser,
       fetchUser,
-      history,
-      match,
-      location,
-      searchParams,
     } = this.props;
     const hItems = defaultHeaderItems;
     const lhItems = loginHeaderItems(user);
@@ -116,12 +111,6 @@ class HeaderController extends Component {
       ...lmItems,
     ];
 
-    let heading;
-    if (searchParams.redirectTo && (searchParams.redirectTo.indexOf(ACTIONS_ADD_TO_FAVOURITE) > -1 ||
-      searchParams.redirectTo.indexOf(ACTIONS_REMOVE_FROM_FAVOURITE) > -1)) {
-      heading = 'Sign up to add to your favorites list';
-    }
-
     return (
       <Fragment>
         <Header
@@ -134,12 +123,7 @@ class HeaderController extends Component {
           menuItemHrIndices={menuItemHrIndices}
         />
         {user !== null && <SavedCommunitiesPopupController />}
-        <AuthController
-          history={history}
-          match={match}
-          location={location}
-          heading={heading}
-        />
+        <AuthController />
       </Fragment>
     );
   }

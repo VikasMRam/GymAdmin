@@ -38,25 +38,19 @@ class SaveCommunityController extends Component {
     currentStep: string,
   };
 
-  componentDidMount = () => {
-    this.userSaveUpdateOrCreate();
-  }
-
-  // componentDidUpdate = () => {
-  //   this.userSaveUpdateOrCreate();
-  // }
-
-  userSaveUpdateOrCreate = () => {
+  async componentDidMount() {
     const {
       user, userSave, searchParams, community, setQueryParams, location,
+      getCommunityUserSave,
     } = this.props;
+    const { id } = community;
+    const isActivated = (searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||
+      searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) && searchParams.entityId === id;
 
-    if (!this.saving && community) {
-      const { id } = community;
-      this.isActivated = (searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||
-        searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) && searchParams.entityId === id;
-
-      if (user && this.isActivated) {
+    if (!this.saving && community && isActivated) {
+      this.saving = true;
+      if (user) {
+        await getCommunityUserSave(community.id);
         if (searchParams.action === ACTIONS_ADD_TO_FAVOURITE) {
           if (!userSave) {
             this.createUserSave();
@@ -66,8 +60,7 @@ class SaveCommunityController extends Component {
         } else if (searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) {
           this.updateUserSave(USER_SAVE_DELETE_STATUS);
         }
-      } else if (this.isActivated) {
-        this.saving = true;
+      } else {
         const redirectTo = location.pathname + location.search;
         setQueryParams({
           modal: MODAL_TYPE_JOIN_SLY, redirectTo, action: null, entityId: null,
@@ -86,7 +79,6 @@ class SaveCommunityController extends Component {
       entitySlug: id,
     };
 
-    this.saving = true;
     createUserSave(payload)
       .then(() => {
         set({
@@ -109,7 +101,6 @@ class SaveCommunityController extends Component {
       community,
     } = this.props;
 
-    this.saving = true;
     updateUserSave(userSave.id, {
       status,
     })
@@ -177,9 +168,6 @@ class SaveCommunityController extends Component {
   }
 
   render() {
-    if (!this.isActivated) {
-      return null;
-    }
     const {
       community,
       user,
