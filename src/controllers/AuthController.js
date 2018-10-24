@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { object, func, string } from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import { getSearchParams } from 'sly/services/helpers/search';
 
 import { MODAL_TYPE_LOG_IN, MODAL_TYPE_SIGN_UP, MODAL_TYPE_JOIN_SLY, MODAL_TYPE_RESET_PASSWORD }
   from 'sly/constants/modalType';
+import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getDetail } from 'sly/store/selectors';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
@@ -31,7 +33,6 @@ export class AuthController extends Component {
     fetchUser: func,
     set: func,
     toastMessage: string,
-    heading: string,
     history: object,
   };
 
@@ -78,13 +79,18 @@ export class AuthController extends Component {
 
   render() {
     const {
-      searchParams, setQueryParams, user, toastMessage, heading,
+      searchParams, setQueryParams, user, toastMessage,
     } = this.props;
     const currentStep = searchParams.modal;
 
     const StepComponent = steps[currentStep];
     if (!StepComponent || user) {
       return null;
+    }
+    let heading;
+    if (searchParams.redirectTo && (searchParams.redirectTo.indexOf(ACTIONS_ADD_TO_FAVOURITE) > -1 ||
+      searchParams.redirectTo.indexOf(ACTIONS_REMOVE_FROM_FAVOURITE) > -1)) {
+      heading = 'Sign up to add to your favorites list';
     }
 
     const componentProps = {};
@@ -132,17 +138,16 @@ export class AuthController extends Component {
 }
 
 const mapStateToProps = (state, {
-  controller, history, match, location, heading,
+  controller, history, match, location,
 }) => ({
   setQueryParams: getQueryParamsSetter(history, location),
   user: getDetail(state, 'user', 'me'),
   searchParams: getSearchParams(match, location),
   toastMessage: controller.toastMessage || '',
-  heading,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me')),
 });
 
-export default connectController(mapStateToProps, mapDispatchToProps)(AuthController);
+export default withRouter(connectController(mapStateToProps, mapDispatchToProps)(AuthController));

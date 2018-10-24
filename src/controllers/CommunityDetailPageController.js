@@ -6,16 +6,12 @@ import { connectController } from 'sly/controllers';
 import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
 import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
-import { USER_SAVE_COMMUNITY_ENTITY_TYPE, USER_SAVE_DELETE_STATUS, USER_SAVE_INIT_STATUS } from 'sly/constants/userSave';
-import { ADD_TO_FAVOURITE } from 'sly/constants/modalType';
+import { USER_SAVE_COMMUNITY_ENTITY_TYPE } from 'sly/constants/userSave';
+import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
+import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getSearchParams } from 'sly/services/helpers/search';
-
-import {
-  getDetail,
-  getList,
-  isResourceUpdateRequestComplete,
-} from 'sly/store/selectors';
-import { resourceDetailReadRequest, resourceListReadRequest, resourceCreateRequest, resourceUpdateRequest }
+import { getDetail, getList } from 'sly/store/selectors';
+import { resourceDetailReadRequest, resourceListReadRequest }
   from 'sly/store/resource/actions';
 
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
@@ -26,7 +22,7 @@ class CommunityDetailPageController extends Component {
   static propTypes = {
     set: func,
     community: object,
-    userSaveForCommunity: object,
+    userSaveOfCommunity: object,
     errorCode: number,
     history: object,
     location: object,
@@ -36,49 +32,37 @@ class CommunityDetailPageController extends Component {
     user: object,
     isQuestionModalOpenValue: bool,
     searchParams: object,
-    isFavouriteModalVisible: bool,
-    createUserSave: func,
-    updateUserSave: func,
-    isUserSaveCreateFailure: bool,
-    isUserSaveDeleteFailure: bool,
     getCommunityUserSave: func,
     isLoadingUserSaves: bool,
-    isLoadUserSavesSuccess: bool,
-    isUserSaveUpdateComplete: bool,
     redirectUrl: string,
-    getUserSaves: func,
     setQueryParams: func,
   };
 
   componentDidMount() {
     const {
-      getCommunityUserSave, user, community, set,
+      getCommunityUserSave, user, community,
     } = this.props;
 
-    if (user && community) {
-      set({
-        isLoadingUserSaves: true,
+    if (!this.userSavedLoaded && user && community) {
+      this.loadingUserSave = true;
+      getCommunityUserSave(community.id).then(() => {
+        this.userSavedLoaded = true;
+        this.loadingUserSave = false;
       });
-      getCommunityUserSave(community.id).then(() => set({
-        isLoadUserSavesSuccess: true,
-        isLoadingUserSaves: false,
-      }));
     }
   }
 
   componentDidUpdate() {
     const {
-      getCommunityUserSave, user, community, isLoadingUserSaves, isLoadUserSavesSuccess, set,
+      getCommunityUserSave, user, community,
     } = this.props;
 
-    if (!isLoadUserSavesSuccess && !isLoadingUserSaves && user && community) {
-      set({
-        isLoadingUserSaves: true,
+    if (!this.userSavedLoaded && !this.loadingUserSave && user && community) {
+      this.loadingUserSave = true;
+      getCommunityUserSave(community.id).then(() => {
+        this.userSavedLoaded = true;
+        this.loadingUserSave = false;
       });
-      getCommunityUserSave(community.id).then(() => set({
-        isLoadUserSavesSuccess: true,
-        isLoadingUserSaves: false,
-      }));
     }
   }
 
@@ -88,7 +72,7 @@ class CommunityDetailPageController extends Component {
     } else {
       this.handleParamsRemove({ paramsToRemove: ['modal'] });
     }
-  };
+  }
 
   setQuestionToAsk = (question) => {
     if (question) {
@@ -96,7 +80,7 @@ class CommunityDetailPageController extends Component {
     } else {
       this.changeSearchParams({ changedParams: { modal: null, entityId: null } });
     }
-  };
+  }
 
   changeSearchParams = ({ changedParams }) => {
     const { history, location } = this.props;
@@ -105,7 +89,7 @@ class CommunityDetailPageController extends Component {
     const newParams = { ...parseURLQueryParams(search), ...changedParams };
     const path = `${pathname}?${objectToURLQueryParams(newParams)}`;
     history.push(path);
-  };
+  }
 
   handleParamsRemove = ({ paramsToRemove }) => {
     const { set } = this.props;
@@ -118,7 +102,7 @@ class CommunityDetailPageController extends Component {
     set({
       userSaveUpdated: false,
     });
-  };
+  }
 
   handleBackToSearchClick = () => {
     const { community } = this.props;
@@ -127,7 +111,7 @@ class CommunityDetailPageController extends Component {
       action: 'click', category: 'backToSearch', label: id,
     };
     SlyEvent.getInstance().sendEvent(event);
-  };
+  }
 
   handleReviewLinkClick = (name) => {
     const { community } = this.props;
@@ -136,7 +120,7 @@ class CommunityDetailPageController extends Component {
       action: 'click', category: 'externalReview', label: id, value: name,
     };
     SlyEvent.getInstance().sendEvent(event);
-  };
+  }
 
   handleConciergeNumberClick = () => {
     const { community } = this.props;
@@ -145,7 +129,7 @@ class CommunityDetailPageController extends Component {
       action: 'click', category: 'conciergePhone', label: id,
     };
     SlyEvent.getInstance().sendEvent(event);
-  };
+  }
 
   handleLiveChatClick = () => {
     const { community } = this.props;
@@ -155,7 +139,7 @@ class CommunityDetailPageController extends Component {
     };
     SlyEvent.getInstance().sendEvent(event);
     window && window.olark && window.olark('api.box.expand');
-  };
+  }
 
   handleReceptionNumberClick = () => {
     const { community } = this.props;
@@ -164,7 +148,7 @@ class CommunityDetailPageController extends Component {
       action: 'click', category: 'receptionPhone', label: id,
     };
     SlyEvent.getInstance().sendEvent(event);
-  };
+  }
 
   handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
     const { set, community } = this.props;
@@ -182,7 +166,7 @@ class CommunityDetailPageController extends Component {
     set({
       mediaGallerySlideIndex: slideIndex,
     });
-  };
+  }
 
   handleToggleMediaGalleryFullscreen = (fromMorePictures, isVideo, fromSeeMoreButton) => {
     const {
@@ -230,7 +214,7 @@ class CommunityDetailPageController extends Component {
     set({
       isMediaGalleryFullscreenActive: !isMediaGalleryFullscreenActive,
     });
-  };
+  }
 
   handleToggleStickyHeader = () => {
     const { set, isStickyHeaderVisible } = this.props;
@@ -240,98 +224,18 @@ class CommunityDetailPageController extends Component {
   };
 
   handleMediaGalleryFavouriteClick = () => {
-    const {
-      createUserSave, community, user, userSaveForCommunity, updateUserSave,
-      getCommunityUserSave, getUserSaves, set,
-    } = this.props;
-    if (user) {
-      if (!userSaveForCommunity) {
-        const { id } = community;
-        const payload = {
-          entityType: USER_SAVE_COMMUNITY_ENTITY_TYPE,
-          entitySlug: id,
-        };
+    const { setQueryParams, community, userSaveOfCommunity } = this.props;
+    const { id } = community;
+    let initedUserSave;
+    if (userSaveOfCommunity) {
+      initedUserSave = userSaveOfCommunity.status !== USER_SAVE_DELETE_STATUS ? userSaveOfCommunity : null;
+    }
 
-        createUserSave(payload)
-          .then(() => {
-            this.setModal(ADD_TO_FAVOURITE);
-            getCommunityUserSave(community.id);
-            // refresh user saves for sidebar
-            getUserSaves();
-          }, () => {
-            set({
-              isUserSaveCreateFailure: true,
-            });
-          });
-      } else if (userSaveForCommunity.status === USER_SAVE_DELETE_STATUS) {
-        updateUserSave(userSaveForCommunity.id, {
-          status: USER_SAVE_INIT_STATUS,
-        })
-          .then(() => {
-            this.setModal(ADD_TO_FAVOURITE);
-            // refresh user saves for sidebar
-            getUserSaves();
-          }, () => {
-            set({
-              isUserSaveCreateFailure: true,
-            });
-          });
-      } else {
-        updateUserSave(userSaveForCommunity.id, {
-          status: USER_SAVE_DELETE_STATUS,
-        }).then(() => {
-          set({
-            isUserSaveDeleteSuccess: true,
-          });
-          // refresh user saves for sidebar
-          getUserSaves();
-        }, () => {
-          set({
-            isUserSaveDeleteFailure: true,
-          });
-        });
-      }
+    if (initedUserSave) {
+      setQueryParams({ action: ACTIONS_REMOVE_FROM_FAVOURITE, entityId: id });
     } else {
-      this.setModal(ADD_TO_FAVOURITE);
+      setQueryParams({ action: ACTIONS_ADD_TO_FAVOURITE, entityId: id });
     }
-  };
-
-  handleSubmitSaveCommunityForm = (data) => {
-    const { updateUserSave, userSaveForCommunity, set } = this.props;
-
-    if (userSaveForCommunity) {
-      updateUserSave(userSaveForCommunity.id, {
-        note: data.note,
-      }).then(() => {
-        set({
-          userSaveUpdated: true,
-        });
-      });
-    }
-  };
-
-  handleUserSaveCreateFailureNotificationClose = () => {
-    const { set } = this.props;
-
-    set({
-      isUserSaveCreateFailure: false,
-    });
-  }
-
-  handleUserSaveDeleteFailureNotificationClose = () => {
-    const { set } = this.props;
-
-    set({
-      isUserSaveDeleteFailure: false,
-    });
-  }
-
-  handleUserSaveDeleteSuccessNotificationClose = () => {
-    const { set } = this.props;
-
-    set({
-      isUserSaveDeleteSuccess: false,
-    });
   }
 
   render() {
@@ -340,19 +244,13 @@ class CommunityDetailPageController extends Component {
       isMediaGalleryFullscreenActive,
       user,
       community,
-      userSaveForCommunity,
+      userSaveOfCommunity,
       errorCode,
       redirectUrl,
       history,
       isStickyHeaderVisible,
-      isFavouriteModalVisible,
-      isUserSaveCreateFailure,
-      isLoadUserSavesSuccess,
       searchParams,
       setQueryParams,
-      isUserSaveUpdateComplete,
-      isUserSaveDeleteFailure,
-      isUserSaveDeleteSuccess,
     } = this.props;
 
     if (errorCode) {
@@ -387,11 +285,6 @@ class CommunityDetailPageController extends Component {
       history.push(url);
     }
 
-    let userSave = userSaveForCommunity;
-    if (userSave) {
-      userSave = userSave.status !== USER_SAVE_DELETE_STATUS ? userSave : null;
-    }
-
     return (
       <CommunityDetailPage
         user={user}
@@ -411,35 +304,20 @@ class CommunityDetailPageController extends Component {
         onReceptionNumberClicked={this.handleReceptionNumberClick}
         setModal={this.setModal}
         setQuestionToAsk={this.setQuestionToAsk}
-        isFavouriteModalVisible={isFavouriteModalVisible}
-        isUserSaveCreateFailure={isUserSaveCreateFailure}
-        isGetCommunityUserSaveComplete={isLoadUserSavesSuccess}
-        userSave={userSave}
+        userSave={userSaveOfCommunity}
         searchParams={searchParams}
         setQueryParams={setQueryParams}
         onParamsRemove={this.handleParamsRemove}
         onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
-        isUserSaveUpdateComplete={isUserSaveUpdateComplete}
-        isUserSaveDeleteFailure={isUserSaveDeleteFailure}
-        isUserSaveDeleteSuccess={isUserSaveDeleteSuccess}
-        onUserSaveCreateFailureNotificationClose={this.handleUserSaveCreateFailureNotificationClose}
-        onUserSaveDeleteFailureNotificationClose={this.handleUserSaveDeleteFailureNotificationClose}
-        onUserSaveDeleteSuccessNotificationClose={this.handleUserSaveDeleteSuccessNotificationClose}
       />
     );
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  createUserSave: data => dispatch(resourceCreateRequest('userSave', data)),
-  updateUserSave: (id, data) => dispatch(resourceUpdateRequest('userSave', id, data)),
   getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
     'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
     'filter[entity_slug]': slug,
-  })),
-  getUserSaves: () => dispatch(resourceListReadRequest('userSave', {
-    'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
-    'filter[status]': USER_SAVE_INIT_STATUS,
   })),
 });
 
@@ -450,14 +328,11 @@ const mapStateToProps = (state, {
   // default state for ssr
   const {
     mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false, isStickyHeaderVisible = false,
-    userSaveUpdated = false, isLoadingUserSaves = false, isLoadUserSavesSuccess = false, isUserSaveCreateFailure = false,
-    isUserSaveDeleteFailure = false, isUserSaveDeleteSuccess = false,
   } = controller;
 
   const searchParams = getSearchParams(match, location);
   const communitySlug = getCommunitySlug(match);
-  const isUserSaveUpdateComplete = userSaveUpdated && isResourceUpdateRequestComplete(state, 'userSave');
-  const userSaveForCommunity = getList(state, 'userSave', {
+  const userSaveOfCommunity = getList(state, 'userSave', {
     'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
     'filter[entity_slug]': communitySlug,
   }).find(userSave =>
@@ -466,16 +341,10 @@ const mapStateToProps = (state, {
   return {
     user: getDetail(state, 'user', 'me'),
     community: getDetail(state, 'community', communitySlug),
-    userSaveForCommunity,
+    userSaveOfCommunity,
     mediaGallerySlideIndex,
     isMediaGalleryFullscreenActive,
     isStickyHeaderVisible,
-    isUserSaveCreateFailure,
-    isLoadingUserSaves,
-    isLoadUserSavesSuccess,
-    isUserSaveUpdateComplete,
-    isUserSaveDeleteSuccess,
-    isUserSaveDeleteFailure,
     searchParams,
     setQueryParams,
   };

@@ -67,6 +67,11 @@ export const isResourceCreateRequestFailure = (state, resource) => {
   return state.thunk && !!state.thunk.failure[thunkName];
 };
 
+export const isResourceCreateRequestInProgress = (state, resource) => {
+  const thunkName = getThunkName(resource, 'create');
+  return state.thunk && !!state.thunk.pending[thunkName];
+};
+
 export const isResourceUpdateRequestInProgress = (state, resource) => {
   const thunkName = getThunkName(resource, 'update');
   return state.thunk && !!state.thunk.pending[thunkName];

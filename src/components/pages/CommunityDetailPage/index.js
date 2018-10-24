@@ -5,7 +5,9 @@ import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ADD_TO_FAVOURITE, ANSWER_QUESTION, MODAL_TYPE_JOIN_SLY } from 'sly/constants/modalType';
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, MODAL_TYPE_JOIN_SLY } from 'sly/constants/modalType';
+import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
+import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
@@ -33,13 +35,11 @@ import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import CommunityLocalDetails from "sly/components/organisms/CommunityLocalDetails";
-import CommunitySaved from "sly/components/organisms/CommunitySaved";
+import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
 import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
-import SaveCommunityFormContainer from 'sly/containers/SaveCommunityFormContainer';
 import Thankyou from 'sly/components/molecules/Thankyou/index';
-import ToastNotification from 'sly/components/molecules/ToastNotification';
+import SaveCommunityController from 'sly/controllers/SaveCommunityController';
 
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
 
@@ -82,18 +82,9 @@ export default class CommunityDetailPage extends Component {
     onReceptionNumberClicked: func,
     setModal: func,
     setQuestionToAsk: func,
-    isUserSaveCreateFailure: bool,
-    isUserSaveDeleteFailure: bool,
-    isUserSaveDeleteSuccess: bool,
-    isGetCommunityUserSaveComplete: bool,
     userSave: object,
     searchParams: object,
     setQueryParams: func,
-    onSubmitSaveCommunityForm: func,
-    isUserSaveUpdateComplete: bool,
-    onUserSaveCreateFailureNotificationClose: func,
-    onUserSaveDeleteFailureNotificationClose: func,
-    onUserSaveDeleteSuccessNotificationClose: func,
   };
 
   componentDidMount() {
@@ -160,18 +151,9 @@ export default class CommunityDetailPage extends Component {
       onReceptionNumberClicked,
       setModal,
       setQuestionToAsk,
-      isUserSaveCreateFailure,
-      isUserSaveDeleteFailure,
-      isUserSaveDeleteSuccess,
-      isGetCommunityUserSaveComplete,
       userSave,
       searchParams,
       setQueryParams,
-      onSubmitSaveCommunityForm,
-      isUserSaveUpdateComplete,
-      onUserSaveCreateFailureNotificationClose,
-      onUserSaveDeleteFailureNotificationClose,
-      onUserSaveDeleteSuccessNotificationClose,
     } = this.props;
 
     const {
@@ -191,13 +173,16 @@ export default class CommunityDetailPage extends Component {
       user: communityUser,
       questions,
       mainImage,
-      url,
     } = community;
+
+    let initedUserSave;
+    if (userSave) {
+      initedUserSave = userSave.status !== USER_SAVE_DELETE_STATUS ? userSave : null;
+    }
 
     const {
       careServices, licenseUrl, websiteUrl, serviceHighlights, communityPhone,
     } = propInfo;
-
 
     let images = gallery.images || [];
     // If there is a mainImage put it in front
@@ -337,8 +322,7 @@ export default class CommunityDetailPage extends Component {
               onSlideChange={onMediaGallerySlideChange}
               isFullscreenMode={isMediaGalleryFullscreenActive}
               onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
-              isFavouriteEnabled={user === null || (user !== null && isGetCommunityUserSaveComplete)}
-              isFavourited={!!userSave}
+              isFavourited={!!initedUserSave}
               onFavouriteClick={onMediaGalleryFavouriteClick}
             />
           }
@@ -505,47 +489,15 @@ export default class CommunityDetailPage extends Component {
 
           )}
         </ConciergeController>
-        {/* TODO: create component for this modal */}
-        <Modal
-          closeable
-          noPadding={user != null && !isUserSaveUpdateComplete}
-          layout={user == null || isUserSaveUpdateComplete ? 'single' : 'double'}
-          isOpen={searchParams.modal === ADD_TO_FAVOURITE &&
-            ((!isUserSaveUpdateComplete && user != null) || isUserSaveUpdateComplete)}
-          onClose={() => setModal()}
-        >
-          {!isUserSaveUpdateComplete && user != null &&
-            <SaveCommunityFormContainer mainImage={mainImage} submitForm={onSubmitSaveCommunityForm} />}
-          {isUserSaveUpdateComplete &&
-            <CommunitySaved similarCommunities={similarProperties} onDoneButtonClicked={() => setModal()} />}
-        </Modal>
+        {(searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||
+          searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) && <SaveCommunityController />}
         <Modal
           closeable
           isOpen={searchParams.modal === THANK_YOU}
-          onClose={() => setModal()}
+          onClose={() => setQueryParams({ modal: null })}
         >
           <Thankyou />
         </Modal>
-        <ToastNotification
-          isOpen={isUserSaveDeleteSuccess}
-          onClose={onUserSaveDeleteSuccessNotificationClose}
-        >
-          Community Removed.
-        </ToastNotification>
-        <ToastNotification
-          isOpen={isUserSaveCreateFailure}
-          onClose={onUserSaveCreateFailureNotificationClose}
-          status="error"
-        >
-          Failed to save community. Please try again.
-        </ToastNotification>
-        <ToastNotification
-          isOpen={isUserSaveDeleteFailure}
-          onClose={onUserSaveDeleteFailureNotificationClose}
-          status="error"
-        >
-          Failed to remove saved community. Please try again.
-        </ToastNotification>
       </Fragment>
     );
   }
