@@ -17,6 +17,7 @@ import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 import Modal from 'sly/components/molecules/Modal';
 import Thankyou from 'sly/components/molecules/Thankyou';
+import AssistedLivingSeo from 'sly/components/organisms/AssistedLivingSeo';
 
 import CAWController from 'sly/external/wizards/caw/Controller';
 
@@ -265,6 +266,7 @@ const CommunitySearchPage = ({
         <Modal closeable isOpen layout="wizard" onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}>
           <CAWController locationSearchParams={{ city: searchParams.city, state: searchParams.state }} />
         </Modal>}
+        <AssistedLivingSeo />
       </CommunitySearchPageTemplate>
     </Fragment>
   );

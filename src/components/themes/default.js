@@ -97,6 +97,7 @@ theme.sizes = {
   },
 
   collapsible: {
+    tiny   : '5.000rem',   //  80px
     small  : '10.00rem',   // 160px
     regular: '20.00rem',   // 320px
     large  : '30.00rem',   // 480px

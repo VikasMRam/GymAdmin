@@ -3,7 +3,7 @@ import Measure from 'react-measure';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
 import { key } from 'styled-theme'; 
-import { bool, number, oneOfType, oneOf } from 'prop-types';
+import { bool, number, string, oneOfType, oneOf } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Block, Link } from 'sly/components/atoms';
@@ -34,8 +34,9 @@ const OnePix = styled.div`
 
 export default class CollapsibleBlock extends Component {
   static propTypes = {
+    blockClassName: string,
     collapsedDefault: bool,
-    minHeight: oneOfType([number, oneOf(['small', 'regular', 'large'])]),
+    minHeight: oneOfType([number, oneOf(['tiny', 'small', 'regular', 'large'])]),
   };
 
   static defaultProps = {
@@ -56,13 +57,13 @@ export default class CollapsibleBlock extends Component {
   });
 
   render() {
-    const { children, minHeight, collapsedDefault, ...props } = this.props;
+    const { children, minHeight, collapsedDefault, blockClassName, ...props } = this.props;
     const { collapsed, maxHeight } = this.state;
 
     return (
       <Measure onResize={this.onResize} margin>
         {({ measureRef }) => 
-          <div>
+          <div className={blockClassName}>
             <BlockCap maxHeight={maxHeight} minHeight={minHeight} collapsed={collapsed}>
               <div ref={measureRef} {...props}>
                 { children }
@@ -81,3 +82,4 @@ export default class CollapsibleBlock extends Component {
     );
   }
 }
+

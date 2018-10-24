@@ -49,5 +49,10 @@ describe('CollapsibleBlock', () => {
     onResize({ entry: { height: 600 } });
     expect(wrapper.state('maxHeight')).toEqual(600);
   });
+
+  it('passes block className to the parent', () => {
+    const wrapper = wrap({ blockClassName: 'parentClassName' });
+    expect(wrapper.find('div').first().props().className).toEqual('parentClassName');
+  });
 });
 
