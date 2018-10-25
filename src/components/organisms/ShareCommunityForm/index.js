@@ -38,32 +38,53 @@ const ContentWrapper = styled.div`
   width: 100%;
 `;
 
-const SaveCommunityForm = ({ mainImage, submitting, handleSubmit }) => (
+const ShareCommunityForm = ({ mainImage, submitting, fromEnabled, handleSubmit }) => (
   <Wrapper>
     {mainImage && <StyledImage src={mainImage} />}
     <ContentWrapper>
-      <StyledHeading size="subtitle">Add to your favorites list</StyledHeading>
+      <StyledHeading size="subtitle">Share this community</StyledHeading>
       <form onSubmit={handleSubmit}>
+        <Field
+          type="text"
+          name="to"
+          label="Send to"
+          placeholder="Enter email addresses, separated by commas"
+          component={ReduxField}
+        />
+        {fromEnabled &&
+          <Field
+            type="text"
+            name="from"
+            label="From"
+            placeholder="Your email"
+            component={ReduxField}
+          />
+        }
         <Field
           type="textarea"
           rows="3"
-          name="note"
-          label="Add a note"
-          placeholder="What are some things about this community that you like..."
+          name="message"
+          label="Message"
+          placeholder="I wanted to share this community with you..."
           component={ReduxField}
         />
         <Button type="submit" kind="jumbo" disabled={submitting}>
-          Confirm
+          Send
         </Button>
       </form>
     </ContentWrapper>
   </Wrapper>
 );
 
-SaveCommunityForm.propTypes = {
+ShareCommunityForm.propTypes = {
   mainImage: string,
   handleSubmit: func.isRequired,
+  fromEnabled: bool,
   submitting: bool,
 };
 
-export default SaveCommunityForm;
+ShareCommunityForm.defaultProps = {
+  fromEnabled: true,
+};
+
+export default ShareCommunityForm;
