@@ -91,13 +91,8 @@ jobs:
       - run:
           name: Deploy to EB
           command: |
-            if [[ "$CIRCLE_BRANCH" = "master" ]]; then
-              export STAGED="--staged"
-              export DEPLOY_FAILED=$(eb deploy slyreact-$SLY_ENV --timeout 30  -v $STAGED | tee /dev/tty | grep -c "ERROR")
-            else
-              export V=$(cat ./VERSION)
-              export DEPLOY_FAILED=$(eb deploy  slyreact-$SLY_ENV --timeout 30 -l $V | tee /dev/tty | grep -c "ERROR")
-            fi
+            export V=$(cat ./VERSION)
+            export DEPLOY_FAILED=$(eb deploy slyreact-$SLY_ENV --timeout 30 -v --staged -l $V | tee /dev/tty | grep -c "ERROR")
 
             if [ "$DEPLOY_FAILED" -gt 0 ]; then
               exit 1
