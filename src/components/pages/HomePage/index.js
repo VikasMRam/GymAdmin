@@ -18,7 +18,8 @@ import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
-import AssistedLivingSeo from 'sly/components/organisms/AssistedLivingSeo';
+import SeoLinks from 'sly/components/organisms/SeoLinks';
+import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -479,7 +480,8 @@ const HomePage = ({
         </CWTColumnWrapper>
       </StyledSection>
       <ConciergeContainer pathName={pathName} queryParams={queryParams} setQueryParams={setQueryParams} />
-      <AssistedLivingSeo />
+      <SeoLinks title="Assisted living by Cities" links={ALSeoCities} />
+      <SeoLinks title="Assisted living by State" links={ALSeoStates} />
     </BasePageTemplate>
   );
 };

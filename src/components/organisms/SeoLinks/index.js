@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
+import { arrayOf, string, object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Heading, Link } from 'sly/components/atoms';
-import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
-import CollapsibleBlock  from 'sly/components/molecules/CollapsibleBlock';
+import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
@@ -40,7 +40,11 @@ const LinkList = styled.div`
   }
 `;
 
-export default class AssistedLivingSeo extends Component{
+export default class SeoLinks extends Component {
+  static propTypes = {
+    title: string.isRequired,
+    links: arrayOf(object).isRequired,
+  };
   renderSection = (title, data) => (
     <Fragment>
       <StyledHeading level="subtitle">{title}</StyledHeading>
@@ -52,14 +56,13 @@ export default class AssistedLivingSeo extends Component{
     </Fragment>
   );
 
-  render(){
+  render() {
+    const { title, links } = this.props;
     return (
       <Fragment>
-        {this.renderSection("Assisted living by Cities", ALSeoCities)}
-        {this.renderSection("Assisted living by State", ALSeoStates)}
+        {this.renderSection(title, links)}
       </Fragment>
     );
   }
 };
-
 
