@@ -12,6 +12,8 @@ import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearc
 import { Heading, Button } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
+import SeoLinks from 'sly/components/organisms/SeoLinks';
+
 import { getTocSearchLabel } from 'sly/services/helpers/search';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
@@ -120,6 +122,9 @@ export default class StateSearchPage extends Component {
             additionalDivs.push(<div dangerouslySetInnerHTML={{__html: gg[p]}} key={p}/>)
           }
         });
+        if (gg.hasOwnProperty('seoLinks')) {
+          additionalDivs.push(<SeoLinks title="Assisted Living in Nearby Cities" links={gg.seoLinks}/>)
+        }
 
         return <Fragment>
           <CommunitySearchList
