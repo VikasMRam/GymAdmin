@@ -4,13 +4,14 @@ import { withRouter } from 'react-router';
 
 import { connectController } from 'sly/controllers';
 import { resourceListReadRequest, resourceUpdateRequest } from 'sly/store/resource/actions';
-import SavedCommunitiesPopup from 'sly/components/organisms/SavedCommunititesPopup';
 import { USER_SAVE_COMMUNITY_ENTITY_TYPE, USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS }
   from 'sly/constants/userSave';
 import { getList } from 'sly/store/selectors';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
+
+import SavedCommunitiesPopup from 'sly/components/organisms/SavedCommunititesPopup';
 
 class SavedCommunitiesPopupController extends Component {
   static propTypes = {
@@ -22,7 +23,7 @@ class SavedCommunitiesPopupController extends Component {
     setQueryParams: func,
     isLoading: bool,
     isLoadSuccess: bool,
-    isUserSaveDeleteSuccess: bool,
+    notifyInfo: func,
   };
 
   componentDidMount() {
@@ -53,23 +54,18 @@ class SavedCommunitiesPopupController extends Component {
     }
   }
 
-  handleUserSaveDeleteSuccessNotificationClose = () => {
-    const { set } = this.props;
-    set({ isUserSaveDeleteSuccess: false });
-  }
-
   handleFavouriteClicked = (userSave) => {
-    const { set, deleteUserSave, getUserSaves } = this.props;
+    const { deleteUserSave, getUserSaves, notifyInfo } = this.props;
 
     deleteUserSave(userSave).then(() => {
       getUserSaves();
-      set({ isUserSaveDeleteSuccess: true });
+      notifyInfo('Community Removed.');
     });
   }
 
   render() {
     const {
-      userSaves, searchParams, isLoading, isLoadSuccess, setQueryParams, isUserSaveDeleteSuccess,
+      userSaves, searchParams, isLoading, isLoadSuccess, setQueryParams,
     } = this.props;
 
     const savedCommunities = userSaves.reduce((result, userSave) => {
@@ -91,8 +87,6 @@ class SavedCommunitiesPopupController extends Component {
         onCloseButtonClick={() => setQueryParams({ modal: null })}
         onFavouriteClicked={this.handleFavouriteClicked}
         isOpen={searchParams.modal === SAVED_COMMUNITIES}
-        isUserSaveDeleteSuccess={isUserSaveDeleteSuccess}
-        onUserSaveDeleteSuccessNotificationClose={this.handleUserSaveDeleteSuccessNotificationClose}
       />
     );
   }
@@ -102,7 +96,7 @@ const mapStateToProps = (state, {
   history, match, location, controller,
 }) => {
   // default state for ssr
-  const { isLoading = false, isLoadSuccess = false, isUserSaveDeleteSuccess = false } = controller;
+  const { isLoading = false, isLoadSuccess = false } = controller;
 
   return {
     setQueryParams: getQueryParamsSetter(history, location),
@@ -113,7 +107,6 @@ const mapStateToProps = (state, {
     }),
     isLoading,
     isLoadSuccess,
-    isUserSaveDeleteSuccess,
   };
 };
 

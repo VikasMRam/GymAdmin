@@ -3,11 +3,11 @@ import { shallow } from 'enzyme';
 
 import IconButton from 'sly/components/molecules/IconButton';
 
-import ToastNotification from '.';
+import Notification from '.';
 
-const wrap = (props = {}) => shallow(<ToastNotification {...props} />);
+const wrap = (props = {}) => shallow(<Notification {...props} />);
 
-describe('ToastNotification', () => {
+describe('Notification', () => {
   it('renders with default status', () => {
     const wrapper = wrap({ status: 'default', children: 'test children' });
     expect(wrapper.dive().text()).toContain('test children');

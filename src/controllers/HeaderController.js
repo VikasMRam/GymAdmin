@@ -8,12 +8,14 @@ import { connectController } from 'sly/controllers';
 import { getDetail } from 'sly/store/selectors';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
-
-import Header from 'sly/components/organisms/Header';
-import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
-import AuthController from 'sly/controllers/AuthController';
 import { resourceDeleteRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { entitiesReceive } from 'sly/store/actions';
+
+import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
+import AuthController from 'sly/controllers/AuthController';
+import NotificationController from 'sly/controllers/NotificationController';
+import Notification from 'sly/components/molecules/Notification';
+import Header from 'sly/components/organisms/Header';
 
 const defaultHeaderItems = [
   { name: '(855) 866-4515', url: 'tel:+18558664515' },
@@ -126,8 +128,19 @@ class HeaderController extends Component {
           menuItems={menuItems}
           menuItemHrIndices={menuItemHrIndices}
         />
-        {user !== null && <SavedCommunitiesPopupController />}
-        <AuthController />
+        <NotificationController>
+          {({
+            message,
+            notifyInfo,
+            dismiss,
+          }) => (
+            <Fragment>
+              <Notification isOpen={!!message.content} onClose={dismiss} type={message.type}>{message.content}</Notification>
+              {user !== null && <SavedCommunitiesPopupController notifyInfo={notifyInfo} />}
+              <AuthController notifyInfo={notifyInfo} />
+            </Fragment>
+          )}
+        </NotificationController>
       </Fragment>
     );
   }

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { object, func, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
@@ -17,7 +17,6 @@ import LoginFormContainer from 'sly/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/containers/SignupFormContainer';
 import JoinSlyButtonsController from 'sly/controllers/JoinSlyButtonsController';
 import ResetPasswordFormContainer from 'sly/containers/ResetPasswordFormContainer';
-import ToastNotification from 'sly/components/molecules/ToastNotification';
 
 const steps = {};
 steps[MODAL_TYPE_JOIN_SLY] = JoinSlyButtonsController;
@@ -25,21 +24,16 @@ steps[MODAL_TYPE_LOG_IN] = LoginFormContainer;
 steps[MODAL_TYPE_SIGN_UP] = SignupFormContainer;
 steps[MODAL_TYPE_RESET_PASSWORD] = ResetPasswordFormContainer;
 
+// TODO: convert this to container
 export class AuthController extends Component {
   static propTypes = {
     searchParams: object,
     user: object,
     setQueryParams: func,
     fetchUser: func,
-    set: func,
-    toastMessage: string,
     history: object,
+    notifyInfo: func,
   };
-
-  setToastMessage = (toastMessage) => {
-    const { set } = this.props;
-    set({ toastMessage });
-  }
 
   gotoLogin = () => {
     const { setQueryParams } = this.props;
@@ -71,15 +65,17 @@ export class AuthController extends Component {
   }
 
   handleResetPasswordSuccess = (json) => {
+    const { notifyInfo } = this.props;
+
     if (json) {
-      this.setToastMessage(json.message);
+      notifyInfo(json.message);
     }
     this.gotoLogin();
   }
 
   render() {
     const {
-      searchParams, setQueryParams, user, toastMessage,
+      searchParams, setQueryParams, user,
     } = this.props;
     const currentStep = searchParams.modal;
 
@@ -118,32 +114,23 @@ export class AuthController extends Component {
     }
 
     return (
-      <Fragment>
-        <Modal
-          closeable
-          isOpen={Object.keys(steps).includes(searchParams.modal)}
-          onClose={() => setQueryParams({ modal: null })}
-        >
-          <StepComponent {...componentProps} />
-        </Modal>
-        <ToastNotification
-          isOpen={toastMessage !== ''}
-          onClose={() => this.setToastMessage('')}
-        >
-          {toastMessage}
-        </ToastNotification>
-      </Fragment>
+      <Modal
+        closeable
+        isOpen={Object.keys(steps).includes(searchParams.modal)}
+        onClose={() => setQueryParams({ modal: null })}
+      >
+        <StepComponent {...componentProps} />
+      </Modal>
     );
   }
 }
 
 const mapStateToProps = (state, {
-  controller, history, match, location,
+  history, match, location,
 }) => ({
   setQueryParams: getQueryParamsSetter(history, location),
   user: getDetail(state, 'user', 'me'),
   searchParams: getSearchParams(match, location),
-  toastMessage: controller.toastMessage || '',
 });
 
 const mapDispatchToProps = dispatch => ({

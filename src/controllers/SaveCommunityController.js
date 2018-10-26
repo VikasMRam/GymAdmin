@@ -11,6 +11,11 @@ import {
   SAVE_COMMUNITY_STEPS_UPDATE,
   SAVE_COMMUNITY_STEPS_COMPLETE,
 } from 'sly/constants/saveCommunitySteps';
+import {
+  NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED,
+  NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_SUCCESS,
+  NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS,
+} from 'sly/constants/notifications';
 import { resourceListReadRequest, resourceCreateRequest, resourceUpdateRequest }
   from 'sly/store/resource/actions';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
@@ -36,6 +41,8 @@ class SaveCommunityController extends Component {
     setQueryParams: func,
     searchParams: object,
     currentStep: string,
+    notifyInfo: func,
+    notifyError: func,
   };
 
   async componentDidMount() {
@@ -67,6 +74,7 @@ class SaveCommunityController extends Component {
   createUserSave = () => {
     const {
       community, set, createUserSave, getCommunityUserSave, getUserSaves,
+      notifyError,
     } = this.props;
     const { id } = community;
     const payload = {
@@ -83,17 +91,15 @@ class SaveCommunityController extends Component {
         // refresh user saves for sidebar
         getUserSaves();
       }, () => {
-        set({
-          notification: 'createFailed',
-        });
         this.handleModalClose();
+        notifyError(NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED);
       });
   }
 
   updateUserSave = (status) => {
     const {
       userSave, updateUserSave, getUserSaves, set, getCommunityUserSave,
-      community,
+      community, notifyError, notifyInfo,
     } = this.props;
 
     updateUserSave(userSave.id, {
@@ -106,9 +112,7 @@ class SaveCommunityController extends Component {
           });
         } else if (status === USER_SAVE_DELETE_STATUS) {
           this.handleModalClose();
-          set({
-            notification: 'deleted',
-          });
+          notifyInfo(NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_SUCCESS);
         }
         getCommunityUserSave(community.id);
         // refresh user saves for sidebar
@@ -116,23 +120,11 @@ class SaveCommunityController extends Component {
       }, () => {
         this.handleModalClose();
         if (status === USER_SAVE_INIT_STATUS) {
-          set({
-            notification: 'createFailed',
-          });
+          notifyError(NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED);
         } else if (status === USER_SAVE_DELETE_STATUS) {
-          set({
-            notification: 'deleteFailed',
-          });
+          notifyError(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS);
         }
       });
-  }
-
-  handleNotificationClose = () => {
-    const { set } = this.props;
-
-    set({
-      notification: '',
-    });
   }
 
   handleSubmitSaveCommunityForm = (data) => {
@@ -166,7 +158,6 @@ class SaveCommunityController extends Component {
     const {
       community,
       user,
-      notification,
       currentStep,
     } = this.props;
     const { mainImage, similarProperties } = community;
@@ -176,8 +167,6 @@ class SaveCommunityController extends Component {
         similarCommunities={similarProperties}
         mainImage={mainImage}
         user={user}
-        notification={notification}
-        onNotificationClose={this.handleNotificationClose}
         onModalClose={this.handleModalClose}
         onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
         currentStep={currentStep}
@@ -204,7 +193,6 @@ const mapStateToProps = (state, {
     location,
     setQueryParams: getQueryParamsSetter(history, location),
     searchParams,
-    notification: controller.notification,
     currentStep: controller.currentStep || SAVE_COMMUNITY_STEPS_CREATE,
   };
 };

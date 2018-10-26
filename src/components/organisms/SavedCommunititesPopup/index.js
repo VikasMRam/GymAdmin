@@ -1,13 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { array, func, bool } from 'prop-types';
 import { palette, key } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Icon, Hr } from 'sly/components/atoms/index';
-import SavedCommunityTile from 'sly/components/molecules/SavedCommunityTile/index';
-import ToastNotification from 'sly/components/molecules/ToastNotification';
+import { Icon, Hr } from 'sly/components/atoms';
+import SavedCommunityTile from 'sly/components/molecules/SavedCommunityTile';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -70,7 +69,6 @@ const StyledHr = styled(Hr)`
 
 const SavedCommunitiesPopup = ({
   savedCommunities, isLoading, isLoadSuccess, onCloseButtonClick, onFavouriteClicked, isOpen,
-  isUserSaveDeleteSuccess, onUserSaveDeleteSuccessNotificationClose,
 }) => {
   let savedCommunitiesComponent = 'Loading...';
   if (!isLoading) {
@@ -86,25 +84,16 @@ const SavedCommunitiesPopup = ({
   }
 
   return (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <Wrapper isOpen={isOpen}>
-        <HeadingWrapper>
-          <HeadingDiv>Saved Communities</HeadingDiv>
-          <CloseIcon icon="close" onClick={onCloseButtonClick} />
-        </HeadingWrapper>
-        <StyledHr />
-        <CommunitiesListWrapper>
-          {savedCommunitiesComponent}
-        </CommunitiesListWrapper>
-      </Wrapper>
-      <ToastNotification
-        isOpen={isUserSaveDeleteSuccess}
-        onClose={onUserSaveDeleteSuccessNotificationClose}
-      >
-        Community Removed.
-      </ToastNotification>
-    </Fragment>
+    <Wrapper isOpen={isOpen}>
+      <HeadingWrapper>
+        <HeadingDiv>Saved Communities</HeadingDiv>
+        <CloseIcon icon="close" onClick={onCloseButtonClick} />
+      </HeadingWrapper>
+      <StyledHr />
+      <CommunitiesListWrapper>
+        {savedCommunitiesComponent}
+      </CommunitiesListWrapper>
+    </Wrapper>
   );
 };
 
@@ -115,8 +104,6 @@ SavedCommunitiesPopup.propTypes = {
   isLoading: bool,
   isLoadSuccess: bool,
   isOpen: bool,
-  isUserSaveDeleteSuccess: bool,
-  onUserSaveDeleteSuccessNotificationClose: func,
 };
 
 SavedCommunitiesPopup.defaultProps = {
