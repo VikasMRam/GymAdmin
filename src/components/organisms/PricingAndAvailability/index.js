@@ -162,7 +162,7 @@ export default class PricingAndAvailability extends Component {
             [, maxPrice] = sortedEstimatedPrice[sortedEstimatedPrice.length - 1];
           }
         }
-        estimatedPriceBase = estimatedPrice.providedAverage || estimatedPrice.estimatedAverage;
+        estimatedPriceBase = community.startingRate || estimatedPrice.providedAverage || estimatedPrice.estimatedAverage;
       }
 
       roomPrices.sort((a, b) => a.price - b.price);
