@@ -61,7 +61,7 @@ export default class communitySummary extends React.Component {
       isCCRC, twilioNumber, phoneNumber, user, licenseUrl, amenityScore, communityHighlights, startingRate,
       estimatedPrice, reviewsValue, innerRef, onConciergeNumberClicked, onReceptionNumberClicked, onHowSeniorlyWorks,
     } = this.props;
-    let { websiteUrl } = this.props;
+    //let { websiteUrl } = this.props;
 
     const highlights = [];
 
@@ -194,19 +194,19 @@ export default class communitySummary extends React.Component {
       <Link onClick={onHowSeniorlyWorks}>How Seniorly Works</Link>
     ));
 
-    if (websiteUrl) {
-      if (!websiteUrl.includes('//')) {
-        websiteUrl = `//${websiteUrl}`;
-      }
-      highlights.push((
-        <Link
-          href={websiteUrl}
-          target="_blank"
-        >
-          Property Website
-        </Link>
-      ));
-    }
+    // if (websiteUrl) {
+    //   if (!websiteUrl.includes('//')) {
+    //     websiteUrl = `//${websiteUrl}`;
+    //   }
+    //   highlights.push((
+    //     <Link
+    //       href={websiteUrl}
+    //       target="_blank"
+    //     >
+    //       Property Website
+    //     </Link>
+    //   ));
+    // }
 
 
     return (
