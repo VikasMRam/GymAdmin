@@ -131,6 +131,12 @@ export default class PricingAndAvailability extends Component {
         queryParams,
         setQueryParams,
       } = this.props;
+      if (estimatedPrice.providedAverage) {
+        estimatedPrice.providedAverage = community.startingRate || estimatedPrice.providedAverage;
+      }
+      if (estimatedPrice.estimatedAverage) {
+        estimatedPrice.estimatedAverage = community.startingRate || estimatedPrice.estimatedAverage;
+      }
 
       const estimatedPriceLabelMap = {
         providedAverage: community.name,
