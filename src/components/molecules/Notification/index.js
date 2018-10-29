@@ -48,7 +48,7 @@ const Notification = ({
 
 Notification.propTypes = {
   type: oneOf(['default', 'error']).isRequired,
-  children: node.isRequired,
+  children: node,
   onClose: func,
   closeable: bool,
   isOpen: bool,

@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { string, func, node, shape, oneOf } from 'prop-types';
+import { string, func, shape, oneOf } from 'prop-types';
 
 import { connectController } from 'sly/controllers';
 
@@ -12,7 +12,7 @@ class NotificationController extends Component {
     }),
     set: func,
     unset: func,
-    children: node,
+    children: func,
   };
 
   addNotification = (message, type = 'default') => {
@@ -51,7 +51,7 @@ class NotificationController extends Component {
   }
 }
 
-const mapStateToProps = (state, { controller }) => ({
+const mapStateToProps = (state, { controller = {} }) => ({
   message: controller.message || {},
 });
 
