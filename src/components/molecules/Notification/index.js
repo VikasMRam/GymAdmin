@@ -9,16 +9,12 @@ import { size } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 
 const Wrapper = styled.div`
-  z-index: ${key('zIndexes.notifications')};
   visibility: ${ifProp('isOpen', 'visible', 'hidden')};
   transform: ${ifProp('isOpen', 'translate(0%)', 'translate(100%)')};
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: fixed;
   white-space: nowrap;
-  bottom: ${size('spacing.large')};
-  right: ${size('spacing.large')};
   padding: ${size('spacing.small')} ${size('spacing.large')};
   border-radius: ${size('spacing.small')};
   ${switchProp('type', {

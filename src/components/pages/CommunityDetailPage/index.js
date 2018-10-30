@@ -21,7 +21,7 @@ import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import SaveCommunityController from 'sly/controllers/SaveCommunityController';
 import NotificationController from 'sly/controllers/NotificationController';
-import Notification from 'sly/components/molecules/Notification';
+import Notifications from 'sly/components/organisms/Notifications';
 import StickyFooter from 'sly/components/molecules/StickyFooter';
 import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
@@ -493,21 +493,15 @@ export default class CommunityDetailPage extends Component {
 
           )}
         </ConciergeController>
-        <NotificationController>
-          {({
-            message,
-            notifyInfo,
-            notifyError,
-            dismiss,
-          }) => (
-            <Fragment>
-              <Notification isOpen={!!message.content} onClose={dismiss} type={message.type}>{message.content}</Notification>
-              {(searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||
-                searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) &&
-                <SaveCommunityController notifyInfo={notifyInfo} notifyError={notifyError} />}
-            </Fragment>
-          )}
-        </NotificationController>
+        {(searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||
+          searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) &&
+          <NotificationController>
+            {({
+              notifyInfo,
+              notifyError,
+            }) => <SaveCommunityController notifyInfo={notifyInfo} notifyError={notifyError} />}
+          </NotificationController>
+        }
         <Modal
           closeable
           isOpen={searchParams.modal === THANK_YOU}

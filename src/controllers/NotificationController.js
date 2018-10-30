@@ -1,29 +1,30 @@
 import { Component } from 'react';
-import { string, func, shape, oneOf } from 'prop-types';
+import { string, func, shape, arrayOf, oneOf } from 'prop-types';
 
 import { connectController } from 'sly/controllers';
 
 // TODO: add timeout support
 class NotificationController extends Component {
   static propTypes = {
-    message: shape({
+    messages: arrayOf(shape({
       content: string,
       type: oneOf(['default', 'error']),
-    }),
+    })),
     set: func,
-    unset: func,
     children: func,
   };
 
   addNotification = (message, type = 'default') => {
-    const { set } = this.props;
+    const { set, messages } = this.props;
     const messageObj = {
       content: message,
       type,
     };
 
+    messages.unshift(messageObj);
+
     set({
-      message: messageObj,
+      messages,
     });
   }
 
@@ -35,24 +36,30 @@ class NotificationController extends Component {
     this.addNotification(message, 'error');
   }
 
-  handleClose = () => {
-    const { unset } = this.props;
+  handleDismiss = (message) => {
+    const { set, messages } = this.props;
+    const messageObjIndex = messages.findIndex(m => m.content === message);
 
-    unset('message');
+    if (messageObjIndex !== -1) {
+      messages.splice(messageObjIndex, 1);
+      set({
+        messages,
+      });
+    }
   }
 
   render() {
-    const { message, children } = this.props;
+    const { children, messages } = this.props;
     const { notifyInfo, notifyError } = this;
 
     return children({
-      message, dismiss: this.handleClose, notifyInfo, notifyError,
+      messages, dismiss: this.handleDismiss, notifyInfo, notifyError,
     });
   }
 }
 
 const mapStateToProps = (state, { controller = {} }) => ({
-  message: controller.message || {},
+  messages: controller.messages || [],
 });
 
 export default connectController(mapStateToProps)(NotificationController);

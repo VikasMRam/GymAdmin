@@ -14,7 +14,7 @@ import { entitiesReceive } from 'sly/store/actions';
 import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
 import AuthController from 'sly/controllers/AuthController';
 import NotificationController from 'sly/controllers/NotificationController';
-import Notification from 'sly/components/molecules/Notification';
+import Notifications from 'sly/components/organisms/Notifications';
 import Header from 'sly/components/organisms/Header';
 
 const defaultHeaderItems = [
@@ -130,16 +130,19 @@ class HeaderController extends Component {
         />
         <NotificationController>
           {({
-            message,
             notifyInfo,
-            dismiss,
           }) => (
             <Fragment>
-              <Notification isOpen={!!message.content} onClose={dismiss} type={message.type}>{message.content}</Notification>
               {user !== null && <SavedCommunitiesPopupController notifyInfo={notifyInfo} />}
               <AuthController notifyInfo={notifyInfo} />
             </Fragment>
           )}
+        </NotificationController>
+        <NotificationController>
+          {({
+            messages,
+            dismiss,
+          }) => <Notifications messages={messages} dismiss={dismiss} />}
         </NotificationController>
       </Fragment>
     );
