@@ -4,20 +4,24 @@ import { object, func, number, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
+import { size } from 'sly/components/themes';
+
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, MODAL_TYPE_JOIN_SLY } from 'sly/constants/modalType';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
-
-import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
-
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
-import { size } from 'sly/components/themes';
+import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
 
 import { Link, Heading, Hr, Button } from 'sly/components/atoms';
 
+import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
+
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
+import SaveCommunityController from 'sly/controllers/SaveCommunityController';
+import NotificationController from 'sly/controllers/NotificationController';
+import Notifications from 'sly/components/organisms/Notifications';
 import StickyFooter from 'sly/components/molecules/StickyFooter';
 import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
@@ -39,9 +43,6 @@ import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetail
 import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import Thankyou from 'sly/components/molecules/Thankyou/index';
-import SaveCommunityController from 'sly/controllers/SaveCommunityController';
-
-import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -85,6 +86,7 @@ export default class CommunityDetailPage extends Component {
     userSave: object,
     searchParams: object,
     setQueryParams: func,
+    notifyInfo: func,
   };
 
   componentDidMount() {
@@ -154,6 +156,7 @@ export default class CommunityDetailPage extends Component {
       userSave,
       searchParams,
       setQueryParams,
+      notifyInfo,
     } = this.props;
 
     const {
@@ -309,6 +312,7 @@ export default class CommunityDetailPage extends Component {
         <CommunityDetailPageTemplate
           column={columnContent}
           bottom={bottomContent}
+          notifyInfo={notifyInfo}
         >
           {(images.length > 0 || videos.length > 0) &&
             <CommunityMediaGallery
@@ -490,7 +494,14 @@ export default class CommunityDetailPage extends Component {
           )}
         </ConciergeController>
         {(searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||
-          searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) && <SaveCommunityController />}
+          searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) &&
+          <NotificationController>
+            {({
+              notifyInfo,
+              notifyError,
+            }) => <SaveCommunityController notifyInfo={notifyInfo} notifyError={notifyError} />}
+          </NotificationController>
+        }
         <Modal
           closeable
           isOpen={searchParams.modal === THANK_YOU}

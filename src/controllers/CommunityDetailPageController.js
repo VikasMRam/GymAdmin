@@ -13,10 +13,10 @@ import { getSearchParams } from 'sly/services/helpers/search';
 import { getDetail, getList } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceListReadRequest }
   from 'sly/store/resource/actions';
+import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
-import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 
 class CommunityDetailPageController extends Component {
   static propTypes = {

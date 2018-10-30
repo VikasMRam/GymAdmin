@@ -287,15 +287,15 @@ theme.transitions = {
   fast   : '0.1s ease-out',
   default: '0.2s ease-out',
   slow   : {
-    in : '.4s ease-in',
-    out: '.4s ease-out',
+    in   : '.4s ease-in',
+    out  : '.4s ease-out',
     inOut: '.4s ease-in-out',
   },
 };
 
 theme.animations = {
   default: '0.2s',
-  slow:    '0.4s',
+  slow   : '0.4s',
 };
 
 theme.zIndexes = {
@@ -303,10 +303,10 @@ theme.zIndexes = {
     overlay             : 10000,
     galleryLayoutHeading: 10001,
   },
-  stickySections    : 10000,
-  header            : 10001,
-  searchSuggestions : 10002,
-  toastNotifications: 10003,
+  stickySections     : 10000,
+  header             : 10001,
+  searchSuggestions  : 10002,
+  notifications      : 10003,
   savedCommunityPopup: 10005,
 };
 
