@@ -138,6 +138,11 @@ export default class CommunityDetailPage extends Component {
     }
   };
 
+  handleShareCommunitySuccess = () => {
+    const { onShareCommunityModalClose } = this.props;
+    onShareCommunityModalClose();
+  }
+
   render() {
     const {
       mediaGallerySlideIndex,
@@ -523,11 +528,19 @@ export default class CommunityDetailPage extends Component {
           isOpen={isShareCommunityModalVisible}
           onClose={onShareCommunityModalClose}
         >
-          <ShareCommunityFormContainer
-            mainImage={mainImage}
-            fromEnabled={!user}
-            communitySlug={community.id}
-          />
+          <NotificationController>
+            {({
+              notifyInfo,
+            }) => (
+              <ShareCommunityFormContainer
+                mainImage={mainImage}
+                fromEnabled={!user}
+                communitySlug={community.id}
+                notifyInfo={notifyInfo}
+                onSuccess={this.handleShareCommunitySuccess}
+              />
+            )}
+          </NotificationController>
         </Modal>
       </Fragment>
     );
