@@ -22,14 +22,49 @@ describe('CommunityMediaGallery', () => {
     const wrapper = wrap({
       communityName: name, videos, images, ariaHideApp: false, onToggleFullscreenMode, onSlideChange,
     });
-    /* TEMPORARILY DISABLE THIS
-    expect(wrapper.find(Icon).find({ icon: 'heart' })).toHaveLength(1);
-    expect(wrapper.find(Icon).find({ icon: 'share' })).toHaveLength(1);
-    */
+
     const mediaGallery = wrapper.find(MediaGallery);
     expect(mediaGallery).toHaveLength(1);
+    expect(mediaGallery.dive().find(Icon).find({ icon: 'favourite-empty' })).toHaveLength(1);
+    expect(mediaGallery.dive().find(Icon).find({ icon: 'share' })).toHaveLength(1);
     const imgsProp = mediaGallery.prop('images');
     expect(imgsProp).toHaveLength(videos.length + images.length);
     expect(wrapper.find(FullscreenMediaGallery)).toHaveLength(1);
+  });
+
+  it('render correctly when favourited', () => {
+    const wrapper = wrap({
+      communityName: name, videos, images, ariaHideApp: false, onToggleFullscreenMode, onSlideChange, isFavourited: true,
+    });
+
+    const mediaGallery = wrapper.find(MediaGallery);
+    expect(mediaGallery).toHaveLength(1);
+    expect(mediaGallery.dive().find(Icon).find({ icon: 'favourite-light' })).toHaveLength(1);
+  });
+
+  it('favourite button click callback called', () => {
+    const onFavouriteClick = jest.fn();
+    const wrapper = wrap({
+      communityName: name, videos, images, ariaHideApp: false, onToggleFullscreenMode, onSlideChange, onFavouriteClick,
+    });
+
+    const mediaGallery = wrapper.find(MediaGallery);
+    expect(mediaGallery).toHaveLength(1);
+    mediaGallery.dive().find(Icon).find({ icon: 'favourite-empty' }).parent()
+      .simulate('click');
+    expect(onFavouriteClick).toHaveBeenCalled();
+  });
+
+  it('share button click callback called', () => {
+    const onShareClick = jest.fn();
+    const wrapper = wrap({
+      communityName: name, videos, images, ariaHideApp: false, onToggleFullscreenMode, onSlideChange, onShareClick,
+    });
+
+    const mediaGallery = wrapper.find(MediaGallery);
+    expect(mediaGallery).toHaveLength(1);
+    mediaGallery.dive().find(Icon).find({ icon: 'share' }).parent()
+      .simulate('click');
+    expect(onShareClick).toHaveBeenCalled();
   });
 });
