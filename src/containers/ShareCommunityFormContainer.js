@@ -33,6 +33,7 @@ class ShareCommunityFormContainer extends Component {
   static propTypes = {
     createUserShare: func,
     onSuccess: func,
+    notifyInfo: func,
     isCreating: bool,
     communitySlug: string.isRequired,
     clearSubmitErrors: func,
@@ -40,7 +41,8 @@ class ShareCommunityFormContainer extends Component {
 
   handleOnSubmit = (data) => {
     const {
-      createUserShare, communitySlug, onSuccess, clearSubmitErrors,
+      createUserShare, communitySlug, notifyInfo, clearSubmitErrors,
+      onSuccess,
     } = this.props;
     // todo: send multiple emails after api changes
     const body = {
@@ -54,7 +56,10 @@ class ShareCommunityFormContainer extends Component {
 
     clearSubmitErrors();
     return createUserShare(body)
-      .then(onSuccess)
+      .then(() => {
+        notifyInfo('Community has been shared.');
+        onSuccess();
+      })
       .catch(() => {
         throw new SubmissionError({ _error: 'Failed to share community. Please try again.' });
       });
