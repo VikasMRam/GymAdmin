@@ -8,28 +8,39 @@ import { Button, Link, Icon } from 'sly/components/atoms';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
 
-
 const MorePicsTablet = styled(Button)`
   display: none;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: initial;
   }
 `;
+
 const MorePicsMobile = styled(Button)`
   display: initial;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: none;
   }
 `;
+
 const BottomRightWrapper = styled.span`
   background: ${palette('black', 0)}80;
   color: ${palette('grayscale', 2)};
   font-size: ${size('text.tiny')};
   padding: ${size('spacing.small')} ${size('spacing.regular')};
 `;
+
 const StyledButton = styled(Button)`
   span {
     margin-right: ${size('spacing.regular')};
+  }
+`;
+
+const StyledButtonWrapper = styled.span`
+  > * {
+    margin-right: ${size('spacing.regular')};
+  }
+  > *:last-child {
+    margin-right: 0;
   }
 `;
 
@@ -47,6 +58,8 @@ export default class CommunityMediaGallery extends Component {
       name: string.isRequired,
       thumbUrl: string.isRequired,
     })),
+    city: string,
+    state: string,
     websiteUrl: string,
     ariaHideApp: bool,
     currentSlide: number,
@@ -54,7 +67,9 @@ export default class CommunityMediaGallery extends Component {
     isFullscreenMode: bool,
     onToggleFullscreenMode: func,
     onFavouriteClick: func,
+    onShareClick: func,
     isFavouriteEnabled: bool,
+    isShareEnabled: bool,
     isFavourited: bool,
   };
 
@@ -62,13 +77,14 @@ export default class CommunityMediaGallery extends Component {
     currentSlide: 0,
     isFullscreenMode: false,
     isFavouriteEnabled: true,
+    isShareEnabled: true,
     isFavourited: false,
   };
 
   render() {
     const {
       communityName, city, state, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
-      onFavouriteClick, isFavouriteEnabled, isFavourited,
+      onFavouriteClick, isFavouriteEnabled, isFavourited, isShareEnabled, onShareClick,
     } = this.props;
     let { websiteUrl } = this.props;
     const { images } = this.props;
@@ -102,8 +118,12 @@ export default class CommunityMediaGallery extends Component {
       return { ...vid, src, thumb: vid.thumbUrl };
     });
     const topRightSection = () => (
-      <span>
-        {/* <StyledButton ghost palette="slate"><Icon icon="share" size="regular" palette="slate" /></StyledButton> */}
+      <StyledButtonWrapper>
+        {isShareEnabled &&
+          <StyledButton ghost palette="slate" onClick={onShareClick}>
+            <Icon icon="share" size="regular" palette="slate" /> Share
+          </StyledButton>
+        }
         {isFavouriteEnabled && !isFavourited &&
           <StyledButton ghost palette="slate" onClick={onFavouriteClick}>
             <Icon icon="favourite-empty" size="regular" palette="slate" /> Save
@@ -114,7 +134,7 @@ export default class CommunityMediaGallery extends Component {
             <Icon icon="favourite-light" size="regular" palette="primary" /> Save
           </StyledButton>
         }
-      </span>
+      </StyledButtonWrapper>
     );
     const bottomLeftSection = () => (
       <span>

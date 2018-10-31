@@ -21,7 +21,6 @@ import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import SaveCommunityController from 'sly/controllers/SaveCommunityController';
 import NotificationController from 'sly/controllers/NotificationController';
-import Notifications from 'sly/components/organisms/Notifications';
 import StickyFooter from 'sly/components/molecules/StickyFooter';
 import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';

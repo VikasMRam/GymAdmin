@@ -38,7 +38,9 @@ const ContentWrapper = styled.div`
   width: 100%;
 `;
 
-const ShareCommunityForm = ({ mainImage, submitting, fromEnabled, handleSubmit }) => (
+const ShareCommunityForm = ({
+  mainImage, submitting, fromEnabled, handleSubmit,
+}) => (
   <Wrapper>
     {mainImage && <StyledImage src={mainImage} />}
     <ContentWrapper>
