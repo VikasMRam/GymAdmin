@@ -44,9 +44,8 @@ class ShareCommunityFormContainer extends Component {
       createUserShare, communitySlug, notifyInfo, clearSubmitErrors,
       onSuccess,
     } = this.props;
-    // todo: send multiple emails after api changes
     const body = {
-      toEmail: data.to,
+      toEmails: data.to.split(','),
       entitySlug: communitySlug,
       entityType: COMMUNITY_ENTITY_TYPE,
     };
