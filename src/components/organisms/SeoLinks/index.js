@@ -20,7 +20,7 @@ const PatchedCollapsibleBlock = styled(({ className, ...props }) => (
     blockClassName={className}
     {...props}
   />))`
-  line-height: 2.0;
+  line-height: 2.1;
   margin-bottom: ${size('spacing.large')};
   font-size: ${size('text.tiny')};
 `;
