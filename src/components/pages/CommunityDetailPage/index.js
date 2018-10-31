@@ -17,6 +17,7 @@ import { Link, Heading, Hr, Button } from 'sly/components/atoms';
 
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
+import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import SaveCommunityController from 'sly/controllers/SaveCommunityController';
@@ -73,7 +74,10 @@ export default class CommunityDetailPage extends Component {
     onMediaGallerySlideChange: func,
     onMediaGalleryToggleFullscreen: func,
     onMediaGalleryFavouriteClick: func,
+    onMediaGalleryShareClick: func,
+    onShareCommunityModalClose: func,
     isStickyHeaderVisible: bool,
+    isShareCommunityModalVisible: bool,
     onToggleStickyHeader: func,
     onBackToSearchClicked: func,
     onReviewLinkClicked: func,
@@ -143,8 +147,11 @@ export default class CommunityDetailPage extends Component {
       onMediaGallerySlideChange,
       onMediaGalleryToggleFullscreen,
       onMediaGalleryFavouriteClick,
+      onMediaGalleryShareClick,
       onBackToSearchClicked,
+      onShareCommunityModalClose,
       isStickyHeaderVisible,
+      isShareCommunityModalVisible,
       user,
       onReviewLinkClicked,
       onConciergeNumberClicked,
@@ -327,6 +334,7 @@ export default class CommunityDetailPage extends Component {
               onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
               isFavourited={!!initedUserSave}
               onFavouriteClick={onMediaGalleryFavouriteClick}
+              onShareClick={onMediaGalleryShareClick}
             />
           }
           <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} innerRef={this.breadCrumbRef} />
@@ -507,6 +515,18 @@ export default class CommunityDetailPage extends Component {
           onClose={() => setQueryParams({ modal: null })}
         >
           <Thankyou />
+        </Modal>
+        <Modal
+          closeable
+          noPadding
+          layout={mainImage ? 'double' : 'single'}
+          isOpen={isShareCommunityModalVisible}
+          onClose={onShareCommunityModalClose}
+        >
+          <ShareCommunityFormContainer
+            mainImage={mainImage}
+            fromEnabled={!!!user}
+          />
         </Modal>
       </Fragment>
     );

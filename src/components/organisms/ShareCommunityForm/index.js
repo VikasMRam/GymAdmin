@@ -44,7 +44,7 @@ const ShareCommunityForm = ({
   <Wrapper>
     {mainImage && <StyledImage src={mainImage} />}
     <ContentWrapper>
-      <StyledHeading size="subtitle">Share this community</StyledHeading>
+      <StyledHeading size="title">Share this community</StyledHeading>
       <form onSubmit={handleSubmit}>
         <Field
           type="text"
