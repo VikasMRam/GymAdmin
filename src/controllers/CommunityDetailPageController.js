@@ -6,7 +6,7 @@ import { connectController } from 'sly/controllers';
 import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
 import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
-import { USER_SAVE_COMMUNITY_ENTITY_TYPE } from 'sly/constants/userSave';
+import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getSearchParams } from 'sly/services/helpers/search';
@@ -335,7 +335,7 @@ class CommunityDetailPageController extends Component {
 
 const mapDispatchToProps = dispatch => ({
   getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
-    'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
+    'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
     'filter[entity_slug]': slug,
   })),
 });
@@ -353,10 +353,10 @@ const mapStateToProps = (state, {
   const searchParams = getSearchParams(match, location);
   const communitySlug = getCommunitySlug(match);
   const userSaveOfCommunity = getList(state, 'userSave', {
-    'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
+    'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
     'filter[entity_slug]': communitySlug,
   }).find(userSave =>
-    userSave.entityType === USER_SAVE_COMMUNITY_ENTITY_TYPE && userSave.entitySlug === communitySlug);
+    userSave.entityType === COMMUNITY_ENTITY_TYPE && userSave.entitySlug === communitySlug);
   const setQueryParams = getQueryParamsSetter(history, location);
   return {
     user: getDetail(state, 'user', 'me'),

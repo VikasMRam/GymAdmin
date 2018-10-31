@@ -4,7 +4,8 @@ import { withRouter } from 'react-router';
 
 import { connectController } from 'sly/controllers';
 import { resourceListReadRequest, resourceUpdateRequest } from 'sly/store/resource/actions';
-import { USER_SAVE_COMMUNITY_ENTITY_TYPE, USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS }
+import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
+import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS }
   from 'sly/constants/userSave';
 import { getList } from 'sly/store/selectors';
 import { getSearchParams } from 'sly/services/helpers/search';
@@ -102,7 +103,7 @@ const mapStateToProps = (state, {
     setQueryParams: getQueryParamsSetter(history, location),
     searchParams: getSearchParams(match, location),
     userSaves: getList(state, 'userSave', {
-      'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
+      'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
       'filter[status]': USER_SAVE_INIT_STATUS,
     }),
     isLoading,
@@ -112,7 +113,7 @@ const mapStateToProps = (state, {
 
 const mapDispatchToProps = dispatch => ({
   getUserSaves: () => dispatch(resourceListReadRequest('userSave', {
-    'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
+    'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
     'filter[status]': USER_SAVE_INIT_STATUS,
   })),
   deleteUserSave: userSave => dispatch(resourceUpdateRequest('userSave', userSave.id, {

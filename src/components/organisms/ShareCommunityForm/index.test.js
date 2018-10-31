@@ -2,8 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import { Button } from 'sly/components/atoms/index';
-
 import ShareCommunityForm from '.';
 
 const wrap = (props = {}) => shallow(<ShareCommunityForm {...props} />);
@@ -18,7 +16,7 @@ describe('ShareCommunityForm', () => {
     expect(img).toHaveLength(1);
     expect(img.prop('src')).toBe(mainImage);
     expect(wrapper.find(Field)).toHaveLength(3);
-    expect(wrapper.find(Button)).toHaveLength(1);
+    expect(wrapper.find('StyledButton')).toHaveLength(1);
   });
 
   it('renders without mainImage', () => {
@@ -28,7 +26,7 @@ describe('ShareCommunityForm', () => {
 
     expect(img).toHaveLength(0);
     expect(wrapper.find(Field)).toHaveLength(3);
-    expect(wrapper.find(Button)).toHaveLength(1);
+    expect(wrapper.find('StyledButton')).toHaveLength(1);
   });
 
   it('renders when from disabled', () => {
@@ -39,7 +37,7 @@ describe('ShareCommunityForm', () => {
     expect(img).toHaveLength(1);
     expect(img.prop('src')).toBe(mainImage);
     expect(wrapper.find(Field)).toHaveLength(2);
-    expect(wrapper.find(Button)).toHaveLength(1);
+    expect(wrapper.find('StyledButton')).toHaveLength(1);
   });
 
 

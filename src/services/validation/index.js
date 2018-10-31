@@ -11,6 +11,21 @@ const join = rules => (value, data) =>
 export const email = value =>
   !isEmpty(value) && !isEmail(value) && 'Invalid email address';
 
+export const emails = (value) => {
+  if (isEmpty(value)) {
+    return 'Invalid email addresses';
+  }
+
+  const emails = value.split(',');
+  for (let i = 0; i < emails.length; i += 1) {
+    if (!isEmail(emails[i].replace(/ /g, ''))) {
+      return 'Invalid email addresses';
+    }
+  }
+
+  return null;
+};
+
 export const url = value => !isEmpty(value) && !isURL(value) && 'Invalid URL';
 
 export const required = value => isEmpty(value) && 'Required field';
@@ -50,8 +65,7 @@ export const createValidator = rules => (data = {}) => {
   return errors;
 };
 
-export const createBooleanValidator = rules => {
+export const createBooleanValidator = (rules) => {
   const validator = createValidator(rules);
   return data => Object.keys(validator(data)).length === 0;
 };
-
