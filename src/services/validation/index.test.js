@@ -6,6 +6,20 @@ test('email', () => {
   expect(v.email('valid@valid.com')).toBeFalsy();
 });
 
+test('emails', () => {
+  expect(v.emails('invalid')).toBeTruthy();
+  expect(v.emails('invalid@invalid')).toBeTruthy();
+  expect(v.emails('valid@valid.com')).toBeFalsy();
+
+  expect(v.emails('invalid,invalid')).toBeTruthy();
+  expect(v.emails('invalid@invalid,invalid@invalid')).toBeTruthy();
+  expect(v.emails('valid@valid.com,valid@valid.com')).toBeFalsy();
+
+  expect(v.emails('invalid, invalid')).toBeTruthy();
+  expect(v.emails('invalid@invalid, invalid@invalid')).toBeTruthy();
+  expect(v.emails('valid@valid.com, valid@valid.com')).toBeFalsy();
+});
+
 test('url', () => {
   expect(v.url('invalid')).toBeTruthy();
   expect(v.url('valid.com')).toBeFalsy();
@@ -52,6 +66,7 @@ test('match', () => {
 test('createValidator', () => {
   const validator = v.createValidator({
     email: [v.required, v.email],
+    emails: [v.emails],
     password: [v.required, v.minLength(6)],
     passwordRepeat: [v.match('password'), v.required],
   });
@@ -60,11 +75,13 @@ test('createValidator', () => {
 
   expect(validator({
     email: '',
+    emails: '',
     password: '',
     passwordRepeat: null,
   })).toEqual(
     {
       email: v.required(''),
+      emails: v.emails(''),
       password: v.required(''),
       passwordRepeat: v.match('a')('c', { a: 'b' }),
     },
@@ -73,30 +90,35 @@ test('createValidator', () => {
 
   expect(Object.keys(validator({
     email: 'invalid',
+    emails: 'invalid, invalid',
     password: '12345',
     passwordRepeat: '',
-  }))).toEqual(['email', 'password', 'passwordRepeat']);
+  }))).toEqual(['email', 'emails', 'password', 'passwordRepeat']);
 
   expect(Object.keys(validator({
     email: 'test@example.com',
+    emails: 'test@example.com, test2@example.com',
     password: '12345',
     passwordRepeat: '',
   }))).toEqual(['password', 'passwordRepeat']);
 
   expect(Object.keys(validator({
     email: 'test@example.com',
+    emails: 'test@example.com, test2@example.com',
     password: '123456',
     passwordRepeat: '654321',
   }))).toEqual(['passwordRepeat']);
 
   expect(validator({
     email: 'test@example.com',
+    emails: 'test@example.com, test2@example.com',
     password: '123456',
     passwordRepeat: '123456',
   })).toEqual({});
 
   expect(validator()).toEqual({
     email: v.required(''),
+    emails: v.emails(''),
     password: v.required(''),
     passwordRepeat: v.required(''),
   });

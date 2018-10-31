@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { object, func, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { USER_SAVE_COMMUNITY_ENTITY_TYPE, USER_SAVE_DELETE_STATUS, USER_SAVE_INIT_STATUS }
+import { USER_SAVE_DELETE_STATUS, USER_SAVE_INIT_STATUS }
   from 'sly/constants/userSave';
+import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { MODAL_TYPE_JOIN_SLY } from 'sly/constants/modalType';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import {
@@ -78,7 +79,7 @@ class SaveCommunityController extends Component {
     } = this.props;
     const { id } = community;
     const payload = {
-      entityType: USER_SAVE_COMMUNITY_ENTITY_TYPE,
+      entityType: COMMUNITY_ENTITY_TYPE,
       entitySlug: id,
     };
 
@@ -181,10 +182,10 @@ const mapStateToProps = (state, {
   const searchParams = getSearchParams(match, location);
   const community = searchParams.entityId ? getDetail(state, 'community', searchParams.entityId) : null;
   const userSave = getList(state, 'userSave', {
-    'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
+    'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
     'filter[entity_slug]': searchParams.entityId,
   }).find(userSave =>
-    userSave.entityType === USER_SAVE_COMMUNITY_ENTITY_TYPE && userSave.entitySlug === searchParams.entityId);
+    userSave.entityType === COMMUNITY_ENTITY_TYPE && userSave.entitySlug === searchParams.entityId);
 
   return {
     user: getDetail(state, 'user', 'me'),
@@ -201,11 +202,11 @@ const mapDispatchToProps = dispatch => ({
   createUserSave: data => dispatch(resourceCreateRequest('userSave', data)),
   updateUserSave: (id, data) => dispatch(resourceUpdateRequest('userSave', id, data)),
   getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
-    'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
+    'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
     'filter[entity_slug]': slug,
   })),
   getUserSaves: () => dispatch(resourceListReadRequest('userSave', {
-    'filter[entity_type]': USER_SAVE_COMMUNITY_ENTITY_TYPE,
+    'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
     'filter[status]': USER_SAVE_INIT_STATUS,
   })),
 });

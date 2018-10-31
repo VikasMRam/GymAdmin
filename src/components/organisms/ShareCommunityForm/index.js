@@ -2,10 +2,11 @@ import React from 'react';
 import { string, func, bool } from 'prop-types';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
+import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 
-import { Heading, Image, Button } from 'sly/components/atoms';
+import { Heading, Image, Button, Block } from 'sly/components/atoms';
 
 import ReduxField from 'sly/components/organisms/ReduxField';
 
@@ -27,7 +28,7 @@ const StyledImage = styled(Image)`
   height: ${size('carousel.mobile')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    height: unset;
+    height: auto;
     max-width: 40%;
   }
 `;
@@ -38,8 +39,13 @@ const ContentWrapper = styled.div`
   width: 100%;
 `;
 
+const StyledButton = styled(Button)`
+  margin-bottom: ${ifProp('error', size('spacing.large'), 0)};
+`;
+StyledButton.displayName = 'StyledButton';
+
 const ShareCommunityForm = ({
-  mainImage, submitting, fromEnabled, handleSubmit,
+  mainImage, submitting, fromEnabled, handleSubmit, error,
 }) => (
   <Wrapper>
     {mainImage && <StyledImage src={mainImage} />}
@@ -70,10 +76,11 @@ const ShareCommunityForm = ({
           placeholder="I wanted to share this community with you..."
           component={ReduxField}
         />
-        <Button type="submit" kind="jumbo" disabled={submitting}>
+        <StyledButton error={error} type="submit" kind="jumbo" disabled={submitting}>
           Send
-        </Button>
+        </StyledButton>
       </form>
+      {error && <Block palette="danger">{error}</Block>}
     </ContentWrapper>
   </Wrapper>
 );
@@ -83,6 +90,7 @@ ShareCommunityForm.propTypes = {
   handleSubmit: func.isRequired,
   fromEnabled: bool,
   submitting: bool,
+  error: string,
 };
 
 ShareCommunityForm.defaultProps = {

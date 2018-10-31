@@ -525,7 +525,8 @@ export default class CommunityDetailPage extends Component {
         >
           <ShareCommunityFormContainer
             mainImage={mainImage}
-            fromEnabled={!!!user}
+            fromEnabled={!user}
+            communitySlug={community.id}
           />
         </Modal>
       </Fragment>
