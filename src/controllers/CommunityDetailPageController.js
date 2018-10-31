@@ -36,6 +36,7 @@ class CommunityDetailPageController extends Component {
     isLoadingUserSaves: bool,
     redirectUrl: string,
     setQueryParams: func,
+    isShareCommunityModalVisible: bool,
   };
 
   componentDidMount() {
@@ -238,10 +239,25 @@ class CommunityDetailPageController extends Component {
     }
   }
 
+  handleMediaGalleryShareClick = () => {
+    const { set, isShareCommunityModalVisible } = this.props;
+    set({
+      isShareCommunityModalVisible: !isShareCommunityModalVisible,
+    });
+  }
+
+  handleShareCommunityModalClose = () => {
+    const { set } = this.props;
+    set({
+      isShareCommunityModalVisible: false,
+    });
+  }
+
   render() {
     const {
       mediaGallerySlideIndex,
       isMediaGalleryFullscreenActive,
+      isShareCommunityModalVisible,
       user,
       community,
       userSaveOfCommunity,
@@ -294,8 +310,11 @@ class CommunityDetailPageController extends Component {
         onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
         onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
         onMediaGalleryFavouriteClick={this.handleMediaGalleryFavouriteClick}
+        onMediaGalleryShareClick={this.handleMediaGalleryShareClick}
+        onShareCommunityModalClose={this.handleShareCommunityModalClose}
         isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
         isStickyHeaderVisible={isStickyHeaderVisible}
+        isShareCommunityModalVisible={isShareCommunityModalVisible}
         onToggleStickyHeader={this.handleToggleStickyHeader}
         onBackToSearchClicked={this.handleBackToSearchClick}
         onReviewLinkClicked={this.handleReviewLinkClick}
@@ -328,6 +347,7 @@ const mapStateToProps = (state, {
   // default state for ssr
   const {
     mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false, isStickyHeaderVisible = false,
+    isShareCommunityModalVisible = false,
   } = controller;
 
   const searchParams = getSearchParams(match, location);
@@ -347,6 +367,7 @@ const mapStateToProps = (state, {
     isStickyHeaderVisible,
     searchParams,
     setQueryParams,
+    isShareCommunityModalVisible,
   };
 };
 
