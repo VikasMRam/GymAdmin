@@ -3,7 +3,7 @@
 import normalize from 'json-api-normalizer';
 import { entitiesReceive } from './actions';
 
-const entitiesToSkip = ['register', 'login', 'recover', 'passwordReset', 'thirdpartyLogin'];
+const entitiesToSkip = ['register', 'login', 'recover', 'passwordReset', 'thirdpartyLogin', 'userShare'];
 
 const middleware = store => next => (action) => {
   const { payload: rawEntities, meta } = action;
