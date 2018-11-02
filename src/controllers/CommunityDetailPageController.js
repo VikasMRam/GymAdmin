@@ -232,11 +232,16 @@ class CommunityDetailPageController extends Component {
       initedUserSave = userSaveOfCommunity.status !== USER_SAVE_DELETE_STATUS ? userSaveOfCommunity : null;
     }
 
+    const event = {
+      action: 'click', category: 'saveCommunity', label: id,
+    };
     if (initedUserSave) {
+      event.category = 'unsaveCommunity';
       setQueryParams({ action: ACTIONS_REMOVE_FROM_FAVOURITE, entityId: id });
     } else {
       setQueryParams({ action: ACTIONS_ADD_TO_FAVOURITE, entityId: id });
     }
+    SlyEvent.getInstance().sendEvent(event);
   }
 
   handleMediaGalleryShareClick = () => {
