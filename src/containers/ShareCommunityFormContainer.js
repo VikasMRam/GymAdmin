@@ -46,6 +46,7 @@ class ShareCommunityFormContainer extends Component {
     } = this.props;
     const body = {
       toEmails: data.to.split(','),
+      message: data.message,
       entitySlug: communitySlug,
       entityType: COMMUNITY_ENTITY_TYPE,
     };
