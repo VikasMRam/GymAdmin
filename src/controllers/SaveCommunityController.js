@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { object, func, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
+import SlyEvent from 'sly/services/helpers/events';
 import { USER_SAVE_DELETE_STATUS, USER_SAVE_INIT_STATUS }
   from 'sly/constants/userSave';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
@@ -146,13 +147,17 @@ class SaveCommunityController extends Component {
   }
 
   handleModalClose = () => {
-    const { setQueryParams, set } = this.props;
+    const { setQueryParams, set, searchParams } = this.props;
 
     this.saving = false;
     set({
       currentStep: null,
     });
     setQueryParams({ modal: null, action: null, entityId: null });
+    const event = {
+      action: 'close-modal', category: 'saveCommunity', label: searchParams.entityId,
+    };
+    SlyEvent.getInstance().sendEvent(event);
   }
 
   render() {

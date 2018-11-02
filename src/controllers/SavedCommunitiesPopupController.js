@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { func, array, object, bool } from 'prop-types';
 import { withRouter } from 'react-router';
 
+import SlyEvent from 'sly/services/helpers/events';
 import { connectController } from 'sly/controllers';
 import { resourceListReadRequest, resourceUpdateRequest } from 'sly/store/resource/actions';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
@@ -25,11 +26,19 @@ class SavedCommunitiesPopupController extends Component {
     isLoading: bool,
     isLoadSuccess: bool,
     notifyInfo: func,
+    location: object,
   };
 
   componentDidMount() {
-    const { getUserSaves, searchParams, set } = this.props;
+    const {
+      getUserSaves, searchParams, set, location,
+    } = this.props;
     if (searchParams.modal === SAVED_COMMUNITIES) {
+      const event = {
+        action: 'open', category: 'savedCommunities', label: location.pathname + location.search,
+      };
+      SlyEvent.getInstance().sendEvent(event);
+
       set({
         isLoading: true,
       });
@@ -42,31 +51,55 @@ class SavedCommunitiesPopupController extends Component {
 
   componentDidUpdate() {
     const {
-      getUserSaves, searchParams, isLoading, isLoadSuccess, set,
+      getUserSaves, searchParams, isLoading, isLoadSuccess, set, location,
     } = this.props;
-    if (!isLoadSuccess && !isLoading && searchParams.modal === SAVED_COMMUNITIES) {
-      set({
-        isLoading: true,
-      });
-      getUserSaves().then(() => set({
-        isLoadSuccess: true,
-        isLoading: false,
-      }));
+
+    if (searchParams.modal === SAVED_COMMUNITIES && !isLoading) {
+      const event = {
+        action: 'open', category: 'savedCommunities', label: location.pathname + location.search,
+      };
+      SlyEvent.getInstance().sendEvent(event);
+
+      if (!isLoadSuccess) {
+        set({
+          isLoading: true,
+        });
+        getUserSaves().then(() => set({
+          isLoadSuccess: true,
+          isLoading: false,
+        }));
+      }
     }
   }
 
   handleFavouriteClicked = (userSave) => {
-    const { deleteUserSave, getUserSaves, notifyInfo } = this.props;
+    const {
+      deleteUserSave, getUserSaves, notifyInfo, location,
+    } = this.props;
 
+    const event = {
+      action: 'favourite-icon-click', category: 'savedCommunities', label: location.pathname + location.search,
+    };
+    SlyEvent.getInstance().sendEvent(event);
     deleteUserSave(userSave).then(() => {
       getUserSaves();
       notifyInfo('Community Removed.');
     });
   }
 
+  handleCloseButtonClick = () => {
+    const { setQueryParams, location } = this.props;
+    const event = {
+      action: 'close', category: 'savedCommunities', label: location.pathname + location.search,
+    };
+
+    setQueryParams({ modal: null });
+    SlyEvent.getInstance().sendEvent(event);
+  }
+
   render() {
     const {
-      userSaves, searchParams, isLoading, isLoadSuccess, setQueryParams,
+      userSaves, searchParams, isLoading, isLoadSuccess,
     } = this.props;
 
     const savedCommunities = userSaves.reduce((result, userSave) => {
@@ -85,7 +118,7 @@ class SavedCommunitiesPopupController extends Component {
         isLoading={isLoading}
         isLoadSuccess={isLoadSuccess}
         savedCommunities={savedCommunities}
-        onCloseButtonClick={() => setQueryParams({ modal: null })}
+        onCloseButtonClick={this.handleCloseButtonClick}
         onFavouriteClicked={this.handleFavouriteClicked}
         isOpen={searchParams.modal === SAVED_COMMUNITIES}
       />
@@ -108,6 +141,7 @@ const mapStateToProps = (state, {
     }),
     isLoading,
     isLoadSuccess,
+    location,
   };
 };
 
