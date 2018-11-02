@@ -114,16 +114,16 @@ export default class StateSearchPage extends Component {
        reviews, <p>7</p>
        */
       if (geoGuide && geoGuide.guideContent) {
-        let additionalDivs = [];
-        let gg = geoGuide.guideContent;
-        ['description','guide','hospitals','transportation',
-          'sports','cultural','weather','reviews'].forEach((p)=>{
-          if (gg.hasOwnProperty(p)){
-            additionalDivs.push(<div dangerouslySetInnerHTML={{__html: gg[p]}} key={p}/>)
+        const additionalDivs = [];
+        const gg = geoGuide.guideContent;
+        ['description', 'guide', 'hospitals', 'transportation',
+          'sports', 'cultural', 'weather', 'reviews'].forEach((p) => {
+          if (gg[p]){
+            additionalDivs.push(<div dangerouslySetInnerHTML={{ __html: gg[p] }} key={p} />);
           }
         });
-        if (gg.hasOwnProperty('seoLinks')) {
-          additionalDivs.push(<SeoLinks title="Assisted Living in Nearby Cities" links={gg.seoLinks}/>)
+        if (gg.seoLinks) {
+          additionalDivs.push(<SeoLinks title="Assisted Living in Nearby Cities" links={gg.seoLinks} />);
         }
 
         return <Fragment>
