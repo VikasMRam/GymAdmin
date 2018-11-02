@@ -12,7 +12,7 @@ import { resourceDeleteRequest, resourceDetailReadRequest } from 'sly/store/reso
 import { entitiesReceive } from 'sly/store/actions';
 
 import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
-import AuthController from 'sly/controllers/AuthController';
+import AuthContainer from 'sly/containers/AuthContainer';
 import NotificationController from 'sly/controllers/NotificationController';
 import Notifications from 'sly/components/organisms/Notifications';
 import Header from 'sly/components/organisms/Header';
@@ -134,7 +134,7 @@ class HeaderController extends Component {
           }) => (
             <Fragment>
               {user !== null && <SavedCommunitiesPopupController notifyInfo={notifyInfo} />}
-              <AuthController notifyInfo={notifyInfo} />
+              <AuthContainer notifyInfo={notifyInfo} />
             </Fragment>
           )}
         </NotificationController>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { object, func, string } from 'prop-types';
+import { object, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import { getSearchParams } from 'sly/services/helpers/search';
 
@@ -10,7 +11,6 @@ import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/con
 import { getDetail } from 'sly/store/selectors';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { connectController } from 'sly/controllers';
 
 import Modal from 'sly/components/molecules/Modal';
 import LoginFormContainer from 'sly/containers/LoginFormContainer';
@@ -24,8 +24,7 @@ steps[MODAL_TYPE_LOG_IN] = LoginFormContainer;
 steps[MODAL_TYPE_SIGN_UP] = SignupFormContainer;
 steps[MODAL_TYPE_RESET_PASSWORD] = ResetPasswordFormContainer;
 
-// TODO: convert this to container
-export class AuthController extends Component {
+class AuthContainer extends Component {
   static propTypes = {
     searchParams: object,
     user: object,
@@ -137,4 +136,4 @@ const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me')),
 });
 
-export default withRouter(connectController(mapStateToProps, mapDispatchToProps)(AuthController));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthContainer));
