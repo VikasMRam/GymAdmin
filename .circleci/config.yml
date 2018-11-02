@@ -97,12 +97,7 @@ jobs:
             if [ "$DEPLOY_FAILED" -gt 0 ]; then
               exit 1
             fi
-      - run:
-          name: Start Smoke test
-          command: |
-            curl -u ${CIRCLE_API_USER_TOKEN}: \
-              -d build_parameters[CIRCLE_JOB]=build \
-              https://circleci.com/api/v1.1/project/github/seniorly/SlyTest/tree/master
+
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
       - run:
           name: Send deploy success notification
