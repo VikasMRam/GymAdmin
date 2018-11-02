@@ -154,16 +154,16 @@ const CommunitySearchPage = ({
      reviews, <p>7</p>
      */
     if (geoGuide && geoGuide.guideContent) {
-      let additionalDivs = [];
-      let gg = geoGuide.guideContent;
-      ['description','guide','articles','resources',
-      'neighborhoods','hospitals','reviews'].forEach((p)=>{
-        if (gg.hasOwnProperty(p)){
-          additionalDivs.push(<LegacyContent dangerouslySetInnerHTML={{__html: gg[p]}} key={p}/>)
+      const additionalDivs = [];
+      const gg = geoGuide.guideContent;
+      ['description', 'guide', 'articles', 'resources',
+        'neighborhoods', 'hospitals', 'reviews'].forEach((p) => {
+        if (Object.prototype.hasOwnProperty.call(gg, p)) {
+          additionalDivs.push(<LegacyContent dangerouslySetInnerHTML={{ __html: gg[p] }} key={p} />);
         }
       });
-      if (gg.hasOwnProperty('seoLinks')) {
-        additionalDivs.push(<SeoLinks title="Assisted Living in Nearby Cities" links={gg.seoLinks}/>)
+      if (gg.seoLinks) {
+        additionalDivs.push(<SeoLinks title="Assisted Living in Nearby Cities" links={gg.seoLinks} />);
       }
 
       return (
