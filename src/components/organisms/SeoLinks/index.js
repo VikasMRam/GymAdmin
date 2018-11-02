@@ -64,5 +64,4 @@ export default class SeoLinks extends Component {
       </Fragment>
     );
   }
-};
-
+}
