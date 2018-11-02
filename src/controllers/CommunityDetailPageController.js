@@ -240,14 +240,26 @@ class CommunityDetailPageController extends Component {
   }
 
   handleMediaGalleryShareClick = () => {
-    const { set, isShareCommunityModalVisible } = this.props;
+    const { set, isShareCommunityModalVisible, community } = this.props;
+    const { id } = community;
+    const event = {
+      action: 'click', category: 'shareCommunity', label: id,
+    };
+
+    SlyEvent.getInstance().sendEvent(event);
     set({
       isShareCommunityModalVisible: !isShareCommunityModalVisible,
     });
   }
 
   handleShareCommunityModalClose = () => {
-    const { set } = this.props;
+    const { set, community } = this.props;
+    const { id } = community;
+    const event = {
+      action: 'close-modal', category: 'shareCommunity', label: id,
+    };
+
+    SlyEvent.getInstance().sendEvent(event);
     set({
       isShareCommunityModalVisible: false,
     });
