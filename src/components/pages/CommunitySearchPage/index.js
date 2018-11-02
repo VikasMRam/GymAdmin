@@ -158,7 +158,7 @@ const CommunitySearchPage = ({
       const gg = geoGuide.guideContent;
       ['description', 'guide', 'articles', 'resources',
         'neighborhoods', 'hospitals', 'reviews'].forEach((p) => {
-        if (Object.prototype.hasOwnProperty.call(gg, p)) {
+        if (gg[p]) {
           additionalDivs.push(<LegacyContent dangerouslySetInnerHTML={{ __html: gg[p] }} key={p} />);
         }
       });
