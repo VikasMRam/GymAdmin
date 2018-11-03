@@ -9,9 +9,9 @@ export default function setGlobalStyles() {
   injectGlobal`
     @font-face {
       font-family: 'Azo Sans';
-      src: url('${publicPath}/fonts/azo/azosans-bold-webfont.woff2') format('woff2'),
-           url('${publicPath}/fonts/azo/azosans-bold-webfont.woff') format('woff');
-      font-weight: 700;
+      src: url('${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2') format('woff2'),
+           url('${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff') format('woff');
+      font-weight: 500;
       font-style: normal;
     }
 
