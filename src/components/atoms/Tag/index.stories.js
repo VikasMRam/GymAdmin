@@ -12,9 +12,4 @@ storiesOf('Atoms|Tag', module)
     <Tag palette="primary">
       assisted living
     </Tag>
-  ))
-  .add('palette opaque', () => (
-    <Tag palette="primary" opaque>
-      assisted living
-    </Tag>
   ));

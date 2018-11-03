@@ -1,14 +1,12 @@
 import { string, bool } from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
-import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 
 const getSize = type => p => size(type, p.size);
 
 const Block = styled.div`
-  background-color: ${ifProp('opaque', palette(0, true), 'transparent')};
   color: ${palette(0)};
   font-size: ${getSize('text')};
   line-height: ${getSize('lineHeight')};
@@ -19,7 +17,6 @@ const Block = styled.div`
 
 Block.propTypes = {
   palette: string,
-  opaque: bool,
   size: string,
 };
 

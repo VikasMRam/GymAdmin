@@ -1,3 +1,4 @@
+import Color from 'color';
 import { key } from 'styled-theme';
 import { prop } from 'styled-tools';
 
@@ -17,4 +18,10 @@ export function getKey(key) {
   // this internally uses lodash get(https://lodash.com/docs#get) which is to getting
   // object keys by specified path
   return prop(key)(theme);
+}
+
+export function makeColor(base, ...variations) {
+  const color = Color(base);
+  const white = Color('white');
+  return variations.map(v => white.mix(color, v).hex());
 }

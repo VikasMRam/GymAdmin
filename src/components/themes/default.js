@@ -1,17 +1,23 @@
 /* eslint-disable key-spacing,no-multi-spaces */
+import { makeColor } from './';
 
 const theme = {};
 
+// color variations are
+// 100% 67% 33% 15% 4%
 theme.palette = {
-  slate    : ['#2a333f'],
-  white    : ['#70767e'],
-  black    : ['#000000'],
-  secondary: ['#2f8fcb', '#2483be', '#63abd8', '#e1eaef'],
+  slate    : makeColor('#2a333f', 1.00, 0.66, 0.33),
+  grays    : makeColor('#2a333f', 0.15, 0.04),
   primary  : ['#7ccdcc', '#65c0bf', '#b0e1e0', '#f4ffff'],
-  grayscale: ['#8f9ca4', '#9ca8af', '#c5d0d5', '#f2f6f7', '#68747a'],
-  danger   : ['#cc5663'],
+  secondary: ['#2f8fcb', '#2483be', '#63abd8', '#e1eaef'],
+  white    : ['#fff'],
+  black    : ['#000'],
+  danger   : makeColor('#dc3133', 1.0, 0.15),
+  warning  : makeColor('#f3c150', 1.0, 0.15),
   facebook : ['#4568b2'],
 };
+
+console.log(theme.palette);
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',

@@ -12,9 +12,4 @@ storiesOf('Atoms|Block', module)
     <Block palette="primary">
       Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
     </Block>
-  ))
-  .add('palette opaque', () => (
-    <Block palette="primary" opaque>
-      Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
-    </Block>
   ));
