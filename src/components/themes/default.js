@@ -52,6 +52,23 @@ theme.sizes = {
     col12:      '66.000rem', // 1056px
   },
 
+  mobileLayout: {
+    gutter:      '1.000rem', // 16px
+
+    col1:        '5.000rem', // 80px
+    col2:       '11.000rem', // 176px
+    col3:       '17.000rem', // 272px
+    col4:       '23.000rem', // 368px
+
+    col5:       '29.000rem', // 464px
+    col6:       '35.000rem', // 560px
+    col7:       '41.000rem', // 656px
+    col8:       '47.000rem', // 752px
+
+    col9:       '53.000rem', // 848px
+    col10:      '59.000rem', // 944px
+  },
+
   modal: {
     single : '35.25rem',   // 516px
     double : '55rem',      // 880px
