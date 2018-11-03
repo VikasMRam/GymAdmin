@@ -12,5 +12,4 @@ it('renders input props when passed in', () => {
 it('mounts with different combination of props', () => {
   mount(<Slider disabled />);
   mount(<Slider responsive />);
-  mount(<Slider reverse />);
 });

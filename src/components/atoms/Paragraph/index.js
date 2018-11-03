@@ -17,7 +17,6 @@ const ParaWrapper = styled.p`
 `;
 
 Paragraph.propTypes = {
-  reverse: PropTypes.bool,
   palette: PropTypes.string,
 };
 

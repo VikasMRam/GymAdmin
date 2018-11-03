@@ -4,7 +4,6 @@ import Input from '.';
 
 storiesOf('Atoms|Input', module)
   .add('default', () => <Input placeholder="Input some text" />)
-  .add('reverse', () => <Input reverse />)
   .add('invalid', () => <Input invalid />)
   .add('type textarea', () => <Input type="textarea" />)
   //   .add('type checkbox', () => <Input type="checkbox" />)

@@ -1,11 +1,10 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { reversePalette } from 'styled-theme/composer';
 
 const theme = {};
 
 theme.palette = {
-  slate    : ['#384c57'],
-  white    : ['#fff'],
+  slate    : ['#2a333f'],
+  white    : ['#70767e'],
   black    : ['#000000'],
   secondary: ['#2f8fcb', '#2483be', '#63abd8', '#e1eaef'],
   primary  : ['#7ccdcc', '#65c0bf', '#b0e1e0', '#f4ffff'],
@@ -13,8 +12,6 @@ theme.palette = {
   danger   : ['#cc5663'],
   facebook : ['#4568b2'],
 };
-
-theme.reversePalette = reversePalette(theme.palette);
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',

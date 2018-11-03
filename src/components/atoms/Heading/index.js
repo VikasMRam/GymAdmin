@@ -27,7 +27,7 @@ const styles = css`
 `;
 
 const Heading = styled(({
-  level, children, reverse, palette, theme, ...props
+  level, children, palette, theme, ...props
 }) =>
   React.createElement(`h${getTag(level)}`, props, children))`
   ${styles};
@@ -38,7 +38,6 @@ Heading.propTypes = {
   size: oneOf(['hero', 'title', 'subtitle']),
   children: node,
   palette: string,
-  reverse: bool,
 };
 
 Heading.defaultProps = {

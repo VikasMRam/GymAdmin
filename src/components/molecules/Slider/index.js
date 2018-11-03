@@ -194,7 +194,6 @@ Slider.propTypes = {
   max: number,
   step: number,
   value: number,
-  reverse: bool,
   disabled: bool,
   valueParse: func,
   valueWidth: oneOf(['small', 'regular', 'large']),
