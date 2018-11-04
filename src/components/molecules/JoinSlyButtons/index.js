@@ -26,6 +26,7 @@ const GoogleButton = StyledButton.extend`
 GoogleButton.displayName = 'GoogleButton';
 
 const FacebookButton = StyledButton.extend`
+  background-color: #4568b2;
   margin-bottom: ${size('spacing.large')};
 `;
 FacebookButton.displayName = 'FacebookButton';
@@ -59,7 +60,7 @@ const JoinSlyButtons = ({
 }) => (
   <section>
     <StyledHeading>{heading}</StyledHeading>
-    <FacebookButton palette="facebook" onClick={onContinueWithFacebookClicked}>
+    <FacebookButton onClick={onContinueWithFacebookClicked}>
       <Icon icon="facebook" size="regular" /> Continue with Facebook
     </FacebookButton>
     <GoogleButton transparent onClick={onContinueWithGoogleClicked} error={socialLoginError}>

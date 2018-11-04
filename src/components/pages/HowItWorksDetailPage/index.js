@@ -109,7 +109,7 @@ const Tab = styled(Link)`
   font-size: ${size('spacing.subtitle')};
   font-weight: bold;
   text-align: center;
-  color: ${p => p.active ? palette('black', 0) : palette('grayscale', 1)};
+  color: ${p => p.active ? palette('slate', 0) : palette('slate', 1)};
 
   :hover {
     cursor: ${p => !p.active ? 'pointer' : ''};

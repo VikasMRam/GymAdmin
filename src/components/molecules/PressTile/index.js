@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string } from 'prop-types';
+import { string, bool } from 'prop-types';
 import { palette } from 'styled-theme';
 
 import { size } from 'sly/components/themes';
@@ -37,10 +37,10 @@ const PressTile = ({
 PressTile.propTypes = {
   text: string.isRequired,
   imageUrl: string.isRequired,
+  borderless: bool.isRequired,
 };
 
 PressTile.defaultProps = {
-  iconPalette: 'black',
   borderless: false,
 };
 

@@ -78,14 +78,10 @@ const HowItWorksInfoTile = ({
 };
 
 HowItWorksInfoTile.propTypes = {
+  imageUrl: string.isRequired,
   heading: string.isRequired,
   content: string.isRequired,
   invert: bool,
-};
-
-HowItWorksInfoTile.defaultProps = {
-  iconPalette: 'black',
-  borderless: false,
 };
 
 export default HowItWorksInfoTile;

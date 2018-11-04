@@ -11,13 +11,9 @@ theme.palette = {
   primary  : makeColor('#186dc5', 1.00, 0.33, 0.15),
   secondary: makeColor('#56c4c2', 1.00, 0.33, 0.15),
   white    : ['#fff'],
-  black    : ['#000'],
   danger   : makeColor('#dc3133', 1.0, 0.15),
   warning  : makeColor('#f3c150', 1.0, 0.15),
-  facebook : ['#4568b2'],
 };
-
-console.log(theme.palette);
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',

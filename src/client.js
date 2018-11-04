@@ -8,6 +8,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ServerStateProvider } from 'react-router-server';
+import Modal from 'react-modal';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { basename, host } from 'sly/config';
@@ -33,6 +34,8 @@ const renderApp = () => (
 
 const root = document.getElementById('app');
 const origin = getOrigin();
+
+Modal.setAppElement('#app');
 
 if (origin.indexOf(host) !== -1) {
   render(renderApp(), root);

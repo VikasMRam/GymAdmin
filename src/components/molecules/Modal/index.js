@@ -159,12 +159,6 @@ export default class Modal extends React.Component {
     closeButtonPalette: 'white',
   };
 
-  componentWillMount() {
-    if (isBrowser && !isTest) {
-      ReactModal.setAppElement('#app');
-    }
-  }
-
   render() {
     const {
       heading, children, closeable, layout, onClose, transparent, closeButtonPalette,

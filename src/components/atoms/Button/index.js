@@ -101,7 +101,7 @@ export const styles = css`
 
   ${ifProp({ kind: 'jumbo' }, css`
     width: 100%; 
-  `)}
+  `)};
 
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
 

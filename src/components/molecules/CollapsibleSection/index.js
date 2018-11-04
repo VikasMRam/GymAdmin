@@ -108,6 +108,7 @@ export default class CollapsibleSection extends Component {
     const {
       children,
       title,
+      collapsedDefault,
       size,
       innerRef,
       paddedContent,
