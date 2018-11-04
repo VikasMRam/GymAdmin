@@ -7,7 +7,7 @@ import { size, getKey } from 'sly/components/themes';
 const padding = ({ padding }) => size('spacing', padding);
 
 const Box = styled.div`
-  border: ${size('border.regular')} solid ${palette(2)};
+  border: ${size('border.regular')} solid ${palette(0)};
   border-radius: ${size('spacing.tiny')};
   padding: ${padding};
 `;

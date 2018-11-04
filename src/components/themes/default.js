@@ -8,8 +8,8 @@ const theme = {};
 theme.palette = {
   slate    : makeColor('#2a333f', 1.00, 0.66, 0.33),
   grays    : makeColor('#2a333f', 0.15, 0.04),
-  primary  : ['#7ccdcc', '#65c0bf', '#b0e1e0', '#f4ffff'],
-  secondary: ['#2f8fcb', '#2483be', '#63abd8', '#e1eaef'],
+  primary  : makeColor('#186dc5', 1.00, 0.33, 0.15),
+  secondary: makeColor('#56c4c2', 1.00, 0.33, 0.15),
   white    : ['#fff'],
   black    : ['#000'],
   danger   : makeColor('#dc3133', 1.0, 0.15),

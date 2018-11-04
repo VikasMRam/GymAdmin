@@ -6,6 +6,7 @@ storiesOf('Atoms|Button', module)
   .add('default', () => <Button>Hello</Button>)
   .add('disabled', () => <Button disabled>Hello</Button>)
   .add('ghost', () => <Button ghost>Hello</Button>)
+  .add('transparent', () => <Button transparent>Hello</Button>)
   .add('disabled ghost', () => (
     <Button disabled ghost>
       Hello
