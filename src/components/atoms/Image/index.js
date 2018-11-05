@@ -10,7 +10,7 @@ const StyledImage = styled.img`
   border: none;
 `;
 
-const paddingTop = ({ aspectRatio }) => size('picture.proportions', aspectRatio);
+const paddingTop = ({ aspectRatio }) => size('picture.ratios', aspectRatio);
 
 const ResponsiveWrapper = styled.div`
   position: relative;
@@ -34,7 +34,7 @@ export default class Image extends React.Component {
   static propTypes = {
     src: string.isRequired,
     alt: string,
-    aspectRatio: oneOf(['4:3', '16:9']),
+    aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3']),
   };
 
   static generateAlt(src) {

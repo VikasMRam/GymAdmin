@@ -16,7 +16,7 @@ const Wrapper = styled.article`
   position: relative;
   width: 100%;
   height: 0;
-  padding-top: ${size('picture.proportions', '4:3')};
+  padding-top: ${size('picture.ratios', '4:3')};
   margin-bottom: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {

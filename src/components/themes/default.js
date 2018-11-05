@@ -3,17 +3,27 @@ import { makeColor } from './';
 
 const theme = {};
 
-// color variations are
-// 100% 67% 33% 15% 4%
+// Color variations are:
+// whole accent filler stroke background
+//  100%    67%    33%    15%         4%
+// not all of the variations should be used,
+// see below comments or in storybook
 theme.palette = {
-  slate    : makeColor('#2a333f', 1.00, 0.66, 0.33),
-  grays    : makeColor('#2a333f', 0.15, 0.04),
-  primary  : makeColor('#186dc5', 1.00, 0.33, 0.15),
-  secondary: makeColor('#56c4c2', 1.00, 0.33, 0.15),
-  white    : ['#fff'],
-  danger   : makeColor('#dc3133', 1.0, 0.15),
-  warning  : makeColor('#f3c150', 1.0, 0.15),
+  // all available: base, accent, filler, stroke, background
+  slate    : makeColor('#2a333f'),
+  // available: base, filler, stroke
+  primary  : makeColor('#186dc5'),
+  // available: base, filler, stroke
+  secondary: makeColor('#56c4c2'),
+  // available: base
+  white    : makeColor('#ffffff'),
+  // available: base, stroke
+  danger   : makeColor('#dc3133'),
+  // available: base, stroke
+  warning  : makeColor('#f3c150'),
 };
+
+console.table(theme.palette);
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',
@@ -125,6 +135,7 @@ theme.sizes = {
     large   : '3.000rem',   // 48px
     xLarge  : '3.250rem',   // 52px
     xxLarge : '4.500rem',   // 72px
+    xxxLarge: '6.000rem',   // 96px
     textarea: '7.500rem',   // 120px
     huge    : '9.000rem',   // 144px
   },
@@ -190,8 +201,10 @@ theme.sizes = {
       width : '32.25rem',   // 516px
       height: '21.4375rem', // 343px
     },
-    proportions: {
+    ratios: {
       '16:9': '56.25%',
+      golden: '61.803398875%',
+      '3:2':  '66.66%',
       '4:3' : '75%',
     },
   },

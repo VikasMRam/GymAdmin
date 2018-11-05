@@ -7,7 +7,7 @@ import { prop } from 'styled-tools';
 import { size } from 'sly/components/themes';
 
 const fontSize = p => size('text', p.size || p.level);
-const lineHeight = p => size('lineHeight', p.size);
+const lineHeight = p => size('lineHeight', p.size || p.level);
 
 const getTag = level => {
   switch(level) {

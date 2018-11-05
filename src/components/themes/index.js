@@ -20,8 +20,20 @@ export function getKey(key) {
   return prop(key)(theme);
 }
 
-export function makeColor(base, ...variations) {
+const white = Color('white');
+const gradients = [
+  [1.00, 'base'],
+  [0.67, 'accent'],
+  [0.33, 'filler'],
+  [0.15, 'stroke'],
+  [0.04, 'background'],
+];
+
+export function makeColor(base) {
   const color = Color(base);
-  const white = Color('white');
-  return variations.map(v => white.mix(color, v).hex());
+  return gradients.reduce((res, [v, name], i) => {
+    // eslint-disable-next-line no-multi-assign
+    res[i] = res[name] = white.mix(color, v).hex();
+    return res;
+  }, { length: gradients.length });
 }
