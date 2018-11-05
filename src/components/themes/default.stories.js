@@ -77,12 +77,20 @@ storiesOf('Theme', module)
           </Fragment>
         ))
       }
+      <div>
+        <pre>
+          grayscale 4 = grayscale accent{'\n'}
+          grayscale 0, 1 = grayscale filler{'\n'}
+          grayscale 2 = grayscale stroke{'\n'}
+          grayscale 3 = grayscale background{'\n'}
+        </pre>
+      </div>
       <Heading level="title">Old Palete</Heading>
       {Object.entries(oldPalette)
         .map(([key, colors]) => (
           <Fragment>
             <Heading level="subtitle">{key}</Heading>
-            <Colors colors={colors.reduce((c, v, i) =>(c[i]=v,c), {})} />
+            <Colors colors={colors.reduce((c,v,i) =>(c[i]=v,c), {})} />
           </Fragment>
         ))
       }

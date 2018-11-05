@@ -44,6 +44,10 @@ export default function setGlobalStyles() {
       font-family: Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
       box-sizing: border-box;
     }
+    
+    html pre {
+      font-family: Consolas, Liberation Mono, Menlo, Courier, monospace;
+    }
 
     // for IE
     header, nav, main, article, section, aside, footer {
