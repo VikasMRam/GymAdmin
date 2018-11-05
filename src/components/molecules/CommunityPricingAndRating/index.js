@@ -23,11 +23,6 @@ const MoSpan = styled.span`
   font-size: ${size('text.caption')};
 `;
 
-const PricingBox = styled.div`
-  display: flex;
-  align-items: baseline;
-`;
-
 const StyledIcon = styled(Icon)`
   padding-top: ${size('spacing.small')};
   margin-right: ${size('spacing.regular')};
@@ -38,14 +33,17 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
     <Wrapper>
       <StyledCommunityPricingWrapper>
         <DescriptionBlock size="caption">{priceDescription}</DescriptionBlock>
-        <Block size="title">${price} <MoSpan size="caption">/mo</MoSpan> </Block>
+        <Block size="title">
+          ${price}
+          <MoSpan size="caption">/mo</MoSpan>
+        </Block>
       </StyledCommunityPricingWrapper>
       <div>
         <DescriptionBlock size="caption">Average Rating</DescriptionBlock>
-        <PricingBox>
-          <StyledIcon icon="star" />
-          <Block size="title">{rating}</Block>
-        </PricingBox>
+        <Block size="title">
+          <StyledIcon icon="star" palette="primary" />
+          {rating}
+        </Block>
       </div>
     </Wrapper>
   );
