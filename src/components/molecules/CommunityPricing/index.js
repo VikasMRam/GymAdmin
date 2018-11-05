@@ -4,29 +4,20 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import Block from 'sly/components/atoms/Block/index';
-import { Heading } from 'sly/components/atoms/index';
 
 const DescriptionBlock = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const PricingBox = styled.div`
-  display: flex;
-  align-items: baseline;
-`;
-
-const PriceValueHeading = styled(Heading)`
-  margin-right: ${size('spacing.small')};
+const MoSpan = styled.span`
+  font-size: ${size('text.caption')};
 `;
 
 const CommunityPricing = ({ price, description }) => {
   return (
     <div>
       <DescriptionBlock size="caption">{description}</DescriptionBlock>
-      <PricingBox>
-        <PriceValueHeading>${price}</PriceValueHeading>
-        <Block size="caption">/mo</Block>
-      </PricingBox>
+      <Block size="title">${price} <MoSpan size="caption">/mo</MoSpan> </Block>
     </div>
   );
 };
