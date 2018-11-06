@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
-import { palette } from 'styled-theme';
+
 import { Field } from 'redux-form';
 import NumberFormat from 'react-number-format';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
@@ -16,7 +16,7 @@ export const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
 `;
 export const Description = styled.p`
-  color: ${palette('grayscale', 0)};
+  color: ${palette('slate', 'filler')};
   margin-bottom: ${size('spacing.xLarge')};
 `;
 const MoneyValue = styled(Heading)`

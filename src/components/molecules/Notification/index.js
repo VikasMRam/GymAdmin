@@ -2,9 +2,9 @@ import React from 'react';
 import { oneOf, node, func, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp, switchProp } from 'styled-tools';
-import { palette, key } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette, key } from 'sly/components/themes';
 
 import IconButton from 'sly/components/molecules/IconButton';
 

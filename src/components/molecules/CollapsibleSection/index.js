@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Measure from 'react-measure';
 import styled, { css } from 'styled-components';
-import { key } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
 
-import { size } from 'sly/components/themes';
+import { size, key } from 'sly/components/themes';
 import { Hr, Heading, Icon } from 'sly/components/atoms';
 
 const marginBottom = p => p.collapsed

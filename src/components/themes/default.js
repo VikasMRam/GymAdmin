@@ -1,5 +1,9 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { makeColor, makeColorTable } from './';
+import { isTest } from 'sly/config';
+
+import { makeColor, makeColorTable } from './color';
+
+export { colorIndex } from './color';
 
 const theme = {};
 
@@ -11,14 +15,14 @@ const theme = {};
 // DO NOT MODIFY the following without asking Jared
 theme.palette = {
   slate    : makeColor('#2a333f', ['base', 'accent', 'filler', 'stroke', 'background']),
-  primary  : makeColor('#186dc5', ['base', 'filler', 'stroke']),
-  secondary: makeColor('#56c4c2', ['base', 'filler', 'stroke']),
+  primary  : makeColor('#186dc5', ['base',           'filler', 'stroke']),
+  secondary: makeColor('#56c4c2', ['base',           'filler', 'stroke']),
   white    : makeColor('#ffffff', ['base']),
-  danger   : makeColor('#dc3133', ['base', 'stroke']),
-  warning  : makeColor('#f3c150', ['base', 'stroke']),
+  danger   : makeColor('#dc3133', ['base',                     'stroke']),
+  warning  : makeColor('#f3c150', ['base',                     'stroke']),
 };
 
-console.table(makeColorTable(theme.palette));
+if (!isTest) console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',

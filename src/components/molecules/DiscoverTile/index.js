@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { palette, key } from 'styled-theme';
 import { string, func, shape } from 'prop-types';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size, assetPath, palette, key } from 'sly/components/themes';
 import { Image, Button, Link } from 'sly/components/atoms';
 
 const Wrapper = styled(Link)`
@@ -13,7 +12,7 @@ const Wrapper = styled(Link)`
 
   color: ${palette('slate', 0)};
 
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.tiny')};
   padding: 0 ${size('spacing.large')};
   padding-bottom: ${size('spacing.xLarge')};
@@ -30,7 +29,7 @@ const Wrapper = styled(Link)`
       0
       ${size('spacing.small')}
       ${size('spacing.large')}
-      ${palette('grayscale', 0)}80;
+      ${palette('slate', 'filler')}80;
     transform: scale(1.002);
     border-radius: ${size('spacing.small')};
   }

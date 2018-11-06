@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 
 import { titleize } from 'sly/services/helpers/strings';
 import { getHelmetForSearchPage } from 'sly/services/helpers/html_headers';
@@ -21,7 +21,7 @@ import IconButton from 'sly/components/molecules/IconButton';
 const TopWrapper = styled.div`
   padding-bottom: ${size('spacing.xLarge')};
   margin-bottom: ${size('spacing.xLarge')};
-  border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;

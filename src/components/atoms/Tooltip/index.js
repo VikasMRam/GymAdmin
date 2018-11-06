@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { font } from 'styled-theme';
+import { font } from 'sly/components/themes';
 import { ifProp } from 'styled-tools';
 
 const opposites = {

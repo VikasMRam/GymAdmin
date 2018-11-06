@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { arrayOf, shape, string, number, func } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 // import { Button, Hr } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
 

@@ -2,8 +2,7 @@ import React from 'react';
 import { string, shape } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
-import { palette } from 'styled-theme';
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 const styles = css`
   border-radius: ${size('spacing.xLarge')};

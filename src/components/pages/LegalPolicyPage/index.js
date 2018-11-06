@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import { Hr } from 'sly/components/atoms';
 
 import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
@@ -14,7 +14,7 @@ import TOSHTML from './tostext.js';
 
 
 const DescriptionText = styled.div`
-  color: ${palette('grayscale', 1)};
+  color: ${palette('slate', 'filler')};
   margin-bottom: ${size('spacing.huge')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {

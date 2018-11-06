@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { number, string, oneOf } from 'prop-types';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
-import { palette } from 'styled-theme';
+import { palette } from 'sly/components/themes';
 
 import { Icon } from 'sly/components/atoms';
 

@@ -2,10 +2,10 @@
 import React from 'react';
 import { string, number, bool, oneOf } from 'prop-types';
 import styled from 'styled-components';
-import { palette, key } from 'styled-theme';
+
 import { ifProp, prop } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, palette, key } from 'sly/components/themes';
 
 const fontSize = props => size('icon', props.size);
 

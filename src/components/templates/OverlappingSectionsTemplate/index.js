@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
-import { palette } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+
+import { size, assetPath, palette } from 'sly/components/themes';
 
 import HeaderController from 'sly/controllers/HeaderController';
 
@@ -81,7 +81,7 @@ const Grid = styled.div`
 `;
 
 const backgrounds = {
-  grayscale: palette('grayscale', 3),
+  grayscale: palette('slate', 'background'),
   white: palette('white', 0),
 };
 

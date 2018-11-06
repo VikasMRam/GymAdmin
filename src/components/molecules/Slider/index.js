@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { string, number, bool, func, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { palette } from 'styled-theme';
+
 import { prop, switchProp, ifProp } from 'styled-tools';
 import { omit } from 'lodash';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 const thumbColor = ({ disabled }) => palette(disabled ? 2 : 0);
 
-const barColor = palette('grayscale', 2);
+const barColor = palette('slate', 'stroke');
 
 const hoverThumbColor = ({ disabled }) => !disabled && palette(0);
 
@@ -28,7 +28,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   font-size: ${size};
-  color: ${palette('grayscale', 0)};
+  color: ${palette('slate', 'filler')};
   background-color: transparent;
   ${switchProp('valuePosition', {
     bottom: css`

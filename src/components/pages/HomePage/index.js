@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
-import { palette } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+
+import { size, assetPath, palette } from 'sly/components/themes';
 
 import HeaderController from 'sly/controllers/HeaderController';
 
@@ -23,7 +23,7 @@ import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 
 const HeroWrapper = styled.div`
   position: relative;
-  background-color: ${palette('grayscale', 0)};
+  background-color: ${palette('slate', 'filler')};
   height: calc(${size('header.home.heroImage.mobileHeight')});
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {

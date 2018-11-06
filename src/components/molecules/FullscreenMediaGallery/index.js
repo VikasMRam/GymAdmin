@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import Modal from 'sly/components/molecules/Modal';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 

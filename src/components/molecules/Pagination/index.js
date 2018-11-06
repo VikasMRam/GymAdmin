@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { number, func } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { palette } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 
 import { Button, Icon } from 'sly/components/atoms';
 import { styles as buttonStyles } from 'sly/components/atoms/Button';
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,7 +47,7 @@ const PageButton = styled(Button)`
 
 const BreakView = styled.span`
   ${buttonStyles};
-  color: ${palette('grayscale', 0)};
+  color: ${palette('slate', 'filler')};
   cursor: default;
   margin-right: ${size('spacing.regular')};
 `;

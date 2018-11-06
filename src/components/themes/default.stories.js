@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
-import { key } from 'styled-theme';
+import { key } from 'sly/components/themes';
 
 import { Heading } from 'sly/components/atoms';
 import theme from 'sly/components/themes/default';

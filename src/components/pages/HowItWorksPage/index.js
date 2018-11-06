@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import { Icon, Hr, Heading, Block, Link, Image } from 'sly/components/atoms';
 import DiscoverTile from 'sly/components/molecules/DiscoverTile';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
@@ -38,7 +38,7 @@ const ContentHeading = styled.div`
 `;
 
 const ContentSubheading = styled.div`
-  color: ${palette('grayscale', 1)};
+  color: ${palette('slate', 'filler')};
   margin-bottom: ${size('spacing.xLarge')};
 `;
 

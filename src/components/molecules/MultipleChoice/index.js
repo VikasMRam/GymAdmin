@@ -12,10 +12,10 @@ import {
 } from 'prop-types';
 
 import styled, { css } from 'styled-components';
-import { font, palette } from 'styled-theme';
+
 import { ifProp, prop } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, font, palette } from 'sly/components/themes';
 import { Button } from 'sly/components/atoms';
 
 const Wrapper = styled.div`

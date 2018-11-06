@@ -1,9 +1,9 @@
 import React from 'react';
 import { bool, func, string, shape, arrayOf, number } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import { Icon, Button } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
@@ -14,14 +14,14 @@ const Wrapper = styled.div`
     transform: scale(1);
     padding: ${size('spacing.large')};
     flex-direction: row;
-    border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('grayscale', 2)};
+    border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('slate', 'stroke')};
     border-radius: ${size('spacing.tiny')};
   }
 
   &:hover {
     cursor: pointer;
     background: ${palette('white', 0)};
-    box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('grayscale', 0)}80;
+    box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('slate', 'filler')}80;
 
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       transform: scale(1.002);
@@ -46,7 +46,7 @@ export const StyledIcon = styled(Icon)`
 `;
 
 const AdInfo = styled.div`
-  border: ${size('border.regular')} solid ${palette('grayscale', 0)};
+  border: ${size('border.regular')} solid ${palette('slate', 'filler')};
   border-top: 0;
   padding: ${size('spacing.large')};
 

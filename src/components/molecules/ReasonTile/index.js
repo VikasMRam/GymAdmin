@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { palette, key } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette, key } from 'sly/components/themes';
 import { Image, Block, Link } from 'sly/components/atoms';
 
 import Heading from 'sly/components/atoms/Heading';
@@ -12,7 +12,7 @@ export const Wrapper = styled(Link)`
   margin-top: ${size('spacing.xxxLarge')};
   display: block;
   position: relative;
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.small')};
   margin-bottom: ${size('spacing.large')};
   width: 100%;

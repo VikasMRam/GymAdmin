@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
-import { palette } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+
+import { size, assetPath, palette } from 'sly/components/themes';
 
 import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
 import { Link, Image, Block, Heading } from 'sly/components/atoms';

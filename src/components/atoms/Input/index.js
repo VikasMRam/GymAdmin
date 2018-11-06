@@ -1,10 +1,10 @@
 import React from 'react';
 import { bool, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { palette } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 const height = p => size('element', p.size);
 const styles = css`
@@ -14,23 +14,23 @@ const styles = css`
   font-size: ${size('text', 'body')};
   padding: ${size('padding', 'regular')};
   height: ${ifProp({ type: 'textarea' }, size('element.textarea'), height)};
-  color: ${ifProp('invalid', palette('danger', 0), palette('grayscale', 0))};
-  background-color: ${palette('whites', 2)};
+  color: ${ifProp('invalid', palette('danger', 'base'), palette('slate', 'filler'))};
+  background-color: ${palette('slate', 'background')};
   border: 1px solid
-    ${ifProp('invalid', palette('danger', 2), palette('grayscale', 2))};
+    ${ifProp('invalid', palette('danger', 'stroke'), palette('slate', 'stroke'))};
   border-radius: 2px;
 
   &:focus {
     outline: none;
     border-color: ${ifProp(
     'invalid',
-    palette('danger', 2),
-    palette('primary', 0)
+    palette('danger', 'stroke'),
+    palette('primary', 'base')
   )};
   }
 
   &::placeholder {
-    color: ${palette(2)};
+    color: ${palette('stroke')};
   }
 
   &[type='checkbox'],
@@ -49,8 +49,8 @@ const StyledTextarea = styled.textarea`
 `;
 const StyledSelect = styled.select`
   ${styles};
-  background: ${palette('white', 0)};
-  color: ${palette('slate', 0)};
+  background: ${palette('white', 'base')};
+  color: ${palette('slate', 'base')};
 `;
 const StyledInput = styled.input`
   ${styles};
@@ -72,7 +72,7 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
-  palette: 'grayscale',
+  palette: 'stroke',
   type: 'text',
   size: 'regular',
 };

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { palette, key } from 'styled-theme';
+
 import { Link } from 'sly/components/atoms'
 
-import { size } from 'sly/components/themes';
+import { size, palette, key } from 'sly/components/themes';
 import Dotdotdot from 'react-dotdotdot';
 import Rating from 'sly/components/molecules/Rating';
 
@@ -14,7 +14,7 @@ const defaultImage =
 const Wrapper = styled.div`
   display: flex;
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid
-    ${palette('grayscale', 2)};
+    ${palette('slate', 'stroke')};
   width: ${size('tile', 'large', 'width')};
   overflow: hidden;
   transition: box-shadow ${key('transitions.default')},

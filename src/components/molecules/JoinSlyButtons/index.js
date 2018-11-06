@@ -1,9 +1,9 @@
 import React from 'react';
 import { func, string } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import { Button, Hr, Block, Icon, Heading } from 'sly/components/atoms';
 
 const StyledButton = styled(Button)`
@@ -17,7 +17,7 @@ const StyledButton = styled(Button)`
 StyledButton.displayName = 'StyledButton';
 
 const GoogleButton = StyledButton.extend`
-  border-color: ${palette('grayscale', 2)};
+  border-color: ${palette('slate', 'stroke')};
 
   span {
     margin-right: ${size('spacing.large')};

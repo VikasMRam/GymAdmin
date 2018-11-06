@@ -1,9 +1,10 @@
-import Color from 'color';
-import { key } from 'styled-theme';
+import { key, palette as styledPalette } from 'styled-theme';
 import { prop } from 'styled-tools';
 
 import { publicPath } from 'sly/config';
-import theme from './default';
+import theme, { colorIndex } from './default';
+
+export { key, font } from 'styled-theme';
 
 export function size(...args) {
   return key(['sizes', ...args].join('.'));
@@ -20,32 +21,10 @@ export function getKey(key) {
   return prop(key)(theme);
 }
 
-const white = Color('white');
-const gradients = [
-  [1.00, 'base'],
-  [0.67, 'accent'],
-  [0.33, 'filler'],
-  [0.15, 'stroke'],
-  [0.04, 'background'],
-];
-
-export function makeColor(base, allowed = []) {
-  const color = Color(base);
-  return gradients.reduce((res, [v, name], i) => {
-    // eslint-disable-next-line no-multi-assign
-    if (allowed.includes(name)) {
-      res[i] = res[name] = white.mix(color, v).hex();
-    }
-    return res;
-  }, { length: gradients.length });
-}
-
-const clear = color => color || '';
-export function makeColorTable(palette) {
-  const names = gradients.map(([_, name]) => name);
-  return Object.entries(palette)
-    .reduce((cumul, [name, colors]) => {
-        cumul[name] = names.reduce((c, name) => (c[name] = clear(colors[name]), c), {});
-        return cumul;
-    }, {});
+export function palette(...args) {
+  let last = args.pop();
+  if (typeof last === 'string') {
+    last = colorIndex[last];
+  }
+  return styledPalette(...[...args, last]);
 }

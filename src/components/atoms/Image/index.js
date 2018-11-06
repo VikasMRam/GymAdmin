@@ -2,7 +2,7 @@ import React from 'react';
 import { string, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { assetPath } from 'sly/components/themes';
 
 const StyledImage = styled.img`

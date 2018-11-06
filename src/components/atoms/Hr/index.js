@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { string, number } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 
 const HRStyled = styled.hr`
   border: 0;

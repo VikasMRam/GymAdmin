@@ -1,10 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { palette } from 'styled-theme';
+
 import { bool, string, shape, number, func, oneOf } from 'prop-types';
 
 import { community as communityPropType } from 'sly/propTypes/community';
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
 import Checkbox from 'sly/components/molecules/Checkbox';

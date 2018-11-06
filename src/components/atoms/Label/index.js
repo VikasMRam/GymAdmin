@@ -1,9 +1,9 @@
 import { string, bool } from 'prop-types';
 import styled from 'styled-components';
-import { font, palette } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, font, palette } from 'sly/components/themes';
 
 const Label = styled.label`
   display: block;

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { string, number, shape, arrayOf } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+
 import { Marker, InfoWindow } from 'react-google-maps';
 
 import { isServer } from 'sly/config';
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import Map from 'sly/components/atoms/Map';
 import MapTile from 'sly/components/molecules/MapTile';
 

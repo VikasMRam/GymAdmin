@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import { Icon, Link, Hr } from 'sly/components/atoms';
 
 import config from 'sly/config';
 
 const FooterWrapper = styled.div`
-  background-color: ${palette('grayscale', 2)};
+  background-color: ${palette('slate', 'stroke')};
   color: ${palette('white', 0)};
 `;
 

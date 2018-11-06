@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { palette, key } from 'styled-theme';
+
 import { object, func } from 'prop-types';
 
-import { size } from 'sly/components/themes';
+import { size, palette, key } from 'sly/components/themes';
 import Button from 'sly/components/atoms/Button';
 
 const FullWrapper = styled.div`
@@ -12,7 +12,7 @@ const FullWrapper = styled.div`
   bottom: 0;
   background-color: ${palette('white', 0)};
   width: 100%;
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   z-index: ${key('zIndexes.stickySections')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {

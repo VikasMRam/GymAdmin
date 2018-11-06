@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
-import { palette } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { Icon, Image } from 'sly/components/atoms';
 import ThumbnailScroller from 'sly/components/molecules/ThumbnailScroller';
 

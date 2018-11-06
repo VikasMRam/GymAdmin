@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, func, arrayOf, object } from 'prop-types';
-import { palette } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+
+import { size, assetPath, palette } from 'sly/components/themes';
 
 import HeaderController from 'sly/controllers/HeaderController';
 
@@ -103,7 +103,7 @@ const TabsWrapper = styled.div`
 `;
 
 const Tab = styled(Link)`
-  background-color: ${p => p.active ? palette('white', 0) : palette('grayscale', 3)};
+  background-color: ${p => p.active ? palette('white', 0) : palette('slate', 'background')};
   padding: ${size('spacing.xLarge')} 0;
   flex-grow: 1;
   font-size: ${size('spacing.subtitle')};

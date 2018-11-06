@@ -1,10 +1,10 @@
 import React from 'react';
 import { string, node, bool, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { font, palette } from 'styled-theme';
+
 import { prop } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, font, palette } from 'sly/components/themes';
 
 const fontSize = p => size('text', p.size || p.level);
 const lineHeight = p => size('lineHeight', p.size || p.level);

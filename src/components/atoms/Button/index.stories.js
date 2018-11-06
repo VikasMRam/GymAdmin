@@ -16,7 +16,7 @@ storiesOf('Atoms|Button', module)
   .add('another palette', () => <Button palette="danger">Hello</Button>)
   .add('label', () => <Button type="label">Hello</Button>)
   .add('label another palette', () => (
-    <Button palette="grayscale" type="label">
+    <Button palette="slate" type="label">
       Hello
     </Button>
   ))

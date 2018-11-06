@@ -2,9 +2,9 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { string, func, oneOf } from 'prop-types';
 import { switchProp } from 'styled-tools';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 
 import { Box, Heading, Block, Button, Image } from 'sly/components/atoms';
 

@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { string, bool } from 'prop-types';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import { Icon } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
   padding: ${size('spacing.xLarge')};
-  border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('grayscale', 2)};
+  border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.tiny')};
 `;
 

@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { oneOf, string, func } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { palette, key } from 'styled-theme';
+
 import { switchProp, ifProp } from 'styled-tools';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size, assetPath, palette, key } from 'sly/components/themes';
 import { Icon, Input, Button, Image } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
@@ -27,7 +27,7 @@ const SearchInputButtonWrapper = styled.div`
 `;
 const SearchTextBox = styled(Input)`
   height: ${size('element.large')};
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.tiny')} 0 0 ${size('spacing.tiny')};
 
   ${switchProp('layout', {
@@ -43,7 +43,7 @@ const SearchTextBox = styled(Input)`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     height: ${size('element.large')};
-    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
     border-radius: ${size('spacing.tiny')} 0 0 ${size('spacing.tiny')};
 
   ${switchProp('layout', {
@@ -95,9 +95,9 @@ const SearchSuggestionsWrapper = styled.div`
   left: 0;
   right: 0;
   background: ${palette('white', 0)};
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')}
-    ${palette('grayscale', 2)};
+    ${palette('slate', 'stroke')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     right: ${ifProp({ layout: 'header' }, size('spacing.xxxLarge'), 0)};
   }
@@ -105,14 +105,14 @@ const SearchSuggestionsWrapper = styled.div`
     right: 0;
   }
 `;
-const searchSuggestionBGColor = p => p.active ? palette('grayscale', 3) : palette('white', 0);
+const searchSuggestionBGColor = p => p.active ? palette('slate', 'background') : palette('white', 0);
 const SearchSuggestion = styled.div`
   width: 100%;
   padding: ${size('spacing.large')};
   background-color: ${searchSuggestionBGColor};
 
   :hover {
-    background-color: ${palette('grayscale', 3)};
+    background-color: ${palette('slate', 'background')};
     cursor: pointer;
   }
 `;

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { string, shape } from 'prop-types';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import { formatDate } from 'sly/services/helpers/date';
 
 const Wrapper = styled.div`
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 
 const CreatorDateDiv = styled.div`
   display: flex;
-  color: ${palette('grayscale', 2)};
+  color: ${palette('slate', 'stroke')};
   margin-bottom: ${size('spacing.regular')};
 `;
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { bool } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
-import { palette } from 'styled-theme';
+import { palette } from 'sly/components/themes';
 
 import { Icon } from 'sly/components/atoms';
 
@@ -13,7 +13,7 @@ export const StyledIcon = styled(Icon)`
       fill: ${palette('white', 0)};
     }
     #box {
-      stroke: ${palette('grayscale', 2)};
+      stroke: ${palette('slate', 'stroke')};
     }
     color: ${ifProp('checked', palette('secondary', 0), palette('white', 0))};
   }
