@@ -20,7 +20,7 @@ const PatchedCollapsibleBlock = styled(({ className, ...props }) => (
     blockClassName={className}
     {...props}
   />))`
-  line-height: 2.1;
+  line-height: 1.5;
   margin-bottom: ${size('spacing.large')};
   font-size: ${size('text.tiny')};
 `;
@@ -37,6 +37,7 @@ const LinkList = styled.div`
   > a {
     display: block;
     color: ${palette('slate', 0)};
+    margin-bottom: ${size('spacing.large')};
   }
 `;
 
@@ -48,7 +49,7 @@ export default class SeoLinks extends Component {
   renderSection = (title, data) => (
     <Fragment>
       <StyledHeading level="subtitle">{title}</StyledHeading>
-      <PatchedCollapsibleBlock minHeight="tiny">
+      <PatchedCollapsibleBlock minHeight="small">
         <LinkList>
           {data.map(link => <Link key={link.to} {...link}>{link.title}</Link>)}
         </LinkList>
