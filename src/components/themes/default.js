@@ -1,5 +1,5 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { makeColor } from './';
+import { makeColor, makeColorTable } from './';
 
 const theme = {};
 
@@ -8,22 +8,17 @@ const theme = {};
 //  100%    67%    33%    15%         4%
 // not all of the variations should be used,
 // see below comments or in storybook
+// DO NOT MODIFY the following without asking Jared
 theme.palette = {
-  // all available: base, accent, filler, stroke, background
-  slate    : makeColor('#2a333f'),
-  // available: base, filler, stroke
-  primary  : makeColor('#186dc5'),
-  // available: base, filler, stroke
-  secondary: makeColor('#56c4c2'),
-  // available: base
-  white    : makeColor('#ffffff'),
-  // available: base, stroke
-  danger   : makeColor('#dc3133'),
-  // available: base, stroke
-  warning  : makeColor('#f3c150'),
+  slate    : makeColor('#2a333f', ['base', 'accent', 'filler', 'stroke', 'background']),
+  primary  : makeColor('#186dc5', ['base', 'filler', 'stroke']),
+  secondary: makeColor('#56c4c2', ['base', 'filler', 'stroke']),
+  white    : makeColor('#ffffff', ['base']),
+  danger   : makeColor('#dc3133', ['base', 'stroke']),
+  warning  : makeColor('#f3c150', ['base', 'stroke']),
 };
 
-console.table(theme.palette);
+console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',

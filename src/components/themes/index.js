@@ -29,11 +29,23 @@ const gradients = [
   [0.04, 'background'],
 ];
 
-export function makeColor(base) {
+export function makeColor(base, allowed = []) {
   const color = Color(base);
   return gradients.reduce((res, [v, name], i) => {
     // eslint-disable-next-line no-multi-assign
-    res[i] = res[name] = white.mix(color, v).hex();
+    if (allowed.includes(name)) {
+      res[i] = res[name] = white.mix(color, v).hex();
+    }
     return res;
   }, { length: gradients.length });
+}
+
+const clear = color => color || '';
+export function makeColorTable(palette) {
+  const names = gradients.map(([_, name]) => name);
+  return Object.entries(palette)
+    .reduce((cumul, [name, colors]) => {
+        cumul[name] = names.reduce((c, name) => (c[name] = clear(colors[name]), c), {});
+        return cumul;
+    }, {});
 }
