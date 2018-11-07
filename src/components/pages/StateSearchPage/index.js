@@ -149,6 +149,7 @@ export default class StateSearchPage extends Component {
         searchParams={searchParams}
         requestMeta={requestMeta}
         onAdTileClick={onAdTileClick}
+        location={location}
       />);
     };
 
