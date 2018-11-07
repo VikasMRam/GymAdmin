@@ -8,7 +8,7 @@ const wrap = (props = {}) =>
 
 describe('DateChoiceTile', () => {
   it('renders', () => {
-    const date = '1-30-2018';
+    const date = '2018-1-30';
     const dayName = 'Tuesday';
     const day = 30;
     const month = 'JAN';
@@ -20,7 +20,7 @@ describe('DateChoiceTile', () => {
   });
 
   it('renders with selected', () => {
-    const date = '1-30-2018';
+    const date = '2018-1-30';
     const dayName = 'Tuesday';
     const day = 30;
     const month = 'JAN';
@@ -34,7 +34,7 @@ describe('DateChoiceTile', () => {
   });
 
   it('onClick is called', () => {
-    const date = '1-30-2018';
+    const date = '2018-1-30';
     const onClick = jest.fn();
     const wrapper = wrap({
       date, onClick,

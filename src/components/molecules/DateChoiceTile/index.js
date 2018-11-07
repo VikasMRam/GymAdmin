@@ -21,7 +21,7 @@ StyledHeading.displayName = 'StyledHeading';
 const DateChoiceTile = ({
   date, selected, onClick,
 }) => {
-  const parsedDate = moment(date, 'MM-DD-YYYY');
+  const parsedDate = moment(date, 'YYYY-MM-DD');
   if (!parsedDate.isValid()) {
     return 'Failed to parse date';
   }
