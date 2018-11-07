@@ -28,6 +28,7 @@ const ListItem = styled.div`
 `;
 
 const CheckIcon = styled(Icon)`
+  padding-top: ${size('spacing.tiny')};
   color: ${palette('slate', 'accent')};
   margin-right: ${size('spacing.regular')};
 `;
@@ -41,7 +42,7 @@ const CommunityScheduleATour = ({ onSATClick }) => {
   const list = ['Completely free!', 'No obligation - cancel anytime'];
   const listComponents = list.map(item => (
     <ListItem key={item}>
-      <CheckIcon icon="check" />
+      <CheckIcon icon="check" size="small" />
       <ListItemText>{item}</ListItemText>
     </ListItem>
   ));
