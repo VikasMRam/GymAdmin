@@ -13,6 +13,8 @@ import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 
 import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
+import queryString from 'query-string';
+
 import AdTile from 'sly/components/molecules/AdTile/index';
 import { SearchPageTileTexts as searchAdProps } from 'sly/services/helpers/ad';
 
@@ -65,6 +67,8 @@ const getPaginationData = requestMeta => ({
   total: requestMeta['filtered-count'] / requestMeta['page-size'],
 });
 
+
+
 const mostSearchedCities = [
   {
     to: '/assisted-living/california/san-francisco',
@@ -111,19 +115,12 @@ export default class CommunitySearchList extends Component {
     onParamsChange: func.isRequired,
     onAdTileClick: func.isRequired,
     communityList: arrayOf(object).isRequired,
-  };
-
-  onPageChange = (page) => {
-    const { onParamsChange } = this.props;
-    console.log('Seeing page change',page);
-    onParamsChange({
-      changedParams: { 'page-number': page },
-    });
+    location: object.isRequired,
   };
 
   render() {
     const {
-      communityList, requestMeta, searchParams, onAdTileClick, ...props
+      communityList, requestMeta, searchParams, onAdTileClick, location, ...props
     } = this.props;
     const adIndex = 2;
     let mostSearchedCitiesComponents = null;
@@ -158,6 +155,21 @@ export default class CommunitySearchList extends Component {
     });
     // components.splice(adIndex, 0, <AdTileWrapper key="ad" ><AdTile {...searchAdProps} onClick={() => onAdTileClick()} /></AdTileWrapper>);
     const { current, total } = getPaginationData(requestMeta);
+
+    //pagination pathname
+    let params = {};
+    if (location.search) {
+      params = queryString.parse(location.search);
+    }
+    if (params['page-number']) {
+      delete params['page-number'];
+    }
+    const qs = queryString.stringify(params);
+    let basePath = location.pathname;
+    if (qs.length > 0) {
+      basePath = `${basePath}?${qs}`;
+    }
+
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -182,7 +194,7 @@ export default class CommunitySearchList extends Component {
         {communityList.length > 0 &&
           <Fragment>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-            <Pagination onChange={this.onPageChange} current={current} total={total} />
+            <Pagination basePath={basePath} pageParam="page-number" current={current} total={total} />
             <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
           </Fragment>
         }

@@ -1,10 +1,10 @@
-import React, { Component, Fragment } from 'react';
-import { number, func } from 'prop-types';
+import React, { Component } from 'react';
+import { number, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { ifProp } from 'styled-tools';
 
-import { Button, Icon } from 'sly/components/atoms';
+import { Link, Icon } from 'sly/components/atoms';
 import { styles as buttonStyles } from 'sly/components/atoms/Button';
 import { size, palette } from 'sly/components/themes';
 
@@ -17,9 +17,11 @@ const Wrapper = styled.div`
 const marginLeftNext = css`
   margin-left: calc(${size('spacing.large')} - ${size('spacing.regular')});
 `;
-
-const ChevronButton = styled(({ flip, ...props }) => (
-  <Button
+const StyledLink = styled(Link)`
+  ${buttonStyles};
+`;
+const ChevronLink = styled(({ flip, ...props }) => (
+  <StyledLink
     ghost
     palette="grayscale"
     kind="label"
@@ -31,13 +33,14 @@ const ChevronButton = styled(({ flip, ...props }) => (
       size="small"
       palette="grayscale"
     />
-  </Button>
+  </StyledLink>
 ))`
   margin-right: ${ifProp('flip', 0, size('spacing.large'))};
   ${ifProp('flip', marginLeftNext, 0)};
 `;
 
-const PageButton = styled(Button)`
+const PageLink = styled(Link)`
+ ${buttonStyles};
   margin-right: ${size('spacing.regular')};
   margin-bottom: ${size('spacing.regular')};
   &:last-of-type {
@@ -58,7 +61,8 @@ export default class Pagination extends Component {
     total: number.isRequired,
     margin: number.isRequired,
     range: number.isRequired,
-    onChange: func.isRequired,
+    basePath: string.isRequired,
+    pageParam: string.isRequired,
   };
 
   static defaultProps = {
@@ -68,21 +72,36 @@ export default class Pagination extends Component {
   };
 
   prevButton() {
-    const { current, total, onChange } = this.props;
+    const { current, basePath, pageParam } = this.props;
 
     if (current <= 0) return null;
 
-    const prev = () => onChange(current - 1);
-    return <ChevronButton onClick={prev} />;
+    let delim = '?';
+    if (basePath.indexOf(delim) > -1) {
+      delim = '&';
+    }
+    const prev = current - 1;
+    if (prev === 0) {
+      return <ChevronLink href={basePath} />;
+    }
+
+    const prevHref = `${basePath}${delim}${pageParam}=${prev}`;
+    return <ChevronLink href={prevHref} />;
   }
 
   nextButton() {
-    const { current, total, onChange } = this.props;
+    const { current, total, basePath, pageParam } = this.props;
 
     if (current >= total - 1) return null;
 
-    const next = () => onChange(current + 1);
-    return <ChevronButton onClick={next} flip />
+    let delim = '?';
+    if (basePath && basePath.indexOf(delim) > -1) {
+      delim = '&';
+    }
+
+    const next = current + 1;
+    const nextHref = `${basePath}${delim}${pageParam}=${next}`;
+    return <ChevronLink href={nextHref} flip />;
   }
 
   ellipsis(index) {
@@ -99,21 +118,27 @@ export default class Pagination extends Component {
   }
 
   pageButton(index) {
-    const { current, onChange } = this.props;
+    const { current, basePath, pageParam } = this.props;
     const sel = current === index;
+    let delim = '?';
+    if (basePath && basePath.indexOf(delim) > -1) {
+      delim = '&';
+    }
     const palette = sel
       ? 'secondary'
       : 'grayscale';
-    const click = () => !sel && onChange(index);
+
+    const pageHref = (index === 0) ? basePath : `${basePath}${delim}${pageParam}=${index}`;
+
     return (
-      <PageButton
+      <PageLink
         kind="label"
         key={index}
         ghost={!sel}
         palette={palette}
-        onClick={click}>
+        href={pageHref} >
           { index + 1 }
-      </PageButton>
+      </PageLink>
     );
   }
 
@@ -170,7 +195,7 @@ export default class Pagination extends Component {
   }
 
   render() {
-    const { current, total, onChange } = this.props;
+    const { current, total, basePath } = this.props;
 
     return (
       <Wrapper>
