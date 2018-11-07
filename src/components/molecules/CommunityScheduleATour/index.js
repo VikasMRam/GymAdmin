@@ -6,7 +6,7 @@ import { size, palette } from 'sly/components/themes';
 import { Heading, Button, Icon, Block } from 'sly/components/atoms/index';
 
 const Wrapper = styled.div`
-  width: calc(${size('layout.col4')} + 3 * ${size('layout.gutter')});
+  width: ${size('layout.col4')};
   padding: ${size('spacing.xLarge')};
 `;
 
