@@ -3,7 +3,7 @@ import { func, object, bool, number, string } from 'prop-types';
 import { Redirect } from 'react-router';
 
 import { connectController } from 'sly/controllers';
-import withServerState from 'sly/store/withServerState';
+import { withServerState } from 'sly/store';
 import SlyEvent from 'sly/services/helpers/events';
 import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';

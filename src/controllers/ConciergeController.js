@@ -3,6 +3,7 @@ import { string, func, object } from 'prop-types';
 
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 
+import { authenticated } from 'sly/store';
 import { getDetail } from 'sly/store/selectors';
 import { connectController } from 'sly/controllers';
 import SlyEvent from 'sly/services/helpers/events';
@@ -322,7 +323,9 @@ const mapStateToProps = (state, props) => {
 
 const submit = data => resourceCreateRequest('userAction', data);
 
-export default connectController(
+export default authenticated()(connectController(
   mapStateToProps,
-  { submit },
-)(ConciergeController);
+  (dispatch, { ensureAuthenticated }) => ({
+    submit: data => dispatch(ensureAuthenticated(submit(data))),
+  }),
+)(ConciergeController));

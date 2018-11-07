@@ -5,7 +5,7 @@ import { createLogger } from 'redux-logger';
 import { isDev, isBrowser } from 'sly/config';
 import entitiesMiddleware from './entities/middleware';
 import reducer from './reducer';
-import sagas from './resource/sagas';
+import sagas from './sagas';
 
 const devtools =
   isDev && isBrowser && window.devToolsExtension
