@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
-import Heading from 'sly/components/atoms/Heading/index';
-import Button from 'sly/components/atoms/Button/index';
-import { Icon } from 'sly/components/atoms/index';
+import { Heading, Button, Icon, Block } from 'sly/components/atoms/index';
 
 const Wrapper = styled.div`
-  width: calc( 4 * ${size('layout.col1')} + 3 * ${size('layout.gutter')});
+  width: calc(${size('layout.col4')} + 3 * ${size('layout.gutter')});
   padding: ${size('spacing.xLarge')};
 `;
 
@@ -33,9 +31,8 @@ const CheckIcon = styled(Icon)`
   margin-right: ${size('spacing.regular')};
 `;
 
-const ListItemText = styled.div`
+const ListItemText = styled(Block)`
   color: ${palette('slate', 'accent')};
-  font-size: ${size('text.caption')};
 `;
 
 const CommunityScheduleATour = ({ onSATClick }) => {
@@ -43,14 +40,14 @@ const CommunityScheduleATour = ({ onSATClick }) => {
   const listComponents = list.map(item => (
     <ListItem key={item}>
       <CheckIcon icon="check" size="small" />
-      <ListItemText>{item}</ListItemText>
+      <ListItemText size="caption">{item}</ListItemText>
     </ListItem>
   ));
   return (
     <Wrapper>
       <DescriptionHeading size="subtitle">Tour this commmunity for free</DescriptionHeading>
       <SATButton kind="jumbo" palette="primary" onClick={onSATClick}>Schedule a Tour</SATButton>
-      <div>{listComponents}</div>
+      <Fragment>{listComponents}</Fragment>
     </Wrapper>
   );
 };
