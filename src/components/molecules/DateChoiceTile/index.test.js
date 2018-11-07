@@ -42,4 +42,12 @@ describe('DateChoiceTile', () => {
     wrapper.simulate('click');
     expect(onClick).toHaveBeenCalled();
   });
+
+  it('errors with invalid date', () => {
+    const date = 'blah';
+    const wrapper = wrap({
+      date,
+    });
+    expect(wrapper.contains('Failed to parse date')).toBe(true);
+  });
 });
