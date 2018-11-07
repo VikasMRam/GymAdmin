@@ -1,6 +1,7 @@
 import React from 'react';
-import { oneOf, bool, func } from 'prop-types';
+import { string, bool, func } from 'prop-types';
 import styled from 'styled-components';
+import moment from 'moment';
 
 import { size } from 'sly/components/themes';
 
@@ -15,27 +16,36 @@ const StyledBox = styled(Box)`
 const StyledHeading = styled(Heading)`
   margin: 0;
 `;
+StyledHeading.displayName = 'StyledHeading';
 
 const DateChoiceTile = ({
-  dayName, day, month, selected, onClick,
-}) => (
-  <StyledBox
-    padding="regular"
-    border={selected ? 'large' : 'regular'}
-    palette={selected ? 'primary' : 'slate'}
-    highlighted={selected}
-    onClick={onClick}
-  >
-    <div>{dayName}</div>
-    <StyledHeading size="title">{day}</StyledHeading>
-    <div>{month}</div>
-  </StyledBox>
-);
+  date, selected, onClick,
+}) => {
+  const parsedDate = moment(date, 'MM-DD-YYYY');
+  if (!parsedDate.isValid()) {
+    return 'Failed to parse date';
+  }
+  const dayName = parsedDate.format('dddd');
+  const day = parsedDate.format('D');
+  const month = parsedDate.format('MMM').toUpperCase();
+
+  return (
+    <StyledBox
+      padding="regular"
+      border={selected ? 'large' : 'regular'}
+      palette={selected ? 'primary' : 'slate'}
+      highlighted={selected}
+      onClick={onClick}
+    >
+      <div>{dayName}</div>
+      <StyledHeading size="title">{day}</StyledHeading>
+      <div>{month}</div>
+    </StyledBox>
+  );
+};
 
 DateChoiceTile.propTypes = {
-  dayName: oneOf(['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']).isRequired,
-  day: oneOf([...(new Array(30))].map((_, i) => i + 1)).isRequired,
-  month: oneOf(['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']).isRequired,
+  date: string,
   selected: bool,
   onClick: func,
 };

@@ -8,34 +8,36 @@ const wrap = (props = {}) =>
 
 describe('DateChoiceTile', () => {
   it('renders', () => {
-    const dayName = 'Monday';
-    const day = 12;
+    const date = '1-30-2018';
+    const dayName = 'Tuesday';
+    const day = 30;
     const month = 'JAN';
-    const wrapper = wrap({ dayName, day, month });
+    const wrapper = wrap({ date });
     expect(wrapper.contains(dayName)).toBe(true);
-    expect(wrapper.contains(day)).toBe(true);
+    expect(wrapper.find('StyledHeading').dive().dive().dive()
+      .text()).toContain(day);
     expect(wrapper.contains(month)).toBe(true);
   });
 
   it('renders with selected', () => {
-    const dayName = 'Monday';
-    const day = 12;
+    const date = '1-30-2018';
+    const dayName = 'Tuesday';
+    const day = 30;
     const month = 'JAN';
     const wrapper = wrap({
-      dayName, day, month, selected: true,
+      date, selected: true,
     });
     expect(wrapper.contains(dayName)).toBe(true);
-    expect(wrapper.contains(day)).toBe(true);
+    expect(wrapper.find('StyledHeading').dive().dive().dive()
+      .text()).toContain(day);
     expect(wrapper.contains(month)).toBe(true);
   });
 
   it('onClick is called', () => {
-    const dayName = 'Monday';
-    const day = 12;
-    const month = 'JAN';
+    const date = '1-30-2018';
     const onClick = jest.fn();
     const wrapper = wrap({
-      dayName, day, month, onClick,
+      date, onClick,
     });
     wrapper.simulate('click');
     expect(onClick).toHaveBeenCalled();
