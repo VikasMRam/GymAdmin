@@ -176,6 +176,7 @@ const CommunitySearchPage = ({
             onParamsRemove={onParamsRemove}
             onAdTileClick={onAdTileClick}
             isFetchingResults={isFetchingResults}
+            location={location}
           />
           {additionalDivs}
         </Fragment>
@@ -191,6 +192,7 @@ const CommunitySearchPage = ({
         onParamsRemove={onParamsRemove}
         onAdTileClick={onAdTileClick}
         isFetchingResults={isFetchingResults}
+        location={location}
       />
     );
   };
