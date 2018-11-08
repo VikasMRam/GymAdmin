@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { any } from 'prop-types';
 import styled from 'styled-components';
 
@@ -6,7 +6,7 @@ import { size } from 'sly/components/themes';
 
 import HeaderController from 'sly/controllers/HeaderController';
 
-import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
+import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import Footer from 'sly/components/organisms/Footer';
 
 const TwoColummnWrapper = styled.div`
@@ -34,17 +34,17 @@ const CommunityDetailPageTemplate = ({
   column,
   bottom,
 }) => (
-  <BasePageTemplate
-    header={<HeaderController />}
-    footer={<Footer />}
-    hasStickyFooter
-  >
-    <TwoColummnWrapper>
-      <MainWrapper>{children}</MainWrapper>
-      <ColumnWrapper>{column}</ColumnWrapper>
-    </TwoColummnWrapper>
-    {bottom}
-  </BasePageTemplate>
+  <Fragment>
+    <TemplateHeader><HeaderController /></TemplateHeader>
+    <TemplateContent>
+      <TwoColummnWrapper>
+        <MainWrapper>{children}</MainWrapper>
+        <ColumnWrapper>{column}</ColumnWrapper>
+      </TwoColummnWrapper>
+      {bottom}
+    </TemplateContent>
+    <Footer />
+  </Fragment>
 );
 
 CommunityDetailPageTemplate.propTypes = {

@@ -7,7 +7,7 @@ import { size, assetPath, palette } from 'sly/components/themes';
 
 import HeaderController from 'sly/controllers/HeaderController';
 
-import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
+import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { Image, Link, Block, Heading, Hr } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import HowItWorksInfoTile from 'sly/components/molecules/HowItWorksInfoTile';
@@ -210,7 +210,6 @@ const HowItWorksDetailPage = ({
   cards,
   onTabClick,
   activeType,
-  onLocationSearch,
 }) => {
   const header = (
     <Header heroImageUrl={heroImageUrl} heading={heading} subheading={subheading}>
@@ -226,24 +225,25 @@ const HowItWorksDetailPage = ({
     </Header>
   );
   return (
-    <BasePageTemplate
-      header={header}
-      footer={<Bottom />}
-    >
-      <ForFamiliesComponents contents={contents} />
-      <StyledHr />
-      <CardsSection>
-        <StyledHeading>Why Use Seniorly</StyledHeading>
-        <CardTiles>
-          {cards.map((item, index) => (
-            <IconInfoTile
-              key={index}
-              {...item}
-            />
-          ))}
-        </CardTiles>
-      </CardsSection>
-    </BasePageTemplate>
+    <Fragment>
+      <TemplateHeader>{header}</TemplateHeader>
+      <TemplateContent>
+        <ForFamiliesComponents contents={contents} />
+        <StyledHr />
+        <CardsSection>
+          <StyledHeading>Why Use Seniorly</StyledHeading>
+          <CardTiles>
+            {cards.map((item, index) => (
+              <IconInfoTile
+                key={index}
+                {...item}
+              />
+            ))}
+          </CardTiles>
+        </CardsSection>
+      </TemplateContent>
+      <Bottom />
+    </Fragment>
   );
 };
 
