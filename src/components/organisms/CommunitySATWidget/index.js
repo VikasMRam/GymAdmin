@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 `;
 
 const PricingAndRatingWrapper = styled.div`
-  padding: ${size('spacing.large')};
+  padding: ${size('spacing.xLarge')};
   border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 `;
 
