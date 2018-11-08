@@ -5,7 +5,7 @@ import Box from '.';
 
 const wrap = (props = {}) => shallow(<Box {...props} />);
 
-const palette = 'mypalette';
+const palette = 'slate';
 
 describe('Box', () => {
   it('renders with default palette', () => {

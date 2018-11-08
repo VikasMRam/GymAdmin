@@ -6,7 +6,6 @@ import { size, palette } from 'sly/components/themes';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating/index';
 import CommunityScheduleATour from 'sly/components/molecules/CommunityScheduleATour/index';
 import CommunityAgentCashback from 'sly/components/molecules/CommunityAgentCashback/index';
-import Hr from 'sly/components/atoms/Hr/index';
 
 const Wrapper = styled.div`
   width: ${size('layout.col4')};
@@ -18,10 +17,7 @@ const Wrapper = styled.div`
 
 const PricingAndRatingWrapper = styled.div`
   padding: ${size('spacing.large')};
-`;
-
-const StyledHr = styled(Hr)`
-  margin-bottom: 0;
+  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 `;
 
 const CommunitySATWidget = ({ price, rating, onSATClick }) => (
@@ -29,7 +25,6 @@ const CommunitySATWidget = ({ price, rating, onSATClick }) => (
     <PricingAndRatingWrapper>
       <CommunityPricingAndRating price={price} rating={rating} />
     </PricingAndRatingWrapper>
-    <StyledHr />
     <CommunityScheduleATour onSATClick={onSATClick} />
     <CommunityAgentCashback />
   </Wrapper>
