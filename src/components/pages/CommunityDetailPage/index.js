@@ -258,8 +258,6 @@ export default class CommunityDetailPage extends Component {
     const onLeaveReview = () => {};
     // TODO: move this to a container PricingAndAvailability for handling bookings
     const { hasSlyReviews, hasWebReviews, reviewsValue } = propRatings;
-    // TODO: Copied from CommunitySummary
-    const reviewsValueFixed = reviewsValue ? reviewsValue.toFixed(1).replace(/\.0+$/, '') : null;
     const ratingsArray = propRatings.ratingsArray || [];
     const reviewsFinal = reviews || [];
     const serviceHighlightsFinal = serviceHighlights || [];
@@ -288,7 +286,7 @@ export default class CommunityDetailPage extends Component {
         top={isStickyHeaderVisible ? 84 : 24}
         bottomBoundary="#sticky-sidebar-boundary"
       >
-        <CommunitySATWidget price={startingRate} rating={reviewsValueFixed} onSATClick={onSATClick} />
+        <CommunitySATWidget price={startingRate} rating={reviewsValue} onSATClick={onSATClick} />
       </Sticky>
     );
     const bottomContent = (
