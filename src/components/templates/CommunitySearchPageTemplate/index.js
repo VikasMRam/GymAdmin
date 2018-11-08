@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { any, func } from 'prop-types';
 import styled from 'styled-components';
 
@@ -6,7 +6,7 @@ import { size } from 'sly/components/themes';
 
 import HeaderController from 'sly/controllers/HeaderController';
 
-import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
+import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import Footer from 'sly/components/organisms/Footer';
 
 const TwoColumnWrapper = styled.div`
@@ -38,15 +38,16 @@ const CommunitySearchPageTemplate = ({
   children,
   column,
 }) => (
-  <BasePageTemplate
-    header={<HeaderController />}
-    footer={<Footer />}
-  >
-    <TwoColumnWrapper>
-      <ColumnWrapper>{column}</ColumnWrapper>
-      <MainWrapper>{children}</MainWrapper>
-    </TwoColumnWrapper>
-  </BasePageTemplate>
+  <Fragment>
+    <TemplateHeader><HeaderController /></TemplateHeader>
+    <TemplateContent>
+      <TwoColumnWrapper>
+        <ColumnWrapper>{column}</ColumnWrapper>
+        <MainWrapper>{children}</MainWrapper>
+      </TwoColumnWrapper>
+    </TemplateContent>
+    <Footer />
+  </Fragment>
 );
 
 CommunitySearchPageTemplate.propTypes = {
