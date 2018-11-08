@@ -29,8 +29,10 @@ const StyledIcon = styled(Icon)`
 `;
 
 const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
+  const ratingFixed = rating ? rating.toFixed(1).replace(/\.0+$/, '') : null;
   return (
     <Wrapper>
+      {price &&
       <StyledCommunityPricingWrapper>
         <DescriptionBlock size="caption">{priceDescription}</DescriptionBlock>
         <Block size="title">
@@ -38,21 +40,24 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
           <MoSpan size="caption">/mo</MoSpan>
         </Block>
       </StyledCommunityPricingWrapper>
+      }
+      {ratingFixed &&
       <div>
         <DescriptionBlock size="caption">Average Rating</DescriptionBlock>
         <Block size="title">
           <StyledIcon icon="star" palette="primary" />
-          {rating}
+          {ratingFixed}
         </Block>
       </div>
+      }
     </Wrapper>
   );
 };
 
 CommunityPricingAndRating.propTypes = {
   priceDescription: string,
-  price: number.isRequired,
-  rating: number.isRequired,
+  price: number,
+  rating: number,
 };
 
 
