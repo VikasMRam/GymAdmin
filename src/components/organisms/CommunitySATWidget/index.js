@@ -31,8 +31,8 @@ const CommunitySATWidget = ({ price, rating, onSATClick }) => (
 );
 
 CommunitySATWidget.propTypes = {
-  price: number.isRequired,
-  rating: number.isRequired,
+  price: number,
+  rating: number,
   onSATClick: func.isRequired,
 };
 

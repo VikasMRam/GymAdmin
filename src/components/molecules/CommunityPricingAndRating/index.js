@@ -31,6 +31,7 @@ const StyledIcon = styled(Icon)`
 const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
   return (
     <Wrapper>
+      {price &&
       <StyledCommunityPricingWrapper>
         <DescriptionBlock size="caption">{priceDescription}</DescriptionBlock>
         <Block size="title">
@@ -38,6 +39,8 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
           <MoSpan size="caption">/mo</MoSpan>
         </Block>
       </StyledCommunityPricingWrapper>
+      }
+      {rating &&
       <div>
         <DescriptionBlock size="caption">Average Rating</DescriptionBlock>
         <Block size="title">
@@ -45,14 +48,15 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
           {rating}
         </Block>
       </div>
+      }
     </Wrapper>
   );
 };
 
 CommunityPricingAndRating.propTypes = {
   priceDescription: string,
-  price: number.isRequired,
-  rating: number.isRequired,
+  price: number,
+  rating: number,
 };
 
 
