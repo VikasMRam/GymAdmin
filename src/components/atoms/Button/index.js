@@ -86,7 +86,7 @@ export const styles = css`
   height: ${height};
   padding: 0 1em;
   text-decoration: none;
-  font-weight: ${ifProp({ kind: 'jumbo' }, 'bold', 'normal')};
+  font-weight: ${ifProp({ kind: 'jumbo' }, '500', 'normal')};
   white-space: nowrap;
   font-size: ${fontSize};
   border: ${size('border.regular')} solid ${borderColor};
@@ -98,11 +98,6 @@ export const styles = css`
   background-color: ${backgroundColor};
   color: ${foregroundColor};
   user-select: none;
-
-  ${ifProp({ kind: 'jumbo' }, css`
-    width: 100%; 
-  `)};
-
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
 
   &:hover {

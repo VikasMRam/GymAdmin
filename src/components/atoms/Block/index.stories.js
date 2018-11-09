@@ -12,4 +12,9 @@ storiesOf('Atoms|Block', module)
     <Block palette="primary">
       Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
     </Block>
+  ))
+  .add('palette and variation', () => (
+    <Block palette="primary" variation="filler">
+      Officia aliqua reprehenderit fugiat occaecat quis non eiusmod.
+    </Block>
   ));

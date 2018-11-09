@@ -1,3 +1,4 @@
+/* eslint-disable key-spacing,no-multi-spaces */
 import React, { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
@@ -23,7 +24,7 @@ const Wrapper = styled.div`
 
 const Colors = styled(({ colors, className }) => (
   <div className={className}>
-    {Object.entries(colors).map(([i, color]) =>
+    {Object.entries(colors).map(([i, color]) => (
       <Color color={color}>
         <div>
           {i}
@@ -31,24 +32,24 @@ const Colors = styled(({ colors, className }) => (
           {color}
         </div>
       </Color>
-    )}
+    ))}
   </div>
 ))`
-  display: flex; 
-  flex-direction: row; 
+  display: flex;
+  flex-direction: row;
   margin-bottom: 1rem;
 `;
 
 const Color = styled.div`
   background: ${p => p.color};
-  width: 3rem; 
+  width: 3rem;
   height: 3rem;
   margin-right: 1rem;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   > div {
     font-size: 0.65rem;
     font-family: ${key('fonts.pre')};
