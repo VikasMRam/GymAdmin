@@ -18,7 +18,7 @@ class Hr extends Component {
     palette: string,
   };
   static defaultProps = {
-    palette: 'grayscale',
+    palette: 'slate',
   };
   render() {
     return <HRStyled {...this.props} />;

@@ -16,7 +16,7 @@ const videoMimeTypes = {
 
 const CarouselWrapper = styled.div`
   position: relative;
-  background: ${ifProp('transparent', 'transparent', palette('grayscale', 1))};
+  background: ${ifProp('transparent', 'transparent', palette('slate', 1))};
   text-align: center;
   margin-bottom: ${size('spacing.large')};
   ${props =>
