@@ -17,6 +17,7 @@ import CommunityDetailPageController from 'sly/controllers/CommunityDetailPageCo
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
+import NearMePageContainer from 'sly/containers/NearMePageContainer';
 import PromoPageContainer from 'sly/containers/PromoPageContainer';
 import AgentsProfilePageController from 'sly/controllers/AgentsProfilePageController';
 import OurHistoryPage from 'sly/components/pages/OurHistoryPage';
@@ -138,6 +139,11 @@ export default class App extends Component {
     {
       path: '/',
       component: HomePageContainer,
+      exact: true,
+    },
+    {
+      path: '/assisted-living',
+      component: NearMePageContainer,
       exact: true,
     },
     {
