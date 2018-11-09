@@ -45,7 +45,7 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
           right
           icon="close"
           iconSize="small"
-          palette="grayscale"
+          palette="slate"
           ghost
           transparent
           onClick={getEvtHandler(['size'], onParamsRemove)}
@@ -58,7 +58,7 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
           right
           icon="close"
           iconSize="small"
-          palette="grayscale"
+          palette="slate"
           ghost
           transparent
           onClick={getEvtHandler(['budget'], onParamsRemove)}

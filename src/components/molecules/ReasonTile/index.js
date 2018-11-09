@@ -46,7 +46,7 @@ const ReasonTile = ({
     <WrappedImage src={image} />
     <ItemDescription>
       <StyledHeading level="subtitle" size="subtitle">{title}</StyledHeading>
-      <TextBlock size="subtitle" palette="grayscale">
+      <TextBlock size="subtitle" palette="slate">
         {text}
       </TextBlock>
     </ItemDescription>

@@ -117,7 +117,7 @@ const Component = ({
                   {currentStep < totalNumberofSteps && (
                     <Button
                       type="button"
-                      palette="grayscale"
+                      palette="slate"
                       disabled={currentStep === 1}
                       onClick={onBackButton}
                     >

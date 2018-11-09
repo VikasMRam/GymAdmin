@@ -165,7 +165,7 @@ export default class SimilarCommunityInfo extends Component {
           </ClampedLine>
         </IconTextWrapper>
 
-        <Description palette="grayscale">
+        <Description palette="slate">
           <Dotdotdot clamp={2}>
             {description}
           </Dotdotdot>

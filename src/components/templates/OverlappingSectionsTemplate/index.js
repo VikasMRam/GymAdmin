@@ -81,7 +81,7 @@ const Grid = styled.div`
 `;
 
 const backgrounds = {
-  grayscale: palette('slate', 'background'),
+  slate: palette('slate', 'background'),
   white: palette('white', 0),
 };
 
@@ -155,7 +155,7 @@ const OverlappingSectionsTemplate = ({
         )}
       </HeroWrapper>
       <Grid>
-        <Background background="grayscale" row="1" />
+        <Background background="slate" row="1" />
         <Background background="white" row="2" />
         <Intro>
           {intro}

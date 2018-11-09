@@ -65,11 +65,11 @@ const DiscoverHomeTile = ({
 }) => (
   <Wrapper size={size}>
     <StyledImage src={image} size={size} />
-    <StyledBox palette="grayscale" size={size}>
+    <StyledBox palette="slate" size={size}>
       <TwoColumnWrapper size={size}>
         <StyledTextWrapper>
           <StyledHeading>{title}</StyledHeading>
-          <Block palette="grayscale">{description}</Block>
+          <Block palette="slate">{description}</Block>
         </StyledTextWrapper>
         <ButtonWrapper size={size}>
           <Button onClick={onButtonClick}>{buttonText}</Button>

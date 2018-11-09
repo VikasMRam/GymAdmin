@@ -23,7 +23,7 @@ const StyledLink = styled(Link)`
 const ChevronLink = styled(({ flip, ...props }) => (
   <StyledLink
     ghost
-    palette="grayscale"
+    palette="slate"
     kind="label"
     {...props}
   >
@@ -31,7 +31,7 @@ const ChevronLink = styled(({ flip, ...props }) => (
       flip={flip}
       icon="chevron-left"
       size="small"
-      palette="grayscale"
+      palette="slate"
     />
   </StyledLink>
 ))`
@@ -109,7 +109,7 @@ export default class Pagination extends Component {
       <BreakView
         ghost
         kind="label"
-        palette="grayscale"
+        palette="slate"
         key={index}
       >
         ...
@@ -126,7 +126,7 @@ export default class Pagination extends Component {
     }
     const palette = sel
       ? 'secondary'
-      : 'grayscale';
+      : 'slate';
 
     const pageHref = (index === 0) ? basePath : `${basePath}${delim}${pageParam}=${index}`;
 

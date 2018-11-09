@@ -26,7 +26,7 @@ export const StyledField = styled(Field)`
   }
 `;
 const StyledBox = styled(Box)`
-  border-color: ${ifProp('checked', palette('secondary', 'base'), palette('grayscale', 'base'))};
+  border-color: ${ifProp('checked', palette('secondary', 'base'), palette('slate', 'base'))};
   display: flex;
   align-items: center;
   justify-content: space-between;

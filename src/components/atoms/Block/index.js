@@ -1,13 +1,13 @@
-import { string, bool } from 'prop-types';
+import { oneOf } from 'prop-types';
 import styled from 'styled-components';
 
-
-import { size, palette } from 'sly/components/themes';
+import { getKey, size, palette } from 'sly/components/themes';
 
 const getSize = type => p => size(type, p.size);
+const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
 const Block = styled.div`
-  color: ${palette(0)};
+  color: ${getColor};
   font-size: ${getSize('text')};
   line-height: ${getSize('lineHeight')};
   // TODO: review this with @jared,
@@ -16,12 +16,14 @@ const Block = styled.div`
 `;
 
 Block.propTypes = {
-  palette: string,
-  size: string,
+  palette: oneOf(Object.keys(getKey('palette'))),
+  variation: oneOf(['base', 'accent', 'filler', 'stroke', 'background']),
+  size: oneOf(Object.keys(getKey('sizes.text'))),
 };
 
 Block.defaultProps = {
   palette: 'slate',
+  variation: 'base',
   size: 'body',
 };
 

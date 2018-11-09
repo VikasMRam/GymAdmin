@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 
   &:hover {
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')}
-      ${palette('grayscale', 1, true)};
+      ${palette('slate', 1, true)};
     opacity: 0.75;
     background: ${palette('white', 2)};
 
