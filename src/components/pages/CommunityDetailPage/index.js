@@ -18,7 +18,6 @@ import { Link, Heading, Hr, Button } from 'sly/components/atoms';
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
-import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import SaveCommunityController from 'sly/controllers/SaveCommunityController';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -43,6 +42,7 @@ import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetail
 import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import Thankyou from 'sly/components/molecules/Thankyou/index';
+import CommunitySATWidget from 'sly/components/organisms/CommunitySATWidget';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -277,13 +277,16 @@ export default class CommunityDetailPage extends Component {
       { label: 'Pricing & Floor Plans', ref: this.pricingAndFloorPlansRef },
       { label: 'Reviews', ref: this.communityReviewsRef },
     ];
+    const onSATClick = () => {
+      console.log("onSATClick");
+    };
     // 24px or 84px (when sticky header is visible) from top TODO: figure out how to get this from styled theme sizes
     const columnContent = (
       <Sticky
         top={isStickyHeaderVisible ? 84 : 24}
         bottomBoundary="#sticky-sidebar-boundary"
       >
-        <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
+        <CommunitySATWidget price={startingRate} rating={reviewsValue} onSATClick={onSATClick} />
       </Sticky>
     );
     const bottomContent = (

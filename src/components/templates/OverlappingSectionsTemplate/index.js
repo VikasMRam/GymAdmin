@@ -7,7 +7,7 @@ import { size, assetPath, palette } from 'sly/components/themes';
 
 import HeaderController from 'sly/controllers/HeaderController';
 
-import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
+import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { Image, Heading, Block } from 'sly/components/atoms';
 
 const FixedWidthContainer = styled.div`
@@ -136,9 +136,9 @@ const OverlappingSectionsTemplate = ({
   description,
   children,
   footer
-}) => {
-  const Top = () => (
-    <Fragment>
+}) => (
+  <Fragment>
+    <TemplateHeader>
       <HeaderController />
       <HeroWrapper>
         <HeroBackgroundImage
@@ -164,17 +164,12 @@ const OverlappingSectionsTemplate = ({
           {description}
         </Description>
       </Grid>
-    </Fragment>
-  );
-
-  return (
-    <BasePageTemplate
-      header={<Top />}
-      footer={footer}
-    >
+    </TemplateHeader>
+    <TemplateContent>
       {children}
-    </BasePageTemplate>
-  );
-};
+    </TemplateContent>
+    {footer}
+  </Fragment>
+);
 
 export default OverlappingSectionsTemplate;
