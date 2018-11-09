@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   font-size: ${size('text.body')};
   box-sizing: border-box;
   min-width: 0;
-  padding: ${size('spacing.regular')};  
+  padding: ${size('spacing.regular')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: 0;
   }
@@ -143,13 +143,13 @@ export default class SimilarCommunityInfo extends Component {
           {this.renderReviews(community)}
         </RatingWrapper>
         <IconTextWrapper>
-          <StyledIcon icon="place" fill={palette('slate', 'background')()} />
+          <StyledIcon icon="place" fill="slate" />
           <ClampedLine>
             {addressString}
           </ClampedLine>
         </IconTextWrapper>
         <IconTextWrapper>
-          <StyledIcon icon="room" fill={palette('slate', 'background')()} />
+          <StyledIcon icon="room" fill="slate" />
           <ClampedLine title={roomTypes.join('.')}>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {roomTypes.map((roomType, i) =>
@@ -157,7 +157,7 @@ export default class SimilarCommunityInfo extends Component {
           </ClampedLine>
         </IconTextWrapper>
         <IconTextWrapper>
-          <StyledIcon icon="hospital" fill={palette('slate', 'background')()} />
+          <StyledIcon icon="hospital" fill="slate" />
           <ClampedLine title={livingTypes.join('.')}>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {livingTypes.map((livingType, i) =>
