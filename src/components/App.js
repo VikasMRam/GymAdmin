@@ -27,6 +27,7 @@ import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
 import LegalPolicyPage from "sly/components/pages/LegalPolicyPage";
 import EntityApprovalContainer from 'sly/containers/EntityApprovalContainer';
+import BookATourPage from 'sly/components/pages/BookATourPage';
 
 setGlobalStyles();
 
@@ -117,6 +118,11 @@ export default class App extends Component {
     {
       path: '/how-it-works',
       component: TempHowItWorks,
+      exact: true,
+    },
+    {
+      path: '/book-a-tour',
+      component: BookATourPage,
       exact: true,
     },
     {
