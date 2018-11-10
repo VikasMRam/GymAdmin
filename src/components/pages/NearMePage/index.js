@@ -89,7 +89,8 @@ const NearMePage = ({ onLocationSearch,
   requestMeta,
   communityList,
   isFetchingResults,
-  handleAnchor,}) => {
+  handleAnchor,
+  location}) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -682,7 +683,7 @@ const NearMePage = ({ onLocationSearch,
       <Fragment>
         <Paragraph innerRef={topRef}/>
         <StyledHeading level={'title'} size={'title'} >
-          Table of contents
+          Table of Contents
         </StyledHeading>
         <StyledArticle>
           <ul>
@@ -778,12 +779,13 @@ const NearMePage = ({ onLocationSearch,
           onParamsRemove={onParamsRemove}
           onAdTileClick={onAdTileClick}
           isFetchingResults={isFetchingResults}
+          location={location}
         />
       </Fragment>
     );
   };
 
-  const title = "Find the Best Assisted Living Near You | Seniorly"
+  const title = "Find the Best Assisted Living Near You "
   const description = "Find the best assisted living near you with local senior living communities & providers. Browse assisted living nearby with prices, reviews & photos."
 
 
@@ -803,8 +805,8 @@ const NearMePage = ({ onLocationSearch,
         {!isFetchingResults && ListContent()}
         {SEOContentAL()}
 
-        <StyledArticle><SeoLinks title="Find Assisted living Near You by Cities" links={ALSeoCities} /></StyledArticle>
-        <StyledArticle><SeoLinks title="Find Assisted living Near You by State" links={ALSeoStates} /></StyledArticle>
+        <StyledArticle><SeoLinks title="Find Assisted Living Near You by Cities" links={ALSeoCities} /></StyledArticle>
+        <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>
       </Fragment>
     </BasePageTemplate>
   );
@@ -817,6 +819,7 @@ NearMePage.propTypes = {
   searchParams: object,
   isFetchingResults: bool,
   handleAnchor: func,
+  location: object.isRequired,
 };
 
 export default NearMePage;
