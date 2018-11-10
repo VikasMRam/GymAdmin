@@ -53,6 +53,7 @@ class NearMePageContainer extends Component {
       requestMeta,
       history,
       isFetchingResults,
+      location,
     } = this.props;
 
     // TODO Add Error Page
@@ -68,6 +69,7 @@ class NearMePageContainer extends Component {
         communityList={communityList}
         isFetchingResults={isFetchingResults}
         handleAnchor={this.handleClick}
+        location={location}
       />
     );
   }
