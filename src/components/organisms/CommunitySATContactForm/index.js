@@ -3,10 +3,10 @@ import { string, object, func } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size, assetPath } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField/index';
 
-import { Heading, Block, Icon } from 'sly/components/atoms';
+import { Heading, Block, Icon, Image } from 'sly/components/atoms';
 import Link from 'sly/components/atoms/Link/index';
 
 const Wrapper = styled.div`
@@ -30,8 +30,9 @@ const SubHeading = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const StyledAvatar = styled(Icon)`
+const AgentImage = styled(Image)`
   display: block;
+  align-self: baseline;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
@@ -70,7 +71,7 @@ const CommunitySATContactForm = ({
         <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
         <SubheadingWrapper>
           <SubHeading size="body">{subheading}<Link palette="primary" onClick={onAdvisorHelpClick}>How can an advisor help?</Link></SubHeading>
-          <StyledAvatar icon="avatar" size="xLarge" />
+          <AgentImage src={assetPath('images/agent-xLarge.png')} alt="Agent" />
         </SubheadingWrapper>
         {!user && <Field
           name="name"
