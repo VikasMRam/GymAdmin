@@ -59,12 +59,17 @@ StyledIcon.displayName = 'MedicaidHelpIcon';
 const CommunitySATContactForm = ({
   error, user, onAdvisorHelpClick, onMedicaidHelpClick,
 }) => {
+  let heading = 'How can we contact you about this community tour?';
+  if (user) {
+    heading = 'Do you have any questions about this tour?';
+  }
+  const subheading = 'A local senior living advisor will help get you detailed pricing with this community. ';
   return (
     <Wrapper>
       <form>
-        <HeadingSection level="subtitle" size="subtitle">How can we contact you about this community tour?</HeadingSection>
+        <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
         <SubheadingWrapper>
-          <SubHeading size="body">A local senior living advisor will help get you detailed pricing with this community. <Link palette="primary" onClick={onAdvisorHelpClick}>How can an advisor help?</Link></SubHeading>
+          <SubHeading size="body">{subheading}<Link palette="primary" onClick={onAdvisorHelpClick}>How can an advisor help?</Link></SubHeading>
           <StyledAvatar user={{ name: 'agent', picture: 'https://avatars.githubusercontent.com/u/113003' }} />
         </SubheadingWrapper>
         {!user && <Field
