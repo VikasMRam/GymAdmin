@@ -43,7 +43,7 @@ export const StyledHelpBubble = styled(HelpBubble)`
 export const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.large')};
 `;
-
+// TODO: replace with generic box checkbox
 const BoxRadioButton = ({
   name, checked, helpText, multiSelect, ...props
 }) => (

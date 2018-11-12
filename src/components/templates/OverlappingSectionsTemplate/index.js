@@ -81,7 +81,7 @@ const Grid = styled.div`
 `;
 
 const backgrounds = {
-  slate: palette('slate', 'background'),
+  grayscale: palette('slate', 'background'),
   white: palette('white', 0),
 };
 
