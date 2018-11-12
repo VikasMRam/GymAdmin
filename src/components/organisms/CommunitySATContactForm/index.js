@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField/index';
 
-import { Heading, Avatar, Block, Icon } from 'sly/components/atoms';
+import { Heading, Block, Icon } from 'sly/components/atoms';
 import Link from 'sly/components/atoms/Link/index';
 
 const Wrapper = styled.div`
@@ -30,7 +30,7 @@ const SubHeading = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const StyledAvatar = styled(Avatar)`
+const StyledAvatar = styled(Icon)`
   display: block;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -70,7 +70,7 @@ const CommunitySATContactForm = ({
         <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
         <SubheadingWrapper>
           <SubHeading size="body">{subheading}<Link palette="primary" onClick={onAdvisorHelpClick}>How can an advisor help?</Link></SubHeading>
-          <StyledAvatar user={{ name: 'agent', picture: 'https://avatars.githubusercontent.com/u/113003' }} />
+          <StyledAvatar icon="avatar" size="xLarge" />
         </SubheadingWrapper>
         {!user && <Field
           name="name"
