@@ -37,8 +37,8 @@ const configureStore = (initialState, services = {}) => {
       const nextReducer = require('./reducer').default;
       store.replaceReducer(nextReducer);
     });
-    module.hot.accept('./resource/sagas', () => {
-      const nextSagas = require('./resource/sagas').default;
+    module.hot.accept('./sagas', () => {
+      const nextSagas = require('./sagas').default;
       sagaTask.cancel();
       sagaTask.done.then(() => {
         sagaTask = sagaMiddleware.run(nextSagas, services);
