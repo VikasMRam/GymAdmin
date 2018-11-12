@@ -107,7 +107,7 @@ const CommunitySATContactForm = ({
             type="checkbox"
             component={MedicaidCheckBox}
           />
-          <StyledIcon icon="help" size="regular" onClick={onMedicaidHelpClick} />
+          <StyledIcon icon="help" size="regular" palette="slate" onClick={onMedicaidHelpClick} />
         </CheckboxWrapper>
         {error && <strong>{error}</strong>}
       </form>
