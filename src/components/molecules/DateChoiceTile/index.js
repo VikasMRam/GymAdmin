@@ -5,12 +5,10 @@ import moment from 'moment';
 
 import { size } from 'sly/components/themes';
 
-import { Box, Heading } from 'sly/components/atoms';
+import { Heading, BoxChoiceTile } from 'sly/components/atoms';
 
-const StyledBox = styled(Box)`
+const StyledBoxChoiceTile = styled(BoxChoiceTile)`
   height: ${size('element.xxxLarge')};
-  text-align: center;
-  cursor: pointer;
 `;
 
 const StyledHeading = styled(Heading)`
@@ -30,17 +28,14 @@ const DateChoiceTile = ({
   const month = parsedDate.format('MMM').toUpperCase();
 
   return (
-    <StyledBox
-      padding="regular"
-      border={selected ? 'large' : 'regular'}
-      palette={selected ? 'primary' : 'slate'}
-      highlighted={selected}
+    <StyledBoxChoiceTile
       onClick={onClick}
+      selected={selected}
     >
       <div>{dayName}</div>
       <StyledHeading size="title">{day}</StyledHeading>
       <div>{month}</div>
-    </StyledBox>
+    </StyledBoxChoiceTile>
   );
 };
 

@@ -280,7 +280,7 @@ theme.sizes = {
     tiny    : '0.750rem',   // 12px
     caption : '0.875rem',   // 14px
     body    : '1.000rem',   // 16px
-    subtitle: '1.125rem',   // 18px
+    subtitle: '1.125rem',   // 18px TODO: clarify whether it's 20px in new theme
     title   : '1.750rem',   // 28px
     hero    : '2.500rem',   // 40px
   },
