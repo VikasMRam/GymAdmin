@@ -10,7 +10,7 @@ import { BoxChoiceTile } from 'sly/components/atoms';
 import DateChoiceTile from 'sly/components/molecules/DateChoiceTile';
 
 const StyledBoxChoiceTile = styled(BoxChoiceTile)`
-  height: ${size('element.xxxLarge')};
+  height: ${size('element.huge')};
 `;
 
 export default class DateChoice extends Component {

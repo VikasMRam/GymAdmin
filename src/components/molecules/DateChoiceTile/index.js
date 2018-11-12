@@ -8,7 +8,7 @@ import { size } from 'sly/components/themes';
 import { Heading, BoxChoiceTile } from 'sly/components/atoms';
 
 const StyledBoxChoiceTile = styled(BoxChoiceTile)`
-  height: ${size('element.xxxLarge')};
+  height: ${size('element.huge')};
 `;
 
 const StyledHeading = styled(Heading)`

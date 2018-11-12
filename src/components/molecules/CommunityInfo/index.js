@@ -28,6 +28,7 @@ const StyledRatingIcon = styled(Icon)`
 const Rate = styled(Block)`
   margin-right: ${size('spacing.large')};
   font-weight: 500;
+  margin-bottom: 0;
 `;
 Rate.displayName = 'Rate';
 

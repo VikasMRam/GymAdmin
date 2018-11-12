@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import classes from 'classnames';
 
 import { size } from 'sly/components/themes';
 import HeaderController from 'sly/controllers/HeaderController';
@@ -17,27 +16,45 @@ import {
 
 import community from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const Header = makeHeader(styled.div`
-  background: blue;
-`);
+const Header = makeHeader(HeaderController);
+
+const columnBackground = ({ backgroundImage }) => `url(${backgroundImage})`;
 const Column = makeColumn(styled.div`
-  background: red;
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    background-image: ${columnBackground};
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+  }
 `);
-const Body = makeBody(styled.div`
-  background: deeppink;
-`);
-const Controls = makeControls(styled.div`
-  background: hotpink; 
-`);
+
+const StyledCommunityInfo = styled(CommunityInfo)`
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+  padding: ${size('spacing.large')}; 
+  padding-top: ${size('spacing.xxxLarge')}; 
+  width: 100%;
+`;
+
+const Body = makeBody(styled.div`background: deeppink;`);
+const Controls = makeControls(styled.div`background: hotpink;`);
 
 export default class BookATourPage extends Component {
   render() {
     return (
       <FullScreenWizard>
-        <Header><HeaderController /></Header>
-        <Column><CommunityInfo community={community} /></Column>
-        <Body />
-        <Controls><BookingFormFooter /></Controls>
+        <Header>
+          <HeaderController />
+        </Header>
+        <Column backgroundImage={community.mainImage}>
+          <StyledCommunityInfo palette="white" community={community} />
+        </Column>
+        <Body>
+          
+        </Body>
+        <Controls>
+          <BookingFormFooter />
+        </Controls>
       </FullScreenWizard>
     );
   }

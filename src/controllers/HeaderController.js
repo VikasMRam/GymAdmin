@@ -79,6 +79,7 @@ class HeaderController extends Component {
       setQueryParams,
       logoutUser,
       fetchUser,
+      className,
     } = this.props;
     const hItems = defaultHeaderItems;
     const lhItems = loginHeaderItems(user);
@@ -127,6 +128,7 @@ class HeaderController extends Component {
           headerItems={headerItems}
           menuItems={menuItems}
           menuItemHrIndices={menuItemHrIndices}
+          className={className}
         />
         <NotificationController>
           {({

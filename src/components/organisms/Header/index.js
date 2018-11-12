@@ -122,7 +122,7 @@ const HeaderItem = styled(Link)`
 `;
 
 const Header = ({
-  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur,
+  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur, className
 }) => {
   const headerItemComponents = headerItems.map(item => (
     <HeaderItem onClick={item.onClick} to={item.url} palette="slate" key={item.name}>
@@ -160,7 +160,7 @@ const Header = ({
 
   return (
     // tabIndex necessary for onBlur to work
-    <HeaderWrapper tabIndex="-1" onBlur={handleHeaderMenuBlur}>
+    <HeaderWrapper tabIndex="-1" onBlur={handleHeaderMenuBlur} className={className}>
       <SeniorlyLogoWrapper>
         <Link href="/">
           <Logo />

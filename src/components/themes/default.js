@@ -134,9 +134,10 @@ theme.sizes = {
     large   : '3.000rem',   // 48px
     xLarge  : '3.250rem',   // 52px
     xxLarge : '4.500rem',   // 72px
-    xxxLarge: '6.000rem',   // 96px
-    textarea: '7.500rem',   // 120px
-    huge    : '9.000rem',   // 144px
+    xxxLarge: '5.000rem',   // 80px
+    huge    : '6.000rem',   // 96px
+    xHuge    : '7.500rem',   // 120px
+    xxHuge    : '9.000rem',   // 144px
   },
 
   slider: {

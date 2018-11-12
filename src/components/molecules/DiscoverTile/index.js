@@ -36,8 +36,8 @@ const Wrapper = styled(Link)`
 `;
 
 export const ImageWrapper = styled(Image)`
-  width: ${size('element.huge')};
-  height: ${size('element.huge')};
+  width: ${size('element.xHuge')};
+  height: ${size('element.xHuge')};
   margin-top: -${size('element.xxLarge')};
   margin-bottom: ${size('spacing.regular')};
 `;
