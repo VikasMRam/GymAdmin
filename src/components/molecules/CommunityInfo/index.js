@@ -89,7 +89,7 @@ export default class CommunityInfo extends Component {
   );
 
   render() {
-    const { community, palette: paletteProp } = this.props;
+    const { community, palette: paletteProp, ...props } = this.props;
     const { name, webViewInfo } = community;
     const {
       firstLineValue,
@@ -99,7 +99,7 @@ export default class CommunityInfo extends Component {
     const livingTypes = firstLineValue.split(',');
 
     return (
-      <div>
+      <div {...props}>
         <Name size="subtitle" palette={paletteProp}>{name}</Name>
         <IconTextWrapper palette={paletteProp}>
           <StyledIcon icon="room" palette={paletteProp} />
