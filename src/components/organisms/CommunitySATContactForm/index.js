@@ -3,10 +3,10 @@ import { string, object, func } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size, assetPath } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField/index';
 
-import { Heading, Avatar, Block, Icon } from 'sly/components/atoms';
+import { Heading, Block, Icon, Image } from 'sly/components/atoms';
 import Link from 'sly/components/atoms/Link/index';
 
 const Wrapper = styled.div`
@@ -30,8 +30,9 @@ const SubHeading = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const StyledAvatar = styled(Avatar)`
+const AgentImage = styled(Image)`
   display: block;
+  align-self: baseline;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
@@ -59,13 +60,18 @@ StyledIcon.displayName = 'MedicaidHelpIcon';
 const CommunitySATContactForm = ({
   error, user, onAdvisorHelpClick, onMedicaidHelpClick,
 }) => {
+  let heading = 'How can we contact you about this community tour?';
+  if (user) {
+    heading = 'Do you have any questions about this tour?';
+  }
+  const subheading = 'A local senior living advisor will help get you detailed pricing with this community. ';
   return (
     <Wrapper>
       <form>
-        <HeadingSection level="subtitle" size="subtitle">How can we contact you about this community tour?</HeadingSection>
+        <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
         <SubheadingWrapper>
-          <SubHeading size="body">A local senior living advisor will help get you detailed pricing with this community. <Link palette="primary" onClick={onAdvisorHelpClick}>How can an advisor help?</Link></SubHeading>
-          <StyledAvatar user={{ name: 'agent', picture: 'https://avatars.githubusercontent.com/u/113003' }} />
+          <SubHeading size="body">{subheading}<Link palette="primary" onClick={onAdvisorHelpClick}>How can an advisor help?</Link></SubHeading>
+          <AgentImage src={assetPath('images/agent-xLarge.png')} alt="Agent" />
         </SubheadingWrapper>
         {!user && <Field
           name="name"
@@ -102,7 +108,7 @@ const CommunitySATContactForm = ({
             type="checkbox"
             component={MedicaidCheckBox}
           />
-          <StyledIcon icon="help" size="regular" onClick={onMedicaidHelpClick} />
+          <StyledIcon icon="help" size="regular" palette="slate" onClick={onMedicaidHelpClick} />
         </CheckboxWrapper>
         {error && <strong>{error}</strong>}
       </form>

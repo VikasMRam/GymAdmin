@@ -10,11 +10,15 @@ const onMedicaidHelpClick = jest.fn();
 const user = { id: 1, name: 'Pranesh Kumar' };
 const error = 'Blah';
 
+const guHeading = 'How can we contact you about this community tour?';
+const userHeading = 'Do you have any questions about this tour?';
+
 const wrap = (props = {}) => shallow(<CommunitySATContactForm onAdvisorHelpClick={onAdvisorHelpClick} onMedicaidHelpClick={onMedicaidHelpClick} {...props} />);
 
 describe('CommunitySATContactForm', () => {
   it('render name and email when user is not passed', () => {
     const wrapper = wrap({ });
+    expect(wrapper.contains(guHeading)).toBe(true);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
@@ -25,6 +29,7 @@ describe('CommunitySATContactForm', () => {
 
   it('does not render name and email when user is passed', () => {
     const wrapper = wrap({ user });
+    expect(wrapper.contains(userHeading)).toBe(true);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(0);

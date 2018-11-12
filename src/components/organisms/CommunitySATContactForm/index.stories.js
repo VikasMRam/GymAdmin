@@ -23,10 +23,14 @@ const user = {
 storiesOf('Organisms|CommunitySATContactForm', module).add('default', () => (
   <CommunitySATContactFormContainer
     handleSubmit={withPreventDefault(action('form submitted'))}
+    onAdvisorHelpClick={action('onAdvisorHelpClick')}
+    onMedicaidHelpClick={action('onMedicaidHelpClick')}
     user={user}
   />
 )).add('Guest User', () => (
   <CommunitySATContactFormContainer
     handleSubmit={withPreventDefault(action('form submitted'))}
+    onAdvisorHelpClick={action('onAdvisorHelpClick')}
+    onMedicaidHelpClick={action('onMedicaidHelpClick')}
   />
 ));
