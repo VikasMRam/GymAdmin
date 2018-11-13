@@ -10,6 +10,8 @@ import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 import CommunityChoice from 'sly/components/molecules/CommunityChoice';
 import RatingInput from 'sly/components/molecules/RatingInput';
 import Slider from 'sly/components/molecules/Slider';
+import DateChoice from 'sly/components/molecules/DateChoice';
+import BoxChoice from 'sly/components/molecules/BoxChoice';
 
 const getInputType = type => (type === 'email' ? 'text' : type);
 const getInputComponent = (type) => {
@@ -23,6 +25,10 @@ const getInputComponent = (type) => {
       return CommunityChoice;
     case 'slider':
       return Slider;
+    case 'boxChoice':
+      return BoxChoice;
+    case 'dateChoice':
+      return DateChoice;
     default:
       return Input;
   }
@@ -104,6 +110,8 @@ Field.propTypes = {
     'communitychoice',
     'singlechoice',
     'multiplechoice',
+    'boxChoice',
+    'dateChoice',
     'slider',
     'text',
     'email',

@@ -9,7 +9,7 @@ import ReduxField from 'sly/components/organisms/ReduxField/index';
 import { Heading, Block, Icon, Image } from 'sly/components/atoms';
 import Link from 'sly/components/atoms/Link/index';
 
-const Wrapper = styled.div`
+const Form = styled.form`
   width: ${size('mobileLayout.col4')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -65,54 +65,53 @@ const CommunitySATContactForm = ({
     heading = 'Do you have any questions about this tour?';
   }
   const subheading = 'A local senior living advisor will help get you detailed pricing with this community. ';
+
   return (
-    <Wrapper>
-      <form>
-        <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
-        <SubheadingWrapper>
-          <SubHeading size="body">{subheading}<Link palette="primary" onClick={onAdvisorHelpClick}>How can an advisor help?</Link></SubHeading>
-          <AgentImage src={assetPath('images/agent-xLarge.png')} alt="Agent" />
-        </SubheadingWrapper>
-        {!user && <Field
-          name="name"
-          label="Name"
-          type="text"
-          placeholder="First and Last Name"
-          component={ReduxField}
-        />}
-        {!user && <Field
-          name="email"
-          label="Email"
-          type="email"
-          placeholder="Email"
-          component={ReduxField}
-        />}
-        {!user && <Field
-          name="phone"
-          label="Phone"
-          type="number"
-          placeholder="Phone"
-          component={ReduxField}
-        />}
+    <Form>
+      <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
+      <SubheadingWrapper>
+        <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can an advisor help?</Link></SubHeading>
+        <AgentImage src={assetPath('images/agent-xLarge.png')} alt="Agent" />
+      </SubheadingWrapper>
+      {!user && <Field
+        name="name"
+        label="Name"
+        type="text"
+        placeholder="First and Last Name"
+        component={ReduxField}
+      />}
+      {!user && <Field
+        name="email"
+        label="Email"
+        type="email"
+        placeholder="Email"
+        component={ReduxField}
+      />}
+      {!user && <Field
+        name="phone"
+        label="Phone"
+        type="number"
+        placeholder="Phone"
+        component={ReduxField}
+      />}
+      <Field
+        name="note"
+        label="Add a note"
+        type="textarea"
+        placeholder="Anything you’d like your Advisor to know about this tour or any questions"
+        component={ReduxField}
+      />
+      <CheckboxWrapper>
         <Field
-          name="note"
-          label="Add a note"
-          type="textarea"
-          placeholder="Anything you’d like your Advisor to know about this tour or any questions"
-          component={ReduxField}
+          name="isMedicaid"
+          label="I qualify for medicaid coverage"
+          type="checkbox"
+          component={MedicaidCheckBox}
         />
-        <CheckboxWrapper>
-          <Field
-            name="isMedicaid"
-            label="I qualify for medicaid coverage"
-            type="checkbox"
-            component={MedicaidCheckBox}
-          />
-          <StyledIcon icon="help" size="regular" palette="slate" onClick={onMedicaidHelpClick} />
-        </CheckboxWrapper>
-        {error && <strong>{error}</strong>}
-      </form>
-    </Wrapper>
+        <StyledIcon icon="help" size="regular" palette="slate" onClick={onMedicaidHelpClick} />
+      </CheckboxWrapper>
+      {error && <Block palette="danger">{error}</Block>}
+    </Form>
   );
 };
 
@@ -124,4 +123,3 @@ CommunitySATContactForm.propTypes = {
 };
 
 export default CommunitySATContactForm;
-

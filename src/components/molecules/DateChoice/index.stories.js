@@ -12,7 +12,7 @@ storiesOf('Molecules|DateChoice', module)
     <DateChoice from={from} to={to} onChange={action('Date selected')} />
   ))
   .add('with selected', () => (
-    <DateChoice from={from} to={to} values={['2018-1-5']} onChange={action('Date selected')} />
+    <DateChoice from={from} to={to} value={['2018-1-5']} onChange={action('Date selected')} />
   ))
   .add('with later date', () => (
     <DateChoice from={from} to={to} hasLaterDate onChange={action('Date selected')} />
