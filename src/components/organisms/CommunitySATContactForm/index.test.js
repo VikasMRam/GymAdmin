@@ -3,28 +3,28 @@ import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
 import CommunitySATContactForm from 'sly/components/organisms/CommunitySATContactForm';
-import { Link } from 'sly/components/atoms/index';
+import { Link, Block } from 'sly/components/atoms';
 
 const onAdvisorHelpClick = jest.fn();
 const onMedicaidHelpClick = jest.fn();
 const user = { id: 1, name: 'Pranesh Kumar' };
 const error = 'Blah';
-
 const guHeading = 'How can we contact you about this community tour?';
 const userHeading = 'Do you have any questions about this tour?';
 
-const wrap = (props = {}) => shallow(<CommunitySATContactForm onAdvisorHelpClick={onAdvisorHelpClick} onMedicaidHelpClick={onMedicaidHelpClick} {...props} />);
+const wrap = (props = {}) =>
+  shallow(<CommunitySATContactForm onAdvisorHelpClick={onAdvisorHelpClick} onMedicaidHelpClick={onMedicaidHelpClick} {...props} />);
 
 describe('CommunitySATContactForm', () => {
   it('render name and email when user is not passed', () => {
-    const wrapper = wrap({ });
+    const wrapper = wrap();
     expect(wrapper.contains(guHeading)).toBe(true);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'note' })).toHaveLength(1);
     expect(wrapper.find({ type: 'checkbox' })).toHaveLength(1);
-    expect(wrapper.find('strong')).toHaveLength(0);
+    expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
   });
 
   it('does not render name and email when user is passed', () => {
@@ -35,7 +35,7 @@ describe('CommunitySATContactForm', () => {
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'note' })).toHaveLength(1);
     expect(wrapper.find({ type: 'checkbox' })).toHaveLength(1);
-    expect(wrapper.find('strong')).toHaveLength(0);
+    expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
   });
 
   it('render error when error is passed', () => {
@@ -45,17 +45,17 @@ describe('CommunitySATContactForm', () => {
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'note' })).toHaveLength(1);
     expect(wrapper.find({ type: 'checkbox' })).toHaveLength(1);
-    expect(wrapper.find('strong')).toHaveLength(1);
+    expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(1);
   });
 
   it('handles onAdvisorHelpClick', () => {
-    const wrapper = wrap({ });
+    const wrapper = wrap();
     wrapper.find(Link).simulate('click');
     expect(onAdvisorHelpClick).toHaveBeenCalled();
   });
 
   it('handles onMedicaidHelpClick', () => {
-    const wrapper = wrap({ });
+    const wrapper = wrap();
     wrapper.find('MedicaidHelpIcon').simulate('click');
     expect(onMedicaidHelpClick).toHaveBeenCalled();
   });
