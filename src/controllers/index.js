@@ -20,18 +20,16 @@ const convertMapDispatchToObject = mapDispatchToProps => (dispatch, props) => {
 
 export function connectController(parentMapStateToProps, parentDispatchToProps) {
   return function controllerCreator(WrappedComponent) {
-    class Controller extends Component {
-      static displayName = `WrappedController(${WrappedComponent.name || 'Controller'})`;
-      render = () => <WrappedComponent {...this.props} />;
-    }
+    const Controller = props => <WrappedComponent {...props} />;
+    Controller.displayName = `WrappedController(${WrappedComponent.name || 'Controller'})`;
 
     const rand = Math.floor(Math.random()*16777215).toString(16);
     const controllerKey = `${WrappedComponent.name}_${rand}`;
 
     const mapDispatchToProps = (dispatch, ownProps) => ({
       ...convertMapDispatchToObject(parentDispatchToProps)(dispatch, ownProps),
-      set: (data) => dispatch(set({ data, controller: controllerKey })),
-      unset: (key) => dispatch(unset({ key, controller: controllerKey })),
+      set: data => dispatch(set({ data, controller: controllerKey })),
+      unset: key => dispatch(unset({ key, controller: controllerKey })),
     });
 
     const mapStateToProps = (state, ownProps) => {
@@ -42,7 +40,5 @@ export function connectController(parentMapStateToProps, parentDispatchToProps) 
     };
 
     return connect(mapStateToProps, mapDispatchToProps)(Controller);
-  }
+  };
 }
-
-

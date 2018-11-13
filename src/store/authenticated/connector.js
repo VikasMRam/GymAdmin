@@ -1,27 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
 import { ensureAuthenticated, trackAuthenticated } from 'sly/store/actions';
+import { getDetail } from 'sly/store/selectors';
 
 export default function authenticated() {
   return function authenticatedComponent(ChildComponent) {
-    class Authenticated extends Component {
-      static displayName = `Authenticated(${ChildComponent.name || 'Authenticated'})`;
+    const Authenticated = props => <ChildComponent {...props} />;
+    Authenticated.displayName = `Authenticated(${ChildComponent.name || 'Authenticated'})`;
 
-      render() {
-        return <ChildComponent {...this.props} />;
-      }
-    }
+    const mapStateToProps = (state) => {
+      const user = getDetail(state, 'user', 'me');
+      return {
+        user,
+        ensureAuthenticated: action => user ? action : ensureAuthenticated(action),
+      };
+    };
 
-    const mapStateToProps = (state, ownProps) => ({
-
-    });
-
-    const mapDispatchToProps = (dispatch, ownProps) => ({
-      ensureAuthenticated: data => dispatch(ensureAuthenticated(data)),
-      trackAuthenticated: data => dispatch(trackAuthenticated(data)),
-    });
-
-    return connect(mapStateToProps, mapDispatchToProps)(Authenticated);
+    return connect(mapStateToProps)(Authenticated);
   };
 }

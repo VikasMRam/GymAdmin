@@ -242,7 +242,7 @@ class CommunityDetailPageController extends Component {
       setQueryParams({ action: ACTIONS_ADD_TO_FAVOURITE, entityId: id });
     }
     SlyEvent.getInstance().sendEvent(event);
-  }
+  };
 
   handleMediaGalleryShareClick = () => {
     const { set, isShareCommunityModalVisible, community } = this.props;
@@ -255,7 +255,7 @@ class CommunityDetailPageController extends Component {
     set({
       isShareCommunityModalVisible: !isShareCommunityModalVisible,
     });
-  }
+  };
 
   handleShareCommunityModalClose = () => {
     const { set, community } = this.props;
@@ -268,7 +268,7 @@ class CommunityDetailPageController extends Component {
     set({
       isShareCommunityModalVisible: false,
     });
-  }
+  };
 
   handleSATClick = () => {
     const { community, history } = this.props;

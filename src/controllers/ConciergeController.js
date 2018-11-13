@@ -109,7 +109,7 @@ export class ConciergeController extends Component {
   gotoWhatNext = () => {
     const { setQueryParams } = this.props;
     setQueryParams({ modal: CONCIERGE, currentStep: HOW_IT_WORKS });
-  }
+  };
 
   submitExpressConversion = (data) => {
     const {

@@ -1,6 +1,14 @@
-import { delay } from 'redux-saga';
+import { call, delay, takeEvery } from 'redux-saga';
 
-export default function* authenticatedSagas() {
-  console.log('again');
-  yield delay(1000);
+import * as actions from 'sly/store/authenticated/actions';
+
+export function* ensureAuthenticated(api, { action }, { thunk }) {
+}
+
+export function* watchEnsureAuthenticated(api, { payload, meta }) {
+  yield call(ensureAuthenticated, api, payload, meta);
+}
+
+export default function* authenticatedSagas({ api }) {
+  yield takeEvery(actions.ENSURE_AUTHENTICATED, watchEnsureAuthenticated, api);
 }

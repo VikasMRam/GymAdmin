@@ -189,8 +189,12 @@ const mapStateToProps = (state, {
   const userSave = getList(state, 'userSave', {
     'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
     'filter[entity_slug]': searchParams.entityId,
-  }).find(userSave =>
-    userSave.entityType === COMMUNITY_ENTITY_TYPE && userSave.entitySlug === searchParams.entityId);
+  }).find(userSave => (
+    userSave.entityType
+    === COMMUNITY_ENTITY_TYPE
+    && userSave.entitySlug
+    === searchParams.entityId
+  ));
 
   return {
     user: getDetail(state, 'user', 'me'),
