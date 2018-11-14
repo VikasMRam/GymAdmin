@@ -17,9 +17,10 @@ export const ensureAuthenticatedSuccess = (action, thunk) => ({
 });
 
 export const ENSURE_AUTHENTICATED_FAILURE = 'ENSURE_AUTHENTICATED_FAILURE';
-export const ensureAuthenticatedFailure = (action, thunk) => ({
+export const ensureAuthenticatedFailure = (error, thunk) => ({
   type: ENSURE_AUTHENTICATED_FAILURE,
-  payload: { action },
+  error: true,
+  payload: error,
   meta: {
     thunk,
   },

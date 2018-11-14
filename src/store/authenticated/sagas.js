@@ -5,24 +5,25 @@ import * as actions from './actions';
 export function* authenticate() {
   yield put(actions.authenticate());
 
-  const { authenticated } = yield race({
+  return yield race({
     authenticated: take(actions.AUTHENTICATE_SUCCESS),
     cancel: take(actions.AUTHENTICATE_CANCEL),
   });
 
-  return authenticated;
 }
 
 export function* ensureAuthenticated(api, { action }, { thunk }) {
-  const authenticated = yield call(authenticate);
+  const { authenticated, cancel } = yield call(authenticate);
 
   if (authenticated) {
     yield all([
       actions.ensureAuthenticatedSuccess(action, thunk),
       action,
     ]);
+  } else if (cancel) {
+    yield put(actions.ensureAuthenticatedFailure(new Error('User canceled'), thunk));
   } else {
-    yield put(actions.ensureAuthenticatedFailure(action, thunk));
+    throw new Error('There was an error during authentication');
   }
 }
 
