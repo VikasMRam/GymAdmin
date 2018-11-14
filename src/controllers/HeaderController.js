@@ -133,18 +133,15 @@ class HeaderController extends Component {
         <NotificationController>
           {({
             notifyInfo,
+            messages,
+            dismiss,
           }) => (
             <Fragment>
               {user !== null && <SavedCommunitiesPopupController notifyInfo={notifyInfo} />}
               <AuthContainer notifyInfo={notifyInfo} />
+              <Notifications messages={messages} dismiss={dismiss} />
             </Fragment>
           )}
-        </NotificationController>
-        <NotificationController>
-          {({
-            messages,
-            dismiss,
-          }) => <Notifications messages={messages} dismiss={dismiss} />}
         </NotificationController>
       </Fragment>
     );

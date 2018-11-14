@@ -1,6 +1,6 @@
-export const ENSURE_AUTHENTICATED = 'ENSURE_AUTHENTICATED';
+export const ENSURE_AUTHENTICATED_REQUEST = 'ENSURE_AUTHENTICATED_REQUEST';
 export const ensureAuthenticated = action => ({
-  type: ENSURE_AUTHENTICATED,
+  type: ENSURE_AUTHENTICATED_REQUEST,
   payload: { action },
   meta: {
     thunk: 'ensureAuthenticated',
@@ -14,5 +14,31 @@ export const ensureAuthenticatedSuccess = (action, thunk) => ({
   meta: {
     thunk,
   },
+});
+
+export const ENSURE_AUTHENTICATED_FAILURE = 'ENSURE_AUTHENTICATED_FAILURE';
+export const ensureAuthenticatedFailure = (action, thunk) => ({
+  type: ENSURE_AUTHENTICATED_FAILURE,
+  payload: { action },
+  meta: {
+    thunk,
+  },
+});
+
+// AUTHENTICATE FLOW
+
+export const AUTHENTICATE = 'AUTHENTICATE';
+export const authenticate = () => ({
+  type: AUTHENTICATE,
+});
+
+export const AUTHENTICATE_CANCEL = 'AUTHENTICATE_CANCEL';
+export const authenticateCancel = () => ({
+  type: AUTHENTICATE_CANCEL,
+});
+
+export const AUTHENTICATE_SUCCESS = 'AUTHENTICATE_SUCCESS';
+export const authenticateSuccess = () => ({
+  type: AUTHENTICATE_SUCCESS,
 });
 

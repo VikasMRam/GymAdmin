@@ -6,10 +6,11 @@ import { connect } from 'react-redux';
 import { getSearchParams } from 'sly/services/helpers/search';
 
 import { MODAL_TYPE_LOG_IN, MODAL_TYPE_SIGN_UP, MODAL_TYPE_JOIN_SLY, MODAL_TYPE_RESET_PASSWORD }
-  from 'sly/constants/modalType';
+  from 'sly/constants/authenticated';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getDetail } from 'sly/store/selectors';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
+import { authenticateCancel } from 'sly/store/authenticated/actions';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 
 import Modal from 'sly/components/molecules/Modal';
@@ -26,6 +27,7 @@ steps[MODAL_TYPE_RESET_PASSWORD] = ResetPasswordFormContainer;
 
 class AuthContainer extends Component {
   static propTypes = {
+    authenticated: object,
     searchParams: object,
     user: object,
     setQueryParams: func,
@@ -74,11 +76,10 @@ class AuthContainer extends Component {
 
   render() {
     const {
-      searchParams, setQueryParams, user,
+      searchParams, user, authenticated, authenticateCancel,
     } = this.props;
-    const currentStep = searchParams.modal;
 
-    const StepComponent = steps[currentStep];
+    const StepComponent = steps[authenticated.step];
     if (!StepComponent || user) {
       return null;
     }
@@ -89,7 +90,7 @@ class AuthContainer extends Component {
     }
 
     const componentProps = {};
-    switch (currentStep) {
+    switch (authenticated.step) {
       case MODAL_TYPE_JOIN_SLY:
         componentProps.onLoginClicked = this.gotoLogin;
         componentProps.onEmailSignupClicked = this.gotoSignup;
@@ -115,8 +116,8 @@ class AuthContainer extends Component {
     return (
       <Modal
         closeable
-        isOpen={Object.keys(steps).includes(searchParams.modal)}
-        onClose={() => setQueryParams({ modal: null })}
+        isOpen
+        onClose={authenticateCancel}
       >
         <StepComponent {...componentProps} />
       </Modal>
@@ -127,6 +128,7 @@ class AuthContainer extends Component {
 const mapStateToProps = (state, {
   history, match, location,
 }) => ({
+  authenticated: state.authenticated,
   setQueryParams: getQueryParamsSetter(history, location),
   user: getDetail(state, 'user', 'me'),
   searchParams: getSearchParams(match, location),
@@ -134,6 +136,7 @@ const mapStateToProps = (state, {
 
 const mapDispatchToProps = dispatch => ({
   fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me')),
+  authenticateCancel: () => dispatch(authenticateCancel()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthContainer));
