@@ -42,7 +42,7 @@ export const FullScreenWizard = styled.div`
     } 
     
     .overlayColumn {
-      display: block;
+      display: inherit;
       grid-column: 1;
       grid-row: 2 / 4;
     }
@@ -56,6 +56,7 @@ export const FullScreenWizard = styled.div`
     }
     
     .overlayControls {
+      position: static;
       grid-column: 2;
       grid-row: 3;
     }

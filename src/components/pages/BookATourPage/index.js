@@ -26,6 +26,7 @@ const Column = makeColumn(styled.div`
     background-position: center;
     display: flex;
     align-items: flex-end;
+    height: 100%;
   }
 `);
 
@@ -50,7 +51,7 @@ export default class BookATourPage extends Component {
           <StyledCommunityInfo palette="white" community={community} />
         </Column>
         <Body>
-          
+
         </Body>
         <Controls>
           <BookingFormFooter />
