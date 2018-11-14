@@ -17,6 +17,7 @@ export const propRatings = shape({
 export const community = shape({
   id: string,
   mainImage: string,
+  name: string,
   url: string.isRequired,
   webViewInfo,
   propRatings,

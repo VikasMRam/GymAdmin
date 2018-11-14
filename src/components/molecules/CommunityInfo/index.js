@@ -9,6 +9,10 @@ import { community as communityPropType } from 'sly/propTypes/community';
 
 import { Block, Icon, ClampedText } from 'sly/components/atoms';
 
+const Wrapper = styled.div`
+  width: 100%;
+`;
+
 const IconTextWrapper = styled.div`
   display: flex;
   color: ${palette(prop('palette'), 'base')};
@@ -100,7 +104,7 @@ export default class CommunityInfo extends Component {
     const livingTypes = firstLineValue.split(',');
 
     return (
-      <div {...props}>
+      <Wrapper {...props}>
         <Name size="subtitle" palette={paletteProp}>{name}</Name>
         <IconTextWrapper palette={paletteProp}>
           <StyledIcon icon="room" palette={paletteProp} />
@@ -122,7 +126,7 @@ export default class CommunityInfo extends Component {
           {this.renderRate(community)}
           {this.renderReviews(community)}
         </RatingWrapper>
-      </div>
+      </Wrapper>
     );
   }
 }
