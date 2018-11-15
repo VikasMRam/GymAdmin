@@ -22,9 +22,4 @@ describe('CommunityTile', () => {
     const wrapper = wrap({ layout: 'contained' }).dive();
     expect(wrapper.find('Styled(CommunityInfo)')).toHaveLength(1);
   });
-
-  it('renders CommunityTile - Full Height Layout', () => {
-    const wrapper = wrap({ layout: 'fullHeight' }).dive();
-    expect(wrapper.find('Styled(CommunityInfo)')).toHaveLength(1);
-  });
 });
