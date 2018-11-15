@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { ensureAuthenticated, trackAuthenticated } from 'sly/store/actions';
+import { ensureAuthenticated } from 'sly/store/actions';
 import { getDetail } from 'sly/store/selectors';
 
 export default function authenticated() {

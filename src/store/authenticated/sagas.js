@@ -1,4 +1,4 @@
-import { call, put, all, race, takeEvery, take } from 'redux-saga/effects';
+import { call, put, race, takeEvery, take } from 'redux-saga/effects';
 
 import * as actions from './actions';
 
