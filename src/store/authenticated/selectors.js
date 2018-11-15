@@ -1,3 +1,3 @@
 export const initialState = {
-  step: null,
+  logginIn: false,
 };
