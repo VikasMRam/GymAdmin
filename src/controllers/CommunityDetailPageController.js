@@ -17,6 +17,7 @@ import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
+import { ANSWER_QUESTION } from 'sly/constants/modalType';
 
 class CommunityDetailPageController extends Component {
   static propTypes = {
@@ -73,15 +74,15 @@ class CommunityDetailPageController extends Component {
     } else {
       this.handleParamsRemove({ paramsToRemove: ['modal'] });
     }
-  }
+  };
 
   setQuestionToAsk = (question) => {
     if (question) {
-      this.changeSearchParams({ changedParams: { modal: 'answerQuestion', entityId: question.id } });
+      this.changeSearchParams({ changedParams: { modal: ANSWER_QUESTION, entityId: question.id } });
     } else {
       this.changeSearchParams({ changedParams: { modal: null, entityId: null } });
     }
-  }
+  };
 
   changeSearchParams = ({ changedParams }) => {
     const { history, location } = this.props;
@@ -90,7 +91,7 @@ class CommunityDetailPageController extends Component {
     const newParams = { ...parseURLQueryParams(search), ...changedParams };
     const path = `${pathname}?${objectToURLQueryParams(newParams)}`;
     history.push(path);
-  }
+  };
 
   handleParamsRemove = ({ paramsToRemove }) => {
     const { set } = this.props;
@@ -103,7 +104,7 @@ class CommunityDetailPageController extends Component {
     set({
       userSaveUpdated: false,
     });
-  }
+  };
 
   handleBackToSearchClick = () => {
     const { community } = this.props;
@@ -112,7 +113,7 @@ class CommunityDetailPageController extends Component {
       action: 'click', category: 'backToSearch', label: id,
     };
     SlyEvent.getInstance().sendEvent(event);
-  }
+  };
 
   handleReviewLinkClick = (name) => {
     const { community } = this.props;
@@ -121,7 +122,7 @@ class CommunityDetailPageController extends Component {
       action: 'click', category: 'externalReview', label: id, value: name,
     };
     SlyEvent.getInstance().sendEvent(event);
-  }
+  };
 
   handleConciergeNumberClick = () => {
     const { community } = this.props;
@@ -130,7 +131,7 @@ class CommunityDetailPageController extends Component {
       action: 'click', category: 'conciergePhone', label: id,
     };
     SlyEvent.getInstance().sendEvent(event);
-  }
+  };
 
   handleLiveChatClick = () => {
     const { community } = this.props;
@@ -140,7 +141,7 @@ class CommunityDetailPageController extends Component {
     };
     SlyEvent.getInstance().sendEvent(event);
     window && window.olark && window.olark('api.box.expand');
-  }
+  };
 
   handleReceptionNumberClick = () => {
     const { community } = this.props;
@@ -149,7 +150,7 @@ class CommunityDetailPageController extends Component {
       action: 'click', category: 'receptionPhone', label: id,
     };
     SlyEvent.getInstance().sendEvent(event);
-  }
+  };
 
   handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
     const { set, community } = this.props;
@@ -167,7 +168,7 @@ class CommunityDetailPageController extends Component {
     set({
       mediaGallerySlideIndex: slideIndex,
     });
-  }
+  };
 
   handleToggleMediaGalleryFullscreen = (fromMorePictures, isVideo, fromSeeMoreButton) => {
     const {
@@ -215,7 +216,7 @@ class CommunityDetailPageController extends Component {
     set({
       isMediaGalleryFullscreenActive: !isMediaGalleryFullscreenActive,
     });
-  }
+  };
 
   handleToggleStickyHeader = () => {
     const { set, isStickyHeaderVisible } = this.props;

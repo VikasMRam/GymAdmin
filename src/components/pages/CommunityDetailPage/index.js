@@ -493,12 +493,18 @@ export default class CommunityDetailPage extends Component {
           </CollapsibleSection>
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
-        <StickyFooter
-          footerInfo={{
-            ctaTitle: 'Schedule a Tour',
-          }}
-          onFooterClick={onSATClick}
-        />
+        <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
+          {({ getPricing }) => (
+            <StickyFooter
+              footerInfo={{
+                title: 'Contact Property',
+                name: community.name,
+                ctaTitle: 'Contact',
+              }}
+              onFooterClick={getPricing}
+            />
+          )}
+        </ConciergeController>
         {(searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||
           searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) &&
           <NotificationController>

@@ -33,13 +33,10 @@ steps[MODAL_TYPE_RESET_PASSWORD] = ResetPasswordFormContainer;
 class AuthContainer extends Component {
   static propTypes = {
     authenticated: object,
-    searchParams: object,
     user: object,
     authenticateCancel: func,
     authenticateSuccess: func,
-    setQueryParams: func,
     fetchUser: func,
-    history: object,
     notifyInfo: func,
   };
 
@@ -61,16 +58,9 @@ class AuthContainer extends Component {
   gotoResetPassword = () => this.setState({ currentStep: MODAL_TYPE_RESET_PASSWORD });
 
   handleLoginSuccess = () => {
-    const {
-      authenticateSuccess, fetchUser, searchParams, history,
-    } = this.props;
-    const { redirectTo } = searchParams;
+    const { authenticateSuccess, fetchUser } = this.props;
     fetchUser().then((user) => {
-      if (redirectTo) {
-        history.push(redirectTo);
-      } else {
-        authenticateSuccess(user);
-      }
+      authenticateSuccess(user);
     });
   };
 
@@ -84,11 +74,7 @@ class AuthContainer extends Component {
   };
 
   render() {
-    const {
-      searchParams,
-      authenticateCancel,
-    } = this.props;
-
+    const { authenticated, authenticateCancel } = this.props;
     const { currentStep } = this.state;
 
     if (!currentStep) {
@@ -96,11 +82,12 @@ class AuthContainer extends Component {
     }
 
     const StepComponent = steps[currentStep];
-    let heading;
-    if (searchParams.redirectTo && (searchParams.redirectTo.indexOf(ACTIONS_ADD_TO_FAVOURITE) > -1 ||
-      searchParams.redirectTo.indexOf(ACTIONS_REMOVE_FROM_FAVOURITE) > -1)) {
-      heading = 'Sign up to add to your favorites list';
-    }
+
+    // TODO: GET RID OF THIS
+    // if (searchParams.redirectTo && (searchParams.redirectTo.indexOf(ACTIONS_ADD_TO_FAVOURITE) > -1 ||
+    //   searchParams.redirectTo.indexOf(ACTIONS_REMOVE_FROM_FAVOURITE) > -1)) {
+    //   heading = 'Sign up to add to your favorites list';
+    // }
 
     const componentProps = {};
     switch (currentStep) {
@@ -108,7 +95,7 @@ class AuthContainer extends Component {
         componentProps.onLoginClicked = this.gotoLogin;
         componentProps.onEmailSignupClicked = this.gotoSignup;
         componentProps.onConnectSuccess = this.handleLoginSuccess;
-        componentProps.heading = heading;
+        componentProps.heading = authenticated.reason;
         break;
       case MODAL_TYPE_LOG_IN:
         componentProps.onSubmitSuccess = this.handleLoginSuccess;
@@ -138,13 +125,9 @@ class AuthContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, {
-  history, match, location,
-}) => ({
+const mapStateToProps = state => ({
   authenticated: state.authenticated,
-  setQueryParams: getQueryParamsSetter(history, location),
   user: getDetail(state, 'user', 'me'),
-  searchParams: getSearchParams(match, location),
 });
 
 const mapDispatchToProps = dispatch => ({
