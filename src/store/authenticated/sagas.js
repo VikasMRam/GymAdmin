@@ -16,10 +16,8 @@ export function* ensureAuthenticated(api, { action }, { thunk }) {
   const { authenticated, cancel } = yield call(authenticate);
 
   if (authenticated) {
-    yield all([
-      actions.ensureAuthenticatedSuccess(action, thunk),
-      action,
-    ]);
+    yield put(actions.ensureAuthenticatedSuccess(authenticated, thunk));
+    yield put(action);
   } else if (cancel) {
     yield put(actions.ensureAuthenticatedFailure(new Error('User canceled'), thunk));
   } else {
