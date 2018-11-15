@@ -33,17 +33,29 @@ describe('BookingFormFooter', () => {
     expect(wrapper.find('PreferenceWrapper').childAt(1).text()).toContain('Anytime');
   });
 
-  it('renders with finalStep', () => {
-    const wrapper = wrap({ finalStep: true });
+  it('renders with isFinalStep', () => {
+    const wrapper = wrap({ isFinalStep: true });
     expect(wrapper.find('PreferenceWrapper').childAt(0).dive().text()).toContain('Select a Date');
     expect(wrapper.find('PreferenceWrapper').childAt(1).text()).toContain('Select a Time');
     expect(wrapper.find(Button).dive().dive().text()).toContain('Send Tour Request');
   });
 
-  it('renders with finalStep, date and time', () => {
-    const wrapper = wrap({ date: '2018-1-9', time: 'Anytime', finalStep: true });
+  it('renders with isFinalStep, date and time', () => {
+    const wrapper = wrap({ date: '2018-1-9', time: 'Anytime', isFinalStep: true });
     expect(wrapper.find('PreferenceWrapper').childAt(0).dive().text()).toContain('Tuesday, JAN 9');
     expect(wrapper.find('PreferenceWrapper').childAt(1).text()).toContain('Anytime');
     expect(wrapper.find(Button).dive().dive().text()).toContain('Send Tour Request');
+  });
+
+  it('onProgressClick is called', () => {
+    const onProgressClick = jest.fn();
+    const wrapper = wrap({ onProgressClick });
+    wrapper.find(Button).simulate('click');
+    expect(onProgressClick).toHaveBeenCalled();
+  });
+
+  it('renders when isButtonDisabled', () => {
+    const wrapper = wrap({ isButtonDisabled: true });
+    expect(wrapper.find(Button).at(0).props().disabled).toBe(true);
   });
 });

@@ -41,7 +41,8 @@ const FirstPreferenceWrapper = styled.div`
 
 
 const BookingFormFooter = ({
-  palette: paletteProp, date, time, finalStep, onProgressClick,
+  palette: paletteProp, date, time, isFinalStep, onProgressClick,
+  isButtonDisabled,
 }) => {
   let dateString = date;
   if (date !== datePlaceholder) {
@@ -76,8 +77,8 @@ const BookingFormFooter = ({
           </div>
         </div>
       </PreferenceWrapper>
-      {finalStep && <Button kind="jumbo" palette={paletteProp} onClick={onProgressClick}>Send Tour Request</Button>}
-      {!finalStep && <Button kind="jumbo" palette={paletteProp} onClick={onProgressClick}>Next</Button>}
+      {isFinalStep && <Button kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>Send Tour Request</Button>}
+      {!isFinalStep && <Button kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>Next</Button>}
     </Wrapper>
   );
 };
@@ -85,7 +86,8 @@ const BookingFormFooter = ({
 BookingFormFooter.propTypes = {
   date: string,
   time: string,
-  finalStep: bool,
+  isFinalStep: bool,
+  isButtonDisabled: bool,
   onProgressClick: func,
   palette: oneOf(Object.keys(getKey('palette'))),
 };
