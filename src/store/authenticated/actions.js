@@ -1,6 +1,6 @@
-export const ENSURE_AUTHENTICATED_REQUEST = 'ENSURE_AUTHENTICATED_REQUEST';
+export const ENSURE_AUTHENTICATED = 'ENSURE_AUTHENTICATED';
 export const ensureAuthenticated = action => ({
-  type: ENSURE_AUTHENTICATED_REQUEST,
+  type: ENSURE_AUTHENTICATED,
   payload: { action },
   meta: {
     thunk: 'ensureAuthenticated',

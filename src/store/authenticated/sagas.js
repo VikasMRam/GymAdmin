@@ -30,5 +30,5 @@ export function* watchEnsureAuthenticated(api, { payload, meta }) {
 }
 
 export default function* authenticatedSagas({ api }) {
-  yield takeEvery(actions.ENSURE_AUTHENTICATED_REQUEST, watchEnsureAuthenticated, api);
+  yield takeEvery(actions.ENSURE_AUTHENTICATED, watchEnsureAuthenticated, api);
 }

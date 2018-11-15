@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { string, func, object } from 'prop-types';
 
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 
-import { authenticated } from 'sly/store';
 import { getDetail } from 'sly/store/selectors';
 import { connectController } from 'sly/controllers';
 import SlyEvent from 'sly/services/helpers/events';
@@ -323,9 +322,9 @@ const mapStateToProps = (state, props) => {
 
 const submit = data => resourceCreateRequest('userAction', data);
 
-export default authenticated()(connectController(
+export default connectController(
   mapStateToProps,
-  (dispatch, { ensureAuthenticated }) => ({
-    submit: data => dispatch(ensureAuthenticated(submit(data))),
+  dispatch => ({
+    submit: data => dispatch(submit(data)),
   }),
-)(ConciergeController));
+)(ConciergeController);
