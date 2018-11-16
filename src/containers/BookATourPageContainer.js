@@ -29,7 +29,7 @@ class BookATourPageContainer extends Component {
       similarProperties,
       mainImage,
     } = community;
-    const appointmentText = 'Blah';
+    const appointmentText = 'Saturday, October 21, Anytime';
     // TODO: Implement BookATour Page flow
     return (
       <BookATourConfirmationPage
