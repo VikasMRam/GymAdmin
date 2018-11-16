@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { string, number } from 'prop-types';
-import styled from 'styled-components';
-
+import React from 'react';
+import { string, bool } from 'prop-types';
+import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 
@@ -10,19 +10,24 @@ const HRStyled = styled.hr`
   padding: 0;
   margin: 0;
   margin-bottom: ${size('spacing.xLarge')};
-  border-top: 1px solid ${palette(2)};
+  border-top: 1px solid ${palette('slate', 'filler')};
+  
+  ${ifProp('fullWidth', css`
+    // Hacky way to implement a Hr beyond the fixed width container
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+  `)};
 `;
 
-class Hr extends Component {
-  static propTypes = {
-    palette: string,
-  };
-  static defaultProps = {
-    palette: 'slate',
-  };
-  render() {
-    return <HRStyled {...this.props} />;
-  }
-}
+const Hr = props => <HRStyled {...props} />;
+
+Hr.propTypes = {
+  palette: string,
+  fullWidth: bool,
+};
+
+Hr.defaultProps = {
+  palette: 'slate',
+};
 
 export default Hr;

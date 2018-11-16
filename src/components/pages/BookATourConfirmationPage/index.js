@@ -11,31 +11,28 @@ import Hr from 'sly/components/atoms/Hr/index';
 import Heading from 'sly/components/atoms/Heading/index';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile/index';
 
-const CommunitySATAcknowledgementWrapper = styled.div`
-  margin-top: ${size('spacing.xxxLarge')};
-  margin-bottom: ${size('spacing.xLarge')};
-  margin-left: auto;
-  margin-right: auto;
-`;
-
 const TopContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
   > * {
     margin-left: auto;
     margin-right: auto;
   }
 `;
 
-const StyledButton = styled(Button)`
-
+const CommunitySATAcknowledgementWrapper = styled.div`
+  margin-top: ${size('spacing.xxxLarge')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const StyledHr = styled(Hr)`
-  margin: ${size('spacing.xxxLarge')} 0;
+  margin-top: ${size('spacing.xxxLarge')};
+  margin-bottom: ${size('spacing.xxxLarge')};
 `;
 
 const StyledHeading = styled(Heading)`
+  text-align: center;
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
@@ -57,9 +54,9 @@ const BookATourConfirmationPage = ({
           <CommunitySATAcknowledgementWrapper>
             <CommunitySATAcknowledgement communityName={communityName} communityImageUrl={communityImageUrl} appointmentText={appointmentText} />
           </CommunitySATAcknowledgementWrapper>
-          <StyledButton kind="jumbo" palette="primary" onClick={onButtonClick} >View Similar Communities</StyledButton>
+          <Button kind="jumbo" palette="primary" onClick={onButtonClick} >View Similar Communities</Button>
         </TopContentWrapper>
-        <StyledHr />
+        <StyledHr fullWidth />
         <StyledHeading level="title">Explore Nearby Communities</StyledHeading>
         {similarCommunitiesComponent}
       </TemplateContent>
