@@ -51,7 +51,10 @@ class WizardController extends Component {
   goto = (step) => {
     const { set, progressPath, currentStep } = this.props;
 
-    progressPath.push(currentStep);
+    // first step will already be present
+    if (currentStep > 2) {
+      progressPath.push(currentStep);
+    }
     set({
       currentStep: step,
       progressPath,
@@ -78,19 +81,11 @@ class WizardController extends Component {
     }
   }
 
-  handleComplete = () => {
-    const { onComplete, data } = this.props;
-
-    if (onComplete) {
-      onComplete(data);
-    }
-  }
-
   handleSubmit = () => {
-    const { onSubmit, data } = this.props;
+    const { onSubmit, onComplete, data } = this.props;
 
     if (this.isFinalStep()) {
-      return this.handleComplete();
+      return onComplete(data);
     }
     if (onSubmit) {
       return onSubmit(data);
@@ -109,7 +104,6 @@ class WizardController extends Component {
       previous: this.previous,
       goto: this.goto,
       onSubmit: this.handleSubmit,
-      onComplete: this.handleComplete,
       setStepsSize: this.setStepsSize,
       currentStep,
       isFinalStep: this.isFinalStep(),

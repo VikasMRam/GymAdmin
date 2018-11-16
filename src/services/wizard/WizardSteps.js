@@ -5,7 +5,6 @@ export default class WizardSteps extends Component {
   static propTypes = {
     currentStep: number.isRequired,
     children: arrayOf(node).isRequired,
-    onComplete: func,
     onSubmit: func,
     formOptions: object,
     setStepsSize: func,
@@ -16,30 +15,29 @@ export default class WizardSteps extends Component {
 
     const { children, setStepsSize } = this.props;
     this.stepsSize = Array.isArray(children) ? children.length : 1;
+    this.children = children;
 
     setStepsSize(this.stepsSize);
   }
 
   render() {
-    const { stepsSize } = this;
+    const { children } = this;
     const {
-      children, currentStep, onComplete, onSubmit, formOptions,
+      currentStep, onSubmit, formOptions,
     } = this.props;
-    let newChildren = children;
+    let newChild = children;
 
     if (Array.isArray(children)) {
-      newChildren = children.map((child, i) =>
-        React.cloneElement(child, {
-          step: i + 1,
-          key: i,
-          currentStep,
-          onComplete,
-          onSubmit: child.props.onSubmit || onSubmit,
-          stepsSize,
-          formOptions,
-        }));
+      const currentStepComponent = children.find((child, i) => i + 1 === currentStep);
+      if (currentStepComponent) {
+        newChild =
+          React.cloneElement(currentStepComponent, {
+            onSubmit: currentStepComponent.props.onSubmit || onSubmit,
+            formOptions,
+          });
+      }
     }
 
-    return <Fragment>{newChildren}</Fragment>;
+    return <Fragment>{newChild}</Fragment>;
   }
 }
