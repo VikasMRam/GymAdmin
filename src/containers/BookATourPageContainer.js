@@ -9,7 +9,7 @@ import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import BookATourConfirmationPage from 'sly/components/pages/BookATourConfirmationPage/index';
 import { getCitySearchUrl } from 'sly/services/helpers/url';
 
-class BookATourContainer extends Component {
+class BookATourPageContainer extends Component {
   handleConfirmationPageOnButtonClick = () => {
     const { community, history } = this.props;
     const {
@@ -43,7 +43,7 @@ class BookATourContainer extends Component {
   }
 }
 
-BookATourContainer.propTypes = {
+BookATourPageContainer.propTypes = {
   community: object,
   user: object,
   history: object,
@@ -88,4 +88,4 @@ export default withServerState({
 })(connectController(
   mapStateToProps,
   null,
-)(BookATourContainer));
+)(BookATourPageContainer));
