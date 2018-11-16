@@ -26,7 +26,7 @@ import { connectController } from 'sly/controllers';
 import { getDetail, getList } from 'sly/store/selectors';
 
 import SaveCommunity from 'sly/components/organisms/SaveCommunity';
-import authenticated from 'sly/store/authenticated/connector';
+import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 
 class SaveCommunityController extends Component {
   static propTypes = {
@@ -200,7 +200,7 @@ const mapStateToProps = (state, {
   };
 };
 
-const mapDispatchToProps = (dispatch, { ensureAuthenticated }) => ({
+const mapDispatchToProps = dispatch => ({
   createUserSave: data => dispatch(ensureAuthenticated(
     'Sign up to add to your favorites list',
     resourceCreateRequest('userSave', data),
@@ -219,4 +219,4 @@ const mapDispatchToProps = (dispatch, { ensureAuthenticated }) => ({
   })),
 });
 
-export default withRouter(authenticated(connectController(mapStateToProps, mapDispatchToProps)(SaveCommunityController)));
+export default withRouter(connectController(mapStateToProps, mapDispatchToProps)(SaveCommunityController));
