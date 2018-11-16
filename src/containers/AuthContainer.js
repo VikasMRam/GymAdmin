@@ -3,11 +3,7 @@ import { object, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getSearchParams } from 'sly/services/helpers/search';
-
-import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getDetail } from 'sly/store/selectors';
-import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import { authenticateCancel, authenticateSuccess } from 'sly/store/authenticated/actions';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 
@@ -82,12 +78,6 @@ class AuthContainer extends Component {
     }
 
     const StepComponent = steps[currentStep];
-
-    // TODO: GET RID OF THIS
-    // if (searchParams.redirectTo && (searchParams.redirectTo.indexOf(ACTIONS_ADD_TO_FAVOURITE) > -1 ||
-    //   searchParams.redirectTo.indexOf(ACTIONS_REMOVE_FROM_FAVOURITE) > -1)) {
-    //   heading = 'Sign up to add to your favorites list';
-    // }
 
     const componentProps = {};
     switch (currentStep) {

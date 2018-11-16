@@ -1,7 +1,7 @@
 export const ENSURE_AUTHENTICATED = 'ENSURE_AUTHENTICATED';
-export const ensureAuthenticated = action => ({
+export const ensureAuthenticated = (reason, action) => ({
   type: ENSURE_AUTHENTICATED,
-  payload: { action },
+  payload: { action, reason },
   meta: {
     thunk: 'ensureAuthenticated',
   },
@@ -29,8 +29,9 @@ export const ensureAuthenticatedFailure = (error, thunk) => ({
 // AUTHENTICATE FLOW
 
 export const AUTHENTICATE = 'AUTHENTICATE';
-export const authenticate = () => ({
+export const authenticate = reason => ({
   type: AUTHENTICATE,
+  payload: { reason },
 });
 
 export const AUTHENTICATE_CANCEL = 'AUTHENTICATE_CANCEL';

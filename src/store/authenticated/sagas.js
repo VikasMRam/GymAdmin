@@ -2,8 +2,8 @@ import { call, put, race, takeEvery, take } from 'redux-saga/effects';
 
 import * as actions from './actions';
 
-export function* authenticate() {
-  yield put(actions.authenticate());
+export function* authenticate(reason) {
+  yield put(actions.authenticate(reason));
 
   return yield race({
     authenticated: take(actions.AUTHENTICATE_SUCCESS),
@@ -12,8 +12,8 @@ export function* authenticate() {
 
 }
 
-export function* ensureAuthenticated(api, { action }, { thunk }) {
-  const { authenticated, cancel } = yield call(authenticate);
+export function* ensureAuthenticated(api, { reason, action }, { thunk }) {
+  const { authenticated, cancel } = yield call(authenticate, reason);
 
   if (authenticated) {
     yield put(actions.ensureAuthenticatedSuccess(authenticated, thunk));

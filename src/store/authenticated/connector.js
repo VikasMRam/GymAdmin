@@ -12,7 +12,7 @@ export default function authenticated(ChildComponent) {
     const user = getDetail(state, 'user', 'me');
     return {
       user,
-      ensureAuthenticated: action => user ? action : ensureAuthenticated(action),
+      ensureAuthenticated: (reason, action) => user ? action : ensureAuthenticated(reason, action),
     };
   };
 
