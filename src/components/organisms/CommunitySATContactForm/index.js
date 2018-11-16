@@ -9,14 +9,6 @@ import ReduxField from 'sly/components/organisms/ReduxField/index';
 import { Heading, Block, Icon, Image } from 'sly/components/atoms';
 import Link from 'sly/components/atoms/Link/index';
 
-const Form = styled.form`
-  width: ${size('mobileLayout.col4')};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col6')};
-  }
-`;
-
 const SubheadingWrapper = styled.div`
   display: flex;
 `;
@@ -67,7 +59,7 @@ const CommunitySATContactForm = ({
   const subheading = 'A local senior living advisor will help get you detailed pricing with this community. ';
 
   return (
-    <Form>
+    <form>
       <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
       <SubheadingWrapper>
         <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can an advisor help?</Link></SubHeading>
@@ -111,7 +103,7 @@ const CommunitySATContactForm = ({
         <StyledIcon icon="help" size="regular" palette="slate" onClick={onMedicaidHelpClick} />
       </CheckboxWrapper>
       {error && <Block palette="danger">{error}</Block>}
-    </Form>
+    </form>
   );
 };
 

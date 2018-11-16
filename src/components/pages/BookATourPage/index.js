@@ -42,7 +42,17 @@ const StyledCommunityInfo = styled(CommunityInfo)`
   width: 100%;
 `;
 
-const Body = makeBody(styled.div``);
+const Body = makeBody(styled.div`
+  > * {
+    width: ${size('mobileLayout.col4')};
+    margin: auto;
+    margin-top: ${size('spacing.xxxLarge')};
+
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      width: ${size('layout.col6')};
+    }
+  }
+`);
 const Controls = makeControls(styled.div``);
 
 export default class BookATourPage extends Component {
@@ -59,39 +69,38 @@ export default class BookATourPage extends Component {
         <Column backgroundImage={community.mainImage}>
           <StyledCommunityInfo palette="white" community={community} />
         </Column>
-        <Body>
-          <WizardController onComplete={this.onComplete}>
-            {({
-              data, onSubmit, isFinalStep, submitEnabled, ...props
-            }) => (
-              <Fragment>
-                <Body>
-                  <WizardSteps {...props}>
-                    <WizardStep
-                      component={CommunitySATDateForm}
-                      name="Date"
-                      validations={{ date: [required], time: [required] }}
-                    />
-                    <WizardStep
-                      component={CommunitySATContactForm}
-                      name="Contact"
-                      validations={{ name: [required], email: [required, email], phone: [required, usPhone] }}
-                    />
-                  </WizardSteps>
-                </Body>
-                <Controls>
-                  <BookingFormFooter
-                    date={data.date}
-                    time={data.time}
-                    onProgressClick={onSubmit}
-                    isFinalStep={isFinalStep}
-                    isButtonDisabled={!submitEnabled}
+        <WizardController onComplete={this.onComplete}>
+          {({
+            data, onSubmit, isFinalStep, submitEnabled, ...props
+          }) => (
+            <Fragment>
+              <Body>
+                <WizardSteps {...props}>
+                  <WizardStep
+                    component={CommunitySATDateForm}
+                    name="Date"
+                    validations={{ date: [required], time: [required] }}
                   />
-                </Controls>
-              </Fragment>
-            )}
-          </WizardController>
-        </Body>
+                  <WizardStep
+                    component={CommunitySATContactForm}
+                    name="Contact"
+                    validations={{ name: [required], email: [required, email], phone: [required, usPhone] }}
+                  />
+                </WizardSteps>
+              </Body>
+              <Controls>
+                <BookingFormFooter
+                  date={data.date}
+                  time={data.time}
+                  onProgressClick={onSubmit}
+                  isFinalStep={isFinalStep}
+                  isButtonDisabled={!submitEnabled}
+                  palette="primary"
+                />
+              </Controls>
+            </Fragment>
+          )}
+        </WizardController>
       </FullScreenWizard>
     );
   }

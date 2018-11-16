@@ -16,14 +16,6 @@ const timeOptions = [
   { label: 'Evening', value: 'evening' },
 ];
 
-const Form = styled.form`
-  width: ${size('mobileLayout.col4')};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col6')};
-  }
-`;
-
 const HeadingSection = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
 `;
@@ -54,7 +46,7 @@ const CommunitySATDateForm = ({
   const to = moment().add(8, 'days');
 
   return (
-    <Form>
+    <form>
       <HeadingSection level="subtitle" size="subtitle">What day did you want to tour?</HeadingSection>
       <StyledField
         hasLaterDate
@@ -72,7 +64,7 @@ const CommunitySATDateForm = ({
         component={ReduxField}
       />
       {error && <Block palette="danger">{error}</Block>}
-    </Form>
+    </form>
   );
 };
 
