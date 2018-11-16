@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import moment from 'moment';
 
 import { getKey, palette, size } from 'sly/components/themes';
+import { LATER_DATE } from 'sly/constants/date';
+import { TIME_OPTIONS } from 'sly/constants/booking';
 
 import { Block, Button } from 'sly/components/atoms';
 
@@ -46,15 +48,24 @@ const BookingFormFooter = ({
 }) => {
   let dateString = date;
   if (date !== datePlaceholder) {
-    const parsedDate = moment(date, 'YYYY-MM-DD');
-    if (!parsedDate.isValid()) {
-      dateString = 'Failed to parse date';
+    if (date === LATER_DATE) {
+      dateString = 'Later Date';
     } else {
-      const dayName = parsedDate.format('dddd');
-      const day = parsedDate.format('D');
-      const month = parsedDate.format('MMM').toUpperCase();
-      dateString = `${dayName}, ${month} ${day}`;
+      const parsedDate = moment(date, 'YYYY-MM-DD');
+      if (!parsedDate.isValid()) {
+        dateString = 'Failed to parse date';
+      } else {
+        const dayName = parsedDate.format('dddd');
+        const day = parsedDate.format('D');
+        const month = parsedDate.format('MMM');
+        dateString = `${dayName}, ${month} ${day}`;
+      }
     }
+  }
+  let timeString = time;
+  const matchedTimeOption = TIME_OPTIONS.find(o => o.value === time);
+  if (matchedTimeOption) {
+    timeString = matchedTimeOption.label;
   }
 
   return (
@@ -73,7 +84,7 @@ const BookingFormFooter = ({
             Time Preference
           </Block>
           <div>
-            {time}
+            {timeString}
           </div>
         </div>
       </PreferenceWrapper>

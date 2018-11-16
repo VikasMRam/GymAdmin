@@ -1,6 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { LATER_DATE } from 'sly/constants/date';
+
 import DateChoice from 'sly/components/molecules/DateChoice';
 import DateChoiceTile from 'sly/components/molecules/DateChoiceTile';
 
@@ -55,7 +57,7 @@ describe('DateChoice', () => {
 
   it('renders with later date selected', () => {
     const fromDate = '2018-1-20';
-    const selectedDate = 'later-date';
+    const selectedDate = LATER_DATE;
     const toDate = '2018-1-31';
     const wrapper = wrap({
       from: fromDate, to: toDate, value: selectedDate, hasLaterDate: true,

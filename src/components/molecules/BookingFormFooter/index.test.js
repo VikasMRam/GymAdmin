@@ -17,7 +17,7 @@ describe('BookingFormFooter', () => {
 
   it('renders with date', () => {
     const wrapper = wrap({ date: '2018-1-9' });
-    expect(wrapper.find('PreferenceWrapper').childAt(0).dive().text()).toContain('Tuesday, JAN 9');
+    expect(wrapper.find('PreferenceWrapper').childAt(0).dive().text()).toContain('Tuesday, Jan 9');
     expect(wrapper.find('PreferenceWrapper').childAt(1).text()).toContain('Select a Time');
   });
 
@@ -29,7 +29,7 @@ describe('BookingFormFooter', () => {
 
   it('renders with date and time', () => {
     const wrapper = wrap({ date: '2018-1-9', time: 'Anytime' });
-    expect(wrapper.find('PreferenceWrapper').childAt(0).dive().text()).toContain('Tuesday, JAN 9');
+    expect(wrapper.find('PreferenceWrapper').childAt(0).dive().text()).toContain('Tuesday, Jan 9');
     expect(wrapper.find('PreferenceWrapper').childAt(1).text()).toContain('Anytime');
   });
 
@@ -42,7 +42,7 @@ describe('BookingFormFooter', () => {
 
   it('renders with isFinalStep, date and time', () => {
     const wrapper = wrap({ date: '2018-1-9', time: 'Anytime', isFinalStep: true });
-    expect(wrapper.find('PreferenceWrapper').childAt(0).dive().text()).toContain('Tuesday, JAN 9');
+    expect(wrapper.find('PreferenceWrapper').childAt(0).dive().text()).toContain('Tuesday, Jan 9');
     expect(wrapper.find('PreferenceWrapper').childAt(1).text()).toContain('Anytime');
     expect(wrapper.find(Button).dive().dive().text()).toContain('Send Tour Request');
   });

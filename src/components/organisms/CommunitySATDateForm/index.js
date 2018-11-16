@@ -5,16 +5,10 @@ import moment from 'moment';
 import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
+import { TIME_OPTIONS } from 'sly/constants/booking';
 
 import { Heading, Block } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
-
-const timeOptions = [
-  { label: 'Anytime', value: 'anytime' },
-  { label: 'Morning', value: 'morning' },
-  { label: 'Afternoon', value: 'afternoon' },
-  { label: 'Evening', value: 'evening' },
-];
 
 const HeadingSection = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
@@ -58,7 +52,7 @@ const CommunitySATDateForm = ({
       />
       <HeadingSection level="subtitle" size="subtitle">What time works best for you?</HeadingSection>
       <StyledTimeField
-        options={timeOptions}
+        options={TIME_OPTIONS}
         name="time"
         type="boxChoice"
         component={ReduxField}
