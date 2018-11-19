@@ -86,7 +86,7 @@ export default class CommunityInfo extends Component {
     this.renderProviderRate(startingRate)
   );
 
-  renderReviews = ({ reviewsValue }) => (
+  renderReviews = reviewsValue => (
     <Rating size="caption" palette={this.props.palette}>
       <StyledRatingIcon icon="star" size="small" palette="primary" />
       {reviewsValue > 0 ? reviewsValue : 'Not Yet Rated'}
@@ -95,43 +95,52 @@ export default class CommunityInfo extends Component {
 
   render() {
     const { community, palette: paletteProp, ...props } = this.props;
-    const { name, webViewInfo } = community;
+    const {
+      name, webViewInfo, floorPlanString, propInfo, propRatings,
+    } = community;
+    let { reviewsValue } = community;
+    const { typeCare } = propInfo;
     let floorPlanComponent = null;
     let livingTypeComponent = null;
+    let floorPlan = floorPlanString;
+    let livingTypes = typeCare;
     if (webViewInfo) {
-      const {
-        firstLineValue,
-        secondLineValue,
-      } = webViewInfo;
-      const isFloorPlanPresent = !!secondLineValue;
-      if (isFloorPlanPresent) {
-        const roomTypes = secondLineValue.split(',');
-        floorPlanComponent = (
-          <IconTextWrapper palette={paletteProp}>
-            <StyledIcon icon="room" palette={paletteProp} />
-            <ClampedText title={roomTypes.join(',')} palette={paletteProp}>
-              {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-              {roomTypes.map((roomType, i) =>
-                <Fragment key={roomType}>{!!i && <Fragment>, </Fragment>}{roomType}</Fragment>)}
-            </ClampedText>
-          </IconTextWrapper>
-        );
-      }
-      const isLivingTypesPresent = !!firstLineValue;
-      if (isLivingTypesPresent) {
-        const livingTypes = firstLineValue.split(',');
-        livingTypeComponent = (
-          <LastIconTextWrapper palette={paletteProp}>
-            <StyledIcon icon="hospital" palette={paletteProp} />
-            <ClampedText title={livingTypes.join(',')} palette={paletteProp}>
-              {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-              {livingTypes.map((livingType, i) =>
-                <Fragment key={livingType}>{!!i && <Fragment>{i === livingTypes.length - 1 ? ' & ' : ', '}</Fragment>}{livingType}</Fragment>)}
-            </ClampedText>
-          </LastIconTextWrapper>
-        );
-      }
+      ({
+        secondLineValue: floorPlan,
+      } = webViewInfo);
+      const { firstLineValue } = webViewInfo;
+      livingTypes = firstLineValue.split(',');
     }
+    if (propRatings) {
+      ({ reviewsValue } = propRatings);
+    }
+
+    if (floorPlan) {
+      const roomTypes = floorPlan.split(',');
+      floorPlanComponent = (
+        <IconTextWrapper palette={paletteProp}>
+          <StyledIcon icon="room" palette={paletteProp} />
+          <ClampedText title={roomTypes.join(',')} palette={paletteProp}>
+            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+            {roomTypes.map((roomType, i) =>
+              <Fragment key={roomType}>{!!i && <Fragment>, </Fragment>}{roomType}</Fragment>)}
+          </ClampedText>
+        </IconTextWrapper>
+      );
+    }
+    if (livingTypes) {
+      livingTypeComponent = (
+        <LastIconTextWrapper palette={paletteProp}>
+          <StyledIcon icon="hospital" palette={paletteProp} />
+          <ClampedText title={livingTypes.join(',')} palette={paletteProp}>
+            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+            {livingTypes.map((livingType, i) =>
+              <Fragment key={livingType}>{!!i && <Fragment>{i === livingTypes.length - 1 ? ' & ' : ', '}</Fragment>}{livingType}</Fragment>)}
+          </ClampedText>
+        </LastIconTextWrapper>
+      );
+    }
+
     return (
       <Wrapper {...props}>
         <Name size="subtitle" palette={paletteProp}>{name}</Name>
@@ -139,7 +148,7 @@ export default class CommunityInfo extends Component {
         {livingTypeComponent}
         <RatingWrapper>
           {this.renderRate(community)}
-          {this.renderReviews(community)}
+          {this.renderReviews(reviewsValue)}
         </RatingWrapper>
       </Wrapper>
     );

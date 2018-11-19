@@ -13,8 +13,12 @@ const palette = 'danger';
 describe('CommunityInfo', () => {
   const verifyData = (wrapper, community) => {
     const {
-      webViewInfo, startingRate, reviewsValue, estimated,
+      webViewInfo, startingRate, estimated, propRatings,
     } = community;
+    let { reviewsValue } = community;
+    if (propRatings) {
+      ({ reviewsValue } = propRatings);
+    }
     if (webViewInfo) {
       const {
         firstLineValue,

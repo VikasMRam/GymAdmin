@@ -2,6 +2,7 @@ import {
   string,
   number,
   shape,
+  arrayOf,
 } from 'prop-types';
 
 export const webViewInfo = shape({
@@ -14,11 +15,17 @@ export const propRatings = shape({
   reviewsValue: number.isRequired,
 });
 
+export const propInfo = shape({
+  typeCare: arrayOf(string),
+});
+
 export const community = shape({
   id: string,
   mainImage: string,
-  name: string,
+  name: string.isRequired,
   url: string.isRequired,
+  floorPlanString: string,
+  propInfo,
   webViewInfo,
   propRatings,
 });

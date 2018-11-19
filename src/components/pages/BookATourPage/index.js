@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
+import { object } from 'prop-types';
 
+import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import HeaderController from 'sly/controllers/HeaderController';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
@@ -18,8 +20,6 @@ import {
   makeControls,
   makeHeader,
 } from 'sly/components/templates/FullScreenWizard';
-
-import community from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const Header = makeHeader(HeaderController);
 
@@ -58,17 +58,25 @@ const Body = makeBody(styled.div`
 const Controls = makeControls(styled.div``);
 
 export default class BookATourPage extends Component {
+  static propTypes = {
+    community: communityPropType,
+    user: object,
+  };
+
   onComplete = (data) => {
     alert(`completed: ${JSON.stringify(data)}`);
   }
 
   render() {
+    const { community } = this.props;
+    const { mainImage } = community;
+
     return (
       <FullScreenWizard>
         <Header>
           <HeaderController />
         </Header>
-        <Column backgroundImage={community.mainImage}>
+        <Column backgroundImage={mainImage}>
           <StyledCommunityInfo palette="white" community={community} />
         </Column>
         <WizardController onComplete={this.onComplete}>
