@@ -9,6 +9,10 @@ import { community as communityPropType } from 'sly/propTypes/community';
 
 import { Block, Icon, ClampedText } from 'sly/components/atoms';
 
+const Wrapper = styled.div`
+  width: 100%;
+`;
+
 const IconTextWrapper = styled.div`
   display: flex;
   color: ${palette(prop('palette'), 'base')};
@@ -92,37 +96,52 @@ export default class CommunityInfo extends Component {
   render() {
     const { community, palette: paletteProp, ...props } = this.props;
     const { name, webViewInfo } = community;
-    const {
-      firstLineValue,
-      secondLineValue,
-    } = webViewInfo;
-    const roomTypes = secondLineValue.split(',');
-    const livingTypes = firstLineValue.split(',');
-
+    let floorPlanComponent = null;
+    let livingTypeComponent = null;
+    if (webViewInfo) {
+      const {
+        firstLineValue,
+        secondLineValue,
+      } = webViewInfo;
+      const isFloorPlanPresent = !!secondLineValue;
+      if (isFloorPlanPresent) {
+        const roomTypes = secondLineValue.split(',');
+        floorPlanComponent = (
+          <IconTextWrapper palette={paletteProp}>
+            <StyledIcon icon="room" palette={paletteProp} />
+            <ClampedText title={roomTypes.join(',')} palette={paletteProp}>
+              {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+              {roomTypes.map((roomType, i) =>
+                <Fragment key={roomType}>{!!i && <Fragment>, </Fragment>}{roomType}</Fragment>)}
+            </ClampedText>
+          </IconTextWrapper>
+        );
+      }
+      const isLivingTypesPresent = !!firstLineValue;
+      if (isLivingTypesPresent) {
+        const livingTypes = firstLineValue.split(',');
+        livingTypeComponent = (
+          <LastIconTextWrapper palette={paletteProp}>
+            <StyledIcon icon="hospital" palette={paletteProp} />
+            <ClampedText title={livingTypes.join(',')} palette={paletteProp}>
+              {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+              {livingTypes.map((livingType, i) =>
+                <Fragment key={livingType}>{!!i && <Fragment>{i === livingTypes.length - 1 ? ' & ' : ', '}</Fragment>}{livingType}</Fragment>)}
+            </ClampedText>
+          </LastIconTextWrapper>
+        );
+      }
+    }
     return (
-      <div {...props}>
+      <Wrapper {...props}>
         <Name size="subtitle" palette={paletteProp}>{name}</Name>
-        <IconTextWrapper palette={paletteProp}>
-          <StyledIcon icon="room" palette={paletteProp} />
-          <ClampedText title={roomTypes.join(',')} palette={paletteProp}>
-            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-            {roomTypes.map((roomType, i) =>
-              <Fragment key={i}>{!!i && <Fragment>, </Fragment>}{roomType}</Fragment>)}
-          </ClampedText>
-        </IconTextWrapper>
-        <LastIconTextWrapper palette={paletteProp}>
-          <StyledIcon icon="hospital" palette={paletteProp} />
-          <ClampedText title={livingTypes.join(',')} palette={paletteProp}>
-            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-            {livingTypes.map((livingType, i) =>
-              <Fragment key={i}>{!!i && <Fragment>{i === livingTypes.length - 1 ? ' & ' : ', '}</Fragment>}{livingType}</Fragment>)}
-          </ClampedText>
-        </LastIconTextWrapper>
+        {floorPlanComponent}
+        {livingTypeComponent}
         <RatingWrapper>
           {this.renderRate(community)}
           {this.renderReviews(community)}
         </RatingWrapper>
-      </div>
+      </Wrapper>
     );
   }
 }
