@@ -1,5 +1,6 @@
 import { call, put, race, takeEvery, take, select } from 'redux-saga/effects';
 
+import { isFSA } from 'sly/store/actions';
 import { getDetail } from 'sly/store/selectors';
 import * as actions from './actions';
 
@@ -26,7 +27,13 @@ export function* ensureAuthenticated(api, { reason, action }, { thunk }) {
   const { authenticated, cancel } = yield call(authenticate, reason);
   if (authenticated) {
     yield put(actions.ensureAuthenticatedSuccess(authenticated, thunk));
-    yield put(action);
+    if (isFSA(action)) {
+      yield put(action);
+    } else if (typeof action === 'function') {
+      yield call(action);
+    } else {
+      throw new Error(`Unknown action type for ${JSON.stringify(action)}`);
+    }
   } else if (cancel) {
     yield put(actions.ensureAuthenticatedFailure(new Error('User canceled'), thunk));
   } else {
