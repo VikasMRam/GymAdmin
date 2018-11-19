@@ -244,12 +244,7 @@ export default class CommunityDetailPage extends Component {
     const { modal, entityId, currentStep } = searchParams;
     let questionToAnswer = null;
     if (modal === ANSWER_QUESTION && entityId) {
-      if (!user) {
-        // To redirect to Login if user not logged in
-        setQueryParams({ modal: MODAL_TYPE_JOIN_SLY, redirectTo: location.pathname + location.search });
-      } else {
-        questionToAnswer = questions.find(question => question.id === entityId);
-      }
+      questionToAnswer = questions.find(question => question.id === entityId);
     }
     // To clear the flag incase the question is not found
     if (questionToAnswer === undefined && entityId) {
