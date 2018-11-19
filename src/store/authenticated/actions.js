@@ -1,11 +1,18 @@
 export const ENSURE_AUTHENTICATED = 'ENSURE_AUTHENTICATED';
-export const ensureAuthenticated = (reason, action) => ({
-  type: ENSURE_AUTHENTICATED,
-  payload: { action, reason },
-  meta: {
-    thunk: 'ensureAuthenticated',
-  },
-});
+export const ensureAuthenticated = (reason, action) => {
+  // default reason
+  if (action === undefined) {
+    action = reason;
+    reason = 'Join Seniorly';
+  }
+  return {
+    type: ENSURE_AUTHENTICATED,
+    payload: { action, reason },
+    meta: {
+      thunk: 'ensureAuthenticated',
+    },
+  };
+};
 
 export const ENSURE_AUTHENTICATED_SUCCESS = 'ENSURE_AUTHENTICATED_SUCCESS';
 export const ensureAuthenticatedSuccess = (action, thunk) => ({

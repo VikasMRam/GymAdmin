@@ -49,6 +49,7 @@ class AuthContainer extends Component {
 
   state = { currentStep: null };
 
+  gotoJoin = () => this.setState({ currentStep: MODAL_TYPE_JOIN_SLY });
   gotoLogin = () => this.setState({ currentStep: MODAL_TYPE_LOG_IN });
   gotoSignup = () => this.setState({ currentStep: MODAL_TYPE_SIGN_UP });
   gotoResetPassword = () => this.setState({ currentStep: MODAL_TYPE_RESET_PASSWORD });
@@ -89,7 +90,7 @@ class AuthContainer extends Component {
         break;
       case MODAL_TYPE_LOG_IN:
         componentProps.onSubmitSuccess = this.handleLoginSuccess;
-        componentProps.onSignupClicked = this.gotoSignup;
+        componentProps.onSignupClicked = this.gotoJoin;
         componentProps.onForgotPasswordClicked = this.gotoResetPassword;
         break;
       case MODAL_TYPE_SIGN_UP:
