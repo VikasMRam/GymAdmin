@@ -44,12 +44,14 @@ const StyledCommunityInfo = styled(CommunityInfo)`
 
 const Body = makeBody(styled.div`
   > * {
-    width: ${size('mobileLayout.col4')};
-    margin: auto;
-    margin-top: ${size('spacing.xxxLarge')};
+    margin-left: ${size('spacing.xLarge')};
+    margin-right: ${size('spacing.xLarge')};
+    margin-top: ${size('spacing.xxLarge')};
 
     @media screen and (min-width: ${size('breakpoint.laptop')}) {
       width: ${size('layout.col6')};
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 `);
@@ -79,7 +81,7 @@ export default class BookATourPage extends Component {
                   <WizardStep
                     component={CommunitySATDateForm}
                     name="Date"
-                    validations={{ date: [required], time: [required] }}
+                    validations={{ date: [required], time: [required], medicaid: [required] }}
                   />
                   <WizardStep
                     component={CommunitySATContactForm}

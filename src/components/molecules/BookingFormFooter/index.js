@@ -41,7 +41,6 @@ const FirstPreferenceWrapper = styled.div`
   width: calc((${size('layout.col1')} * 2) + (${size('layout.gutter')} * 2) );
 `;
 
-
 const BookingFormFooter = ({
   palette: paletteProp, date, time, isFinalStep, onProgressClick,
   isButtonDisabled,
