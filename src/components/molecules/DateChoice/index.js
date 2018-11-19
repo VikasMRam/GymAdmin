@@ -4,6 +4,7 @@ import moment from 'moment';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
+import { LATER_DATE } from 'sly/constants/date';
 
 import { BoxChoiceTile } from 'sly/components/atoms';
 import DateChoiceTile from 'sly/components/molecules/DateChoiceTile';
@@ -69,12 +70,12 @@ export default class DateChoice extends Component {
 
     if (multiChoice) {
       value.forEach((val, i) => {
-        if (!hasLaterDate && val !== 'later-date') {
+        if (!hasLaterDate && val !== LATER_DATE) {
           const parsedDate = moment(val, 'YYYY-MM-DD');
           value[i] = parsedDate.format('YYYY-MM-DD');
         }
       });
-    } else if (!hasLaterDate && value !== 'later-date') {
+    } else if (!hasLaterDate && value !== LATER_DATE) {
       const parsedDate = moment(value, 'YYYY-MM-DD');
       value = parsedDate.format('YYYY-MM-DD');
     }
@@ -92,8 +93,8 @@ export default class DateChoice extends Component {
         {hasLaterDate &&
           <StyledBoxChoiceTile
             label="Later Date"
-            selected={isSelected(multiChoice, value, 'later-date')}
-            onClick={() => this.onClick('later-date')}
+            selected={isSelected(multiChoice, value, LATER_DATE)}
+            onClick={() => this.onClick(LATER_DATE)}
           />
         }
       </Fragment>

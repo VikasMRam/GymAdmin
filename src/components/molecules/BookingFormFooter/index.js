@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import moment from 'moment';
 
 import { getKey, palette, size } from 'sly/components/themes';
+import { LATER_DATE } from 'sly/constants/date';
+import { TIME_OPTIONS } from 'sly/constants/booking';
 
 import { Block, Button } from 'sly/components/atoms';
 
@@ -39,21 +41,30 @@ const FirstPreferenceWrapper = styled.div`
   width: calc((${size('layout.col1')} * 2) + (${size('layout.gutter')} * 2) );
 `;
 
-
 const BookingFormFooter = ({
-  palette: paletteProp, date, time, finalStep, onProgressClick,
+  palette: paletteProp, date, time, isFinalStep, onProgressClick,
+  isButtonDisabled,
 }) => {
   let dateString = date;
   if (date !== datePlaceholder) {
-    const parsedDate = moment(date, 'YYYY-MM-DD');
-    if (!parsedDate.isValid()) {
-      dateString = 'Failed to parse date';
+    if (date === LATER_DATE) {
+      dateString = 'Later Date';
     } else {
-      const dayName = parsedDate.format('dddd');
-      const day = parsedDate.format('D');
-      const month = parsedDate.format('MMM').toUpperCase();
-      dateString = `${dayName}, ${month} ${day}`;
+      const parsedDate = moment(date, 'YYYY-MM-DD');
+      if (!parsedDate.isValid()) {
+        dateString = 'Failed to parse date';
+      } else {
+        const dayName = parsedDate.format('dddd');
+        const day = parsedDate.format('D');
+        const month = parsedDate.format('MMM');
+        dateString = `${dayName}, ${month} ${day}`;
+      }
     }
+  }
+  let timeString = time;
+  const matchedTimeOption = TIME_OPTIONS.find(o => o.value === time);
+  if (matchedTimeOption) {
+    timeString = matchedTimeOption.label;
   }
 
   return (
@@ -72,12 +83,12 @@ const BookingFormFooter = ({
             Time Preference
           </Block>
           <div>
-            {time}
+            {timeString}
           </div>
         </div>
       </PreferenceWrapper>
-      {finalStep && <Button kind="jumbo" palette={paletteProp} onClick={onProgressClick}>Send Tour Request</Button>}
-      {!finalStep && <Button kind="jumbo" palette={paletteProp} onClick={onProgressClick}>Next</Button>}
+      {isFinalStep && <Button kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>Send Tour Request</Button>}
+      {!isFinalStep && <Button kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>Next</Button>}
     </Wrapper>
   );
 };
@@ -85,7 +96,8 @@ const BookingFormFooter = ({
 BookingFormFooter.propTypes = {
   date: string,
   time: string,
-  finalStep: bool,
+  isFinalStep: bool,
+  isButtonDisabled: bool,
   onProgressClick: func,
   palette: oneOf(Object.keys(getKey('palette'))),
 };

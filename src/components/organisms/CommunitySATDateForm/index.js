@@ -5,38 +5,26 @@ import moment from 'moment';
 import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
+import { TIME_OPTIONS } from 'sly/constants/booking';
 
-import { Heading, Block } from 'sly/components/atoms';
+import { Heading, Block, Icon } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
-const timeOptions = [
-  { label: 'Anytime', value: 'anytime' },
-  { label: 'Morning', value: 'morning' },
-  { label: 'Afternoon', value: 'afternoon' },
-  { label: 'Evening', value: 'evening' },
+const medicaidOptions = [
+  { label: 'Yes', value: 'yes' },
+  { label: 'No', value: 'no' },
+  { label: "I'm not sure", value: 'not-sure' },
 ];
 
-const Form = styled.form`
-  width: ${size('mobileLayout.col4')};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col6')};
-  }
-`;
-
 const HeadingSection = styled(Heading)`
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const StyledField = styled(Field)`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
-  > * {
-    margin-bottom: ${size('spacing.large')};
-    width: calc(${size('layout.col1')} + (${size('layout.gutter')}) * 2);
-  }
+  display: grid;
+  grid-gap: ${size('spacing.large')};
+  grid-template-columns: repeat(auto-fit, calc(${size('layout.col1')} + (${size('layout.gutter')}) * 2));
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 StyledField.displayName = 'StyledField';
 
@@ -47,6 +35,19 @@ const StyledTimeField = StyledField.extend`
 `;
 StyledTimeField.displayName = 'StyledTimeField';
 
+const StyledBlock = styled(Block)`
+  margin-bottom: ${size('spacing.regular')};
+`;
+
+const MedicaidLabel = StyledBlock.extend`
+  display: flex;
+  align-items: center;
+`;
+
+const StyledIcon = styled(Icon)`
+  margin-left: ${size('spacing.small')};
+`;
+
 const CommunitySATDateForm = ({
   error,
 }) => {
@@ -54,8 +55,9 @@ const CommunitySATDateForm = ({
   const to = moment().add(8, 'days');
 
   return (
-    <Form>
-      <HeadingSection level="subtitle" size="subtitle">What day did you want to tour?</HeadingSection>
+    <form>
+      <HeadingSection level="subtitle" size="subtitle">Schedule a Tour</HeadingSection>
+      <StyledBlock size="caption">What day did you want to tour?</StyledBlock>
       <StyledField
         hasLaterDate
         from={from.format('YYYY-MM-DD')}
@@ -64,15 +66,24 @@ const CommunitySATDateForm = ({
         type="dateChoice"
         component={ReduxField}
       />
-      <HeadingSection level="subtitle" size="subtitle">What time works best for you?</HeadingSection>
+      <StyledBlock size="caption">What time works best for you?</StyledBlock>
       <StyledTimeField
-        options={timeOptions}
+        options={TIME_OPTIONS}
         name="time"
         type="boxChoice"
         component={ReduxField}
       />
+      <MedicaidLabel size="caption">
+        Do you qualify for medicaid? <StyledIcon icon="help" size="regular" palette="slate" variation="filler" />
+      </MedicaidLabel>
+      <StyledTimeField
+        options={medicaidOptions}
+        name="medicaid"
+        type="boxChoice"
+        component={ReduxField}
+      />
       {error && <Block palette="danger">{error}</Block>}
-    </Form>
+    </form>
   );
 };
 

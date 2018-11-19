@@ -12,7 +12,7 @@ describe('CommunitySATDateForm', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('StyledField')).toHaveLength(1);
-    expect(wrapper.find('StyledTimeField')).toHaveLength(1);
+    expect(wrapper.find('StyledTimeField')).toHaveLength(2);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
   });
 
@@ -20,7 +20,7 @@ describe('CommunitySATDateForm', () => {
     const wrapper = wrap({ error });
 
     expect(wrapper.find('StyledField')).toHaveLength(1);
-    expect(wrapper.find('StyledTimeField')).toHaveLength(1);
+    expect(wrapper.find('StyledTimeField')).toHaveLength(2);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(1);
   });
 });

@@ -1,52 +1,30 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { object } from 'prop-types';
 
+import { community as communityPropType } from 'sly/propTypes/community';
 import { connectController } from 'sly/controllers';
 import withServerState from 'sly/store/withServerState';
 import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 
-import BookATourConfirmationPage from 'sly/components/pages/BookATourConfirmationPage/index';
-import { getCitySearchUrl } from 'sly/services/helpers/url';
+import BookATourPage from 'sly/components/pages/BookATourPage';
 
-class BookATourPageContainer extends Component {
-  handleConfirmationPageOnButtonClick = () => {
-    const { community, history } = this.props;
-    const {
-      propInfo,
-      address,
-    } = community;
-    const searchPageUrl = getCitySearchUrl({ propInfo, address });
-    history.push(searchPageUrl);
+const BookATourPageContainer = ({ community, user }) => {
+  if (!community) {
+    return null;
   }
-  render() {
-    const { community } = this.props;
-    if (!community) {
-      return null;
-    }
-    const {
-      name,
-      similarProperties,
-      mainImage,
-    } = community;
-    const appointmentText = 'Saturday, October 21, Anytime';
-    // TODO: Implement BookATour Page flow
-    return (
-      <BookATourConfirmationPage
-        communityName={name}
-        communityImageUrl={mainImage}
-        similarCommunities={similarProperties}
-        appointmentText={appointmentText}
-        onButtonClick={this.handleConfirmationPageOnButtonClick}
-      />
-    );
-  }
-}
+
+  return (
+    <BookATourPage
+      community={community}
+      user={user}
+    />
+  );
+};
 
 BookATourPageContainer.propTypes = {
-  community: object,
+  community: communityPropType,
   user: object,
-  history: object,
 };
 
 const getCommunitySlug = match => match.params.communitySlug;
@@ -85,7 +63,4 @@ const handleError = (err) => {
 export default withServerState({
   fetchData,
   handleError,
-})(connectController(
-  mapStateToProps,
-  null,
-)(BookATourPageContainer));
+})(connectController(mapStateToProps)(BookATourPageContainer));
