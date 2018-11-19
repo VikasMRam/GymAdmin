@@ -6,7 +6,7 @@ import HeaderController from 'sly/controllers/HeaderController';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
 
-import { required, email, usPhone } from 'sly/services/validation';
+import { required, usPhone } from 'sly/services/validation';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import CommunitySATContactForm from 'sly/components/organisms/CommunitySATContactForm';
 import CommunitySATDateForm from 'sly/components/organisms/CommunitySATDateForm';
@@ -86,7 +86,7 @@ export default class BookATourPage extends Component {
                   <WizardStep
                     component={CommunitySATContactForm}
                     name="Contact"
-                    validations={{ name: [required], email: [required, email], phone: [required, usPhone] }}
+                    validations={{ name: [required], phone: [required, usPhone] }}
                   />
                 </WizardSteps>
               </Body>
