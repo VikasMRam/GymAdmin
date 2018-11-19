@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('layout.col6')};
     padding: ${size('spacing.xxLarge')};
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};

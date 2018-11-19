@@ -43,16 +43,12 @@ const StyledHeading = styled(Heading)`
 `;
 
 const StyledHr = styled(Hr)`
-  // Hacky way to implement a Hr beyond the fixed width container
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }
 `;
 
-const StyledButton= styled(Button)`
+const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -246,7 +242,7 @@ const CommunitySearchPage = ({
             Filters
           </IconButton>
         </TopWrapper>
-        <StyledHr />
+        <StyledHr fullWidth />
         {!isMapView && !isFetchingResults && ListContent()}
         {isMapView && (
           <SearchMapContainer

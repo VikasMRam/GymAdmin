@@ -28,7 +28,7 @@ import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
 import LegalPolicyPage from "sly/components/pages/LegalPolicyPage";
 import EntityApprovalContainer from 'sly/containers/EntityApprovalContainer';
-import BookATourPage from 'sly/components/pages/BookATourPage';
+import BookATourPageContainer from 'sly/containers/BookATourPageContainer';
 
 setGlobalStyles();
 
@@ -122,8 +122,8 @@ export default class App extends Component {
       exact: true,
     },
     {
-      path: '/book-a-tour',
-      component: BookATourPage,
+      path: '/book-a-tour/:communitySlug',
+      component: BookATourPageContainer,
       exact: true,
     },
     {
