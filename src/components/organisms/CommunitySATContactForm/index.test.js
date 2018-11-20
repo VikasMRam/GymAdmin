@@ -49,4 +49,11 @@ describe('CommunitySATContactForm', () => {
     wrapper.find(Link).at(0).simulate('click');
     expect(onAdvisorHelpClick).toHaveBeenCalled();
   });
+
+  it('handles onContactByTextMsgChange', () => {
+    const onContactByTextMsgChange = jest.fn();
+    const wrapper = wrap({ onContactByTextMsgChange });
+    wrapper.find({ type: 'checkbox' }).at(0).simulate('change');
+    expect(onContactByTextMsgChange).toHaveBeenCalled();
+  });
 });
