@@ -1,9 +1,8 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 import { prop } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 const Bar = styled.div`
   background-color: ${palette(0)};

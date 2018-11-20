@@ -1,9 +1,9 @@
 import React from 'react';
 import { func, string } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import { Button, Hr, Block, Icon, Heading } from 'sly/components/atoms';
 
 const StyledButton = styled(Button)`
@@ -17,7 +17,7 @@ const StyledButton = styled(Button)`
 StyledButton.displayName = 'StyledButton';
 
 const GoogleButton = StyledButton.extend`
-  border-color: ${palette('grayscale', 2)};
+  border-color: ${palette('slate', 'stroke')};
 
   span {
     margin-right: ${size('spacing.large')};
@@ -26,6 +26,7 @@ const GoogleButton = StyledButton.extend`
 GoogleButton.displayName = 'GoogleButton';
 
 const FacebookButton = StyledButton.extend`
+  background-color: #4568b2;
   margin-bottom: ${size('spacing.large')};
 `;
 FacebookButton.displayName = 'FacebookButton';
@@ -59,7 +60,7 @@ const JoinSlyButtons = ({
 }) => (
   <section>
     <StyledHeading>{heading}</StyledHeading>
-    <FacebookButton palette="facebook" onClick={onContinueWithFacebookClicked}>
+    <FacebookButton onClick={onContinueWithFacebookClicked}>
       <Icon icon="facebook" size="regular" /> Continue with Facebook
     </FacebookButton>
     <GoogleButton transparent onClick={onContinueWithGoogleClicked} error={socialLoginError}>

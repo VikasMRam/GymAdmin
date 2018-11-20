@@ -1,25 +1,29 @@
-import { oneOf, string } from 'prop-types';
+import { oneOf, bool } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+import { ifProp } from 'styled-tools';
 
-import { size, getKey } from 'sly/components/themes';
+import { size, getKey, palette } from 'sly/components/themes';
 
 const padding = ({ padding }) => size('spacing', padding);
+const border = ({ border }) => size('border', border);
 
 const Box = styled.div`
-  border: ${size('border.regular')} solid ${palette(2)};
-  border-radius: ${size('spacing.tiny')};
+  border: ${border} solid ${ifProp('highlighted', palette('base'), palette('stroke'))}};
+  border-radius: ${size('spacing.small')};
   padding: ${padding};
 `;
 
 Box.propTypes = {
-  palette: string,
+  palette: oneOf(Object.keys(getKey('palette'))),
   padding: oneOf(Object.keys(getKey('sizes.spacing'))),
+  border: oneOf(Object.keys(getKey('sizes.border'))),
+  highlighted: bool,
 };
 
 Box.defaultProps = {
-  palette: 'grayscale',
+  palette: 'slate',
   padding: 'xLarge',
+  border: 'regular',
 };
 
 export default Box;

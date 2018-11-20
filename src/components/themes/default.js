@@ -1,20 +1,28 @@
 /* eslint-disable key-spacing,no-multi-spaces */
-import { reversePalette } from 'styled-theme/composer';
+import { isTest } from 'sly/config';
+
+import { makeColor, makeColorTable } from './color';
+
+export { colorIndex } from './color';
 
 const theme = {};
 
+// Color variations are:
+// whole accent filler stroke background
+//  100%    67%    33%    15%         4%
+// not all of the variations should be used,
+// see below comments or in storybook
+// DO NOT MODIFY the following without asking Jared
 theme.palette = {
-  slate    : ['#384c57'],
-  white    : ['#fff'],
-  black    : ['#000000'],
-  secondary: ['#2f8fcb', '#2483be', '#63abd8', '#e1eaef'],
-  primary  : ['#7ccdcc', '#65c0bf', '#b0e1e0', '#f4ffff'],
-  grayscale: ['#8f9ca4', '#9ca8af', '#c5d0d5', '#f2f6f7', '#68747a'],
-  danger   : ['#cc5663'],
-  facebook : ['#4568b2'],
+  slate    : makeColor('#2a333f', ['base', 'accent', 'filler', 'stroke', 'background']),
+  primary  : makeColor('#186dc5', ['base',           'filler', 'stroke']),
+  secondary: makeColor('#56c4c2', ['base',           'filler', 'stroke']),
+  white    : makeColor('#ffffff', ['base']),
+  danger   : makeColor('#dc3133', ['base',                     'stroke']),
+  warning  : makeColor('#f3c150', ['base',                     'stroke']),
 };
 
-theme.reversePalette = reversePalette(theme.palette);
+if (!isTest) console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',
@@ -50,6 +58,23 @@ theme.sizes = {
     col11:      '60.375rem', // 966px
     // max page width
     col12:      '66.000rem', // 1056px
+  },
+
+  mobileLayout: {
+    gutter:      '1.000rem', // 16px
+
+    col1:        '5.000rem', // 80px
+    col2:       '11.000rem', // 176px
+    col3:       '17.000rem', // 272px
+    col4:       '23.000rem', // 368px
+
+    col5:       '29.000rem', // 464px
+    col6:       '35.000rem', // 560px
+    col7:       '41.000rem', // 656px
+    col8:       '47.000rem', // 752px
+
+    col9:       '53.000rem', // 848px
+    col10:      '59.000rem', // 944px
   },
 
   modal: {
@@ -109,8 +134,10 @@ theme.sizes = {
     large   : '3.000rem',   // 48px
     xLarge  : '3.250rem',   // 52px
     xxLarge : '4.500rem',   // 72px
-    textarea: '7.500rem',   // 120px
-    huge    : '9.000rem',   // 144px
+    xxxLarge: '5.000rem',   // 80px
+    huge    : '6.000rem',   // 96px
+    xHuge    : '7.500rem',   // 120px
+    xxHuge    : '9.000rem',   // 144px
   },
 
   slider: {
@@ -174,8 +201,10 @@ theme.sizes = {
       width : '32.25rem',   // 516px
       height: '21.4375rem', // 343px
     },
-    proportions: {
+    ratios: {
       '16:9': '56.25%',
+      golden: '61.803398875%',
+      '3:2':  '66.66%',
       '4:3' : '75%',
     },
   },
@@ -252,12 +281,13 @@ theme.sizes = {
     tiny    : '0.750rem',   // 12px
     caption : '0.875rem',   // 14px
     body    : '1.000rem',   // 16px
-    subtitle: '1.125rem',   // 18px
+    subtitle: '1.125rem',   // 18px TODO: clarify whether it's 20px in new theme
     title   : '1.750rem',   // 28px
     hero    : '2.500rem',   // 40px
   },
 
   lineHeight: {
+    tiny    : '1.167',
     caption : '1.4',
     body    : '1.5',
     subtitle: '1.3',

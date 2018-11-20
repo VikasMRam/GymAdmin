@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { string, arrayOf, shape, bool, number, func } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import { Button, Link, Icon } from 'sly/components/atoms';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
@@ -23,8 +23,8 @@ const MorePicsMobile = styled(Button)`
 `;
 
 const BottomRightWrapper = styled.span`
-  background: ${palette('black', 0)}80;
-  color: ${palette('grayscale', 2)};
+  background: ${palette('slate', 0)}80;
+  color: ${palette('slate', 2)};
   font-size: ${size('text.tiny')};
   padding: ${size('spacing.small')} ${size('spacing.regular')};
 `;
@@ -149,7 +149,7 @@ export default class CommunityMediaGallery extends Component {
     const bottomRightSection = () => (
       websiteUrl ?
         <BottomRightWrapper>
-          <Link palette="grayscale" href={websiteUrl} target="_blank"> Image source </Link>
+          <Link palette="slate" href={websiteUrl} target="_blank"> Image source </Link>
         </BottomRightWrapper> : null
     );
 

@@ -4,7 +4,7 @@ import { string, number, bool, func } from 'prop-types';
 import Rating from 'sly/components/molecules/Rating';
 
 const getPalette = ({ disabled, palette }) => disabled
-  ? 'grayscale'
+  ? 'slate'
   : palette;
 
 const getDefaultValue = (props) => {

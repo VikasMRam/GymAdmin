@@ -6,6 +6,7 @@ storiesOf('Atoms|Button', module)
   .add('default', () => <Button>Hello</Button>)
   .add('disabled', () => <Button disabled>Hello</Button>)
   .add('ghost', () => <Button ghost>Hello</Button>)
+  .add('transparent', () => <Button transparent>Hello</Button>)
   .add('disabled ghost', () => (
     <Button disabled ghost>
       Hello
@@ -15,7 +16,7 @@ storiesOf('Atoms|Button', module)
   .add('another palette', () => <Button palette="danger">Hello</Button>)
   .add('label', () => <Button type="label">Hello</Button>)
   .add('label another palette', () => (
-    <Button palette="grayscale" type="label">
+    <Button palette="slate" type="label">
       Hello
     </Button>
   ))

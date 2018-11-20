@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { arrayOf, shape, string, func } from 'prop-types';
 import { Lazy } from 'react-lazy';
 import { ifProp } from 'styled-tools';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import PictureTile from 'sly/components/molecules/PictureTile';
 
 const Wrapper = styled.div`
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
     width: 100%;
     margin-bottom: ${size('spacing.xLarge')};
     line-height: 0;
-    background-color: ${palette('grayscale', 1)};
+    background-color: ${palette('slate', 'filler')};
   }
   > *:hover {
     cursor: ${ifProp('hasOnPictureClick', 'pointer', 'initial')};

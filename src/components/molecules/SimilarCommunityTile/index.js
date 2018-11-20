@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { palette, key } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+
+import { size, assetPath, palette, key } from 'sly/components/themes';
 import { Lazy } from 'react-lazy';
 import { Image, Button } from 'sly/components/atoms';
 import SimilarCommunityInfo from 'sly/components/molecules/SimilarCommunityInfo';
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid
-    ${palette('grayscale', 2)};
+    ${palette('slate', 'stroke')};
   transition: box-shadow ${key('transitions.default')}
     , opacity ${key('transitions.default')}
     , transform ${key('transitions.default')};
@@ -54,7 +54,7 @@ const Wrapper = styled.div`
 
     cursor: pointer;
     background: ${palette('white', 0)};
-    box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('grayscale', 0)}80;
+    box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('slate', 'filler')}80;
 
     Button {
       display: initial;
@@ -66,7 +66,7 @@ const StyledLazy = styled(Lazy)`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     min-width: 0;
     flex-shrink: 0;
-    background: ${palette('grayscale', 2)};
+    background: ${palette('slate', 'stroke')};
     width: ${size('tile.regular.width')};
     height: ${size('tile.regular.height')};
   }

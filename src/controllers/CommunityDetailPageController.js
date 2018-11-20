@@ -270,6 +270,17 @@ class CommunityDetailPageController extends Component {
     });
   }
 
+  handleSATClick = () => {
+    const { community, history } = this.props;
+    const { id } = community;
+    const event = {
+      action: 'click-sat-button', category: 'BAT', label: id,
+    };
+
+    SlyEvent.getInstance().sendEvent(event);
+    history.push(`/book-a-tour/${id}`);
+  }
+
   render() {
     const {
       mediaGallerySlideIndex,
@@ -345,6 +356,7 @@ class CommunityDetailPageController extends Component {
         setQueryParams={setQueryParams}
         onParamsRemove={this.handleParamsRemove}
         onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
+        onSATClick={this.handleSATClick}
       />
     );
   }

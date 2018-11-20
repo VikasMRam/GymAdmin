@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { font } from 'styled-theme';
+import { font } from 'sly/components/themes';
 import { ifProp } from 'styled-tools';
 
 const opposites = {
@@ -20,8 +20,6 @@ export const perpendicularOpposite = props => opposites[perpendicular(props)];
 
 export const perpendicularAxis = ({ position }) =>
   position === 'left' || position === 'right' ? 'Y' : 'X';
-
-const backgroundColor = ifProp('reverse', 'rgba(255, 255, 255, 0.85)', 'rgba(0, 0, 0, 0.85)');
 
 const styles = css`
   position: relative;
@@ -56,8 +54,8 @@ const styles = css`
     font-size: 0.8125rem;
     line-height: 1.5;
     text-align: center;
-    color: ${ifProp('reverse', 'black', 'white')};
-    background-color: ${backgroundColor};
+    color: white;
+    background-color: rgba(0, 0, 0, 0.85);
     border-radius: 0.15384em;
     padding: 0.75em 1em;
     ${opposite}: calc(100% + 2rem);
@@ -82,20 +80,19 @@ const styles = css`
     content: '';
     height: 0;
     width: 0;
-    border-${({ position }) => position}-color: ${backgroundColor};
+    border-${({ position }) => position}-color: rgba(0, 0, 0, 0.85);
     border-width: 0.5rem;
     margin-${perpendicular}: -0.5rem;
   }
 `;
 
 const Tooltip = styled(({
-  position, align, reverse, children, theme, ...props
+  position, align, children, theme, ...props
 }) => React.cloneElement(children, props))`${styles}`;
 
 Tooltip.propTypes = {
   position: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
   align: PropTypes.oneOf(['start', 'center', 'end']),
-  reverse: PropTypes.bool,
   'data-title': PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
 };

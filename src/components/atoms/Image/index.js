@@ -2,7 +2,7 @@ import React from 'react';
 import { string, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { assetPath } from 'sly/components/themes';
 
 const StyledImage = styled.img`
@@ -10,7 +10,7 @@ const StyledImage = styled.img`
   border: none;
 `;
 
-const paddingTop = ({ aspectRatio }) => size('picture.proportions', aspectRatio);
+const paddingTop = ({ aspectRatio }) => size('picture.ratios', aspectRatio);
 
 const ResponsiveWrapper = styled.div`
   position: relative;
@@ -34,7 +34,7 @@ export default class Image extends React.Component {
   static propTypes = {
     src: string.isRequired,
     alt: string,
-    aspectRatio: oneOf(['4:3', '16:9']),
+    aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3']),
   };
 
   static generateAlt(src) {

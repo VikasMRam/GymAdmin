@@ -1,9 +1,9 @@
 import { string, bool } from 'prop-types';
 import styled from 'styled-components';
-import { font, palette } from 'styled-theme';
+
 import { ifProp, prop } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, font, palette } from 'sly/components/themes';
 
 const Tag = styled.div`
   display: inline-flex;
@@ -13,7 +13,7 @@ const Tag = styled.div`
   color: ${palette(1)};
   font-size: ${size('text.caption')};
   height: ${size('element.small')};
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.small')};
   padding: 0 1em;
   line-height: 1.5em;

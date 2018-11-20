@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import Measure from 'react-measure';
 import styled, { css } from 'styled-components';
-import { key } from 'styled-theme';
-import { ifProp, switchProp } from 'styled-tools';
+
+import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
 
-import { size } from 'sly/components/themes';
+import { size, key } from 'sly/components/themes';
 import { Hr, Heading, Icon } from 'sly/components/atoms';
 
-const marginBottom = p => p.collapsed 
-  ? 0 
-  : p.paddedContent 
-    ? size('spacing.large') 
+const marginBottom = p => p.collapsed
+  ? 0
+  : p.paddedContent
+    ? size('spacing.large')
     : size('spacing.xLarge');
 
 const Section = styled.section`
@@ -120,17 +120,18 @@ export default class CollapsibleSection extends Component {
     return (
       <Measure onResize={this.onResize}>
         {({ measureRef }) => (
-          <Section 
-                paddedContent={paddedContent} 
-                collapsed={collapsed} 
-                size={size} 
-                innerRef={innerRef}>
+          <Section
+            paddedContent={paddedContent}
+            collapsed={collapsed}
+            size={size}
+            innerRef={innerRef}
+          >
             {!noHr && <StyledHr />}
-            <Header onClick={this.toggle} transparent ghost noHr={noHr}>
-              <StyledHeading level={getHeadingLevel(size)}  size={getHeadingSize(size)}>
+            <Header onClick={this.toggle} noHr={noHr}>
+              <StyledHeading level={getHeadingLevel(size)} size={getHeadingSize(size)}>
                 {title}
               </StyledHeading>
-              <Icon icon="chevron" size="large" palette="grays" flip={!collapsed} />
+              <Icon icon="chevron" size="large" palette="slate" flip={!collapsed} />
             </Header>
             <Content maxHeight={maxHeight} collapsed={collapsed}>
               <div ref={measureRef} {...props}>

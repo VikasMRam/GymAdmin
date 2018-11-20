@@ -1,16 +1,14 @@
-import React from 'react';
-import styled from "styled-components";
-import { palette } from "styled-theme";
-import { size } from "sly/components/themes";
-import { Component } from "react";
+import React, { Component, Fragment } from 'react';
 import { number } from 'prop-types';
+import styled from 'styled-components';
+import { palette } from 'styled-theme';
 
+import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
+import { size } from 'sly/components/themes';
 import HeaderController from 'sly/controllers/HeaderController';
-
-import Heading from "sly/components/atoms/Heading";
-import Link from "sly/components/atoms/Link";
-import BasePageTemplate from "sly/components/templates/BasePageTemplate";
-import Footer from "sly/components/organisms/Footer";
+import Heading from 'sly/components/atoms/Heading';
+import Link from 'sly/components/atoms/Link';
+import Footer from 'sly/components/organisms/Footer';
 
 const Wrapper = styled.div`
   position: relative;
@@ -27,11 +25,11 @@ const IWrapper = styled(Heading)`
 
 `;
 
-const getTextError= (errorCode) => {
-  //Change to map and add more codeS!
+const getTextError = (errorCode) => {
+  // Change to map and add more codeS!
   let text = '';
   switch (errorCode) {
-    //TODO: Use Localizable Labels.
+    // TODO: Use Localizable Labels.
     case 404:
       text = 'Sorry, we couldn\'t find that page.';
       break;
@@ -41,28 +39,33 @@ const getTextError= (errorCode) => {
     default:
       text = 'We could not process your request at this time. ';
       break;
-  };
+  }
   return text;
 };
 
 export default class ErrorPage extends Component {
   static propTypes = {
-    errorCode:number.isRequired,
+    errorCode: number.isRequired,
   };
 
-  render () {
+  render() {
     const { errorCode } = this.props;
 
     return (
-      <BasePageTemplate header={<HeaderController />}  footer={<Footer/>}>
-        <Wrapper>
-          <IWrapper>{getTextError(errorCode)}</IWrapper>
-          <div>
-            Head back to our
-            <Link href="/"> Homepage </Link> or
-            <Link href="/contact"> Contact Us </Link>
-          </div>
-        </Wrapper>
-      </BasePageTemplate>)
+      <Fragment>
+        <TemplateHeader><HeaderController /></TemplateHeader>
+        <TemplateContent>
+          <Wrapper>
+            <IWrapper>{getTextError(errorCode)}</IWrapper>
+            <div>
+              Head back to our
+              <Link href="/"> Homepage </Link> or
+              <Link href="/contact"> Contact Us </Link>
+            </div>
+          </Wrapper>
+        </TemplateContent>
+        <Footer />
+      </Fragment>
+    );
   }
 }

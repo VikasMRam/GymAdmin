@@ -3,21 +3,21 @@ import { string } from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import { uniqueId } from 'lodash';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 
 import { Icon } from 'sly/components/atoms';
 
 const StyledIcon = styled(Icon)`
-  color: ${palette('grayscale', 2)};
+  color: ${palette('slate', 'stroke')};
 `;
 // TODO: is it better to make this tooltip as atom so that we don't have to copy styles in all required components?
 // will need replacing exsting tooltip atom, that's not used anywhere?
 const TooltipContent = styled(ReactTooltip)`
   padding: ${size('spacing.regular')};
   color: ${palette('white', 0)} !important;
-  background-color: ${palette('grayscale', 0)} !important;
+  background-color: ${palette('slate', 'filler')} !important;
   border-radius: ${size('spacing.tiny')};
   font-size: ${size('text.caption')};
 `;

@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { bool, func } from 'prop-types';
-import { palette } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+
+import { size, assetPath, palette } from 'sly/components/themes';
 
 import HeaderController from 'sly/controllers/HeaderController';
 
-import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
+import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { Image, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import Modal from 'sly/components/molecules/Modal';
@@ -414,76 +414,77 @@ const PromoPage = ({ isModalOpen, isWizardActive, onLocationSearch, setActiveDis
   ));
 
   return (
-    <BasePageTemplate
-      header={HeaderContent}
-      footer={<Footer />}
-    >
-      <Modal layout="searchBox" closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}><Heading>Please enter a location:</Heading><SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} /></Modal>
-      <StyledSection title="Discover Homes Near You">
-        <TwoColumnWrapper>
-          {firstRowDiscoverHomesComponents}
-        </TwoColumnWrapper>
-        <ThreeColumnWrapper>
-          {secondRowDiscoverHomesComponents}
-        </ThreeColumnWrapper>
-      </StyledSection>
-      <br />
-      <StyledHr />
-      <StyledSection title="Meet Families We’ve Helped">
-        <ThreeColumnWrapper>
-          {familiesWeHaveHelpedTilesComponents}
-        </ThreeColumnWrapper>
-      </StyledSection>
-      <br />
-      <StyledHr />
-      <StyledSection title="Useful Information">
-        <UIColumnWrapper>
-          {usefulInformationTilesComponents}
-        </UIColumnWrapper>
-      </StyledSection>
-      <StyledHr />
-      <StyledSection title="Most Searched Cities">
-        <MSCColumnWrapper>
-          {mostSearchedCitiesComponents}
-        </MSCColumnWrapper>
-      </StyledSection>
-      <StyledHr />
-      <StyledSection>
-        <TwoColumnWrapper>
-          <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/partner-with-us.jpeg')}>
-            <Heading palette="white">Partner With Us</Heading>
-            <StyledBlock palette="white" level="subtitle">For Local Referral Agents</StyledBlock>
-            <Button to="/providers/crm">Get Started</Button>
-          </ImageOverlayContentTile>
-          <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/list-a-property.jpeg')}>
-            <Heading palette="white">List a Property</Heading>
-            <StyledBlock palette="white" level="subtitle">For Senior Housing Providers</StyledBlock>
-            <Button to="/providers/housing">Get Started</Button>
-          </ImageOverlayContentTile>
-        </TwoColumnWrapper>
-      </StyledSection>
-      <StyledHr />
-      <StyledSection title="Corporate Partners">
-        <CWTColumnWrapper>
-          <CWTImage src={assetPath('images/home/companies-we-trust/Brookdale_BW.png')} alt="Brookdale Senior Living Logo" />
-          <CWTImage src={assetPath('images/home/companies-we-trust/SunriseSeniorLiving_BW.png')} alt="SunriseSenior Living Logo" />
-          <CWTImage src={assetPath('images/home/companies-we-trust/HolidayRetirement_BW.png')} alt="Holidat Retirement" />
-          <CWTImage src={assetPath('images/home/companies-we-trust/PacificaSeniorLiving_BW.png')} alt="Pacifica Senior Living Logo" />
-        </CWTColumnWrapper>
-        <CWTColumnWrapper>
-          <CWTImage src={assetPath('images/home/companies-we-trust/HomeCareAssistance_BW.png')} alt="Home Care Assistance Logo" />
-          <CWTImage src={assetPath('images/home/companies-we-trust/FCA_BW.png')} alt="Family Caregiver Alliance Logo" />
-          <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
-          <CWTImage src={assetPath('images/home/companies-we-trust/SeniorCareAuthority_BW.png')} alt="SeniorCareAuthority Logo" />
-          <CWTImage src={assetPath('images/home/companies-we-trust/OasisSeniorAdvisors_BW.png')} alt="Oasis Senior Advisors Logo" />
-        </CWTColumnWrapper>
-      </StyledSection>
-      { isWizardActive &&
+    <Fragment>
+      <TemplateHeader>{HeaderContent}</TemplateHeader>
+      <TemplateContent>
+        <Modal layout="searchBox" closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}><Heading>Please enter a location:</Heading><SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} /></Modal>
+        <StyledSection title="Discover Homes Near You">
+          <TwoColumnWrapper>
+            {firstRowDiscoverHomesComponents}
+          </TwoColumnWrapper>
+          <ThreeColumnWrapper>
+            {secondRowDiscoverHomesComponents}
+          </ThreeColumnWrapper>
+        </StyledSection>
+        <br />
+        <StyledHr />
+        <StyledSection title="Meet Families We’ve Helped">
+          <ThreeColumnWrapper>
+            {familiesWeHaveHelpedTilesComponents}
+          </ThreeColumnWrapper>
+        </StyledSection>
+        <br />
+        <StyledHr />
+        <StyledSection title="Useful Information">
+          <UIColumnWrapper>
+            {usefulInformationTilesComponents}
+          </UIColumnWrapper>
+        </StyledSection>
+        <StyledHr />
+        <StyledSection title="Most Searched Cities">
+          <MSCColumnWrapper>
+            {mostSearchedCitiesComponents}
+          </MSCColumnWrapper>
+        </StyledSection>
+        <StyledHr />
+        <StyledSection>
+          <TwoColumnWrapper>
+            <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/partner-with-us.jpeg')}>
+              <Heading palette="white">Partner With Us</Heading>
+              <StyledBlock palette="white" level="subtitle">For Local Referral Agents</StyledBlock>
+              <Button to="/providers/crm">Get Started</Button>
+            </ImageOverlayContentTile>
+            <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/list-a-property.jpeg')}>
+              <Heading palette="white">List a Property</Heading>
+              <StyledBlock palette="white" level="subtitle">For Senior Housing Providers</StyledBlock>
+              <Button to="/providers/housing">Get Started</Button>
+            </ImageOverlayContentTile>
+          </TwoColumnWrapper>
+        </StyledSection>
+        <StyledHr />
+        <StyledSection title="Corporate Partners">
+          <CWTColumnWrapper>
+            <CWTImage src={assetPath('images/home/companies-we-trust/Brookdale_BW.png')} alt="Brookdale Senior Living Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/SunriseSeniorLiving_BW.png')} alt="SunriseSenior Living Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/HolidayRetirement_BW.png')} alt="Holidat Retirement" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/PacificaSeniorLiving_BW.png')} alt="Pacifica Senior Living Logo" />
+          </CWTColumnWrapper>
+          <CWTColumnWrapper>
+            <CWTImage src={assetPath('images/home/companies-we-trust/HomeCareAssistance_BW.png')} alt="Home Care Assistance Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/FCA_BW.png')} alt="Family Caregiver Alliance Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/SeniorCareAuthority_BW.png')} alt="SeniorCareAuthority Logo" />
+            <CWTImage src={assetPath('images/home/companies-we-trust/OasisSeniorAdvisors_BW.png')} alt="Oasis Senior Advisors Logo" />
+          </CWTColumnWrapper>
+        </StyledSection>
+        { isWizardActive &&
         <Modal closeable isOpen layout="wizard"  onClose={() => wizardStatus(false)} >
           <CAWController currentStep={2} locationSearchParams={{ city: 'san-francisco', state: 'california' }} />
         </Modal>
-      }
-    </BasePageTemplate>
+        }
+      </TemplateContent>
+      <Footer />
+    </Fragment>
   );
 };
 

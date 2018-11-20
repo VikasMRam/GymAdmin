@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 const Wrapper = styled.div`
   position: relative;

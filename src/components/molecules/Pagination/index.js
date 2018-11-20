@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { number, string } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { palette } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 
 import { Link, Icon } from 'sly/components/atoms';
 import { styles as buttonStyles } from 'sly/components/atoms/Button';
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const StyledLink = styled(Link)`
 const ChevronLink = styled(({ flip, ...props }) => (
   <StyledLink
     ghost
-    palette="grayscale"
+    palette="slate"
     kind="label"
     {...props}
   >
@@ -31,7 +31,7 @@ const ChevronLink = styled(({ flip, ...props }) => (
       flip={flip}
       icon="chevron-left"
       size="small"
-      palette="grayscale"
+      palette="slate"
     />
   </StyledLink>
 ))`
@@ -50,7 +50,7 @@ const PageLink = styled(Link)`
 
 const BreakView = styled.span`
   ${buttonStyles};
-  color: ${palette('grayscale', 0)};
+  color: ${palette('slate', 'filler')};
   cursor: default;
   margin-right: ${size('spacing.regular')};
 `;
@@ -109,7 +109,7 @@ export default class Pagination extends Component {
       <BreakView
         ghost
         kind="label"
-        palette="grayscale"
+        palette="slate"
         key={index}
       >
         ...
@@ -126,7 +126,7 @@ export default class Pagination extends Component {
     }
     const palette = sel
       ? 'secondary'
-      : 'grayscale';
+      : 'slate';
 
     const pageHref = (index === 0) ? basePath : `${basePath}${delim}${pageParam}=${index}`;
 

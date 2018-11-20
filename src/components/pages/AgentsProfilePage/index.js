@@ -1,11 +1,10 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
-import { palette } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size, assetPath, palette } from 'sly/components/themes';
 
-import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
+import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Link, Image, Block, Heading } from 'sly/components/atoms';
 
 import HeaderController from 'sly/controllers/HeaderController';
@@ -213,7 +212,7 @@ const AgentsProfilePage = ({
       </StyledSection>
     );
   });
-  const HeaderContent = (
+  const headerContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <HeaderController />
@@ -242,20 +241,21 @@ const AgentsProfilePage = ({
   ));
 
   return (
-    <BasePageTemplate
-      header={HeaderContent}
-      footer={<Footer />}
-    >
-      {agentsSectionComponents}
-      <StyledSection title="Most Searched Cities">
-        <MSCColumnWrapper>
-          {mostSearchedCitiesComponents}
-        </MSCColumnWrapper>
-      </StyledSection>
-      <Modal layout="single" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
-        {activeProfile && <ProfileTile profile={activeProfile} layout="modal" />}
-      </Modal>
-    </BasePageTemplate>
+    <Fragment>
+      <TemplateHeader>{headerContent}</TemplateHeader>
+      <TemplateContent>
+        {agentsSectionComponents}
+        <StyledSection title="Most Searched Cities">
+          <MSCColumnWrapper>
+            {mostSearchedCitiesComponents}
+          </MSCColumnWrapper>
+        </StyledSection>
+        <Modal layout="single" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
+          {activeProfile && <ProfileTile profile={activeProfile} layout="modal" />}
+        </Modal>
+      </TemplateContent>
+      <Footer />
+    </Fragment>
   );
 };
 

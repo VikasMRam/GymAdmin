@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
-import { palette } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+
+import { size, assetPath, palette } from 'sly/components/themes';
 
 import HeaderController from 'sly/controllers/HeaderController';
 
-import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
+import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { Image, Heading, Block } from 'sly/components/atoms';
 
 const FixedWidthContainer = styled.div`
@@ -81,7 +81,7 @@ const Grid = styled.div`
 `;
 
 const backgrounds = {
-  grayscale: palette('grayscale', 3),
+  grayscale: palette('slate', 'background'),
   white: palette('white', 0),
 };
 
@@ -136,9 +136,9 @@ const OverlappingSectionsTemplate = ({
   description,
   children,
   footer
-}) => {
-  const Top = () => (
-    <Fragment>
+}) => (
+  <Fragment>
+    <TemplateHeader>
       <HeaderController />
       <HeroWrapper>
         <HeroBackgroundImage
@@ -155,7 +155,7 @@ const OverlappingSectionsTemplate = ({
         )}
       </HeroWrapper>
       <Grid>
-        <Background background="grayscale" row="1" />
+        <Background background="slate" row="1" />
         <Background background="white" row="2" />
         <Intro>
           {intro}
@@ -164,17 +164,12 @@ const OverlappingSectionsTemplate = ({
           {description}
         </Description>
       </Grid>
-    </Fragment>
-  );
-
-  return (
-    <BasePageTemplate
-      header={<Top />}
-      footer={footer}
-    >
+    </TemplateHeader>
+    <TemplateContent>
       {children}
-    </BasePageTemplate>
-  );
-};
+    </TemplateContent>
+    {footer}
+  </Fragment>
+);
 
 export default OverlappingSectionsTemplate;

@@ -30,7 +30,7 @@ storiesOf('Molecules|IconButton', module)
       right
       icon="close"
       iconSize="small"
-      palette="grayscale"
+      palette="slate"
       ghost
       transparent
     >

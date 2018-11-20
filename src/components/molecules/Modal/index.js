@@ -2,12 +2,12 @@ import React from 'react';
 import { node, bool, func, oneOf } from 'prop-types';
 import styled, { css, injectGlobal } from 'styled-components';
 import ReactModal from 'react-modal';
-import { palette, key } from 'styled-theme';
+
 import { ifProp, switchProp } from 'styled-tools';
 
 import { isBrowser, isTest } from 'sly/config';
 
-import { size } from 'sly/components/themes';
+import { size, palette, key } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 
 injectGlobal`
@@ -75,7 +75,7 @@ const ModalContext = styled.article`
   margin: 1rem calc(-50% + 1rem) 1rem 1rem;
   max-height: calc(100% - 4rem);
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: ${ifProp('noPadding', 0, size('spacing.xxxLarge'))};
+    padding: ${ifProp('noPadding', 0, size('spacing.xxLarge'))};
   };
 
   ${switchProp('layout', {
@@ -158,12 +158,6 @@ export default class Modal extends React.Component {
     noPadding: false,
     closeButtonPalette: 'white',
   };
-
-  componentWillMount() {
-    if (isBrowser && !isTest) {
-      ReactModal.setAppElement('#app');
-    }
-  }
 
   render() {
     const {

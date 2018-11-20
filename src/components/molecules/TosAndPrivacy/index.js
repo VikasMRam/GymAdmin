@@ -10,7 +10,7 @@ const tosNewTab = <Link href="/tos" target="_blank">Terms of Use</Link>;
 const privacyNewTab = <Link href="/privacy" target="_blank">Privacy Policy</Link>;
 
 const TosAndPrivacy = ({ openLinkInNewTab }) => (
-  <Block palette="grayscale" size="tiny">
+  <Block palette="slate" size="tiny">
     {!openLinkInNewTab &&
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}

@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { palette, key } from 'styled-theme';
 import { bool, object, number, func, string, arrayOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size, assetPath, palette, key } from 'sly/components/themes';
 import { Button, Hr, Heading, Image } from 'sly/components/atoms';
 import Logo from 'sly/components/atoms/Logo';
 
@@ -118,7 +117,7 @@ const Component = ({
                   {currentStep < totalNumberofSteps && (
                     <Button
                       type="button"
-                      palette="grayscale"
+                      palette="slate"
                       disabled={currentStep === 1}
                       onClick={onBackButton}
                     >

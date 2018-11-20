@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, func, arrayOf, object } from 'prop-types';
-import { palette } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+
+import { size, assetPath, palette } from 'sly/components/themes';
 
 import HeaderController from 'sly/controllers/HeaderController';
 
-import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
+import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { Image, Link, Block, Heading, Hr } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import HowItWorksInfoTile from 'sly/components/molecules/HowItWorksInfoTile';
@@ -103,13 +103,13 @@ const TabsWrapper = styled.div`
 `;
 
 const Tab = styled(Link)`
-  background-color: ${p => p.active ? palette('white', 0) : palette('grayscale', 3)};
+  background-color: ${p => p.active ? palette('white', 0) : palette('slate', 'background')};
   padding: ${size('spacing.xLarge')} 0;
   flex-grow: 1;
   font-size: ${size('spacing.subtitle')};
   font-weight: bold;
   text-align: center;
-  color: ${p => p.active ? palette('black', 0) : palette('grayscale', 1)};
+  color: ${p => p.active ? palette('slate', 0) : palette('slate', 1)};
 
   :hover {
     cursor: ${p => !p.active ? 'pointer' : ''};
@@ -210,7 +210,6 @@ const HowItWorksDetailPage = ({
   cards,
   onTabClick,
   activeType,
-  onLocationSearch,
 }) => {
   const header = (
     <Header heroImageUrl={heroImageUrl} heading={heading} subheading={subheading}>
@@ -226,24 +225,25 @@ const HowItWorksDetailPage = ({
     </Header>
   );
   return (
-    <BasePageTemplate
-      header={header}
-      footer={<Bottom />}
-    >
-      <ForFamiliesComponents contents={contents} />
-      <StyledHr />
-      <CardsSection>
-        <StyledHeading>Why Use Seniorly</StyledHeading>
-        <CardTiles>
-          {cards.map((item, index) => (
-            <IconInfoTile
-              key={index}
-              {...item}
-            />
-          ))}
-        </CardTiles>
-      </CardsSection>
-    </BasePageTemplate>
+    <Fragment>
+      <TemplateHeader>{header}</TemplateHeader>
+      <TemplateContent>
+        <ForFamiliesComponents contents={contents} />
+        <StyledHr />
+        <CardsSection>
+          <StyledHeading>Why Use Seniorly</StyledHeading>
+          <CardTiles>
+            {cards.map((item, index) => (
+              <IconInfoTile
+                key={index}
+                {...item}
+              />
+            ))}
+          </CardTiles>
+        </CardsSection>
+      </TemplateContent>
+      <Bottom />
+    </Fragment>
   );
 };
 

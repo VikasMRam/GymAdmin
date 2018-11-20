@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+
+import { size, assetPath, palette } from 'sly/components/themes';
 import { Heading, Block, Image, Icon, Hr } from 'sly/components/atoms';
 import Modal from 'sly/components/molecules/Modal';
 import ProfileTile from 'sly/components/molecules/ProfileTile';
@@ -34,7 +34,7 @@ const IntroLogo = styled.div`
 `;
 
 const DescriptionText = styled.div`
-  color: ${palette('grayscale', 1)};
+  color: ${palette('slate', 'filler')};
   margin-bottom: ${size('spacing.huge')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {

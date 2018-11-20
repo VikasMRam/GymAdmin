@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { palette, key } from 'styled-theme';
+
 import NumberFormat from 'react-number-format';
 
-import { size } from 'sly/components/themes';
+import { size, palette, key } from 'sly/components/themes';
 import { Button, TileImage } from 'sly/components/atoms';
 import { Lazy } from 'react-lazy';
 
@@ -17,7 +17,7 @@ const defaultImage = '//d1qiigpe5txw4q.cloudfront.net/uploads/19898cec23e2a81436
 
 const Wrapper = styled.div`
     display: inline-block;
-    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
     width: 100%;
     transition: box-shadow ${key('transitions.default')}, opacity ${key('transitions.default')};
     @media screen and (min-width: ${size('breakpoint.mobile')}) {
@@ -25,7 +25,7 @@ const Wrapper = styled.div`
     }
     &:hover {
       cursor: default;
-      box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')} ${palette('grayscale', 1, true)};
+      box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')} ${palette('slate', 1, true)};
       opacity: 0.75;
       background: ${palette('white', 2)};
 
