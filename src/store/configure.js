@@ -5,7 +5,7 @@ import { createLogger } from 'redux-logger';
 import { isDev, isBrowser } from 'sly/config';
 import entitiesMiddleware from './entities/middleware';
 import reducer from './reducer';
-import sagas from './resource/sagas';
+import sagas from './sagas';
 
 const devtools =
   isDev && isBrowser && window.devToolsExtension
@@ -37,8 +37,8 @@ const configureStore = (initialState, services = {}) => {
       const nextReducer = require('./reducer').default;
       store.replaceReducer(nextReducer);
     });
-    module.hot.accept('./resource/sagas', () => {
-      const nextSagas = require('./resource/sagas').default;
+    module.hot.accept('./sagas', () => {
+      const nextSagas = require('./sagas').default;
       sagaTask.cancel();
       sagaTask.done.then(() => {
         sagaTask = sagaMiddleware.run(nextSagas, services);

@@ -7,7 +7,7 @@ import { Lazy } from 'react-lazy';
 import { size } from 'sly/components/themes';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, MODAL_TYPE_JOIN_SLY } from 'sly/constants/modalType';
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION } from 'sly/constants/modalType';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
@@ -244,12 +244,7 @@ export default class CommunityDetailPage extends Component {
     const { modal, entityId, currentStep } = searchParams;
     let questionToAnswer = null;
     if (modal === ANSWER_QUESTION && entityId) {
-      if (!user) {
-        // To redirect to Login if user not logged in
-        setQueryParams({ modal: MODAL_TYPE_JOIN_SLY, redirectTo: location.pathname + location.search });
-      } else {
-        questionToAnswer = questions.find(question => question.id === entityId);
-      }
+      questionToAnswer = questions.find(question => question.id === entityId);
     }
     // To clear the flag incase the question is not found
     if (questionToAnswer === undefined && entityId) {
@@ -493,12 +488,18 @@ export default class CommunityDetailPage extends Component {
           </CollapsibleSection>
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
-        <StickyFooter
-          footerInfo={{
-            ctaTitle: 'Schedule a Tour',
-          }}
-          onFooterClick={onSATClick}
-        />
+        <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
+          {({ getPricing }) => (
+            <StickyFooter
+              footerInfo={{
+                title: 'Contact Property',
+                name: community.name,
+                ctaTitle: 'Contact',
+              }}
+              onFooterClick={getPricing}
+            />
+          )}
+        </ConciergeController>
         {(searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||
           searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) &&
           <NotificationController>

@@ -13,6 +13,7 @@ import {
 } from 'sly/services/validation';
 
 import CommunityLeaveAnAnswerForm from 'sly/components/organisms/CommunityLeaveAnAnswerForm';
+import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 
 const validate = createValidator({
   answer: [required],
@@ -80,7 +81,10 @@ class CommunityLeaveAnAnswerFormContainer extends Component {
 
 const mapDispatchToProps = dispatch => ({
   leaveAnAnswer: (data) => {
-    return dispatch(resourceCreateRequest('answer', data));
+    return dispatch(ensureAuthenticated(
+      'Please Login to Answer this Question',
+      resourceCreateRequest('answer', data),
+    ));
   },
   loadCommunity: slug => dispatch(resourceDetailReadRequest('community', slug, {
     include: 'similar-communities,questions,agents',

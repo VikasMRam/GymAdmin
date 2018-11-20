@@ -2,14 +2,14 @@ import React, { Component, Fragment } from 'react';
 import { func, bool, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { SAVED_COMMUNITIES, MODAL_TYPE_LOG_IN, MODAL_TYPE_JOIN_SLY } from 'sly/constants/modalType';
+import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
 
 import { connectController } from 'sly/controllers';
 import { getDetail } from 'sly/store/selectors';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import { resourceDeleteRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { entitiesReceive } from 'sly/store/actions';
+import { ensureAuthenticated, entitiesReceive } from 'sly/store/actions';
 
 import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
 import AuthContainer from 'sly/containers/AuthContainer';
@@ -62,6 +62,7 @@ class HeaderController extends Component {
     history: object,
     match: object,
     location: object,
+    ensureAuthenticated: func,
   };
 
   handleMenuItemClick = () => {
@@ -80,18 +81,16 @@ class HeaderController extends Component {
       logoutUser,
       fetchUser,
       className,
+      ensureAuthenticated,
     } = this.props;
+
     const hItems = defaultHeaderItems;
     const lhItems = loginHeaderItems(user);
     const lmItems = loginMenuItems(user);
 
     const savedHeaderItem = hItems.find(item => item.name === 'Saved');
     if (savedHeaderItem) {
-      if (user) {
-        savedHeaderItem.onClick = () => setQueryParams({ modal: SAVED_COMMUNITIES });
-      } else {
-        savedHeaderItem.onClick = () => setQueryParams({ modal: MODAL_TYPE_JOIN_SLY });
-      }
+      savedHeaderItem.onClick = () => ensureAuthenticated(() => setQueryParams({ modal: SAVED_COMMUNITIES }));
     }
     const logoutLeftMenuItem = lmItems.find(item => item.name === 'Log out');
     if (logoutLeftMenuItem) {
@@ -101,11 +100,11 @@ class HeaderController extends Component {
     }
     let loginItem = lhItems.find(item => item.name === 'Sign in');
     if (loginItem) {
-      loginItem.onClick = () => setQueryParams({ modal: MODAL_TYPE_LOG_IN });
+      loginItem.onClick = () => ensureAuthenticated(() => {});
     }
     loginItem = lmItems.find(item => item.name === 'Sign in');
     if (loginItem) {
-      loginItem.onClick = () => setQueryParams({ modal: MODAL_TYPE_LOG_IN });
+      loginItem.onClick = () => ensureAuthenticated(() => {});
     }
 
     const headerItems = [
@@ -133,18 +132,15 @@ class HeaderController extends Component {
         <NotificationController>
           {({
             notifyInfo,
+            messages,
+            dismiss,
           }) => (
             <Fragment>
               {user !== null && <SavedCommunitiesPopupController notifyInfo={notifyInfo} />}
               <AuthContainer notifyInfo={notifyInfo} />
+              <Notifications messages={messages} dismiss={dismiss} />
             </Fragment>
           )}
-        </NotificationController>
-        <NotificationController>
-          {({
-            messages,
-            dismiss,
-          }) => <Notifications messages={messages} dismiss={dismiss} />}
         </NotificationController>
       </Fragment>
     );
@@ -164,6 +160,7 @@ const mapStateToProps = (state, {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    ensureAuthenticated: action => dispatch(ensureAuthenticated(action)),
     logoutUser: () => dispatch(resourceDeleteRequest('logout')),
     // TODO: FIXME: Temp solution to set the entity and resource of user me to null as the response is not jsonapi
     fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me'))
