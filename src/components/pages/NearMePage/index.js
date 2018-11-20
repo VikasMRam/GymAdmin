@@ -8,7 +8,7 @@ import { size, assetPath } from 'sly/components/themes';
 
 import HeaderController from 'sly/controllers/HeaderController';
 
-import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
+import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 
 import { Image, Label, Heading, Paragraph } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
@@ -18,7 +18,7 @@ import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 
 import { getTocSearchLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
-import Link from "sly/components/atoms/Link/index";
+import Link from 'sly/components/atoms/Link';
 
 
 const HeroWrapper = styled.div`
@@ -779,12 +779,9 @@ const NearMePage = ({ onLocationSearch,
 
 
   return (
-    <BasePageTemplate
-      header={HeaderContent}
-      footer={<Footer />}
-    >
-
-      <Fragment>
+    <Fragment>
+      <TemplateHeader>{HeaderContent}</TemplateHeader>
+      <TemplateContent>
         <Helmet>
           <title>{title}</title>
           <meta name="description" content={description} />
@@ -796,8 +793,10 @@ const NearMePage = ({ onLocationSearch,
 
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by Cities" links={ALSeoCities} /></StyledArticle>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>
-      </Fragment>
-    </BasePageTemplate>
+      </TemplateContent>
+      <Footer/>
+    </Fragment>
+
   );
 };
 
