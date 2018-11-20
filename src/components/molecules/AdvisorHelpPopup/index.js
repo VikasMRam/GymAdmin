@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import { Heading, Button, Icon } from 'sly/components/atoms/index';
+import { Block, Button, Icon } from 'sly/components/atoms/index';
 import IconListItem from 'sly/components/molecules/IconListItem/index';
 
-const SubHeading = styled(Heading)`
+const SubHeading = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
@@ -53,7 +53,7 @@ const AdvisorHelpPopup = ({ onButtonClick }) => {
     <div>
       <TopSection>
         <div>
-          <SubHeading size="body">Here are the top 5 benefits to work with our local senior living advisors:</SubHeading>
+          <SubHeading weight="medium">Here are the top 5 benefits to work with our local senior living advisors:</SubHeading>
           <IconListWrapper>{iconListItemsComponent}</IconListWrapper>
         </div>
         <AvatarIcon icon="avatar" size="xLarge" />

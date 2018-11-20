@@ -1,17 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { object, func } from 'prop-types';
+import { object, func, bool } from 'prop-types';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
-import HeaderController from 'sly/controllers/HeaderController';
-import CommunityInfo from 'sly/components/molecules/CommunityInfo';
-import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
-
 import { required, usPhone } from 'sly/services/validation';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
-import CommunitySATContactForm from 'sly/components/organisms/CommunitySATContactForm';
-import CommunitySATDateForm from 'sly/components/organisms/CommunitySATDateForm';
 
 import {
   FullScreenWizard,
@@ -20,6 +14,15 @@ import {
   makeControls,
   makeHeader,
 } from 'sly/components/templates/FullScreenWizard';
+
+import BookATourPageController from 'sly/controllers/BookATourPageController';
+import HeaderController from 'sly/controllers/HeaderController';
+import CommunityInfo from 'sly/components/molecules/CommunityInfo';
+import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
+import Modal from 'sly/components/molecules/Modal';
+import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
+import CommunitySATContactForm from 'sly/components/organisms/CommunitySATContactForm';
+import CommunitySATDateForm from 'sly/components/organisms/CommunitySATDateForm';
 
 const Header = makeHeader(HeaderController);
 
@@ -70,41 +73,53 @@ const BookATourPage = ({
       <Column backgroundImage={mainImage}>
         <StyledCommunityInfo palette="white" community={community} />
       </Column>
-      <WizardController onComplete={onComplete} onStepChange={onStepChange}>
+      <BookATourPageController>
         {({
-          data, onSubmit, isFinalStep, submitEnabled, ...props
+          isAdvisorHelpVisible, toggleAdvisorHelp,
         }) => (
           <Fragment>
-            <Body>
-              <WizardSteps {...props}>
-                <WizardStep
-                  component={CommunitySATDateForm}
-                  name="Date"
-                  validations={{ date: [required], time: [required], medicaid: [required] }}
-                  onDateChange={onDateChange}
-                  onTimeChange={onTimeChange}
-                />
-                <WizardStep
-                  component={CommunitySATContactForm}
-                  name="Contact"
-                  validations={{ name: [required], phone: [required, usPhone] }}
-                  onContactByTextMsgChange={onContactByTextMsgChange}
-                />
-              </WizardSteps>
-            </Body>
-            <Controls>
-              <BookingFormFooter
-                date={data.date}
-                time={data.time}
-                onProgressClick={onSubmit}
-                isFinalStep={isFinalStep}
-                isButtonDisabled={!submitEnabled}
-                palette="primary"
-              />
-            </Controls>
+            <Modal closeable isOpen={isAdvisorHelpVisible} onClose={toggleAdvisorHelp}>
+              <AdvisorHelpPopup onButtonClick={toggleAdvisorHelp} />
+            </Modal>
+            <WizardController onComplete={onComplete} onStepChange={onStepChange}>
+              {({
+                data, onSubmit, isFinalStep, submitEnabled, ...props
+              }) => (
+                <Fragment>
+                  <Body>
+                    <WizardSteps {...props}>
+                      <WizardStep
+                        component={CommunitySATDateForm}
+                        name="Date"
+                        validations={{ date: [required], time: [required], medicaid: [required] }}
+                        onDateChange={onDateChange}
+                        onTimeChange={onTimeChange}
+                      />
+                      <WizardStep
+                        component={CommunitySATContactForm}
+                        name="Contact"
+                        validations={{ name: [required], phone: [required, usPhone] }}
+                        onContactByTextMsgChange={onContactByTextMsgChange}
+                        onAdvisorHelpClick={toggleAdvisorHelp}
+                      />
+                    </WizardSteps>
+                  </Body>
+                  <Controls>
+                    <BookingFormFooter
+                      date={data.date}
+                      time={data.time}
+                      onProgressClick={onSubmit}
+                      isFinalStep={isFinalStep}
+                      isButtonDisabled={!submitEnabled}
+                      palette="primary"
+                    />
+                  </Controls>
+                </Fragment>
+              )}
+            </WizardController>
           </Fragment>
         )}
-      </WizardController>
+      </BookATourPageController>
     </FullScreenWizard>
   );
 };
@@ -117,6 +132,8 @@ BookATourPage.propTypes = {
   onStepChange: func,
   onComplete: func,
   onContactByTextMsgChange: func,
+  isAdvisorHelpVisible: bool,
+  onAdvisorHelpClick: func,
 };
 
 export default BookATourPage;
