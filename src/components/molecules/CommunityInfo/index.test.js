@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import NumberFormat from 'react-number-format';
 
+import { formatRating } from 'sly/services/helpers/rating';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import { ClampedText } from 'sly/components/atoms';
 
@@ -52,7 +53,7 @@ describe('CommunityInfo', () => {
       expect(rateRendered.text()).toContain('Estimated');
     }
     if (reviewsValue) {
-      const reviewsValueFixed = reviewsValue.toFixed(1).replace(/\.0+$/, '');
+      const reviewsValueFixed = formatRating(reviewsValue);
       expect(wrapper.find('Rating').contains(reviewsValueFixed)).toBe(true);
     } else {
       expect(wrapper.find('Rating').contains('Not Yet Rated')).toBe(true);

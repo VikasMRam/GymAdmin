@@ -6,6 +6,7 @@ import NumberFormat from 'react-number-format';
 
 import { getKey, palette, size } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
+import { formatRating } from 'sly/services/helpers/rating';
 
 import { Block, Icon, ClampedText } from 'sly/components/atoms';
 
@@ -89,7 +90,7 @@ export default class CommunityInfo extends Component {
   renderReviews = reviewsValue => (
     <Rating size="caption" palette={this.props.palette}>
       <StyledRatingIcon icon="star" size="small" palette="primary" />
-      {reviewsValue > 0 ? reviewsValue.toFixed(1).replace(/\.0+$/, '') : 'Not Yet Rated'}
+      {reviewsValue > 0 ? formatRating(reviewsValue) : 'Not Yet Rated'}
     </Rating>
   );
 
