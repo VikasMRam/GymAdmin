@@ -31,8 +31,8 @@ describe('SimilarCommunityNearbyTile', () => {
     expect(wrapper.find('ImageWrapper')).toHaveLength(1);
     expect(wrapper.find('Name')).toHaveLength(1);
     expect(wrapper.find(Block)).toHaveLength(1);
-    expect(wrapper.find(Block).dive().text()).toContain('Estimated <NumberFormat /> per month');
-    expect(wrapper.find('RatingWrapper')).toHaveLength(1);
+    expect(wrapper.find(Block).dive().text()).toContain('<Styled(Icon) />4.428571');
+    expect(wrapper.contains('4.428571')).toBeTruthy;
   });
 
   it('renders when zero reviews', () => {
@@ -44,7 +44,7 @@ describe('SimilarCommunityNearbyTile', () => {
       reviewsValue: similarCommunity.reviewsValue,
       numReviews: 0,
     });
-    expect(wrapper.find('RatingWrapper')).toHaveLength(0);
+    expect(wrapper.contains('4.428571')).toBeFalsy;
   });
 
   it('renders when estimated is 0', () => {
@@ -59,7 +59,7 @@ describe('SimilarCommunityNearbyTile', () => {
     expect(wrapper.find('ImageWrapper')).toHaveLength(1);
     expect(wrapper.find('Name')).toHaveLength(1);
     expect(wrapper.find(Block)).toHaveLength(1);
-    expect(wrapper.find(Block).dive().text()).toContain('<NumberFormat /> per month');
-    expect(wrapper.find('RatingWrapper')).toHaveLength(1);
+    expect(wrapper.find(Block).dive().text()).toContain('<Styled(Icon) />4.428571');
+    expect(wrapper.contains('4.428571')).toBeTruthy;
   });
 });

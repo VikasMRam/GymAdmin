@@ -9,12 +9,10 @@ import Heading from 'sly/components/atoms/Heading/index';
 import SimilarCommunityNearbyTile from 'sly/components/molecules/SimilarCommunityNearbyTile/index';
 
 const CommunitySATAcknowledgementWrapper = styled.div`
-  margin-top: ${size('spacing.xxxLarge')};
-  margin-bottom: ${size('spacing.xLarge')};
+  margin-bottom: ${size('spacing.xxxLarge')};
 `;
 
 const StyledHr = styled(Hr)`
-  margin-top: ${size('spacing.xxxLarge')};
   margin-bottom: ${size('spacing.xxxLarge')};
 `;
 

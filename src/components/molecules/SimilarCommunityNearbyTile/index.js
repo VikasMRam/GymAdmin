@@ -39,12 +39,6 @@ const TypeOfCare = styled(Block)`
   margin-bottom: ${size('spacing.small')};
 `;
 
-const RatingWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
-RatingWrapper.displayName = 'RatingWrapper';
-
 const RateBlock = styled(Block)`
   margin-right: ${size('spacing.large')};
 `;
