@@ -32,5 +32,6 @@ storiesOf('Organisms|CommunitySATContactForm', module).add('default', () => (
     handleSubmit={withPreventDefault(action('form submitted'))}
     onAdvisorHelpClick={action('onAdvisorHelpClick')}
     onMedicaidHelpClick={action('onMedicaidHelpClick')}
+    onContactByTextMsgChange={action('onContactByTextMsgChange')}
   />
 ));

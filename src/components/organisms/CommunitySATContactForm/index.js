@@ -37,7 +37,7 @@ const CheckboxField = styled(Field)`
 `;
 
 const CommunitySATContactForm = ({
-  error, user, onAdvisorHelpClick,
+  error, user, onAdvisorHelpClick, onContactByTextMsgChange,
 }) => {
   let heading = 'How can we contact you about this community tour?';
   if (user) {
@@ -78,6 +78,7 @@ const CommunitySATContactForm = ({
         label="Please contact me by text message"
         type="checkbox"
         component={ReduxField}
+        onChange={onContactByTextMsgChange}
       />}
       {error && <Block palette="danger">{error}</Block>}
       {!user && <Block size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></Block>}
@@ -89,6 +90,7 @@ CommunitySATContactForm.propTypes = {
   user: object,
   error: string,
   onAdvisorHelpClick: func.isRequired,
+  onContactByTextMsgChange: func,
 };
 
 export default CommunitySATContactForm;

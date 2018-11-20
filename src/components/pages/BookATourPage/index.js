@@ -57,65 +57,66 @@ const Body = makeBody(styled.div`
 `);
 const Controls = makeControls(styled.div``);
 
-export default class BookATourPage extends Component {
-  static propTypes = {
-    community: communityPropType,
-    user: object,
-    onDateChange: func,
-    onTimeChange: func,
-  };
+const BookATourPage = ({
+  community, onDateChange, onTimeChange, onStepChange, onComplete, onContactByTextMsgChange,
+}) => {
+  const { mainImage } = community;
 
-  onComplete = (data) => {
-    alert(`completed: ${JSON.stringify(data)}`);
-  }
-
-  render() {
-    const { community, onDateChange, onTimeChange } = this.props;
-    const { mainImage } = community;
-
-    return (
-      <FullScreenWizard>
-        <Header>
-          <HeaderController />
-        </Header>
-        <Column backgroundImage={mainImage}>
-          <StyledCommunityInfo palette="white" community={community} />
-        </Column>
-        <WizardController onComplete={this.onComplete}>
-          {({
-            data, onSubmit, isFinalStep, submitEnabled, ...props
-          }) => (
-            <Fragment>
-              <Body>
-                <WizardSteps {...props}>
-                  <WizardStep
-                    component={CommunitySATDateForm}
-                    name="Date"
-                    validations={{ date: [required], time: [required], medicaid: [required] }}
-                    onDateChange={onDateChange}
-                    onTimeChange={onTimeChange}
-                  />
-                  <WizardStep
-                    component={CommunitySATContactForm}
-                    name="Contact"
-                    validations={{ name: [required], phone: [required, usPhone] }}
-                  />
-                </WizardSteps>
-              </Body>
-              <Controls>
-                <BookingFormFooter
-                  date={data.date}
-                  time={data.time}
-                  onProgressClick={onSubmit}
-                  isFinalStep={isFinalStep}
-                  isButtonDisabled={!submitEnabled}
-                  palette="primary"
+  return (
+    <FullScreenWizard>
+      <Header>
+        <HeaderController />
+      </Header>
+      <Column backgroundImage={mainImage}>
+        <StyledCommunityInfo palette="white" community={community} />
+      </Column>
+      <WizardController onComplete={onComplete} onStepChange={onStepChange}>
+        {({
+          data, onSubmit, isFinalStep, submitEnabled, ...props
+        }) => (
+          <Fragment>
+            <Body>
+              <WizardSteps {...props}>
+                <WizardStep
+                  component={CommunitySATDateForm}
+                  name="Date"
+                  validations={{ date: [required], time: [required], medicaid: [required] }}
+                  onDateChange={onDateChange}
+                  onTimeChange={onTimeChange}
                 />
-              </Controls>
-            </Fragment>
-          )}
-        </WizardController>
-      </FullScreenWizard>
-    );
-  }
-}
+                <WizardStep
+                  component={CommunitySATContactForm}
+                  name="Contact"
+                  validations={{ name: [required], phone: [required, usPhone] }}
+                  onContactByTextMsgChange={onContactByTextMsgChange}
+                />
+              </WizardSteps>
+            </Body>
+            <Controls>
+              <BookingFormFooter
+                date={data.date}
+                time={data.time}
+                onProgressClick={onSubmit}
+                isFinalStep={isFinalStep}
+                isButtonDisabled={!submitEnabled}
+                palette="primary"
+              />
+            </Controls>
+          </Fragment>
+        )}
+      </WizardController>
+    </FullScreenWizard>
+  );
+};
+
+BookATourPage.propTypes = {
+  community: communityPropType,
+  user: object,
+  onDateChange: func,
+  onTimeChange: func,
+  onStepChange: func,
+  onComplete: func,
+  onContactByTextMsgChange: func,
+};
+
+export default BookATourPage;

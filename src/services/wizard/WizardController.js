@@ -19,6 +19,7 @@ class WizardController extends Component {
     data: object,
     submitEnabled: bool,
     resetForm: func,
+    onStepChange: func,
   };
 
   constructor(props) {
@@ -82,13 +83,18 @@ class WizardController extends Component {
   }
 
   handleSubmit = () => {
-    const { onSubmit, onComplete, data } = this.props;
+    const {
+      onSubmit, onComplete, onStepChange, data, currentStep,
+    } = this.props;
 
     if (this.isFinalStep()) {
       return onComplete(data);
     }
     if (onSubmit) {
       return onSubmit(data);
+    }
+    if (onStepChange) {
+      onStepChange(currentStep + 1, data);
     }
     return this.next();
   }

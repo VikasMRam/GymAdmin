@@ -12,14 +12,36 @@ import BookATourPage from 'sly/components/pages/BookATourPage';
 
 const handleDateChange = (e, newValue) => {
   const event = {
-    action: 'date-change', category: 'BAT', label: newValue,
+    action: 'date-changed', category: 'BAT', label: newValue,
   };
   SlyEvent.getInstance().sendEvent(event);
 };
 
 const handleTimeChange = (e, newValue) => {
   const event = {
-    action: 'time-change', category: 'BAT', label: newValue,
+    action: 'time-changed', category: 'BAT', label: newValue,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
+
+const handleStepChange = (step) => {
+  const event = {
+    action: 'step-completed', category: 'BAT', label: step - 1,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
+
+const handleComplete = (data) => {
+  alert(`completed: ${JSON.stringify(data)}`);
+  const event = {
+    action: 'tour-booked', category: 'BAT',
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
+
+const handleContactByTextMsgChange = (e) => {
+  const event = {
+    action: 'contactByTextMsg-changed', category: 'BAT', label: e.target.checked,
   };
   SlyEvent.getInstance().sendEvent(event);
 };
@@ -35,6 +57,9 @@ const BookATourPageContainer = ({ community, user }) => {
       user={user}
       onDateChange={handleDateChange}
       onTimeChange={handleTimeChange}
+      onStepChange={handleStepChange}
+      onComplete={handleComplete}
+      onContactByTextMsgChange={handleContactByTextMsgChange}
     />
   );
 };
