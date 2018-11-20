@@ -20,7 +20,7 @@ describe('CommunitySATContactForm', () => {
     expect(wrapper.contains(guHeading)).toBe(true);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
-    expect(wrapper.find(Field).filter({ name: 'note' })).toHaveLength(0);
+    expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(0);
     expect(wrapper.find({ type: 'checkbox' })).toHaveLength(1);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
   });
@@ -30,7 +30,7 @@ describe('CommunitySATContactForm', () => {
     expect(wrapper.contains(userHeading)).toBe(true);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(0);
-    expect(wrapper.find(Field).filter({ name: 'note' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
     expect(wrapper.find({ type: 'checkbox' })).toHaveLength(0);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
   });
@@ -39,7 +39,7 @@ describe('CommunitySATContactForm', () => {
     const wrapper = wrap({ error });
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
-    expect(wrapper.find(Field).filter({ name: 'note' })).toHaveLength(0);
+    expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(0);
     expect(wrapper.find({ type: 'checkbox' })).toHaveLength(1);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(1);
   });

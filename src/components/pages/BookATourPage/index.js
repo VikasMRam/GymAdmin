@@ -61,7 +61,7 @@ const Body = makeBody(styled.div`
 const Controls = makeControls(styled.div``);
 
 const BookATourPage = ({
-  community, onDateChange, onTimeChange, onStepChange, onComplete, onContactByTextMsgChange,
+  community, user, onDateChange, onTimeChange, onStepChange, onComplete, onContactByTextMsgChange,
 }) => {
   const { mainImage } = community;
 
@@ -101,6 +101,7 @@ const BookATourPage = ({
                         validations={{ name: [required], phone: [required, usPhone] }}
                         onContactByTextMsgChange={onContactByTextMsgChange}
                         onAdvisorHelpClick={toggleAdvisorHelp}
+                        user={user}
                       />
                     </WizardSteps>
                   </Body>

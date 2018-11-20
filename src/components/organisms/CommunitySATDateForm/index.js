@@ -62,7 +62,7 @@ const CommunitySATDateForm = ({
         hasLaterDate
         from={from.format('YYYY-MM-DD')}
         to={to.format('YYYY-MM-DD')}
-        name="date"
+        name="scheduledDate"
         type="dateChoice"
         component={ReduxField}
         onChange={onDateChange}
@@ -70,7 +70,7 @@ const CommunitySATDateForm = ({
       <StyledBlock size="caption">What time works best for you?</StyledBlock>
       <StyledTimeField
         options={TIME_OPTIONS}
-        name="time"
+        name="scheduledTime"
         type="boxChoice"
         component={ReduxField}
         onChange={onTimeChange}
