@@ -1,5 +1,5 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { string, func } from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
 import { Field } from 'redux-form';
@@ -49,7 +49,7 @@ const StyledIcon = styled(Icon)`
 `;
 
 const CommunitySATDateForm = ({
-  error,
+  error, onDateChange, onTimeChange,
 }) => {
   const from = moment();
   const to = moment().add(8, 'days');
@@ -65,6 +65,7 @@ const CommunitySATDateForm = ({
         name="date"
         type="dateChoice"
         component={ReduxField}
+        onChange={onDateChange}
       />
       <StyledBlock size="caption">What time works best for you?</StyledBlock>
       <StyledTimeField
@@ -72,6 +73,7 @@ const CommunitySATDateForm = ({
         name="time"
         type="boxChoice"
         component={ReduxField}
+        onChange={onTimeChange}
       />
       <MedicaidLabel size="caption">
         Do you qualify for medicaid? <StyledIcon icon="help" size="regular" palette="slate" variation="filler" />
@@ -89,6 +91,8 @@ const CommunitySATDateForm = ({
 
 CommunitySATDateForm.propTypes = {
   error: string,
+  onDateChange: func,
+  onTimeChange: func,
 };
 
 export default CommunitySATDateForm;

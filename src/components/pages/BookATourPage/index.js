@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
@@ -61,6 +61,8 @@ export default class BookATourPage extends Component {
   static propTypes = {
     community: communityPropType,
     user: object,
+    onDateChange: func,
+    onTimeChange: func,
   };
 
   onComplete = (data) => {
@@ -68,7 +70,7 @@ export default class BookATourPage extends Component {
   }
 
   render() {
-    const { community } = this.props;
+    const { community, onDateChange, onTimeChange } = this.props;
     const { mainImage } = community;
 
     return (
@@ -90,6 +92,8 @@ export default class BookATourPage extends Component {
                     component={CommunitySATDateForm}
                     name="Date"
                     validations={{ date: [required], time: [required], medicaid: [required] }}
+                    onDateChange={onDateChange}
+                    onTimeChange={onTimeChange}
                   />
                   <WizardStep
                     component={CommunitySATContactForm}

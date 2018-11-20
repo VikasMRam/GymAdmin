@@ -56,15 +56,19 @@ const FooterDetailHeader = styled.div`
 const FooterName = styled.div``;
 
 const StickyFooter = ({ footerInfo, onFooterClick }) => {
-  const { title, name, ctaTitle, link } = footerInfo;
+  const {
+    title, name, ctaTitle, link,
+  } = footerInfo;
   return (
     <FullWrapper>
       <FooterWrapper>
-        <FooterDetails>
-          <FooterDetailHeader>{title}</FooterDetailHeader>
-          <FooterName>{name}</FooterName>
-        </FooterDetails>
-        <Button kind="jumbo" href={link} onClick={onFooterClick}>{ctaTitle}</Button>
+        {(title || name) &&
+          <FooterDetails>
+            <FooterDetailHeader>{title}</FooterDetailHeader>
+            <FooterName>{name}</FooterName>
+          </FooterDetails>
+        }
+        <Button kind="jumbo" palette="primary" href={link} onClick={onFooterClick}>{ctaTitle}</Button>
       </FooterWrapper>
     </FullWrapper>
   );

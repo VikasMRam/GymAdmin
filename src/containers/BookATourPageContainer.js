@@ -6,8 +6,23 @@ import { connectController } from 'sly/controllers';
 import withServerState from 'sly/store/withServerState';
 import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
+import SlyEvent from 'sly/services/helpers/events';
 
 import BookATourPage from 'sly/components/pages/BookATourPage';
+
+const handleDateChange = (e, newValue) => {
+  const event = {
+    action: 'date-change', category: 'BAT', label: newValue,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
+
+const handleTimeChange = (e, newValue) => {
+  const event = {
+    action: 'time-change', category: 'BAT', label: newValue,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
 
 const BookATourPageContainer = ({ community, user }) => {
   if (!community) {
@@ -18,6 +33,8 @@ const BookATourPageContainer = ({ community, user }) => {
     <BookATourPage
       community={community}
       user={user}
+      onDateChange={handleDateChange}
+      onTimeChange={handleTimeChange}
     />
   );
 };

@@ -1,10 +1,10 @@
 import React from 'react';
 import { arrayOf, string, number, object, shape, func } from 'prop-types';
 import NumberFormat from 'react-number-format';
-
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
+import { formatRating } from 'sly/services/helpers/rating';
 import { size, palette } from 'sly/components/themes';
 import { Link } from 'sly/components/atoms';
 import List from 'sly/components/molecules/List';
@@ -185,7 +185,7 @@ export default class communitySummary extends React.Component {
           href={`#${this.constructor.sectionIdMaps.reviews}`}
           onClick={e => this.constructor.scrollToSection(e, this.props.communityReviewsRef)}
         >
-          Rating {reviewsValue.toFixed(1).replace(/\.0+$/, '')}-Star Average
+          Rating {formatRating(reviewsValue)}-Star Average
         </Link>
       ));
     }

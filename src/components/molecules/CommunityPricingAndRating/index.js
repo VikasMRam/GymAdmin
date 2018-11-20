@@ -2,10 +2,10 @@ import React from 'react';
 import { number, string } from 'prop-types';
 import styled from 'styled-components';
 
+import { formatRating } from 'sly/services/helpers/rating';
 import { size } from 'sly/components/themes';
 import Block from 'sly/components/atoms/Block/index';
 import Icon from 'sly/components/atoms/Icon/index';
-
 
 const Wrapper = styled.div`
   display: flex;
@@ -29,7 +29,7 @@ const StyledIcon = styled(Icon)`
 `;
 
 const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
-  const ratingFixed = rating ? rating.toFixed(1).replace(/\.0+$/, '') : null;
+  const ratingFixed = formatRating(rating);
   return (
     <Wrapper>
       {price &&
