@@ -47,12 +47,44 @@ describe('SimilarCommunityNearbyTile', () => {
     expect(wrapper.contains('4.428571')).toBeFalsy;
   });
 
+  it('renders when rate is not provided', () => {
+    const wrapper = wrap({
+      image: similarCommunity.imageUrl,
+      name: similarCommunity.name,
+      estimatedRate: 0,
+      startingRate: 0,
+      reviewsValue: similarCommunity.reviewsValue,
+      numReviews: similarCommunity.numReviews,
+    });
+    expect(wrapper.find('ImageWrapper')).toHaveLength(1);
+    expect(wrapper.find('Name')).toHaveLength(1);
+    expect(wrapper.find(Block)).toHaveLength(1);
+    expect(wrapper.find(Block).dive().text()).toContain('<Styled(Icon) />4.428571');
+    expect(wrapper.contains('4.428571')).toBeTruthy;
+  });
+
   it('renders when estimated is 0', () => {
     const wrapper = wrap({
       image: similarCommunity.imageUrl,
       name: similarCommunity.name,
       estimatedRate: 0,
       startingRate: similarCommunity.startingRate,
+      reviewsValue: similarCommunity.reviewsValue,
+      numReviews: similarCommunity.numReviews,
+    });
+    expect(wrapper.find('ImageWrapper')).toHaveLength(1);
+    expect(wrapper.find('Name')).toHaveLength(1);
+    expect(wrapper.find(Block)).toHaveLength(1);
+    expect(wrapper.find(Block).dive().text()).toContain('<Styled(Icon) />4.428571');
+    expect(wrapper.contains('4.428571')).toBeTruthy;
+  });
+
+  it('renders when starting rate is 0', () => {
+    const wrapper = wrap({
+      image: similarCommunity.imageUrl,
+      name: similarCommunity.name,
+      estimatedRate: similarCommunity.estimated,
+      startingRate: 0,
       reviewsValue: similarCommunity.reviewsValue,
       numReviews: similarCommunity.numReviews,
     });
