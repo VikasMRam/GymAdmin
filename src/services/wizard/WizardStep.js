@@ -21,7 +21,7 @@ export default class WizardStep extends Component {
 
   render() {
     let { currentWizardStepFormName, WizardStepForm } = this;
-    const { name } = this.props;
+    const { name, ...props } = this.props;
     if (currentWizardStepFormName !== name || !WizardStepForm) {
       const {
         name,
@@ -48,7 +48,7 @@ export default class WizardStep extends Component {
     ({ currentWizardStepFormName, WizardStepForm } = this);
 
     if (WizardStepForm) {
-      return <WizardStepForm />;
+      return <WizardStepForm {...props} />;
     }
     return null;
   }

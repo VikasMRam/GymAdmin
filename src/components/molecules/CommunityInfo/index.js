@@ -89,7 +89,7 @@ export default class CommunityInfo extends Component {
   renderReviews = reviewsValue => (
     <Rating size="caption" palette={this.props.palette}>
       <StyledRatingIcon icon="star" size="small" palette="primary" />
-      {reviewsValue > 0 ? reviewsValue : 'Not Yet Rated'}
+      {reviewsValue > 0 ? reviewsValue.toFixed(1).replace(/\.0+$/, '') : 'Not Yet Rated'}
     </Rating>
   );
 

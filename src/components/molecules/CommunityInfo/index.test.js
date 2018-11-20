@@ -52,7 +52,8 @@ describe('CommunityInfo', () => {
       expect(rateRendered.text()).toContain('Estimated');
     }
     if (reviewsValue) {
-      expect(wrapper.find('Rating').contains(reviewsValue)).toBe(true);
+      const reviewsValueFixed = reviewsValue.toFixed(1).replace(/\.0+$/, '');
+      expect(wrapper.find('Rating').contains(reviewsValueFixed)).toBe(true);
     } else {
       expect(wrapper.find('Rating').contains('Not Yet Rated')).toBe(true);
     }

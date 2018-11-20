@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { reduxForm } from 'redux-form';
+import { action } from '@storybook/addon-actions';
 
 import CommunitySATDateForm from 'sly/components/organisms/CommunitySATDateForm';
 
@@ -15,5 +16,5 @@ const CommunitySATDateFormContainer = reduxForm({
 
 storiesOf('Organisms|CommunitySATDateForm', module)
   .add('default', () => (
-    <CommunitySATDateFormContainer />
+    <CommunitySATDateFormContainer onDateChange={action('date changed')} onTimeChange={action('time changed')} />
   ));
