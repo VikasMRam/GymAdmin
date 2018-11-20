@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import { object, number, array, bool, func } from 'prop-types';
 
-import SlyEvent from 'sly/services/helpers/events';
-import NearMePage from 'sly/components/pages/NearMePage';
-import { getSearchParamFromPlacesResponse, filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
-import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
-
-import queryString from 'query-string';
-
 import withServerState from 'sly/store/withServerState';
+import SlyEvent from 'sly/services/helpers/events';
+import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList, getListMeta, isResourceListRequestInProgress } from 'sly/store/selectors';
 import ErrorPage from 'sly/components/pages/Error';
+import NearMePage from 'sly/components/pages/NearMePage';
+import { parseURLQueryParams } from 'sly/services/helpers/url';
+
 
 class NearMePageContainer extends Component {
   static propTypes = {
@@ -75,8 +73,9 @@ class NearMePageContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const searchParams = { toc: 'assisted-living', nearme: 'true' };
+const mapStateToProps = (state, {location}) => {
+  const qs = parseURLQueryParams(location.search);
+  const searchParams = { toc: 'assisted-living', nearme: 'true', 'page-number': qs['page-number'] };
   return {
     searchParams,
     communityList: getList(state, 'searchResource', searchParams),
@@ -85,8 +84,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const fetchData = (dispatch) => {
-  const searchParams = { toc: 'assisted-living', nearme: 'true' };
+const fetchData = (dispatch, {location}) => {
+  const qs = parseURLQueryParams(location.search);
+  const searchParams = { toc: 'assisted-living', nearme: 'true', 'page-number': qs['page-number'] };
   return Promise.all([
     dispatch(resourceListReadRequest('searchResource', searchParams)),
   ]);
