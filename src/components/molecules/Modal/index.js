@@ -75,7 +75,7 @@ const ModalContext = styled.article`
   margin: 1rem calc(-50% + 1rem) 1rem 1rem;
   max-height: calc(100% - 4rem);
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: ${ifProp('noPadding', 0, size('spacing.xxxLarge'))};
+    padding: ${ifProp('noPadding', 0, size('spacing.xxLarge'))};
   };
 
   ${switchProp('layout', {

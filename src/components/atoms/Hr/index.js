@@ -10,7 +10,7 @@ const HRStyled = styled.hr`
   padding: 0;
   margin: 0;
   margin-bottom: ${size('spacing.xLarge')};
-  border-top: 1px solid ${palette('slate', 'filler')};
+  border-top: 1px solid ${palette('slate', 'stroke')};
   
   ${ifProp('fullWidth', css`
     // Hacky way to implement a Hr beyond the fixed width container
