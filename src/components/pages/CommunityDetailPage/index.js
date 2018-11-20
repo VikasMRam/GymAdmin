@@ -7,7 +7,7 @@ import { Lazy } from 'react-lazy';
 import { size } from 'sly/components/themes';
 
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, MODAL_TYPE_JOIN_SLY } from 'sly/constants/modalType';
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION } from 'sly/constants/modalType';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
@@ -18,7 +18,6 @@ import { Link, Heading, Hr, Button } from 'sly/components/atoms';
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
-import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import SaveCommunityController from 'sly/controllers/SaveCommunityController';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -43,6 +42,7 @@ import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetail
 import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import Thankyou from 'sly/components/molecules/Thankyou/index';
+import CommunitySATWidget from 'sly/components/organisms/CommunitySATWidget';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -90,6 +90,7 @@ export default class CommunityDetailPage extends Component {
     searchParams: object,
     setQueryParams: func,
     notifyInfo: func,
+    onSATClick: func,
   };
 
   componentDidMount() {
@@ -168,6 +169,7 @@ export default class CommunityDetailPage extends Component {
       searchParams,
       setQueryParams,
       notifyInfo,
+      onSATClick,
     } = this.props;
 
     const {
@@ -242,12 +244,7 @@ export default class CommunityDetailPage extends Component {
     const { modal, entityId, currentStep } = searchParams;
     let questionToAnswer = null;
     if (modal === ANSWER_QUESTION && entityId) {
-      if (!user) {
-        // To redirect to Login if user not logged in
-        setQueryParams({ modal: MODAL_TYPE_JOIN_SLY, redirectTo: location.pathname + location.search });
-      } else {
-        questionToAnswer = questions.find(question => question.id === entityId);
-      }
+      questionToAnswer = questions.find(question => question.id === entityId);
     }
     // To clear the flag incase the question is not found
     if (questionToAnswer === undefined && entityId) {
@@ -283,7 +280,7 @@ export default class CommunityDetailPage extends Component {
         top={isStickyHeaderVisible ? 84 : 24}
         bottomBoundary="#sticky-sidebar-boundary"
       >
-        <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
+        <CommunitySATWidget price={startingRate} rating={reviewsValue} onSATClick={onSATClick} />
       </Sticky>
     );
     const bottomContent = (
@@ -492,7 +489,7 @@ export default class CommunityDetailPage extends Component {
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
         <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
-          {({ concierge, getPricing }) => (
+          {({ getPricing }) => (
             <StickyFooter
               footerInfo={{
                 title: 'Contact Property',
@@ -500,9 +497,7 @@ export default class CommunityDetailPage extends Component {
                 ctaTitle: 'Contact',
               }}
               onFooterClick={getPricing}
-
             />
-
           )}
         </ConciergeController>
         {(searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||

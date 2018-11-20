@@ -42,7 +42,7 @@ describe('RatingInput', () => {
     const wrapper = wrap({ onChange, disabled: true });
     const rating = wrapper.find(Rating);
     const props = rating.props();
-    expect(props.palette).toEqual('grayscale');
+    expect(props.palette).toEqual('slate');
     rating.simulate('click', {
       clientX: 150,
     });

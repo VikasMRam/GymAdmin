@@ -2,17 +2,18 @@
 import React from 'react';
 import { string, number, bool, oneOf } from 'prop-types';
 import styled from 'styled-components';
-import { palette, key } from 'styled-theme';
+
 import { ifProp, prop } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, palette, key, getKey } from 'sly/components/themes';
 
 const fontSize = props => size('icon', props.size);
+const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
 const Wrapper = styled.span`
   display: inline-block;
   font-size: ${fontSize};
-  color: ${prop('fill', palette(0))};
+  color: ${prop('fill', getColor)};
   // sizes relative to set font-size
   width: ${fontSize};
   height: ${fontSize};
@@ -43,7 +44,8 @@ Icon.propTypes = {
   icon: string.isRequired,
   width: number,
   size: oneOf(['tiny', 'small', 'regular', 'large', 'xLarge', 'xxLarge']),
-  palette: string,
+  palette: oneOf(Object.keys(getKey('palette'))),
+  variation: oneOf(['base', 'accent', 'filler', 'stroke', 'background']),
   fill: string,
   stroke: string,
   flip: bool,
@@ -53,6 +55,7 @@ Icon.defaultProps = {
   flip: false,
   size: 'regular',
   palette: 'secondary',
+  variation: 'base',
 };
 
 export default Icon;

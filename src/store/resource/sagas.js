@@ -79,7 +79,7 @@ export function* watchResourceDeleteRequest(api, { payload, meta }) {
   yield call(deleteResource, api, payload, meta);
 }
 
-export default function* ({ api }) {
+export default function* resourceSagas({ api }) {
   yield takeEvery(
     actions.RESOURCE_CREATE_REQUEST,
     watchResourceCreateRequest,

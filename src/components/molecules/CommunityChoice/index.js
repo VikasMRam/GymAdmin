@@ -11,10 +11,10 @@ import {
 } from 'prop-types';
 
 import styled from 'styled-components';
-import { font, palette } from 'styled-theme';
+
 import { ifProp, prop } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, font, palette } from 'sly/components/themes';
 import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
 
 export default class CommunityChoice extends Component {

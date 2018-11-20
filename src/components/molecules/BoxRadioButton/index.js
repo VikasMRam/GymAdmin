@@ -2,10 +2,10 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { string, bool } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 import { Box, Icon } from 'sly/components/atoms';
 import HelpBubble from 'sly/components/molecules/HelpBubble';
@@ -26,7 +26,7 @@ export const StyledField = styled(Field)`
   }
 `;
 const StyledBox = styled(Box)`
-  border-color: ${ifProp('checked', palette('secondary', 0), palette('grayscale', 2))};
+  border-color: ${ifProp('checked', palette('secondary', 'base'), palette('slate', 'base'))};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -43,7 +43,7 @@ export const StyledHelpBubble = styled(HelpBubble)`
 export const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.large')};
 `;
-
+// TODO: replace with generic box checkbox
 const BoxRadioButton = ({
   name, checked, helpText, multiSelect, ...props
 }) => (

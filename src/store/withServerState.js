@@ -84,10 +84,10 @@ const passthrouh = _=>_;
 const promiseNoop = Promise.resolve;
 
 export default function withServerState({
-  fetchData=promiseNoop,
-  handleError=passthrouh,
-  mapStateToProps=(_, props) => props,
-  mapDispatchToProps=noop
+  fetchData = promiseNoop,
+  handleError = passthrouh,
+  mapStateToProps = (_, props) => props,
+  mapDispatchToProps = noop,
 }) {
   return (ChildComponent) => {
     const getMapDispatchToProps = (dispatch, props) => {
@@ -102,7 +102,7 @@ export default function withServerState({
 
     const childMapDispatchToProps = (dispatch, props) => ({
       ...getMapDispatchToProps(dispatch, props),
-      fetchData: (nextProps=props) => fetchData(dispatch, nextProps),
+      fetchData: (nextProps = props) => fetchData(dispatch, nextProps),
       handleError,
     });
 
@@ -114,9 +114,7 @@ export default function withServerState({
       childMapDispatchToProps,
     );
 
-    return serverStateDecorator(
-      connector(ServerStateComponent)
-    );
+    return serverStateDecorator(connector(ServerStateComponent));
   };
 };
 

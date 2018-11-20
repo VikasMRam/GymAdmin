@@ -1,12 +1,12 @@
 import React from 'react';
 
 import styled, { css } from 'styled-components';
-import { palette } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 
 import { bool, string, oneOf } from 'prop-types';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
 
 const backgroundColor = ({ ghost, disabled, transparent, selectable, selected }) =>
@@ -18,7 +18,7 @@ const backgroundColor = ({ ghost, disabled, transparent, selectable, selected })
 
 const foregroundColor = ({ ghost, disabled, transparent, selectable, selected }) =>
   disabled
-    ? palette('grayscale', 2)
+    ? palette('slate', 'stroke')
     : ghost
       ? palette(0)
       : (selectable && !selected)
@@ -27,7 +27,7 @@ const foregroundColor = ({ ghost, disabled, transparent, selectable, selected })
 
 const borderColor = ({ ghost, disabled, selectable, selected }) => {
   if (selectable && !selected) {
-    return palette('grayscale', 2);
+    return palette('slate', 'stroke');
   } else {
     return ghost || disabled ? 'currentcolor' : 'transparent';
   }
@@ -86,7 +86,7 @@ export const styles = css`
   height: ${height};
   padding: 0 1em;
   text-decoration: none;
-  font-weight: ${ifProp({ kind: 'jumbo' }, 'bold', 'normal')};
+  font-weight: ${ifProp({ kind: 'jumbo' }, '500', 'normal')};
   white-space: nowrap;
   font-size: ${fontSize};
   border: ${size('border.regular')} solid ${borderColor};
@@ -98,11 +98,6 @@ export const styles = css`
   background-color: ${backgroundColor};
   color: ${foregroundColor};
   user-select: none;
-
-  ${ifProp({ kind: 'jumbo' }, css`
-    width: 100%; 
-  `)}
-
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
 
   &:hover {

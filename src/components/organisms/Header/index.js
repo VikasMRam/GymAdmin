@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import { bool, func, arrayOf, shape, string, number } from 'prop-types';
 import styled from 'styled-components';
-import { palette, key } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette, key } from 'sly/components/themes';
 import { Icon, Hr, Link } from 'sly/components/atoms';
 import Logo from 'sly/components/atoms/Logo';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
@@ -11,7 +11,7 @@ import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 const HeaderWrapper = styled.nav`
   display: flex;
   width: 100%;
-  border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   // To remove blue line caused by tabIndex
   outline: none;
 
@@ -38,7 +38,7 @@ export const SeniorlyIconMenu = styled.div`
   display: flex;
   padding: calc(${size('spacing.small')} + ${size('spacing.regular')})
     ${size('spacing.large')};
-  border-right: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border-right: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
@@ -72,9 +72,9 @@ export const HeaderMenu = styled.div`
     width: ${size('header.menu.width')};
     top: ${size('header.menu.position.top.laptopLarge')};
     right: ${size('spacing.large')};
-    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.large')}
-      ${palette('grayscale', 2)};
+      ${palette('slate', 'stroke')};
   }
 `;
 
@@ -84,7 +84,7 @@ export const HeaderMenuItem = styled(Link)`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     :hover {
-      background-color: ${palette('grayscale', 3)};
+      background-color: ${palette('slate', 'background')};
     }
   }
 `;
@@ -122,7 +122,7 @@ const HeaderItem = styled(Link)`
 `;
 
 const Header = ({
-  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur,
+  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur, className
 }) => {
   const headerItemComponents = headerItems.map(item => (
     <HeaderItem onClick={item.onClick} to={item.url} palette="slate" key={item.name}>
@@ -160,7 +160,7 @@ const Header = ({
 
   return (
     // tabIndex necessary for onBlur to work
-    <HeaderWrapper tabIndex="-1" onBlur={handleHeaderMenuBlur}>
+    <HeaderWrapper tabIndex="-1" onBlur={handleHeaderMenuBlur} className={className}>
       <SeniorlyLogoWrapper>
         <Link href="/">
           <Logo />

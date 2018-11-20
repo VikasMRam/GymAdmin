@@ -1,10 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { palette } from 'styled-theme';
+
 import { switchProp } from 'styled-tools';
 import { string, shape, oneOf, func } from 'prop-types';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { Image, Link } from 'sly/components/atoms';
 
 const Wrapper = styled(Link)`
@@ -25,7 +25,7 @@ const Wrapper = styled(Link)`
       &:hover {
         cursor: pointer;
         background: ${palette('white', 0)};
-        box-shadow: 0 ${size('spacing.regular')} ${size('spacing.large')} ${palette('grayscale', 0)}80;
+        box-shadow: 0 ${size('spacing.regular')} ${size('spacing.large')} ${palette('slate', 'filler')}80;
       }
     `,
   })}
@@ -65,7 +65,7 @@ const SubHeadingWrapper = styled.div`
 `;
 
 const DescriptionWrapper = styled.div`
-  color: ${palette('grayscale', 1)};
+  color: ${palette('slate', 'filler')};
 `;
 
 const ProfileTile = ({

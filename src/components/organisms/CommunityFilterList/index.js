@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object, func, bool } from 'prop-types';
-import { palette } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size, assetPath, palette } from 'sly/components/themes';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Field from 'sly/components/molecules/Field';
 import Radio from 'sly/components/molecules/Radio';
@@ -53,7 +53,7 @@ const ImageButtonWrapper = styled.div`
   }
 
   button {
-    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   }
 
   ${ifProp('isMapView', '', `

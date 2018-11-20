@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { string, bool } from 'prop-types';
-import { palette } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+
+import { size, palette, assetPath } from 'sly/components/themes';
 import { Heading, Block, Icon, Image } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
@@ -78,14 +78,10 @@ const HowItWorksInfoTile = ({
 };
 
 HowItWorksInfoTile.propTypes = {
+  imageUrl: string.isRequired,
   heading: string.isRequired,
   content: string.isRequired,
   invert: bool,
-};
-
-HowItWorksInfoTile.defaultProps = {
-  iconPalette: 'black',
-  borderless: false,
 };
 
 export default HowItWorksInfoTile;

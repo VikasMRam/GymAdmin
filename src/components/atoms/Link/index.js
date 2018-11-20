@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import styled, { css } from 'styled-components';
-import { palette } from 'styled-theme';
+import { palette } from 'sly/components/themes';
 import RRLink from 'react-router-dom/Link';
 import { matchPath } from 'react-router-dom';
 import { string, array } from 'prop-types';

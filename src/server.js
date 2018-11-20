@@ -16,7 +16,7 @@ import cookieParser from 'cookie-parser';
 import serializeError from 'serialize-error';
 
 import { port, host, basename, publicPath, isDev, cookieDomain, externalWizardsPath } from 'sly/config';
-import configureStore from 'sly/store/configure';
+import { configure as configureStore } from 'sly/store';
 import apiService from 'sly/services/api';
 import App from 'sly/components/App';
 import Html from 'sly/components/Html';

@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { array, func, bool } from 'prop-types';
-import { palette, key } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, palette, key } from 'sly/components/themes';
 import { Icon, Hr } from 'sly/components/atoms';
 import SavedCommunityTile from 'sly/components/molecules/SavedCommunityTile';
 
@@ -20,8 +20,8 @@ const Wrapper = styled.div`
   transition: all ${key('transitions.slow.inOut')};
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('layout.col5')};
-    border: ${size('border.regular')} solid ${palette('grayscale', 2)};
-    box-shadow: -${size('spacing.small')} 0 ${size('spacing.regular')} 0 ${palette('black', 0)}10;
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+    box-shadow: -${size('spacing.small')} 0 ${size('spacing.regular')} 0 ${palette('slate', 0)}10;
   }
 `;
 

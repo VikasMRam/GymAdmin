@@ -2,9 +2,9 @@ import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { string, func, shape, arrayOf, oneOf } from 'prop-types';
 import styled from 'styled-components';
-import { key } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, key } from 'sly/components/themes';
 
 import Notification from 'sly/components/molecules/Notification';
 

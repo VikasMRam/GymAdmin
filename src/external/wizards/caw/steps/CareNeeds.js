@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import { Heading } from 'sly/components/atoms';
 import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
 
@@ -29,7 +29,7 @@ export const BoxRadioButtonWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
 export const Description = styled.p`
-  color: ${palette('grayscale', 0)};
+  color: ${palette('slate', 'filler')};
   margin-bottom: ${size('spacing.xLarge')};
 `;
 

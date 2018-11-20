@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string } from 'prop-types';
-import { palette } from 'styled-theme';
+import { string, bool } from 'prop-types';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import { Image } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
@@ -37,10 +37,10 @@ const PressTile = ({
 PressTile.propTypes = {
   text: string.isRequired,
   imageUrl: string.isRequired,
+  borderless: bool.isRequired,
 };
 
 PressTile.defaultProps = {
-  iconPalette: 'black',
   borderless: false,
 };
 

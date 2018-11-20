@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+
 import { array, bool, func, object } from 'prop-types';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 import { titleize } from 'sly/services/helpers/strings';
 import { getTocSearchLabel } from 'sly/services/helpers/search';
@@ -43,16 +43,12 @@ const StyledHeading = styled(Heading)`
 `;
 
 const StyledHr = styled(Hr)`
-  // Hacky way to implement a Hr beyond the fixed width container
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
-
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }
 `;
 
-const StyledButton= styled(Button)`
+const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -246,7 +242,7 @@ const CommunitySearchPage = ({
             Filters
           </IconButton>
         </TopWrapper>
-        <StyledHr />
+        <StyledHr fullWidth />
         {!isMapView && !isFetchingResults && ListContent()}
         {isMapView && (
           <SearchMapContainer

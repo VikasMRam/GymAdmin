@@ -2,10 +2,10 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 import ReduxField from 'sly/components/organisms/ReduxField';
 
@@ -27,7 +27,7 @@ const StyledButton = styled(Button)`
 StyledButton.displayName = 'StyledButton';
 
 const StyledBlock = styled(Block)`
-  color: ${palette('grayscale', 1)};
+  color: ${palette('slate', 'filler')};
   font-size: ${size('text.tiny')};
   margin-bottom: ${ifProp('error', size('spacing.large'), 'initial')};
 `;

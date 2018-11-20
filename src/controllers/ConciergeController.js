@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { string, func, object } from 'prop-types';
 
 import { resourceCreateRequest } from 'sly/store/resource/actions';
@@ -108,7 +108,7 @@ export class ConciergeController extends Component {
   gotoWhatNext = () => {
     const { setQueryParams } = this.props;
     setQueryParams({ modal: CONCIERGE, currentStep: HOW_IT_WORKS });
-  }
+  };
 
   submitExpressConversion = (data) => {
     const {
@@ -324,5 +324,7 @@ const submit = data => resourceCreateRequest('userAction', data);
 
 export default connectController(
   mapStateToProps,
-  { submit },
+  dispatch => ({
+    submit: data => dispatch(submit(data)),
+  }),
 )(ConciergeController);

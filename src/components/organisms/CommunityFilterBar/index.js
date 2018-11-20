@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
-import { palette } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 import IconButton from 'sly/components/molecules/IconButton';
 import Button from 'sly/components/atoms/Button';
@@ -45,7 +45,7 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
           right
           icon="close"
           iconSize="small"
-          palette="grayscale"
+          palette="slate"
           ghost
           transparent
           onClick={getEvtHandler(['size'], onParamsRemove)}
@@ -58,7 +58,7 @@ const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
           right
           icon="close"
           iconSize="small"
-          palette="grayscale"
+          palette="slate"
           ghost
           transparent
           onClick={getEvtHandler(['budget'], onParamsRemove)}

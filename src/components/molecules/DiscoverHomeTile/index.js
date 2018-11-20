@@ -2,9 +2,9 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { string, func, oneOf } from 'prop-types';
 import { switchProp } from 'styled-tools';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 
 import { Box, Heading, Block, Button, Image } from 'sly/components/atoms';
 
@@ -65,11 +65,11 @@ const DiscoverHomeTile = ({
 }) => (
   <Wrapper size={size}>
     <StyledImage src={image} size={size} />
-    <StyledBox palette="grayscale" size={size}>
+    <StyledBox palette="slate" size={size}>
       <TwoColumnWrapper size={size}>
         <StyledTextWrapper>
           <StyledHeading>{title}</StyledHeading>
-          <Block palette="grayscale">{description}</Block>
+          <Block palette="slate">{description}</Block>
         </StyledTextWrapper>
         <ButtonWrapper size={size}>
           <Button onClick={onButtonClick}>{buttonText}</Button>

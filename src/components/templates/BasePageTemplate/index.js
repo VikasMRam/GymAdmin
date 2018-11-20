@@ -1,11 +1,8 @@
-import React, { Fragment } from 'react';
-import { any, bool, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 
-const Content = styled.main`
+export const TemplateContent = styled.main`
   width: 100%;
   margin: 0 auto;
   padding: 0 ${size('spacing.large')};
@@ -18,30 +15,10 @@ const Content = styled.main`
   }
 `;
 
-const StyledHeader = styled.header`
+export const TemplateHeader = styled.header`
   margin-bottom: ${size('spacing.large')};
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-bottom: ${size('spacing.xLarge')};
   }
 `;
 
-const BasePageTemplate = ({
-  header, children, footer, hasStickyFooter, className,
-}) => (
-  <Fragment>
-    <StyledHeader>{header}</StyledHeader>
-    <Content className={className}>{children}</Content>
-    <footer>{footer}</footer>
-    { /*<ChatBoxContainer pageWithStickyFooter={hasStickyFooter} />*/ }
-  </Fragment>
-);
-
-BasePageTemplate.propTypes = {
-  header: any.isRequired,
-  footer: any.isRequired,
-  children: any.isRequired,
-  hasStickyFooter: bool,
-  className: string,
-};
-
-export default BasePageTemplate;

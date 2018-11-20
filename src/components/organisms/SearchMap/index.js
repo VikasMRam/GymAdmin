@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { string, number, shape, arrayOf, func, bool } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+
 import { Marker, InfoWindow, OverlayView } from 'react-google-maps';
 
 import { isServer } from 'sly/config';
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import Checkbox from 'sly/components/molecules/Checkbox';
 import Map from 'sly/components/atoms/Map';
 import MapTile from 'sly/components/molecules/MapTile';
@@ -25,7 +25,7 @@ const StyledDiv = styled.div`
   top: -40vh;
   left: -100px;
   background-color: ${palette('white', 0)};
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   width: 200px;
   height: auto;
   padding: ${size('spacing.small')};

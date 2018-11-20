@@ -2,10 +2,10 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 import ReduxField from 'sly/components/organisms/ReduxField';
 

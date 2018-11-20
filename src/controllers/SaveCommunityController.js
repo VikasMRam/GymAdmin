@@ -6,7 +6,6 @@ import SlyEvent from 'sly/services/helpers/events';
 import { USER_SAVE_DELETE_STATUS, USER_SAVE_INIT_STATUS }
   from 'sly/constants/userSave';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
-import { MODAL_TYPE_JOIN_SLY } from 'sly/constants/modalType';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import {
   SAVE_COMMUNITY_STEPS_CREATE,
@@ -27,6 +26,7 @@ import { connectController } from 'sly/controllers';
 import { getDetail, getList } from 'sly/store/selectors';
 
 import SaveCommunity from 'sly/components/organisms/SaveCommunity';
+import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 
 class SaveCommunityController extends Component {
   static propTypes = {
@@ -49,26 +49,19 @@ class SaveCommunityController extends Component {
 
   async componentDidMount() {
     const {
-      user, userSave, searchParams, community, setQueryParams, location,
+      userSave, searchParams, community,
     } = this.props;
 
     if (!this.saving && community) {
       this.saving = true;
-      if (user) {
-        if (searchParams.action === ACTIONS_ADD_TO_FAVOURITE) {
-          if (!userSave) {
-            this.createUserSave();
-          } else if (userSave.status === USER_SAVE_DELETE_STATUS) {
-            this.updateUserSave(USER_SAVE_INIT_STATUS);
-          }
-        } else if (searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) {
-          this.updateUserSave(USER_SAVE_DELETE_STATUS);
+      if (searchParams.action === ACTIONS_ADD_TO_FAVOURITE) {
+        if (!userSave) {
+          this.createUserSave();
+        } else if (userSave.status === USER_SAVE_DELETE_STATUS) {
+          this.updateUserSave(USER_SAVE_INIT_STATUS);
         }
-      } else {
-        const redirectTo = location.pathname + location.search;
-        setQueryParams({
-          modal: MODAL_TYPE_JOIN_SLY, redirectTo, action: null, entityId: null,
-        });
+      } else if (searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) {
+        this.updateUserSave(USER_SAVE_DELETE_STATUS);
       }
     }
   }
@@ -96,7 +89,7 @@ class SaveCommunityController extends Component {
         this.handleModalClose();
         notifyError(NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED);
       });
-  }
+  };
 
   updateUserSave = (status) => {
     const {
@@ -127,7 +120,7 @@ class SaveCommunityController extends Component {
           notifyError(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS);
         }
       });
-  }
+  };
 
   handleSubmitSaveCommunityForm = (data) => {
     const {
@@ -189,8 +182,12 @@ const mapStateToProps = (state, {
   const userSave = getList(state, 'userSave', {
     'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
     'filter[entity_slug]': searchParams.entityId,
-  }).find(userSave =>
-    userSave.entityType === COMMUNITY_ENTITY_TYPE && userSave.entitySlug === searchParams.entityId);
+  }).find(userSave => (
+    userSave.entityType
+    === COMMUNITY_ENTITY_TYPE
+    && userSave.entitySlug
+    === searchParams.entityId
+  ));
 
   return {
     user: getDetail(state, 'user', 'me'),
@@ -204,8 +201,14 @@ const mapStateToProps = (state, {
 };
 
 const mapDispatchToProps = dispatch => ({
-  createUserSave: data => dispatch(resourceCreateRequest('userSave', data)),
-  updateUserSave: (id, data) => dispatch(resourceUpdateRequest('userSave', id, data)),
+  createUserSave: data => dispatch(ensureAuthenticated(
+    'Sign up to add to your favorites list',
+    resourceCreateRequest('userSave', data),
+  )),
+  updateUserSave: (id, data) => dispatch(ensureAuthenticated(
+    'Sign up to add to your favorites list',
+    resourceUpdateRequest('userSave', id, data),
+  )),
   getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
     'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
     'filter[entity_slug]': slug,

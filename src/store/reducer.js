@@ -4,6 +4,7 @@ import { reducer as thunk } from 'redux-saga-thunk';
 
 import entities from './entities/reducer';
 import modal from './modal/reducer';
+import authenticated from './authenticated/reducer';
 import resource from './resource/reducer';
 import experiments from './experiments/reducer';
 import searchBox from './searchBox/reducer';
@@ -16,6 +17,7 @@ const reducers = {
   thunk,
   entities,
   modal,
+  authenticated,
   resource,
   experiments,
   searchBox,

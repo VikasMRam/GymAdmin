@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import Image from 'sly/components/atoms/Image';
 
 const StyledImg = styled(Image)`

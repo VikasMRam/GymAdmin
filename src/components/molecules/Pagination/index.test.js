@@ -33,7 +33,7 @@ describe('Pagination', () => {
       const button = wrapper.childAt(i);
       expect(button.prop('children')).toEqual(i + 1);
       expect(button.prop('href')).toEqual(i === 0 ? '/test' :`/test?page-number=${i}`);
-      expect(button.prop('palette')).toEqual(i === 0 ? 'secondary' : 'grayscale');
+      expect(button.prop('palette')).toEqual(i === 0 ? 'secondary' : 'slate');
     }
   });
 
@@ -83,7 +83,7 @@ describe('Pagination', () => {
 
     const fortyNine = wrapper.childAt(3);
     expect(fortyNine.prop('children')).toEqual(49);
-    expect(fortyNine.prop('palette')).toEqual('grayscale');
+    expect(fortyNine.prop('palette')).toEqual('slate');
     expect(fortyNine.prop('href')).toEqual('/test?page-number=48');
 
     const fiftyOne = wrapper.childAt(5);
@@ -94,7 +94,7 @@ describe('Pagination', () => {
 
     const fiftyThree = wrapper.childAt(7);
     expect(fiftyThree.prop('ghost')).toEqual(true);
-    expect(fiftyThree.prop('palette')).toEqual('grayscale');
+    expect(fiftyThree.prop('palette')).toEqual('slate');
     expect(fiftyThree.prop('href')).toEqual('/test?page-number=52');
 
     const secondDots = wrapper.childAt(8);
@@ -102,7 +102,7 @@ describe('Pagination', () => {
 
     const hundred = wrapper.childAt(9);
     expect(hundred.prop('ghost')).toEqual(true);
-    expect(hundred.prop('palette')).toEqual('grayscale');
+    expect(hundred.prop('palette')).toEqual('slate');
     expect(hundred.prop('href')).toEqual('/test?page-number=99');
   });
 });

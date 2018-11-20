@@ -16,6 +16,8 @@ import Thumbnail from './Thumbnail';
 import TileImage from './TileImage';
 import Tooltip from './Tooltip';
 import Map from './Map';
+import ClampedText from './ClampedText';
+import BoxChoiceTile from './BoxChoiceTile';
 
 export {
   Avatar,
@@ -36,4 +38,6 @@ export {
   TileImage,
   Tooltip,
   Map,
+  ClampedText,
+  BoxChoiceTile,
 };

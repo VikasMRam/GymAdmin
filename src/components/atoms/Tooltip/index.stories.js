@@ -10,13 +10,6 @@ storiesOf('Atoms|Tooltip', module)
       </Tooltip>
     </div>
   ))
-  .add('reverse', () => (
-    <div style={{ margin: 100 }}>
-      <Tooltip data-title="Hello!" reverse>
-        <a href="#foo">Hover me</a>
-      </Tooltip>
-    </div>
-  ))
   .add('position right', () => (
     <div style={{ margin: 100 }}>
       <Tooltip data-title="Hello" position="right">

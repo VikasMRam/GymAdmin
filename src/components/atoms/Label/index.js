@@ -1,13 +1,12 @@
-import { string, bool } from 'prop-types';
+import { string } from 'prop-types';
 import styled from 'styled-components';
-import { font, palette } from 'styled-theme';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 const Label = styled.label`
   display: block;
-  font-size: ${size('text', 'body')};
+  font-size: ${size('text.caption')};
   color: ${ifProp('invalid', palette('danger', 0), palette(0))};
   margin-bottom: ${size('spacing.small')};
 `;

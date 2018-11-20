@@ -1,16 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import { bool, string, arrayOf, shape, object } from 'prop-types';
 import styled from 'styled-components';
-import { palette, key } from 'styled-theme';
+
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, palette, key } from 'sly/components/themes';
 import { Link } from 'sly/components/atoms';
 
 const StyledNav = styled.nav`
   width: 100%;
   background: ${palette('white', 0)};
-  border-bottom: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   padding: ${size('spacing.large')};
   transform-origin: center -100%;
   transform: ${ifProp('visible', 'scaleY(1)', 'scaleY(0)')};

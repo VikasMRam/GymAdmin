@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { palette } from 'styled-theme';
+
 import Dotdotdot from 'react-dotdotdot';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { Heading, Icon } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
 import NumberFormat from 'react-number-format';
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   font-size: ${size('text.body')};
   box-sizing: border-box;
   min-width: 0;
-  padding: ${size('spacing.regular')};  
+  padding: ${size('spacing.regular')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: 0;
   }
@@ -65,7 +65,7 @@ const Description = styled.div`
 
 const IconTextWrapper = styled.div`
   display: flex;
-  color: ${palette('grayscale', 1)};
+  color: ${palette('slate', 'filler')};
   margin-bottom: ${size('spacing.small')};
 `;
 
@@ -143,13 +143,13 @@ export default class SimilarCommunityInfo extends Component {
           {this.renderReviews(community)}
         </RatingWrapper>
         <IconTextWrapper>
-          <StyledIcon icon="place" fill={palette('grayscale', 3)()} />
+          <StyledIcon icon="place" fill="slate" />
           <ClampedLine>
             {addressString}
           </ClampedLine>
         </IconTextWrapper>
         <IconTextWrapper>
-          <StyledIcon icon="room" fill={palette('grayscale', 3)()} />
+          <StyledIcon icon="room" fill="slate" />
           <ClampedLine title={roomTypes.join('.')}>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {roomTypes.map((roomType, i) =>
@@ -157,7 +157,7 @@ export default class SimilarCommunityInfo extends Component {
           </ClampedLine>
         </IconTextWrapper>
         <IconTextWrapper>
-          <StyledIcon icon="hospital" fill={palette('grayscale', 3)()} />
+          <StyledIcon icon="hospital" fill="slate" />
           <ClampedLine title={livingTypes.join('.')}>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {livingTypes.map((livingType, i) =>
@@ -165,7 +165,7 @@ export default class SimilarCommunityInfo extends Component {
           </ClampedLine>
         </IconTextWrapper>
 
-        <Description palette="grayscale">
+        <Description palette="slate">
           <Dotdotdot clamp={2}>
             {description}
           </Dotdotdot>

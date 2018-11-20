@@ -2,9 +2,9 @@ import React from 'react';
 import { func, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
-import { size } from 'sly/components/themes';
+
+import { size, palette } from 'sly/components/themes';
 import { Experiment, Variant } from 'sly/services/experiments';
 
 import ReduxField from 'sly/components/organisms/ReduxField';
@@ -21,14 +21,14 @@ const StyledButton = styled(Button)`
 const StyledForm = styled.form`
   width: 100%;
   padding: ${size('spacing.xLarge')};
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const AgentSectionWrapper = styled.div`
   width: 100%;
   padding: ${size('spacing.xLarge')};
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 `;
 
 const AgentSectionText = styled.div`
@@ -37,7 +37,7 @@ const AgentSectionText = styled.div`
 `;
 
 const AgentTileWrapper = styled.div`
-  border: ${size('border.regular')} solid ${palette('grayscale', 2)};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.tiny')};
 `;
 

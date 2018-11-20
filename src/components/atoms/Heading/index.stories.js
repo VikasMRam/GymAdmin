@@ -11,11 +11,6 @@ storiesOf('Atoms|Heading', module)
       Id tempor duis non esse commodo fugiat excepteur nostrud.
     </Heading>
   ))
-  .add('palette reverse', () => (
-    <Heading palette="primary" reverse>
-      Id tempor duis non esse commodo fugiat excepteur nostrud.
-    </Heading>
-  ))
   .add('level hero', () => (
     <Heading level="hero">
       Id tempor duis non esse commodo fugiat excepteur nostrud.

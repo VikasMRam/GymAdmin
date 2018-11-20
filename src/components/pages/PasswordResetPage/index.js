@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
@@ -9,7 +9,7 @@ import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
 import HeaderController from 'sly/controllers/HeaderController';
-import BasePageTemplate from 'sly/components/templates/BasePageTemplate';
+import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import Footer from 'sly/components/organisms/Footer';
 
 import { Heading, Block, Button } from 'sly/components/atoms';
@@ -35,26 +35,27 @@ const StyledButton = styled(Button)`
 StyledButton.displayName = 'StyledButton';
 
 const PasswordResetPage = ({ handleSubmit, submitting, error }) => (
-  <BasePageTemplate
-    header={<HeaderController />}
-    footer={<Footer />}
-  >
-    <Form onSubmit={handleSubmit}>
-      <Heading>Reset your password</Heading>
-      <StyledBlock>Enter a new password</StyledBlock>
-      <Field
-        name="password"
-        label="Password"
-        type="password"
-        placeholder="Password"
-        component={ReduxField}
-      />
-      <StyledButton error={error} type="submit" kind="jumbo" disabled={submitting}>
-        Change my password
-      </StyledButton>
-      {error && <Block palette="danger">{error}</Block>}
-    </Form>
-  </BasePageTemplate>
+  <Fragment>
+    <TemplateHeader><HeaderController /></TemplateHeader>
+    <TemplateContent>
+      <Form onSubmit={handleSubmit}>
+        <Heading>Reset your password</Heading>
+        <StyledBlock>Enter a new password</StyledBlock>
+        <Field
+          name="password"
+          label="Password"
+          type="password"
+          placeholder="Password"
+          component={ReduxField}
+        />
+        <StyledButton error={error} type="submit" kind="jumbo" disabled={submitting}>
+          Change my password
+        </StyledButton>
+        {error && <Block palette="danger">{error}</Block>}
+      </Form>
+    </TemplateContent>
+    <Footer />
+  </Fragment>
 );
 
 PasswordResetPage.propTypes = {
