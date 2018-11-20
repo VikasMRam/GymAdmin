@@ -32,7 +32,6 @@ const StyledRatingIcon = styled(Icon)`
 
 const Rate = styled(Block)`
   margin-right: ${size('spacing.large')};
-  font-weight: 500;
   margin-bottom: 0;
 `;
 Rate.displayName = 'Rate';
@@ -51,7 +50,6 @@ Rating.displayName = 'Rating';
 
 const Name = styled(Block)`
   margin-bottom: ${size('spacing.large')};
-  font-weight: 500;
 `;
 
 const LastIconTextWrapper = IconTextWrapper.extend`
@@ -70,13 +68,13 @@ export default class CommunityInfo extends Component {
   };
 
   renderEstimatedRate = startingRate => startingRate ? (
-    <Rate palette={this.props.palette}>
+    <Rate palette={this.props.palette} weight="medium">
       Estimated <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" /> per month
     </Rate>
   ) : null;
 
   renderProviderRate = startingRate => startingRate ? (
-    <Rate palette={this.props.palette}>
+    <Rate palette={this.props.palette} weight="medium">
       <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" /> per month
     </Rate>
   ) : null;
@@ -144,7 +142,7 @@ export default class CommunityInfo extends Component {
 
     return (
       <Wrapper {...props}>
-        <Name size="subtitle" palette={paletteProp}>{name}</Name>
+        <Name size="subtitle" palette={paletteProp} weight="medium">{name}</Name>
         {floorPlanComponent}
         {livingTypeComponent}
         <RatingWrapper>

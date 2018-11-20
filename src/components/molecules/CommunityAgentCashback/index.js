@@ -21,7 +21,6 @@ const TextSection = styled.div`
 `;
 
 const StyledHeading = styled(Block)`
-  font-weight: 500;
   margin-bottom: ${size('spacing.regular')};
 `;
 
@@ -30,7 +29,7 @@ const CommunityAgentCashback = () => (
     <LoyaltyIcon icon="baseline-loyalty" size="large" />
     <TextSection>
       <StyledHeading size="body">Get $500 cash back</StyledHeading>
-      <Block size="caption">Enjoy cash back when you move in with help from a Seniorly Agent.</Block>
+      <Block size="caption" weight="medium">Enjoy cash back when you move in with help from a Seniorly Agent.</Block>
     </TextSection>
   </Wrapper>
 );

@@ -287,6 +287,7 @@ theme.sizes = {
   },
 
   lineHeight: {
+    tiny    : '1.167',
     caption : '1.4',
     body    : '1.5',
     subtitle: '1.3',
