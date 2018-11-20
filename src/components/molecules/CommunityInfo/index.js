@@ -26,7 +26,7 @@ const StyledIcon = styled(Icon)`
 `;
 
 const StyledRatingIcon = styled(Icon)`
-  margin-right: ${size('spacing.tiny')};
+  margin-right: ${size('spacing.small')};
 `;
 
 const Rate = styled(Block)`
@@ -49,7 +49,7 @@ const Rating = styled(Block)`
 Rating.displayName = 'Rating';
 
 const Name = styled(Block)`
-  margin-bottom: ${size('spacing.small')};
+  margin-bottom: ${size('spacing.large')};
   font-weight: 500;
 `;
 

@@ -90,6 +90,7 @@ export default class CommunityDetailPage extends Component {
     searchParams: object,
     setQueryParams: func,
     notifyInfo: func,
+    onSATClick: func,
   };
 
   componentDidMount() {
@@ -168,6 +169,7 @@ export default class CommunityDetailPage extends Component {
       searchParams,
       setQueryParams,
       notifyInfo,
+      onSATClick,
     } = this.props;
 
     const {
@@ -277,9 +279,6 @@ export default class CommunityDetailPage extends Component {
       { label: 'Pricing & Floor Plans', ref: this.pricingAndFloorPlansRef },
       { label: 'Reviews', ref: this.communityReviewsRef },
     ];
-    const onSATClick = () => {
-      console.log("onSATClick");
-    };
     // 24px or 84px (when sticky header is visible) from top TODO: figure out how to get this from styled theme sizes
     const columnContent = (
       <Sticky
