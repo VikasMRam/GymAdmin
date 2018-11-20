@@ -102,7 +102,7 @@ const NearMePage = ({ onLocationSearch,
             Find The Best Assisted Living Near Me
           </StyledHeading>
           <StyledLabel palette="white">
-            Use our free search for assisted living
+            Use our free search to find assisted living nearby
           </StyledLabel>
           <SearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
         </SearchBoxWrapper>
@@ -124,7 +124,6 @@ const NearMePage = ({ onLocationSearch,
   const onParamsRemove = () => {};
 
   const topRef = React.createRef();
-  const resultsRef = React.createRef();
   const alRef = React.createRef();
   const staffRef = React.createRef();
   const licenseRef = React.createRef();
@@ -136,7 +135,6 @@ const NearMePage = ({ onLocationSearch,
 
   const sectionIdMap = {
     top: 'top',
-    results: 'results',
     al: 'what-is-assisted-living',
     staff: 'medical-staff',
     license: 'license',
@@ -151,6 +149,78 @@ const NearMePage = ({ onLocationSearch,
   const SEOContentAL = () => {
     return (
       <Fragment>
+        <Paragraph innerRef={topRef}/>
+        <StyledHeading level={'title'} size={'title'} >
+          Table of Contents
+        </StyledHeading>
+        <StyledArticle>
+          <ul>
+            <li>
+              <Link
+                href={`#${sectionIdMap.al}`}
+                onClick={e => handleAnchor(e, alRef)}
+              >
+                What is Assisted Living?
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`#${sectionIdMap.staff}`}
+                onClick={e => handleAnchor(e, staffRef)}
+              >
+                What Type of Medical Staff is Present?
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`#${sectionIdMap.license}`}
+                onClick={e => handleAnchor(e, licenseRef)}
+              >
+                Licensing and Inspection
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`#${sectionIdMap.social}`}
+                onClick={e => handleAnchor(e, socialRef)}
+              >
+                The Social and Community Aspects
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`#${sectionIdMap.cost}`}
+                onClick={e => handleAnchor(e, costRef)}
+              >
+                Cost and Payment Options
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`#${sectionIdMap.alvsnh}`}
+                onClick={e => handleAnchor(e, alvsnhRef)}
+              >
+                Assisted Living vs. Nursing Homes
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`#${sectionIdMap.alvsil}`}
+                onClick={e => handleAnchor(e, alvsilRef)}
+              >
+                Assisted Living vs. Independent Living
+              </Link>
+            </li>
+            <li>
+              <Link
+                href={`#${sectionIdMap.next}`}
+                onClick={e => handleAnchor(e, nextRef)}
+              >
+                Next Steps
+              </Link>
+            </li>
+          </ul>
+        </StyledArticle>
         <StyledArticle>
           <Paragraph innerRef={alRef}/>
           <StyledHeading level={'title'} size={'title'} >
@@ -681,86 +751,6 @@ const NearMePage = ({ onLocationSearch,
   const TopContent = () => {
     return (
       <Fragment>
-        <Paragraph innerRef={topRef}/>
-        <StyledHeading level={'title'} size={'title'} >
-          Table of Contents
-        </StyledHeading>
-        <StyledArticle>
-          <ul>
-            <li>
-              <Link
-                href={`#${sectionIdMap.results}`}
-                onClick={e => handleAnchor(e, resultsRef)}
-              >
-                {tocLabel} near {city}
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.al}`}
-                onClick={e => handleAnchor(e, alRef)}
-              >
-                What is Assisted Living?
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.staff}`}
-                onClick={e => handleAnchor(e, staffRef)}
-              >
-                What Type of Medical Staff is Present?
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.license}`}
-                onClick={e => handleAnchor(e, licenseRef)}
-              >
-                Licensing and Inspection
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.social}`}
-                onClick={e => handleAnchor(e, socialRef)}
-              >
-                The Social and Community Aspects
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.cost}`}
-                onClick={e => handleAnchor(e, costRef)}
-              >
-                Cost and Payment Options
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.alvsnh}`}
-                onClick={e => handleAnchor(e, alvsnhRef)}
-              >
-                Assisted Living vs. Nursing Homes
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.alvsil}`}
-                onClick={e => handleAnchor(e, alvsilRef)}
-              >
-                Assisted Living vs. Independent Living
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`#${sectionIdMap.next}`}
-                onClick={e => handleAnchor(e, nextRef)}
-              >
-                Next Steps
-              </Link>
-            </li>
-          </ul>
-        </StyledArticle>
         <StyledHeading level={'title'} size={'title'}>
           {listSize} {tocLabel} near {city}
         </StyledHeading>
@@ -770,7 +760,6 @@ const NearMePage = ({ onLocationSearch,
   const ListContent = ()=> {
     return (
       <Fragment>
-        <Paragraph innerRef={resultsRef}/>
         <CommunitySearchList
           communityList={communityList}
           searchParams={searchParams}
