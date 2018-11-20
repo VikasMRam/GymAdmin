@@ -309,7 +309,7 @@ describe('ConciergeController', () => {
       const wrapper = wrap({
         communitySlug: community.id,
         submit,
-        concierge: {}
+        concierge: {},
       });
       const instance = wrapper.instance();
       instance.next = jest.fn();

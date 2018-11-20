@@ -29,7 +29,6 @@ steps[MODAL_TYPE_RESET_PASSWORD] = ResetPasswordFormContainer;
 class AuthContainer extends Component {
   static propTypes = {
     authenticated: object,
-    user: object,
     authenticateCancel: func,
     authenticateSuccess: func,
     fetchUser: func,
@@ -56,9 +55,7 @@ class AuthContainer extends Component {
 
   handleLoginSuccess = () => {
     const { authenticateSuccess, fetchUser } = this.props;
-    fetchUser().then((user) => {
-      authenticateSuccess(user);
-    });
+    return fetchUser().then(authenticateSuccess);
   };
 
   handleResetPasswordSuccess = (json) => {
@@ -118,7 +115,6 @@ class AuthContainer extends Component {
 
 const mapStateToProps = state => ({
   authenticated: state.authenticated,
-  user: getDetail(state, 'user', 'me'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -127,4 +123,4 @@ const mapDispatchToProps = dispatch => ({
   authenticateSuccess: user => dispatch(authenticateSuccess(user)),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthContainer));
+export default connect(mapStateToProps, mapDispatchToProps)(AuthContainer);
