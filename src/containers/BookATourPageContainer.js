@@ -1,12 +1,13 @@
 import React from 'react';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 import { connectController } from 'sly/controllers';
 import withServerState from 'sly/store/withServerState';
 import { getDetail } from 'sly/store/selectors';
-import { resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
+import { BOOK_A_TOUR } from 'sly/services/api/actions';
 
 import BookATourPage from 'sly/components/pages/BookATourPage';
 
@@ -31,14 +32,6 @@ const handleStepChange = (step) => {
   SlyEvent.getInstance().sendEvent(event);
 };
 
-const handleComplete = (data) => {
-  alert(`completed: ${JSON.stringify(data)}`);
-  const event = {
-    action: 'tour-booked', category: 'BAT',
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
 const handleContactByTextMsgChange = (e) => {
   const event = {
     action: 'contactByTextMsg-changed', category: 'BAT', label: e.target.checked,
@@ -46,10 +39,32 @@ const handleContactByTextMsgChange = (e) => {
   SlyEvent.getInstance().sendEvent(event);
 };
 
-const BookATourPageContainer = ({ community, user }) => {
+const BookATourPageContainer = ({
+  community, user, postUserAction, history,
+}) => {
   if (!community) {
     return null;
   }
+  const { id, url } = community;
+
+  const handleComplete = (data) => {
+    const payload = {
+      action: BOOK_A_TOUR,
+      value: {
+        ...data,
+        slug: id,
+      },
+    };
+
+    postUserAction(payload)
+      .then(() => {
+        const event = {
+          action: 'tour-booked', category: 'BAT',
+        };
+        SlyEvent.getInstance().sendEvent(event);
+        history.push(url);
+      });
+  };
 
   return (
     <BookATourPage
@@ -67,6 +82,8 @@ const BookATourPageContainer = ({ community, user }) => {
 BookATourPageContainer.propTypes = {
   community: communityPropType,
   user: object,
+  postUserAction: func.isRequired,
+  history: object.isRequired,
 };
 
 const getCommunitySlug = match => match.params.communitySlug;
@@ -75,6 +92,11 @@ const mapStateToProps = (state, { match }) => {
   return {
     user: getDetail(state, 'user', 'me'),
     community: getDetail(state, 'community', communitySlug),
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
   };
 };
 
@@ -105,4 +127,7 @@ const handleError = (err) => {
 export default withServerState({
   fetchData,
   handleError,
-})(connectController(mapStateToProps)(BookATourPageContainer));
+})(connectController(
+  mapStateToProps,
+  mapDispatchToProps
+)(BookATourPageContainer));

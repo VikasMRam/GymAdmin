@@ -67,7 +67,7 @@ const CommunitySATContactForm = ({
         component={ReduxField}
       />}
       {user && <Field
-        name="note"
+        name="notes"
         label="Add a note"
         type="textarea"
         placeholder="Anything you’d like your Advisor to know about this tour or any questions"
