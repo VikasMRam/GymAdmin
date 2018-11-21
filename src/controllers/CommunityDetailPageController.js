@@ -331,7 +331,8 @@ class CommunityDetailPageController extends Component {
     if (pathname !== url) {
       history.push(url);
     }
-    const isAlreadyTourScheduled = userAction.toursBooked && userAction.toursBooked.find(b => b.slug === id);
+    const isAlreadyTourScheduled = userAction && userAction.toursBooked &&
+      !!userAction.toursBooked.find(b => b.slug === id);
 
     return (
       <CommunityDetailPage
