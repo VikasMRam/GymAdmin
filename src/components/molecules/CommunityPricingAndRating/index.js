@@ -33,22 +33,22 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
   return (
     <Wrapper>
       {price &&
-      <StyledCommunityPricingWrapper>
-        <DescriptionBlock size="caption">{priceDescription}</DescriptionBlock>
-        <Block size="title">
-          ${price}
-          <MoSpan size="caption">/mo</MoSpan>
-        </Block>
-      </StyledCommunityPricingWrapper>
+        <StyledCommunityPricingWrapper>
+          <DescriptionBlock size="caption">{priceDescription}</DescriptionBlock>
+          <Block size="title">
+            ${price}
+            <MoSpan size="caption">/mo</MoSpan>
+          </Block>
+        </StyledCommunityPricingWrapper>
       }
-      {ratingFixed &&
-      <div>
-        <DescriptionBlock size="caption">Average Rating</DescriptionBlock>
-        <Block size="title">
-          <StyledIcon icon="star" palette="primary" />
-          {ratingFixed}
-        </Block>
-      </div>
+      {ratingFixed > 0 &&
+        <div>
+          <DescriptionBlock size="caption">Average Rating</DescriptionBlock>
+          <Block size="title">
+            <StyledIcon icon="star" palette="primary" />
+            {ratingFixed}
+          </Block>
+        </div>
       }
     </Wrapper>
   );

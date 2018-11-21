@@ -23,6 +23,7 @@ class CommunityDetailPageController extends Component {
   static propTypes = {
     set: func,
     community: object,
+    userAction: object,
     userSaveOfCommunity: object,
     errorCode: number,
     history: object,
@@ -296,6 +297,7 @@ class CommunityDetailPageController extends Component {
       isStickyHeaderVisible,
       searchParams,
       setQueryParams,
+      userAction,
     } = this.props;
 
     if (errorCode) {
@@ -325,10 +327,11 @@ class CommunityDetailPageController extends Component {
     // If request url does not match resource url from api, perform 302 redirect
     const { location } = history;
     const { pathname } = location;
-    const { url } = community;
+    const { url, id } = community;
     if (pathname !== url) {
       history.push(url);
     }
+    const isAlreadyTourScheduled = userAction.toursBooked && userAction.toursBooked.find(b => b.slug === id);
 
     return (
       <CommunityDetailPage
@@ -358,6 +361,7 @@ class CommunityDetailPageController extends Component {
         onParamsRemove={this.handleParamsRemove}
         onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
         onSATClick={this.handleSATClick}
+        isAlreadyTourScheduled={isAlreadyTourScheduled}
       />
     );
   }
@@ -391,6 +395,7 @@ const mapStateToProps = (state, {
   return {
     user: getDetail(state, 'user', 'me'),
     community: getDetail(state, 'community', communitySlug),
+    userAction: getDetail(state, 'userAction'),
     userSaveOfCommunity,
     mediaGallerySlideIndex,
     isMediaGalleryFullscreenActive,

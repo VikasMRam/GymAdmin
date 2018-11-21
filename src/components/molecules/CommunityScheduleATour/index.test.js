@@ -14,6 +14,11 @@ describe('CommunityScheduleATour', () => {
     expect(wrapper.contains('test')).toBe(false);
   });
 
+  it('renders with isAlreadyTourScheduled', () => {
+    const wrapper = wrap({ isAlreadyTourScheduled: true });
+    expect(wrapper.find('SATButton').contains('Tour requested')).toBe(true);
+  });
+
   it('does handles onSATClick', () => {
     const wrapper = wrap();
     const SATButton = wrapper.find('SATButton');

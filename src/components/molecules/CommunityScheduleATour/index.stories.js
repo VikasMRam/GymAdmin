@@ -8,4 +8,7 @@ const onSATClick = () => alert('onSATClick');
 storiesOf('Molecules|CommunityScheduleATour', module)
   .add('default', () => (
     <CommunityScheduleATour onSATClick={onSATClick} />
+  ))
+  .add('with isAlreadyTourScheduled', () => (
+    <CommunityScheduleATour isAlreadyTourScheduled onSATClick={onSATClick} />
   ));
