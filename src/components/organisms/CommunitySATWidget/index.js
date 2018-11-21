@@ -3,17 +3,18 @@ import styled from 'styled-components';
 import { number, func, bool } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
+import { Box } from 'sly/components/atoms';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
 import CommunityScheduleATour from 'sly/components/molecules/CommunityScheduleATour';
 import CommunityAgentCashback from 'sly/components/molecules/CommunityAgentCashback';
 
-const Wrapper = styled.div`
+const Wrapper = styled(Box)`
   width: ${size('layout.col4')};
   display: flex;
   flex-direction: column;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.small')};
   margin-bottom: ${size('spacing.xLarge')};
+  padding: 0;
 `;
 
 const PricingAndRatingWrapper = styled.div`
