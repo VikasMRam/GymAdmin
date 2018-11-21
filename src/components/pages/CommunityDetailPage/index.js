@@ -576,7 +576,9 @@ export default class CommunityDetailPage extends Component {
           isOpen={isAskAgentQuestionModalVisible}
           onClose={onToggleAskAgentQuestionModal}
         >
-          <CommunityAskQuestionAgentFormContainer />
+          <CommunityAskQuestionAgentFormContainer
+            notifyInfo={notifyInfo}
+          />
         </Modal>
       </Fragment>
     );

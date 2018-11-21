@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import { reduxForm, SubmissionError } from 'redux-form';
 import { func } from 'prop-types';
+import SlyEvent from 'sly/services/helpers/events';
+import { ASK_QUESTION } from 'sly/services/api/actions';
 
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 import {
@@ -23,10 +25,32 @@ const ReduxForm = reduxForm({
 class CommunityAskQuestionAgentFormContainer extends Component {
   static propTypes = {
     postUserAction: func,
+    notifyInfo: func,
   };
 
-  handleOnSubmit = () => {
-    // todo: create user action
+  handleOnSubmit = (data) => {
+    const { postUserAction, notifyInfo } = this.prop;
+
+    const value = {
+      question: data.question,
+    };
+
+    const body = {
+      action: ASK_QUESTION,
+      value,
+    };
+
+    return postUserAction(body)
+      .then(() => {
+        const event = {
+          action: 'ask-question', category: 'BAT',
+        };
+        SlyEvent.getInstance().sendEvent(event);
+        notifyInfo('Question sent successfully.');
+      })
+      .catch(() => {
+        throw new SubmissionError({ _error: 'Failed to send question. Please try again.' });
+      });
   }
 
   render() {
