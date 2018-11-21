@@ -37,7 +37,7 @@ const CheckboxField = styled(Field)`
 `;
 
 const CommunitySATContactForm = ({
-  error, user, onAdvisorHelpClick, onContactByTextMsgChange,
+  error, user, onAdvisorHelpClick, onContactByTextMsgChange, handleSubmit,
 }) => {
   let heading = 'How can we contact you about this community tour?';
   if (user) {
@@ -46,7 +46,7 @@ const CommunitySATContactForm = ({
   const subheading = 'A local senior living advisor will help get you detailed pricing with this community. ';
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
       <SubheadingWrapper>
         <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can an advisor help?</Link></SubHeading>
@@ -91,6 +91,7 @@ CommunitySATContactForm.propTypes = {
   error: string,
   onAdvisorHelpClick: func.isRequired,
   onContactByTextMsgChange: func,
+  handleSubmit: func,
 };
 
 export default CommunitySATContactForm;

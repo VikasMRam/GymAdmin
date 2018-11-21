@@ -5,7 +5,7 @@ import { isValid, isSubmitting, reset } from 'redux-form';
 import { connectController } from 'sly/controllers';
 import { selectFormData } from 'sly/services/helpers/forms';
 
-const formName = 'Wizard';
+const formName = 'SATWizardForm';
 
 class WizardController extends Component {
   static propTypes = {
@@ -80,7 +80,7 @@ class WizardController extends Component {
         progressPath,
       });
     }
-  }
+  };
 
   handleSubmit = () => {
     const {
@@ -97,7 +97,7 @@ class WizardController extends Component {
       onStepChange(currentStep + 1, data);
     }
     return this.next();
-  }
+  };
 
   render() {
     const { formOptions } = this;
@@ -121,6 +121,7 @@ class WizardController extends Component {
 }
 
 const mapStateToProps = (state, { controller, ...ownProps }) => {
+  isValid(formName)(state);
   return {
     progressPath: controller.progressPath || [1],
     currentStep: controller.currentStep || ownProps.currentStep || 1,

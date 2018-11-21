@@ -6,7 +6,6 @@ export default class WizardSteps extends Component {
     currentStep: number.isRequired,
     children: arrayOf(node).isRequired,
     onSubmit: func,
-    formOptions: object,
     setStepsSize: func,
   };
 
@@ -23,7 +22,7 @@ export default class WizardSteps extends Component {
   render() {
     const { children } = this;
     const {
-      currentStep, onSubmit, formOptions,
+      currentStep, onSubmit,
     } = this.props;
     let newChild = children;
 
@@ -33,7 +32,6 @@ export default class WizardSteps extends Component {
         newChild =
           React.cloneElement(currentStepComponent, {
             onSubmit: currentStepComponent.props.onSubmit || onSubmit,
-            formOptions,
           });
       }
     }

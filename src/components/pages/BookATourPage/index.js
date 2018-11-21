@@ -4,7 +4,6 @@ import { object, func, bool } from 'prop-types';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
-import { required, usPhone } from 'sly/services/validation';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 
 import {
@@ -21,8 +20,8 @@ import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
 import Modal from 'sly/components/molecules/Modal';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
-import CommunitySATContactForm from 'sly/components/organisms/CommunitySATContactForm';
-import CommunitySATDateForm from 'sly/components/organisms/CommunitySATDateForm';
+import CommunitySATDateFormContainer from 'sly/containers/CommunitySATDateFormContainer';
+import CommunitySATContactFormContainer from 'sly/containers/CommunitySATContactFormContainer';
 
 const Header = makeHeader(HeaderController);
 
@@ -89,16 +88,14 @@ const BookATourPage = ({
                   <Body>
                     <WizardSteps {...props}>
                       <WizardStep
-                        component={CommunitySATDateForm}
+                        component={CommunitySATDateFormContainer}
                         name="Date"
-                        validations={{ scheduledDate: [required], scheduledTime: [required], medicaid: [required] }}
                         onDateChange={onDateChange}
                         onTimeChange={onTimeChange}
                       />
                       <WizardStep
-                        component={CommunitySATContactForm}
+                        component={CommunitySATContactFormContainer}
                         name="Contact"
-                        validations={{ name: [required], phone: [required, usPhone] }}
                         onContactByTextMsgChange={onContactByTextMsgChange}
                         onAdvisorHelpClick={toggleAdvisorHelp}
                         user={user}

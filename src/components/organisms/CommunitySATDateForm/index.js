@@ -49,13 +49,13 @@ const StyledIcon = styled(Icon)`
 `;
 
 const CommunitySATDateForm = ({
-  error, onDateChange, onTimeChange,
+  error, onDateChange, onTimeChange, handleSubmit,
 }) => {
   const from = moment();
   const to = moment().add(8, 'days');
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <HeadingSection level="subtitle" size="subtitle">Schedule a Tour</HeadingSection>
       <StyledBlock size="caption">What day did you want to tour?</StyledBlock>
       <StyledField
@@ -93,6 +93,7 @@ CommunitySATDateForm.propTypes = {
   error: string,
   onDateChange: func,
   onTimeChange: func,
+  handleSubmit: func,
 };
 
 export default CommunitySATDateForm;
