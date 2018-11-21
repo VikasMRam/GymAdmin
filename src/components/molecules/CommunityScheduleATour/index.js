@@ -56,7 +56,7 @@ const CommunityScheduleATour = ({ onSATClick, isAlreadyTourScheduled }) => {
 };
 
 CommunityScheduleATour.propTypes = {
-  onSATClick: func.isRequired,
+  onSATClick: func,
   isAlreadyTourScheduled: bool,
 };
 
