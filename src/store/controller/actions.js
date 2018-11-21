@@ -10,3 +10,9 @@ export const unset = ({ key, controller }) => ({
   payload: { key, controller },
 });
 
+export const RESET = 'controller/RESET';
+export const reset = ({ controller }) => ({
+  type: RESET,
+  payload: { controller },
+});
+

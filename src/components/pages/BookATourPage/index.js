@@ -80,7 +80,7 @@ const BookATourPage = ({
             <Modal closeable isOpen={isAdvisorHelpVisible} onClose={toggleAdvisorHelp}>
               <AdvisorHelpPopup onButtonClick={toggleAdvisorHelp} />
             </Modal>
-            <WizardController onComplete={() => onComplete().then(() => toggleConfirmationModal())} onStepChange={onStepChange}>
+            <WizardController onComplete={data => onComplete(data).then(() => toggleConfirmationModal())} onStepChange={onStepChange}>
               {({
                 data, onSubmit, isFinalStep, submitEnabled, ...props
               }) => (
