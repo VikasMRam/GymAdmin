@@ -91,7 +91,7 @@ const BookATourPage = ({
                       <WizardStep
                         component={CommunitySATDateForm}
                         name="Date"
-                        validations={{ date: [required], time: [required], medicaid: [required] }}
+                        validations={{ scheduledDate: [required], scheduledTime: [required], medicaid: [required] }}
                         onDateChange={onDateChange}
                         onTimeChange={onTimeChange}
                       />
