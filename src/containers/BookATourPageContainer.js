@@ -47,7 +47,7 @@ const BookATourPageContainer = ({
   }
   const { id, url } = community;
 
-  const handleComplete = (data) => {
+  const handleComplete = (data, toggleConfirmationModal) => {
     const value = {
       ...data,
       slug: id,
@@ -72,6 +72,7 @@ const BookATourPageContainer = ({
         };
         SlyEvent.getInstance().sendEvent(event);
         history.push(url);
+        toggleConfirmationModal();
       });
   };
 

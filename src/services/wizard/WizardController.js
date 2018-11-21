@@ -1,11 +1,9 @@
 import { Component } from 'react';
-import { arrayOf, any, func, number, object, bool } from 'prop-types';
+import { arrayOf, any, func, number, object, bool, string } from 'prop-types';
 import { isValid, isSubmitting, reset } from 'redux-form';
 
 import { connectController } from 'sly/controllers';
 import { selectFormData } from 'sly/services/helpers/forms';
-
-const formName = 'SATWizardForm';
 
 class WizardController extends Component {
   static propTypes = {
@@ -21,10 +19,16 @@ class WizardController extends Component {
     submitEnabled: bool,
     resetForm: func,
     onStepChange: func,
+    formName: string.isRequired,
+  };
+
+  static defaultProps = {
+    formName: 'WizardForm',
   };
 
   constructor(props) {
     super(props);
+    const { formName } = props;
 
     this.formOptions = {
       form: formName,
@@ -123,18 +127,18 @@ class WizardController extends Component {
 }
 
 const mapStateToProps = (state, { controller, ...ownProps }) => {
-  isValid(formName)(state);
+  isValid(ownProps.formName)(state);
   return {
     progressPath: controller.progressPath || [1],
     currentStep: controller.currentStep || ownProps.currentStep || 1,
     stepSize: controller.stepSize || 0,
-    data: selectFormData(state, formName, {}),
-    submitEnabled: isValid(formName)(state) && !isSubmitting(formName)(state),
+    data: selectFormData(state, ownProps.formName, {}),
+    submitEnabled: isValid(ownProps.formName)(state) && !isSubmitting(ownProps.formName)(state),
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  resetForm: () => dispatch(reset(formName)),
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  resetForm: () => dispatch(reset(ownProps.formName)),
 });
 
 export default connectController(mapStateToProps, mapDispatchToProps)(WizardController);
