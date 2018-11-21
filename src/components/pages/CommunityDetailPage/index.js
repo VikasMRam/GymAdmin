@@ -91,6 +91,7 @@ export default class CommunityDetailPage extends Component {
     setQueryParams: func,
     notifyInfo: func,
     onSATClick: func,
+    isAlreadyTourScheduled: bool,
   };
 
   componentDidMount() {
@@ -170,6 +171,7 @@ export default class CommunityDetailPage extends Component {
       setQueryParams,
       notifyInfo,
       onSATClick,
+      isAlreadyTourScheduled,
     } = this.props;
 
     const {
@@ -280,7 +282,7 @@ export default class CommunityDetailPage extends Component {
         top={isStickyHeaderVisible ? 84 : 24}
         bottomBoundary="#sticky-sidebar-boundary"
       >
-        <CommunitySATWidget price={startingRate} rating={reviewsValue} onSATClick={onSATClick} />
+        <CommunitySATWidget isAlreadyTourScheduled={isAlreadyTourScheduled} price={startingRate} rating={reviewsValue} onSATClick={onSATClick} />
       </Sticky>
     );
     const bottomContent = (

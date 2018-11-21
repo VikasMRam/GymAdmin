@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { func } from 'prop-types';
+import { func, bool } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import { Heading, Button, Icon, Block } from 'sly/components/atoms/index';
@@ -35,7 +35,7 @@ const ListItemText = styled(Block)`
   color: ${palette('slate', 'accent')};
 `;
 
-const CommunityScheduleATour = ({ onSATClick }) => {
+const CommunityScheduleATour = ({ onSATClick, isAlreadyTourScheduled }) => {
   const list = ['Completely free!', 'No obligation - cancel anytime'];
   const listComponents = list.map(item => (
     <ListItem key={item}>
@@ -46,7 +46,10 @@ const CommunityScheduleATour = ({ onSATClick }) => {
   return (
     <Wrapper>
       <DescriptionHeading size="subtitle">Tour this commmunity for free</DescriptionHeading>
-      <SATButton kind="jumbo" palette="primary" onClick={onSATClick}>Schedule a Tour</SATButton>
+      {!isAlreadyTourScheduled &&
+        <SATButton kind="jumbo" palette="primary" onClick={onSATClick}>Schedule a Tour</SATButton>}
+      {isAlreadyTourScheduled &&
+        <SATButton ghost kind="jumbo" palette="primary" onClick={onSATClick}>Tour requested</SATButton>}
       <Fragment>{listComponents}</Fragment>
     </Wrapper>
   );
@@ -54,6 +57,7 @@ const CommunityScheduleATour = ({ onSATClick }) => {
 
 CommunityScheduleATour.propTypes = {
   onSATClick: func.isRequired,
+  isAlreadyTourScheduled: bool,
 };
 
 export default CommunityScheduleATour;

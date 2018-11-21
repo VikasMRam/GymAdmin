@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { number, func } from 'prop-types';
+import { number, func, bool } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
-import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating/index';
-import CommunityScheduleATour from 'sly/components/molecules/CommunityScheduleATour/index';
-import CommunityAgentCashback from 'sly/components/molecules/CommunityAgentCashback/index';
+import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
+import CommunityScheduleATour from 'sly/components/molecules/CommunityScheduleATour';
+import CommunityAgentCashback from 'sly/components/molecules/CommunityAgentCashback';
 
 const Wrapper = styled.div`
   width: ${size('layout.col4')};
@@ -13,6 +13,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.small')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const PricingAndRatingWrapper = styled.div`
@@ -20,20 +21,25 @@ const PricingAndRatingWrapper = styled.div`
   border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 `;
 
-const CommunitySATWidget = ({ price, rating, onSATClick }) => (
-  <Wrapper>
-    <PricingAndRatingWrapper>
-      <CommunityPricingAndRating price={price} rating={rating} />
-    </PricingAndRatingWrapper>
-    <CommunityScheduleATour onSATClick={onSATClick} />
+const CommunitySATWidget = ({
+  price, rating, onSATClick, isAlreadyTourScheduled,
+}) => (
+  <Fragment>
+    <Wrapper>
+      <PricingAndRatingWrapper>
+        <CommunityPricingAndRating price={price} rating={rating} />
+      </PricingAndRatingWrapper>
+      <CommunityScheduleATour isAlreadyTourScheduled={isAlreadyTourScheduled} onSATClick={onSATClick} />
+    </Wrapper>
     <CommunityAgentCashback />
-  </Wrapper>
+  </Fragment>
 );
 
 CommunitySATWidget.propTypes = {
   price: number,
   rating: number,
   onSATClick: func.isRequired,
+  isAlreadyTourScheduled: bool,
 };
 
 export default CommunitySATWidget;
