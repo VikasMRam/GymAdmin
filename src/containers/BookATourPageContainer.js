@@ -48,12 +48,21 @@ const BookATourPageContainer = ({
   const { id, url } = community;
 
   const handleComplete = (data) => {
+    const value = {
+      ...data,
+      slug: id,
+    };
+    if (user) {
+      if (!value.name && user.name) {
+        value.name = user.name;
+      }
+      if (!value.phone && user.phoneNumber) {
+        value.phone = user.phoneNumber;
+      }
+    }
     const payload = {
       action: BOOK_A_TOUR,
-      value: {
-        ...data,
-        slug: id,
-      },
+      value,
     };
 
     postUserAction(payload)

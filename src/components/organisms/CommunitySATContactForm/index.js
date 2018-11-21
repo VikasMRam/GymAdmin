@@ -52,14 +52,14 @@ const CommunitySATContactForm = ({
         <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can an advisor help?</Link></SubHeading>
         <AgentImage src={assetPath('images/agent-xLarge.png')} alt="Agent" />
       </SubheadingWrapper>
-      {!user && <Field
+      {!(user && user.name) && <Field
         name="name"
         label="Full name"
         type="text"
         placeholder="Full name"
         component={ReduxField}
       />}
-      {!user && <Field
+      {!(user && user.phoneNumber) && <Field
         name="phone"
         label="Phone"
         type="number"
