@@ -9,15 +9,10 @@ import { withPreventDefault } from 'sly/services/helpers/forms';
 
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-const { name, mainImage, similarProperties } = RhodaGoldmanPlaza;
-
-const appointmentText = 'Saturday, October 21, Anytime';
+const { similarProperties } = RhodaGoldmanPlaza;
 
 const defaultProps = {
-  communityName: name,
-  communityImageUrl: mainImage,
   similarCommunities: similarProperties,
-  appointmentText,
   onButtonClick: withPreventDefault(action('Button Clicked')),
 };
 

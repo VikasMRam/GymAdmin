@@ -7,6 +7,7 @@ class BookATourPageController extends Component {
   static propTypes = {
     set: func,
     isAdvisorHelpVisible: bool,
+    isConfirmationModalVisible: bool,
     children: func,
   };
 
@@ -18,18 +19,26 @@ class BookATourPageController extends Component {
     });
   }
 
+  handleToggleConfirmationModal = () => {
+    const { set, isConfirmationModalVisible } = this.props;
+    set({
+      isConfirmationModalVisible: !isConfirmationModalVisible,
+    });
+  }
+
   render() {
-    const { children, isAdvisorHelpVisible } = this.props;
-    const { handleToggleAdvisorHelp } = this;
+    const { children, isAdvisorHelpVisible, isConfirmationModalVisible } = this.props;
+    const { handleToggleAdvisorHelp, handleToggleConfirmationModal } = this;
 
     return children({
-      isAdvisorHelpVisible, toggleAdvisorHelp: handleToggleAdvisorHelp,
+      isAdvisorHelpVisible, toggleAdvisorHelp: handleToggleAdvisorHelp, isConfirmationModalVisible, toggleConfirmationModal: handleToggleConfirmationModal,
     });
   }
 }
 
 const mapStateToProps = (state, { controller = {} }) => ({
   isAdvisorHelpVisible: controller.isAdvisorHelpVisible,
+  isConfirmationModalVisible: controller.isConfirmationModalVisible,
 });
 
 export default connectController(mapStateToProps)(BookATourPageController);

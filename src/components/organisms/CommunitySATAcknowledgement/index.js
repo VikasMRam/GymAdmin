@@ -45,7 +45,7 @@ const StyledButton = styled(Button)`
 const CommunitySATAcknowledgement = ({ onButtonClick }) => (
   <Wrapper>
     <HeadingSection>
-      <StyledIcon icon="circle-tick" size="large" />
+      <StyledIcon icon="circle-tick" size="large" palette="green" />
       <StyledHeading>Tour Request Sent!</StyledHeading>
     </HeadingSection>
     <StyledBlock>Your advisor will check if this community is available at this time. They will get back to you shortly by phone or email.</StyledBlock>
