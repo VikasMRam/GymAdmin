@@ -6,6 +6,7 @@ import NumberFormat from 'react-number-format';
 import { size } from 'sly/components/themes';
 
 import { Image, Block, Icon } from 'sly/components/atoms';
+import { formatRating } from 'sly/services/helpers/rating';
 
 const clamp = css`
   display: block;
@@ -79,7 +80,7 @@ const SimilarCommunityNearbyTile = ({
       {reviewsValue !== 0 &&
       <Block size="caption">
         <StyledIcon icon="star" palette="primary" size="small" />
-        {reviewsValue}
+        {formatRating(reviewsValue)}
       </Block>
       }
     </PriceAndRatingWrapper>

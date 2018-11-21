@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { string, func, array } from 'prop-types';
+import { func, array } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import CommunitySATAcknowledgement from 'sly/components/organisms/CommunitySATAcknowledgement/index';
@@ -66,9 +66,6 @@ const CommunitySATConfirmationPopup = ({
 };
 
 CommunitySATConfirmationPopup.propTypes = {
-  communityName: string.isRequired,
-  communityImageUrl: string.isRequired,
-  appointmentText: string.isRequired,
   onButtonClick: func.isRequired,
   similarCommunities: array.isRequired,
 };
