@@ -8,6 +8,7 @@ import HeaderController from 'sly/controllers/HeaderController';
 
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import Footer from 'sly/components/organisms/Footer';
+import BannerNotification from 'sly/components/molecules/BannerNotification';
 
 const TwoColummnWrapper = styled.div`
   display: flex;
@@ -33,9 +34,13 @@ const CommunityDetailPageTemplate = ({
   children,
   column,
   bottom,
+  bannerNotification,
 }) => (
   <Fragment>
-    <TemplateHeader><HeaderController /></TemplateHeader>
+    <TemplateHeader>
+      <HeaderController />
+      {bannerNotification && <BannerNotification>{bannerNotification}</BannerNotification>}
+    </TemplateHeader>
     <TemplateContent>
       <TwoColummnWrapper>
         <MainWrapper>{children}</MainWrapper>
@@ -51,6 +56,7 @@ CommunityDetailPageTemplate.propTypes = {
   children: any.isRequired,
   column: any.isRequired,
   bottom: any.isRequired,
+  bannerNotification: any,
 };
 
 export default CommunityDetailPageTemplate;

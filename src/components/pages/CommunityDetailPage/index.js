@@ -282,7 +282,13 @@ export default class CommunityDetailPage extends Component {
         top={isStickyHeaderVisible ? 84 : 24}
         bottomBoundary="#sticky-sidebar-boundary"
       >
-        <CommunitySATWidget isAlreadyTourScheduled={isAlreadyTourScheduled} price={startingRate} rating={reviewsValue} onSATClick={onSATClick} />
+        <CommunitySATWidget
+          isAlreadyTourScheduled={isAlreadyTourScheduled}
+          price={startingRate}
+          rating={reviewsValue}
+          // TODO: open message modal after adding components and new user action
+          onSATClick={!isAlreadyTourScheduled ? onSATClick : null}
+        />
       </Sticky>
     );
     const bottomContent = (
@@ -323,6 +329,8 @@ export default class CommunityDetailPage extends Component {
           column={columnContent}
           bottom={bottomContent}
           notifyInfo={notifyInfo}
+          bannerNotification={isAlreadyTourScheduled ?
+            'We have recieved your tour request. Your advisor is checking this community’s availability and will get back to you shortly.' : null}
         >
           {(images.length > 0 || videos.length > 0) &&
             <CommunityMediaGallery

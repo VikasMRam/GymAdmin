@@ -20,6 +20,7 @@ theme.palette = {
   white    : makeColor('#ffffff', ['base']),
   danger   : makeColor('#dc3133', ['base',                     'stroke']),
   warning  : makeColor('#f3c150', ['base',                     'stroke']),
+  green    : makeColor('#4FB75F', ['base']),
 };
 
 if (!isTest) console.table(makeColorTable(theme.palette));
