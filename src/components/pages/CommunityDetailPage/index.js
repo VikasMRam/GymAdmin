@@ -45,6 +45,7 @@ import Thankyou from 'sly/components/molecules/Thankyou/index';
 import CommunitySATWidget from 'sly/components/organisms/CommunitySATWidget';
 import BookATourPageController from 'sly/controllers/BookATourPageController';
 import CommunitySATConfirmationPopup from 'sly/components/organisms/CommunitySATConfirmationPopup/index';
+import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -94,6 +95,8 @@ export default class CommunityDetailPage extends Component {
     notifyInfo: func,
     onSATClick: func,
     isAlreadyTourScheduled: bool,
+    isAskAgentQuestionModalVisible: bool,
+    onToggleAskAgentQuestionModal: func,
   };
 
   componentDidMount() {
@@ -174,6 +177,8 @@ export default class CommunityDetailPage extends Component {
       notifyInfo,
       onSATClick,
       isAlreadyTourScheduled,
+      isAskAgentQuestionModalVisible,
+      onToggleAskAgentQuestionModal,
     } = this.props;
 
     const {
@@ -288,8 +293,7 @@ export default class CommunityDetailPage extends Component {
           isAlreadyTourScheduled={isAlreadyTourScheduled}
           price={startingRate}
           rating={reviewsValue}
-          // TODO: open message modal after adding components and new user action
-          onSATClick={!isAlreadyTourScheduled ? onSATClick : null}
+          onSATClick={!isAlreadyTourScheduled ? onSATClick : onToggleAskAgentQuestionModal}
         />
       </Sticky>
     );
@@ -567,6 +571,13 @@ export default class CommunityDetailPage extends Component {
               );
           }}
         </BookATourPageController>
+        <Modal
+          closeable
+          isOpen={isAskAgentQuestionModalVisible}
+          onClose={onToggleAskAgentQuestionModal}
+        >
+          <CommunityAskQuestionAgentFormContainer />
+        </Modal>
       </Fragment>
     );
   }

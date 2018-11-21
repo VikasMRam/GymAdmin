@@ -68,7 +68,7 @@ const StickyFooter = ({ footerInfo, onFooterClick }) => {
             <FooterName>{name}</FooterName>
           </FooterDetails>
         }
-        <Button kind="jumbo" palette="primary" href={link} onClick={onFooterClick}>{ctaTitle}</Button>
+        <Button kind="jumbo" href={link} onClick={onFooterClick}>{ctaTitle}</Button>
       </FooterWrapper>
     </FullWrapper>
   );

@@ -105,7 +105,7 @@ BookingFormFooter.propTypes = {
 BookingFormFooter.defaultProps = {
   date: datePlaceholder,
   time: timePlaceholder,
-  palette: 'slate',
+  palette: 'primary',
 };
 
 export default BookingFormFooter;

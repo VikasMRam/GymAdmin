@@ -80,7 +80,11 @@ const BookATourPage = ({
             <Modal closeable isOpen={isAdvisorHelpVisible} onClose={toggleAdvisorHelp}>
               <AdvisorHelpPopup onButtonClick={toggleAdvisorHelp} />
             </Modal>
-            <WizardController onComplete={data => onComplete(data).then(() => toggleConfirmationModal())} onStepChange={onStepChange}>
+            <WizardController
+              formName="SATWizardForm"
+              onComplete={data => onComplete(data, toggleConfirmationModal)}
+              onStepChange={onStepChange}
+            >
               {({
                 data, onSubmit, isFinalStep, submitEnabled, ...props
               }) => (
@@ -109,7 +113,6 @@ const BookATourPage = ({
                       onProgressClick={onSubmit}
                       isFinalStep={isFinalStep}
                       isButtonDisabled={!submitEnabled}
-                      palette="primary"
                     />
                   </Controls>
                 </Fragment>

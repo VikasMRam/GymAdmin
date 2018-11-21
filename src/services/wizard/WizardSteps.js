@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { number, node, func, arrayOf, object } from 'prop-types';
+import { number, node, func, arrayOf } from 'prop-types';
 
 export default class WizardSteps extends Component {
   static propTypes = {

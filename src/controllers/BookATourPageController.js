@@ -13,7 +13,6 @@ class BookATourPageController extends Component {
 
   handleToggleAdvisorHelp = () => {
     const { set, isAdvisorHelpVisible } = this.props;
-
     set({
       isAdvisorHelpVisible: !isAdvisorHelpVisible,
     });
@@ -27,11 +26,18 @@ class BookATourPageController extends Component {
   }
 
   render() {
-    const { children, isAdvisorHelpVisible, isConfirmationModalVisible } = this.props;
-    const { handleToggleAdvisorHelp, handleToggleConfirmationModal } = this;
+    const {
+      children, isAdvisorHelpVisible, isConfirmationModalVisible,
+    } = this.props;
+    const {
+      handleToggleAdvisorHelp, handleToggleConfirmationModal,
+    } = this;
 
     return children({
-      isAdvisorHelpVisible, toggleAdvisorHelp: handleToggleAdvisorHelp, isConfirmationModalVisible, toggleConfirmationModal: handleToggleConfirmationModal,
+      isAdvisorHelpVisible,
+      isConfirmationModalVisible,
+      toggleAdvisorHelp: handleToggleAdvisorHelp,
+      toggleConfirmationModal: handleToggleConfirmationModal,
     });
   }
 }

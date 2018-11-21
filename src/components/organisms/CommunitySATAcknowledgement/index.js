@@ -49,7 +49,7 @@ const CommunitySATAcknowledgement = ({ onButtonClick }) => (
       <StyledHeading>Tour Request Sent!</StyledHeading>
     </HeadingSection>
     <StyledBlock>Your advisor will check if this community is available at this time. They will get back to you shortly by phone or email.</StyledBlock>
-    <StyledButton kind="jumbo" palette="primary" onClick={onButtonClick} >View Similar Communities</StyledButton>
+    <StyledButton kind="jumbo" onClick={onButtonClick} >View Similar Communities</StyledButton>
   </Wrapper>
 );
 

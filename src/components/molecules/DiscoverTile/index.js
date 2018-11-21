@@ -65,7 +65,7 @@ const DiscoverTile = ({ content, ...props }) => {
       <ImageWrapper src={assetPath(badgeImageUrl)} />
       <HeadingWrapper>{badgeName}</HeadingWrapper>
       <SubheadingWrapper>{badgeText}</SubheadingWrapper>
-      <Button palette="primary">Learn More</Button>
+      <Button>Learn More</Button>
     </Wrapper>
   );
 };
