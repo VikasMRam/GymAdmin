@@ -38,6 +38,10 @@ const ContentWrapper = styled.div`
   width: 100%;
 `;
 
+const StyledButton = styled(Button)`
+  width: 100%;
+`;
+
 const SaveCommunityForm = ({ mainImage, submitting, handleSubmit }) => (
   <Wrapper>
     {mainImage && <StyledImage src={mainImage} />}
@@ -52,9 +56,9 @@ const SaveCommunityForm = ({ mainImage, submitting, handleSubmit }) => (
           placeholder="What are some things about this community that you like..."
           component={ReduxField}
         />
-        <Button type="submit" kind="jumbo" disabled={submitting}>
+        <StyledButton type="submit" kind="jumbo" disabled={submitting}>
           Confirm
-        </Button>
+        </StyledButton>
       </form>
     </ContentWrapper>
   </Wrapper>

@@ -46,7 +46,6 @@ const CommunitySaved = ({ similarCommunities, onDoneButtonClicked }) => (
     <ButtonsWrapper>
       <StyledDoneButton
         onClick={onDoneButtonClicked}
-        palette="secondary"
         ghost
       >
         Done
