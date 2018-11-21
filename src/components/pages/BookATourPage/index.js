@@ -74,13 +74,13 @@ const BookATourPage = ({
       </Column>
       <BookATourPageController>
         {({
-          isAdvisorHelpVisible, toggleAdvisorHelp,
+          isAdvisorHelpVisible, toggleAdvisorHelp, toggleConfirmationModal,
         }) => (
           <Fragment>
             <Modal closeable isOpen={isAdvisorHelpVisible} onClose={toggleAdvisorHelp}>
               <AdvisorHelpPopup onButtonClick={toggleAdvisorHelp} />
             </Modal>
-            <WizardController onComplete={onComplete} onStepChange={onStepChange}>
+            <WizardController onComplete={() => onComplete().then(() => toggleConfirmationModal())} onStepChange={onStepChange}>
               {({
                 data, onSubmit, isFinalStep, submitEnabled, ...props
               }) => (

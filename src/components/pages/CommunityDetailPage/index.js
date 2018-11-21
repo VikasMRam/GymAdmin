@@ -43,6 +43,8 @@ import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import Thankyou from 'sly/components/molecules/Thankyou/index';
 import CommunitySATWidget from 'sly/components/organisms/CommunitySATWidget';
+import BookATourPageController from 'sly/controllers/BookATourPageController';
+import CommunitySATConfirmationPopup from 'sly/components/organisms/CommunitySATConfirmationPopup/index';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -547,6 +549,24 @@ export default class CommunityDetailPage extends Component {
             )}
           </NotificationController>
         </Modal>
+        <BookATourPageController>
+          {({ isConfirmationModalVisible, toggleConfirmationModal }) => {
+              const props = {
+                similarCommunities: similarProperties,
+                onButtonClick: toggleConfirmationModal,
+              };
+              return (
+                <Modal
+                  onClose={toggleConfirmationModal}
+                  isOpen={isConfirmationModalVisible}
+                  closeable
+                  layout="double"
+                >
+                  <CommunitySATConfirmationPopup {...props} />
+                </Modal>
+              );
+          }}
+        </BookATourPageController>
       </Fragment>
     );
   }

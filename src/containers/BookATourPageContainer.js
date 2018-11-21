@@ -65,7 +65,7 @@ const BookATourPageContainer = ({
       value,
     };
 
-    postUserAction(payload)
+    return postUserAction(payload)
       .then(() => {
         const event = {
           action: 'tour-booked', category: 'BAT',
