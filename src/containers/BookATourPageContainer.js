@@ -8,7 +8,6 @@ import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
 import { BOOK_A_TOUR } from 'sly/services/api/actions';
-import { fetchUser } from 'sly/services/helpers/user';
 
 import BookATourPage from 'sly/components/pages/BookATourPage';
 
@@ -115,7 +114,6 @@ const fetchData = (dispatch, { match }) =>
     dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
       include: 'similar-communities',
     })),
-    fetchUser(dispatch),
   ]);
 
 const handleError = (err) => {

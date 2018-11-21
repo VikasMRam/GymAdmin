@@ -8,15 +8,14 @@ import { connectController } from 'sly/controllers';
 import { getDetail } from 'sly/store/selectors';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
-import { resourceDeleteRequest } from 'sly/store/resource/actions';
-import { ensureAuthenticated } from 'sly/store/actions';
+import { resourceDeleteRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { ensureAuthenticated, entitiesReceive } from 'sly/store/actions';
 
 import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
 import AuthContainer from 'sly/containers/AuthContainer';
 import NotificationController from 'sly/controllers/NotificationController';
 import Notifications from 'sly/components/organisms/Notifications';
 import Header from 'sly/components/organisms/Header';
-import { fetchUser } from 'sly/services/helpers/user';
 
 const defaultHeaderItems = [
   { name: '(855) 866-4515', url: 'tel:+18558664515' },
@@ -163,7 +162,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     ensureAuthenticated: action => dispatch(ensureAuthenticated(action)),
     logoutUser: () => dispatch(resourceDeleteRequest('logout')),
-    fetchUser: () => fetchUser(dispatch),
+    // TODO: FIXME: Temp solution to set the entity and resource of user me to null as the response is not jsonapi
+    fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me'))
+      .catch(() => dispatch(entitiesReceive({ user: { me: null } }))),
   };
 };
 
