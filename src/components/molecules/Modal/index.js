@@ -164,6 +164,7 @@ export default class Modal extends React.Component {
       heading, children, closeable, layout, onClose, transparent, closeButtonPalette,
       noPadding,
     } = this.props;
+
     const iconClose = (
       <IconButton
         icon="close"
@@ -175,25 +176,23 @@ export default class Modal extends React.Component {
     );
 
     return (
-      <div>
-        <StyledReactModal
-          onRequestClose={onClose}
-          layout={layout}
-          transparent={transparent}
-          onClose={onClose}
-          {...this.props}
-        >
-          {(closeable || heading) && (
-            <Heading layout={layout}>
-              {closeable && iconClose}
-              {heading}
-            </Heading>
-          )}
-          <ModalContext layout={layout} transparent={transparent} noPadding={noPadding}>
-            {children}
-          </ModalContext>
-        </StyledReactModal>
-      </div>
+      <StyledReactModal
+        onRequestClose={onClose}
+        layout={layout}
+        transparent={transparent}
+        onClose={onClose}
+        {...this.props}
+      >
+        {(closeable || heading) && (
+          <Heading layout={layout}>
+            {closeable && iconClose}
+            {heading}
+          </Heading>
+        )}
+        <ModalContext layout={layout} transparent={transparent} noPadding={noPadding}>
+          {children}
+        </ModalContext>
+      </StyledReactModal>
     );
   }
 }
