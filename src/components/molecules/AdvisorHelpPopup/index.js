@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { func } from 'prop-types';
 
-import { size } from 'sly/components/themes';
-import { Block, Button, Icon } from 'sly/components/atoms/index';
+import { size, assetPath } from 'sly/components/themes';
+import { Block, Button, Image } from 'sly/components/atoms/index';
 import IconListItem from 'sly/components/molecules/IconListItem/index';
 
 const SubHeading = styled(Block)`
@@ -37,7 +37,7 @@ const TopSection = styled.div`
   }
 `;
 
-const AvatarIcon = styled(Icon)`
+const AvatarIcon = styled(Image)`
   display: none;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -56,7 +56,9 @@ const AdvisorHelpPopup = ({ onButtonClick }) => {
           <SubHeading weight="medium">Here are the top 5 benefits to work with our local senior living advisors:</SubHeading>
           <IconListWrapper>{iconListItemsComponent}</IconListWrapper>
         </div>
-        <AvatarIcon icon="avatar" size="xLarge" />
+        <div>
+          <AvatarIcon src={assetPath('images/agent-xLarge.png')} />
+        </div>
       </TopSection>
       <GotItButton kind="jumbo" palette="primary" onClick={onButtonClick}>Got it</GotItButton>
     </div>
