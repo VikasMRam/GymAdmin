@@ -43,7 +43,7 @@ const CommunitySATContactForm = ({
   if (user) {
     heading = 'Do you have any questions about this tour?';
   }
-  const subheading = 'A local senior living advisor will help get you detailed pricing with this community. ';
+  const subheading = 'A local senior living advisor will help get you detailed pricing with this community.';
 
   return (
     <form onSubmit={handleSubmit}>
@@ -70,7 +70,7 @@ const CommunitySATContactForm = ({
         name="notes"
         label="Add a note"
         type="textarea"
-        placeholder="Anything you’d like your Advisor to know about this tour or any questions"
+        placeholder="Anything you'd like your Advisor to know about this tour or any questions"
         component={ReduxField}
       />}
       {!user && <CheckboxField
