@@ -72,6 +72,10 @@ const LegacyContent = styled.div`
   }
 `;
 
+const ApplyFilterButton = styled(Button)`
+  width: 100%;
+`;
+
 LegacyContent.defaultProps = {
   palette: 'secondary',
 };
@@ -213,9 +217,9 @@ const CommunitySearchPage = ({
           toggleFilter={onToggleModalFilterPanel}
           onParamsRemove={onParamsRemove}
         />
-        <Button kind="jumbo" onClick={onToggleModalFilterPanel}>
+        <ApplyFilterButton kind="jumbo" onClick={onToggleModalFilterPanel}>
           Apply Filters
-        </Button>
+        </ApplyFilterButton>
       </Modal>
       <CommunitySearchPageTemplate
         column={columnContent}

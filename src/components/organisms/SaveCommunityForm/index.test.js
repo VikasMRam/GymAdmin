@@ -2,8 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import { Button } from 'sly/components/atoms/index';
-
 import SaveCommunityForm from '.';
 
 const wrap = (props = {}) => shallow(<SaveCommunityForm {...props} />);
@@ -18,7 +16,7 @@ describe('SaveCommunityForm', () => {
     expect(img).toHaveLength(1);
     expect(img.prop('src')).toBe(mainImage);
     expect(wrapper.find(Field)).toHaveLength(1);
-    expect(wrapper.find(Button)).toHaveLength(1);
+    expect(wrapper.find('Styled(Button)')).toHaveLength(1);
   });
 
   it('renders without mainImage', () => {
@@ -28,7 +26,7 @@ describe('SaveCommunityForm', () => {
 
     expect(img).toHaveLength(0);
     expect(wrapper.find(Field)).toHaveLength(1);
-    expect(wrapper.find(Button)).toHaveLength(1);
+    expect(wrapper.find('Styled(Button)')).toHaveLength(1);
   });
 
   it('handles onFormSubmit', () => {

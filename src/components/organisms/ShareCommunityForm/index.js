@@ -41,6 +41,7 @@ const ContentWrapper = styled.div`
 
 const StyledButton = styled(Button)`
   margin-bottom: ${ifProp('error', size('spacing.large'), 0)};
+  width: 100%;
 `;
 StyledButton.displayName = 'StyledButton';
 
