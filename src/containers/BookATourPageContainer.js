@@ -46,7 +46,6 @@ const BookATourPageContainer = ({
     return null;
   }
   const { id, url } = community;
-
   const handleComplete = (data, toggleConfirmationModal) => {
     const value = {
       ...data,

@@ -44,7 +44,6 @@ const CommunitySATContactForm = ({
     heading = 'Do you have any questions about this tour?';
   }
   const subheading = 'A local senior living advisor will help get you detailed pricing with this community.';
-
   return (
     <form onSubmit={handleSubmit}>
       <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>

@@ -63,7 +63,6 @@ const BookATourPage = ({
   community, user, onDateChange, onTimeChange, onStepChange, onComplete, onContactByTextMsgChange,
 }) => {
   const { mainImage } = community;
-
   return (
     <FullScreenWizard>
       <Header>

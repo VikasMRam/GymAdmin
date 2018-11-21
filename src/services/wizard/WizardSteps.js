@@ -13,14 +13,11 @@ export default class WizardSteps extends Component {
     super(props);
 
     const { children, setStepsSize } = this.props;
-    this.stepsSize = Array.isArray(children) ? children.length : 1;
-    this.children = children;
-
-    setStepsSize(this.stepsSize);
+    setStepsSize(Array.isArray(children) ? children.length : 1);
   }
 
   render() {
-    const { children } = this;
+    const { children } = this.props;
     const {
       currentStep, onSubmit,
     } = this.props;
