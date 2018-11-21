@@ -1,11 +1,12 @@
-import { SET, UNSET } from './actions';
+import { SET, UNSET, RESET } from './actions';
 import set from 'lodash/set';
 import get from 'lodash/get';
 import merge from 'lodash/merge';
 import unset from 'lodash/unset';
+import omit from 'lodash/omit';
 
-export default (state={}, { type, payload }) => {
-  switch(type) {
+export default (state = {}, { type, payload }) => {
+  switch (type) {
     case SET: {
       const { data, controller } = payload;
       const prev = get(state, controller);
@@ -16,12 +17,17 @@ export default (state={}, { type, payload }) => {
     case UNSET: {
       const { key, controller } = payload;
       const prev = get(state, controller);
-      unset(prev, key); 
+      unset(prev, key);
       const next = merge({}, prev);
       set(state, controller, next);
       return Object.assign({}, state);
     }
+    case RESET: {
+      const { controller } = payload;
+      return omit(state, controller);
+    }
+    default: {
+      return state;
+    }
   }
-  return state;
-}
-
+};

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 
-import { set, unset } from 'sly/store/controller/actions';
+import { set, unset, reset } from 'sly/store/controller/actions';
 
 const convertMapDispatchToObject = mapDispatchToProps => (dispatch, props) => {
   if (!mapDispatchToProps) {
@@ -30,6 +30,7 @@ export function connectController(parentMapStateToProps, parentDispatchToProps) 
       ...convertMapDispatchToObject(parentDispatchToProps)(dispatch, ownProps),
       set: data => dispatch(set({ data, controller: controllerKey })),
       unset: key => dispatch(unset({ key, controller: controllerKey })),
+      resetController: () => dispatch(reset({ controller: controllerKey })),
     });
 
     const mapStateToProps = (state, ownProps) => {

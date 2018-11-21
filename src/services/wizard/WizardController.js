@@ -12,6 +12,7 @@ class WizardController extends Component {
     progressPath: arrayOf(number).isRequired,
     children: any,
     set: func,
+    resetController: func,
     currentStep: number,
     stepSize: number,
     onComplete: func,
@@ -32,8 +33,9 @@ class WizardController extends Component {
   }
 
   componentWillUnmount() {
-    const { resetForm } = this.props;
+    const { resetForm, resetController } = this.props;
     resetForm();
+    resetController();
   }
 
   setStepsSize = (stepSize) => {
