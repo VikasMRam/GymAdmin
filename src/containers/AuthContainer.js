@@ -12,6 +12,7 @@ import LoginFormContainer from 'sly/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/containers/SignupFormContainer';
 import JoinSlyButtonsController from 'sly/controllers/JoinSlyButtonsController';
 import ResetPasswordFormContainer from 'sly/containers/ResetPasswordFormContainer';
+import { fetchUser } from 'sly/services/helpers/user';
 
 import {
   MODAL_TYPE_LOG_IN,
@@ -118,7 +119,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me')),
+  fetchUser: () => fetchUser(dispatch),
   authenticateCancel: () => dispatch(authenticateCancel()),
   authenticateSuccess: user => dispatch(authenticateSuccess(user)),
 });

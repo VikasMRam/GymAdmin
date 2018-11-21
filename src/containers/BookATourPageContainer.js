@@ -8,6 +8,7 @@ import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
 import { BOOK_A_TOUR } from 'sly/services/api/actions';
+import { fetchUser } from 'sly/services/helpers/user';
 
 import BookATourPage from 'sly/components/pages/BookATourPage';
 
@@ -48,12 +49,21 @@ const BookATourPageContainer = ({
   const { id, url } = community;
 
   const handleComplete = (data) => {
+    const value = {
+      ...data,
+      slug: id,
+    };
+    if (user) {
+      if (!value.name && user.name) {
+        value.name = user.name;
+      }
+      if (!value.phone && user.phoneNumber) {
+        value.phone = user.phoneNumber;
+      }
+    }
     const payload = {
       action: BOOK_A_TOUR,
-      value: {
-        ...data,
-        slug: id,
-      },
+      value,
     };
 
     postUserAction(payload)
@@ -105,6 +115,7 @@ const fetchData = (dispatch, { match }) =>
     dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
       include: 'similar-communities',
     })),
+    fetchUser(dispatch),
   ]);
 
 const handleError = (err) => {
