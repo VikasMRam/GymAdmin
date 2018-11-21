@@ -107,8 +107,8 @@ const BookATourPage = ({
                   </Body>
                   <Controls>
                     <BookingFormFooter
-                      date={data.date}
-                      time={data.time}
+                      date={data.scheduledDate}
+                      time={data.scheduledTime}
                       onProgressClick={onSubmit}
                       isFinalStep={isFinalStep}
                       isButtonDisabled={!submitEnabled}
