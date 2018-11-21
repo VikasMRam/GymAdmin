@@ -6,7 +6,8 @@ import CommunitySATContactForm from 'sly/components/organisms/CommunitySATContac
 import { Link, Block } from 'sly/components/atoms';
 
 const onAdvisorHelpClick = jest.fn();
-const user = { id: 1, name: 'Pranesh Kumar' };
+const name = 'Pranesh Kumar';
+const phoneNumber = '9999999999';
 const error = 'Blah';
 const guHeading = 'How can we contact you about this community tour?';
 const userHeading = 'Do you have any questions about this tour?';
@@ -15,7 +16,7 @@ const wrap = (props = {}) =>
   shallow(<CommunitySATContactForm onAdvisorHelpClick={onAdvisorHelpClick} {...props} />);
 
 describe('CommunitySATContactForm', () => {
-  it('render name and email when user is not passed', () => {
+  it('render name and phone when user is not passed', () => {
     const wrapper = wrap();
     expect(wrapper.contains(guHeading)).toBe(true);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
@@ -25,10 +26,30 @@ describe('CommunitySATContactForm', () => {
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
   });
 
-  it('does not render name, note and email when user is passed', () => {
-    const wrapper = wrap({ user });
+  it('does not render name and phoneNumber when user is passed', () => {
+    const wrapper = wrap({ user: { name, phoneNumber } });
     expect(wrapper.contains(userHeading)).toBe(true);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(0);
+    expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(0);
+    expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
+    expect(wrapper.find({ type: 'checkbox' })).toHaveLength(0);
+    expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
+  });
+
+  it('does not render name when name is passed', () => {
+    const wrapper = wrap({ user: { name } });
+    expect(wrapper.contains(userHeading)).toBe(true);
+    expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(0);
+    expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
+    expect(wrapper.find({ type: 'checkbox' })).toHaveLength(0);
+    expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
+  });
+
+  it('does not render phoneNumber when phoneNumber is passed', () => {
+    const wrapper = wrap({ user: { phoneNumber } });
+    expect(wrapper.contains(userHeading)).toBe(true);
+    expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
     expect(wrapper.find({ type: 'checkbox' })).toHaveLength(0);
