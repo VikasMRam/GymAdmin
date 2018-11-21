@@ -109,7 +109,6 @@ const BookATourPage = ({
                       onProgressClick={onSubmit}
                       isFinalStep={isFinalStep}
                       isButtonDisabled={!submitEnabled}
-                      palette="primary"
                     />
                   </Controls>
                 </Fragment>

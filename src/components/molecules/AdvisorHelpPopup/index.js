@@ -60,7 +60,7 @@ const AdvisorHelpPopup = ({ onButtonClick }) => {
           <AvatarIcon src={assetPath('images/agent-xLarge.png')} />
         </div>
       </TopSection>
-      <GotItButton kind="jumbo" palette="primary" onClick={onButtonClick}>Got it</GotItButton>
+      <GotItButton kind="jumbo" onClick={onButtonClick}>Got it</GotItButton>
     </div>
   );
 };

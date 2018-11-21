@@ -47,9 +47,9 @@ const CommunityScheduleATour = ({ onSATClick, isAlreadyTourScheduled }) => {
     <Wrapper>
       <DescriptionHeading size="subtitle">Tour this commmunity for free</DescriptionHeading>
       {!isAlreadyTourScheduled &&
-        <SATButton kind="jumbo" palette="primary" onClick={onSATClick}>Schedule a Tour</SATButton>}
+        <SATButton kind="jumbo" onClick={onSATClick}>Schedule a Tour</SATButton>}
       {isAlreadyTourScheduled &&
-        <SATButton ghost kind="jumbo" palette="primary" onClick={onSATClick}>Tour requested</SATButton>}
+        <SATButton ghost kind="jumbo" onClick={onSATClick}>Tour requested</SATButton>}
       <Fragment>{listComponents}</Fragment>
     </Wrapper>
   );

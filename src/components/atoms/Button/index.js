@@ -157,7 +157,7 @@ Button.propTypes = {
 Button.defaultProps = {
   selectable: false,
   selected: true,
-  palette: 'secondary',
+  palette: 'primary',
   kind: 'regular',
   type: 'button',
 };
