@@ -550,6 +550,7 @@ export default class CommunityDetailPage extends Component {
               const props = {
                 similarCommunities: similarProperties,
                 similarCommunititesHref: getCitySearchUrl({ propInfo, address }),
+                onTileClick: toggleConfirmationModal,
               };
               return (
                 <Modal
