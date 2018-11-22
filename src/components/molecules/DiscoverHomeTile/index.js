@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import { string, func, oneOf } from 'prop-types';
 import { switchProp } from 'styled-tools';
 
-
 import { size, palette } from 'sly/components/themes';
 
 import { Box, Heading, Block, Button, Image } from 'sly/components/atoms';
@@ -39,7 +38,6 @@ const ButtonWrapper = styled.div`
 `;
 const StyledBox = styled(Box)`
   padding: ${size('spacing.xLarge')};
-  border-color: ${palette('secondary', 3)};
   border-top: 0;
 `;
 const TwoColumnWrapper = styled.div`

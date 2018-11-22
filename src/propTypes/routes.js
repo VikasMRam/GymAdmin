@@ -4,8 +4,8 @@ import { Component } from 'react';
 export const routes = arrayOf(shape({
   path: string.isRequired,
   component: oneOfType([
-    instanceOf(Component), 
-    func
+    instanceOf(Component),
+    func,
   ]).isRequired,
   exact: bool,
 }));

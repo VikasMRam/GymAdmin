@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
-
 import { size, assetPath, palette } from 'sly/components/themes';
 
 import HeaderController from 'sly/controllers/HeaderController';
@@ -120,9 +119,7 @@ const ThreeColumnWrapper = ColumnWrapper.extend`
     }
   }
 `;
-const StyledHr = styled(Hr)`
-  border-color: ${palette('primary', 3)};
-`;
+
 const UIColumnWrapper = ColumnWrapper.extend`
   > * {
     margin-bottom: ${size('spacing.large')};
@@ -429,26 +426,26 @@ const HomePage = ({
           </ThreeColumnWrapper>
         </StyledSection>
         <br />
-        <StyledHr />
+        <Hr />
         <StyledSection title="Meet Families We’ve Helped">
           <ThreeColumnWrapper>
             {familiesWeHaveHelpedTilesComponents}
           </ThreeColumnWrapper>
         </StyledSection>
         <br />
-        <StyledHr />
+        <Hr />
         <StyledSection title="Useful Information">
           <UIColumnWrapper>
             {usefulInformationTilesComponents}
           </UIColumnWrapper>
         </StyledSection>
-        <StyledHr />
+        <Hr />
         <StyledSection title="Most Searched Cities">
           <MSCColumnWrapper>
             {mostSearchedCitiesComponents}
           </MSCColumnWrapper>
         </StyledSection>
-        <StyledHr />
+        <Hr />
         <StyledSection>
           <TwoColumnWrapper>
             <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/partner-with-us.jpeg')}>
@@ -463,7 +460,7 @@ const HomePage = ({
             </ImageOverlayContentTile>
           </TwoColumnWrapper>
         </StyledSection>
-        <StyledHr />
+        <Hr />
         <StyledSection title="Corporate Partners">
           <CWTColumnWrapper>
             <CWTImage src={assetPath('images/home/companies-we-trust/Brookdale_BW.png')} alt="Brookdale Senior Living Logo" />

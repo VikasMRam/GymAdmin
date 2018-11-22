@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { switchProp } from 'styled-tools';
 
 import { getKey, size, palette } from 'sly/components/themes';
+import { variation as variationPropType } from 'sly/propTypes/variation';
 
 const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
@@ -23,7 +24,7 @@ const Block = styled.div`
 
 Block.propTypes = {
   palette: oneOf(Object.keys(getKey('palette'))),
-  variation: oneOf(['base', 'accent', 'filler', 'stroke', 'background']),
+  variation: variationPropType,
   size: oneOf(Object.keys(getKey('sizes.text'))),
   weight: oneOf(['regular', 'medium', 'bold']),
 };
