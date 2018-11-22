@@ -1,5 +1,5 @@
 import React from 'react';
-import { func } from 'prop-types';
+import { string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -42,19 +42,19 @@ const StyledButton = styled(Button)`
   margin-right: auto;
 `;
 
-const CommunitySATAcknowledgement = ({ onButtonClick }) => (
+const CommunitySATAcknowledgement = ({ similarCommunititesHref }) => (
   <Wrapper>
     <HeadingSection>
       <StyledIcon icon="circle-tick" size="large" palette="green" />
       <StyledHeading>Tour Request Sent!</StyledHeading>
     </HeadingSection>
     <StyledBlock>Your advisor will check if this community is available at this time. They will get back to you shortly by phone or email.</StyledBlock>
-    <StyledButton kind="jumbo" onClick={onButtonClick} >View Similar Communities</StyledButton>
+    <StyledButton kind="jumbo" href={similarCommunititesHref} >View Similar Communities</StyledButton>
   </Wrapper>
 );
 
 CommunitySATAcknowledgement.propTypes = {
-  onButtonClick: func.isRequired,
+  similarCommunititesHref: string.isRequired,
 };
 
 export default CommunitySATAcknowledgement;
