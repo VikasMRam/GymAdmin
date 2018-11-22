@@ -306,12 +306,6 @@ theme.sizes = {
     width : '8.0625rem',   // 129px
     height: '5.375rem',    // 86px
   },
-
-  chatBox: {
-    reachedBottomTriggerScrollGap   : '60',
-    footerReachedBottomMargin       : '3.75rem',   // 60px
-    pageWithStickyFooterBottomMargin: '6.25rem',   // 100px
-  },
 };
 
 theme.transitions = {
