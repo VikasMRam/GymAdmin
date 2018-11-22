@@ -57,7 +57,7 @@ export default class Concierge extends Component {
     const { modalIsOpen, currentStep } = concierge;
 
     const StepComponent = steps[currentStep];
-    const modal = (
+    return (
       <Fragment>
         {appElement && StepComponent && modalIsOpen && (
         <Modal
@@ -78,23 +78,6 @@ export default class Concierge extends Component {
         </Modal>
         )}
       </Fragment>);
-    let result = modal;
-    if (community) {
-      result = (
-        <Fragment >
-          <ConversionFormContainer
-            submitRegularConversion={submitRegularConversion}
-            submitExpressConversion={submitExpressConversion}
-            gotoWhatNext={gotoWhatNext}
-            community={community}
-            concierge={concierge}
-            express={false}
-          />
-          {modal}
-        </Fragment>
-      );
-    }
-    return result;
   }
 }
 

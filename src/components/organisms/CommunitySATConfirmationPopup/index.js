@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { string, array } from 'prop-types';
+import { string, array, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import CommunitySATAcknowledgement from 'sly/components/organisms/CommunitySATAcknowledgement/index';
 import Hr from 'sly/components/atoms/Hr/index';
 import Heading from 'sly/components/atoms/Heading/index';
 import SimilarCommunityNearbyTile from 'sly/components/molecules/SimilarCommunityNearbyTile/index';
+import { Link } from 'sly/components/atoms/index';
 
 const CommunitySATAcknowledgementWrapper = styled.div`
   margin-bottom: ${size('spacing.xxxLarge')};
@@ -21,7 +22,7 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const SimilarCommunityTileWrapper = styled.div`
+const SimilarCommunityTileWrapper = styled(Link)`
   margin-bottom: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -38,10 +39,10 @@ const SimilarCommunitiesWrapper = styled.div`
 `;
 
 const CommunitySATConfirmationPopup = ({
-  similarCommunititesHref, similarCommunities,
+  similarCommunititesHref, similarCommunities, onTileClick,
 }) => {
   const similarCommunitiesComponent = similarCommunities.map(community => (
-    <SimilarCommunityTileWrapper key={community.id}>
+    <SimilarCommunityTileWrapper key={community.id} to={community.url} onClick={onTileClick}>
       <SimilarCommunityNearbyTile
         image={community.imageUrl}
         name={community.name}
@@ -68,6 +69,7 @@ const CommunitySATConfirmationPopup = ({
 CommunitySATConfirmationPopup.propTypes = {
   similarCommunititesHref: string.isRequired,
   similarCommunities: array.isRequired,
+  onTileClick: func.isRequired,
 };
 
 export default CommunitySATConfirmationPopup;
