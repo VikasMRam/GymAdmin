@@ -46,7 +46,7 @@ class PasswordResetPageContainer extends Component {
         throw new SubmissionError({ _error: errorMessage });
       });
     });
-  }
+  };
 
   render() {
     return (

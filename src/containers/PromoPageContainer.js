@@ -3,8 +3,6 @@ import { object, func } from 'prop-types';
 import { Redirect } from 'react-router';
 import queryString from 'query-string';
 
-
-
 import SlyEvent from 'sly/services/helpers/events';
 import PromoPage from 'sly/components/pages/PromoPage';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
@@ -12,14 +10,14 @@ import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/h
 class PromoPageContainer extends Component {
   static propTypes = {
     history: object,
+    location: object,
     setLocation: func,
   };
 
   state = {
     activeDiscoverHome: null,
     activeWizard: false,
-
-};
+  };
 
   setActiveDiscoverHome = (activeDiscoverHome) => {
     const previouslyActiveDiscoverHomeTitle = this.state.activeDiscoverHome ? this.state.activeDiscoverHome.title : null;
@@ -61,7 +59,6 @@ class PromoPageContainer extends Component {
     this.setState({ activeWizard });
   };
 
-
   render() {
     const { activeDiscoverHome, activeWizard } = this.state;
     const { location } = this.props;
@@ -74,7 +71,7 @@ class PromoPageContainer extends Component {
     }
     if (!utmPresent) {
       const { pathname } = location;
-      return <Redirect to={pathname + '?utm_campaign=offer150sf&utm_medium=shoppingcart&utm_source=molliestone'} />
+      return <Redirect to={`${pathname}?utm_campaign=offer150sf&utm_medium=shoppingcart&utm_source=molliestone`} />
     }
     return (
       <PromoPage

@@ -62,7 +62,7 @@ class CommunityAddRatingFormContainer extends Component {
         throw new SubmissionError({ _error: errorMessage });
       });
     });
-  }
+  };
 
   render() {
     const {

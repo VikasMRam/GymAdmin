@@ -85,4 +85,5 @@ const mapStateToProps = (state, {
     pathName: pathname,
   };
 };
+
 export default connect(mapStateToProps, null)(HomePageContainer);

@@ -60,7 +60,7 @@ class CommunityAskQuestionAgentFormContainer extends Component {
       .catch(() => {
         throw new SubmissionError({ _error: 'Failed to send question. Please try again.' });
       });
-  }
+  };
 
   render() {
     return (

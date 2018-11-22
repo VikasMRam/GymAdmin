@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { object, number, array } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
-
 import { resourceListReadRequest } from 'sly/store/resource/actions';
 import { getList, getListMeta } from 'sly/store/selectors';
 import ErrorPage from 'sly/components/pages/Error';
@@ -22,7 +21,7 @@ class StateSearchPageContainer extends Component {
     geoGuide: array,
     requestMeta: object.isRequired,
     errorCode: number,
-  }
+  };
 
   // TODO Define Search Parameters
   toggleMap = () => {
@@ -58,7 +57,7 @@ class StateSearchPageContainer extends Component {
 
   handleOnAdTileClick = () => {
     this.changeSearchParams({ changedParams: { modal: 'cawWizard' } });
-  }
+  };
 
   render() {
     const {
@@ -109,7 +108,7 @@ const fetchData = (dispatch, { match, location }) => {
   return Promise.all([
     dispatch(resourceListReadRequest('searchResource', searchParams)),
     dispatch(resourceListReadRequest('geoGuide', searchParams)),
-  ]);;
+  ]);
 };
 
 const handleError = (err) => {

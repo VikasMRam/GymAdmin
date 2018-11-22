@@ -12,7 +12,7 @@ class EntityApprovalContainer extends Component {
     userFetchComplete: bool.isRequired,
     userFetchDone: bool.isRequired,
     entityUpdateComplete: bool.isRequired,
-  }
+  };
 
   constructor(props) {
     super(props);

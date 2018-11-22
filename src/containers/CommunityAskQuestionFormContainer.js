@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { string, func, object } from 'prop-types';
 
-// import { getDetail } from 'sly/store/selectors';
-
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 
 import {

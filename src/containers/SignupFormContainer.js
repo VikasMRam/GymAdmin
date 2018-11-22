@@ -12,6 +12,7 @@ const validate = createValidator({
   email: [required, email],
   password: [required],
 });
+
 const ReduxForm = reduxForm({
   form: 'SignupForm',
   validate,
@@ -36,7 +37,7 @@ class SignupFormContainer extends Component {
         throw new SubmissionError({ _error: errorMessage });
       });
     });
-  }
+  };
 
   render() {
     return <ReduxForm onSubmit={this.handleSubmit} {...this.props} />;

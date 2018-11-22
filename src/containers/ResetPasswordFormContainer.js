@@ -5,12 +5,12 @@ import { func, bool } from 'prop-types';
 
 import { createValidator, required, email } from 'sly/services/validation';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
-
 import ResetPasswordForm from 'sly/components/organisms/ResetPasswordForm';
 
 const validate = createValidator({
   email: [required, email],
 });
+
 const ReduxForm = reduxForm({
   form: 'ResetPasswordForm',
   validate,
@@ -35,7 +35,7 @@ class ResetPasswordFormContainer extends Component {
         throw new SubmissionError({ _error: errorMessage });
       });
     });
-  }
+  };
 
   render() {
     return <ReduxForm onSubmit={this.handleSubmit} {...this.props} />;
