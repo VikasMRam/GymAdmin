@@ -70,7 +70,7 @@ Rating.propTypes = {
 
 Rating.defaultProps = {
   size: 'regular',
-  palette: 'secondary',
+  palette: 'primary',
 };
 
 export default Rating;

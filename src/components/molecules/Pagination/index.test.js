@@ -33,7 +33,7 @@ describe('Pagination', () => {
       const button = wrapper.childAt(i);
       expect(button.prop('children')).toEqual(i + 1);
       expect(button.prop('href')).toEqual(i === 0 ? '/test' :`/test?page-number=${i}`);
-      expect(button.prop('palette')).toEqual(i === 0 ? 'secondary' : 'slate');
+      expect(button.prop('palette')).toEqual(i === 0 ? 'primary' : 'slate');
     }
   });
 
@@ -88,7 +88,7 @@ describe('Pagination', () => {
 
     const fiftyOne = wrapper.childAt(5);
     expect(fiftyOne.prop('ghost')).toEqual(false);
-    expect(fiftyOne.prop('palette')).toEqual('secondary');
+    expect(fiftyOne.prop('palette')).toEqual('primary');
     expect(fiftyOne.prop('href')).toEqual('/test?page-number=50');
 
 

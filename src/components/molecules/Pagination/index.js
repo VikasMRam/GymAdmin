@@ -125,7 +125,7 @@ export default class Pagination extends Component {
       delim = '&';
     }
     const palette = sel
-      ? 'secondary'
+      ? 'primary'
       : 'slate';
 
     const pageHref = (index === 0) ? basePath : `${basePath}${delim}${pageParam}=${index}`;
