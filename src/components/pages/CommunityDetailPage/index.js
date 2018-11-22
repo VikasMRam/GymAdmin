@@ -575,7 +575,7 @@ export default class CommunityDetailPage extends Component {
               <CommunityAskQuestionAgentFormContainer
                 toggleAskAgentQuestionModal={onToggleAskAgentQuestionModal}
                 notifyInfo={notifyInfo}
-                communitySlug={community.id}
+                community={community}
               />
             )}
           </NotificationController>

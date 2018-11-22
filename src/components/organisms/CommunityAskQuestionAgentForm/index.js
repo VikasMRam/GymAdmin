@@ -28,7 +28,7 @@ const TextWrapper = styled.div`
 `;
 
 const CommunityAskQuestionAgentForm = ({
-  handleSubmit, pristine, submitting, error,
+  handleSubmit, pristine, submitting, error, communityName,
 }) => (
   <form onSubmit={handleSubmit}>
     <TopSection>
@@ -46,7 +46,7 @@ const CommunityAskQuestionAgentForm = ({
       name="question"
       label="Your message"
       type="textarea"
-      placeholder="Hi Rachel, I have a question about my tour with Sagebrook..."
+      placeholder={`Hi Rachel, I have a question about my tour with ${communityName}...`}
       component={ReduxField}
     />
     {error && <Block palette="danger">{error}</Block>}
@@ -61,6 +61,7 @@ CommunityAskQuestionAgentForm.propTypes = {
   pristine: bool,
   submitting: bool,
   error: string,
+  communityName: string.isRequired,
 };
 
 export default CommunityAskQuestionAgentForm;
