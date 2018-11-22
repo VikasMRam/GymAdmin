@@ -16,5 +16,6 @@ storiesOf('Organisms|CommunityAskQuestionAgentForm', module)
   .add('default', () => (
     <CommunityAskQuestionAgentFormContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
+      communityName="Rhoda"
     />
   ));
