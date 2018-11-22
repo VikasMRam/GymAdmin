@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { object, func } from 'prop-types';
+import { object, func, bool } from 'prop-types';
 
 import { size, palette, key } from 'sly/components/themes';
 import Button from 'sly/components/atoms/Button';
@@ -55,10 +55,16 @@ const FooterDetailHeader = styled.div`
 
 const FooterName = styled.div``;
 
-const StickyFooter = ({ footerInfo, onFooterClick }) => {
-  const {
-    title, name, ctaTitle, link,
-  } = footerInfo;
+const StickyFooter = ({ footerInfo, onFooterClick, ghostButton }) => {
+  let title;
+  let name;
+  let ctaTitle;
+  let link;
+  if (footerInfo) {
+    ({
+      title, name, ctaTitle, link,
+    } = footerInfo);
+  }
   return (
     <FullWrapper>
       <FooterWrapper>
@@ -68,14 +74,15 @@ const StickyFooter = ({ footerInfo, onFooterClick }) => {
             <FooterName>{name}</FooterName>
           </FooterDetails>
         }
-        <Button kind="jumbo" href={link} onClick={onFooterClick}>{ctaTitle}</Button>
+        <Button kind="jumbo" ghost={ghostButton} href={link} onClick={onFooterClick}>{ctaTitle}</Button>
       </FooterWrapper>
     </FullWrapper>
   );
 };
 
 StickyFooter.propTypes = {
-  footerInfo: object.isRequired,
+  footerInfo: object,
+  ghostButton: bool,
   onFooterClick: func.isRequired,
 };
 
