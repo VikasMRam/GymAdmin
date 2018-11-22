@@ -92,7 +92,6 @@ export default class CommunityDetailPage extends Component {
     userSave: object,
     searchParams: object,
     setQueryParams: func,
-    notifyInfo: func,
     onSATClick: func,
     isAlreadyTourScheduled: bool,
     isAskAgentQuestionModalVisible: bool,
@@ -174,7 +173,6 @@ export default class CommunityDetailPage extends Component {
       userSave,
       searchParams,
       setQueryParams,
-      notifyInfo,
       onSATClick,
       isAlreadyTourScheduled,
       isAskAgentQuestionModalVisible,
@@ -334,7 +332,6 @@ export default class CommunityDetailPage extends Component {
         <CommunityDetailPageTemplate
           column={columnContent}
           bottom={bottomContent}
-          notifyInfo={notifyInfo}
           bannerNotification={isAlreadyTourScheduled ?
             'We have recieved your tour request. Your advisor is checking this community’s availability and will get back to you shortly.' : null}
         >
@@ -576,9 +573,11 @@ export default class CommunityDetailPage extends Component {
           isOpen={isAskAgentQuestionModalVisible}
           onClose={onToggleAskAgentQuestionModal}
         >
-          <CommunityAskQuestionAgentFormContainer
-            notifyInfo={notifyInfo}
-          />
+          <NotificationController>
+            {({
+              notifyInfo,
+            }) => <CommunityAskQuestionAgentFormContainer notifyInfo={notifyInfo} />}
+          </NotificationController>
         </Modal>
       </Fragment>
     );

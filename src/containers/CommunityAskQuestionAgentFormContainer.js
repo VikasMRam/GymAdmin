@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, SubmissionError } from 'redux-form';
+import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func } from 'prop-types';
 import SlyEvent from 'sly/services/helpers/events';
 import { ASK_QUESTION } from 'sly/services/api/actions';
@@ -16,9 +16,9 @@ import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAsk
 const validate = createValidator({
   question: [required],
 });
-
+const formName = 'CommunityAskQuestionAgentForm';
 const ReduxForm = reduxForm({
-  form: 'CommunityAskQuestionAgentForm',
+  form: formName,
   validate,
 })(CommunityAskQuestionAgentForm);
 
@@ -26,10 +26,11 @@ class CommunityAskQuestionAgentFormContainer extends Component {
   static propTypes = {
     postUserAction: func,
     notifyInfo: func,
+    clearSubmitErrors: func,
   };
 
   handleOnSubmit = (data) => {
-    const { postUserAction, notifyInfo } = this.prop;
+    const { postUserAction, notifyInfo, clearSubmitErrors } = this.props;
 
     const value = {
       question: data.question,
@@ -40,6 +41,7 @@ class CommunityAskQuestionAgentFormContainer extends Component {
       value,
     };
 
+    clearSubmitErrors();
     return postUserAction(body)
       .then(() => {
         const event = {
@@ -64,6 +66,7 @@ class CommunityAskQuestionAgentFormContainer extends Component {
 
 const mapDispatchToProps = dispatch => ({
   postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
+  clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
 });
 
 export default connect(
