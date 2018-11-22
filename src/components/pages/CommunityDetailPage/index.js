@@ -46,6 +46,7 @@ import CommunitySATWidget from 'sly/components/organisms/CommunitySATWidget';
 import BookATourPageController from 'sly/controllers/BookATourPageController';
 import CommunitySATConfirmationPopup from 'sly/components/organisms/CommunitySATConfirmationPopup/index';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
+import ConciergeContainer from 'sly/containers/ConciergeContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -581,6 +582,7 @@ export default class CommunityDetailPage extends Component {
             )}
           </NotificationController>
         </Modal>
+        <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
       </Fragment>
     );
   }
