@@ -54,7 +54,7 @@ Icon.propTypes = {
 Icon.defaultProps = {
   flip: false,
   size: 'regular',
-  palette: 'secondary',
+  palette: 'primary',
   variation: 'base',
 };
 

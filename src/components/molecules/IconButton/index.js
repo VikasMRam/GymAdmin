@@ -105,7 +105,7 @@ IconButton.propTypes = {
 IconButton.defaultProps = {
   iconOnly: false,
   iconSize: 'regular',
-  palette: 'secondary',
+  palette: 'primary',
 };
 
 export default IconButton;

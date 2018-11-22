@@ -10,7 +10,7 @@ export const StyledIcon = styled(Icon)`
   svg {
     #circle {
       display: ${ifProp('checked', 'block', 'none')};
-      fill: ${palette('secondary', 0)};
+      fill: ${palette('primary', 0)};
     }
     #box {
       stroke: ${palette('slate', 'stroke')};

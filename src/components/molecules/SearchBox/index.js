@@ -71,14 +71,14 @@ const SearchButton = styled(Button)`
       height: auto;
       background: none;
       > span {
-        color: ${palette('secondary', 0)};
+        color: ${palette('primary', 0)};
       }
     `,
   })};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-right: 0px;
-    background-color: ${palette('secondary', 0)};
+    background-color: ${palette('primary', 0)};
     width: ${size('element.xxLarge')};
     > span {
       color: ${palette('white', 0)};

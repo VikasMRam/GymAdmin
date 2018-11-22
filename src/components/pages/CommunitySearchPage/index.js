@@ -77,7 +77,7 @@ const ApplyFilterButton = styled(Button)`
 `;
 
 LegacyContent.defaultProps = {
-  palette: 'secondary',
+  palette: 'primary',
 };
 
 const CommunitySearchPage = ({
