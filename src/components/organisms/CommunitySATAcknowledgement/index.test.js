@@ -3,9 +3,9 @@ import { shallow } from 'enzyme';
 
 import CommunitySATAcknowledgement from 'sly/components/organisms/CommunitySATAcknowledgement';
 
-const handleButtonClick = jest.fn();
+const similarCommunititesHref = 'www.teamseniorly.com';
 const defaultProps = {
-  onButtonClick: handleButtonClick,
+  similarCommunititesHref,
 };
 
 const wrap = (props = {}) => shallow(<CommunitySATAcknowledgement {...defaultProps} {...props} />);
@@ -18,7 +18,6 @@ describe('CommunitySATAcknowledgement', () => {
 
   it('onButtonClick is called', () => {
     const wrapper = wrap({ });
-    wrapper.find('Styled(Button)').simulate('click');
-    expect(handleButtonClick).toHaveBeenCalled();
+    expect(wrapper.find('Styled(Button)').prop('href')).toEqual(similarCommunititesHref);
   });
 });

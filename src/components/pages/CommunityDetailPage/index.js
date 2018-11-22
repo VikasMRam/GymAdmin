@@ -557,7 +557,7 @@ export default class CommunityDetailPage extends Component {
           {({ isConfirmationModalVisible, toggleConfirmationModal }) => {
               const props = {
                 similarCommunities: similarProperties,
-                onButtonClick: toggleConfirmationModal,
+                similarCommunititesHref: getCitySearchUrl({ propInfo, address }),
               };
               return (
                 <Modal
