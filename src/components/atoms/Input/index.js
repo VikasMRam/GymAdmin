@@ -14,7 +14,7 @@ const styles = css`
   font-size: ${size('text', 'body')};
   padding: ${size('padding', 'regular')};
   height: ${ifProp({ type: 'textarea' }, size('element.textarea'), height)};
-  color: ${ifProp('invalid', palette('danger', 'base'), palette('slate', 'filler'))};
+  color: ${ifProp('invalid', palette('danger', 'base'), palette('slate', 'base'))};
   background-color: ${palette('slate', 'background')};
   border: 1px solid
     ${ifProp('invalid', palette('danger', 'stroke'), palette('slate', 'stroke'))};
