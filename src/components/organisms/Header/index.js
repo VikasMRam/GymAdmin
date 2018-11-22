@@ -102,15 +102,19 @@ export const HeaderItems = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: flex;
-    margin-left: auto; // For Float Right in Flex
+    justify-content: space-between;
+    flex-grow: 1;
     align-items: center;
-    margin-right: ${size('spacing.regular')};
+    padding-left: ${size('spacing.large')};
+    margin-left: auto;
+    margin-right: ${size('spacing.xLarge')};
+    max-width: ${size('layout.col7')};
   }
 `;
 
 const HeaderItem = styled(Link)`
   display: none;
-  padding: ${size('spacing.large')};
+  padding: ${size('spacing.large')} 0;
   font-size: ${size('text.caption')};
   &:first-child {
     padding-left: 0px;

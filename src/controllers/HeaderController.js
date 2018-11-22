@@ -63,7 +63,7 @@ class HeaderController extends Component {
     match: object,
     location: object,
     ensureAuthenticated: func,
-    className: string.isRequired,
+    className: string,
   };
 
   handleMenuItemClick = () => {
