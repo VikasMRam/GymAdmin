@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 import SlyEvent from 'sly/services/helpers/events';
 import { ASK_QUESTION } from 'sly/services/api/actions';
 
@@ -24,16 +24,22 @@ const ReduxForm = reduxForm({
 
 class CommunityAskQuestionAgentFormContainer extends Component {
   static propTypes = {
-    postUserAction: func,
-    notifyInfo: func,
-    clearSubmitErrors: func,
+    postUserAction: func.isRequired,
+    notifyInfo: func.isRequired,
+    clearSubmitErrors: func.isRequired,
+    toggleAskAgentQuestionModal: func.isRequired,
+    communitySlug: string.isRequired,
   };
 
   handleOnSubmit = (data) => {
-    const { postUserAction, notifyInfo, clearSubmitErrors } = this.props;
+    const {
+      postUserAction, notifyInfo, clearSubmitErrors, toggleAskAgentQuestionModal,
+      communitySlug,
+    } = this.props;
 
     const value = {
       question: data.question,
+      slug: communitySlug,
     };
 
     const body = {
@@ -48,6 +54,7 @@ class CommunityAskQuestionAgentFormContainer extends Component {
           action: 'ask-question', category: 'BAT',
         };
         SlyEvent.getInstance().sendEvent(event);
+        toggleAskAgentQuestionModal();
         notifyInfo('Question sent successfully.');
       })
       .catch(() => {
