@@ -149,7 +149,7 @@ const CommunityFilterList = ({
           {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
           <ImageButtonWrapper isMapView={isMapView}>
             {isMapView && toggleMap &&
-            <IconButton icon="list" onClick={toggleMap} palette="secondary" ghost>
+            <IconButton icon="list" onClick={toggleMap} palette="primary" ghost>
               View List
             </IconButton>
             }
@@ -157,7 +157,7 @@ const CommunityFilterList = ({
             <Fragment>
               {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
               <StyledImage src={assetPath('images/map-placeholder.png')} />
-              <IconButton icon="map" onClick={toggleMap} palette="secondary" ghost>
+              <IconButton icon="map" onClick={toggleMap} palette="primary" ghost>
                 View Map
               </IconButton>
             </Fragment>

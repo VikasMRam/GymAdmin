@@ -16,14 +16,14 @@ class BookATourPageController extends Component {
     set({
       isAdvisorHelpVisible: !isAdvisorHelpVisible,
     });
-  }
+  };
 
   handleToggleConfirmationModal = () => {
     const { set, isConfirmationModalVisible } = this.props;
     set({
       isConfirmationModalVisible: !isConfirmationModalVisible,
     });
-  }
+  };
 
   render() {
     const {

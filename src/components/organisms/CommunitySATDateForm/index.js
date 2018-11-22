@@ -7,7 +7,7 @@ import { Field } from 'redux-form';
 import { size } from 'sly/components/themes';
 import { TIME_OPTIONS } from 'sly/constants/booking';
 
-import { Heading, Block, Icon } from 'sly/components/atoms';
+import { Heading, Block } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
 const medicaidOptions = [
@@ -44,9 +44,9 @@ const MedicaidLabel = StyledBlock.extend`
   align-items: center;
 `;
 
-const StyledIcon = styled(Icon)`
-  margin-left: ${size('spacing.small')};
-`;
+// const StyledIcon = styled(Icon)`
+//   margin-left: ${size('spacing.small')};
+// `;
 
 const CommunitySATDateForm = ({
   error, onDateChange, onTimeChange, handleSubmit,
@@ -76,7 +76,8 @@ const CommunitySATDateForm = ({
         onChange={onTimeChange}
       />
       <MedicaidLabel size="caption">
-        Do you qualify for medicaid? <StyledIcon icon="help" size="regular" palette="slate" variation="filler" />
+        Do you qualify for medicaid?
+        {/* <StyledIcon icon="help" size="regular" palette="slate" variation="filler" /> */}
       </MedicaidLabel>
       <StyledTimeField
         options={medicaidOptions}

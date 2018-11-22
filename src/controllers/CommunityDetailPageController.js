@@ -208,13 +208,7 @@ class CommunityDetailPageController extends Component {
         SlyEvent.getInstance().sendEvent(event);
       }
     }
-    /*
-    let event = {action:'submit',category:'requestavailability',label:this.props.community.id};
-    SlyEvent.getInstance().sendEvent(event);
-    let event = {action:'submit',category:'requestavailability',label:this.props.community.id};
-    let event = {action:'contactCommunity',category:'requestCallback',label:this.props.community.id};
-    SlyEvent.getInstance().sendEvent(event);
-    */
+
     set({
       isMediaGalleryFullscreenActive: !isMediaGalleryFullscreenActive,
     });
@@ -282,14 +276,14 @@ class CommunityDetailPageController extends Component {
 
     SlyEvent.getInstance().sendEvent(event);
     history.push(`/book-a-tour/${id}`);
-  }
+  };
 
   handleToggleAskAgentQuestionModal = () => {
     const { set, isAskAgentQuestionModalVisible } = this.props;
     set({
       isAskAgentQuestionModalVisible: !isAskAgentQuestionModalVisible,
     });
-  }
+  };
 
   render() {
     const {

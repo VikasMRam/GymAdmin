@@ -12,6 +12,7 @@ const validate = createValidator({
   email: [required, email],
   password: [required],
 });
+
 const ReduxForm = reduxForm({
   form: 'LoginForm',
   validate,
@@ -37,7 +38,7 @@ class LoginFormContainer extends Component {
         throw new SubmissionError({ _error: 'Oops! That email / password combination is not valid.' });
       });
     });
-  }
+  };
 
   render() {
     return (

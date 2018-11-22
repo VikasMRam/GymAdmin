@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
-
 import styled, { css } from 'styled-components';
-import { palette } from 'sly/components/themes';
-import RRLink from 'react-router-dom/Link';
 import { matchPath } from 'react-router-dom';
-import { string, array } from 'prop-types';
+import RRLink from 'react-router-dom/Link';
+import { string, oneOf } from 'prop-types';
+
+import { palette, getKey } from 'sly/components/themes';
 
 import { routes as routesPropType } from 'sly/propTypes/routes';
+import { variation as variationPropType } from 'sly/propTypes/variation';
+
+const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
 const isLinkToAllowed = (routes, to) => {
   return routes.some(route => matchPath(to, route));
 };
 
 const styles = css`
-  color: ${palette(0)};
+  color: ${getColor};
   text-decoration: none;
 
   &:hover {
@@ -22,7 +25,7 @@ const styles = css`
   }
 
   &:active {
-    color: ${palette(0)};
+    color: ${getColor};
   }
 
   &:focus {
@@ -42,10 +45,13 @@ export default class Link extends Component {
   static propTypes = {
     to: string,
     href: string,
+    palette: oneOf(Object.keys(getKey('palette'))),
+    variation: variationPropType,
   };
 
   static defaultProps = {
-    palette: 'secondary',
+    palette: 'primary',
+    variation: 'base',
   };
 
   static contextTypes = {
@@ -76,5 +82,4 @@ export default class Link extends Component {
       : { };
     return <Anchor {...target} {...props} />;
   }
-};
-
+}

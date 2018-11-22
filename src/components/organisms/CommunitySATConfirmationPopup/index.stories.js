@@ -5,15 +5,13 @@ import { action } from '@storybook/addon-actions';
 import CommunitySATConfirmationPopup from 'sly/components/organisms/CommunitySATConfirmationPopup';
 import Modal from 'sly/components/molecules/Modal/index';
 
-import { withPreventDefault } from 'sly/services/helpers/forms';
-
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const { similarProperties } = RhodaGoldmanPlaza;
 
 const defaultProps = {
   similarCommunities: similarProperties,
-  onButtonClick: withPreventDefault(action('Button Clicked')),
+  similarCommunititesHref: 'www.teamseniorly.com',
 };
 
 storiesOf('Organisms|CommunitySATConfirmationPopup', module)

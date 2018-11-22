@@ -206,7 +206,7 @@ Slider.defaultProps = {
   min: 0,
   max: 2,
   step: 1,
-  palette: 'secondary',
+  palette: 'primary',
   valueParse: val => val,
   valueWidth: 'regular',
   valuePosition: 'right',

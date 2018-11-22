@@ -137,7 +137,7 @@ class SaveCommunityController extends Component {
         });
       });
     }
-  }
+  };
 
   handleModalClose = () => {
     const { setQueryParams, set, searchParams } = this.props;
@@ -151,7 +151,7 @@ class SaveCommunityController extends Component {
       action: 'close-modal', category: 'saveCommunity', label: searchParams.entityId,
     };
     SlyEvent.getInstance().sendEvent(event);
-  }
+  };
 
   render() {
     const {

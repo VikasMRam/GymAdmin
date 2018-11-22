@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import CommunitySATConfirmationPopup from 'sly/components/organisms/CommunitySATConfirmationPopup';
 
 const appointmentText = 'Saturday, October 21, Anytime';
-const onButtonClick = jest.fn();
+const similarCommunititesHref = 'www.teamseniorly.com';
 const defaultProps = {
   communityName: 'Rhoda Goldman Plaza',
   communityImageUrl: 'image.url',
@@ -18,7 +18,7 @@ const defaultProps = {
     numReviews: 2,
   }],
   appointmentText,
-  onButtonClick,
+  similarCommunititesHref,
 };
 
 const wrap = (props = {}) => shallow(<CommunitySATConfirmationPopup {...defaultProps} {...props} />);

@@ -4,6 +4,7 @@ import { string, number, bool, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
 import { ifProp, prop } from 'styled-tools';
+import { variation as variationPropType } from 'sly/propTypes/variation';
 
 import { size, palette, key, getKey } from 'sly/components/themes';
 
@@ -45,7 +46,7 @@ Icon.propTypes = {
   width: number,
   size: oneOf(['tiny', 'small', 'regular', 'large', 'xLarge', 'xxLarge']),
   palette: oneOf(Object.keys(getKey('palette'))),
-  variation: oneOf(['base', 'accent', 'filler', 'stroke', 'background']),
+  variation: variationPropType,
   fill: string,
   stroke: string,
   flip: bool,
@@ -54,7 +55,7 @@ Icon.propTypes = {
 Icon.defaultProps = {
   flip: false,
   size: 'regular',
-  palette: 'secondary',
+  palette: 'primary',
   variation: 'base',
 };
 

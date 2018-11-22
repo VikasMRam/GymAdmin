@@ -5,15 +5,15 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 import { isResourceCreateRequestInProgress } from 'sly/store/selectors';
+import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
+import ShareCommunityForm from 'sly/components/organisms/ShareCommunityForm';
+
 import {
   createValidator,
   required,
   email,
   emails,
 } from 'sly/services/validation';
-import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
-
-import ShareCommunityForm from 'sly/components/organisms/ShareCommunityForm';
 
 const formName = 'ShareCommunityForm';
 
@@ -63,7 +63,7 @@ class ShareCommunityFormContainer extends Component {
       .catch(() => {
         throw new SubmissionError({ _error: 'Failed to share community. Please try again.' });
       });
-  }
+  };
 
   render() {
     const { isCreating, ...props } = this.props;

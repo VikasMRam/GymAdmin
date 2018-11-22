@@ -1,18 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { func, object } from 'prop-types';
-
-import { ASSESSMENT } from 'sly/services/api/actions';
-
-import { resourceCreateRequest } from 'sly/store/resource/actions';
-
-import {
-  createValidator,
-  required,
-  email,
-  usPhone,
-} from 'sly/services/validation';
 
 import AdvancedInfoForm from 'sly/components/organisms/AdvancedInfoForm';
 

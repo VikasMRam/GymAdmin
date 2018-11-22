@@ -48,7 +48,7 @@ const ReviewProviderDiv = styled.div`
 // `;
 
 const Link = styled.a`
-  color: ${palette('secondary', 2)};
+  color: ${palette('primary', 0)};
 `;
 
 const DisclaimerDiv = styled.div`

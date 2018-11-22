@@ -6,10 +6,6 @@ import { object, func, bool } from 'prop-types';
 import { getDetail } from 'sly/store/selectors';
 
 import {
-  resourceCreateRequest,
-} from 'sly/store/resource/actions';
-
-import {
   createValidator,
   createBooleanValidator,
   notProvided,
@@ -44,12 +40,15 @@ const ReduxForm = reduxForm({
 class ConversionFormContainer extends Component {
   static propTypes = {
     community: object,
+    gotoWhatNext: func.isRequired,
+    userDetails: object,
     submitExpressConversion: func.isRequired,
     submitRegularConversion: func.isRequired,
     express: bool.isRequired,
   };
+
   static defaultProps = {
-    express: false
+    express: false,
   };
 
   render() {
@@ -69,8 +68,9 @@ class ConversionFormContainer extends Component {
       phone,
       full_name: fullName,
     };
-    let agent, contact = null;
-    if(community) {
+    let agent = null;
+    let contact = null;
+    if (community) {
       const { agents, contacts } = community;
       agent = agents[0];
       contact = contacts[0];
@@ -94,7 +94,7 @@ class ConversionFormContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   userDetails: (getDetail(state, 'userAction') || {}).userDetails || {},
 });
 

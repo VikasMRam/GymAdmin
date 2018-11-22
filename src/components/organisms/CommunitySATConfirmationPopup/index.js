@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { func, array } from 'prop-types';
+import { string, array } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import CommunitySATAcknowledgement from 'sly/components/organisms/CommunitySATAcknowledgement/index';
@@ -38,7 +38,7 @@ const SimilarCommunitiesWrapper = styled.div`
 `;
 
 const CommunitySATConfirmationPopup = ({
-  onButtonClick, similarCommunities,
+  similarCommunititesHref, similarCommunities,
 }) => {
   const similarCommunitiesComponent = similarCommunities.map(community => (
     <SimilarCommunityTileWrapper key={community.id}>
@@ -56,7 +56,7 @@ const CommunitySATConfirmationPopup = ({
   return (
     <Fragment>
       <CommunitySATAcknowledgementWrapper>
-        <CommunitySATAcknowledgement onButtonClick={onButtonClick} />
+        <CommunitySATAcknowledgement similarCommunititesHref={similarCommunititesHref} />
       </CommunitySATAcknowledgementWrapper>
       <StyledHr />
       <StyledHeading level="title">Explore communities nearby</StyledHeading>
@@ -66,7 +66,7 @@ const CommunitySATConfirmationPopup = ({
 };
 
 CommunitySATConfirmationPopup.propTypes = {
-  onButtonClick: func.isRequired,
+  similarCommunititesHref: string.isRequired,
   similarCommunities: array.isRequired,
 };
 

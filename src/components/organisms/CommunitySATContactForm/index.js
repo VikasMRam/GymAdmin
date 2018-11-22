@@ -61,8 +61,8 @@ const CommunitySATContactForm = ({
       {!(user && user.phoneNumber) && <Field
         name="phone"
         label="Phone"
-        type="number"
-        placeholder="Phone"
+        type="text"
+        placeholder="925-555-5555"
         component={ReduxField}
       />}
       {user && <Field

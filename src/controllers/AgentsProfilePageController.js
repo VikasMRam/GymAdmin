@@ -3,8 +3,6 @@ import { func, object, arrayOf } from 'prop-types';
 
 import AgentsProfilePage from 'sly/components/pages/AgentsProfilePage';
 import { connectController } from 'sly/controllers';
-import { resourceListReadRequest } from 'sly/store/resource/actions';
-import { getList } from 'sly/store/selectors';
 import { agents } from 'sly/services/helpers/agents';
 
 const agentStateRegionMap = {
@@ -58,7 +56,7 @@ class AgentsProfilePageController extends Component {
     set({
       activeProfile: profile,
     });
-  }
+  };
 
   render() {
     const { activeProfile } = this.props;
@@ -82,9 +80,7 @@ class AgentsProfilePageController extends Component {
       }
       return regionProfilesMap;
     }, {});
-    const uniqueArray = notFoundRegions.filter((item, pos) => {
-      return notFoundRegions.indexOf(item) === pos;
-    });
+
     return <AgentsProfilePage regionProfiles={regionProfiles} activeProfile={activeProfile} setModalProfile={this.handleModalProfile} />;
   }
 }
@@ -92,12 +88,7 @@ class AgentsProfilePageController extends Component {
 const mapStateToProps = (state, { controller }) => {
   return {
     activeProfile: controller.activeProfile || null,
-    // agents: getList(state, 'agent'),
   };
 };
 
-const fetchData = (dispatch) => {
-  // return dispatch(resourceListReadRequest('agent'));
-};
-
-export default connectController(mapStateToProps, fetchData)(AgentsProfilePageController);
+export default connectController(mapStateToProps)(AgentsProfilePageController);

@@ -24,7 +24,6 @@ const MorePicsMobile = styled(Button)`
 
 const BottomRightWrapper = styled.span`
   background: ${palette('slate', 0)}80;
-  color: ${palette('slate', 2)};
   font-size: ${size('text.tiny')};
   padding: ${size('spacing.small')} ${size('spacing.regular')};
 `;
@@ -149,7 +148,7 @@ export default class CommunityMediaGallery extends Component {
     const bottomRightSection = () => (
       websiteUrl ?
         <BottomRightWrapper>
-          <Link palette="slate" href={websiteUrl} target="_blank"> Image source </Link>
+          <Link palette="slate" variation="filler" href={websiteUrl} target="_blank"> Image source </Link>
         </BottomRightWrapper> : null
     );
 

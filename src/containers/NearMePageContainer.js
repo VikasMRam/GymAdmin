@@ -10,6 +10,14 @@ import ErrorPage from 'sly/components/pages/Error';
 import NearMePage from 'sly/components/pages/NearMePage';
 import { parseURLQueryParams } from 'sly/services/helpers/url';
 
+const handleClick = (e, sectionRef) => {
+  // Link triggers router navigation so need to preventDefault.
+  // TODO: find better way to do it with any other component without much styling code
+  e.preventDefault();
+  if (sectionRef.current) {
+    sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+  }
+};
 
 class NearMePageContainer extends Component {
   static propTypes = {
@@ -20,6 +28,7 @@ class NearMePageContainer extends Component {
     requestMeta: object.isRequired,
     errorCode: number,
     isFetchingResults: bool,
+    location: object.isRequired,
   };
 
   handleOnLocationSearch = (result) => {
@@ -33,15 +42,6 @@ class NearMePageContainer extends Component {
     const { path } = filterLinkPath(searchParams, {});
     history.push(path);
   };
-
-  handleClick(e, sectionRef) {
-    // Link triggers router navigation so need to preventDefault.
-    // TODO: find better way to do it with any other component without much styling code
-    e.preventDefault();
-    if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
 
   render() {
     const {
@@ -66,7 +66,7 @@ class NearMePageContainer extends Component {
         searchParams={searchParams}
         communityList={communityList}
         isFetchingResults={isFetchingResults}
-        handleAnchor={this.handleClick}
+        handleAnchor={handleClick}
         location={location}
       />
     );

@@ -92,7 +92,6 @@ export default class CommunityDetailPage extends Component {
     userSave: object,
     searchParams: object,
     setQueryParams: func,
-    notifyInfo: func,
     onSATClick: func,
     isAlreadyTourScheduled: bool,
     isAskAgentQuestionModalVisible: bool,
@@ -174,7 +173,6 @@ export default class CommunityDetailPage extends Component {
       userSave,
       searchParams,
       setQueryParams,
-      notifyInfo,
       onSATClick,
       isAlreadyTourScheduled,
       isAskAgentQuestionModalVisible,
@@ -334,7 +332,6 @@ export default class CommunityDetailPage extends Component {
         <CommunityDetailPageTemplate
           column={columnContent}
           bottom={bottomContent}
-          notifyInfo={notifyInfo}
           bannerNotification={isAlreadyTourScheduled ?
             'We have recieved your tour request. Your advisor is checking this community’s availability and will get back to you shortly.' : null}
         >
@@ -504,18 +501,13 @@ export default class CommunityDetailPage extends Component {
           </CollapsibleSection>
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
-        <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
-          {({ getPricing }) => (
-            <StickyFooter
-              footerInfo={{
-                title: 'Contact Property',
-                name: community.name,
-                ctaTitle: 'Contact',
-              }}
-              onFooterClick={getPricing}
-            />
-          )}
-        </ConciergeController>
+        <StickyFooter
+          footerInfo={{
+            ctaTitle: !isAlreadyTourScheduled ? 'Schedule a Tour' : 'Tour requested',
+          }}
+          ghostButton={isAlreadyTourScheduled}
+          onFooterClick={!isAlreadyTourScheduled ? onSATClick : onToggleAskAgentQuestionModal}
+        />
         {(searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||
           searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) &&
           <NotificationController>
@@ -557,7 +549,7 @@ export default class CommunityDetailPage extends Component {
           {({ isConfirmationModalVisible, toggleConfirmationModal }) => {
               const props = {
                 similarCommunities: similarProperties,
-                onButtonClick: toggleConfirmationModal,
+                similarCommunititesHref: getCitySearchUrl({ propInfo, address }),
               };
               return (
                 <Modal
@@ -576,9 +568,17 @@ export default class CommunityDetailPage extends Component {
           isOpen={isAskAgentQuestionModalVisible}
           onClose={onToggleAskAgentQuestionModal}
         >
-          <CommunityAskQuestionAgentFormContainer
-            notifyInfo={notifyInfo}
-          />
+          <NotificationController>
+            {({
+              notifyInfo,
+            }) => (
+              <CommunityAskQuestionAgentFormContainer
+                toggleAskAgentQuestionModal={onToggleAskAgentQuestionModal}
+                notifyInfo={notifyInfo}
+                community={community}
+              />
+            )}
+          </NotificationController>
         </Modal>
       </Fragment>
     );

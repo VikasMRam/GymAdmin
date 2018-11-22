@@ -6,11 +6,16 @@ import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
 
 import { resourceListReadRequest } from 'sly/store/resource/actions';
-import { getList, getListMeta } from 'sly/store/selectors';
-import { isCommunitySearchPageModalFilterPanelActive, isResourceListRequestInProgress } from 'sly/store/selectors';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 import { toggleModalFilterPanel } from 'sly/store/communitySearchPage/actions';
+
+import {
+  getList,
+  getListMeta,
+  isCommunitySearchPageModalFilterPanelActive,
+  isResourceListRequestInProgress,
+} from 'sly/store/selectors';
 
 import {
   filterLinkPath,
@@ -29,15 +34,7 @@ class CommunitySearchPageContainer extends Component {
     isModalFilterPanelVisible: bool,
     toggleModalFilterPanel: func,
     isFetchingResults: bool,
-  }
-
-  // componentDidUpdate() {
-  //   const { searchParams } = this.props;
-  //   const event = {
-  //     action: 'search', category: searchParams.toc, label:queryString.stringify(searchParams),
-  //   };
-  //   SlyEvent.getInstance().sendEvent(event);
-  // }
+  };
 
   // TODO Define Search Parameters
   toggleMap = () => {

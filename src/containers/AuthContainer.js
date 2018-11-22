@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { getDetail } from 'sly/store/selectors';
 import { authenticateCancel, authenticateSuccess } from 'sly/store/authenticated/actions';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 
