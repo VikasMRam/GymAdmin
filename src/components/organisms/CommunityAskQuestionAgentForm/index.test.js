@@ -5,7 +5,7 @@ import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAsk
 import { Block } from 'sly/components/atoms';
 
 const wrap = (props = {}) =>
-  shallow(<CommunityAskQuestionAgentForm {...props} />);
+  shallow(<CommunityAskQuestionAgentForm communityName="rhoda" {...props} />);
 
 describe('CommunityAskQuestionAgentForm', () => {
   it('renders', () => {

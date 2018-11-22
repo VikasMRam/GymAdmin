@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
-import { func, string } from 'prop-types';
+import { func } from 'prop-types';
 import SlyEvent from 'sly/services/helpers/events';
 import { ASK_QUESTION } from 'sly/services/api/actions';
 
@@ -10,6 +10,7 @@ import {
   createValidator,
   required,
 } from 'sly/services/validation';
+import { community as communityPropType } from 'sly/propTypes/community';
 
 import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
 
@@ -28,18 +29,19 @@ class CommunityAskQuestionAgentFormContainer extends Component {
     notifyInfo: func.isRequired,
     clearSubmitErrors: func.isRequired,
     toggleAskAgentQuestionModal: func.isRequired,
-    communitySlug: string.isRequired,
+    community: communityPropType,
   };
 
   handleOnSubmit = (data) => {
     const {
       postUserAction, notifyInfo, clearSubmitErrors, toggleAskAgentQuestionModal,
-      communitySlug,
+      community,
     } = this.props;
+    const { id } = community;
 
     const value = {
       question: data.question,
-      slug: communitySlug,
+      slug: id,
     };
 
     const body = {
@@ -63,9 +65,13 @@ class CommunityAskQuestionAgentFormContainer extends Component {
   }
 
   render() {
+    const { community } = this.props;
+    const { name } = community;
+
     return (
       <ReduxForm
         onSubmit={this.handleOnSubmit}
+        communityName={name}
       />
     );
   }
