@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { func, bool, object } from 'prop-types';
+import { func, bool, object, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
@@ -40,7 +40,7 @@ const defaultMenuItems = [
 ];
 
 const loginHeaderItems = user => user
-  ? [] //[{ name: 'Dashboard', url: '/mydashboard' }]
+  ? []
   : [{ name: 'Sign in' }];
 
 const loginMenuItems = user => loginHeaderItems(user)
@@ -63,6 +63,7 @@ class HeaderController extends Component {
     match: object,
     location: object,
     ensureAuthenticated: func,
+    className: string.isRequired,
   };
 
   handleMenuItemClick = () => {

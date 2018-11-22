@@ -26,15 +26,15 @@ class NotificationController extends Component {
     set({
       messages,
     });
-  }
+  };
 
   notifyInfo = (message) => {
     this.addNotification(message);
-  }
+  };
 
   notifyError = (message) => {
     this.addNotification(message, 'error');
-  }
+  };
 
   handleDismiss = (message) => {
     const { set, messages } = this.props;
@@ -46,7 +46,7 @@ class NotificationController extends Component {
         messages,
       });
     }
-  }
+  };
 
   render() {
     const { children, messages } = this.props;

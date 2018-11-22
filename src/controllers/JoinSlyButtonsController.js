@@ -46,7 +46,7 @@ class JoinSlyButtonsController extends Component {
       onConnectSuccess,
       () => this.setSocialLoginError('Failed to authorize with Google. Please try again.')
     );
-  }
+  };
 
   onFacebookConnected = (resp) => {
     const { thirdpartyLogin, onConnectSuccess } = this.props;
@@ -77,7 +77,7 @@ class JoinSlyButtonsController extends Component {
     set({
       socialLoginError: msg,
     });
-  }
+  };
 
   handleContinueWithFacebookClick = () => {
     this.setSocialLoginError('');
@@ -90,7 +90,7 @@ class JoinSlyButtonsController extends Component {
         }
       }, { scope: 'email' });
     }
-  }
+  };
 
   handleContinueWithGoogleClick = () => {
     this.setSocialLoginError('');
@@ -101,7 +101,7 @@ class JoinSlyButtonsController extends Component {
         () => this.setSocialLoginError('Failed to connect with Google. Please try again.')
       );
     }
-  }
+  };
 
   render() {
     const {
