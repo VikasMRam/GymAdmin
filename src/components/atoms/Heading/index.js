@@ -1,19 +1,18 @@
 import React from 'react';
-import { string, node, bool, oneOf } from 'prop-types';
+import { string, node, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { prop } from 'styled-tools';
-
-import { size, font, palette } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 const fontSize = p => size('text', p.size || p.level);
 const lineHeight = p => size('lineHeight', p.size || p.level);
 
-const getTag = level => {
-  switch(level) {
+const getTag = (level) => {
+  switch (level) {
     case 'hero': return 1;
     case 'title': return 2;
     case 'subtitle': return 3;
+    default: return 1;
   }
 };
 
