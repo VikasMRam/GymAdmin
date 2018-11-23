@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object, func, bool } from 'prop-types';
-
 import { ifProp } from 'styled-tools';
 
 import { size, assetPath, palette } from 'sly/components/themes';
@@ -10,7 +9,6 @@ import Field from 'sly/components/molecules/Field';
 import Radio from 'sly/components/molecules/Radio';
 import IconButton from 'sly/components/molecules/IconButton';
 import { Link, Image, Box, Hr, Button } from 'sly/components/atoms';
-
 import {
   tocs,
   budgets,
@@ -91,7 +89,7 @@ const generateRadioLink = (elem, type, path, selected, nofollow) => {
         selected={selected}
         rel="nofollow"
       >
-        <Radio checked={selected}/>{elem.label}
+        <Radio checked={selected} />{elem.label}
       </StyledLink>
     );
   }
@@ -123,7 +121,7 @@ const CommunityFilterList = ({
   onFieldChange,
   onParamsRemove,
 }) => {
-  const nofollow = searchParams.hasOwnProperty('budget') || searchParams.hasOwnProperty('size');
+  const nofollow = searchParams.budget || searchParams.size;
 
   const tocFields = tocs.map((elem) => {
     const { path, selected } = filterLinkPath(searchParams, { toc: elem.value });

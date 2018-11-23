@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
+
 import Header from '.';
 
 const headerItems = [

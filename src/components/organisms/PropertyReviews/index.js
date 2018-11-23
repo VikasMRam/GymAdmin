@@ -5,9 +5,7 @@ import Button from 'sly/components/atoms/Button';
 import Modal from 'sly/components/molecules/Modal';
 import PropertyReview from 'sly/components/molecules/PropertyReview';
 import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
-
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
-
 import { ADD_RATING } from 'sly/constants/modalType';
 
 const PropertyReviews = ({

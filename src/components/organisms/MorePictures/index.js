@@ -41,7 +41,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const MorePictures = ({ gallery, communityName, city, state, onPictureClick }) => {
+const MorePictures = ({
+  gallery, communityName, city, state, onPictureClick,
+}) => {
   const { images } = gallery;
   const imageComponents = images.map((image, i) => (
     <Lazy

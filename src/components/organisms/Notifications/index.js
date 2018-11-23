@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 
 import { size, key } from 'sly/components/themes';
-
 import Notification from 'sly/components/molecules/Notification';
 
 const transitionName = 'slide';

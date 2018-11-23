@@ -3,8 +3,7 @@ import styled, { css } from 'styled-components';
 import { oneOf } from 'prop-types';
 import { switchProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
-import { assetPath } from "sly/components/themes";
+import { size, assetPath } from 'sly/components/themes';
 import ReasonTile from 'sly/components/molecules/ReasonTile';
 
 
@@ -46,7 +45,7 @@ const compare = {
 const reasons = {
   howItWorks: [search, support, free],
   whatNext: [connect, compare, free],
-}
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -69,8 +68,8 @@ const Wrapper = styled.div`
 
 const HowSlyWorks = ({ reasons: key, ...props }) => {
   return (
-    <Wrapper {...props }>
-      {reasons[key].map((reason) => (
+    <Wrapper {...props}>
+      {reasons[key].map(reason => (
         <ReasonTile
           key={reason.title}
           {...reason}

@@ -10,7 +10,7 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
-import {createBooleanValidator, email, required, usPhone} from "sly/services/validation";
+import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
 
 const Item = styled.div`
   display: inline-block;
@@ -110,7 +110,7 @@ export default class PricingAndAvailability extends Component {
       roomPrices: [],
     };
 
-    renderEstimatedPricing = ({ roomsLength, estimatedBase }) => (roomsLength && estimatedBase)? (
+    renderEstimatedPricing = ({ roomsLength, estimatedBase }) => (roomsLength && estimatedBase) ? (
       <Rate>
         {'Estimated '}
         <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />
@@ -173,12 +173,12 @@ export default class PricingAndAvailability extends Component {
             {(!roomPrices.length && estimatedPriceBase) ?
               (
                 <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams}>
-                  {({getPricing}) =>
-                    <EstimatedCost
+                  {({ getPricing }) =>
+                    (<EstimatedCost
                       getPricing={getPricing}
                       community={community}
                       price={estimatedPriceBase}
-                    />
+                    />)
                   }
                 </ConciergeController>
               ) : null
@@ -195,7 +195,7 @@ export default class PricingAndAvailability extends Component {
                   if (!hasAllUserData(userDetails)) {
                     return (
                       <DoneBox>
-                        <Icon icon='round-checkmark' />
+                        <Icon icon="round-checkmark" />
                         <DoneText>
 
                           We received your request, check your inbox shortly.
@@ -203,25 +203,22 @@ export default class PricingAndAvailability extends Component {
                         </DoneText>
                       </DoneBox>
                     );
-                  } else {
+                  }
                     return (
                       <DoneBox>
-                        <Icon icon='round-checkmark' />
+                        <Icon icon="round-checkmark" />
                         <DoneText>
                           Your Seniorly Guide will reach out to you regarding this community.
                         </DoneText>
                       </DoneBox>
                     );
-                  }
-
-                } else {
+                }
                   return (
                     <GetCurrentAvailabilityFormContainer
                       submitExpressConversion={submitExpressConversion}
                       community={community}
                     />
                   );
-                }
               }
             }
           </ConciergeController>

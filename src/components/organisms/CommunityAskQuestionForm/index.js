@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField/index';
-
 import { Heading, Button } from 'sly/components/atoms';
 
 const StyledButton = styled(Button)`

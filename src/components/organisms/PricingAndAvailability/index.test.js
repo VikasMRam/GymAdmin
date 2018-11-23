@@ -1,19 +1,19 @@
 import React from 'react';
 import { mount } from 'enzyme';
-
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+
+import PricingAndAvailability, { findPercentage, sortProperties } from '.';
 
 import RoomTile from 'sly/components/molecules/RoomTile';
 import PriceBar from 'sly/components/molecules/PriceBar';
 
-import PricingAndAvailability, { findPercentage, sortProperties } from '.';
 
-const wrap = (props = {}) => mount(() =>
-  <Provider store={createStore(state=>state)}>
+const wrap = (props = {}) => mount(() => (
+  <Provider store={createStore(state => state)}>
     <PricingAndAvailability {...props} />);
   </Provider>
-);
+));
 
 const properties = {
   case1: {

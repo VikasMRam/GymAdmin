@@ -5,8 +5,7 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
-
-import { Heading, Button, Block } from 'sly/components/atoms';
+import { Heading, Button } from 'sly/components/atoms';
 
 const Form = styled.form`
   width: 100%;
@@ -37,11 +36,11 @@ const typeOfCareOptions = [
   { value: 'assisted', label: 'Assisted' },
   { value: 'memory', label: 'Dementia' },
 ];
-const typeOfRoomOptions = [
-  { value: 'shared', label: 'Shared Suite' },
-  { value: 'studio', label: 'Studio' },
-  { value: 'bedroom', label: '1+ Bedroom' },
-];
+// const typeOfRoomOptions = [
+//   { value: 'shared', label: 'Shared Suite' },
+//   { value: 'studio', label: 'Studio' },
+//   { value: 'bedroom', label: '1+ Bedroom' },
+// ];
 const timeToMoveOptions = [
   { value: 1, label: 'Now' },
   { value: 3, label: '1-3 Months' },
@@ -55,10 +54,10 @@ const budgetOptions = [
   // { value: 10, label: 'Over $6000' },
 ];
 
-const paymentOptions = [
-  {value:'Private Pay',label:'Private Pay'},
-  {value:'Medicaid Pay',label:'Medicaid'}
-]
+// const paymentOptions = [
+//   { value: 'Private Pay', label: 'Private Pay' },
+//   { value: 'Medicaid Pay', label: 'Medicaid' },
+// ];
 
 const AdvancedInfoForm = ({
   handleSubmit, submitting, community,
@@ -74,14 +73,14 @@ const AdvancedInfoForm = ({
       width="100%"
       component={ReduxField}
     />
-    {/*<Field*/}
-      {/*name="type_of_room"*/}
-      {/*label="What type of room are you looking for?"*/}
-      {/*type="multiplechoice"*/}
-      {/*options={typeOfRoomOptions}*/}
-      {/*width="75%"*/}
-      {/*component={ReduxField}*/}
-    {/*/>*/}
+    {/* <Field */}
+    {/* name="type_of_room" */}
+    {/* label="What type of room are you looking for?" */}
+    {/* type="multiplechoice" */}
+    {/* options={typeOfRoomOptions} */}
+    {/* width="75%" */}
+    {/* component={ReduxField} */}
+    {/* /> */}
     <Field
       name="time_to_move"
       label="When would you/your loved one want to move in?"
@@ -98,14 +97,14 @@ const AdvancedInfoForm = ({
       width="100%"
       component={ReduxField}
     />
-    {/*<Field*/}
-      {/*name="payment_mode"*/}
-      {/*label="How do you intend to pay?"*/}
-      {/*type="singlechoice"*/}
-      {/*options={paymentOptions}*/}
-      {/*width="100%"*/}
-      {/*component={ReduxField}*/}
-    {/*/>*/}
+    {/* <Field */}
+    {/* name="payment_mode" */}
+    {/* label="How do you intend to pay?" */}
+    {/* type="singlechoice" */}
+    {/* options={paymentOptions} */}
+    {/* width="100%" */}
+    {/* component={ReduxField} */}
+    {/* /> */}
     <Field
       name="medicaid_coverage"
       label="I'm only using Medicaid to pay."

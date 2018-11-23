@@ -7,7 +7,6 @@ import {
   SAVE_COMMUNITY_STEPS_UPDATE,
   SAVE_COMMUNITY_STEPS_COMPLETE,
 } from 'sly/constants/saveCommunitySteps';
-
 import Modal from 'sly/components/molecules/Modal';
 import SaveCommunityFormContainer from 'sly/containers/SaveCommunityFormContainer';
 import CommunitySaved from 'sly/components/organisms/CommunitySaved';

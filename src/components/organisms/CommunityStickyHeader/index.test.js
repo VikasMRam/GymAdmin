@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
 import { Link } from 'sly/components/atoms';
 
-import CommunityStickyHeader from '.';
 
 const dummyRef = React.createRef();
 const items = [

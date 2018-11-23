@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { string, number, shape, arrayOf } from 'prop-types';
 import styled from 'styled-components';
-
 import { Marker, InfoWindow } from 'react-google-maps';
 
 import { isServer } from 'sly/config';
-import { size, palette } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import Map from 'sly/components/atoms/Map';
 import MapTile from 'sly/components/molecules/MapTile';
-
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
 

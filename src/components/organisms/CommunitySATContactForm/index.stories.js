@@ -3,9 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
+import CommunitySATContactForm from 'sly/components/organisms/CommunitySATContactForm';
 import { withPreventDefault } from 'sly/services/helpers/forms';
 
-import CommunitySATContactForm from '.';
 
 const CommunitySATContactFormContainer = reduxForm({
   form: 'CommunitySATContactForm',

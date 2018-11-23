@@ -5,9 +5,7 @@ import { Field } from 'redux-form';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-
 import { Heading, Image, Button, Block } from 'sly/components/atoms';
-
 import ReduxField from 'sly/components/organisms/ReduxField';
 
 const StyledHeading = styled(Heading)`

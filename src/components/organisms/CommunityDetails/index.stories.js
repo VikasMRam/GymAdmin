@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
+import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-import CommunityDetails from '.';
 
 const {
   name, propInfo,

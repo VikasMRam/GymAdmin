@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import CommunitySATConfirmationPopup from 'sly/components/organisms/CommunitySATConfirmationPopup';
-import { Link } from 'sly/components/atoms/index';
 
 const appointmentText = 'Saturday, October 21, Anytime';
 const similarCommunititesHref = 'www.teamseniorly.com';

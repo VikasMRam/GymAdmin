@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+
 import Footer from '.';
 
 const wrap = (props = {}) => shallow(<Footer {...props} />);

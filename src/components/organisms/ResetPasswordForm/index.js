@@ -2,13 +2,10 @@ import React from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
-
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
-
 import ReduxField from 'sly/components/organisms/ReduxField';
-
 import { Heading, Button, Block } from 'sly/components/atoms';
 
 const Form = styled.form`

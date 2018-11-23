@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { arrayOf, string } from 'prop-types';
 import styled from 'styled-components';
 
@@ -9,27 +9,24 @@ const StyledArticle = styled.article`
   margin-bottom: ${size('spacing.large')};
 `;
 
-export default class CareServicesList extends Component {
-  static propTypes = {
-    communityName: string.isRequired,
-    careServices: arrayOf(string).isRequired,
-    serviceHighlights: arrayOf(string).isRequired,
-  };
+const CareServicesList = ({ communityName, careServices, serviceHighlights }) => (
+  <section id="care-services">
+    {serviceHighlights && serviceHighlights.length > 0 &&
+    <StyledArticle>
+      <List heading={`${communityName} is known for`} items={serviceHighlights} />
+    </StyledArticle>
+    }
 
-  render() {
-    const { communityName, careServices, serviceHighlights } = this.props;
+    <StyledArticle>
+      <List heading={`${communityName} also offers`} items={careServices} />
+    </StyledArticle>
+  </section>
+);
 
-    return (
-      <section id="care-services">
-        {serviceHighlights && serviceHighlights.length > 0 && <StyledArticle>
-          <List heading={`${communityName} is known for`} items={serviceHighlights} />
-        </StyledArticle>
-        }
+CareServicesList.propTypes = {
+  communityName: string.isRequired,
+  careServices: arrayOf(string).isRequired,
+  serviceHighlights: arrayOf(string).isRequired,
+};
 
-        <StyledArticle>
-          <List heading={`${communityName} also offers`} items={careServices} />
-        </StyledArticle>
-      </section>
-    );
-  }
-}
+export default CareServicesList;

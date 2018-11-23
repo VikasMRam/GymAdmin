@@ -1,11 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import CommunitySaved from 'sly/components/organisms/CommunitySaved';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-
 import SimilarCommunitiesNearby from 'sly/components/organisms/SimilarCommunitiesNearby';
 
-import CommunitySaved from '.';
 
 const { similarProperties } = RhodaGoldmanPlaza;
 

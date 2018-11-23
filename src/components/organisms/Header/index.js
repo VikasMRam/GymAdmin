@@ -126,7 +126,7 @@ const HeaderItem = styled(Link)`
 `;
 
 const Header = ({
-  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur, className
+  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur, className,
 }) => {
   const headerItemComponents = headerItems.map(item => (
     <HeaderItem onClick={item.onClick} to={item.url} palette="slate" key={item.name}>
@@ -209,6 +209,7 @@ Header.propTypes = {
     onClick: func,
   })),
   menuItemHrIndices: arrayOf(number),
+  className: string,
 };
 
 Header.defaultProps = {

@@ -1,31 +1,23 @@
-import React, { Component } from 'react';
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import CollapsibleBlock  from 'sly/components/molecules/CollapsibleBlock';
+import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 
-
-export default class CommunityLocalDetails extends  Component{
-  static propTypes = {
-    localDetails: PropTypes.string,
-  };
-  static defaultProps = {
-    localDetails: '',
-  };
-
-  render(){
-    const {
-      localDetails
-    } = this.props;
-    if (localDetails) {
-      return (
-        <CollapsibleBlock collapsedDefault={false} >
-          <div dangerouslySetInnerHTML={{ __html: localDetails }}></div>
-        </CollapsibleBlock>)
-    } else {
-      return <div></div>;
-    }
-
+const CommunityLocalDetails = ({ localDetails }) => {
+  if (localDetails) {
+    return (
+      <CollapsibleBlock collapsedDefault={false} >
+        <div dangerouslySetInnerHTML={{ __html: localDetails }} />
+      </CollapsibleBlock>);
   }
+  return <div />;
 };
 
+CommunityLocalDetails.propTypes = {
+  localDetails: PropTypes.string,
+};
+CommunityLocalDetails.defaultProps = {
+  localDetails: '',
+};
 
+export default CommunityLocalDetails;

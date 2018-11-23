@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
+import SeoLinks from 'sly/components/organisms/SeoLinks';
 import { ALSeoCities } from 'sly/services/helpers/homepage';
-import SeoLinks from '.';
 
 
 storiesOf('Organisms|SeoLinks', module)
