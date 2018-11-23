@@ -10,7 +10,7 @@ const CommunityLocalDetails = ({ localDetails }) => {
         <div dangerouslySetInnerHTML={{ __html: localDetails }} />
       </CollapsibleBlock>);
   }
-  return <div />;
+  return null;
 };
 
 CommunityLocalDetails.propTypes = {

@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import { Label, Input, Block } from 'sly/components/atoms';
-
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 import CommunityChoice from 'sly/components/molecules/CommunityChoice';

@@ -4,9 +4,7 @@ import ReactTooltip from 'react-tooltip';
 import { uniqueId } from 'lodash';
 import styled from 'styled-components';
 
-
 import { size, palette } from 'sly/components/themes';
-
 import { Icon } from 'sly/components/atoms';
 
 const StyledIcon = styled(Icon)`

@@ -3,8 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { Heading, Block } from 'sly/components/atoms';
-
-import Modal from '.';
+import Modal from 'sly/components/molecules/Modal';
 
 storiesOf('Molecules|Modal', module)
   .add('default', () => (
@@ -20,7 +19,7 @@ storiesOf('Molecules|Modal', module)
   .add('closeable', () => (
     <Modal onClose={action('closed')} closeable isOpen>
       <Heading>
-        {`Hey ho, 
+        {`Hey ho,
         let's go`}
       </Heading>
       <Block>

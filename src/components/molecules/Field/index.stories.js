@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Field from '.';
+
+import Field from 'sly/components/molecules/Field';
 
 storiesOf('Molecules|Field', module)
   .add('default', () => <Field name="field" placeholder="Input some text" />)

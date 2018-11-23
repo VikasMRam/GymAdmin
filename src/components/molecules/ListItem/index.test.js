@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Icon from 'sly/components/atoms/Icon';
-import ListItem from '.';
+import ListItem from 'sly/components/molecules/ListItem';
 
 const wrap = () => shallow(<ListItem>blah</ListItem>);
 

@@ -2,11 +2,10 @@ import React from 'react';
 import { mount } from 'enzyme';
 import SwipeableViews from 'react-swipeable-views';
 
-import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-
 import { Image } from 'sly/components/atoms';
 import ThumbnailScroller from 'sly/components/molecules/ThumbnailScroller';
-import MediaGallery from '.';
+import MediaGallery from 'sly/components/molecules/MediaGallery';
+import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => mount(<MediaGallery {...props} />);
 

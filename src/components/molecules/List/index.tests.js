@@ -3,8 +3,7 @@ import { mount } from 'enzyme';
 
 import { Heading } from 'sly/components/atoms';
 import ListItem from 'sly/components/molecules/ListItem';
-
-import List from '.';
+import List from 'sly/components/molecules/List';
 
 const wrap = (props = {}) => mount(<List {...props} />);
 

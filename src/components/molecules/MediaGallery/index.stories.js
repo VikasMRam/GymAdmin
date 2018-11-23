@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 
+import MediaGallery from 'sly/components/molecules/MediaGallery';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-
-import MediaGallery from '.';
 
 class MediaGalleryWithState extends Component {
   state = {

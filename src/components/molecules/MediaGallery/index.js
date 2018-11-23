@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
-
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';

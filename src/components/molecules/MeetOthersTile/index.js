@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { string } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-
 import { Heading, Block, Image } from 'sly/components/atoms';
 
 const Wrapper = styled.div`

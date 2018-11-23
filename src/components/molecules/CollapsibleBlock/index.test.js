@@ -1,7 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import Measure from 'react-measure';
-import CollapsibleBlock, { ReadMore } from '.';
+
+import CollapsibleBlock, { ReadMore } from 'sly/components/molecules/CollapsibleBlock';
 
 const wrap = (props = {}) => mount(<CollapsibleBlock {...props} />);
 

@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import CollapsibleBlock from '.';
+
+import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 
 storiesOf('Molecules|CollapsibleBlock', module)
   .add('default', () => (

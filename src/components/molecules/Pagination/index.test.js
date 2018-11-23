@@ -2,8 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { Icon } from 'sly/components/atoms';
-
-import Pagination from '.';
+import Pagination from 'sly/components/molecules/Pagination';
 
 const wrap = (props = {}) => shallow(<Pagination {...props} />);
 
@@ -27,7 +26,7 @@ describe('Pagination', () => {
   it('should render elements under range', () => {
     const wrapper = wrap(small);
     expect(wrapper.children()).toHaveLength(6);
-    for (let i = 0; i < 5; ++i) {
+    for (let i = 0; i < 5; i += 1) {
       const button = wrapper.childAt(i);
       expect(button.prop('children')).toEqual(i + 1);
       expect(button.prop('href')).toEqual(i === 0 ? '/test' : `/test?page-number=${i}`);

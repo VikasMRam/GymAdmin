@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { number, string } from 'prop-types';
 import styled, { css } from 'styled-components';
-
 import { ifProp } from 'styled-tools';
 
 import { Link, Icon } from 'sly/components/atoms';
@@ -90,7 +89,9 @@ export default class Pagination extends Component {
   }
 
   nextButton() {
-    const { current, total, basePath, pageParam } = this.props;
+    const {
+      current, total, basePath, pageParam,
+    } = this.props;
 
     if (current >= total - 1) return null;
 
@@ -104,18 +105,16 @@ export default class Pagination extends Component {
     return <ChevronLink href={nextHref} flip />;
   }
 
-  ellipsis(index) {
-    return (
-      <BreakView
-        ghost
-        kind="label"
-        palette="slate"
-        key={index}
-      >
-        ...
-      </BreakView>
-    );
-  }
+  ellipsis = index => (
+    <BreakView
+      ghost
+      kind="label"
+      palette="slate"
+      key={index}
+    >
+      ...
+    </BreakView>
+  );
 
   pageButton(index) {
     const { current, basePath, pageParam } = this.props;
@@ -136,15 +135,15 @@ export default class Pagination extends Component {
         key={index}
         ghost={!sel}
         palette={palette}
-        href={pageHref} >
-          { index + 1 }
+        href={pageHref}
+      >
+        {index + 1}
       </PageLink>
     );
   }
 
   pagination() {
     // loop inspired by react-paginate
-
     const {
       current,
       range,
@@ -155,7 +154,7 @@ export default class Pagination extends Component {
     let leftSide = (range / 2);
     let rightSide = (range - leftSide);
 
-    if (current > total - range / 2) {
+    if (current > total - (range / 2)) {
       rightSide = total - current;
       leftSide = range - rightSide;
     } else if (current < range / 2) {
@@ -167,7 +166,7 @@ export default class Pagination extends Component {
     let breakView;
 
     const items = [];
-    for (let index = 0; index < total; index++) {
+    for (let index = 0; index < total; index += 1) {
       page = index + 1;
 
       if (page <= margin) {
@@ -195,7 +194,6 @@ export default class Pagination extends Component {
   }
 
   render() {
-
     return (
       <Wrapper>
         { this.prevButton() }
@@ -205,4 +203,3 @@ export default class Pagination extends Component {
     );
   }
 }
-

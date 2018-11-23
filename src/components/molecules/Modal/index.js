@@ -2,7 +2,6 @@ import React from 'react';
 import { node, bool, func, oneOf } from 'prop-types';
 import styled, { css, injectGlobal } from 'styled-components';
 import ReactModal from 'react-modal';
-
 import { ifProp, switchProp } from 'styled-tools';
 
 import { size, palette, key } from 'sly/components/themes';

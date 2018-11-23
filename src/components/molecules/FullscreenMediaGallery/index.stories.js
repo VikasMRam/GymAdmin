@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
+import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-
-import FullscreenMediaGallery from '.';
 
 function onClose() {
   action('modal close triggered');

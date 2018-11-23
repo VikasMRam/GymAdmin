@@ -5,7 +5,6 @@ import NumberFormat from 'react-number-format';
 import { formatRating } from 'sly/services/helpers/rating';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import { ClampedText } from 'sly/components/atoms';
-
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => shallow(<CommunityInfo community={RhodaGoldmanPlaza} {...props} />);

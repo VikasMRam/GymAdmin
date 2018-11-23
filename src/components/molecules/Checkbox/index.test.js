@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Checkbox, { StyledIcon } from '.';
+
+import Checkbox, { StyledIcon } from 'sly/components/molecules/Checkbox';
 
 const wrap = (props = {}) => shallow(<Checkbox {...props} />);
 

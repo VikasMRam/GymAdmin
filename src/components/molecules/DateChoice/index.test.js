@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { LATER_DATE } from 'sly/constants/date';
-
 import DateChoice from 'sly/components/molecules/DateChoice';
 import DateChoiceTile from 'sly/components/molecules/DateChoiceTile';
 

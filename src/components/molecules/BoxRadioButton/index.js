@@ -2,11 +2,9 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { string, bool } from 'prop-types';
 import styled from 'styled-components';
-
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
-
 import { Box, Icon } from 'sly/components/atoms';
 import HelpBubble from 'sly/components/molecules/HelpBubble';
 import ReduxField from 'sly/components/organisms/ReduxField';

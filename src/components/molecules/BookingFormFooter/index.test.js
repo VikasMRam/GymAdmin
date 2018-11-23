@@ -1,9 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
-
 import { Button } from 'sly/components/atoms';
+import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
 
 const wrap = (props = {}) => shallow(<BookingFormFooter {...props} />);
 

@@ -12,8 +12,12 @@ const fadeIn = keyframes`
   100% { display: block; opacity: 1; }
 `;
 
-const iconWidth = p =>
-  p.hasText ? 'auto' : p.iconOnly ? size('icon.regular') : size('icon.large');
+const iconWidth = (p) => {
+  if (p.hasText) {
+    return 'auto';
+  }
+  return p.iconOnly ? size('icon.regular') : size('icon.large');
+};
 
 // const iconHeight = p =>
 //   p.iconOnly ? size('icon.regular') : size('icon.large');

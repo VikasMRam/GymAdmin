@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { assetPath } from 'sly/components/themes';
-import DiscoverTile from '.';
+import DiscoverTile from 'sly/components/molecules/DiscoverTile';
 
 const content = {
   badgeImageUrl: assetPath('images/how-it-works/discover-1.png'),
@@ -11,13 +11,9 @@ const content = {
   badgeText: 'Find an assisted living community to love from our thousands of listings',
 };
 
-function onClick() {
-  action('Click on DiscoverTile');
-}
-
 storiesOf('Molecules|DiscoverTile', module)
   .add('default', () => (
     <div style={{ padding: '50px' }}>
-      <DiscoverTile content={content} onClick={onClick} />
+      <DiscoverTile content={content} onClick={action('Click on DiscoverTile')} />
     </div>
   ));

@@ -2,7 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { Block } from 'sly/components/atoms';
-import MeetOthersTile, { StyledImage, StyledHeading } from '.';
+import MeetOthersTile, { StyledImage, StyledHeading }
+  from 'sly/components/molecules/MeetOthersTile';
 
 const image =
   'https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_sd.jpg';

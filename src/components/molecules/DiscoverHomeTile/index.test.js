@@ -3,7 +3,8 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import { Block, Button } from 'sly/components/atoms';
-import DiscoverHomeTile, { StyledImage, StyledHeading } from '.';
+import DiscoverHomeTile, { StyledImage, StyledHeading }
+  from 'sly/components/molecules/DiscoverHomeTile';
 
 const image =
   'https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_sd.jpg';
