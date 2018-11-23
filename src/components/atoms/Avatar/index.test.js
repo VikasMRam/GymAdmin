@@ -1,8 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
 
-import Avatar from '.';
+import Avatar from 'sly/components/atoms/Avatar';
 
 const wrap = (props = {}) => shallow(<Avatar {...props} />).dive();
 
@@ -22,22 +21,5 @@ describe('Avatar', () => {
     expect(div).toHaveLength(1);
     expect(div.props()).toHaveProperty('data-title', 'Fonz');
     expect(div.text()).toEqual('F');
-  });
-
-  describe('propTypes', () => {
-    beforeEach(() => {
-      sinon.stub(console, 'error');
-    });
-    afterEach(() => {
-      console.error.restore();
-    });
-    it('does trigger a propType warning with no name', () => {
-      wrap({ user: { picture } });
-      expect(console.error.getCalls()).toHaveLength(1);
-    });
-    it('does not trigger a propType warning with no name', () => {
-      wrap({ user: { name, picture } });
-      expect(console.error.getCalls()).toHaveLength(0);
-    });
   });
 });

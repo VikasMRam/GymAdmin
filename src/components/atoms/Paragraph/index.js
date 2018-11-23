@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string, node } from 'prop-types';
 import styled from 'styled-components';
-import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 
-const Paragraph = ({ ...props }) => {
-  return <ParaWrapper {...props}>{props.children}</ParaWrapper>;
+const Paragraph = ({ children, ...props }) => {
+  return <ParaWrapper {...props}>{children}</ParaWrapper>;
 };
 
 const ParaWrapper = styled.p`
@@ -17,7 +16,8 @@ const ParaWrapper = styled.p`
 `;
 
 Paragraph.propTypes = {
-  palette: PropTypes.string,
+  palette: string,
+  children: node,
 };
 
 Paragraph.defaultProps = {
