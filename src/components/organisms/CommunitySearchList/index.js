@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object, arrayOf, func } from 'prop-types';
-
+import queryString from 'query-string';
 
 import { size, assetPath } from 'sly/components/themes';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
@@ -11,12 +11,7 @@ import Pagination from 'sly/components/molecules/Pagination';
 import Heading from 'sly/components/atoms/Heading';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
-
 import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
-import queryString from 'query-string';
-
-import AdTile from 'sly/components/molecules/AdTile/index';
-import { SearchPageTileTexts as searchAdProps } from 'sly/services/helpers/ad';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -27,10 +22,6 @@ const CommunityFilterBarWrapper = styled.div`
 `;
 const StyledLink = styled(Link)`
   display: block;
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const AdTileWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -66,7 +57,6 @@ const getPaginationData = requestMeta => ({
   current: requestMeta['page-number'],
   total: requestMeta['filtered-count'] / requestMeta['page-size'],
 });
-
 
 
 const mostSearchedCities = [
@@ -108,98 +98,95 @@ const usefulInformationTiles = [
   },
 ];
 
-export default class CommunitySearchList extends Component {
-  static propTypes = {
-    requestMeta: object.isRequired,
-    searchParams: object.isRequired,
-    onParamsChange: func.isRequired,
-    onAdTileClick: func.isRequired,
-    communityList: arrayOf(object).isRequired,
-    location: object.isRequired,
-  };
+const CommunitySearchList = ({
+  communityList, requestMeta, searchParams, onAdTileClick, location, ...props
+}) => {
+  let mostSearchedCitiesComponents = null;
+  let usefulInformationTilesComponents = null;
 
-  render() {
-    const {
-      communityList, requestMeta, searchParams, onAdTileClick, location, ...props
-    } = this.props;
-    const adIndex = 2;
-    let mostSearchedCitiesComponents = null;
-    let usefulInformationTilesComponents = null;
-
-    if (communityList.length < 1) {
-      mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
-        <StyledLink key={mostSearchedCity.title} to={mostSearchedCity.to}>
-          <ImageOverlayContentTile size="small" image={mostSearchedCity.image}>
-            <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
-            <Block palette="white">{mostSearchedCity.title}</Block>
-          </ImageOverlayContentTile>
-        </StyledLink>
-      ));
-      usefulInformationTilesComponents = usefulInformationTiles.map(usefulInformation => (
-        <StyledLink key={usefulInformation.title} to={usefulInformation.to}>
-          <ImageOverlayContentTile size="small" image={usefulInformation.image}>
-            <Heading size="subtitle" palette="white">{usefulInformation.title}</Heading>
-          </ImageOverlayContentTile>
-        </StyledLink>
-      ));
-    }
-
-    const components = communityList.map((similarProperty) => {
-      return (
-        <StyledLink key={similarProperty.id} to={similarProperty.url}>
-          <SimilarCommunityTile
-            similarProperty={similarProperty}
-          />
-        </StyledLink>
-      );
-    });
-    // components.splice(adIndex, 0, <AdTileWrapper key="ad" ><AdTile {...searchAdProps} onClick={() => onAdTileClick()} /></AdTileWrapper>);
-    const { current, total } = getPaginationData(requestMeta);
-
-    //pagination pathname
-    let params = {};
-    if (location.search) {
-      params = queryString.parse(location.search);
-    }
-    if (params['page-number']) {
-      delete params['page-number'];
-    }
-    const qs = queryString.stringify(params);
-    let basePath = location.pathname;
-    if (qs.length > 0) {
-      basePath = `${basePath}?${qs}`;
-    }
-
-    return (
-      <Fragment>
-        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-        <CommunityFilterBarWrapper>
-          <CommunityFilterBar searchParams={searchParams} {...props} />
-        </CommunityFilterBarWrapper>
-        {components}
-        {communityList.length < 1 &&
-          <Fragment>
-            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-            <StyledHeading size="subtitle">Explore homes in popular cities</StyledHeading>
-            <MSCColumnWrapper>
-              {mostSearchedCitiesComponents}
-            </MSCColumnWrapper>
-            <StyledHeading size="subtitle">Learn more about senior care</StyledHeading>
-            <MSCColumnWrapper>
-              {usefulInformationTilesComponents}
-            </MSCColumnWrapper>
-            <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
-          </Fragment>
-        }
-        {communityList.length > 0 &&
-          <Fragment>
-            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-            <Pagination basePath={basePath} pageParam="page-number" current={current} total={total} />
-            <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
-          </Fragment>
-        }
-      </Fragment>
-    );
+  if (communityList.length < 1) {
+    mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
+      <StyledLink key={mostSearchedCity.title} to={mostSearchedCity.to}>
+        <ImageOverlayContentTile size="small" image={mostSearchedCity.image}>
+          <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
+          <Block palette="white">{mostSearchedCity.title}</Block>
+        </ImageOverlayContentTile>
+      </StyledLink>
+    ));
+    usefulInformationTilesComponents = usefulInformationTiles.map(usefulInformation => (
+      <StyledLink key={usefulInformation.title} to={usefulInformation.to}>
+        <ImageOverlayContentTile size="small" image={usefulInformation.image}>
+          <Heading size="subtitle" palette="white">{usefulInformation.title}</Heading>
+        </ImageOverlayContentTile>
+      </StyledLink>
+    ));
   }
-}
 
+  const components = communityList.map((similarProperty) => {
+    return (
+      <StyledLink key={similarProperty.id} to={similarProperty.url}>
+        <SimilarCommunityTile
+          similarProperty={similarProperty}
+        />
+      </StyledLink>
+    );
+  });
+  // components.splice(adIndex, 0, <AdTileWrapper key="ad" ><AdTile {...searchAdProps} onClick={() => onAdTileClick()} /></AdTileWrapper>);
+  const { current, total } = getPaginationData(requestMeta);
+
+  // pagination pathname
+  let params = {};
+  if (location.search) {
+    params = queryString.parse(location.search);
+  }
+  if (params['page-number']) {
+    delete params['page-number'];
+  }
+  const qs = queryString.stringify(params);
+  let basePath = location.pathname;
+  if (qs.length > 0) {
+    basePath = `${basePath}?${qs}`;
+  }
+
+  return (
+    <Fragment>
+      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+      <CommunityFilterBarWrapper>
+        <CommunityFilterBar searchParams={searchParams} {...props} />
+      </CommunityFilterBarWrapper>
+      {components}
+      {communityList.length < 1 &&
+        <Fragment>
+          {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+          <StyledHeading size="subtitle">Explore homes in popular cities</StyledHeading>
+          <MSCColumnWrapper>
+            {mostSearchedCitiesComponents}
+          </MSCColumnWrapper>
+          <StyledHeading size="subtitle">Learn more about senior care</StyledHeading>
+          <MSCColumnWrapper>
+            {usefulInformationTilesComponents}
+          </MSCColumnWrapper>
+          <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
+        </Fragment>
+      }
+      {communityList.length > 0 &&
+        <Fragment>
+          {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+          <Pagination basePath={basePath} pageParam="page-number" current={current} total={total} />
+          <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
+        </Fragment>
+      }
+    </Fragment>
+  );
+};
+
+CommunitySearchList.propTypes = {
+  requestMeta: object.isRequired,
+  searchParams: object.isRequired,
+  onParamsChange: func.isRequired,
+  onAdTileClick: func.isRequired,
+  communityList: arrayOf(object).isRequired,
+  location: object.isRequired,
+};
+
+export default CommunitySearchList;

@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField/index';
-
 import { Heading, Block, Image } from 'sly/components/atoms';
 import Link from 'sly/components/atoms/Link/index';
 

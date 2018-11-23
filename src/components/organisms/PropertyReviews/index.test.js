@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import PropertyReviews from 'sly/components/organisms/PropertyReviews';
 import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
 import PropertyReview from 'sly/components/molecules/PropertyReview';
 import Modal from 'sly/components/molecules/Modal';
-import PropertyReviews from '.';
 
 const reviewRating = {
   name: 'Yelp',

@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { bool, string, arrayOf, shape, object } from 'prop-types';
 import styled from 'styled-components';
-
 import { ifProp } from 'styled-tools';
 
 import { size, palette, key } from 'sly/components/themes';

@@ -2,9 +2,9 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
+import LoginForm from 'sly/components/organisms/LoginForm';
 import { Block } from 'sly/components/atoms/index';
 
-import LoginForm from '.';
 
 const error = 'Blah';
 

@@ -2,9 +2,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
+import CommunitySaved from 'sly/components/organisms/CommunitySaved';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-import CommunitySaved from '.';
 
 const { similarProperties } = RhodaGoldmanPlaza;
 

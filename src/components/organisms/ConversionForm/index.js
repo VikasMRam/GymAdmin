@@ -5,13 +5,10 @@ import styled from 'styled-components';
 
 
 import { size, palette } from 'sly/components/themes';
-import { Experiment, Variant } from 'sly/services/experiments';
-
 import ReduxField from 'sly/components/organisms/ReduxField';
 import { Button, Heading, Link, Hr, Block } from 'sly/components/atoms';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 import AgentTile from 'sly/components/molecules/AgentTile';
-import { community as communityPropType } from 'sly/propTypes/community';
 
 const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.regular')};
@@ -52,9 +49,7 @@ const ExpressBlock = styled(Block)`
 
 const ConversionForm = ({
   handleSubmit,
-  gotoWhatNext,
   submitting,
-  concierge,
   hasOnlyEmail,
   agent,
   contact,

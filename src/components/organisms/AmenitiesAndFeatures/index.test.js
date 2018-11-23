@@ -1,18 +1,20 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
+import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import { Heading, Paragraph } from 'sly/components/atoms';
-
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-import AmenitiesAndFeatures from '.';
 
 const wrap = (props = {}) => mount(<AmenitiesAndFeatures {...props} />);
 
 const { name, propInfo } = RhodaGoldmanPlaza;
+const {
+  personalSpaceOther, communitySpaceOther, nonCareServicesOther, languagesOther,
+} = propInfo;
 let {
-  communityHighlights, personalSpace, personalSpaceOther, communitySpace, communitySpaceOther,
-  nonCareServices, nonCareServicesOther, languages, languagesOther,
+  communityHighlights, personalSpace, communitySpace,
+  nonCareServices, languages,
 } = propInfo;
 communityHighlights = communityHighlights || [];
 personalSpace = personalSpace || [];

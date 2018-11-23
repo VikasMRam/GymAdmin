@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
 import { Icon, Link, Hr } from 'sly/components/atoms';
-
 import config from 'sly/config';
 
 const FooterWrapper = styled.footer`
@@ -155,7 +154,7 @@ const groups = {
     { name: 'Contact', url: '/contact' },
     { name: 'Terms', url: '/tos' },
     { name: 'Privacy', url: '/privacy' },
-    { name: 'Sitemap', url: '/sitemap'},
+    { name: 'Sitemap', url: '/sitemap' },
   ],
   Listings: [
     { name: 'For Referral Agents', url: '/providers/crm' },

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { object, func } from 'prop-types';
 
 
@@ -16,7 +16,7 @@ const ExpressConversionFormContainer = props => (
   />
 );
 
-const HowItWorks = props => <WhatNext reasons="howItWorks" {...props} />
+const HowItWorks = props => <WhatNext reasons="howItWorks" {...props} />;
 
 const steps = {
   conversionForm: ConversionFormContainer,
@@ -30,54 +30,53 @@ const steps = {
 
 const appElement = isBrowser && document.querySelector('#app');
 
-export default class Concierge extends Component {
-  static propTypes = {
-    community: object,
-    concierge: object.isRequired,
-    close: func.isRequired,
-    gotoWhatNext: func.isRequired,
-    submitExpressConversion: func.isRequired,
-    submitRegularConversion: func.isRequired,
-    submitAdvancedInfo: func.isRequired,
+const Concierge = ({
+  community,
+  concierge,
+  close,
+  gotoWhatNext,
+  submitRegularConversion,
+  submitExpressConversion,
+  submitAdvancedInfo,
+  ...props
+}) => {
+  const { modalIsOpen, currentStep } = concierge;
 
-  };
-
-  render() {
-    const {
-      community,
-      concierge,
-      close,
-      gotoWhatNext,
-      submitRegularConversion,
-      submitExpressConversion,
-      submitAdvancedInfo,
-      ...props
-    } = this.props;
-
-    const { modalIsOpen, currentStep } = concierge;
-
-    const StepComponent = steps[currentStep];
-    return (
-      <Fragment>
-        {appElement && StepComponent && modalIsOpen && (
-        <Modal
-          appElement={appElement}
+  const StepComponent = steps[currentStep];
+  return (
+    <Fragment>
+      {appElement && StepComponent && modalIsOpen && (
+      <Modal
+        appElement={appElement}
+        onClose={close}
+        isOpen={modalIsOpen}
+        closeable
+      >
+        <StepComponent
+          community={community}
+          concierge={concierge}
+          submitRegularConversion={submitRegularConversion}
+          submitExpressConversion={submitExpressConversion}
+          submitAdvancedInfo={submitAdvancedInfo}
           onClose={close}
-          isOpen={modalIsOpen}
-          closeable
-        >
-          <StepComponent
-            community={community}
-            concierge={concierge}
-            submitRegularConversion={submitRegularConversion}
-            submitExpressConversion={submitExpressConversion}
-            submitAdvancedInfo={submitAdvancedInfo}
-            onClose={close}
-            {...props}
-          />
-        </Modal>
-        )}
-      </Fragment>);
-  }
-}
+          {...props}
+        />
+      </Modal>
+      )}
+    </Fragment>
+  );
+};
+
+Concierge.propTypes = {
+  community: object,
+  concierge: object.isRequired,
+  close: func.isRequired,
+  gotoWhatNext: func.isRequired,
+  submitExpressConversion: func.isRequired,
+  submitRegularConversion: func.isRequired,
+  submitAdvancedInfo: func.isRequired,
+
+};
+
+export default Concierge;
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import MorePictures from 'sly/components/organisms/MorePictures';
 import PictureTile from 'sly/components/molecules/PictureTile';
-import MorePictures from '.';
 
 const gallery = {
   images: [

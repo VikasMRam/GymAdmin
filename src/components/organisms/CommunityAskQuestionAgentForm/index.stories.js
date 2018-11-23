@@ -4,7 +4,6 @@ import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
 import { withPreventDefault } from 'sly/services/helpers/forms';
-
 import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
 
 const CommunityAskQuestionAgentFormContainer = reduxForm({

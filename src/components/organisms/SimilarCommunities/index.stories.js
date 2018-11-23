@@ -1,12 +1,11 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
+import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-
-import SimilarCommunity from '.';
 
 const { similarProperties } = RhodaGoldmanPlaza;
 
 storiesOf('Organisms|SimilarCommunities', module).add('default', () => (
-  <SimilarCommunity similarProperties={similarProperties} />
+  <SimilarCommunities similarProperties={similarProperties} />
 ));

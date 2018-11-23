@@ -4,9 +4,7 @@ import styled from 'styled-components';
 import { prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-
 import Link from 'sly/components/atoms/Link';
-
 import SimilarCommunityNearbyTile from 'sly/components/molecules/SimilarCommunityNearbyTile';
 
 const Wrapper = styled.div`

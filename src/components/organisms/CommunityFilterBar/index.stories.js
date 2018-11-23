@@ -1,11 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 // import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 import CommunityFilterBar from '.';
 
 const paramsRemover = (elem) => {
-  console.log('Callback with', elem);
+  action('Callback with', elem);
 };
 const fullSp = {
   size: 'small',

@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import ReasonTile from 'sly/components/molecules/ReasonTile';
-import HowSlyWorks from '.';
 
 const wrap = (props = {}) => shallow(<HowSlyWorks {...props} />);
 

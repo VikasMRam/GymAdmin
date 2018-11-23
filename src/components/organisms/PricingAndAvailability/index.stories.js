@@ -1,9 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
+import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailability';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-import PricingAndAvailability from '.';
 
 const {
   name, address, rgsAux, floorPlans,
@@ -12,10 +13,10 @@ const roomPrices = floorPlans.map(({ info }) => info);
 // TODO: mock as USA until country becomes available
 address.country = 'USA';
 const onGetDetailedPricingClicked = () => {
-  alert('open modal');
+  action('open modal');
 };
 const onInquireOrBookClicked = () => {
-  alert('open book modal');
+  action('open book modal');
 };
 
 storiesOf('Organisms|PricingAndAvailability', module)

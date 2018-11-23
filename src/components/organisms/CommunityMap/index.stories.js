@@ -1,15 +1,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
+import CommunityMap from 'sly/components/organisms/CommunityMap';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import CommunityMap from '.';
 
 const {
-  id,
-  name,
-  startingRate,
-  mainImage,
-  address,
   similarProperties,
 } = RhodaGoldmanPlaza;
 

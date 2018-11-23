@@ -59,9 +59,9 @@ export default class communitySummary extends React.Component {
   render() {
     const {
       isCCRC, twilioNumber, phoneNumber, user, licenseUrl, amenityScore, communityHighlights, startingRate,
-      estimatedPrice, reviewsValue, innerRef, onConciergeNumberClicked, onReceptionNumberClicked, onHowSeniorlyWorks,
+      estimatedPrice, reviewsValue, innerRef, onConciergeNumberClicked, onHowSeniorlyWorks,
     } = this.props;
-    //let { websiteUrl } = this.props;
+    // let { websiteUrl } = this.props;
 
     const highlights = [];
 
@@ -74,7 +74,7 @@ export default class communitySummary extends React.Component {
     if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
       conciergeNumber = twilioNumber.numbers[0];
     }
-    const hasPricing = ( (estimatedPrice && (estimatedPrice.estimatedAverage || estimatedPrice.providedAverage )) || startingRate);
+    const hasPricing = ((estimatedPrice && (estimatedPrice.estimatedAverage || estimatedPrice.providedAverage)) || startingRate);
 
     let shownPricing = '';
     if (estimatedPrice) {
@@ -177,7 +177,6 @@ export default class communitySummary extends React.Component {
           </Link>
         </span>
       ));
-
     }
     if (reviewsValue > 0) {
       highlights.push((

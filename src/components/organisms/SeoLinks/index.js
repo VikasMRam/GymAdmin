@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-
 import { arrayOf, string, object } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';

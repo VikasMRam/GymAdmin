@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
+import CareServicesList from 'sly/components/organisms/CareServicesList';
 import List from 'sly/components/molecules/List';
-import CareServicesList from '.';
 
 const wrap = () =>
   mount(<CareServicesList

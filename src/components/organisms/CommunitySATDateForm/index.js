@@ -6,7 +6,6 @@ import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
 import { TIME_OPTIONS } from 'sly/constants/booking';
-
 import { Heading, Block } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 

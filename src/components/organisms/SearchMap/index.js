@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { string, number, shape, arrayOf, func, bool } from 'prop-types';
 import styled from 'styled-components';
-
 import { Marker, InfoWindow, OverlayView } from 'react-google-maps';
 
 import { isServer } from 'sly/config';
@@ -9,7 +8,6 @@ import { size, palette } from 'sly/components/themes';
 import Checkbox from 'sly/components/molecules/Checkbox';
 import Map from 'sly/components/atoms/Map';
 import MapTile from 'sly/components/molecules/MapTile';
-
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
 import { delayedExecutor, getRadiusFromMapBounds } from 'sly/services/helpers/search';

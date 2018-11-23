@@ -3,10 +3,9 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
+import AdvandedInfoForm from 'sly/components/organisms/AdvancedInfoForm';
 import { withPreventDefault } from 'sly/services/helpers/forms';
-
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import AdvandedInfoForm from '.';
 
 const user = {
   name: 'Ashley Clark',

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { array, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-
 import { Heading, Button, Block, Hr } from 'sly/components/atoms';
 import SimilarCommunitiesNearby from 'sly/components/organisms/SimilarCommunitiesNearby';
 
@@ -19,10 +18,6 @@ const ButtonsWrapper = styled.div`
   margin-bottom: ${size('spacing.xxLarge')};
 `;
 ButtonsWrapper.displayName = 'ButtonsWrapper';
-
-const StyledGotoButton = styled(Button)`
-  flex: 3;
-`;
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
@@ -50,9 +45,9 @@ const CommunitySaved = ({ similarCommunities, onDoneButtonClicked }) => (
       >
         Done
       </StyledDoneButton>
-      {/*<StyledGotoButton href="/mydashboard">*/}
-        {/*Go to my dashboard*/}
-      {/*</StyledGotoButton>*/}
+      {/* <StyledGotoButton href="/mydashboard"> */}
+      {/* Go to my dashboard */}
+      {/* </StyledGotoButton> */}
     </ButtonsWrapper>
     <StyledHr />
     <StyledHeading size="subtitle">Similar communities nearby</StyledHeading>

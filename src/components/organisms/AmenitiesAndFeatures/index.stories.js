@@ -1,14 +1,17 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
+import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-import AmenitiesAndFeatures from '.';
 
 const { name, propInfo } = RhodaGoldmanPlaza;
+const {
+  personalSpaceOther, communitySpaceOther, nonCareServicesOther, languagesOther,
+} = propInfo;
 let {
-  communityHighlights, personalSpace, personalSpaceOther, communitySpace, communitySpaceOther,
-  nonCareServices, nonCareServicesOther, languages, languagesOther,
+  communityHighlights, personalSpace, communitySpace,
+  nonCareServices, languages,
 } = propInfo;
 
 communityHighlights = communityHighlights || [];
