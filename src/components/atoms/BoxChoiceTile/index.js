@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { palette } from 'sly/components/themes';
-
 import Box from 'sly/components/atoms/Box';
 
 const StyledBox = styled(Box)`

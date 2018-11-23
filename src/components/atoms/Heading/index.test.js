@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Heading from '.';
+
+import Heading from 'sly/components/atoms/Heading';
 
 const wrap = (props = {}) => shallow(<Heading {...props} />).dive();
 

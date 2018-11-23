@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Paragraph from '.';
+
+import Paragraph from 'sly/components/atoms/Paragraph';
 
 const wrap = (props = {}) => shallow(<Paragraph {...props} />);
 

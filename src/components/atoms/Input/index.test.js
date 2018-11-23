@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Input from '.';
+
+import Input from 'sly/components/atoms/Input';
 
 const wrap = (props = {}) => shallow(<Input {...props} />).dive();
 

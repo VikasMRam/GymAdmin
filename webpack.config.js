@@ -2,6 +2,7 @@
 // https://github.com/diegohaz/arc/wiki/Webpack
 const path = require('path');
 const fs = require('fs');
+
 const UglifyJs = require('uglify-es');
 const cssmin = require('cssmin');
 const devServer = require('@webpack-blocks/dev-server2');
@@ -13,7 +14,6 @@ const AssetsByTypePlugin = require('webpack-assets-by-type-plugin');
 const ChildConfigPlugin = require('webpack-child-config-plugin');
 const SpawnPlugin = require('webpack-spawn-plugin');
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
-
 const {
   addPlugins,
   createConfig,

@@ -1,6 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Tooltip, { opposite, perpendicular, perpendicularAxis } from '.';
+
+import Tooltip, { opposite, perpendicular, perpendicularAxis }
+  from 'sly/components/atoms/Tooltip';
 
 const wrap = (props = {}) => (
   shallow(<Tooltip data-title="title" {...props}><span>test</span></Tooltip>).dive()
