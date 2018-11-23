@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Measure from 'react-measure';
 import styled from 'styled-components';
-import { bool, number, string, oneOfType, oneOf, array, object } from 'prop-types';
+import { bool, number, string, oneOfType, oneOf, node } from 'prop-types';
 
 import { size, key } from 'sly/components/themes';
 import { Link } from 'sly/components/atoms';
@@ -35,7 +35,7 @@ export default class CollapsibleBlock extends Component {
     blockClassName: string,
     collapsedDefault: bool,
     minHeight: oneOfType([number, oneOf(['tiny', 'small', 'regular', 'large'])]),
-    children: oneOfType([string, array, object]),
+    children: node,
   };
 
   static defaultProps = {
