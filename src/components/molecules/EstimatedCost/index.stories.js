@@ -1,11 +1,13 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+
 import EstimatedCost from '.';
 
 const communityName = 'Buena Vista Manor House';
 const price = 1230;
 const onGetDetailedPricingClicked = () => {
-  alert('open booking modal');
+  action('open booking modal');
 };
 
 storiesOf('Molecules|EstimatedCost', module)

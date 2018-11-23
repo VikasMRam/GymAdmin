@@ -1,7 +1,7 @@
 import React from 'react';
 import { string, bool, number, node } from 'prop-types';
 import styled, { css, keyframes } from 'styled-components';
-import { ifProp, prop } from 'styled-tools';
+import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import { Icon, Button } from 'sly/components/atoms';
@@ -15,8 +15,8 @@ const fadeIn = keyframes`
 const iconWidth = p =>
   p.hasText ? 'auto' : p.iconOnly ? size('icon.regular') : size('icon.large');
 
-const iconHeight = p =>
-  p.iconOnly ? size('icon.regular') : size('icon.large');
+// const iconHeight = p =>
+//   p.iconOnly ? size('icon.regular') : size('icon.large');
 
 // TODO: measurements from theme
 const StyledButton = styled(Button)`

@@ -2,8 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import DiscoverHomeTile, { StyledImage, StyledHeading } from '.';
 import { Block, Button } from 'sly/components/atoms';
+import DiscoverHomeTile, { StyledImage, StyledHeading } from '.';
 
 const image =
   'https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_sd.jpg';

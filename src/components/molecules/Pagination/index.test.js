@@ -1,28 +1,26 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Link, Icon } from 'sly/components/atoms';
+import { Icon } from 'sly/components/atoms';
 
 import Pagination from '.';
 
-const wrap = (props={}) => shallow(<Pagination {...props} />);
-
-const onChange = jest.fn();
+const wrap = (props = {}) => shallow(<Pagination {...props} />);
 
 const small = {
   current: 0,
   range: 5,
   total: 5,
-  basePath:'/test',
-  pageParam:"page-number",
+  basePath: '/test',
+  pageParam: 'page-number',
 };
 
 const large = {
   current: 50,
   range: 5,
   total: 100,
-  basePath:'/test',
-  pageParam:"page-number",
+  basePath: '/test',
+  pageParam: 'page-number',
 };
 
 describe('Pagination', () => {
@@ -32,7 +30,7 @@ describe('Pagination', () => {
     for (let i = 0; i < 5; ++i) {
       const button = wrapper.childAt(i);
       expect(button.prop('children')).toEqual(i + 1);
-      expect(button.prop('href')).toEqual(i === 0 ? '/test' :`/test?page-number=${i}`);
+      expect(button.prop('href')).toEqual(i === 0 ? '/test' : `/test?page-number=${i}`);
       expect(button.prop('palette')).toEqual(i === 0 ? 'primary' : 'slate');
     }
   });
@@ -51,7 +49,6 @@ describe('Pagination', () => {
     const prevIcon = prevButton.dive().dive().find(Icon);
     expect(prevIcon.prop('flip')).toEqual(false);
     expect(prevButton.prop('href')).toEqual('/test?page-number=3');
-
   });
 
   it('should render both next and prev buttons', () => {

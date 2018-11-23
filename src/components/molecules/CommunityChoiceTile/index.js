@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { bool, string, shape, number, func, oneOf } from 'prop-types';
+import { bool, func } from 'prop-types';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size, palette } from 'sly/components/themes';
@@ -97,17 +97,14 @@ const NumberReviews = styled.div`
 `;
 
 const CommunityChoiceTile = ({
-  size,
-  palette,
   community,
   selected,
   selectable,
   borderless,
   onClick,
-  ...props
 }) => {
   const {
-    name, uri, picture, startingRate, numReviews, reviewsValue,
+    name, picture, startingRate, numReviews, reviewsValue,
   } = community;
 
   return (

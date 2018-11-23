@@ -9,10 +9,6 @@ const footerInfo = {
   ctaTitle: 'Contact',
 };
 
-const communityWithContact = {
-  contacts: [{ foo: 'bar' }],
-};
-
 function onContactClick() {
   // console.log('onContactClick');
 }
@@ -43,7 +39,7 @@ describe('StickyFooter', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({
       children: 'test',
-      footerInfo: footerInfo,
+      footerInfo,
     });
     expect(wrapper.contains('test')).toBe(false);
   });

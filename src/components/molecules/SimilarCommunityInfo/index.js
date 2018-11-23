@@ -118,10 +118,6 @@ export default class SimilarCommunityInfo extends Component {
 
     const {
       name,
-      estimated,
-      startingRate,
-      reviewsValue,
-      numReviews,
       addressString,
       description,
       webViewInfo,

@@ -4,8 +4,8 @@ import { shallow } from 'enzyme';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 import Modal from 'sly/components/molecules/Modal';
-import FullscreenMediaGallery from '.';
-import { StyledMediaGallery } from '.';
+
+import FullscreenMediaGallery, { StyledMediaGallery } from '.';
 
 const wrap = (props = {}) => shallow(<FullscreenMediaGallery {...props} />);
 

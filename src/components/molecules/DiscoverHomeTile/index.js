@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { string, func, oneOf } from 'prop-types';
 import { switchProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 
 import { Box, Heading, Block, Button, Image } from 'sly/components/atoms';
 

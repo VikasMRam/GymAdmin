@@ -1,7 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Field from '.';
+
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
+import Field from '.';
 
 const wrap = (props = {}) => shallow(<Field name="name" {...props} />);
 
@@ -33,16 +34,16 @@ describe('Field', () => {
 
   describe('MultipleChoice', () => {
     const options = [
-      { value: 'first',  label: 'First',  },
-      { value: 'second', label: 'Second', },
+      { value: 'first', label: 'First' },
+      { value: 'second', label: 'Second' },
     ];
 
     it('should create a MultiPlechoice and pass onChange', () => {
       const onChange = jest.fn();
       const wrapper = wrap({ type: 'multiplechoice', options, onChange });
-      const multipleChoice = wrapper.childAt(0); 
+      const multipleChoice = wrapper.childAt(0);
       expect(multipleChoice.type()).toBe(MultipleChoice);
-      expect(multipleChoice.prop('onChange')).toBe(onChange);  
+      expect(multipleChoice.prop('onChange')).toBe(onChange);
     });
   });
 });

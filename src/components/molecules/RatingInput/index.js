@@ -30,29 +30,6 @@ export default class RatingInput extends Component {
 
   state = { value: getDefaultValue(this.props) };
 
-  innerRef = React.createRef();
-
-  getValue = (event) => {
-    const currentValue = this.state.value;
-    const { current } = this.innerRef;
-    const clientRect = current.getBoundingClientRect();
-    const left = clientRect.left;
-    const last = current.children[current.children.length - 1];
-    const lastClientRect = last.getBoundingClientRect();
-    const right = lastClientRect.left + last.offsetWidth;
-
-    if (event.clientX > right) {
-      return currentValue;
-    }
-
-    const value = (event.clientX - left) / (right - left);
-    return Math.ceil(value * 5.0);
-  };
-
-  resetValue = () => {
-    this.setState({ value: getDefaultValue(this.props) });
-  };
-
   onClick = (event) => {
     const { onChange, disabled } = this.props;
 
@@ -60,7 +37,6 @@ export default class RatingInput extends Component {
       return;
     }
 
-    const { value } = this.state;
     const nextValue = this.getValue(event);
     if (onChange) {
       onChange(nextValue);
@@ -92,9 +68,32 @@ export default class RatingInput extends Component {
     this.resetValue();
   };
 
+  getValue = (event) => {
+    const currentValue = this.state.value;
+    const { current } = this.innerRef;
+    const clientRect = current.getBoundingClientRect();
+    const { left } = clientRect;
+    const last = current.children[current.children.length - 1];
+    const lastClientRect = last.getBoundingClientRect();
+    const right = lastClientRect.left + last.offsetWidth;
+
+    if (event.clientX > right) {
+      return currentValue;
+    }
+
+    const value = (event.clientX - left) / (right - left);
+    return Math.ceil(value * 5.0);
+  };
+
+  innerRef = React.createRef();
+
+  resetValue = () => {
+    this.setState({ value: getDefaultValue(this.props) });
+  };
+
   render() {
     const { value } = this.state;
-    const { palette, defaultValue, value: discardValue, ...props } = this.props;
+    const { defaultValue, value: discardValue, ...props } = this.props;
     return (
       <Rating
         innerRef={this.innerRef}

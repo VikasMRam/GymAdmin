@@ -1,12 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { spy } from 'sinon'
 
 import { Button } from 'sly/components/atoms';
 
 import MultipleChoice from '.';
 
-const wrap = (props={}) => shallow(<MultipleChoice {...props} />);
+const wrap = (props = {}) => shallow(<MultipleChoice {...props} />);
 
 const options = [
   { value: 'first', label: 'First' },
@@ -57,7 +56,9 @@ describe('MultipleChoice', () => {
 
   it('should send the right value onChange when singlechoice', () => {
     const onChange = jest.fn();
-    const wrapper = wrap({ options, onChange, type: 'singlechoice', value: 'first' });
+    const wrapper = wrap({
+      options, onChange, type: 'singlechoice', value: 'first',
+    });
     expect(wrapper.children()).toHaveLength(2);
     const first = wrapper.childAt(0);
     const second = wrapper.childAt(1);
@@ -74,5 +75,3 @@ describe('MultipleChoice', () => {
     expect(onBlur).toHaveBeenCalledWith('value');
   });
 });
-
-

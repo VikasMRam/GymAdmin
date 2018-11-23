@@ -54,7 +54,7 @@ export class Router extends Component {
     const qs = queryString.parse(search);
     const prevQs = queryString.parse(prevSearch);
 
-    if ((!blacklisted(pathname, prevPath) 
+    if ((!blacklisted(pathname, prevPath)
       && pathname !== prevPath
     ) || bumpOnSearch(prevQs, qs)) {
       window && window.scrollTo(0, 0);

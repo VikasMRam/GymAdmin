@@ -1,15 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import sinon from 'sinon';
-
-import EstimatedCost, {DesktopButton, MobileButton}  from '.';
+import EstimatedCost, { DesktopButton, MobileButton } from '.';
 
 const wrap = (props = {}) => mount(<EstimatedCost {...props} />);
 
 const price = 200;
 const priceFrom = 180;
 const priceTo = 220;
-const community = {name:'testcommunityName'};
+const community = { name: 'testcommunityName' };
 const onGetDetailedPricingClickedSpy = jest.fn();
 
 describe('EstimatedCost', () => {
@@ -20,7 +18,7 @@ describe('EstimatedCost', () => {
 
   it('verify correct description', () => {
     const wrapper = wrap({ price, community });
-    expect(wrapper.text()).toContain(`*Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services.`);
+    expect(wrapper.text()).toContain('*Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services.');
   });
 
   it('verify onGetDetailedPricingClicked callback', () => {

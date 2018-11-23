@@ -6,7 +6,7 @@ const profile = {
   heading: 'Arthur Bretschneider',
   subHeading: 'Founder & CEO',
   imageUrl: 'team/Arthur-a2b97989c2264366a85578f9a9103196.jpg',
-  description: 
+  description:
     `Arthur is a third generation senior housing operator. After selling his family’s senior housing company,
      he held two financial analyst roles in real estate and finance companies. He then founded a consulting firm, assisting 
      real estate developers and other financial institutions in entering the senior housing market. While pursuing his MBA
@@ -36,7 +36,7 @@ describe('ProfileTile', () => {
     const wrapper = wrap({ layout: 'modal' });
     expect(wrapper.contains(profile.heading)).toEqual(true);
     expect(wrapper.contains(profile.subHeading)).toEqual(true);
-    expect(wrapper.find(ImageWrapper).prop('src')).toEqual(profile.imageUrl);    
+    expect(wrapper.find(ImageWrapper).prop('src')).toEqual(profile.imageUrl);
     expect(wrapper.contains(profile.description)).toEqual(true);
   });
 });

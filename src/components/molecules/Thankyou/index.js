@@ -7,7 +7,6 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import { getCitySearchUrl } from 'sly/services/helpers/url';
 
 import { Button, Block, Icon, Heading } from 'sly/components/atoms';
-import AgentTile from "sly/components/molecules/AgentTile";
 
 const Wrapper = styled.div`
   display: flex;
@@ -59,7 +58,6 @@ const Thankyou = ({ community, onClose }) => {
         A Seniorly Guide will reach out to you with local expertise and support to ensure you find the right fit for your needs. There is no cost to you!
       </StyledBlock>
       {backToSearch}
-      {/*{<AgentTile community={ {...community, uri:'#' } } user={{name:'Test'}}/>}*/}
       {onClose && <Button onClick={onClose} kind="jumbo">Done</Button>}
     </Wrapper>
   );

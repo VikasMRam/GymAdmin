@@ -1,11 +1,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import { SearchPageTileTexts as searchAdProps } from 'sly/services/helpers/ad';
 import AdTile from '.';
 
 function onClick() {
-  alert('Ad Tile Clicked');
+  action('Ad Tile Clicked');
 }
 
 storiesOf('Molecules|AdTile', module)

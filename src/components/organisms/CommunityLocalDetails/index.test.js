@@ -11,7 +11,7 @@ const communityLocalDetails = 'big text here';
 describe('CommunityDetails', () => {
   it('verify local Details are Shown', () => {
     const wrapper = wrap({
-      localDetails:communityLocalDetails,
+      localDetails: communityLocalDetails,
     });
     expect(wrapper.text()).toContain(communityLocalDetails);
   });

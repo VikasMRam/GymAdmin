@@ -44,7 +44,7 @@ const percentageOf = (num, percentage) => {
 };
 
 const EstimatedCost = ({
-  price, community, getPricing, onLiveChatClicked,
+  price, getPricing,
 }) => {
   let from = 0;
   let to = 0;

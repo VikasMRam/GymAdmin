@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import { assetPath } from 'sly/components/themes';
 import DiscoverTile from '.';
@@ -11,14 +12,12 @@ const content = {
 };
 
 function onClick() {
-  alert('Click on DiscoverTile');
+  action('Click on DiscoverTile');
 }
 
 storiesOf('Molecules|DiscoverTile', module)
   .add('default', () => (
-    <div style={{
-        padding: "50px",
-    }}>
+    <div style={{ padding: '50px' }}>
       <DiscoverTile content={content} onClick={onClick} />
     </div>
   ));

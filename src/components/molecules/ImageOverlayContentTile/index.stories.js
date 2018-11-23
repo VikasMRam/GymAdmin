@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import ImageOverlayContentTile from '.';
-
 import { Heading } from 'sly/components/atoms';
+
+import ImageOverlayContentTile from '.';
 
 storiesOf('Molecules|ImageOverlayContentTile', module)
   .add('default', () => (

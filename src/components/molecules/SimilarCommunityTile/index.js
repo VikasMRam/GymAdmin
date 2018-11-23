@@ -97,7 +97,8 @@ const Info = styled(SimilarCommunityInfo)`
 `;
 
 const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
-  let { imageUrl, name } = similarProperty;
+  let { imageUrl } = similarProperty;
+  const { name } = similarProperty;
   if (!imageUrl || imageUrl.indexOf('maps.googleapis.com/maps/api/streetview') > -1) {
     imageUrl = communityDefaultImages[similarProperty.communitySize];
   }

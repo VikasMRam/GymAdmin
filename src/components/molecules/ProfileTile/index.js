@@ -35,13 +35,13 @@ export const ImageWrapper = styled(Image)`
   z-index: 0;
   display: block;
 
-  ${switchProp('layout', {
+${switchProp('layout', {
     regular: css`
         margin-bottom: ${size('spacing.xLarge')};
-    `,
+`,
     modal: css`
         margin-bottom: ${size('spacing.large')};
-    `,
+`,
   })}
 `;
 
@@ -60,7 +60,7 @@ const SubHeadingWrapper = styled.div`
   ${switchProp('layout', {
     modal: css`
       margin-bottom: ${size('spacing.large')};
-    `,
+`,
   })}
 `;
 

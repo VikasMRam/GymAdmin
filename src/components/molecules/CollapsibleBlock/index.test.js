@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import Measure from 'react-measure';
-import CollapsibleBlock, { ReadMore, blockCapHeight } from '.';
+import CollapsibleBlock, { ReadMore } from '.';
 
 const wrap = (props = {}) => mount(<CollapsibleBlock {...props} />);
 
@@ -22,7 +22,7 @@ describe('CollapsibleBlock', () => {
 
     expect(wrapper.state()).toEqual({ collapsed: true });
     expect(readMore.text()).toEqual('Read more');
-    readMore.simulate('click'); 
+    readMore.simulate('click');
     expect(wrapper.state()).toEqual({ collapsed: false });
     expect(readMore.text()).toEqual('Read less');
   });
@@ -33,7 +33,7 @@ describe('CollapsibleBlock', () => {
 
     expect(wrapper.state()).toEqual({ collapsed: false });
     expect(readMore.text()).toEqual('Read less');
-    readMore.simulate('click'); 
+    readMore.simulate('click');
     expect(wrapper.state()).toEqual({ collapsed: true });
     expect(readMore.text()).toEqual('Read more');
   });

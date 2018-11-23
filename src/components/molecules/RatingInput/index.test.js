@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import Rating from 'sly/components/molecules/Rating';
 import RatingInput from '.';
@@ -54,7 +54,7 @@ describe('RatingInput', () => {
     const wrapper = wrap({ onChange });
     wrapper.instance().innerRef.current = element;
 
-    var rating = wrapper.find(Rating);
+    let rating = wrapper.find(Rating);
     rating.simulate('click', {
       clientX: 150,
     });
@@ -69,7 +69,7 @@ describe('RatingInput', () => {
     const wrapper = wrap({ onChange });
     wrapper.instance().innerRef.current = element;
 
-    var rating = wrapper.find(Rating);
+    let rating = wrapper.find(Rating);
     rating.simulate('mouseover', {
       clientX: 150,
     });
