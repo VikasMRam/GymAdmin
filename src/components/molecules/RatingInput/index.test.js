@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Rating from 'sly/components/molecules/Rating';
-import RatingInput from '.';
+import RatingInput from 'sly/components/molecules/RatingInput';
 
 const wrap = (props = {}) => shallow(<RatingInput {...props} />);
 

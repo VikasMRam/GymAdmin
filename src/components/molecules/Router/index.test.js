@@ -2,7 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import SlyEvent from '../../../services/helpers/events';
-import { Router } from '.';
+
+import { Router } from 'sly/components/molecules/Router';
 
 jest.mock('../../../services/helpers/events');
 

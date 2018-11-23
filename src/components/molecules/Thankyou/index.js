@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import { size } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { getCitySearchUrl } from 'sly/services/helpers/url';
-
 import { Button, Block, Icon, Heading } from 'sly/components/atoms';
 
 const Wrapper = styled.div`

@@ -2,8 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { Block } from 'sly/components/atoms';
-
-import SimilarCommunityNearbyTile from '.';
+import SimilarCommunityNearbyTile from 'sly/components/molecules/SimilarCommunityNearbyTile';
 
 const similarCommunity = {
   id: 'victorian-manor',

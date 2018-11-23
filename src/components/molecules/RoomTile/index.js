@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
 import NumberFormat from 'react-number-format';
+import { Lazy } from 'react-lazy';
 
 import { size, palette, key } from 'sly/components/themes';
 import { Button, TileImage } from 'sly/components/atoms';
-import { Lazy } from 'react-lazy';
 
 const priceTypeMap = {
   'Monthly Rate': 'month',

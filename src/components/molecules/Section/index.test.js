@@ -2,8 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import { Heading } from 'sly/components/atoms';
-
-import Section from '.';
+import Section from 'sly/components/molecules/Section';
 
 const title = 'Section Title';
 const wrap = (props = {}) => mount(<Section title={title} {...props} />);

@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import { string, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-
 import { Image, Block, Icon, Link } from 'sly/components/atoms';
 
 const clamp = css`

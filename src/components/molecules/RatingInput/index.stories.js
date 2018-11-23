@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import RatingInput from './';
+import RatingInput from 'sly/components/molecules/RatingInput';
 
 storiesOf('Molecules|RatingInput', module)
   .add('default', () => <RatingInput />)

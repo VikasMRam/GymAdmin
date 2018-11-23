@@ -3,9 +3,7 @@ import { oneOf, node, func, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp, switchProp } from 'styled-tools';
 
-
 import { size, palette, key } from 'sly/components/themes';
-
 import IconButton from 'sly/components/molecules/IconButton';
 
 const Wrapper = styled.div`

@@ -2,8 +2,8 @@ import React from 'react';
 import { number, string, oneOf } from 'prop-types';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
-import { palette } from 'sly/components/themes';
 
+import { palette } from 'sly/components/themes';
 import { Icon } from 'sly/components/atoms';
 
 const times = (nr, fn) => Array.from(Array(nr).keys()).map((_, i) => fn(i));

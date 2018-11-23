@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { oneOf, string, func } from 'prop-types';
 import styled, { css } from 'styled-components';
-
 import { switchProp, ifProp } from 'styled-tools';
 import PlacesAutocomplete from 'react-places-autocomplete';
 

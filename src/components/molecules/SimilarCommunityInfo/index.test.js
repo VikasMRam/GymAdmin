@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import SimilarCommunityInfo from '.';
+
+import SimilarCommunityInfo from 'sly/components/molecules/SimilarCommunityInfo';
 
 const similarProperty = {
   name: 'Rhoda Goldman Plaza',
@@ -34,7 +35,7 @@ describe('SimilarCommunityInfo', () => {
       .dive()
       .text()
       .match(/\d/g)
-      .join(''))).toEqual(similarProperty.startingRate);
+      .join(''), 10)).toEqual(similarProperty.startingRate);
     expect(wrapper.childAt(2).contains(similarProperty.addressString)).toBe(true);
     similarProperty.webViewInfo.secondLineValue.split(',').forEach((roomType) => {
       expect(wrapper.childAt(3).contains(roomType)).toBe(true);

@@ -1,14 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
+import { Thumbnail } from 'sly/components/atoms';
+import ThumbnailScroller from 'sly/components/molecules/ThumbnailScroller';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-import { Thumbnail } from 'sly/components/atoms';
-import ThumbnailScroller from '.';
-
 const wrap = (props = {}) => shallow(<ThumbnailScroller {...props} />);
-
-const onClick = jest.fn();
 
 const { name, gallery } = RhodaGoldmanPlaza;
 const images = gallery.images || [];
@@ -26,6 +23,7 @@ describe('ThumbnailScroller', () => {
   });
 
   it('onClick called', () => {
+    const onClick = jest.fn();
     const wrapper = wrap({ thumbnails, onClick });
     wrapper.find(Thumbnail).at(4).simulate('click');
     expect(onClick).toHaveBeenCalledWith(4);

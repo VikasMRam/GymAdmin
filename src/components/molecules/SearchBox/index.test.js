@@ -1,23 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { action } from '@storybook/addon-actions';
 
 import { Icon, Input, Button } from 'sly/components/atoms';
-import SearchBox from '.';
-
-function onChange() {
-  // console.log('onChange');
-}
-
-function onSelect() {
-  // console.log('onSelect');
-}
-
-function onSeachButtonClick() {
-  // console.log('onSeachButtonClick');
-}
+import SearchBox from 'sly/components/molecules/SearchBox';
 
 const wrap = (props = {}) =>
-  mount(<SearchBox {...props} value="" onChange={onChange} onSelect={onSelect} onSeachButtonClick={onSeachButtonClick} />);
+  mount(<SearchBox {...props} value="" onChange={action('onChange')} onSelect={action('onSelect')} onSeachButtonClick={action('onSeachButtonClick')} />);
 
 const setupGoogleMock = () => {
   /** * Mock Google Maps JavaScript API ** */

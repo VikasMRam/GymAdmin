@@ -4,7 +4,6 @@ import { string, number } from 'prop-types';
 import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
-
 import { Image, Block, Icon } from 'sly/components/atoms';
 import { formatRating } from 'sly/services/helpers/rating';
 
@@ -14,10 +13,6 @@ const clamp = css`
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-`;
-
-const Wrapper = styled.div`
-
 `;
 
 const ImageWrapper = styled(Image)`
@@ -71,7 +66,7 @@ const renderRate = (estimated, startingRate) =>
 const SimilarCommunityNearbyTile = ({
   image, name, typeOfCare, estimatedRate, startingRate, reviewsValue,
 }) => (
-  <Wrapper>
+  <div>
     <ImageWrapper src={image} aspectRatio="3:2" />
     <TypeOfCare size="tiny" palette="primary" weight="bold">{typeOfCare}</TypeOfCare>
     <Name size="body" weight="medium">{name}</Name>
@@ -84,7 +79,7 @@ const SimilarCommunityNearbyTile = ({
       </Block>
       }
     </PriceAndRatingWrapper>
-  </Wrapper>
+  </div>
 );
 
 SimilarCommunityNearbyTile.propTypes = {
