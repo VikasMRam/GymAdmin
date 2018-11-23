@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Tooltip from '.';
+
+import Tooltip from 'sly/components/atoms/Tooltip';
 
 storiesOf('Atoms|Tooltip', module)
   .add('default', () => (

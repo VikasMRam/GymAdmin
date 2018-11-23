@@ -5,7 +5,6 @@ import RRLink from 'react-router-dom/Link';
 import { string, oneOf } from 'prop-types';
 
 import { palette, getKey } from 'sly/components/themes';
-
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import { variation as variationPropType } from 'sly/propTypes/variation';
 

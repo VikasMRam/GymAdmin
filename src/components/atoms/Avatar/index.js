@@ -1,6 +1,7 @@
 import React from 'react';
 import { string, shape } from 'prop-types';
 import styled, { css } from 'styled-components';
+
 import { size, palette } from 'sly/components/themes';
 
 const styles = css`
