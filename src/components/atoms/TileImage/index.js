@@ -18,8 +18,10 @@ const StyledImg = styled.img`
   }
 `;
 
-const TileImage = ({ tileSize, src, breakpoint, alt }) => {
-  return <StyledImg tileSize={tileSize} src={src} breakpoint={breakpoint} alt={alt}/>;
+const TileImage = ({
+  tileSize, src, breakpoint, alt,
+}) => {
+  return <StyledImg tileSize={tileSize} src={src} breakpoint={breakpoint} alt={alt} />;
 };
 
 TileImage.propTypes = {

@@ -1,9 +1,6 @@
 import React from 'react';
-
 import styled, { css } from 'styled-components';
-
 import { ifProp } from 'styled-tools';
-
 import { bool, string, oneOf } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
@@ -11,23 +8,30 @@ import Link from 'sly/components/atoms/Link';
 
 const backgroundColor = ({
   ghost, disabled, transparent, selectable, selected,
-}) =>
-  disabled
-    ? palette('white', 0)
-    : ghost || (selectable && !selected)
-      ? palette('white', 0)
-      : transparent ? 'transparent' : palette(0);
+}) => {
+  if (disabled) {
+    return palette('white', 0);
+  }
+  if (ghost || (selectable && !selected)) {
+    return palette('white', 0);
+  }
+  return transparent ? 'transparent' : palette(0);
+};
 
 const foregroundColor = ({
   ghost, disabled, transparent, selectable, selected,
-}) =>
-  disabled
-    ? palette('slate', 'stroke')
-    : ghost
-      ? palette(0)
-      : (selectable && !selected)
-        ? palette('slate', 0)
-        : transparent ? 'none' : palette('white', 0);
+}) => {
+  if (disabled) {
+    return palette('slate', 'stroke');
+  }
+  if (ghost) {
+    return palette(0);
+  }
+  if (selectable && !selected) {
+    return palette('slate', 0);
+  }
+  return transparent ? 'none' : palette('white', 0);
+};
 
 const borderColor = ({
   ghost, disabled, selectable, selected,

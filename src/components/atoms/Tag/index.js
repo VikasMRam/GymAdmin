@@ -1,9 +1,7 @@
-import { string, bool } from 'prop-types';
+import { string } from 'prop-types';
 import styled from 'styled-components';
 
-import { ifProp, prop } from 'styled-tools';
-
-import { size, font, palette } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 const Tag = styled.div`
   display: inline-flex;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Thumbnail from '.';
 import { Image } from 'sly/components/atoms';
+
+import Thumbnail from 'sly/components/atoms/Thumbnail';
 
 const wrap = (props = {}) => shallow(<Thumbnail {...props} />).dive();
 
