@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { spy } from 'sinon';
 
 import { SearchPageTileTexts as searchAdProps } from 'sly/services/helpers/ad';
-import AdTile, { StyledIcon } from '.';
+import AdTile, { StyledIcon } from 'sly/components/molecules/AdTile';
 
 const wrap = (props = {}) =>
   shallow(<AdTile {...searchAdProps} {...props} />);

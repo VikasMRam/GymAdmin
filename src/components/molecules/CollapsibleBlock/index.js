@@ -6,11 +6,15 @@ import { bool, number, string, oneOfType, oneOf, node } from 'prop-types';
 import { size, key } from 'sly/components/themes';
 import { Link } from 'sly/components/atoms';
 
-export const blockCapHeight = props => !props.collapsed
-  ? `${props.maxHeight}px`
-  : typeof props.minHeight === 'number'
-    ? `${props.minHeight}px`
-    : size('collapsible', props.minHeight);
+export const blockCapHeight = (props) => {
+  if (!props.collapsed) {
+    return `${props.maxHeight}px`;
+  }
+  if (typeof props.minHeight === 'number') {
+    return `${props.minHeight}px`;
+  }
+  return size('collapsible', props.minHeight);
+};
 
 export const ReadMore = styled(Link)`
   display: block;
@@ -24,7 +28,7 @@ const BlockCap = styled.div`
 
 const OnePix = styled.div`
   // hack so last element in the measureaable element
-  // is not one with a margin-bottom, this way 
+  // is not one with a margin-bottom, this way
   // getBoundingBox will return the right measure
   height: 1px;
   margin-top: -1px;
@@ -84,4 +88,3 @@ export default class CollapsibleBlock extends Component {
     );
   }
 }
-

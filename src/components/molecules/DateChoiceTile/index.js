@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import moment from 'moment';
 
 import { size } from 'sly/components/themes';
-
 import { Heading, BoxChoiceTile } from 'sly/components/atoms';
 
 const StyledBoxChoiceTile = styled(BoxChoiceTile)`

@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 import Measure from 'react-measure';
 import styled, { css } from 'styled-components';
-
 import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
 
 import { size, key } from 'sly/components/themes';
 import { Hr, Heading, Icon } from 'sly/components/atoms';
 
-const marginBottom = p => p.collapsed
-  ? 0
-  : p.paddedContent
-    ? size('spacing.large')
-    : size('spacing.xLarge');
+const marginBottom = (p) => {
+  if (p.collapsed) {
+    return 0;
+  }
+  return p.paddedContent ?
+    size('spacing.large') : size('spacing.xLarge');
+};
 
 const Section = styled.section`
   padding-bottom: ${marginBottom};

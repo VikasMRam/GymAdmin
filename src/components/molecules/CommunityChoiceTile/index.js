@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-
 import { bool, func } from 'prop-types';
 
 import { community as communityPropType } from 'sly/propTypes/community';

@@ -3,12 +3,8 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import { SearchPageTileTexts as searchAdProps } from 'sly/services/helpers/ad';
-import AdTile from '.';
-
-function onClick() {
-  action('Ad Tile Clicked');
-}
+import AdTile from 'sly/components/molecules/AdTile';
 
 storiesOf('Molecules|AdTile', module)
-  .add('default', () => <AdTile {...searchAdProps} onClick={onClick} />)
-  .add('borderless', () => <AdTile {...searchAdProps} onClick={onClick} borderless />);
+  .add('default', () => <AdTile {...searchAdProps} onClick={action('Ad Tile Clicked')} />)
+  .add('borderless', () => <AdTile {...searchAdProps} onClick={action('Ad Tile Clicked')} borderless />);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import Modal from '.';
+
+import Modal from 'sly/components/molecules/Modal';
 
 const onClose = jest.fn();
 

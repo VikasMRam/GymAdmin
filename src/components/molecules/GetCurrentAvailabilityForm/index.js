@@ -5,7 +5,6 @@ import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
-
 import { Box, Heading, Button } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 

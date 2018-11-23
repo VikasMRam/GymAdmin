@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { formatDate } from 'sly/services/helpers/date';
-import CommunityAnswer from '.';
+import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
 
 const answer = {
   creator: 'The Seniorly Team',

@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Dotdotdot from 'react-dotdotdot';
 
 import { Link } from 'sly/components/atoms';
-
 import { size, palette, key } from 'sly/components/themes';
-import Dotdotdot from 'react-dotdotdot';
 import Rating from 'sly/components/molecules/Rating';
 
 const defaultImage =
@@ -39,12 +38,12 @@ const TileImage = styled.img`
   width: ${size('tile.tiny.width')};
   height: ${size('tile.tiny.height')};
 
-  
+
 `;
 
 const ChildrenWrapper = styled.div`
   margin-left: ${size('spacing.regular')};
- 
+
 `;
 
 const NameDiv = styled.div`

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { assetPath } from 'sly/components/themes';
-import DiscoverTile, { ImageWrapper } from '.';
+import DiscoverTile, { ImageWrapper } from 'sly/components/molecules/DiscoverTile';
 
 const content = {
   badgeName: 'Families',

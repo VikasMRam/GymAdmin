@@ -3,8 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-
-import GatheredReviewRatings from '.';
+import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
 
 const { propRatings } = RhodaGoldmanPlaza;
 const { ratingsArray } = propRatings;

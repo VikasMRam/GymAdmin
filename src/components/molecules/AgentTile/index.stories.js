@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import AgentTile from '.';
+
+import AgentTile from 'sly/components/molecules/AgentTile';
 
 const name = 'Fonz';
 const picture = 'https://avatars.githubusercontent.com/u/113003';

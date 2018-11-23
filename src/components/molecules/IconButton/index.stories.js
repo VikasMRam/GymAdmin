@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import IconButton from '.';
+
+import IconButton from 'sly/components/molecules/IconButton';
 
 storiesOf('Molecules|IconButton', module)
   .add('default', () => <IconButton icon="close">Hello</IconButton>)

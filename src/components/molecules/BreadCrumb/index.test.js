@@ -2,8 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { Link } from 'sly/components/atoms';
-
-import BreadCrumb from '.';
+import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 
 const items = [
   {

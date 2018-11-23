@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import CommunityChoice from '.';
+
+import CommunityChoice from 'sly/components/molecules/CommunityChoice';
 
 const options = [
   { value: 'first', label: 'First' },

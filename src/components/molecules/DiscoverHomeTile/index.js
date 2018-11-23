@@ -4,7 +4,6 @@ import { string, func, oneOf } from 'prop-types';
 import { switchProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-
 import { Box, Heading, Block, Button, Image } from 'sly/components/atoms';
 
 const width = p => size('picture', p.size, 'width');

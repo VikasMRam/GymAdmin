@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Block } from 'sly/components/atoms';
 
-import JoinSlyButtons from '.';
+import { Block } from 'sly/components/atoms';
+import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
 
 const wrap = (props = {}) => shallow(<JoinSlyButtons {...props} />);
 

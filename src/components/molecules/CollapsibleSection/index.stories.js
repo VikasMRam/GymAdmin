@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import CollapsibleSection from '.';
+
+import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 
 storiesOf('Molecules|CollapsibleSection', module)
   .add('default', () => (

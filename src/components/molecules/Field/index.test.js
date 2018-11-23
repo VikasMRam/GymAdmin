@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
-import Field from '.';
+import Field from 'sly/components/molecules/Field';
 
 const wrap = (props = {}) => shallow(<Field name="name" {...props} />);
 

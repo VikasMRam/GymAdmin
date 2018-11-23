@@ -2,8 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import { Heading } from 'sly/components/atoms';
-
-import ImageOverlayContentTile from '.';
+import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 
 storiesOf('Molecules|ImageOverlayContentTile', module)
   .add('default', () => (

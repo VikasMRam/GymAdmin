@@ -1,6 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import EstimatedCost, { DesktopButton, MobileButton } from '.';
+
+import EstimatedCost, { DesktopButton, MobileButton }
+  from 'sly/components/molecules/EstimatedCost';
 
 const wrap = (props = {}) => mount(<EstimatedCost {...props} />);
 

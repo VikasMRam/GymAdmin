@@ -6,7 +6,6 @@ import moment from 'moment';
 import { getKey, palette, size } from 'sly/components/themes';
 import { LATER_DATE } from 'sly/constants/date';
 import { TIME_OPTIONS } from 'sly/constants/booking';
-
 import { Block, Button } from 'sly/components/atoms';
 
 const datePlaceholder = 'Select a Date';

@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import { LATER_DATE } from 'sly/constants/date';
-
 import { BoxChoiceTile } from 'sly/components/atoms';
 import DateChoiceTile from 'sly/components/molecules/DateChoiceTile';
 

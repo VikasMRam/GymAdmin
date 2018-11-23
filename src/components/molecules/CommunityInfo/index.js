@@ -7,7 +7,6 @@ import NumberFormat from 'react-number-format';
 import { getKey, palette, size } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { formatRating } from 'sly/services/helpers/rating';
-
 import { Block, Icon, ClampedText } from 'sly/components/atoms';
 
 const Wrapper = styled.div`

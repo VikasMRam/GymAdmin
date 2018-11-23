@@ -1,6 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import MultipleChoice from '.';
+
+import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 
 const options = [
   { value: 'first', label: 'First' },

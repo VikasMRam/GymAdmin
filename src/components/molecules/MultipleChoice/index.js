@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import {
   oneOf,
   oneOfType,
@@ -10,9 +9,7 @@ import {
   func,
   bool,
 } from 'prop-types';
-
 import styled, { css } from 'styled-components';
-
 import { ifProp, prop } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
@@ -26,7 +23,7 @@ const Wrapper = styled.div`
 
   flex-wrap: wrap;
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) { 
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
     // hack % in AdvancedInfoForm
     ${ifProp('width', css`
       width: ${prop('width')};
@@ -110,11 +107,11 @@ export default class MultipleChoice extends Component {
     return (
       <Wrapper onBlur={this.onBlur} {...props}>
         {options &&
-          options.map(({ value: option, label }, i) => (
+          options.map(({ value: option, label }) => (
             <StyledButton
               selectable
               selected={isSelected(type, value, option)}
-              key={option+i}
+              key={option}
               onClick={() => this.onClick(option)}
             >
               {label}
