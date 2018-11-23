@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import Hr from '.';
 
-const wrap = (props = {}) => shallow(<Hr />).dive();
+const wrap = (props = {}) => shallow(<Hr {...props} />).dive();
 
 it('does not render children when passed in', () => {
   const wrapper = wrap({ childred: 'test' });

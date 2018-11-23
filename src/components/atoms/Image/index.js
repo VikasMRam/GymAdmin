@@ -1,9 +1,8 @@
 import React from 'react';
-import { string, oneOf } from 'prop-types';
+import { string, oneOf, node } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, palette } from 'sly/components/themes';
-import { assetPath } from 'sly/components/themes';
+import { size, assetPath } from 'sly/components/themes';
 
 const StyledImage = styled.img`
   user-select: none;
@@ -35,6 +34,7 @@ export default class Image extends React.Component {
     src: string.isRequired,
     alt: string,
     aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3']),
+    children: node,
   };
 
   static generateAlt(src) {
@@ -67,10 +67,12 @@ export default class Image extends React.Component {
     }
   };
 
-  renderImage = (props) => <StyledImage {...props} />;
+  renderImage = props => <StyledImage {...props} />;
 
   render() {
-    const { src, alt, aspectRatio, children, ...props } = this.props;
+    const {
+      src, alt, aspectRatio, children, ...props
+    } = this.props;
     const { failed } = this.state;
 
     const srcProps = failed
@@ -89,9 +91,7 @@ export default class Image extends React.Component {
           {children}
         </ResponsiveWrapper>
       );
-    } else {
-      return this.renderImage({ ...imageProps, ...props });
     }
+    return this.renderImage({ ...imageProps, ...props });
   }
 }
-

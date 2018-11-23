@@ -33,6 +33,7 @@ const Icon = ({ icon, size, ...props }) => {
   try {
     svg = require(`!raw-loader!./icons/${icon}-${size}.svg`);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error('Icon not found:', `${icon}-${size}`);
     svg = '<span>x</span>';
   }

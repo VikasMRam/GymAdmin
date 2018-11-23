@@ -9,14 +9,18 @@ import { bool, string, oneOf } from 'prop-types';
 import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
 
-const backgroundColor = ({ ghost, disabled, transparent, selectable, selected }) =>
+const backgroundColor = ({
+  ghost, disabled, transparent, selectable, selected,
+}) =>
   disabled
     ? palette('white', 0)
     : ghost || (selectable && !selected)
       ? palette('white', 0)
       : transparent ? 'transparent' : palette(0);
 
-const foregroundColor = ({ ghost, disabled, transparent, selectable, selected }) =>
+const foregroundColor = ({
+  ghost, disabled, transparent, selectable, selected,
+}) =>
   disabled
     ? palette('slate', 'stroke')
     : ghost
@@ -25,18 +29,21 @@ const foregroundColor = ({ ghost, disabled, transparent, selectable, selected })
         ? palette('slate', 0)
         : transparent ? 'none' : palette('white', 0);
 
-const borderColor = ({ ghost, disabled, selectable, selected }) => {
+const borderColor = ({
+  ghost, disabled, selectable, selected,
+}) => {
   if (selectable && !selected) {
     return palette('slate', 'stroke');
-  } else {
-    return ghost || disabled ? 'currentcolor' : 'transparent';
   }
+  return ghost || disabled ? 'currentcolor' : 'transparent';
 };
 
 const hoverBackgroundColor = ({ disabled, ghost, transparent }) =>
   !disabled && !ghost && !transparent && palette(1);
 
-const hoverForegroundColor = ({ disabled, ghost, selectable, selected }) =>
+const hoverForegroundColor = ({
+  disabled, ghost, selectable, selected,
+}) =>
   (selectable && !selected)
     ? palette('white', 0)
     : !disabled && ghost && palette(1);
