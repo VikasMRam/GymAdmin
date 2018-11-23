@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { object, func, bool } from 'prop-types';
 
 import { size, palette, key } from 'sly/components/themes';

@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Icon from 'sly/components/atoms/Icon';
-import Rating, { PositionedMask } from '.';
+import Rating, { PositionedMask } from 'sly/components/molecules/Rating';
 
 const wrap = (props = {}) => shallow(<Rating {...props} />);
 
@@ -16,7 +16,12 @@ describe('Rating', () => {
     expect(masks).toHaveLength(5);
 
     masks.forEach((mask, i) => {
-      const expected = i < 3 ? 100 : i < 4 ? 50 : 0;
+      let expected = 0;
+      if (i < 3) {
+        expected = 100;
+      } else if (i < 4) {
+        expected = 50;
+      }
       expect(mask.prop('width')).toEqual(expected);
     });
   });

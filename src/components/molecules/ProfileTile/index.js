@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-
 import { switchProp } from 'styled-tools';
 import { string, shape, oneOf, func } from 'prop-types';
 

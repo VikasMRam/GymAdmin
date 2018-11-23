@@ -2,8 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import IconButton from 'sly/components/molecules/IconButton';
-
-import Notification from '.';
+import Notification from 'sly/components/molecules/Notification';
 
 const wrap = (props = {}) => shallow(<Notification {...props} />);
 

@@ -2,8 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { Link } from 'sly/components/atoms';
-
-import SavedCommunityTile from '.';
+import SavedCommunityTile from 'sly/components/molecules/SavedCommunityTile';
 
 const savedCommunity = {
   imageUrl: 'https://d1qiigpe5txw4q.cloudfront.net/uploads/db8f52dcc7f603607d0ff91c68328b73/VM-5668_sm_sd.jpg',

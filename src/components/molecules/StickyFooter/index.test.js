@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { mount } from 'enzyme';
-import StickyFooter from '.';
 
+import StickyFooter from 'sly/components/molecules/StickyFooter';
 
 const footerInfo = {
   title: 'Some',

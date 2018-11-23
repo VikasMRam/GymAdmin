@@ -1,9 +1,8 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 
-
-import ReasonTile, { Wrapper, StyledHeading } from '.';
-
+import ReasonTile, { Wrapper, StyledHeading }
+  from 'sly/components/molecules/ReasonTile';
 
 const wrap = (props = {}) => mount(<ReasonTile {...props} />);
 const wrapShallow = (props = {}) => shallow(<ReasonTile {...props} />);

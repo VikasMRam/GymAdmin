@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
+import ThumbnailScroller from 'sly/components/molecules/ThumbnailScroller';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-
-import ThumbnailScroller from '.';
 
 const { name, gallery } = RhodaGoldmanPlaza;
 const { images } = gallery;

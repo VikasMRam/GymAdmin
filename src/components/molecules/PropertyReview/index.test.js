@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PropertyReview from '.';
+
+import PropertyReview from 'sly/components/molecules/PropertyReview';
 
 const review = {
   value: 3.5,

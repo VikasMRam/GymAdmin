@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
+import SimilarCommunityNearbyTile from 'sly/components/molecules/SimilarCommunityNearbyTile';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-
-import SimilarCommunityNearbyTile from '.';
 
 const { similarProperties } = RhodaGoldmanPlaza;
 const similarProperty = similarProperties[1];

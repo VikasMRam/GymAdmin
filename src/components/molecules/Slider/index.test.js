@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount, shallow } from 'enzyme';
-import Slider from '.';
+
+import Slider from 'sly/components/molecules/Slider';
 
 const wrap = (props = {}) => shallow(<Slider {...props} />);
 

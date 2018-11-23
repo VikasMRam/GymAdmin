@@ -1,13 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-
 import Dotdotdot from 'react-dotdotdot';
+import NumberFormat from 'react-number-format';
 
 import { size, palette } from 'sly/components/themes';
 import { Heading, Icon } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
-import NumberFormat from 'react-number-format';
 
 const clamp = css`
   display: block;

@@ -2,7 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Section from '.';
+import Section from 'sly/components/molecules/Section';
 
 storiesOf('Molecules|Section', module)
   .add('default', () => (

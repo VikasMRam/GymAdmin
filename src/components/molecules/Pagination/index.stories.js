@@ -1,7 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import Pagination from '.';
+
+import Pagination from 'sly/components/molecules/Pagination';
 
 const firstFive = {
   current: 0,

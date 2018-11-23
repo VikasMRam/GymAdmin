@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
+import { Lazy } from 'react-lazy';
 
 import { size, assetPath, palette, key } from 'sly/components/themes';
-import { Lazy } from 'react-lazy';
 import { Image, Button } from 'sly/components/atoms';
 import SimilarCommunityInfo from 'sly/components/molecules/SimilarCommunityInfo';
 

@@ -1,9 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
+import PropertyReview from 'sly/components/molecules/PropertyReview';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-
-import PropertyReview from '.';
 
 const { reviews } = RhodaGoldmanPlaza;
 const review = reviews[0];

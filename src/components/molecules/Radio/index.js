@@ -2,8 +2,8 @@ import React from 'react';
 import { bool } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
-import { palette } from 'sly/components/themes';
 
+import { palette } from 'sly/components/themes';
 import { Icon } from 'sly/components/atoms';
 
 export const StyledIcon = styled(Icon)`

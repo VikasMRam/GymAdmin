@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import { assetPath } from 'sly/components/themes';
-import ReasonTile from '.';
+import ReasonTile from 'sly/components/molecules/ReasonTile';
 
 storiesOf('Molecules|ReasonTile', module)
   .add('default', () => (
