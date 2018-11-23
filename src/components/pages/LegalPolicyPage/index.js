@@ -1,16 +1,14 @@
 import React, { Fragment } from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
-
+import { object } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import { Hr } from 'sly/components/atoms';
-
 import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
 import Footer from 'sly/components/organisms/Footer';
-
-import PPHTML from './privacypolicytext.js';
-import TOSHTML from './tostext.js';
+import PPHTML from 'sly/components/pages/LegalPolicyPage/privacypolicytext';
+import TOSHTML from 'sly/components/pages/LegalPolicyPage/tostext';
 
 
 const DescriptionText = styled.div`
@@ -23,8 +21,6 @@ const DescriptionText = styled.div`
     margin-right: ${size('layout.gutter')};
   }
 `;
-
-
 
 const StyledHr = styled(Hr)`
   margin-bottom: ${size('spacing.huge')};
@@ -40,20 +36,18 @@ const ContentWrapper = styled.div`
 
 /** TODO Check with Fonz/Amal about performance about below */
 const legalPageTypes = {
-  'privacy':{
-    component: <PPHTML/>,
-    title : 'Our Privacy Policy',
-
+  privacy: {
+    component: <PPHTML />,
+    title: 'Our Privacy Policy',
   },
-  'tos':{
-    component: <TOSHTML/>,
-    title : 'Terms of Use',
-
+  tos: {
+    component: <TOSHTML />,
+    title: 'Terms of Use',
   },
 };
 const LegalPolicyPage = ({ match }) => {
   const { legalPage } = match.params;
-  const {component, title} = legalPageTypes[legalPage];
+  const { component, title } = legalPageTypes[legalPage];
 
   const description = (
     <Fragment>
@@ -63,12 +57,11 @@ const LegalPolicyPage = ({ match }) => {
     </Fragment>
   );
 
-
   return (
     <Fragment>
 
       <Helmet>
-        <meta name="robots" content="noindex"/>
+        <meta name="robots" content="noindex" />
       </Helmet>
 
       <OverlappingSectionsTemplate
@@ -85,6 +78,10 @@ const LegalPolicyPage = ({ match }) => {
       </OverlappingSectionsTemplate>
     </Fragment>
   );
+};
+
+LegalPolicyPage.propTypes = {
+  match: object,
 };
 
 export default LegalPolicyPage;

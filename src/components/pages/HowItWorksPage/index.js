@@ -168,9 +168,9 @@ const CityTileWrapper = styled(Link)`
 `;
 
 
-const hiwDetailUrl = data => `/how-it-works/${data.slug}`;
+// const hiwDetailUrl = data => `/how-it-works/${data.slug}`;
 
-const HowItWorksPage = ({ history }) => {
+const HowItWorksPage = () => {
   const intro = (
     <Fragment>
       <IntroText>
@@ -184,7 +184,7 @@ const HowItWorksPage = ({ history }) => {
   );
 
   const discoverTiles = Object.entries(howItWorksContents)
-    .map(([key, data], index) => (
+    .map(([data], index) => (
       <DiscoverTile
         key={index}
         content={data}
@@ -192,14 +192,14 @@ const HowItWorksPage = ({ history }) => {
       />
     ));
 
-  const secondContentTiles = secondContents.map((item, index) => {
-    return (
-      <IconInfoTile
-        key={index}
-        {...item}
-      />
-    );
-  });
+  // const secondContentTiles = secondContents.map((item, index) => {
+  //   return (
+  //     <IconInfoTile
+  //       key={index}
+  //       {...item}
+  //     />
+  //   );
+  // });
 
   const Bottom = () => {
     const mostSearchedCitiesComponents = MostSearchedCities

@@ -4,9 +4,7 @@ import { bool, func } from 'prop-types';
 
 
 import { size, assetPath, palette } from 'sly/components/themes';
-
 import HeaderController from 'sly/controllers/HeaderController';
-
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { Image, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
@@ -327,7 +325,9 @@ const familiesWeHaveHelpedTiles = [
   },
 ];
 
-const PromoPage = ({ isModalOpen, isWizardActive, onLocationSearch, setActiveDiscoverHome, wizardStatus }) => {
+const PromoPage = ({
+  isModalOpen, isWizardActive, onLocationSearch, setActiveDiscoverHome, wizardStatus,
+}) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -338,11 +338,11 @@ const PromoPage = ({ isModalOpen, isWizardActive, onLocationSearch, setActiveDis
           <SearchBoxWrapper>
             <StyledHeading level="hero" size="hero" palette="white">
               The #1 company to find Senior Housing in
-              <br/>
+              <br />
               San Francisco
             </StyledHeading>
             <StyledHeading level="title" size="title" palette="white">
-              $150 off first month's rent.
+              $150 off first month&apos;s rent.
             </StyledHeading>
             <StyledLabel palette="white">
               To redeem offer, please click through now to complete the free and easy sign-up process.
@@ -478,7 +478,7 @@ const PromoPage = ({ isModalOpen, isWizardActive, onLocationSearch, setActiveDis
           </CWTColumnWrapper>
         </StyledSection>
         { isWizardActive &&
-        <Modal closeable isOpen layout="wizard"  onClose={() => wizardStatus(false)} >
+        <Modal closeable isOpen layout="wizard" onClose={() => wizardStatus(false)} >
           <CAWController currentStep={2} locationSearchParams={{ city: 'san-francisco', state: 'california' }} />
         </Modal>
         }
@@ -492,7 +492,8 @@ PromoPage.propTypes = {
   isModalOpen: bool,
   onLocationSearch: func,
   setActiveDiscoverHome: func,
-  onWizardStart: func,
+  wizardStatus: func,
+  isWizardActive: bool,
 };
 
 export default PromoPage;

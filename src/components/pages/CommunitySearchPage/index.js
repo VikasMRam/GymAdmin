@@ -1,14 +1,11 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-
 import { array, bool, func, object } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
-
 import { titleize } from 'sly/services/helpers/strings';
 import { getTocSearchLabel } from 'sly/services/helpers/search';
 import { getHelmetForSearchPage } from 'sly/services/helpers/html_headers';
-
 import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
 import { Heading, Button, Hr } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
@@ -18,9 +15,7 @@ import IconButton from 'sly/components/molecules/IconButton';
 import Modal from 'sly/components/molecules/Modal';
 import Thankyou from 'sly/components/molecules/Thankyou';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
-
 import CAWController from 'sly/external/wizards/caw/Controller';
-
 import { THANK_YOU, CAW_WIZARD } from 'sly/constants/modalType';
 
 const TopWrapper = styled.div`
@@ -122,27 +117,28 @@ const CommunitySearchPage = ({
   );
   const TopContent = () => {
     if (geoGuide && geoGuide.guideContent) {
-      let gg = geoGuide.guideContent;
+      const gg = geoGuide.guideContent;
       if (gg.autoDescription) {
-        return (<Fragment>
-          <StyledHeading level={'hero'} size={'title'}>
-            {listSize} {tocLabel} near {city}
-          </StyledHeading>
-          <LegacyContent dangerouslySetInnerHTML={{__html: gg.autoDescription}}/>
-        </Fragment>);
+        return (
+          <Fragment>
+            <StyledHeading level="hero" size="title">
+              {listSize} {tocLabel} near {city}
+            </StyledHeading>
+            <LegacyContent dangerouslySetInnerHTML={{ __html: gg.autoDescription }} />
+          </Fragment>
+        );
       }
-
     }
 
     return (
       <Fragment>
-        <StyledHeading level={'hero'} size={'title'}>
+        <StyledHeading level="hero" size="title">
           {listSize} {tocLabel} near {city}
         </StyledHeading>
       </Fragment>);
   };
 
-  const ListContent = ()=> {
+  const ListContent = () => {
     /**
      * Order of appearance as in editor :
      * description, <p>1</p>
@@ -200,7 +196,9 @@ const CommunitySearchPage = ({
   return (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      {getHelmetForSearchPage({ ...searchParams, url: location, communityList, listSize })}
+      {getHelmetForSearchPage({
+        ...searchParams, url: location, communityList, listSize,
+        })}
       <Modal
         closeable
         onClose={onToggleModalFilterPanel}

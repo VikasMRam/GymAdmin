@@ -5,7 +5,6 @@ import { object, func, bool } from 'prop-types';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
-
 import {
   FullScreenWizard,
   makeBody,
@@ -13,7 +12,6 @@ import {
   makeControls,
   makeHeader,
 } from 'sly/components/templates/FullScreenWizard';
-
 import BookATourPageController from 'sly/controllers/BookATourPageController';
 import HeaderController from 'sly/controllers/HeaderController';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';

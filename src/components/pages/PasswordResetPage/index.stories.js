@@ -4,8 +4,7 @@ import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
 import { withPreventDefault } from 'sly/services/helpers/forms';
-
-import PasswordResetPage from '.';
+import PasswordResetPage from 'sly/components/pages/PasswordResetPage';
 
 const PasswordResetPageContainer = reduxForm({
   form: 'PasswordResetPage',
