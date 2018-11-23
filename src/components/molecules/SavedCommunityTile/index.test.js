@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Link} from 'sly/components/atoms';
+import { Link } from 'sly/components/atoms';
 
 import SavedCommunityTile from '.';
 

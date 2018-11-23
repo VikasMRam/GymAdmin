@@ -1,10 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import CommunityChoiceTile from '.';
+
+import parentCommunity from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 import Checkbox from 'sly/components/molecules/Checkbox';
 
-import parentCommunity from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
+import CommunityChoiceTile from '.';
 
 const { similarProperties: { 0: community } } = parentCommunity;
 

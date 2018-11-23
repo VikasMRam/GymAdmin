@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 
-import { size, palette, key } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { Image, Block, Link } from 'sly/components/atoms';
 
 import Heading from 'sly/components/atoms/Heading';

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import {
-  oneOf,
   oneOfType,
   arrayOf,
   shape,
@@ -10,11 +9,6 @@ import {
   func,
 } from 'prop-types';
 
-import styled from 'styled-components';
-
-import { ifProp, prop } from 'styled-tools';
-
-import { size, font, palette } from 'sly/components/themes';
 import CommunityChoiceTile from 'sly/components/molecules/CommunityChoiceTile';
 
 export default class CommunityChoice extends Component {
@@ -24,6 +18,7 @@ export default class CommunityChoice extends Component {
       label: string,
     })).isRequired,
     value: arrayOf(oneOfType([string, number])).isRequired,
+    onChange: func,
   };
 
   static defaultProps = {
@@ -44,14 +39,14 @@ export default class CommunityChoice extends Component {
 
   render() {
     const {
-      options, value, type, invalid, ...props
+      options, value, ...props
     } = this.props;
     return (
       <div {...props}>
         {options &&
-          options.map(({ value: option, label, ...props }, i) => (
+          options.map(({ value: option, label, ...props }) => (
             <CommunityChoiceTile
-              key={option + i}
+              key={option}
               selected={value.includes(option)}
               onClick={() => this.onClick(option)}
               {...props}

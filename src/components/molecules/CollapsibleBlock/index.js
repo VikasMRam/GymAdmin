@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Measure from 'react-measure';
 import styled from 'styled-components';
-import { bool, number, string, oneOfType, oneOf } from 'prop-types';
+import { bool, number, string, oneOfType, oneOf, node } from 'prop-types';
 
 import { size, key } from 'sly/components/themes';
-import { Block, Link } from 'sly/components/atoms';
+import { Link } from 'sly/components/atoms';
 
 export const blockCapHeight = props => !props.collapsed
   ? `${props.maxHeight}px`
@@ -35,6 +35,7 @@ export default class CollapsibleBlock extends Component {
     blockClassName: string,
     collapsedDefault: bool,
     minHeight: oneOfType([number, oneOf(['tiny', 'small', 'regular', 'large'])]),
+    children: node,
   };
 
   static defaultProps = {
@@ -46,21 +47,23 @@ export default class CollapsibleBlock extends Component {
     collapsed: this.props.collapsedDefault,
   };
 
+  onResize = ({ entry = {} }) => this.setState({
+    maxHeight: entry.height,
+  });
+
   toggle = () => this.setState({
     collapsed: !this.state.collapsed,
   });
 
-  onResize = ({entry={}}) => this.setState({
-    maxHeight: entry.height
-  });
-
   render() {
-    const { children, minHeight, collapsedDefault, blockClassName, ...props } = this.props;
+    const {
+      children, minHeight, collapsedDefault, blockClassName, ...props
+    } = this.props;
     const { collapsed, maxHeight } = this.state;
 
     return (
       <Measure onResize={this.onResize} margin>
-        {({ measureRef }) =>
+        {({ measureRef }) => (
           <div className={blockClassName}>
             <BlockCap maxHeight={maxHeight} minHeight={minHeight} collapsed={collapsed}>
               <div ref={measureRef} {...props}>
@@ -75,6 +78,7 @@ export default class CollapsibleBlock extends Component {
               {collapsed ? 'Read more' : 'Read less'}
             </ReadMore>
           </div>
+        )
         }
       </Measure>
     );

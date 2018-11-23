@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Rating, { PositionedMask } from '.';
 import Icon from 'sly/components/atoms/Icon';
+import Rating, { PositionedMask } from '.';
 
 const wrap = (props = {}) => shallow(<Rating {...props} />);
 

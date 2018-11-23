@@ -6,12 +6,8 @@ const wrap = (props = {}) => shallow(<IconButton icon="github" {...props} />);
 
 it('mounts with different combination of props', () => {
   mount(<IconButton icon="github">test</IconButton>);
-  mount(<IconButton icon="github" right>
-      test
-        </IconButton>);
-  mount(<IconButton icon="github" collapsed>
-      test
-        </IconButton>);
+  mount(<IconButton icon="github" right>test</IconButton>);
+  mount(<IconButton icon="github" collapsed>test</IconButton>);
   mount(<IconButton icon="github" />);
   mount(<IconButton icon="github" right />);
 });

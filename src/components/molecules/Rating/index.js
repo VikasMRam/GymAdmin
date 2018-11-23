@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { number, string, oneOf } from 'prop-types';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
@@ -11,7 +11,7 @@ const times = (nr, fn) => Array.from(Array(nr).keys()).map((_, i) => fn(i));
 const getWidth = (current, total) => {
   if (total > current + 1) return 100;
   else if (total < current) return 0;
-  return (total - current) * 80 + 10;
+  return ((total - current) * 80) + 10;
 };
 
 const Wrapper = styled.div`
@@ -41,7 +41,9 @@ const Star = styled.div`
   position: relative;
 `;
 
-const Rating = ({ palette, value, size, ...props }) => {
+const Rating = ({
+  palette, value, size, ...props
+}) => {
   // TODO: fix hardcoded stroke size in svg
   const stars = times(5, i => (
     <Star key={`star${i}`}>

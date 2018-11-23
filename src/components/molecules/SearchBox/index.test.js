@@ -1,8 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import SearchBox from '.';
 import { Icon, Input, Button } from 'sly/components/atoms';
+import SearchBox from '.';
 
 function onChange() {
   // console.log('onChange');

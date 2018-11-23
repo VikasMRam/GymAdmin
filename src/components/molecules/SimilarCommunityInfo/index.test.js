@@ -13,7 +13,7 @@ const similarProperty = {
   numReviews: 4,
   webViewInfo: {
     firstLineValue: 'A, B',
-    secondLineValue : 'Suite, One Bedroom',
+    secondLineValue: 'Suite, One Bedroom',
   },
 };
 const wrap = (props = {}) =>

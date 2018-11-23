@@ -15,7 +15,7 @@ import styled, { css } from 'styled-components';
 
 import { ifProp, prop } from 'styled-tools';
 
-import { size, font, palette } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import { Button } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
@@ -66,6 +66,8 @@ export default class MultipleChoice extends Component {
     ]).isRequired,
     type: oneOf(['multiplechoice', 'singlechoice']),
     width: string, // hack % in AdvancedInfoForm
+    onBlur: func,
+    onChange: func,
   };
 
   static defaultProps = {
@@ -92,6 +94,7 @@ export default class MultipleChoice extends Component {
       copy.splice(index, 1);
       onChange(copy);
     }
+    return null;
   }
 
   render() {
@@ -107,7 +110,7 @@ export default class MultipleChoice extends Component {
     return (
       <Wrapper onBlur={this.onBlur} {...props}>
         {options &&
-          options.map(({ value: option, label, ...props }, i) => (
+          options.map(({ value: option, label }, i) => (
             <StyledButton
               selectable
               selected={isSelected(type, value, option)}

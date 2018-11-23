@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
-
-import FullscreenMediaGallery from '.';
+import { action } from '@storybook/addon-actions';
 
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
+import FullscreenMediaGallery from '.';
+
 function onClose() {
-  alert('modal close triggered');
+  action('modal close triggered');
 }
 
 class FullscreenMediaGalleryWithState extends Component {

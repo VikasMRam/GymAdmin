@@ -1,6 +1,5 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
-import sinon from 'sinon';
+import { shallow } from 'enzyme';
 
 import AgentTile, { CaptionSpan } from '.';
 
@@ -19,7 +18,6 @@ const userFull = {
   picture,
   title,
 };
-const userNothing = { name };
 const userNoTitle = { name, picture, rating: 5 };
 const userWithRating = { ...userFull, rating: 5 };
 

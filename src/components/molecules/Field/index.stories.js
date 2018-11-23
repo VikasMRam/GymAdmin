@@ -21,14 +21,16 @@ storiesOf('Molecules|Field', module)
   .add('type textarea', () => (
     <Field name="field" label="Label" type="textarea" />
   ))
-  .add('type select', () => <Field name="field" label="Label" type="select" >
-    <option>Name 1</option>
-    <option>Name 2</option>
-  </Field>)
-  .add('type select with selected', () => <Field name="field" label="Label" type="select" >
-    <option >Name 1</option>
-    <option selected={true}>Name 2</option>
-  </Field>)
+  .add('type select', () => (
+    <Field name="field" label="Label" type="select" >
+      <option>Name 1</option>
+      <option>Name 2</option>
+    </Field>))
+  .add('type select with selected', () => (
+    <Field name="field" label="Label" type="select" >
+      <option >Name 1</option>
+      <option selected>Name 2</option>
+    </Field>))
   .add('type checkbox', () => (
     <Field name="field" label="Label" type="checkbox" />
   ))

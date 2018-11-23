@@ -18,7 +18,7 @@ const PriceBar = ({
 }) => {
   return (
     <TwoColumnWrapper {...props}>
-      <Bar width={width/2.5} />
+      <Bar width={width / 2.5} />
       <TextWrapper>
         <Block size="caption">
           <NumberFormat value={price} displayType="text" thousandSeparator prefix="$" />

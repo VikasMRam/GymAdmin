@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Link } from 'sly/components/atoms'
+import { Link } from 'sly/components/atoms';
 
 import { size, palette, key } from 'sly/components/themes';
 import Dotdotdot from 'react-dotdotdot';
@@ -66,7 +66,9 @@ const NumberReviewDiv = styled.div`
 `;
 
 const MapTile = ({ tileInfo, onClick, borderless }) => {
-  const { id, mainImage, name, startingRate, propRatings, url } = tileInfo;
+  const {
+    id, mainImage, name, startingRate, propRatings, url,
+  } = tileInfo;
   const { reviewsValue, numReviews } = propRatings;
   return (
     <Link key={id} to={url}>

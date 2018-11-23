@@ -19,7 +19,7 @@ export const StyledIcon = styled(Icon)`
   }
 `;
 
-const Checkbox = (props) => <StyledIcon icon="checkbox" {...props} />;
+const Checkbox = props => <StyledIcon icon="checkbox" {...props} />;
 
 Checkbox.propTypes = {
   checked: bool.isRequired,

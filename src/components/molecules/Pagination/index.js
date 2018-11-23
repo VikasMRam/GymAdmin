@@ -152,14 +152,14 @@ export default class Pagination extends Component {
       margin,
     } = this.props;
 
-    let leftSide  = (range / 2);
+    let leftSide = (range / 2);
     let rightSide = (range - leftSide);
 
     if (current > total - range / 2) {
       rightSide = total - current;
-      leftSide  = range - rightSide;
+      leftSide = range - rightSide;
     } else if (current < range / 2) {
-      leftSide  = current;
+      leftSide = current;
       rightSide = range - leftSide;
     }
 
@@ -195,7 +195,6 @@ export default class Pagination extends Component {
   }
 
   render() {
-    const { current, total, basePath } = this.props;
 
     return (
       <Wrapper>

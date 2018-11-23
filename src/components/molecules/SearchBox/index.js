@@ -30,7 +30,7 @@ const SearchTextBox = styled(Input)`
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.tiny')} 0 0 ${size('spacing.tiny')};
 
-  ${switchProp('layout', {
+${switchProp('layout', {
     header: css`
       height: auto;
       border: none;
@@ -46,7 +46,7 @@ const SearchTextBox = styled(Input)`
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
     border-radius: ${size('spacing.tiny')} 0 0 ${size('spacing.tiny')};
 
-  ${switchProp('layout', {
+${switchProp('layout', {
     header: css`
       border-right: 0;
     `,
@@ -64,7 +64,7 @@ const SearchButton = styled(Button)`
   width: ${size('element.xxLarge')};
   border-radius: 0 ${size('spacing.tiny')} ${size('spacing.tiny')} 0;
 
-  ${switchProp('layout', {
+${switchProp('layout', {
     header: css`
       margin-right: ${size('spacing.regular')};
       width: ${size('element.large')};
@@ -73,7 +73,7 @@ const SearchButton = styled(Button)`
       > span {
         color: ${palette('primary', 0)};
       }
-    `,
+`,
   })};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -124,7 +124,7 @@ const GoogleLogo = styled(Image)`
 `;
 const baseSearchOptions = { types: ['(regions)'] };
 const SearchBox = ({
-  layout, value, onChange, onSelect, onSeachButtonClick, onTextboxFocus, placeholder, ...props,
+  layout, value, onChange, onSelect, onSeachButtonClick, onTextboxFocus, placeholder, ...props
 }) => (
   <Wrapper layout={layout} {...props}>
     <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion>

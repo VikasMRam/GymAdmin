@@ -1,7 +1,8 @@
 import React from 'react';
+import { shallow } from 'enzyme';
+
 import SlyEvent from '../../../services/helpers/events';
 import { Router } from '.';
-import { shallow } from 'enzyme';
 
 jest.mock('../../../services/helpers/events');
 
@@ -18,7 +19,7 @@ const location = {
   search: '?foo=xyz',
 };
 
-const wrap = (props={}) => shallow(<Router {...props} />);
+const wrap = (props = {}) => shallow(<Router {...props} />);
 
 global.scrollTo = jest.fn();
 
@@ -36,7 +37,7 @@ describe('Router', () => {
     expect(sendPageView).toHaveBeenCalledWith('abc', '?foo=xyz');
     wrapper.setProps({ location });
     expect(sendPageView).toHaveBeenCalledTimes(1);
-    wrapper.setProps({ location: { pathname: 'cba', search: '?baz=xyz' }}); 
+    wrapper.setProps({ location: { pathname: 'cba', search: '?baz=xyz' } });
     expect(sendPageView).toHaveBeenCalledTimes(2);
     expect(sendPageView).toHaveBeenCalledWith('cba', '?baz=xyz');
   });
@@ -44,41 +45,53 @@ describe('Router', () => {
   it('should call scrollTo only when path changes', () => {
     const wrapper = wrap({ location });
     expect(global.scrollTo).not.toHaveBeenCalled();
-    wrapper.setProps({ location: {
-      ...location,
-      search: '?change',
-    }});
+    wrapper.setProps({
+      location: {
+        ...location,
+        search: '?change',
+      },
+    });
     expect(global.scrollTo).not.toHaveBeenCalled();
-    wrapper.setProps({ location: {
-      ...location,
-      pathname: 'change',
-    }});
+    wrapper.setProps({
+      location: {
+        ...location,
+        pathname: 'change',
+      },
+    });
     expect(global.scrollTo).toHaveBeenCalledWith(0, 0);
   });
 
   it('should call scrollTo when some page-number changes', () => {
-    const wrapper = wrap({ location: {
-      ...location,
-      search: '?page-number=0'
-    }}); 
+    const wrapper = wrap({
+      location: {
+        ...location,
+        search: '?page-number=0',
+      },
+    });
     expect(global.scrollTo).not.toHaveBeenCalled();
-    wrapper.setProps({ location: {
-      ...location,
-      search: '?page-number=1',
-    }});
+    wrapper.setProps({
+      location: {
+        ...location,
+        search: '?page-number=1',
+      },
+    });
     expect(global.scrollTo).toHaveBeenCalledWith(0, 0);
   });
 
   it('should call scrollTo when some page-size changes', () => {
-    const wrapper = wrap({ location: {
-      ...location,
-      search: '?page-size=0'
-    }}); 
+    const wrapper = wrap({
+      location: {
+        ...location,
+        search: '?page-size=0',
+      },
+    });
     expect(global.scrollTo).not.toHaveBeenCalled();
-    wrapper.setProps({ location: {
-      ...location,
-      search: '?page-size=1',
-    }});
+    wrapper.setProps({
+      location: {
+        ...location,
+        search: '?page-size=1',
+      },
+    });
     expect(global.scrollTo).toHaveBeenCalledWith(0, 0);
   });
 });

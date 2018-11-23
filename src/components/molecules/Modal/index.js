@@ -5,8 +5,6 @@ import ReactModal from 'react-modal';
 
 import { ifProp, switchProp } from 'styled-tools';
 
-import { isBrowser, isTest } from 'sly/config';
-
 import { size, palette, key } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 
@@ -27,8 +25,8 @@ const ModalBox = styled(ReactModal)`
   &[class*='after-open'] > article {
     transform: translate(-50%, -50%);
     ${switchProp('layout', {
-      sidebar: css`transform: translate(0%, 0%);`,
-    })};
+    sidebar: css`transform: translate(0%, 0%);`,
+  })};
   }
   &[class*='before-close'] > article {
     transform: translate(-50%, 100%);
@@ -140,59 +138,56 @@ const Heading = styled.div`
   z-index: ${key('zIndexes.modal.galleryLayoutHeading')};
 `;
 
-export default class Modal extends React.Component {
-  static propTypes = {
-    layout: oneOf(['single', 'double', 'gallery', 'sidebar', 'searchBox', 'wizard']).isRequired,
-    heading: node,
-    children: node,
-    closeable: bool,
-    onClose: func.isRequired,
-    transparent: bool,
-    noPadding: bool,
-    closeButtonPalette: oneOf(['white', 'slate']),
-  };
+const Modal = ({
+  heading, children, closeable, layout, onClose, transparent, closeButtonPalette, noPadding, ...props
+}) => {
+  const iconClose = (
+    <IconButton
+      icon="close"
+      iconOnly
+      layout={layout}
+      onClick={onClose}
+      palette={closeButtonPalette}
+    />
+  );
 
-  static defaultProps = {
-    layout: 'single',
-    transparent: false,
-    noPadding: false,
-    closeButtonPalette: 'white',
-  };
+  return (
+    <StyledReactModal
+      onRequestClose={onClose}
+      layout={layout}
+      transparent={transparent}
+      onClose={onClose}
+      {...props}
+    >
+      {(closeable || heading) && (
+        <Heading layout={layout}>
+          {closeable && iconClose}
+          {heading}
+        </Heading>
+      )}
+      <ModalContext layout={layout} transparent={transparent} noPadding={noPadding}>
+        {children}
+      </ModalContext>
+    </StyledReactModal>
+  );
+};
 
-  render() {
-    const {
-      heading, children, closeable, layout, onClose, transparent, closeButtonPalette,
-      noPadding,
-    } = this.props;
+Modal.propTypes = {
+  layout: oneOf(['single', 'double', 'gallery', 'sidebar', 'searchBox', 'wizard']).isRequired,
+  heading: node,
+  children: node,
+  closeable: bool,
+  onClose: func.isRequired,
+  transparent: bool,
+  noPadding: bool,
+  closeButtonPalette: oneOf(['white', 'slate']),
+};
 
-    const iconClose = (
-      <IconButton
-        icon="close"
-        iconOnly
-        layout={layout}
-        onClick={onClose}
-        palette={closeButtonPalette}
-      />
-    );
+Modal.defaultProps = {
+  layout: 'single',
+  transparent: false,
+  noPadding: false,
+  closeButtonPalette: 'white',
+};
 
-    return (
-      <StyledReactModal
-        onRequestClose={onClose}
-        layout={layout}
-        transparent={transparent}
-        onClose={onClose}
-        {...this.props}
-      >
-        {(closeable || heading) && (
-          <Heading layout={layout}>
-            {closeable && iconClose}
-            {heading}
-          </Heading>
-        )}
-        <ModalContext layout={layout} transparent={transparent} noPadding={noPadding}>
-          {children}
-        </ModalContext>
-      </StyledReactModal>
-    );
-  }
-}
+export default Modal;
