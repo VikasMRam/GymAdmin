@@ -78,11 +78,10 @@ export default class SlyEvent {
       value,
     };
 
-    if (!isDev) {
+    if (isDev) {
       console.info('EVENT event', gaEvent);
     } else {
       fetch(`${eventServerUrl}?${stringify(se)}`);
-      console.info('EVENT event', gaEvent);
       ReactGA.event(gaEvent);
       if (typeof window.dataLayer !== 'undefined'){
         window.dataLayer.push(gaEvent);
