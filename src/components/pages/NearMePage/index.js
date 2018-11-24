@@ -5,17 +5,13 @@ import { array, bool, func, object } from 'prop-types';
 import { palette } from 'styled-theme';
 
 import { size, assetPath } from 'sly/components/themes';
-
 import HeaderController from 'sly/controllers/HeaderController';
-
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-
 import { Image, Label, Heading, Paragraph } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
-
 import { getTocSearchLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import Link from 'sly/components/atoms/Link';
@@ -84,13 +80,15 @@ const StyledArticle = styled.article`
   }
 `;
 
-const NearMePage = ({ onLocationSearch,
+const NearMePage = ({
+  onLocationSearch,
   searchParams,
   requestMeta,
   communityList,
   isFetchingResults,
   handleAnchor,
-  location}) => {
+  location,
+}) => {
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -116,7 +114,7 @@ const NearMePage = ({ onLocationSearch,
   );
 
   const listSize = requestMeta['filtered-count'];
-  const geo = requestMeta['geo'];
+  const { geo } = requestMeta;
   const city = geo && geo.city;
   const tocLabel = getTocSearchLabel('assisted-living');
   const onAdTileClick = () => {};
@@ -149,8 +147,8 @@ const NearMePage = ({ onLocationSearch,
   const SEOContentAL = () => {
     return (
       <Fragment>
-        <Paragraph innerRef={topRef}/>
-        <StyledHeading level={'title'} size={'title'} >
+        <Paragraph innerRef={topRef} />
+        <StyledHeading level="title"size="title">
           Table of Contents
         </StyledHeading>
         <StyledArticle>
@@ -222,8 +220,8 @@ const NearMePage = ({ onLocationSearch,
           </ul>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={alRef}/>
-          <StyledHeading level={'title'} size={'title'} >
+          <Paragraph innerRef={alRef} />
+          <StyledHeading level="title" size="title" >
             What is Assisted Living?
           </StyledHeading>
           <Paragraph>
@@ -319,8 +317,8 @@ const NearMePage = ({ onLocationSearch,
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={staffRef}/>
-          <StyledHeading level={'title'} size={'title'} >
+          <Paragraph innerRef={staffRef} />
+          <StyledHeading level="title" size="title" >
             What Type Of Medical Staff Is Present?
           </StyledHeading>
           <Paragraph>
@@ -387,8 +385,8 @@ const NearMePage = ({ onLocationSearch,
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={licenseRef}/>
-          <StyledHeading level={'title'} size={'title'} >
+          <Paragraph innerRef={licenseRef} />
+          <StyledHeading level="title" size="title">
             Licensing and Inspection Requirements
           </StyledHeading>
           <Paragraph>
@@ -407,8 +405,8 @@ const NearMePage = ({ onLocationSearch,
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={socialRef}/>
-          <StyledHeading level={'title'} size={'title'} >
+          <Paragraph innerRef={socialRef} />
+          <StyledHeading level="title"size="title">
             Exploring The Social and Community Aspects
           </StyledHeading>
           <Paragraph>
@@ -444,8 +442,8 @@ const NearMePage = ({ onLocationSearch,
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={costRef}/>
-          <StyledHeading level={'title'} size={'title'} >
+          <Paragraph innerRef={costRef} />
+          <StyledHeading level="title"size="title">
             Considering Cost and Payment Options
           </StyledHeading>
           <Paragraph>
@@ -522,11 +520,11 @@ const NearMePage = ({ onLocationSearch,
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <StyledHeading level={'title'} size={'title'} >
+          <StyledHeading level="title"size="title">
             How Assisted Living Varies from other care options
           </StyledHeading>
-          <Paragraph innerRef={alvsnhRef}/>
-          <StyledHeading level={'subtitle'} size={'subtitle'} >
+          <Paragraph innerRef={alvsnhRef} />
+          <StyledHeading level="subtitle" size="subtitle" >
             Assisted Living vs Nursing Homes
           </StyledHeading>
           <Paragraph>
@@ -546,57 +544,57 @@ const NearMePage = ({ onLocationSearch,
           <StyledArticle>
             <table>
               <thead>
-              <tr>
-                <th></th>
-                <th>
-                  Nursing Home
-                </th>
-                <th>
-                  Assisted Living
-                </th>
-              </tr>
+                <tr>
+                  <th />
+                  <th>
+                    Nursing Home
+                  </th>
+                  <th>
+                    Assisted Living
+                  </th>
+                </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>
-                  Private Living
-                </td>
-                <td></td>
-                <td>
-                  x
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  24-Hour Medical Assistance
-                </td>
-                <td>
-                  x
-                </td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>
-                  Medication Monitoring
-                </td>
-                <td>
-                  x
-                </td>
-                <td>
-                  x
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Regular Activities
-                </td>
-                <td>
-                  x
-                </td>
-                <td>
-                  x
-                </td>
-              </tr>
+                <tr>
+                  <td>
+                    Private Living
+                  </td>
+                  <td />
+                  <td>
+                    x
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    24-Hour Medical Assistance
+                  </td>
+                  <td>
+                    x
+                  </td>
+                  <td />
+                </tr>
+                <tr>
+                  <td>
+                    Medication Monitoring
+                  </td>
+                  <td>
+                    x
+                  </td>
+                  <td>
+                    x
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Regular Activities
+                  </td>
+                  <td>
+                    x
+                  </td>
+                  <td>
+                    x
+                  </td>
+                </tr>
               </tbody>
             </table>
           </StyledArticle>
@@ -613,8 +611,8 @@ const NearMePage = ({ onLocationSearch,
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={alvsilRef}/>
-          <StyledHeading level={'subtitle'} size={'subtitle'} >
+          <Paragraph innerRef={alvsilRef} />
+          <StyledHeading level="subtitle" size="subtitle" >
             Assisted Living vs. Independent Living
           </StyledHeading>
           <Paragraph>
@@ -626,57 +624,57 @@ const NearMePage = ({ onLocationSearch,
           <StyledArticle>
             <table>
               <thead>
-              <tr>
-                <th></th>
-                <th>
-                  Independent Living
-                </th>
-                <th>
-                  Assisted Living
-                </th>
-              </tr>
+                <tr>
+                  <th />
+                  <th>
+                    Independent Living
+                  </th>
+                  <th>
+                    Assisted Living
+                  </th>
+                </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>
-                  Private Living
-                </td>
-                <td>
-                  x
-                </td>
-                <td>
-                  x
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Daily Living Assistance
-                </td>
-                <td></td>
-                <td>
-                  x
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Medication Monitoring
-                </td>
-                <td></td>
-                <td>
-                  x
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  Regular Activities
-                </td>
-                <td>
-                  x
-                </td>
-                <td>
-                  x
-                </td>
-              </tr>
+                <tr>
+                  <td>
+                    Private Living
+                  </td>
+                  <td>
+                    x
+                  </td>
+                  <td>
+                    x
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Daily Living Assistance
+                  </td>
+                  <td />
+                  <td>
+                    x
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Medication Monitoring
+                  </td>
+                  <td />
+                  <td>
+                    x
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Regular Activities
+                  </td>
+                  <td>
+                    x
+                  </td>
+                  <td>
+                    x
+                  </td>
+                </tr>
               </tbody>
             </table>
           </StyledArticle>
@@ -705,8 +703,8 @@ const NearMePage = ({ onLocationSearch,
           </Link>
         </StyledArticle>
         <StyledArticle>
-          <Paragraph innerRef={nextRef}/>
-          <StyledHeading level={'title'} size={'title'} >
+          <Paragraph innerRef={nextRef} />
+          <StyledHeading level="title"size="title">
             Next Steps
           </StyledHeading>
           <Paragraph>
@@ -751,13 +749,13 @@ const NearMePage = ({ onLocationSearch,
   const TopContent = () => {
     return (
       <Fragment>
-        <StyledHeading level={'title'} size={'title'}>
+        <StyledHeading level="title"size="title">
           {listSize} {tocLabel} near {city}
         </StyledHeading>
       </Fragment>);
   };
 
-  const ListContent = ()=> {
+  const ListContent = () => {
     return (
       <Fragment>
         <CommunitySearchList
@@ -774,8 +772,8 @@ const NearMePage = ({ onLocationSearch,
     );
   };
 
-  const title = "Find the Best Assisted Living Near You "
-  const description = "Find the best assisted living near you with local senior living communities & providers. Browse assisted living nearby with prices, reviews & photos."
+  const title = 'Find the Best Assisted Living Near You ';
+  const description = 'Find the best assisted living near you with local senior living communities & providers. Browse assisted living nearby with prices, reviews & photos.';
 
 
   return (
@@ -794,7 +792,7 @@ const NearMePage = ({ onLocationSearch,
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by Cities" links={ALSeoCities} /></StyledArticle>
         <StyledArticle><SeoLinks title="Find Assisted Living Near You by State" links={ALSeoStates} /></StyledArticle>
       </TemplateContent>
-      <Footer/>
+      <Footer />
     </Fragment>
 
   );
@@ -811,5 +809,3 @@ NearMePage.propTypes = {
 };
 
 export default NearMePage;
-
-

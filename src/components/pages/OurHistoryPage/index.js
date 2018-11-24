@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-
+import { object } from 'prop-types';
 
 import { size, assetPath, palette } from 'sly/components/themes';
 import { Heading, Block, Image, Icon, Hr } from 'sly/components/atoms';
@@ -9,13 +9,12 @@ import ProfileTile from 'sly/components/molecules/ProfileTile';
 import PressTile from 'sly/components/molecules/PressTile';
 import OverlappingSectionsTemplate from 'sly/components/templates/OverlappingSectionsTemplate';
 import Footer from 'sly/components/organisms/Footer';
-
 import { TeamMembersData as profiles } from 'sly/services/helpers/our_team';
 import { PressTileContents as press } from 'sly/services/helpers/press';
 
 const ourHistoryUri = member => member
   ? `/about/${member}`
-  : `/about`;
+  : '/about';
 
 const IntroText = styled.div`
   font-size: ${size('spacing.xLarge')};
@@ -113,7 +112,7 @@ const PressTileWrapper = styled.div`
   column-break-inside: avoid;
 `;
 
-const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
+const OurHistoryPage = ({ match, history }) => {
   const { push } = history;
   const intro = (
     <Fragment>
@@ -140,17 +139,19 @@ const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
     </Fragment>
   );
 
-  const teamMemberTiles = profiles
-  .map(p => <StyledProfileTile
-    key={p.heading}
-    to={ourHistoryUri(p.slug)}
-    profile={p} />);
+  const teamMemberTiles = profiles.map(p => (
+    <StyledProfileTile
+      key={p.heading}
+      to={ourHistoryUri(p.slug)}
+      profile={p}
+    />
+  ));
 
-  const pressTiles = press.map((item, index) => {
+  const pressTiles = press.map((item) => {
     const props = { ...item };
     props.imageUrl = assetPath(item.imageUrl);
     return (
-      <PressTileWrapper key={index} >
+      <PressTileWrapper key={item.imageUrl} >
         <PressTile {...props} />
       </PressTileWrapper>
     );
@@ -191,6 +192,11 @@ const OurHistoryPage = ({ match, history, setModalProfile, ...props }) => {
       </ContentWrapper>
     </OverlappingSectionsTemplate>
   );
+};
+
+OurHistoryPage.propTypes = {
+  match: object,
+  history: object,
 };
 
 export default OurHistoryPage;

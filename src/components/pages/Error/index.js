@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { number } from 'prop-types';
 import styled from 'styled-components';
 import { palette } from 'styled-theme';
@@ -43,29 +43,25 @@ const getTextError = (errorCode) => {
   return text;
 };
 
-export default class ErrorPage extends Component {
-  static propTypes = {
-    errorCode: number.isRequired,
-  };
+const ErrorPage = ({ errorCode }) => (
+  <Fragment>
+    <TemplateHeader><HeaderController /></TemplateHeader>
+    <TemplateContent>
+      <Wrapper>
+        <IWrapper>{getTextError(errorCode)}</IWrapper>
+        <div>
+          Head back to our
+          <Link href="/"> Homepage </Link> or
+          <Link href="/contact"> Contact Us </Link>
+        </div>
+      </Wrapper>
+    </TemplateContent>
+    <Footer />
+  </Fragment>
+);
 
-  render() {
-    const { errorCode } = this.props;
+ErrorPage.propTypes = {
+  errorCode: number.isRequired,
+};
 
-    return (
-      <Fragment>
-        <TemplateHeader><HeaderController /></TemplateHeader>
-        <TemplateContent>
-          <Wrapper>
-            <IWrapper>{getTextError(errorCode)}</IWrapper>
-            <div>
-              Head back to our
-              <Link href="/"> Homepage </Link> or
-              <Link href="/contact"> Contact Us </Link>
-            </div>
-          </Wrapper>
-        </TemplateContent>
-        <Footer />
-      </Fragment>
-    );
-  }
-}
+export default ErrorPage;

@@ -5,13 +5,10 @@ import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-
 import ReduxField from 'sly/components/organisms/ReduxField';
-
 import HeaderController from 'sly/controllers/HeaderController';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import Footer from 'sly/components/organisms/Footer';
-
 import { Heading, Block, Button } from 'sly/components/atoms';
 
 const Form = styled.form`

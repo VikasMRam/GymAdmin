@@ -3,12 +3,9 @@ import styled from 'styled-components';
 import { object, func } from 'prop-types';
 
 import { size, assetPath, palette } from 'sly/components/themes';
-
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Link, Image, Block, Heading } from 'sly/components/atoms';
-
 import HeaderController from 'sly/controllers/HeaderController';
-
 import ProfileTile from 'sly/components/molecules/ProfileTile';
 import Footer from 'sly/components/organisms/Footer';
 import Modal from 'sly/components/molecules/Modal';

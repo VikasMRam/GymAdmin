@@ -4,9 +4,7 @@ import { string, func, arrayOf, object } from 'prop-types';
 
 
 import { size, assetPath, palette } from 'sly/components/themes';
-
 import HeaderController from 'sly/controllers/HeaderController';
-
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { Image, Link, Block, Heading, Hr } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
@@ -92,15 +90,15 @@ const FAQHr = styled(Hr)`
   margin: ${size('spacing.xxxLarge')} 0;
 `;
 
-const TabsWrapper = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: inherit;
+// const TabsWrapper = styled.div`
+//   position: absolute;
+//   bottom: 0;
+//   width: inherit;
 
-  display: flex;
-  border: ${size('border.regular')} solid ${palette('secondary', 3)};
-  border-radius: ${size('spacing.small')};
-`;
+//   display: flex;
+//   border: ${size('border.regular')} solid ${palette('secondary', 3)};
+//   border-radius: ${size('spacing.small')};
+// `;
 
 const Tab = styled(Link)`
   background-color: ${p => p.active ? palette('white', 0) : palette('slate', 'background')};
@@ -116,7 +114,7 @@ const Tab = styled(Link)`
   }
 `;
 
-const Header = ({ heroImageUrl, heading, subheading, children }) => (
+const Header = ({ heroImageUrl, heading, subheading }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
     <HeaderController />
@@ -132,12 +130,18 @@ const Header = ({ heroImageUrl, heading, subheading, children }) => (
           </HeroSubheading>
         </FixedWidthContainer>
       </HeroTextWrapper>
-      {/*<TabsWrapper>
+      {/* <TabsWrapper>
         {children}
-      </TabsWrapper>*/}
+      </TabsWrapper> */}
     </HeroWrapper>
   </Fragment>
 );
+
+Header.propTypes = {
+  heroImageUrl: string,
+  heading: string,
+  subheading: string,
+};
 
 const ForFamiliesComponents = ({ contents }) => contents
   .map((content, index) => (
@@ -189,7 +193,7 @@ const Bottom = () => {
           {FAQ.map((item, index) => (
             <Fragment key={item.question}>
               <FAQTile {...item} />
-              {index !== FAQ.length -1 &&
+              {index !== FAQ.length - 1 &&
                 <FAQHr />
               }
             </Fragment>
@@ -208,7 +212,6 @@ const HowItWorksDetailPage = ({
   tabs,
   contents,
   cards,
-  onTabClick,
   activeType,
 }) => {
   const header = (
@@ -250,11 +253,11 @@ const HowItWorksDetailPage = ({
 HowItWorksDetailPage.propTypes = {
   heading: string,
   subheading: string,
-  imageUrl: string,
+  heroImageUrl: string,
   contents: arrayOf(object),
+  cards: arrayOf(object),
   tabs: object,
   activeType: string,
-  onTabClick: func,
   onLocationSearch: func,
 };
 

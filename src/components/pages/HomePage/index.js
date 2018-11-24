@@ -3,11 +3,8 @@ import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
 import { size, assetPath, palette } from 'sly/components/themes';
-
 import HeaderController from 'sly/controllers/HeaderController';
-
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-
 import { Image, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import Modal from 'sly/components/molecules/Modal';

@@ -5,18 +5,14 @@ import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
 import { size } from 'sly/components/themes';
-
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION } from 'sly/constants/modalType';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
-
 import { Link, Heading, Hr, Button } from 'sly/components/atoms';
-
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
-
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import SaveCommunityController from 'sly/controllers/SaveCommunityController';
@@ -316,10 +312,10 @@ export default class CommunityDetailPage extends Component {
         <Section title="How Seniorly Works">
           <HowSlyWorks />
         </Section>
-        { (rgsAux && rgsAux.localDetails !=='') ?
-                (<Section title="Local Details">
-                  <CommunityLocalDetails localDetails={rgsAux.localDetails}/>
-                </Section>) : null
+        { (rgsAux && rgsAux.localDetails !== '') ? (
+          <Section title="Local Details">
+            <CommunityLocalDetails localDetails={rgsAux.localDetails} />
+          </Section>) : null
         }
       </Fragment>
     );
@@ -399,7 +395,7 @@ export default class CommunityDetailPage extends Component {
             innerRef={this.pricingAndFloorPlansRef}
           >
             <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
-              {({ concierge, getPricing}) => (
+              {({ getPricing }) => (
                 <PricingAndAvailability
                   community={community}
                   isCCRC={isCCRC}
@@ -427,7 +423,7 @@ export default class CommunityDetailPage extends Component {
               />
             </CollapsibleSection>
           }
-          <CollapsibleSection paddedContent={true} title="Care Services">
+          <CollapsibleSection paddedContent title="Care Services">
             <CareServicesList
               communityName={name}
               careServices={careServices}
@@ -435,7 +431,7 @@ export default class CommunityDetailPage extends Component {
             />
           </CollapsibleSection>
           <CollapsibleSection
-            paddedContent={true}
+            paddedContent
             title="Amenities & Features"
             innerRef={this.amenitiesAndFeaturesRef}
           >
