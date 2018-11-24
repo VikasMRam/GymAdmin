@@ -26,11 +26,10 @@ const Wrapper = styled.div`
 `;
 
 const PreferenceWrapper = styled.div`
+  display: none;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: ${size('spacing.large')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-bottom: 0;
   }
 `;
