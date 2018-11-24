@@ -13,28 +13,28 @@ import BookATourPage from 'sly/components/pages/BookATourPage';
 
 const handleDateChange = (e, newValue) => {
   const event = {
-    action: 'date-changed', category: 'BAT', label: newValue,
+    action: 'date-changed', category: 'BAT', label: newValue.toString(),
   };
   SlyEvent.getInstance().sendEvent(event);
 };
 
 const handleTimeChange = (e, newValue) => {
   const event = {
-    action: 'time-changed', category: 'BAT', label: newValue,
+    action: 'time-changed', category: 'BAT', label: newValue.toString(),
   };
   SlyEvent.getInstance().sendEvent(event);
 };
 
 const handleStepChange = (step) => {
   const event = {
-    action: 'step-completed', category: 'BAT', label: step - 1,
+    action: 'step-completed', category: 'BAT', label: (step - 1).toString(),
   };
   SlyEvent.getInstance().sendEvent(event);
 };
 
 const handleContactByTextMsgChange = (e) => {
   const event = {
-    action: 'contactByTextMsg-changed', category: 'BAT', label: e.target.checked,
+    action: 'contactByTextMsg-changed', category: 'BAT', label: (e.target.checked).toString(),
   };
   SlyEvent.getInstance().sendEvent(event);
 };
@@ -67,7 +67,7 @@ const BookATourPageContainer = ({
     return postUserAction(payload)
       .then(() => {
         const event = {
-          action: 'tour-booked', category: 'BAT',
+          action: 'tour-booked', category: 'BAT', label: 'complete',
         };
         SlyEvent.getInstance().sendEvent(event);
         history.push(url);
