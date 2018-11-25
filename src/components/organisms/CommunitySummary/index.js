@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, string, number, object, shape, func } from 'prop-types';
+import { arrayOf, string, number, object, shape, func, bool } from 'prop-types';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
@@ -39,6 +39,7 @@ export default class communitySummary extends React.Component {
     onConciergeNumberClicked: func,
     onReceptionNumberClicked: func,
     onHowSeniorlyWorks: func,
+    isCCRC: bool,
   };
 
   static sectionIdMaps = {
@@ -150,7 +151,7 @@ export default class communitySummary extends React.Component {
           href={`#${this.constructor.sectionIdMaps.amenitiesAndFeatures}`}
           onClick={e => this.constructor.scrollToSection(e, this.props.amenitiesAndFeaturesRef)}
         >
-          Alzheimer's & Dementia support
+          Alzheimer&apos;s & Dementia support
         </Link>
       ));
     }

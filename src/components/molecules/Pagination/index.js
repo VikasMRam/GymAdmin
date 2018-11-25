@@ -171,20 +171,11 @@ export default class Pagination extends Component {
 
       if (page <= margin) {
         items.push(this.pageButton(index));
-        continue;
-      }
-
-      if (page > total - margin) {
+      } else if (page > total - margin) {
         items.push(this.pageButton(index));
-        continue;
-      }
-
-      if ((index >= current - leftSide) && (index <= current + rightSide)) {
+      } else if ((index >= current - leftSide) && (index <= current + rightSide)) {
         items.push(this.pageButton(index));
-        continue;
-      }
-
-      if (items[items.length - 1] !== breakView) {
+      } else if (items[items.length - 1] !== breakView) {
         breakView = this.ellipsis(index);
         items.push(breakView);
       }
