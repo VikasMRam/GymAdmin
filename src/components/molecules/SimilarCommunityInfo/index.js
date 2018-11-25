@@ -148,7 +148,7 @@ export default class SimilarCommunityInfo extends Component {
           <ClampedLine title={roomTypes.join('.')}>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {roomTypes.map((roomType, i) =>
-              <Fragment key={i}>{!!i && <Fragment>&nbsp;&nbsp;&middot;&nbsp;</Fragment>}{roomType}</Fragment>)}
+              <Fragment key={roomType}>{!!i && <Fragment>&nbsp;&nbsp;&middot;&nbsp;</Fragment>}{roomType}</Fragment>)}
           </ClampedLine>
         </IconTextWrapper>
         <IconTextWrapper>
@@ -156,7 +156,7 @@ export default class SimilarCommunityInfo extends Component {
           <ClampedLine title={livingTypes.join('.')}>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {livingTypes.map((livingType, i) =>
-              <Fragment key={i}>{!!i && <Fragment>&nbsp;&nbsp;&middot;&nbsp;</Fragment>}{livingType}</Fragment>)}
+              <Fragment key={livingType}>{!!i && <Fragment>&nbsp;&nbsp;&middot;&nbsp;</Fragment>}{livingType}</Fragment>)}
           </ClampedLine>
         </IconTextWrapper>
 

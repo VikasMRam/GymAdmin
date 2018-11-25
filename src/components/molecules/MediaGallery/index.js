@@ -231,9 +231,9 @@ export default class MediaGallery extends Component {
             controlsList="nodownload"
             innerRef={(c) => { this.mediaRefs[index] = c; }}
           >
-            {media.src.map((src, i) => (
+            {media.src.map(src => (
               <source
-                key={i}
+                key={src.url}
                 src={this.shouldLoadMedia(index) ? src.url : ''}
                 type={videoMimeTypes[src.type]}
               />
@@ -270,7 +270,7 @@ export default class MediaGallery extends Component {
     this.setLoadedImages(currentSlide);
     const slideViews = this.allMedia.map((media, i) => (
       <StyledSlide
-        key={i}
+        key={media.id}
         hasOnSlideClick={onSlideClick}
         onClick={() => onSlideClick && onSlideClick(i)}
       >

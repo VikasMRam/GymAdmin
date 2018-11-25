@@ -45,6 +45,7 @@
       "aspects": ["noHref", "invalidHref", "preferButton"]
     }],
     "import/newline-after-import": ["error", { "count": 1 }],
-    "import/order": ["error", { "newlines-between": "always" }]
+    "import/order": ["error", { "newlines-between": "always" }],
+    "import/first": ["error", "DISABLE-absolute-first"]
   }
 }

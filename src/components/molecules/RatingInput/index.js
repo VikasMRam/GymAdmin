@@ -14,7 +14,6 @@ const getDefaultValue = (props) => {
     : defaultValue;
 };
 
-
 export default class RatingInput extends Component {
   static propTypes = {
     id: string,
@@ -101,6 +100,8 @@ export default class RatingInput extends Component {
         onClick={this.onClick}
         onMouseOver={this.onMouseOver}
         onMouseOut={this.onMouseOut}
+        onFocus={this.onMouseOver}
+        onBlur={this.onMouseOut}
         palette={getPalette(props)}
         {...props}
       />
