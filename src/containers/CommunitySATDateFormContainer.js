@@ -6,7 +6,7 @@ import { createValidator, required } from 'sly/services/validation';
 const validate = createValidator({
   scheduledDate: [required],
   scheduledTime: [required],
-  medicaid: [required],
+  medicaidCoverage: [required],
 });
 
 export default reduxForm({
