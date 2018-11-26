@@ -13,6 +13,10 @@ const StyledBoxChoiceTile = styled(BoxChoiceTile)`
 const StyledHeading = styled(Heading)`
   margin: 0;
 `;
+
+const StyledDiv = styled.div`
+  font-size: ${size('text.caption')}
+`;
 StyledHeading.displayName = 'StyledHeading';
 
 const DateChoiceTile = ({
@@ -31,9 +35,9 @@ const DateChoiceTile = ({
       onClick={onClick}
       selected={selected}
     >
-      <div>{dayName}</div>
+      <StyledDiv>{dayName}</StyledDiv>
       <StyledHeading size="title">{day}</StyledHeading>
-      <div>{month}</div>
+      <StyledDiv>{month}</StyledDiv>
     </StyledBoxChoiceTile>
   );
 };

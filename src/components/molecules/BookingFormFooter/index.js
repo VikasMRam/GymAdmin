@@ -14,15 +14,20 @@ const timePlaceholder = 'Select a Time';
 const Wrapper = styled.div`
   background-color: ${palette('slate', 'background')};
   display: flex;
-  padding: ${size('spacing.xLarge')};
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  padding: ${size('spacing.large')} ${size('spacing.xLarge')};
   margin-bottom: ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    margin-bottom: 0;
+    margin-bottom: 0;  
   }
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.xLarge')};
+  }
+  
 `;
 
 const PreferenceWrapper = styled.div`
@@ -33,6 +38,13 @@ const PreferenceWrapper = styled.div`
     margin-bottom: 0;
   }
 `;
+
+const StyledButton = styled(Button)`
+  width:100%;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width:auto;
+  }
+`
 PreferenceWrapper.displayName = 'PreferenceWrapper';
 
 const FirstPreferenceWrapper = styled.div`
@@ -85,8 +97,8 @@ const BookingFormFooter = ({
           </div>
         </div>
       </PreferenceWrapper>
-      {isFinalStep && <Button kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>Send Tour Request</Button>}
-      {!isFinalStep && <Button kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>Next</Button>}
+      {isFinalStep && <StyledButton kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>Send Tour Request</StyledButton>}
+      {!isFinalStep && <StyledButton kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>Continue</StyledButton>}
     </Wrapper>
   );
 };

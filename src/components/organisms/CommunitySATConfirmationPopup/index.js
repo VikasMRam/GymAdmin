@@ -22,7 +22,7 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const SimilarCommunityTileWrapper = styled(Link)`
+const SimilarCommunityTileWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -42,15 +42,17 @@ const CommunitySATConfirmationPopup = ({
   similarCommunititesHref, similarCommunities, onTileClick,
 }) => {
   const similarCommunitiesComponent = similarCommunities.map(community => (
-    <SimilarCommunityTileWrapper key={community.id} to={community.url} onClick={onTileClick}>
-      <SimilarCommunityNearbyTile
-        image={community.imageUrl}
-        name={community.name}
-        estimatedRate={community.estimated || 0}
-        startingRate={community.startingRate}
-        reviewsValue={community.reviewsValue}
-        numReviews={community.numReviews}
-      />
+    <SimilarCommunityTileWrapper>
+      <Link key={community.id} to={community.url} onClick={onTileClick}>
+        <SimilarCommunityNearbyTile
+          image={community.imageUrl}
+          name={community.name}
+          estimatedRate={community.estimated || 0}
+          startingRate={community.startingRate}
+          reviewsValue={community.reviewsValue}
+          numReviews={community.numReviews}
+        />
+      </Link>
     </SimilarCommunityTileWrapper>
   ));
 
