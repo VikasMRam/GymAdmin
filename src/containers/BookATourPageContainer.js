@@ -47,7 +47,7 @@ const BookATourPageContainer = ({
   const { id, url } = community;
   const handleComplete = (data, toggleConfirmationModal) => {
     const {
-      name, phone, medicaidCoverage, ...restData
+      name, phone, medicaidCoverage, contactByTextMsg, ...restData
     } = data;
     const value = {
       ...restData,
@@ -55,6 +55,7 @@ const BookATourPageContainer = ({
       user: {
         name,
         phone,
+        contactByTextMsg,
         medicaid_coverage: medicaidCoverage,
       },
     };
