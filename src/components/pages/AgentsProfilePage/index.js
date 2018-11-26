@@ -5,7 +5,7 @@ import { object, func } from 'prop-types';
 import { size, assetPath, palette } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Link, Image, Block, Heading } from 'sly/components/atoms';
-import HeaderController from 'sly/controllers/HeaderController';
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import ProfileTile from 'sly/components/molecules/ProfileTile';
 import Footer from 'sly/components/organisms/Footer';
 import Modal from 'sly/components/molecules/Modal';
@@ -212,7 +212,7 @@ const AgentsProfilePage = ({
   const headerContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <HeaderController />
+      <HeaderContainer />
       <HeroWrapper>
         <HeroBackgroundImage src={assetPath('images/agent-hero.jpg')} alt="A Home To Love" />
         <HeroTextWrapper>

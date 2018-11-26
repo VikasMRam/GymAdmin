@@ -13,7 +13,7 @@ import {
   makeHeader,
 } from 'sly/components/templates/FullScreenWizard';
 import BookATourPageController from 'sly/controllers/BookATourPageController';
-import HeaderController from 'sly/controllers/HeaderController';
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
 import Modal from 'sly/components/molecules/Modal';
@@ -21,7 +21,7 @@ import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunitySATDateFormContainer from 'sly/containers/CommunitySATDateFormContainer';
 import CommunitySATContactFormContainer from 'sly/containers/CommunitySATContactFormContainer';
 
-const Header = makeHeader(HeaderController);
+const Header = makeHeader(HeaderContainer);
 
 const columnBackground = ({ backgroundImage }) => `url(${backgroundImage})`;
 const Column = makeColumn(styled.div`
@@ -63,9 +63,7 @@ const BookATourPage = ({
   const { mainImage } = community;
   return (
     <FullScreenWizard>
-      <Header>
-        <HeaderController />
-      </Header>
+      <Header />
       <Column backgroundImage={mainImage}>
         <StyledCommunityInfo palette="white" community={community} />
       </Column>

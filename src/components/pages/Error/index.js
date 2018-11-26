@@ -5,7 +5,7 @@ import { palette } from 'styled-theme';
 
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { size } from 'sly/components/themes';
-import HeaderController from 'sly/controllers/HeaderController';
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import Heading from 'sly/components/atoms/Heading';
 import Link from 'sly/components/atoms/Link';
 import Footer from 'sly/components/organisms/Footer';
@@ -45,7 +45,7 @@ const getTextError = (errorCode) => {
 
 const ErrorPage = ({ errorCode }) => (
   <Fragment>
-    <TemplateHeader><HeaderController /></TemplateHeader>
+    <TemplateHeader><HeaderContainer /></TemplateHeader>
     <TemplateContent>
       <Wrapper>
         <IWrapper>{getTextError(errorCode)}</IWrapper>

@@ -4,8 +4,7 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 
-import HeaderController from 'sly/controllers/HeaderController';
-
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import Footer from 'sly/components/organisms/Footer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
@@ -38,7 +37,7 @@ const CommunityDetailPageTemplate = ({
 }) => (
   <Fragment>
     <TemplateHeader>
-      <HeaderController />
+      <HeaderContainer />
       {bannerNotification && <BannerNotification>{bannerNotification}</BannerNotification>}
     </TemplateHeader>
     <TemplateContent>
