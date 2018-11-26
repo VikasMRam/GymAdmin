@@ -2,7 +2,6 @@ import React from 'react';
 import { arrayOf, shape, string, number, func } from 'prop-types';
 import styled from 'styled-components';
 
-
 import { size, palette } from 'sly/components/themes';
 // import { Button, Hr } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
@@ -55,7 +54,6 @@ const DisclaimerDiv = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
-
 const GatheredReviewRatings = ({ reviewRatings, onReviewLinkClicked }) => {
   const ratings = reviewRatings.map((review) => {
     return (
@@ -96,7 +94,7 @@ const GatheredReviewRatings = ({ reviewRatings, onReviewLinkClicked }) => {
           </LeaveAReviewButtonDiv>
           <Hr /> */}
           <DisclaimerDiv>
-            {`Disclaimer: All trademarks and copyrights for names are owned by the respective companies. 
+            {`Disclaimer: All trademarks and copyrights for names are owned by the respective companies.
             They do not endorse Seniorly and are not
             related to Seniorly's service in any way.`}
           </DisclaimerDiv>

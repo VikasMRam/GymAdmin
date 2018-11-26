@@ -3,7 +3,6 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { string, func, shape, arrayOf, oneOf } from 'prop-types';
 import styled from 'styled-components';
 
-
 import { size, key } from 'sly/components/themes';
 import Notification from 'sly/components/molecules/Notification';
 
@@ -45,9 +44,9 @@ const StyledTransitionGroup = styled(TransitionGroup)`
 const Notifications = ({ messages, dismiss }) => {
   const notificationComponents = messages.map(({
     type, content,
-  }, i) => (
+  }) => (
     <CSSTransition
-      key={i}
+      key={content}
       timeout={500}
       classNames={transitionName}
     >
