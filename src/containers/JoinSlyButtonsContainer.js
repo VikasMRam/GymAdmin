@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/constants/loginProviders';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
-import JoinSlyButtonsController from 'sly/controllers/JoinSlyButtonsController';
 import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
 
 class JoinSlyButtonsContainer extends Component {
@@ -19,6 +18,8 @@ class JoinSlyButtonsContainer extends Component {
     heading: string,
     children: func,
   };
+
+  state = { socialLoginError: '' };
 
   componentDidMount() {
     if (window.gapi) {
@@ -69,7 +70,13 @@ class JoinSlyButtonsContainer extends Component {
         setSocialLoginError('Failed to fetch required info from Facebook. Please try again.');
       }
     });
-  }
+  };
+
+  setSocialLoginError = (msg) => {
+    this.setState({
+      socialLoginError: msg,
+    });
+  };
 
   handleContinueWithFacebookClick = (setSocialLoginError) => {
     setSocialLoginError('');
@@ -99,26 +106,21 @@ class JoinSlyButtonsContainer extends Component {
     const {
       onLoginClicked, onEmailSignupClicked, heading,
     } = this.props;
+    const { socialLoginError } = this.state;
     const {
       handleContinueWithFacebookClick, handleContinueWithGoogleClick,
+      setSocialLoginError,
     } = this;
 
     return (
-      <JoinSlyButtonsController>
-        {({
-          socialLoginError,
-          setSocialLoginError,
-        }) => (
-          <JoinSlyButtons
-            onContinueWithFacebookClicked={() => handleContinueWithFacebookClick(setSocialLoginError)}
-            onContinueWithGoogleClicked={() => handleContinueWithGoogleClick(setSocialLoginError)}
-            onLoginClicked={onLoginClicked}
-            onEmailSignupClicked={onEmailSignupClicked}
-            socialLoginError={socialLoginError}
-            heading={heading}
-          />
-        )}
-      </JoinSlyButtonsController>
+      <JoinSlyButtons
+        onContinueWithFacebookClicked={() => handleContinueWithFacebookClick(setSocialLoginError)}
+        onContinueWithGoogleClicked={() => handleContinueWithGoogleClick(setSocialLoginError)}
+        onLoginClicked={onLoginClicked}
+        onEmailSignupClicked={onEmailSignupClicked}
+        socialLoginError={socialLoginError}
+        heading={heading}
+      />
     );
   }
 }
