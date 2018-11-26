@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { func, object, string } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -13,7 +13,6 @@ import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPop
 import AuthContainer from 'sly/containers/AuthContainer';
 import NotificationController from 'sly/controllers/NotificationController';
 import Notifications from 'sly/components/organisms/Notifications';
-import HeaderController from 'sly/controllers/HeaderController';
 import Header from 'sly/components/organisms/Header';
 
 const defaultHeaderItems = [
@@ -49,95 +48,103 @@ const loginMenuItems = user => loginHeaderItems(user)
 
 const menuItemHrIndices = [7, 10];
 
-const HeaderContainer = ({
-  user,
-  setQueryParams,
-  logoutUser,
-  fetchUser,
-  className,
-  ensureAuthenticated,
-}) => {
-  const hItems = defaultHeaderItems;
-  const lhItems = loginHeaderItems(user);
-  const lmItems = loginMenuItems(user);
+class HeaderContainer extends Component {
+  static propTypes = {
+    user: object,
+    setQueryParams: func,
+    searchParams: object,
+    logoutUser: func,
+    fetchUser: func,
+    history: object,
+    match: object,
+    location: object,
+    ensureAuthenticated: func,
+    className: string,
+  };
 
-  const savedHeaderItem = hItems.find(item => item.name === 'Saved');
-  if (savedHeaderItem) {
-    savedHeaderItem.onClick = () => ensureAuthenticated(() => setQueryParams({ modal: SAVED_COMMUNITIES }));
+  state = { isDropdownOpen: false };
+
+  toggleDropdown = () => {
+    const { isDropdownOpen } = this.state;
+    this.setState({
+      isDropdownOpen: !isDropdownOpen,
+    });
+  };
+
+  render() {
+    const {
+      user,
+      setQueryParams,
+      logoutUser,
+      fetchUser,
+      className,
+      ensureAuthenticated,
+    } = this.props;
+    const { isDropdownOpen } = this.state;
+    const { toggleDropdown } = this;
+
+    const hItems = defaultHeaderItems;
+    const lhItems = loginHeaderItems(user);
+    const lmItems = loginMenuItems(user);
+
+    const savedHeaderItem = hItems.find(item => item.name === 'Saved');
+    if (savedHeaderItem) {
+      savedHeaderItem.onClick = () => ensureAuthenticated(() => setQueryParams({ modal: SAVED_COMMUNITIES }));
+    }
+    const logoutLeftMenuItem = lmItems.find(item => item.name === 'Log out');
+    if (logoutLeftMenuItem) {
+      logoutLeftMenuItem.onClick = () => {
+        logoutUser().then(() => fetchUser());
+      };
+    }
+    let loginItem = lhItems.find(item => item.name === 'Sign in');
+    if (loginItem) {
+      loginItem.onClick = () => ensureAuthenticated(() => {});
+    }
+    loginItem = lmItems.find(item => item.name === 'Sign in');
+    if (loginItem) {
+      loginItem.onClick = () => ensureAuthenticated(() => {});
+    }
+
+    const headerItems = [
+      ...hItems,
+      ...lhItems,
+    ];
+
+    const menuItems = [
+      ...defaultMenuItems,
+      ...lmItems,
+    ];
+
+    return (
+      <Fragment>
+        <Header
+          menuOpen={isDropdownOpen}
+          onMenuIconClick={toggleDropdown}
+          onMenuItemClick={toggleDropdown}
+          onHeaderBlur={toggleDropdown}
+          headerItems={headerItems}
+          menuItems={menuItems}
+          menuItemHrIndices={menuItemHrIndices}
+          className={className}
+        />
+        <NotificationController>
+          {({
+            notifyInfo,
+            messages,
+            dismiss,
+          }) => (
+            <Fragment>
+              {user !== null && <SavedCommunitiesPopupController notifyInfo={notifyInfo} />}
+              <AuthContainer notifyInfo={notifyInfo} />
+              <Notifications messages={messages} dismiss={dismiss} />
+            </Fragment>
+          )}
+        </NotificationController>
+      </Fragment>
+    );
   }
-  const logoutLeftMenuItem = lmItems.find(item => item.name === 'Log out');
-  if (logoutLeftMenuItem) {
-    logoutLeftMenuItem.onClick = () => {
-      logoutUser().then(() => fetchUser());
-    };
-  }
-  let loginItem = lhItems.find(item => item.name === 'Sign in');
-  if (loginItem) {
-    loginItem.onClick = () => ensureAuthenticated(() => {});
-  }
-  loginItem = lmItems.find(item => item.name === 'Sign in');
-  if (loginItem) {
-    loginItem.onClick = () => ensureAuthenticated(() => {});
-  }
-
-  const headerItems = [
-    ...hItems,
-    ...lhItems,
-  ];
-
-  const menuItems = [
-    ...defaultMenuItems,
-    ...lmItems,
-  ];
-
-  return (
-    <HeaderController>
-      {({
-        isDropdownOpen,
-        toggleDropdown,
-      }) => (
-        <Fragment>
-          <Header
-            menuOpen={isDropdownOpen}
-            onMenuIconClick={toggleDropdown}
-            onMenuItemClick={toggleDropdown}
-            onHeaderBlur={toggleDropdown}
-            headerItems={headerItems}
-            menuItems={menuItems}
-            menuItemHrIndices={menuItemHrIndices}
-            className={className}
-          />
-          <NotificationController>
-            {({
-              notifyInfo,
-              messages,
-              dismiss,
-            }) => (
-              <Fragment>
-                {user !== null && <SavedCommunitiesPopupController notifyInfo={notifyInfo} />}
-                <AuthContainer notifyInfo={notifyInfo} />
-                <Notifications messages={messages} dismiss={dismiss} />
-              </Fragment>
-            )}
-          </NotificationController>
-        </Fragment>
-      )}
-    </HeaderController>
-  );
-};
-
-HeaderContainer.propTypes = {
-  user: object,
-  setQueryParams: func,
-  searchParams: object,
-  logoutUser: func,
-  fetchUser: func,
-  history: object,
-  match: object,
-  location: object,
-  ensureAuthenticated: func,
-  className: string,
-};
+}
 
 const mapStateToProps = (state, {
   history, match, location,
