@@ -156,14 +156,12 @@ const mapStateToProps = (state, {
   user: getDetail(state, 'user', 'me'),
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    ensureAuthenticated: action => dispatch(ensureAuthenticated(action)),
-    logoutUser: () => dispatch(resourceDeleteRequest('logout')),
-    // TODO: FIXME: Temp solution to set the entity and resource of user me to null as the response is not jsonapi
-    fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me'))
-      .catch(() => dispatch(entitiesReceive({ user: { me: null } }))),
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  ensureAuthenticated: action => dispatch(ensureAuthenticated(action)),
+  logoutUser: () => dispatch(resourceDeleteRequest('logout')),
+  // TODO: FIXME: Temp solution to set the entity and resource of user me to null as the response is not jsonapi
+  fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me'))
+    .catch(() => dispatch(entitiesReceive({ user: { me: null } }))),
+});
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderContainer));
