@@ -330,7 +330,7 @@ export default class CommunityDetailPage extends Component {
           column={columnContent}
           bottom={bottomContent}
           bannerNotification={isAlreadyTourScheduled ?
-            'We have recieved your tour request. Your advisor is checking this community’s availability and will get back to you shortly.' : null}
+            'We have received your tour request. Your advisor is checking this community’s availability and will get back to you shortly.' : null}
         >
           {(images.length > 0 || videos.length > 0) &&
             <CommunityMediaGallery
