@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
+import { object, string, number, shape, func, arrayOf } from 'prop-types';
 import styled from 'styled-components';
 
 import { Heading, Box, Icon } from 'sly/components/atoms';
@@ -78,168 +78,157 @@ export const sortProperties = (obj) => {
   return sortable;
 };
 
-export default class PricingAndAvailability extends Component {
-    static propTypes = {
-      community: communityPropType.isRequired,
-      roomPrices: PropTypes.arrayOf(PropTypes.shape({
-        roomType: PropTypes.string.isRequired,
-        image: PropTypes.string,
-        shareType: PropTypes.string.isRequired,
-        price: PropTypes.number,
-        priceShared: PropTypes.number,
-        priceType: PropTypes.string.isRequired,
-      })),
-      address: PropTypes.shape({
-        country: PropTypes.string.isRequired,
-        city: PropTypes.string.isRequired,
-        state: PropTypes.string.isRequired,
-      }).isRequired,
-      estimatedPrice: PropTypes.shape({
-        providedAverage: PropTypes.number.isRequired,
-        estimatedAverage: PropTypes.number.isRequired,
-        cityAverage: PropTypes.number.isRequired,
-        stateAverage: PropTypes.number.isRequired,
-        nationalAverage: PropTypes.number.isRequired,
-      }),
-      getDetailedPricing: PropTypes.func,
-      onInquireOrBookClicked: PropTypes.func,
-      onLiveChatClicked: PropTypes.func,
-    };
+const PricingAndAvailability = ({
+  community,
+  roomPrices,
+  address,
+  estimatedPrice,
+  onInquireOrBookClicked,
+  queryParams,
+  setQueryParams,
+}) => {
+  const mEstimatedPrice = { ...estimatedPrice };
+  if (mEstimatedPrice && mEstimatedPrice.providedAverage) {
+    mEstimatedPrice.providedAverage = community.startingRate || mEstimatedPrice.providedAverage;
+  }
+  if (mEstimatedPrice && mEstimatedPrice.estimatedAverage) {
+    mEstimatedPrice.estimatedAverage = community.startingRate || mEstimatedPrice.estimatedAverage;
+  }
 
-    static defaultProps = {
-      roomPrices: [],
-    };
+  const estimatedPriceLabelMap = {
+    providedAverage: community.name,
+    estimatedAverage: community.name, // TODO: figure out correct label
+    cityAverage: address.city,
+    stateAverage: address.state,
+    nationalAverage: address.country,
+  };
 
-    renderEstimatedPricing = ({ roomsLength, estimatedBase }) => (roomsLength && estimatedBase) ? (
-      <Rate>
-        {'Estimated '}
-        <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />
-        {'/mo'}
-      </Rate>
-    ) : null;
-
-    render() {
-      const {
-        community,
-        isCCRC,
-        roomPrices,
-        address,
-        estimatedPrice,
-        getDetailedPricing,
-        onInquireOrBookClicked,
-        onLiveChatClicked,
-        queryParams,
-        setQueryParams,
-      } = this.props;
-      if (estimatedPrice && estimatedPrice.providedAverage) {
-        estimatedPrice.providedAverage = community.startingRate || estimatedPrice.providedAverage;
+  let sortedEstimatedPrice = [];
+  let maxPrice = 0;
+  let estimatedPriceBase = 0;
+  if (mEstimatedPrice) {
+    sortedEstimatedPrice = sortProperties(mEstimatedPrice);
+    // remove items with 0 price
+    sortedEstimatedPrice = sortedEstimatedPrice.filter(price => price[1] > 0);
+    if (sortedEstimatedPrice.length) {
+      // what if only providedAverage or estimatedAverage is non zero. just show nothing
+      if (sortedEstimatedPrice.length === 1 &&
+        (sortedEstimatedPrice[0][0] === 'providedAverage' || sortedEstimatedPrice[0][0] === 'estimatedAverage')) {
+        sortedEstimatedPrice = [];
+      } else {
+        [, maxPrice] = sortedEstimatedPrice[sortedEstimatedPrice.length - 1];
       }
-      if (estimatedPrice && estimatedPrice.estimatedAverage) {
-        estimatedPrice.estimatedAverage = community.startingRate || estimatedPrice.estimatedAverage;
-      }
+    }
+    estimatedPriceBase = community.startingRate || mEstimatedPrice.providedAverage || mEstimatedPrice.estimatedAverage;
+  }
 
-      const estimatedPriceLabelMap = {
-        providedAverage: community.name,
-        estimatedAverage: community.name, // TODO: figure out correct label
-        cityAverage: address.city,
-        stateAverage: address.state,
-        nationalAverage: address.country,
-      };
+  roomPrices.sort((a, b) => a.price - b.price);
 
-      let sortedEstimatedPrice = [];
-      let maxPrice = 0;
-      let estimatedPriceBase = 0;
-      if (estimatedPrice) {
-        sortedEstimatedPrice = sortProperties(estimatedPrice);
-        // remove items with 0 price
-        sortedEstimatedPrice = sortedEstimatedPrice.filter(price => price[1] > 0);
-        if (sortedEstimatedPrice.length) {
-          // what if only providedAverage or estimatedAverage is non zero. just show nothing
-          if (sortedEstimatedPrice.length === 1 &&
-            (sortedEstimatedPrice[0][0] === 'providedAverage' || sortedEstimatedPrice[0][0] === 'estimatedAverage')) {
-            sortedEstimatedPrice = [];
-          } else {
-            [, maxPrice] = sortedEstimatedPrice[sortedEstimatedPrice.length - 1];
+  return (
+    <section id="pricing-and-floor-plans">
+      <StyledArticle id="pricing-and-floor-plans-price-tiles">
+        {(!roomPrices.length && estimatedPriceBase) ?
+          (
+            <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams}>
+              {({ getPricing }) =>
+                (<EstimatedCost
+                  getPricing={getPricing}
+                  community={community}
+                  price={estimatedPriceBase}
+                />)
+              }
+            </ConciergeController>
+          ) : null
+        }
+        {roomPrices.map(object => (
+          <Item key={`${object.price}-${object.priceType}-${object.roomType}`}>
+            <RoomTile onInquireOrBookClicked={onInquireOrBookClicked} {...object} />
+          </Item>
+        ))}
+      </StyledArticle>
+      <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams}>
+        {({ concierge, submitExpressConversion, userDetails }) => {
+            if (concierge.contactRequested) {
+              if (!hasAllUserData(userDetails)) {
+                return (
+                  <DoneBox>
+                    <Icon icon="round-checkmark" />
+                    <DoneText>
+
+                      We received your request, check your inbox shortly.
+
+                    </DoneText>
+                  </DoneBox>
+                );
+              }
+                return (
+                  <DoneBox>
+                    <Icon icon="round-checkmark" />
+                    <DoneText>
+                      Your Seniorly Guide will reach out to you regarding this community.
+                    </DoneText>
+                  </DoneBox>
+                );
+            }
+              return (
+                <GetCurrentAvailabilityFormContainer
+                  submitExpressConversion={submitExpressConversion}
+                  community={community}
+                />
+              );
           }
         }
-        estimatedPriceBase = community.startingRate || estimatedPrice.providedAverage || estimatedPrice.estimatedAverage;
+      </ConciergeController>
+
+      {sortedEstimatedPrice.length > 0 &&
+        <article id="pricing-and-floor-plans-comparison">
+          <CompareHeading level="subtitle" size="subtitle">
+            Compare to Local Assisted Living Costs
+          </CompareHeading>
+          {sortedEstimatedPrice.map(object => (
+            <Fragment key={object[1]}>
+              <PriceLabel>{estimatedPriceLabelMap[object[0]]}</PriceLabel>
+              <StyledPriceBar
+                width={findPercentage(object[1], maxPrice)}
+                price={object[1]}
+              />
+            </Fragment>
+          ))}
+        </article>
       }
+    </section>
+  );
+};
 
-      roomPrices.sort((a, b) => a.price - b.price);
+PricingAndAvailability.propTypes = {
+  community: communityPropType.isRequired,
+  roomPrices: arrayOf(shape({
+    roomType: string.isRequired,
+    image: string,
+    shareType: string.isRequired,
+    price: number,
+    priceShared: number,
+    priceType: string.isRequired,
+  })),
+  address: shape({
+    country: string.isRequired,
+    city: string.isRequired,
+    state: string.isRequired,
+  }).isRequired,
+  estimatedPrice: shape({
+    providedAverage: number.isRequired,
+    estimatedAverage: number.isRequired,
+    cityAverage: number.isRequired,
+    stateAverage: number.isRequired,
+    nationalAverage: number.isRequired,
+  }),
+  onInquireOrBookClicked: func,
+  queryParams: object,
+  setQueryParams: func,
+};
 
-      return (
-        <section id="pricing-and-floor-plans">
-          <StyledArticle id="pricing-and-floor-plans-price-tiles">
-            {(!roomPrices.length && estimatedPriceBase) ?
-              (
-                <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams}>
-                  {({ getPricing }) =>
-                    (<EstimatedCost
-                      getPricing={getPricing}
-                      community={community}
-                      price={estimatedPriceBase}
-                    />)
-                  }
-                </ConciergeController>
-              ) : null
-            }
-            {roomPrices.map((object, i) => (
-              <Item key={i}>
-                <RoomTile onInquireOrBookClicked={onInquireOrBookClicked} {...object} />
-              </Item>
-            ))}
-          </StyledArticle>
-          <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams}>
-            {({ concierge, submitExpressConversion, userDetails }) => {
-                if (concierge.contactRequested) {
-                  if (!hasAllUserData(userDetails)) {
-                    return (
-                      <DoneBox>
-                        <Icon icon="round-checkmark" />
-                        <DoneText>
+PricingAndAvailability.defaultProps = {
+  roomPrices: [],
+};
 
-                          We received your request, check your inbox shortly.
-
-                        </DoneText>
-                      </DoneBox>
-                    );
-                  }
-                    return (
-                      <DoneBox>
-                        <Icon icon="round-checkmark" />
-                        <DoneText>
-                          Your Seniorly Guide will reach out to you regarding this community.
-                        </DoneText>
-                      </DoneBox>
-                    );
-                }
-                  return (
-                    <GetCurrentAvailabilityFormContainer
-                      submitExpressConversion={submitExpressConversion}
-                      community={community}
-                    />
-                  );
-              }
-            }
-          </ConciergeController>
-
-          {sortedEstimatedPrice.length > 0 &&
-            <article id="pricing-and-floor-plans-comparison">
-              <CompareHeading level="subtitle" size="subtitle">
-                Compare to Local Assisted Living Costs
-              </CompareHeading>
-              {sortedEstimatedPrice.map((object, i) => (
-                <Fragment key={`${object[0]}_${i}`}>
-                  <PriceLabel>{estimatedPriceLabelMap[object[0]]}</PriceLabel>
-                  <StyledPriceBar
-                    width={findPercentage(object[1], maxPrice)}
-                    price={object[1]}
-                  />
-                </Fragment>
-              ))}
-            </article>
-          }
-        </section>
-      );
-    }
-}
+export default PricingAndAvailability;

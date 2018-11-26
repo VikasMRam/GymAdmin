@@ -1,5 +1,6 @@
+/* eslint-disable react/no-danger */
 import React from 'react';
-import PropTypes from 'prop-types';
+import { string } from 'prop-types';
 
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 
@@ -14,7 +15,7 @@ const CommunityLocalDetails = ({ localDetails }) => {
 };
 
 CommunityLocalDetails.propTypes = {
-  localDetails: PropTypes.string,
+  localDetails: string,
 };
 CommunityLocalDetails.defaultProps = {
   localDetails: '',

@@ -1,19 +1,11 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import { shallow } from 'enzyme';
 
-import PricingAndAvailability, { findPercentage, sortProperties } from '.';
-
-import RoomTile from 'sly/components/molecules/RoomTile';
+import PricingAndAvailability, { findPercentage, sortProperties } from 'sly/components/organisms/PricingAndAvailability';
 import PriceBar from 'sly/components/molecules/PriceBar';
+import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
-
-const wrap = (props = {}) => mount(() => (
-  <Provider store={createStore(state => state)}>
-    <PricingAndAvailability {...props} />);
-  </Provider>
-));
+const wrap = (props = {}) => shallow(<PricingAndAvailability community={RhodaGoldmanPlaza} {...props} />);
 
 const properties = {
   case1: {
@@ -159,21 +151,21 @@ describe('PricingAndAvailability', () => {
     expect(sortProperties(properties.case1)).toEqual(sortedProperties.case1);
   });
 
-  // it('verify price comparison with only providedAverage non zero ', () => {
-  //   const wrapper = wrap({
-  //     communityName, roomPrices, address, estimatedPrice: properties.case2,
-  //   });
-  //   const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
-  //   expect(comparison).toHaveLength(0);
-  //   expect(comparison.find(PriceBar)).toHaveLength(expectedPropertiesLength.case2);
-  // });
+  it('verify price comparison with only providedAverage non zero ', () => {
+    const wrapper = wrap({
+      communityName, roomPrices, address, estimatedPrice: properties.case2,
+    });
+    const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
+    expect(comparison).toHaveLength(0);
+    expect(comparison.find(PriceBar)).toHaveLength(expectedPropertiesLength.case2);
+  });
 
-  // it('verify price comparison with all properties zero ', () => {
-  //   const wrapper = wrap({
-  //     communityName, roomPrices, address, estimatedPrice: properties.case3,
-  //   });
-  //   const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
-  //   expect(comparison).toHaveLength(0);
-  //   expect(comparison.find(PriceBar)).toHaveLength(expectedPropertiesLength.case3);
-  // });
+  it('verify price comparison with all properties zero ', () => {
+    const wrapper = wrap({
+      communityName, roomPrices, address, estimatedPrice: properties.case3,
+    });
+    const comparison = wrapper.find('#pricing-and-floor-plans-comparison');
+    expect(comparison).toHaveLength(0);
+    expect(comparison.find(PriceBar)).toHaveLength(expectedPropertiesLength.case3);
+  });
 });

@@ -20,17 +20,15 @@ const StyledArticle = styled.article`
   }
 `;
 
-
 const CommunityDetails = ({
   communityName, communityDescription, rgsAuxDescription, staffDescription, residentDescription, ownerExperience, contract,
 }) => {
   return (
     <CollapsibleBlock collapsedDefault={false}>
-
       {communityDescription && (
         <StyledArticle>
           {communityDescription.split('\n\n')
-            .map((paragraph, index) => <Paragraph key={`p_${index}`}>{paragraph}</Paragraph>)
+            .map(paragraph => <Paragraph key={paragraph}>{paragraph}</Paragraph>)
           }
         </StyledArticle>
       )}
@@ -46,7 +44,7 @@ const CommunityDetails = ({
             Owners Story
           </StyledHeading>
           {ownerExperience.split('\n\n')
-            .map((paragraph, index) => <Paragraph key={`p_${index}`}>{paragraph}</Paragraph>)
+            .map(paragraph => <Paragraph key={paragraph}>{paragraph}</Paragraph>)
           }
         </StyledArticle>
       )}
@@ -56,7 +54,7 @@ const CommunityDetails = ({
             About the Staff at {communityName}
           </StyledHeading>
           {staffDescription.split('\n\n')
-            .map((paragraph, index) => <Paragraph key={`p_${index}`}>{paragraph}</Paragraph>)
+            .map(paragraph => <Paragraph key={paragraph}>{paragraph}</Paragraph>)
           }
         </StyledArticle>
       )}
@@ -66,7 +64,7 @@ const CommunityDetails = ({
             About the Residents at {communityName}
           </StyledHeading>
           {residentDescription.split('\n\n')
-            .map((paragraph, index) => <Paragraph key={`p_${index}`}>{paragraph}</Paragraph>)
+            .map(paragraph => <Paragraph key={paragraph}>{paragraph}</Paragraph>)
           }
         </StyledArticle>
       )}

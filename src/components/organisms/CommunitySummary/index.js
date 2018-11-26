@@ -73,7 +73,7 @@ export default class communitySummary extends React.Component {
 
     let conciergeNumber = receptionNumber;
     if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
-      conciergeNumber = twilioNumber.numbers[0];
+      [conciergeNumber] = twilioNumber.numbers;
     }
     const hasPricing = ((estimatedPrice && (estimatedPrice.estimatedAverage || estimatedPrice.providedAverage)) || startingRate);
 
@@ -191,7 +191,7 @@ export default class communitySummary extends React.Component {
     }
 
     highlights.push((
-      <Link onClick={onHowSeniorlyWorks}>How Seniorly Works</Link>
+      <Link href="##" onClick={onHowSeniorlyWorks}>How Seniorly Works</Link>
     ));
 
     // if (websiteUrl) {
