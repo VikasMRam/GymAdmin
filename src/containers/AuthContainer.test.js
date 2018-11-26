@@ -6,10 +6,9 @@ import configureStore from 'redux-mock-store';
 import * as actions from 'sly/store/authenticated/actions';
 import authenticated from 'sly/store/authenticated/reducer';
 import AuthContainer from 'sly/containers/AuthContainer';
-
 import LoginFormContainer from 'sly/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/containers/SignupFormContainer';
-import JoinSlyButtonsController from 'sly/controllers/JoinSlyButtonsController';
+import JoinSlyButtonsContainer from 'sly/containers/JoinSlyButtonsContainer';
 import ResetPasswordFormContainer from 'sly/containers/ResetPasswordFormContainer';
 
 const reducer = combineReducers({ authenticated });
@@ -25,7 +24,7 @@ const wrap = (props = {}, state) => {
   return wrapper;
 };
 
-const mockStore = configureStore([store => next => (action) => {
+const mockStore = configureStore([() => next => (action) => {
   next(action);
   return Promise.resolve(action);
 }]);
@@ -58,7 +57,7 @@ describe('AuthContainer', () => {
     wrapper.store.dispatch(actions.authenticate('For the lolz'));
     wrapper.update();
     const authController = wrapper.dive();
-    const join = authController.find(JoinSlyButtonsController);
+    const join = authController.find(JoinSlyButtonsContainer);
     const instance = authController.instance();
     expect(join.props()).toEqual({
       heading: 'For the lolz',
@@ -106,7 +105,7 @@ describe('AuthContainer', () => {
     expect(notifyInfo).toHaveBeenCalledWith('message');
 
     authController.instance().handleLoginSuccess().then(() => {
-      const [ first, second ] = wrapper.store.getActions();
+      const [first, second] = wrapper.store.getActions();
       expect(first.type).toEqual('RESOURCE_DETAIL_READ_REQUEST');
       expect(first.payload.needle).toEqual('me');
       expect(second.type).toEqual('AUTHENTICATE_SUCCESS');
