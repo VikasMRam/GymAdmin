@@ -67,10 +67,6 @@ class AuthContainer extends Component {
     const { authenticated, authenticateCancel } = this.props;
     const { currentStep } = this.state;
 
-    if (!currentStep) {
-      return null;
-    }
-
     const StepComponent = steps[currentStep];
 
     const componentProps = {};
@@ -100,10 +96,10 @@ class AuthContainer extends Component {
     return (
       <Modal
         closeable
-        isOpen
+        isOpen={!!currentStep}
         onClose={authenticateCancel}
       >
-        <StepComponent {...componentProps} />
+        {StepComponent && <StepComponent {...componentProps} />}
       </Modal>
     );
   }
