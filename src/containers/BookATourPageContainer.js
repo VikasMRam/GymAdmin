@@ -8,7 +8,6 @@ import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
 import { BOOK_A_TOUR } from 'sly/services/api/actions';
-
 import BookATourPage from 'sly/components/pages/BookATourPage';
 
 const handleDateChange = (e, newValue) => {
@@ -48,7 +47,7 @@ const BookATourPageContainer = ({
   const { id, url } = community;
   const handleComplete = (data, toggleConfirmationModal) => {
     const {
-      name, phone, medicaid, ...restData
+      name, phone, medicaidCoverage, ...restData
     } = data;
     const value = {
       ...restData,
@@ -56,7 +55,7 @@ const BookATourPageContainer = ({
       user: {
         name,
         phone,
-        medicaid,
+        medicaid_coverage: medicaidCoverage,
       },
     };
     if (user) {

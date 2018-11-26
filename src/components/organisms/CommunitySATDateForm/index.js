@@ -80,7 +80,7 @@ const CommunitySATDateForm = ({
       </MedicaidLabel>
       <StyledTimeField
         options={medicaidOptions}
-        name="medicaid"
+        name="medicaidCoverage"
         type="boxChoice"
         component={ReduxField}
       />
