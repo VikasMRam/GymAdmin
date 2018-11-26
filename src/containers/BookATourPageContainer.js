@@ -47,16 +47,24 @@ const BookATourPageContainer = ({
   }
   const { id, url } = community;
   const handleComplete = (data, toggleConfirmationModal) => {
+    const {
+      name, phone, medicaid, ...restData
+    } = data;
     const value = {
-      ...data,
+      ...restData,
       slug: id,
+      user: {
+        name,
+        phone,
+        medicaid,
+      },
     };
     if (user) {
-      if (!value.name && user.name) {
-        value.name = user.name;
+      if (!name && user.name) {
+        value.user.name = user.name;
       }
-      if (!value.phone && user.phoneNumber) {
-        value.phone = user.phoneNumber;
+      if (!phone && user.phoneNumber) {
+        value.user.phone = user.phoneNumber;
       }
     }
     const payload = {
