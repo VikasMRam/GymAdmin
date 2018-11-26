@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object, func, bool } from 'prop-types';
+import Helmet from 'react-helmet';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
@@ -63,6 +64,9 @@ const BookATourPage = ({
   const { mainImage } = community;
   return (
     <FullScreenWizard>
+      <Helmet>
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <Header />
       <Column backgroundImage={mainImage}>
         <StyledCommunityInfo palette="white" community={community} />
