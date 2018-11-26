@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
 import { size, assetPath, palette } from 'sly/components/themes';
-import HeaderController from 'sly/controllers/HeaderController';
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Image, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
@@ -334,7 +334,7 @@ const HomePage = ({
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <HeaderController />
+      <HeaderContainer />
       <HeroWrapper>
         <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
         <SearchBoxWrapper>

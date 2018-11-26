@@ -4,7 +4,7 @@ import { bool, func } from 'prop-types';
 
 
 import { size, assetPath, palette } from 'sly/components/themes';
-import HeaderController from 'sly/controllers/HeaderController';
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { Image, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
@@ -331,8 +331,7 @@ const PromoPage = ({
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <HeaderController />
-
+      <HeaderContainer />
       <HeroTwoColumnWrapper>
         <HeroWrapper>
           <SearchBoxWrapper>

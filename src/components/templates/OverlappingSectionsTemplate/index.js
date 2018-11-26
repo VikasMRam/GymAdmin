@@ -2,11 +2,8 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
 
-
 import { size, assetPath, palette } from 'sly/components/themes';
-
-import HeaderController from 'sly/controllers/HeaderController';
-
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { Image, Heading, Block } from 'sly/components/atoms';
 
@@ -139,7 +136,7 @@ const OverlappingSectionsTemplate = ({
 }) => (
   <Fragment>
     <TemplateHeader>
-      <HeaderController />
+      <HeaderContainer />
       <HeroWrapper>
         <HeroBackgroundImage
           src={assetPath(imagePath)}

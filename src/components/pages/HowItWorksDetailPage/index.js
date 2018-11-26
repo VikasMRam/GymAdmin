@@ -2,9 +2,8 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, func, arrayOf, object } from 'prop-types';
 
-
 import { size, assetPath, palette } from 'sly/components/themes';
-import HeaderController from 'sly/controllers/HeaderController';
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { Image, Link, Block, Heading, Hr } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
@@ -117,7 +116,7 @@ const Tab = styled(Link)`
 const Header = ({ heroImageUrl, heading, subheading }) => (
   <Fragment>
     {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-    <HeaderController />
+    <HeaderContainer />
     <HeroWrapper>
       <HeroBackgroundImage src={assetPath(heroImageUrl)} alt="A Home To Love" />
       <HeroTextWrapper>

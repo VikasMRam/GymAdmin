@@ -1,11 +1,10 @@
 import React, { Fragment } from 'react';
-import { any, func } from 'prop-types';
+import { any } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 
-import HeaderController from 'sly/controllers/HeaderController';
-
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import Footer from 'sly/components/organisms/Footer';
 
@@ -39,7 +38,7 @@ const CommunitySearchPageTemplate = ({
   column,
 }) => (
   <Fragment>
-    <TemplateHeader><HeaderController /></TemplateHeader>
+    <TemplateHeader><HeaderContainer /></TemplateHeader>
     <TemplateContent>
       <TwoColumnWrapper>
         <ColumnWrapper>{column}</ColumnWrapper>

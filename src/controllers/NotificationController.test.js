@@ -3,8 +3,7 @@ import configureStore from 'redux-mock-store';
 import { shallow } from 'enzyme';
 
 import { SET } from 'sly/store/controller/actions';
-
-import NotificationController from './NotificationController';
+import NotificationController from 'sly/controllers/NotificationController';
 
 describe('NotificationController', () => {
   const mockStore = configureStore();

@@ -5,7 +5,7 @@ import { array, bool, func, object } from 'prop-types';
 import { palette } from 'styled-theme';
 
 import { size, assetPath } from 'sly/components/themes';
-import HeaderController from 'sly/controllers/HeaderController';
+import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Image, Label, Heading, Paragraph } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
@@ -92,7 +92,7 @@ const NearMePage = ({
   const HeaderContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <HeaderController />
+      <HeaderContainer />
       <HeroWrapper>
         <StyledImage src={assetPath('images/home/cover4.jpg')} alt="A Home To Love" />
         <SearchBoxWrapper>
