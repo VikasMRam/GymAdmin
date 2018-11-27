@@ -12,30 +12,9 @@ import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
 
 const eventCategory = 'PricingWizard';
 
-const handleDateChange = (e, newValue) => {
-  const event = {
-    action: 'date-changed', category: eventCategory, label: newValue.toString(),
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
-const handleTimeChange = (e, newValue) => {
-  const event = {
-    action: 'time-changed', category: eventCategory, label: newValue.toString(),
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
 const handleStepChange = (step) => {
   const event = {
     action: 'step-completed', category: eventCategory, label: (step - 1).toString(),
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
-const handleContactByTextMsgChange = (e) => {
-  const event = {
-    action: 'contactByTextMsg-changed', category: eventCategory, label: (e.target.checked).toString(),
   };
   SlyEvent.getInstance().sendEvent(event);
 };
@@ -49,16 +28,17 @@ const PricingWizardPageContainer = ({
   const { id, url } = community;
   const handleComplete = (data, toggleConfirmationModal) => {
     const {
-      name, phone, medicaidCoverage, contactByTextMsg, ...restData
+      name, phone, medicaidCoverage, roomType, careType, ...restData
     } = data;
     const value = {
       ...restData,
       slug: id,
       user: {
-        name,
+        full_name: name,
         phone,
-        contactByTextMsg,
         medicaid_coverage: medicaidCoverage,
+        type_of_care: careType,
+        type_of_room: roomType,
       },
     };
     if (user) {
@@ -77,7 +57,7 @@ const PricingWizardPageContainer = ({
     return postUserAction(payload)
       .then(() => {
         const event = {
-          action: 'tour-booked', category: eventCategory, label: 'complete',
+          action: 'pricing-requested', category: eventCategory, label: 'complete',
         };
         SlyEvent.getInstance().sendEvent(event);
         history.push(url);
@@ -89,11 +69,8 @@ const PricingWizardPageContainer = ({
     <PricingWizardPage
       community={community}
       user={user}
-      onDateChange={handleDateChange}
-      onTimeChange={handleTimeChange}
       onStepChange={handleStepChange}
       onComplete={handleComplete}
-      onContactByTextMsgChange={handleContactByTextMsgChange}
     />
   );
 };

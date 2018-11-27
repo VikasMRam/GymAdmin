@@ -165,6 +165,7 @@ class PricingWizardPage extends Component {
                           onAdvisorHelpClick={toggleAdvisorHelp}
                           user={user}
                           type="pricing"
+                          form="PWizardForm"
                         />
                       </WizardSteps>
                     </Body>
