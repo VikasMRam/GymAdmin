@@ -64,6 +64,7 @@ const CommunityPWEstimatedPricingForm = ({
       name="roomType"
       type="boxChoice"
       component={ReduxField}
+      multiChoice
     />
     <StyledBlock size="caption">What type of care needs do you have?</StyledBlock>
     <CareTypesField
@@ -71,6 +72,7 @@ const CommunityPWEstimatedPricingForm = ({
       name="careType"
       type="boxChoice"
       component={ReduxField}
+      multiChoice
     />
     <StyledBlock size="caption">
       Do you qualify for medicaid?

@@ -16,7 +16,7 @@ import {
 import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
-import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
+import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 import Modal from 'sly/components/molecules/Modal';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
@@ -61,7 +61,7 @@ const Controls = makeControls(styled.div``);
 const PricingWizardPage = ({
   community, user, onDateChange, onTimeChange, onStepChange, onComplete, onContactByTextMsgChange,
 }) => {
-  const { mainImage } = community;
+  const { mainImage, startingRate } = community;
   return (
     <FullScreenWizard>
       <Helmet>
@@ -106,9 +106,8 @@ const PricingWizardPage = ({
                     </WizardSteps>
                   </Body>
                   <Controls>
-                    <BookingFormFooter
-                      date={data.scheduledDate}
-                      time={data.scheduledTime}
+                    <PricingFormFooter
+                      price={startingRate}
                       onProgressClick={onSubmit}
                       isFinalStep={isFinalStep}
                       isButtonDisabled={!submitEnabled}
