@@ -15,7 +15,7 @@ const items = [
   { icon: 'location', text: 'Personalized service. They set up tours and can accompany you.' },
   { icon: 'book', text: 'Expert knowledge. They can answer any question you have.' },
   { icon: 'house', text: 'Insider information. They know unique details about this community.' },
-  { icon: 'loyalty', text: '$500 cash back. They will arrange this gift after you move in.' },
+  { icon: 'loyalty', text: 'Upto $500 cash back*. They will arrange this gift after you move in.' },
 ];
 
 const IconListWrapper = styled.div`
