@@ -58,7 +58,7 @@ const CommunityPWEstimatedPricingForm = ({
 }) => (
   <form onSubmit={handleSubmit}>
     <HeadingSection level="subtitle" size="subtitle">Get your custom pricing with Sagebrook Senior Living</HeadingSection>
-    <StyledBlock size="caption">What day did you want to tour?</StyledBlock>
+    <StyledBlock size="caption">What type of room are you looking for?</StyledBlock>
     <StyledField
       options={roomTypeOptions}
       name="roomType"

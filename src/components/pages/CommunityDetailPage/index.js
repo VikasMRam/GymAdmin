@@ -543,11 +543,12 @@ export default class CommunityDetailPage extends Component {
           </NotificationController>
         </Modal>
         <FullScreenWizardController>
-          {({ isConfirmationModalVisible, toggleConfirmationModal }) => {
+          {({ isConfirmationModalVisible, toggleConfirmationModal, type }) => {
               const props = {
                 similarCommunities: similarProperties,
                 similarCommunititesHref: getCitySearchUrl({ propInfo, address }),
                 onTileClick: toggleConfirmationModal,
+                type,
               };
               return (
                 <Modal

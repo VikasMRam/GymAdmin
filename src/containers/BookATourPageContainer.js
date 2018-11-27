@@ -79,7 +79,7 @@ const BookATourPageContainer = ({
         };
         SlyEvent.getInstance().sendEvent(event);
         history.push(url);
-        toggleConfirmationModal();
+        toggleConfirmationModal('booking');
       });
   };
 

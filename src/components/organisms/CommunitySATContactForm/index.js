@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, object, func } from 'prop-types';
+import { string, object, func, oneOf } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -36,13 +36,23 @@ const CheckboxField = styled(Field)`
 `;
 
 const CommunitySATContactForm = ({
-  error, user, onAdvisorHelpClick, onContactByTextMsgChange, handleSubmit,
+  error, user, type, onAdvisorHelpClick, onContactByTextMsgChange, handleSubmit,
 }) => {
-  let heading = 'How can we contact you about this community tour?';
-  if (user) {
-    heading = 'Do you have any questions about this tour?';
+  let heading = null;
+  if (type === 'booking') {
+    heading = 'How can we contact you about this community tour?';
+    if (user) {
+      heading = 'Do you have any questions about this tour?';
+    }
+  } else if (type === 'pricing') {
+    heading = 'How can we contact you about your pricing?';
   }
-  const subheading = 'A local senior living advisor will help get you set up a tour with this community.';
+  let subheading = null;
+  if (type === 'booking') {
+    subheading = 'A local senior living advisor will help get you set up a tour with this community.';
+  } else if (type === 'pricing') {
+    subheading = 'Your advisor will help get your custom pricing according to your care needs and room accomodations.';
+  }
   return (
     <form onSubmit={handleSubmit}>
       <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
@@ -91,6 +101,11 @@ CommunitySATContactForm.propTypes = {
   onAdvisorHelpClick: func.isRequired,
   onContactByTextMsgChange: func,
   handleSubmit: func,
+  type: oneOf(['booking', 'pricing']),
+};
+
+CommunitySATContactForm.defaultProps = {
+  type: 'booking',
 };
 
 export default CommunitySATContactForm;
