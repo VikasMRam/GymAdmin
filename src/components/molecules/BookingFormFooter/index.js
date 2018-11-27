@@ -44,7 +44,7 @@ const StyledButton = styled(Button)`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width:auto;
   }
-`
+`;
 PreferenceWrapper.displayName = 'PreferenceWrapper';
 
 const FirstPreferenceWrapper = styled.div`
