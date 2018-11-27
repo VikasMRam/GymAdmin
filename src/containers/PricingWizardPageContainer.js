@@ -32,7 +32,7 @@ const PricingWizardPageContainer = ({
     } = data;
     const value = {
       ...restData,
-      slug: id,
+      propertyIds: [id],
       user: {
         full_name: name,
         phone,

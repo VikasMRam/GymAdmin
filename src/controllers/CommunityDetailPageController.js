@@ -336,6 +336,8 @@ class CommunityDetailPageController extends Component {
     }
     const isAlreadyTourScheduled = userAction && userAction.toursBooked &&
       !!userAction.toursBooked.find(b => b.slug === id);
+    const isAlreadyPricingRequested = userAction && userAction.profilesContacted &&
+      !!userAction.profilesContacted.find(b => b.slug === id);
 
     return (
       <CommunityDetailPage
@@ -367,6 +369,7 @@ class CommunityDetailPageController extends Component {
         onSATClick={this.handleSATClick}
         onToggleAskAgentQuestionModal={this.handleToggleAskAgentQuestionModal}
         isAlreadyTourScheduled={isAlreadyTourScheduled}
+        isAlreadyPricingRequested={isAlreadyPricingRequested}
         isAskAgentQuestionModalVisible={isAskAgentQuestionModalVisible}
       />
     );

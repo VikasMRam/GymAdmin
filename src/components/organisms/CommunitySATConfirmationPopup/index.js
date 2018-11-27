@@ -72,7 +72,7 @@ CommunitySATConfirmationPopup.propTypes = {
   similarCommunititesHref: string.isRequired,
   similarCommunities: array.isRequired,
   onTileClick: func.isRequired,
-  type: string.isRequired,
+  type: string,
 };
 
 export default CommunitySATConfirmationPopup;
