@@ -278,6 +278,17 @@ class CommunityDetailPageController extends Component {
     history.push(`/book-a-tour/${id}`);
   };
 
+  handleGCPClick = () => {
+    const { community, history } = this.props;
+    const { id } = community;
+    const event = {
+      action: 'click-gcp-button', category: 'PricingWizard', label: id,
+    };
+
+    SlyEvent.getInstance().sendEvent(event);
+    history.push(`/custom-pricing/${id}`);
+  };
+
   handleToggleAskAgentQuestionModal = () => {
     const { set, isAskAgentQuestionModalVisible } = this.props;
     set({
@@ -367,6 +378,7 @@ class CommunityDetailPageController extends Component {
         onParamsRemove={this.handleParamsRemove}
         onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
         onSATClick={this.handleSATClick}
+        onGCPClick={this.handleGCPClick}
         onToggleAskAgentQuestionModal={this.handleToggleAskAgentQuestionModal}
         isAlreadyTourScheduled={isAlreadyTourScheduled}
         isAlreadyPricingRequested={isAlreadyPricingRequested}

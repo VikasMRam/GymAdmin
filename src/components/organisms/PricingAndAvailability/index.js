@@ -86,6 +86,7 @@ const PricingAndAvailability = ({
   onInquireOrBookClicked,
   queryParams,
   setQueryParams,
+  onGCPClick,
 }) => {
   const mEstimatedPrice = { ...estimatedPrice };
   if (mEstimatedPrice && mEstimatedPrice.providedAverage) {
@@ -130,9 +131,10 @@ const PricingAndAvailability = ({
         {(!roomPrices.length && estimatedPriceBase) ?
           (
             <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams}>
-              {({ getPricing }) =>
+              {() =>
                 (<EstimatedCost
-                  getPricing={getPricing}
+                  // getPricing={getPricing} getPricing is a prop from children of ConciergeController
+                  getPricing={onGCPClick}
                   community={community}
                   price={estimatedPriceBase}
                 />)
@@ -224,6 +226,7 @@ PricingAndAvailability.propTypes = {
   }),
   onInquireOrBookClicked: func,
   queryParams: object,
+  onGCPClick: func,
   setQueryParams: func,
 };
 
