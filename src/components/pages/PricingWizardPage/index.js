@@ -102,6 +102,7 @@ const PricingWizardPage = ({
                         onContactByTextMsgChange={onContactByTextMsgChange}
                         onAdvisorHelpClick={toggleAdvisorHelp}
                         user={user}
+                        type="pricing"
                       />
                     </WizardSteps>
                   </Body>
