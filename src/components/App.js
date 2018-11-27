@@ -9,7 +9,6 @@ import { func } from 'prop-types';
 // https://github.com/diegohaz/arc/wiki/Styling
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
-
 import { facebookPixelId, googleTagManagerId, isProd, facebookAppId, googleAppId, rokoApikey } from 'sly/config';
 import { assetPath } from 'sly/components/themes';
 // import AppController from 'sly/controllers/Appcontroller';
@@ -26,9 +25,10 @@ import HowItWorksDetailPageContainer from 'sly/containers/HowItWorksDetailPageCo
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
-import LegalPolicyPage from "sly/components/pages/LegalPolicyPage";
+import LegalPolicyPage from 'sly/components/pages/LegalPolicyPage';
 import EntityApprovalContainer from 'sly/containers/EntityApprovalContainer';
 import BookATourPageContainer from 'sly/containers/BookATourPageContainer';
+import PricingWizardPageContainer from 'sly/containers/PricingWizardPageContainer';
 
 setGlobalStyles();
 
@@ -124,6 +124,11 @@ export default class App extends Component {
     {
       path: '/book-a-tour/:communitySlug',
       component: BookATourPageContainer,
+      exact: true,
+    },
+    {
+      path: '/custom-pricing/:communitySlug',
+      component: PricingWizardPageContainer,
       exact: true,
     },
     {
