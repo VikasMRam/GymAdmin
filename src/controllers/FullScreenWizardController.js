@@ -3,7 +3,7 @@ import { bool, func } from 'prop-types';
 
 import { connectController } from 'sly/controllers';
 
-class BookATourPageController extends Component {
+class FullScreenWizardController extends Component {
   static propTypes = {
     set: func,
     isAdvisorHelpVisible: bool,
@@ -47,4 +47,4 @@ const mapStateToProps = (state, { controller = {} }) => ({
   isConfirmationModalVisible: controller.isConfirmationModalVisible,
 });
 
-export default connectController(mapStateToProps)(BookATourPageController);
+export default connectController(mapStateToProps)(FullScreenWizardController);

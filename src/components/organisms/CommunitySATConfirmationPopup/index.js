@@ -42,8 +42,8 @@ const CommunitySATConfirmationPopup = ({
   similarCommunititesHref, similarCommunities, onTileClick,
 }) => {
   const similarCommunitiesComponent = similarCommunities.map(community => (
-    <SimilarCommunityTileWrapper>
-      <Link key={community.id} to={community.url} onClick={onTileClick}>
+    <SimilarCommunityTileWrapper key={community.id}>
+      <Link to={community.url} onClick={onTileClick}>
         <SimilarCommunityNearbyTile
           image={community.imageUrl}
           name={community.name}
