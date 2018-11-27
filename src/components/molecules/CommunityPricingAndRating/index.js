@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { number, string } from 'prop-types';
 import styled from 'styled-components';
 
@@ -28,29 +28,38 @@ const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.regular')};
 `;
 
+const StyledBlock = styled(Block)`
+  margin: 0;
+`;
+
 const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
   const ratingFixed = formatRating(rating);
   return (
-    <Wrapper>
-      {price &&
-        <StyledCommunityPricingWrapper>
-          <DescriptionBlock size="caption">{priceDescription}</DescriptionBlock>
-          <Block size="title">
-            ${price}
-            <MoSpan size="caption">/mo</MoSpan>
-          </Block>
-        </StyledCommunityPricingWrapper>
-      }
-      {ratingFixed > 0 &&
-        <div>
-          <DescriptionBlock size="caption">Average Rating</DescriptionBlock>
-          <Block size="title">
-            <StyledIcon icon="star" palette="primary" />
-            {ratingFixed}
-          </Block>
-        </div>
-      }
-    </Wrapper>
+    <Fragment>
+      <Wrapper>
+        {price &&
+          <StyledCommunityPricingWrapper>
+            <DescriptionBlock size="caption">{priceDescription}</DescriptionBlock>
+            <Block size="title">
+              ${price}
+              <MoSpan size="caption">/mo<sup>*</sup></MoSpan>
+            </Block>
+          </StyledCommunityPricingWrapper>
+        }
+        {ratingFixed > 0 &&
+          <div>
+            <DescriptionBlock size="caption">Average Rating</DescriptionBlock>
+            <Block size="title">
+              <StyledIcon icon="star" palette="primary" />
+              {ratingFixed}
+            </Block>
+          </div>
+        }
+      </Wrapper>
+      <StyledBlock size="caption">
+        * Your pricing will vary depending on your specific room and care service needs.
+      </StyledBlock>
+    </Fragment>
   );
 };
 
@@ -60,9 +69,8 @@ CommunityPricingAndRating.propTypes = {
   rating: number,
 };
 
-
 CommunityPricingAndRating.defaultProps = {
-  priceDescription: 'Pricing starts from',
+  priceDescription: 'Est. pricing from',
 };
 
 export default CommunityPricingAndRating;

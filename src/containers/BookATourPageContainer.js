@@ -75,7 +75,7 @@ const BookATourPageContainer = ({
     return postUserAction(payload)
       .then(() => {
         const event = {
-          action: 'tour-booked', category: 'BAT', label: 'complete',
+          action: 'tour-booked', category: 'BAT', label: id,
         };
         SlyEvent.getInstance().sendEvent(event);
         history.push(url);
