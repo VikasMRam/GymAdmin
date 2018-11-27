@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import { getKey, palette, size } from 'sly/components/themes';
 import { LATER_DATE } from 'sly/constants/date';
-import { TIME_OPTIONS } from 'sly/constants/booking';
+import { TIME_OPTIONS } from 'sly/constants/bookingForm';
 import { Block, Button } from 'sly/components/atoms';
 
 const datePlaceholder = 'Select a Date';
@@ -21,13 +21,13 @@ const Wrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    margin-bottom: 0;  
+    margin-bottom: 0;
   }
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: ${size('spacing.xLarge')};
   }
-  
+
 `;
 
 const PreferenceWrapper = styled.div`

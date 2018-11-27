@@ -5,15 +5,9 @@ import moment from 'moment';
 import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
-import { TIME_OPTIONS } from 'sly/constants/booking';
+import { TIME_OPTIONS, MEDICAID_OPTIONS } from 'sly/constants/bookingForm';
 import { Heading, Block } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
-
-const medicaidOptions = [
-  { label: 'Yes', value: 'yes' },
-  { label: 'No', value: 'no' },
-  { label: "I'm not sure", value: 'not-sure' },
-];
 
 const HeadingSection = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
@@ -79,7 +73,7 @@ const CommunitySATDateForm = ({
         {/* <StyledIcon icon="help" size="regular" palette="slate" variation="filler" /> */}
       </MedicaidLabel>
       <StyledTimeField
-        options={medicaidOptions}
+        options={MEDICAID_OPTIONS}
         name="medicaidCoverage"
         type="boxChoice"
         component={ReduxField}

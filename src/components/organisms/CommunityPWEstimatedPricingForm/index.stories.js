@@ -12,5 +12,5 @@ const CommunityPWEstimatedPricingFormContainer = reduxForm({
 
 storiesOf('Organisms|CommunityPWEstimatedPricingForm', module)
   .add('default', () => (
-    <CommunityPWEstimatedPricingFormContainer />
+    <CommunityPWEstimatedPricingFormContainer onRoomTypeChange={action('room type changed')} onCareTypeChange={action('care type changed')} />
   ));
