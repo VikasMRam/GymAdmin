@@ -19,7 +19,7 @@ import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
 import Modal from 'sly/components/molecules/Modal';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
-import CommunitySATDateFormContainer from 'sly/containers/CommunitySATDateFormContainer';
+import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
 import CommunitySATContactFormContainer from 'sly/containers/CommunitySATContactFormContainer';
 
 const Header = makeHeader(HeaderContainer);
@@ -80,7 +80,7 @@ const PricingWizardPage = ({
               <AdvisorHelpPopup onButtonClick={toggleAdvisorHelp} />
             </Modal>
             <WizardController
-              formName="SATWizardForm"
+              formName="PWizardForm"
               onComplete={data => onComplete(data, toggleConfirmationModal)}
               onStepChange={onStepChange}
             >
@@ -91,8 +91,8 @@ const PricingWizardPage = ({
                   <Body>
                     <WizardSteps {...props}>
                       <WizardStep
-                        component={CommunitySATDateFormContainer}
-                        name="Date"
+                        component={CommunityPWEstimatedPricingFormContainer}
+                        name="EstimatedPricing"
                         onDateChange={onDateChange}
                         onTimeChange={onTimeChange}
                       />
