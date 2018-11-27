@@ -39,7 +39,7 @@ import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import Thankyou from 'sly/components/molecules/Thankyou/index';
 import CommunitySATWidget from 'sly/components/organisms/CommunitySATWidget';
-import BookATourPageController from 'sly/controllers/BookATourPageController';
+import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
 import CommunitySATConfirmationPopup from 'sly/components/organisms/CommunitySATConfirmationPopup/index';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
@@ -542,7 +542,7 @@ export default class CommunityDetailPage extends Component {
             )}
           </NotificationController>
         </Modal>
-        <BookATourPageController>
+        <FullScreenWizardController>
           {({ isConfirmationModalVisible, toggleConfirmationModal }) => {
               const props = {
                 similarCommunities: similarProperties,
@@ -560,7 +560,7 @@ export default class CommunityDetailPage extends Component {
                 </Modal>
               );
           }}
-        </BookATourPageController>
+        </FullScreenWizardController>
         <Modal
           closeable
           isOpen={isAskAgentQuestionModalVisible}

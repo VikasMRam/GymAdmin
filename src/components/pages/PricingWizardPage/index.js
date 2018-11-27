@@ -13,7 +13,7 @@ import {
   makeControls,
   makeHeader,
 } from 'sly/components/templates/FullScreenWizard';
-import BookATourPageController from 'sly/controllers/BookATourPageController';
+import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
@@ -71,7 +71,7 @@ const PricingWizardPage = ({
       <Column backgroundImage={mainImage}>
         <StyledCommunityInfo palette="white" community={community} />
       </Column>
-      <BookATourPageController>
+      <FullScreenWizardController>
         {({
           isAdvisorHelpVisible, toggleAdvisorHelp, toggleConfirmationModal,
         }) => (
@@ -119,7 +119,7 @@ const PricingWizardPage = ({
             </WizardController>
           </Fragment>
         )}
-      </BookATourPageController>
+      </FullScreenWizardController>
     </FullScreenWizard>
   );
 };

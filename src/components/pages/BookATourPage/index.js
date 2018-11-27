@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { object, func, bool } from 'prop-types';
 import Helmet from 'react-helmet';
 
+import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
@@ -13,7 +14,6 @@ import {
   makeControls,
   makeHeader,
 } from 'sly/components/templates/FullScreenWizard';
-import BookATourPageController from 'sly/controllers/BookATourPageController';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
@@ -71,7 +71,7 @@ const BookATourPage = ({
       <Column backgroundImage={mainImage}>
         <StyledCommunityInfo palette="white" community={community} />
       </Column>
-      <BookATourPageController>
+      <FullScreenWizardController>
         {({
           isAdvisorHelpVisible, toggleAdvisorHelp, toggleConfirmationModal,
         }) => (
@@ -119,7 +119,7 @@ const BookATourPage = ({
             </WizardController>
           </Fragment>
         )}
-      </BookATourPageController>
+      </FullScreenWizardController>
     </FullScreenWizard>
   );
 };
