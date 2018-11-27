@@ -52,7 +52,7 @@ const PricingFormFooter = ({
       <Block size="caption" variation="accent">
         Your estimated pricing
       </Block>
-      <StyledNumberFormat value={price} displayType="text" thousandSeparator prefix="$" />/mo
+      <StyledNumberFormat decimalScale={0} value={price} displayType="text" thousandSeparator prefix="$" />/mo
     </PreferenceWrapper>
     {isFinalStep && <StyledButton kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>Send Pricing Request</StyledButton>}
     {!isFinalStep && <StyledButton kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>Continue</StyledButton>}
