@@ -20,4 +20,9 @@ describe('CommunitySATAcknowledgement', () => {
     const wrapper = wrap({ });
     expect(wrapper.find('Styled(Button)').prop('href')).toEqual(similarCommunititesHref);
   });
+
+  it('renders with type pricing', () => {
+    const wrapper = wrap({ type: 'pricing' });
+    expect(wrapper.contains('test')).toBe(false);
+  });
 });

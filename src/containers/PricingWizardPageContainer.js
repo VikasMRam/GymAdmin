@@ -7,38 +7,19 @@ import withServerState from 'sly/store/withServerState';
 import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
-import { BOOK_A_TOUR } from 'sly/services/api/actions';
-import BookATourPage from 'sly/components/pages/BookATourPage';
+import { CUSTOM_PRICING } from 'sly/services/api/actions';
+import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
 
-const handleDateChange = (e, newValue) => {
-  const event = {
-    action: 'date-changed', category: 'BAT', label: newValue.toString(),
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
-const handleTimeChange = (e, newValue) => {
-  const event = {
-    action: 'time-changed', category: 'BAT', label: newValue.toString(),
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
+const eventCategory = 'PricingWizard';
 
 const handleStepChange = (step) => {
   const event = {
-    action: 'step-completed', category: 'BAT', label: (step - 1).toString(),
+    action: 'step-completed', category: eventCategory, label: (step - 1).toString(),
   };
   SlyEvent.getInstance().sendEvent(event);
 };
 
-const handleContactByTextMsgChange = (e) => {
-  const event = {
-    action: 'contactByTextMsg-changed', category: 'BAT', label: (e.target.checked).toString(),
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
-const BookATourPageContainer = ({
+const PricingWizardPageContainer = ({
   community, user, postUserAction, history,
 }) => {
   if (!community) {
@@ -47,16 +28,17 @@ const BookATourPageContainer = ({
   const { id, url } = community;
   const handleComplete = (data, toggleConfirmationModal) => {
     const {
-      name, phone, medicaidCoverage, contactByTextMsg, ...restData
+      name, phone, medicaidCoverage, roomType, careType, ...restData
     } = data;
     const value = {
       ...restData,
-      slug: id,
+      propertyIds: [id],
       user: {
-        name,
+        full_name: name,
         phone,
-        contactByTextMsg,
         medicaid_coverage: medicaidCoverage,
+        type_of_care: careType,
+        type_of_room: roomType,
       },
     };
     if (user) {
@@ -68,35 +50,32 @@ const BookATourPageContainer = ({
       }
     }
     const payload = {
-      action: BOOK_A_TOUR,
+      action: CUSTOM_PRICING,
       value,
     };
 
     return postUserAction(payload)
       .then(() => {
         const event = {
-          action: 'tour-booked', category: 'BAT', label: id,
+          action: 'pricing-requested', category: eventCategory, label: 'complete',
         };
         SlyEvent.getInstance().sendEvent(event);
         history.push(url);
-        toggleConfirmationModal('booking');
+        toggleConfirmationModal('pricing');
       });
   };
 
   return (
-    <BookATourPage
+    <PricingWizardPage
       community={community}
       user={user}
-      onDateChange={handleDateChange}
-      onTimeChange={handleTimeChange}
       onStepChange={handleStepChange}
       onComplete={handleComplete}
-      onContactByTextMsgChange={handleContactByTextMsgChange}
     />
   );
 };
 
-BookATourPageContainer.propTypes = {
+PricingWizardPageContainer.propTypes = {
   community: communityPropType,
   user: object,
   postUserAction: func.isRequired,
@@ -147,4 +126,4 @@ export default withServerState({
 })(connectController(
   mapStateToProps,
   mapDispatchToProps
-)(BookATourPageContainer));
+)(PricingWizardPageContainer));

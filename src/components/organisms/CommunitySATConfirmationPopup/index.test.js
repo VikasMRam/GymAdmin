@@ -21,6 +21,7 @@ const defaultProps = {
   appointmentText,
   similarCommunititesHref,
   onTileClick,
+  type: 'booking',
 };
 
 const wrap = (props = {}) => shallow(<CommunitySATConfirmationPopup {...defaultProps} {...props} />);
@@ -32,9 +33,9 @@ describe('CommunitySATConfirmationPopup', () => {
   });
 
   it('handles onTileClick', () => {
-    const wrapper = wrap();
-    expect(wrapper.find('Styled(Link)')).toHaveLength(1);
-    const link = wrapper.find('Styled(Link)');
+    const wrapper = wrap({ });
+    expect(wrapper.find('Link')).toHaveLength(1);
+    const link = wrapper.find('Link');
     link.simulate('click');
     expect(onTileClick).toHaveBeenCalledTimes(1);
   });

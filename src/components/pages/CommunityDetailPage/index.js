@@ -38,8 +38,8 @@ import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetail
 import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import Thankyou from 'sly/components/molecules/Thankyou/index';
-import CommunitySATWidget from 'sly/components/organisms/CommunitySATWidget';
-import BookATourPageController from 'sly/controllers/BookATourPageController';
+import CommunitySidebarWidget from 'sly/components/organisms/CommunitySidebarWidget';
+import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
 import CommunitySATConfirmationPopup from 'sly/components/organisms/CommunitySATConfirmationPopup/index';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
@@ -91,6 +91,7 @@ export default class CommunityDetailPage extends Component {
     setQueryParams: func,
     onSATClick: func,
     isAlreadyTourScheduled: bool,
+    isAlreadyPricingRequested: bool,
     isAskAgentQuestionModalVisible: bool,
     onToggleAskAgentQuestionModal: func,
   };
@@ -172,6 +173,7 @@ export default class CommunityDetailPage extends Component {
       setQueryParams,
       onSATClick,
       isAlreadyTourScheduled,
+      isAlreadyPricingRequested,
       isAskAgentQuestionModalVisible,
       onToggleAskAgentQuestionModal,
     } = this.props;
@@ -284,11 +286,13 @@ export default class CommunityDetailPage extends Component {
         top={isStickyHeaderVisible ? 84 : 24}
         bottomBoundary="#sticky-sidebar-boundary"
       >
-        <CommunitySATWidget
+        <CommunitySidebarWidget
           isAlreadyTourScheduled={isAlreadyTourScheduled}
+          isAlreadyPricingRequested={isAlreadyPricingRequested}
           price={startingRate}
           rating={reviewsValue}
           onSATClick={!isAlreadyTourScheduled ? onSATClick : onToggleAskAgentQuestionModal}
+          onGCPClick={!isAlreadyPricingRequested ? onSATClick : onToggleAskAgentQuestionModal}
         />
       </Sticky>
     );
@@ -319,6 +323,13 @@ export default class CommunityDetailPage extends Component {
         }
       </Fragment>
     );
+    let bannerNotification = null;
+    if (isAlreadyTourScheduled) {
+      bannerNotification = "We have received your tour request. Your advisor is checking this community's availability and will get back to you shortly.";
+    } else if (isAlreadyPricingRequested) {
+      bannerNotification = "We have recieved your pricing request. Your advisor is checking this community's availability and will get back to you shortly.";
+    }
+
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -329,8 +340,7 @@ export default class CommunityDetailPage extends Component {
         <CommunityDetailPageTemplate
           column={columnContent}
           bottom={bottomContent}
-          bannerNotification={isAlreadyTourScheduled ?
-            'We have received your tour request. Your advisor is checking this community’s availability and will get back to you shortly.' : null}
+          bannerNotification={bannerNotification}
         >
           {(images.length > 0 || videos.length > 0) &&
             <CommunityMediaGallery
@@ -542,12 +552,13 @@ export default class CommunityDetailPage extends Component {
             )}
           </NotificationController>
         </Modal>
-        <BookATourPageController>
-          {({ isConfirmationModalVisible, toggleConfirmationModal }) => {
+        <FullScreenWizardController>
+          {({ isConfirmationModalVisible, toggleConfirmationModal, type }) => {
               const props = {
                 similarCommunities: similarProperties,
                 similarCommunititesHref: getCitySearchUrl({ propInfo, address }),
                 onTileClick: toggleConfirmationModal,
+                type,
               };
               return (
                 <Modal
@@ -560,7 +571,7 @@ export default class CommunityDetailPage extends Component {
                 </Modal>
               );
           }}
-        </BookATourPageController>
+        </FullScreenWizardController>
         <Modal
           closeable
           isOpen={isAskAgentQuestionModalVisible}

@@ -77,4 +77,9 @@ describe('CommunitySATContactForm', () => {
     wrapper.find({ type: 'checkbox' }).at(0).simulate('change');
     expect(onContactByTextMsgChange).toHaveBeenCalled();
   });
+
+  it('renders with type pricing', () => {
+    const wrapper = wrap({ type: 'pricing' });
+    expect(wrapper.contains('test')).toBe(false);
+  });
 });
