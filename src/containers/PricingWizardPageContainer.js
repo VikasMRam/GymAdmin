@@ -58,37 +58,11 @@ const PricingWizardPageContainer = ({
         toggleConfirmationModal('pricing');
       });
   };
-  const handleStepChange = (step) => {
-    const { id } = community;
-    const event = {
-      action: 'step-completed', category: eventCategory, label: id, value: (step - 1).toString(),
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  const handleRoomTypeChange = (e, newValue) => {
-    const { id } = community;
-    const event = {
-      action: 'roomType-changed', category: eventCategory, label: id, value: newValue.toString(),
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  const handleCareTypeChange = (e, newValue) => {
-    const { id } = community;
-    const event = {
-      action: 'careType-changed', category: eventCategory, label: id, value: newValue.toString(),
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
 
   return (
     <PricingWizardPage
       community={community}
       user={user}
-      onStepChange={handleStepChange}
-      onRoomTypeChange={handleRoomTypeChange}
-      onCareTypeChange={handleCareTypeChange}
       onComplete={handleComplete}
     />
   );

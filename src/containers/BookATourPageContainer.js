@@ -57,47 +57,11 @@ const BookATourPageContainer = ({
       });
   };
 
-  const handleDateChange = (e, newValue) => {
-    const { id } = community;
-    const event = {
-      action: 'date-changed', category: eventCategory, label: id, value: newValue.toString(),
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  const handleTimeChange = (e, newValue) => {
-    const { id } = community;
-    const event = {
-      action: 'time-changed', category: eventCategory, label: id, value: newValue.toString(),
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  const handleStepChange = (step) => {
-    const { id } = community;
-    const event = {
-      action: 'step-completed', category: eventCategory, label: id, value: (step - 1).toString(),
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
-  const handleContactByTextMsgChange = (e) => {
-    const { id } = community;
-    const event = {
-      action: 'contactByTextMsg-changed', category: eventCategory, label: id, value: (e.target.checked).toString(),
-    };
-    SlyEvent.getInstance().sendEvent(event);
-  };
-
   return (
     <BookATourPage
       community={community}
       user={user}
-      onDateChange={handleDateChange}
-      onTimeChange={handleTimeChange}
-      onStepChange={handleStepChange}
       onComplete={handleComplete}
-      onContactByTextMsgChange={handleContactByTextMsgChange}
     />
   );
 };

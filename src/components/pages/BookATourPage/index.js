@@ -14,6 +14,7 @@ import {
   makeControls,
   makeHeader,
 } from 'sly/components/templates/FullScreenWizard';
+import SlyEvent from 'sly/services/helpers/events';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
@@ -44,10 +45,18 @@ const StyledCommunityInfo = styled(CommunityInfo)`
   padding-top: ${size('spacing.xxxLarge')};
 `;
 
+const eventCategory = 'BAT';
+const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
+  category: eventCategory,
+  action,
+  label,
+  value,
+});
+
 const BookATourPage = ({
-  community, user, onDateChange, onTimeChange, onStepChange, onComplete, onContactByTextMsgChange,
+  community, user, onComplete,
 }) => {
-  const { mainImage } = community;
+  const { id, mainImage } = community;
   let formHeading = 'How can we contact you about this community tour?';
   if (user) {
     formHeading = 'Do you have any questions about this tour?';
@@ -73,7 +82,7 @@ const BookATourPage = ({
             <WizardController
               formName="SATWizardForm"
               onComplete={data => onComplete(data, toggleConfirmationModal)}
-              onStepChange={onStepChange}
+              onStepChange={step => sendEvent('step-completed', id, step - 1)}
             >
               {({
                 data, onSubmit, isFinalStep, submitEnabled, ...props
@@ -84,13 +93,13 @@ const BookATourPage = ({
                       <WizardStep
                         component={CommunitySATDateFormContainer}
                         name="Date"
-                        onDateChange={onDateChange}
-                        onTimeChange={onTimeChange}
+                        onDateChange={(e, newValue) => sendEvent('date-changed', id, newValue.toString())}
+                        onTimeChange={(e, newValue) => sendEvent('time-changed', id, newValue.toString())}
                       />
                       <WizardStep
                         component={CommunitySATContactFormContainer}
                         name="Contact"
-                        onContactByTextMsgChange={onContactByTextMsgChange}
+                        onContactByTextMsgChange={e => sendEvent('contactByTextMsg-changed', id, e.target.checked.toString())}
                         onAdvisorHelpClick={toggleAdvisorHelp}
                         user={user}
                         heading={formHeading}
@@ -120,11 +129,7 @@ const BookATourPage = ({
 BookATourPage.propTypes = {
   community: communityPropType,
   user: object,
-  onDateChange: func,
-  onTimeChange: func,
-  onStepChange: func,
   onComplete: func,
-  onContactByTextMsgChange: func,
   isAdvisorHelpVisible: bool,
   onAdvisorHelpClick: func,
 };
