@@ -13,10 +13,11 @@ MainButton.displayName = 'MainButton';
 
 const Wrapper = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
 const CommunityActions = ({
-  onSATClick, onGCPClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
+  onSATClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
 }) => (
   <div>
     {!isAlreadyPricingRequested &&
@@ -24,6 +25,7 @@ const CommunityActions = ({
     {isAlreadyPricingRequested &&
       <MainButton ghost kind="jumbo" onClick={onGCPClick}>Pricing requested</MainButton>}
     <Wrapper>
+      <Button ghost onClick={onAQClick}>Ask a question</Button>
       <Button ghost onClick={onSATClick}>{isAlreadyTourScheduled ? 'Tour requested' : 'Book a Tour'}</Button>
     </Wrapper>
   </div>
@@ -32,6 +34,7 @@ const CommunityActions = ({
 CommunityActions.propTypes = {
   onSATClick: func,
   onGCPClick: func,
+  onAQClick: func,
   isAlreadyTourScheduled: bool,
   isAlreadyPricingRequested: bool,
 };

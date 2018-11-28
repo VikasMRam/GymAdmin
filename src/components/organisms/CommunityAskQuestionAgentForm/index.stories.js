@@ -16,7 +16,7 @@ const CommunityAskQuestionAgentFormContainer = reduxForm({
 const component = (
   <CommunityAskQuestionAgentFormContainer
     handleSubmit={withPreventDefault(action('form submitted'))}
-    communityName="Rhoda"
+    placeholder="Rhoda"
     heading="We&apos;ve received your tour request."
     description="Your advisor will reach out to you soon. Feel free to ask them any questions in the meantime."
     agentImageUrl={assetPath('images/agent-xLarge.png')}

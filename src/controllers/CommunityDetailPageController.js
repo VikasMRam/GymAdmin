@@ -40,6 +40,7 @@ class CommunityDetailPageController extends Component {
     setQueryParams: func,
     isShareCommunityModalVisible: bool,
     isAskAgentQuestionModalVisible: bool,
+    askAgentQuestionType: string,
   };
 
   componentDidMount() {
@@ -289,10 +290,11 @@ class CommunityDetailPageController extends Component {
     history.push(`/custom-pricing/${id}`);
   };
 
-  handleToggleAskAgentQuestionModal = () => {
+  handleToggleAskAgentQuestionModal = (e, type) => {
     const { set, isAskAgentQuestionModalVisible } = this.props;
     set({
       isAskAgentQuestionModalVisible: !isAskAgentQuestionModalVisible,
+      askAgentQuestionType: type,
     });
   };
 
@@ -312,6 +314,7 @@ class CommunityDetailPageController extends Component {
       setQueryParams,
       userAction,
       isAskAgentQuestionModalVisible,
+      askAgentQuestionType,
     } = this.props;
 
     if (errorCode) {
@@ -383,6 +386,7 @@ class CommunityDetailPageController extends Component {
         isAlreadyTourScheduled={isAlreadyTourScheduled}
         isAlreadyPricingRequested={isAlreadyPricingRequested}
         isAskAgentQuestionModalVisible={isAskAgentQuestionModalVisible}
+        askAgentQuestionType={askAgentQuestionType}
       />
     );
   }
@@ -402,7 +406,7 @@ const mapStateToProps = (state, {
   // default state for ssr
   const {
     mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false, isStickyHeaderVisible = false,
-    isShareCommunityModalVisible = false, isAskAgentQuestionModalVisible,
+    isShareCommunityModalVisible = false, isAskAgentQuestionModalVisible, askAgentQuestionType,
   } = controller;
 
   const searchParams = getSearchParams(match, location);
@@ -425,6 +429,7 @@ const mapStateToProps = (state, {
     setQueryParams,
     isShareCommunityModalVisible,
     isAskAgentQuestionModalVisible,
+    askAgentQuestionType,
   };
 };
 
