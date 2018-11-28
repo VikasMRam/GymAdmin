@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Button } from 'sly/components/atoms';
 import CommunityActions from 'sly/components/molecules/CommunityActions';
 
 const wrap = (props = {}) =>
@@ -15,7 +14,7 @@ describe('CommunityActions', () => {
 
   it('renders with isAlreadyTourScheduled', () => {
     const wrapper = wrap({ isAlreadyTourScheduled: true });
-    expect(wrapper.find(Button).contains('Tour requested')).toBe(true);
+    expect(wrapper.find('Styled(Button)').contains('Tour requested')).toBe(true);
   });
 
   it('renders with isAlreadyPricingRequested', () => {
@@ -26,7 +25,7 @@ describe('CommunityActions', () => {
   it('does handles onSATClick', () => {
     const onSATClick = jest.fn();
     const wrapper = wrap({ onSATClick });
-    const SATButton = wrapper.find(Button);
+    const SATButton = wrapper.find('Styled(Button)');
 
     expect(SATButton).toHaveLength(2);
     SATButton.at(1).simulate('click');
@@ -46,7 +45,7 @@ describe('CommunityActions', () => {
   it('does handles onAQClick', () => {
     const onAQClick = jest.fn();
     const wrapper = wrap({ onAQClick });
-    const AQButton = wrapper.find(Button);
+    const AQButton = wrapper.find('Styled(Button)');
 
     expect(AQButton).toHaveLength(2);
     AQButton.at(0).simulate('click');
