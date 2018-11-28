@@ -35,4 +35,5 @@ export const CARETYPE_OPTIONS = [
 export const MEDICAID_OPTIONS = [
   { label: 'Yes', value: 'yes' },
   { label: 'No', value: 'no' },
+  { label: "I'm not sure", value: 'not-sure' },
 ];
