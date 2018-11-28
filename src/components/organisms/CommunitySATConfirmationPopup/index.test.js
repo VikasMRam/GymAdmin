@@ -6,6 +6,9 @@ import CommunitySATConfirmationPopup from 'sly/components/organisms/CommunitySAT
 const appointmentText = 'Saturday, October 21, Anytime';
 const similarCommunititesHref = 'www.teamseniorly.com';
 const onTileClick = jest.fn();
+const heading = 'temp heading';
+const subheading = 'temp subheading';
+
 const defaultProps = {
   communityName: 'Rhoda Goldman Plaza',
   communityImageUrl: 'image.url',
@@ -21,7 +24,8 @@ const defaultProps = {
   appointmentText,
   similarCommunititesHref,
   onTileClick,
-  type: 'booking',
+  heading,
+  subheading,
 };
 
 const wrap = (props = {}) => shallow(<CommunitySATConfirmationPopup {...defaultProps} {...props} />);
@@ -30,6 +34,8 @@ describe('CommunitySATConfirmationPopup', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBe(false);
+    expect(wrapper.contains(heading)).toBe(false);
+    expect(wrapper.contains(subheading)).toBe(false);
   });
 
   it('handles onTileClick', () => {

@@ -62,6 +62,11 @@ const BookATourPage = ({
   community, user, onDateChange, onTimeChange, onStepChange, onComplete, onContactByTextMsgChange,
 }) => {
   const { mainImage } = community;
+  let formHeading = 'How can we contact you about this community tour?';
+  if (user) {
+    formHeading = 'Do you have any questions about this tour?';
+  }
+  const formSubheading = 'A local senior living advisor will help get you set up a tour with this community.';
   return (
     <FullScreenWizard>
       <Helmet>
@@ -102,6 +107,8 @@ const BookATourPage = ({
                         onContactByTextMsgChange={onContactByTextMsgChange}
                         onAdvisorHelpClick={toggleAdvisorHelp}
                         user={user}
+                        heading={formHeading}
+                        subheading={formSubheading}
                       />
                     </WizardSteps>
                   </Body>

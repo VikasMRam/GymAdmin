@@ -4,8 +4,13 @@ import { shallow } from 'enzyme';
 import CommunitySATAcknowledgement from 'sly/components/organisms/CommunitySATAcknowledgement';
 
 const similarCommunititesHref = 'www.teamseniorly.com';
+const heading = 'temp heading';
+const subheading = 'temp subheading';
+
 const defaultProps = {
   similarCommunititesHref,
+  heading,
+  subheading,
 };
 
 const wrap = (props = {}) => shallow(<CommunitySATAcknowledgement {...defaultProps} {...props} />);
@@ -14,15 +19,12 @@ describe('CommunitySATAcknowledgement', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBe(false);
+    expect(wrapper.contains(heading)).toBeTruthy();
+    expect(wrapper.contains(subheading)).toBeTruthy();
   });
 
   it('onButtonClick is called', () => {
-    const wrapper = wrap({ });
+    const wrapper = wrap();
     expect(wrapper.find('Styled(Button)').prop('href')).toEqual(similarCommunititesHref);
-  });
-
-  it('renders with type pricing', () => {
-    const wrapper = wrap({ type: 'pricing' });
-    expect(wrapper.contains('test')).toBe(false);
   });
 });

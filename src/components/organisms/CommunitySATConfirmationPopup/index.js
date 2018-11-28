@@ -39,7 +39,7 @@ const SimilarCommunitiesWrapper = styled.div`
 `;
 
 const CommunitySATConfirmationPopup = ({
-  similarCommunititesHref, similarCommunities, type, onTileClick,
+  similarCommunititesHref, similarCommunities, heading, subheading, onTileClick,
 }) => {
   const similarCommunitiesComponent = similarCommunities.map(community => (
     <SimilarCommunityTileWrapper key={community.id}>
@@ -59,7 +59,7 @@ const CommunitySATConfirmationPopup = ({
   return (
     <Fragment>
       <CommunitySATAcknowledgementWrapper>
-        <CommunitySATAcknowledgement similarCommunititesHref={similarCommunititesHref} type={type} />
+        <CommunitySATAcknowledgement similarCommunititesHref={similarCommunititesHref} heading={heading} subheading={subheading} />
       </CommunitySATAcknowledgementWrapper>
       <StyledHr />
       <StyledHeading level="title">Explore communities nearby</StyledHeading>
@@ -72,7 +72,8 @@ CommunitySATConfirmationPopup.propTypes = {
   similarCommunititesHref: string.isRequired,
   similarCommunities: array.isRequired,
   onTileClick: func.isRequired,
-  type: string,
+  heading: string.isRequired,
+  subheading: string.isRequired,
 };
 
 export default CommunitySATConfirmationPopup;

@@ -124,6 +124,8 @@ class PricingWizardPage extends Component {
     } = this.props;
     const { mainImage } = community;
     const { estimatedPrice } = this.state;
+    const formHeading = 'How can we contact you about your pricing?';
+    const formSubheading = 'Your advisor will help get your custom pricing according to your care needs and room accomodations.';
 
     return (
       <FullScreenWizard>
@@ -164,8 +166,9 @@ class PricingWizardPage extends Component {
                           name="Contact"
                           onAdvisorHelpClick={toggleAdvisorHelp}
                           user={user}
-                          type="pricing"
                           form="PWizardForm"
+                          heading={formHeading}
+                          subheading={formSubheading}
                         />
                       </WizardSteps>
                     </Body>
