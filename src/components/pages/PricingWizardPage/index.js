@@ -36,28 +36,14 @@ const Column = makeColumn(styled.div`
     height: 100%;
   }
 `);
+const Body = makeBody(styled.div``);
+const Controls = makeControls(styled.div``);
 
 const StyledCommunityInfo = styled(CommunityInfo)`
   background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
   padding: ${size('spacing.large')};
   padding-top: ${size('spacing.xxxLarge')};
-  width: 100%;
 `;
-
-const Body = makeBody(styled.div`
-  > * {
-    margin-left: ${size('spacing.xLarge')};
-    margin-right: ${size('spacing.xLarge')};
-    margin-top: ${size('spacing.xxLarge')};
-
-    @media screen and (min-width: ${size('breakpoint.laptop')}) {
-      width: ${size('layout.col6')};
-      margin-left: auto;
-      margin-right: auto;
-    }
-  }
-`);
-const Controls = makeControls(styled.div``);
 
 class PricingWizardPage extends Component {
   static propTypes = {
