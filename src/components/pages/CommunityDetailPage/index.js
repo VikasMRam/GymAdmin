@@ -559,11 +559,24 @@ export default class CommunityDetailPage extends Component {
         </Modal>
         <FullScreenWizardController>
           {({ isConfirmationModalVisible, toggleConfirmationModal, type }) => {
+              let heading = null;
+              if (type === 'booking') {
+                heading = 'Tour Request Sent!';
+              } else if (type === 'pricing') {
+                heading = 'Custom pricing request sent!';
+              }
+              let subheading = null;
+              if (type === 'booking') {
+                subheading = 'Your advisor will check if this community is available at this time. They will get back to you shortly by phone or email.';
+              } else if (type === 'pricing') {
+                subheading = 'Your advisor will work with you to get your custom pricing. They will reach out to you soon.';
+              }
               const props = {
                 similarCommunities: similarProperties,
                 similarCommunititesHref: getCitySearchUrl({ propInfo, address }),
                 onTileClick: toggleConfirmationModal,
-                type,
+                heading,
+                subheading,
               };
               return (
                 <Modal

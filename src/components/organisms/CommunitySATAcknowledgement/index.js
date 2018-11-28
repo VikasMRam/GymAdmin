@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, oneOf } from 'prop-types';
+import { string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -42,38 +42,21 @@ const StyledButton = styled(Button)`
   margin-right: auto;
 `;
 
-const CommunitySATAcknowledgement = ({ type, similarCommunititesHref }) => {
-  let heading = null;
-  if (type === 'booking') {
-    heading = 'Tour Request Sent!';
-  } else if (type === 'pricing') {
-    heading = 'Custom pricing request sent!';
-  }
-  let subheading = null;
-  if (type === 'booking') {
-    subheading = 'Your advisor will check if this community is available at this time. They will get back to you shortly by phone or email.';
-  } else if (type === 'pricing') {
-    subheading = 'Your advisor will work with you to get your custom pricing. They will reach out to you soon.';
-  }
-  return (
-    <Wrapper>
-      <HeadingSection>
-        <StyledIcon icon="circle-tick" size="large" palette="green" />
-        <StyledHeading>{heading}</StyledHeading>
-      </HeadingSection>
-      <StyledBlock>{subheading}</StyledBlock>
-      <StyledButton kind="jumbo" href={similarCommunititesHref} >View Similar Communities</StyledButton>
-    </Wrapper>
-  );
-};
+const CommunitySATAcknowledgement = ({ heading, subheading, similarCommunititesHref }) => (
+  <Wrapper>
+    <HeadingSection>
+      <StyledIcon icon="circle-tick" size="large" palette="green" />
+      <StyledHeading>{heading}</StyledHeading>
+    </HeadingSection>
+    <StyledBlock>{subheading}</StyledBlock>
+    <StyledButton kind="jumbo" href={similarCommunititesHref} >View Similar Communities</StyledButton>
+  </Wrapper>
+);
 
 CommunitySATAcknowledgement.propTypes = {
   similarCommunititesHref: string.isRequired,
-  type: oneOf(['booking', 'pricing']),
-};
-
-CommunitySATAcknowledgement.defaultProps = {
-  type: 'booking',
+  heading: string.isRequired,
+  subheading: string.isRequired,
 };
 
 export default CommunitySATAcknowledgement;

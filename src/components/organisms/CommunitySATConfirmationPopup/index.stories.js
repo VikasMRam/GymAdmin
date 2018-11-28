@@ -11,6 +11,8 @@ const { similarProperties } = RhodaGoldmanPlaza;
 const defaultProps = {
   similarCommunities: similarProperties,
   similarCommunititesHref: 'www.teamseniorly.com',
+  heading: 'Tour Request Sent!',
+  subheading: 'Your advisor will check if this community is available at this time. They will get back to you shortly by phone or email.',
 };
 
 storiesOf('Organisms|CommunitySATConfirmationPopup', module)

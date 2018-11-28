@@ -26,6 +26,8 @@ storiesOf('Organisms|CommunitySATContactForm', module).add('default', () => (
     onAdvisorHelpClick={action('onAdvisorHelpClick')}
     onMedicaidHelpClick={action('onMedicaidHelpClick')}
     user={user}
+    heading="How can we contact you about this community tour?"
+    subheading="A local senior living advisor will help get you set up a tour with this community."
   />
 )).add('Guest User', () => (
   <CommunitySATContactFormContainer
@@ -33,5 +35,16 @@ storiesOf('Organisms|CommunitySATContactForm', module).add('default', () => (
     onAdvisorHelpClick={action('onAdvisorHelpClick')}
     onMedicaidHelpClick={action('onMedicaidHelpClick')}
     onContactByTextMsgChange={action('onContactByTextMsgChange')}
+    heading="Do you have any questions about this tour?"
+    subheading="A local senior living advisor will help get you set up a tour with this community."
+  />
+)).add('Pricing Wizard', () => (
+  <CommunitySATContactFormContainer
+    handleSubmit={withPreventDefault(action('form submitted'))}
+    onAdvisorHelpClick={action('onAdvisorHelpClick')}
+    onMedicaidHelpClick={action('onMedicaidHelpClick')}
+    onContactByTextMsgChange={action('onContactByTextMsgChange')}
+    heading="How can we contact you about your pricing?"
+    subheading="Your advisor will help get your custom pricing according to your care needs and room accomodations."
   />
 ));
