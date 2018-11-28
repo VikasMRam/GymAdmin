@@ -44,19 +44,21 @@ const StyledButton = styled(Button)`
 
 const CommunitySATAcknowledgement = ({ heading, subheading, similarCommunititesHref }) => (
   <Wrapper>
-    <HeadingSection>
-      <StyledIcon icon="circle-tick" size="large" palette="green" />
-      <StyledHeading>{heading}</StyledHeading>
-    </HeadingSection>
-    <StyledBlock>{subheading}</StyledBlock>
+    {heading &&
+      <HeadingSection>
+        <StyledIcon icon="circle-tick" size="large" palette="green" />
+        <StyledHeading>{heading}</StyledHeading>
+      </HeadingSection>
+    }
+    {subheading && <StyledBlock>{subheading}</StyledBlock>}
     <StyledButton kind="jumbo" href={similarCommunititesHref} >View Similar Communities</StyledButton>
   </Wrapper>
 );
 
 CommunitySATAcknowledgement.propTypes = {
   similarCommunititesHref: string.isRequired,
-  heading: string.isRequired,
-  subheading: string.isRequired,
+  heading: string,
+  subheading: string,
 };
 
 export default CommunitySATAcknowledgement;
