@@ -28,8 +28,8 @@ describe('CommunityActions', () => {
     const wrapper = wrap({ onSATClick });
     const SATButton = wrapper.find(Button);
 
-    expect(SATButton).toHaveLength(1);
-    SATButton.simulate('click');
+    expect(SATButton).toHaveLength(2);
+    SATButton.at(1).simulate('click');
     expect(onSATClick).toHaveBeenCalled();
   });
 
@@ -41,5 +41,15 @@ describe('CommunityActions', () => {
     expect(GCPButton).toHaveLength(1);
     GCPButton.simulate('click');
     expect(onGCPClick).toHaveBeenCalled();
+  });
+
+  it('does handles onAQClick', () => {
+    const onAQClick = jest.fn();
+    const wrapper = wrap({ onAQClick });
+    const AQButton = wrapper.find(Button);
+
+    expect(AQButton).toHaveLength(2);
+    AQButton.at(0).simulate('click');
+    expect(onAQClick).toHaveBeenCalled();
   });
 });
