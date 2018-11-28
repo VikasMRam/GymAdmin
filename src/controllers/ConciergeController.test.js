@@ -1,25 +1,23 @@
 import React from 'react';
 import configureStore from 'redux-mock-store';
-import { shallow, mount } from 'enzyme';
-
-import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
-import { CONCIERGE } from 'sly/constants/modalType';
+import { shallow } from 'enzyme';
 
 import SlyEvent from '../services/helpers/events';
 
 import ConciergeControllerContainer, {
   ConciergeController,
   CONVERSION_FORM,
-  EXPRESS_CONVERSION_FORM,
   ADVANCED_INFO,
-  WHAT_NEXT,
 } from './ConciergeController';
+
+import { ASSESSMENT, REQUEST_CALLBACK } from 'sly/services/api/actions';
+import { CONCIERGE } from 'sly/constants/modalType';
 
 jest.mock('../services/helpers/events');
 
 describe('ConciergeController', () => {
   const mockStore = configureStore();
-  const initStore = (props={}, conciergeProps={}) => mockStore({
+  const initStore = (props = {}, conciergeProps = {}) => mockStore({
     controller: { concierge: { ...conciergeProps } },
     ...props,
   });
@@ -160,6 +158,7 @@ describe('ConciergeController', () => {
 
   describe('Controller', () => {
     const sendEvent = jest.fn();
+    const onGCPClick = jest.fn();
     const events = {
       sendEvent,
     };
@@ -201,6 +200,7 @@ describe('ConciergeController', () => {
         children={spy}
         queryParams={{}}
         setQueryParams={setQueryParams}
+        onGCPClick={onGCPClick}
       />
     );
 
@@ -302,10 +302,55 @@ describe('ConciergeController', () => {
       });
 
       then.mock.calls.pop()[0]();
+      expect(onGCPClick).toHaveBeenCalled();
+    });
+
+    it('should submit conversion when community not passed', () => {
+      const wrapper = wrap({
+        pathName: 'blah',
+        submit,
+        concierge: {},
+      });
+      const instance = wrapper.instance();
+      instance.next = jest.fn();
+      const then = jest.fn();
+      promise = { then };
+      const data = { data: 'DATA' };
+
+      childProps().submitRegularConversion(data);
+
+      // expect(lastEvent()).toEqual({
+      //   action: 'contactCommunity',
+      //   category: 'requestCallback',
+      //   label: 'my-community',
+      // });
+      //
+      // expect(lastSubmit()).toEqual({
+      //   action: 'LEAD/REQUEST_CALLBACK',
+      //   value: {
+      //     user: { data: 'DATA' },
+      //     propertyIds: [ 'my-community' ],
+      //   },
+      // });
+      expect(lastEvent()).toEqual({
+        action: 'contactCommunity',
+        category: 'requestConsultation',
+        label: 'blah',
+      });
+
+      expect(lastSubmit()).toEqual({
+        action: 'LEAD/REQUEST_CONSULTATION',
+        value: {
+          user: { data: 'DATA' },
+          propertyIds: [],
+        },
+      });
+
+      then.mock.calls.pop()[0]();
       expect(instance.next).toHaveBeenCalledWith(false);
     });
 
-    it('should submit express conversion', () => {
+    it('should submit express conversion when community is passed', () => {
       const wrapper = wrap({
         communitySlug: community.id,
         submit,
@@ -330,6 +375,38 @@ describe('ConciergeController', () => {
         value: {
           user: { data: 'DATA' },
           propertyIds: [ 'my-community' ],
+        },
+      });
+
+      then.mock.calls.pop()[0]();
+      expect(onGCPClick).toHaveBeenCalled();
+    });
+
+    it('should submit express conversion', () => {
+      const wrapper = wrap({
+        pathName: 'Blah',
+        submit,
+        concierge: {},
+      });
+      const instance = wrapper.instance();
+      instance.next = jest.fn();
+      const then = jest.fn();
+      promise = { then };
+      const data = { data: 'DATA' };
+
+      childProps().submitExpressConversion(data);
+
+      expect(lastEvent()).toEqual({
+        action: 'contactCommunity',
+        category: 'requestAvailability',
+        label: 'Blah',
+      });
+
+      expect(lastSubmit()).toEqual({
+        action: 'LEAD/REQUEST_AVAILABILITY',
+        value: {
+          user: { data: 'DATA' },
+          propertyIds: [],
         },
       });
 
