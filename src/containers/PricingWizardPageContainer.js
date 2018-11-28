@@ -12,27 +12,6 @@ import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
 
 const eventCategory = 'PricingWizard';
 
-const handleStepChange = (step) => {
-  const event = {
-    action: 'step-completed', category: eventCategory, label: (step - 1).toString(),
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
-const handleRoomTypeChange = (e, newValue) => {
-  const event = {
-    action: 'roomType-changed', category: eventCategory, label: newValue.toString(),
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
-const handleCareTypeChange = (e, newValue) => {
-  const event = {
-    action: 'careType-changed', category: eventCategory, label: newValue.toString(),
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
 const PricingWizardPageContainer = ({
   community, user, postUserAction, history,
 }) => {
@@ -72,12 +51,35 @@ const PricingWizardPageContainer = ({
     return postUserAction(payload)
       .then(() => {
         const event = {
-          action: 'pricing-requested', category: eventCategory, label: 'complete',
+          action: 'pricing-requested', category: eventCategory, label: id,
         };
         SlyEvent.getInstance().sendEvent(event);
         history.push(url);
         toggleConfirmationModal('pricing');
       });
+  };
+  const handleStepChange = (step) => {
+    const { id } = community;
+    const event = {
+      action: 'step-completed', category: eventCategory, label: id, value: (step - 1).toString(),
+    };
+    SlyEvent.getInstance().sendEvent(event);
+  };
+
+  const handleRoomTypeChange = (e, newValue) => {
+    const { id } = community;
+    const event = {
+      action: 'roomType-changed', category: eventCategory, label: id, value: newValue.toString(),
+    };
+    SlyEvent.getInstance().sendEvent(event);
+  };
+
+  const handleCareTypeChange = (e, newValue) => {
+    const { id } = community;
+    const event = {
+      action: 'careType-changed', category: eventCategory, label: id, value: newValue.toString(),
+    };
+    SlyEvent.getInstance().sendEvent(event);
   };
 
   return (
