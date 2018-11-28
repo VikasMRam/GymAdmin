@@ -158,7 +158,7 @@ describe('ConciergeController', () => {
 
   describe('Controller', () => {
     const sendEvent = jest.fn();
-    const onGCPClick = jest.fn();
+    const gotoGetCustomPricing = jest.fn();
     const events = {
       sendEvent,
     };
@@ -200,7 +200,7 @@ describe('ConciergeController', () => {
         children={spy}
         queryParams={{}}
         setQueryParams={setQueryParams}
-        onGCPClick={onGCPClick}
+        gotoGetCustomPricing={gotoGetCustomPricing}
       />
     );
 
@@ -302,7 +302,7 @@ describe('ConciergeController', () => {
       });
 
       then.mock.calls.pop()[0]();
-      expect(onGCPClick).toHaveBeenCalled();
+      expect(gotoGetCustomPricing).toHaveBeenCalled();
     });
 
     it('should submit conversion when community not passed', () => {
@@ -379,7 +379,7 @@ describe('ConciergeController', () => {
       });
 
       then.mock.calls.pop()[0]();
-      expect(onGCPClick).toHaveBeenCalled();
+      expect(gotoGetCustomPricing).toHaveBeenCalled();
     });
 
     it('should submit express conversion', () => {

@@ -423,7 +423,7 @@ export default class CommunityDetailPage extends Component {
                   onLiveChatClicked={onLiveChatClicked}
                   queryParams={{ modal, currentStep }}
                   setQueryParams={setQueryParams}
-                  onGCPClick={onGCPClick}
+                  gotoGetCustomPricing={onGCPClick}
                 />
               )}
             </ConciergeController>
