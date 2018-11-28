@@ -32,6 +32,7 @@ class CommunityAskQuestionAgentFormContainer extends Component {
     heading: string,
     description: string,
     agentImageUrl: string,
+    placeholder: string,
   };
 
   handleOnSubmit = (data) => {
@@ -68,14 +69,13 @@ class CommunityAskQuestionAgentFormContainer extends Component {
 
   render() {
     const {
-      community, heading, description, agentImageUrl,
+      heading, description, agentImageUrl, placeholder,
     } = this.props;
-    const { name } = community;
 
     return (
       <ReduxForm
         onSubmit={this.handleOnSubmit}
-        communityName={name}
+        placeholder={placeholder}
         heading={heading}
         description={description}
         agentImageUrl={agentImageUrl}

@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
-import { object, func, number, bool } from 'prop-types';
+import { object, func, number, bool, string } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
@@ -95,6 +95,7 @@ export default class CommunityDetailPage extends Component {
     isAlreadyPricingRequested: bool,
     isAskAgentQuestionModalVisible: bool,
     onToggleAskAgentQuestionModal: func,
+    askAgentQuestionType: string,
   };
 
   componentDidMount() {
@@ -178,6 +179,7 @@ export default class CommunityDetailPage extends Component {
       isAlreadyPricingRequested,
       isAskAgentQuestionModalVisible,
       onToggleAskAgentQuestionModal,
+      askAgentQuestionType,
     } = this.props;
 
     const {
@@ -293,8 +295,9 @@ export default class CommunityDetailPage extends Component {
           isAlreadyPricingRequested={isAlreadyPricingRequested}
           price={startingRate}
           rating={reviewsValue}
-          onSATClick={!isAlreadyTourScheduled ? onSATClick : onToggleAskAgentQuestionModal}
-          onGCPClick={!isAlreadyPricingRequested ? onGCPClick : onToggleAskAgentQuestionModal}
+          onSATClick={!isAlreadyTourScheduled ? onSATClick : e => onToggleAskAgentQuestionModal(e, 'tour')}
+          onGCPClick={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
+          onAQClick={onToggleAskAgentQuestionModal}
         />
       </Sticky>
     );
@@ -599,9 +602,22 @@ export default class CommunityDetailPage extends Component {
             {({
               notifyInfo,
             }) => {
-              const heading = 'We have received your tour request.';
-              const description = 'Your advisor will reach out to you soon. Feel free to ask them any questions in the meantime.';
+              const { name, address } = community;
+              const { city } = address;
+              let heading = `Ask your advisor a question about ${name} in ${city}.`;
+              let placeholder = `Hi Rachel, I have a question about ${name} in ${city}...`;
+              let description = null;
               const agentImageUrl = assetPath('images/agent-xLarge.png');
+
+              if (askAgentQuestionType === 'tour') {
+                heading = 'We have received your tour request.';
+                description = 'Your advisor will reach out to you soon. Feel free to ask them any questions in the meantime.';
+                placeholder = `Hi Rachel, I have a question about my tour with ${name}...`;
+              } else if (askAgentQuestionType === 'pricing') {
+                heading = 'We have received your custom pricing request.';
+                description = 'Your advisor will reach out to you soon. Feel free to ask them any questions in the meantime.';
+              }
+
               return (
                 <CommunityAskQuestionAgentFormContainer
                   toggleAskAgentQuestionModal={onToggleAskAgentQuestionModal}
@@ -610,6 +626,7 @@ export default class CommunityDetailPage extends Component {
                   heading={heading}
                   description={description}
                   agentImageUrl={agentImageUrl}
+                  placeholder={placeholder}
                 />
             );
           }}

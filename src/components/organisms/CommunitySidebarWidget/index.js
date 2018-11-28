@@ -22,7 +22,7 @@ const CommunityPricingAndRatingWrapper = styled.div`
 `;
 
 const CommunitySidebarWidget = ({
-  price, rating, onSATClick, onGCPClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
+  price, rating, onSATClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
 }) => (
   <Fragment>
     <Wrapper>
@@ -35,6 +35,7 @@ const CommunitySidebarWidget = ({
         isAlreadyTourScheduled={isAlreadyTourScheduled}
         onSATClick={onSATClick}
         onGCPClick={onGCPClick}
+        onAQClick={onAQClick}
       />
     </Wrapper>
     <CommunityAgentCashback />
@@ -46,6 +47,7 @@ CommunitySidebarWidget.propTypes = {
   rating: number,
   onSATClick: func,
   onGCPClick: func,
+  onAQClick: func,
   isAlreadyTourScheduled: bool,
   isAlreadyPricingRequested: bool,
 };

@@ -27,13 +27,13 @@ const TextWrapper = styled.div`
 `;
 
 const CommunityAskQuestionAgentForm = ({
-  heading, description, agentImageUrl, handleSubmit, pristine, submitting, error, communityName,
+  heading, description, agentImageUrl, handleSubmit, pristine, submitting, error, placeholder,
 }) => (
   <form onSubmit={handleSubmit}>
     <TopSection>
       <TextWrapper>
         <Heading level="subtitle" size="subtitle">{heading}</Heading>
-        <Block>{description}</Block>
+        {description && <Block>{description}</Block>}
       </TextWrapper>
       <div><Image src={agentImageUrl} /></div>
     </TopSection>
@@ -41,7 +41,7 @@ const CommunityAskQuestionAgentForm = ({
       name="question"
       label="Your message"
       type="textarea"
-      placeholder={`Hi Rachel, I have a question about my tour with ${communityName}...`}
+      placeholder={placeholder}
       component={ReduxField}
     />
     {error && <Block palette="danger">{error}</Block>}
@@ -56,9 +56,9 @@ CommunityAskQuestionAgentForm.propTypes = {
   pristine: bool,
   submitting: bool,
   error: string,
-  communityName: string.isRequired,
+  placeholder: string.isRequired,
   heading: string.isRequired,
-  description: string.isRequired,
+  description: string,
   agentImageUrl: string.isRequired,
 };
 

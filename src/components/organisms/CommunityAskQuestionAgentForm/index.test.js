@@ -5,7 +5,7 @@ import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAsk
 import { Block, Image } from 'sly/components/atoms';
 
 const defaultProps = {
-  communityName: 'rhoda',
+  placeholder: 'rhoda',
   heading: 'We&apos;ve received your tour request.',
   description: 'Your advisor will reach out to you soon. Feel free to ask them any questions in the meantime.',
   agentImageUrl: 'abc.url',

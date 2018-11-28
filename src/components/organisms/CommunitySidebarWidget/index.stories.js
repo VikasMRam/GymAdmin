@@ -6,5 +6,11 @@ import CommunitySidebarWidget from 'sly/components/organisms/CommunitySidebarWid
 
 storiesOf('Organisms|CommunitySidebarWidget', module)
   .add('default', () => (
-    <CommunitySidebarWidget price={4300} rating={3.6} onSATClick={action('onSATClick')} onGCPClick={action('onGCPClick')} />
+    <CommunitySidebarWidget
+      price={4300}
+      rating={3.6}
+      onSATClick={action('onSATClick')}
+      onGCPClick={action('onGCPClick')}
+      onAQClick={action('onAQClick')}
+    />
   ));
