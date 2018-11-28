@@ -4,7 +4,7 @@ import { object, func, number, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
-import { size } from 'sly/components/themes';
+import { size, assetPath } from 'sly/components/themes';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION } from 'sly/constants/modalType';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
@@ -598,13 +598,21 @@ export default class CommunityDetailPage extends Component {
           <NotificationController>
             {({
               notifyInfo,
-            }) => (
-              <CommunityAskQuestionAgentFormContainer
-                toggleAskAgentQuestionModal={onToggleAskAgentQuestionModal}
-                notifyInfo={notifyInfo}
-                community={community}
-              />
-            )}
+            }) => {
+              const heading = 'We have received your tour request.';
+              const description = 'Your advisor will reach out to you soon. Feel free to ask them any questions in the meantime.';
+              const agentImageUrl = assetPath('images/agent-xLarge.png');
+              return (
+                <CommunityAskQuestionAgentFormContainer
+                  toggleAskAgentQuestionModal={onToggleAskAgentQuestionModal}
+                  notifyInfo={notifyInfo}
+                  community={community}
+                  heading={heading}
+                  description={description}
+                  agentImageUrl={agentImageUrl}
+                />
+            );
+          }}
           </NotificationController>
         </Modal>
         <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
