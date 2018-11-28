@@ -12,8 +12,14 @@ const MainButton = styled(Button)`
 MainButton.displayName = 'MainButton';
 
 const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: ${size('spacing.regular')};
+`;
+
+// TODO: clarify whether to modify in atom
+const StyledButton = styled(Button)`
+  font-size: ${size('text.caption')};
 `;
 
 const CommunityActions = ({
@@ -25,8 +31,8 @@ const CommunityActions = ({
     {isAlreadyPricingRequested &&
       <MainButton ghost kind="jumbo" onClick={onGCPClick}>Pricing requested</MainButton>}
     <Wrapper>
-      <Button ghost onClick={onAQClick}>Ask a question</Button>
-      <Button ghost onClick={onSATClick}>{isAlreadyTourScheduled ? 'Tour requested' : 'Book a Tour'}</Button>
+      <StyledButton ghost onClick={onAQClick}>Ask a question</StyledButton>
+      <StyledButton ghost onClick={onSATClick}>{isAlreadyTourScheduled ? 'Tour requested' : 'Book a Tour'}</StyledButton>
     </Wrapper>
   </div>
 );

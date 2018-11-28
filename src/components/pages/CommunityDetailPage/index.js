@@ -17,7 +17,7 @@ import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContai
 import ConciergeController from 'sly/controllers/ConciergeController';
 import SaveCommunityController from 'sly/controllers/SaveCommunityController';
 import NotificationController from 'sly/controllers/NotificationController';
-import StickyFooter from 'sly/components/molecules/StickyFooter';
+import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
 import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
@@ -516,12 +516,12 @@ export default class CommunityDetailPage extends Component {
           </CollapsibleSection>
           <Hr id="sticky-sidebar-boundary" />
         </CommunityDetailPageTemplate>
-        <StickyFooter
-          footerInfo={{
-            ctaTitle: !isAlreadyTourScheduled ? 'Schedule a Tour' : 'Tour requested',
-          }}
-          ghostButton={isAlreadyTourScheduled}
-          onFooterClick={!isAlreadyTourScheduled ? onSATClick : onToggleAskAgentQuestionModal}
+        <CommunityStickyFooter
+          isAlreadyTourScheduled={isAlreadyTourScheduled}
+          isAlreadyPricingRequested={isAlreadyPricingRequested}
+          onSATClick={!isAlreadyTourScheduled ? onSATClick : e => onToggleAskAgentQuestionModal(e, 'tour')}
+          onGCPClick={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
+          onAQClick={onToggleAskAgentQuestionModal}
         />
         {(searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||
           searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) &&
