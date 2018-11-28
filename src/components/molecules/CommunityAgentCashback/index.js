@@ -28,7 +28,7 @@ const CommunityAgentCashback = () => (
   <Wrapper>
     <LoyaltyIcon icon="baseline-loyalty" size="large" />
     <TextSection>
-      <StyledHeading size="body">Get upto $500 cash back*</StyledHeading>
+      <StyledHeading size="body">Get up to $500 cash back*</StyledHeading>
       <Block size="caption" weight="medium">Enjoy cash back when you move in with help from a Seniorly Agent.</Block>
     </TextSection>
   </Wrapper>
