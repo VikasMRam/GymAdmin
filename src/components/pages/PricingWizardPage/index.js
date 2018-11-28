@@ -6,6 +6,7 @@ import Helmet from 'react-helmet';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
+import SlyEvent from 'sly/services/helpers/events';
 import {
   FullScreenWizard,
   makeBody,
@@ -45,11 +46,18 @@ const StyledCommunityInfo = styled(CommunityInfo)`
   padding-top: ${size('spacing.xxxLarge')};
 `;
 
+const eventCategory = 'PricingWizard';
+const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
+  category: eventCategory,
+  action,
+  label,
+  value,
+});
+
 class PricingWizardPage extends Component {
   static propTypes = {
     community: communityPropType,
     user: object,
-    onStepChange: func,
     onComplete: func,
     isAdvisorHelpVisible: bool,
     onAdvisorHelpClick: func,
@@ -64,15 +72,21 @@ class PricingWizardPage extends Component {
   }
 
   onRoomTypeChange = (e, newRoomTypes) => {
+    const { community } = this.props;
+    const { id } = community;
     this.roomTypes = newRoomTypes;
     const { roomTypes = [], careTypes = [] } = this;
     this.calculatePrice(roomTypes, careTypes);
+    sendEvent('roomType-changed', id, newRoomTypes.toString());
   };
 
   onCareTypeChange = (e, newCareTypes) => {
+    const { community } = this.props;
+    const { id } = community;
     this.careTypes = newCareTypes;
     const { roomTypes = [], careTypes = [] } = this;
     this.calculatePrice(roomTypes, careTypes);
+    sendEvent('careType-changed', id, newCareTypes.toString());
   };
 
   calculatePrice = (roomTypes, careTypes) => {
@@ -106,9 +120,9 @@ class PricingWizardPage extends Component {
   render() {
     const { onRoomTypeChange, onCareTypeChange } = this;
     const {
-      community, user, onStepChange, onComplete,
+      community, user, onComplete,
     } = this.props;
-    const { mainImage } = community;
+    const { id, mainImage } = community;
     const { estimatedPrice } = this.state;
     const formHeading = 'How can we contact you about your pricing?';
     const formSubheading = 'Your advisor will help get your custom pricing according to your care needs and room accomodations.';
@@ -133,7 +147,7 @@ class PricingWizardPage extends Component {
               <WizardController
                 formName="PWizardForm"
                 onComplete={data => onComplete(data, toggleConfirmationModal)}
-                onStepChange={onStepChange}
+                onStepChange={step => sendEvent('step-completed', id, step - 1)}
               >
                 {({
                   data, onSubmit, isFinalStep, submitEnabled, ...props

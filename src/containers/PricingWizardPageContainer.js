@@ -12,13 +12,6 @@ import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
 
 const eventCategory = 'PricingWizard';
 
-const handleStepChange = (step) => {
-  const event = {
-    action: 'step-completed', category: eventCategory, label: (step - 1).toString(),
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
 const PricingWizardPageContainer = ({
   community, user, postUserAction, history,
 }) => {
@@ -58,7 +51,7 @@ const PricingWizardPageContainer = ({
     return postUserAction(payload)
       .then(() => {
         const event = {
-          action: 'pricing-requested', category: eventCategory, label: 'complete',
+          action: 'pricing-requested', category: eventCategory, label: id,
         };
         SlyEvent.getInstance().sendEvent(event);
         history.push(url);
@@ -70,7 +63,6 @@ const PricingWizardPageContainer = ({
     <PricingWizardPage
       community={community}
       user={user}
-      onStepChange={handleStepChange}
       onComplete={handleComplete}
     />
   );
