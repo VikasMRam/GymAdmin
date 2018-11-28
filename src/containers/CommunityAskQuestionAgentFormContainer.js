@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
-import { func, string } from 'prop-types';
+import { reduxForm, SubmissionError, clearSubmitErrors, getFormValues } from 'redux-form';
+import { func, string, object } from 'prop-types';
 
 import SlyEvent from 'sly/services/helpers/events';
 import { ASK_QUESTION } from 'sly/services/api/actions';
@@ -12,6 +12,7 @@ import {
 } from 'sly/services/validation';
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
+import { getDetail } from 'sly/store/selectors';
 
 const validate = createValidator({
   question: [required],
@@ -33,6 +34,8 @@ class CommunityAskQuestionAgentFormContainer extends Component {
     description: string,
     agentImageUrl: string,
     placeholder: string,
+    userAction: object,
+    formValues: object,
   };
 
   handleOnSubmit = (data) => {
@@ -44,6 +47,10 @@ class CommunityAskQuestionAgentFormContainer extends Component {
 
     const value = {
       question: data.question,
+      user: {
+        full_name: data.full_name,
+        phone: data.phone,
+      },
       slug: id,
     };
 
@@ -69,11 +76,17 @@ class CommunityAskQuestionAgentFormContainer extends Component {
 
   render() {
     const {
-      heading, description, agentImageUrl, placeholder,
+      heading, description, agentImageUrl, placeholder, userAction, formValues,
     } = this.props;
-
+    const { userDetails } = userAction;
+    const initialValues = {
+      full_name: userDetails.fullName,
+      phone: userDetails.phone,
+    };
     return (
       <ReduxForm
+        initialValues={initialValues}
+        formValues={formValues}
         onSubmit={this.handleOnSubmit}
         placeholder={placeholder}
         heading={heading}
@@ -84,12 +97,19 @@ class CommunityAskQuestionAgentFormContainer extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    userAction: getDetail(state, 'userAction'),
+    formValues: getFormValues(formName)(state),
+  };
+};
+
 const mapDispatchToProps = dispatch => ({
   postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
   clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(CommunityAskQuestionAgentFormContainer);
