@@ -3,7 +3,7 @@ import { func, string, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import { Heading, Button, Block, Image } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
@@ -27,19 +27,15 @@ const TextWrapper = styled.div`
 `;
 
 const CommunityAskQuestionAgentForm = ({
-  handleSubmit, pristine, submitting, error, communityName,
+  heading, description, agentImageUrl, handleSubmit, pristine, submitting, error, communityName,
 }) => (
   <form onSubmit={handleSubmit}>
     <TopSection>
       <TextWrapper>
-        <Heading level="subtitle" size="subtitle">We&apos;ve recieved your tour request.</Heading>
-        <Block>
-          Your advisor will reach out to you soon. Feel free to ask them any questions in the meantime.
-        </Block>
+        <Heading level="subtitle" size="subtitle">{heading}</Heading>
+        <Block>{description}</Block>
       </TextWrapper>
-      <div>
-        <Image src={assetPath('images/agent-xLarge.png')} />
-      </div>
+      <div><Image src={agentImageUrl} /></div>
     </TopSection>
     <StyledField
       name="question"
@@ -61,6 +57,9 @@ CommunityAskQuestionAgentForm.propTypes = {
   submitting: bool,
   error: string,
   communityName: string.isRequired,
+  heading: string.isRequired,
+  description: string.isRequired,
+  agentImageUrl: string.isRequired,
 };
 
 export default CommunityAskQuestionAgentForm;
