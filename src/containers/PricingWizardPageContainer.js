@@ -28,7 +28,7 @@ const PricingWizardPageContainer = ({
   const { id, url } = community;
   const handleComplete = (data, toggleConfirmationModal) => {
     const {
-      name, phone, medicaidCoverage, roomType, careType, ...restData
+      name, phone, medicaidCoverage, roomType, careType, contactByTextMsg, ...restData
     } = data;
     const value = {
       ...restData,
@@ -39,6 +39,7 @@ const PricingWizardPageContainer = ({
         medicaid_coverage: medicaidCoverage,
         type_of_care: careType,
         type_of_room: roomType,
+        contact_by_text_msg: contactByTextMsg,
       },
     };
     if (user) {

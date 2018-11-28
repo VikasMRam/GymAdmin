@@ -53,15 +53,15 @@ const BookATourPageContainer = ({
       ...restData,
       slug: id,
       user: {
-        name,
+        full_name: name,
         phone,
-        contactByTextMsg,
         medicaid_coverage: medicaidCoverage,
+        contact_by_text_msg: contactByTextMsg,
       },
     };
     if (user) {
       if (!name && user.name) {
-        value.user.name = user.name;
+        value.user.full_name = user.name;
       }
       if (!phone && user.phoneNumber) {
         value.user.phone = user.phoneNumber;
