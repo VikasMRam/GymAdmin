@@ -90,6 +90,7 @@ export default class CommunityDetailPage extends Component {
     searchParams: object,
     setQueryParams: func,
     onSATClick: func,
+    onGCPClick: func,
     isAlreadyTourScheduled: bool,
     isAlreadyPricingRequested: bool,
     isAskAgentQuestionModalVisible: bool,
@@ -172,6 +173,7 @@ export default class CommunityDetailPage extends Component {
       searchParams,
       setQueryParams,
       onSATClick,
+      onGCPClick,
       isAlreadyTourScheduled,
       isAlreadyPricingRequested,
       isAskAgentQuestionModalVisible,
@@ -292,7 +294,7 @@ export default class CommunityDetailPage extends Component {
           price={startingRate}
           rating={reviewsValue}
           onSATClick={!isAlreadyTourScheduled ? onSATClick : onToggleAskAgentQuestionModal}
-          onGCPClick={!isAlreadyPricingRequested ? onSATClick : onToggleAskAgentQuestionModal}
+          onGCPClick={!isAlreadyPricingRequested ? onGCPClick : onToggleAskAgentQuestionModal}
         />
       </Sticky>
     );
@@ -324,10 +326,12 @@ export default class CommunityDetailPage extends Component {
       </Fragment>
     );
     let bannerNotification = null;
-    if (isAlreadyTourScheduled) {
+    if (isAlreadyTourScheduled && isAlreadyPricingRequested) {
+      bannerNotification = "We have received your tour and pricing request. Your advisor is checking this community's availability and will get back to you shortly.";
+    } else if (isAlreadyTourScheduled) {
       bannerNotification = "We have received your tour request. Your advisor is checking this community's availability and will get back to you shortly.";
     } else if (isAlreadyPricingRequested) {
-      bannerNotification = "We have recieved your pricing request. Your advisor is checking this community's availability and will get back to you shortly.";
+      bannerNotification = "We have received your pricing request. Your advisor is checking this community's availability and will get back to you shortly.";
     }
 
     return (
@@ -416,6 +420,7 @@ export default class CommunityDetailPage extends Component {
                   onLiveChatClicked={onLiveChatClicked}
                   queryParams={{ modal, currentStep }}
                   setQueryParams={setQueryParams}
+                  onGCPClick={onGCPClick}
                 />
               )}
             </ConciergeController>
