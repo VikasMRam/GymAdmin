@@ -10,30 +10,32 @@ import SlyEvent from 'sly/services/helpers/events';
 import { BOOK_A_TOUR } from 'sly/services/api/actions';
 import BookATourPage from 'sly/components/pages/BookATourPage';
 
+const eventCategory = 'BAT';
+
 const handleDateChange = (e, newValue) => {
   const event = {
-    action: 'date-changed', category: 'BAT', label: newValue.toString(),
+    action: 'date-changed', category: eventCategory, label: newValue.toString(),
   };
   SlyEvent.getInstance().sendEvent(event);
 };
 
 const handleTimeChange = (e, newValue) => {
   const event = {
-    action: 'time-changed', category: 'BAT', label: newValue.toString(),
+    action: 'time-changed', category: eventCategory, label: newValue.toString(),
   };
   SlyEvent.getInstance().sendEvent(event);
 };
 
 const handleStepChange = (step) => {
   const event = {
-    action: 'step-completed', category: 'BAT', label: (step - 1).toString(),
+    action: 'step-completed', category: eventCategory, label: (step - 1).toString(),
   };
   SlyEvent.getInstance().sendEvent(event);
 };
 
 const handleContactByTextMsgChange = (e) => {
   const event = {
-    action: 'contactByTextMsg-changed', category: 'BAT', label: (e.target.checked).toString(),
+    action: 'contactByTextMsg-changed', category: eventCategory, label: (e.target.checked).toString(),
   };
   SlyEvent.getInstance().sendEvent(event);
 };
@@ -75,7 +77,7 @@ const BookATourPageContainer = ({
     return postUserAction(payload)
       .then(() => {
         const event = {
-          action: 'tour-booked', category: 'BAT', label: id,
+          action: 'tour-booked', category: eventCategory, label: id,
         };
         SlyEvent.getInstance().sendEvent(event);
         history.push(url);

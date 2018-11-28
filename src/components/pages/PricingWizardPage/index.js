@@ -51,6 +51,8 @@ class PricingWizardPage extends Component {
     user: object,
     onStepChange: func,
     onComplete: func,
+    onRoomTypeChange: func,
+    onCareTypeChange: func,
     isAdvisorHelpVisible: bool,
     onAdvisorHelpClick: func,
   };
@@ -64,15 +66,19 @@ class PricingWizardPage extends Component {
   }
 
   onRoomTypeChange = (e, newRoomTypes) => {
+    const { onRoomTypeChange } = this.props;
     this.roomTypes = newRoomTypes;
     const { roomTypes = [], careTypes = [] } = this;
     this.calculatePrice(roomTypes, careTypes);
+    onRoomTypeChange(e, newRoomTypes);
   };
 
   onCareTypeChange = (e, newCareTypes) => {
+    const { onCareTypeChange } = this.props;
     this.careTypes = newCareTypes;
     const { roomTypes = [], careTypes = [] } = this;
     this.calculatePrice(roomTypes, careTypes);
+    onCareTypeChange(e, newCareTypes);
   };
 
   calculatePrice = (roomTypes, careTypes) => {

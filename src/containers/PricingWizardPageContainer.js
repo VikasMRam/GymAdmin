@@ -19,6 +19,20 @@ const handleStepChange = (step) => {
   SlyEvent.getInstance().sendEvent(event);
 };
 
+const handleRoomTypeChange = (e, newValue) => {
+  const event = {
+    action: 'roomType-changed', category: eventCategory, label: newValue.toString(),
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
+
+const handleCareTypeChange = (e, newValue) => {
+  const event = {
+    action: 'careType-changed', category: eventCategory, label: newValue.toString(),
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
+
 const PricingWizardPageContainer = ({
   community, user, postUserAction, history,
 }) => {
@@ -71,6 +85,8 @@ const PricingWizardPageContainer = ({
       community={community}
       user={user}
       onStepChange={handleStepChange}
+      onRoomTypeChange={handleRoomTypeChange}
+      onCareTypeChange={handleCareTypeChange}
       onComplete={handleComplete}
     />
   );
