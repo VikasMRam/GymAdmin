@@ -290,7 +290,7 @@ class CommunityDetailPageController extends Component {
     history.push(`/custom-pricing/${id}`);
   };
 
-  handleToggleAskAgentQuestionModal = (e, type) => {
+  handleToggleAskAgentQuestionModal = (e, type = null) => {
     const { set, isAskAgentQuestionModalVisible } = this.props;
     set({
       isAskAgentQuestionModalVisible: !isAskAgentQuestionModalVisible,
