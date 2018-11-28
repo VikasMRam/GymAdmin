@@ -86,7 +86,7 @@ const PricingAndAvailability = ({
   onInquireOrBookClicked,
   queryParams,
   setQueryParams,
-  onGCPClick,
+  gotoGetCustomPricing,
 }) => {
   const mEstimatedPrice = { ...estimatedPrice };
   if (mEstimatedPrice && mEstimatedPrice.providedAverage) {
@@ -148,7 +148,7 @@ const PricingAndAvailability = ({
           </Item>
         ))}
       </StyledArticle>
-      <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams}>
+      <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams} gotoGetCustomPricing={gotoGetCustomPricing}>
         {({ concierge, submitExpressConversion, userDetails }) => {
             if (concierge.contactRequested) {
               if (!hasAllUserData(userDetails)) {
@@ -226,7 +226,7 @@ PricingAndAvailability.propTypes = {
   }),
   onInquireOrBookClicked: func,
   queryParams: object,
-  onGCPClick: func,
+  gotoGetCustomPricing: func,
   setQueryParams: func,
 };
 

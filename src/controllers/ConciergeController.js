@@ -58,6 +58,7 @@ export class ConciergeController extends Component {
     queryParams: object,
     setQueryParams: func.isRequired,
     submit: func,
+    gotoGetCustomPricing: func,
     userDetails: object,
   };
 
@@ -164,6 +165,7 @@ export class ConciergeController extends Component {
     const {
       submit,
       communitySlug,
+      gotoGetCustomPricing,
     } = this.props;
     const value = {
       user: { ...data },
@@ -176,7 +178,11 @@ export class ConciergeController extends Component {
       action,
       value,
     }).then(() => {
-      this.next(isExpress);
+      if (communitySlug) {
+        gotoGetCustomPricing();
+      } else {
+        this.next(isExpress);
+      }
     });
   };
 
