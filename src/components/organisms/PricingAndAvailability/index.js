@@ -130,11 +130,11 @@ const PricingAndAvailability = ({
       <StyledArticle id="pricing-and-floor-plans-price-tiles">
         {(!roomPrices.length && estimatedPriceBase) ?
           (
-            <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams}>
+            <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams} gotoGetCustomPricing={gotoGetCustomPricing}>
               {() =>
                 (<EstimatedCost
                   // getPricing={getPricing} getPricing is a prop from children of ConciergeController
-                  getPricing={onGCPClick}
+                  getPricing={gotoGetCustomPricing}
                   community={community}
                   price={estimatedPriceBase}
                 />)
