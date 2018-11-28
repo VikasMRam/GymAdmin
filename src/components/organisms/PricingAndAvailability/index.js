@@ -148,7 +148,7 @@ const PricingAndAvailability = ({
           </Item>
         ))}
       </StyledArticle>
-      <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams}>
+      <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams} onGCPClick={onGCPClick}>
         {({ concierge, submitExpressConversion, userDetails }) => {
             if (concierge.contactRequested) {
               if (!hasAllUserData(userDetails)) {

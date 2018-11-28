@@ -58,6 +58,7 @@ export class ConciergeController extends Component {
     queryParams: object,
     setQueryParams: func.isRequired,
     submit: func,
+    onGCPClick: func,
     userDetails: object,
   };
 
@@ -164,6 +165,7 @@ export class ConciergeController extends Component {
     const {
       submit,
       communitySlug,
+      onGCPClick,
     } = this.props;
     const value = {
       user: { ...data },
@@ -176,7 +178,11 @@ export class ConciergeController extends Component {
       action,
       value,
     }).then(() => {
-      this.next(isExpress);
+      if (communitySlug) {
+        onGCPClick();
+      } else {
+        this.next(isExpress);
+      }
     });
   };
 
