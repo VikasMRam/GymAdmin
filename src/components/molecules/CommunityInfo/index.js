@@ -10,7 +10,7 @@ import { formatRating } from 'sly/services/helpers/rating';
 import { Block, Icon, ClampedText } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
-  width: 100%;
+  overflow: hidden;
 `;
 
 const IconTextWrapper = styled.div`
@@ -47,7 +47,7 @@ const Rating = styled(Block)`
 `;
 Rating.displayName = 'Rating';
 
-const Name = styled(Block)`
+const Name = styled(ClampedText)`
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -141,7 +141,7 @@ export default class CommunityInfo extends Component {
 
     return (
       <Wrapper {...props}>
-        <Name size="subtitle" palette={paletteProp} weight="medium">{name}</Name>
+        <Name size="subtitle" palette={paletteProp} weight="medium" title={name}>{name}</Name>
         {floorPlanComponent}
         {livingTypeComponent}
         <RatingWrapper>

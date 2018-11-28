@@ -7,6 +7,7 @@ const wrap = (props = {}, text = '') => shallow(<ClampedText {...props}>{text}</
 const palette = 'slate';
 const title = 'title';
 const size = 'title';
+const weight = 'bold';
 
 describe('ClampedText', () => {
   it('renders', () => {
@@ -27,5 +28,10 @@ describe('ClampedText', () => {
   it('renders with correct size', () => {
     const wrapper = wrap({ size });
     expect(wrapper.instance().props.size).toBe(size);
+  });
+
+  it('renders with correct weight', () => {
+    const wrapper = wrap({ weight });
+    expect(wrapper.instance().props.weight).toBe(weight);
   });
 });
