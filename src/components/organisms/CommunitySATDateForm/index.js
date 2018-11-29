@@ -23,7 +23,8 @@ StyledField.displayName = 'StyledField';
 
 const StyledTimeField = StyledField.extend`
   > * {
-    height: ${size('element.xLarge')};
+    height: ${size('element.large')};
+    font-size: ${size('text.caption')};
   }
 `;
 StyledTimeField.displayName = 'StyledTimeField';

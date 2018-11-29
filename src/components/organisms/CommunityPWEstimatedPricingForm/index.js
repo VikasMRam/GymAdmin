@@ -23,7 +23,8 @@ const StyledField = styled(Field)`
   margin-bottom: ${size('spacing.xLarge')};
 
   > * {
-    height: ${size('element.xLarge')};
+    height: ${size('element.large')};
+    font-size: ${size('text.caption')};
   }
 `;
 

@@ -44,7 +44,7 @@ export const FullScreenWizard = styled.div`
     display: grid;
     grid-template-columns: ${size('layout.col5')} auto;
     grid-gap: 0;
-    grid-template-rows: ${size('element.xxxLarge')} auto ${size('element.huge')};
+    grid-template-rows: ${size('element.xxxLarge')} 1fr auto;
 
     .overlayHeader {
       grid-column: 1 / 3;
