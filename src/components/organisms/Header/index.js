@@ -70,7 +70,7 @@ export const HeaderMenu = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: 0;
     width: ${size('header.menu.width')};
-    top: ${size('header.menu.position.top.laptopLarge')};
+    top: ${size('header.menu.position.top.laptop')};
     right: ${size('spacing.large')};
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
     box-shadow: 0 ${size('spacing.small')} ${size('spacing.large')}

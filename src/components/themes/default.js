@@ -37,7 +37,6 @@ theme.sizes = {
     mobile           : '375px',
     tablet           : '768px',
     laptop           : '1104px',
-    laptopLarge      : '1200px',
   },
 
   // only for tablet and wider
@@ -93,7 +92,7 @@ theme.sizes = {
       position: {
         top: {
           mobile     : '3.8125rem',   // 61px
-          laptopLarge: '3.4375rem',   // 55px
+          laptop     : '3.4375rem',   // 55px
         },
       },
     },
