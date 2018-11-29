@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { reduxForm, SubmissionError, clearSubmitErrors, getFormValues } from 'redux-form';
+import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { func, string, object } from 'prop-types';
 
 import SlyEvent from 'sly/services/helpers/events';
@@ -35,7 +35,6 @@ class CommunityAskQuestionAgentFormContainer extends Component {
     agentImageUrl: string,
     placeholder: string,
     userAction: object,
-    formValues: object,
   };
 
   handleOnSubmit = (data) => {
@@ -76,17 +75,20 @@ class CommunityAskQuestionAgentFormContainer extends Component {
 
   render() {
     const {
-      heading, description, agentImageUrl, placeholder, userAction, formValues,
+      heading, description, agentImageUrl, placeholder, userAction,
     } = this.props;
     const { userDetails } = userAction;
-    const initialValues = {
-      full_name: userDetails.fullName,
-      phone: userDetails.phone,
-    };
+    let initialValues = null;
+    if (userDetails) {
+      initialValues = {
+        full_name: userDetails.fullName,
+        phone: userDetails.phone,
+      };
+    }
     return (
       <ReduxForm
         initialValues={initialValues}
-        formValues={formValues}
+        userDetails={userDetails}
         onSubmit={this.handleOnSubmit}
         placeholder={placeholder}
         heading={heading}
@@ -100,7 +102,6 @@ class CommunityAskQuestionAgentFormContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     userAction: getDetail(state, 'userAction'),
-    formValues: getFormValues(formName)(state),
   };
 };
 
