@@ -35,8 +35,8 @@ theme.sizes = {
   // pixel measurements
   breakpoint: {
     mobile           : '375px',
-    tablet           : '768px',
-    laptop           : '1104px',
+    tablet           : '720px',
+    laptop           : '1080px',
   },
 
   // only for tablet and wider
