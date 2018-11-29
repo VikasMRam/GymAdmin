@@ -15,9 +15,21 @@ const HeadingSection = styled(Heading)`
 
 const StyledField = styled(Field)`
   display: grid;
-  grid-gap: ${size('spacing.large')};
-  grid-template-columns: repeat(auto-fit, calc(${size('layout.col1')} + (${size('layout.gutter')}) * 2));
   margin-bottom: ${size('spacing.xLarge')};
+  margin-right: -${size('spacing.large')};
+  
+  grid-gap: ${size('spacing.regular')};
+  grid-template-columns: repeat(auto-fit, calc(100% / 2 - ${size('spacing.regular')}));
+  
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    grid-gap: ${size('spacing.regular')};
+    grid-template-columns: repeat(auto-fit, calc(100% / 3 - ${size('spacing.regular')}));
+  }
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    grid-gap: ${size('spacing.large')};
+    grid-template-columns: repeat(auto-fit, calc(100% / 4 - ${size('spacing.large')}));
+  }
 `;
 StyledField.displayName = 'StyledField';
 

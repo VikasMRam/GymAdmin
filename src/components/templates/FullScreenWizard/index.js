@@ -20,11 +20,15 @@ export const FullScreenWizard = styled.div`
       margin-left: ${size('spacing.xLarge')};
       margin-right: ${size('spacing.xLarge')};
       margin-top: ${size('spacing.xxLarge')};
-
-      @media screen and (min-width: ${size('breakpoint.laptop')}) {
-        width: ${size('layout.col6')};
+      
+      @media screen and (min-width: ${size('breakpoint.mobile')}) {
+        width: ${size('mobileLayout.col4')};
         margin-left: auto;
         margin-right: auto;
+      }
+
+      @media screen and (min-width: ${size('breakpoint.tablet')}) {
+        width: ${size('layout.col6')};
       }
     }
   }
