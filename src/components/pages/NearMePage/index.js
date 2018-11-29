@@ -392,7 +392,7 @@ const NearMePage = ({
           <Paragraph>
             Each state has its own licensing agency responsible for inspecting and certifying each Assisted Living
             community. Here is a full list of regulating agencies by state, as well as a{' '}
-            <Link href="https://www.seniorly.com/assisted-living/articles/assisted-living-regulations">
+            <Link href="https://www.seniorly.com/resources/articles/assisted-living-regulations">
               full list of certifications
             </Link>
             {' '}you should always ask to see.
