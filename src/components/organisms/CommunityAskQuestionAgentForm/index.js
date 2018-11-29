@@ -27,7 +27,7 @@ const TextWrapper = styled.div`
 `;
 
 const CommunityAskQuestionAgentForm = ({
-  heading, description, agentImageUrl, handleSubmit, pristine, submitting, error, placeholder, formValues,
+  heading, description, agentImageUrl, handleSubmit, pristine, submitting, error, placeholder, userDetails,
 }) => (
   <form onSubmit={handleSubmit}>
     <TopSection>
@@ -37,14 +37,14 @@ const CommunityAskQuestionAgentForm = ({
       </TextWrapper>
       <div><Image src={agentImageUrl} /></div>
     </TopSection>
-    {!(formValues && formValues.full_name) && <Field
+    {!(userDetails && userDetails.fullName) && <Field
       name="full_name"
       label="Full name"
       type="text"
       placeholder="Full name"
       component={ReduxField}
     />}
-    {!(formValues && formValues.phone) && <Field
+    {!(userDetails && userDetails.phone) && <Field
       name="phone"
       label="Phone"
       type="text"
@@ -74,7 +74,7 @@ CommunityAskQuestionAgentForm.propTypes = {
   heading: string.isRequired,
   description: string,
   agentImageUrl: string.isRequired,
-  formValues: object,
+  userDetails: object,
 };
 
 export default CommunityAskQuestionAgentForm;
