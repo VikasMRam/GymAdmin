@@ -55,6 +55,7 @@ const CommunityAskQuestionAgentForm = ({
       name="question"
       label="Your message"
       type="textarea"
+      rows="5"
       placeholder={placeholder}
       component={ReduxField}
     />
