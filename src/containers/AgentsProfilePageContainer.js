@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { func, object, arrayOf } from 'prop-types';
 
-import AgentsProfilePage from 'sly/components/pages/AgentsProfilePage';
-import { connectController } from 'sly/controllers';
 import { agents } from 'sly/services/helpers/agents';
+import AgentsProfilePage from 'sly/components/pages/AgentsProfilePage';
 
 const agentStateRegionMap = {
   CA: 'West Coast',
@@ -43,7 +42,7 @@ const agentStateRegionMap = {
   WV: 'East Coast',
 };
 
-class AgentsProfilePageController extends Component {
+export default class AgentsProfilePageContainer extends Component {
   static propTypes = {
     activeProfile: object,
     agents: arrayOf(object),
@@ -51,17 +50,19 @@ class AgentsProfilePageController extends Component {
     set: func,
   };
 
+  state = { activeProfile: null };
+
   handleModalProfile = (profile) => {
-    const { set } = this.props;
-    set({
+    this.setState({
       activeProfile: profile,
     });
   };
 
   render() {
-    const { activeProfile } = this.props;
+    const { activeProfile } = this.state;
     const notFoundRegions = [];
     const regionProfiles = agents.reduce((regionProfilesMap, agent) => {
+      const newRegionProfilesMap = regionProfilesMap;
       const profile = {
         id: agent.id,
         heading: agent.user.name,
@@ -70,25 +71,23 @@ class AgentsProfilePageController extends Component {
       };
       const region = agentStateRegionMap[agent.address.state];
       if (region) {
-        if (regionProfilesMap[region]) {
-          regionProfilesMap[region].push(profile);
+        if (newRegionProfilesMap[region]) {
+          newRegionProfilesMap[region].push(profile);
         } else {
-          regionProfilesMap[region] = [profile];
+          newRegionProfilesMap[region] = [profile];
         }
       } else {
         notFoundRegions.push(agent.address.state);
       }
-      return regionProfilesMap;
+      return newRegionProfilesMap;
     }, {});
 
-    return <AgentsProfilePage regionProfiles={regionProfiles} activeProfile={activeProfile} setModalProfile={this.handleModalProfile} />;
+    return (
+      <AgentsProfilePage
+        regionProfiles={regionProfiles}
+        activeProfile={activeProfile}
+        setModalProfile={this.handleModalProfile}
+      />
+    );
   }
 }
-
-const mapStateToProps = (state, { controller }) => {
-  return {
-    activeProfile: controller.activeProfile || null,
-  };
-};
-
-export default connectController(mapStateToProps)(AgentsProfilePageController);

@@ -202,7 +202,7 @@ const AgentsProfilePage = ({
       <StyledProfileTile key={profile.id} profile={profile} onClick={() => setModalProfile(profile)} />
     ));
     return (
-      <StyledSection title={region}>
+      <StyledSection key={region} title={region}>
         <ContentTilesWrapper>
           {agentsProfile}
         </ContentTilesWrapper>
