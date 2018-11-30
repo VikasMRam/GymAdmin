@@ -1,5 +1,5 @@
-import React from 'react';
-import { string, func } from 'prop-types';
+import React, { Fragment } from 'react';
+import { string, func, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -33,7 +33,7 @@ const CareTypesField = StyledField.extend`
 `;
 
 const CommunityPWEstimatedPricingForm = ({
-  error, handleSubmit, communityName, onRoomTypeChange, onCareTypeChange,
+  error, handleSubmit, communityName, onRoomTypeChange, onCareTypeChange, userDetails,
 }) => (
   <form onSubmit={handleSubmit}>
     <HeadingSection level="subtitle" size="subtitle">Get your custom pricing for {communityName}</HeadingSection>
@@ -55,15 +55,19 @@ const CommunityPWEstimatedPricingForm = ({
       onChange={onCareTypeChange}
       multiChoice
     />
-    <StyledBlock size="caption">
-      Do you qualify for medicaid?
-    </StyledBlock>
-    <StyledField
-      options={MEDICAID_OPTIONS}
-      name="medicaidCoverage"
-      type="boxChoice"
-      component={ReduxField}
-    />
+    {!(userDetails && userDetails.medicaidCoverage) &&
+      <Fragment>
+        <StyledBlock size="caption">
+          Do you qualify for medicaid?
+        </StyledBlock>
+        <StyledField
+          options={MEDICAID_OPTIONS}
+          name="medicaidCoverage"
+          type="boxChoice"
+          component={ReduxField}
+        />
+      </Fragment>
+    }
     {error && <Block palette="danger">{error}</Block>}
   </form>
 );
@@ -74,6 +78,7 @@ CommunityPWEstimatedPricingForm.propTypes = {
   communityName: string,
   onRoomTypeChange: func,
   onCareTypeChange: func,
+  userDetails: object,
 };
 
 export default CommunityPWEstimatedPricingForm;

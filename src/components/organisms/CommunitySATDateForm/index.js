@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, func } from 'prop-types';
+import { string, func, object } from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
 import { Field } from 'redux-form';
@@ -55,7 +55,7 @@ const MedicaidLabel = StyledBlock.extend`
 // `;
 
 const CommunitySATDateForm = ({
-  error, onDateChange, onTimeChange, handleSubmit,
+  error, onDateChange, onTimeChange, handleSubmit, userDetails,
 }) => {
   const from = moment();
   const to = moment().add(8, 'days');
@@ -81,16 +81,20 @@ const CommunitySATDateForm = ({
         component={ReduxField}
         onChange={onTimeChange}
       />
-      <MedicaidLabel size="caption">
-        Do you qualify for medicaid?
-        {/* <StyledIcon icon="help" size="regular" palette="slate" variation="filler" /> */}
-      </MedicaidLabel>
-      <StyledTimeField
-        options={MEDICAID_OPTIONS}
-        name="medicaidCoverage"
-        type="boxChoice"
-        component={ReduxField}
-      />
+      {!(userDetails && userDetails.medicaidCoverage) &&
+        <fragment>
+          <MedicaidLabel size="caption">
+            Do you qualify for medicaid?
+            {/* <StyledIcon icon="help" size="regular" palette="slate" variation="filler" /> */}
+          </MedicaidLabel>
+          <StyledTimeField
+            options={MEDICAID_OPTIONS}
+            name="medicaidCoverage"
+            type="boxChoice"
+            component={ReduxField}
+          />
+        </fragment>
+      }
       {error && <Block palette="danger">{error}</Block>}
     </form>
   );
@@ -98,6 +102,7 @@ const CommunitySATDateForm = ({
 
 CommunitySATDateForm.propTypes = {
   error: string,
+  userDetails: object,
   onDateChange: func,
   onTimeChange: func,
   handleSubmit: func,

@@ -22,6 +22,13 @@ describe('CommunityPWEstimatedPricingForm', () => {
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(1);
   });
 
+  it('does not render medicaid when medicaidCoverage is passed', () => {
+    const wrapper = wrap({ userDetails: { medicaidCoverage: 'no' } });
+
+    expect(wrapper.find('Styled(Field)')).toHaveLength(2);
+    expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
+  });
+
   it('onRoomTypeChange gets called', () => {
     const onRoomTypeChange = jest.fn();
     const wrapper = wrap({ onRoomTypeChange });

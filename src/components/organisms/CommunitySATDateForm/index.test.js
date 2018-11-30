@@ -16,6 +16,14 @@ describe('CommunitySATDateForm', () => {
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
   });
 
+  it('does not render medicaid when medicaidCoverage is passed', () => {
+    const wrapper = wrap({ userDetails: { medicaidCoverage: 'no' } });
+
+    expect(wrapper.find('StyledField')).toHaveLength(1);
+    expect(wrapper.find('StyledTimeField')).toHaveLength(1);
+    expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
+  });
+
   it('render error when error is passed', () => {
     const wrapper = wrap({ error });
 
