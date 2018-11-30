@@ -9,11 +9,12 @@ import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/reso
 import SlyEvent from 'sly/services/helpers/events';
 import { CUSTOM_PRICING } from 'sly/services/api/actions';
 import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
+import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 
 const eventCategory = 'PricingWizard';
 
 const PricingWizardPageContainer = ({
-  community, user, postUserAction, history,
+  community, user, postUserAction, history, userAction,
 }) => {
   if (!community) {
     return null;
@@ -23,26 +24,13 @@ const PricingWizardPageContainer = ({
     const {
       name, phone, medicaidCoverage, roomType, careType, contactByTextMsg, ...restData
     } = data;
+    const { userDetails } = userAction;
+    const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
     const value = {
       ...restData,
       propertyIds: [id],
-      user: {
-        full_name: name,
-        phone,
-        medicaid_coverage: medicaidCoverage,
-        type_of_care: careType,
-        type_of_room: roomType,
-        contact_by_text_msg: contactByTextMsg,
-      },
+      user,
     };
-    if (user) {
-      if (!name && user.name) {
-        value.user.name = user.name;
-      }
-      if (!phone && user.phoneNumber) {
-        value.user.phone = user.phoneNumber;
-      }
-    }
     const payload = {
       action: CUSTOM_PRICING,
       value,
@@ -58,11 +46,12 @@ const PricingWizardPageContainer = ({
         toggleConfirmationModal('pricing');
       });
   };
-
+  const userDetails = userAction ? userAction.userDetails : null;
   return (
     <PricingWizardPage
       community={community}
       user={user}
+      userDetails={userDetails}
       onComplete={handleComplete}
     />
   );
@@ -71,6 +60,7 @@ const PricingWizardPageContainer = ({
 PricingWizardPageContainer.propTypes = {
   community: communityPropType,
   user: object,
+  userAction: object,
   postUserAction: func.isRequired,
   history: object.isRequired,
 };
@@ -80,6 +70,7 @@ const mapStateToProps = (state, { match }) => {
   const communitySlug = getCommunitySlug(match);
   return {
     user: getDetail(state, 'user', 'me'),
+    userAction: getDetail(state, 'userAction'),
     community: getDetail(state, 'community', communitySlug),
   };
 };
@@ -94,6 +85,7 @@ const fetchData = (dispatch, { match }) =>
     dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
       include: 'similar-communities',
     })),
+    dispatch(resourceDetailReadRequest('userAction')),
   ]);
 
 const handleError = (err) => {

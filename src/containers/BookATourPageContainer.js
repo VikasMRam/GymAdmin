@@ -9,11 +9,12 @@ import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/reso
 import SlyEvent from 'sly/services/helpers/events';
 import { BOOK_A_TOUR } from 'sly/services/api/actions';
 import BookATourPage from 'sly/components/pages/BookATourPage';
+import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 
 const eventCategory = 'BAT';
 
 const BookATourPageContainer = ({
-  community, user, postUserAction, history,
+  community, user, postUserAction, history, userAction,
 }) => {
   if (!community) {
     return null;
@@ -23,24 +24,13 @@ const BookATourPageContainer = ({
     const {
       name, phone, medicaidCoverage, contactByTextMsg, ...restData
     } = data;
+    const { userDetails } = userAction;
+    const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
     const value = {
       ...restData,
       slug: id,
-      user: {
-        full_name: name,
-        phone,
-        medicaid_coverage: medicaidCoverage,
-        contact_by_text_msg: contactByTextMsg,
-      },
+      user,
     };
-    if (user) {
-      if (!name && user.name) {
-        value.user.full_name = user.name;
-      }
-      if (!phone && user.phoneNumber) {
-        value.user.phone = user.phoneNumber;
-      }
-    }
     const payload = {
       action: BOOK_A_TOUR,
       value,
@@ -57,10 +47,12 @@ const BookATourPageContainer = ({
       });
   };
 
+  const userDetails = userAction ? userAction.userDetails : null;
   return (
     <BookATourPage
       community={community}
       user={user}
+      userDetails={userDetails}
       onComplete={handleComplete}
     />
   );
@@ -69,6 +61,7 @@ const BookATourPageContainer = ({
 BookATourPageContainer.propTypes = {
   community: communityPropType,
   user: object,
+  userAction: object,
   postUserAction: func.isRequired,
   history: object.isRequired,
 };
@@ -78,6 +71,7 @@ const mapStateToProps = (state, { match }) => {
   const communitySlug = getCommunitySlug(match);
   return {
     user: getDetail(state, 'user', 'me'),
+    userAction: getDetail(state, 'userAction'),
     community: getDetail(state, 'community', communitySlug),
   };
 };
@@ -92,6 +86,7 @@ const fetchData = (dispatch, { match }) =>
     dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
       include: 'similar-communities',
     })),
+    dispatch(resourceDetailReadRequest('userAction')),
   ]);
 
 const handleError = (err) => {
