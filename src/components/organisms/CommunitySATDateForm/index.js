@@ -17,15 +17,15 @@ const StyledField = styled(Field)`
   display: grid;
   margin-bottom: ${size('spacing.xLarge')};
   margin-right: -${size('spacing.large')};
-  
+
   grid-gap: ${size('spacing.regular')};
   grid-template-columns: repeat(auto-fit, calc(100% / 2 - ${size('spacing.regular')}));
-  
+
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
     grid-gap: ${size('spacing.regular')};
     grid-template-columns: repeat(auto-fit, calc(100% / 3 - ${size('spacing.regular')}));
   }
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     grid-gap: ${size('spacing.large')};
     grid-template-columns: repeat(auto-fit, calc(100% / 4 - ${size('spacing.large')}));
@@ -84,7 +84,7 @@ const CommunitySATDateForm = ({
       {!(userDetails && userDetails.medicaidCoverage) &&
         <fragment>
           <MedicaidLabel size="caption">
-            Do you qualify for medicaid?
+            Do you qualify for Medicaid?
             {/* <StyledIcon icon="help" size="regular" palette="slate" variation="filler" /> */}
           </MedicaidLabel>
           <StyledTimeField
