@@ -84,7 +84,7 @@ const ProfileTile = ({
       <ImageWrapper src={imageUrl} aspectRatio="16:9" layout={layout} />
       <InfoWrapper layout={layout}>
         <HeadingWrapper>{heading}</HeadingWrapper>
-        <SubHeadingWrapper>{subHeading}</SubHeadingWrapper>
+        {subHeading && <SubHeadingWrapper>{subHeading}</SubHeadingWrapper>}
         { layout === 'modal' && <DescriptionWrapper>{description}</DescriptionWrapper>}
       </InfoWrapper>
     </Wrapper>
@@ -94,7 +94,7 @@ const ProfileTile = ({
 ProfileTile.propTypes = {
   profile: shape({
     heading: string.isRequired,
-    subHeading: string.isRequired,
+    subHeading: string,
     imageUrl: string.isRequired,
     description: string,
   }),
