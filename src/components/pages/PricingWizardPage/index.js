@@ -14,7 +14,7 @@ import {
   makeControls,
   makeHeader,
 } from 'sly/components/templates/FullScreenWizard';
-import { WEIGHT_ACCOMODATION, WEIGHT_CARE_SERVICE } from 'sly/constants/pricingForm';
+import { EST_ADDL_COST_ACCOMODATION,EST_ADDL_COST_CARE_SERVICE } from 'sly/constants/pricingForm';
 import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
@@ -93,25 +93,25 @@ class PricingWizardPage extends Component {
     const { community } = this.props;
     const { startingRate } = community;
     const roomTypeWeights = [];
-    const careTypeWeights = [];
 
-    roomTypes.forEach((roomType) => {
-      const roomTypeWeight = WEIGHT_ACCOMODATION[roomType];
-      if (roomTypeWeight) {
-        roomTypeWeights.push(roomTypeWeight);
-      }
+    roomTypes.forEach((roomType)=>{
+      const roomTypeAddlCost = EST_ADDL_COST_ACCOMODATION[roomType];
+        if (roomTypeAddlCost) {
+          roomTypeWeights.push(roomTypeAddlCost);
+        }
     });
+
+    var addlCareCost = 0;
     careTypes.forEach((careType) => {
-      const careTypeWeight = WEIGHT_CARE_SERVICE[careType];
-      if (careTypeWeight) {
-        careTypeWeights.push(careTypeWeight);
+      const careTypeAddlCost = EST_ADDL_COST_CARE_SERVICE[careType];
+      if (careTypeAddlCost) {
+        addlCareCost += careTypeAddlCost;
       }
     });
 
-    const maxWa = roomTypeWeights.length ? Math.max(...roomTypeWeights) / 100 : 0;
-    const maxWc = careTypeWeights.length ? Math.max(...careTypeWeights) / 100 : 0;
+    const maxWa = roomTypeWeights.length ? Math.max(...roomTypeWeights) : 0;
 
-    const estimatedPrice = startingRate * (1 + maxWa) * (1 + maxWc);
+    const estimatedPrice = startingRate + maxWa + addlCareCost;
     this.setState({
       estimatedPrice,
     });
@@ -122,10 +122,10 @@ class PricingWizardPage extends Component {
     const {
       community, user, onComplete,
     } = this.props;
-    const { id, mainImage } = community;
+    const { id, mainImage, name } = community;
     const { estimatedPrice } = this.state;
     const formHeading = 'How can we contact you about your pricing?';
-    const formSubheading = 'Your advisor will help get your custom pricing according to your care needs and room accomodations.';
+    const formSubheading = 'Your agent will help get your exact pricing according to your care needs and room accommodations.';
 
     return (
       <FullScreenWizard>
@@ -158,6 +158,7 @@ class PricingWizardPage extends Component {
                         <WizardStep
                           component={CommunityPWEstimatedPricingFormContainer}
                           name="EstimatedPricing"
+                          communityName={name}
                           onRoomTypeChange={onRoomTypeChange}
                           onCareTypeChange={onCareTypeChange}
                         />

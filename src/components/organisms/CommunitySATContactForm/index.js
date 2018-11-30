@@ -42,7 +42,7 @@ const CommunitySATContactForm = ({
     <form onSubmit={handleSubmit}>
       <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
       <SubheadingWrapper>
-        <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can an advisor help?</Link></SubHeading>
+        <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can a partner agent help?</Link></SubHeading>
         <AgentImage src={assetPath('images/agent-xLarge.png')} alt="Agent" />
       </SubheadingWrapper>
       {!(user && user.name) && <Field
@@ -64,7 +64,7 @@ const CommunitySATContactForm = ({
         label="Add a note"
         type="textarea"
         rows="5"
-        placeholder="Anything you'd like your Advisor to know about this tour or any questions"
+        placeholder="Anything you'd like your partner agent to know about this tour or any questions"
         component={ReduxField}
       />}
       {!user && <CheckboxField
