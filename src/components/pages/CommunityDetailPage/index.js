@@ -330,11 +330,11 @@ export default class CommunityDetailPage extends Component {
     );
     let bannerNotification = null;
     if (isAlreadyTourScheduled && isAlreadyPricingRequested) {
-      bannerNotification = "We have received your tour and pricing request. Your advisor is checking this community's availability and will get back to you shortly.";
+      bannerNotification = "We have received your tour and pricing request. Your partner agent is checking with this community and will get back to you shortly.";
     } else if (isAlreadyTourScheduled) {
-      bannerNotification = "We have received your tour request. Your advisor is checking this community's availability and will get back to you shortly.";
+      bannerNotification = "We have received your tour request. Your partner agent is checking with this community and will get back to you shortly.";
     } else if (isAlreadyPricingRequested) {
-      bannerNotification = "We have received your pricing request. Your advisor is checking this community's availability and will get back to you shortly.";
+      bannerNotification = "We have received your pricing request. Your partner agent is checking with this community and will get back to you shortly.";
     }
 
     return (
@@ -570,9 +570,9 @@ export default class CommunityDetailPage extends Component {
               }
               let subheading = null;
               if (type === 'booking') {
-                subheading = 'Your advisor will check if this community is available at this time. They will get back to you shortly by phone or email.';
+                subheading = 'Your partner agent will check if this community is available at this time. They will get back to you shortly by phone or email.';
               } else if (type === 'pricing') {
-                subheading = 'Your advisor will work with you to get your custom pricing. They will reach out to you soon.';
+                subheading = 'Your partner agent will work with you to get your exact pricing. They will reach out to you soon.';
               }
               const props = {
                 similarCommunities: similarProperties,
@@ -604,18 +604,18 @@ export default class CommunityDetailPage extends Component {
             }) => {
               const { name, address } = community;
               const { city } = address;
-              let heading = `Ask your advisor a question about ${name} in ${city}.`;
+              let heading = `Ask your partner agent a question about ${name} in ${city}.`;
               let placeholder = `Hi Rachel, I have a question about ${name} in ${city}...`;
               let description = null;
               const agentImageUrl = assetPath('images/agent-xLarge.png');
 
               if (askAgentQuestionType === 'tour') {
                 heading = 'We have received your tour request.';
-                description = 'Your advisor will reach out to you soon. Feel free to ask them any questions in the meantime.';
+                description = 'Your partner agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
                 placeholder = `Hi Rachel, I have a question about my tour with ${name}...`;
               } else if (askAgentQuestionType === 'pricing') {
                 heading = 'We have received your custom pricing request.';
-                description = 'Your advisor will reach out to you soon. Feel free to ask them any questions in the meantime.';
+                description = 'Your partner agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
               }
 
               return (

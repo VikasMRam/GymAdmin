@@ -33,10 +33,10 @@ const CareTypesField = StyledField.extend`
 `;
 
 const CommunityPWEstimatedPricingForm = ({
-  error, handleSubmit, onRoomTypeChange, onCareTypeChange,
+  error, handleSubmit, communityName, onRoomTypeChange, onCareTypeChange,
 }) => (
   <form onSubmit={handleSubmit}>
-    <HeadingSection level="subtitle" size="subtitle">Get your custom pricing with Sagebrook Senior Living</HeadingSection>
+    <HeadingSection level="subtitle" size="subtitle">Get your custom pricing for {communityName}</HeadingSection>
     <StyledBlock size="caption">What type of room are you looking for?</StyledBlock>
     <StyledField
       options={ROOMTYPE_OPTIONS}
@@ -46,7 +46,7 @@ const CommunityPWEstimatedPricingForm = ({
       onChange={onRoomTypeChange}
       multiChoice
     />
-    <StyledBlock size="caption">What type of care needs do you have?</StyledBlock>
+    <StyledBlock size="caption">What care needs do you or your loved one have?</StyledBlock>
     <CareTypesField
       options={CARETYPE_OPTIONS}
       name="careType"
@@ -71,6 +71,7 @@ const CommunityPWEstimatedPricingForm = ({
 CommunityPWEstimatedPricingForm.propTypes = {
   error: string,
   handleSubmit: func,
+  communityName: string,
   onRoomTypeChange: func,
   onCareTypeChange: func,
 };
