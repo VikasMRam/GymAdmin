@@ -64,7 +64,7 @@ const CommunityPWEstimatedPricingForm = ({
       multiChoice
     />
     <StyledBlock size="caption">
-      Do you qualify for medicaid?
+      Do you qualify for Medicaid?
     </StyledBlock>
     <StyledField
       options={MEDICAID_OPTIONS}
