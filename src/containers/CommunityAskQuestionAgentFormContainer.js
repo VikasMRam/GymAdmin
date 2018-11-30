@@ -9,12 +9,15 @@ import { resourceCreateRequest } from 'sly/store/resource/actions';
 import {
   createValidator,
   required,
+  usPhone,
 } from 'sly/services/validation';
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
 import { getDetail } from 'sly/store/selectors';
 
 const validate = createValidator({
+  full_name: [required],
+  phone: [required, usPhone],
   question: [required],
 });
 const formName = 'CommunityAskQuestionAgentForm';

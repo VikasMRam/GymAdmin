@@ -412,18 +412,18 @@ export default class CommunityDetailPage extends Component {
             innerRef={this.pricingAndFloorPlansRef}
           >
             <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
-              {({ getPricing }) => (
+              {() => (
                 <PricingAndAvailability
                   community={community}
                   isCCRC={isCCRC}
                   address={address}
                   estimatedPrice={rgsAux.estimatedPrice}
                   roomPrices={roomPrices}
-                  onInquireOrBookClicked={getPricing}
+                  onInquireOrBookClicked={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
                   onLiveChatClicked={onLiveChatClicked}
                   queryParams={{ modal, currentStep }}
                   setQueryParams={setQueryParams}
-                  gotoGetCustomPricing={onGCPClick}
+                  gotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
                 />
               )}
             </ConciergeController>

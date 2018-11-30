@@ -13,4 +13,7 @@ const CommunityPWEstimatedPricingFormContainer = reduxForm({
 storiesOf('Organisms|CommunityPWEstimatedPricingForm', module)
   .add('default', () => (
     <CommunityPWEstimatedPricingFormContainer onRoomTypeChange={action('room type changed')} onCareTypeChange={action('care type changed')} />
+  ))
+  .add('with medicaidCoverage', () => (
+    <CommunityPWEstimatedPricingFormContainer userDetails={{ medicaidCoverage: 'no' }} onRoomTypeChange={action('room type changed')} onCareTypeChange={action('care type changed')} />
   ));

@@ -54,7 +54,7 @@ const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
 });
 
 const BookATourPage = ({
-  community, user, onComplete,
+  community, user, userDetails, onComplete,
 }) => {
   const { id, mainImage } = community;
   let formHeading = 'How can we contact you about this community tour?';
@@ -93,15 +93,17 @@ const BookATourPage = ({
                       <WizardStep
                         component={CommunitySATDateFormContainer}
                         name="Date"
+                        userDetails={userDetails}
                         onDateChange={(e, newValue) => sendEvent('date-changed', id, newValue.toString())}
                         onTimeChange={(e, newValue) => sendEvent('time-changed', id, newValue.toString())}
                       />
                       <WizardStep
                         component={CommunitySATContactFormContainer}
                         name="Contact"
-                        onContactByTextMsgChange={e => sendEvent('contactByTextMsg-changed', id, e.target.checked.toString())}
+                        onContactByTextMsgChange={(e, value) => sendEvent('contactByTextMsg-changed', id, value)}
                         onAdvisorHelpClick={toggleAdvisorHelp}
                         user={user}
+                        userDetails={userDetails}
                         heading={formHeading}
                         subheading={formSubheading}
                       />
@@ -129,6 +131,7 @@ const BookATourPage = ({
 BookATourPage.propTypes = {
   community: communityPropType,
   user: object,
+  userDetails: object,
   onComplete: func,
   isAdvisorHelpVisible: bool,
   onAdvisorHelpClick: func,

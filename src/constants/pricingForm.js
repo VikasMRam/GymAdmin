@@ -64,3 +64,8 @@ export const MEDICAID_OPTIONS = [
   { label: 'No', value: 'no' },
   { label: "I'm not sure", value: 'not-sure' },
 ];
+
+export const CONTACT_BY_TEXT_MSG_OPTIONS = [
+  { label: 'Yes', value: 'yes' },
+  { label: 'No', value: 'no' },
+];

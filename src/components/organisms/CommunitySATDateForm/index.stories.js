@@ -17,4 +17,8 @@ const CommunitySATDateFormContainer = reduxForm({
 storiesOf('Organisms|CommunitySATDateForm', module)
   .add('default', () => (
     <CommunitySATDateFormContainer onDateChange={action('date changed')} onTimeChange={action('time changed')} />
+  ))
+  .add('with medicaidCoverage', () => (
+    <CommunitySATDateFormContainer userDetails={{ medicaidCoverage: 'no' }} onDateChange={action('date changed')} onTimeChange={action('time changed')} />
   ));
+

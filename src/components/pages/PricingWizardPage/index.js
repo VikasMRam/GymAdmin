@@ -14,7 +14,7 @@ import {
   makeControls,
   makeHeader,
 } from 'sly/components/templates/FullScreenWizard';
-import { EST_ADDL_COST_ACCOMODATION,EST_ADDL_COST_CARE_SERVICE } from 'sly/constants/pricingForm';
+import { EST_ADDL_COST_ACCOMODATION, EST_ADDL_COST_CARE_SERVICE } from 'sly/constants/pricingForm';
 import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
@@ -58,6 +58,7 @@ class PricingWizardPage extends Component {
   static propTypes = {
     community: communityPropType,
     user: object,
+    userDetails: object,
     onComplete: func,
     isAdvisorHelpVisible: bool,
     onAdvisorHelpClick: func,
@@ -94,14 +95,14 @@ class PricingWizardPage extends Component {
     const { startingRate } = community;
     const roomTypeWeights = [];
 
-    roomTypes.forEach((roomType)=>{
+    roomTypes.forEach((roomType) => {
       const roomTypeAddlCost = EST_ADDL_COST_ACCOMODATION[roomType];
-        if (roomTypeAddlCost) {
-          roomTypeWeights.push(roomTypeAddlCost);
-        }
+      if (roomTypeAddlCost) {
+        roomTypeWeights.push(roomTypeAddlCost);
+      }
     });
 
-    var addlCareCost = 0;
+    let addlCareCost = 0;
     careTypes.forEach((careType) => {
       const careTypeAddlCost = EST_ADDL_COST_CARE_SERVICE[careType];
       if (careTypeAddlCost) {
@@ -120,7 +121,7 @@ class PricingWizardPage extends Component {
   render() {
     const { onRoomTypeChange, onCareTypeChange } = this;
     const {
-      community, user, onComplete,
+      community, user, onComplete, userDetails,
     } = this.props;
     const { id, mainImage, name } = community;
     const { estimatedPrice } = this.state;
@@ -161,12 +162,14 @@ class PricingWizardPage extends Component {
                           communityName={name}
                           onRoomTypeChange={onRoomTypeChange}
                           onCareTypeChange={onCareTypeChange}
+                          userDetails={userDetails}
                         />
                         <WizardStep
                           component={CommunitySATContactFormContainer}
                           name="Contact"
                           onAdvisorHelpClick={toggleAdvisorHelp}
                           user={user}
+                          userDetails={userDetails}
                           form="PWizardForm"
                           heading={formHeading}
                           subheading={formSubheading}
