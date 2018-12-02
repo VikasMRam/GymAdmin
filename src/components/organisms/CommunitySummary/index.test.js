@@ -96,20 +96,20 @@ it('renders amenityScore', () => {
 
 it('renders startingRate', () => {
   const wrapper = wrap({
-    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { estimatedAverage: 1 }, providedRates: false,
+    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { estimatedAverage: 1 }, ratesProvided: false,
   });
   testEstimatedRate(wrapper);
 });
 
 it('renders estimatedPricing', () => {
   const wrapper = wrap({
-    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { estimatedAverage: 1 }, providedRates: false,
+    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { estimatedAverage: 1 }, ratesProvided: false,
   });
   testEstimatedRate(wrapper);
 });
 it('renders providedPricing', () => {
   const wrapper = wrap({
-    communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { providedAverage: 1 }, providedRates: true,
+    communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { providedAverage: 1 }, ratesProvided: true,
   });
   testProvidedRate(wrapper);
 });
@@ -141,7 +141,7 @@ it('renders all properties', () => {
     pricingAndFloorPlansRef,
     amenitiesAndFeaturesRef,
     providedAverage: 1,
-    providedRates: true,
+    ratesProvided: true,
   });
 
   // testTwilioNumber(wrapper);
