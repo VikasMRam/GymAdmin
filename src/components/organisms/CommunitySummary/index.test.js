@@ -44,18 +44,18 @@ const testAmenityScore = (wrapper) => {
   expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.amenitiesAndFeatures}` }).length).toBeGreaterThan(0);
   expect(wrapper.text()).toContain('Amenity Score');
 };
-const testStartingRate = (wrapper) => {
+// const testStartingRate = (wrapper) => {
+//   expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.pricingAndFloorPlans}` }).length).toBeGreaterThan(0);
+//   expect(wrapper.text()).toContain('Pricing starts from:');
+// };
+const testEstimatedRate = (wrapper) => {
+  expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.pricingAndFloorPlans}` }).length).toBeGreaterThan(0);
+  expect(wrapper.text()).toContain('Estimated Pricing:');
+};
+const testProvidedRate = (wrapper) => {
   expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.pricingAndFloorPlans}` }).length).toBeGreaterThan(0);
   expect(wrapper.text()).toContain('Pricing starts from:');
 };
-// const testEstimatedRate = (wrapper) => {
-//   expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.pricingAndFloorPlans}` }).length).toBeGreaterThan(0);
-//   expect(wrapper.text()).toContain('Estimated Pricing:');
-// };
-// const testProvidedRate = (wrapper) => {
-//   expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.pricingAndFloorPlans}` }).length).toBeGreaterThan(0);
-//   expect(wrapper.text()).toContain('Pricing Starts from:');
-// };
 
 const testCommunityHighlights = (wrapper) => {
   expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.amenitiesAndFeatures}` }).length).toBeGreaterThan(0);
@@ -96,22 +96,22 @@ it('renders amenityScore', () => {
 
 it('renders startingRate', () => {
   const wrapper = wrap({
-    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { estimatedAverage: 1 },
+    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { estimatedAverage: 1 }, ratesProvided: false,
   });
-  testStartingRate(wrapper);
+  testEstimatedRate(wrapper);
 });
 
 it('renders estimatedPricing', () => {
   const wrapper = wrap({
-    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { estimatedAverage: 1 },
+    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { estimatedAverage: 1 }, ratesProvided: false,
   });
-  testStartingRate(wrapper);
+  testEstimatedRate(wrapper);
 });
 it('renders providedPricing', () => {
   const wrapper = wrap({
-    communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { providedAverage: 1 },
+    communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { providedAverage: 1 }, ratesProvided: true,
   });
-  testStartingRate(wrapper);
+  testProvidedRate(wrapper);
 });
 
 it('renders communityHighlights', () => {
@@ -141,13 +141,14 @@ it('renders all properties', () => {
     pricingAndFloorPlansRef,
     amenitiesAndFeaturesRef,
     providedAverage: 1,
+    ratesProvided: true,
   });
 
   // testTwilioNumber(wrapper);
   // testPhoneNumber(wrapper);
   // testUserPhoneNumber(wrapper);
   testAmenityScore(wrapper);
-  testStartingRate(wrapper);
+  testProvidedRate(wrapper);
   testCommunityHighlights(wrapper);
   testReviews(wrapper);
 });

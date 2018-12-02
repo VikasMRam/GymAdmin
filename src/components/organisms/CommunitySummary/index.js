@@ -29,6 +29,7 @@ export default class communitySummary extends React.Component {
     licenseUrl: string,
     amenityScore: string,
     communityHighlights: arrayOf(string),
+    ratesProvided: bool,
     startingRate: number,
     estimatedPrice: object,
     reviewsValue: number,
@@ -59,7 +60,7 @@ export default class communitySummary extends React.Component {
 
   render() {
     const {
-      isCCRC, twilioNumber, phoneNumber, user, licenseUrl, amenityScore, communityHighlights, startingRate,
+      isCCRC, twilioNumber, phoneNumber, user, licenseUrl, amenityScore, communityHighlights, ratesProvided, startingRate,
       estimatedPrice, reviewsValue, innerRef, onConciergeNumberClicked, onHowSeniorlyWorks,
     } = this.props;
     // let { websiteUrl } = this.props;
@@ -166,7 +167,7 @@ export default class communitySummary extends React.Component {
     if (!isCCRC && hasPricing) {
       highlights.push((
         <span>
-          { (startingRate || (estimatedPrice && estimatedPrice.providedAverage))
+          { (ratesProvided)
               ? 'Pricing starts from: '
               : 'Estimated Pricing: '
           }

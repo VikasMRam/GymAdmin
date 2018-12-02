@@ -185,6 +185,7 @@ export default class CommunityDetailPage extends Component {
     const {
       id,
       name,
+      rates,
       startingRate,
       propInfo,
       propRatings,
@@ -270,6 +271,7 @@ export default class CommunityDetailPage extends Component {
     const serviceHighlightsFinal = serviceHighlights || [];
     const roomPrices = floorPlans.map(({ info }) => info);
     const isCCRC = typeCare && (typeCare.indexOf('Continuing Care Retirement Community(CCRC)') !== -1);
+    const ratesProvided = (rates && rates === 'Provided');
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
@@ -396,6 +398,7 @@ export default class CommunityDetailPage extends Component {
                 user={communityUser}
                 amenityScore={rgsAux.amenityScore}
                 startingRate={startingRate}
+                ratesProvided={ratesProvided}
                 estimatedPrice={rgsAux.estimatedPrice}
                 communityHighlights={communityHighlights}
                 reviews={reviews}
