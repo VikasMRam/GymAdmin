@@ -22,6 +22,7 @@ import App from 'sly/components/App';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 import crypto from 'crypto';
+import url from 'url';
 
 const utmParams = [
   'utm_content',
@@ -95,6 +96,13 @@ app.use(async (req, res, next) => {
 
   const cookies = [req.headers.cookie];
   const setCookie = createSetCookie(res, cookies);
+
+  if (req.query.sly_uuid) {
+    if (!req.cookies.sly_uuid) {
+      setCookie('sly_uuid', req.query.sly_uuid);
+    }
+    res.redirect(url.parse(req.url).pathname);
+  }
 
   if (!req.cookies.sly_uuid) {
     setCookie('sly_uuid', v4());
