@@ -53,7 +53,7 @@ const CommunityPWEstimatedPricingForm = ({
     <HeadingSection level="subtitle" size="subtitle">Get your custom pricing for {communityName}</HeadingSection>
     <StyledBlock size="caption">
       What type of room are you looking for?
-      <StyledHelpBubble>Not all shown room types may not be available in this community.</StyledHelpBubble>
+      <StyledHelpBubble>All shown room types may not be available in this community.</StyledHelpBubble>
     </StyledBlock>
     <StyledField
       options={ROOMTYPE_OPTIONS}
