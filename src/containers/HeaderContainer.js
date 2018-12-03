@@ -38,7 +38,7 @@ const defaultMenuItems = [
 ];
 
 const loginHeaderItems = user => user
-  ? []
+  ? [{ name: 'Dashboard', url: '/mydashboard' }]
   : [{ name: 'Sign in' }];
 
 const loginMenuItems = user => loginHeaderItems(user)
