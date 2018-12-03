@@ -183,8 +183,8 @@ describe('ConciergeController', () => {
     });
 
     const setPricingEvent = {
-      action: 'click',
-      category: 'getPricing',
+      action: 'click-gcp-button',
+      category: 'PricingWizard',
       label: 'my-community',
     };
 

@@ -75,8 +75,8 @@ export class ConciergeController extends Component {
     } = concierge;
 
     SlyEvent.getInstance().sendEvent({
-      action: 'click',
-      category: 'getPricing',
+      action: 'click-gcp-button',
+      category: 'PricingWizard',
       label: communitySlug || pathName,
     });
 
