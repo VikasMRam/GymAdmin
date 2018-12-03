@@ -37,12 +37,12 @@ theme.fonts = {
 theme.sizes = {
   // pixel measurements
   // use mobile only in special cases
-  // mobile, fluid: 0 to 414
+  // mobile, fluid: 0 to 416, centered
   // mobile, fixed: 0 to 768
   // tablet: 768 to 1080
   // desktop: 1080 onwards
   breakpoint: {
-    mobile           : '414px',
+    mobile           : '416px',
     tablet           : '768px',
     laptop           : '1080px',
   },
@@ -59,35 +59,37 @@ theme.sizes = {
     col5:       '26.000rem', // 416px
     col6:       '31.500rem', // 504px
     col7:       '37.000rem', // 592px
-    // main body column / latop
+    // main body column
     col8:       '42.500rem', // 680px
     col9:       '48.000rem', // 768px
     col10:      '53.500rem', // 856px
     col11:      '59.000rem', // 944px
     col12:      '64.500rem', // 1032px
-
     // laptop breakpoint has to fit: 24 margin + col12 + 24 margin = 1080
   },
 
+  // tablet measures are not rem compatible
   tabletLayout: {
-    gutter: '',
+    gutter:     '1.500rem', // 24px
+    col1:       '69px',
+    col2:       '162px',
+    col3:       '255px',
+    col4:       '348px',
+    col5:       '441px',
+    col6:       '534px',
+    col7:       '627px',
+    col8:       '720px',
   },
 
+  // mobile measure are rem compatible TODO: fix numbers
   mobileLayout: {
-    gutter:      '1.000rem', // 16px
+    gutter:     '1.000rem', // 16px
 
-    col1:        '5.000rem', // 80px
-    col2:       '11.000rem', // 176px
-    col3:       '17.000rem', // 272px
-    col4:       '23.000rem', // 368px
-
-    col5:       '29.000rem', // 464px
-    col6:       '35.000rem', // 560px
-    col7:       '41.000rem', // 656px
-    col8:       '47.000rem', // 752px
-
-    col9:       '53.000rem', // 848px
-    col10:      '59.000rem', // 944px
+    col1:       '84px',
+    col2:       '184px',
+    col3:       '284px',
+    col4:       '384px',
+    // mobile breakpoint has to fit 16 margin + col4 + 16 margin = 416px
   },
 
   modal: {
