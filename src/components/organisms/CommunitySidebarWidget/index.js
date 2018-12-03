@@ -26,10 +26,14 @@ const CommunitySidebarWidget = ({
 }) => (
   <Fragment>
     <Wrapper>
-      <CommunityPricingAndRatingWrapper>
-        <CommunityPricingAndRating price={price} rating={rating} />
-      </CommunityPricingAndRatingWrapper>
-      <Hr />
+      {(price > 0 || rating > 0) &&
+        <Fragment>
+          <CommunityPricingAndRatingWrapper>
+            <CommunityPricingAndRating price={price} rating={rating} />
+          </CommunityPricingAndRatingWrapper>
+          <Hr />
+        </Fragment>
+      }
       <CommunityActions
         isAlreadyPricingRequested={isAlreadyPricingRequested}
         isAlreadyTourScheduled={isAlreadyTourScheduled}
