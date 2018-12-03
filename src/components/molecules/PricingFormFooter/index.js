@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 `;
 
 const PreferenceWrapper = styled.div`
-  display: none;
+  display: inline-flex;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: block;
   }
