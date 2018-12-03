@@ -13,4 +13,11 @@ storiesOf('Organisms|CommunitySidebarWidget', module)
       onGCPClick={action('onGCPClick')}
       onAQClick={action('onAQClick')}
     />
+  ))
+  .add('without price and rating', () => (
+    <CommunitySidebarWidget
+      onSATClick={action('onSATClick')}
+      onGCPClick={action('onGCPClick')}
+      onAQClick={action('onAQClick')}
+    />
   ));
