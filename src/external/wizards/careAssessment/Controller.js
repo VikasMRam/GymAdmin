@@ -12,15 +12,15 @@ import SlyEvent from 'sly/services/helpers/events';
 import { connectController } from 'sly/controllers';
 import { createValidator } from 'sly/services/validation';
 import { selectFormData } from 'sly/services/helpers/forms';
-import { CAW_PROGRESS } from 'sly/services/api/actions';
+import { CARE_ASSESSMENT_PROGRESS } from 'sly/services/api/actions';
 
-import CAWComponent from './Component';
+import CareAssessmentComponent from './Component';
 import {
   stepOrders, defaultStepOrder, inputBasedNextSteps, getStepInputFieldValidations,
   getStepInputFieldDefaultValues, stepInputFieldNames, converStepInputToString,
 } from './helpers';
 
-const formName = 'CAWForm';
+const formName = 'CareAssessmentForm';
 const validate = createValidator(getStepInputFieldValidations());
 const ReduxForm = reduxForm({
   form: formName,
@@ -28,7 +28,7 @@ const ReduxForm = reduxForm({
   keepDirtyOnReinitialize: true,
   validate,
   initialValues: getStepInputFieldDefaultValues(),
-})(CAWComponent);
+})(CareAssessmentComponent);
 
 class Controller extends Component {
   static propTypes = {
@@ -122,7 +122,7 @@ class Controller extends Component {
         careAssessment.care_needs = transformedCareNeeds;
       }
       const payload = {
-        action: CAW_PROGRESS,
+        action: CARE_ASSESSMENT_PROGRESS,
         value: {
           user,
           wizard_progress: {

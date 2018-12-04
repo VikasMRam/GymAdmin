@@ -14,7 +14,7 @@ import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-import CAWController from 'sly/external/wizards/caw/Controller';
+import CareAssessmentController from 'sly/external/wizards/careAssessment/Controller';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -478,7 +478,7 @@ const PromoPage = ({
         </StyledSection>
         { isWizardActive &&
         <Modal closeable isOpen layout="wizard" onClose={() => wizardStatus(false)} >
-          <CAWController currentStep={2} locationSearchParams={{ city: 'san-francisco', state: 'california' }} />
+          <CareAssessmentController currentStep={2} locationSearchParams={{ city: 'san-francisco', state: 'california' }} />
         </Modal>
         }
       </TemplateContent>
