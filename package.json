@@ -136,6 +136,7 @@
     "redux-object": "0.5.5",
     "redux-saga": "^0.16.0",
     "redux-saga-thunk": "^0.5.3",
+    "redux-thunk": "^2.3.0",
     "rimraf": "^2.6.1",
     "serialize-error": "^2.1.0",
     "serialize-javascript": "^1.5.0",

@@ -12,6 +12,7 @@ class NotificationController extends Component {
       type: oneOf(['default', 'error']),
     })),
     set: func,
+    get: func,
     children: func,
   };
 
@@ -48,14 +49,18 @@ class NotificationController extends Component {
   };
 
   handleDismiss = (id) => {
-    const { set, messages } = this.props;
-    const messageObjIndex = messages.findIndex(m => m.id === id);
+    const { set, get } = this.props;
 
-    if (messageObjIndex !== -1) {
-      set({
-        messages: [...messages.slice(0, messageObjIndex), ...messages.slice(messageObjIndex + 1)],
-      });
-    }
+    // necessary due to the asynchronous nature
+    get(({ messages }) => {
+      const index = messages.findIndex(m => m.id === id);
+
+      if (index !== -1) {
+        set({
+          messages: [...messages.slice(0, index), ...messages.slice(index + 1)],
+        });
+      }
+    });
   };
 
   render() {
