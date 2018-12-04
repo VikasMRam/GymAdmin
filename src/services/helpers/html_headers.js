@@ -184,21 +184,28 @@ export const getHelmetForSearchPage = ({
 
 export const getHelmetForCommunityPage = (community, location) => {
   const {
-    name, address, propInfo, url, gallery = {}, videoGallery = {},
+    name, address, propInfo, rates, startingRate, url, gallery = {}, videoGallery = {},
   } = community;
   const {
-    search
-  } = location
+    search,
+  } = location;
+
+  const ratesProvided = (rates && rates === 'Provided');
+
   let toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
   if (typeof toc === 'undefined'){
     toc = {
-      label: 'All Communities',
+      label: 'Retirement',
       value: 'retirement-community',
       segment: 'retirement-community',
     };
   }
-  const title = `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`;
-  const description = `${name} ${toc ? toc.label : ''} located at ${address.line1} in ${titleize(address.city)}, ${titleize(address.state)}. See pricing and photos"`;
+  const title = (ratesProvided ? `${name} - Pricing Starting $${startingRate}/mo` : `${name} ${titleize(address.city)}, ${titleize(address.state)}`);
+
+  const article = ((toc.label === 'Assisted Living ' || toc.label === 'Memory Care') ? 'an' : 'a');
+
+  const description = `${name} is ${article} ${toc.label} community located at ${address.line1} in ${titleize(address.city)}, ${titleize(address.state)}. See pricing, photos & reviews on Seniorly.com!`;
+
   let imageUrl = null;
   if (gallery.images && gallery.images.length > 0) {
     imageUrl = gallery.images[0].url;
