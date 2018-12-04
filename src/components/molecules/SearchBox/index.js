@@ -70,14 +70,14 @@ ${switchProp('layout', {
       height: auto;
       background: none;
       > span {
-        color: ${palette('primary', 0)};
+        color: ${palette('primary', 'base')};
       }
 `,
   })};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-right: 0px;
-    background-color: ${palette('primary', 0)};
+    background-color: ${palette('primary', 'base')};
     width: ${size('element.xxLarge')};
     > span {
       color: ${palette('white', 'base')};
