@@ -19,7 +19,7 @@ const styles = css`
   text-decoration: none;
 
   &:hover {
-    color: ${palette(2)};
+    color: ${palette('filler')};
     cursor: pointer;
   }
 

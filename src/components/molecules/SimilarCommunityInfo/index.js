@@ -58,7 +58,7 @@ const ClampedLine = styled.div`
 `;
 
 const Description = styled.div`
-  color: ${palette(0)};
+  color: ${palette('base')};
   font-size: ${size('text.caption')};
 `;
 

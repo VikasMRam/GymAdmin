@@ -50,15 +50,15 @@ const StyledButton = styled(Button)`
 const LegacyContent = styled.div`
   a {
     text-decoration: none;
-    color: ${palette(0)};
+    color: ${palette('base')};
 
     &:hover {
-      color: ${palette(2)};
+      color: ${palette('filler')};
       cursor: pointer;
     }
 
     &:active {
-      color: ${palette(0)};
+      color: ${palette('base')};
     }
 
     &:focus {

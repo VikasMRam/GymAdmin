@@ -23,7 +23,7 @@ const styles = css`
   // TODO: review this with @jared,
   // for now let's make margin-bottom relative to font-size
   margin: 0 0 calc(${fontSize} * 0.25) 0;
-  color: ${palette(0)};
+  color: ${palette('base')};
 `;
 
 const Heading = styled(({

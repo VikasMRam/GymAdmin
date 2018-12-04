@@ -21,7 +21,7 @@ const Wrapper = styled.div`
 
 const BaseIcon = styled(Icon)`
   svg {
-    color: ${palette(2)};
+    color: ${palette('filler')};
   }
 `;
 
@@ -33,7 +33,7 @@ export const PositionedMask = styled.div`
   width: ${prop('width')}%;
 
   svg {
-    color: ${palette(0)};
+    color: ${palette('base')};
   }
 `;
 
