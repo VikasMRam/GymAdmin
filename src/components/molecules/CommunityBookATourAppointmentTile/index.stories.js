@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import CommunitySATAppointmentTile from 'sly/components/molecules/CommunitySATAppointmentTile';
+import CommunityBookATourAppointmentTile from 'sly/components/molecules/CommunityBookATourAppointmentTile';
 
 const defaultProps = {
   communityName: 'Rhoda Goldman Plaza',
@@ -9,5 +9,5 @@ const defaultProps = {
   appointmentText: 'Saturday, October 21 in the Morning',
 };
 
-storiesOf('Molecules|CommunitySATAppointmentTile', module)
-  .add('default', () => <CommunitySATAppointmentTile {...defaultProps} />);
+storiesOf('Molecules|CommunityBookATourAppointmentTile', module)
+  .add('default', () => <CommunityBookATourAppointmentTile {...defaultProps} />);
