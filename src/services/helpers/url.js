@@ -255,23 +255,14 @@ export const getStateAbbr = (state) => {
   return stateAbbr[st];
 }
 
-// Inspired from https://stackoverflow.com/questions/42700105/how-to-remove-some-parameters-from-an-url-string
 export const removeQueryParamFromURL = (key, sourceURL) => {
-  let rtn = sourceURL.split('?')[0];
-  let param;
-  let paramsArr = [];
-  const queryString = (sourceURL.indexOf('?') !== -1) ? sourceURL.split('?')[1] : '';
-  if (queryString !== '') {
-    paramsArr = queryString.split('&');
-    for (let i = paramsArr.length - 1; i >= 0; i -= 1) {
-      [param] = paramsArr[i].split('=');
-      if (param === key) {
-        paramsArr.splice(i, 1);
-      }
-    }
-    if (Object.keys(paramsArr).length > 0) {
-      rtn = `${rtn}?${paramsArr.join('&')}`;
-    }
+  const [path, queryStringStr] = sourceURL.split('?');
+  const queryStringsObj = parse(queryStringStr);
+  queryStringsObj[key] = undefined;
+  const newQs = stringify(queryStringsObj);
+  let newPath = path;
+  if (newQs !== '') {
+    newPath = `${path}?${newQs}`;
   }
-  return rtn;
+  return newPath;
 };

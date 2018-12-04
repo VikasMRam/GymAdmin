@@ -2,6 +2,8 @@
 import 'babel-polyfill';
 
 import path from 'path';
+import crypto from 'crypto';
+
 import express from 'express';
 import React from 'react';
 import serialize from 'serialize-javascript';
@@ -10,19 +12,17 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { renderToString } from 'react-router-server';
-
 import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import serializeError from 'serialize-error';
 
+import { removeQueryParamFromURL } from 'sly/services/helpers/url';
 import { port, host, basename, publicPath, isDev, cookieDomain, externalWizardsPath } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import apiService from 'sly/services/api';
 import App from 'sly/components/App';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
-import crypto from 'crypto';
-import { removeQueryParamFromURL } from './services/helpers/url';
 
 const utmParams = [
   'utm_content',
