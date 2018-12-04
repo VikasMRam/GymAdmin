@@ -1,7 +1,8 @@
 /* eslint-disable key-spacing,no-multi-spaces */
+import { makeColor, makeColorTable } from './color';
+
 import { isTest } from 'sly/config';
 
-import { makeColor, makeColorTable } from './color';
 
 export { colorIndex } from './color';
 
@@ -14,13 +15,13 @@ const theme = {};
 // see below comments or in storybook
 // DO NOT MODIFY the following without asking Jared
 theme.palette = {
-  slate    : makeColor('#2a333f', ['base', 'accent', 'filler', 'stroke', 'background']),
-  primary  : makeColor('#186dc5', ['base',           'filler', 'stroke']),
-  secondary: makeColor('#56c4c2', ['base',           'filler', 'stroke']),
+  slate    : makeColor('#2a333f', ['base', 'accent', 'filler', 'stroke', 'background', 'dark']),
+  primary  : makeColor('#186dc5', ['base',           'filler', 'stroke',               'dark']),
+  secondary: makeColor('#56c4c2', ['base',           'filler', 'stroke',               'dark']),
   white    : makeColor('#ffffff', ['base']),
-  danger   : makeColor('#dc3133', ['base',                     'stroke']),
-  warning  : makeColor('#f3c150', ['base',                     'stroke']),
-  green    : makeColor('#4FB75F', ['base']),
+  danger   : makeColor('#dc3133', ['base',                     'stroke',               'dark']),
+  warning  : makeColor('#f3c150', ['base',                     'stroke',               'dark']),
+  green    : makeColor('#4FB75F', ['base',                                             'dark']),
 };
 
 if (!isTest) console.table(makeColorTable(theme.palette));
