@@ -42,7 +42,7 @@ const StyledButton = styled(Button)`
   margin-right: auto;
 `;
 
-const CommunityBookATourAcknowledgement = ({ heading, subheading, similarCommunititesHref }) => (
+const CommunitySATAcknowledgement = ({ heading, subheading, similarCommunititesHref }) => (
   <Wrapper>
     {heading &&
       <HeadingSection>
@@ -55,10 +55,10 @@ const CommunityBookATourAcknowledgement = ({ heading, subheading, similarCommuni
   </Wrapper>
 );
 
-CommunityBookATourAcknowledgement.propTypes = {
+CommunitySATAcknowledgement.propTypes = {
   similarCommunititesHref: string.isRequired,
   heading: string,
   subheading: string,
 };
 
-export default CommunityBookATourAcknowledgement;
+export default CommunitySATAcknowledgement;

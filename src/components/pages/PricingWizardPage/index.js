@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { object, func, bool } from 'prop-types';
 import Helmet from 'react-helmet';
 
-import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
@@ -23,6 +22,7 @@ import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 import Modal from 'sly/components/molecules/Modal';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
+import CommunitySATContactFormContainer from 'sly/containers/CommunitySATContactFormContainer';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -165,7 +165,7 @@ class PricingWizardPage extends Component {
                           userDetails={userDetails}
                         />
                         <WizardStep
-                          component={CommunityBookATourContactFormContainer}
+                          component={CommunitySATContactFormContainer}
                           name="Contact"
                           onAdvisorHelpClick={toggleAdvisorHelp}
                           user={user}

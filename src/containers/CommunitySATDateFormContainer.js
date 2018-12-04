@@ -1,6 +1,6 @@
 import { reduxForm } from 'redux-form';
 
-import CommunityBookATourDateForm from 'sly/components/organisms/CommunityBookATourDateForm';
+import CommunitySATDateForm from 'sly/components/organisms/CommunitySATDateForm';
 import { createValidator, required } from 'sly/services/validation';
 
 const validate = createValidator({
@@ -11,7 +11,7 @@ const validate = createValidator({
 
 export default reduxForm({
   validate,
-  form: 'BookATourWizardForm',
+  form: 'SATWizardForm',
   destroyOnUnmount: false,
-})(CommunityBookATourDateForm);
+})(CommunitySATDateForm);
 

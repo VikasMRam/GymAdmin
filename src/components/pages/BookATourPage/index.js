@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { object, func, bool } from 'prop-types';
 import Helmet from 'react-helmet';
 
-import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
-import CommunityBookATourDateFormContainer from 'sly/containers/CommunityBookATourDateFormContainer';
+import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
@@ -21,7 +20,8 @@ import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
 import Modal from 'sly/components/molecules/Modal';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
-import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
+import CommunitySATDateFormContainer from 'sly/containers/CommunitySATDateFormContainer';
+import CommunitySATContactFormContainer from 'sly/containers/CommunitySATContactFormContainer';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -80,7 +80,7 @@ const BookATourPage = ({
               <AdvisorHelpPopup onButtonClick={toggleAdvisorHelp} />
             </Modal>
             <WizardController
-              formName="BookATourWizardForm"
+              formName="SATWizardForm"
               onComplete={data => onComplete(data, toggleConfirmationModal)}
               onStepChange={step => sendEvent('step-completed', id, step - 1)}
             >
@@ -91,14 +91,14 @@ const BookATourPage = ({
                   <Body>
                     <WizardSteps {...props}>
                       <WizardStep
-                        component={CommunityBookATourDateFormContainer}
+                        component={CommunitySATDateFormContainer}
                         name="Date"
                         userDetails={userDetails}
                         onDateChange={(e, newValue) => sendEvent('date-changed', id, newValue.toString())}
                         onTimeChange={(e, newValue) => sendEvent('time-changed', id, newValue.toString())}
                       />
                       <WizardStep
-                        component={CommunityBookATourContactFormContainer}
+                        component={CommunitySATContactFormContainer}
                         name="Contact"
                         onContactByTextMsgChange={(e, value) => sendEvent('contactByTextMsg-changed', id, value)}
                         onAdvisorHelpClick={toggleAdvisorHelp}

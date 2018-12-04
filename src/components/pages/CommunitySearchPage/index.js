@@ -15,8 +15,8 @@ import IconButton from 'sly/components/molecules/IconButton';
 import Modal from 'sly/components/molecules/Modal';
 import Thankyou from 'sly/components/molecules/Thankyou';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
-import CareAssessmentController from 'sly/external/wizards/careAssessment/Controller';
-import { THANK_YOU, CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
+import CAWController from 'sly/external/wizards/caw/Controller';
+import { THANK_YOU, CAW_WIZARD } from 'sly/constants/modalType';
 
 const TopWrapper = styled.div`
   padding-bottom: ${size('spacing.xLarge')};
@@ -265,9 +265,9 @@ const CommunitySearchPage = ({
               Click to Continue
           </StyledButton>
         </Modal>}
-        { searchParams.modal === CARE_ASSESSMENT_WIZARD &&
+        { searchParams.modal === CAW_WIZARD &&
         <Modal closeable isOpen layout="wizard" onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}>
-          <CareAssessmentController locationSearchParams={{ city: searchParams.city, state: searchParams.state }} />
+          <CAWController locationSearchParams={{ city: searchParams.city, state: searchParams.state }} />
         </Modal>}
 
       </CommunitySearchPageTemplate>

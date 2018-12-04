@@ -3,10 +3,10 @@ import { shallow } from 'enzyme';
 
 import CommunitySidebarWidget from 'sly/components/organisms/CommunitySidebarWidget';
 
-const onBookATourClick = jest.fn();
+const onSATClick = jest.fn();
 
 const wrap = (props = {}) =>
-  shallow(<CommunitySidebarWidget price={4300} rating={3.6} onBookATourClick={onBookATourClick} {...props} />);
+  shallow(<CommunitySidebarWidget price={4300} rating={3.6} onSATClick={onSATClick} {...props} />);
 
 describe('CommunitySidebarWidget', () => {
   it('does not renders children when passed in', () => {

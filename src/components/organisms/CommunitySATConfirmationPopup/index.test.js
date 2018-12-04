@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
+import CommunitySATConfirmationPopup from 'sly/components/organisms/CommunitySATConfirmationPopup';
 
 const appointmentText = 'Saturday, October 21, Anytime';
 const similarCommunititesHref = 'www.teamseniorly.com';
@@ -28,9 +28,9 @@ const defaultProps = {
   subheading,
 };
 
-const wrap = (props = {}) => shallow(<CommunityBookATourConfirmationPopup {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<CommunitySATConfirmationPopup {...defaultProps} {...props} />);
 
-describe('CommunityBookATourConfirmationPopup', () => {
+describe('CommunitySATConfirmationPopup', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBe(false);

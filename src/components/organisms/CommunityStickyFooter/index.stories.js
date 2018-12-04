@@ -7,14 +7,14 @@ import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFoote
 storiesOf('Organisms|CommunityStickyFooter', module)
   .add('default', () => (
     <CommunityStickyFooter
-      onBookATourClick={action('onBookATourClick')}
+      onSATClick={action('onSATClick')}
       onGCPClick={action('onGCPClick')}
       onAQClick={action('onAQClick')}
     />
   ))
   .add('with isAlreadyTourScheduled', () => (
     <CommunityStickyFooter
-      onBookATourClick={action('onBookATourClick')}
+      onSATClick={action('onSATClick')}
       onGCPClick={action('onGCPClick')}
       onAQClick={action('onAQClick')}
       isAlreadyTourScheduled
@@ -22,7 +22,7 @@ storiesOf('Organisms|CommunityStickyFooter', module)
   ))
   .add('with isAlreadyPricingRequested', () => (
     <CommunityStickyFooter
-      onBookATourClick={action('onBookATourClick')}
+      onSATClick={action('onSATClick')}
       onGCPClick={action('onGCPClick')}
       onAQClick={action('onAQClick')}
       isAlreadyPricingRequested

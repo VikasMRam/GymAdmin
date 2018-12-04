@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
-import CommunityBookATourContactForm from 'sly/components/organisms/CommunityBookATourContactForm';
+import CommunitySATContactForm from 'sly/components/organisms/CommunitySATContactForm';
 import { Link, Block } from 'sly/components/atoms';
 
 const onAdvisorHelpClick = jest.fn();
@@ -14,9 +14,9 @@ const heading = 'Do you have any questions about this tour?';
 const subheading = 'A local senior living advisor will help get you set up a tour with this community.';
 
 const wrap = (props = {}) =>
-  shallow(<CommunityBookATourContactForm onAdvisorHelpClick={onAdvisorHelpClick} heading={heading} subheading={subheading} {...props} />);
+  shallow(<CommunitySATContactForm onAdvisorHelpClick={onAdvisorHelpClick} heading={heading} subheading={subheading} {...props} />);
 
-describe('CommunityBookATourContactForm', () => {
+describe('CommunitySATContactForm', () => {
   it('render name and phone when userDetails is not passed', () => {
     const wrapper = wrap();
     expect(wrapper.contains(heading)).toBe(true);

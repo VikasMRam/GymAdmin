@@ -37,10 +37,10 @@ import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
 import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
-import Thankyou from 'sly/components/molecules/Thankyou';
+import Thankyou from 'sly/components/molecules/Thankyou/index';
 import CommunitySidebarWidget from 'sly/components/organisms/CommunitySidebarWidget';
 import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
-import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
+import CommunitySATConfirmationPopup from 'sly/components/organisms/CommunitySATConfirmationPopup/index';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 
@@ -89,7 +89,7 @@ export default class CommunityDetailPage extends Component {
     userSave: object,
     searchParams: object,
     setQueryParams: func,
-    onBookATourClick: func,
+    onSATClick: func,
     onGCPClick: func,
     isAlreadyTourScheduled: bool,
     isAlreadyPricingRequested: bool,
@@ -173,7 +173,7 @@ export default class CommunityDetailPage extends Component {
       userSave,
       searchParams,
       setQueryParams,
-      onBookATourClick,
+      onSATClick,
       onGCPClick,
       isAlreadyTourScheduled,
       isAlreadyPricingRequested,
@@ -297,7 +297,7 @@ export default class CommunityDetailPage extends Component {
           isAlreadyPricingRequested={isAlreadyPricingRequested}
           price={startingRate}
           rating={reviewsValue}
-          onBookATourClick={!isAlreadyTourScheduled ? onBookATourClick : e => onToggleAskAgentQuestionModal(e, 'tour')}
+          onSATClick={!isAlreadyTourScheduled ? onSATClick : e => onToggleAskAgentQuestionModal(e, 'tour')}
           onGCPClick={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
           onAQClick={onToggleAskAgentQuestionModal}
         />
@@ -332,11 +332,11 @@ export default class CommunityDetailPage extends Component {
     );
     let bannerNotification = null;
     if (isAlreadyTourScheduled && isAlreadyPricingRequested) {
-      bannerNotification = 'We have received your tour and pricing request. Your partner agent is checking with this community and will get back to you shortly.';
+      bannerNotification = "We have received your tour and pricing request. Your partner agent is checking with this community and will get back to you shortly.";
     } else if (isAlreadyTourScheduled) {
-      bannerNotification = 'We have received your tour request. Your partner agent is checking with this community and will get back to you shortly.';
+      bannerNotification = "We have received your tour request. Your partner agent is checking with this community and will get back to you shortly.";
     } else if (isAlreadyPricingRequested) {
-      bannerNotification = 'We have received your pricing request. Your partner agent is checking with this community and will get back to you shortly.';
+      bannerNotification = "We have received your pricing request. Your partner agent is checking with this community and will get back to you shortly.";
     }
 
     return (
@@ -522,7 +522,7 @@ export default class CommunityDetailPage extends Component {
         <CommunityStickyFooter
           isAlreadyTourScheduled={isAlreadyTourScheduled}
           isAlreadyPricingRequested={isAlreadyPricingRequested}
-          onBookATourClick={!isAlreadyTourScheduled ? onBookATourClick : e => onToggleAskAgentQuestionModal(e, 'tour')}
+          onSATClick={!isAlreadyTourScheduled ? onSATClick : e => onToggleAskAgentQuestionModal(e, 'tour')}
           onGCPClick={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
           onAQClick={onToggleAskAgentQuestionModal}
         />
@@ -591,7 +591,7 @@ export default class CommunityDetailPage extends Component {
                   closeable
                   layout="double"
                 >
-                  <CommunityBookATourConfirmationPopup {...props} />
+                  <CommunitySATConfirmationPopup {...props} />
                 </Modal>
               );
           }}
