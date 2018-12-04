@@ -43,7 +43,7 @@ const StyledTransitionGroup = styled(TransitionGroup)`
 
 const Notifications = ({ messages, dismiss }) => {
   const notificationComponents = messages.map(({
-    type, content,
+    type, content, id,
   }) => (
     <CSSTransition
       key={content}
@@ -53,7 +53,7 @@ const Notifications = ({ messages, dismiss }) => {
       <Notification
         isOpen
         type={type}
-        onClose={() => dismiss(content)}
+        onClose={() => dismiss(id)}
       >
         {content}
       </Notification>
