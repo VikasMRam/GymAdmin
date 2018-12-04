@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   border-radius: ${size('spacing.small')};
   ${switchProp('type', {
     default: css`background-color: ${palette('slate', 'base')};`,
-    error: css`background-color: ${palette('danger', 0)};`,
+    error: css`background-color: ${palette('danger', 'base')};`,
   })};
   color: ${palette('white', 'base')};
   transition: all ${key('transitions.slow.inOut')};

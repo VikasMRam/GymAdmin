@@ -7,7 +7,7 @@ import { size, palette } from 'sly/components/themes';
 const Label = styled.label`
   display: block;
   font-size: ${size('text.caption')};
-  color: ${ifProp('invalid', palette('danger', 0), palette(0))};
+  color: ${ifProp('invalid', palette('danger', 'base'), palette(0))};
   margin-bottom: ${size('spacing.small')};
 `;
 

@@ -18,7 +18,7 @@ import CareAssessmentController from 'sly/external/wizards/careAssessment/Contro
 
 const HeroWrapper = styled.div`
   position: relative;
-  background-color: ${palette('danger', 0)};
+  background-color: ${palette('danger', 'base')};
   height: calc(${size('header.home.heroImage.mobileHeight')});
   width:100%;
 
