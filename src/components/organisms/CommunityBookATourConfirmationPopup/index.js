@@ -3,13 +3,13 @@ import styled from 'styled-components';
 import { string, array, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import CommunitySATAcknowledgement from 'sly/components/organisms/CommunitySATAcknowledgement/index';
+import CommunityBookATourAcknowledgement from 'sly/components/organisms/CommunityBookATourAcknowledgement/index';
 import Hr from 'sly/components/atoms/Hr/index';
 import Heading from 'sly/components/atoms/Heading/index';
 import SimilarCommunityNearbyTile from 'sly/components/molecules/SimilarCommunityNearbyTile/index';
 import { Link } from 'sly/components/atoms/index';
 
-const CommunitySATAcknowledgementWrapper = styled.div`
+const CommunityBookATourAcknowledgementWrapper = styled.div`
   margin-bottom: ${size('spacing.xxxLarge')};
 `;
 
@@ -38,7 +38,7 @@ const SimilarCommunitiesWrapper = styled.div`
   }
 `;
 
-const CommunitySATConfirmationPopup = ({
+const CommunityBookATourConfirmationPopup = ({
   similarCommunititesHref, similarCommunities, heading, subheading, onTileClick,
 }) => {
   const similarCommunitiesComponent = similarCommunities.map(community => (
@@ -58,9 +58,9 @@ const CommunitySATConfirmationPopup = ({
 
   return (
     <Fragment>
-      <CommunitySATAcknowledgementWrapper>
-        <CommunitySATAcknowledgement similarCommunititesHref={similarCommunititesHref} heading={heading} subheading={subheading} />
-      </CommunitySATAcknowledgementWrapper>
+      <CommunityBookATourAcknowledgementWrapper>
+        <CommunityBookATourAcknowledgement similarCommunititesHref={similarCommunititesHref} heading={heading} subheading={subheading} />
+      </CommunityBookATourAcknowledgementWrapper>
       <StyledHr />
       <StyledHeading level="title">Explore communities nearby</StyledHeading>
       <SimilarCommunitiesWrapper>{similarCommunitiesComponent}</SimilarCommunitiesWrapper>
@@ -68,7 +68,7 @@ const CommunitySATConfirmationPopup = ({
   );
 };
 
-CommunitySATConfirmationPopup.propTypes = {
+CommunityBookATourConfirmationPopup.propTypes = {
   similarCommunititesHref: string.isRequired,
   similarCommunities: array.isRequired,
   onTileClick: func.isRequired,
@@ -76,5 +76,5 @@ CommunitySATConfirmationPopup.propTypes = {
   subheading: string,
 };
 
-export default CommunitySATConfirmationPopup;
+export default CommunityBookATourConfirmationPopup;
 
