@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import { string, func, shape, arrayOf, oneOf } from 'prop-types';
 
+import { TIMEOUT } from 'sly/constants/notifications';
 import { connectController } from 'sly/controllers';
 
-// TODO: add timeout support
 class NotificationController extends Component {
   static propTypes = {
     messages: arrayOf(shape({
@@ -14,7 +14,16 @@ class NotificationController extends Component {
     children: func,
   };
 
+  componentWillUnmount() {
+    const { timeoutRef } = this;
+
+    if (timeoutRef) {
+      clearInterval(timeoutRef);
+    }
+  }
+
   addNotification = (message, type = 'default') => {
+    const { handleDismiss } = this;
     const { set, messages } = this.props;
     const messageObj = {
       content: message,
@@ -26,6 +35,7 @@ class NotificationController extends Component {
     set({
       messages,
     });
+    this.timeoutRef = setTimeout(() => handleDismiss(message), TIMEOUT);
   };
 
   notifyInfo = (message) => {
@@ -50,10 +60,10 @@ class NotificationController extends Component {
 
   render() {
     const { children, messages } = this.props;
-    const { notifyInfo, notifyError } = this;
+    const { notifyInfo, notifyError, handleDismiss } = this;
 
     return children({
-      messages, dismiss: this.handleDismiss, notifyInfo, notifyError,
+      messages, dismiss: handleDismiss, notifyInfo, notifyError,
     });
   }
 }
