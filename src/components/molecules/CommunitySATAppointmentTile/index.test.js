@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityBookATourAppointmentTile from 'sly/components/molecules/CommunityBookATourAppointmentTile';
+import CommunitySATAppointmentTile from 'sly/components/molecules/CommunitySATAppointmentTile';
 
 const defaultProps = {
   communityName: 'Rhoda Goldman Plaza',
@@ -9,15 +9,15 @@ const defaultProps = {
   appointmentText: 'Saturday, October 21 in the Morning',
 };
 
-const wrap = (props = {}) => shallow(<CommunityBookATourAppointmentTile {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<CommunitySATAppointmentTile {...defaultProps} {...props} />);
 
-describe('CommunityBookATourAppointmentTile', () => {
+describe('CommunitySATAppointmentTile', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBe(false);
   });
 
-  it('renders CommunityBookATourAppointmentTile', () => {
+  it('renders CommunitySATAppointmentTile', () => {
     const wrapper = wrap().dive();
     expect(wrapper.contains(defaultProps.communityName)).toBe(true);
     expect(wrapper.contains(defaultProps.appointmentText)).toBe(true);

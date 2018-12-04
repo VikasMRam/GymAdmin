@@ -23,11 +23,11 @@ const FullWrapper = styled.div`
 `;
 
 const CommunityStickyFooter = ({
-  onBookATourClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
+  onSATClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
 }) => (
   <FullWrapper>
     <CommunityActions
-      onBookATourClick={onBookATourClick}
+      onSATClick={onSATClick}
       onGCPClick={onGCPClick}
       onAQClick={onAQClick}
       isAlreadyTourScheduled={isAlreadyTourScheduled}
@@ -37,7 +37,7 @@ const CommunityStickyFooter = ({
 );
 
 CommunityStickyFooter.propTypes = {
-  onBookATourClick: func,
+  onSATClick: func,
   onGCPClick: func,
   onAQClick: func,
   isAlreadyTourScheduled: bool,

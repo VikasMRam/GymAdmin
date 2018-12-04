@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { string, func, object } from 'prop-types';
 import styled from 'styled-components';
 import moment from 'moment';
@@ -8,6 +8,7 @@ import { size } from 'sly/components/themes';
 import { TIME_OPTIONS, MEDICAID_OPTIONS } from 'sly/constants/bookingForm';
 import { Heading, Block } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
+import HelpBubble from 'sly/components/molecules/HelpBubble';
 
 const HeadingSection = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
@@ -50,11 +51,11 @@ const MedicaidLabel = StyledBlock.extend`
   align-items: center;
 `;
 
-// const StyledIcon = styled(Icon)`
-//   margin-left: ${size('spacing.small')};
-// `;
+const StyledHelpBubble = styled(HelpBubble)`
+  margin-left: ${size('spacing.small')};
+`;
 
-const CommunityBookATourDateForm = ({
+const CommunitySATDateForm = ({
   error, onDateChange, onTimeChange, handleSubmit, userDetails,
 }) => {
   const from = moment();
@@ -82,10 +83,13 @@ const CommunityBookATourDateForm = ({
         onChange={onTimeChange}
       />
       {!(userDetails && userDetails.medicaidCoverage) &&
-        <fragment>
+        <Fragment>
           <MedicaidLabel size="caption">
             Do you qualify for Medicaid?
-            {/* <StyledIcon icon="help" size="regular" palette="slate" variation="filler" /> */}
+            <StyledHelpBubble>
+              Typically, Medicare and Medicaid cannot be used for monthly rent in long-term care communities.<br />
+              However, veteran&apos;s benefits and long term care insurance can help bridge the cost.
+            </StyledHelpBubble>
           </MedicaidLabel>
           <StyledTimeField
             options={MEDICAID_OPTIONS}
@@ -93,14 +97,14 @@ const CommunityBookATourDateForm = ({
             type="boxChoice"
             component={ReduxField}
           />
-        </fragment>
+        </Fragment>
       }
       {error && <Block palette="danger">{error}</Block>}
     </form>
   );
 };
 
-CommunityBookATourDateForm.propTypes = {
+CommunitySATDateForm.propTypes = {
   error: string,
   userDetails: object,
   onDateChange: func,
@@ -108,4 +112,4 @@ CommunityBookATourDateForm.propTypes = {
   handleSubmit: func,
 };
 
-export default CommunityBookATourDateForm;
+export default CommunitySATDateForm;

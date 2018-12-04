@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import CommunityBookATourAcknowledgement from 'sly/components/organisms/CommunityBookATourAcknowledgement';
+import CommunitySATAcknowledgement from 'sly/components/organisms/CommunitySATAcknowledgement';
 
 const defaultProps = {
   communityName: 'Rhoda Goldman Plaza',
@@ -12,7 +12,7 @@ const defaultProps = {
   subheading: 'Your advisor will check if this community is available at this time. They will get back to you shortly by phone or email.',
 };
 
-storiesOf('Organisms|CommunityBookATourAcknowledgement', module)
+storiesOf('Organisms|CommunitySATAcknowledgement', module)
   .add('default', () => (
-    <CommunityBookATourAcknowledgement {...defaultProps} />
+    <CommunitySATAcknowledgement {...defaultProps} />
   ));

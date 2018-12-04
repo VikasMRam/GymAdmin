@@ -33,7 +33,7 @@ const AppointmentText = styled(Block)`
   color: ${palette('white', 0)};
 `;
 
-const CommunityBookATourAppointmentTile = ({ communityName, communityImageUrl, appointmentText }) => {
+const CommunitySATAppointmentTile = ({ communityName, communityImageUrl, appointmentText }) => {
   return (
     <Wrapper>
       <StyledImage aspectRatio="3:2" src={communityImageUrl} />
@@ -45,10 +45,10 @@ const CommunityBookATourAppointmentTile = ({ communityName, communityImageUrl, a
   );
 };
 
-CommunityBookATourAppointmentTile.propTypes = {
+CommunitySATAppointmentTile.propTypes = {
   communityName: string.isRequired,
   communityImageUrl: string.isRequired,
   appointmentText: string.isRequired,
 };
 
-export default CommunityBookATourAppointmentTile;
+export default CommunitySATAppointmentTile;

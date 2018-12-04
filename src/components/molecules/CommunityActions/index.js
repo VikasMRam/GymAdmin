@@ -23,7 +23,7 @@ const StyledButton = styled(Button)`
 `;
 
 const CommunityActions = ({
-  onBookATourClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
+  onSATClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
 }) => (
   <div>
     {!isAlreadyPricingRequested &&
@@ -32,13 +32,13 @@ const CommunityActions = ({
       <MainButton ghost kind="jumbo" onClick={onGCPClick}>Pricing requested</MainButton>}
     <Wrapper>
       <StyledButton ghost onClick={onAQClick}>Ask a question</StyledButton>
-      <StyledButton ghost onClick={onBookATourClick}>{isAlreadyTourScheduled ? 'Tour requested' : 'Book a Tour'}</StyledButton>
+      <StyledButton ghost onClick={onSATClick}>{isAlreadyTourScheduled ? 'Tour requested' : 'Book a Tour'}</StyledButton>
     </Wrapper>
   </div>
 );
 
 CommunityActions.propTypes = {
-  onBookATourClick: func,
+  onSATClick: func,
   onGCPClick: func,
   onAQClick: func,
   isAlreadyTourScheduled: bool,

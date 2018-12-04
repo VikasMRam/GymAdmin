@@ -1,13 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityBookATourDateForm from 'sly/components/organisms/CommunityBookATourDateForm';
+import CommunitySATDateForm from 'sly/components/organisms/CommunitySATDateForm';
 import { Block } from 'sly/components/atoms';
 
 const error = 'Blah';
-const wrap = (props = {}) => shallow(<CommunityBookATourDateForm {...props} />);
+const wrap = (props = {}) => shallow(<CommunitySATDateForm {...props} />);
 
-describe('CommunityBookATourDateForm', () => {
+describe('CommunitySATDateForm', () => {
   it('renders', () => {
     const wrapper = wrap();
 

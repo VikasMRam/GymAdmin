@@ -51,7 +51,7 @@ const ContactByTextField = StyledField.extend`
   grid-template-columns: repeat(auto-fit, ${size('layout.col3')});
 `;
 
-const CommunityBookATourContactForm = ({
+const CommunitySATContactForm = ({
   error, user, userDetails, heading, subheading, onAdvisorHelpClick, onContactByTextMsgChange, handleSubmit,
 }) => {
   return (
@@ -101,7 +101,7 @@ const CommunityBookATourContactForm = ({
   );
 };
 
-CommunityBookATourContactForm.propTypes = {
+CommunitySATContactForm.propTypes = {
   user: object,
   userDetails: object,
   error: string,
@@ -112,4 +112,4 @@ CommunityBookATourContactForm.propTypes = {
   subheading: string.isRequired,
 };
 
-export default CommunityBookATourContactForm;
+export default CommunitySATContactForm;
