@@ -3,17 +3,17 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import CommunitySATContactForm from 'sly/components/organisms/CommunitySATContactForm';
+import CommunityBookATourContactForm from 'sly/components/organisms/CommunityBookATourContactForm';
 import { withPreventDefault } from 'sly/services/helpers/forms';
 
 
-const CommunitySATContactFormContainer = reduxForm({
-  form: 'CommunitySATContactForm',
+const CommunityBookATourContactFormContainer = reduxForm({
+  form: 'CommunityBookATourContactForm',
   destroyOnUnmount: false,
   initialValues: {
     question: '',
   },
-})(CommunitySATContactForm);
+})(CommunityBookATourContactForm);
 
 const user = {
   id: 1,
@@ -26,8 +26,8 @@ const userDetails = {
   contactByTextMsg: 'yes',
 };
 
-storiesOf('Organisms|CommunitySATContactForm', module).add('default', () => (
-  <CommunitySATContactFormContainer
+storiesOf('Organisms|CommunityBookATourContactForm', module).add('default', () => (
+  <CommunityBookATourContactFormContainer
     handleSubmit={withPreventDefault(action('form submitted'))}
     onAdvisorHelpClick={action('onAdvisorHelpClick')}
     onMedicaidHelpClick={action('onMedicaidHelpClick')}
@@ -36,7 +36,7 @@ storiesOf('Organisms|CommunitySATContactForm', module).add('default', () => (
     subheading="A local senior living advisor will help get you set up a tour with this community."
   />
 )).add('Guest User', () => (
-  <CommunitySATContactFormContainer
+  <CommunityBookATourContactFormContainer
     handleSubmit={withPreventDefault(action('form submitted'))}
     onAdvisorHelpClick={action('onAdvisorHelpClick')}
     onMedicaidHelpClick={action('onMedicaidHelpClick')}
@@ -45,7 +45,7 @@ storiesOf('Organisms|CommunitySATContactForm', module).add('default', () => (
     subheading="A local senior living advisor will help get you set up a tour with this community."
   />
 )).add('Guest User with User Details', () => (
-  <CommunitySATContactFormContainer
+  <CommunityBookATourContactFormContainer
     handleSubmit={withPreventDefault(action('form submitted'))}
     onAdvisorHelpClick={action('onAdvisorHelpClick')}
     onMedicaidHelpClick={action('onMedicaidHelpClick')}
@@ -56,7 +56,7 @@ storiesOf('Organisms|CommunitySATContactForm', module).add('default', () => (
   />
 ))
   .add('Pricing Wizard', () => (
-    <CommunitySATContactFormContainer
+    <CommunityBookATourContactFormContainer
       handleSubmit={withPreventDefault(action('form submitted'))}
       onAdvisorHelpClick={action('onAdvisorHelpClick')}
       onMedicaidHelpClick={action('onMedicaidHelpClick')}

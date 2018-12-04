@@ -1,6 +1,6 @@
 import { reduxForm } from 'redux-form';
 
-import CommunitySATContactForm from 'sly/components/organisms/CommunitySATContactForm';
+import CommunityBookATourContactForm from 'sly/components/organisms/CommunityBookATourContactForm';
 import { createValidator, required, usPhone } from 'sly/services/validation';
 
 const validate = createValidator({
@@ -10,6 +10,6 @@ const validate = createValidator({
 
 export default reduxForm({
   validate,
-  form: 'SATWizardForm',
+  form: 'BookATourWizardForm',
   destroyOnUnmount: false,
-})(CommunitySATContactForm);
+})(CommunityBookATourContactForm);

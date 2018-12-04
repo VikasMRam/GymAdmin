@@ -22,14 +22,14 @@ describe('CommunityActions', () => {
     expect(wrapper.find('MainButton').contains('Pricing requested')).toBe(true);
   });
 
-  it('does handles onSATClick', () => {
-    const onSATClick = jest.fn();
-    const wrapper = wrap({ onSATClick });
-    const SATButton = wrapper.find('Styled(Button)');
+  it('does handles onBookATourClick', () => {
+    const onBookATourClick = jest.fn();
+    const wrapper = wrap({ onBookATourClick });
+    const BookATourButton = wrapper.find('Styled(Button)');
 
-    expect(SATButton).toHaveLength(2);
-    SATButton.at(1).simulate('click');
-    expect(onSATClick).toHaveBeenCalled();
+    expect(BookATourButton).toHaveLength(2);
+    BookATourButton.at(1).simulate('click');
+    expect(onBookATourClick).toHaveBeenCalled();
   });
 
   it('does handles onGCPClick', () => {

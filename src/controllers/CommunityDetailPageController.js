@@ -268,7 +268,7 @@ class CommunityDetailPageController extends Component {
     });
   };
 
-  handleSATClick = () => {
+  handleBookATourClick = () => {
     const { community, history } = this.props;
     const { id } = community;
     const event = {
@@ -380,7 +380,7 @@ class CommunityDetailPageController extends Component {
         setQueryParams={setQueryParams}
         onParamsRemove={this.handleParamsRemove}
         onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
-        onSATClick={this.handleSATClick}
+        onBookATourClick={this.handleBookATourClick}
         onGCPClick={this.handleGCPClick}
         onToggleAskAgentQuestionModal={this.handleToggleAskAgentQuestionModal}
         isAlreadyTourScheduled={isAlreadyTourScheduled}

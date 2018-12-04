@@ -7,7 +7,7 @@ import CommunityActions from 'sly/components/molecules/CommunityActions';
 storiesOf('Molecules|CommunityActions', module)
   .add('default', () => (
     <CommunityActions
-      onSATClick={action('onSATClick')}
+      onBookATourClick={action('onBookATourClick')}
       onGCPClick={action('onGCPClick')}
       onAQClick={action('onAQClick')}
     />
@@ -15,7 +15,7 @@ storiesOf('Molecules|CommunityActions', module)
   .add('with isAlreadyTourScheduled', () => (
     <CommunityActions
       isAlreadyTourScheduled
-      onSATClick={action('onSATClick')}
+      onBookATourClick={action('onBookATourClick')}
       onGCPClick={action('onGCPClick')}
       onAQClick={action('onAQClick')}
     />
@@ -23,7 +23,7 @@ storiesOf('Molecules|CommunityActions', module)
   .add('with isAlreadyPricingRequested', () => (
     <CommunityActions
       isAlreadyPricingRequested
-      onSATClick={action('onSATClick')}
+      onBookATourClick={action('onBookATourClick')}
       onGCPClick={action('onGCPClick')}
       onAQClick={action('onAQClick')}
     />
