@@ -22,7 +22,7 @@ import App from 'sly/components/App';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 import crypto from 'crypto';
-import url from 'url';
+import { removeQueryParamFromURL } from './services/helpers/url';
 
 const utmParams = [
   'utm_content',
@@ -101,7 +101,9 @@ app.use(async (req, res, next) => {
     if (!req.cookies.sly_uuid) {
       setCookie('sly_uuid', req.query.sly_uuid);
     }
-    res.redirect(url.parse(req.url).pathname);
+    const newUrl = removeQueryParamFromURL('sly_uuid', req.url);
+    res.redirect(newUrl);
+    return;
   }
 
   if (!req.cookies.sly_uuid) {
