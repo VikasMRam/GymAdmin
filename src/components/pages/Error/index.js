@@ -12,7 +12,7 @@ import Footer from 'sly/components/organisms/Footer';
 
 const Wrapper = styled.div`
   position: relative;
-  background-color: ${palette('white', 0)};
+  background-color: ${palette('white', 'base')};
   margin: calc(${size('breakpoint.tablet')}/4) auto;
   content-align: center;
   text-align: center;

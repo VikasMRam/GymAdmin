@@ -23,7 +23,7 @@ const Wrapper = styled(Link)`
       // TODO: @pranesh-seniorly this should be flexbox and should figure out sizes by itsef
       &:hover {
         cursor: pointer;
-        background: ${palette('white', 0)};
+        background: ${palette('white', 'base')};
         box-shadow: 0 ${size('spacing.regular')} ${size('spacing.large')} ${palette('slate', 'filler')}80;
       }
     `,

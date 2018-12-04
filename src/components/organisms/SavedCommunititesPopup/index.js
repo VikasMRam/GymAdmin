@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   position: fixed;
   top: 0;
   right: 0;
-  background-color: ${palette('white', 0)};
+  background-color: ${palette('white', 'base')};
   height: 100%;
   overflow: auto;
   z-index: ${key('zIndexes.modal.overlay')};

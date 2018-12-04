@@ -19,7 +19,7 @@ const Wrapper = styled.div`
     default: css`background-color: ${palette('slate', 0)};`,
     error: css`background-color: ${palette('danger', 0)};`,
   })};
-  color: ${palette('white', 0)};
+  color: ${palette('white', 'base')};
   transition: all ${key('transitions.slow.inOut')};
 `;
 

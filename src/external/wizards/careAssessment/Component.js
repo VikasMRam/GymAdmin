@@ -48,7 +48,7 @@ const BottomWrapper = styled.div`
   // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/10183406/
   position: absolute;
   width: 100%;
-  background-color: ${palette('white', 0)};
+  background-color: ${palette('white', 'base')};
   padding-bottom: ${size('spacing.xLarge')};
   bottom: 0;
   right: ${size('spacing.xxLarge')};

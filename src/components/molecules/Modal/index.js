@@ -14,7 +14,7 @@ injectGlobal`
 `;
 
 const ModalBox = styled(ReactModal)`
-  background-color: ${ifProp('transparent', 'transparent', palette('white', 0))};
+  background-color: ${ifProp('transparent', 'transparent', palette('white', 'base'))};
   outline: none;
 
   > article {
@@ -55,8 +55,8 @@ const StyledReactModal = styled(({ className, ...props }) => (
 `;
 
 const ModalContext = styled.article`
-  background-color: ${ifProp('transparent', 'transparent', palette('white', 0))};
-  color: ${ifProp('transparent', palette('white', 0), palette('slate', 0))};
+  background-color: ${ifProp('transparent', 'transparent', palette('white', 'base'))};
+  color: ${ifProp('transparent', palette('white', 'base'), palette('slate', 0))};
   position: absolute;
   display: flex;
   flex-direction: column;

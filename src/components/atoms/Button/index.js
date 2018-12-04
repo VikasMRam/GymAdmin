@@ -10,10 +10,10 @@ const backgroundColor = ({
   ghost, disabled, transparent, selectable, selected,
 }) => {
   if (disabled) {
-    return palette('white', 0);
+    return palette('white', 'base');
   }
   if (ghost || (selectable && !selected)) {
-    return palette('white', 0);
+    return palette('white', 'base');
   }
   return transparent ? 'transparent' : palette(0);
 };
@@ -30,7 +30,7 @@ const foregroundColor = ({
   if (selectable && !selected) {
     return palette('slate', 0);
   }
-  return transparent ? 'none' : palette('white', 0);
+  return transparent ? 'none' : palette('white', 'base');
 };
 
 const borderColor = ({
@@ -49,7 +49,7 @@ const hoverForegroundColor = ({
   disabled, ghost, selectable, selected,
 }) =>
   (selectable && !selected)
-    ? palette('white', 0)
+    ? palette('white', 'base')
     : !disabled && ghost && palette(1);
 
 const activeBackgroundColor = ({ disabled, ghost, transparent }) =>

@@ -21,7 +21,7 @@ const StyledDiv = styled.div`
   align-items: center;
   justify-content: center;
   background: ${palette(1)};
-  color: ${palette('white', 0)};
+  color: ${palette('white', 'base')};
   font-size: ${size('text.subtitle')};
   font-weight: 700;
 `;

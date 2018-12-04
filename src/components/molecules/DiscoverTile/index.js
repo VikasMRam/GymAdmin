@@ -24,7 +24,7 @@ const Wrapper = styled(Link)`
   &:hover {
     color: ${palette('slate', 0)};
     cursor: pointer;
-    background: ${palette('white', 0)};
+    background: ${palette('white', 'base')};
     box-shadow:
       0
       ${size('spacing.small')}

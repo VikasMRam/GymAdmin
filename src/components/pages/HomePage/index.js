@@ -63,7 +63,7 @@ const ImageCreditDiv = styled.div`
 `;
 const ImageCreditLabel = styled.label`
   font-size: ${size('text', 'tiny')};
-  color: ${palette('white', 0)};
+  color: ${palette('white', 'base')};
 `;
 
 const StyledSection = styled(Section)`
