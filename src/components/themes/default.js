@@ -68,7 +68,7 @@ theme.sizes = {
     // laptop breakpoint has to fit: 24 margin + col12 + 24 margin = 1080
   },
 
-  // tablet measures are not rem compatible
+  // tablet measures are not based on our unit (16px, 1rem)
   tabletLayout: {
     gutter:     '1.500rem', // 24px
     col1:       '69px',
@@ -79,17 +79,18 @@ theme.sizes = {
     col6:       '534px',
     col7:       '627px',
     col8:       '720px',
+    // tablet breakpoint fits 24 margin + col8 + 24 margin = 768px, 48rem
   },
 
   // mobile measure are rem compatible TODO: fix numbers
   mobileLayout: {
     gutter:     '1.000rem', // 16px
 
-    col1:       '84px',
-    col2:       '184px',
-    col3:       '284px',
-    col4:       '384px',
-    // mobile breakpoint has to fit 16 margin + col4 + 16 margin = 416px
+    col1:       '5.250rem',
+    col2:      '11.500rem',
+    col3:      '17.750rem',
+    col4:      '24.000rem',
+    // mobile breakpoint has to fit 16 margin + col4 + 16 margin = 416px, 26rem
   },
 
   modal: {
