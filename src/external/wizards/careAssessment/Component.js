@@ -12,7 +12,7 @@ import { getStepComponent } from './steps';
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
 
 export const ProgressWrapper = styled.div`
-  background-color: ${palette('primary', 3)};
+  background-color: ${palette('primary', 'stroke')};
 `;
 const ProgressBar = styled.div`
   background-color: ${palette('secondary', 'base')};

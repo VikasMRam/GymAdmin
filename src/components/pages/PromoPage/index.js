@@ -112,7 +112,7 @@ const ThreeColumnWrapper = ColumnWrapper.extend`
   }
 `;
 const StyledHr = styled(Hr)`
-  border-color: ${palette('primary', 3)};
+  border-color: ${palette('primary', 'stroke')};
 `;
 const UIColumnWrapper = ColumnWrapper.extend`
   > * {

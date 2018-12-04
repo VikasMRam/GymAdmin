@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: ${size('spacing.xLarge')};
-  border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('secondary', 3)};
+  border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('secondary', 'stroke')};
   border-radius: ${size('spacing.tiny')};
 `;
 

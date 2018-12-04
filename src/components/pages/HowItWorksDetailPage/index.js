@@ -73,7 +73,7 @@ const HeroSubheading = styled(Block)`
 `;
 
 const BlueBRWrapper = styled.div`
-  background-color: ${palette('secondary', 3)};
+  background-color: ${palette('secondary', 'stroke')};
 `;
 
 const BottomWrapper = styled.div`
@@ -95,7 +95,7 @@ const FAQHr = styled(Hr)`
 //   width: inherit;
 
 //   display: flex;
-//   border: ${size('border.regular')} solid ${palette('secondary', 3)};
+//   border: ${size('border.regular')} solid ${palette('secondary', 'stroke)};
 //   border-radius: ${size('spacing.small')};
 // `;
 
@@ -106,7 +106,7 @@ const Tab = styled(Link)`
   font-size: ${size('spacing.subtitle')};
   font-weight: bold;
   text-align: center;
-  color: ${p => p.active ? palette('slate', 'base') : palette('slate', 1)};
+  color: ${p => p.active ? palette('slate', 'base') : palette('slate', 'accent')};
 
   :hover {
     cursor: ${p => !p.active ? 'pointer' : ''};

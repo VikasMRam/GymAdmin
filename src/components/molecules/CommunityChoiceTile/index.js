@@ -20,7 +20,7 @@ export const Wrapper = styled.div`
   ${props =>
     props.selected &&
     css`
-      background-color: ${palette('secondary', 3)};
+      background-color: ${palette('secondary', 'stroke')};
     `};
 
   input[type='checkbox'] {

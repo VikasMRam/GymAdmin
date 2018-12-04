@@ -19,7 +19,7 @@ import Link from 'sly/components/atoms/Link';
 
 const HeroWrapper = styled.div`
   position: relative;
-  background-color: ${palette('grayscale', 0)};
+  background-color: ${palette('slate', 'stroke')};
   height: ${size('header.home.heroImage.mobileHeight')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
