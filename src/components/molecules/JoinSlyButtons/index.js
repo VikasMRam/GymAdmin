@@ -41,7 +41,7 @@ const StyledHeading = styled(Heading)`
 StyledHeading.displayName = 'StyledHeading';
 
 const Login = styled.span`
-  color: ${palette('secondary', 0)};
+  color: ${palette('secondary', 'base')};
 
   :hover {
     cursor: pointer;

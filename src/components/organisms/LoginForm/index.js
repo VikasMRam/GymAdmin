@@ -34,7 +34,7 @@ const StyledReduxField = styled(ReduxField)`
 `;
 
 const Signup = styled.span`
-  color: ${palette('secondary', 0)};
+  color: ${palette('secondary', 'base')};
 
   :hover {
     cursor: pointer;

@@ -35,7 +35,7 @@ const StyledHr = styled(Hr)`
 `;
 
 const Login = styled.span`
-  color: ${palette('secondary', 0)};
+  color: ${palette('secondary', 'base')};
 
   :hover {
     cursor: pointer;

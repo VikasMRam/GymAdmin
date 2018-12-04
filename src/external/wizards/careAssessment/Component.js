@@ -15,14 +15,14 @@ export const ProgressWrapper = styled.div`
   background-color: ${palette('primary', 3)};
 `;
 const ProgressBar = styled.div`
-  background-color: ${palette('secondary', 0)};
+  background-color: ${palette('secondary', 'base')};
   height: ${size('spacing.regular')};
   width: ${progressBarWidth}%;
   transition: width ${key('transitions.slow.inOut')};
 `;
 export const CurrentStep = styled.p`
   font-size: ${size('text.caption')};
-  color: ${ifProp('limitReached', palette('secondary', 0), 'initial')};
+  color: ${ifProp('limitReached', palette('secondary', 'base'), 'initial')};
 `;
 const StyledForm = styled.form`
   margin-bottom: calc(${size('spacing.huge')} + ${size('spacing.xxxLarge')});

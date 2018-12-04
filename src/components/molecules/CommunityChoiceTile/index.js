@@ -16,7 +16,7 @@ export const Wrapper = styled.div`
 
   position: relative;
   display: flex;
-  border: ${p => p.borderless ? 0 : size('border.regular')} solid ${palette('secondary', 0)};
+  border: ${p => p.borderless ? 0 : size('border.regular')} solid ${palette('secondary', 'base')};
   ${props =>
     props.selected &&
     css`
@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
     margin: 0px;
   }
   input[type='checkbox']:checked {
-    background-color: ${palette('secondary', 0)};
+    background-color: ${palette('secondary', 'base')};
   }
 
   ${props =>
