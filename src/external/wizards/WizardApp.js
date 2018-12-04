@@ -13,7 +13,7 @@ import Router from 'sly/components/molecules/Router';
 import WizardAppErrorPage from './WizardAppErrorPage';
 import addGlobalStyles from './setGlobalStyles';
 
-import { Controller as CareAssessmentController } from './careAssessment';
+import { Controller as CAWController } from './caw';
 
 addGlobalStyles();
 
@@ -29,7 +29,7 @@ export default class WizardApp extends Component {
   routes = [
     {
       path: `${externalWizardsPath}/caw`,
-      component: CareAssessmentController,
+      component: CAWController,
       exact: true,
     },
   ];
