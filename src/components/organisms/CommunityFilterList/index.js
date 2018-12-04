@@ -34,7 +34,7 @@ const StyledBox = styled(Box)`
 const StyledLink = styled(Link)`
   display: flex;
   margin-bottom: ${size('spacing.regular')};
-  color: ${palette('slate', 0)};
+  color: ${palette('slate', 'base')};
 
   span {
     margin-right: ${size('spacing.small')};

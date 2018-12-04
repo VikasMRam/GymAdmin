@@ -9,10 +9,10 @@ import { Image, Link } from 'sly/components/atoms';
 const Wrapper = styled(Link)`
   display: flex;
   flex-direction: column;
-  color: ${palette('slate', 0)};
+  color: ${palette('slate', 'base')};
 
   &:hover {
-    color: ${palette('slate', 0)};
+    color: ${palette('slate', 'base')};
   }
 
   ${switchProp('layout', {

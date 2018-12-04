@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('layout.col5')};
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-    box-shadow: -${size('spacing.small')} 0 ${size('spacing.regular')} 0 ${palette('slate', 0)}10;
+    box-shadow: -${size('spacing.small')} 0 ${size('spacing.regular')} 0 ${palette('slate', 'base')}10;
   }
 `;
 

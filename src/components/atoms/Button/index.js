@@ -28,7 +28,7 @@ const foregroundColor = ({
     return palette(0);
   }
   if (selectable && !selected) {
-    return palette('slate', 0);
+    return palette('slate', 'base');
   }
   return transparent ? 'none' : palette('white', 'base');
 };

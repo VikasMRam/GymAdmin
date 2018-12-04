@@ -28,7 +28,7 @@ const FixedWidthContainer = styled.div`
 
 const HeroWrapper = styled.div`
   position: relative;
-  background-color: ${palette('slate', 0)};
+  background-color: ${palette('slate', 'base')};
   height: 40vh;
   max-height: ${size('layout.col5')};
 
@@ -106,7 +106,7 @@ const Tab = styled(Link)`
   font-size: ${size('spacing.subtitle')};
   font-weight: bold;
   text-align: center;
-  color: ${p => p.active ? palette('slate', 0) : palette('slate', 1)};
+  color: ${p => p.active ? palette('slate', 'base') : palette('slate', 1)};
 
   :hover {
     cursor: ${p => !p.active ? 'pointer' : ''};

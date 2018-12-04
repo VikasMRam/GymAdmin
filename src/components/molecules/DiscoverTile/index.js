@@ -10,7 +10,7 @@ const Wrapper = styled(Link)`
   margin-top: ${size('element.xxLarge')};
   text-align: center;
 
-  color: ${palette('slate', 0)};
+  color: ${palette('slate', 'base')};
 
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.tiny')};
@@ -22,7 +22,7 @@ const Wrapper = styled(Link)`
     , transform ${key('transitions.default')};
 
   &:hover {
-    color: ${palette('slate', 0)};
+    color: ${palette('slate', 'base')};
     cursor: pointer;
     background: ${palette('white', 'base')};
     box-shadow:
