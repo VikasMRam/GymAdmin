@@ -80,7 +80,7 @@ const CommunityBookATourContactForm = ({
         label="Add a note"
         type="textarea"
         rows="5"
-        placeholder="Anything you'd like your partner agent to know about this tour or any questions"
+        placeholder="Anything you'd like your partner agent to know or any questions"
         component={ReduxField}
       />
       {!(userDetails && userDetails.contactByTextMsg) &&
