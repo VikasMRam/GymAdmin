@@ -23,7 +23,7 @@ const MorePicsMobile = styled(Button)`
 `;
 
 const BottomRightWrapper = styled.span`
-  background: ${palette('slate', 0)}80;
+  background: ${palette('slate', 'base')}80;
   font-size: ${size('text.tiny')};
   padding: ${size('spacing.small')} ${size('spacing.regular')};
 `;

@@ -63,7 +63,7 @@ export const HeaderMenu = styled.div`
   width: 100%;
   position: absolute;
   top: ${size('header.menu.position.top.mobile')};
-  background: ${palette('white', 0)};
+  background: ${palette('white', 'base')};
   z-index: ${key('zIndexes.header')};
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
 

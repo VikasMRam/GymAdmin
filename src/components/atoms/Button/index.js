@@ -10,12 +10,12 @@ const backgroundColor = ({
   ghost, disabled, transparent, selectable, selected,
 }) => {
   if (disabled) {
-    return palette('white', 0);
+    return palette('white', 'base');
   }
   if (ghost || (selectable && !selected)) {
-    return palette('white', 0);
+    return palette('white', 'base');
   }
-  return transparent ? 'transparent' : palette(0);
+  return transparent ? 'transparent' : palette('base');
 };
 
 const foregroundColor = ({
@@ -25,12 +25,12 @@ const foregroundColor = ({
     return palette('slate', 'stroke');
   }
   if (ghost) {
-    return palette(0);
+    return palette('base');
   }
   if (selectable && !selected) {
-    return palette('slate', 0);
+    return palette('slate', 'base');
   }
-  return transparent ? 'none' : palette('white', 0);
+  return transparent ? 'none' : palette('white', 'base');
 };
 
 const borderColor = ({
@@ -43,20 +43,20 @@ const borderColor = ({
 };
 
 const hoverBackgroundColor = ({ disabled, ghost, transparent }) =>
-  !disabled && !ghost && !transparent && palette(1);
+  !disabled && !ghost && !transparent && palette('accent');
 
 const hoverForegroundColor = ({
   disabled, ghost, selectable, selected,
 }) =>
   (selectable && !selected)
-    ? palette('white', 0)
-    : !disabled && ghost && palette(1);
+    ? palette('white', 'base')
+    : !disabled && ghost && palette('accent');
 
 const activeBackgroundColor = ({ disabled, ghost, transparent }) =>
-  !disabled && !ghost && !transparent && palette(2);
+  !disabled && !ghost && !transparent && palette('filler');
 
 const activeForegroundColor = ({ disabled, ghost }) =>
-  !disabled && ghost && palette(2);
+  !disabled && ghost && palette('filler');
 
 const height = ({ kind }) => {
   switch (kind) {

@@ -8,7 +8,7 @@ import config from 'sly/config';
 
 const FooterWrapper = styled.footer`
   background-color: ${palette('slate', 'stroke')};
-  color: ${palette('white', 0)};
+  color: ${palette('white', 'base')};
 `;
 
 const FooterTopWrapper = styled.div`
@@ -76,14 +76,14 @@ const GroupHeading = styled.div`
 
 const GroupItem = styled(Link)`
   display: block;
-  color: ${palette('white', 0)};
+  color: ${palette('white', 'base')};
   font-size: ${size('spacing.large')};
   text-decoration: none;
   margin-bottom: ${size('spacing.regular')};
 `;
 
 const StyledHR = styled(Hr)`
-  border-top: ${size('spacing.nano')} solid ${palette('white', 0)};
+  border-top: ${size('spacing.nano')} solid ${palette('white', 'base')};
   margin-bottom: ${size('spacing.regular')};
 `;
 
@@ -127,7 +127,7 @@ const FooterIcon = styled(Icon)`
 `;
 
 const TradeMark = styled.div`
-  color: ${palette('white', 0)};
+  color: ${palette('white', 'base')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     order: 1;

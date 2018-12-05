@@ -23,7 +23,7 @@ export const FilterButton = styled(IconButton)`
 export const ClearAllButton = styled(Button)`
   display: flex;
   flex-direction: row;
-  color: ${palette('primary', 0)};
+  color: ${palette('primary', 'base')};
 `;
 
 const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {

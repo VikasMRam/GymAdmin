@@ -10,12 +10,12 @@ export const StyledIcon = styled(Icon)`
   svg {
     #check {
       display: ${ifProp('checked', 'block', 'none')};
-      fill: ${palette('white', 0)};
+      fill: ${palette('white', 'base')};
     }
     #box {
       stroke: ${palette('slate', 'stroke')};
     }
-    color: ${ifProp('checked', palette('secondary', 0), palette('white', 0))};
+    color: ${ifProp('checked', palette('secondary', 'base'), palette('white', 'base'))};
   }
 `;
 

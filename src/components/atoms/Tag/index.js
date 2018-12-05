@@ -8,7 +8,7 @@ const Tag = styled.div`
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  color: ${palette(1)};
+  color: ${palette('accent')};
   font-size: ${size('text.caption')};
   height: ${size('element.small')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};

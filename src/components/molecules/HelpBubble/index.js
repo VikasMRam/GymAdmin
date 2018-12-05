@@ -10,7 +10,7 @@ import { Icon } from 'sly/components/atoms';
 
 const TooltipContent = styled(ReactTooltip)`
   padding: ${size('spacing.regular')};
-  color: ${palette('white', 0)} !important;
+  color: ${palette('white', 'base')} !important;
   background-color: ${palette('slate', 'base')} !important;
   border-radius: ${size('spacing.tiny')};
   font-size: ${size('text.caption')};

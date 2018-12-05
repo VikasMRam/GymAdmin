@@ -22,7 +22,7 @@ const StyledDiv = styled.div`
   position: fixed;
   top: -40vh;
   left: -100px;
-  background-color: ${palette('white', 0)};
+  background-color: ${palette('white', 'base')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   width: 200px;
   height: auto;

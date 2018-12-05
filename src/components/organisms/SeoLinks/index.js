@@ -35,7 +35,7 @@ const LinkList = styled.div`
 
   > a {
     display: block;
-    color: ${palette('slate', 0)};
+    color: ${palette('slate', 'base')};
     margin-bottom: ${size('spacing.large')};
   }
 `;

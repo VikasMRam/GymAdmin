@@ -20,8 +20,8 @@ const StyledDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${palette(1)};
-  color: ${palette('white', 0)};
+  background: ${palette('accent')};
+  color: ${palette('white', 'base')};
   font-size: ${size('text.subtitle')};
   font-weight: 700;
 `;

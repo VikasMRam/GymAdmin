@@ -16,10 +16,10 @@ const Wrapper = styled.div`
   padding: ${size('spacing.small')} ${size('spacing.large')};
   border-radius: ${size('spacing.small')};
   ${switchProp('type', {
-    default: css`background-color: ${palette('slate', 0)};`,
-    error: css`background-color: ${palette('danger', 0)};`,
+    default: css`background-color: ${palette('slate', 'base')};`,
+    error: css`background-color: ${palette('danger', 'base')};`,
   })};
-  color: ${palette('white', 0)};
+  color: ${palette('white', 'base')};
   transition: all ${key('transitions.slow.inOut')};
 `;
 

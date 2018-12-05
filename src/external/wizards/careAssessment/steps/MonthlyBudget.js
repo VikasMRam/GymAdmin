@@ -21,7 +21,7 @@ export const Description = styled.p`
 `;
 const MoneyValue = styled(Heading)`
   font-weight: normal;
-  color: ${palette('secondary', 0)};
+  color: ${palette('secondary', 'base')};
   margin-bottom: ${size('spacing.large')};
 `;
 

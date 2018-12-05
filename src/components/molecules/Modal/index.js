@@ -14,7 +14,7 @@ injectGlobal`
 `;
 
 const ModalBox = styled(ReactModal)`
-  background-color: ${ifProp('transparent', 'transparent', palette('white', 0))};
+  background-color: ${ifProp('transparent', 'transparent', palette('white', 'base'))};
   outline: none;
 
   > article {
@@ -37,8 +37,8 @@ const StyledReactModal = styled(({ className, ...props }) => (
 ))`
   position: fixed;
   // for old browsers
-  background-color: ${palette('slate', 0)};
-  background-color: ${palette('slate', 0)}e5;
+  background-color: ${palette('slate', 'base')};
+  background-color: ${palette('slate', 'base')}e5;
   top: 0;
   right: 0;
   left: 0;
@@ -55,8 +55,8 @@ const StyledReactModal = styled(({ className, ...props }) => (
 `;
 
 const ModalContext = styled.article`
-  background-color: ${ifProp('transparent', 'transparent', palette('white', 0))};
-  color: ${ifProp('transparent', palette('white', 0), palette('slate', 0))};
+  background-color: ${ifProp('transparent', 'transparent', palette('white', 'base'))};
+  color: ${ifProp('transparent', palette('white', 'base'), palette('slate', 'base'))};
   position: absolute;
   display: flex;
   flex-direction: column;

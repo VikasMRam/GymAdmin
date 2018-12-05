@@ -16,18 +16,18 @@ export const Wrapper = styled.div`
 
   position: relative;
   display: flex;
-  border: ${p => p.borderless ? 0 : size('border.regular')} solid ${palette('secondary', 0)};
+  border: ${p => p.borderless ? 0 : size('border.regular')} solid ${palette('secondary', 'base')};
   ${props =>
     props.selected &&
     css`
-      background-color: ${palette('secondary', 3)};
+      background-color: ${palette('secondary', 'stroke')};
     `};
 
   input[type='checkbox'] {
     margin: 0px;
   }
   input[type='checkbox']:checked {
-    background-color: ${palette('secondary', 0)};
+    background-color: ${palette('secondary', 'base')};
   }
 
   ${props =>

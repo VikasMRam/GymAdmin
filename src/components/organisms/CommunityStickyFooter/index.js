@@ -9,7 +9,7 @@ const FullWrapper = styled.div`
   position: fixed;
   left: 0;
   bottom: 0;
-  background-color: ${palette('white', 0)};
+  background-color: ${palette('white', 'base')};
   width: 100%;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   z-index: ${key('zIndexes.stickySections')};

@@ -52,7 +52,7 @@ const Wrapper = styled.div`
     }
 
     cursor: pointer;
-    background: ${palette('white', 0)};
+    background: ${palette('white', 'base')};
     box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('slate', 'filler')}80;
 
     Button {
@@ -82,7 +82,7 @@ const ImageWrapper = styled(Image)`
       width: ${size('tile.regular.width')};
       height: ${size('tile.regular.height')};
       max-width: none;
-      background: ${palette('white', 0)};
+      background: ${palette('white', 'base')};
     }
   }
 `;

@@ -26,11 +26,11 @@ const TextOverlay = styled.div`
 `;
 
 const CommunityName = styled(Heading)`
-  color: ${palette('white', 0)};
+  color: ${palette('white', 'base')};
 `;
 
 const AppointmentText = styled(Block)`
-  color: ${palette('white', 0)};
+  color: ${palette('white', 'base')};
 `;
 
 const CommunityBookATourAppointmentTile = ({ communityName, communityImageUrl, appointmentText }) => {

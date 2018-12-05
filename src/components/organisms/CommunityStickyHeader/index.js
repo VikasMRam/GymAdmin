@@ -8,7 +8,7 @@ import { Link } from 'sly/components/atoms';
 
 const StyledNav = styled.nav`
   width: 100%;
-  background: ${palette('white', 0)};
+  background: ${palette('white', 'base')};
   border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   padding: ${size('spacing.large')};
   transform-origin: center -100%;
