@@ -14,11 +14,11 @@ import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-import CAWController from 'sly/external/wizards/caw/Controller';
+import CareAssessmentController from 'sly/external/wizards/careAssessment/Controller';
 
 const HeroWrapper = styled.div`
   position: relative;
-  background-color: ${palette('danger', 0)};
+  background-color: ${palette('danger', 'base')};
   height: calc(${size('header.home.heroImage.mobileHeight')});
   width:100%;
 
@@ -112,7 +112,7 @@ const ThreeColumnWrapper = ColumnWrapper.extend`
   }
 `;
 const StyledHr = styled(Hr)`
-  border-color: ${palette('primary', 3)};
+  border-color: ${palette('primary', 'stroke')};
 `;
 const UIColumnWrapper = ColumnWrapper.extend`
   > * {
@@ -478,7 +478,7 @@ const PromoPage = ({
         </StyledSection>
         { isWizardActive &&
         <Modal closeable isOpen layout="wizard" onClose={() => wizardStatus(false)} >
-          <CAWController currentStep={2} locationSearchParams={{ city: 'san-francisco', state: 'california' }} />
+          <CareAssessmentController currentStep={2} locationSearchParams={{ city: 'san-francisco', state: 'california' }} />
         </Modal>
         }
       </TemplateContent>

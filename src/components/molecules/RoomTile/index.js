@@ -24,9 +24,9 @@ const Wrapper = styled.div`
     }
     &:hover {
       cursor: default;
-      box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')} ${palette('slate', 1, true)};
+      box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')} ${palette('slate', 'accent')};
       opacity: 0.75;
-      background: ${palette('white', 2)};
+      background: ${palette('white', 'base')};
 
       Button {
         display: initial;

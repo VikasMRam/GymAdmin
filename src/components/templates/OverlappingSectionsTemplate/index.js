@@ -21,7 +21,7 @@ const FixedWidthContainer = styled.div`
 
 const HeroWrapper = styled.div`
   position: relative;
-  background-color: ${palette('slate', 0)};
+  background-color: ${palette('slate', 'base')};
   height: 40vh;
   max-height: ${size('layout.col5')};
 

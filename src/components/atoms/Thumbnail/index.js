@@ -13,7 +13,7 @@ const StyledImg = styled(Image)`
   ${props =>
     props.selected &&
     css`
-      border: ${size('border.xxLarge')} solid ${palette(0)};
+      border: ${size('border.xxLarge')} solid ${palette('base')};
     `};
 `;
 

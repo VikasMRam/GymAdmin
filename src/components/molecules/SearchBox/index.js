@@ -70,17 +70,17 @@ ${switchProp('layout', {
       height: auto;
       background: none;
       > span {
-        color: ${palette('primary', 0)};
+        color: ${palette('primary', 'base')};
       }
 `,
   })};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-right: 0px;
-    background-color: ${palette('primary', 0)};
+    background-color: ${palette('primary', 'base')};
     width: ${size('element.xxLarge')};
     > span {
-      color: ${palette('white', 0)};
+      color: ${palette('white', 'base')};
       vertical-align: middle;
     }
   }
@@ -93,7 +93,7 @@ const SearchSuggestionsWrapper = styled.div`
   top: calc(100% + ${size('spacing.regular')});
   left: 0;
   right: 0;
-  background: ${palette('white', 0)};
+  background: ${palette('white', 'base')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.xLarge')}
     ${palette('slate', 'stroke')};
@@ -104,7 +104,7 @@ const SearchSuggestionsWrapper = styled.div`
     right: 0;
   }
 `;
-const searchSuggestionBGColor = p => p.active ? palette('slate', 'background') : palette('white', 0);
+const searchSuggestionBGColor = p => p.active ? palette('slate', 'background') : palette('white', 'base');
 const SearchSuggestion = styled.div`
   width: 100%;
   padding: ${size('spacing.large')};

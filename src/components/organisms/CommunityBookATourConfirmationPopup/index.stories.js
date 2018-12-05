@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import CommunitySATConfirmationPopup from 'sly/components/organisms/CommunitySATConfirmationPopup';
+import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
 import Modal from 'sly/components/molecules/Modal/index';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
@@ -15,8 +15,8 @@ const defaultProps = {
   subheading: 'Your advisor will check if this community is available at this time. They will get back to you shortly by phone or email.',
 };
 
-storiesOf('Organisms|CommunitySATConfirmationPopup', module)
-  .add('default', () => <CommunitySATConfirmationPopup {...defaultProps} />)
+storiesOf('Organisms|CommunityBookATourConfirmationPopup', module)
+  .add('default', () => <CommunityBookATourConfirmationPopup {...defaultProps} />)
   .add('Within Modal', () => (
     <Modal
       onClose={action('closed')}
@@ -24,6 +24,6 @@ storiesOf('Organisms|CommunitySATConfirmationPopup', module)
       closeable
       layout="double"
     >
-      <CommunitySATConfirmationPopup {...defaultProps} />
+      <CommunityBookATourConfirmationPopup {...defaultProps} />
     </Modal>
   ));

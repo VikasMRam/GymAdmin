@@ -9,21 +9,21 @@ import { Image, Link } from 'sly/components/atoms';
 const Wrapper = styled(Link)`
   display: flex;
   flex-direction: column;
-  color: ${palette('slate', 0)};
+  color: ${palette('slate', 'base')};
 
   &:hover {
-    color: ${palette('slate', 0)};
+    color: ${palette('slate', 'base')};
   }
 
   ${switchProp('layout', {
     regular: css`
-      border: ${size('border.regular')} solid ${palette('secondary', 3)};
+      border: ${size('border.regular')} solid ${palette('secondary', 'stroke')};
       padding: ${size('spacing.xLarge')};
       border-radius: ${size('spacing.small')};
       // TODO: @pranesh-seniorly this should be flexbox and should figure out sizes by itsef
       &:hover {
         cursor: pointer;
-        background: ${palette('white', 0)};
+        background: ${palette('white', 'base')};
         box-shadow: 0 ${size('spacing.regular')} ${size('spacing.large')} ${palette('slate', 'filler')}80;
       }
     `,

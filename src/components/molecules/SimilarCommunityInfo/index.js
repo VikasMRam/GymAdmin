@@ -17,7 +17,7 @@ const clamp = css`
 `;
 
 const Wrapper = styled.div`
-  color: ${palette('slate', 0)};
+  color: ${palette('slate', 'base')};
   font-size: ${size('text.body')};
   box-sizing: border-box;
   min-width: 0;
@@ -58,7 +58,7 @@ const ClampedLine = styled.div`
 `;
 
 const Description = styled.div`
-  color: ${palette(0)};
+  color: ${palette('base')};
   font-size: ${size('text.caption')};
 `;
 

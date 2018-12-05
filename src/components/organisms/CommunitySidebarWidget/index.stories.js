@@ -9,7 +9,14 @@ storiesOf('Organisms|CommunitySidebarWidget', module)
     <CommunitySidebarWidget
       price={4300}
       rating={3.6}
-      onSATClick={action('onSATClick')}
+      onBookATourClick={action('onBookATourClick')}
+      onGCPClick={action('onGCPClick')}
+      onAQClick={action('onAQClick')}
+    />
+  ))
+  .add('without price and rating', () => (
+    <CommunitySidebarWidget
+      onBookATourClick={action('onBookATourClick')}
       onGCPClick={action('onGCPClick')}
       onAQClick={action('onAQClick')}
     />

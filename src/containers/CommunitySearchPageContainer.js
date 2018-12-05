@@ -21,6 +21,7 @@ import {
   filterLinkPath,
   getSearchParams,
 } from 'sly/services/helpers/search';
+import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
 
 class CommunitySearchPageContainer extends Component {
   static propTypes = {
@@ -79,7 +80,7 @@ class CommunitySearchPageContainer extends Component {
   };
 
   handleOnAdTileClick = () => {
-    this.changeSearchParams({ changedParams: { modal: 'cawWizard' } });
+    this.changeSearchParams({ changedParams: { modal: CARE_ASSESSMENT_WIZARD } });
   };
 
   render() {

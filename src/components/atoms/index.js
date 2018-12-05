@@ -14,7 +14,6 @@ export Paragraph from './Paragraph';
 export Tag from './Tag';
 export Thumbnail from './Thumbnail';
 export TileImage from './TileImage';
-export Tooltip from './Tooltip';
 export Map from './Map';
 export ClampedText from './ClampedText';
 export BoxChoiceTile from './BoxChoiceTile';

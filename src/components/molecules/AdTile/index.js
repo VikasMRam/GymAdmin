@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 
   &:hover {
     cursor: pointer;
-    background: ${palette('white', 0)};
+    background: ${palette('white', 'base')};
     box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('slate', 'filler')}80;
 
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -32,7 +32,7 @@ const Wrapper = styled.div`
 
 const AdImage = styled.div`
   display: flex;
-  background:  ${palette('secondary', 0)};
+  background:  ${palette('secondary', 'base')};
   height: ${size('tile', 'large', 'height')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {

@@ -34,7 +34,7 @@ const StyledBox = styled(Box)`
 const StyledLink = styled(Link)`
   display: flex;
   margin-bottom: ${size('spacing.regular')};
-  color: ${palette('slate', 0)};
+  color: ${palette('slate', 'base')};
 
   span {
     margin-right: ${size('spacing.small')};
@@ -106,7 +106,7 @@ const generateRadioLink = (elem, type, path, selected, nofollow) => {
 };
 
 export const ClearAllButton = styled(Button)`
-  color: ${palette('primary', 0)};
+  color: ${palette('primary', 'base')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;

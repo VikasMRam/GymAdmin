@@ -10,7 +10,7 @@ const thumbColor = ({ disabled }) => palette(disabled ? 2 : 0);
 
 const barColor = palette('slate', 'stroke');
 
-const hoverThumbColor = ({ disabled }) => !disabled && palette(0);
+const hoverThumbColor = ({ disabled }) => !disabled && palette('base');
 
 const thumbHeight = size('slider.knobHeight');
 const thumbWidth = size('slider.knobWidth');

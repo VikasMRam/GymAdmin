@@ -12,17 +12,17 @@ import { getStepComponent } from './steps';
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
 
 export const ProgressWrapper = styled.div`
-  background-color: ${palette('primary', 3)};
+  background-color: ${palette('primary', 'stroke')};
 `;
 const ProgressBar = styled.div`
-  background-color: ${palette('secondary', 0)};
+  background-color: ${palette('secondary', 'base')};
   height: ${size('spacing.regular')};
   width: ${progressBarWidth}%;
   transition: width ${key('transitions.slow.inOut')};
 `;
 export const CurrentStep = styled.p`
   font-size: ${size('text.caption')};
-  color: ${ifProp('limitReached', palette('secondary', 0), 'initial')};
+  color: ${ifProp('limitReached', palette('secondary', 'base'), 'initial')};
 `;
 const StyledForm = styled.form`
   margin-bottom: calc(${size('spacing.huge')} + ${size('spacing.xxxLarge')});
@@ -48,7 +48,7 @@ const BottomWrapper = styled.div`
   // https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/10183406/
   position: absolute;
   width: 100%;
-  background-color: ${palette('white', 0)};
+  background-color: ${palette('white', 'base')};
   padding-bottom: ${size('spacing.xLarge')};
   bottom: 0;
   right: ${size('spacing.xxLarge')};

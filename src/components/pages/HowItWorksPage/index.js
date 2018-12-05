@@ -89,7 +89,7 @@ const SecondContentTiles = styled.div`
 `;
 
 const BottomContent = styled.div`
-  background-color: ${palette('secondary', 3)};
+  background-color: ${palette('secondary', 'stroke')};
   padding-top: ${size('spacing.huge')};
 `;
 

@@ -44,7 +44,7 @@ export default function setGlobalStyles() {
       font-family: Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
       box-sizing: border-box;
     }
-    
+
     html pre {
       font-family: Consolas, Liberation Mono, Menlo, Courier, monospace;
     }
@@ -56,6 +56,10 @@ export default function setGlobalStyles() {
 
     a {
       background-color: transparent;
+    }
+
+    .roko-instabot-widget-button {
+      z-index: 10000!important;
     }
   `;
 }

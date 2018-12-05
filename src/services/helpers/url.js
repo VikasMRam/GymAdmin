@@ -254,3 +254,15 @@ export const getStateAbbr = (state) => {
   const st = titleize(state);
   return stateAbbr[st];
 }
+
+export const removeQueryParamFromURL = (key, sourceURL) => {
+  const [path, queryStringStr] = sourceURL.split('?');
+  const queryStringsObj = parse(queryStringStr);
+  queryStringsObj[key] = undefined;
+  const newQs = stringify(queryStringsObj);
+  let newPath = path;
+  if (newQs !== '') {
+    newPath = `${path}?${newQs}`;
+  }
+  return newPath;
+};

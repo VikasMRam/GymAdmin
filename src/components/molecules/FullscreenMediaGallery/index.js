@@ -23,8 +23,8 @@ export const StyledMediaGallery = styled(MediaGallery)`
 `;
 
 const CopyrightWrapper = styled.div`
-  background: ${palette('slate', 0)}80;
-  color: ${palette('slate', 2)};
+  background: ${palette('slate', 'base')}80;
+  color: ${palette('slate', 'filler')};
   font-size: ${size('text.tiny')};
   padding: ${size('spacing.small')} ${size('spacing.regular')};
 `;

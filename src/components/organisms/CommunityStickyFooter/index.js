@@ -9,7 +9,7 @@ const FullWrapper = styled.div`
   position: fixed;
   left: 0;
   bottom: 0;
-  background-color: ${palette('white', 0)};
+  background-color: ${palette('white', 'base')};
   width: 100%;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   z-index: ${key('zIndexes.stickySections')};
@@ -23,11 +23,11 @@ const FullWrapper = styled.div`
 `;
 
 const CommunityStickyFooter = ({
-  onSATClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
+  onBookATourClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
 }) => (
   <FullWrapper>
     <CommunityActions
-      onSATClick={onSATClick}
+      onBookATourClick={onBookATourClick}
       onGCPClick={onGCPClick}
       onAQClick={onAQClick}
       isAlreadyTourScheduled={isAlreadyTourScheduled}
@@ -37,7 +37,7 @@ const CommunityStickyFooter = ({
 );
 
 CommunityStickyFooter.propTypes = {
-  onSATClick: func,
+  onBookATourClick: func,
   onGCPClick: func,
   onAQClick: func,
   isAlreadyTourScheduled: bool,

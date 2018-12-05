@@ -13,16 +13,11 @@ const Wrapper = styled.div`
   align-items: center;
   flex-wrap: wrap;
   padding: ${size('spacing.large')} ${size('spacing.xLarge')};
-  margin-bottom: ${size('spacing.large')};
   border-top: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-
-  @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    margin-bottom: 0;
-  }
 `;
 
 const PreferenceWrapper = styled.div`
-  display: none;
+  display: inline-flex;
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: block;
   }
