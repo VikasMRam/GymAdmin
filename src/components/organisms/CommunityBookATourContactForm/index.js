@@ -52,10 +52,10 @@ const ContactByTextField = StyledField.extend`
 `;
 
 const CommunityBookATourContactForm = ({
-  error, user, userDetails, heading, subheading, onAdvisorHelpClick, onContactByTextMsgChange, handleSubmit, ...props
+  error, user, userDetails, heading, subheading, onAdvisorHelpClick, onContactByTextMsgChange, handleSubmit,
 }) => {
   return (
-    <form onSubmit={handleSubmit} {...props}>
+    <form onSubmit={handleSubmit}>
       <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
       <SubheadingWrapper>
         <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can a partner agent help?</Link></SubHeading>

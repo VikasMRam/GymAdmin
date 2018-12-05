@@ -89,8 +89,8 @@ const BookATourPage = ({
                 data, onSubmit, isFinalStep, submitEnabled, ...props
               }) => (
                 <Fragment>
-                  <WizardSteps {...props}>
-                    <Body>
+                  <Body>
+                    <WizardSteps {...props}>
                       <WizardStep
                         component={CommunityBookATourDateFormContainer}
                         name="Date"
@@ -108,8 +108,8 @@ const BookATourPage = ({
                         heading={formHeading}
                         subheading={formSubheading}
                       />
-                    </Body>
-                  </WizardSteps>
+                    </WizardSteps>
+                  </Body>
                   <Controls>
                     <BookingFormFooter
                       date={data.scheduledDate}
