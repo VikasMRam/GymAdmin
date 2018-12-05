@@ -57,7 +57,7 @@ const CommunityBookATourDateForm = ({
   const to = moment().add(8, 'days');
 
   return (
-    <form onSubmit={handleSubmit} {...props}>
+    <form onSubmit={handleSubmit}>
       <HeadingSection level="subtitle" size="subtitle">Schedule a Tour</HeadingSection>
       <StyledBlock size="caption">What day did you want to tour?</StyledBlock>
       <StyledField
