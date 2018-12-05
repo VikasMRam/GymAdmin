@@ -17,19 +17,15 @@ const HeadingSection = styled(Heading)`
 const StyledField = styled(Field)`
   display: grid;
   margin-bottom: ${size('spacing.xLarge')};
-  margin-right: -${size('spacing.large')};
+  margin-right: -${size('spacing.regular')};
 
   grid-gap: ${size('spacing.regular')};
-  grid-template-columns: repeat(auto-fit, calc(100% / 2 - ${size('spacing.regular')}));
-
-  @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    grid-gap: ${size('spacing.regular')};
-    grid-template-columns: repeat(auto-fit, calc(100% / 3 - ${size('spacing.regular')}));
-  }
+  grid-template-columns: repeat(auto-fit, calc(100% / 3 - ${size('spacing.regular')}));
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     grid-gap: ${size('spacing.large')};
     grid-template-columns: repeat(auto-fit, calc(100% / 4 - ${size('spacing.large')}));
+    margin-right: -${size('spacing.large')};
   }
 `;
 StyledField.displayName = 'StyledField';
@@ -56,13 +52,13 @@ const StyledHelpBubble = styled(HelpBubble)`
 `;
 
 const CommunityBookATourDateForm = ({
-  error, onDateChange, onTimeChange, handleSubmit, userDetails,
+  error, onDateChange, onTimeChange, handleSubmit, userDetails, ...props
 }) => {
   const from = moment();
   const to = moment().add(8, 'days');
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} {...props}>
       <HeadingSection level="subtitle" size="subtitle">Schedule a Tour</HeadingSection>
       <StyledBlock size="caption">What day did you want to tour?</StyledBlock>
       <StyledField

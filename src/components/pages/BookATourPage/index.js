@@ -36,8 +36,9 @@ const Column = makeColumn(styled.div`
     height: 100%;
   }
 `);
-const Body = makeBody(styled.div``);
-const Controls = makeControls(styled.div``);
+
+const Body = makeBody('div');
+const Controls = makeControls('div');
 
 const StyledCommunityInfo = styled(CommunityInfo)`
   background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
@@ -88,8 +89,8 @@ const BookATourPage = ({
                 data, onSubmit, isFinalStep, submitEnabled, ...props
               }) => (
                 <Fragment>
-                  <Body>
-                    <WizardSteps {...props}>
+                  <WizardSteps {...props}>
+                    <Body>
                       <WizardStep
                         component={CommunityBookATourDateFormContainer}
                         name="Date"
@@ -107,8 +108,8 @@ const BookATourPage = ({
                         heading={formHeading}
                         subheading={formSubheading}
                       />
-                    </WizardSteps>
-                  </Body>
+                    </Body>
+                  </WizardSteps>
                   <Controls>
                     <BookingFormFooter
                       date={data.scheduledDate}
