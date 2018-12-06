@@ -8,7 +8,7 @@ const gradients = [
   { percentage: 0.67, baseColor: white, variant: 'accent' },
   { percentage: 0.33, baseColor: white, variant: 'filler' },
   { percentage: 0.15, baseColor: white, variant: 'stroke' },
-  { percentage: 0.04, baseColor: white, variant: 'background' },
+  { percentage: 0.08, baseColor: white, variant: 'background' },
   { percentage: 0.85, baseColor: black, variant: 'dark' },
 ];
 const clear = color => color || '';
