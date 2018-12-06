@@ -10,7 +10,8 @@ const Wrapper = styled.div`
 `;
 
 export const StyledImage = styled(Image)`
-  border-radius: ${size('border.large')};
+  overflow: hidden;
+  border-radius: ${size('spacing.small')};
   margin-bottom: ${size('spacing.xLarge')};
 `;
 

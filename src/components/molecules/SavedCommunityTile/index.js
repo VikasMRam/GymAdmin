@@ -25,7 +25,7 @@ const ImageWrapper = styled(Image)`
   padding-top: unset;
 
   > img {
-    border-radius: ${size('border.xxLarge')};
+    border-radius: ${size('spacing.small')};
   }
 `;
 ImageWrapper.displayName = 'ImageWrapper';

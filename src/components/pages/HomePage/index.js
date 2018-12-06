@@ -166,8 +166,8 @@ const CenteredTile = styled(({ title, to, image, children, ...props }) => (
     </Image>
   </StyledLink>
 ))`
-  margin-bottom: 
-  border-radius: ${size('spacing.large')};
+  overflow: hidden;
+  border-radius: ${size('spacing.small')};
 `;
 
 const firstRowDiscoverHomes = [

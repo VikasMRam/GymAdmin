@@ -9,6 +9,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   text-align: left;
+  overflow: hidden;
+  border-top-left-radius: ${size('spacing.small')}; 
+  border-top-right-radius: ${size('spacing.small')}; 
   
   > :first-child {
     flex-grow: 0;
