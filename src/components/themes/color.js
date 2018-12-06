@@ -5,7 +5,6 @@ const black = Color('black');
 
 const gradients = [
   { percentage: 1.00, tint: white, variant: 'base' },
-  { percentage: 0.67, tint: white, variant: 'accent' },
   { percentage: 0.33, tint: white, variant: 'filler' },
   { percentage: 0.15, tint: white, variant: 'stroke' },
   { percentage: 0.08, tint: white, variant: 'background' },

@@ -9,20 +9,20 @@ export { colorIndex } from './color';
 const theme = {};
 
 // Color variations are:
-// whole accent filler stroke background
-//  100%    67%    33%    15%         4%
+// whole filler stroke background
+//  100%    33%    15%         8%
 // not all of the variations should be used,
 // see below comments or in storybook
 // DO NOT MODIFY the following without asking Jared
 theme.palette = {
-  slate    : makeColor('#2a333f', ['base', 'accent', 'filler', 'stroke', 'background', 'dark']),
-  grey     : makeColor('#70767E', ['base', 'accent', 'filler', 'stroke', 'background', 'dark']),
-  primary  : makeColor('#186dc5', ['base',           'filler', 'stroke',               'dark']),
-  secondary: makeColor('#56c4c2', ['base',           'filler', 'stroke',               'dark']),
+  slate    : makeColor('#2a333f', ['base', 'filler', 'stroke', 'background', 'dark']),
+  grey     : makeColor('#70767E', ['base', 'filler', 'stroke', 'background', 'dark']),
+  primary  : makeColor('#186dc5', ['base', 'filler', 'stroke',               'dark']),
+  secondary: makeColor('#56c4c2', ['base', 'filler', 'stroke',               'dark']),
   white    : makeColor('#ffffff', ['base']),
-  danger   : makeColor('#dc3133', ['base',                     'stroke',               'dark']),
-  warning  : makeColor('#f3c150', ['base',                     'stroke',               'dark']),
-  green    : makeColor('#4FB75F', ['base',                                             'dark']),
+  danger   : makeColor('#dc3133', ['base',           'stroke',               'dark']),
+  warning  : makeColor('#f3c150', ['base',           'stroke',               'dark']),
+  green    : makeColor('#4FB75F', ['base',                                   'dark']),
 };
 
 if (!isTest) console.table(makeColorTable(theme.palette));
