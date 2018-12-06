@@ -16,7 +16,7 @@ const theme = {};
 // DO NOT MODIFY the following without asking Jared
 theme.palette = {
   slate    : makeColor('#2a333f', ['base', 'accent', 'filler', 'stroke', 'background', 'dark']),
-  grey     : makeColor('#70767E', ['base', 'accent', 'filler', 'stroke', 'background']),
+  grey     : makeColor('#70767E', ['base', 'accent', 'filler', 'stroke', 'background', 'dark']),
   primary  : makeColor('#186dc5', ['base',           'filler', 'stroke',               'dark']),
   secondary: makeColor('#56c4c2', ['base',           'filler', 'stroke',               'dark']),
   white    : makeColor('#ffffff', ['base']),
