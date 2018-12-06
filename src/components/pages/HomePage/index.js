@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
-import { size, assetPath, palette } from 'sly/components/themes';
+import { size, assetPath, palette, gridColumns } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Image, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
@@ -11,7 +11,6 @@ import Modal from 'sly/components/molecules/Modal';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
-import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
@@ -74,93 +73,60 @@ const StyledSection = styled(Section)`
     margin-bottom: ${size('spacing.xLarge')};
   }
 `;
-const ColumnWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-
-  > * {
-    margin-bottom: ${size('spacing.xLarge')};
-  }
-  > *:last-child {
-    margin-right: 0;
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-`;
-const TwoColumnWrapper = ColumnWrapper.extend`
-  > * {
-    margin-right: 0;
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    > * {
-      margin-right: ${size('spacing.xLarge')};
-    }
-  }
-`;
-const ThreeColumnWrapper = ColumnWrapper.extend`
-  > * {
-    margin-right: 0;
-  }
+const TwoColumnWrapper = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
+  ${gridColumns(1, size('spacing.xLarge'))};
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    > *:first-child {
-      margin-right: ${size('spacing.xLarge')};
-    }
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    > * {
-      margin-right: ${size('spacing.xLarge')};
-    }
+    ${gridColumns(2, size('spacing.xLarge'))};
   }
 `;
 
-const UIColumnWrapper = ColumnWrapper.extend`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
+const ThreeColumnWrapper = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
+  ${gridColumns(1, size('spacing.xLarge'))};
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    > *:nth-child(odd) {
-      margin-right: ${size('spacing.xLarge')};
-    }
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    > * {
-      margin-right: ${size('spacing.xLarge')};
-    }
-    > *:nth-child(3n) {
-      margin-right: 0;
-    }
+    ${gridColumns(3, size('spacing.xLarge'))};
   }
 `;
-const MSCColumnWrapper = ColumnWrapper.extend`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
+
+const UIColumnWrapper = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
+  ${gridColumns(1, size('spacing.xLarge'))};
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    > *:nth-child(odd) {
-      margin-right: ${size('spacing.xLarge')};
-    }
+    ${gridColumns(2, size('spacing.xLarge'))};
   }
+  
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    > * {
-      margin-right: ${size('spacing.xLarge')};
-    }
-    > *:nth-child(4n) {
-      margin-right: 0;
-    }
+    ${gridColumns(3, size('spacing.xLarge'))};
   }
 `;
+
+const MSCColumnWrapper = styled.div`
+  margin-bottom: ${size('spacing.xLarge')};
+  ${gridColumns(1, size('spacing.xLarge'))};
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    ${gridColumns(2, size('spacing.xLarge'))};
+  }
+  
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    ${gridColumns(4, size('spacing.xLarge'))};
+  }
+`;
+
 const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
+
 const CWTImage = styled(Image)`
   margin-bottom: ${size('spacing.regular')};
   height: ${size('picture.tiny.height')};
 `;
-const CWTColumnWrapper = ColumnWrapper.extend`
+
+const CWTColumnWrapper = styled.div` 
   margin-bottom: ${size('spacing.xxLarge')};
   > * {
     margin-right: ${size('spacing.large')};
@@ -173,9 +139,35 @@ const CWTColumnWrapper = ColumnWrapper.extend`
     }
   }
 `;
+
 // this is required for IE as it won't consider inline elements as flex children
 const StyledLink = styled(Link)`
   display: block;
+`;
+
+const Centered = styled.div`
+  position: absolute;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const CenteredTile = styled(({ title, to, image, children, ...props }) => (
+  <StyledLink key={title} to={to} {...props}>
+    <Image src={image} aspectRatio="3:2">
+      <Centered>
+        {children}
+      </Centered>
+    </Image>
+  </StyledLink>
+))`
+  margin-bottom: 
+  border-radius: ${size('spacing.large')};
 `;
 
 const firstRowDiscoverHomes = [
@@ -184,7 +176,6 @@ const firstRowDiscoverHomes = [
     description: 'Communities combining comfort and care',
     image: assetPath('images/home/discover-home/care-home.jpeg'),
     buttonText: 'See more',
-    size: 'xLarge',
     searchParams: { size: 'small' },
   },
   {
@@ -192,7 +183,6 @@ const firstRowDiscoverHomes = [
     description: 'Specializing in all of your daily care needs',
     image: assetPath('images/home/discover-home/assisted-living.jpeg'),
     buttonText: 'See more',
-    size: 'xLarge',
     searchParams: { toc: 'assisted-living' },
   },
 ];
@@ -365,7 +355,6 @@ const HomePage = ({
       title={discoverHome.title}
       description={discoverHome.description}
       image={discoverHome.image}
-      size={discoverHome.size}
       buttonText={discoverHome.buttonText}
       onButtonClick={() => onButtonClick(discoverHome)}
     />
@@ -377,27 +366,22 @@ const HomePage = ({
       title={discoverHome.title}
       description={discoverHome.description}
       image={discoverHome.image}
-      size={discoverHome.size}
       buttonText={discoverHome.buttonText}
       onButtonClick={() => onButtonClick(discoverHome)}
     />
   ));
 
   const usefulInformationTilesComponents = usefulInformationTiles.map(usefulInformation => (
-    <StyledLink key={usefulInformation.title} to={usefulInformation.to}>
-      <ImageOverlayContentTile image={usefulInformation.image}>
-        <Heading palette="white">{usefulInformation.title}</Heading>
-      </ImageOverlayContentTile>
-    </StyledLink>
+    <CenteredTile {...usefulInformation}>
+      <Heading palette="white">{usefulInformation.title}</Heading>
+    </CenteredTile>
   ));
 
   const mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
-    <StyledLink key={mostSearchedCity.title} to={mostSearchedCity.to}>
-      <ImageOverlayContentTile size="small" image={mostSearchedCity.image}>
-        <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
-        <Block palette="white">{mostSearchedCity.title}</Block>
-      </ImageOverlayContentTile>
-    </StyledLink>
+    <CenteredTile size="small" {...mostSearchedCity}>
+      <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
+      <Block palette="white">{mostSearchedCity.title}</Block>
+    </CenteredTile>
   ));
 
   const familiesWeHaveHelpedTilesComponents = familiesWeHaveHelpedTiles.map(familyWeHaveHelped => (
@@ -422,14 +406,12 @@ const HomePage = ({
             {secondRowDiscoverHomesComponents}
           </ThreeColumnWrapper>
         </StyledSection>
-        <br />
         <Hr />
         <StyledSection title="Meet Families We’ve Helped">
           <ThreeColumnWrapper>
             {familiesWeHaveHelpedTilesComponents}
           </ThreeColumnWrapper>
         </StyledSection>
-        <br />
         <Hr />
         <StyledSection title="Useful Information">
           <UIColumnWrapper>
@@ -445,16 +427,16 @@ const HomePage = ({
         <Hr />
         <StyledSection>
           <TwoColumnWrapper>
-            <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/partner-with-us.jpeg')}>
+            <CenteredTile image={assetPath('images/home/partner-with-us.jpeg')} to="/providers/crm" title="For Local Referral Agents">
               <Heading palette="white">Partner With Us</Heading>
               <StyledBlock palette="white" level="subtitle">For Local Referral Agents</StyledBlock>
               <Button to="/providers/crm">Get Started</Button>
-            </ImageOverlayContentTile>
-            <ImageOverlayContentTile size="xLarge" image={assetPath('images/home/list-a-property.jpeg')}>
+            </CenteredTile>
+            <CenteredTile image={assetPath('images/home/list-a-property.jpeg')} to="/providers/housing" tile="For Senior Housing Providers">
               <Heading palette="white">List a Property</Heading>
               <StyledBlock palette="white" level="subtitle">For Senior Housing Providers</StyledBlock>
               <Button to="/providers/housing">Get Started</Button>
-            </ImageOverlayContentTile>
+            </CenteredTile>
           </TwoColumnWrapper>
         </StyledSection>
         <Hr />

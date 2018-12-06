@@ -18,7 +18,6 @@ const regular = size('spacing.regular');
 const large = size('spacing.large');
 
 const StyledField = styled(Field)`
-  display: grid;
   margin-bottom: ${size('spacing.xLarge')};
 
   ${gridColumns(3, regular)};

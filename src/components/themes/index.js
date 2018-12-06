@@ -17,6 +17,7 @@ export const columnWidth = (parts, gutter) => css`
 `;
 
 export const gridColumns = (parts, gutter) => css`
+  display: grid;
   grid-gap: ${gutter};
   grid-template-columns: repeat(auto-fit, ${columnWidth(parts, gutter)});
 `;
