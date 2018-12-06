@@ -48,7 +48,7 @@ const PricingFormFooter = ({
 }) => (
   <Wrapper>
     <PreferenceWrapper>
-      <EstimatedPriceText size="caption" variation="accent">
+      <EstimatedPriceText size="caption" palette="grey">
         Your estimated pricing
       </EstimatedPriceText>
       <StyledNumberFormat decimalScale={0} value={price} displayType="text" thousandSeparator prefix="$" />/mo

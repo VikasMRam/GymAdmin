@@ -8,7 +8,7 @@ const Tag = styled.div`
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  color: ${palette('accent')};
+  color: ${palette('base')};
   font-size: ${size('text.caption')};
   height: ${size('element.small')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
@@ -26,7 +26,7 @@ Tag.propTypes = {
 };
 
 Tag.defaultProps = {
-  palette: 'slate',
+  palette: 'grey',
   size: 'body',
 };
 
