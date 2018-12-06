@@ -12,7 +12,7 @@ const datePlaceholder = 'Select a Date';
 const timePlaceholder = 'Select a Time';
 
 const Wrapper = styled.div`
-  background-color: ${palette('slate', 'background')};
+  background-color: ${palette('grey', 'stroke')};
   display: flex;
   justify-content: space-between;
   align-items: center;

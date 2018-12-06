@@ -100,7 +100,7 @@ const FAQHr = styled(Hr)`
 // `;
 
 const Tab = styled(Link)`
-  background-color: ${p => p.active ? palette('white', 'base') : palette('slate', 'background')};
+  background-color: ${p => p.active ? palette('white', 'base') : palette('grey', 'stroke')};
   padding: ${size('spacing.xLarge')} 0;
   flex-grow: 1;
   font-size: ${size('spacing.subtitle')};

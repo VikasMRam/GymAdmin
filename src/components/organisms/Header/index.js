@@ -84,7 +84,7 @@ export const HeaderMenuItem = styled(Link)`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     :hover {
-      background-color: ${palette('slate', 'background')};
+      background-color: ${palette('grey', 'stroke')};
     }
   }
 `;
