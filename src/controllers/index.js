@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
 
+import { randomHexNumber } from 'sly/services/helpers/utils';
 import { set, unset, reset } from 'sly/store/controller/actions';
 
 const convertMapDispatchToObject = mapDispatchToProps => (dispatch, props) => {
@@ -20,16 +21,18 @@ const convertMapDispatchToObject = mapDispatchToProps => (dispatch, props) => {
 
 // TODO: tests
 export function connectController(parentMapStateToProps, parentDispatchToProps) {
-  return function controllerCreator(WrappedComponent) {
+  return function controllerCreator(WrappedComponent, rand = randomHexNumber()) {
     const Controller = props => <WrappedComponent {...props} />;
     Controller.displayName = `WrappedController(${WrappedComponent.name || 'Controller'})`;
-
-    const rand = Math.floor(Math.random()*16777215).toString(16);
     const controllerKey = `${WrappedComponent.name}_${rand}`;
 
     const mapDispatchToProps = (dispatch, ownProps) => ({
       ...convertMapDispatchToObject(parentDispatchToProps)(dispatch, ownProps),
-      get: callback => dispatch((dispatch, getState) => callback(get(getState(), ['controller', controllerKey]))),
+      get: () => dispatch((dispatch, getState) => {
+        console.log(getState());
+        console.log(controllerKey);
+        return get(getState(), ['controller', controllerKey]);
+      }),
       set: data => dispatch(set({ data, controller: controllerKey })),
       unset: key => dispatch(unset({ key, controller: controllerKey })),
       resetController: () => dispatch(reset({ controller: controllerKey })),
@@ -42,6 +45,8 @@ export function connectController(parentMapStateToProps, parentDispatchToProps) 
       });
     };
 
-    return connect(mapStateToProps, mapDispatchToProps)(Controller);
+    const ConnectedController = connect(mapStateToProps, mapDispatchToProps)(Controller);
+    ConnectedController.controllerKey = controllerKey;
+    return ConnectedController;
   };
 }
