@@ -7,7 +7,7 @@ import { getKey, palette, size } from 'sly/components/themes';
 import { Block, Button } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
-  background-color: ${palette('slate', 'background')};
+  background-color: ${palette('grey', 'stroke')};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -48,7 +48,7 @@ const PricingFormFooter = ({
 }) => (
   <Wrapper>
     <PreferenceWrapper>
-      <EstimatedPriceText size="caption" variation="accent">
+      <EstimatedPriceText size="caption" palette="grey">
         Your estimated pricing
       </EstimatedPriceText>
       <StyledNumberFormat decimalScale={0} value={price} displayType="text" thousandSeparator prefix="$" />/mo

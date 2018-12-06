@@ -20,8 +20,7 @@ const Wrapper = styled.div`
     opacity ${key('transitions.default')};
 
   &:hover {
-    box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')}
-      ${palette('slate', 'accent', true)};
+    box-shadow: 0 ${size('spacing.small')} ${size('spacing.regular')} ${palette('grey', 'base')};
     opacity: 0.75;
     background: ${palette('white', 'base')};
 
