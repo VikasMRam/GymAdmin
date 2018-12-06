@@ -21,18 +21,15 @@ const convertMapDispatchToObject = mapDispatchToProps => (dispatch, props) => {
 
 // TODO: tests
 export function connectController(parentMapStateToProps, parentDispatchToProps) {
-  return function controllerCreator(WrappedComponent, rand = randomHexNumber()) {
+  return function controllerCreator(WrappedComponent) {
+    const rand = randomHexNumber();
     const Controller = props => <WrappedComponent {...props} />;
     Controller.displayName = `WrappedController(${WrappedComponent.name || 'Controller'})`;
     const controllerKey = `${WrappedComponent.name}_${rand}`;
 
     const mapDispatchToProps = (dispatch, ownProps) => ({
       ...convertMapDispatchToObject(parentDispatchToProps)(dispatch, ownProps),
-      get: () => dispatch((dispatch, getState) => {
-        console.log(getState());
-        console.log(controllerKey);
-        return get(getState(), ['controller', controllerKey]);
-      }),
+      get: () => dispatch((dispatch, getState) => get(getState(), ['controller', controllerKey])),
       set: data => dispatch(set({ data, controller: controllerKey })),
       unset: key => dispatch(unset({ key, controller: controllerKey })),
       resetController: () => dispatch(reset({ controller: controllerKey })),
