@@ -5,35 +5,63 @@ import { func, bool } from 'prop-types';
 import { size } from 'sly/components/themes';
 import { Button } from 'sly/components/atoms/index';
 
-const MainButton = styled(Button)`
+const BookATourButton = styled(Button)`
+  display: none;
   width: 100%;
   margin-bottom: ${size('spacing.large')};
-`;
-MainButton.displayName = 'MainButton';
 
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-gap: ${size('spacing.regular')};
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: block;
+  }
 `;
+BookATourButton.displayName = 'BookATourButton';
 
-// TODO: clarify whether to modify in atom
-const StyledButton = styled(Button)`
-  font-size: ${size('text.caption')};
+const AskQuestionButton = styled(Button)`
+  display: none;
+  width: 100%;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: block;
+  }
 `;
+AskQuestionButton.displayName = 'AskQuestionButton';
+
+const GetCustomPriceButton = styled(Button)`
+  display: block;
+  width: 100%;
+  margin-bottom: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none; 
+  }
+`;
+GetCustomPriceButton.displayName = 'GetCustomPriceButton';
+
+const BookATourFooterButton = styled(Button)`
+  width: 100%;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
+`;
+BookATourFooterButton.displayName = 'BookATourFooterButton';
 
 const CommunityActions = ({
   onBookATourClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
 }) => (
   <div>
-    {!isAlreadyPricingRequested &&
-      <MainButton kind="jumbo" onClick={onGCPClick}>Get custom pricing</MainButton>}
-    {isAlreadyPricingRequested &&
-      <MainButton ghost kind="jumbo" onClick={onGCPClick}>Pricing requested</MainButton>}
-    <Wrapper>
-      <StyledButton ghost onClick={onAQClick}>Ask a question</StyledButton>
-      <StyledButton ghost onClick={onBookATourClick}>{isAlreadyTourScheduled ? 'Tour requested' : 'Book a Tour'}</StyledButton>
-    </Wrapper>
+    <BookATourButton isAlreadyTourScheduled={isAlreadyTourScheduled} kind="jumbo" onClick={onBookATourClick}>
+      {isAlreadyTourScheduled ? 'Tour requested' : 'Book a Tour'}
+    </BookATourButton>
+    <AskQuestionButton ghost kind="jumbo" onClick={onAQClick}>
+      Ask a question
+    </AskQuestionButton>
+    <GetCustomPriceButton kind="jumbo" onClick={onGCPClick}>
+      {isAlreadyPricingRequested ? 'Pricing requested' : 'Get custom pricing'}
+    </GetCustomPriceButton>
+    <BookATourFooterButton ghost kind="jumbo" onClick={onBookATourClick}>
+      {isAlreadyTourScheduled ? 'Tour requested' : 'Book a Tour'}
+    </BookATourFooterButton>
   </div>
 );
 
