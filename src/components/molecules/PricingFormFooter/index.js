@@ -35,15 +35,22 @@ const StyledNumberFormat = styled(NumberFormat)`
   font-weight: 500;
 `;
 
+const EstimatedPriceText = styled(Block)`
+  margin-right: ${size('spacing.small')}
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-right: initial;
+  }
+`;
+
 const PricingFormFooter = ({
   palette: paletteProp, price, isButtonDisabled, isFinalStep,
   onProgressClick,
 }) => (
   <Wrapper>
     <PreferenceWrapper>
-      <Block size="caption" variation="accent">
+      <EstimatedPriceText size="caption" variation="accent">
         Your estimated pricing
-      </Block>
+      </EstimatedPriceText>
       <StyledNumberFormat decimalScale={0} value={price} displayType="text" thousandSeparator prefix="$" />/mo
     </PreferenceWrapper>
     {isFinalStep && <StyledButton kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>Send Pricing Request</StyledButton>}
