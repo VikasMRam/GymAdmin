@@ -5,7 +5,7 @@ import { bool, func, string, object } from 'prop-types';
 import { size, assetPath, palette, gridColumns } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Image, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
+import { Image, Centered, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import Footer from 'sly/components/organisms/Footer';
 import Modal from 'sly/components/molecules/Modal';
 import Section from 'sly/components/molecules/Section';
@@ -143,18 +143,6 @@ const CWTColumnWrapper = styled.div`
 // this is required for IE as it won't consider inline elements as flex children
 const StyledLink = styled(Link)`
   display: block;
-`;
-
-const Centered = styled.div`
-  position: absolute;
-  top: 0; 
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 `;
 
 const CenteredTile = styled(({ title, to, image, children, ...props }) => (
