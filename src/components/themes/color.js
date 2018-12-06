@@ -4,11 +4,11 @@ const white = Color('white');
 const black = Color('black');
 
 const gradients = [
+  { percentage: 0.85, tint: black, variant: 'dark' },
   { percentage: 1.00, tint: white, variant: 'base' },
   { percentage: 0.33, tint: white, variant: 'filler' },
   { percentage: 0.15, tint: white, variant: 'stroke' },
   { percentage: 0.08, tint: white, variant: 'background' },
-  { percentage: 0.85, tint: black, variant: 'dark' },
 ];
 const clear = color => color || '';
 const names = gradients.map(({ variant }) => variant);
