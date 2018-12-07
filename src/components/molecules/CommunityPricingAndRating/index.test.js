@@ -23,4 +23,11 @@ describe('CommunityPricingAndRating', () => {
     const wrapper = wrap({ priceDescription });
     expect(wrapper.contains(priceDescription)).toBe(true);
   });
+
+  it('does not render price when empty', () => {
+    const wrapper = wrap({ price: 0 });
+    expect(wrapper.find('Wrapper').children()).toHaveLength(1);
+    expect(wrapper.contains('Styled(Block)')).toBe(false);
+    expect(wrapper.contains('3.6')).toBe(true);
+  });
 });

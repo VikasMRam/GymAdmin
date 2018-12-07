@@ -1,10 +1,9 @@
 import React, { Fragment } from 'react';
 import { number } from 'prop-types';
 import styled from 'styled-components';
-import { palette } from 'styled-theme';
 
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Heading from 'sly/components/atoms/Heading';
 import Link from 'sly/components/atoms/Link';

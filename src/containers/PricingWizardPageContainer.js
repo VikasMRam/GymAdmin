@@ -22,7 +22,7 @@ const PricingWizardPageContainer = ({
   const { id, url } = community;
   const handleComplete = (data, toggleConfirmationModal) => {
     const {
-      name, phone, medicaidCoverage, roomType, careType, contactByTextMsg, ...restData
+      name, phone, medicaidCoverage, roomType, careType, contactByTextMsg, interest, ...restData
     } = data;
     const { userDetails } = userAction;
     const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });

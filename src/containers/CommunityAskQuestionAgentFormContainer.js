@@ -38,6 +38,7 @@ class CommunityAskQuestionAgentFormContainer extends Component {
     agentImageUrl: string,
     placeholder: string,
     userAction: object,
+    initialValues: object,
   };
 
   handleOnSubmit = (data) => {
@@ -80,10 +81,11 @@ class CommunityAskQuestionAgentFormContainer extends Component {
     const {
       heading, description, agentImageUrl, placeholder, userAction,
     } = this.props;
+    let { initialValues } = this.props;
     const { userDetails } = userAction;
-    let initialValues = null;
     if (userDetails) {
       initialValues = {
+        ...initialValues,
         full_name: userDetails.fullName,
         phone: userDetails.phone,
       };
@@ -102,9 +104,13 @@ class CommunityAskQuestionAgentFormContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+  const { question } = ownProps;
   return {
     userAction: getDetail(state, 'userAction'),
+    initialValues: {
+      question,
+    },
   };
 };
 
