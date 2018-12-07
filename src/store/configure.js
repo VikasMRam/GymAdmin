@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { middleware as thunkMiddleware } from 'redux-saga-thunk';
+import { middleware as sagaThunkMiddleware } from 'redux-saga-thunk';
+import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import { isDev, isBrowser } from 'sly/config';
 import entitiesMiddleware from './entities/middleware';
@@ -17,7 +18,7 @@ const loggerMiddleware = createLogger();
 const configureStore = (initialState, services = {}) => {
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [
-    entitiesMiddleware, thunkMiddleware, sagaMiddleware,
+    entitiesMiddleware, thunkMiddleware, sagaThunkMiddleware, sagaMiddleware,
   ];
 
   if (isBrowser && isDev) {
