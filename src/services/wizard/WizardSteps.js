@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react';
-import { number, node, func, arrayOf } from 'prop-types';
+import { number, node, func, arrayOf, object } from 'prop-types';
 
 export default class WizardSteps extends Component {
   static propTypes = {
     currentStep: number.isRequired,
     children: arrayOf(node).isRequired,
+    formOptions: object.isRequired,
     onSubmit: func,
     setStepsSize: func,
   };
@@ -19,9 +20,10 @@ export default class WizardSteps extends Component {
   render() {
     const { children } = this.props;
     const {
-      currentStep, onSubmit,
+      currentStep, onSubmit, formOptions,
     } = this.props;
     let newChild = children;
+    const { form } = formOptions;
 
     if (Array.isArray(children)) {
       const currentStepComponent = children.find((child, i) => i + 1 === currentStep);
@@ -29,6 +31,7 @@ export default class WizardSteps extends Component {
         newChild =
           React.cloneElement(currentStepComponent, {
             onSubmit: currentStepComponent.props.onSubmit || onSubmit,
+            form: currentStepComponent.props.form || form,
           });
       }
     }
