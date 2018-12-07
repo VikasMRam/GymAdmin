@@ -89,6 +89,7 @@ const CommunityBookATourContactForm = ({
           />}
         </Variant>
       </Experiment>
+      {!(userDetails && userDetails.fullName) &&
       <Field
         name="notes"
         label="Add a note"
@@ -97,17 +98,6 @@ const CommunityBookATourContactForm = ({
         placeholder="Anything you'd like your partner agent to know or any questions"
         component={ReduxField}
       />
-      {!(userDetails && userDetails.contactByTextMsg) &&
-        <Fragment>
-          <StyledBlock size="caption">Please contact me by text message</StyledBlock>
-          <ContactByTextField
-            options={CONTACT_BY_TEXT_MSG_OPTIONS}
-            name="contactByTextMsg"
-            type="boxChoice"
-            component={ReduxField}
-            onChange={onContactByTextMsgChange}
-          />
-        </Fragment>
       }
       {error && <Block palette="danger">{error}</Block>}
       {!user && <Block size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></Block>}

@@ -74,8 +74,8 @@ export default class SlyEvent {
     const gaEvent = {
       category,
       action,
-      label,
       value,
+      label: `${label}:${value}`,
     };
 
     if (isDev) {
