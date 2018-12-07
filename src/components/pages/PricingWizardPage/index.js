@@ -23,6 +23,7 @@ import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 import Modal from 'sly/components/molecules/Modal';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
+import CommunityPricingWizardWhatToDoNextFormContainer from 'sly/containers/CommunityPricingWizardWhatToDoNextFormContainer';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -146,7 +147,7 @@ class PricingWizardPage extends Component {
                 <AdvisorHelpPopup onButtonClick={toggleAdvisorHelp} />
               </Modal>
               <WizardController
-                formName="PWizardForm"
+                formName="PricingWizardForm"
                 onComplete={data => onComplete(data, toggleConfirmationModal)}
                 onStepChange={step => sendEvent('step-completed', id, step - 1)}
               >
@@ -165,12 +166,18 @@ class PricingWizardPage extends Component {
                           userDetails={userDetails}
                         />
                         <WizardStep
+                          component={CommunityPricingWizardWhatToDoNextFormContainer}
+                          name="WhatToDoNext"
+                          communityName={name}
+                          estimatedPrice={estimatedPrice}
+                          onSubmit={onSubmit}
+                        />
+                        <WizardStep
                           component={CommunityBookATourContactFormContainer}
                           name="Contact"
                           onAdvisorHelpClick={toggleAdvisorHelp}
                           user={user}
                           userDetails={userDetails}
-                          form="PWizardForm"
                           heading={formHeading}
                           subheading={formSubheading}
                         />
