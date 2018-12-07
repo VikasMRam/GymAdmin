@@ -10,38 +10,52 @@ import {
   bool,
 } from 'prop-types';
 import styled, { css } from 'styled-components';
-import { ifProp, prop } from 'styled-tools';
+import { ifProp, prop, switchProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import { Button } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
-  display: flex;
-  button {
-    flex: 1;
-  }
+  ${switchProp('orientation', {
+    horizontal: css`
+      display: flex;
+      button {
+        flex: 1;
+      }
 
-  flex-wrap: wrap;
+      flex-wrap: wrap;
+    `,
+    vertical: css`
+      > button {
+        width: 100%;
+        margin-bottom: ${size('spacing.regular')}
+      }
+`,
+  })}
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     // hack % in AdvancedInfoForm
     ${ifProp('width', css`
       width: ${prop('width')};
-    `)};
+`)};
   }
 `;
 
 const StyledButton = styled(Button)`
-  + Button {
-    margin-left: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  :not(:last-child) {
-    border-right: none;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
+  ${switchProp('orientation', {
+    horizontal: css`
+      + Button {
+        margin-left: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      :not(:last-child) {
+        border-right: none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    `,
+  })}
 `;
 
 const isSelected = (type, value, option) => (type === 'singlechoice')
@@ -61,14 +75,18 @@ export default class MultipleChoice extends Component {
       oneOfType([string, number]),
       arrayOf(oneOfType([string, number])),
     ]).isRequired,
-    type: oneOf(['multiplechoice', 'singlechoice']),
+    type: oneOf(['multiplechoice', 'singlechoice', 'buttonlist']),
     width: string, // hack % in AdvancedInfoForm
+    buttonKind: string,
+    buttonPalette: string,
+    orientation: oneOf(['horizontal', 'vertical']),
     onBlur: func,
     onChange: func,
   };
 
   static defaultProps = {
     value: [],
+    orientation: 'horizontal',
   };
 
   onBlur = () => {
@@ -79,7 +97,7 @@ export default class MultipleChoice extends Component {
   onClick(option) {
     const { value, type, onChange } = this.props;
 
-    if (type === 'singlechoice') {
+    if (type === 'singlechoice' || type === 'buttonlist') {
       return onChange(option);
     }
 
@@ -101,17 +119,23 @@ export default class MultipleChoice extends Component {
       type,
       onBlur,
       invalid,
+      buttonKind,
+      buttonPalette,
+      orientation,
       ...props
     } = this.props;
 
     return (
-      <Wrapper onBlur={this.onBlur} {...props}>
+      <Wrapper onBlur={this.onBlur} orientation={orientation} {...props}>
         {options &&
           options.map(({ value: option, label }) => (
             <StyledButton
-              selectable
+              orientation={orientation}
+              selectable={type === 'singlechoice' || type === 'multiplechoice'}
               selected={isSelected(type, value, option)}
               key={option}
+              kind={buttonKind}
+              palette={buttonPalette}
               onClick={() => this.onClick(option)}
             >
               {label}
