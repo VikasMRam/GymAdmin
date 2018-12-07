@@ -43,16 +43,13 @@ class NotificationController extends Component {
   handleDismiss = (id) => {
     const { set, get } = this.props;
     // necessary due to the asynchronous nature
-    const { messages } = get();
+    const { messages = [] } = get();
+    const index = messages.findIndex(m => m.id === id);
 
-    if (messages) {
-      const index = messages.findIndex(m => m.id === id);
-
-      if (index !== -1) {
-        set({
-          messages: [...messages.slice(0, index), ...messages.slice(index + 1)],
-        });
-      }
+    if (index !== -1) {
+      set({
+        messages: [...messages.slice(0, index), ...messages.slice(index + 1)],
+      });
     }
   };
 
