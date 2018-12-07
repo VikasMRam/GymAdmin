@@ -5,7 +5,8 @@ import styled from 'styled-components';
 import { ifProp, prop } from 'styled-tools';
 
 import { variation as variationPropType } from 'sly/propTypes/variation';
-import { size, palette, key, getKey } from 'sly/components/themes';
+import { palette as palettePropType } from 'sly/propTypes/palette';
+import { size, palette, key } from 'sly/components/themes';
 
 const fontSize = props => size('icon', props.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
@@ -45,7 +46,7 @@ Icon.propTypes = {
   icon: string.isRequired,
   width: number,
   size: oneOf(['tiny', 'small', 'regular', 'large', 'xLarge', 'xxLarge']),
-  palette: oneOf(Object.keys(getKey('palette'))),
+  palette: palettePropType,
   variation: variationPropType,
   fill: string,
   stroke: string,

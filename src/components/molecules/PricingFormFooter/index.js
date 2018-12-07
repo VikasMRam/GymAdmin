@@ -1,9 +1,10 @@
 import React from 'react';
-import { oneOf, number, bool, func } from 'prop-types';
+import { number, bool, func } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
-import { getKey, palette, size } from 'sly/components/themes';
+import { palette as palettePropType } from 'sly/propTypes/palette';
+import { palette, size } from 'sly/components/themes';
 import { Block, Button } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
@@ -63,11 +64,7 @@ PricingFormFooter.propTypes = {
   isButtonDisabled: bool,
   price: number.isRequired,
   onProgressClick: func,
-  palette: oneOf(Object.keys(getKey('palette'))),
-};
-
-PricingFormFooter.defaultProps = {
-  palette: 'primary',
+  palette: palettePropType,
 };
 
 export default PricingFormFooter;

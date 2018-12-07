@@ -4,9 +4,10 @@ import { number, func, bool } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Box, Hr } from 'sly/components/atoms';
+import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
 import CommunityActions from 'sly/components/molecules/CommunityActions';
-import CommunityAgentCashback from 'sly/components/molecules/CommunityAgentCashback';
+import OfferNotification from 'sly/components/molecules/OfferNotification';
 
 const Wrapper = styled(Box)`
   width: ${size('layout.col4')};
@@ -22,38 +23,58 @@ const CommunityPricingAndRatingWrapper = styled.div`
 `;
 
 const CommunitySidebarWidget = ({
-  price, rating, onBookATourClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
-}) => (
-  <Fragment>
-    <Wrapper>
-      {(price > 0 || rating > 0) &&
-        <Fragment>
-          <CommunityPricingAndRatingWrapper>
-            <CommunityPricingAndRating price={price} rating={rating} />
-          </CommunityPricingAndRatingWrapper>
-          <Hr />
-        </Fragment>
-      }
-      <CommunityActions
-        isAlreadyPricingRequested={isAlreadyPricingRequested}
-        isAlreadyTourScheduled={isAlreadyTourScheduled}
-        onBookATourClick={onBookATourClick}
-        onGCPClick={onGCPClick}
-        onAQClick={onAQClick}
-      />
-    </Wrapper>
-    <CommunityAgentCashback />
-  </Fragment>
-);
+  community, onBookATourClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
+  onLearnMoreClick,
+}) => {
+  const { startingRate, propRatings, propInfo } = community;
+  const { reviewsValue } = propRatings;
+  const { promoDescription, promoTitle } = propInfo;
+
+  return (
+    <Fragment>
+      <Wrapper>
+        {(startingRate > 0 || startingRate > 0) &&
+          <Fragment>
+            <CommunityPricingAndRatingWrapper>
+              <CommunityPricingAndRating price={startingRate} rating={reviewsValue} />
+            </CommunityPricingAndRatingWrapper>
+            <Hr />
+          </Fragment>
+        }
+        <CommunityActions
+          isAlreadyPricingRequested={isAlreadyPricingRequested}
+          isAlreadyTourScheduled={isAlreadyTourScheduled}
+          onBookATourClick={onBookATourClick}
+          onGCPClick={onGCPClick}
+          onAQClick={onAQClick}
+        />
+      </Wrapper>
+      {(promoDescription || promoTitle) &&
+        (
+          <OfferNotification
+            onLearnMoreClick={onLearnMoreClick}
+            palette="warning"
+            title={promoTitle}
+            description={promoDescription}
+            hasLearnMore
+          />
+        )}
+    </Fragment>
+  );
+};
 
 CommunitySidebarWidget.propTypes = {
-  price: number,
-  rating: number,
+  community: communityPropType,
   onBookATourClick: func,
   onGCPClick: func,
   onAQClick: func,
   isAlreadyTourScheduled: bool,
   isAlreadyPricingRequested: bool,
+  onLearnMoreClick: func,
+};
+
+CommunitySidebarWidget.defaultProps = {
+  community: {},
 };
 
 export default CommunitySidebarWidget;
