@@ -23,8 +23,8 @@ const StyledButton = styled(Button)`
 `;
 
 const CommunityActions = ({
-                            onBookATourClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
-                          }) => (
+  onBookATourClick, onGCPClick, onAQClick, isAlreadyTourScheduled, isAlreadyPricingRequested,
+}) => (
   <div>
     {!isAlreadyPricingRequested &&
     <MainButton kind="jumbo" onClick={onGCPClick}>Get custom pricing</MainButton>}
