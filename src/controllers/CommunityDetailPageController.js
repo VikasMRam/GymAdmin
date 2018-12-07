@@ -291,7 +291,18 @@ class CommunityDetailPageController extends Component {
   };
 
   handleToggleAskAgentQuestionModal = (e, type = null) => {
-    const { set, isAskAgentQuestionModalVisible } = this.props;
+    const { community, set, isAskAgentQuestionModalVisible } = this.props;
+    const { id } = community;
+    const action = isAskAgentQuestionModalVisible ? 'close-modal' : 'open-modal';
+    let category = 'AskAgentQuestion';
+    if (type) {
+      category += `-${type}`;
+    }
+    const event = {
+      action, category, label: id,
+    };
+
+    SlyEvent.getInstance().sendEvent(event);
     set({
       isAskAgentQuestionModalVisible: !isAskAgentQuestionModalVisible,
       askAgentQuestionType: type,
