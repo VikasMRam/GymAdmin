@@ -11,6 +11,7 @@ import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 import AgentTile from 'sly/components/molecules/AgentTile';
 
 const StyledButton = styled(Button)`
+  width: 100%;
   margin-bottom: ${size('spacing.regular')};
   font-weight: normal;
 `;
@@ -60,12 +61,6 @@ const ConversionForm = ({
       {contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
 
       <Hr />
-
-      {hasOnlyEmail && (
-        <ExpressBlock>
-          A Seniorly Guide will contact you soon, we just need your name and number.
-        </ExpressBlock>
-      )}
 
       <Field
         name="full_name"

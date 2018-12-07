@@ -301,15 +301,19 @@ export default class CommunityDetailPage extends Component {
         top={isStickyHeaderVisible ? 84 : 24}
         bottomBoundary="#sticky-sidebar-boundary"
       >
-        <CommunitySidebarWidget
-          isAlreadyTourScheduled={isAlreadyTourScheduled}
-          isAlreadyPricingRequested={isAlreadyPricingRequested}
-          community={community}
-          onBookATourClick={!isAlreadyTourScheduled ? onBookATourClick : e => onToggleAskAgentQuestionModal(e, 'tour')}
-          onGCPClick={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-          onAQClick={onToggleAskAgentQuestionModal}
-          onLearnMoreClick={e => onToggleAskAgentQuestionModal(e, 'offer')}
-        />
+        <Fragment>
+          <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
+          {(promoDescription || promoTitle) &&
+          (
+            <OfferNotification
+              onLearnMoreClick={e => onToggleAskAgentQuestionModal(e, 'offer')}
+              palette="warning"
+              title={promoTitle}
+              description={promoDescription}
+              hasLearnMore
+            />
+          )}
+        </Fragment>
       </Sticky>
     );
     const bottomContent = (
@@ -660,7 +664,6 @@ export default class CommunityDetailPage extends Component {
           }}
           </NotificationController>
         </Modal>
-        <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
       </Fragment>
     );
   }
