@@ -4,14 +4,9 @@ import styled from 'styled-components';
 import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
-import { community as communityPropType } from 'sly/propTypes/community';
-import { Box, Heading, Button } from 'sly/components/atoms';
+import { Button } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
-const StyledBox = styled(Box)`
-  margin-bottom: ${size('spacing.xLarge')};
-  padding: ${size('spacing.xLarge')};
-`;
 const TwoColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,39 +22,24 @@ const StyledReduxField = styled(ReduxField)`
   }
   width: 100%;
 `;
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.regular')};
-`;
 
-const GetCurrentAvailabilityForm = ({
-  community, handleSubmit, submitting,
-}) => {
-  const { name } = community;
-
-  return (
-    <StyledBox>
-      <StyledHeading level="subtitle" size="subtitle">
-        Ask about availability at {name}
-      </StyledHeading>
-      <form onSubmit={handleSubmit}>
-        <TwoColumnWrapper>
-          <Field
-            name="email"
-            type="email"
-            placeholder="Your email"
-            component={StyledReduxField}
-          />
-          <Button type="submit" disabled={submitting}>Get Availability</Button>
-        </TwoColumnWrapper>
-      </form>
-    </StyledBox>
-  );
-};
+const GetCurrentAvailabilityForm = ({ handleSubmit, submitting }) => (
+  <form onSubmit={handleSubmit}>
+    <TwoColumnWrapper>
+      <Field
+        name="email"
+        type="email"
+        placeholder="Your email address"
+        component={StyledReduxField}
+      />
+      <Button type="submit" ghost disabled={submitting}>Get Pricing and Availability</Button>
+    </TwoColumnWrapper>
+  </form>
+);
 
 GetCurrentAvailabilityForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
-  community: communityPropType,
 };
 
 export default GetCurrentAvailabilityForm;

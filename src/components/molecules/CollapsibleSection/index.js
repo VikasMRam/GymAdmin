@@ -4,32 +4,31 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
 
-import { size, key } from 'sly/components/themes';
-import { Hr, Heading, Icon } from 'sly/components/atoms';
+import { size, key, palette } from 'sly/components/themes';
+import { Heading, Icon } from 'sly/components/atoms';
 
-const marginBottom = (p) => {
-  if (p.collapsed) {
-    return 0;
-  }
-  return p.paddedContent ?
-    size('spacing.large') : size('spacing.xLarge');
-};
+// const marginBottom = (p) => {
+//   if (p.collapsed) {
+//     return 0;
+//   }
+//   return p.paddedContent ?
+//     size('spacing.large') : size('spacing.xLarge');
+// };
 
 const Section = styled.section`
-  padding-bottom: ${marginBottom};
   transition: padding-bottom ${key('transitions.default')};
   max-width: 100%;
-`;
 
-const StyledHr = styled(Hr)`
-  margin-bottom: 0;
+  margin-bottom: ${size('spacing.large')};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  border-radius: ${size('spacing.small')};
 `;
 
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${ifProp('noHr', size('spacing.large'), size('spacing.xLarge'))} 0;
+  padding: ${size('spacing.xLarge')};
 
   :hover {
     cursor: pointer;
@@ -58,35 +57,48 @@ const Content = styled.div`
 const getHeadingLevel = (size) => {
   switch (size) {
     case 'small':
-      return 'subtitle';
+      return 'body';
     default:
-      return 'title';
+      return 'subtitle';
   }
 };
 const getHeadingSize = (size) => {
   switch (size) {
     case 'small':
-      return 'subtitle';
+      return 'body';
     default:
-      return 'title';
+      return 'subtitle';
   }
 };
+
+const ChildrenSection = styled.div`
+  padding: 0 ${size('spacing.xLarge')};
+  padding-bottom: ${size('spacing.xLarge')};
+  ${ifProp('collapsed', css`
+    padding-bottom: 0;
+  `)};
+`;
+
+const BottomSection = styled.div`
+  background-color: ${palette('slate', 'background')};
+  padding: ${size('spacing.xLarge')};
+  border-top: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+`;
 
 export default class CollapsibleSection extends Component {
   static propTypes = {
     children: node,
+    botttomSection: node,
     title: string.isRequired,
     collapsedDefault: bool.isRequired,
     size: oneOf(['small', 'regular', 'large']),
     innerRef: object,
-    noHr: bool,
     paddedContent: bool,
   };
 
   static defaultProps = {
     collapsedDefault: false,
     size: 'regular',
-    noHr: false,
     paddedContent: false,
   };
 
@@ -108,13 +120,12 @@ export default class CollapsibleSection extends Component {
   render() {
     const {
       children,
+      botttomSection,
       title,
       collapsedDefault,
       size,
       innerRef,
       paddedContent,
-      // TODO: Add Stories and Test for noHr
-      noHr,
       ...props
     } = this.props;
     const { collapsed, maxHeight } = this.state;
@@ -127,16 +138,22 @@ export default class CollapsibleSection extends Component {
             size={size}
             innerRef={innerRef}
           >
-            {!noHr && <StyledHr />}
-            <Header onClick={this.toggle} noHr={noHr}>
+            <Header onClick={this.toggle}>
               <StyledHeading level={getHeadingLevel(size)} size={getHeadingSize(size)}>
                 {title}
               </StyledHeading>
-              <Icon icon="chevron" size="large" palette="slate" flip={!collapsed} />
+              <Icon icon="chevron" size="regular" palette="slate" flip={!collapsed} />
             </Header>
             <Content maxHeight={maxHeight} collapsed={collapsed}>
               <div ref={measureRef} {...props}>
-                {children}
+                <ChildrenSection collapsed={collapsed}>
+                  {children}
+                </ChildrenSection>
+                {botttomSection &&
+                  <BottomSection>
+                    {botttomSection}
+                  </BottomSection>
+                }
               </div>
             </Content>
           </Section>
