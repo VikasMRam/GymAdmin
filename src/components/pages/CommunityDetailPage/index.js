@@ -14,7 +14,7 @@ import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
 import { Link, Heading, Hr, Button } from 'sly/components/atoms';
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
-import ConciergeController from 'sly/controllers/ConciergeController';
+import { ConciergeController } from 'sly/controllers/ConciergeController';
 import SaveCommunityController from 'sly/controllers/SaveCommunityController';
 import NotificationController from 'sly/controllers/NotificationController';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
@@ -43,6 +43,7 @@ import FullScreenWizardController from 'sly/controllers/FullScreenWizardControll
 import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
+import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -221,11 +222,10 @@ export default class CommunityDetailPage extends Component {
     if ((receptionNumber === undefined || receptionNumber === '') && user) {
       receptionNumber = user.phoneNumber;
     }
-
-    let conciergeNumber = receptionNumber;
-    if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
-      conciergeNumber = twilioNumber.numbers[0];
-    }
+    // let conciergeNumber = receptionNumber;
+    // if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
+    //   conciergeNumber = twilioNumber.numbers[0];
+    // }
     if (communityMainImage) {
       images = images.filter(img => img.sd !== communityMainImage.sd);
       images.unshift(communityMainImage);
@@ -411,7 +411,8 @@ export default class CommunityDetailPage extends Component {
           </ConciergeController>
 
           <CollapsibleSection
-            title="Pricing & Floor Plans"
+            title={`Floor plans at ${name}`}
+            botttomSection={<GetCurrentAvailabilityFormContainer submitExpressConversion={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')} community={community} />}
             innerRef={this.pricingAndFloorPlansRef}
           >
             <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
