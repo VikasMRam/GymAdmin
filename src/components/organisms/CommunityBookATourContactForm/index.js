@@ -89,7 +89,7 @@ const CommunityBookATourContactForm = ({
           />}
         </Variant>
       </Experiment>
-      {!(userDetails && userDetails.fullName) &&
+      {userDetails && userDetails.fullName &&
       <Field
         name="notes"
         label="Add a note"
