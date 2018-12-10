@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import { Block, Button } from 'sly/components/atoms';
-import DiscoverHomeTile, { StyledImage, StyledHeading }
+import DiscoverHomeTile, { StyledHeading }
   from 'sly/components/molecules/DiscoverHomeTile';
 
 const image =
@@ -20,7 +20,7 @@ describe('DiscoverHomeTile', () => {
     const wrapper = wrap({
       image, title, description, buttonText, onButtonClick,
     });
-    expect(wrapper.find(StyledImage)).toHaveLength(1);
+    expect(wrapper.find('Image')).toHaveLength(1);
   });
 
   it('renders title', () => {

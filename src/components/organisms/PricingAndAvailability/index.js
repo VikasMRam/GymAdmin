@@ -1,16 +1,13 @@
 import React, { Fragment } from 'react';
-import { object, string, number, shape, func, arrayOf } from 'prop-types';
+import { string, number, shape, func, arrayOf } from 'prop-types';
 import styled from 'styled-components';
 
-import { Heading, Box, Icon } from 'sly/components/atoms';
+import { Heading } from 'sly/components/atoms';
 import RoomTile from 'sly/components/molecules/RoomTile';
 import PriceBar from 'sly/components/molecules/PriceBar';
 import EstimatedCost from 'sly/components/molecules/EstimatedCost';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
-import ConciergeController from 'sly/controllers/ConciergeController';
-import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
-import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
 
 const Item = styled.div`
   display: inline-block;
@@ -36,19 +33,6 @@ const StyledArticle = styled.article`
   }
 `;
 
-const DoneBox = styled(Box)`
-  margin-bottom: ${size('spacing.xLarge')};
-  display: flex;
-
-  > :first-child {
-    margin-right: ${size('spacing.regular')};
-  }
-`;
-
-const DoneText = styled.span`
-  font-weight: bold;
-`;
-
 const CompareHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
 `;
@@ -58,12 +42,6 @@ const PriceLabel = styled.div`
 `;
 
 export const findPercentage = (price, maxPrice) => ((price / maxPrice) * 100);
-
-const hasAllUserData = createBooleanValidator({
-  fullName: [required],
-  email: [required, email],
-  phone: [required, usPhone],
-});
 
 export const sortProperties = (obj) => {
   const sortable = [];
@@ -84,8 +62,6 @@ const PricingAndAvailability = ({
   address,
   estimatedPrice,
   onInquireOrBookClicked,
-  queryParams,
-  setQueryParams,
   gotoGetCustomPricing,
 }) => {
   const mEstimatedPrice = { ...estimatedPrice };
@@ -129,17 +105,12 @@ const PricingAndAvailability = ({
     <section id="pricing-and-floor-plans">
       <StyledArticle id="pricing-and-floor-plans-price-tiles">
         {(!roomPrices.length && estimatedPriceBase) ?
-          (
-            <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams} gotoGetCustomPricing={gotoGetCustomPricing}>
-              {() =>
-                (<EstimatedCost
-                  // getPricing={getPricing} getPricing is a prop from children of ConciergeController
-                  getPricing={gotoGetCustomPricing}
-                  community={community}
-                  price={estimatedPriceBase}
-                />)
-              }
-            </ConciergeController>
+          (<EstimatedCost
+            // getPricing={getPricing} getPricing is a prop from children of ConciergeController
+            getPricing={gotoGetCustomPricing}
+            community={community}
+            price={estimatedPriceBase}
+          />
           ) : null
         }
         {roomPrices.map(object => (
@@ -148,39 +119,6 @@ const PricingAndAvailability = ({
           </Item>
         ))}
       </StyledArticle>
-      <ConciergeController communitySlug={community.id} queryParams={queryParams} setQueryParams={setQueryParams} gotoGetCustomPricing={gotoGetCustomPricing}>
-        {({ concierge, submitExpressConversion, userDetails }) => {
-            if (concierge.contactRequested) {
-              if (!hasAllUserData(userDetails)) {
-                return (
-                  <DoneBox>
-                    <Icon icon="round-checkmark" />
-                    <DoneText>
-
-                      We received your request, check your inbox shortly.
-
-                    </DoneText>
-                  </DoneBox>
-                );
-              }
-                return (
-                  <DoneBox>
-                    <Icon icon="round-checkmark" />
-                    <DoneText>
-                      Your Seniorly Guide will reach out to you regarding this community.
-                    </DoneText>
-                  </DoneBox>
-                );
-            }
-              return (
-                <GetCurrentAvailabilityFormContainer
-                  submitExpressConversion={submitExpressConversion}
-                  community={community}
-                />
-              );
-          }
-        }
-      </ConciergeController>
 
       {sortedEstimatedPrice.length > 0 &&
         <article id="pricing-and-floor-plans-comparison">
@@ -225,9 +163,7 @@ PricingAndAvailability.propTypes = {
     nationalAverage: number.isRequired,
   }),
   onInquireOrBookClicked: func,
-  queryParams: object,
   gotoGetCustomPricing: func,
-  setQueryParams: func,
 };
 
 PricingAndAvailability.defaultProps = {
