@@ -3,14 +3,13 @@ import styled from 'styled-components';
 import { object, arrayOf, func } from 'prop-types';
 import queryString from 'query-string';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size, gridColumns, assetPath } from 'sly/components/themes';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
-import { Link, Block } from 'sly/components/atoms';
+import { Image, Centered, Link, Block } from 'sly/components/atoms';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import Pagination from 'sly/components/molecules/Pagination';
 import Heading from 'sly/components/atoms/Heading';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
 
 const CommunityFilterBarWrapper = styled.div`
@@ -30,26 +29,15 @@ const StyledHeading = styled(Heading)`
 `;
 
 const MSCColumnWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-
-  > * {
-    margin-bottom: ${size('spacing.large')};
-    margin-right: 0;
-  }
-  > *:last-child {
-    margin-right: 0;
-  }
+  margin-bottom: ${size('spacing.xLarge')};
+  ${gridColumns(1, size('spacing.xLarge'))};
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    > * {
-      margin-right: ${size('spacing.xLarge')};
-    }
+    ${gridColumns(2, size('spacing.xLarge'))};
   }
+  
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    align-items: flex-start;
-    justify-content: flex-start;
+    ${gridColumns(3, size('spacing.xLarge'))};
   }
 `;
 
@@ -107,17 +95,21 @@ const CommunitySearchList = ({
   if (communityList.length < 1) {
     mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
       <StyledLink key={mostSearchedCity.title} to={mostSearchedCity.to}>
-        <ImageOverlayContentTile size="small" image={mostSearchedCity.image}>
-          <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
-          <Block palette="white">{mostSearchedCity.title}</Block>
-        </ImageOverlayContentTile>
+        <Image src={mostSearchedCity.image}>
+          <Centered>
+            <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
+            <Block palette="white">{mostSearchedCity.title}</Block>
+          </Centered>
+        </Image>
       </StyledLink>
     ));
     usefulInformationTilesComponents = usefulInformationTiles.map(usefulInformation => (
       <StyledLink key={usefulInformation.title} to={usefulInformation.to}>
-        <ImageOverlayContentTile size="small" image={usefulInformation.image}>
-          <Heading size="subtitle" palette="white">{usefulInformation.title}</Heading>
-        </ImageOverlayContentTile>
+        <Image size="small" src={usefulInformation.image}>
+          <Centered>
+            <Heading size="subtitle" palette="white">{usefulInformation.title}</Heading>
+          </Centered>
+        </Image>
       </StyledLink>
     ));
   }

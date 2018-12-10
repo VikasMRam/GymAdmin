@@ -3,6 +3,7 @@ export Bar from './Bar';
 export Block from './Block';
 export Box from './Box';
 export Button from './Button';
+export Centered from './Centered';
 export Heading from './Heading';
 export Hr from './Hr';
 export Icon from './Icon';

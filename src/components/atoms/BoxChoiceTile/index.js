@@ -13,7 +13,8 @@ const StyledBox = styled(Box)`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background: ${ifProp('highlighted', palette('slate', 'background'), 'none')};
+  border-color: ${ifProp('highlighted', palette('base'), palette('stroke'))}};
+  background: ${ifProp('highlighted', palette('grey', 'stroke'), 'none')};
 `;
 
 const BoxChoiceTile = ({

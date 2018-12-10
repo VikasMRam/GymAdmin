@@ -104,14 +104,14 @@ const SearchSuggestionsWrapper = styled.div`
     right: 0;
   }
 `;
-const searchSuggestionBGColor = p => p.active ? palette('slate', 'background') : palette('white', 'base');
+const searchSuggestionBGColor = p => p.active ? palette('grey', 'stroke') : palette('white', 'base');
 const SearchSuggestion = styled.div`
   width: 100%;
   padding: ${size('spacing.large')};
   background-color: ${searchSuggestionBGColor};
 
   :hover {
-    background-color: ${palette('slate', 'background')};
+    background-color: ${palette('grey', 'stroke')};
     cursor: pointer;
   }
 `;

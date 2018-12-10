@@ -1,29 +1,40 @@
-import { oneOf, bool } from 'prop-types';
-import styled from 'styled-components';
-import { ifProp } from 'styled-tools';
+import { oneOf } from 'prop-types';
+import styled, { css } from 'styled-components';
+import { switchProp } from 'styled-tools';
 
 import { size, getKey, palette } from 'sly/components/themes';
 
 const padding = ({ padding }) => size('spacing', padding);
-const border = ({ border }) => size('border', border);
 
 const Box = styled.div`
-  border: ${border} solid ${ifProp('highlighted', palette('base'), palette('stroke'))}};
+  border: ${size('border.regular')} solid ${palette('stroke')};
   border-radius: ${size('spacing.small')};
   padding: ${padding};
+  
+  ${switchProp('snap', {
+    top: css`
+      border-top: 0;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    `,
+    bottom: css`
+      border-bottom: 0;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    `,
+  })};
 `;
 
 Box.propTypes = {
   palette: oneOf(Object.keys(getKey('palette'))),
   padding: oneOf(Object.keys(getKey('sizes.spacing'))),
-  border: oneOf(Object.keys(getKey('sizes.border'))),
-  highlighted: bool,
+  snap: oneOf(['none', 'top', 'bottom']),
 };
 
 Box.defaultProps = {
   palette: 'slate',
   padding: 'xLarge',
-  border: 'regular',
+  snap: 'none',
 };
 
 export default Box;

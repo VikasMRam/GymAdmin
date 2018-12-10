@@ -10,6 +10,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import { BOOK_A_TOUR } from 'sly/services/api/actions';
 import BookATourPage from 'sly/components/pages/BookATourPage';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
+import { win } from 'sly/services/experiments';
 
 const eventCategory = 'BAT';
 
@@ -38,6 +39,7 @@ const BookATourPageContainer = ({
 
     return postUserAction(payload)
       .then(() => {
+        win('Organisms_CommunityBookATourContactForm');
         const event = {
           action: 'tour-booked', category: eventCategory, label: id,
         };

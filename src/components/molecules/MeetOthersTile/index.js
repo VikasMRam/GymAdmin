@@ -6,20 +6,15 @@ import { size } from 'sly/components/themes';
 import { Heading, Block, Image } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
-  width: 100%;
-  @media screen and (min-width: ${size('picture.regular.width')}) {
-    width: ${size('picture.regular.width')};
-  }
   text-align: left;
 `;
+
 export const StyledImage = styled(Image)`
-  border-radius: ${size('border.large')};
+  overflow: hidden;
+  border-radius: ${size('spacing.small')};
   margin-bottom: ${size('spacing.xLarge')};
-  width: 100%;
-  @media screen and (min-width: ${size('picture.regular.width')}) {
-    width: ${size('picture.regular.width')};
-  }
 `;
+
 export const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
 `;
@@ -28,7 +23,7 @@ const MeetOthersTile = ({
   image, title, description,
 }) => (
   <Wrapper>
-    <StyledImage src={image} />
+    <StyledImage src={image} aspectRatio="3:2" />
     <StyledHeading level="subtitle" size="subtitle">{title}</StyledHeading>
     <Block>{description}</Block>
   </Wrapper>

@@ -1,3 +1,4 @@
+import { css } from 'styled-components';
 import { key, palette as styledPalette } from 'styled-theme';
 import { prop } from 'styled-tools';
 
@@ -9,6 +10,17 @@ export { key, font } from 'styled-theme';
 export function size(...args) {
   return key(['sizes', ...args].join('.'));
 }
+
+export const columnWidth = (parts, gutter) => css`
+  // WARNING: no semicolon here, keep it that way
+  calc((100% + ${gutter}) / ${parts} - ${gutter})
+`;
+
+export const gridColumns = (parts, gutter) => css`
+  display: grid;
+  grid-gap: ${gutter};
+  grid-template-columns: repeat(auto-fit, ${columnWidth(parts, gutter)});
+`;
 
 export function assetPath(url) {
   return `${publicPath}/${url}`;

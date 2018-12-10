@@ -2,9 +2,8 @@ import React, { Fragment } from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { array, bool, func, object } from 'prop-types';
-import { palette } from 'styled-theme';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size, assetPath, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Image, Label, Heading, Paragraph } from 'sly/components/atoms';

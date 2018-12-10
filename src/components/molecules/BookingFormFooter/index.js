@@ -12,7 +12,7 @@ const datePlaceholder = 'Select a Date';
 const timePlaceholder = 'Select a Time';
 
 const Wrapper = styled.div`
-  background-color: ${palette('slate', 'background')};
+  background-color: ${palette('grey', 'stroke')};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -77,7 +77,7 @@ const BookingFormFooter = ({
     <Wrapper>
       <PreferenceWrapper>
         <FirstPreferenceWrapper>
-          <Block size="caption" variation="accent">
+          <Block size="caption" palette="grey">
             Date Preference
           </Block>
           <div>
@@ -85,7 +85,7 @@ const BookingFormFooter = ({
           </div>
         </FirstPreferenceWrapper>
         <div>
-          <Block size="caption" variation="accent">
+          <Block size="caption" palette="grey">
             Time Preference
           </Block>
           <div>
