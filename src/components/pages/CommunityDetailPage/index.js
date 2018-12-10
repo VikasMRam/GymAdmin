@@ -11,10 +11,10 @@ import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
-import { Link, Heading, Hr, Button } from 'sly/components/atoms';
+import { Link, Heading, Hr, Button, Icon, Block } from 'sly/components/atoms';
 import CommunityDetailPageTemplate from 'sly/components/templates/CommunityDetailPageTemplate';
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
-import { ConciergeController } from 'sly/controllers/ConciergeController';
+import ConciergeController from 'sly/controllers/ConciergeController';
 import SaveCommunityController from 'sly/controllers/SaveCommunityController';
 import NotificationController from 'sly/controllers/NotificationController';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
@@ -44,6 +44,7 @@ import CommunityBookATourConfirmationPopup from 'sly/components/organisms/Commun
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
+import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -64,6 +65,20 @@ const AddressHeading = styled(Heading)`
 const AdTileWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
+
+const GetAvailabilitySuccessBox = styled.div`
+  display: flex;
+
+  > :first-child {
+    margin-right: ${size('spacing.regular')};
+  }
+`;
+
+const hasAllUserData = createBooleanValidator({
+  fullName: [required],
+  email: [required, email],
+  phone: [required, usPhone],
+});
 
 export default class CommunityDetailPage extends Component {
   static propTypes = {
@@ -412,7 +427,43 @@ export default class CommunityDetailPage extends Component {
 
           <CollapsibleSection
             title={`Floor plans at ${name}`}
-            botttomSection={<GetCurrentAvailabilityFormContainer submitExpressConversion={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')} community={community} />}
+            botttomSection={
+              <ConciergeController
+                communitySlug={community.id}
+                queryParams={{ modal, currentStep }}
+                setQueryParams={setQueryParams}
+                gotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
+              >
+                {({ concierge, submitExpressConversion, userDetails }) => {
+                    if (concierge.contactRequested) {
+                      let availabilityDoneText = 'Your Seniorly Guide will reach out to you regarding this community.';
+                      if (!hasAllUserData(userDetails)) {
+                        availabilityDoneText = 'We received your request, check your inbox shortly.';
+                      }
+                      return (
+                        <GetAvailabilitySuccessBox>
+                          <Icon icon="round-checkmark" />
+                          <Block weight="bold">{availabilityDoneText}</Block>
+                        </GetAvailabilitySuccessBox>
+                      );
+                    }
+                    return (
+                      <GetCurrentAvailabilityFormContainer
+                        submitExpressConversion={(e) => {
+                          submitExpressConversion(e);
+                          if (isAlreadyPricingRequested) {
+                            onToggleAskAgentQuestionModal(e, 'pricing');
+                          } else {
+                            onGCPClick(e);
+                          }
+                        }}
+                        community={community}
+                      />
+                    );
+                  }
+                }
+              </ConciergeController>
+              }
             innerRef={this.pricingAndFloorPlansRef}
           >
             <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
