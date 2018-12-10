@@ -3,12 +3,12 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import CommunitySidebarWidget from 'sly/components/organisms/CommunitySidebarWidget';
+import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 storiesOf('Organisms|CommunitySidebarWidget', module)
   .add('default', () => (
     <CommunitySidebarWidget
-      price={4300}
-      rating={3.6}
+      community={RhodaGoldmanPlaza}
       onBookATourClick={action('onBookATourClick')}
       onGCPClick={action('onGCPClick')}
       onAQClick={action('onAQClick')}

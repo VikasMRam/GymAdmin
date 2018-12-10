@@ -132,7 +132,7 @@ export default class SimilarCommunityInfo extends Component {
     // TODO : Get the following values from API Response
     return (
       <Wrapper {...props}>
-        <StyledHeading level="subtitle" size="subtitle">{name}</StyledHeading>
+        <StyledHeading level="title" size="subtitle">{name}</StyledHeading>
         <RatingWrapper>
           {this.renderRate(community)}
           {this.renderReviews(community)}

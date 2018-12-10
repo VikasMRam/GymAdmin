@@ -1,12 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommunityAgentCashback from 'sly/components/molecules/CommunityAgentCashback';
+import OfferNotification from 'sly/components/molecules/OfferNotification';
 
+const title = 'test title';
 const wrap = (props = {}) =>
-  shallow(<CommunityAgentCashback {...props} />);
+  shallow(<OfferNotification title={title} {...props} />);
 
-describe('CommunityAgentCashback', () => {
+// todo: add tests
+describe('OfferNotification', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap();
     expect(wrapper.contains('test')).toBe(false);

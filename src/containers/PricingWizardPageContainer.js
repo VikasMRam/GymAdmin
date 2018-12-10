@@ -1,10 +1,10 @@
 import React from 'react';
-import { object, func } from 'prop-types';
+import { object, func, bool } from 'prop-types';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 import { connectController } from 'sly/controllers';
 import withServerState from 'sly/store/withServerState';
-import { getDetail } from 'sly/store/selectors';
+import { getDetail, isResourceDetailRequestComplete } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
 import { CUSTOM_PRICING } from 'sly/services/api/actions';
@@ -14,15 +14,15 @@ import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 const eventCategory = 'PricingWizard';
 
 const PricingWizardPageContainer = ({
-  community, user, postUserAction, history, userAction,
+  community, user, postUserAction, history, userAction, isUserFetchDone,
 }) => {
-  if (!community) {
+  if (!community || !userAction || !isUserFetchDone) {
     return null;
   }
   const { id, url } = community;
   const handleComplete = (data, toggleConfirmationModal) => {
     const {
-      name, phone, medicaidCoverage, roomType, careType, contactByTextMsg, ...restData
+      name, phone, medicaidCoverage, roomType, careType, contactByTextMsg, interest, ...restData
     } = data;
     const { userDetails } = userAction;
     const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
@@ -63,6 +63,7 @@ PricingWizardPageContainer.propTypes = {
   userAction: object,
   postUserAction: func.isRequired,
   history: object.isRequired,
+  isUserFetchDone: bool,
 };
 
 const getCommunitySlug = match => match.params.communitySlug;
@@ -72,6 +73,7 @@ const mapStateToProps = (state, { match }) => {
     user: getDetail(state, 'user', 'me'),
     userAction: getDetail(state, 'userAction'),
     community: getDetail(state, 'community', communitySlug),
+    isUserFetchDone: isResourceDetailRequestComplete(state, 'user'),
   };
 };
 const mapDispatchToProps = (dispatch) => {

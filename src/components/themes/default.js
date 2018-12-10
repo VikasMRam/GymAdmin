@@ -3,7 +3,6 @@ import { makeColor, makeColorTable } from './color';
 
 import { isTest } from 'sly/config';
 
-
 export { colorIndex } from './color';
 
 const theme = {};
@@ -349,8 +348,5 @@ theme.zIndexes = {
   notifications      : 10003,
   savedCommunityPopup: 10005,
 };
-
-// timeout to hide toast notifications, in milliseconds
-theme.toastNotificationTimeout = 30000;
 
 export default theme;

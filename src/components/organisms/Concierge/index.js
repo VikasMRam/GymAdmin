@@ -43,28 +43,44 @@ const Concierge = ({
   const { modalIsOpen, currentStep } = concierge;
 
   const StepComponent = steps[currentStep];
-  return (
+  const modal = (
     <Fragment>
       {appElement && StepComponent && modalIsOpen && (
-      <Modal
-        appElement={appElement}
-        onClose={close}
-        isOpen={modalIsOpen}
-        closeable
-      >
-        <StepComponent
-          community={community}
-          concierge={concierge}
+        <Modal
+          appElement={appElement}
+          onClose={close}
+          isOpen={modalIsOpen}
+          closeable
+        >
+          <StepComponent
+            community={community}
+            concierge={concierge}
+            submitRegularConversion={submitRegularConversion}
+            submitExpressConversion={submitExpressConversion}
+            submitAdvancedInfo={submitAdvancedInfo}
+            onClose={close}
+            {...props}
+          />
+        </Modal>
+      )}
+    </Fragment>);
+  let result = modal;
+  if (community) {
+    result = (
+      <Fragment >
+        <ConversionFormContainer
           submitRegularConversion={submitRegularConversion}
           submitExpressConversion={submitExpressConversion}
-          submitAdvancedInfo={submitAdvancedInfo}
-          onClose={close}
-          {...props}
+          gotoWhatNext={gotoWhatNext}
+          community={community}
+          concierge={concierge}
+          express={false}
         />
-      </Modal>
-      )}
-    </Fragment>
-  );
+        {modal}
+      </Fragment>
+    );
+  }
+  return result;
 };
 
 Concierge.propTypes = {
@@ -79,4 +95,3 @@ Concierge.propTypes = {
 };
 
 export default Concierge;
-

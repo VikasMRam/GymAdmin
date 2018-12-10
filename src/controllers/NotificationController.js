@@ -16,14 +16,6 @@ class NotificationController extends Component {
     children: func,
   };
 
-  componentWillUnmount() {
-    const { timeoutRef } = this;
-
-    if (timeoutRef) {
-      clearInterval(timeoutRef);
-    }
-  }
-
   addNotification = (message, type = 'default') => {
     const { handleDismiss } = this;
     const { set, messages } = this.props;
@@ -51,7 +43,7 @@ class NotificationController extends Component {
   handleDismiss = (id) => {
     const { set, get } = this.props;
     // necessary due to the asynchronous nature
-    const { messages } = get();
+    const { messages = [] } = get();
     const index = messages.findIndex(m => m.id === id);
 
     if (index !== -1) {

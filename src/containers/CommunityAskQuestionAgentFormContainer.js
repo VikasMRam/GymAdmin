@@ -10,6 +10,7 @@ import {
   createValidator,
   required,
   usPhone,
+  email,
 } from 'sly/services/validation';
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
@@ -17,6 +18,7 @@ import { getDetail } from 'sly/store/selectors';
 
 const validate = createValidator({
   full_name: [required],
+  email: [required, email],
   phone: [required, usPhone],
   question: [required],
 });
@@ -38,6 +40,7 @@ class CommunityAskQuestionAgentFormContainer extends Component {
     agentImageUrl: string,
     placeholder: string,
     userAction: object,
+    initialValues: object,
   };
 
   handleOnSubmit = (data) => {
@@ -80,10 +83,11 @@ class CommunityAskQuestionAgentFormContainer extends Component {
     const {
       heading, description, agentImageUrl, placeholder, userAction,
     } = this.props;
+    let { initialValues } = this.props;
     const { userDetails } = userAction;
-    let initialValues = null;
     if (userDetails) {
       initialValues = {
+        ...initialValues,
         full_name: userDetails.fullName,
         phone: userDetails.phone,
       };
@@ -102,9 +106,13 @@ class CommunityAskQuestionAgentFormContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+  const { question } = ownProps;
   return {
     userAction: getDetail(state, 'userAction'),
+    initialValues: {
+      question,
+    },
   };
 };
 

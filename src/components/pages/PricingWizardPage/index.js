@@ -23,6 +23,7 @@ import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 import Modal from 'sly/components/molecules/Modal';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
+import CommunityPricingWizardWhatToDoNextFormContainer from 'sly/containers/CommunityPricingWizardWhatToDoNextFormContainer';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -53,6 +54,22 @@ const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
   label,
   value,
 });
+
+const options = [
+  { value: 'schedule-tour', label: 'Schedule a tour' },
+  { value: 'talk-advisor', label: 'Talk to an advisor' },
+  { value: 'learn-similar-communities', label: 'Learn about similar communities' },
+  { value: 'explore-affordable-options', label: 'Explore more affordable options' },
+  { value: 'lost-need-help', label: 'I am lost, I need help' },
+];
+
+const contactFormHeadingMap = {
+  'schedule-tour': { heading: 'Schedule a Tour', subheading: 'We will help you schedule tours and, if you request, we can provide a local Advisor to accompany you. This is a free service. ' },
+  'talk-advisor': { heading: 'Talk to an Advisor', subheading: 'We offer complete support with an Advisor near you.  This is a no-obligation free service. ' },
+  'learn-similar-communities': { heading: 'Learn about Similar Communities', subheading: 'We help you evaluate communities, so you can pick the best one. This is a free service. ' },
+  'explore-affordable-options': { heading: 'Learn about Affordable Communities', subheading: 'We help you choose from more affordable options, so you can pick the best one. This is a free service. ' },
+  'lost-need-help': { heading: 'We Are Here to Help You', subheading: 'We have helped thousands of families to learn about and choose a community they love. This is a free service. ' },
+};
 
 class PricingWizardPage extends Component {
   static propTypes = {
@@ -125,8 +142,6 @@ class PricingWizardPage extends Component {
     } = this.props;
     const { id, mainImage, name } = community;
     const { estimatedPrice } = this.state;
-    const formHeading = 'How can we contact you about your pricing?';
-    const formSubheading = 'Your agent will help get your exact pricing according to your care needs and room accommodations.';
 
     return (
       <FullScreenWizard>
@@ -146,46 +161,65 @@ class PricingWizardPage extends Component {
                 <AdvisorHelpPopup onButtonClick={toggleAdvisorHelp} />
               </Modal>
               <WizardController
-                formName="PWizardForm"
+                formName="PricingWizardForm"
                 onComplete={data => onComplete(data, toggleConfirmationModal)}
                 onStepChange={step => sendEvent('step-completed', id, step - 1)}
               >
                 {({
-                  data, onSubmit, isFinalStep, submitEnabled, ...props
-                }) => (
-                  <Fragment>
-                    <Body>
-                      <WizardSteps {...props}>
-                        <WizardStep
-                          component={CommunityPWEstimatedPricingFormContainer}
-                          name="EstimatedPricing"
-                          communityName={name}
-                          onRoomTypeChange={onRoomTypeChange}
-                          onCareTypeChange={onCareTypeChange}
-                          userDetails={userDetails}
-                        />
-                        <WizardStep
-                          component={CommunityBookATourContactFormContainer}
-                          name="Contact"
-                          onAdvisorHelpClick={toggleAdvisorHelp}
-                          user={user}
-                          userDetails={userDetails}
-                          form="PWizardForm"
-                          heading={formHeading}
-                          subheading={formSubheading}
-                        />
-                      </WizardSteps>
-                    </Body>
-                    <Controls>
-                      <PricingFormFooter
-                        price={estimatedPrice}
-                        onProgressClick={onSubmit}
-                        isFinalStep={isFinalStep}
-                        isButtonDisabled={!submitEnabled}
-                      />
-                    </Controls>
-                  </Fragment>
-                )}
+                  data, onSubmit, isFinalStep, submitEnabled, currentStep, ...props
+                }) => {
+                  let formHeading = null;
+                  let formSubheading = null;
+                  if (data.interest) {
+                    const contactFormHeadingObj = contactFormHeadingMap[data.interest];
+                    formHeading = contactFormHeadingObj.heading;
+                    formSubheading = contactFormHeadingObj.subheading;
+                  }
+                  return (
+                    <Fragment>
+                      <Body>
+                        <WizardSteps currentStep={currentStep} {...props}>
+                          <WizardStep
+                            component={CommunityPWEstimatedPricingFormContainer}
+                            name="EstimatedPricing"
+                            communityName={name}
+                            onRoomTypeChange={onRoomTypeChange}
+                            onCareTypeChange={onCareTypeChange}
+                            userDetails={userDetails}
+                          />
+                          <WizardStep
+                            component={CommunityPricingWizardWhatToDoNextFormContainer}
+                            name="WhatToDoNext"
+                            communityName={name}
+                            estimatedPrice={estimatedPrice}
+                            listOptions={options}
+                            onSubmit={(value) => {
+                              sendEvent('pricing-next-interest', id, value);
+                              onSubmit(value);
+                            }}
+                          />
+                          <WizardStep
+                            component={CommunityBookATourContactFormContainer}
+                            name="Contact"
+                            onAdvisorHelpClick={toggleAdvisorHelp}
+                            user={user}
+                            userDetails={userDetails}
+                            heading={formHeading}
+                            subheading={formSubheading}
+                          />
+                        </WizardSteps>
+                      </Body>
+                      <Controls>
+                        { currentStep !== 2 && <PricingFormFooter
+                          price={estimatedPrice}
+                          onProgressClick={onSubmit}
+                          isFinalStep={isFinalStep}
+                          isButtonDisabled={!submitEnabled}
+                        />}
+                      </Controls>
+                    </Fragment>
+                    );
+                  }}
               </WizardController>
             </Fragment>
           )}
