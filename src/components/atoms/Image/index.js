@@ -67,8 +67,6 @@ export default class Image extends React.Component {
     }
   };
 
-  renderImage = props => <StyledImage {...props} />;
-
   render() {
     const {
       src, alt, aspectRatio, children, ...props
@@ -87,11 +85,12 @@ export default class Image extends React.Component {
     if (aspectRatio) {
       return (
         <ResponsiveWrapper aspectRatio={aspectRatio} {...props}>
-          {this.renderImage(imageProps)}
+          <StyledImage {...imageProps} />
           {children}
         </ResponsiveWrapper>
       );
     }
-    return this.renderImage({ ...imageProps, ...props });
+
+    return <StyledImage {...imageProps} {...props} />;
   }
 }

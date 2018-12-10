@@ -36,9 +36,14 @@ theme.fonts = {
 
 theme.sizes = {
   // pixel measurements
+  // use mobile only in special cases
+  // mobile, fluid: 0 to 416, centered
+  // mobile, fixed: 0 to 768
+  // tablet: 768 to 1080
+  // desktop: 1080 onwards
   breakpoint: {
-    mobile           : '375px',
-    tablet           : '720px',
+    mobile           : '416px',
+    tablet           : '768px',
     laptop           : '1080px',
   },
 
@@ -46,38 +51,46 @@ theme.sizes = {
   layout: {
     gutter:      '1.500rem', // 24px
 
-    col1:        '4.125rem', // 66px
-    col2:        '9.750rem', // 156px
-    col3:       '15.375rem', // 246px
+    col1:        '4.000rem', // 64px
+    col2:        '9.500rem', // 152px
+    col3:       '15.000rem', // 240px
     // side column
-    col4:       '21.000rem', // 336px
-    col5:       '26.625rem', // 426px
-    col6:       '32.250rem', // 516px
-    col7:       '37.875rem', // 606px
+    col4:       '20.500rem', // 328x
+    col5:       '26.000rem', // 416px
+    col6:       '31.500rem', // 504px
+    col7:       '37.000rem', // 592px
     // main body column
-    col8:       '43.500rem', // 696px
-    col9:       '49.125rem', // 786px
-    col10:      '54.750rem', // 876px
-    col11:      '60.375rem', // 966px
-    // max page width
-    col12:      '66.000rem', // 1056px
+    col8:       '42.500rem', // 680px
+    col9:       '48.000rem', // 768px
+    col10:      '53.500rem', // 856px
+    col11:      '59.000rem', // 944px
+    col12:      '64.500rem', // 1032px
+    // laptop breakpoint has to fit: 24 margin + col12 + 24 margin = 1080
   },
 
+  // tablet measures are not based on our unit (16px, 1rem)
+  tabletLayout: {
+    gutter:     '1.500rem', // 24px
+    col1:       '69px',
+    col2:       '162px',
+    col3:       '255px',
+    col4:       '348px',
+    col5:       '441px',
+    col6:       '534px',
+    col7:       '627px',
+    col8:       '720px',
+    // tablet breakpoint fits 24 margin + col8 + 24 margin = 768px, 48rem
+  },
+
+  // mobile measure are rem compatible TODO: fix numbers
   mobileLayout: {
-    gutter:      '1.000rem', // 16px
+    gutter:     '1.000rem', // 16px
 
-    col1:        '5.000rem', // 80px
-    col2:       '11.000rem', // 176px
-    col3:       '17.000rem', // 272px
-    col4:       '23.000rem', // 368px
-
-    col5:       '29.000rem', // 464px
-    col6:       '35.000rem', // 560px
-    col7:       '41.000rem', // 656px
-    col8:       '47.000rem', // 752px
-
-    col9:       '53.000rem', // 848px
-    col10:      '59.000rem', // 944px
+    col1:       '5.250rem',
+    col2:      '11.500rem',
+    col3:      '17.750rem',
+    col4:      '24.000rem',
+    // mobile breakpoint has to fit 16 margin + col4 + 16 margin = 416px, 26rem
   },
 
   modal: {
@@ -139,8 +152,8 @@ theme.sizes = {
     xxLarge : '4.500rem',   // 72px
     xxxLarge: '5.000rem',   // 80px
     huge    : '6.000rem',   // 96px
-    xHuge    : '7.500rem',   // 120px
-    xxHuge    : '9.000rem',   // 144px
+    xHuge   : '7.500rem',   // 120px
+    xxHuge  : '9.000rem',   // 144px
   },
 
   slider: {

@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   position: relative
 `;
 export const StyledImage = styled(Image)`
-  border-radius: ${size('border.large')};
+  border-radius: ${size('spacing.tiny')};
   width: 100%;
   height: initial;
   @media screen and (min-width: ${width}) {

@@ -19,7 +19,7 @@ const ImageWrapper = styled(Image)`
   margin-bottom: ${size('spacing.regular')};
 
   > img {
-    border-radius: ${size('border.xxLarge')};
+    border-radius: ${size('spacing.small')};
   }
 `;
 ImageWrapper.displayName = 'ImageWrapper';
