@@ -6,11 +6,8 @@ import EstimatedCost from '.';
 
 const communityName = 'Buena Vista Manor House';
 const price = 1230;
-const onGetDetailedPricingClicked = () => {
-  action('open booking modal');
-};
 
 storiesOf('Molecules|EstimatedCost', module)
   .add('default', () => (
-    <EstimatedCost communityName={communityName} price={price} getDetailedPricing={onGetDetailedPricingClicked} />
+    <EstimatedCost communityName={communityName} price={price} getDetailedPricing={action('open booking modal')} />
   ));
