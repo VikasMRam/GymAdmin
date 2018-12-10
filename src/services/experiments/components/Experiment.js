@@ -95,7 +95,8 @@ export class Experiment extends Component {
     if (!variantKey && enableExperimentsDebugger) {
       console.info(`[Experiments] failed evaluating experiment ${name}. defaultVaraint will be selected.`);
     }
-    const childrenArray = Array.isArray(children) ? children : [children];
+    let childrenArray = Array.isArray(children) ? children : [children];
+    childrenArray = childrenArray.filter(a => a); // To remove all false values
     let [variant] = childrenArray;
     if (this.selectedVariant) {
       const variantChildren = childrenArray.filter(c => c.props.name === this.selectedVariant);

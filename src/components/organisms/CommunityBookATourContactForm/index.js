@@ -1,10 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { string, object, func } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
-import { CONTACT_BY_TEXT_MSG_OPTIONS } from 'sly/constants/pricingForm';
 import { Experiment, Variant } from 'sly/services/experiments';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import { Heading, Block, Image } from 'sly/components/atoms';
@@ -32,28 +31,8 @@ const AgentImage = styled(Image)`
   }
 `;
 
-const StyledBlock = styled(Block)`
-  margin-bottom: ${size('spacing.regular')};
-`;
-
-const StyledField = styled(Field)`
-  display: grid;
-  grid-gap: ${size('spacing.large')};
-  grid-template-columns: repeat(auto-fit, calc(${size('layout.col1')} + (${size('layout.gutter')}) * 2));
-  margin-bottom: ${size('spacing.xLarge')};
-
-  > * {
-    height: ${size('element.large')};
-    font-size: ${size('text.caption')};
-  }
-`;
-
-const ContactByTextField = StyledField.extend`
-  grid-template-columns: repeat(auto-fit, ${size('layout.col3')});
-`;
-
 const CommunityBookATourContactForm = ({
-  error, user, userDetails, heading, subheading, onAdvisorHelpClick, onContactByTextMsgChange, handleSubmit,
+  error, user, userDetails, heading, subheading, onAdvisorHelpClick, handleSubmit,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -70,24 +49,28 @@ const CommunityBookATourContactForm = ({
         component={ReduxField}
       />}
       <Experiment name="Organisms_CommunityBookATourContactForm" defaultVariant="phone">
-        <Variant name="phone">
-          {!(userDetails && userDetails.phone) && <Field
-            name="phone"
-            label="Phone"
-            type="text"
-            placeholder="925-555-5555"
-            component={ReduxField}
-          />}
-        </Variant>
-        <Variant name="email">
-          {!(userDetails && userDetails.email) && <Field
-            name="email"
-            label="Email"
-            type="email"
-            placeholder="Your email"
-            component={ReduxField}
-          />}
-        </Variant>
+        {!(userDetails && userDetails.phone) &&
+          <Variant name="phone">
+            <Field
+              name="phone"
+              label="Phone"
+              type="text"
+              placeholder="925-555-5555"
+              component={ReduxField}
+            />
+          </Variant>
+          }
+        {!(userDetails && userDetails.email) &&
+          <Variant name="email">
+            <Field
+              name="email"
+              label="Email"
+              type="email"
+              placeholder="Your email"
+              component={ReduxField}
+            />
+          </Variant>
+        }
       </Experiment>
       {userDetails && userDetails.fullName &&
       <Field
