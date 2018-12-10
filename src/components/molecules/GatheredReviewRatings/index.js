@@ -55,9 +55,9 @@ const DisclaimerDiv = styled.div`
 `;
 
 const GatheredReviewRatings = ({ reviewRatings, onReviewLinkClicked }) => {
-  const ratings = reviewRatings.map((review) => {
+  const ratings = reviewRatings.map((review, i) => {
     return (
-      <ReviewDiv key={review.name}>
+      <ReviewDiv key={review.name + i}>
         <StartNumDiv>
           <Rating value={review.avgRating} />
           {' ('}{review.numReviews }{')'}
