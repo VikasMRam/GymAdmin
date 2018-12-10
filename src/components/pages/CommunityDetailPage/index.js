@@ -474,10 +474,10 @@ export default class CommunityDetailPage extends Component {
                     return (
                       <GetCurrentAvailabilityFormContainer
                         submitExpressConversion={(e) => {
-                          submitExpressConversion(e);
                           if (isAlreadyPricingRequested) {
                             onToggleAskAgentQuestionModal(e, 'pricing');
                           } else {
+                            submitExpressConversion(e);
                             onGCPClick(e);
                           }
                         }}
