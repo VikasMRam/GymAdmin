@@ -16,7 +16,7 @@ export default class ConciergeContainer extends Component {
           submitRegularConversion,
           gotoWhatNext,
           submitAdvancedInfo,
-          close
+          close,
         }) => (
 
           <Concierge

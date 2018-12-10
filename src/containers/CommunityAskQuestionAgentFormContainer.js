@@ -10,6 +10,7 @@ import {
   createValidator,
   required,
   usPhone,
+  email,
 } from 'sly/services/validation';
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
@@ -17,6 +18,7 @@ import { getDetail } from 'sly/store/selectors';
 
 const validate = createValidator({
   full_name: [required],
+  email: [required, email],
   phone: [required, usPhone],
   question: [required],
 });

@@ -45,10 +45,21 @@ const SubHeading = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const ExpressBlock = styled(Block)`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
+const phoneParser = str => str.replace(/[^\d]/g, '');
+const phoneFormatter = (value) => {
+  if (!value) {
+    return value;
+  }
 
+  const onlyNums = value.replace(/[^\d]/g, '');
+  if (onlyNums.length <= 3) {
+    return onlyNums;
+  }
+  if (onlyNums.length <= 6) {
+    return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3)}`;
+  }
+  return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3, 6)}-${onlyNums.slice(6)}`;
+};
 
 const ConversionForm = ({
   handleSubmit,
@@ -82,6 +93,8 @@ const ConversionForm = ({
       <Field
         name="phone"
         label="Phone"
+        parse={phoneParser}
+        format={phoneFormatter}
         placeholder="925-555-5555"
         component={ReduxField}
       />

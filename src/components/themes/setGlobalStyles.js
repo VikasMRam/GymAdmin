@@ -2,6 +2,7 @@ import { injectGlobal } from 'styled-components';
 import styles from './default';
 
 import { publicPath } from 'sly/config';
+import { getKey } from 'sly/components/themes';
 
 const baseColor = styles.palette.slate[0];
 
@@ -60,6 +61,7 @@ export default function setGlobalStyles() {
 
     .roko-instabot-widget-button {
       z-index: 10000!important;
+      margin-bottom: ${getKey('sizes.spacing.massive')}!important;
     }
   `;
 }

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { size } from 'sly/components/themes';
 import { Heading, Button, Block, Image } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
+import { Experiment, Variant } from 'sly/services/experiments';
 
 const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.regular')};
@@ -44,13 +45,30 @@ const CommunityAskQuestionAgentForm = ({
       placeholder="Full name"
       component={ReduxField}
     />}
-    {!(userDetails && userDetails.phone) && <Field
-      name="phone"
-      label="Phone"
-      type="text"
-      placeholder="925-555-5555"
-      component={ReduxField}
-    />}
+    <Experiment name="Organisms_CommunityBookATourContactForm" defaultVariant="phone">
+      {!(userDetails && userDetails.phone) &&
+        <Variant name="phone">
+          <Field
+            name="phone"
+            label="Phone"
+            type="text"
+            placeholder="925-555-5555"
+            component={ReduxField}
+          />
+        </Variant>
+        }
+      {!(userDetails && userDetails.email) &&
+        <Variant name="email">
+          <Field
+            name="email"
+            label="Email"
+            type="email"
+            placeholder="Your email"
+            component={ReduxField}
+          />
+        </Variant>
+      }
+    </Experiment>
     <StyledField
       name="question"
       label="Your message"

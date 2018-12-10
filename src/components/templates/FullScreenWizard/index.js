@@ -14,7 +14,7 @@ export const FullScreenWizard = styled.div`
   }
 
   .overlayBody {
-    margin-bottom: ${size('element.huge')};
+    margin-bottom: ${size('element.xHuge')};
 
     > * {
       margin-left: ${size('spacing.xLarge')};
