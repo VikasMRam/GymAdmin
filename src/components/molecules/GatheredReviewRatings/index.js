@@ -55,6 +55,7 @@ const DisclaimerDiv = styled.div`
 `;
 
 const GatheredReviewRatings = ({ reviewRatings, onReviewLinkClicked }) => {
+  /* eslint-disable react/no-array-index-key */
   const ratings = reviewRatings.map((review, i) => {
     return (
       <ReviewDiv key={review.name + i}>
