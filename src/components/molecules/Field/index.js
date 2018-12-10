@@ -19,6 +19,7 @@ const getInputComponent = (type) => {
       return RatingInput;
     case 'singlechoice':
     case 'multiplechoice':
+    case 'buttonlist':
       return MultipleChoice;
     case 'communitychoice':
       return CommunityChoice;
@@ -109,6 +110,7 @@ Field.propTypes = {
     'communitychoice',
     'singlechoice',
     'multiplechoice',
+    'buttonlist',
     'boxChoice',
     'dateChoice',
     'slider',

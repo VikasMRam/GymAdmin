@@ -44,6 +44,7 @@ import CommunityBookATourConfirmationPopup from 'sly/components/organisms/Commun
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
+import OfferNotification from 'sly/components/molecules/OfferNotification';
 import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
 
 const BackToSearch = styled.div`
@@ -79,6 +80,13 @@ const hasAllUserData = createBooleanValidator({
   email: [required, email],
   phone: [required, usPhone],
 });
+
+const StyledOfferNotification = styled(OfferNotification)`
+  margin-bottom: ${size('spacing.xLarge')};
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
+`;
 
 export default class CommunityDetailPage extends Component {
   static propTypes = {
@@ -225,6 +233,7 @@ export default class CommunityDetailPage extends Component {
 
     const {
       careServices, licenseUrl, websiteUrl, serviceHighlights, communityPhone,
+      promoDescription, promoTitle,
     } = propInfo;
 
     let images = gallery.images || [];
@@ -307,15 +316,19 @@ export default class CommunityDetailPage extends Component {
         top={isStickyHeaderVisible ? 84 : 24}
         bottomBoundary="#sticky-sidebar-boundary"
       >
-        <CommunitySidebarWidget
-          isAlreadyTourScheduled={isAlreadyTourScheduled}
-          isAlreadyPricingRequested={isAlreadyPricingRequested}
-          price={startingRate}
-          rating={reviewsValue}
-          onBookATourClick={!isAlreadyTourScheduled ? onBookATourClick : e => onToggleAskAgentQuestionModal(e, 'tour')}
-          onGCPClick={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-          onAQClick={onToggleAskAgentQuestionModal}
-        />
+        <Fragment>
+          <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
+          {(promoDescription || promoTitle) &&
+          (
+            <OfferNotification
+              onLearnMoreClick={e => onToggleAskAgentQuestionModal(e, 'offer')}
+              palette="warning"
+              title={promoTitle}
+              description={promoDescription}
+              hasLearnMore
+            />
+          )}
+        </Fragment>
       </Sticky>
     );
     const bottomContent = (
@@ -424,6 +437,17 @@ export default class CommunityDetailPage extends Component {
               )
             }
           </ConciergeController>
+
+          {(promoDescription || promoTitle) &&
+            (
+              <StyledOfferNotification
+                palette="warning"
+                title={promoTitle}
+                description={promoDescription}
+                onLearnMoreClick={onToggleAskAgentQuestionModal}
+                hasLearnMore
+              />
+            )}
 
           <CollapsibleSection
             title={`Floor plans at ${name}`}
@@ -662,6 +686,7 @@ export default class CommunityDetailPage extends Component {
               let heading = `Ask your partner agent a question about ${name} in ${city}.`;
               let placeholder = `Hi Rachel, I have a question about ${name} in ${city}...`;
               let description = null;
+              let question = null;
               const agentImageUrl = assetPath('images/agent-xLarge.png');
 
               if (askAgentQuestionType === 'tour') {
@@ -671,6 +696,9 @@ export default class CommunityDetailPage extends Component {
               } else if (askAgentQuestionType === 'pricing') {
                 heading = 'We have received your custom pricing request.';
                 description = 'Your partner agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
+              } else if (askAgentQuestionType === 'offer') {
+                heading = `Ask your partner agent about the holiday incentive at ${name}`;
+                question = `Hi, I am interested in knowing more about the holiday promotion at ${name}. I am looking for...`;
               }
 
               return (
@@ -682,12 +710,12 @@ export default class CommunityDetailPage extends Component {
                   description={description}
                   agentImageUrl={agentImageUrl}
                   placeholder={placeholder}
+                  question={question}
                 />
             );
           }}
           </NotificationController>
         </Modal>
-        <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
       </Fragment>
     );
   }

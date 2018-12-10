@@ -11,6 +11,7 @@ import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 import AgentTile from 'sly/components/molecules/AgentTile';
 
 const StyledButton = styled(Button)`
+  width: 100%;
   margin-bottom: ${size('spacing.regular')};
   font-weight: normal;
 `;
@@ -26,6 +27,8 @@ const AgentSectionWrapper = styled.div`
   width: 100%;
   padding: ${size('spacing.xLarge')};
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  margin-bottom: ${size('spacing.xLarge')};
+
 `;
 
 const AgentSectionText = styled.div`
@@ -61,12 +64,6 @@ const ConversionForm = ({
 
       <Hr />
 
-      {hasOnlyEmail && (
-        <ExpressBlock>
-          A Seniorly Guide will contact you soon, we just need your name and number.
-        </ExpressBlock>
-      )}
-
       <Field
         name="full_name"
         label="Full Name"
@@ -96,11 +93,13 @@ const ConversionForm = ({
     </StyledForm>
     {agent &&
       <AgentSectionWrapper>
-        <AgentSectionText>We have matched you with a Seniorly Local Guide to help you along the way</AgentSectionText>
-        <AgentSectionText><Link href="https://www.seniorly.com/resources/articles/why-you-should-use-a-referral-agent" target="_blank">Learn More</Link></AgentSectionText>
+        <AgentSectionText>
+          We have matched you with a Seniorly partner agent to help you along the way.{' '}
+          <Link href="https://www.seniorly.com/resources/articles/why-you-should-use-a-referral-agent" target="_blank">Learn More</Link>
+        </AgentSectionText>
         <AgentTileWrapper>
           <AgentTile
-            user={{ name: agent.user.name, title: 'Seniorly Local Guide', picture: agent.mainImage }}
+            user={{ name: agent.user.name, title: 'Seniorly Partner Agent', picture: agent.mainImage }}
           />
         </AgentTileWrapper>
       </AgentSectionWrapper>

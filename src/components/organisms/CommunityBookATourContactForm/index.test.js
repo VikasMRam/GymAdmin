@@ -23,8 +23,6 @@ describe('CommunityBookATourContactForm', () => {
     expect(wrapper.contains(subheading)).toBe(true);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
-    expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
-    expect(wrapper.find('Styled(Field)')).toHaveLength(1);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
   });
 
@@ -34,7 +32,7 @@ describe('CommunityBookATourContactForm', () => {
     expect(wrapper.contains(subheading)).toBe(true);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(0);
-    expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
+
     expect(wrapper.find('Styled(Field)')).toHaveLength(0);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
     expect(wrapper.find(Link).filter({ href: '/tos' })).toHaveLength(1);
@@ -47,7 +45,7 @@ describe('CommunityBookATourContactForm', () => {
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
-    expect(wrapper.find('Styled(Field)')).toHaveLength(1);
+
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
     expect(wrapper.find(Link).filter({ href: '/tos' })).toHaveLength(1);
   });
@@ -58,20 +56,6 @@ describe('CommunityBookATourContactForm', () => {
     expect(wrapper.contains(subheading)).toBe(true);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(0);
-    expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
-    expect(wrapper.find('Styled(Field)')).toHaveLength(1);
-    expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
-    expect(wrapper.find(Link).filter({ href: '/tos' })).toHaveLength(1);
-  });
-
-  it('does not render contactByTextMsg when contactByTextMsg is passed', () => {
-    const wrapper = wrap({ userDetails: { contactByTextMsg } });
-    expect(wrapper.contains(heading)).toBe(true);
-    expect(wrapper.contains(subheading)).toBe(true);
-    expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
-    expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
-    expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
-    expect(wrapper.find('Styled(Field)')).toHaveLength(0);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
     expect(wrapper.find(Link).filter({ href: '/tos' })).toHaveLength(1);
   });
@@ -80,8 +64,7 @@ describe('CommunityBookATourContactForm', () => {
     const wrapper = wrap({ error });
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
-    expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
-    expect(wrapper.find('Styled(Field)')).toHaveLength(1);
+
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(1);
     expect(wrapper.find(Link).filter({ href: '/tos' })).toHaveLength(1);
   });
@@ -90,13 +73,6 @@ describe('CommunityBookATourContactForm', () => {
     const wrapper = wrap();
     wrapper.find(Link).at(0).simulate('click');
     expect(onAdvisorHelpClick).toHaveBeenCalled();
-  });
-
-  it('handles onContactByTextMsgChange', () => {
-    const onContactByTextMsgChange = jest.fn();
-    const wrapper = wrap({ onContactByTextMsgChange });
-    wrapper.find('Styled(Field)').simulate('change');
-    expect(onContactByTextMsgChange).toHaveBeenCalled();
   });
 
   it('renders tos when user is not passed', () => {

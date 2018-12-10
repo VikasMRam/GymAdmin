@@ -3,25 +3,17 @@ import { shallow } from 'enzyme';
 
 import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 
-const price = 4200;
-const renderedPrice = '$4,200';
-const wrap = (props = {}) => shallow(<PricingFormFooter price={price} {...props} />);
+const wrap = (props = {}) => shallow(<PricingFormFooter {...props} />);
 
 describe('PricingFormFooter', () => {
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('PreferenceWrapper').dive().find('Styled(NumberFormat)').dive()
-      .dive()
-      .text()).toContain(renderedPrice);
     expect(wrapper.find('Styled(Button)').dive().dive().dive()
       .text()).toContain('Continue');
   });
 
   it('renders with isFinalStep', () => {
     const wrapper = wrap({ isFinalStep: true });
-    expect(wrapper.find('PreferenceWrapper').dive().find('Styled(NumberFormat)').dive()
-      .dive()
-      .text()).toContain(renderedPrice);
     expect(wrapper.find('Styled(Button)').dive().dive().dive()
       .text()).toContain('Send Pricing Request');
   });
