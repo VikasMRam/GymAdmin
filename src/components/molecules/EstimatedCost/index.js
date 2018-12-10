@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { func, number, object } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
@@ -26,19 +26,6 @@ const StyledBlock = styled(Block)`
   margin-bottom: 0;
 `;
 
-export const DesktopButton = styled(Button)`
-  display: none;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: inline-flex;
-  }
-`;
-
-export const MobileButton = styled(Button)`
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: none;
-  }
-`;
-
 const percentageOf = (num, percentage) => {
   return (percentage / 100) * num;
 };
@@ -63,17 +50,15 @@ const EstimatedCost = ({
           *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.
         </StyledBlock>
       </EstimatedCostWrapper>
-      <DesktopButton onClick={getPricing}>Get Detailed Pricing</DesktopButton>
-      <MobileButton onClick={getPricing}>Get Detailed Pricing</MobileButton>
-
+      <Button onClick={getPricing}>Get Current Availability</Button>
     </StyledBox>
   );
 };
 
 EstimatedCost.propTypes = {
-  price: PropTypes.number.isRequired,
-  community: PropTypes.object.isRequired,
-  getPricing: PropTypes.func,
+  price: number.isRequired,
+  community: object.isRequired,
+  getPricing: func,
 };
 
 export default EstimatedCost;
