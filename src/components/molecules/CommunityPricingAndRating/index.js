@@ -10,6 +10,7 @@ import Icon from 'sly/components/atoms/Icon/index';
 const Wrapper = styled.div`
   display: flex;
 `;
+Wrapper.displayName = 'Wrapper';
 
 const StyledCommunityPricingWrapper = styled.div`
   width: calc(${size('layout.col2')} + ${size('layout.gutter')});
@@ -37,7 +38,7 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
   return (
     <Fragment>
       <Wrapper>
-        {price &&
+        {price > 0 &&
           <StyledCommunityPricingWrapper>
             <DescriptionBlock size="caption">{priceDescription}</DescriptionBlock>
             <Block size="title">
@@ -56,9 +57,11 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
           </div>
         }
       </Wrapper>
-      <StyledBlock size="caption">
-        * Your pricing will vary depending on your specific room and care service needs.
-      </StyledBlock>
+      {price > 0 &&
+        <StyledBlock size="caption">
+          * Your pricing will vary depending on your specific room and care service needs.
+        </StyledBlock>
+      }
     </Fragment>
   );
 };
@@ -71,6 +74,8 @@ CommunityPricingAndRating.propTypes = {
 
 CommunityPricingAndRating.defaultProps = {
   priceDescription: 'Est. pricing from',
+  price: 0,
+  rating: 0,
 };
 
 export default CommunityPricingAndRating;

@@ -9,4 +9,7 @@ storiesOf('Molecules|CommunityPricingAndRating', module)
   ))
   .add('with Description', () => (
     <CommunityPricingAndRating price={4300} rating={3.6} priceDescription="Blah" />
+  ))
+  .add('without pricing', () => (
+    <CommunityPricingAndRating price={0} rating={3.6} />
   ));
