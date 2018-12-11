@@ -15,7 +15,7 @@ describe('PricingFormFooter', () => {
   it('renders with isFinalStep', () => {
     const wrapper = wrap({ isFinalStep: true });
     expect(wrapper.find('Styled(Button)').dive().dive().dive()
-      .text()).toContain('Send Pricing Request');
+      .text()).toContain('Submit');
   });
 
   it('onProgressClick is called', () => {
