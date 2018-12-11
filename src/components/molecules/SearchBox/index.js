@@ -123,7 +123,7 @@ const GoogleLogo = styled(Image)`
 `;
 const baseSearchOptions = { types: ['(regions)'] };
 const SearchBox = ({
-  layout, value, onChange, onSelect, onSeachButtonClick, onTextboxFocus, placeholder, ...props
+  layout, value, onChange, onSelect, onSearchButtonClick, onTextboxFocus, placeholder, ...props
 }) => (
   <Wrapper layout={layout} {...props}>
     <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion>
@@ -145,12 +145,7 @@ const SearchBox = ({
             {layout !== 'boxWithoutButton' &&
               <SearchButton
                 layout={layout}
-                onMouseDown={() => {
-                  if (suggestions[0]) {
-                    onChange(suggestions[0].description);
-                    onSeachButtonClick(suggestions[0]);
-                  }
-                }}
+                onMouseDown={onSearchButtonClick}
               >
                 <Icon icon="search" size="regular" palette="white" />
               </SearchButton>

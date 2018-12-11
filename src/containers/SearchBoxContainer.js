@@ -72,10 +72,10 @@ class SearchBoxContainer extends Component {
       .catch(error => console.error('Error', error));
   }
 
-  handleSearch = (suggestion) => {
-    const { location } = this.props;
-    if (suggestion) {
-      this.handleSelect(suggestion.description);
+  handleSearch = () => {
+    const { location, address } = this.props;
+    if (address) {
+      this.handleSelect(address);
     } else if (location) {
       this.handleOnLocationSearch(location);
     }
