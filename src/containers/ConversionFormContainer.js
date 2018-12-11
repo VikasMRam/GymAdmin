@@ -1,9 +1,14 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
-import { object, func, bool } from 'prop-types';
+import React, {Component, Fragment} from 'react';
+import {connect} from 'react-redux';
+import {reduxForm} from 'redux-form';
+import {object, func, bool} from 'prop-types';
 
-import { getDetail } from 'sly/store/selectors';
+import Modal from 'sly/components/molecules/Modal';
+import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
+
+import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
+
+import {getDetail} from 'sly/store/selectors';
 
 import {
   createValidator,
@@ -15,6 +20,7 @@ import {
 } from 'sly/services/validation';
 
 import ConversionForm from 'sly/components/organisms/ConversionForm';
+import SlyEvent from "sly/services/helpers/events";
 
 const validate = createValidator({
   full_name: [required],
@@ -62,7 +68,7 @@ class ConversionFormContainer extends Component {
       ...props
     } = this.props;
 
-    const { email, fullName, phone } = userDetails;
+    const {email, fullName, phone} = userDetails;
     const initialValues = {
       email,
       phone,
@@ -71,7 +77,7 @@ class ConversionFormContainer extends Component {
     let agent = null;
     let contact = null;
     if (community) {
-      const { agents, contacts } = community;
+      const {agents, contacts} = community;
       agent = agents[0];
       contact = contacts[0];
     }
@@ -79,17 +85,38 @@ class ConversionFormContainer extends Component {
       ? submitExpressConversion
       : submitRegularConversion;
 
+
     return (
-      <ReduxForm
-        initialValues={initialValues}
-        onSubmit={submitConversion}
-        agent={agent}
-        contact={contact}
-        gotoWhatNext={gotoWhatNext}
-        community={community}
-        hasOnlyEmail={hasOnlyEmail(userDetails)}
-        {...props}
-      />
+      <FullScreenWizardController>
+        {({
+            isAdvisorHelpVisible, toggleAdvisorHelp,
+          }) => (
+          <Fragment>
+            <Modal closeable isOpen={isAdvisorHelpVisible} onClose={toggleAdvisorHelp}>
+              <AdvisorHelpPopup onButtonClick={toggleAdvisorHelp}/>
+            </Modal>
+            <ReduxForm
+              initialValues={initialValues}
+              onSubmit={submitConversion}
+              agent={agent}
+              contact={contact}
+              gotoWhatNext={gotoWhatNext}
+              community={community}
+              hasOnlyEmail={hasOnlyEmail(userDetails)}
+              onAdvisorHelpClick={()=> {
+                SlyEvent.getInstance().sendEvent({
+                  category: 'advisor-learn-more',
+                  action:'click',
+                  label:community.id,
+                  value:'',
+                });
+                toggleAdvisorHelp();
+              }}
+              {...props}
+            />
+          </Fragment>
+        )}
+      </FullScreenWizardController>
     );
   }
 }

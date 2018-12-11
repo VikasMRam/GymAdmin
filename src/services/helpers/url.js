@@ -2,6 +2,8 @@ import { stringify, parse } from 'query-string';
 
 import { titleize } from 'sly/services/helpers/strings';
 
+import { communitySizeSearchParamMap } from 'sly/services/helpers/search';
+
 export default function getSearchUrl(matchParams) {
   /*
    { careType: 'assisted-living', state: 'califo', city: 'sf' }
@@ -234,6 +236,13 @@ export const getCitySearchUrl = ({ propInfo, address }) => {
   const tocBc = tocPaths(propInfo.typeCare);
   return `${tocBc.path}/${urlize(stateNames[address.state])}/${urlize(address.city)}?latitude=${address.latitude}&longitude=${address.longitude}`;
 };
+
+export const getCitySearchWithSizeUrl = ({ propInfo, address }) => {
+  const sizeParam = communitySizeSearchParamMap[propInfo.communitySize];
+  console.log("Inside gsc func",sizeParam);
+  return `${getCitySearchUrl({propInfo,address})}&size=${sizeParam}`;
+};
+
 
 export const getOrigin = () => {
   if (!window) {
