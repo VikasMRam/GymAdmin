@@ -7,6 +7,7 @@ import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBook
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
+import { getCitySearchWithSizeUrl } from 'sly/services/helpers/url';
 import SlyEvent from 'sly/services/helpers/events';
 import {
   FullScreenWizard,
@@ -56,20 +57,21 @@ const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
 });
 
 const options = [
-  { value: 'schedule-tour', label: 'Schedule a tour' },
+  { value: 'schedule-tour', label: 'Schedule a tour',  },
   { value: 'talk-advisor', label: 'Talk to an advisor' },
   { value: 'learn-similar-communities', label: 'Learn about similar communities' },
   { value: 'explore-affordable-options', label: 'Explore more affordable options' },
-  { value: 'lost-need-help', label: 'I am lost, I need help' },
+  { value: 'apply-financing', label: 'Learn about financing' },
 ];
 
 const contactFormHeadingMap = {
   'schedule-tour': { heading: 'Schedule a Tour', subheading: 'We will help you schedule tours and, if you request, we can provide a local Advisor to accompany you. This is a free service. ' },
-  'talk-advisor': { heading: 'Talk to an Advisor', subheading: 'We offer complete support with an Advisor near you.  This is a no-obligation free service. ' },
+  'talk-advisor': { heading: 'Talk to an Advisor', subheading: 'Call us at (855) 866-4515 to talk to us. We offer complete support with an Advisor near you.  This is a no-obligation free service. ' },
   'learn-similar-communities': { heading: 'Learn about Similar Communities', subheading: 'We help you evaluate communities, so you can pick the best one. This is a free service. ' },
   'explore-affordable-options': { heading: 'Learn about Affordable Communities', subheading: 'We help you choose from more affordable options, so you can pick the best one. This is a free service. ' },
-  'lost-need-help': { heading: 'We Are Here to Help You', subheading: 'We have helped thousands of families to learn about and choose a community they love. This is a free service. ' },
+  'apply-financing': { heading: 'We Are Here to Help You', subheading: 'We have helped thousands of families to learn about and choose a community they love. This is a free service. ' },
 };
+
 
 class PricingWizardPage extends Component {
   static propTypes = {
@@ -79,6 +81,7 @@ class PricingWizardPage extends Component {
     onComplete: func,
     isAdvisorHelpVisible: bool,
     onAdvisorHelpClick: func,
+    history: object,
   };
 
   constructor(props) {
@@ -105,6 +108,25 @@ class PricingWizardPage extends Component {
     const { roomTypes = [], careTypes = [] } = this;
     this.calculatePrice(roomTypes, careTypes);
     sendEvent('careType-changed', id, newCareTypes.toString());
+  };
+
+  onInterestSubmit = (value, onSubmit) =>  {
+    const { community, history } = this.props;
+    const { id } = community;
+    sendEvent('pricing-next-interest', id, value);
+    if (value === 'schedule-tour') {
+      history.push(`/book-a-tour/${id}`);
+    } else if (value === 'learn-similar-communities') {
+      const url = getCitySearchWithSizeUrl(community);
+      console.log('Saw url',url);
+      history.push(url);
+    } else if (value === 'apply-financing') {
+      const url = 'https://try.seniorly.com/getfinancing/';
+      window.open(url);
+    }
+    else {
+      onSubmit(value);
+    }
   };
 
   calculatePrice = (roomTypes, careTypes) => {
@@ -140,7 +162,7 @@ class PricingWizardPage extends Component {
     const {
       community, user, onComplete, userDetails,
     } = this.props;
-    const { id, mainImage, name } = community;
+    const { id, mainImage, name, address, } = community;
     const { estimatedPrice } = this.state;
 
     return (
@@ -193,10 +215,7 @@ class PricingWizardPage extends Component {
                             communityName={name}
                             estimatedPrice={estimatedPrice}
                             listOptions={options}
-                            onSubmit={(value) => {
-                              sendEvent('pricing-next-interest', id, value);
-                              onSubmit(value);
-                            }}
+                            onSubmit={(value) =>  this.onInterestSubmit(value,onSubmit)}
                           />
                           <WizardStep
                             component={CommunityBookATourContactFormContainer}
