@@ -1,7 +1,7 @@
 /* eslint-disable key-spacing,no-multi-spaces */
 import { makeColor, makeColorTable } from './color';
 
-import { isTest } from 'sly/config';
+import { isDev } from 'sly/config';
 
 export { colorIndex } from './color';
 
@@ -25,7 +25,7 @@ theme.palette = {
   green    : makeColor('#4FB75F', ['dark', 'base', 'filler', 'stroke']),
 };
 
-if (!isTest) console.table(makeColorTable(theme.palette));
+if (isDev) console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',

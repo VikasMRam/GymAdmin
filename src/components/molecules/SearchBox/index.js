@@ -137,8 +137,21 @@ const SearchBox = ({
               layout={layout}
               onFocus={onTextboxFocus}
             />
+            {/*
+              it's important that mousedown is used instead of click because it will be fired before blur event.
+              SearchTextBox blur event will clear suggestions. hence to search with first suggestion when SearchButton
+              is clicked, fire onSeachButtonClick before suggestions are cleared.
+            */}
             {layout !== 'boxWithoutButton' &&
-              <SearchButton layout={layout} onClick={onSeachButtonClick}>
+              <SearchButton
+                layout={layout}
+                onMouseDown={() => {
+                  if (suggestions[0]) {
+                    onChange(suggestions[0].description);
+                    onSeachButtonClick(suggestions[0]);
+                  }
+                }}
+              >
                 <Icon icon="search" size="regular" palette="white" />
               </SearchButton>
             }

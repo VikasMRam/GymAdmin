@@ -7,13 +7,11 @@ import { withRouter } from 'react-router-dom';
 import { gMapsApiKey } from 'sly/config';
 import { changeAddress, setLocation, clearLocation } from 'sly/store/actions';
 import { searchBoxAddress, searchBoxLocation } from 'sly/store/selectors';
-
-import SearchBox from 'sly/components/molecules/SearchBox';
-
 import {
   filterLinkPath,
   getSearchParamFromPlacesResponse,
 } from 'sly/services/helpers/search';
+import SearchBox from 'sly/components/molecules/SearchBox';
 
 class SearchBoxContainer extends Component {
   static propTypes = {
@@ -74,9 +72,11 @@ class SearchBoxContainer extends Component {
       .catch(error => console.error('Error', error));
   }
 
-  handleSearch = () => {
+  handleSearch = (suggestion) => {
     const { location } = this.props;
-    if (location) {
+    if (suggestion) {
+      this.handleSelect(suggestion.description);
+    } else if (location) {
       this.handleOnLocationSearch(location);
     }
   };
