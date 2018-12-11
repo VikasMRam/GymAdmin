@@ -113,7 +113,7 @@ class SearchBoxContainer extends Component {
           value={address}
           onChange={this.handleChange}
           onSelect={this.handleSelect}
-          onSeachButtonClick={this.handleSearch}
+          onSearchButtonClick={this.handleSearch}
           onTextboxFocus={this.handleTextboxFocus}
           {...props}
         />
@@ -125,7 +125,7 @@ class SearchBoxContainer extends Component {
         value={address}
         onChange={this.handleChange}
         onSelect={this.handleSelect}
-        onSeachButtonClick={this.handleSearch}
+        onSearchButtonClick={this.handleSearch}
         {...props}
       />
     );

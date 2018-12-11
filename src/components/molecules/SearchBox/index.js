@@ -140,7 +140,7 @@ const SearchBox = ({
             {/*
               it's important that mousedown is used instead of click because it will be fired before blur event.
               SearchTextBox blur event will clear suggestions. hence to search with first suggestion when SearchButton
-              is clicked, fire onSeachButtonClick before suggestions are cleared.
+              is clicked, fire onSearchButtonClick before suggestions are cleared.
             */}
             {layout !== 'boxWithoutButton' &&
               <SearchButton
@@ -172,7 +172,7 @@ SearchBox.propTypes = {
   value: string.isRequired,
   onChange: func.isRequired,
   onSelect: func.isRequired,
-  onSeachButtonClick: func.isRequired,
+  onSearchButtonClick: func.isRequired,
   onTextboxFocus: func,
   placeholder: string,
 };
