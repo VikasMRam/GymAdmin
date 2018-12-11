@@ -43,7 +43,7 @@ const borderColor = ({
 };
 
 const hoverBackgroundColor = ({ disabled, ghost, transparent }) =>
-  !disabled && !ghost && !transparent && palette('filler');
+  !disabled && !ghost && !transparent && palette('dark');
 
 const hoverForegroundColor = ({
   disabled, ghost, selectable, selected,
