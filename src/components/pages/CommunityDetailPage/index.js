@@ -67,9 +67,6 @@ const AdTileWrapper = styled.div`
 
 const StyledOfferNotification = styled(OfferNotification)`
   margin-bottom: ${size('spacing.xLarge')};
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none;
-  }
 `;
 
 export default class CommunityDetailPage extends Component {
@@ -303,16 +300,6 @@ export default class CommunityDetailPage extends Component {
       >
         <Fragment>
           <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
-          {(promoDescription || promoTitle) &&
-          (
-            <OfferNotification
-              onLearnMoreClick={e => onToggleAskAgentQuestionModal(e, 'offer')}
-              palette="warning"
-              title={promoTitle}
-              description={promoDescription}
-              hasLearnMore
-            />
-          )}
         </Fragment>
       </Sticky>
     );
