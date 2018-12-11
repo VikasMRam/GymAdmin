@@ -72,10 +72,10 @@ class SearchBoxContainer extends Component {
       .catch(error => console.error('Error', error));
   }
 
-  handleSearch = (suggestion) => {
-    const { location } = this.props;
-    if (suggestion) {
-      this.handleSelect(suggestion.description);
+  handleSearch = () => {
+    const { location, address } = this.props;
+    if (address) {
+      this.handleSelect(address);
     } else if (location) {
       this.handleOnLocationSearch(location);
     }
@@ -113,7 +113,7 @@ class SearchBoxContainer extends Component {
           value={address}
           onChange={this.handleChange}
           onSelect={this.handleSelect}
-          onSeachButtonClick={this.handleSearch}
+          onSearchButtonClick={this.handleSearch}
           onTextboxFocus={this.handleTextboxFocus}
           {...props}
         />
@@ -125,7 +125,7 @@ class SearchBoxContainer extends Component {
         value={address}
         onChange={this.handleChange}
         onSelect={this.handleSelect}
-        onSeachButtonClick={this.handleSearch}
+        onSearchButtonClick={this.handleSearch}
         {...props}
       />
     );
