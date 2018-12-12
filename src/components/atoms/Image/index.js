@@ -33,7 +33,7 @@ export default class Image extends React.Component {
   static propTypes = {
     src: string.isRequired,
     alt: string,
-    aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3']),
+    aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3', '1:1']),
     children: node,
   };
 

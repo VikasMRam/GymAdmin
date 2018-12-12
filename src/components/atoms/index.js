@@ -12,6 +12,7 @@ export Input from './Input';
 export Label from './Label';
 export Link from './Link';
 export Paragraph from './Paragraph';
+export Span from './Span';
 export Tag from './Tag';
 export Thumbnail from './Thumbnail';
 export TileImage from './TileImage';
