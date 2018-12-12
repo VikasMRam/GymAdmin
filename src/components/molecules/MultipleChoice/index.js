@@ -26,7 +26,7 @@ const Wrapper = styled.div`
       flex-wrap: wrap;
     `,
     vertical: css`
-      > button {
+      > * {
         width: 100%;
         margin-bottom: ${size('spacing.regular')}
       }
@@ -69,6 +69,10 @@ export default class MultipleChoice extends Component {
     options: arrayOf(shape({
       value: oneOfType([string, number]).isRequired,
       label: string,
+      type: string,
+      href: string,
+      to: string,
+      target: string,
     })).isRequired,
     invalid: bool,
     value: oneOfType([
@@ -128,14 +132,20 @@ export default class MultipleChoice extends Component {
     return (
       <Wrapper onBlur={this.onBlur} orientation={orientation} {...props}>
         {options &&
-          options.map(({ value: option, label }) => (
+          options.map(({
+            value: option, label, type: buttonType, href, to, target,
+          }) => (
             <StyledButton
               orientation={orientation}
               selectable={type === 'singlechoice' || type === 'multiplechoice'}
               selected={isSelected(type, value, option)}
               key={option}
               kind={buttonKind}
+              type={buttonType}
               palette={buttonPalette}
+              href={href}
+              to={to}
+              target={target}
               onClick={() => this.onClick(option)}
             >
               {label}

@@ -9,7 +9,7 @@ import { Button } from 'sly/components/atoms';
 const Wrapper = styled.div`
   background-color: ${palette('grey', 'stroke')};
   display: flex;
-  
+
   padding: ${size('spacing.large')} ${size('spacing.xLarge')};
   border-top: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 `;
@@ -35,7 +35,7 @@ const PricingFormFooter = ({
   onProgressClick,
 }) => (
   <Wrapper>
-    <StyledButton kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>{isFinalStep ? 'Send Pricing Request' : 'Continue'}</StyledButton>
+    <StyledButton kind="jumbo" disabled={isButtonDisabled} palette={paletteProp} onClick={onProgressClick}>{isFinalStep ? 'Submit' : 'Continue'}</StyledButton>
   </Wrapper>
 );
 

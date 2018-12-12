@@ -43,7 +43,7 @@ const borderColor = ({
 };
 
 const hoverBackgroundColor = ({ disabled, ghost, transparent }) =>
-  !disabled && !ghost && !transparent && palette('filler');
+  !disabled && !ghost && !transparent && palette('dark');
 
 const hoverForegroundColor = ({
   disabled, ghost, selectable, selected,
@@ -145,7 +145,8 @@ const StyledButton = styled.button`
 const Button = ({ type, kind, ...props }) => {
   // rename type to kind to avoid collision with html button type
   if (props.to) {
-    return <StyledLink kind={kind} {...props} />;
+    const { selectable, ...linkProps } = props;
+    return <StyledLink kind={kind} {...linkProps} />;
   } else if (props.href) {
     return <Anchor kind={kind} {...props} />;
   }

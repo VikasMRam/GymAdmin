@@ -67,6 +67,7 @@ const ConversionForm = ({
   hasOnlyEmail,
   agent,
   contact,
+  onAdvisorHelpClick,
 }) => (
   <div>
     <StyledForm onSubmit={handleSubmit}>
@@ -108,7 +109,7 @@ const ConversionForm = ({
       <AgentSectionWrapper>
         <AgentSectionText>
           We have matched you with a Seniorly partner agent to help you along the way.{' '}
-          <Link href="https://www.seniorly.com/resources/articles/why-you-should-use-a-referral-agent" target="_blank">Learn More</Link>
+          <Link palette="primary" onClick={onAdvisorHelpClick}>Learn More</Link>
         </AgentSectionText>
         <AgentTileWrapper>
           <AgentTile
@@ -126,6 +127,7 @@ ConversionForm.propTypes = {
   agent: object,
   contact: object,
   hasOnlyEmail: bool,
+  onAdvisorHelpClick: func,
 };
 
 export default ConversionForm;

@@ -82,7 +82,7 @@ const BookATourPage = ({
             <WizardController
               formName="BookATourWizardForm"
               onComplete={data => onComplete(data, toggleConfirmationModal)}
-              onStepChange={step => sendEvent('step-completed', id, step - 1)}
+              onStepChange={({ currentStep }) => sendEvent('step-completed', id, currentStep)}
             >
               {({
                 data, onSubmit, isFinalStep, submitEnabled, ...props

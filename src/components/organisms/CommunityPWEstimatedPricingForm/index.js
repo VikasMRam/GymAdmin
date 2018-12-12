@@ -50,7 +50,7 @@ const CommunityPWEstimatedPricingForm = ({
   error, handleSubmit, communityName, onRoomTypeChange, onCareTypeChange, userDetails,
 }) => (
   <form onSubmit={handleSubmit}>
-    <HeadingSection level="subtitle" size="subtitle">Get your custom pricing for {communityName}</HeadingSection>
+    <HeadingSection level="subtitle" size="subtitle">Get your Pricing and Availability for {communityName}</HeadingSection>
     <StyledBlock size="caption">
       What type of room are you looking for?
       <StyledHelpBubble>All shown room types may not be available in this community.</StyledHelpBubble>

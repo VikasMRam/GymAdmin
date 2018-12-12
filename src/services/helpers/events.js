@@ -67,6 +67,12 @@ export default class SlyEvent {
       t: Date.now(),
     };
 
+    let gaLabel = label;
+
+    if (value) {
+      gaLabel += `:${value}`;
+    }
+
     if (category == null) {
       category = window.location.pathname + window.location.hash.split('?')[0];
     }
@@ -75,7 +81,7 @@ export default class SlyEvent {
       category,
       action,
       value,
-      label: `${label}:${value}`,
+      label: gaLabel,
     };
 
     if (isDev) {

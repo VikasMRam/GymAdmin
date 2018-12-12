@@ -20,3 +20,5 @@ export function isFSA(action) {
 export function isError(action) {
   return isFSA(action) && action.error === true;
 }
+
+export * from './chatBox/actions';

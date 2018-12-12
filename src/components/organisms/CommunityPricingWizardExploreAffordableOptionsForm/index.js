@@ -1,7 +1,6 @@
 import React from 'react';
-import { string, func, number, array } from 'prop-types';
+import { func, array } from 'prop-types';
 import styled from 'styled-components';
-import NumberFormat from 'react-number-format';
 import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
@@ -27,34 +26,17 @@ const WrapperForm = styled.form`
 `;
 
 const HeadingSection = styled(Block)`
-  margin-bottom: ${size('spacing.small')};
-`;
-
-const PriceSection = styled(Block)`
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const Price = styled(NumberFormat)`
-  font-size: ${size('text.hero')};
-`;
-
-const WhatToDoNextText = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const CommunityPricingWizardWhatToDoNextForm = ({
-  handleSubmit, communityName, estimatedPrice, listOptions, onInterestChange,
+const CommunityPricingWizardExploreAffordableOptionsForm = ({
+  handleSubmit, listOptions, onBudgetChange,
 }) => (
   <Wrapper shadow>
     <WrapperForm onSubmit={handleSubmit}>
-      <HeadingSection palette="grey" size="body">Your estimated pricing for {communityName}:</HeadingSection>
-      <PriceSection weight="bold">
-        <Price value={estimatedPrice} displayType="text" thousandSeparator prefix="$" />
-        <span>/mo</span>
-      </PriceSection>
-      <WhatToDoNextText palette="grey">Here is what you can do next:</WhatToDoNextText>
+      <HeadingSection palette="grey" size="body">What is your monthly budget?</HeadingSection>
       <Field
-        name="interest"
+        name="budget"
         type="buttonlist"
         options={listOptions}
         orientation="vertical"
@@ -62,19 +44,17 @@ const CommunityPricingWizardWhatToDoNextForm = ({
         buttonType="submit"
         buttonPalette="primary"
         component={ReduxField}
-        onChange={onInterestChange}
+        onChange={onBudgetChange}
       />
     </WrapperForm>
   </Wrapper>
 );
 
-CommunityPricingWizardWhatToDoNextForm.propTypes = {
-  communityName: string.isRequired,
-  estimatedPrice: number.isRequired,
+CommunityPricingWizardExploreAffordableOptionsForm.propTypes = {
   listOptions: array.isRequired,
   handleSubmit: func.isRequired,
   onSubmit: func.isRequired,
-  onInterestChange: func,
+  onBudgetChange: func,
 };
 
-export default CommunityPricingWizardWhatToDoNextForm;
+export default CommunityPricingWizardExploreAffordableOptionsForm;
