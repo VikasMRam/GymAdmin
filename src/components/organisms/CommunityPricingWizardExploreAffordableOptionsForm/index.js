@@ -34,7 +34,7 @@ const CommunityPricingWizardExploreAffordableOptionsForm = ({
 }) => (
   <Wrapper shadow>
     <WrapperForm onSubmit={handleSubmit}>
-      <HeadingSection palette="grey" size="body">What is your monthly budget</HeadingSection>
+      <HeadingSection palette="grey" size="body">What is your monthly budget?</HeadingSection>
       <Field
         name="budget"
         type="buttonlist"
