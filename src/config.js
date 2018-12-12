@@ -28,7 +28,6 @@ const config = {
     publicPath,
     externalWizardsPath: process.env.EXTERNAL_WIZARDS_PATH,
     olarkSiteId: '',
-    rokoApikey: 'OgRs7tffvTdiKOKqsDSwwLgyJF6wHYVxFAK+qQO4paU=',
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-NTC7HG2',
     version: process.env.VERSION,
