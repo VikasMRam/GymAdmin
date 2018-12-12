@@ -1,21 +1,5 @@
-export const WEIGHT_ACCOMODATION = {
-  suite: 0,
-  '1-bedroom': 10,
-  '2-bedroom': 20,
-};
-
-export const WEIGHT_CARE_SERVICE = {
-  none: -10,
-  'memory-care': 20,
-  'palliative-care': 15,
-  'medication-management': 0,
-  'diabetes-care': 5,
-  'physical-therapy': 5,
-  other: 0,
-};
-
 export const EST_ADDL_COST_ACCOMODATION = {
-  'shared-suite':-350,
+  'shared-suite': -350,
   suite: 0,
   '1-bedroom': 1000,
   '2-bedroom': 1250,
@@ -65,7 +49,26 @@ export const MEDICAID_OPTIONS = [
   { label: "I'm not sure", value: 'not-sure' },
 ];
 
-export const CONTACT_BY_TEXT_MSG_OPTIONS = [
-  { label: 'Yes', value: 'yes' },
-  { label: 'No', value: 'no' },
+export const WHAT_TO_NEXT_OPTIONS = [
+  { value: 'schedule-tour', label: 'Schedule a tour' },
+  { value: 'talk-advisor', label: 'Talk to an advisor', type: 'submit' },
+  { value: 'learn-similar-communities', label: 'Learn about similar communities' },
+  { value: 'explore-affordable-options', label: 'Explore more affordable options', type: 'submit' },
+  {
+    value: 'apply-financing',
+    label: 'Learn about financing',
+    href: 'https://try.seniorly.com/getfinancing/',
+    target: '_blank',
+  },
+];
+
+export const EXPLORE_AFFORDABLE_PRICING_OPTIONS = [
+  {
+    value: 'less-than-$2000',
+    label: 'Less than $2000',
+    href: 'https://www.seniorly.com/resources/articles/low-income-assisted-living',
+    target: '_blank',
+  },
+  { value: '$2000-$3000', label: '$2000 - $3000', type: 'submit' },
+  { value: '$3000-$4000', label: '$3000 - $4000', type: 'submit' },
 ];

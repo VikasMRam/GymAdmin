@@ -1,10 +1,9 @@
 import { stringify, parse } from 'query-string';
 
 import { titleize } from 'sly/services/helpers/strings';
-
 import { communitySizeSearchParamMap } from 'sly/services/helpers/search';
 
-export default function getSearchUrl(matchParams) {
+export const getSearchUrl = (matchParams) => {
   /*
    { careType: 'assisted-living', state: 'califo', city: 'sf' }
    */
@@ -14,7 +13,7 @@ export default function getSearchUrl(matchParams) {
     toc: matchParams.toc,
   };
   return outUrl;
-}
+};
 
 const tocPaths = (toc) => {
   if (toc && toc.length > 0) {
@@ -203,20 +202,19 @@ export const getBreadCrumbsForLocation = ({ toc, state, city }) => {
     path: '/',
     label: 'Home',
   }];
-  //TODO A better job
-  if (tocBc){
+  // TODO A better job
+  if (tocBc) {
     baseBcs.push(tocBc);
-  }
-  else {
-    //Safety
+  } else {
+    // Safety
     return baseBcs;
   }
 
   if (state) {
     baseBcs.push({
       path: `${tocBc.path}/${state}`,
-        label: titleize(state),
-    })
+      label: titleize(state),
+    });
   } else {
     return baseBcs;
   }
@@ -225,11 +223,10 @@ export const getBreadCrumbsForLocation = ({ toc, state, city }) => {
     baseBcs.push({
       path: `${tocBc.path}/${state}/${city}`,
       label: titleize(city),
-    })
+    });
   }
 
   return baseBcs;
-
 };
 
 export const getCitySearchUrl = ({ propInfo, address }) => {
@@ -239,10 +236,8 @@ export const getCitySearchUrl = ({ propInfo, address }) => {
 
 export const getCitySearchWithSizeUrl = ({ propInfo, address }) => {
   const sizeParam = communitySizeSearchParamMap[propInfo.communitySize];
-  console.log("Inside gsc func",sizeParam);
-  return `${getCitySearchUrl({propInfo,address})}&size=${sizeParam}`;
+  return `${getCitySearchUrl({ propInfo, address })}&size=${sizeParam}`;
 };
-
 
 export const getOrigin = () => {
   if (!window) {
@@ -262,7 +257,7 @@ export const parseURLQueryParams = obj => parse(obj);
 export const getStateAbbr = (state) => {
   const st = titleize(state);
   return stateAbbr[st];
-}
+};
 
 export const removeQueryParamFromURL = (key, sourceURL) => {
   const [path, queryStringStr] = sourceURL.split('?');
