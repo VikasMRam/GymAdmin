@@ -1,29 +1,35 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, arrayOf, object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import CommunityFloorPlanListItem from 'sly/components/molecules/CommunityFloorPlanListItem/index';
-import Block from 'sly/components/atoms/Block/index';
+import { Hr, Block } from 'sly/components/atoms';
+import CommunityFloorPlanListItem from 'sly/components/molecules/CommunityFloorPlanListItem';
 
-const Wrapper = styled.div`
-
+const StyledHr = styled(Hr)`
+  margin: 0 -${size('spacing.xLarge')};
 `;
 
 const ListWrapper = styled.div`
-margin-bottom: ${size('spacing.large')};
+  margin: 0 -${size('spacing.xLarge')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const CommunityFloorPlansList = ({ typeOfCare, floorPlans }) => (
-  <Wrapper>
+  <Fragment>
     <ListWrapper>
-      {floorPlans.map((floorPlan) => {
+      {floorPlans.map((floorPlan, i) => {
         const { id, info } = floorPlan;
-        return <CommunityFloorPlanListItem key={id} typeOfCare={typeOfCare} {...info} />;
+        return (
+          <Fragment key={id}>
+            <CommunityFloorPlanListItem typeOfCare={typeOfCare} {...info} />
+            <StyledHr />
+          </Fragment>
+        );
       })}
     </ListWrapper>
     <Block size="tiny" palette="grey">*Care services not included in price. Your pricing will vary depending on your specific room and care service needs.</Block>
-  </Wrapper>
+  </Fragment>
 );
 
 CommunityFloorPlansList.propTypes = {

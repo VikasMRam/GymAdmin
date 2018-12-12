@@ -1,48 +1,58 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { string, number, func, oneOf } from 'prop-types';
 import { Lazy } from 'react-lazy';
 
 import { size, palette, assetPath } from 'sly/components/themes';
-import Image from 'sly/components/atoms/Image/index';
-import Block from 'sly/components/atoms/Block/index';
+import { Image, Block, Box, Span } from 'sly/components/atoms';
+
+const bodyLineHeight = () => css`calc(${size('text.body')} * ${size('lineHeight.body')})`;
 
 const Wrapper = styled.div`
   display: flex;
-  padding: ${size('spacing.large')};
-  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  padding: ${size('spacing.xLarge')};
+  
   &:hover {
     background-color: ${palette('primary', 'background')};
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   }
 `;
 
-const ImageWrapper = styled.div`
-  object-fit: contain;
+const StyledBox = styled(Box)`
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: ${size('element.xxLarge')};
+  height: ${size('element.xxLarge')};
+  background: ${palette('white.base')};
   margin-right: ${size('spacing.large')};
 `;
 
 const StyledImage = styled(Image)`
-  width: ${size('element.xxLarge')};
+  img {
+    object-fit: contain;
+  }
 `;
 
 const TextSection = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  text-align: center;
+  flex-grow: 1;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     flex-direction: row;
-    text-align: left;
-    width: 100%;
   }
 `;
 
 const RoomTypeText = styled(Block)`
   margin-bottom: ${size('spacing.small')};
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 const PriceSection = styled.div`
@@ -51,20 +61,23 @@ const PriceSection = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-left: auto;
     flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
   }
 `;
 
 const PricingFromText = styled(Block)`
   margin-right: ${size('spacing.small')};
-  line-height: 24px;
+  line-height: ${bodyLineHeight}; 
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin: 0;
+    margin-bottom: ${size('spacing.small')};
+  }
 `;
 
 const FullPriceSection = styled.div`
-  display: flex;
-`;
-
-const FrequencyText = styled(Block)`
-  line-height: 24px;
+  line-height: ${bodyLineHeight}; 
 `;
 
 const priceTypeMap = {
@@ -86,11 +99,11 @@ const CommunityFloorPlanListItem = ({
 
   return (
     <Wrapper onClick={onItemClick}>
-      <ImageWrapper>
+      <StyledBox padding="small">
         <Lazy component="div" ltIE9>
-          <StyledImage src={imgSrc} />
+          <StyledImage src={imgSrc} aspectRatio="1:1" />
         </Lazy>
-      </ImageWrapper>
+      </StyledBox>
       <TextSection>
         <RoomTypeText>
           {`${typeOfCare} - ${roomType}`}
@@ -98,8 +111,8 @@ const CommunityFloorPlanListItem = ({
         <PriceSection>
           <PricingFromText palette="grey" size="caption">Pricing from</PricingFromText>
           <FullPriceSection>
-            <Block weight="medium">${priceToShow}</Block>
-            <FrequencyText size="caption">/{priceTypeMap[priceType]}*</FrequencyText>
+            <Span weight="medium">${priceToShow}</Span>
+            <Span>/{priceTypeMap[priceType]}*</Span>
           </FullPriceSection>
         </PriceSection>
       </TextSection>
