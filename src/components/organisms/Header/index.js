@@ -125,6 +125,13 @@ const HeaderItem = styled(Link)`
   }
 `;
 
+const StyledSearchBoxContainer = styled(SearchBoxContainer)`
+  width: 100%;
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('header.SearchBox.width')};
+  }
+`;
+
 const Header = ({
   menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur, className,
 }) => {
@@ -180,7 +187,7 @@ const Header = ({
           </Fragment>
         )}
       </SeniorlyIconMenu>
-      <SearchBoxContainer layout="header" onLocationSearch={onLocationSearch} />
+      <StyledSearchBoxContainer layout="header" onLocationSearch={onLocationSearch} />
       <HeaderItems>
         {headerItemComponents}
       </HeaderItems>
