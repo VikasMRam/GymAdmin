@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { string, number, func, oneOf } from 'prop-types';
 import { Lazy } from 'react-lazy';
+import NumberFormat from 'react-number-format';
 
 import { size, palette, assetPath } from 'sly/components/themes';
 import { Image, Block, Box, Span } from 'sly/components/atoms';
@@ -86,6 +87,10 @@ const priceTypeMap = {
   'Daily Rate': 'day',
 };
 
+const StyledNumberFormat = styled(NumberFormat)`
+  font-weight: 500;
+`;
+
 const CommunityFloorPlanListItem = ({
   image, typeOfCare, roomType, shareType, price, priceShared, priceType, onItemClick,
 }) => {
@@ -112,7 +117,7 @@ const CommunityFloorPlanListItem = ({
         <PriceSection>
           <PricingFromText palette="grey" size="caption">Pricing from</PricingFromText>
           <FullPriceSection>
-            <Span weight="medium">${priceToShow}</Span>
+            <StyledNumberFormat value={priceToShow} displayType="text" thousandSeparator prefix="$" />
             <Span>/{priceTypeMap[priceType]}*</Span>
           </FullPriceSection>
         </PriceSection>
