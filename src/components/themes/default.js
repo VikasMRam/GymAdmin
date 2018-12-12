@@ -221,6 +221,7 @@ theme.sizes = {
       golden: '61.803398875%',
       '3:2':  '66.66%',
       '4:3' : '75%',
+      '1:1' : '100%',
     },
   },
 
@@ -299,6 +300,13 @@ theme.sizes = {
     subtitle: '1.125rem',   // 18px TODO: clarify whether it's 20px in new theme
     title   : '1.750rem',   // 28px
     hero    : '2.500rem',   // 40px
+  },
+
+  weight: {
+    light:    '300',
+    regular:  '400',
+    medium:   '500',
+    bold:     '700',
   },
 
   lineHeight: {

@@ -19,7 +19,7 @@ const getTag = (level) => {
 const styles = css`
   font-size: ${fontSize};
   line-height: ${lineHeight};
-  font-weight: 500;
+  font-weight: ${size('weight.medium')};
   // TODO: review this with @jared,
   // for now let's make margin-bottom relative to font-size
   margin: 0 0 calc(${fontSize} * 0.25) 0;

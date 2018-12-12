@@ -46,6 +46,7 @@ import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
 import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
+import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList/index';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -276,6 +277,7 @@ export default class CommunityDetailPage extends Component {
       languages,
       languagesOther,
     } = propInfo;
+    const typeOfCare = typeCare[0];
     const { modal, entityId, currentStep } = searchParams;
     let questionToAnswer = null;
     if (modal === ANSWER_QUESTION && entityId) {
@@ -490,7 +492,7 @@ export default class CommunityDetailPage extends Component {
               }
             innerRef={this.pricingAndFloorPlansRef}
           >
-            <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
+            {/* <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
               {() => (
                 <PricingAndAvailability
                   community={community}
@@ -505,7 +507,8 @@ export default class CommunityDetailPage extends Component {
                   gotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
                 />
               )}
-            </ConciergeController>
+            </ConciergeController> */}
+            <CommunityFloorPlansList typeOfCare={typeOfCare} floorPlans={floorPlans} />
           </CollapsibleSection>
           {(communityDescription || rgsAux.communityDescription) &&
             <CollapsibleSection title="Community Details">

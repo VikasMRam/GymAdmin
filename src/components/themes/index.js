@@ -33,7 +33,12 @@ export function getKey(key) {
   return prop(key)(theme);
 }
 
+
 export function palette(...args) {
+  if (args.length === 1 && typeof args[0] === 'string') {
+    // eslint-disable-next-line no-param-reassign
+    args = args[0].split('.');
+  }
   let last = args.pop();
   if (typeof last === 'string') {
     last = colorIndex[last];
