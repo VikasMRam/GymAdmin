@@ -1,6 +1,5 @@
 import { oneOf } from 'prop-types';
-import styled, { css } from 'styled-components';
-import { switchProp } from 'styled-tools';
+import styled from 'styled-components';
 
 import { getKey, size, palette } from 'sly/components/themes';
 import { variation as variationPropType } from 'sly/propTypes/variation';
