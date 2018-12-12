@@ -4,6 +4,7 @@ import { reduxForm } from 'redux-form';
 import { action } from '@storybook/addon-actions';
 
 import CommunityPricingWizardWhatToDoNextForm from 'sly/components/organisms/CommunityPricingWizardWhatToDoNextForm';
+import { WHAT_TO_NEXT_OPTIONS } from 'sly/constants/pricingForm';
 
 const CommunityPWEstimatedPricingFormContainer = reduxForm({
   form: 'CommunityPricingWizardWhatToDoNextForm',
@@ -13,7 +14,9 @@ const CommunityPWEstimatedPricingFormContainer = reduxForm({
 const defaultProps = {
   communityName: 'Rhoda Goldman Plaza',
   estimatedPrice: 3600,
-  onOptionClick: action('onOptionClick'),
+  onSubmit: action('onSubmit'),
+  onInterestChange: action('onInterestChange'),
+  listOptions: WHAT_TO_NEXT_OPTIONS,
 };
 
 storiesOf('Organisms|CommunityPricingWizardWhatToDoNextForm', module)

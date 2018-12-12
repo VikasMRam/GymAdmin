@@ -53,7 +53,6 @@ const PricingWizardPageContainer = ({
       user={user}
       userDetails={userDetails}
       onComplete={handleComplete}
-      history={history}
     />
   );
 };

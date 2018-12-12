@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Box from '.';
+import Box from 'sly/components/atoms/Box';
 
 const wrap = (props = {}) => shallow(<Box {...props} />);
 const palette = 'danger';

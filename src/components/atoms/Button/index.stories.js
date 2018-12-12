@@ -23,4 +23,7 @@ storiesOf('Atoms|Button', module)
   ))
   .add('link', () => (
     <Button href="https://github.com/diegohaz/arc">ARc repository</Button>
+  ))
+  .add('link and target', () => (
+    <Button href="https://github.com/diegohaz/arc" target="_blank">ARc repository</Button>
   ));

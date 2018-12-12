@@ -89,6 +89,7 @@ class WizardController extends Component {
   };
 
   handleSubmit = () => {
+    const { next, previous, goto } = this;
     const {
       onSubmit, onComplete, onStepChange, data, currentStep,
     } = this.props;
@@ -99,26 +100,39 @@ class WizardController extends Component {
     if (onSubmit) {
       return onSubmit(data);
     }
+    this.next();
+
     if (onStepChange) {
-      onStepChange(currentStep + 1, data);
+      const args = {
+        currentStep,
+        data,
+        next,
+        previous,
+        goto,
+      };
+      return onStepChange(args);
     }
-    return this.next();
+
+    return null;
   };
 
   render() {
-    const { formOptions } = this;
+    const {
+      formOptions, next, previous, goto, handleSubmit, setStepsSize,
+      isFinalStep,
+    } = this;
     const {
       children, currentStep, data, submitEnabled,
     } = this.props;
 
     return children({
-      next: this.next,
-      previous: this.previous,
-      goto: this.goto,
-      onSubmit: this.handleSubmit,
-      setStepsSize: this.setStepsSize,
+      onSubmit: handleSubmit,
+      isFinalStep: isFinalStep(),
+      setStepsSize,
       currentStep,
-      isFinalStep: this.isFinalStep(),
+      next,
+      previous,
+      goto,
       formOptions,
       data,
       submitEnabled,

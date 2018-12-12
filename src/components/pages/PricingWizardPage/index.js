@@ -16,7 +16,12 @@ import {
   makeControls,
   makeHeader,
 } from 'sly/components/templates/FullScreenWizard';
-import { EST_ADDL_COST_ACCOMODATION, EST_ADDL_COST_CARE_SERVICE } from 'sly/constants/pricingForm';
+import {
+  EST_ADDL_COST_ACCOMODATION,
+  EST_ADDL_COST_CARE_SERVICE,
+  WHAT_TO_NEXT_OPTIONS,
+  EXPLORE_AFFORDABLE_PRICING_OPTIONS,
+} from 'sly/constants/pricingForm';
 import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
@@ -25,6 +30,8 @@ import Modal from 'sly/components/molecules/Modal';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityPWEstimatedPricingFormContainer from 'sly/containers/CommunityPWEstimatedPricingFormContainer';
 import CommunityPricingWizardWhatToDoNextFormContainer from 'sly/containers/CommunityPricingWizardWhatToDoNextFormContainer';
+import CommunityPricingWizardExploreAffordableOptionsFormContainer
+  from 'sly/containers/CommunityPricingWizardExploreAffordableOptionsFormContainer';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -56,22 +63,15 @@ const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
   value,
 });
 
-const options = [
-  { value: 'schedule-tour', label: 'Schedule a tour',  },
-  { value: 'talk-advisor', label: 'Talk to an advisor' },
-  { value: 'learn-similar-communities', label: 'Learn about similar communities' },
-  { value: 'explore-affordable-options', label: 'Explore more affordable options' },
-  { value: 'apply-financing', label: 'Learn about financing' },
-];
-
 const contactFormHeadingMap = {
   'schedule-tour': { heading: 'Schedule a Tour', subheading: 'We will help you schedule tours and, if you request, we can provide a local Advisor to accompany you. This is a free service. ' },
-  'talk-advisor': { heading: 'Talk to an Advisor', subheading: 'Call us at (855) 866-4515 to talk to us. We offer complete support with an Advisor near you.  This is a no-obligation free service. ' },
+  'talk-advisor': { heading: 'Talk to an Advisor', subheading: 'Call us at (855) 866-4515 to talk to us. We offer complete support with an Partner Agent near you.  This is a no-obligation free service. ' },
   'learn-similar-communities': { heading: 'Learn about Similar Communities', subheading: 'We help you evaluate communities, so you can pick the best one. This is a free service. ' },
   'explore-affordable-options': { heading: 'Learn about Affordable Communities', subheading: 'We help you choose from more affordable options, so you can pick the best one. This is a free service. ' },
   'apply-financing': { heading: 'We Are Here to Help You', subheading: 'We have helped thousands of families to learn about and choose a community they love. This is a free service. ' },
 };
 
+const stepsWithoutControls = [2, 3];
 
 class PricingWizardPage extends Component {
   static propTypes = {
@@ -92,7 +92,7 @@ class PricingWizardPage extends Component {
     this.state = { estimatedPrice: startingRate };
   }
 
-  onRoomTypeChange = (e, newRoomTypes) => {
+  handleRoomTypeChange = (e, newRoomTypes) => {
     const { community } = this.props;
     const { id } = community;
     this.roomTypes = newRoomTypes;
@@ -101,7 +101,7 @@ class PricingWizardPage extends Component {
     sendEvent('roomType-changed', id, newRoomTypes.toString());
   };
 
-  onCareTypeChange = (e, newCareTypes) => {
+  handleCareTypeChange = (e, newCareTypes) => {
     const { community } = this.props;
     const { id } = community;
     this.careTypes = newCareTypes;
@@ -110,22 +110,14 @@ class PricingWizardPage extends Component {
     sendEvent('careType-changed', id, newCareTypes.toString());
   };
 
-  onInterestSubmit = (value, onSubmit) =>  {
-    const { community, history } = this.props;
+  handleStepChange = ({ currentStep, data, goto }) => {
+    const { community } = this.props;
     const { id } = community;
-    sendEvent('pricing-next-interest', id, value);
-    if (value === 'schedule-tour') {
-      history.push(`/book-a-tour/${id}`);
-    } else if (value === 'learn-similar-communities') {
-      const url = getCitySearchWithSizeUrl(community);
-      console.log('Saw url',url);
-      history.push(url);
-    } else if (value === 'apply-financing') {
-      const url = 'https://try.seniorly.com/getfinancing/';
-      window.open(url);
-    }
-    else {
-      onSubmit(value);
+    const { interest } = data;
+
+    sendEvent('step-completed', id, currentStep);
+    if (currentStep === 2 && interest !== 'explore-affordable-options') {
+      goto(4);
     }
   };
 
@@ -158,12 +150,19 @@ class PricingWizardPage extends Component {
   };
 
   render() {
-    const { onRoomTypeChange, onCareTypeChange } = this;
+    const {
+      handleRoomTypeChange, handleCareTypeChange, handleStepChange,
+    } = this;
     const {
       community, user, onComplete, userDetails,
     } = this.props;
-    const { id, mainImage, name, address, } = community;
+    const { id, mainImage, name } = community;
     const { estimatedPrice } = this.state;
+    const compiledWhatToDoNextOptions = [...WHAT_TO_NEXT_OPTIONS];
+    const scheduleTourOption = compiledWhatToDoNextOptions.find(o => o.value === 'schedule-tour');
+    scheduleTourOption.to = `/book-a-tour/${id}`;
+    const similarCommunitiesOption = compiledWhatToDoNextOptions.find(o => o.value === 'learn-similar-communities');
+    similarCommunitiesOption.to = getCitySearchWithSizeUrl(community);
 
     return (
       <FullScreenWizard>
@@ -185,10 +184,10 @@ class PricingWizardPage extends Component {
               <WizardController
                 formName="PricingWizardForm"
                 onComplete={data => onComplete(data, toggleConfirmationModal)}
-                onStepChange={step => sendEvent('step-completed', id, step - 1)}
+                onStepChange={handleStepChange}
               >
                 {({
-                  data, onSubmit, isFinalStep, submitEnabled, currentStep, ...props
+                  data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
                 }) => {
                   let formHeading = null;
                   let formSubheading = null;
@@ -205,8 +204,8 @@ class PricingWizardPage extends Component {
                             component={CommunityPWEstimatedPricingFormContainer}
                             name="EstimatedPricing"
                             communityName={name}
-                            onRoomTypeChange={onRoomTypeChange}
-                            onCareTypeChange={onCareTypeChange}
+                            onRoomTypeChange={handleRoomTypeChange}
+                            onCareTypeChange={handleCareTypeChange}
                             userDetails={userDetails}
                           />
                           <WizardStep
@@ -214,8 +213,16 @@ class PricingWizardPage extends Component {
                             name="WhatToDoNext"
                             communityName={name}
                             estimatedPrice={estimatedPrice}
-                            listOptions={options}
-                            onSubmit={(value) =>  this.onInterestSubmit(value,onSubmit)}
+                            listOptions={compiledWhatToDoNextOptions}
+                            onInterestChange={(e, interest) => sendEvent('pricing-next-interest', id, interest)}
+                            onSubmit={onSubmit}
+                          />
+                          <WizardStep
+                            component={CommunityPricingWizardExploreAffordableOptionsFormContainer}
+                            name="ExploreAffordableOptions"
+                            listOptions={EXPLORE_AFFORDABLE_PRICING_OPTIONS}
+                            onBudgetChange={(e, budget) => sendEvent('budget-selected', id, budget)}
+                            onSubmit={onSubmit}
                           />
                           <WizardStep
                             component={CommunityBookATourContactFormContainer}
@@ -229,12 +236,14 @@ class PricingWizardPage extends Component {
                         </WizardSteps>
                       </Body>
                       <Controls>
-                        { currentStep !== 2 && <PricingFormFooter
-                          price={estimatedPrice}
-                          onProgressClick={onSubmit}
-                          isFinalStep={isFinalStep}
-                          isButtonDisabled={!submitEnabled}
-                        />}
+                        {!stepsWithoutControls.includes(currentStep) &&
+                          <PricingFormFooter
+                            price={estimatedPrice}
+                            onProgressClick={onSubmit}
+                            isFinalStep={isFinalStep}
+                            isButtonDisabled={!submitEnabled}
+                          />
+                        }
                       </Controls>
                     </Fragment>
                     );
