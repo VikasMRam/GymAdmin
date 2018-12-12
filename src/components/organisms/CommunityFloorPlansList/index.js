@@ -7,11 +7,10 @@ import { Hr, Block } from 'sly/components/atoms';
 import CommunityFloorPlanListItem from 'sly/components/molecules/CommunityFloorPlanListItem';
 
 const StyledHr = styled(Hr)`
-  margin: 0 -${size('spacing.xLarge')};
+  margin: 0;
 `;
 
 const ListWrapper = styled.div`
-  margin: 0 -${size('spacing.xLarge')};
   margin-bottom: ${size('spacing.xLarge')};
 `;
 

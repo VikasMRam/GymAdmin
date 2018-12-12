@@ -11,6 +11,7 @@ const bodyLineHeight = () => css`calc(${size('text.body')} * ${size('lineHeight.
 const Wrapper = styled.div`
   display: flex;
   padding: ${size('spacing.xLarge')};
+  margin: 0 -${size('spacing.xLarge')};
   
   &:hover {
     background-color: ${palette('primary', 'background')};
