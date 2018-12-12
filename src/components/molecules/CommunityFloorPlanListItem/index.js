@@ -88,7 +88,7 @@ const priceTypeMap = {
 };
 
 const StyledNumberFormat = styled(NumberFormat)`
-  font-weight: 500;
+  font-weight: ${size('weight.medium')};
 `;
 
 const CommunityFloorPlanListItem = ({
