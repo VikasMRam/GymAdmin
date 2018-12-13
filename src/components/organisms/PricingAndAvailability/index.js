@@ -119,7 +119,6 @@ const PricingAndAvailability = ({
           </Item>
         ))}
       </StyledArticle>
-
       {sortedEstimatedPrice.length > 0 &&
         <article id="pricing-and-floor-plans-comparison">
           <CompareHeading level="subtitle" size="subtitle">

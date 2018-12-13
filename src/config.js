@@ -27,13 +27,12 @@ const config = {
     cookieDomain: process.env.DOMAIN,
     publicPath,
     externalWizardsPath: process.env.EXTERNAL_WIZARDS_PATH,
-    olarkSiteId: '',
-    rokoApikey: 'OgRs7tffvTdiKOKqsDSwwLgyJF6wHYVxFAK+qQO4paU=',
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-NTC7HG2',
     version: process.env.VERSION,
     facebookAppId: process.env.FB_CLIENT_ID,
     googleAppId: process.env.GOOGLE_CLIENT_ID,
+    olarkSiteId: '9319-500-10-7635',
   },
 
   test: {

@@ -3,7 +3,6 @@ import { any } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import Footer from 'sly/components/organisms/Footer';
@@ -40,7 +39,7 @@ const CommunityDetailPageTemplate = ({
       <HeaderContainer />
       {bannerNotification && <BannerNotification>{bannerNotification}</BannerNotification>}
     </TemplateHeader>
-    <TemplateContent>
+    <TemplateContent hasStickyFooter>
       <TwoColummnWrapper>
         <MainWrapper>{children}</MainWrapper>
         <ColumnWrapper>{column}</ColumnWrapper>

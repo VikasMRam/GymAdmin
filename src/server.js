@@ -29,7 +29,7 @@ const utmParams = [
   'utm_medium',
   'utm_source',
   'utm_campaign',
-  'utm_term'
+  'utm_term',
 ];
 
 const renderApp = ({
@@ -67,12 +67,12 @@ const renderHtml = ({
 
 const experiments = require('sly/../experiments.json');
 
-const createSetCookie = (res, cookies) => (key, value, maxAge=27000000) => {
+const createSetCookie = (res, cookies) => (key, value, maxAge = 27000000) => {
   res.cookie(key, value, { domain: cookieDomain, maxAge });
   cookies.push(`${key}=${value}`);
 };
 
-const makeSid = () => crypto.randomBytes(16).toString('hex')
+const makeSid = () => crypto.randomBytes(16).toString('hex');
 
 const app = express();
 app.disable('x-powered-by');
@@ -106,8 +106,10 @@ app.use(async (req, res, next) => {
     return;
   }
 
-  if (!req.cookies.sly_uuid) {
-    setCookie('sly_uuid', v4());
+  let slyUUID = req.cookies.sly_uuid;
+  if (!slyUUID) {
+    slyUUID = v4();
+    setCookie('sly_uuid', slyUUID);
   }
 
   const slySID = req.cookies.sly_sid || makeSid();
@@ -133,21 +135,24 @@ app.use(async (req, res, next) => {
 
   res.header('Cache-Control', [
     'max-age=0, private, must-revalidate',
-    'no-cache="set-cookie"'
+    'no-cache="set-cookie"',
   ]);
 
   api.setHeader('cookie', cookies.join('; '));
   api.setHeader('user-agent', req.headers['user-agent']);
   api.setHeader('x-is-sly-ssr', 'true');
-  api.setHeader('x-forwarded-for',
-       req.headers['x-forwarded-for']
-    || req.connection.remoteAddress);
+  api.setHeader(
+    'x-forwarded-for',
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  );
 
+  const hmac = crypto.createHmac('sha256', slyUUID);
+  const slyUUIDHash = hmac.digest('hex');
   const experimentNames = Object.keys(experiments);
   const userExperiments = experimentNames
     .reduce((cumul, key, i) => {
       const channel = i % 8;
-      const part = slySID.substr(channel * 4, 4);
+      const part = slyUUIDHash.substr(channel * 4, 4);
       const segment = Math.floor((parseInt(part, 16) / 65536) / (1 / experiments[key].length));
       const variant = experiments[key][segment];
       const modifiedCumul = { ...cumul };

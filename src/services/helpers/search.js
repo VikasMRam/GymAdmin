@@ -1,4 +1,5 @@
 import { urlize, objectToURLQueryParams, parseURLQueryParams } from './url';
+import {assetPath} from "sly/components/themes";
 
 const fnExecutionTracker = {};
 
@@ -126,6 +127,12 @@ export const sizes = [
   { label: 'Medium', segment: '20-to-51-beds', value: 'medium' },
   { label: 'Large', segment: 'greater-than-51-beds', value: 'large' },
 ];
+
+export const communitySizeSearchParamMap = {
+  'up to 20 Beds': 'small',
+  '20 - 51 Beds': 'medium',
+  '51 +': 'large',
+}
 
 export const budgets = [
   { label: 'Up to $2500', segment: '2500-dollars', value: 2500 },
@@ -267,3 +274,7 @@ export const getTocSearchLabel = (toc) => {
   }
   return actualToc.searchLabel;
 };
+
+export const getCommunitySearchUrl = (community) => {
+
+}

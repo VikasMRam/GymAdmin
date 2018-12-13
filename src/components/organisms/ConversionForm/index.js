@@ -45,10 +45,21 @@ const SubHeading = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const ExpressBlock = styled(Block)`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
+const phoneParser = str => str.replace(/[^\d]/g, '');
+const phoneFormatter = (value) => {
+  if (!value) {
+    return value;
+  }
 
+  const onlyNums = value.replace(/[^\d]/g, '');
+  if (onlyNums.length <= 3) {
+    return onlyNums;
+  }
+  if (onlyNums.length <= 6) {
+    return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3)}`;
+  }
+  return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3, 6)}-${onlyNums.slice(6)}`;
+};
 
 const ConversionForm = ({
   handleSubmit,
@@ -56,6 +67,7 @@ const ConversionForm = ({
   hasOnlyEmail,
   agent,
   contact,
+  onAdvisorHelpClick,
 }) => (
   <div>
     <StyledForm onSubmit={handleSubmit}>
@@ -82,6 +94,8 @@ const ConversionForm = ({
       <Field
         name="phone"
         label="Phone"
+        parse={phoneParser}
+        format={phoneFormatter}
         placeholder="925-555-5555"
         component={ReduxField}
       />
@@ -95,7 +109,7 @@ const ConversionForm = ({
       <AgentSectionWrapper>
         <AgentSectionText>
           We have matched you with a Seniorly partner agent to help you along the way.{' '}
-          <Link href="https://www.seniorly.com/resources/articles/why-you-should-use-a-referral-agent" target="_blank">Learn More</Link>
+          <Link palette="primary" onClick={onAdvisorHelpClick}>Learn More</Link>
         </AgentSectionText>
         <AgentTileWrapper>
           <AgentTile
@@ -113,6 +127,7 @@ ConversionForm.propTypes = {
   agent: object,
   contact: object,
   hasOnlyEmail: bool,
+  onAdvisorHelpClick: func,
 };
 
 export default ConversionForm;

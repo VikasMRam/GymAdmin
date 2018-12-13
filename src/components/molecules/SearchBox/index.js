@@ -123,7 +123,7 @@ const GoogleLogo = styled(Image)`
 `;
 const baseSearchOptions = { types: ['(regions)'] };
 const SearchBox = ({
-  layout, value, onChange, onSelect, onSeachButtonClick, onTextboxFocus, placeholder, ...props
+  layout, value, onChange, onSelect, onSearchButtonClick, onTextboxFocus, placeholder, ...props
 }) => (
   <Wrapper layout={layout} {...props}>
     <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion>
@@ -137,8 +137,16 @@ const SearchBox = ({
               layout={layout}
               onFocus={onTextboxFocus}
             />
+            {/*
+              it's important that mousedown is used instead of click because it will be fired before blur event.
+              SearchTextBox blur event will clear suggestions. hence to search with first suggestion when SearchButton
+              is clicked, fire onSearchButtonClick before suggestions are cleared.
+            */}
             {layout !== 'boxWithoutButton' &&
-              <SearchButton layout={layout} onClick={onSeachButtonClick}>
+              <SearchButton
+                layout={layout}
+                onMouseDown={onSearchButtonClick}
+              >
                 <Icon icon="search" size="regular" palette="white" />
               </SearchButton>
             }
@@ -164,7 +172,7 @@ SearchBox.propTypes = {
   value: string.isRequired,
   onChange: func.isRequired,
   onSelect: func.isRequired,
-  onSeachButtonClick: func.isRequired,
+  onSearchButtonClick: func.isRequired,
   onTextboxFocus: func,
   placeholder: string,
 };

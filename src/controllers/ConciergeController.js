@@ -178,7 +178,7 @@ export class ConciergeController extends Component {
       action,
       value,
     }).then(() => {
-      if (communitySlug) {
+      if (communitySlug && gotoGetCustomPricing) {
         gotoGetCustomPricing();
       } else {
         this.next(isExpress);
