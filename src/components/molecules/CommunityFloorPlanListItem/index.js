@@ -15,6 +15,7 @@ const Wrapper = styled.div`
   margin: 0 -${size('spacing.xLarge')};
   
   &:hover {
+    cursor: pointer;
     background-color: ${palette('primary', 'background')};
   }
 `;

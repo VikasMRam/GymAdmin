@@ -1,12 +1,12 @@
 import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
-import { object, func, number, bool, string } from 'prop-types';
+import { object, func, number, bool, string, any } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
 import { size, assetPath } from 'sly/components/themes';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION } from 'sly/constants/modalType';
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, FLOOR_PLAN } from 'sly/constants/modalType';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
@@ -47,6 +47,7 @@ import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvaila
 import OfferNotification from 'sly/components/molecules/OfferNotification';
 import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
 import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList/index';
+import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -118,6 +119,10 @@ export default class CommunityDetailPage extends Component {
     isAskAgentQuestionModalVisible: bool,
     onToggleAskAgentQuestionModal: func,
     askAgentQuestionType: string,
+    userAction: object,
+    onFloorPlanModalToggle: func,
+    modalFromStore: string,
+    modalEntity: any,
   };
 
   componentDidMount() {
@@ -202,6 +207,10 @@ export default class CommunityDetailPage extends Component {
       isAskAgentQuestionModalVisible,
       onToggleAskAgentQuestionModal,
       askAgentQuestionType,
+      userAction,
+      onFloorPlanModalToggle,
+      modalFromStore,
+      modalEntity,
     } = this.props;
 
     const {
@@ -254,7 +263,7 @@ export default class CommunityDetailPage extends Component {
       gallery.images = images;
     }
     const videos = videoGallery.videos || [];
-
+    const { userDetails } = userAction;
     const {
       communityDescription,
       staffDescription,
@@ -495,7 +504,7 @@ export default class CommunityDetailPage extends Component {
                 />
               )}
             </ConciergeController> */}
-            <CommunityFloorPlansList typeOfCare={typeOfCare} floorPlans={floorPlans} />
+            <CommunityFloorPlansList typeOfCare={typeOfCare} floorPlans={floorPlans} onItemClick={floorPlan => onFloorPlanModalToggle(floorPlan)} />
           </CollapsibleSection>
           {(communityDescription || rgsAux.communityDescription) &&
             <CollapsibleSection title="Community Details">
@@ -628,6 +637,14 @@ export default class CommunityDetailPage extends Component {
               />
             )}
           </NotificationController>
+        </Modal>
+        <Modal
+          noPadding
+          closeable
+          isOpen={modalFromStore === FLOOR_PLAN}
+          onClose={() => onFloorPlanModalToggle()}
+        >
+          {modalEntity && <CommunityFloorPlanPopupFormContainer user={user} typeOfCare={typeOfCare} floorPlanInfo={modalEntity.info} userDetails={userDetails} />}
         </Modal>
         <FullScreenWizardController>
           {({ isConfirmationModalVisible, toggleConfirmationModal, type }) => {

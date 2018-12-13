@@ -12,3 +12,4 @@ export const SAVED_COMMUNITIES = 'savedCommunities';
 
 export const CONCIERGE = 'concierge';
 
+export const FLOOR_PLAN = 'floorPlan';

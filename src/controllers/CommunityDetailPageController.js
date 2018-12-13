@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object, bool, number, string } from 'prop-types';
+import { func, object, bool, number, string, any } from 'prop-types';
 import { Redirect } from 'react-router';
 
 import { connectController } from 'sly/controllers';
@@ -14,10 +14,9 @@ import { getDetail, getList } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceListReadRequest }
   from 'sly/store/resource/actions';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
-
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
-import { ANSWER_QUESTION } from 'sly/constants/modalType';
+import { ANSWER_QUESTION, FLOOR_PLAN } from 'sly/constants/modalType';
 
 class CommunityDetailPageController extends Component {
   static propTypes = {
@@ -41,6 +40,8 @@ class CommunityDetailPageController extends Component {
     isShareCommunityModalVisible: bool,
     isAskAgentQuestionModalVisible: bool,
     askAgentQuestionType: string,
+    modalFromStore: string,
+    modalEntity: any,
   };
 
   componentDidMount() {
@@ -268,6 +269,28 @@ class CommunityDetailPageController extends Component {
     });
   };
 
+  handleFloorPlanModalToggle= (floorPlan) => {
+    const { set, community } = this.props;
+    const { id } = community;
+    let action = 'close-modal';
+    if (floorPlan) {
+      action = 'open-modal';
+      set({
+        modal: FLOOR_PLAN,
+        modalEntity: floorPlan,
+      });
+    } else {
+      set({
+        modal: null,
+        modalEntity: null,
+      });
+    }
+    const event = {
+      action, category: 'floorPlan', label: id,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+  };
+
   handleBookATourClick = () => {
     const { community, history } = this.props;
     const { id } = community;
@@ -326,6 +349,8 @@ class CommunityDetailPageController extends Component {
       userAction,
       isAskAgentQuestionModalVisible,
       askAgentQuestionType,
+      modalFromStore,
+      modalEntity,
     } = this.props;
 
     if (errorCode) {
@@ -398,6 +423,10 @@ class CommunityDetailPageController extends Component {
         isAlreadyPricingRequested={isAlreadyPricingRequested}
         isAskAgentQuestionModalVisible={isAskAgentQuestionModalVisible}
         askAgentQuestionType={askAgentQuestionType}
+        onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
+        modalFromStore={modalFromStore}
+        modalEntity={modalEntity}
+        userAction={userAction}
       />
     );
   }
@@ -418,6 +447,7 @@ const mapStateToProps = (state, {
   const {
     mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false, isStickyHeaderVisible = false,
     isShareCommunityModalVisible = false, isAskAgentQuestionModalVisible, askAgentQuestionType,
+    modal, modalEntity,
   } = controller;
 
   const searchParams = getSearchParams(match, location);
@@ -441,6 +471,8 @@ const mapStateToProps = (state, {
     isShareCommunityModalVisible,
     isAskAgentQuestionModalVisible,
     askAgentQuestionType,
+    modalFromStore: modal,
+    modalEntity,
   };
 };
 
