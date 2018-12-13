@@ -76,7 +76,7 @@ const StyledSection = styled(Section)`
 const TwoColumnWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
   ${gridColumns(1, size('spacing.xLarge'))};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${gridColumns(2, size('spacing.xLarge'))};
   }
@@ -85,7 +85,7 @@ const TwoColumnWrapper = styled.div`
 const ThreeColumnWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
   ${gridColumns(1, size('spacing.xLarge'))};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${gridColumns(3, size('spacing.xLarge'))};
   }
@@ -94,11 +94,11 @@ const ThreeColumnWrapper = styled.div`
 const UIColumnWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
   ${gridColumns(1, size('spacing.xLarge'))};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${gridColumns(2, size('spacing.xLarge'))};
   }
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     ${gridColumns(3, size('spacing.xLarge'))};
   }
@@ -107,11 +107,11 @@ const UIColumnWrapper = styled.div`
 const MSCColumnWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
   ${gridColumns(1, size('spacing.xLarge'))};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${gridColumns(2, size('spacing.xLarge'))};
   }
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     ${gridColumns(4, size('spacing.xLarge'))};
   }
@@ -126,7 +126,7 @@ const CWTImage = styled(Image)`
   height: ${size('picture.tiny.height')};
 `;
 
-const CWTColumnWrapper = styled.div` 
+const CWTColumnWrapper = styled.div`
   margin-bottom: ${size('spacing.xxLarge')};
   > * {
     margin-right: ${size('spacing.large')};
@@ -145,7 +145,9 @@ const StyledLink = styled(Link)`
   display: block;
 `;
 
-const CenteredTile = styled(({ title, to, image, children, ...props }) => (
+const CenteredTile = styled(({
+  title, to, image, children, ...props
+}) => (
   <StyledLink key={title} to={to} {...props}>
     <Image src={image} aspectRatio="3:2">
       <Centered>
@@ -385,7 +387,7 @@ const HomePage = ({
     <Fragment>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
-        <Modal layout="searchBox" closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}><Heading>Please enter a location:</Heading><SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} /></Modal>
+        <Modal layout="searchBox" closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}><Heading size="subtitle">Please enter a location:</Heading><SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} /></Modal>
         <StyledSection title="Discover Homes Near You">
           <TwoColumnWrapper>
             {firstRowDiscoverHomesComponents}

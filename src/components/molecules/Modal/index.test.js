@@ -1,18 +1,13 @@
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import Modal from 'sly/components/molecules/Modal';
 
 const onClose = jest.fn();
-
 const wrap = (props = {}) => shallow(<Modal onClose={onClose} {...props} />);
 
+// todo: add tests that's useful
 describe('Modal', () => {
-  it('renders modal with different props', () => {
-    mount(<Modal onClose={onClose} />);
-    mount(<Modal onClose={onClose} closeable />);
-  });
-
   it('renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBe(true);

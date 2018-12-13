@@ -1,12 +1,14 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import { action } from '@storybook/addon-actions';
+import { shallow } from 'enzyme';
+import PlacesAutocomplete from 'react-places-autocomplete';
 
-import { Icon, Input, Button } from 'sly/components/atoms';
 import SearchBox from 'sly/components/molecules/SearchBox';
 
+const onChange = jest.fn();
+const onSelect = jest.fn();
+const onSearchButtonClick = jest.fn();
 const wrap = (props = {}) =>
-  mount(<SearchBox {...props} value="" onChange={action('onChange')} onSelect={action('onSelect')} onSearchButtonClick={action('onSearchButtonClick')} />);
+  shallow(<SearchBox {...props} onChange={onChange} onSelect={onSelect} onSearchButtonClick={onSearchButtonClick} />);
 
 const setupGoogleMock = () => {
   /** * Mock Google Maps JavaScript API ** */
@@ -45,16 +47,32 @@ beforeAll(() => {
   setupGoogleMock();
 });
 
-it('renders', () => {
-  const wrapper = wrap();
-  expect(wrapper.find(Icon)).toHaveLength(1);
-  expect(wrapper.find(Button)).toHaveLength(1);
-  expect(wrapper.find(Input)).toHaveLength(1);
-});
+// todo: add more tests
+describe('SearchBox', () => {
+  it('renders', () => {
+    const wrapper = wrap();
+    const autocomplete = wrapper.dive().find(PlacesAutocomplete);
 
-it('renders with homeHero layout', () => {
-  const wrapper = wrap({ layout: 'homeHero' });
-  expect(wrapper.find(Icon)).toHaveLength(1);
-  expect(wrapper.find(Button)).toHaveLength(1);
-  expect(wrapper.find(Input)).toHaveLength(1);
+    expect(autocomplete).toHaveLength(1);
+    expect(autocomplete.dive().find('Styled(Button)')).toHaveLength(1);
+    expect(autocomplete.dive().find('Styled(Input)')).toHaveLength(1);
+  });
+
+  it('renders with homeHero layout', () => {
+    const wrapper = wrap({ layout: 'homeHero' });
+    const autocomplete = wrapper.dive().find(PlacesAutocomplete);
+
+    expect(autocomplete).toHaveLength(1);
+    expect(autocomplete.dive().find('Styled(Button)')).toHaveLength(1);
+    expect(autocomplete.dive().find('Styled(Input)')).toHaveLength(1);
+  });
+
+  it('renders with boxWithoutButton layout', () => {
+    const wrapper = wrap({ layout: 'boxWithoutButton' });
+    const autocomplete = wrapper.dive().find(PlacesAutocomplete);
+
+    expect(autocomplete).toHaveLength(1);
+    expect(autocomplete.dive().find('Styled(Button)')).toHaveLength(0);
+    expect(autocomplete.dive().find('Styled(Input)')).toHaveLength(1);
+  });
 });

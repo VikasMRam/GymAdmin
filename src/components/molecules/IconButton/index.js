@@ -24,6 +24,8 @@ const iconWidth = (p) => {
 
 // TODO: measurements from theme
 const StyledButton = styled(Button)`
+  height: auto;
+  display: block;
   width: ${iconWidth};
   // TODO : Need to fix this
   padding: ${ifProp('hasText', '0 0.4375em', 0)};

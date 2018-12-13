@@ -8,17 +8,7 @@ import { size, assetPath, palette, key } from 'sly/components/themes';
 import { Icon, Input, Button, Image } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
-  width: 100%;
   position: relative;
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-  ${switchProp('layout', {
-    header: css`
-      width: ${size('header.SearchBox.width')};`,
-    homeHero: css`
-      width: ${size('header.home.heroSearchBox.width')};`,
-  })}
-  }
 `;
 const SearchInputButtonWrapper = styled.div`
   display: flex;
@@ -180,6 +170,7 @@ SearchBox.propTypes = {
 SearchBox.defaultProps = {
   layout: 'header',
   placeholder: 'Search by city or zip code',
+  value: '',
 };
 
 export default SearchBox;

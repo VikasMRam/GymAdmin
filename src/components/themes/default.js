@@ -92,12 +92,6 @@ theme.sizes = {
     // mobile breakpoint has to fit 16 margin + col4 + 16 margin = 416px, 26rem
   },
 
-  modal: {
-    single : '35.25rem',   // 516px
-    double : '55rem',      // 880px
-    gallery: '54.75rem',   // 876px
-  },
-
   header: {
     SearchBox: {
       width: '22.5rem',   // 360x

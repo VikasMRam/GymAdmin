@@ -14,11 +14,10 @@ injectGlobal`
 `;
 
 const ModalBox = styled(ReactModal)`
-  background-color: ${ifProp('transparent', 'transparent', palette('white', 'base'))};
   outline: none;
 
   > article {
-    transition: transform 250ms ease-in-out;
+    transition: transform ${key('transitions.slow.inOut')};
     transform: translate(-50%, 100%);
   }
   &[class*='after-open'] > article {
@@ -44,7 +43,7 @@ const StyledReactModal = styled(({ className, ...props }) => (
   left: 0;
   bottom: 0;
   z-index: ${key('zIndexes.modal.overlay')};
-  transition: opacity 250ms ease-in-out;
+  transition: opacity ${key('transitions.slow.inOut')};
   opacity: 0;
   &[class*='after-open'] {
     opacity: 1;
@@ -55,60 +54,47 @@ const StyledReactModal = styled(({ className, ...props }) => (
 `;
 
 const ModalContext = styled.article`
-  background-color: ${ifProp('transparent', 'transparent', palette('white', 'base'))};
-  color: ${ifProp('transparent', palette('white', 'base'), palette('slate', 'base'))};
+  background-color: ${palette('white', 'base')};
+  color: ${palette('slate', 'base')};
   position: absolute;
   display: flex;
   flex-direction: column;
   outline: none;
-  padding: ${ifProp('noPadding', 0, size('spacing.xLarge'))};
-  width: 100%;
-  height: 100%;
-  height: unset;
-  top: calc(50% + 1rem);
-  left: calc(50% - 1rem);
+  top: 50%;
+  left: 50%;
   right: auto;
   bottom: auto;
-  margin: 1rem calc(-50% + 1rem) 1rem 1rem;
-  max-height: calc(100% - 4rem);
+  overflow: auto;
+  max-height: calc(100% - ${size('spacing.small')});
+  border-radius: ${size('spacing.small')};
+  width: calc(100% - ${size('spacing.xxLarge')});
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    width: ${size('layout.col4')};
+  }
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: ${ifProp('noPadding', 0, size('spacing.xxLarge'))};
-  };
+    width: ${size('layout.col6')};
+  }
 
   ${switchProp('layout', {
-    single: css`
-      overflow: auto;
-      border-radius: ${size('spacing.small')};
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        width: ${size('modal.single')};
-      }`,
-    double: css`
-      overflow: auto;
-      border-radius: ${size('spacing.small')};
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        width: ${size('modal.double')};
-      }`,
     searchBox: css`
       // same as single without overflow auto
-      border-radius: ${size('spacing.small')};
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        width: ${size('modal.single')};
-      }`,
+      overflow: visible;
+    `,
     gallery: css`
-      padding: 0;
-      border-radius: ${size('spacing.small')};
+      background-color: transparent;
       max-height: 100%;
-      @media screen and (min-width: ${size('breakpoint.laptop')}) {
-        width: ${size('modal.gallery')};
+      width: calc(100% - ${size('spacing.large')})!important;
+      @media screen and (min-width: ${size('breakpoint.tablet')}) {
+        width: ${size('layout.col10')}!important;
         overflow: initial;
       }`,
     sidebar: css`
       top: 0;
       left: 0;
       margin: 0;
+      border-radius: 0;
       height: 100%;
       max-height: 100%;
-      padding: ${size('spacing.xLarge')};
       width: 100%;
       overflow: auto;
       display: block;
@@ -117,36 +103,40 @@ const ModalContext = styled.article`
       }
     `,
     wizard: css`
-      padding: 0!important;
       overflow: hidden;
-      border-radius: ${size('spacing.small')};
       height: 90%;
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        width: ${size('modal.single')};
-      }
     `,
   })}
 `;
 
-const Heading = styled.div`
-  padding-bottom: ${size('spacing.xLarge')};
-  padding: 0;
-  position: fixed;
-  left: ${size('spacing.xLarge')};
-  top: ${size('spacing.large')};
-  z-index: ${key('zIndexes.modal.galleryLayoutHeading')};
+const Head = styled.div`
+  padding: ${ifProp('noPadding', 0, size('spacing.large'))};
+
+${switchProp('layout', {
+    gallery: css`
+      padding: 0;
+      position: fixed;
+      left: ${size('spacing.large')};
+      top: ${size('spacing.large')};
+      z-index: ${key('zIndexes.modal.galleryLayoutHeading')};`,
+  })}
+`;
+
+const Body = styled.div`
+  padding: ${ifProp('noPadding', 0, size('spacing.xxLarge'))};
+  padding-top: 0;
 `;
 
 const Modal = ({
-  heading, children, closeable, layout, onClose, transparent, closeButtonPalette, noPadding, ...props
+  children, closeable, layout, onClose, noPadding, ...props
 }) => {
-  const iconClose = (
+  const iconClose = (palette = 'slate') => (
     <IconButton
       icon="close"
+      palette={palette}
       iconOnly
       layout={layout}
       onClick={onClose}
-      palette={closeButtonPalette}
     />
   );
 
@@ -154,39 +144,39 @@ const Modal = ({
     <StyledReactModal
       onRequestClose={onClose}
       layout={layout}
-      transparent={transparent}
       onClose={onClose}
       {...props}
     >
-      {(closeable || heading) && (
-        <Heading layout={layout}>
-          {closeable && iconClose}
-          {heading}
-        </Heading>
+      {(closeable && layout === 'gallery') && (
+        <Head layout={layout}>
+          {closeable && iconClose('white')}
+        </Head>
       )}
-      <ModalContext layout={layout} transparent={transparent} noPadding={noPadding}>
-        {children}
+      <ModalContext layout={layout} noPadding={noPadding}>
+        {(closeable && layout !== 'gallery') && (
+          <Head layout={layout}>
+            {closeable && iconClose()}
+          </Head>
+        )}
+        <Body noPadding={layout === 'gallery'}>
+          {children}
+        </Body>
       </ModalContext>
     </StyledReactModal>
   );
 };
 
 Modal.propTypes = {
-  layout: oneOf(['single', 'double', 'gallery', 'sidebar', 'searchBox', 'wizard']).isRequired,
-  heading: node,
+  layout: oneOf(['default', 'gallery', 'sidebar', 'wizard', 'searchBox']).isRequired,
   children: node,
   closeable: bool,
   onClose: func.isRequired,
-  transparent: bool,
   noPadding: bool,
-  closeButtonPalette: oneOf(['white', 'slate']),
 };
 
 Modal.defaultProps = {
-  layout: 'single',
-  transparent: false,
+  layout: 'default',
   noPadding: false,
-  closeButtonPalette: 'white',
 };
 
 export default Modal;
