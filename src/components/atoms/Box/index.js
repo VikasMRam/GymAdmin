@@ -1,5 +1,5 @@
 import { bool } from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
@@ -14,9 +14,6 @@ const Box = styled.div`
   border: ${border} solid ${ifProp('highlighted', palette('base'), palette('stroke'))}};
   border-radius: ${size('spacing.small')};
   padding: ${padding};
-  ${ifProp('shadow', css`
-    box-shadow: 0 ${size('spacing.small')} ${size('spacing.large')} ${palette('slate', 'filler')}80;
-  `)}
 `;
 
 Box.propTypes = {
@@ -24,7 +21,6 @@ Box.propTypes = {
   padding: spacingPropType,
   border: borderPropType,
   highlighted: bool,
-  shadow: bool,
 };
 
 Box.defaultProps = {
