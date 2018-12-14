@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Field } from 'redux-form';
 
 import CommunityFloorPlanPopupForm from 'sly/components/molecules/CommunityFloorPlanPopupForm';
-import Field from 'sly/components/molecules//Field/index';
 
 const defaultProp = {
   typeOfCare: 'Assisted Living',
