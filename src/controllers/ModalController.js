@@ -1,16 +1,17 @@
 import { Component } from 'react';
-import { string, func } from 'prop-types';
+import { string, func, any } from 'prop-types';
 
 import { connectController } from 'sly/controllers';
 
 class ModalController extends Component {
   static propTypes = {
     modalType: string,
+    modalEntity: any,
     set: func,
     children: func,
   };
 
-  show = (type) => {
+  show = (type, modalEntity) => {
     if (!type) {
       throw new Error('A modal type is required');
     }
@@ -18,6 +19,7 @@ class ModalController extends Component {
 
     return set({
       modalType: type,
+      modalEntity,
     });
   };
 
@@ -31,10 +33,10 @@ class ModalController extends Component {
 
   render() {
     const { show, hide } = this;
-    const { children, modalType } = this.props;
+    const { children, modalType, modalEntity } = this.props;
 
     return children({
-      show, hide, modalType,
+      show, hide, modalType, modalEntity,
     });
   }
 }

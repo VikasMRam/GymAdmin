@@ -14,6 +14,7 @@ describe('ModalController', () => {
   });
   const spy = jest.fn();
   const type = 'test-modal';
+  const entity = ['one', 'two'];
 
   const wrap = (props = {}) =>
     shallow(<ModalController {...props}>{spy}</ModalController>).dive();
@@ -38,6 +39,17 @@ describe('ModalController', () => {
     const action = store.getActions().pop();
     expect(action.type).toBe(SET);
     expect(action.payload.data.modalType).toBe(type);
+  });
+
+  it('show modal with entity', () => {
+    const store = initStore();
+    const wrapper = wrap({ store });
+
+    wrapper.dive().instance().show(type, entity);
+    const action = store.getActions().pop();
+    expect(action.type).toBe(SET);
+    expect(action.payload.data.modalType).toBe(type);
+    expect(action.payload.data.modalEntity).toEqual(entity);
   });
 
   it('hide modal', () => {

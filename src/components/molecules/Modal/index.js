@@ -110,7 +110,7 @@ const ModalContext = styled.article`
 `;
 
 const Head = styled.div`
-  padding: ${ifProp('noPadding', 0, size('spacing.large'))};
+  padding: ${size('spacing.large')};
 
 ${switchProp('layout', {
     gallery: css`
@@ -152,13 +152,13 @@ const Modal = ({
           {closeable && iconClose('white')}
         </Head>
       )}
-      <ModalContext layout={layout} noPadding={noPadding}>
+      <ModalContext layout={layout}>
         {(closeable && layout !== 'gallery') && (
           <Head layout={layout}>
             {closeable && iconClose()}
           </Head>
         )}
-        <Body noPadding={layout === 'gallery'}>
+        <Body noPadding={noPadding || layout === 'gallery'}>
           {children}
         </Body>
       </ModalContext>

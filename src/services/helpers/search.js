@@ -274,7 +274,3 @@ export const getTocSearchLabel = (toc) => {
   }
   return actualToc.searchLabel;
 };
-
-export const getCommunitySearchUrl = (community) => {
-
-}
