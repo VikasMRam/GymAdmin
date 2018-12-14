@@ -17,7 +17,7 @@ const CarouselWrapper = styled.div`
   position: relative;
   background: ${ifProp('transparent', 'transparent', palette('grey', 'base'))};
   text-align: center;
-  margin-bottom: ${size('spacing.large')};
+
   ${props =>
     !props.autoHeight &&
     css`

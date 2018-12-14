@@ -1,219 +1,121 @@
-import React from 'react';
-import { arrayOf, string, number, object, shape, func, bool } from 'prop-types';
+import React, { Fragment } from 'react';
+import { object, bool, func, string } from 'prop-types';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
 import ReactTooltip from 'react-tooltip';
 
-import { formatRating } from 'sly/services/helpers/rating';
-import { size, palette } from 'sly/components/themes';
-import { Link } from 'sly/components/atoms';
-import List from 'sly/components/molecules/List';
+import { size } from 'sly/components/themes';
+import { community as communityPropType } from 'sly/propTypes/community';
+import { Link, Box, Block, Heading, Hr, Icon, Button } from 'sly/components/atoms';
+import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
 
-const TooltipContent = styled(ReactTooltip)`
-  padding: ${size('spacing.regular')};
-  color: ${palette('white', 'base')} !important;
-  background-color: ${palette('slate', 'filler')} !important;
-  border-radius: ${size('spacing.tiny')};
-  font-size: ${size('text.caption')};
+const StyledBlock = styled(Block)`
+  margin-bottom: ${size('spacing.small')};
+`;
+StyledBlock.displayName = 'StyledBlock';
+
+const StyledHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+StyledHeading.displayName = 'StyledHeading';
+
+const StyledHr = styled(Hr)`
+  margin-bottom: ${size('spacing.xxLarge')};
 `;
 
-export default class communitySummary extends React.Component {
-  static propTypes = {
-    phoneNumber: string,
-    user: shape({
-      phoneNumber: string,
-    }),
-    twilioNumber: shape({
-      numbers: arrayOf(number),
-    }),
-    licenseUrl: string,
-    amenityScore: string,
-    communityHighlights: arrayOf(string),
-    ratesProvided: bool,
-    startingRate: number,
-    estimatedPrice: object,
-    reviewsValue: number,
-    innerRef: object,
-    pricingAndFloorPlansRef: object.isRequired,
-    amenitiesAndFeaturesRef: object.isRequired,
-    communityReviewsRef: object.isRequired,
-    onConciergeNumberClicked: func,
-    onReceptionNumberClicked: func,
-    onHowSeniorlyWorks: func,
-    isCCRC: bool,
-  };
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+Wrapper.displayName = 'Wrapper';
 
-  static sectionIdMaps = {
-    amenitiesAndFeatures: 'amenities-and-features',
-    pricingAndFloorPlans: 'pricing-and-floor-plans',
-    reviews: 'reviews',
-  };
+const StyledButton = styled(Button)`
+  margin-right: ${size('spacing.regular')};
+`;
+StyledButton.displayName = 'StyledButton';
 
-  static scrollToSection(e, sectionRef) {
-    // Link triggers router navigation so need to preventDefault.
-    // TODO: find better way to do it with any other component without much styling code
-    e.preventDefault();
-    if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
+const CommunitySummary = ({
+  community, innerRef, isAdmin, onConciergeNumberClicked, className,
+  onFavouriteClick, isFavourited, onShareClick,
+}) => {
+  const {
+    address, name, startingRate, propRatings, propInfo, twilioNumber,
+  } = community;
+  const {
+    line1, line2, city, state, zip,
+  } = address;
+  const { communityPhone } = propInfo;
+  const { reviewsValue } = propRatings;
+  const formattedAddress = `${line1}, ${line2}, ${city},
+    ${state}
+    ${zip}`
+    .replace(/\s/g, ' ')
+    .replace(/, ,/g, ', ');
+  let conciergeNumber = communityPhone;
+  if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
+    [conciergeNumber] = twilioNumber.numbers;
   }
 
-  render() {
-    const {
-      isCCRC, twilioNumber, phoneNumber, user, licenseUrl, amenityScore, communityHighlights, ratesProvided, startingRate,
-      estimatedPrice, reviewsValue, innerRef, onConciergeNumberClicked, onHowSeniorlyWorks,
-    } = this.props;
-    // let { websiteUrl } = this.props;
-
-    const highlights = [];
-
-    let receptionNumber = phoneNumber;
-    if ((receptionNumber === undefined || receptionNumber === '') && user) {
-      receptionNumber = user.phoneNumber;
-    }
-
-    let conciergeNumber = receptionNumber;
-    if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
-      [conciergeNumber] = twilioNumber.numbers;
-    }
-    const hasPricing = ((estimatedPrice && (estimatedPrice.estimatedAverage || estimatedPrice.providedAverage)) || startingRate);
-
-    let shownPricing = '';
-    if (estimatedPrice) {
-      shownPricing = estimatedPrice.estimatedAverage;
-      if (estimatedPrice.providedAverage) {
-        shownPricing = estimatedPrice.providedAverage;
-      }
-    }
-    if (startingRate) {
-      shownPricing = startingRate;
-    }
-
-    highlights.push((
-      <span>
-        Pricing & Availability&nbsp;
-        <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
-          <NumberFormat
-            value={conciergeNumber}
-            format="(###) ###-####"
-            displayType="text"
-            data-tip
-            data-for="tooltipPhoneNumber"
-          />
-        </Link>
-        <TooltipContent id="tooltipPhoneNumber" place="bottom" effect="solid" type="light" multiline>
-          This phone number will connect you to the<br /> concierge team at Seniorly.
-        </TooltipContent>
-      </span>
-    ));
-
-    // highlights.push((
-    //   <span>
-    //     Reception&nbsp;
-    //     <Link href={`tel:${receptionNumber}`} onClick={onReceptionNumberClicked}>
-    //       <NumberFormat value={receptionNumber} format="(###) ###-####" displayType="text" />
-    //     </Link>
-    //   </span>
-    // ));
-
-
-    if (licenseUrl) {
-      highlights.push((
-        <Link
-          href={licenseUrl}
-          target="_blank"
-        >
-          State Inspection Reports
-        </Link>
-      ));
-    }
-
-    if (amenityScore) {
-      const parsedAmenityScore = parseFloat(amenityScore);
-      if (parsedAmenityScore) {
-        highlights.push((
+  return (
+    <Box innerRef={innerRef} className={className}>
+      <StyledBlock palette="grey">{formattedAddress}</StyledBlock>
+      <StyledHeading>
+        {name} {city ? `at ${city}` : ''}
+        {isAdmin &&
           <Link
-            href={`#${this.constructor.sectionIdMaps.amenitiesAndFeatures}`}
-            onClick={e => this.constructor.scrollToSection(e, this.props.amenitiesAndFeaturesRef)}
+            to={`/mydashboard#/mydashboard/communities/${community.id}/about`}
           >
-            Amenity Score {parsedAmenityScore}
+            &nbsp;(Edit)
           </Link>
-        ));
-      }
-    }
-    const matchingHighlights = communityHighlights &&
-      communityHighlights.filter((h) => {
-        const lh = h.toLowerCase();
-        return lh.includes('alzheimer') || lh.includes('dementia');
-      });
-    if (matchingHighlights && matchingHighlights.length) {
-      highlights.push((
-        <Link
-          href={`#${this.constructor.sectionIdMaps.amenitiesAndFeatures}`}
-          onClick={e => this.constructor.scrollToSection(e, this.props.amenitiesAndFeaturesRef)}
-        >
-          Alzheimer&apos;s & Dementia support
-        </Link>
-      ));
-    }
-    highlights.push((
-      <Link
-        href={`#${this.constructor.sectionIdMaps.pricingAndFloorPlans}`}
-        onClick={e => this.constructor.scrollToSection(e, this.props.pricingAndFloorPlansRef)}
-      >
-        Available Floor Plans
-      </Link>
-    ));
-    if (!isCCRC && hasPricing) {
-      highlights.push((
-        <span>
-          { (ratesProvided)
-              ? 'Pricing starts from: '
-              : 'Estimated Pricing: '
+        }
+      </StyledHeading>
+      <CommunityPricingAndRating price={startingRate} rating={reviewsValue} />
+      <StyledHr />
+      <Wrapper>
+        <div>
+          {conciergeNumber &&
+            <Fragment>
+              For pricing and avilability, call&nbsp;
+              <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
+                <NumberFormat
+                  value={conciergeNumber}
+                  format="###-###-####"
+                  displayType="text"
+                />
+              </Link>
+            </Fragment>
           }
-          <Link
-            href={`#${this.constructor.sectionIdMaps.pricingAndFloorPlans}`}
-            onClick={e => this.constructor.scrollToSection(e, this.props.pricingAndFloorPlansRef)}
-          >
-            <NumberFormat value={shownPricing} thousandSeparator displayType="text" prefix="$" />
-          </Link>
-        </span>
-      ));
-    }
-    if (reviewsValue > 0) {
-      highlights.push((
-        <Link
-          href={`#${this.constructor.sectionIdMaps.reviews}`}
-          onClick={e => this.constructor.scrollToSection(e, this.props.communityReviewsRef)}
-        >
-          Rating {formatRating(reviewsValue)}-Star Average
-        </Link>
-      ));
-    }
+        </div>
+        <div>
+          <StyledButton ghost palette="slate" onClick={onShareClick}>
+            <Icon icon="share" size="regular" palette="slate" /> Share
+          </StyledButton>
+          {!isFavourited &&
+            <Button ghost palette="slate" onClick={onFavouriteClick}>
+              <Icon icon="favourite-empty" size="regular" palette="slate" /> Save
+            </Button>
+          }
+          {isFavourited &&
+            <Button ghost palette="slate" onClick={onFavouriteClick}>
+              <Icon icon="favourite-light" size="regular" palette="primary" /> Save
+            </Button>
+          }
+        </div>
+      </Wrapper>
+    </Box>
+  );
+};
 
-    highlights.push((
-      <Link href="##" onClick={onHowSeniorlyWorks}>How Seniorly Works</Link>
-    ));
+CommunitySummary.propTypes = {
+  community: communityPropType.isRequired,
+  innerRef: object,
+  isAdmin: bool,
+  onConciergeNumberClicked: func,
+  className: string,
+  onFavouriteClick: func,
+  onShareClick: func,
+  isFavourited: bool,
+};
 
-    // if (websiteUrl) {
-    //   if (!websiteUrl.includes('//')) {
-    //     websiteUrl = `//${websiteUrl}`;
-    //   }
-    //   highlights.push((
-    //     <Link
-    //       href={websiteUrl}
-    //       target="_blank"
-    //     >
-    //       Property Website
-    //     </Link>
-    //   ));
-    // }
-
-
-    return (
-      <article ref={innerRef}>
-        <List items={highlights} />
-      </article>
-    );
-  }
-}
+export default CommunitySummary;
