@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
+import { bool, node } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
@@ -23,11 +24,11 @@ export const TemplateContent = ({ hasStickyFooter, children }) => (
     <ChatBoxContainer pageWithStickyFooter={hasStickyFooter} />
   </Fragment>
 );
+TemplateContent.propTypes = {
+  hasStickyFooter: bool,
+  children: node,
+};
 
 export const TemplateHeader = styled.header`
   margin-bottom: ${size('spacing.large')};
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    margin-bottom: ${size('spacing.xLarge')};
-  }
 `;
-
