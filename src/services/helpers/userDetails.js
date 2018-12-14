@@ -28,10 +28,12 @@ export const getUserDetailsFromUAAndForm = ({ userDetails, formData }) => {
     }
   });
   const result = { ...userDataFromUA, ...sanitizedUserDataFromForm };
-  if (result.interest) {
-    result.interest.push(formData.interest);
-  } else {
-    result.interest = [formData.interest];
+  if (formData.interest) {
+    if (result.interest) {
+      result.interest.push(formData.interest);
+    } else {
+      result.interest = [formData.interest];
+    }
   }
   return result;
 };
