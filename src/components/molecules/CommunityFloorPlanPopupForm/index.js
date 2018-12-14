@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { func, shape, string, number, object, bool } from 'prop-types';
 import NumberFormat from 'react-number-format';
+import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
 import { Block, Hr, Link, Button, Image } from 'sly/components/atoms';
-import Field from 'sly/components/molecules/Field';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import { Experiment, Variant } from 'sly/services/experiments';
 

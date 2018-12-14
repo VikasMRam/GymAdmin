@@ -654,7 +654,7 @@ export default class CommunityDetailPage extends Component {
               isOpen={modalType === FLOOR_PLAN}
               onClose={() => { onFloorPlanModalToggle(); hide(); }}
             >
-              {modalEntity && <CommunityFloorPlanPopupFormContainer user={user} typeOfCare={typeOfCare} floorPlanInfo={modalEntity.info} userDetails={userDetails} />}
+              {modalEntity && <CommunityFloorPlanPopupFormContainer community={community} user={user} typeOfCare={typeOfCare} floorPlanInfo={modalEntity.info} userDetails={userDetails} postSubmit={hide} />}
             </Modal>
           )}
         </ModalController>
