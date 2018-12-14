@@ -5,16 +5,17 @@ import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
 import { Block, Box } from 'sly/components/atoms';
+import shadow from 'sly/components/helpers/shadow';
 import ReduxField from 'sly/components/organisms/ReduxField/index';
 
-const Wrapper = styled(Box)`
+const Wrapper = shadow(styled(Box)`
   margin: 0 auto;
   padding: ${size('spacing.xxLarge')} ${size('spacing.xLarge')};
   width: ${size('mobileLayout.col4')};
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('layout.col6')};
   }
-`;
+`);
 
 const WrapperForm = styled.form`
   text-align: center;
@@ -32,7 +33,7 @@ const HeadingSection = styled(Block)`
 const CommunityPricingWizardExploreAffordableOptionsForm = ({
   handleSubmit, listOptions, onBudgetChange,
 }) => (
-  <Wrapper shadow>
+  <Wrapper>
     <WrapperForm onSubmit={handleSubmit}>
       <HeadingSection palette="grey" size="body">What is your monthly budget?</HeadingSection>
       <Field
