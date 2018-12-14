@@ -48,6 +48,7 @@ import OfferNotification from 'sly/components/molecules/OfferNotification';
 import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
 import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList/index';
 import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
+import ModalController from 'sly/controllers/ModalController';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -121,8 +122,6 @@ export default class CommunityDetailPage extends Component {
     askAgentQuestionType: string,
     userAction: object,
     onFloorPlanModalToggle: func,
-    modalFromStore: string,
-    modalEntity: any,
   };
 
   componentDidMount() {
@@ -209,8 +208,6 @@ export default class CommunityDetailPage extends Component {
       askAgentQuestionType,
       userAction,
       onFloorPlanModalToggle,
-      modalFromStore,
-      modalEntity,
     } = this.props;
 
     const {
@@ -504,7 +501,18 @@ export default class CommunityDetailPage extends Component {
                 />
               )}
             </ConciergeController> */}
-            <CommunityFloorPlansList typeOfCare={typeOfCare} floorPlans={floorPlans} onItemClick={floorPlan => onFloorPlanModalToggle(floorPlan)} />
+            <ModalController>
+              {({ show }) => (
+                <CommunityFloorPlansList
+                  typeOfCare={typeOfCare}
+                  floorPlans={floorPlans}
+                  onItemClick={(floorPlan) => {
+                    show(FLOOR_PLAN, floorPlan);
+                    onFloorPlanModalToggle(floorPlan);
+                  }}
+                />
+              )}
+            </ModalController>
           </CollapsibleSection>
           {(communityDescription || rgsAux.communityDescription) &&
             <CollapsibleSection title="Community Details">
@@ -638,14 +646,18 @@ export default class CommunityDetailPage extends Component {
             )}
           </NotificationController>
         </Modal>
-        <Modal
-          noPadding
-          closeable
-          isOpen={modalFromStore === FLOOR_PLAN}
-          onClose={() => onFloorPlanModalToggle()}
-        >
-          {modalEntity && <CommunityFloorPlanPopupFormContainer user={user} typeOfCare={typeOfCare} floorPlanInfo={modalEntity.info} userDetails={userDetails} />}
-        </Modal>
+        <ModalController>
+          {({ modalType, modalEntity, hide }) => (
+            <Modal
+              noPadding
+              closeable
+              isOpen={modalType === FLOOR_PLAN}
+              onClose={() => { onFloorPlanModalToggle(); hide(); }}
+            >
+              {modalEntity && <CommunityFloorPlanPopupFormContainer user={user} typeOfCare={typeOfCare} floorPlanInfo={modalEntity.info} userDetails={userDetails} />}
+            </Modal>
+          )}
+        </ModalController>
         <FullScreenWizardController>
           {({ isConfirmationModalVisible, toggleConfirmationModal, type }) => {
               let heading = null;
