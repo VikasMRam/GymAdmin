@@ -65,19 +65,41 @@ jobs:
             fi
       - checkout
       - run:
-          name: Put version in VERSION file
+          name: Install awscli
           command: |
+            sudo pip install awsebcli --upgrade
+      - run:
+          name: Choosing EB_ENV
+          command: |
+            export LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+            export LATEST_COMMIT=$(git rev-parse --short HEAD)
+            export NUMBER_OF_COMMITS=$(git rev-list --count HEAD ^$LATEST_TAG)
+            git for-each-ref --format="%(refname:short)-$NUMBER_OF_COMMITS-$LATEST_COMMIT" --sort=-authordate --count=1 refs/tags > ./VERSION
+            cat ./VERSION
+            git add ./VERSION
+
             if [[ -n "$CIRCLE_TAG" ]]; then
               echo $CIRCLE_TAG > ./VERSION
               cat ./VERSION
               git add ./VERSION
+              echo "export EB_ENV=slyreact-staging" >> $BASH_ENV
+              EB_ENV=slyreact-staging
             elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
-              export LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
-              export LATEST_COMMIT=$(git rev-parse --short HEAD)
-              export NUMBER_OF_COMMITS=$(git rev-list --count HEAD ^$LATEST_TAG)
-              git for-each-ref --format="%(refname:short)-$NUMBER_OF_COMMITS-$LATEST_COMMIT" --sort=-authordate --count=1 refs/tags > ./VERSION
-              cat ./VERSION
-              git add ./VERSION
+              echo "export EB_ENV=slyreact-development" >> $BASH_ENV
+              EB_ENV=slyreact-development
+            else
+              FEATURE_ENV=$(eb list | grep -w "$CIRCLE_BRANCH" || true)
+              if [[ "$FEATURE_ENV" = "slyreact-prod" || "$FEATURE_ENV" = "slyreact-staging" ]]; then
+                echo "Tried to deploy to restricted env"
+                echo $FEATURE_ENV
+                return -1
+              fi
+              echo "export EB_ENV=$FEATURE_ENV" >> $BASH_ENV
+              EB_ENV=$FEATURE_ENV
+            fi 
+
+            if [[ -z "$EB_ENV" ]]; then
+              circleci step halt
             fi
 
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
@@ -85,19 +107,16 @@ jobs:
           name: Send deploy start notification
           command: |
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            ./.circleci/push-slack-notification.sh -t "starting deploy to slyreact-$SLY_ENV" \
+            ./.circleci/push-slack-notification.sh -t "Starting deploy to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#66d3e4"
-
-      - run:
-          name: Install awscli
-          command: |
-            sudo pip install awsebcli --upgrade
 
       - run:
           name: Deploy to EB
           command: |
             export V=$(cat ./VERSION)
-            export DEPLOY_FAILED=$(eb deploy slyreact-$SLY_ENV --timeout 30 -v --staged -l $V | tee /dev/tty | grep -c "ERROR")
+            echo "Deploying to $EB_ENV"
+            eb use $EB_ENV
+            export DEPLOY_FAILED=$(eb deploy $EB_ENV --timeout 30 -v --staged -l $V | tee /dev/tty | grep -c "ERROR")
 
             if [ "$DEPLOY_FAILED" -gt 0 ]; then
               exit 1
@@ -108,14 +127,14 @@ jobs:
           name: Send deploy success notification
           command: |
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            ./.circleci/push-slack-notification.sh -t "successfully deployed to slyreact-$SLY_ENV" \
+            ./.circleci/push-slack-notification.sh -t "Successfully deployed to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#42c88a"
       - run:
           name: Send deploy failed notification
           when: on_fail
           command: |
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            ./.circleci/push-slack-notification.sh -t "failed deploying to slyreact-$SLY_ENV" \
+            ./.circleci/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#ed5c5c"
 
 workflows:
@@ -128,10 +147,6 @@ workflows:
           context: ReactDev
           requires:
             - build
-          filters:
-            branches:
-              only:
-                - master
   build-staging:
     jobs:
       - build:
