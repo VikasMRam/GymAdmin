@@ -10,12 +10,12 @@ import { Link, Box, Block, Heading, Hr, Icon, Button } from 'sly/components/atom
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
 
 const StyledBlock = styled(Block)`
-  margin-bottom: ${size('spacing.small')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 StyledBlock.displayName = 'StyledBlock';
 
 const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.xLarge')};
+  margin-bottom: ${size('spacing.small')};
 `;
 StyledHeading.displayName = 'StyledHeading';
 
@@ -59,7 +59,6 @@ const CommunitySummary = ({
 
   return (
     <Box innerRef={innerRef} className={className}>
-      <StyledBlock palette="grey">{formattedAddress}</StyledBlock>
       <StyledHeading>
         {name} {city ? `at ${city}` : ''}
         {isAdmin &&
@@ -70,6 +69,7 @@ const CommunitySummary = ({
           </Link>
         }
       </StyledHeading>
+      <StyledBlock palette="grey">{formattedAddress}</StyledBlock>
       <CommunityPricingAndRating price={startingRate} rating={reviewsValue} />
       <StyledHr />
       <Wrapper>
