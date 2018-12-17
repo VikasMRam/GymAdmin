@@ -302,7 +302,6 @@ export default class CommunityDetailPage extends Component {
     const ratingsArray = propRatings.ratingsArray || [];
     const reviewsFinal = reviews || [];
     const serviceHighlightsFinal = serviceHighlights || [];
-    const roomPrices = floorPlans.map(({ info }) => info);
     const isCCRC = typeCare && (typeCare.indexOf('Continuing Care Retirement Community(CCRC)') !== -1);
     const ratesProvided = (rates && rates === 'Provided');
 
@@ -414,6 +413,7 @@ export default class CommunityDetailPage extends Component {
             <CollapsibleSection
               title={`Floor plans at ${name}`}
               botttomSection={
+                floorPlans.length > 0 &&
                 <ConciergeController
                   communitySlug={community.id}
                   queryParams={{ modal, currentStep }}
@@ -452,34 +452,28 @@ export default class CommunityDetailPage extends Component {
                 }
               innerRef={this.pricingAndFloorPlansRef}
             >
-              {/* <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
-                {() => (
-                  <PricingAndAvailability
-                    community={community}
-                    isCCRC={isCCRC}
-                    address={address}
-                    estimatedPrice={rgsAux.estimatedPrice}
-                    roomPrices={roomPrices}
-                    onInquireOrBookClicked={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-                    onLiveChatClicked={onLiveChatClicked}
-                    queryParams={{ modal, currentStep }}
-                    setQueryParams={setQueryParams}
-                    gotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-                  />
-                )}
-              </ConciergeController> */}
-              <ModalController>
-                {({ show }) => (
-                  <CommunityFloorPlansList
-                    typeOfCare={typeOfCare}
-                    floorPlans={floorPlans}
-                    onItemClick={(floorPlan) => {
-                      show(FLOOR_PLAN, floorPlan);
-                      onFloorPlanModalToggle(floorPlan);
-                    }}
-                  />
-                )}
-              </ModalController>
+              {floorPlans.length > 0 &&
+                <ModalController>
+                  {({ show }) => (
+                    <CommunityFloorPlansList
+                      typeOfCare={typeOfCare}
+                      floorPlans={floorPlans}
+                      onItemClick={(floorPlan) => {
+                        show(FLOOR_PLAN, floorPlan);
+                        onFloorPlanModalToggle(floorPlan);
+                      }}
+                    />
+                  )}
+                </ModalController>
+              }
+              {floorPlans.length === 0 &&
+                <PricingAndAvailability
+                  community={community}
+                  address={address}
+                  estimatedPrice={rgsAux.estimatedPrice}
+                  gotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
+                />
+              }
             </CollapsibleSection>
             {(communityDescription || rgsAux.communityDescription) &&
               <CollapsibleSection title="Community Details">

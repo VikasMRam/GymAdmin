@@ -1,23 +1,12 @@
 import React, { Fragment } from 'react';
-import { string, number, shape, func, arrayOf } from 'prop-types';
+import { string, number, shape, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { Heading } from 'sly/components/atoms';
-import RoomTile from 'sly/components/molecules/RoomTile';
 import PriceBar from 'sly/components/molecules/PriceBar';
 import EstimatedCost from 'sly/components/molecules/EstimatedCost';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { size } from 'sly/components/themes';
-
-const Item = styled.div`
-  display: inline-block;
-  margin-bottom: ${size('spacing.large')};
-  width: 100%;
-  @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    margin-right: ${size('spacing.large')};
-    width: auto;
-  }
-`;
 
 const StyledPriceBar = styled(PriceBar)`
   margin-bottom: ${size('spacing.small')};
@@ -58,10 +47,8 @@ export const sortProperties = (obj) => {
 
 const PricingAndAvailability = ({
   community,
-  roomPrices,
   address,
   estimatedPrice,
-  onInquireOrBookClicked,
   gotoGetCustomPricing,
 }) => {
   const mEstimatedPrice = { ...estimatedPrice };
@@ -98,26 +85,16 @@ const PricingAndAvailability = ({
     }
     estimatedPriceBase = community.startingRate || mEstimatedPrice.providedAverage || mEstimatedPrice.estimatedAverage;
   }
-
-  roomPrices.sort((a, b) => a.price - b.price);
-
   return (
     <section id="pricing-and-floor-plans">
       <StyledArticle id="pricing-and-floor-plans-price-tiles">
-        {(!roomPrices.length && estimatedPriceBase) ?
+        {estimatedPriceBase ?
           (<EstimatedCost
-            // getPricing={getPricing} getPricing is a prop from children of ConciergeController
             getPricing={gotoGetCustomPricing}
-            community={community}
             price={estimatedPriceBase}
           />
           ) : null
         }
-        {roomPrices.map(object => (
-          <Item key={`${object.price}-${object.priceType}-${object.roomType}`}>
-            <RoomTile onInquireOrBookClicked={onInquireOrBookClicked} {...object} />
-          </Item>
-        ))}
       </StyledArticle>
       {sortedEstimatedPrice.length > 0 &&
         <article id="pricing-and-floor-plans-comparison">
@@ -141,14 +118,6 @@ const PricingAndAvailability = ({
 
 PricingAndAvailability.propTypes = {
   community: communityPropType.isRequired,
-  roomPrices: arrayOf(shape({
-    roomType: string.isRequired,
-    image: string,
-    shareType: string.isRequired,
-    price: number,
-    priceShared: number,
-    priceType: string.isRequired,
-  })),
   address: shape({
     country: string.isRequired,
     city: string.isRequired,
@@ -163,10 +132,6 @@ PricingAndAvailability.propTypes = {
   }),
   onInquireOrBookClicked: func,
   gotoGetCustomPricing: func,
-};
-
-PricingAndAvailability.defaultProps = {
-  roomPrices: [],
 };
 
 export default PricingAndAvailability;
