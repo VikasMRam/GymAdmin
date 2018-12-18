@@ -1,5 +1,7 @@
-import React from 'react';
-import { bool, oneOf } from 'prop-types';
+/* eslint-disable react/sort-comp */
+
+import React, { Component } from 'react';
+import { bool, oneOf, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -55,18 +57,33 @@ const StyledInput = styled.input`
   ${styles};
 `;
 
-const Input = ({ ...props }) => {
-  if (props.type === 'textarea') {
-    return <StyledTextarea {...props} />;
-  } else if (props.type === 'select') {
-    return <StyledSelect {...props} />;
+class Input extends Component {
+  ref = React.createRef();
+
+  onFocus = (...args) => {
+    if (this.props.onFocus) {
+      this.props.onFocus(...args);
+    }
+    this.ref.current.scrollIntoView({
+      block: 'center',
+      inline: 'nearest',
+    });
+  };
+
+  render() {
+    if (this.props.type === 'textarea') {
+      return <StyledTextarea {...this.props} />;
+    } else if (this.props.type === 'select') {
+      return <StyledSelect {...this.props} />;
+    }
+    return <StyledInput {...this.props} onFocus={this.onFocus} />;
   }
-  return <StyledInput {...props} />;
-};
+}
 
 Input.propTypes = {
   type: oneOf(['textarea', 'select', 'text', 'checkbox', 'radio', 'password', 'number']),
   size: oneOf(['small', 'regular', 'large', 'xLarge']),
+  onFocus: func,
   invalid: bool,
 };
 
