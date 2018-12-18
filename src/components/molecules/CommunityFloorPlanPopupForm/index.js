@@ -5,7 +5,7 @@ import NumberFormat from 'react-number-format';
 import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
-import { Block, Hr, Link, Button, Image } from 'sly/components/atoms';
+import { Heading, Block, Link, Button, Image } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import { Experiment, Variant } from 'sly/services/experiments';
 
@@ -17,7 +17,7 @@ const DetailsSection = styled.div`
   padding: ${size('spacing.xLarge')};
 `;
 
-const HeadingBlock = styled(Block)`
+const HeadingBlock = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
@@ -29,6 +29,7 @@ const DetailsTable = styled.div`
   display: grid;
   grid-template-columns: 50% 50%;
   grid-gap: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const StyledButton = styled(Button)`
@@ -41,7 +42,11 @@ const StyledImage = styled(Image)`
 `;
 
 const TosBlock = styled(Block)`
-  margin-bottom: ${size('spacing.regular')};
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
+const CTAHeadingBlock = styled(Heading)`
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const CommunityFloorPlanPopupForm = ({
@@ -88,10 +93,9 @@ const CommunityFloorPlanPopupForm = ({
             <Block size="caption">{accessibility}</Block>
           </Fragment>}
         </DetailsTable>
-        <Hr />
         {/* FIXME: Copied from CommunityBookATourContactForm. Make it reusable component */}
         <form onSubmit={handleSubmit}>
-          <HeadingBlock size="subtitle" weight="medium">Enquire about this listing</HeadingBlock>
+          <CTAHeadingBlock size="subtitle" weight="medium">Enquire about this listing</CTAHeadingBlock>
           {!(userDetails && userDetails.fullName) && <Field
             name="name"
             label="Full name"
