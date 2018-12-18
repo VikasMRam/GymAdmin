@@ -50,6 +50,9 @@ import { createBooleanValidator, email, required, usPhone } from 'sly/services/v
 import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList/index';
 import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
 import ModalController from 'sly/controllers/ModalController';
+import { calculatePricing, findPercentage } from 'sly/services/helpers/pricing';
+import EstimatedCost from 'sly/components/molecules/EstimatedCost';
+import PriceBar from 'sly/components/molecules/PriceBar';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -92,6 +95,14 @@ const StyledOfferNotification = styled(OfferNotification)`
 const Body = makeBody('main');
 const Column = makeColumn('aside');
 const Footer = makeFooter('footer');
+
+const PriceLabel = styled.div`
+  margin-bottom: ${size('spacing.small')};
+`;
+
+const StyledPriceBar = styled(PriceBar)`
+  margin-bottom: ${size('spacing.small')};
+`;
 
 export default class CommunityDetailPage extends Component {
   static propTypes = {
@@ -328,6 +339,11 @@ export default class CommunityDetailPage extends Component {
       bannerNotification = 'We have received your pricing request. Your partner agent is checking with this community and will get back to you shortly.';
     }
     const Header = makeHeader(bannerNotification);
+    const {
+      estimatedPriceBase, estimatedPriceLabelMap, sortedEstimatedPrice, maxPrice,
+    } = calculatePricing({
+      community, estimatedPrice: rgsAux.estimatedPrice, address,
+    });
 
     return (
       <Fragment>
@@ -411,7 +427,7 @@ export default class CommunityDetailPage extends Component {
               )}
 
             <CollapsibleSection
-              title={`Floor plans at ${name}`}
+              title={`Pricing and Floor plans at ${name}`}
               botttomSection={
                 floorPlans.length > 0 &&
                 <ConciergeController
@@ -467,14 +483,28 @@ export default class CommunityDetailPage extends Component {
                 </ModalController>
               }
               {floorPlans.length === 0 &&
-                <PricingAndAvailability
+                <EstimatedCost
+                  getPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
                   community={community}
-                  address={address}
-                  estimatedPrice={rgsAux.estimatedPrice}
-                  gotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
+                  price={estimatedPriceBase}
                 />
               }
             </CollapsibleSection>
+            {sortedEstimatedPrice.length > 0 &&
+              <CollapsibleSection title="Compare to other communities in the area">
+                <article id="pricing-and-floor-plans-comparison">
+                  {sortedEstimatedPrice.map(object => (
+                    <Fragment key={object[1]}>
+                      <PriceLabel>{estimatedPriceLabelMap[object[0]]}</PriceLabel>
+                      <StyledPriceBar
+                        width={findPercentage(object[1], maxPrice)}
+                        price={object[1]}
+                      />
+                    </Fragment>
+                  ))}
+                </article>
+              </CollapsibleSection>
+            }
             {(communityDescription || rgsAux.communityDescription) &&
               <CollapsibleSection title="Community Details">
                 <CommunityDetails

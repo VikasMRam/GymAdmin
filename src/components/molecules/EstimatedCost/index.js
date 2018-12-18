@@ -1,21 +1,22 @@
-import React from 'react';
-import { func, number, object } from 'prop-types';
+import React, { Fragment } from 'react';
+import { func, number } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
-import { Button, Block, Heading } from 'sly/components/atoms';
-
-const StyledBox = styled.div`
-
-`;
+import { Button, Block } from 'sly/components/atoms';
 
 const EstimatedCostWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
 const StyledBlock = styled(Block)`
-  margin-bottom: 0;
+  margin-bottom: ${size('spacing.regular')};
+`;
+
+const StyledNumberFormat = styled(NumberFormat)`
+  font-size: ${size('text.title')};
+  font-weight: ${size('weight.medium')};
 `;
 
 const percentageOf = (num, percentage) => {
@@ -33,17 +34,18 @@ const EstimatedCost = ({
   to = Math.round(price + basePer);
 
   return (
-    <StyledBox>
+    <Fragment>
       <EstimatedCostWrapper>
-        <Heading level="subtitle" size="subtitle">
-          Estimated cost from <NumberFormat value={from} displayType="text" thousandSeparator prefix="$" /> to <NumberFormat value={to} displayType="text" thousandSeparator prefix="$" /> per month*
-        </Heading>
-        <StyledBlock size="caption" palette="grey">
+        <StyledBlock size="caption" palette="grey">Estimated Pricing</StyledBlock>
+        <Block size="caption">
+          <StyledNumberFormat value={from} displayType="text" thousandSeparator prefix="$" /> to <StyledNumberFormat value={to} displayType="text" thousandSeparator prefix="$" />/ mo*
+        </Block>
+        <Block size="caption" palette="grey">
           *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.
-        </StyledBlock>
+        </Block>
       </EstimatedCostWrapper>
       <Button ghost onClick={getPricing}>Get Detailed Pricing</Button>
-    </StyledBox>
+    </Fragment>
   );
 };
 
