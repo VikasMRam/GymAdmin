@@ -69,16 +69,8 @@ const AgentTile = ({
 );
 
 AgentTile.propTypes = {
-  palette: string,
-  user: shape({
-    name: string.isRequired,
-    picture: string,
-  }),
-  community: communityPropType,
+  agent: agentPropType,
 };
 
-AgentTile.defaultProps = {
-  palette: 'primary',
-};
 
 export default AgentTile;

@@ -3,29 +3,21 @@ import { storiesOf } from '@storybook/react';
 
 import AgentTile from 'sly/components/molecules/AgentTile';
 
-const name = 'Fonz';
-const picture = 'https://avatars.githubusercontent.com/u/113003';
-const title = 'Property Manager';
-const community = {
-  name: 'Rhoda Goldman Plaza',
-  url: '/assisted-living/california/san-francisco/rhoda-goldman-plaza',
+const aggregateRating = {
+  ratingValue: 4.5,
+  numRatings: 14,
+};
+const agentInfo = {
+  displayName: 'Fonz Wasserstrom',
+  slyPhone: '9258906575',
+  recentFamilies: 17,
+  profileImgUrl: 'https://avatars.githubusercontent.com/u/113003',
 };
 
-const userFull = {
-  name,
-  picture,
-  title,
+const agent = {
+  aggregateRating,
+  agentInfo,
 };
-const userNoTitle = { name, picture };
-const userNothing = { name };
-const userWithRating = { ...userFull, rating: 3.5 };
 
 storiesOf('Molecules|AgentTile', module)
-  .add('default', () => <AgentTile user={userFull} community={community} />)
-  .add('with nothing', () => <AgentTile user={userNothing} />)
-  .add('with rating', () => (
-    <AgentTile user={userWithRating} community={community} />
-  ))
-  .add('with on title', () => (
-    <AgentTile user={userNoTitle} community={community} />
-  ));
+  .add('default', () => <AgentTile agent={agent} />);
