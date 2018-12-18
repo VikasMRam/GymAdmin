@@ -10,11 +10,10 @@ import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getSearchParams } from 'sly/services/helpers/search';
-import { getDetail, getList } from 'sly/store/selectors';
+import { getDetail, getList, isResourceDetailRequestComplete } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceListReadRequest }
   from 'sly/store/resource/actions';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
-
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
 import { ANSWER_QUESTION } from 'sly/constants/modalType';
@@ -24,6 +23,7 @@ class CommunityDetailPageController extends Component {
     set: func,
     community: object,
     userAction: object,
+    isUserFetchDone: bool,
     userSaveOfCommunity: object,
     errorCode: number,
     history: object,
@@ -268,6 +268,21 @@ class CommunityDetailPageController extends Component {
     });
   };
 
+  handleFloorPlanModalToggle= (floorPlan) => {
+    const { community } = this.props;
+    const { id } = community;
+    let action = 'close-modal';
+    let value = null;
+    if (floorPlan) {
+      action = 'open-modal';
+      value = floorPlan.info.roomType || null;
+    }
+    const event = {
+      action, category: 'floorPlan', label: id, value,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+  };
+
   handleBookATourClick = () => {
     const { community, history } = this.props;
     const { id } = community;
@@ -316,6 +331,7 @@ class CommunityDetailPageController extends Component {
       isShareCommunityModalVisible,
       user,
       community,
+      isUserFetchDone,
       userSaveOfCommunity,
       errorCode,
       redirectUrl,
@@ -348,7 +364,7 @@ class CommunityDetailPageController extends Component {
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
-    if (!community) {
+    if (!community || !userAction || !isUserFetchDone) {
       return null;
     }
 
@@ -398,6 +414,8 @@ class CommunityDetailPageController extends Component {
         isAlreadyPricingRequested={isAlreadyPricingRequested}
         isAskAgentQuestionModalVisible={isAskAgentQuestionModalVisible}
         askAgentQuestionType={askAgentQuestionType}
+        onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
+        userAction={userAction}
       />
     );
   }
@@ -432,6 +450,7 @@ const mapStateToProps = (state, {
     user: getDetail(state, 'user', 'me'),
     community: getDetail(state, 'community', communitySlug),
     userAction: getDetail(state, 'userAction'),
+    isUserFetchDone: isResourceDetailRequestComplete(state, 'user'),
     userSaveOfCommunity,
     mediaGallerySlideIndex,
     isMediaGalleryFullscreenActive,

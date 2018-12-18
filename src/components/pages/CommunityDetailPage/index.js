@@ -6,7 +6,7 @@ import { Lazy } from 'react-lazy';
 
 import { size, assetPath } from 'sly/components/themes';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, CONCIERGE } from 'sly/constants/modalType';
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, FLOOR_PLAN, CONCIERGE } from 'sly/constants/modalType';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
@@ -48,6 +48,11 @@ import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvaila
 import OfferNotification from 'sly/components/molecules/OfferNotification';
 import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
 import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList/index';
+import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
+import ModalController from 'sly/controllers/ModalController';
+import { calculatePricing, findPercentage } from 'sly/services/helpers/pricing';
+import EstimatedCost from 'sly/components/molecules/EstimatedCost';
+import PriceBar from 'sly/components/molecules/PriceBar';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -91,6 +96,14 @@ const Body = makeBody('main');
 const Column = makeColumn('aside');
 const Footer = makeFooter('footer');
 
+const PriceLabel = styled.div`
+  margin-bottom: ${size('spacing.small')};
+`;
+
+const StyledPriceBar = styled(PriceBar)`
+  margin-bottom: ${size('spacing.small')};
+`;
+
 export default class CommunityDetailPage extends Component {
   static propTypes = {
     user: object,
@@ -123,6 +136,8 @@ export default class CommunityDetailPage extends Component {
     isAskAgentQuestionModalVisible: bool,
     onToggleAskAgentQuestionModal: func,
     askAgentQuestionType: string,
+    userAction: object,
+    onFloorPlanModalToggle: func,
   };
 
   componentDidMount() {
@@ -206,6 +221,8 @@ export default class CommunityDetailPage extends Component {
       isAskAgentQuestionModalVisible,
       onToggleAskAgentQuestionModal,
       askAgentQuestionType,
+      userAction,
+      onFloorPlanModalToggle,
     } = this.props;
 
     const {
@@ -258,7 +275,7 @@ export default class CommunityDetailPage extends Component {
       gallery.images = images;
     }
     const videos = videoGallery.videos || [];
-
+    const { userDetails } = userAction;
     const {
       communityDescription,
       staffDescription,
@@ -296,7 +313,6 @@ export default class CommunityDetailPage extends Component {
     const ratingsArray = propRatings.ratingsArray || [];
     const reviewsFinal = reviews || [];
     const serviceHighlightsFinal = serviceHighlights || [];
-    const roomPrices = floorPlans.map(({ info }) => info);
     const isCCRC = typeCare && (typeCare.indexOf('Continuing Care Retirement Community(CCRC)') !== -1);
     const ratesProvided = (rates && rates === 'Provided');
 
@@ -323,6 +339,11 @@ export default class CommunityDetailPage extends Component {
       bannerNotification = 'We have received your pricing request. Your partner agent is checking with this community and will get back to you shortly.';
     }
     const Header = makeHeader(bannerNotification);
+    const {
+      estimatedPriceBase, estimatedPriceLabelMap, sortedEstimatedPrice, maxPrice,
+    } = calculatePricing({
+      community, estimatedPrice: rgsAux.estimatedPrice, address,
+    });
 
     return (
       <Fragment>
@@ -406,8 +427,9 @@ export default class CommunityDetailPage extends Component {
               )}
 
             <CollapsibleSection
-              title={`Floor plans at ${name}`}
+              title={`Pricing and Floor Plans at ${name}`}
               botttomSection={
+                floorPlans.length > 0 &&
                 <ConciergeController
                   communitySlug={community.id}
                   queryParams={{ modal, currentStep }}
@@ -446,24 +468,43 @@ export default class CommunityDetailPage extends Component {
                 }
               innerRef={this.pricingAndFloorPlansRef}
             >
-              {/* <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
-                {() => (
-                  <PricingAndAvailability
-                    community={community}
-                    isCCRC={isCCRC}
-                    address={address}
-                    estimatedPrice={rgsAux.estimatedPrice}
-                    roomPrices={roomPrices}
-                    onInquireOrBookClicked={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-                    onLiveChatClicked={onLiveChatClicked}
-                    queryParams={{ modal, currentStep }}
-                    setQueryParams={setQueryParams}
-                    gotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-                  />
-                )}
-              </ConciergeController> */}
-              <CommunityFloorPlansList typeOfCare={typeOfCare} floorPlans={floorPlans} />
+              {floorPlans.length > 0 &&
+                <ModalController>
+                  {({ show }) => (
+                    <CommunityFloorPlansList
+                      typeOfCare={typeOfCare}
+                      floorPlans={floorPlans}
+                      onItemClick={(floorPlan) => {
+                        show(FLOOR_PLAN, floorPlan);
+                        onFloorPlanModalToggle(floorPlan);
+                      }}
+                    />
+                  )}
+                </ModalController>
+              }
+              {floorPlans.length === 0 &&
+                <EstimatedCost
+                  getPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
+                  community={community}
+                  price={estimatedPriceBase}
+                />
+              }
             </CollapsibleSection>
+            {sortedEstimatedPrice.length > 0 &&
+              <CollapsibleSection title="Compare to other communities in the area">
+                <article id="pricing-and-floor-plans-comparison">
+                  {sortedEstimatedPrice.map(object => (
+                    <Fragment key={object[1]}>
+                      <PriceLabel>{estimatedPriceLabelMap[object[0]]}</PriceLabel>
+                      <StyledPriceBar
+                        width={findPercentage(object[1], maxPrice)}
+                        price={object[1]}
+                      />
+                    </Fragment>
+                  ))}
+                </article>
+              </CollapsibleSection>
+            }
             {(communityDescription || rgsAux.communityDescription) &&
               <CollapsibleSection title="Community Details">
                 <CommunityDetails
@@ -595,6 +636,18 @@ export default class CommunityDetailPage extends Component {
                 )}
               </NotificationController>
             </Modal>
+            <ModalController>
+              {({ modalType, modalEntity, hide }) => (
+                <Modal
+                  noPadding
+                  closeable
+                  isOpen={modalType === FLOOR_PLAN}
+                  onClose={() => { onFloorPlanModalToggle(); hide(); }}
+                >
+                  {modalEntity && <CommunityFloorPlanPopupFormContainer community={community} user={user} typeOfCare={typeOfCare} floorPlanInfo={modalEntity.info} userDetails={userDetails} postSubmit={hide} />}
+                </Modal>
+              )}
+            </ModalController>
             <FullScreenWizardController>
               {({ isConfirmationModalVisible, toggleConfirmationModal, type }) => {
                   let heading = null;

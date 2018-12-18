@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { string, arrayOf, object } from 'prop-types';
+import { string, arrayOf, object, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Hr, Block } from 'sly/components/atoms';
@@ -14,14 +14,14 @@ const ListWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const CommunityFloorPlansList = ({ typeOfCare, floorPlans }) => (
+const CommunityFloorPlansList = ({ typeOfCare, floorPlans, onItemClick }) => (
   <Fragment>
     <ListWrapper>
-      {floorPlans.map((floorPlan, i) => {
+      {floorPlans.map((floorPlan) => {
         const { id, info } = floorPlan;
         return (
           <Fragment key={id}>
-            <CommunityFloorPlanListItem typeOfCare={typeOfCare} {...info} />
+            <CommunityFloorPlanListItem typeOfCare={typeOfCare} {...info} onItemClick={() => onItemClick(floorPlan)} />
             <StyledHr />
           </Fragment>
         );
@@ -34,6 +34,7 @@ const CommunityFloorPlansList = ({ typeOfCare, floorPlans }) => (
 CommunityFloorPlansList.propTypes = {
   typeOfCare: string.isRequired,
   floorPlans: arrayOf(object).isRequired,
+  onItemClick: func,
 };
 
 export default CommunityFloorPlansList;

@@ -5,7 +5,7 @@ import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
 
 import { size, key, palette } from 'sly/components/themes';
-import { Heading, Icon } from 'sly/components/atoms';
+import { Icon, ClampedText } from 'sly/components/atoms';
 
 // const marginBottom = (p) => {
 //   if (p.collapsed) {
@@ -35,7 +35,7 @@ export const Header = styled.div`
   }
 `;
 
-const StyledHeading = styled(Heading)`
+const StyledHeading = styled(ClampedText)`
   margin: 0;
 `;
 
@@ -80,7 +80,7 @@ const ChildrenSection = styled.div`
 `;
 
 const BottomSection = styled.div`
-  background-color: ${palette('slate', 'background')};
+  background-color: ${palette('grey', 'stroke')};
   padding: ${size('spacing.xLarge')};
   border-top: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 `;
@@ -139,7 +139,7 @@ export default class CollapsibleSection extends Component {
             innerRef={innerRef}
           >
             <Header onClick={this.toggle}>
-              <StyledHeading level={getHeadingLevel(size)} size={getHeadingSize(size)}>
+              <StyledHeading weight="medium" level={getHeadingLevel(size)} size={getHeadingSize(size)}>
                 {title}
               </StyledHeading>
               <Icon icon="chevron" size="regular" palette="slate" flip={!collapsed} />

@@ -1,8 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import PricingAndAvailability, { findPercentage, sortProperties } from 'sly/components/organisms/PricingAndAvailability';
+import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailability';
 import PriceBar from 'sly/components/molecules/PriceBar';
+import { findPercentage, sortProperties } from 'sly/services/helpers/pricing';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => shallow(<PricingAndAvailability community={RhodaGoldmanPlaza} {...props} />);
