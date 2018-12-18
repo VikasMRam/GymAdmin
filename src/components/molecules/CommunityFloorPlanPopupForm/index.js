@@ -40,6 +40,10 @@ const StyledImage = styled(Image)`
   }
 `;
 
+const TosBlock = styled(Block)`
+  margin-bottom: ${size('spacing.regular')};
+`;
+
 const CommunityFloorPlanPopupForm = ({
   handleSubmit, typeOfCare, floorPlanInfo, userDetails, user, error, submitting,
 }) => {
@@ -87,6 +91,7 @@ const CommunityFloorPlanPopupForm = ({
         <Hr />
         {/* FIXME: Copied from CommunityBookATourContactForm. Make it reusable component */}
         <form onSubmit={handleSubmit}>
+          <HeadingBlock size="subtitle" weight="medium">Enquire about this listing</HeadingBlock>
           {!(userDetails && userDetails.fullName) && <Field
             name="name"
             label="Full name"
@@ -129,7 +134,7 @@ const CommunityFloorPlanPopupForm = ({
           />
           }
           {error && <Block palette="danger">{error}</Block>}
-          {!user && <Block size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></Block>}
+          {!user && <TosBlock size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></TosBlock>}
           <StyledButton type="submit" kind="jumbo" disabled={submitting}>Submit</StyledButton>
         </form>
       </DetailsSection>

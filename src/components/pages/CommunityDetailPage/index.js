@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
-import { object, func, number, bool, string, any } from 'prop-types';
+import { object, func, number, bool, string } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
@@ -427,7 +427,7 @@ export default class CommunityDetailPage extends Component {
               )}
 
             <CollapsibleSection
-              title={`Pricing and Floor plans at ${name}`}
+              title={`Pricing and Floor Plans at ${name}`}
               botttomSection={
                 floorPlans.length > 0 &&
                 <ConciergeController

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
-import { Button, Block } from 'sly/components/atoms';
+import { Button, Block, Span } from 'sly/components/atoms';
 
 const EstimatedCostWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
@@ -15,7 +15,6 @@ const StyledBlock = styled(Block)`
 `;
 
 const StyledNumberFormat = styled(NumberFormat)`
-  font-size: ${size('text.title')};
   font-weight: ${size('weight.medium')};
 `;
 
@@ -36,9 +35,9 @@ const EstimatedCost = ({
   return (
     <Fragment>
       <EstimatedCostWrapper>
-        <StyledBlock size="caption" palette="grey">Estimated Pricing</StyledBlock>
-        <Block size="caption">
-          <StyledNumberFormat value={from} displayType="text" thousandSeparator prefix="$" /> to <StyledNumberFormat value={to} displayType="text" thousandSeparator prefix="$" />/ mo*
+        <StyledBlock size="caption" palette="grey">Estimated Pricing*</StyledBlock>
+        <Block size="title">
+          <StyledNumberFormat value={from} displayType="text" thousandSeparator prefix="$" /> - <StyledNumberFormat value={to} displayType="text" thousandSeparator prefix="$" /><Span size="caption"> /mo</Span>
         </Block>
         <Block size="caption" palette="grey">
           *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.
