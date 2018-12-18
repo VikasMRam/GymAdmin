@@ -64,10 +64,7 @@ class Input extends Component {
     if (this.props.onFocus) {
       this.props.onFocus(...args);
     }
-    this.ref.current.scrollIntoView({
-      block: 'center',
-      inline: 'nearest',
-    });
+    this.ref.current.scrollIntoView(true);
   };
 
   render() {
