@@ -28,6 +28,7 @@ class ModalController extends Component {
 
     set({
       modalType: null,
+      modalEntity: null,
     });
   };
 
@@ -43,6 +44,7 @@ class ModalController extends Component {
 
 const mapStateToProps = (state, { controller = {} }) => ({
   modalType: controller.modalType,
+  modalEntity: controller.modalEntity,
 });
 
 export default connectController(mapStateToProps)(ModalController);
