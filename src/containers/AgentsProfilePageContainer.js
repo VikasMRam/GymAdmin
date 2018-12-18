@@ -2,45 +2,8 @@ import React, { Component } from 'react';
 import { func, object, arrayOf } from 'prop-types';
 
 import { agents } from 'sly/services/helpers/agents';
+import { stateRegionMap } from 'sly/helpers/url';
 import AgentsProfilePage from 'sly/components/pages/AgentsProfilePage';
-
-const agentStateRegionMap = {
-  CA: 'West Coast',
-  WA: 'West Coast',
-  OR: 'West Coast',
-  AZ: 'West Coast',
-  GA: 'Southeast',
-  KS: 'Midwest',
-  IL: 'Midwest',
-  MI: 'Midwest',
-  MO: 'Midwest',
-  MN: 'Midwest',
-  NE: 'Midwest',
-  WI: 'Midwest',
-  IN: 'Midwest',
-  OH: 'Midwest',
-  CO: 'West Coast',
-  FL: 'Southeast',
-  NY: 'East Coast',
-  NJ: 'East Coast',
-  TX: 'South',
-  ME: 'East Coast',
-  PA: 'East Coast',
-  MS: 'South',
-  AL: 'South',
-  AR: 'South',
-  UT: 'West Coast',
-  CT: 'East Coast',
-  DC: 'East Coast',
-  DE: 'East Coast',
-  HI: 'West Coast',
-  IA: 'Midwest',
-  NC: 'Southeast',
-  SC: 'Southeast',
-  TN: 'Tennessee',
-  VA: 'East Coast',
-  WV: 'East Coast',
-};
 
 export default class AgentsProfilePageContainer extends Component {
   static propTypes = {
