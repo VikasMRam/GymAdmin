@@ -17,7 +17,7 @@ describe('AdvisorHelpPopup', () => {
 
   it('renders AdvisorHelpPopup', () => {
     const wrapper = wrap();
-    expect(wrapper.find(IconListItem)).toHaveLength(5);
+    expect(wrapper.find(IconListItem)).toHaveLength(4);
     expect(wrapper.find('Styled(Button)')).toHaveLength(1);
   });
 
