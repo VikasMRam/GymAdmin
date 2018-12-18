@@ -12,6 +12,7 @@ const agentInfo = {
   slyPhone: '9258906575',
   recentFamilies: 17,
   profileImgUrl: 'https://avatars.githubusercontent.com/u/113003',
+  citiesServed: ['Utah', 'Calcuta'],
 };
 
 const agent = {
