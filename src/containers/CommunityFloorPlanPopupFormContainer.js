@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
-import { object, func } from 'prop-types';
+import { object, func, string } from 'prop-types';
 
 import SlyEvent from 'sly/services/helpers/events';
-import { REQUEST_CONSULTATION } from 'sly/services/api/actions';
+import { REQUEST_FLOORPLAN } from 'sly/services/api/actions';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 import CommunityFloorPlanPopupForm from 'sly/components/molecules/CommunityFloorPlanPopupForm';
@@ -18,17 +18,19 @@ class CommunityFloorPlanPopupFormContainer extends Component {
   handleSubmit = (data) => {
     const { notes } = data;
     const {
-      community, userDetails, postUserAction, postSubmit,
+      community, userDetails, postUserAction, postSubmit, typeOfCare, floorPlanInfo,
     } = this.props;
+    const { roomType } = floorPlanInfo;
     const { id } = community;
     const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
     const value = {
       notes,
-      propertyIds: [id],
+      slug: id,
+      listingType: `${typeOfCare} - ${roomType}`,
       user,
     };
     const payload = {
-      action: REQUEST_CONSULTATION,
+      action: REQUEST_FLOORPLAN,
       value,
     };
 
@@ -61,6 +63,8 @@ CommunityFloorPlanPopupFormContainer.propTypes = {
   community: object.isRequired,
   userDetails: object.isRequired,
   postUserAction: func.isRequired,
+  typeOfCare: string,
+  floorPlanInfo: object,
   postSubmit: func,
 };
 
