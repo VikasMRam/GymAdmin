@@ -25,8 +25,20 @@ const StyledHr = styled(Hr)`
 
 const Wrapper = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: left;
   justify-content: space-between;
+  > *:first-child {
+    margin-bottom: ${size('spacing.xLarge')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    flex-direction: row;
+    align-items: center;
+    > *:first-child {
+      margin-bottom: 0;
+    }
+  }
 `;
 Wrapper.displayName = 'Wrapper';
 
@@ -70,6 +82,7 @@ const CommunitySummary = ({
         }
       </StyledHeading>
       <StyledBlock palette="grey">{formattedAddress}</StyledBlock>
+      {startingRate > 0 && reviewsValue > 0 && <StyledHr />}
       <CommunityPricingAndRating price={startingRate} rating={reviewsValue} />
       <StyledHr />
       <Wrapper>
