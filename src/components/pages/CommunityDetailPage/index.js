@@ -53,6 +53,7 @@ import ModalController from 'sly/controllers/ModalController';
 import { calculatePricing, findPercentage } from 'sly/services/helpers/pricing';
 import EstimatedCost from 'sly/components/molecules/EstimatedCost';
 import PriceBar from 'sly/components/molecules/PriceBar';
+import CommunityReviewsBottomSection from 'sly/components/molecules/CommunityReviewsBottomSection/index';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -485,8 +486,13 @@ export default class CommunityDetailPage extends Component {
                 languagesOther={languagesOther}
               />
             </CollapsibleSection>
-            <CollapsibleSection title="Reviews" innerRef={this.communityReviewsRef}>
+            <CollapsibleSection
+              title={`Reviews at ${name}`}
+              innerRef={this.communityReviewsRef}
+              botttomSection={<CommunityReviewsBottomSection communityName={name} onButtonClick={() => setModal(ADD_RATING)} />}
+            >
               <PropertyReviews
+                reviewsValue={reviewsValue}
                 hasSlyReviews={hasSlyReviews}
                 hasWebReviews={hasWebReviews}
                 reviews={reviewsFinal}

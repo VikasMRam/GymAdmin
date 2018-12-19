@@ -1,14 +1,30 @@
 import React from 'react';
 import { arrayOf, shape, string, number, func, bool, object } from 'prop-types';
+import styled from 'styled-components';
 
-import Button from 'sly/components/atoms/Button';
+import { size } from 'sly/components/themes';
+import { Icon, Block } from 'sly/components/atoms';
 import Modal from 'sly/components/molecules/Modal';
 import PropertyReview from 'sly/components/molecules/PropertyReview';
 import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
-import { ADD_RATING } from 'sly/constants/modalType';
+
+const ReviewValueSection = styled.div`
+  display: flex;
+  margin-bottom: ${size('spacing.large')};
+  align-items: center;
+`;
+
+const ReviewValueRatingIcon = styled(Icon)`
+  margin-right: ${size('spacing.small')};
+`;
+
+const ReviewValue = styled(Block)`
+  margin-right: ${size('spacing.regular')};
+`;
 
 const PropertyReviews = ({
+  reviewsValue,
   hasWebReviews,
   reviews,
   reviewRatings,
@@ -29,6 +45,11 @@ const PropertyReviews = ({
   }
   return (
     <article ref={communityReviewsRef}>
+      <ReviewValueSection>
+        <ReviewValueRatingIcon icon="star" size="regular" palette="secondary" />
+        <ReviewValue size="subtitle" weight="medium">{reviewsValue}</ReviewValue>
+        <Block size="caption" palette="grey">Average rating</Block>
+      </ReviewValueSection>
       {propertyReviews}
       {hasWebReviews && (
         <GatheredReviewRatings
@@ -37,7 +58,6 @@ const PropertyReviews = ({
           onReviewLinkClicked={onReviewLinkClicked}
         />
       )}
-      <Button onClick={() => setModal(ADD_RATING)} >Leave a Review</Button>
       {isAskRatingModalOpen &&
       <Modal
         onClose={() => setModal(null)}
@@ -52,6 +72,7 @@ const PropertyReviews = ({
 };
 
 PropertyReviews.propTypes = {
+  reviewsValue: number.isRequired,
   reviews: arrayOf(shape({
     id: string.isRequired,
     author: string.isRequired,
