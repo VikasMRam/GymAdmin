@@ -4,13 +4,14 @@ import { object, func } from 'prop-types';
 
 import { size, assetPath, palette } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Link, Image, Block, Heading } from 'sly/components/atoms';
+import { Link, Image, Block, Heading, Hr, Icon } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ProfileTile from 'sly/components/molecules/ProfileTile';
 import Footer from 'sly/components/organisms/Footer';
 import Modal from 'sly/components/molecules/Modal';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import Section from 'sly/components/molecules/Section';
+import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 
 const mostSearchedCities = [
   {
@@ -84,8 +85,7 @@ const FixedWidthContainer = styled.main`
 const HeroWrapper = styled.div`
   position: relative;
   background-color: ${palette('slate', 'base')};
-  height: 40vh;
-  max-height: ${size('layout.col5')};
+  height: calc(${size('header.agents.heroImage.height')});
 
   > * {
     position: absolute;
@@ -137,19 +137,18 @@ const StyledSection = styled(Section)`
 
 const ColumnWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-
+  justify-content: space-between;
+  flex-direction: column;
   > * {
     margin-bottom: ${size('spacing.xLarge')};
   }
-  > *:last-child {
-    margin-right: 0;
-  }
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    align-items: flex-start;
-    justify-content: flex-start;
+    flex-direction: row;
+
+    > * {
+      width: ${size('layout.col4')};
+    }
   }
 `;
 
@@ -172,43 +171,9 @@ const MSCColumnWrapper = ColumnWrapper.extend`
   }
 `;
 
-const ContentTilesWrapper = styled.div`
-  margin-bottom: ${size('spacing.huge')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -${size('spacing.xLarge')};
-  }
-`;
-
-const StyledProfileTile = styled(ProfileTile)`
-margin-bottom: ${size('spacing.xLarge')};
-
-@media screen and (min-width: ${size('breakpoint.tablet')}) {
-  width: calc(100% / 2 - ${size('spacing.xLarge')});
-  margin-right: ${size('spacing.xLarge')};
-}
-
-@media screen and (min-width: ${size('breakpoint.laptop')}) {
-  width: calc(100% / 3 - ${size('spacing.xLarge')});
-}
-`;
-
 const AgentsPage = ({
-  regionProfiles, activeProfile, setModalProfile,
+  activeProfile, setModalProfile,
 }) => {
-  const agentsSectionComponents = Object.keys(regionProfiles).map((region) => {
-    const agentsProfile = regionProfiles[region].map(profile => (
-      <StyledProfileTile key={profile.id} profile={profile} onClick={() => setModalProfile(profile)} />
-    ));
-    return (
-      <StyledSection key={region} title={region}>
-        <ContentTilesWrapper>
-          {agentsProfile}
-        </ContentTilesWrapper>
-      </StyledSection>
-    );
-  });
   const headerContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -241,7 +206,14 @@ const AgentsPage = ({
     <Fragment>
       <TemplateHeader>{headerContent}</TemplateHeader>
       <TemplateContent>
-        {agentsSectionComponents}
+        <StyledSection title="Why should I work with an agent?">
+          <ColumnWrapper>
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="house" heading="Service from start to finish" content="As a Seniorly Partner Agent you will still operate under your business name and simply receive extra family referrals in addition to your current business." />
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="star" heading="Expert negotiators" content="We don't sell leads. Instead, your profile and reviews are displayed on Seniorly.com, so families can choose you as their agent when they are ready to make a move." />
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="loyalty" heading="Service from start to finish" content="As a Seniorly Partner Agent you will still operate under your business name and simply receive extra family referrals in addition to your current business." />
+          </ColumnWrapper>
+        </StyledSection>
+        <Hr fullWidth />
         <StyledSection title="Most Searched Cities">
           <MSCColumnWrapper>
             {mostSearchedCitiesComponents}
@@ -257,7 +229,6 @@ const AgentsPage = ({
 };
 
 AgentsPage.propTypes = {
-  regionProfiles: object,
   activeProfile: object,
   setModalProfile: func,
 };

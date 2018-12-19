@@ -1,16 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string, bool } from 'prop-types';
-
+import { string, bool, oneOf } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
-import { Icon } from 'sly/components/atoms';
+import { Icon, Box } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
-  padding: ${size('spacing.xLarge')};
+  padding: ${p => p.noPadding ? 0 : size('spacing.xLarge')};
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.tiny')};
+  flex-direction: row;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    flex-direction: ${p => p.layout === 'iconTop' ? 'column' : 'row'};
+  }
 `;
 
 const HeadingContentWrapper = styled.div`
@@ -19,7 +23,7 @@ const HeadingContentWrapper = styled.div`
 `;
 
 export const StyledIcon = styled(Icon)`
-  margin-right: ${size('spacing.xLarge')};
+  margin-right: ${p => !p.iconBorder ? size('spacing.xLarge') : 0};
 `;
 
 const HeadingWrapper = styled.div`
@@ -28,19 +32,31 @@ const HeadingWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const ContentWrapper = styled.div`
+const StyledBox = styled(Box)`
+  align-self: flex-start;
+  margin-bottom: ${p => p.layout === 'iconTop' ? size('spacing.large') : 0};
+  margin-right: ${size('spacing.large')};
 
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    margin-right: 0;
+  }
 `;
 
 const IconInfoTile = ({
   icon, iconPalette, heading, content, borderless,
+  noPadding, layout, iconBorder,
 }) => {
   return (
-    <Wrapper borderless={borderless}>
-      <StyledIcon icon={icon} palette={iconPalette} />
+    <Wrapper layout={layout} borderless={borderless} noPadding={noPadding}>
+      {iconBorder &&
+        <StyledBox padding="regular" layout={layout}>
+          <StyledIcon icon={icon} palette={iconPalette} iconBorder={iconBorder} />
+        </StyledBox>
+      }
+      {!iconBorder && <StyledIcon icon={icon} palette={iconPalette} iconBorder={iconBorder} />}
       <HeadingContentWrapper>
         <HeadingWrapper>{heading}</HeadingWrapper>
-        <ContentWrapper>{content}</ContentWrapper>
+        <div>{content}</div>
       </HeadingContentWrapper>
     </Wrapper>
   );
@@ -49,14 +65,19 @@ const IconInfoTile = ({
 IconInfoTile.propTypes = {
   icon: string.isRequired,
   iconPalette: string,
+  iconBorder: bool,
   heading: string.isRequired,
   content: string.isRequired,
   borderless: bool,
+  noPadding: bool,
+  layout: oneOf(['default', 'iconTop']),
 };
 
 IconInfoTile.defaultProps = {
   iconPalette: 'slate',
   borderless: false,
+  noPadding: false,
+  layout: 'default',
 };
 
 export default IconInfoTile;

@@ -114,6 +114,11 @@ theme.sizes = {
         mobileHeight: '30rem', // 480px
       },
     },
+    agents: {
+      heroImage: {
+        height: '30rem', // 480px
+      },
+    },
   },
 
   home: {
