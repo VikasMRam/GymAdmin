@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import agentPropType from 'sly/propTypes/agent';
 import { Box, Image, Block, Link } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
-import IconListItem from 'sly/components/molecules/IconListItem';
+import IconItem from 'sly/components/molecules/IconItem';
 
 const Wrapper = 'div';
 
@@ -25,7 +25,7 @@ const AgentTile = ({
       <Box snap="top">
         <Block><Link to={url}>{info.displayName}</Link></Block>
         <ul>
-          <li><IconListItem icon="blah" text="blah" /></li>
+          <li><IconItem icon="blah" text="blah" /></li>
         </ul>
       </Box>
     </Wrapper>

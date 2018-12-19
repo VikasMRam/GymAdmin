@@ -4,7 +4,7 @@ import { func } from 'prop-types';
 
 import { size, assetPath } from 'sly/components/themes';
 import { Block, Button, Image } from 'sly/components/atoms/index';
-import IconListItem from 'sly/components/molecules/IconListItem/index';
+import IconItem from 'sly/components/molecules/IconItem/index';
 
 const SubHeading = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
@@ -48,9 +48,9 @@ const AvatarIcon = styled(Image)`
 const AdvisorHelpPopup = ({ onButtonClick }) => {
   const iconListItemsComponent = items.map(item => (
     <ListItem key={item.icon}>
-      <IconListItem icon={item.icon}>
+      <IconItem icon={item.icon}>
         {item.text}
-      </IconListItem>
+      </IconItem>
     </ListItem>
   ));
   return (

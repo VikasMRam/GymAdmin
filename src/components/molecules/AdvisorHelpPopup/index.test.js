@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup/index';
-import IconListItem from 'sly/components/molecules/IconListItem/index';
+import IconItem from 'sly/components/molecules/IconItem/index';
 
 const onButtonClick = jest.fn();
 
@@ -17,7 +17,7 @@ describe('AdvisorHelpPopup', () => {
 
   it('renders AdvisorHelpPopup', () => {
     const wrapper = wrap();
-    expect(wrapper.find(IconListItem)).toHaveLength(4);
+    expect(wrapper.find(IconItem)).toHaveLength(4);
     expect(wrapper.find('Styled(Button)')).toHaveLength(1);
   });
 

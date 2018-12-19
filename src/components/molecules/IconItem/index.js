@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   } 
 `;
 
-const IconListItem = ({
+const IconItem = ({
   icon, iconSize, iconPalette, palette, size, children,
 }) => {
   return (
@@ -25,7 +25,7 @@ const IconListItem = ({
   );
 };
 
-IconListItem.propTypes = {
+IconItem.propTypes = {
   icon: string.isRequired,
   iconSize: string,
   iconPalette: string,
@@ -34,4 +34,4 @@ IconListItem.propTypes = {
   children: any,
 };
 
-export default IconListItem;
+export default IconItem;
