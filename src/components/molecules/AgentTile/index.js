@@ -19,7 +19,7 @@ const AgentTile = ({
     <Box>
       <Image src={profileImgUrl} aspectRatio="3:2" />
       <Data>
-        <Block><Link to={}</Block>
+        <Block><Link to={}></Link></Block>
       </Data>
     </Box>
   );

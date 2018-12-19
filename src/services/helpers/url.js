@@ -164,65 +164,22 @@ const stateAbbr = {
   Wyoming: 'WY',
 };
 
-export const stateRegionMap = {
-  CT: 'Northeast',
-  ME: 'Northeast',
-  MA: 'Northeast',
-  NH: 'Northeast',
-  RI: 'Northeast',
-  VT: 'Northeast',
-  NJ: 'Northeast',
-  NY: 'Northeast',
-  PA: 'Northeast',
-
-  IL: 'Midwest',
-  IN: 'Midwest',
-  MI: 'Midwest',
-  OH: 'Midwest',
-  WI: 'Midwest',
-  IA: 'Midwest',
-  KS: 'Midwest',
-  MN: 'Midwest',
-  MO: 'Midwest',
-  NE: 'Midwest',
-  ND: 'Midwest',
-  SD: 'Midwest',
-
-  DE: 'South',
-  FL: 'South',
-  GA: 'South',
-  MD: 'South',
-  NC: 'South',
-  SC: 'South',
-  VA: 'South',
-  DC: 'South',
-  WV: 'South',
-
-  AL: 'Southeast',
-  KY: 'Southeast',
-  MS: 'Southeast',
-  TN: 'Southeast',
-
-  AR: 'Southwest',
-  LA: 'Southwest',
-  OK: 'Southwest',
-  TX: 'Southwest',
-
-  AZ: 'West - Mountain',
-  CO: 'West - Mountain',
-  ID: 'West - Mountain',
-  MT: 'West - Mountain',
-  NV: 'West - Mountain',
-  NM: 'West - Mountain',
-  UT: 'West - Mountain',
-  WY: 'West - Mountain',
-
-  AK: 'West - Pacific',
-  CA: 'West - Pacific',
-  HI: 'West - Pacific',
-  OR: 'West - Pacific',
-  WA: 'West - Pacific',
+const regionStateMap = {
+  Northeast: ['CT', 'ME', 'MA', 'NH', 'RI', 'VT', 'NJ', 'NY', 'PA'],
+  Midwest: ['IL', 'IN', 'MI', 'OH', 'WI', 'IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD'],
+  South: ['DE', 'FL', 'GA', 'MD', 'NC', 'SC', 'VA', 'DC', 'WV'],
+  Southeast: ['AL', 'KY', 'MS', 'TN'],
+  Southwest: ['AR', 'LA', 'OK', 'TX'],
+  'Mountain West': ['AZ', 'CO', 'ID', 'MT', 'NV', 'NM', 'PR', 'UT', 'VI', 'WY'],
+  'Pacific West': ['AS', 'GU', 'AK', 'CA', 'HI', 'OR', 'WA'],
 };
+
+export const stateRegionMap = Object.entries(regionStateMap).reduce((res, [region, states]) => {
+  states.forEach((state) => {
+    res[state] = region;
+  });
+  return res;
+}, {});
 
 export const urlize = inString =>
   inString

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { func, object, arrayOf } from 'prop-types';
 
-import { agents } from 'sly/services/helpers/agents';
-import { stateRegionMap } from 'sly/helpers/url';
 import AgentsProfilePage from 'sly/components/pages/AgentsProfilePage';
+import { agents } from 'sly/services/helpers/agents';
+import { stateRegionMap } from 'sly/services/helpers/url';
 
 export default class AgentsProfilePageContainer extends Component {
   static propTypes = {
@@ -32,7 +32,7 @@ export default class AgentsProfilePageContainer extends Component {
         description: agent.agentBio,
         imageUrl: agent.mainImage,
       };
-      const region = agentStateRegionMap[agent.address.state];
+      const region = stateRegionMap[agent.address.state];
       if (region) {
         if (newRegionProfilesMap[region]) {
           newRegionProfilesMap[region].push(profile);
