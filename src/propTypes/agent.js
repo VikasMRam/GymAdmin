@@ -19,6 +19,7 @@ const agentInfo = shape({
 });
 
 export default shape({
+  url: string.isRequired,
   address,
   aggregateRating,
   agentInfo,

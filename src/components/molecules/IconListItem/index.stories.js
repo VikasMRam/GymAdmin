@@ -6,4 +6,4 @@ import IconListItem from 'sly/components/molecules/IconListItem';
 const item = { icon: 'favourite-light', text: '100% free. They do not charge you.' };
 
 storiesOf('Molecules|IconListItem', module)
-  .add('default', () => <IconListItem {...item} />);
+  .add('default', () => <IconListItem icon={item.icon}>{item.text}</IconListItem>);

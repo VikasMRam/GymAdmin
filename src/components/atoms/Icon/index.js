@@ -13,6 +13,7 @@ const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, v
 
 const Wrapper = styled.span`
   display: inline-block;
+  vertical-align: top;
   font-size: ${fontSize};
   color: ${prop('fill', getColor)};
   // sizes relative to set font-size
@@ -56,7 +57,7 @@ Icon.propTypes = {
 Icon.defaultProps = {
   flip: false,
   size: 'regular',
-  palette: 'primary',
+  palette: 'secondary',
   variation: 'base',
 };
 

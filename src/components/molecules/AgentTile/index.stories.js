@@ -24,6 +24,7 @@ const agentInfo = {
 };
 
 const agent = {
+  url: '/agents/midwest/fonz-wasserstrom',
   aggregateRating,
   agentInfo,
 };

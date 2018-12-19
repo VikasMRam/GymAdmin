@@ -17,12 +17,13 @@ const items = [
   { icon: 'house', text: 'Insider information. They know unique details about this community.' },
 ];
 
-const IconListWrapper = styled.div`
-  margin-bottom: ${size('spacing.xLarge')};
+const List = styled.ul`
+  padding: 0 0 ${size('spacing.xLarge')};
 `;
 
-const IconListItemWrapper = styled.div`
-  margin-bottom: ${size('spacing.large')};
+const ListItem = styled.li`
+  list-style: none;
+  margin: 0 0 ${size('spacing.large')};
 `;
 
 const GotItButton = styled(Button)`
@@ -46,14 +47,18 @@ const AvatarIcon = styled(Image)`
 
 const AdvisorHelpPopup = ({ onButtonClick }) => {
   const iconListItemsComponent = items.map(item => (
-    <IconListItemWrapper key={item.icon}><IconListItem {...item} /></IconListItemWrapper>
+    <ListItem key={item.icon}>
+      <IconListItem icon={item.icon}>
+        {item.text}
+      </IconListItem>
+    </ListItem>
   ));
   return (
     <div>
       <TopSection>
         <div>
           <SubHeading weight="medium">Here are the top 5 benefits to work with our local partner agents:</SubHeading>
-          <IconListWrapper>{iconListItemsComponent}</IconListWrapper>
+          <List>{iconListItemsComponent}</List>
         </div>
         <div>
           <AvatarIcon src={assetPath('images/agent-xLarge.png')} />
