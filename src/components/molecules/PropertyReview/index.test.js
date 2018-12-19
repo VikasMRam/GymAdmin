@@ -19,17 +19,9 @@ describe('PropertyReview', () => {
 
   it('renders Property review', () => {
     const wrapper = wrap();
-    expect(wrapper.childAt(1).contains('Best Community')).toBe(true);
-    expect(wrapper
-      .childAt(0)
-      .childAt(1)
-      .dive()
-      .text()).toEqual('By Pranesh');
-    expect(wrapper
-      .childAt(0)
-      .childAt(2)
-      .dive()
-      .text()).toEqual('Apr 20, 2018');
     expect(wrapper.find('Rating[value=3.5]')).toHaveLength(1);
+    expect(wrapper.contains('Best Community')).toBeTruthy();
+    expect(wrapper.contains('By Pranesh')).toBeTruthy();
+    expect(wrapper.contains('April 2018')).toBeTruthy();
   });
 });

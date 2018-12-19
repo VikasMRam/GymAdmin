@@ -20,6 +20,7 @@ const review = {
   createdAt: '2018-04-20T04:26:04.418Z',
   comments: 'Best Community',
 };
+const reviewsValue = 3.4;
 
 function onLeaveReview() {
   //   console.log('onLeaveReview');
@@ -34,6 +35,7 @@ const user = {
 
 const wrap = (props = {}) =>
   shallow(<PropertyReviews
+    reviewsValue={reviewsValue}
     reviewRatings={reviewRatings}
     reviews={reviews}
     onLeaveReview={onLeaveReview}
@@ -54,6 +56,7 @@ describe('PropertyReviews', () => {
 
   it('renders Property review', () => {
     const wrapper = wrap({ hasWebReviews: true });
+    expect(wrapper.contains(reviewsValue)).toBeTruthy();
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);
     expect(wrapper.find(PropertyReview)).toHaveLength(3);
   });

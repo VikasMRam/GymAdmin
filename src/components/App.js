@@ -18,7 +18,7 @@ import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
 import NearMePageContainer from 'sly/containers/NearMePageContainer';
 import PromoPageContainer from 'sly/containers/PromoPageContainer';
-import AgentsProfilePageContainer from 'sly/containers/AgentsProfilePageContainer';
+import AgentsPageContainer from 'sly/containers/AgentsPageContainer';
 import OurHistoryPage from 'sly/components/pages/OurHistoryPage';
 import PasswordResetPageContainer from 'sly/containers/PasswordResetPageContainer';
 import HowItWorksDetailPageContainer from 'sly/containers/HowItWorksDetailPageContainer';
@@ -109,7 +109,7 @@ export default class App extends Component {
     },
     {
       path: '/agents',
-      component: AgentsProfilePageContainer,
+      component: AgentsPageContainer,
       exact: true,
     },
     {

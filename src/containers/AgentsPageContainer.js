@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { func, object, arrayOf } from 'prop-types';
 
-import AgentsProfilePage from 'sly/components/pages/AgentsProfilePage';
+import AgentsPage from 'sly/components/pages/AgentsPage';
 import { agents } from 'sly/services/helpers/agents';
 import { stateRegionMap } from 'sly/services/helpers/url';
 
-export default class AgentsProfilePageContainer extends Component {
+export default class AgentsPageContainer extends Component {
   static propTypes = {
     activeProfile: object,
     agents: arrayOf(object),
@@ -46,7 +46,7 @@ export default class AgentsProfilePageContainer extends Component {
     }, {});
 
     return (
-      <AgentsProfilePage
+      <AgentsPage
         regionProfiles={regionProfiles}
         activeProfile={activeProfile}
         setModalProfile={this.handleModalProfile}
