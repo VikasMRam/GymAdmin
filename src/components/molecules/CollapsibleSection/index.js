@@ -80,7 +80,7 @@ const ChildrenSection = styled.div`
 `;
 
 const BottomSection = styled.div`
-  background-color: ${palette('grey', 'stroke')};
+  background-color: ${palette('grey', 'background')};
   padding: ${size('spacing.xLarge')};
   border-top: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 `;

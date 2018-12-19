@@ -1,46 +1,48 @@
 import React from 'react';
 import { string, number } from 'prop-types';
 import styled from 'styled-components';
+import moment from 'moment';
 
 import { size } from 'sly/components/themes';
 import Rating from 'sly/components/molecules/Rating';
-import Hr from 'sly/components/atoms/Hr';
-import { formatDate } from 'sly/services/helpers/date';
+import { Hr, Block } from 'sly/components/atoms';
 
-const RatingHeadingDiv = styled.div`
+const Wrapper = styled.div`
   display: flex;
-  padding-bottom: ${size('spacing.regular')};
+  flex-direction: column;
+  margin-bottom: ${size('spacing.regular')};
 `;
 
 const RatingIconDiv = styled.div`
-  padding-right: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.regular')};
 `;
 
-const ReviewHeadingText = styled.div`
-  padding-top: ${size('spacing.small')};
-  padding-right: ${size('spacing.large')};
-  color: grey;
+const ReviewHeadingText = styled(Block)`
+  margin-right: ${size('spacing.large')};
 `;
 
-const PaddedHR = styled(Hr)`
-  margin-top: ${size('spacing.xLarge')};
-  margin-bottom: ${size('spacing.xLarge')};
+const BottomSection = styled.div`
+  display: flex;
+`;
+
+const CommentBlock = styled(Block)`
+  margin-bottom: ${size('spacing.regular')};
 `;
 
 const PropertyReview = ({
   value, author, createdAt, comments,
 }) => (
-  <div>
-    <RatingHeadingDiv>
-      <RatingIconDiv>
-        <Rating value={value} />
-      </RatingIconDiv>
-      <ReviewHeadingText>By {author}</ReviewHeadingText>
-      <ReviewHeadingText>{formatDate(createdAt)}</ReviewHeadingText>
-    </RatingHeadingDiv>
-    {comments}
-    <PaddedHR />
-  </div>
+  <Wrapper>
+    <RatingIconDiv>
+      <Rating value={value} palette="secondary" />
+    </RatingIconDiv>
+    <CommentBlock>{comments}</CommentBlock>
+    <BottomSection>
+      <ReviewHeadingText size="caption" palette="grey">{`By ${author}`}</ReviewHeadingText>
+      <ReviewHeadingText size="caption" palette="grey">{moment(createdAt).format('MMMM YYYY')}</ReviewHeadingText>
+    </BottomSection>
+    <Hr />
+  </Wrapper>
 );
 
 PropertyReview.propTypes = {
