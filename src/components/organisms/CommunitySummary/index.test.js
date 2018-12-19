@@ -1,154 +1,93 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
+import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
+import { Link, Button } from 'sly/components/atoms';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
-import { Link } from 'sly/components/atoms';
-import ListItem from 'sly/components/molecules/ListItem';
 
-const {
-  propInfo,
-  propRatings,
-  startingRate,
-  rgsAux,
-  twilioNumber,
-  user,
-} = RhodaGoldmanPlaza;
-const {
-  communityHighlights,
-  communityPhone,
-} = propInfo;
-const {
-  reviewsValue,
-} = propRatings;
+const wrap = (props = {}) => shallow(<CommunitySummary {...props} />);
 
-const communityReviewsRef = React.createRef();
-const pricingAndFloorPlansRef = React.createRef();
-const amenitiesAndFeaturesRef = React.createRef();
+const verify = (wrapper) => {
+  const {
+    address, name,
+  } = RhodaGoldmanPlaza;
+  const {
+    line1, line2, city, state, zip,
+  } = address;
+  const renderedAddress = wrapper.find('StyledBlock').dive().dive().text();
+  const renderedWrapper = wrapper.find('Wrapper');
 
-const wrap = (props = {}) => mount(<CommunitySummary {...props} />);
-
-// const testTwilioNumber = (wrapper) => {
-//   expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${twilioNumber.numbers[0]}` }).length).toBeGreaterThan(0);
-//   expect(wrapper.text()).toContain('Pricing & Availability');
-// };
-// const testPhoneNumber = (wrapper) => {
-//   expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${communityPhone}` }).length).toBeGreaterThan(0);
-//   expect(wrapper.text()).toContain('Reception');
-// };
-// const testUserPhoneNumber = (wrapper) => {
-//   expect(wrapper.find(ListItem).find(Link).find({ href: `tel:${user.phoneNumber}` }).length).toBeGreaterThan(0);
-//   expect(wrapper.text()).toContain('Reception');
-// };
-const testAmenityScore = (wrapper) => {
-  expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.amenitiesAndFeatures}` }).length).toBeGreaterThan(0);
-  expect(wrapper.text()).toContain('Amenity Score');
-};
-// const testStartingRate = (wrapper) => {
-//   expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.pricingAndFloorPlans}` }).length).toBeGreaterThan(0);
-//   expect(wrapper.text()).toContain('Pricing starts from:');
-// };
-const testEstimatedRate = (wrapper) => {
-  expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.pricingAndFloorPlans}` }).length).toBeGreaterThan(0);
-  expect(wrapper.text()).toContain('Estimated Pricing:');
-};
-const testProvidedRate = (wrapper) => {
-  expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.pricingAndFloorPlans}` }).length).toBeGreaterThan(0);
-  expect(wrapper.text()).toContain('Pricing starts from:');
+  expect(renderedAddress).toContain(line1);
+  expect(renderedAddress).toContain(line2);
+  expect(renderedAddress).toContain(city);
+  expect(renderedAddress).toContain(state);
+  expect(renderedAddress).toContain(zip);
+  expect(wrapper.find('StyledHeading').dive().dive().dive()
+    .text()).toContain(name);
+  expect(wrapper.find(CommunityPricingAndRating)).toHaveLength(1);
+  expect(renderedWrapper.childAt(0).find(Link)).toHaveLength(1);
 };
 
-const testCommunityHighlights = (wrapper) => {
-  expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.amenitiesAndFeatures}` }).length).toBeGreaterThan(0);
-  expect(wrapper.text()).toContain("Alzheimer's & Dementia support");
-};
-const testReviews = (wrapper) => {
-  expect(wrapper.find(ListItem).find(Link).find({ href: `#${CommunitySummary.sectionIdMaps.reviews}` }).length).toBeGreaterThan(0);
-  expect(wrapper.text()).toContain('Rating 4.1-Star Average');
-};
-
-// it('renders twilioNumber', () => {
-//   const wrapper = wrap({
-//     twilioNumber, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
-//   });
-//   testTwilioNumber(wrapper);
-// });
-//
-// it('renders phoneNumber', () => {
-//   const wrapper = wrap({
-//     phoneNumber:communityPhone, user, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
-//   });
-//   testPhoneNumber(wrapper);
-// });
-//
-// it('renders user phone number', () => {
-//   const wrapper = wrap({
-//     user, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
-//   });
-//   testUserPhoneNumber(wrapper);
-// });
-
-it('renders amenityScore', () => {
-  const wrapper = wrap({
-    amenityScore: rgsAux.amenityScore, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
-  });
-  testAmenityScore(wrapper);
-});
-
-it('renders startingRate', () => {
-  const wrapper = wrap({
-    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { estimatedAverage: 1 }, ratesProvided: false,
-  });
-  testEstimatedRate(wrapper);
-});
-
-it('renders estimatedPricing', () => {
-  const wrapper = wrap({
-    startingRate, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { estimatedAverage: 1 }, ratesProvided: false,
-  });
-  testEstimatedRate(wrapper);
-});
-it('renders providedPricing', () => {
-  const wrapper = wrap({
-    communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef, estimatedPrice: { providedAverage: 1 }, ratesProvided: true,
-  });
-  testProvidedRate(wrapper);
-});
-
-it('renders communityHighlights', () => {
-  const wrapper = wrap({
-    communityHighlights, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
-  });
-  testCommunityHighlights(wrapper);
-});
-
-it('renders reviews', () => {
-  const wrapper = wrap({
-    reviewsValue, communityReviewsRef, pricingAndFloorPlansRef, amenitiesAndFeaturesRef,
-  });
-  testReviews(wrapper);
-});
-
-it('renders all properties', () => {
-  const wrapper = wrap({
-    twilioNumber,
-    phoneNumber: communityPhone,
-    user,
-    amenityScore: rgsAux.amenityScore,
-    startingRate,
-    communityHighlights,
-    reviewsValue,
-    communityReviewsRef,
-    pricingAndFloorPlansRef,
-    amenitiesAndFeaturesRef,
-    providedAverage: 1,
-    ratesProvided: true,
+describe('CommunitySummary', () => {
+  it('renders', () => {
+    const wrapper = wrap({
+      community: RhodaGoldmanPlaza,
+    });
+    verify(wrapper);
+    expect(wrapper.find('Wrapper').childAt(1).find(Button).find({ icon: 'favourite-empty' })).toHaveLength(1);
   });
 
-  // testTwilioNumber(wrapper);
-  // testPhoneNumber(wrapper);
-  // testUserPhoneNumber(wrapper);
-  testAmenityScore(wrapper);
-  testProvidedRate(wrapper);
-  testCommunityHighlights(wrapper);
-  testReviews(wrapper);
+  it('renders with isFavourited', () => {
+    const wrapper = wrap({
+      community: RhodaGoldmanPlaza,
+      isFavourited: true,
+    });
+    verify(wrapper);
+    expect(wrapper.find('Wrapper').childAt(1).find(Button).find({ icon: 'favourite-light' })).toHaveLength(1);
+  });
+
+  it('onShareClick called', () => {
+    const onShareClick = jest.fn();
+    const wrapper = wrap({
+      community: RhodaGoldmanPlaza,
+      onShareClick,
+    });
+    wrapper.find('Wrapper').childAt(1).find('StyledButton').find({ icon: 'share' })
+      .parent()
+      .simulate('click');
+    expect(onShareClick).toHaveBeenCalled();
+  });
+
+  it('onFavouriteClick called', () => {
+    const onFavouriteClick = jest.fn();
+    const wrapper = wrap({
+      community: RhodaGoldmanPlaza,
+      onFavouriteClick,
+    });
+    wrapper.find('Wrapper').childAt(1).find(Button)
+      .simulate('click');
+    expect(onFavouriteClick).toHaveBeenCalled();
+  });
+
+  it('onFavouriteClick called when isFavourited', () => {
+    const onFavouriteClick = jest.fn();
+    const wrapper = wrap({
+      community: RhodaGoldmanPlaza,
+      isFavourited: true,
+      onFavouriteClick,
+    });
+    wrapper.find('Wrapper').childAt(1).find(Button)
+      .simulate('click');
+    expect(onFavouriteClick).toHaveBeenCalled();
+  });
+
+  it('renders with isAdmin', () => {
+    const wrapper = wrap({
+      community: RhodaGoldmanPlaza,
+      isAdmin: true,
+    });
+    verify(wrapper);
+    expect(wrapper.find('StyledHeading').dive().find(Link)).toHaveLength(1);
+  });
 });

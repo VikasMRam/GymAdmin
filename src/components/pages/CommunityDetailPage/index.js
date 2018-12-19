@@ -58,18 +58,6 @@ const BackToSearch = styled.div`
   text-align: center
 `;
 
-const NameHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.small')};
-  line-height: ${size('lineHeight.minimal')};
-
-  a { display: none; }
-  &:hover { a { display: unset; } }
-`;
-
-const AddressHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
-
 const AdTileWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
@@ -80,6 +68,10 @@ const GetAvailabilitySuccessBox = styled.div`
   > :first-child {
     margin-right: ${size('spacing.regular')};
   }
+`;
+
+const StyledCommunitySummary = styled(CommunitySummary)`
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const hasAllUserData = createBooleanValidator({
@@ -239,8 +231,6 @@ export default class CommunityDetailPage extends Component {
       similarProperties,
       gallery = {},
       videoGallery = {},
-      twilioNumber,
-      user: communityUser,
       questions,
       mainImage,
     } = community;
@@ -251,7 +241,7 @@ export default class CommunityDetailPage extends Component {
     }
 
     const {
-      careServices, licenseUrl, websiteUrl, serviceHighlights, communityPhone,
+      careServices, websiteUrl, serviceHighlights,
       promoDescription, promoTitle,
     } = propInfo;
 
@@ -261,14 +251,6 @@ export default class CommunityDetailPage extends Component {
       return element.sd === mainImage;
     });
 
-    let receptionNumber = communityPhone;
-    if ((receptionNumber === undefined || receptionNumber === '') && user) {
-      receptionNumber = user.phoneNumber;
-    }
-    // let conciergeNumber = receptionNumber;
-    // if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
-    //   conciergeNumber = twilioNumber.numbers[0];
-    // }
     if (communityMainImage) {
       images = images.filter(img => img.sd !== communityMainImage.sd);
       images.unshift(communityMainImage);
@@ -318,12 +300,6 @@ export default class CommunityDetailPage extends Component {
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
-    const formattedAddress = `${address.line1}, ${address.line2}, ${
-      address.city
-    }, ${address.state}
-      ${address.zip}`
-      .replace(/\s/g, ' ')
-      .replace(/, ,/g, ', ');
     const stickyHeaderItems = [
       { label: 'Summary', ref: this.communitySummaryRef },
       { label: 'Pricing & Floor Plans', ref: this.pricingAndFloorPlansRef },
@@ -369,51 +345,17 @@ export default class CommunityDetailPage extends Component {
                 onSlideChange={onMediaGallerySlideChange}
                 isFullscreenMode={isMediaGalleryFullscreenActive}
                 onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
-                isFavourited={!!initedUserSave}
-                onFavouriteClick={onMediaGalleryFavouriteClick}
-                onShareClick={onMediaGalleryShareClick}
               />
             }
 
-            <NameHeading level="hero" size="hero">
-              {name}{' '}
-              {(user && user.admin) &&
-                <Link
-                  to={`/mydashboard#/mydashboard/communities/${community.id}/about`}
-                >
-                (Edit)
-                </Link>
-              }
-            </NameHeading>
-
-            <AddressHeading level="subtitle" size="subtitle">{formattedAddress}</AddressHeading>
-            <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
-              {({ gotoWhatNext }) => (
-                <CommunitySummary
-                  innerRef={this.communitySummaryRef}
-                  pricingAndFloorPlansRef={this.pricingAndFloorPlansRef}
-                  amenitiesAndFeaturesRef={this.amenitiesAndFeaturesRef}
-                  communityReviewsRef={this.communityReviewsRef}
-                  isCCRC={isCCRC}
-                  twilioNumber={twilioNumber}
-                  reviewsValue={reviewsValue}
-                  phoneNumber={communityPhone}
-                  licenseUrl={licenseUrl}
-                  websiteUrl={websiteUrl}
-                  user={communityUser}
-                  amenityScore={rgsAux.amenityScore}
-                  startingRate={startingRate}
-                  ratesProvided={ratesProvided}
-                  estimatedPrice={rgsAux.estimatedPrice}
-                  communityHighlights={communityHighlights}
-                  reviews={reviews}
-                  onConciergeNumberClicked={onConciergeNumberClicked}
-                  onReceptionNumberClicked={onReceptionNumberClicked}
-                  onHowSeniorlyWorks={gotoWhatNext}
-                />
-                )
-              }
-            </ConciergeController>
+            <StyledCommunitySummary
+              innerRef={this.communitySummaryRef}
+              community={community}
+              isAdmin={user && user.admin}
+              isFavourited={!!initedUserSave}
+              onFavouriteClick={onMediaGalleryFavouriteClick}
+              onShareClick={onMediaGalleryShareClick}
+            />
 
             {(promoDescription || promoTitle) &&
               (
@@ -618,7 +560,6 @@ export default class CommunityDetailPage extends Component {
             </Modal>
             <Modal
               closeable
-              noPadding
               isOpen={isShareCommunityModalVisible}
               onClose={onShareCommunityModalClose}
             >

@@ -2,45 +2,15 @@ import React, { Component } from 'react';
 import { string, arrayOf, shape, bool, number, func } from 'prop-types';
 import styled from 'styled-components';
 
-
 import { size, palette } from 'sly/components/themes';
-import { Button, Link, Icon } from 'sly/components/atoms';
+import { Button, Link } from 'sly/components/atoms';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import FullscreenMediaGallery from 'sly/components/molecules/FullscreenMediaGallery';
-
-const MorePicsTablet = styled(Button)`
-  display: none;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: initial;
-  }
-`;
-
-const MorePicsMobile = styled(Button)`
-  display: initial;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: none;
-  }
-`;
 
 const BottomRightWrapper = styled.span`
   background: ${palette('slate', 'base')}80;
   font-size: ${size('text.tiny')};
   padding: ${size('spacing.small')} ${size('spacing.regular')};
-`;
-
-const StyledButton = styled(Button)`
-  span {
-    margin-right: ${size('spacing.regular')};
-  }
-`;
-
-const StyledButtonWrapper = styled.span`
-  > * {
-    margin-right: ${size('spacing.regular')};
-  }
-  > *:last-child {
-    margin-right: 0;
-  }
 `;
 
 export default class CommunityMediaGallery extends Component {
@@ -65,25 +35,16 @@ export default class CommunityMediaGallery extends Component {
     onSlideChange: func.isRequired,
     isFullscreenMode: bool,
     onToggleFullscreenMode: func,
-    onFavouriteClick: func,
-    onShareClick: func,
-    isFavouriteEnabled: bool,
-    isShareEnabled: bool,
-    isFavourited: bool,
   };
 
   static defaultProps = {
     currentSlide: 0,
     isFullscreenMode: false,
-    isFavouriteEnabled: true,
-    isShareEnabled: true,
-    isFavourited: false,
   };
 
   render() {
     const {
       communityName, city, state, videos, ariaHideApp, currentSlide, onSlideChange, isFullscreenMode, onToggleFullscreenMode,
-      onFavouriteClick, isFavouriteEnabled, isFavourited, isShareEnabled, onShareClick,
     } = this.props;
     let { websiteUrl } = this.props;
     const { images } = this.props;
@@ -117,29 +78,7 @@ export default class CommunityMediaGallery extends Component {
       return { ...vid, src, thumb: vid.thumbUrl };
     });
     const topRightSection = () => (
-      <StyledButtonWrapper>
-        {isShareEnabled &&
-          <StyledButton ghost palette="slate" onClick={onShareClick}>
-            <Icon icon="share" size="regular" palette="slate" /> Share
-          </StyledButton>
-        }
-        {isFavouriteEnabled && !isFavourited &&
-          <StyledButton ghost palette="slate" onClick={onFavouriteClick}>
-            <Icon icon="favourite-empty" size="regular" palette="slate" /> Save
-          </StyledButton>
-        }
-        {isFavouriteEnabled && isFavourited &&
-          <StyledButton ghost palette="slate" onClick={onFavouriteClick}>
-            <Icon icon="favourite-light" size="regular" palette="primary" /> Save
-          </StyledButton>
-        }
-      </StyledButtonWrapper>
-    );
-    const bottomLeftSection = () => (
-      <span>
-        <MorePicsTablet ghost palette="slate" transparent={false} onClick={() => onToggleFullscreenMode(false, false, true)}>See {this.sdGalleryImages.length - 1} more pictures</MorePicsTablet>
-        <MorePicsMobile ghost palette="slate" transparent={false} onClick={() => onToggleFullscreenMode(false, false, true)}>View pictures</MorePicsMobile>
-      </span>
+      <Button ghost palette="slate" transparent={false} onClick={() => onToggleFullscreenMode(false, false, true)}>View Photos</Button>
     );
 
     if (websiteUrl && !websiteUrl.includes('//')) {
@@ -159,7 +98,6 @@ export default class CommunityMediaGallery extends Component {
           communityName={communityName}
           images={this.sdGalleryImages}
           topRightSection={topRightSection}
-          bottomLeftSection={this.sdGalleryImages.length > 1 ? bottomLeftSection : null}
           bottomRightSection={bottomRightSection}
           currentSlide={currentSlide}
           onSlideChange={onSlideChange}
