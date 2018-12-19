@@ -194,7 +194,7 @@ margin-bottom: ${size('spacing.xLarge')};
 }
 `;
 
-const AgentsProfilePage = ({
+const AgentsPage = ({
   regionProfiles, activeProfile, setModalProfile,
 }) => {
   const agentsSectionComponents = Object.keys(regionProfiles).map((region) => {
@@ -214,7 +214,7 @@ const AgentsProfilePage = ({
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <HeaderContainer />
       <HeroWrapper>
-        <HeroBackgroundImage src={assetPath('images/agent-hero.jpg')} alt="A Home To Love" />
+        <HeroBackgroundImage src={assetPath('images/agent-hero.png')} alt="A Home To Love" />
         <HeroTextWrapper>
           <FixedWidthContainer>
             <HeroHeading level="hero" size="hero" palette="white">
@@ -256,10 +256,10 @@ const AgentsProfilePage = ({
   );
 };
 
-AgentsProfilePage.propTypes = {
+AgentsPage.propTypes = {
   regionProfiles: object,
   activeProfile: object,
   setModalProfile: func,
 };
 
-export default AgentsProfilePage;
+export default AgentsPage;
