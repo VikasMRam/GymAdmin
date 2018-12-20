@@ -13,54 +13,31 @@ import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayConten
 import Section from 'sly/components/molecules/Section';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 
-const mostSearchedCities = [
+const mostSearchedRegions = [
   {
-    to: '/assisted-living/california/san-francisco',
+    to: '',
     image: assetPath('images/cities/SanFrancisco.jpeg'),
-    subtitle: 'San Francisco, CA',
-    title: '95+ communities',
+    title: 'West Coast',
   },
   {
-    to: '/assisted-living/california/los-angeles',
-    image: assetPath('images/cities/LosAngeles.jpeg'),
-    subtitle: 'Los Angeles, CA',
-    title: '105+ communities',
+    to: '',
+    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    title: 'East Coast',
   },
   {
-    to: '/assisted-living/california/san-diego',
-    image: assetPath('images/cities/SanDiego.jpeg'),
-    subtitle: 'San Diego, CA',
-    title: '75+ communities',
+    to: '',
+    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    title: 'Southeast',
   },
   {
-    to: '/assisted-living/texas/dallas',
-    image: assetPath('images/cities/Dallas.jpeg'),
-    subtitle: 'Dallas, TX',
-    title: '90+ communities',
+    to: '',
+    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    title: 'Midwest',
   },
   {
-    to: '/assisted-living/texas/houston',
-    image: assetPath('images/cities/Houston.jpeg'),
-    subtitle: 'Houston, TX',
-    title: '72+ communities',
-  },
-  {
-    to: '/assisted-living/arizona/phoenix',
-    image: assetPath('images/cities/Pheonix.jpeg'),
-    subtitle: 'Phoenix, AZ',
-    title: '151+ communities',
-  },
-  {
-    to: '/assisted-living/florida/orlando',
-    image: assetPath('images/cities/Orlando.jpeg'),
-    subtitle: 'Orlando, FL',
-    title: '60+ communities',
-  },
-  {
-    to: '/assisted-living/florida/miami',
-    image: assetPath('images/cities/Miami.jpeg'),
-    subtitle: 'Miami, FL',
-    title: '150+ communities',
+    to: '',
+    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    title: 'South',
   },
 ];
 
@@ -136,39 +113,29 @@ const StyledSection = styled(Section)`
 `;
 
 const ColumnWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  > * {
-    margin-bottom: ${size('spacing.xLarge')};
-  }
+  display: grid;
+  grid-gap: ${size('layout.gutter')};
+  grid-template-columns: auto;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    flex-direction: row;
-
-    > * {
-      width: ${size('layout.col4')};
-    }
+    grid-template-columns: auto auto auto;
   }
 `;
 
-const MSCColumnWrapper = ColumnWrapper.extend`
-  > * {
-    margin-bottom: ${size('spacing.large')};
-  }
+const MSColumnWrapper = ColumnWrapper.extend`
+  grid-template-columns: auto;
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    > *:nth-child(odd) {
-      margin-right: ${size('spacing.xLarge')};
-    }
+    grid-template-columns: auto auto;
   }
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    > * {
-      margin-right: ${size('spacing.xLarge')};
-    }
-    > *:nth-child(4n) {
-      margin-right: 0;
-    }
+    grid-template-columns: auto auto auto;
   }
+`;
+
+const StyledImageOverlayContentTile = styled(ImageOverlayContentTile)`
+  height: ${size('element.huge')};
 `;
 
 const AgentsPage = ({
@@ -193,12 +160,11 @@ const AgentsPage = ({
       </HeroWrapper>
     </Fragment>
   );
-  const mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
-    <StyledLink key={mostSearchedCity.title} to={mostSearchedCity.to}>
-      <ImageOverlayContentTile size="small" image={mostSearchedCity.image}>
-        <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
-        <Block palette="white">{mostSearchedCity.title}</Block>
-      </ImageOverlayContentTile>
+  const mostSearchedRegionsComponents = mostSearchedRegions.map(mostSearchedRegion => (
+    <StyledLink key={mostSearchedRegion.title} to={mostSearchedRegion.to}>
+      <StyledImageOverlayContentTile size="small" image={mostSearchedRegion.image}>
+        <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedRegion.title}</Heading>
+      </StyledImageOverlayContentTile>
     </StyledLink>
   ));
 
@@ -214,10 +180,10 @@ const AgentsPage = ({
           </ColumnWrapper>
         </StyledSection>
         <Hr fullWidth />
-        <StyledSection title="Most Searched Cities">
-          <MSCColumnWrapper>
-            {mostSearchedCitiesComponents}
-          </MSCColumnWrapper>
+        <StyledSection title="Search senior living agents by region">
+          <MSColumnWrapper>
+            {mostSearchedRegionsComponents}
+          </MSColumnWrapper>
         </StyledSection>
         <Modal layout="single" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
           {activeProfile && <ProfileTile profile={activeProfile} layout="modal" />}
