@@ -4,11 +4,9 @@ import { object, func } from 'prop-types';
 
 import { size, assetPath, palette } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Link, Image, Block, Heading, Hr, Icon } from 'sly/components/atoms';
+import { Link, Image, Block, Heading, Hr } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
-import ProfileTile from 'sly/components/molecules/ProfileTile';
 import Footer from 'sly/components/organisms/Footer';
-import Modal from 'sly/components/molecules/Modal';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import Section from 'sly/components/molecules/Section';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
@@ -138,9 +136,7 @@ const StyledImageOverlayContentTile = styled(ImageOverlayContentTile)`
   height: ${size('element.huge')};
 `;
 
-const AgentsPage = ({
-  activeProfile, setModalProfile,
-}) => {
+const AgentsPage = () => {
   const headerContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -176,7 +172,7 @@ const AgentsPage = ({
           <ColumnWrapper>
             <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="house" heading="Service from start to finish" content="As a Seniorly Partner Agent you will still operate under your business name and simply receive extra family referrals in addition to your current business." />
             <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="star" heading="Expert negotiators" content="We don't sell leads. Instead, your profile and reviews are displayed on Seniorly.com, so families can choose you as their agent when they are ready to make a move." />
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="loyalty" heading="Service from start to finish" content="As a Seniorly Partner Agent you will still operate under your business name and simply receive extra family referrals in addition to your current business." />
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="loyalty" heading="Choose the right agent for you" content="You receive 70% of your side of the comission when a referral moves into a home. A referral fee is paid to Seniorly only when you close" />
           </ColumnWrapper>
         </StyledSection>
         <Hr fullWidth />
@@ -185,18 +181,10 @@ const AgentsPage = ({
             {mostSearchedRegionsComponents}
           </MSColumnWrapper>
         </StyledSection>
-        <Modal layout="single" closeable onClose={() => setModalProfile(null)} isOpen={activeProfile !== null}>
-          {activeProfile && <ProfileTile profile={activeProfile} layout="modal" />}
-        </Modal>
       </TemplateContent>
       <Footer />
     </Fragment>
   );
-};
-
-AgentsPage.propTypes = {
-  activeProfile: object,
-  setModalProfile: func,
 };
 
 export default AgentsPage;
