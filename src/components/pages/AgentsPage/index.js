@@ -11,6 +11,7 @@ import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayConten
 import Section from 'sly/components/molecules/Section';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import FindLocalAgent from 'sly/components/organisms/FindLocalAgent';
+import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
 
 const mostSearchedRegions = [
   {
@@ -91,6 +92,14 @@ const StyledSection = styled(Section)`
   }
 `;
 
+const FormSection = StyledSection.extend`
+  width: 100%;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.col6')};
+  }
+`;
+
 const ColumnWrapper = styled.div`
   display: grid;
   grid-template-columns: auto;
@@ -159,6 +168,10 @@ const AgentsPage = () => {
             {mostSearchedRegionsComponents}
           </MSColumnWrapper>
         </StyledSection>
+        <Hr fullWidth />
+        <FormSection>
+          <TalkToAgentFormContainer />
+        </FormSection>
       </TemplateContent>
       <Footer />
     </Fragment>
