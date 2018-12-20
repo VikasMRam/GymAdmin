@@ -14,12 +14,12 @@ const wrap = (props = {}) =>
 describe('IconItem', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
-    expect(wrapper.contains('test')).toBe(false);
+    expect(wrapper.contains('test')).toBe(true);
   });
 
   it('renders IconItem', () => {
     const wrapper = wrap();
-    expect(wrapper.find('Styled(Icon)')).toHaveLength(1);
-    expect(wrapper.contains(defaultProps.text)).toBeTruthy();
+    expect(wrapper.find('Icon')).toHaveLength(1);
+    expect(wrapper.contains(defaultProps.text)).toBeFalsy();
   });
 });

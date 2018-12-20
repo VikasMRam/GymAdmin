@@ -28,7 +28,7 @@ const agentInfo = {
   citiesServed: ['Utah', 'Calcuta'],
 };
 
-const agent = {
+export const agent = {
   url: '/agents/midwest/fonz-wasserstrom',
   address,
   aggregateRating,
