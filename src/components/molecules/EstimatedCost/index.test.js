@@ -14,9 +14,9 @@ const priceTo = 220;
 describe('EstimatedCost', () => {
   it('verify correct percentage', () => {
     const wrapper = wrap({ price });
-    expect(wrapper.find('Styled(NumberFormat)').at(0).dive().dive()
+    expect(wrapper.find('StyledNumberFormat').at(0).dive().dive()
       .text()).toEqual(`$${priceFrom}`);
-    expect(wrapper.find('Styled(NumberFormat)').at(1).dive().dive()
+    expect(wrapper.find('StyledNumberFormat').at(1).dive().dive()
       .text()).toEqual(`$${priceTo}`);
   });
 
