@@ -3,24 +3,16 @@ import { arrayOf, shape, string, number, func, bool, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import { Icon, Block } from 'sly/components/atoms';
+import { Icon, Span } from 'sly/components/atoms';
 import Modal from 'sly/components/molecules/Modal';
 import PropertyReview from 'sly/components/molecules/PropertyReview';
 import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
+import { formatRating } from 'sly/services/helpers/rating';
 
 const ReviewValueSection = styled.div`
-  display: flex;
   margin-bottom: ${size('spacing.large')};
   align-items: center;
-`;
-
-const ReviewValueRatingIcon = styled(Icon)`
-  margin-right: ${size('spacing.small')};
-`;
-
-const ReviewValue = styled(Block)`
-  margin-right: ${size('spacing.regular')};
 `;
 
 const PropertyReviews = ({
@@ -45,11 +37,13 @@ const PropertyReviews = ({
   }
   return (
     <article ref={communityReviewsRef}>
+      {reviewsValue > 0 &&
       <ReviewValueSection>
-        <ReviewValueRatingIcon icon="star" size="regular" palette="secondary" />
-        <ReviewValue size="subtitle" weight="medium">{reviewsValue}</ReviewValue>
-        <Block size="caption" palette="grey">Average rating</Block>
+        <Icon icon="star" size="regular" palette="secondary" />
+        <Span size="subtitle" weight="medium"> {formatRating(reviewsValue)}</Span>
+        <Span size="caption" palette="grey"> Average rating</Span>
       </ReviewValueSection>
+      }
       {propertyReviews}
       {hasWebReviews && (
         <GatheredReviewRatings
