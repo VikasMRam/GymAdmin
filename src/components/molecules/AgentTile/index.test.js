@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import AgentTile, { CaptionSpan } from '.';
+import AgentTile from 'sly/components/molecules/AgentTile';
 
 const address = {
   city: 'San Anselmo',
@@ -62,8 +62,8 @@ describe('AgentTile', () => {
     const secondLinkContent = shallow(<div>{links.last().prop('children')}</div>);
     expect(secondLinkContent.render().text()).toEqual(`${aggregateRating.numRatings} reviews`);
 
-    expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone')
-    expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575')
+    expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone');
+    expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575');
 
     expect(wrapper.find('IconItem').last().prop('icon')).toEqual('star');
 
@@ -85,8 +85,8 @@ describe('AgentTile', () => {
     const secondLinkContent = shallow(<div>{links.last().prop('children')}</div>);
     expect(secondLinkContent.render().text()).toEqual(`${aggregateRating.numRatings} reviews`);
 
-    expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone')
-    expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575')
+    expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone');
+    expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575');
 
     expect(wrapper.find('IconItem').last().prop('icon')).toEqual('star');
 
@@ -104,8 +104,8 @@ describe('AgentTile', () => {
     expect(links.first().prop('to')).toEqual(agent.url);
     expect(links.first().prop('children')).toEqual(agentInfo.displayName);
 
-    expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone')
-    expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575')
+    expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone');
+    expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575');
 
     expect(wrapper.find('Block').render().text()).toEqual('San Anselmo, CA');
   });

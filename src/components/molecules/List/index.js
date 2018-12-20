@@ -35,7 +35,7 @@ const List = ({
       <StyledHeading level="subtitle" size="subtitle">{heading}</StyledHeading>
     }
     <ListWrapper columns={columns}>
-      {items.map((item, i) => <ListItem key={item}>{item}</ListItem>)}
+      {items.map(item => <ListItem key={item}>{item}</ListItem>)}
     </ListWrapper>
   </Fragment>
 );

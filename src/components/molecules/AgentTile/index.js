@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import agentPropType from 'sly/propTypes/agent';
-import { Box, Image, Block, Link, Span } from 'sly/components/atoms';
+import { Box, Image, Block, Link } from 'sly/components/atoms';
 import { size, palette } from 'sly/components/themes';
 import IconItem from 'sly/components/molecules/IconItem';
 import { phoneFormatter } from 'sly/services/helpers/phone';

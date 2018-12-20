@@ -39,7 +39,7 @@ describe('LoginForm', () => {
     const handleSubmit = jest.fn();
     const onSignupClicked = jest.fn();
     const wrapper = wrap({ handleSubmit, onSignupClicked });
-    wrapper.find('Signup').simulate('click');
+    wrapper.find('Signup').at(1).simulate('click');
     expect(onSignupClicked).toHaveBeenCalled();
   });
 });
