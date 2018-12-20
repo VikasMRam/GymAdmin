@@ -189,6 +189,14 @@ export const urlize = inString =>
     .replace(/[\s-]+/g, ' ')
     .replace(/\s/g, '-');
 
+global.stateData = {
+  names: stateNames,
+  slugs: Object.entries(stateNames).reduce((res, [key, name]) => (res[key] = urlize(name), res), {}),
+  stateRegionMap,
+  regionStateMap,
+  regionSlugs: Object.keys(regionStateMap).reduce((res, name) => (res[name] = urlize(name), res), {}),
+};
+
 export const getBreadCrumbsForCommunity = ({ name, propInfo, address }) => {
   const tocBc = tocPaths(propInfo.typeCare);
   // TODO: use react router generated paths once router wiring is complete

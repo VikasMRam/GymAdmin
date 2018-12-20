@@ -1,68 +1,112 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import AgentTile, { CaptionSpan } from '.';
+import AgentTile from 'sly/components/molecules/AgentTile';
 
-const wrap = (props = {}) => shallow(<AgentTile {...props} />);
-
-const name = 'Fonz';
-const picture = 'https://avatars.githubusercontent.com/u/113003';
-const title = 'Property Manager';
-const community = {
-  name: 'Rhoda Goldman Plaza',
-  url: '/assisted-living/california/san-francisco/rhoda-goldman-plaza',
+const address = {
+  city: 'San Anselmo',
+  state: 'CA',
 };
 
-const userFull = {
-  name,
-  picture,
-  title,
+const aggregateRating = {
+  ratingValue: 4.5,
+  numRatings: 14,
 };
-const userNoTitle = { name, picture, rating: 5 };
-const userWithRating = { ...userFull, rating: 5 };
+
+const agentInfo = {
+  displayName: 'Fonz Wasserstrom',
+  slyPhone: '9258906575',
+  recentFamilies: 17,
+  profileImgUrl: 'https://avatars.githubusercontent.com/u/113003',
+  citiesServed: ['Utah', 'Calcuta'],
+};
+
+const agent = {
+  url: '/agents/midwest/fonz-wasserstrom',
+  address,
+  aggregateRating,
+  agentInfo,
+};
+
+const agentNoFams = {
+  ...agent,
+  agentInfo: {
+    ...agentInfo,
+    recentFamilies: 0,
+  },
+};
+
+const agentNoRatings = {
+  ...agent,
+  aggregateRating: {
+    ...aggregateRating,
+    numRatings: 0,
+  },
+};
+
+const wrap = (props = {}) => shallow(<AgentTile agent={agent} {...props} />);
 
 describe('AgentTile', () => {
   it('renders full', () => {
-    const wrapper = wrap({
-      user: userWithRating,
-      community,
-      palette: 'random',
-    });
-    const avatar = wrapper.find('Avatar');
-    const title = wrapper.find('Title').dive();
-    const link = title.find('Link');
-    expect(avatar.prop('user')).toEqual(userWithRating);
-    expect(avatar.prop('palette')).toEqual('random');
-    expect(link.prop('to')).toEqual(community.url);
-    expect(link.prop('children')).toEqual(community.name);
+    const wrapper = wrap();
+    expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImgUrl);
+    expect(wrapper.find('Badge').render().text()).toEqual('17 recent placements');
+
+    const links = wrapper.find('Link');
+    expect(links.length).toBe(2);
+
+    expect(links.first().prop('to')).toEqual(agent.url);
+    expect(links.first().prop('children')).toEqual(agentInfo.displayName);
+
+    expect(links.last().prop('to')).toEqual(agent.url);
+    const secondLinkContent = shallow(<div>{links.last().prop('children')}</div>);
+    expect(secondLinkContent.render().text()).toEqual(`${aggregateRating.numRatings} reviews`);
+
+    expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone');
+    expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575');
+
+    expect(wrapper.find('IconItem').last().prop('icon')).toEqual('star');
+
+    expect(wrapper.find('Block').render().text()).toEqual('San Anselmo, CA');
   });
 
-  it('renders with no title but community', () => {
-    const wrapper = wrap({ user: userNoTitle, community });
-    const title = wrapper.find('Title').dive();
-    const caption = title.find(CaptionSpan);
-    const captionContent = caption.prop('children');
-    expect(captionContent.slice(0, 2)).toEqual([undefined, undefined]);
-    expect(caption.find('Link')).toHaveLength(1);
+  it('no families', () => {
+    const wrapper = wrap({ agent: agentNoFams });
+    expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImgUrl);
+    expect(wrapper.find('Badge').length).toEqual(0);
+
+    const links = wrapper.find('Link');
+    expect(links.length).toBe(2);
+
+    expect(links.first().prop('to')).toEqual(agent.url);
+    expect(links.first().prop('children')).toEqual(agentInfo.displayName);
+
+    expect(links.last().prop('to')).toEqual(agent.url);
+    const secondLinkContent = shallow(<div>{links.last().prop('children')}</div>);
+    expect(secondLinkContent.render().text()).toEqual(`${aggregateRating.numRatings} reviews`);
+
+    expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone');
+    expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575');
+
+    expect(wrapper.find('IconItem').last().prop('icon')).toEqual('star');
+
+    expect(wrapper.find('Block').render().text()).toEqual('San Anselmo, CA');
   });
 
-  it('renders with no community but title', () => {
-    const wrapper = wrap({ user: userFull });
-    const title = wrapper.find('Title').dive();
-    const caption = title.find(CaptionSpan);
-    expect(caption.childAt(0).childAt(0).text()).toEqual(userFull.title);
-    expect(caption.childAt(1).text()).toEqual('');
-    expect(caption.childAt(2).childAt(0).text()).toEqual('');
-    expect(caption.find('Link')).toHaveLength(0);
-  });
+  it('no ratings', () => {
+    const wrapper = wrap({ agent: agentNoRatings });
+    expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImgUrl);
+    expect(wrapper.find('Badge').render().text()).toEqual('17 recent placements');
 
-  it('renders with community and title', () => {
-    const wrapper = wrap({ user: userFull, community });
-    const title = wrapper.find('Title').dive();
-    const caption = title.find(CaptionSpan);
-    expect(caption.childAt(0).childAt(0).text()).toEqual(userFull.title);
-    expect(caption.childAt(1).text()).toEqual(', ');
-    expect(caption.childAt(2).childAt(0).text()).toEqual(community.name);
-    expect(caption.find('Link')).toHaveLength(1);
+    const links = wrapper.find('Link');
+    expect(links.length).toBe(1);
+
+    expect(links.first().prop('to')).toEqual(agent.url);
+    expect(links.first().prop('children')).toEqual(agentInfo.displayName);
+
+    expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone');
+    expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575');
+
+    expect(wrapper.find('Block').render().text()).toEqual('San Anselmo, CA');
   });
 });

@@ -33,7 +33,7 @@ describe('CommunityBookATourContactForm', () => {
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(0);
 
-    expect(wrapper.find('Styled(Field)')).toHaveLength(0);
+    expect(wrapper.find('StyledField')).toHaveLength(0);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
     expect(wrapper.find(Link).filter({ href: '/tos' })).toHaveLength(1);
   });

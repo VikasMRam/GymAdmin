@@ -31,8 +31,12 @@ const Wrapper = styled.span`
 
 const Icon = ({ icon, size, ...props }) => {
   let svg;
+  // FIXME: hack to use captionsize icons with current icons until we clarify with Jared
+  const iconSize = size === 'caption'
+    ? 'regular'
+    : size;
   try {
-    svg = require(`!raw-loader!./icons/${icon}-${size}.svg`);
+    svg = require(`!raw-loader!./icons/${icon}-${iconSize}.svg`);
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('Icon not found:', `${icon}-${size}`);
@@ -46,7 +50,7 @@ const Icon = ({ icon, size, ...props }) => {
 Icon.propTypes = {
   icon: string.isRequired,
   width: number,
-  size: oneOf(['tiny', 'small', 'regular', 'large', 'xLarge', 'xxLarge']),
+  size: oneOf(['tiny', 'small', 'regular', 'caption', 'large', 'xLarge', 'xxLarge']),
   palette: palettePropType,
   variation: variationPropType,
   fill: string,

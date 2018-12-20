@@ -281,6 +281,7 @@ theme.sizes = {
   icon: {
     tiny   : '0.750rem',   // 12px
     small  : '1.000rem',   // 16px
+    caption: '1.250rem',   // 20px for use with caption text
     regular: '1.500rem',   // 24px
     large  : '2.250rem',   // 36px
     xLarge : '3.000rem',   // 48px
@@ -291,7 +292,7 @@ theme.sizes = {
     tiny    : '0.750rem',   // 12px
     caption : '0.875rem',   // 14px
     body    : '1.000rem',   // 16px
-    subtitle: '1.125rem',   // 18px TODO: clarify whether it's 20px in new theme
+    subtitle: '1.250rem',   // 20px
     title   : '1.750rem',   // 28px
     hero    : '2.500rem',   // 40px
   },

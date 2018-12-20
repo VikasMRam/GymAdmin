@@ -18,12 +18,12 @@ describe('AdvisorHelpPopup', () => {
   it('renders AdvisorHelpPopup', () => {
     const wrapper = wrap();
     expect(wrapper.find(IconItem)).toHaveLength(4);
-    expect(wrapper.find('Styled(Button)')).toHaveLength(1);
+    expect(wrapper.find('GotItButton')).toHaveLength(1);
   });
 
   it('handles onButtonClick', () => {
     const wrapper = wrap();
-    const GotItButton = wrapper.find('Styled(Button)');
+    const GotItButton = wrapper.find('GotItButton');
     expect(onButtonClick).toHaveBeenCalledTimes(0);
     GotItButton.simulate('click');
     expect(onButtonClick).toHaveBeenCalledTimes(1);

@@ -10,6 +10,11 @@ const Wrapper = styled.div`
   margin: ${size('spacing.large')};
 `;
 
+const address = {
+  city: 'San Anselmo',
+  state: 'CA',
+};
+
 const aggregateRating = {
   ratingValue: 4.5,
   numRatings: 14,
@@ -23,8 +28,9 @@ const agentInfo = {
   citiesServed: ['Utah', 'Calcuta'],
 };
 
-const agent = {
+export const agent = {
   url: '/agents/midwest/fonz-wasserstrom',
+  address,
   aggregateRating,
   agentInfo,
 };

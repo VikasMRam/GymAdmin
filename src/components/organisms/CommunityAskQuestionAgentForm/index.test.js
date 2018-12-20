@@ -17,7 +17,7 @@ const wrap = (props = {}) =>
 describe('CommunityAskQuestionAgentForm', () => {
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('Styled(Field)')).toHaveLength(1);
+    expect(wrapper.find('StyledField')).toHaveLength(1);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
     expect(wrapper.contains(defaultProps.heading)).toBeTruthy();
     expect(wrapper.contains(defaultProps.description)).toBeTruthy();
@@ -26,7 +26,7 @@ describe('CommunityAskQuestionAgentForm', () => {
 
   it('render error when error is passed', () => {
     const wrapper = wrap({ error: 'has an error' });
-    expect(wrapper.find('Styled(Field)')).toHaveLength(1);
+    expect(wrapper.find('StyledField')).toHaveLength(1);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(1);
     expect(wrapper.contains(defaultProps.heading)).toBeTruthy();
     expect(wrapper.contains(defaultProps.description)).toBeTruthy();

@@ -47,7 +47,7 @@ describe('CommunityFloorPlanPopupForm', () => {
 
   it('renders with image passed', () => {
     const wrapper = wrap({ floorPlanInfo: { image: 'abc.png' } });
-    expect(wrapper.find('Styled(Image)')).toHaveLength(1);
+    expect(wrapper.find('StyledImage')).toHaveLength(1);
   });
 
   it('renders inputs when userDetails is not passed', () => {

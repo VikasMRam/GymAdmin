@@ -3,30 +3,88 @@ import styled from 'styled-components';
 
 import agentPropType from 'sly/propTypes/agent';
 import { Box, Image, Block, Link } from 'sly/components/atoms';
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import IconItem from 'sly/components/molecules/IconItem';
+import { phoneFormatter } from 'sly/services/helpers/phone';
 
 const Wrapper = 'div';
 
 const ProfileImage = styled(Image)`
+  overflow: hidden;
   border-radius: ${size('spacing.small')};
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 `;
 
+const Badge = styled(Block)`
+  position: absolute;
+  top: ${size('spacing.large')};
+  left: 0;
+  background: ${palette('secondary.base')};
+  padding: ${size('spacing.regular')};
+  border-radius: 0;
+  border-top-right-radius: ${size('spacing.xLarge')};
+  border-bottom-right-radius: ${size('spacing.xLarge')};
+`;
+
+const Name = styled(Block)`
+  margin-bottom: ${size('spacing.regular')};
+`;
+
+const List = styled.ul`
+  margin: 0;
+  padding: 0;
+  margin-bottom: ${size('spacing.xLarge')}; 
+
+  li {
+    margin-bottom: ${size('spacing.regular')};
+    break-inside: avoid-column;
+    overflow: hidden;
+  }
+  
+  li:last-child {
+    margin-bottom: 0;
+  }
+`;
+
 const AgentTile = ({
   agent,
 }) => {
-  const { agentInfo: info, url } = agent;
+  const {
+    agentInfo: info,
+    aggregateRating: rating,
+    url,
+    address,
+  } = agent;
+
+  const phoneNumber = phoneFormatter(info.slyPhone);
 
   return (
     <Wrapper>
-      <ProfileImage src={info.profileImgUrl} aspectRatio="3:2" />
+      <ProfileImage src={info.profileImgUrl} aspectRatio="3:2">
+        {info.recentFamilies &&
+          <Badge size="caption" palette="white">
+            <b>{info.recentFamilies}</b> recent placements
+          </Badge>
+        }
+      </ProfileImage>
       <Box snap="top">
-        <Block><Link to={url}>{info.displayName}</Link></Block>
-        <ul>
-          <li><IconItem icon="blah" text="blah" /></li>
-        </ul>
+        <Name size="subtitle">
+          <Link to={url}>{info.displayName}</Link>
+        </Name>
+        <List>
+          <li>
+            <IconItem size="caption" icon="phone">{phoneNumber}</IconItem>
+          </li>
+          {rating.numRatings > 0 &&
+            <li>
+              <IconItem size="caption" icon="star">
+                {rating.ratingValue}from  <Link to={url}>{rating.numRatings} reviews</Link>
+              </IconItem>
+            </li>
+          }
+        </List>
+        <Block palette="grey" size="caption">{address.city}, {address.state}</Block>
       </Box>
     </Wrapper>
   );

@@ -5,8 +5,9 @@ import styled from 'styled-components';
 
 
 import { size, palette } from 'sly/components/themes';
+import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { Button, Heading, Link, Hr, Block } from 'sly/components/atoms';
+import { Button, Heading, Link, Hr } from 'sly/components/atoms';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 import AgentTile from 'sly/components/molecules/AgentTile';
 
@@ -44,22 +45,6 @@ const AgentTileWrapper = styled.div`
 const SubHeading = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
-
-const phoneParser = str => str.replace(/[^\d]/g, '');
-const phoneFormatter = (value) => {
-  if (!value) {
-    return value;
-  }
-
-  const onlyNums = value.replace(/[^\d]/g, '');
-  if (onlyNums.length <= 3) {
-    return onlyNums;
-  }
-  if (onlyNums.length <= 6) {
-    return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3)}`;
-  }
-  return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3, 6)}-${onlyNums.slice(6)}`;
-};
 
 const ConversionForm = ({
   handleSubmit,

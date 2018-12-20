@@ -142,7 +142,7 @@ export default class CollapsibleSection extends Component {
               <StyledHeading weight="medium" level={getHeadingLevel(size)} size={getHeadingSize(size)}>
                 {title}
               </StyledHeading>
-              <Icon icon="chevron" size="regular" palette="slate" flip={!collapsed} />
+              <Icon icon="chevron" palette="slate" flip={!collapsed} />
             </Header>
             <Content maxHeight={maxHeight} collapsed={collapsed}>
               <div ref={measureRef} {...props}>

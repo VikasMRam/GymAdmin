@@ -22,13 +22,13 @@ describe('CommunityFloorPlanListItem', () => {
 
   it('renders with image passed', () => {
     const wrapper = wrap({ image: 'abc.png' });
-    expect(wrapper.find('Styled(Image)')).toHaveLength(1);
+    expect(wrapper.find('StyledImage')).toHaveLength(1);
   });
 
   it('renders shared price', () => {
     const wrapper = wrap({ shareType: 'Shared', priceShared: 8234.34 });
     expect(wrapper.contains(defaultProp.price)).toBe(false);
-    expect(wrapper.find('Styled(NumberFormat)').prop('value')).toEqual(8234.34);
+    expect(wrapper.find('StyledNumberFormat').prop('value')).toEqual(8234.34);
   });
 
   it('handles onItemClick', () => {
