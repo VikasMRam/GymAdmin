@@ -113,7 +113,7 @@ const AgentSummary = ({
       </AgentImageWrapper>
       <TextSection>
         <AgentName weight="medium" size="title">{displayName}</AgentName>
-        {aggregateRating &&
+        {aggregateRating > 0 &&
           <ReviewValueSection>
             <Icon icon="star" size="regular" palette="secondary" />
             <Span size="subtitle" weight="medium"> {formatRating(aggregateRating)} </Span>
@@ -121,7 +121,7 @@ const AgentSummary = ({
           </ReviewValueSection>
         }
         <StyledHr />
-        {recentFamiliesHelped &&
+        {recentFamiliesHelped > 0 &&
           <FamiliesHelpedSection>
             <Span weight="medium">Families helped: </Span>
             <Span>{recentFamiliesHelped}</Span>
@@ -162,7 +162,7 @@ AgentSummary.propTypes = {
   numRatings: number,
   recentFamiliesHelped: number,
   citiesServed: arrayOf(string),
-  slyPhone: number,
+  slyPhone: string,
   onButtonClick: func,
   onPhoneClick: func,
 };
