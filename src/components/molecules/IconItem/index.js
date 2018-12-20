@@ -17,9 +17,10 @@ const Wrapper = styled.div`
 const IconItem = ({
   icon, iconSize, iconPalette, palette, size, children,
 }) => {
+  const defIconSize = iconSize || size || undefined;
   return (
     <Wrapper>
-      <Icon icon={icon} size={iconSize} palette={iconPalette} />
+      <Icon icon={icon} size={defIconSize} palette={iconPalette} />
       <Span palette={palette} size={size}>{children}</Span>
     </Wrapper>
   );

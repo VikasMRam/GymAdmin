@@ -1,9 +1,6 @@
 import { string, number, arrayOf, shape } from 'prop-types';
 
-const address = shape({
-  city: string.isRequired,
-  state: string.isRequired,
-});
+import { address } from './address';
 
 const aggregateRating = shape({
   ratingValue: number.isRequired,
