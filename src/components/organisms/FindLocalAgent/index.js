@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
-import { Heading, Block } from 'sly/components/atoms';
+import { Block } from 'sly/components/atoms';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 const StyledBlock = styled(Block)`
@@ -28,7 +28,7 @@ const StyledSearchBoxContainer = styled(SearchBoxContainer)`
 const FindLocalAgent = () => (
   <Wrapper>
     <ContentWrapper>
-      <Heading>Find your local senior living agent</Heading>
+      <Block size="hero">Find your local senior living agent</Block>
       <StyledBlock>Seniorly agents are local experts who can find homes that fit your care needs and budget</StyledBlock>
     </ContentWrapper>
     <StyledSearchBoxContainer layout="homeHero" />

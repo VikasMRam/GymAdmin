@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { string, bool, oneOf } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
-import { Icon, Box } from 'sly/components/atoms';
+import { Icon, Box, Block } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
@@ -26,9 +26,7 @@ export const StyledIcon = styled(Icon)`
   margin-right: ${p => !p.iconBorder ? size('spacing.xLarge') : 0};
 `;
 
-const HeadingWrapper = styled.div`
-  font-size: ${size('text.subtitle')};
-  font-weight: bold;
+const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
@@ -55,7 +53,7 @@ const IconInfoTile = ({
       }
       {!iconBorder && <StyledIcon icon={icon} palette={iconPalette} iconBorder={iconBorder} />}
       <HeadingContentWrapper>
-        <HeadingWrapper>{heading}</HeadingWrapper>
+        <StyledBlock size={layout === 'iconTop' ? 'subtitle' : 'body'} weight={layout === 'iconTop' ? 'medium' : 'bold'}>{heading}</StyledBlock>
         <div>{content}</div>
       </HeadingContentWrapper>
     </Wrapper>
