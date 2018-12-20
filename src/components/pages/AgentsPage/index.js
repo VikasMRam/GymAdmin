@@ -2,14 +2,15 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object, func } from 'prop-types';
 
-import { size, assetPath, palette } from 'sly/components/themes';
+import { size, assetPath } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Link, Image, Block, Heading, Hr } from 'sly/components/atoms';
+import { Link, Image, Heading, Hr } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import Section from 'sly/components/molecules/Section';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
+import FindLocalAgent from 'sly/components/organisms/FindLocalAgent';
 
 const mostSearchedRegions = [
   {
@@ -43,24 +44,9 @@ const StyledLink = styled(Link)`
   display: block;
 `;
 
-// Copied from BasePageTemplate
-const FixedWidthContainer = styled.main`
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 ${size('spacing.large')};
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: 0;
-    width: ${size('layout.col8')};
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col12')};
-  }
-`;
-
 const HeroWrapper = styled.div`
   position: relative;
-  background-color: ${palette('slate', 'base')};
-  height: calc(${size('header.agents.heroImage.height')});
+  height: ${size('header.agents.heroImage.height')};
 
   > * {
     position: absolute;
@@ -75,7 +61,6 @@ const HeroBackgroundImage = styled(Image)`
   object-fit: cover;
   width: 100%;
   height: 100%;
-  opacity: 0.5;
   z-index: 0;
   display: block;
 `;
@@ -84,20 +69,16 @@ const HeroTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`;
+  align-items: center;
 
-const HeroHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.regular')};
-`;
-
-const HeroSubheading = styled(Block)`
-  margin-bottom: ${size('spacing.large')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding-right: ${size('layout.col2')};
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    padding-right: ${size('layout.col6')};
+  > * {
+    max-width: ${size('mobileLayout.col4')};
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      max-width: ${size('tabletLayout.col6')};
+    }
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      max-width: ${size('layout.col8')};
+    }
   }
 `;
 
@@ -112,10 +93,14 @@ const StyledSection = styled(Section)`
 
 const ColumnWrapper = styled.div`
   display: grid;
-  grid-gap: ${size('layout.gutter')};
   grid-template-columns: auto;
+  grid-gap: ${size('mobileLayout.gutter')};
 
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    grid-gap: ${size('tabletLayout.gutter')};
+  }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    grid-gap: ${size('layout.gutter')};
     grid-template-columns: auto auto auto;
   }
 `;
@@ -144,14 +129,7 @@ const AgentsPage = () => {
       <HeroWrapper>
         <HeroBackgroundImage src={assetPath('images/agent-hero.png')} alt="A Home To Love" />
         <HeroTextWrapper>
-          <FixedWidthContainer>
-            <HeroHeading level="hero" size="hero" palette="white">
-              Our Seniorly Guides
-            </HeroHeading>
-            <HeroSubheading palette="white" size="subtitle">
-              We partner with local senior living experts across the country.  These local experts help thousands of families every year.
-            </HeroSubheading>
-          </FixedWidthContainer>
+          <FindLocalAgent />
         </HeroTextWrapper>
       </HeroWrapper>
     </Fragment>
