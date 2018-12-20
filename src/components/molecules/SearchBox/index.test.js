@@ -54,8 +54,8 @@ describe('SearchBox', () => {
     const autocomplete = wrapper.dive().find(PlacesAutocomplete);
 
     expect(autocomplete).toHaveLength(1);
-    expect(autocomplete.dive().find('Styled(Button)')).toHaveLength(1);
-    expect(autocomplete.dive().find('Styled(Input)')).toHaveLength(1);
+    expect(autocomplete.dive().find('SearchButton')).toHaveLength(1);
+    expect(autocomplete.dive().find('SearchTextBox')).toHaveLength(1);
   });
 
   it('renders with homeHero layout', () => {
@@ -63,8 +63,8 @@ describe('SearchBox', () => {
     const autocomplete = wrapper.dive().find(PlacesAutocomplete);
 
     expect(autocomplete).toHaveLength(1);
-    expect(autocomplete.dive().find('Styled(Button)')).toHaveLength(1);
-    expect(autocomplete.dive().find('Styled(Input)')).toHaveLength(1);
+    expect(autocomplete.dive().find('SearchButton')).toHaveLength(1);
+    expect(autocomplete.dive().find('SearchTextBox')).toHaveLength(1);
   });
 
   it('renders with boxWithoutButton layout', () => {
@@ -72,7 +72,7 @@ describe('SearchBox', () => {
     const autocomplete = wrapper.dive().find(PlacesAutocomplete);
 
     expect(autocomplete).toHaveLength(1);
-    expect(autocomplete.dive().find('Styled(Button)')).toHaveLength(0);
-    expect(autocomplete.dive().find('Styled(Input)')).toHaveLength(1);
+    expect(autocomplete.dive().find('SearchButton')).toHaveLength(0);
+    expect(autocomplete.dive().find('SearchTextBox')).toHaveLength(1);
   });
 });
