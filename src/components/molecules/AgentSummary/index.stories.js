@@ -13,7 +13,7 @@ const defaultProp = {
   aggregateRating: 3.53223232,
   recentFamiliesHelped: 20,
   citiesServed: ['Sausalito', 'Mill Valley', 'Tiburon', 'Belvedere', 'Corte Madera', 'Larkspur', 'Greenbrae', 'Kentfield', 'Ross', 'San Anselmo'],
-  slyPhone: 9258312050,
+  slyPhone: '9258312050',
 };
 
 storiesOf('Molecules|AgentSummary', module)

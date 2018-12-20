@@ -56,7 +56,7 @@ describe('PropertyReviews', () => {
 
   it('renders Property review', () => {
     const wrapper = wrap({ hasWebReviews: true });
-    expect(wrapper.contains(reviewsValue)).toBeTruthy();
+    expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.4');
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);
     expect(wrapper.find(PropertyReview)).toHaveLength(3);
   });
