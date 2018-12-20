@@ -12,7 +12,7 @@ describe('SaveCommunityForm', () => {
     const wrapper = wrap({ handleSubmit });
 
     expect(wrapper.find(Field)).toHaveLength(1);
-    expect(wrapper.find('Styled(Button)')).toHaveLength(1);
+    expect(wrapper.find('StyledButton')).toHaveLength(1);
   });
 
   it('handles onFormSubmit', () => {

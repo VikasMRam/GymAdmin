@@ -14,11 +14,11 @@ describe('CommunityTile', () => {
 
   it('renders CommunityTile - Mobile Layout', () => {
     const wrapper = wrap().dive();
-    expect(wrapper.find('Styled(CommunityInfo)')).toHaveLength(1);
+    expect(wrapper.find('StyledCommunityInfo')).toHaveLength(1);
   });
 
   it('renders CommunityTile - Contained Layout', () => {
     const wrapper = wrap({ layout: 'contained' }).dive();
-    expect(wrapper.find('Styled(CommunityInfo)')).toHaveLength(1);
+    expect(wrapper.find('StyledCommunityInfo')).toHaveLength(1);
   });
 });
