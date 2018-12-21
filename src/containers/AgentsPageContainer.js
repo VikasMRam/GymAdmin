@@ -1,18 +1,30 @@
-import React from 'react';
-import { func, object, arrayOf } from 'prop-types';
+import React, { Component } from 'react';
+import { func } from 'prop-types';
 
 import AgentsPage from 'sly/components/pages/AgentsPage';
 
-const handleSubmitForm = () => {
-  console.log('handleSubmitForm');
-};
+class AgentsPageContainer extends Component {
+  static propTypes = {
+    history: func,
+  };
 
-const handleLocationSearch = (value) => {
-  console.log('handleLocationSearch', value);
-};
+  handleSubmitForm = () => {
+    console.log('handleSubmitForm');
+  };
 
-const AgentsPageContainer = () => (
-  <AgentsPage onSubmitForm={handleSubmitForm} onLocationSearch={handleLocationSearch} />
-);
+  handleLocationSearch = (value) => {
+    // const { history } = this.props;
+
+    console.log('handleLocationSearch', value);
+  };
+
+  render() {
+    const { handleSubmitForm, handleLocationSearch } = this;
+
+    return (
+      <AgentsPage onSubmitForm={handleSubmitForm} onLocationSearch={handleLocationSearch} />
+    );
+  }
+}
 
 export default AgentsPageContainer;
