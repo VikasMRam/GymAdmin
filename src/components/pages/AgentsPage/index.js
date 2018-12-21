@@ -130,7 +130,7 @@ const StyledImageOverlayContentTile = styled(ImageOverlayContentTile)`
   height: ${size('element.huge')};
 `;
 
-const AgentsPage = () => {
+const AgentsPage = ({ onSubmitForm }) => {
   const headerContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -170,12 +170,16 @@ const AgentsPage = () => {
         </StyledSection>
         <Hr fullWidth />
         <FormSection>
-          <TalkToAgentFormContainer />
+          <TalkToAgentFormContainer onSubmit={onSubmitForm} />
         </FormSection>
       </TemplateContent>
       <Footer />
     </Fragment>
   );
+};
+
+AgentsPage.propTypes = {
+  onSubmitForm: func,
 };
 
 export default AgentsPage;
