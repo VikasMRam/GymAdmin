@@ -5,6 +5,7 @@ import { Field } from 'redux-form';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
+import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import { Button, Block } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
@@ -63,6 +64,8 @@ class TalkToAgentForm extends Component {
             name="phone"
             label="Phone"
             type="text"
+            parse={phoneParser}
+            format={phoneFormatter}
             placeholder="925-555-5555"
             component={ReduxField}
           />
