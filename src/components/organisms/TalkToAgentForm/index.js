@@ -11,7 +11,7 @@ import ReduxField from 'sly/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 const StyledBlock = styled(Block)`
-  margin-bottom: ${size('spacing.regular')}
+  margin-bottom: ${size('spacing.regular')};
 `;
 
 const StyledButton = styled(Button)`
@@ -63,7 +63,7 @@ class TalkToAgentForm extends Component {
           <Field name="location" component={noRender} />
           <Field
             name="phone"
-            label="Phone"
+            label="Phone *"
             type="text"
             parse={phoneParser}
             format={phoneFormatter}

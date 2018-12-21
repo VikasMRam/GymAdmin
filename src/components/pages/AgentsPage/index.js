@@ -130,7 +130,7 @@ const StyledImageOverlayContentTile = styled(ImageOverlayContentTile)`
   height: ${size('element.huge')};
 `;
 
-const AgentsPage = ({ onSubmitForm }) => {
+const AgentsPage = ({ onSubmitForm, onLocationSearch }) => {
   const headerContent = (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -138,7 +138,7 @@ const AgentsPage = ({ onSubmitForm }) => {
       <HeroWrapper>
         <HeroBackgroundImage src={assetPath('images/agent-hero.png')} alt="A Home To Love" />
         <HeroTextWrapper>
-          <FindLocalAgent />
+          <FindLocalAgent onLocationSearch={onLocationSearch} />
         </HeroTextWrapper>
       </HeroWrapper>
     </Fragment>
@@ -180,6 +180,7 @@ const AgentsPage = ({ onSubmitForm }) => {
 
 AgentsPage.propTypes = {
   onSubmitForm: func,
+  onLocationSearch: func,
 };
 
 export default AgentsPage;

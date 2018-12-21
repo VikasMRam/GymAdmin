@@ -3,12 +3,16 @@ import { func, object, arrayOf } from 'prop-types';
 
 import AgentsPage from 'sly/components/pages/AgentsPage';
 
-const onSubmitForm = () => {
+const handleSubmitForm = () => {
+  console.log('handleSubmitForm');
+};
 
+const handleLocationSearch = (value) => {
+  console.log('handleLocationSearch', value);
 };
 
 const AgentsPageContainer = () => (
-  <AgentsPage onSubmitForm={onSubmitForm} />
+  <AgentsPage onSubmitForm={handleSubmitForm} onLocationSearch={handleLocationSearch} />
 );
 
 export default AgentsPageContainer;

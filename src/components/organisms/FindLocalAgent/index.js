@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { func } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import { Block } from 'sly/components/atoms';
@@ -25,14 +26,18 @@ const StyledSearchBoxContainer = styled(SearchBoxContainer)`
   margin: auto;
 `;
 
-const FindLocalAgent = () => (
+const FindLocalAgent = ({ onLocationSearch }) => (
   <Wrapper>
     <ContentWrapper>
       <Block size="hero">Find your local senior living agent</Block>
       <StyledBlock>Seniorly agents are local experts who can find homes that fit your care needs and budget</StyledBlock>
     </ContentWrapper>
-    <StyledSearchBoxContainer layout="homeHero" />
+    <StyledSearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />
   </Wrapper>
 );
+
+FindLocalAgent.propTypes = {
+  onLocationSearch: func,
+};
 
 export default FindLocalAgent;
