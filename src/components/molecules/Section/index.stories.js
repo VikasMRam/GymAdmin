@@ -9,4 +9,9 @@ storiesOf('Molecules|Section', module)
     <Section title="Section title">
       { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
     </Section>
+  ))
+  .add('centered title', () => (
+    <Section centerTitle title="Section title">
+      { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
+    </Section>
   ));

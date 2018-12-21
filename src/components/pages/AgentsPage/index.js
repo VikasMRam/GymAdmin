@@ -163,7 +163,7 @@ const AgentsPage = ({ onSubmitForm, onLocationSearch }) => {
           </ColumnWrapper>
         </StyledSection>
         <Hr fullWidth />
-        <StyledSection title="Search senior living agents by region">
+        <StyledSection centerTitle title="Search senior living agents by region">
           <MSColumnWrapper>
             {mostSearchedRegionsComponents}
           </MSColumnWrapper>

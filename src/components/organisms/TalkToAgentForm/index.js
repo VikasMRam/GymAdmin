@@ -11,6 +11,7 @@ import ReduxField from 'sly/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 const StyledBlock = styled(Block)`
+  text-align: center;
   margin-bottom: ${size('spacing.regular')};
 `;
 
@@ -36,6 +37,11 @@ class TalkToAgentForm extends Component {
     error: string,
     change: func,
     onLocationChange: func,
+    heading: string,
+  };
+
+  static defaultProps = {
+    heading: 'Talk to a local Seniorly Agent',
   };
 
   handleChange = (result) => {
@@ -46,12 +52,12 @@ class TalkToAgentForm extends Component {
   render() {
     const { handleChange } = this;
     const {
-      submitting, handleSubmit, error, onLocationChange,
+      submitting, handleSubmit, error, onLocationChange, heading,
     } = this.props;
 
     return (
       <section>
-        <StyledBlock size="subtitle" weight="medium">Talk to a local Seniorly Agent</StyledBlock>
+        <StyledBlock size="subtitle" weight="medium">{heading}</StyledBlock>
         <form onSubmit={handleSubmit}>
           <Label size="caption">Where are you searching for homes? *</Label>
           <StyledSearchBoxContainer
