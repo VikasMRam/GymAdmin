@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { string, func, bool } from 'prop-types';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
@@ -26,41 +26,62 @@ const Label = styled(Block)`
   margin-bottom: ${size('spacing.small')};
 `;
 
-const TalkToAgentForm = ({
-  submitting, handleSubmit, error,
-}) => (
-  <section>
-    <StyledBlock size="subtitle" weight="medium">Talk to a local Seniorly Agent</StyledBlock>
-    <form onSubmit={handleSubmit}>
-      <Label size="caption">Where are you searching for homes? *</Label>
-      <StyledSearchBoxContainer layout="homeHero" />
-      <Field
-        name="phone"
-        label="Phone"
-        type="text"
-        placeholder="925-555-5555"
-        component={ReduxField}
-      />
-      <Field
-        type="textarea"
-        rows="3"
-        name="message"
-        label="What can we help you with? *"
-        placeholder="I'm interested in a free consult with a Seniorly Agent."
-        component={ReduxField}
-      />
-      <StyledButton error={error} type="submit" kind="jumbo" disabled={submitting}>
-        Send
-      </StyledButton>
-    </form>
-    {error && <Block palette="danger">{error}</Block>}
-  </section>
-);
+const noRender = () => null;
 
-TalkToAgentForm.propTypes = {
-  handleSubmit: func.isRequired,
-  submitting: bool,
-  error: string,
-};
+class TalkToAgentForm extends Component {
+  static propTypes = {
+    handleSubmit: func.isRequired,
+    submitting: bool,
+    error: string,
+    change: func,
+    onLocationChange: func,
+  };
+
+  handleChange = (result) => {
+    const { change } = this.props;
+    change('location', result);
+  }
+
+  render() {
+    const { handleChange } = this;
+    const {
+      submitting, handleSubmit, error, onLocationChange,
+    } = this.props;
+
+    return (
+      <section>
+        <StyledBlock size="subtitle" weight="medium">Talk to a local Seniorly Agent</StyledBlock>
+        <form onSubmit={handleSubmit}>
+          <Label size="caption">Where are you searching for homes? *</Label>
+          <StyledSearchBoxContainer
+            layout="homeHero"
+            onLocationSearch={onLocationChange}
+            onTextChange={handleChange}
+          />
+          <Field name="location" component={noRender} />
+          <Field
+            name="phone"
+            label="Phone"
+            type="text"
+            placeholder="925-555-5555"
+            component={ReduxField}
+          />
+          <Field
+            type="textarea"
+            rows="3"
+            name="message"
+            label="What can we help you with? *"
+            placeholder="I'm interested in a free consult with a Seniorly Agent."
+            component={ReduxField}
+          />
+          <StyledButton error={error} type="submit" kind="jumbo" disabled={submitting}>
+            Send
+          </StyledButton>
+        </form>
+        {error && <Block palette="danger">{error}</Block>}
+      </section>
+    );
+  }
+}
 
 export default TalkToAgentForm;

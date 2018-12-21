@@ -28,7 +28,7 @@ export const ContentWrapper = styled.div`
 const ImageOverlayContentTile = ({
   image, children, className,
 }) => (
-  <Wrapper size={size} className={className}>
+  <Wrapper className={className}>
     <StyledImage src={image} size={size} />
     <ContentWrapper size={size}>
       {children}

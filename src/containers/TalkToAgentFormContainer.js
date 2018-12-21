@@ -12,9 +12,14 @@ const ReduxForm = reduxForm({
   keepDirtyOnReinitialize: false,
 })(TalkToAgentForm);
 
+const handleLocationChange = () => {
+
+};
+
 const TalkToAgentFormContainer = ({ submitForm, ...props }) => (
   <ReduxForm
     onSubmit={submitForm}
+    onLocationChange={handleLocationChange}
     {...props}
   />
 );
