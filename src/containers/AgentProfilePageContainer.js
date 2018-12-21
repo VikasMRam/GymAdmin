@@ -1,26 +1,57 @@
 import React from 'react';
 
+import agentPropType from 'sly/propTypes/agent';
 import AgentProfilePage from 'sly/components/pages/AgentProfilePage';
+import { resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { getDetail } from 'sly/store/selectors';
+import withServerState from 'sly/store/withServerState';
 
-const agent = {
-  id: 'cataldi-manor-ref-agent-rcfe',
-  aggregateRating: null,
-  info: {
-    bio: 'Sample Agent Bio',
-    chosenReview: 'My Review',
-    citiesServed: [
-      'San Jose',
-      'San Francisco',
-    ],
-    displayName: 'Sush Cat',
-    profileImageUrl: 'https://d1qiigpe5txw4q.cloudfront.net/uploads/362a5be1e0e2e9a510b7b4c1344f9eff/DSC_1235_sm_sd.jpg',
-    recentFamiliesHelped: 0,
-    slyPhone: '4159978742',
-  },
-  name: 'Cataldi Manor Ref Agent RCFE',
-  status: 3,
+const AgentProfilePageContainer = ({ agent }) => <AgentProfilePage agent={agent} />;
+
+const getAgentSlug = match => match.params.agentSlug;
+const mapStateToProps = (state, { match }) => {
+  const agentSlug = getAgentSlug(match);
+  return {
+    user: getDetail(state, 'user', 'me'),
+    agent: getDetail(state, 'agent', agentSlug),
+    userAction: getDetail(state, 'userAction'),
+  };
 };
 
-const AgentProfilePageContainer = () => <AgentProfilePage agent={agent} />;
+const mapDispatchToProps = () => {
+  return {};
+};
 
-export default AgentProfilePageContainer;
+const fetchData = (dispatch, { match }) =>
+  Promise.all([
+    dispatch(resourceDetailReadRequest('agent', getAgentSlug(match))),
+    dispatch(resourceDetailReadRequest('userAction')),
+  ]);
+
+const handleError = (err) => {
+  if (err.response) {
+    if (err.response.status !== 200) {
+      if (err.location) {
+        const redUrl = err.location.split('/');
+        return {
+          errorCode: err.response.status,
+          redirectUrl: redUrl[redUrl.length - 1],
+        };
+      }
+      return { errorCode: err.response.status };
+    }
+    return { errorCode: null };
+  }
+  throw err;
+};
+
+AgentProfilePageContainer.propTypes = {
+  agent: agentPropType,
+};
+
+export default withServerState({
+  mapStateToProps,
+  mapDispatchToProps,
+  fetchData,
+  handleError,
+})(AgentProfilePageContainer);

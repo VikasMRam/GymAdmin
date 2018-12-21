@@ -9,6 +9,7 @@ import Footer from 'sly/components/organisms/Footer';
 import AgentSummary from 'sly/components/molecules/AgentSummary/index';
 import Section from 'sly/components/molecules/Section/index';
 import { Hr } from 'sly/components/atoms';
+import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
 
 const StyledHr = styled(Hr)`
   margin: ${size('spacing.xxxLarge')} 0;
@@ -26,6 +27,9 @@ const AgentSummaryWrapper = styled.div`
   }
 `;
 const AgentProfilePage = ({ agent }) => {
+  if (!agent) {
+    return null;
+  }
   const { info } = agent;
   const { displayName, bio } = info;
   const firstName = displayName.split(' ')[0];
@@ -39,6 +43,10 @@ const AgentProfilePage = ({ agent }) => {
         <StyledHr />
         <StyledSection title={`About ${firstName}`}>
           {bio}
+        </StyledSection>
+        <StyledHr />
+        <StyledSection>
+          <AskQuestionToAgentFormContainer heading={`Ask ${firstName} a question`} firstName={firstName} />
         </StyledSection>
       </TemplateContent>
       <Footer />
