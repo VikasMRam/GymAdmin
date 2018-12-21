@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { func } from 'prop-types';
 
+import SlyEvent from 'sly/services/helpers/events';
 import AgentsPage from 'sly/components/pages/AgentsPage';
 
 class AgentsPageContainer extends Component {
@@ -12,10 +13,14 @@ class AgentsPageContainer extends Component {
     console.log('handleSubmitForm');
   };
 
-  handleLocationSearch = (value) => {
+  handleLocationSearch = (result) => {
     // const { history } = this.props;
+    const event = {
+      action: 'submit', category: 'agentsSearch', label: result.formatted_address,
+    };
+    SlyEvent.getInstance().sendEvent(event);
 
-    console.log('handleLocationSearch', value);
+    console.log('handleLocationSearch', result);
   };
 
   render() {
