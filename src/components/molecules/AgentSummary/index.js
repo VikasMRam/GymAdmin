@@ -103,9 +103,8 @@ const AskQuestionPhoneSection = styled.div`
   }
 `;
 const AgentSummary = ({
-  profileImageUrl, displayName, aggregateRating, numRatings, recentFamiliesHelped, citiesServed, slyPhone, onButtonClick, onPhoneClick,
+  profileImageUrl, displayName, firstName, aggregateRating, numRatings, recentFamiliesHelped, citiesServed, slyPhone, onButtonClick, onPhoneClick,
 }) => {
-  const firstName = displayName.split(' ')[0];
   return (
     <Wrapper>
       <AgentImageWrapper>
@@ -158,6 +157,7 @@ const AgentSummary = ({
 AgentSummary.propTypes = {
   profileImageUrl: string.isRequired,
   displayName: string.isRequired,
+  firstName: string.isRequired,
   aggregateRating: number,
   numRatings: number,
   recentFamiliesHelped: number,

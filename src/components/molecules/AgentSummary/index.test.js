@@ -6,6 +6,7 @@ import Image from 'sly/components/atoms/Image';
 
 const defaultProp = {
   displayName: 'Stephen Anderson',
+  firstName: 'Stephen',
   profileImageUrl: 'abc.def',
   // numRatings: 15,
   // aggregateRating: 3.53223232,
