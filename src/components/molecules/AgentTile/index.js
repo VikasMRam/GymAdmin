@@ -34,14 +34,14 @@ const Name = styled(Block)`
 const List = styled.ul`
   margin: 0;
   padding: 0;
-  margin-bottom: ${size('spacing.xLarge')}; 
+  margin-bottom: ${size('spacing.xLarge')};
 
   li {
     margin-bottom: ${size('spacing.regular')};
     break-inside: avoid-column;
     overflow: hidden;
   }
-  
+
   li:last-child {
     margin-bottom: 0;
   }

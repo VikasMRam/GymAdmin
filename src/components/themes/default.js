@@ -114,6 +114,11 @@ theme.sizes = {
         mobileHeight: '30rem', // 480px
       },
     },
+    agents: {
+      heroImage: {
+        height: '30rem', // 480px
+      },
+    },
   },
 
   home: {
@@ -294,7 +299,7 @@ theme.sizes = {
     body    : '1.000rem',   // 16px
     subtitle: '1.250rem',   // 20px
     title   : '1.750rem',   // 28px
-    hero    : '2.500rem',   // 40px
+    hero    : '2.250rem',   // 36px
   },
 
   weight: {
@@ -310,7 +315,7 @@ theme.sizes = {
     body    : '1.5',
     subtitle: '1.3',
     title   : '1.28',
-    hero    : '1.2',
+    hero    : '1.33',
     minimal : '1.125',
   },
 

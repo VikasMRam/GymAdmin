@@ -19,7 +19,7 @@ import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 const HeroWrapper = styled.div`
   position: relative;
   background-color: ${palette('slate', 'filler')};
-  height: calc(${size('header.home.heroImage.mobileHeight')});
+  height: ${size('header.home.heroImage.mobileHeight')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     height: ${size('header.home.heroImage.height')};
