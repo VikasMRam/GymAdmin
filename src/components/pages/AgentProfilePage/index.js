@@ -10,6 +10,7 @@ import AgentSummary from 'sly/components/molecules/AgentSummary/index';
 import Section from 'sly/components/molecules/Section/index';
 import { Hr } from 'sly/components/atoms';
 import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
+import PropertyReviews from 'sly/components/organisms/PropertyReviews/index';
 
 const StyledHr = styled(Hr)`
   margin: ${size('spacing.xxxLarge')} 0;
@@ -26,11 +27,20 @@ const AgentSummaryWrapper = styled.div`
     width: ${size('tabletLayout.col8')};
   }
 `;
-const AgentProfilePage = ({ agent }) => {
+
+const AskQuestionToAgentWrapper = styled.div`
+  margin: 0 auto;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('tabletLayout.col6')};
+  }
+`;
+
+const AgentProfilePage = ({ agent, user }) => {
   if (!agent) {
     return null;
   }
-  const { info } = agent;
+  console.log(agent);
+  const { info, reviews } = agent;
   const { displayName, bio } = info;
   const firstName = displayName.split(' ')[0];
   return (
@@ -41,12 +51,21 @@ const AgentProfilePage = ({ agent }) => {
           <AgentSummary {...info} firstName={firstName} bio={bio} />
         </AgentSummaryWrapper>
         <StyledHr />
+        <StyledSection title={`${firstName}'s reviews`} >
+          <PropertyReviews
+            // reviewsValue={reviewsValue}
+            reviews={reviews}
+            user={user}
+          />
+        </StyledSection>
         <StyledSection title={`About ${firstName}`}>
           {bio}
         </StyledSection>
         <StyledHr />
         <StyledSection>
-          <AskQuestionToAgentFormContainer heading={`Ask ${firstName} a question`} firstName={firstName} />
+          <AskQuestionToAgentWrapper>
+            <AskQuestionToAgentFormContainer heading={`Ask ${firstName} a question`} firstName={firstName} />
+          </AskQuestionToAgentWrapper>
         </StyledSection>
       </TemplateContent>
       <Footer />
@@ -58,6 +77,7 @@ AgentProfilePage.propTypes = {
   agent: shape({
     info: object.isRequired,
   }).isRequired,
+  user: object,
 };
 
 export default AgentProfilePage;
