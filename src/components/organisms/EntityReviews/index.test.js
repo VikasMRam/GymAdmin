@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import EntityReviews from 'sly/components/organisms/EntityReviews';
 import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
 import EntityReview from 'sly/components/molecules/EntityReview';
-import Modal from 'sly/components/molecules/Modal';
 
 const reviewRating = {
   name: 'Yelp',
@@ -22,64 +21,36 @@ const review = {
 };
 const reviewsValue = 3.4;
 
-function onLeaveReview() {
-  //   console.log('onLeaveReview');
-}
-
 const reviewRatings = [reviewRating, reviewRating];
 const reviews = [review, review, review];
-const user = {
-  id: 1,
-  name: 'Pranesh Kumar',
-};
 
 const wrap = (props = {}) =>
   shallow(<EntityReviews
-    reviewsValue={reviewsValue}
-    reviewRatings={reviewRatings}
-    reviews={reviews}
-    onLeaveReview={onLeaveReview}
-    communitySlug="abc"
-    communityName="Rhoda Goldman Plaza"
-    user={user}
     {...props}
   />);
 
 describe('EntityReviews', () => {
   it('does not renders children when passed in', () => {
-    const wrapper = wrap({
-      hasWebReviews: true,
-      children: 'test',
-    });
+    const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBe(false);
   });
 
   it('renders EntityReview', () => {
-    const wrapper = wrap({ hasWebReviews: true });
-    expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.4');
-    expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);
-    expect(wrapper.find(EntityReview)).toHaveLength(3);
-  });
-
-  it('renders Seniorly Reviews only when length of reviews > 0', () => {
-    const wrapper = wrap({ hasWebReviews: false });
+    const wrapper = wrap({ reviews });
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(0);
     expect(wrapper.find(EntityReview)).toHaveLength(3);
   });
 
-  it('renders Web Reviews only when hasWebReviews is true', () => {
-    const wrapper = wrap({ hasWebReviews: true });
+  it('renders Reviews Value only when reviewsValue is passed', () => {
+    const wrapper = wrap({ reviewsValue });
+    expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.4');
+    expect(wrapper.find(GatheredReviewRatings)).toHaveLength(0);
+    expect(wrapper.find(EntityReview)).toHaveLength(0);
+  });
+
+  it('renders Web Reviews only when reviewRatings is passed', () => {
+    const wrapper = wrap({ reviewRatings });
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);
-    expect(wrapper.find(EntityReview)).toHaveLength(3);
-  });
-
-  it('renders Modal when isAskRatingModalOpen is true', () => {
-    const wrapper = wrap({ hasWebReviews: false, isAskRatingModalOpen: true });
-    expect(wrapper.find(Modal)).toHaveLength(1);
-  });
-
-  it('does not renders Modal when isAskRatingModalOpen is false', () => {
-    const wrapper = wrap({ hasWebReviews: false, isAskRatingModalOpen: false });
-    expect(wrapper.find(Modal)).toHaveLength(0);
+    expect(wrapper.find(EntityReview)).toHaveLength(0);
   });
 });
