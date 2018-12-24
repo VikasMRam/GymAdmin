@@ -29,7 +29,7 @@ const CommentBlock = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const PropertyReview = ({
+const EntityReview = ({
   value, author, createdAt, comments,
 }) => (
   <Wrapper>
@@ -45,11 +45,11 @@ const PropertyReview = ({
   </Wrapper>
 );
 
-PropertyReview.propTypes = {
+EntityReview.propTypes = {
   value: number.isRequired,
   author: string.isRequired,
   createdAt: string.isRequired,
   comments: string.isRequired,
 };
 
-export default PropertyReview;
+export default EntityReview;

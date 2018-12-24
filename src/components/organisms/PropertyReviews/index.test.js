@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import PropertyReviews from 'sly/components/organisms/PropertyReviews';
 import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
-import PropertyReview from 'sly/components/molecules/PropertyReview';
+import EntityReview from 'sly/components/molecules/EntityReview';
 import Modal from 'sly/components/molecules/Modal';
 
 const reviewRating = {
@@ -58,19 +58,19 @@ describe('PropertyReviews', () => {
     const wrapper = wrap({ hasWebReviews: true });
     expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.4');
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);
-    expect(wrapper.find(PropertyReview)).toHaveLength(3);
+    expect(wrapper.find(EntityReview)).toHaveLength(3);
   });
 
   it('renders Seniorly Reviews only when length of reviews > 0', () => {
     const wrapper = wrap({ hasWebReviews: false });
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(0);
-    expect(wrapper.find(PropertyReview)).toHaveLength(3);
+    expect(wrapper.find(EntityReview)).toHaveLength(3);
   });
 
   it('renders Web Reviews only when hasWebReviews is true', () => {
     const wrapper = wrap({ hasWebReviews: true });
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);
-    expect(wrapper.find(PropertyReview)).toHaveLength(3);
+    expect(wrapper.find(EntityReview)).toHaveLength(3);
   });
 
   it('renders Modal when isAskRatingModalOpen is true', () => {

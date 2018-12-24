@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import { Icon, Span } from 'sly/components/atoms';
-import PropertyReview from 'sly/components/molecules/PropertyReview';
+import EntityReview from 'sly/components/molecules/EntityReview';
 import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
 import { formatRating } from 'sly/services/helpers/rating';
 
@@ -25,7 +25,7 @@ const PropertyReviews = ({
   let propertyReviews = null;
   if (reviews.length > 0) {
     propertyReviews = reviews.map((review) => {
-      return <PropertyReview {...review} key={review.id} />;
+      return <EntityReview {...review} key={review.id} />;
     });
   }
   return (

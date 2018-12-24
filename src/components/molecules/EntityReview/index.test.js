@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import PropertyReview from 'sly/components/molecules/PropertyReview';
+import EntityReview from 'sly/components/molecules/EntityReview';
 
 const review = {
   value: 3.5,
@@ -9,15 +9,15 @@ const review = {
   createdAt: '2018-04-20 00:00:00.00',
   comments: 'Best Community',
 };
-const wrap = (props = {}) => shallow(<PropertyReview {...review} {...props} />);
+const wrap = (props = {}) => shallow(<EntityReview {...review} {...props} />);
 
-describe('PropertyReview', () => {
+describe('EntityReview', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBe(false);
   });
 
-  it('renders Property review', () => {
+  it('renders EntityReview', () => {
     const wrapper = wrap();
     expect(wrapper.find('Rating[value=3.5]')).toHaveLength(1);
     expect(wrapper.contains('Best Community')).toBeTruthy();
