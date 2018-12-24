@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { bool, func, arrayOf, shape, string, number } from 'prop-types';
 import styled from 'styled-components';
 
-
 import { size, palette, key } from 'sly/components/themes';
 import { Icon, Hr, Link } from 'sly/components/atoms';
 import Logo from 'sly/components/atoms/Logo';

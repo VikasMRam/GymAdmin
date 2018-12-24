@@ -40,7 +40,6 @@ const Signup = styled.span`
     cursor: pointer;
   }
 `;
-Signup.displayName = 'Signup';
 
 const ForgotPassword = Signup.extend`
   float: right;

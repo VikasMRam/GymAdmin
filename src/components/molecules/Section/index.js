@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, node } from 'prop-types';
+import { string, node, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import { Heading } from 'sly/components/atoms';
@@ -9,17 +9,26 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const Section = ({ title, children, ...props }) => (
+const CenteredHeading = StyledHeading.extend`
+  text-align: center;
+`;
+
+const Section = ({
+  title, children, centerTitle, ...props
+}) => (
   <section {...props}>
-    {title &&
-      <StyledHeading>{title}</StyledHeading>
-    }
+    {title && (
+      centerTitle ?
+        <CenteredHeading>{title}</CenteredHeading> :
+        <StyledHeading>{title}</StyledHeading>
+    )}
     <article>{children}</article>
   </section>
 );
 
 Section.propTypes = {
   title: string,
+  centerTitle: bool,
   children: node,
 };
 

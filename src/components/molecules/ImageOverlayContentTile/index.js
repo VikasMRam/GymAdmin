@@ -1,27 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string, node, oneOf } from 'prop-types';
+import { string, node } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import { Image } from 'sly/components/atoms';
 
-const width = p => size('picture', p.size, 'width');
-const height = p => size('picture', p.size, 'height');
 const Wrapper = styled.div`
   width: 100%;
-  @media screen and (min-width: ${width}) {
-    width: ${width};
-  }
+  height: 100%;
   position: relative
 `;
 export const StyledImage = styled(Image)`
   border-radius: ${size('spacing.tiny')};
   width: 100%;
-  height: initial;
-  @media screen and (min-width: ${width}) {
-    width: ${width};
-    height: ${height};
-  }
+  height: 100%;
 `;
 export const ContentWrapper = styled.div`
   position: absolute;
@@ -31,30 +23,23 @@ export const ContentWrapper = styled.div`
   padding: 0 ${size('spacing.large')};
   width: 100%;
   text-align: center;
-  @media screen and (min-width: ${width}) {
-    width: inherit;
-  }
 `;
 
 const ImageOverlayContentTile = ({
-  image, children, size,
+  image, children, className,
 }) => (
-  <Wrapper size={size}>
-    <StyledImage src={image} size={size} />
-    <ContentWrapper size={size}>
+  <Wrapper className={className}>
+    <StyledImage src={image} />
+    <ContentWrapper>
       {children}
     </ContentWrapper>
   </Wrapper>
 );
 
 ImageOverlayContentTile.propTypes = {
+  className: string,
   image: string.isRequired,
   children: node,
-  size: oneOf(['small', 'regular', 'large', 'xLarge']),
-};
-
-ImageOverlayContentTile.defaultProps = {
-  size: 'regular',
 };
 
 export default ImageOverlayContentTile;

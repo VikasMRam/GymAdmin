@@ -1,56 +1,38 @@
 import React, { Component } from 'react';
-import { func, object, arrayOf } from 'prop-types';
+import { func } from 'prop-types';
 
+import SlyEvent from 'sly/services/helpers/events';
+import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
 import AgentsPage from 'sly/components/pages/AgentsPage';
-import { agents } from 'sly/services/helpers/agents';
-import { stateRegionMap } from 'sly/services/helpers/url';
 
-export default class AgentsPageContainer extends Component {
+class AgentsPageContainer extends Component {
   static propTypes = {
-    activeProfile: object,
-    agents: arrayOf(object),
-    handleModalProfile: func,
-    set: func,
+    history: func,
   };
 
-  state = { activeProfile: null };
+  handleSubmitForm = () => {
+    console.log('handleSubmitForm');
+  };
 
-  handleModalProfile = (profile) => {
-    this.setState({
-      activeProfile: profile,
-    });
+  handleLocationSearch = (result) => {
+    const { history } = this.props;
+    const event = {
+      action: 'submit', category: 'agentsSearch', label: result.formatted_address,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+
+    const searchParams = getSearchParamFromPlacesResponse(result);
+    const { path } = filterLinkPath(searchParams);
+    history.push(path);
   };
 
   render() {
-    const { activeProfile } = this.state;
-    const notFoundRegions = [];
-    const regionProfiles = agents.reduce((regionProfilesMap, agent) => {
-      const newRegionProfilesMap = regionProfilesMap;
-      const profile = {
-        id: agent.id,
-        heading: agent.user.name,
-        description: agent.agentBio,
-        imageUrl: agent.mainImage,
-      };
-      const region = stateRegionMap[agent.address.state];
-      if (region) {
-        if (newRegionProfilesMap[region]) {
-          newRegionProfilesMap[region].push(profile);
-        } else {
-          newRegionProfilesMap[region] = [profile];
-        }
-      } else {
-        notFoundRegions.push(agent.address.state);
-      }
-      return newRegionProfilesMap;
-    }, {});
+    const { handleSubmitForm, handleLocationSearch } = this;
 
     return (
-      <AgentsPage
-        regionProfiles={regionProfiles}
-        activeProfile={activeProfile}
-        setModalProfile={this.handleModalProfile}
-      />
+      <AgentsPage onSubmitForm={handleSubmitForm} onLocationSearch={handleLocationSearch} />
     );
   }
 }
+
+export default AgentsPageContainer;
