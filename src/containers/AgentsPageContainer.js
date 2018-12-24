@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { func } from 'prop-types';
 
 import SlyEvent from 'sly/services/helpers/events';
+import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
 import AgentsPage from 'sly/components/pages/AgentsPage';
 
 class AgentsPageContainer extends Component {
@@ -14,13 +15,15 @@ class AgentsPageContainer extends Component {
   };
 
   handleLocationSearch = (result) => {
-    // const { history } = this.props;
+    const { history } = this.props;
     const event = {
       action: 'submit', category: 'agentsSearch', label: result.formatted_address,
     };
     SlyEvent.getInstance().sendEvent(event);
 
-    console.log('handleLocationSearch', result);
+    const searchParams = getSearchParamFromPlacesResponse(result);
+    const { path } = filterLinkPath(searchParams);
+    history.push(path);
   };
 
   render() {
