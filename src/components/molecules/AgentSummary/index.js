@@ -84,7 +84,6 @@ const AskQuestionButton = styled(Button)`
   margin-bottom: ${size('spacing.xLarge')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: initial;
-    margin-right: ${size('spacing.xLarge')};
   }
 `;
 
@@ -100,6 +99,7 @@ const AskQuestionPhoneSection = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
     align-items: center;
+    justify-content: space-between;
   }
 `;
 const AgentSummary = ({

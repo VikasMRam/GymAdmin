@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, shape, string, number, func, bool, object } from 'prop-types';
+import { arrayOf, shape, string, number, func, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
