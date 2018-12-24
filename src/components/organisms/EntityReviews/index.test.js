@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import PropertyReviews from 'sly/components/organisms/PropertyReviews';
+import EntityReviews from 'sly/components/organisms/EntityReviews';
 import GatheredReviewRatings from 'sly/components/molecules/GatheredReviewRatings';
 import EntityReview from 'sly/components/molecules/EntityReview';
 import Modal from 'sly/components/molecules/Modal';
@@ -34,7 +34,7 @@ const user = {
 };
 
 const wrap = (props = {}) =>
-  shallow(<PropertyReviews
+  shallow(<EntityReviews
     reviewsValue={reviewsValue}
     reviewRatings={reviewRatings}
     reviews={reviews}
@@ -45,7 +45,7 @@ const wrap = (props = {}) =>
     {...props}
   />);
 
-describe('PropertyReviews', () => {
+describe('EntityReviews', () => {
   it('does not renders children when passed in', () => {
     const wrapper = wrap({
       hasWebReviews: true,
@@ -54,7 +54,7 @@ describe('PropertyReviews', () => {
     expect(wrapper.contains('test')).toBe(false);
   });
 
-  it('renders Property review', () => {
+  it('renders EntityReview', () => {
     const wrapper = wrap({ hasWebReviews: true });
     expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.4');
     expect(wrapper.find(GatheredReviewRatings)).toHaveLength(1);

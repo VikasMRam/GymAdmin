@@ -13,18 +13,17 @@ const ReviewValueSection = styled.div`
   align-items: center;
 `;
 
-const PropertyReviews = ({
+const EntityReviews = ({
   reviewsValue,
-  hasWebReviews,
   reviews,
   reviewRatings,
   onLeaveReview,
   communityReviewsRef,
   onReviewLinkClicked,
 }) => {
-  let propertyReviews = null;
+  let entityReviews = null;
   if (reviews.length > 0) {
-    propertyReviews = reviews.map((review) => {
+    entityReviews = reviews.map((review) => {
       return <EntityReview {...review} key={review.id} />;
     });
   }
@@ -37,8 +36,8 @@ const PropertyReviews = ({
         <Span size="caption" palette="grey"> Average rating</Span>
       </ReviewValueSection>
       }
-      {propertyReviews}
-      {hasWebReviews && (
+      {entityReviews}
+      {reviewRatings.length > 0 && (
         <GatheredReviewRatings
           reviewRatings={reviewRatings}
           onLeaveReview={onLeaveReview}
@@ -49,25 +48,29 @@ const PropertyReviews = ({
   );
 };
 
-PropertyReviews.propTypes = {
-  reviewsValue: number.isRequired,
+EntityReviews.propTypes = {
+  reviewsValue: number,
   reviews: arrayOf(shape({
     id: string.isRequired,
     author: string.isRequired,
     createdAt: string.isRequired,
     value: number.isRequired,
     comments: string.isRequired,
-  })).isRequired,
+  })),
   reviewRatings: arrayOf(shape({
     name: string.isRequired,
     numReviews: number.isRequired,
     reviewsUrl: string.isRequired,
     avgRating: number.isRequired,
-  })).isRequired,
+  })),
   onLeaveReview: func,
-  hasWebReviews: bool.isRequired,
   communityReviewsRef: object,
   onReviewLinkClicked: func,
 };
 
-export default PropertyReviews;
+EntityReviews.defaultProps = {
+  reviews: [],
+  reviewRatings: [],
+};
+
+export default EntityReviews;

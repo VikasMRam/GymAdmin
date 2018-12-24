@@ -10,7 +10,7 @@ import AgentSummary from 'sly/components/molecules/AgentSummary/index';
 import Section from 'sly/components/molecules/Section/index';
 import { Hr } from 'sly/components/atoms';
 import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
-import PropertyReviews from 'sly/components/organisms/PropertyReviews/index';
+import EntityReviews from 'sly/components/organisms/EntityReviews/index';
 
 const StyledHr = styled(Hr)`
   margin: ${size('spacing.xxxLarge')} 0;
@@ -52,7 +52,7 @@ const AgentProfilePage = ({ agent, user }) => {
         </AgentSummaryWrapper>
         <StyledHr />
         <StyledSection title={`${firstName}'s reviews`} >
-          <PropertyReviews
+          <EntityReviews
             // reviewsValue={reviewsValue}
             reviews={reviews}
             user={user}
