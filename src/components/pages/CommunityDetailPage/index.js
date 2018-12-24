@@ -54,6 +54,7 @@ import { calculatePricing, findPercentage } from 'sly/services/helpers/pricing';
 import EstimatedCost from 'sly/components/molecules/EstimatedCost';
 import PriceBar from 'sly/components/molecules/PriceBar';
 import CommunityReviewsBottomSection from 'sly/components/molecules/CommunityReviewsBottomSection/index';
+import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -595,6 +596,13 @@ export default class CommunityDetailPage extends Component {
                 </Modal>
               )}
             </ModalController>
+            <Modal
+              onClose={() => setModal(null)}
+              isOpen={modal === ADD_RATING}
+              closeable
+            >
+              <CommunityAddRatingFormContainer user={user} communitySlug={id} communityName={name} setModal={setModal} />
+            </Modal>
             <FullScreenWizardController>
               {({ isConfirmationModalVisible, toggleConfirmationModal, type }) => {
                   let heading = null;
