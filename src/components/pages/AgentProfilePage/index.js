@@ -12,6 +12,8 @@ import { Link, Hr } from 'sly/components/atoms';
 import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
 import EntityReviews from 'sly/components/organisms/EntityReviews/index';
 import SimilarCommunityNearbyTile from 'sly/components/molecules/SimilarCommunityNearbyTile/index';
+import BreadCrumb from 'sly/components/molecules/BreadCrumb/index';
+import { getBreadCrumbsForAgent } from 'sly/services/helpers/url';
 
 const StyledHr = styled(Hr)`
   margin: ${size('spacing.xxxLarge')} 0;
@@ -46,6 +48,10 @@ const AskQuestionToAgentWrapper = styled.div`
   }
 `;
 
+const AgentCommunityLink = styled(Link)`
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
 const AgentCommunitiesWrapper = styled.div`
   width: 100%;
   justify-content: center;
@@ -67,15 +73,17 @@ const AgentProfilePage = ({ agent, user }) => {
     return null;
   }
   const {
-    info, aggregateRating, reviews, communities,
+    info, aggregateRating, reviews, communities, address,
   } = agent;
   const { ratingValue } = aggregateRating;
   const { displayName, bio } = info;
   const firstName = displayName.split(' ')[0];
+  const { state, city } = address;
   return (
     <Fragment>
       <TemplateHeader><HeaderContainer /></TemplateHeader>
       <TemplateContent>
+        <BreadCrumb items={getBreadCrumbsForAgent({ name: displayName, state, city })} />
         <AgentSummaryWrapper>
           <AgentSummary {...info} aggregateRating={aggregateRating} firstName={firstName} />
         </AgentSummaryWrapper>
@@ -89,7 +97,7 @@ const AgentProfilePage = ({ agent, user }) => {
                   const { firstLineValue } = webViewInfo;
                   const typeOfCare = firstLineValue.split(',')[0];
                   return (
-                    <Link
+                    <AgentCommunityLink
                       key={community.slug}
                       to={community.url}
                     >
@@ -102,7 +110,7 @@ const AgentProfilePage = ({ agent, user }) => {
                         reviewsValue={community.reviewsValue}
                         numReviews={community.numReviews}
                       />
-                    </Link>
+                    </AgentCommunityLink>
                   );
                 })}
               </AgentCommunitiesWrapper>

@@ -255,6 +255,43 @@ export const getBreadCrumbsForLocation = ({ toc, state, city }) => {
   return baseBcs;
 };
 
+export const getBreadCrumbsForAgent = ({ name, state, city }) => {
+  const agentsPath = '/agents';
+  const baseBcs = [{
+    path: '/',
+    label: 'Home',
+  },
+  {
+    path: agentsPath,
+    label: 'Agents',
+  }];
+
+  if (state) {
+    const region = stateRegionMap[state];
+    baseBcs.push({
+      path: `${agentsPath}/${urlize(region)}`,
+      label: region,
+    });
+    if (city) {
+      baseBcs.push({
+        path: `${agentsPath}/${urlize(region)}/${urlize(city)}`,
+        label: city,
+      });
+      if (name) {
+        baseBcs.push({
+          path: `${agentsPath}/${urlize(region)}/${urlize(city)}/${urlize(name)}`,
+          label: name,
+        });
+      }
+    } else {
+      return baseBcs;
+    }
+  } else {
+    return baseBcs;
+  }
+  return baseBcs;
+};
+
 export const getCitySearchUrl = ({ propInfo, address }) => {
   const tocBc = tocPaths(propInfo.typeCare);
   return `${tocBc.path}/${urlize(stateNames[address.state])}/${urlize(address.city)}?latitude=${address.latitude}&longitude=${address.longitude}`;
