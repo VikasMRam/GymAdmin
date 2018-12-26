@@ -109,7 +109,7 @@ export default class App extends Component {
       component: StateSearchPageContainer,
     },
     {
-      path: '/agents/:region/:agentSlug',
+      path: '/agents/:region/:city/:agentSlug',
       component: AgentProfilePageContainer,
       exact: true,
     },

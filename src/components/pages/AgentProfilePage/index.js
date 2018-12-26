@@ -90,7 +90,7 @@ const AgentProfilePage = ({ agent, user }) => {
         <StyledHr />
         {communities &&
           <Fragment>
-            <Section title={`${firstName} communities`}>
+            <Section title={`${firstName}'s communities`}>
               <AgentCommunitiesWrapper>
                 {communities.map((community) => {
                   const { mainService } = community;
