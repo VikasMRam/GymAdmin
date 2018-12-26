@@ -23,7 +23,7 @@ import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeade
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
 import CareServicesList from 'sly/components/organisms/CareServicesList';
-import PropertyReviews from 'sly/components/organisms/PropertyReviews';
+import EntityReviews from 'sly/components/organisms/EntityReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailability';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
@@ -54,6 +54,7 @@ import { calculatePricing, findPercentage } from 'sly/services/helpers/pricing';
 import EstimatedCost from 'sly/components/molecules/EstimatedCost';
 import PriceBar from 'sly/components/molecules/PriceBar';
 import CommunityReviewsBottomSection from 'sly/components/molecules/CommunityReviewsBottomSection/index';
+import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -289,7 +290,7 @@ export default class CommunityDetailPage extends Component {
       setQuestionToAsk(null);
     }
 
-    // TODO: move this to a container for PropertyReviews handling posts
+    // TODO: move this to a container for EntityReviews handling posts
     const onLeaveReview = () => {};
     // TODO: move this to a container PricingAndAvailability for handling bookings
     const { hasSlyReviews, hasWebReviews, reviewsValue } = propRatings;
@@ -491,19 +492,12 @@ export default class CommunityDetailPage extends Component {
               innerRef={this.communityReviewsRef}
               botttomSection={<CommunityReviewsBottomSection communityName={name} onButtonClick={() => setModal(ADD_RATING)} />}
             >
-              <PropertyReviews
+              <EntityReviews
                 reviewsValue={reviewsValue}
-                hasSlyReviews={hasSlyReviews}
-                hasWebReviews={hasWebReviews}
                 reviews={reviewsFinal}
                 reviewRatings={ratingsArray}
                 onLeaveReview={onLeaveReview}
                 onReviewLinkClicked={onReviewLinkClicked}
-                isAskRatingModalOpen={modal === ADD_RATING}
-                setModal={setModal}
-                user={user}
-                communitySlug={id}
-                communityName={name}
               />
             </CollapsibleSection>
             <CollapsibleSection title="Questions">
@@ -595,6 +589,13 @@ export default class CommunityDetailPage extends Component {
                 </Modal>
               )}
             </ModalController>
+            <Modal
+              onClose={() => setModal(null)}
+              isOpen={modal === ADD_RATING}
+              closeable
+            >
+              <CommunityAddRatingFormContainer user={user} communitySlug={id} communityName={name} setModal={setModal} />
+            </Modal>
             <FullScreenWizardController>
               {({ isConfirmationModalVisible, toggleConfirmationModal, type }) => {
                   let heading = null;

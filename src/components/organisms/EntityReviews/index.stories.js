@@ -2,18 +2,18 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
-import PropertyReviews from 'sly/components/organisms/PropertyReviews';
+import EntityReviews from 'sly/components/organisms/EntityReviews';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const { propRatings, reviews } = RhodaGoldmanPlaza;
 const { ratingsArray, hasSlyReviews, hasWebReviews } = propRatings;
 
 const onLeaveReview = () => {
-  action('On Click of onLeaveReview outside PropertyReviews ');
+  action('On Click of onLeaveReview outside EntityReviews ');
 };
 
-storiesOf('Organisms|PropertyReviews', module).add('default', () => (
-  <PropertyReviews
+storiesOf('Organisms|EntityReviews', module).add('default', () => (
+  <EntityReviews
     hasSlyReviews={hasSlyReviews}
     hasWebReviews={hasWebReviews}
     reviews={reviews}

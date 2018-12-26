@@ -29,6 +29,7 @@ import LegalPolicyPage from 'sly/components/pages/LegalPolicyPage';
 import EntityApprovalContainer from 'sly/containers/EntityApprovalContainer';
 import BookATourPageContainer from 'sly/containers/BookATourPageContainer';
 import PricingWizardPageContainer from 'sly/containers/PricingWizardPageContainer';
+import AgentProfilePageContainer from 'sly/containers/AgentProfilePageContainer';
 
 setGlobalStyles();
 
@@ -106,6 +107,11 @@ export default class App extends Component {
     {
       path: `/:toc(${careTypes})/:state`,
       component: StateSearchPageContainer,
+    },
+    {
+      path: '/agents/:region/:city/:agentSlug',
+      component: AgentProfilePageContainer,
+      exact: true,
     },
     {
       path: '/agents',
