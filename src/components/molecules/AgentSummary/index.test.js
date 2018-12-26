@@ -32,12 +32,12 @@ describe('AgentSummary', () => {
   });
 
   it('renders aggregateRating', () => {
-    const wrapper = wrap({ aggregateRating: 3.53223232 });
+    const wrapper = wrap({ aggregateRating: { ratingValue: 3.53223232 } });
     expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.5 ');
   });
 
   it('renders aggregateRating and numRatings', () => {
-    const wrapper = wrap({ aggregateRating: 3.53223232, numRatings: 15 });
+    const wrapper = wrap({ aggregateRating: { ratingValue: 3.53223232, numRatings: 15 } });
     expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.5 ');
     expect(wrapper.find('ReviewValueSection').childAt(2).dive().text()).toEqual('15 reviews');
   });

@@ -105,7 +105,17 @@ const AskQuestionPhoneSection = styled.div`
 const AgentSummary = ({
   profileImageUrl, displayName, firstName, aggregateRating, recentFamiliesHelped, citiesServed, slyPhone, onButtonClick, onPhoneClick,
 }) => {
-  const { numRatings, ratingValue } = aggregateRating;
+  let ratingsSection = null;
+  if (aggregateRating && aggregateRating.ratingValue > 0) {
+    const { numRatings, ratingValue } = aggregateRating;
+    ratingsSection = (
+      <ReviewValueSection>
+        <Icon icon="star" size="regular" palette="secondary" />
+        <Span size="subtitle" weight="medium"> {formatRating(ratingValue)} </Span>
+        {numRatings && <Span size="caption" palette="grey">{numRatings} reviews</Span>}
+      </ReviewValueSection>
+    );
+  }
   return (
     <Wrapper>
       <AgentImageWrapper>
@@ -113,13 +123,7 @@ const AgentSummary = ({
       </AgentImageWrapper>
       <TextSection>
         <AgentName weight="medium" size="title">{displayName}</AgentName>
-        {ratingValue > 0 &&
-          <ReviewValueSection>
-            <Icon icon="star" size="regular" palette="secondary" />
-            <Span size="subtitle" weight="medium"> {formatRating(ratingValue)} </Span>
-            {numRatings && <Span size="caption" palette="grey">{numRatings} reviews</Span>}
-          </ReviewValueSection>
-        }
+        {ratingsSection}
         <StyledHr />
         {recentFamiliesHelped > 0 &&
           <FamiliesHelpedSection>
