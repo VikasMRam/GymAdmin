@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Helmet from 'react-helmet';
 
 import { size, assetPath } from 'sly/components/themes';
+import { getHelmetForPartnersPage } from 'sly/services/helpers/html_headers';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Image } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
@@ -83,16 +84,14 @@ const PartnersPage = () => {
 
   return (
     <Fragment>
-      <Helmet>
-        <title>Our Senior Living Partner Agents</title>
-      </Helmet>
+      {getHelmetForPartnersPage()}
       <TemplateHeader>{headerContent}</TemplateHeader>
       <TemplateContent>
-        <StyledSection title="How does it work?">
+        <StyledSection title="Do we need?">
           <ColumnWrapper>
             <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="house" heading="Stay with your curreny agency" content="As a Seniorly Partner Agent you will still operate under your business name and simply receive extra family referrals in addition to your current business. " />
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="star" heading="Get serious referrals" content="We don’t sell leads. Instead, your profile and reviews are displayed on Seniorly.com, so families can choose you as their agent when they are ready to make a move." />
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="loyalty" heading="Keep 70% commission" content="You recieve 70% of your side of the comission when a referral moves into a home. A referral fee is paid to Seniorly only when you close" />
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="star" heading="Work with qualified families" content="We are not one of those “online lead companies”. As a Partner Agent, your profile will be highlighted on Seniorly.com. Families can reach out directly or be matched by Seniorly according to your area of expertise." />
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="loyalty" heading="Keep over 50% commission" content="You receive over 50% of the referral fee when successfully helping a Seniorly prospect. A referral commission is paid to Seniorly upon a new resident move-in." />
           </ColumnWrapper>
         </StyledSection>
       </TemplateContent>

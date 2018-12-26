@@ -6,6 +6,7 @@ import Helmet from 'react-helmet';
 import { size, assetPath } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Image, Hr } from 'sly/components/atoms';
+import { getHelmetForAgentsPage } from 'sly/services/helpers/html_headers';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import Section from 'sly/components/molecules/Section';
@@ -87,9 +88,7 @@ const AgentsPage = ({ onSubmitForm, onLocationSearch }) => {
 
   return (
     <Fragment>
-      <Helmet>
-        <title>Our Senior Living Partner Agents</title>
-      </Helmet>
+      {getHelmetForAgentsPage()}
       <TemplateHeader>{headerContent}</TemplateHeader>
       <TemplateContent>
         <StyledSection>
