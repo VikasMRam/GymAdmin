@@ -8,9 +8,10 @@ import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePa
 import Footer from 'sly/components/organisms/Footer';
 import AgentSummary from 'sly/components/molecules/AgentSummary/index';
 import Section from 'sly/components/molecules/Section/index';
-import { Hr } from 'sly/components/atoms';
+import { Link, Hr } from 'sly/components/atoms';
 import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
 import EntityReviews from 'sly/components/organisms/EntityReviews/index';
+import SimilarCommunityNearbyTile from 'sly/components/molecules/SimilarCommunityNearbyTile/index';
 
 const StyledHr = styled(Hr)`
   margin: ${size('spacing.xxxLarge')} 0;
@@ -45,12 +46,28 @@ const AskQuestionToAgentWrapper = styled.div`
   }
 `;
 
+const AgentCommunitiesWrapper = styled.div`
+  width: 100%;
+  justify-content: center;
+  display: grid;
+  grid-gap: ${size('spacing.large')};
+  grid-template-columns: ${size('layout.col4')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    grid-template-columns: ${size('layout.col4')} ${size('layout.col4')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    grid-template-columns: ${size('layout.col4')} ${size('layout.col4')} ${size('layout.col4')};
+  }
+`;
+
 const AgentProfilePage = ({ agent, user }) => {
   if (!agent) {
     return null;
   }
   console.log(agent);
-  const { info, reviews } = agent;
+  const { info, reviews, communities } = agent;
   const { displayName, bio } = info;
   const firstName = displayName.split(' ')[0];
   return (
@@ -61,6 +78,36 @@ const AgentProfilePage = ({ agent, user }) => {
           <AgentSummary {...info} firstName={firstName} bio={bio} />
         </AgentSummaryWrapper>
         <StyledHr />
+        {communities &&
+          <Fragment>
+            <Section title={`${firstName} communities`}>
+              <AgentCommunitiesWrapper>
+                {communities.map((community) => {
+                  const { webViewInfo } = community;
+                  const { firstLineValue } = webViewInfo;
+                  const typeOfCare = firstLineValue.split(',')[0];
+                  return (
+                    <Link
+                      key={community.id}
+                      to={community.url}
+                    >
+                      <SimilarCommunityNearbyTile
+                        image={community.imageUrl}
+                        typeOfCare={typeOfCare}
+                        name={community.name}
+                        estimatedRate={community.estimated || 0}
+                        startingRate={community.startingRate}
+                        reviewsValue={community.reviewsValue}
+                        numReviews={community.numReviews}
+                      />
+                    </Link>
+                  );
+                })}
+              </AgentCommunitiesWrapper>
+            </Section>
+            <StyledHr />
+          </Fragment>
+        }
         <StyledSection title={`${firstName}'s reviews`} >
           <EntityReviews
             // reviewsValue={reviewsValue}

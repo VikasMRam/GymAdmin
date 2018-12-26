@@ -44,7 +44,6 @@ const PriceAndRatingWrapper = styled.div`
 `;
 
 const StyledIcon = styled(Icon)`
-  padding-top: ${size('spacing.small')};
   margin-right: ${size('spacing.regular')};
 `;
 
