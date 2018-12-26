@@ -18,6 +18,12 @@ const StyledHr = styled(Hr)`
 
 const StyledSection = styled(Section)`
   margin: 0 ${size('spacing.regular')};
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin: 0 ${size('spacing.xxxLarge')};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    margin: 0;
+  }
 `;
 
 const AgentSummaryWrapper = styled.div`
@@ -26,10 +32,14 @@ const AgentSummaryWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('tabletLayout.col8')};
   }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('layout.col10')};
+  }
 `;
 
 const AskQuestionToAgentWrapper = styled.div`
   margin: 0 auto;
+  margin-bottom: ${size('spacing.huge')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('tabletLayout.col6')};
   }
