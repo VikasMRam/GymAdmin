@@ -83,8 +83,8 @@ const AgentProfilePage = ({ agent, user }) => {
     <Fragment>
       <TemplateHeader><HeaderContainer /></TemplateHeader>
       <TemplateContent>
-        <BreadCrumb items={getBreadCrumbsForAgent({ name: displayName, state, city })} />
         <AgentSummaryWrapper>
+          <BreadCrumb items={getBreadCrumbsForAgent({ name: displayName, state, city })} />
           <AgentSummary {...info} aggregateRating={aggregateRating} firstName={firstName} />
         </AgentSummaryWrapper>
         <StyledHr />
