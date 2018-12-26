@@ -66,8 +66,10 @@ const AgentProfilePage = ({ agent, user }) => {
   if (!agent) {
     return null;
   }
-  console.log(agent);
-  const { info, reviews, communities } = agent;
+  const {
+    info, aggregateRating, reviews, communities,
+  } = agent;
+  const { ratingValue } = aggregateRating;
   const { displayName, bio } = info;
   const firstName = displayName.split(' ')[0];
   return (
@@ -75,7 +77,7 @@ const AgentProfilePage = ({ agent, user }) => {
       <TemplateHeader><HeaderContainer /></TemplateHeader>
       <TemplateContent>
         <AgentSummaryWrapper>
-          <AgentSummary {...info} firstName={firstName} bio={bio} />
+          <AgentSummary {...info} aggregateRating={aggregateRating} firstName={firstName} />
         </AgentSummaryWrapper>
         <StyledHr />
         {communities &&
@@ -88,7 +90,7 @@ const AgentProfilePage = ({ agent, user }) => {
                   const typeOfCare = firstLineValue.split(',')[0];
                   return (
                     <Link
-                      key={community.id}
+                      key={community.slug}
                       to={community.url}
                     >
                       <SimilarCommunityNearbyTile
@@ -110,7 +112,7 @@ const AgentProfilePage = ({ agent, user }) => {
         }
         <StyledSection title={`${firstName}'s reviews`} >
           <EntityReviews
-            // reviewsValue={reviewsValue}
+            reviewsValue={ratingValue}
             reviews={reviews}
             user={user}
           />

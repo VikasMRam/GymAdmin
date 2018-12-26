@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, number, arrayOf, func } from 'prop-types';
+import { string, number, arrayOf, func, shape } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
@@ -103,8 +103,9 @@ const AskQuestionPhoneSection = styled.div`
   }
 `;
 const AgentSummary = ({
-  profileImageUrl, displayName, firstName, aggregateRating, numRatings, recentFamiliesHelped, citiesServed, slyPhone, onButtonClick, onPhoneClick,
+  profileImageUrl, displayName, firstName, aggregateRating, recentFamiliesHelped, citiesServed, slyPhone, onButtonClick, onPhoneClick,
 }) => {
+  const { numRatings, ratingValue } = aggregateRating;
   return (
     <Wrapper>
       <AgentImageWrapper>
@@ -112,10 +113,10 @@ const AgentSummary = ({
       </AgentImageWrapper>
       <TextSection>
         <AgentName weight="medium" size="title">{displayName}</AgentName>
-        {aggregateRating > 0 &&
+        {ratingValue > 0 &&
           <ReviewValueSection>
             <Icon icon="star" size="regular" palette="secondary" />
-            <Span size="subtitle" weight="medium"> {formatRating(aggregateRating)} </Span>
+            <Span size="subtitle" weight="medium"> {formatRating(ratingValue)} </Span>
             {numRatings && <Span size="caption" palette="grey">{numRatings} reviews</Span>}
           </ReviewValueSection>
         }
@@ -126,7 +127,7 @@ const AgentSummary = ({
             <Span>{recentFamiliesHelped}</Span>
           </FamiliesHelpedSection>
         }
-        {citiesServed &&
+        {citiesServed.length > 0 &&
           <AgentsCitiesSection>
             <Span weight="medium">{`${firstName}'s Cities: `}</Span>
             <Span>{citiesServed.join(', ')}</Span>
@@ -158,13 +159,19 @@ AgentSummary.propTypes = {
   profileImageUrl: string.isRequired,
   displayName: string.isRequired,
   firstName: string.isRequired,
-  aggregateRating: number,
-  numRatings: number,
+  aggregateRating: shape({
+    numRatings: number,
+    ratingValue: number,
+  }),
   recentFamiliesHelped: number,
   citiesServed: arrayOf(string),
   slyPhone: string,
   onButtonClick: func,
   onPhoneClick: func,
+};
+
+AgentSummary.defaultProps = {
+  citiesServed: [],
 };
 
 export default AgentSummary;
