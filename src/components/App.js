@@ -31,6 +31,7 @@ import BookATourPageContainer from 'sly/containers/BookATourPageContainer';
 import PricingWizardPageContainer from 'sly/containers/PricingWizardPageContainer';
 import AgentProfilePageContainer from 'sly/containers/AgentProfilePageContainer';
 import AgentRegionPageContainer from 'sly/containers/AgentRegionPageContainer';
+import PartnersPage from 'sly/components/pages/PartnersPage';
 
 setGlobalStyles();
 
@@ -127,6 +128,11 @@ export default class App extends Component {
     {
       path: '/agents',
       component: AgentsPageContainer,
+      exact: true,
+    },
+    {
+      path: '/agents/partners',
+      component: PartnersPage,
       exact: true,
     },
     {
