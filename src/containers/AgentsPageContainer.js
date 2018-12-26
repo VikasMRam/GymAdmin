@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func } from 'prop-types';
+import { object } from 'prop-types';
 
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
@@ -7,7 +7,7 @@ import AgentsPage from 'sly/components/pages/AgentsPage';
 
 class AgentsPageContainer extends Component {
   static propTypes = {
-    history: func,
+    history: object,
   };
 
   handleSubmitForm = () => {

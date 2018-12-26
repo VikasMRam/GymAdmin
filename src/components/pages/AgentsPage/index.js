@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { object, func } from 'prop-types';
+import { func } from 'prop-types';
+import Helmet from 'react-helmet';
 
 import { size, assetPath } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
@@ -153,13 +154,16 @@ const AgentsPage = ({ onSubmitForm, onLocationSearch }) => {
 
   return (
     <Fragment>
+      <Helmet>
+        <title>Our Senior Living Partner Agents</title>
+      </Helmet>
       <TemplateHeader>{headerContent}</TemplateHeader>
       <TemplateContent>
-        <StyledSection title="Why should I work with an agent?">
+        <StyledSection>
           <ColumnWrapper>
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="house" heading="Service from start to finish" content="As a Seniorly Partner Agent you will still operate under your business name and simply receive extra family referrals in addition to your current business." />
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="star" heading="Expert negotiators" content="We don't sell leads. Instead, your profile and reviews are displayed on Seniorly.com, so families can choose you as their agent when they are ready to make a move." />
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="loyalty" heading="Choose the right agent for you" content="You receive 70% of your side of the comission when a referral moves into a home. A referral fee is paid to Seniorly only when you close" />
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="house" heading="100% free" content="Seniorly Partner Agents are commissioned by the community you choose only when you move-in. They are on your side to find and choose the right option." />
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="star" heading="Personalized Service" content="Navigating this process can be a challenge. Your agent will help you throughout to answer questions, weigh your options, accompany you on tours and help you get the best deal for your budget." />
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="loyalty" heading="Local Insider Expertise" content="Your agent will know and share the unique details of communities and care options in your area." />
           </ColumnWrapper>
         </StyledSection>
         <Hr fullWidth />
