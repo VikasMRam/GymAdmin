@@ -93,9 +93,7 @@ const AgentProfilePage = ({ agent, user }) => {
             <Section title={`${firstName} communities`}>
               <AgentCommunitiesWrapper>
                 {communities.map((community) => {
-                  const { webViewInfo } = community;
-                  const { firstLineValue } = webViewInfo;
-                  const typeOfCare = firstLineValue.split(',')[0];
+                  const { mainService } = community;
                   return (
                     <AgentCommunityLink
                       key={community.slug}
@@ -103,7 +101,7 @@ const AgentProfilePage = ({ agent, user }) => {
                     >
                       <SimilarCommunityNearbyTile
                         image={community.imageUrl}
-                        typeOfCare={typeOfCare}
+                        typeOfCare={mainService}
                         name={community.name}
                         estimatedRate={community.estimated || 0}
                         startingRate={community.startingRate}
