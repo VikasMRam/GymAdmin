@@ -7,9 +7,10 @@ import { getHelmetForPartnersPage } from 'sly/services/helpers/html_headers';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Image } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
-import Footer from 'sly/components/organisms/Footer';
 import Section from 'sly/components/molecules/Section';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
+import Footer from 'sly/components/organisms/Footer';
+import PartnerWithSly from 'sly/components/organisms/PartnerWithSly';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -75,9 +76,7 @@ const PartnersPage = () => {
       <HeaderContainer />
       <HeroWrapper>
         <HeroBackgroundImage src={assetPath('images/agents-partners-hero.png')} alt="A Home To Love" />
-        <HeroTextWrapper>
-
-        </HeroTextWrapper>
+        <HeroTextWrapper><PartnerWithSly /></HeroTextWrapper>
       </HeroWrapper>
     </Fragment>
   );
@@ -87,7 +86,7 @@ const PartnersPage = () => {
       {getHelmetForPartnersPage()}
       <TemplateHeader>{headerContent}</TemplateHeader>
       <TemplateContent>
-        <StyledSection title="Do we need?">
+        <StyledSection title="How does it work?">
           <ColumnWrapper>
             <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="house" heading="Stay with your curreny agency" content="As a Seniorly Partner Agent you will still operate under your business name and simply receive extra family referrals in addition to your current business. " />
             <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="star" heading="Work with qualified families" content="We are not one of those “online lead companies”. As a Partner Agent, your profile will be highlighted on Seniorly.com. Families can reach out directly or be matched by Seniorly according to your area of expertise." />

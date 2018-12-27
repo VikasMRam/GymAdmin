@@ -44,7 +44,6 @@ const HeroTextWrapper = styled.div`
   align-items: center;
 
   > * {
-    padding: ${size('spacing.xxxLarge')};
     max-width: ${size('mobileLayout.col4')};
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       max-width: ${size('tabletLayout.col6')};
