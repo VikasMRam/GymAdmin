@@ -89,7 +89,7 @@ class WizardController extends Component {
     }
   };
 
-  doSubmit = (params) => {
+  doSubmit = (params = {}) => {
     const { onComplete, data } = this.props;
 
     onComplete(data, ...params);
