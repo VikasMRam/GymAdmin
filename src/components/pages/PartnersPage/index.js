@@ -13,6 +13,7 @@ import Footer from 'sly/components/organisms/Footer';
 import PartnerWithSly from 'sly/components/molecules/PartnerWithSly';
 import FactBox from 'sly/components/molecules/FactBox';
 import { ColumnWrapper } from 'sly/components/molecules/MostSearchedRegions';
+import PartnerReview from 'sly/components/molecules/PartnerReview';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -71,6 +72,15 @@ const StyledColumnWrapper = styled(ColumnWrapper)`
   }
 `;
 
+const MSPAColumnWrapper = styled(ColumnWrapper)`
+  grid-template-columns: auto;
+  grid-row-gap: ${size('spacing.xxxLarge')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
+
 const PartnersPage = () => {
   const headerContent = (
     <Fragment>
@@ -103,6 +113,15 @@ const PartnersPage = () => {
             <FactBox title="98%" description="of families who moved in would recommend their Advisor to a friend" />
             <FactBox title="90%" description="Over 90% of our partners would refer Seniorly to their colleagues" />
           </StyledColumnWrapper>
+        </StyledSection>
+        <Hr fullWidth />
+        <StyledSection title="Meet Seniorly Partner Advisors">
+          <MSPAColumnWrapper>
+            <PartnerReview name="Steve Villa" location="San Francisco, California" image={assetPath('images/agent-xLarge.png')} review="Steve was very professional, was very knowledgeable, extremely resourceful and most accommodating. It's been a pleasure to work with him. Thank you!" />
+            <PartnerReview name="Rijan Shrestha" location="San Francisco, California" image={assetPath('images/agent-xLarge.png')} review="I am so very grateful for Rijan and for Seniorly. They helped find the perfect place for my daughter, and were so service-oriented. I would recommend this service, and Rijan especially, to anyone looking to locate senior housing. - Donna B." />
+            <PartnerReview name="Brett from Senior Advantages Assisted Living Placement (Florida)" location="San Francisco, California" image={assetPath('images/agent-xLarge.png')} review="Brett has done a great job assuring me that my mom can be assisted in a personalized way, not just warehoused.  He talked with me directly and has emailed me assuring me that there were several ways forward.  I truly appreciate nit just pushing mom into a facility but hearing who she was and her present/future needs might be. Thank you for this service. - Rebecca H" />
+            <PartnerReview name="Megan Wiswell" location="San Francisco, California" image={assetPath('images/agent-xLarge.png')} review="Good morning. Megan Wiswell is amazing. I would recommend her anytime. She is thorough and friendly. She knew the area and respected the budget I was working with. (Didn’t try to push me somewhere that wouldn’t work) I really appreciated that because she didn’t make me feel bad. She said “it is what it is” and we work with it. She’s a good listener and followed up to make sure I had what I needed. Thank you to all of you for being there for me. It is a steep learning curve and you don’t need it until you need it. Blessings for all - Sue G" />
+          </MSPAColumnWrapper>
         </StyledSection>
       </TemplateContent>
       <Footer />
