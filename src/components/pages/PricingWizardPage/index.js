@@ -79,6 +79,7 @@ class PricingWizardPage extends Component {
     user: object,
     userDetails: object,
     onComplete: func,
+    userActionSubmit: func,
     isAdvisorHelpVisible: bool,
     onAdvisorHelpClick: func,
     history: object,
@@ -110,20 +111,26 @@ class PricingWizardPage extends Component {
     sendEvent('careType-changed', id, newCareTypes.toString());
   };
 
+
   handleStepChange = ({
     currentStep, data, goto, doSubmit, toggleConfirmationModal,
   }) => {
-    const { community } = this.props;
+    const { community, userActionSubmit } = this.props;
     const { id } = community;
     const { interest } = data;
 
     sendEvent('step-completed', id, currentStep);
+
+
     if (currentStep === 3) {
       if (interest === 'talk-advisor') {
         doSubmit(toggleConfirmationModal);
       } else if (interest !== 'explore-affordable-options') {
         goto(4);
       }
+    }
+    if (currentStep === 2) {
+      userActionSubmit(data);
     }
   };
 
@@ -194,7 +201,7 @@ class PricingWizardPage extends Component {
                 {({
                   data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
                 }) => {
-                  let formHeading = null;
+                  let formHeading = 'See your estimated pricing in your next step. We need your information to connect you to our partner agent. We do not share your information with anyone else.';
                   let formSubheading = null;
                   if (data.interest) {
                     const contactFormHeadingObj = contactFormHeadingMap[data.interest];
