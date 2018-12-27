@@ -1,9 +1,10 @@
 import React from 'react';
-import { oneOf, node } from 'prop-types';
+import { node } from 'prop-types';
 import styled from 'styled-components';
 
+import { palette as palettePropType } from 'sly/propTypes/palette';
 import { Block } from 'sly/components/atoms';
-import { size, palette, getKey } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 
 const getBackground = ({ type }) => palette(type, 'base');
 
@@ -21,7 +22,7 @@ const BannerNotification = ({ children, palette }) => (
 
 BannerNotification.propTypes = {
   children: node.isRequired,
-  palette: oneOf(Object.keys(getKey('palette'))).isRequired,
+  palette: palettePropType.isRequired,
 };
 
 BannerNotification.defaultProps = {
