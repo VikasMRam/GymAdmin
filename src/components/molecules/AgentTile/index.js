@@ -51,7 +51,7 @@ const AgentTile = ({
   agent,
 }) => {
   const {
-    agentInfo: info,
+    info,
     aggregateRating: rating,
     url,
     address,
@@ -61,10 +61,10 @@ const AgentTile = ({
 
   return (
     <Wrapper>
-      <ProfileImage src={info.profileImgUrl} aspectRatio="3:2">
-        {info.recentFamilies &&
+      <ProfileImage src={info.profileImageUrl} aspectRatio="3:2">
+        {info.recentFamiliesHelped &&
           <Badge size="caption" palette="white">
-            <b>{info.recentFamilies}</b> recent placements
+            <b>{info.recentFamiliesHelped}</b> recent placements
           </Badge>
         }
       </ProfileImage>
@@ -79,7 +79,7 @@ const AgentTile = ({
           {rating.numRatings > 0 &&
             <li>
               <IconItem size="caption" icon="star">
-                {rating.ratingValue}from  <Link to={url}>{rating.numRatings} reviews</Link>
+                {rating.ratingValue} from  <Link to={url}>{rating.numRatings} reviews</Link>
               </IconItem>
             </li>
           }

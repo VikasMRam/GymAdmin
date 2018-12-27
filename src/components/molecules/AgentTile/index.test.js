@@ -16,8 +16,8 @@ const aggregateRating = {
 const agentInfo = {
   displayName: 'Fonz Wasserstrom',
   slyPhone: '9258906575',
-  recentFamilies: 17,
-  profileImgUrl: 'https://avatars.githubusercontent.com/u/113003',
+  recentFamiliesHelped: 17,
+  profileImageUrl: 'https://avatars.githubusercontent.com/u/113003',
   citiesServed: ['Utah', 'Calcuta'],
 };
 
@@ -25,14 +25,14 @@ const agent = {
   url: '/agents/midwest/fonz-wasserstrom',
   address,
   aggregateRating,
-  agentInfo,
+  info: agentInfo,
 };
 
 const agentNoFams = {
   ...agent,
-  agentInfo: {
+  info: {
     ...agentInfo,
-    recentFamilies: 0,
+    recentFamiliesHelped: 0,
   },
 };
 
@@ -49,7 +49,7 @@ const wrap = (props = {}) => shallow(<AgentTile agent={agent} {...props} />);
 describe('AgentTile', () => {
   it('renders full', () => {
     const wrapper = wrap();
-    expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImgUrl);
+    expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImageUrl);
     expect(wrapper.find('Badge').render().text()).toEqual('17 recent placements');
 
     const links = wrapper.find('Link');
@@ -72,7 +72,7 @@ describe('AgentTile', () => {
 
   it('no families', () => {
     const wrapper = wrap({ agent: agentNoFams });
-    expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImgUrl);
+    expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImageUrl);
     expect(wrapper.find('Badge').length).toEqual(0);
 
     const links = wrapper.find('Link');
@@ -95,7 +95,7 @@ describe('AgentTile', () => {
 
   it('no ratings', () => {
     const wrapper = wrap({ agent: agentNoRatings });
-    expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImgUrl);
+    expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImageUrl);
     expect(wrapper.find('Badge').render().text()).toEqual('17 recent placements');
 
     const links = wrapper.find('Link');

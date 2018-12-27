@@ -11,14 +11,14 @@ const agentInfo = shape({
   citiesServed: arrayOf(string).isRequired,
   displayName: string.isRequired,
   slyPhone: string.isRequired,
-  recentFamilies: number,
-  profileImgUrl: string.isRequired,
+  recentFamiliesHelped: number,
+  profileImageUrl: string.isRequired,
 });
 
 export default shape({
   url: string.isRequired,
   address,
   aggregateRating,
-  agentInfo,
+  info: agentInfo,
 });
 

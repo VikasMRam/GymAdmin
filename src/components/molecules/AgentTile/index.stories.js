@@ -23,8 +23,8 @@ const aggregateRating = {
 const agentInfo = {
   displayName: 'Fonz Wasserstrom',
   slyPhone: '9258906575',
-  recentFamilies: 17,
-  profileImgUrl: 'https://avatars.githubusercontent.com/u/113003',
+  recentFamiliesHelped: 17,
+  profileImageUrl: 'https://avatars.githubusercontent.com/u/113003',
   citiesServed: ['Utah', 'Calcuta'],
 };
 
@@ -32,7 +32,7 @@ export const agent = {
   url: '/agents/midwest/fonz-wasserstrom',
   address,
   aggregateRating,
-  agentInfo,
+  info: agentInfo,
 };
 
 storiesOf('Molecules|AgentTile', module)
