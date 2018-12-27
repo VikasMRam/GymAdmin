@@ -71,7 +71,7 @@ const contactFormHeadingMap = {
   'apply-financing': { heading: 'We Are Here to Help You', subheading: 'We have helped thousands of families to learn about and choose a community they love. This is a free service. ' },
 };
 
-const stepsWithoutControls = [2, 3];
+const stepsWithoutControls = [3, 4];
 
 class PricingWizardPage extends Component {
   static propTypes = {
@@ -110,14 +110,20 @@ class PricingWizardPage extends Component {
     sendEvent('careType-changed', id, newCareTypes.toString());
   };
 
-  handleStepChange = ({ currentStep, data, goto }) => {
+  handleStepChange = ({
+    currentStep, data, goto, doSubmit, toggleConfirmationModal,
+  }) => {
     const { community } = this.props;
     const { id } = community;
     const { interest } = data;
 
     sendEvent('step-completed', id, currentStep);
-    if (currentStep === 2 && interest !== 'explore-affordable-options') {
-      goto(4);
+    if (currentStep === 3) {
+      if (interest === 'talk-advisor') {
+        doSubmit(toggleConfirmationModal);
+      } else if (interest !== 'explore-affordable-options') {
+        goto(4);
+      }
     }
   };
 
@@ -183,7 +189,7 @@ class PricingWizardPage extends Component {
               <WizardController
                 formName="PricingWizardForm"
                 onComplete={data => onComplete(data, toggleConfirmationModal)}
-                onStepChange={handleStepChange}
+                onStepChange={params => handleStepChange({ ...params, toggleConfirmationModal })}
               >
                 {({
                   data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
@@ -208,6 +214,15 @@ class PricingWizardPage extends Component {
                             userDetails={userDetails}
                           />
                           <WizardStep
+                            component={CommunityBookATourContactFormContainer}
+                            name="Contact"
+                            onAdvisorHelpClick={toggleAdvisorHelp}
+                            user={user}
+                            userDetails={userDetails}
+                            heading={formHeading}
+                            subheading={formSubheading}
+                          />
+                          <WizardStep
                             component={CommunityPricingWizardWhatToDoNextFormContainer}
                             name="WhatToDoNext"
                             communityName={name}
@@ -222,15 +237,6 @@ class PricingWizardPage extends Component {
                             listOptions={EXPLORE_AFFORDABLE_PRICING_OPTIONS}
                             onBudgetChange={(e, budget) => sendEvent('budget-selected', id, budget)}
                             onSubmit={onSubmit}
-                          />
-                          <WizardStep
-                            component={CommunityBookATourContactFormContainer}
-                            name="Contact"
-                            onAdvisorHelpClick={toggleAdvisorHelp}
-                            user={user}
-                            userDetails={userDetails}
-                            heading={formHeading}
-                            subheading={formSubheading}
                           />
                         </WizardSteps>
                       </Body>

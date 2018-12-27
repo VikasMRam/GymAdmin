@@ -69,10 +69,11 @@ class WizardController extends Component {
   }
 
   next = () => {
+    const { goto } = this;
     const { currentStep } = this.props;
     const nextStep = currentStep + 1;
 
-    this.goto(nextStep);
+    goto(nextStep);
   }
 
   previous = () => {
@@ -88,14 +89,22 @@ class WizardController extends Component {
     }
   };
 
+  doSubmit = (params) => {
+    const { onComplete, data } = this.props;
+
+    onComplete(data, ...params);
+  };
+
   handleSubmit = () => {
-    const { next, previous, goto } = this;
     const {
-      onSubmit, onComplete, onStepChange, data, currentStep,
+      next, previous, goto, doSubmit, isFinalStep,
+    } = this;
+    const {
+      onSubmit, onStepChange, data, currentStep,
     } = this.props;
 
-    if (this.isFinalStep()) {
-      return onComplete(data);
+    if (isFinalStep()) {
+      return doSubmit();
     }
     if (onSubmit) {
       return onSubmit(data);
@@ -109,6 +118,7 @@ class WizardController extends Component {
         next,
         previous,
         goto,
+        doSubmit,
       };
       return onStepChange(args);
     }
