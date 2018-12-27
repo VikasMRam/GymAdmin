@@ -12,7 +12,7 @@ import Footer from 'sly/components/organisms/Footer';
 import Section from 'sly/components/molecules/Section';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import MostSearchedRegions, { ColumnWrapper } from 'sly/components/molecules/MostSearchedRegions';
-import FindLocalAgent from 'sly/components/organisms/FindLocalAgent';
+import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
 import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
 import { mostSearchedRegions } from 'sly/services/helpers/agents';
 

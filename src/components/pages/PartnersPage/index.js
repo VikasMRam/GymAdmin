@@ -5,12 +5,12 @@ import Helmet from 'react-helmet';
 import { size, assetPath } from 'sly/components/themes';
 import { getHelmetForPartnersPage } from 'sly/services/helpers/html_headers';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Image } from 'sly/components/atoms';
+import { Image, Hr, Paragraph, Box } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Section from 'sly/components/molecules/Section';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import Footer from 'sly/components/organisms/Footer';
-import PartnerWithSly from 'sly/components/organisms/PartnerWithSly';
+import PartnerWithSly from 'sly/components/molecules/PartnerWithSly';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -92,6 +92,16 @@ const PartnersPage = () => {
             <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="star" heading="Work with qualified families" content="We are not one of those “online lead companies”. As a Partner Agent, your profile will be highlighted on Seniorly.com. Families can reach out directly or be matched by Seniorly according to your area of expertise." />
             <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="loyalty" heading="Keep over 50% commission" content="You receive over 50% of the referral fee when successfully helping a Seniorly prospect. A referral commission is paid to Seniorly upon a new resident move-in." />
           </ColumnWrapper>
+        </StyledSection>
+        <Hr fullWidth />
+        <StyledSection title="Seniorly according to your area of expertise">
+          <Paragraph>Seniorly is the premier platform for senior housing and care. Thousands of families visit our site everyday givine you incredible exposure to new clients</Paragraph>
+          <Box>
+            30,000+
+            <Paragraph>families found a home with the help of Seniorly Partner Advisors</Paragraph>
+          </Box>
+          <Box>98%</Box>
+          <Box>Keep over 50% commission</Box>
         </StyledSection>
       </TemplateContent>
       <Footer />

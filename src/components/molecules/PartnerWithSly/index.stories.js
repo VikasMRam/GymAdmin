@@ -1,9 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import PartnerWithSly from 'sly/components/organisms/PartnerWithSly';
+import PartnerWithSly from 'sly/components/molecules/PartnerWithSly';
 
-storiesOf('Organisms|PartnerWithSly', module)
+storiesOf('Molecules|PartnerWithSly', module)
   .add('default', () => (
     <PartnerWithSly />
   ));
