@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { func } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import { Block, Button } from 'sly/components/atoms';

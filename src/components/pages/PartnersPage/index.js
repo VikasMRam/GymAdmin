@@ -5,12 +5,14 @@ import Helmet from 'react-helmet';
 import { size, assetPath } from 'sly/components/themes';
 import { getHelmetForPartnersPage } from 'sly/services/helpers/html_headers';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Image, Hr, Paragraph, Box } from 'sly/components/atoms';
+import { Image, Hr, Paragraph } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Section from 'sly/components/molecules/Section';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import Footer from 'sly/components/organisms/Footer';
 import PartnerWithSly from 'sly/components/molecules/PartnerWithSly';
+import FactBox from 'sly/components/molecules/FactBox';
+import { ColumnWrapper } from 'sly/components/molecules/MostSearchedRegions';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -59,13 +61,13 @@ const StyledSection = styled(Section)`
   }
 `;
 
-const ColumnWrapper = styled.div`
-  display: grid;
-  grid-template-columns: auto;
-  grid-gap: ${size('layout.gutter')};
+const StyledColumnWrapper = styled(ColumnWrapper)`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-template-columns: auto auto auto;
+    grid-template-columns: ${size('layout.col4')} ${size('layout.col4')} ${size('layout.col4')};
   }
 `;
 
@@ -94,14 +96,13 @@ const PartnersPage = () => {
           </ColumnWrapper>
         </StyledSection>
         <Hr fullWidth />
-        <StyledSection title="Seniorly according to your area of expertise">
-          <Paragraph>Seniorly is the premier platform for senior housing and care. Thousands of families visit our site everyday givine you incredible exposure to new clients</Paragraph>
-          <Box>
-            30,000+
-            <Paragraph>families found a home with the help of Seniorly Partner Advisors</Paragraph>
-          </Box>
-          <Box>98%</Box>
-          <Box>Keep over 50% commission</Box>
+        <StyledSection title="Online Discovery Matched With Local Expertise">
+          <Paragraph>Seniorly is changing the way families find senior housing and care. Thousands of families visit our site everyday, giving you exposure to new high quality clients.</Paragraph>
+          <StyledColumnWrapper>
+            <FactBox title="30,000+" description="families found a home with the help of Seniorly Partner Advisors" />
+            <FactBox title="98%" description="of families who moved in would recommend their Advisor to a friend" />
+            <FactBox title="90%" description="Over 90% of our partners would refer Seniorly to their colleagues" />
+          </StyledColumnWrapper>
         </StyledSection>
       </TemplateContent>
       <Footer />
