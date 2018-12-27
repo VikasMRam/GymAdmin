@@ -12,7 +12,7 @@ import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 const StyledBlock = styled(Block)`
   text-align: center;
-  margin-bottom: ${size('spacing.regular')};
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const StyledButton = styled(Button)`
@@ -57,7 +57,7 @@ class TalkToAgentForm extends Component {
 
     return (
       <section>
-        <StyledBlock size="subtitle" weight="medium">{heading}</StyledBlock>
+        <StyledBlock size="title" weight="medium">{heading}</StyledBlock>
         <form onSubmit={handleSubmit}>
           <Label size="caption">Where are you searching for homes? *</Label>
           <StyledSearchBoxContainer

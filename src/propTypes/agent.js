@@ -11,7 +11,7 @@ const agentInfo = shape({
   citiesServed: arrayOf(string).isRequired,
   displayName: string.isRequired,
   slyPhone: string.isRequired,
-  recentFamilies: number,
+  recentFamiliesHelped: number,
   profileImgUrl: string.isRequired,
 });
 
@@ -19,6 +19,6 @@ export default shape({
   url: string.isRequired,
   address,
   aggregateRating,
-  agentInfo,
+  info: agentInfo,
 });
 

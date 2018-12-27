@@ -6,13 +6,16 @@ import { size, palette } from 'sly/components/themes';
 import { Block } from 'sly/components/atoms';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
+const TitleBlock = styled(Block)`
+  margin-bottom: ${size('spacing.regular')};
+`;
+
 const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const Wrapper = styled.div`
   background: ${palette('white', 'base')}E6;
-  padding: ${size('spacing.xxxLarge')};
   border-radius: ${size('border.xLarge')};
 `;
 
@@ -29,7 +32,7 @@ const StyledSearchBoxContainer = styled(SearchBoxContainer)`
 const FindLocalAgent = ({ onLocationSearch }) => (
   <Wrapper>
     <ContentWrapper>
-      <Block size="hero">Find your local senior living agent</Block>
+      <TitleBlock size="hero">Find your local senior living agent</TitleBlock>
       <StyledBlock>Seniorly agents are local experts who can find homes that fit your care needs and budget</StyledBlock>
     </ContentWrapper>
     <StyledSearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />

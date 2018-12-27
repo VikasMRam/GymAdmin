@@ -1,4 +1,33 @@
 import { urlize, stateRegionMap, getStateAbbr, objectToURLQueryParams } from 'sly/services/helpers/url';
+import { assetPath } from 'sly/components/themes';
+
+export const mostSearchedRegions = [
+  {
+    to: '',
+    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    title: 'West Coast',
+  },
+  {
+    to: '',
+    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    title: 'East Coast',
+  },
+  {
+    to: '',
+    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    title: 'Southeast',
+  },
+  {
+    to: '',
+    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    title: 'Midwest',
+  },
+  {
+    to: '',
+    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    title: 'South',
+  },
+];
 
 export const agents =[
   {

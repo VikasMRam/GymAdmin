@@ -30,6 +30,7 @@ import EntityApprovalContainer from 'sly/containers/EntityApprovalContainer';
 import BookATourPageContainer from 'sly/containers/BookATourPageContainer';
 import PricingWizardPageContainer from 'sly/containers/PricingWizardPageContainer';
 import AgentProfilePageContainer from 'sly/containers/AgentProfilePageContainer';
+import AgentRegionPageContainer from 'sly/containers/AgentRegionPageContainer';
 
 setGlobalStyles();
 
@@ -111,6 +112,11 @@ export default class App extends Component {
     {
       path: '/agents/:region/:city/:agentSlug',
       component: AgentProfilePageContainer,
+      exact: true,
+    },
+    {
+      path: '/agents/:region',
+      component: AgentRegionPageContainer,
       exact: true,
     },
     {

@@ -5,46 +5,15 @@ import Helmet from 'react-helmet';
 
 import { size, assetPath } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Link, Image, Heading, Hr } from 'sly/components/atoms';
+import { Image, Hr } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
-import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import Section from 'sly/components/molecules/Section';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
+import MostSearchedRegions, { ColumnWrapper } from 'sly/components/molecules/MostSearchedRegions';
 import FindLocalAgent from 'sly/components/organisms/FindLocalAgent';
 import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
-
-const mostSearchedRegions = [
-  {
-    to: '',
-    image: assetPath('images/cities/SanFrancisco.jpeg'),
-    title: 'West Coast',
-  },
-  {
-    to: '',
-    image: assetPath('images/cities/SanFrancisco.jpeg'),
-    title: 'East Coast',
-  },
-  {
-    to: '',
-    image: assetPath('images/cities/SanFrancisco.jpeg'),
-    title: 'Southeast',
-  },
-  {
-    to: '',
-    image: assetPath('images/cities/SanFrancisco.jpeg'),
-    title: 'Midwest',
-  },
-  {
-    to: '',
-    image: assetPath('images/cities/SanFrancisco.jpeg'),
-    title: 'South',
-  },
-];
-
-const StyledLink = styled(Link)`
-  display: block;
-`;
+import { mostSearchedRegions } from 'sly/services/helpers/agents';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -74,6 +43,7 @@ const HeroTextWrapper = styled.div`
   align-items: center;
 
   > * {
+    padding: ${size('spacing.xxxLarge')};
     max-width: ${size('mobileLayout.col4')};
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       max-width: ${size('tabletLayout.col6')};
@@ -101,36 +71,6 @@ const FormSection = StyledSection.extend`
   }
 `;
 
-const ColumnWrapper = styled.div`
-  display: grid;
-  grid-template-columns: auto;
-  grid-gap: ${size('mobileLayout.gutter')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    grid-gap: ${size('tabletLayout.gutter')};
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-gap: ${size('layout.gutter')};
-    grid-template-columns: auto auto auto;
-  }
-`;
-
-const MSColumnWrapper = ColumnWrapper.extend`
-  grid-template-columns: auto;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    grid-template-columns: auto auto;
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-template-columns: auto auto auto;
-  }
-`;
-
-const StyledImageOverlayContentTile = styled(ImageOverlayContentTile)`
-  height: ${size('element.huge')};
-`;
-
 const AgentsPage = ({ onSubmitForm, onLocationSearch }) => {
   const headerContent = (
     <Fragment>
@@ -144,13 +84,6 @@ const AgentsPage = ({ onSubmitForm, onLocationSearch }) => {
       </HeroWrapper>
     </Fragment>
   );
-  const mostSearchedRegionsComponents = mostSearchedRegions.map(mostSearchedRegion => (
-    <StyledLink key={mostSearchedRegion.title} to={mostSearchedRegion.to}>
-      <StyledImageOverlayContentTile size="small" image={mostSearchedRegion.image}>
-        <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedRegion.title}</Heading>
-      </StyledImageOverlayContentTile>
-    </StyledLink>
-  ));
 
   return (
     <Fragment>
@@ -168,9 +101,7 @@ const AgentsPage = ({ onSubmitForm, onLocationSearch }) => {
         </StyledSection>
         <Hr fullWidth />
         <StyledSection centerTitle title="Search senior living agents by region">
-          <MSColumnWrapper>
-            {mostSearchedRegionsComponents}
-          </MSColumnWrapper>
+          <MostSearchedRegions mostSearchedRegions={mostSearchedRegions} />
         </StyledSection>
         <Hr fullWidth />
         <FormSection>

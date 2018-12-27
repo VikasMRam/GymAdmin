@@ -7,7 +7,7 @@ import { Icon, Link, Hr } from 'sly/components/atoms';
 import config from 'sly/config';
 
 const FooterWrapper = styled.footer`
-  background-color: ${palette('slate', 'stroke')};
+  background-color: ${palette('slate', 'base')};
   color: ${palette('white', 'base')};
 `;
 
