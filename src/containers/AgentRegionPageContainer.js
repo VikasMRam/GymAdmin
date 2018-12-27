@@ -9,13 +9,14 @@ import withServerState from 'sly/store/withServerState';
 import { titleize } from 'sly/services/helpers/strings';
 
 const AgentRegionPageContainer = ({ agentsList, regionSlug, citySlug }) => {
-  let title = null;
+  let locationName = null;
   if (citySlug) {
-    title = `${titleize(citySlug)} Partner Agents`;
+    locationName = titleize(citySlug);
   } else {
-    title = `${titleize(regionSlug)} Partner Agents`;
+    locationName = titleize(regionSlug);
   }
-  return <AgentRegionPage agentsList={agentsList} title={title} />;
+  const title = `${locationName} Partner Agents`;
+  return <AgentRegionPage agentsList={agentsList} title={title} locationName={locationName} />;
 };
 
 const mapStateToProps = (state, { match }) => {

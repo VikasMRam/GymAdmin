@@ -66,7 +66,11 @@ const StyledSection = styled(Section)`
   margin-bottom: ${size('spacing.huge')};
 `;
 
-const AgentProfilePage = ({ title, agentsList }) => {
+const NoResultBlock = styled(Block)`
+  text-align: center;
+`;
+
+const AgentProfilePage = ({ title, locationName, agentsList }) => {
   if (!agentsList) {
     return null;
   }
@@ -79,9 +83,14 @@ const AgentProfilePage = ({ title, agentsList }) => {
           <FindLocalAgentLink to="/" palette="slate">Looking for agents in other areas?</FindLocalAgentLink>
         </PageHeadingSection>
         <StyledHr />
-        <AgentTilesWrapper>
-          {agentsList.map(agent => <Link key={agent.id} to="/"><AgentTile agent={agent} /></Link>)}
-        </AgentTilesWrapper>
+        {agentsList.length > 0 &&
+          <AgentTilesWrapper>
+            {agentsList.map(agent => <Link key={agent.id} to="/"><AgentTile agent={agent} /></Link>)}
+          </AgentTilesWrapper>
+        }
+        {agentsList.length === 0 &&
+          <NoResultBlock>{`It looks like we do not have any agents listed in ${locationName}. We are currently adding new partners everyday who might not be listed yet. Fill out the form below and we will help you find your local partner agent.`}</NoResultBlock>
+        }
         <StyledHr />
         <FormSection>
           <TalkToAgentFormContainer headingSize="title" onSubmit={() => {}} />
@@ -101,6 +110,7 @@ const AgentProfilePage = ({ title, agentsList }) => {
 
 AgentProfilePage.propTypes = {
   title: string.isRequired,
+  locationName: string.isRequired,
   agentsList: arrayOf(agentPropType),
 };
 
