@@ -111,14 +111,23 @@ class PricingWizardPage extends Component {
     sendEvent('careType-changed', id, newCareTypes.toString());
   };
 
-  handleStepChange = ({ currentStep, data, goto }) => {
+
+  handleStepChange = ({
+    currentStep, data, goto, doSubmit, toggleConfirmationModal,
+  }) => {
     const { community, userActionSubmit } = this.props;
     const { id } = community;
     const { interest } = data;
 
     sendEvent('step-completed', id, currentStep);
-    if (currentStep === 3 && interest !== 'explore-affordable-options') {
-      goto(4);
+
+
+    if (currentStep === 3) {
+      if (interest === 'talk-advisor') {
+        doSubmit(toggleConfirmationModal);
+      } else if (interest !== 'explore-affordable-options') {
+        goto(4);
+      }
     }
     if (currentStep === 2) {
       userActionSubmit(data);
@@ -187,7 +196,7 @@ class PricingWizardPage extends Component {
               <WizardController
                 formName="PricingWizardForm"
                 onComplete={data => onComplete(data, toggleConfirmationModal)}
-                onStepChange={handleStepChange}
+                onStepChange={params => handleStepChange({ ...params, toggleConfirmationModal })}
               >
                 {({
                   data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
