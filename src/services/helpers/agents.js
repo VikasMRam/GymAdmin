@@ -3,27 +3,27 @@ import { assetPath } from 'sly/components/themes';
 
 export const mostSearchedRegions = [
   {
-    to: '',
+    to: '/agents/west-coast',
     image: assetPath('images/cities/SanFrancisco.jpeg'),
     title: 'West Coast',
   },
   {
-    to: '',
+    to: '/agents/east-coast',
     image: assetPath('images/cities/SanFrancisco.jpeg'),
     title: 'East Coast',
   },
   {
-    to: '',
+    to: '/agents/south-east',
     image: assetPath('images/cities/SanFrancisco.jpeg'),
     title: 'Southeast',
   },
   {
-    to: '',
+    to: '/agents/midwest',
     image: assetPath('images/cities/SanFrancisco.jpeg'),
     title: 'Midwest',
   },
   {
-    to: '',
+    to: '/agents/south',
     image: assetPath('images/cities/SanFrancisco.jpeg'),
     title: 'South',
   },
