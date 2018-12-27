@@ -12,7 +12,7 @@ const agentInfo = shape({
   displayName: string.isRequired,
   slyPhone: string.isRequired,
   recentFamiliesHelped: number,
-  profileImgUrl: string.isRequired,
+  profileImageUrl: string.isRequired,
 });
 
 export default shape({
