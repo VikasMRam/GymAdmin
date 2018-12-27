@@ -115,6 +115,11 @@ export default class App extends Component {
       exact: true,
     },
     {
+      path: '/agents/:region/:city/',
+      component: AgentRegionPageContainer,
+      exact: true,
+    },
+    {
       path: '/agents/:region',
       component: AgentRegionPageContainer,
       exact: true,

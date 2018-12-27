@@ -8,14 +8,23 @@ import { getList } from 'sly/store/selectors';
 import withServerState from 'sly/store/withServerState';
 import { titleize } from 'sly/services/helpers/strings';
 
-const AgentRegionPageContainer = ({ agentsList, regionSlug }) => <AgentRegionPage agentsList={agentsList} title={`${titleize(regionSlug)} Partner Agents`} />;
+const AgentRegionPageContainer = ({ agentsList, regionSlug, citySlug }) => {
+  let title = null;
+  if (citySlug) {
+    title = `${titleize(citySlug)} Partner Agents`;
+  } else {
+    title = `${titleize(regionSlug)} Partner Agents`;
+  }
+  return <AgentRegionPage agentsList={agentsList} title={title} />;
+};
 
 const mapStateToProps = (state, { match }) => {
   const { params } = match;
-  const { region } = params;
+  const { region, city } = params;
   return {
     regionSlug: region,
-    agentsList: getList(state, 'agent', { region }),
+    citySlug: city,
+    agentsList: getList(state, 'agent', { region, city }),
   };
 };
 
@@ -25,9 +34,9 @@ const mapDispatchToProps = () => {
 
 const fetchData = (dispatch, { match }) => {
   const { params } = match;
-  const { region } = params;
+  const { region, city } = params;
   return Promise.all([
-    dispatch(resourceListReadRequest('agent', { region })),
+    dispatch(resourceListReadRequest('agent', { region, city })),
   ]);
 };
 
@@ -49,7 +58,8 @@ const handleError = (err) => {
 };
 
 AgentRegionPageContainer.propTypes = {
-  regionSlug: string,
+  regionSlug: string.isRequired,
+  citySlug: string,
   agentsList: arrayOf(agentPropType),
 };
 
