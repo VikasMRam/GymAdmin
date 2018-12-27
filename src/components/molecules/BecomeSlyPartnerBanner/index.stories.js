@@ -5,4 +5,4 @@ import BecomeSlyPartnerBanner from 'sly/components/molecules/BecomeSlyPartnerBan
 
 storiesOf('Molecules|BecomeSlyPartnerBanner', module)
   .add('default', () => <BecomeSlyPartnerBanner />)
-  .add('with palette', () => <BecomeSlyPartnerBanner />);
+  .add('with palette', () => <BecomeSlyPartnerBanner palette="slate" />);

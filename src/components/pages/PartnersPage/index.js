@@ -14,6 +14,7 @@ import PartnerWithSly from 'sly/components/molecules/PartnerWithSly';
 import FactBox from 'sly/components/molecules/FactBox';
 import { ColumnWrapper } from 'sly/components/molecules/MostSearchedRegions';
 import PartnerReview from 'sly/components/molecules/PartnerReview';
+import BecomeSlyPartnerBanner from 'sly/components/molecules/BecomeSlyPartnerBanner';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -124,6 +125,7 @@ const PartnersPage = () => {
           </MSPAColumnWrapper>
         </StyledSection>
       </TemplateContent>
+      <BecomeSlyPartnerBanner />
       <Footer />
     </Fragment>
   );

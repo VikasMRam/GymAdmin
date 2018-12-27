@@ -15,7 +15,7 @@ const Wrapper = styled(Block)`
 `;
 
 const BannerNotification = ({ children, palette }) => (
-  <Wrapper type={palette} palette="white" weight="regular">
+  <Wrapper type={palette} palette="white">
     {children}
   </Wrapper>
 );

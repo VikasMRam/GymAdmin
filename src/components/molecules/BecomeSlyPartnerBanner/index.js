@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
-import { Block, Logo } from 'sly/components/atoms';
+import { Block, Logo, Button } from 'sly/components/atoms';
 import { size, palette } from 'sly/components/themes';
 
 const getBackground = ({ type }) => palette(type, 'base');
@@ -13,24 +13,35 @@ const Wrapper = styled(Block)`
   padding: ${size('spacing.xxxLarge')};
 `;
 
-const TextWrapper = styled.div`
-  border-left: ${size('border.regular')} solid ${palette('white', 'base')};
-  padding-left: ${size('spacing.regular')};
+const Line = styled.div`
+  background: ${palette('white', 'base')};
+  width: ${size('border.regular')};
+  height: 100%;
   margin-left: ${size('spacing.regular')};
+  margin-right: ${size('spacing.regular')};
 `;
 
 const TopWrapper = styled.div`
-  display: flex;
-  justify-content: center;
+  display: grid;
   align-items: center;
+  justify-content: center;
+  grid-template-columns: min-content min-content min-content;
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
+const StyledBlock = styled(Block)`
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const BecomeSlyPartnerBanner = ({ palette }) => (
-  <Wrapper type={palette} palette="white" weight="regular">
+  <Wrapper type={palette} palette="white">
     <TopWrapper>
       <Logo variant="white" />
-      <TextWrapper>PARTNERS</TextWrapper>
+      <Line />
+      <div>PARTNERS</div>
     </TopWrapper>
+    <StyledBlock palette="white" size="title">Become A Seniorly Partner Agent</StyledBlock>
+    <Button href="/providers/crm" kind="jumbo" palette="white" foregroundPalette="primary">Apply now</Button>
   </Wrapper>
 );
 
