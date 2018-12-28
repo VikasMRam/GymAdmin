@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
 import { string, arrayOf } from 'prop-types';
 
@@ -70,48 +70,63 @@ const NoResultBlock = styled(Block)`
   text-align: center;
 `;
 
-const AgentProfilePage = ({ title, locationName, agentsList }) => {
-  if (!agentsList) {
-    return null;
+class AgentRegionPage extends Component {
+  static propTypes = {
+    title: string.isRequired,
+    locationName: string.isRequired,
+    agentsList: arrayOf(agentPropType),
   }
-  return (
-    <Fragment>
-      <TemplateHeader><HeaderContainer /></TemplateHeader>
-      <TemplateContent>
-        <PageHeadingSection>
-          <Block size="hero">{title}</Block>
-          <FindLocalAgentLink to="/" palette="slate">Looking for agents in other areas?</FindLocalAgentLink>
-        </PageHeadingSection>
-        <StyledHr />
-        {agentsList.length > 0 &&
-          <AgentTilesWrapper>
-            {agentsList.map(agent => <Link key={agent.id} to="/"><AgentTile agent={agent} /></Link>)}
-          </AgentTilesWrapper>
-        }
-        {agentsList.length === 0 &&
-          <NoResultBlock>{`It looks like we do not have any agents listed in ${locationName}. We are currently adding new partners everyday who might not be listed yet. Fill out the form below and we will help you find your local partner agent.`}</NoResultBlock>
-        }
-        <StyledHr />
-        <FormSection>
-          <TalkToAgentFormContainer headingSize="title" onSubmit={() => {}} />
-        </FormSection>
-        <StyledHr />
-        <FindLocalAgentWrapper>
-          <FindLocalAgent onLocationSearch={() => {}} />
-        </FindLocalAgentWrapper>
-        <StyledSection centerTitle title="Search senior living agents by region">
-          <MostSearchedRegions mostSearchedRegions={mostSearchedRegions} />
-        </StyledSection>
-      </TemplateContent>
-      <Footer />
-    </Fragment>
-  );
-};
+  constructor(props) {
+    super(props);
+    this.talkToLocalAgentRef = React.createRef();
+  }
+  render() {
+    const { title, locationName, agentsList } = this.props;
+    if (!agentsList) {
+      return null;
+    }
+    return (
+      <Fragment>
+        <TemplateHeader><HeaderContainer /></TemplateHeader>
+        <TemplateContent>
+          <PageHeadingSection>
+            <Block size="hero">{title}</Block>
+            <FindLocalAgentLink
+              palette="slate"
+              onClick={() => {
+                if (this.talkToLocalAgentRef.current.scrollIntoView) {
+                  this.talkToLocalAgentRef.current.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
+              Looking for agents in other areas?
+            </FindLocalAgentLink>
+          </PageHeadingSection>
+          <StyledHr />
+          {agentsList.length > 0 &&
+            <AgentTilesWrapper>
+              {agentsList.map(agent => <Link key={agent.id} to="/"><AgentTile agent={agent} /></Link>)}
+            </AgentTilesWrapper>
+          }
+          {agentsList.length === 0 &&
+            <NoResultBlock>{`It looks like we do not have any agents listed in ${locationName}. We are currently adding new partners everyday who might not be listed yet. Fill out the form below and we will help you find your local partner agent.`}</NoResultBlock>
+          }
+          <StyledHr />
+          <FormSection innerRef={this.talkToLocalAgentRef}>
+            <TalkToAgentFormContainer headingSize="title" onSubmit={() => {}} />
+          </FormSection>
+          <StyledHr />
+          <FindLocalAgentWrapper>
+            <FindLocalAgent onLocationSearch={() => {}} />
+          </FindLocalAgentWrapper>
+          <StyledSection centerTitle title="Search senior living agents by region">
+            <MostSearchedRegions mostSearchedRegions={mostSearchedRegions} />
+          </StyledSection>
+        </TemplateContent>
+        <Footer />
+      </Fragment>
+    );
+  }
+}
 
-AgentProfilePage.propTypes = {
-  title: string.isRequired,
-  locationName: string.isRequired,
-  agentsList: arrayOf(agentPropType),
-};
-
-export default AgentProfilePage;
+export default AgentRegionPage;
