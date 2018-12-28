@@ -5,7 +5,7 @@ import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
 
 import { size, key, palette } from 'sly/components/themes';
-import { Icon, ClampedText } from 'sly/components/atoms';
+import { Icon, ClampedText, Block } from 'sly/components/atoms';
 
 // const marginBottom = (p) => {
 //   if (p.collapsed) {
@@ -27,16 +27,12 @@ const Section = styled.section`
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: ${size('spacing.xLarge')};
 
   :hover {
     cursor: pointer;
   }
-`;
-
-const StyledHeading = styled(ClampedText)`
-  margin: 0;
 `;
 
 const contentHeight = ({ collapsed, maxHeight }) => (!collapsed ? `${maxHeight}px` : 0);
@@ -94,12 +90,15 @@ export default class CollapsibleSection extends Component {
     size: oneOf(['small', 'regular', 'large']),
     innerRef: object,
     paddedContent: bool,
+    className: string,
+    clampTitle: bool,
   };
 
   static defaultProps = {
     collapsedDefault: false,
     size: 'regular',
     paddedContent: false,
+    clampTitle: true,
   };
 
   state = {
@@ -126,6 +125,8 @@ export default class CollapsibleSection extends Component {
       size,
       innerRef,
       paddedContent,
+      className,
+      clampTitle,
       ...props
     } = this.props;
     const { collapsed, maxHeight } = this.state;
@@ -137,11 +138,19 @@ export default class CollapsibleSection extends Component {
             collapsed={collapsed}
             size={size}
             innerRef={innerRef}
+            className={className}
           >
             <Header onClick={this.toggle}>
-              <StyledHeading weight="medium" level={getHeadingLevel(size)} size={getHeadingSize(size)}>
-                {title}
-              </StyledHeading>
+              {clampTitle &&
+                <ClampedText weight="medium" level={getHeadingLevel(size)} size={getHeadingSize(size)}>
+                  {title}
+                </ClampedText>
+              }
+              {!clampTitle &&
+                <Block weight="medium" level={getHeadingLevel(size)} size={getHeadingSize(size)}>
+                  {title}
+                </Block>
+              }
               <Icon icon="chevron" palette="slate" flip={!collapsed} />
             </Header>
             <Content maxHeight={maxHeight} collapsed={collapsed}>
