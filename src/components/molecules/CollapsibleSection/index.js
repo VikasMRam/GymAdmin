@@ -6,6 +6,7 @@ import { bool, string, node, oneOf, object } from 'prop-types';
 
 import { size, key, palette } from 'sly/components/themes';
 import { Icon, ClampedText, Block } from 'sly/components/atoms';
+import { weight as weightPropType } from 'sly/propTypes/weight';
 
 // const marginBottom = (p) => {
 //   if (p.collapsed) {
@@ -92,6 +93,7 @@ export default class CollapsibleSection extends Component {
     paddedContent: bool,
     className: string,
     clampTitle: bool,
+    headingWeight: weightPropType,
   };
 
   static defaultProps = {
@@ -99,6 +101,7 @@ export default class CollapsibleSection extends Component {
     size: 'regular',
     paddedContent: false,
     clampTitle: true,
+    headingWeight: 'medium',
   };
 
   state = {
@@ -127,6 +130,7 @@ export default class CollapsibleSection extends Component {
       paddedContent,
       className,
       clampTitle,
+      headingWeight,
       ...props
     } = this.props;
     const { collapsed, maxHeight } = this.state;
@@ -142,12 +146,12 @@ export default class CollapsibleSection extends Component {
           >
             <Header onClick={this.toggle}>
               {clampTitle &&
-                <ClampedText weight="medium" level={getHeadingLevel(size)} size={getHeadingSize(size)}>
+                <ClampedText weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
                   {title}
                 </ClampedText>
               }
               {!clampTitle &&
-                <Block weight="medium" level={getHeadingLevel(size)} size={getHeadingSize(size)}>
+                <Block weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
                   {title}
                 </Block>
               }

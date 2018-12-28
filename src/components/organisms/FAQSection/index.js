@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { arrayOf, shape, string } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import { Block, Heading, Box } from 'sly/components/atoms';
+import { Block, Box } from 'sly/components/atoms';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 
 const StyledCollapsibleSection = styled(CollapsibleSection)`
@@ -41,7 +41,7 @@ const StyledBox = styled(Box)`
   border-bottom-right-radius: 0;
 `;
 
-const StyledHeading = styled(Heading)`
+const StyledBlock = styled(Block)`
   padding: ${size('spacing.xLarge')};
   padding-bottom: 0;
 `;
@@ -50,7 +50,7 @@ const FAQSection = ({ faqs }) => {
   const [firstFaq, ...restFaqs] = faqs;
 
   const restFaqComponents = restFaqs.map(({ title, description }) => (
-    <StyledCollapsibleSection key={title} clampTitle={false} title={title}>
+    <StyledCollapsibleSection key={title} clampTitle={false} headingWeight="regular" title={title}>
       <Block palette="grey">
         {description}
       </Block>
@@ -60,16 +60,16 @@ const FAQSection = ({ faqs }) => {
   return (
     <div>
       <StyledBox>
-        <StyledHeading>Frequently asked questions</StyledHeading>
+        <StyledBlock size="title">Frequently asked questions</StyledBlock>
         {faqs.length === 1 &&
-          <OneCollapsibleSection clampTitle={false} title={firstFaq.title}>
+          <OneCollapsibleSection clampTitle={false} headingWeight="regular" title={firstFaq.title}>
             <Block palette="grey">
               {firstFaq.description}
             </Block>
           </OneCollapsibleSection>
         }
         {faqs.length > 1 &&
-          <FirstCollapsibleSection clampTitle={false} title={firstFaq.title}>
+          <FirstCollapsibleSection clampTitle={false} headingWeight="regular" title={firstFaq.title}>
             <Block palette="grey">
               {firstFaq.description}
             </Block>
