@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { size, assetPath } from 'sly/components/themes';
 import { getHelmetForPartnersPage } from 'sly/services/helpers/html_headers';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
-import { Image, Hr, Paragraph } from 'sly/components/atoms';
+import { Hr, Paragraph } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Section from 'sly/components/molecules/Section';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
@@ -29,22 +29,16 @@ const HeroWrapper = styled.div`
   }
 `;
 
-const HeroBackgroundImage = styled(Image)`
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  display: block;
-`;
-
 const HeroTextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-position: right 50%;
+  background-image: url(${assetPath('images/agents-partners-hero.png')});
 
   > * {
-    max-width: ${size('mobileLayout.col4')};
+    max-width: calc(100% - ${size('spacing.large')});
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       max-width: ${size('tabletLayout.col6')};
     }
@@ -88,7 +82,6 @@ const PartnersPage = () => {
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       <HeaderContainer />
       <HeroWrapper>
-        <HeroBackgroundImage src={assetPath('images/agents-partners-hero.png')} alt="A Home To Love" />
         <HeroTextWrapper><PartnerWithSly /></HeroTextWrapper>
       </HeroWrapper>
     </Fragment>
