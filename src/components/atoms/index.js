@@ -19,3 +19,4 @@ export TileImage from './TileImage';
 export Map from './Map';
 export ClampedText from './ClampedText';
 export BoxChoiceTile from './BoxChoiceTile';
+export Logo from './Logo';

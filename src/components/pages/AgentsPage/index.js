@@ -6,12 +6,13 @@ import Helmet from 'react-helmet';
 import { size, assetPath } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Image, Hr } from 'sly/components/atoms';
+import { getHelmetForAgentsPage } from 'sly/services/helpers/html_headers';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import Section from 'sly/components/molecules/Section';
 import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import MostSearchedRegions, { ColumnWrapper } from 'sly/components/molecules/MostSearchedRegions';
-import FindLocalAgent from 'sly/components/organisms/FindLocalAgent';
+import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
 import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
 import { mostSearchedRegions } from 'sly/services/helpers/agents';
 
@@ -43,7 +44,6 @@ const HeroTextWrapper = styled.div`
   align-items: center;
 
   > * {
-    padding: ${size('spacing.xxxLarge')};
     max-width: ${size('mobileLayout.col4')};
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       max-width: ${size('tabletLayout.col6')};
@@ -87,9 +87,7 @@ const AgentsPage = ({ onSubmitForm, onLocationSearch }) => {
 
   return (
     <Fragment>
-      <Helmet>
-        <title>Our Senior Living Partner Agents</title>
-      </Helmet>
+      {getHelmetForAgentsPage()}
       <TemplateHeader>{headerContent}</TemplateHeader>
       <TemplateContent>
         <StyledSection>
