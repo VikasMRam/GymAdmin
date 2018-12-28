@@ -11,7 +11,7 @@ import Section from 'sly/components/molecules/Section';
 import Footer from 'sly/components/organisms/Footer';
 import { Block, Link, Hr } from 'sly/components/atoms';
 import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
-import FindLocalAgent from 'sly/components/organisms/FindLocalAgent';
+import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
 import MostSearchedRegions from 'sly/components/molecules/MostSearchedRegions';
 import { mostSearchedRegions } from 'sly/services/helpers/agents';
 

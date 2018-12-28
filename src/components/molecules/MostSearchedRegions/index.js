@@ -25,7 +25,7 @@ export const ColumnWrapper = styled.div`
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     grid-gap: ${size('layout.gutter')};
-    grid-template-columns: auto auto auto;
+    grid-template-columns: ${size('layout.col4')} ${size('layout.col4')} ${size('layout.col4')};
   }
 `;
 
@@ -33,11 +33,11 @@ const Wrapper = ColumnWrapper.extend`
   grid-template-columns: auto;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    grid-template-columns: auto auto;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-template-columns: auto auto auto;
+    grid-template-columns: ${size('layout.col4')} ${size('layout.col4')} ${size('layout.col4')};
   }
 `;
 
