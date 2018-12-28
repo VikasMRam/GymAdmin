@@ -10,7 +10,11 @@ const StyledBlock = styled(Block)`
 `;
 
 const StyledBox = styled(Box)`
-  padding: ${size('spacing.xxLarge')} ${size('spacing.xLarge')};
+  padding:  ${size('spacing.xLarge')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.xxLarge')} ${size('spacing.xLarge')};
+  }
 `;
 
 const FactBox = ({ title, description }) => (
