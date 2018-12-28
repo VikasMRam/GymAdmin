@@ -78,7 +78,7 @@ class AgentRegionPage extends Component {
   }
   constructor(props) {
     super(props);
-    this.talkToLocalAgentRef = React.createRef();
+    this.findLocalAgentRef = React.createRef();
   }
   render() {
     const { title, locationName, agentsList } = this.props;
@@ -94,8 +94,8 @@ class AgentRegionPage extends Component {
             <FindLocalAgentLink
               palette="slate"
               onClick={() => {
-                if (this.talkToLocalAgentRef.current.scrollIntoView) {
-                  this.talkToLocalAgentRef.current.scrollIntoView({ behavior: 'smooth' });
+                if (this.findLocalAgentRef.current.scrollIntoView) {
+                  this.findLocalAgentRef.current.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
             >
@@ -112,11 +112,11 @@ class AgentRegionPage extends Component {
             <NoResultBlock>{`It looks like we do not have any agents listed in ${locationName}. We are currently adding new partners everyday who might not be listed yet. Fill out the form below and we will help you find your local partner agent.`}</NoResultBlock>
           }
           <StyledHr />
-          <FormSection innerRef={this.talkToLocalAgentRef}>
+          <FormSection>
             <TalkToAgentFormContainer headingSize="title" onSubmit={() => {}} />
           </FormSection>
           <StyledHr />
-          <FindLocalAgentWrapper>
+          <FindLocalAgentWrapper innerRef={this.findLocalAgentRef}>
             <FindLocalAgent onLocationSearch={() => {}} />
           </FindLocalAgentWrapper>
           <StyledSection centerTitle title="Search senior living agents by region">
