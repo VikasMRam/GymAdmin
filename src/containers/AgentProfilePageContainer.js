@@ -1,13 +1,27 @@
 import React from 'react';
-import { object } from 'prop-types';
+import { object, func, bool } from 'prop-types';
 
 import agentPropType from 'sly/propTypes/agent';
 import AgentProfilePage from 'sly/components/pages/AgentProfilePage';
-import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { getDetail } from 'sly/store/selectors';
+import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/resource/actions';
+import { getDetail, isResourceDetailRequestComplete } from 'sly/store/selectors';
 import withServerState from 'sly/store/withServerState';
 
-const AgentProfilePageContainer = ({ agent, user }) => <AgentProfilePage agent={agent} user={user} />;
+const AgentProfilePageContainer = ({
+  agent, user, userAction, isUserFetchDone, postUserAction,
+}) => {
+  if (!agent || !userAction || !isUserFetchDone) {
+    return null;
+  }
+  return (
+    <AgentProfilePage
+      agent={agent}
+      user={user}
+      userDetails={userAction.userDetails}
+      postUserAction={postUserAction}
+    />
+  );
+};
 
 const getAgentSlug = match => match.params.agentSlug;
 const mapStateToProps = (state, { match }) => {
@@ -16,11 +30,14 @@ const mapStateToProps = (state, { match }) => {
     user: getDetail(state, 'user', 'me'),
     agent: getDetail(state, 'agent', agentSlug),
     userAction: getDetail(state, 'userAction'),
+    isUserFetchDone: isResourceDetailRequestComplete(state, 'user'),
   };
 };
 
-const mapDispatchToProps = () => {
-  return {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
+  };
 };
 
 const fetchData = (dispatch, { match }) =>
@@ -49,6 +66,9 @@ const handleError = (err) => {
 AgentProfilePageContainer.propTypes = {
   agent: agentPropType,
   user: object,
+  userAction: object,
+  postUserAction: func.isRequired,
+  isUserFetchDone: bool,
 };
 
 export default withServerState({

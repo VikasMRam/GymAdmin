@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { shape, object } from 'prop-types';
+import { shape, object, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -74,6 +74,8 @@ class AgentProfilePage extends Component {
       info: object.isRequired,
     }).isRequired,
     user: object,
+    userDetails: object,
+    postUserAction: func.isRequired,
   }
   constructor(props) {
     super(props);
@@ -81,7 +83,9 @@ class AgentProfilePage extends Component {
   }
 
   render() {
-    const { agent, user } = this.props;
+    const {
+      agent, user, userDetails, postUserAction,
+    } = this.props;
     if (!agent) {
       return null;
     }
@@ -151,7 +155,13 @@ class AgentProfilePage extends Component {
           <StyledHr />
           <StyledSection>
             <AskQuestionToAgentWrapper innerRef={this.askAgentAQuestionRef}>
-              <AskQuestionToAgentFormContainer heading={`Ask ${firstName} a question`} firstName={firstName} />
+              <AskQuestionToAgentFormContainer
+                agent={agent}
+                heading={`Ask ${firstName} a question`}
+                firstName={firstName}
+                userDetails={userDetails}
+                postUserAction={postUserAction}
+              />
             </AskQuestionToAgentWrapper>
           </StyledSection>
         </TemplateContent>
