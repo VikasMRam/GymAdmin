@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
-import { string, arrayOf } from 'prop-types';
+import { string, arrayOf, func, object } from 'prop-types';
 
 import agentPropType from 'sly/propTypes/agent';
 import { size, palette } from 'sly/components/themes';
@@ -75,13 +75,17 @@ class AgentRegionPage extends Component {
     title: string.isRequired,
     locationName: string.isRequired,
     agentsList: arrayOf(agentPropType),
+    postUserAction: func.isRequired,
+    userDetails: object,
   }
   constructor(props) {
     super(props);
     this.findLocalAgentRef = React.createRef();
   }
   render() {
-    const { title, locationName, agentsList } = this.props;
+    const {
+      title, locationName, agentsList, postUserAction, userDetails,
+    } = this.props;
     if (!agentsList) {
       return null;
     }
@@ -113,7 +117,7 @@ class AgentRegionPage extends Component {
           }
           <StyledHr />
           <FormSection>
-            <TalkToAgentFormContainer headingSize="title" onSubmit={() => {}} />
+            <TalkToAgentFormContainer headingSize="title" postUserAction={postUserAction} userDetails={userDetails} />
           </FormSection>
           <StyledHr />
           <FindLocalAgentWrapper innerRef={this.findLocalAgentRef}>

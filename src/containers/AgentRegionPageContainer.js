@@ -1,14 +1,19 @@
 import React from 'react';
-import { string, arrayOf } from 'prop-types';
+import { string, arrayOf, func, object } from 'prop-types';
 
 import agentPropType from 'sly/propTypes/agent';
 import AgentRegionPage from 'sly/components/pages/AgentRegionPage';
-import { resourceListReadRequest } from 'sly/store/resource/actions';
-import { getList } from 'sly/store/selectors';
+import { resourceListReadRequest, resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { getList, getDetail } from 'sly/store/selectors';
 import withServerState from 'sly/store/withServerState';
 import { titleize } from 'sly/services/helpers/strings';
 
-const AgentRegionPageContainer = ({ agentsList, regionSlug, citySlug }) => {
+const AgentRegionPageContainer = ({
+  agentsList, regionSlug, citySlug, postUserAction, userAction,
+}) => {
+  if (!userAction) {
+    return null;
+  }
   let locationName = null;
   if (citySlug) {
     locationName = titleize(citySlug);
@@ -16,7 +21,15 @@ const AgentRegionPageContainer = ({ agentsList, regionSlug, citySlug }) => {
     locationName = titleize(regionSlug);
   }
   const title = `${locationName} Partner Agents`;
-  return <AgentRegionPage agentsList={agentsList} title={title} locationName={locationName} />;
+  return (
+    <AgentRegionPage
+      agentsList={agentsList}
+      title={title}
+      locationName={locationName}
+      postUserAction={postUserAction}
+      userDetails={userAction.userDetails}
+    />
+  );
 };
 
 const mapStateToProps = (state, { match }) => {
@@ -26,11 +39,14 @@ const mapStateToProps = (state, { match }) => {
     regionSlug: region,
     citySlug: city,
     agentsList: getList(state, 'agent', { region, city }),
+    userAction: getDetail(state, 'userAction'),
   };
 };
 
-const mapDispatchToProps = () => {
-  return {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
+  };
 };
 
 const fetchData = (dispatch, { match }) => {
@@ -38,6 +54,7 @@ const fetchData = (dispatch, { match }) => {
   const { region, city } = params;
   return Promise.all([
     dispatch(resourceListReadRequest('agent', { region, city })),
+    dispatch(resourceDetailReadRequest('userAction')),
   ]);
 };
 
@@ -62,6 +79,8 @@ AgentRegionPageContainer.propTypes = {
   regionSlug: string.isRequired,
   citySlug: string,
   agentsList: arrayOf(agentPropType),
+  postUserAction: func.isRequired,
+  userAction: object,
 };
 
 export default withServerState({

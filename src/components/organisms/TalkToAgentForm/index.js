@@ -33,6 +33,7 @@ const noRender = () => null;
 class TalkToAgentForm extends Component {
   static propTypes = {
     handleSubmit: func.isRequired,
+    invalid: bool,
     submitting: bool,
     error: string,
     change: func,
@@ -44,15 +45,23 @@ class TalkToAgentForm extends Component {
     heading: 'Talk to a local Seniorly Agent',
   };
 
-  handleChange = (result) => {
+  handleChange = () => {
     const { change } = this.props;
-    change('location', result);
+    change('location', null);
   }
 
+  handleLocationChange = (value) => {
+    const { change, onLocationChange } = this.props;
+    change('location', value);
+    if (onLocationChange) {
+      onLocationChange(value);
+    }
+  };
+
   render() {
-    const { handleChange } = this;
+    const { handleChange, handleLocationChange } = this;
     const {
-      submitting, handleSubmit, error, onLocationChange, heading,
+      invalid, submitting, handleSubmit, error, heading,
     } = this.props;
 
     return (
@@ -63,7 +72,7 @@ class TalkToAgentForm extends Component {
           <StyledSearchBoxContainer
             clearLocationOnBlur={false}
             layout="homeHero"
-            onLocationSearch={onLocationChange}
+            onLocationSearch={handleLocationChange}
             onTextChange={handleChange}
           />
           <Field name="location" component={noRender} />
@@ -84,7 +93,7 @@ class TalkToAgentForm extends Component {
             placeholder="I'm interested in a free consult with a Seniorly Agent."
             component={ReduxField}
           />
-          <StyledButton error={error} type="submit" kind="jumbo" disabled={submitting}>
+          <StyledButton error={error} type="submit" kind="jumbo" disabled={invalid || submitting}>
             Send
           </StyledButton>
         </form>
