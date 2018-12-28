@@ -25,9 +25,9 @@ const Section = styled.section`
 `;
 
 export const Header = styled.div`
-  display: flex;
+  display: grid;
   justify-content: space-between;
-  align-items: flex-start;
+  grid-template-columns: auto auto;
   padding: ${size('spacing.xLarge')};
 
   :hover {
