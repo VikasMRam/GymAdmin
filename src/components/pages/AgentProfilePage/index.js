@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import { shape, object } from 'prop-types';
 import styled from 'styled-components';
 
@@ -68,81 +68,97 @@ const AgentCommunitiesWrapper = styled.div`
   }
 `;
 
-const AgentProfilePage = ({ agent, user }) => {
-  if (!agent) {
-    return null;
+class AgentProfilePage extends Component {
+  static propTypes = {
+    agent: shape({
+      info: object.isRequired,
+    }).isRequired,
+    user: object,
   }
-  const {
-    info, aggregateRating, reviews, communities, address,
-  } = agent;
-  const { ratingValue } = aggregateRating;
-  const { displayName, bio } = info;
-  const firstName = displayName.split(' ')[0];
-  const { state, city } = address;
-  return (
-    <Fragment>
-      <TemplateHeader><HeaderContainer /></TemplateHeader>
-      <TemplateContent>
-        <AgentSummaryWrapper>
-          <BreadCrumb items={getBreadCrumbsForAgent({ name: displayName, state, city })} />
-          <AgentSummary {...info} aggregateRating={aggregateRating} firstName={firstName} />
-        </AgentSummaryWrapper>
-        <StyledHr />
-        {communities &&
-          <Fragment>
-            <Section title={`${firstName}'s communities`}>
-              <AgentCommunitiesWrapper>
-                {communities.map((community) => {
-                  const { mainService } = community;
-                  return (
-                    <AgentCommunityLink
-                      key={community.slug}
-                      to={community.url}
-                    >
-                      <SimilarCommunityNearbyTile
-                        image={community.imageUrl}
-                        typeOfCare={mainService}
-                        name={community.name}
-                        estimatedRate={community.estimated || 0}
-                        startingRate={community.startingRate}
-                        reviewsValue={community.reviewsValue}
-                        numReviews={community.numReviews}
-                      />
-                    </AgentCommunityLink>
-                  );
-                })}
-              </AgentCommunitiesWrapper>
-            </Section>
-            <StyledHr />
-          </Fragment>
-        }
-        <StyledSection title={`${firstName}'s reviews`} >
-          <EntityReviews
-            reviewsValue={ratingValue}
-            reviews={reviews}
-            user={user}
-          />
-        </StyledSection>
-        <StyledSection title={`About ${firstName}`}>
-          {bio}
-        </StyledSection>
-        <StyledHr />
-        <StyledSection>
-          <AskQuestionToAgentWrapper>
-            <AskQuestionToAgentFormContainer heading={`Ask ${firstName} a question`} firstName={firstName} />
-          </AskQuestionToAgentWrapper>
-        </StyledSection>
-      </TemplateContent>
-      <Footer />
-    </Fragment>
-  );
-};
+  constructor(props) {
+    super(props);
+    this.askAgentAQuestionRef = React.createRef();
+  }
 
-AgentProfilePage.propTypes = {
-  agent: shape({
-    info: object.isRequired,
-  }).isRequired,
-  user: object,
-};
+  render() {
+    const { agent, user } = this.props;
+    if (!agent) {
+      return null;
+    }
+    const {
+      info, aggregateRating, reviews, communities, address,
+    } = agent;
+    const { ratingValue } = aggregateRating;
+    const { displayName, bio } = info;
+    const firstName = displayName.split(' ')[0];
+    const { state, city } = address;
+    return (
+      <Fragment>
+        <TemplateHeader><HeaderContainer /></TemplateHeader>
+        <TemplateContent>
+          <AgentSummaryWrapper>
+            <BreadCrumb items={getBreadCrumbsForAgent({ name: displayName, state, city })} />
+            <AgentSummary
+              {...info}
+              aggregateRating={aggregateRating}
+              firstName={firstName}
+              onButtonClick={() => {
+                if (this.askAgentAQuestionRef.current.scrollIntoView) {
+                  this.askAgentAQuestionRef.current.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            />
+          </AgentSummaryWrapper>
+          <StyledHr />
+          {communities &&
+            <Fragment>
+              <Section title={`${firstName}'s communities`}>
+                <AgentCommunitiesWrapper>
+                  {communities.map((community) => {
+                    const { mainService } = community;
+                    return (
+                      <AgentCommunityLink
+                        key={community.slug}
+                        to={community.url}
+                      >
+                        <SimilarCommunityNearbyTile
+                          image={community.imageUrl}
+                          typeOfCare={mainService}
+                          name={community.name}
+                          estimatedRate={community.estimated || 0}
+                          startingRate={community.startingRate}
+                          reviewsValue={community.reviewsValue}
+                          numReviews={community.numReviews}
+                        />
+                      </AgentCommunityLink>
+                    );
+                  })}
+                </AgentCommunitiesWrapper>
+              </Section>
+              <StyledHr />
+            </Fragment>
+          }
+          <StyledSection title={`${firstName}'s reviews`} >
+            <EntityReviews
+              reviewsValue={ratingValue}
+              reviews={reviews}
+              user={user}
+            />
+          </StyledSection>
+          <StyledSection title={`About ${firstName}`}>
+            {bio}
+          </StyledSection>
+          <StyledHr />
+          <StyledSection>
+            <AskQuestionToAgentWrapper innerRef={this.askAgentAQuestionRef}>
+              <AskQuestionToAgentFormContainer heading={`Ask ${firstName} a question`} firstName={firstName} />
+            </AskQuestionToAgentWrapper>
+          </StyledSection>
+        </TemplateContent>
+        <Footer />
+      </Fragment>
+    );
+  }
+}
 
 export default AgentProfilePage;
