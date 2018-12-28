@@ -10,9 +10,13 @@ const Wrapper = styled.div`
 `;
 
 const ImageWrapper = styled.div`
-  width: ${size('element.xxLarge')};
-  height: ${size('element.xxLarge')};
   margin-right: ${size('spacing.large')};
+
+  img {
+    width: ${size('element.xxLarge')};
+    height: ${size('element.xxLarge')};
+    border-radius: 50%;
+  }
 `;
 
 const StyledHr = styled(Hr)`
