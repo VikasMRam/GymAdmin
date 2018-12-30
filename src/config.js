@@ -21,7 +21,7 @@ const config = {
     isServer: typeof window === 'undefined',
     apiUrl: process.env.API_URL,
     authTokenUrl: process.env.AUTH_URL,
-    gMapsApiKey: 'AIzaSyDGcBUVVLnoCTe46mT141WuWShs6eibk58',//process.env.GOOGLE_MAPS_API_KEY,
+    gMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
     gAnalyticsKey: 'UA-55078261-2',
     eventServerUrl: 'http://localhost:8888/events/new',
     cookieDomain: process.env.DOMAIN,

@@ -2,9 +2,12 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import Box from 'sly/components/atoms/Box';
+import shadow from 'sly/components/helpers/shadow';
+
+const ShadowBox = shadow(Box);
 
 storiesOf('Atoms|Box', module)
   .add('default', () => <Box>test content</Box>)
   .add('with palette', () => <Box palette="secondary">test content</Box>)
   .add('with padding', () => <Box padding="regular">test content</Box>)
-  .add('with shadow', () => <Box shadow>test content</Box>);
+  .add('with shadow', () => <ShadowBox>test content</ShadowBox>);

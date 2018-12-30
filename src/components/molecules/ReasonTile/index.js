@@ -40,7 +40,7 @@ const TextBlock = styled(Block)`
 const ReasonTile = ({
   image, title, text, to, ...props
 }) => (
-  <Wrapper to={to} {...props}>
+  <Wrapper to={to} target="_blank" {...props}>
     <WrappedImage src={image} />
     <ItemDescription>
       <StyledHeading level="subtitle" size="subtitle">{title}</StyledHeading>
