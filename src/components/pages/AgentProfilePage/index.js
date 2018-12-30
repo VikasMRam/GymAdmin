@@ -14,7 +14,6 @@ import EntityReviews from 'sly/components/organisms/EntityReviews/index';
 import SimilarCommunityNearbyTile from 'sly/components/molecules/SimilarCommunityNearbyTile/index';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb/index';
 import { getBreadCrumbsForAgent } from 'sly/services/helpers/url';
-import BannerNotification from 'sly/components/molecules/BannerNotification';
 import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 
 const StyledHr = styled(Hr)`
@@ -103,11 +102,6 @@ class AgentProfilePage extends Component {
       <Fragment>
         <TemplateHeader>
           <HeaderContainer />
-          <BannerNotificationController>
-            {({ messages }) => {
-              return messages.map(message => <BannerNotification key={message.id}>{message.content}</BannerNotification>);
-            }}
-          </BannerNotificationController>
         </TemplateHeader>
         <TemplateContent>
           <AgentSummaryWrapper innerRef={this.agentSummaryRef}>

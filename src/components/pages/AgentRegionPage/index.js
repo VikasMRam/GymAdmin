@@ -14,6 +14,7 @@ import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
 import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
 import MostSearchedRegions from 'sly/components/molecules/MostSearchedRegions';
 import { mostSearchedRegions } from 'sly/services/helpers/agents';
+import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 
 const PageHeadingSection = styled.div`
   text-align: center;
@@ -81,6 +82,7 @@ class AgentRegionPage extends Component {
   constructor(props) {
     super(props);
     this.findLocalAgentRef = React.createRef();
+    this.titleRef = React.createRef();
   }
   render() {
     const {
@@ -94,7 +96,7 @@ class AgentRegionPage extends Component {
         <TemplateHeader><HeaderContainer /></TemplateHeader>
         <TemplateContent>
           <PageHeadingSection>
-            <Block size="hero">{title}</Block>
+            <Block size="hero" innerRef={this.titleRef}>{title}</Block>
             <FindLocalAgentLink
               palette="slate"
               onClick={() => {
@@ -117,7 +119,20 @@ class AgentRegionPage extends Component {
           }
           <StyledHr />
           <FormSection>
-            <TalkToAgentFormContainer headingSize="title" postUserAction={postUserAction} userDetails={userDetails} />
+            <BannerNotificationController>
+              {({ notifyInfo }) => (
+                <TalkToAgentFormContainer
+                  postUserAction={postUserAction}
+                  userDetails={userDetails}
+                  postSubmit={() => {
+                    notifyInfo('We have received your request and we will get back to you soon.');
+                    if (this.titleRef.current.scrollIntoView) {
+                      this.titleRef.current.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                />
+              )}
+            </BannerNotificationController>
           </FormSection>
           <StyledHr />
           <FindLocalAgentWrapper innerRef={this.findLocalAgentRef}>
