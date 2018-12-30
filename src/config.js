@@ -11,6 +11,7 @@ const config = {
   all: {
     env: process.env.NODE_ENV,
     slyEnv: process.env.SLY_ENV,
+    gaEnv: process.env.GA_ENV,
     isDev: process.env.NODE_ENV,
     isTest: false,
     isProd: false,
