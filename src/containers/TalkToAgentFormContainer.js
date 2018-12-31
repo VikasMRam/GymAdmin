@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object } from 'prop-types';
+import { func, object, string } from 'prop-types';
 import { reduxForm, reset } from 'redux-form';
 
 import { createValidator, required, usPhone } from 'sly/services/validation';
@@ -33,12 +33,13 @@ class TalkToAgentFormContainer extends Component {
     userDetails: object.isRequired,
     postUserAction: func.isRequired,
     postSubmit: func,
+    pathName: string.isRequired,
   };
 
   handleSubmit = (data) => {
     const { message, location } = data;
     const {
-      userDetails, postUserAction, postSubmit,
+      userDetails, postUserAction, postSubmit, pathName,
     } = this.props;
     const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
     const { formatted_address, geometry } = location;
@@ -60,7 +61,7 @@ class TalkToAgentFormContainer extends Component {
     return postUserAction(payload)
       .then(() => {
         const event = {
-          action: 'ask_question', category: 'agent', label: '',
+          action: 'ask_question', category: 'agent', label: pathName,
         };
         SlyEvent.getInstance().sendEvent(event);
         if (postSubmit) {

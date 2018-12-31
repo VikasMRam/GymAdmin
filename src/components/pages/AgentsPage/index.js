@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
-import { func, object } from 'prop-types';
+import { func, object, string } from 'prop-types';
 
 import { size, assetPath } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
@@ -76,6 +76,7 @@ class AgentsPage extends Component {
     onLocationSearch: func,
     userDetails: object,
     postUserAction: func.isRequired,
+    pathName: string.isRequired,
   };
 
   constructor(props) {
@@ -85,7 +86,7 @@ class AgentsPage extends Component {
 
   render() {
     const {
-      onLocationSearch, userDetails, postUserAction,
+      onLocationSearch, userDetails, postUserAction, pathName,
     } = this.props;
     const headerContent = (
       <Fragment>
@@ -122,6 +123,7 @@ class AgentsPage extends Component {
                 <TalkToAgentFormContainer
                   postUserAction={postUserAction}
                   userDetails={userDetails}
+                  pathName={pathName}
                   postSubmit={() => {
                     notifyInfo('We have received your request and we will get back to you soon.');
                     if (this.heroRef.current.scrollIntoView) {

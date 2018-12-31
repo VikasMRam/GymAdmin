@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, func } from 'prop-types';
+import { object, func, string } from 'prop-types';
 
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
@@ -13,6 +13,7 @@ class AgentsPageContainer extends Component {
     history: object,
     postUserAction: func.isRequired,
     userAction: object,
+    pathName: string.isRequired,
   };
 
   handleLocationSearch = (result) => {
@@ -29,7 +30,7 @@ class AgentsPageContainer extends Component {
 
   render() {
     const { handleLocationSearch } = this;
-    const { postUserAction, userAction } = this.props;
+    const { postUserAction, userAction, pathName } = this.props;
     if (!userAction) {
       return null;
     }
@@ -38,14 +39,17 @@ class AgentsPageContainer extends Component {
         onLocationSearch={handleLocationSearch}
         postUserAction={postUserAction}
         userDetails={userAction.userDetails}
+        pathName={pathName}
       />
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, { location }) => {
+  const { pathname } = location;
   return {
     userAction: getDetail(state, 'userAction'),
+    pathName: pathname,
   };
 };
 

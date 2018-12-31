@@ -13,6 +13,7 @@ const agentInfo = shape({
   slyPhone: string.isRequired,
   recentFamiliesHelped: number,
   profileImageUrl: string.isRequired,
+  chosenReview: string,
 });
 
 export default shape({

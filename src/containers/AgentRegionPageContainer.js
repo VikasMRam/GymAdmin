@@ -9,7 +9,7 @@ import withServerState from 'sly/store/withServerState';
 import { titleize } from 'sly/services/helpers/strings';
 
 const AgentRegionPageContainer = ({
-  agentsList, regionSlug, citySlug, postUserAction, userAction,
+  agentsList, regionSlug, citySlug, postUserAction, userAction, pathName,
 }) => {
   if (!userAction) {
     return null;
@@ -28,18 +28,21 @@ const AgentRegionPageContainer = ({
       locationName={locationName}
       postUserAction={postUserAction}
       userDetails={userAction.userDetails}
+      pathName={pathName}
     />
   );
 };
 
-const mapStateToProps = (state, { match }) => {
+const mapStateToProps = (state, { match, location }) => {
   const { params } = match;
   const { region, city } = params;
+  const { pathname } = location;
   return {
     regionSlug: region,
     citySlug: city,
     agentsList: getList(state, 'agent', { region, city }),
     userAction: getDetail(state, 'userAction'),
+    pathName: pathname,
   };
 };
 
@@ -81,6 +84,7 @@ AgentRegionPageContainer.propTypes = {
   agentsList: arrayOf(agentPropType),
   postUserAction: func.isRequired,
   userAction: object,
+  pathName: string.isRequired,
 };
 
 export default withServerState({
