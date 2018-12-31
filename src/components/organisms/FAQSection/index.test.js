@@ -2,36 +2,14 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import FAQSection from 'sly/components/organisms/FAQSection';
+import { partnerFAQs } from 'sly/services/helpers/agents';
 
 const wrap = (props = {}) => shallow(<FAQSection {...props} />);
 
-const faqs = [
-  {
-    title: 'Do I have to leave my current senior living referral agency business to join the Seniorly Agent Program?',
-    description: 'No, you do not need to leave your current agency. As a Seniorly Partner Agent you will still operate under your business name and simply receive extra family referrals in addition to your current business.',
-  },
-  {
-    title: 'Can I work on a team with other agents?',
-    description: 'Yes. To do so you will need to set up points of contact and your team members’ coverage areas. To apply as a team, please be sure to add each member’s information on the Seniorly Partner Agent application.',
-  },
-  {
-    title: 'Will I receive Assisted Living, Memory Care, Independent Living and Home Care Referrals?',
-    description: 'Seniorly will send referrals based on your area of expertise. You will be asked to set up care types your service in the sign up process.',
-  },
-  {
-    title: 'What are my financial obligations to the program?',
-    description: 'This is a success based program, which means there is no obligation or up-front cost. Once a family moves in or selects an in-home option partner agents receive a commission which is a split with Seniorly.',
-  },
-  {
-    title: 'How many referrals can I expect?',
-    description: 'Demand from families varies by market and time of year, but our partner agents receive an average of 1-5 referrals each week.',
-  },
-];
-
 describe('FAQSection', () => {
   it('renders', () => {
-    const wrapper = wrap({ faqs });
-    const [firstFaq, ...restFaqs] = faqs;
+    const wrapper = wrap({ faqs: partnerFAQs });
+    const [firstFaq, ...restFaqs] = partnerFAQs;
 
     const cs = wrapper.find('StyledBox').find('StyledCollapsibleSection').at(0);
     expect(cs.prop('title')).toBe(firstFaq.title);
@@ -44,10 +22,10 @@ describe('FAQSection', () => {
   });
 
   it('renders with one faq', () => {
-    const wrapper = wrap({ faqs: [faqs[0]] });
+    const wrapper = wrap({ faqs: [partnerFAQs[0]] });
 
     const cs = wrapper.find('StyledBox').find('StyledCollapsibleSection');
-    expect(cs.prop('title')).toBe(faqs[0].title);
-    expect(cs.dive().find('Block').dive().text()).toBe(faqs[0].description);
+    expect(cs.prop('title')).toBe(partnerFAQs[0].title);
+    expect(cs.dive().find('Block').dive().text()).toBe(partnerFAQs[0].description);
   });
 });

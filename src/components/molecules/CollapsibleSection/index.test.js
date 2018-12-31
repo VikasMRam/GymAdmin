@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import Measure from 'react-measure';
 
 import CollapsibleSection, { Header } from 'sly/components/molecules/CollapsibleSection';
+import { ClampedText } from 'sly/components/atoms';
 
 const title = 'Section Title';
 const wrap = (props = {}) => mount(<CollapsibleSection title={title} {...props} />);
@@ -10,7 +11,10 @@ const wrap = (props = {}) => mount(<CollapsibleSection title={title} {...props} 
 describe('CollapsibleSection', () => {
   it('renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
+    const heading = wrapper.find(Header);
+
     expect(wrapper.contains('test')).toBe(true);
+    expect(heading.find(ClampedText)).toHaveLength(1);
   });
 
   it('renders props when passed in', () => {
@@ -22,6 +26,7 @@ describe('CollapsibleSection', () => {
     const wrapper = wrap({ collapsedDefault: true });
     const heading = wrapper.find(Header);
 
+    expect(heading.find(ClampedText)).toHaveLength(1);
     expect(wrapper.state()).toEqual({ collapsed: true });
     heading.simulate('click');
     expect(wrapper.state()).toEqual({ collapsed: false });
@@ -31,6 +36,7 @@ describe('CollapsibleSection', () => {
     const wrapper = wrap();
     const heading = wrapper.find(Header);
 
+    expect(heading.find(ClampedText)).toHaveLength(1);
     expect(wrapper.state()).toEqual({ collapsed: false });
     heading.simulate('click');
     expect(wrapper.state()).toEqual({ collapsed: true });
@@ -46,6 +52,13 @@ describe('CollapsibleSection', () => {
 
     onResize({ entry: { height: 600 } });
     expect(wrapper.state('maxHeight')).toEqual(600);
+  });
+
+  it('renders without clampTitle', () => {
+    const wrapper = wrap({ clampTitle: false });
+    const heading = wrapper.find(Header);
+
+    expect(heading.find(ClampedText)).toHaveLength(0);
   });
 });
 
