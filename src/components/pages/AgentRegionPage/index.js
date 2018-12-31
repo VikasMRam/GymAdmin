@@ -78,6 +78,7 @@ class AgentRegionPage extends Component {
     agentsList: arrayOf(agentPropType),
     postUserAction: func.isRequired,
     userDetails: object,
+    pathName: string.isRequired,
   }
   constructor(props) {
     super(props);
@@ -86,7 +87,7 @@ class AgentRegionPage extends Component {
   }
   render() {
     const {
-      title, locationName, agentsList, postUserAction, userDetails,
+      title, locationName, agentsList, postUserAction, userDetails, pathName,
     } = this.props;
     if (!agentsList) {
       return null;
@@ -124,6 +125,7 @@ class AgentRegionPage extends Component {
                 <TalkToAgentFormContainer
                   postUserAction={postUserAction}
                   userDetails={userDetails}
+                  pathName={pathName}
                   postSubmit={() => {
                     notifyInfo('We have received your request and we will get back to you soon.');
                     if (this.titleRef.current.scrollIntoView) {
