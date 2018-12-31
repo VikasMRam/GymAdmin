@@ -9,7 +9,6 @@ import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import { Button, Heading, Link, Hr } from 'sly/components/atoms';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
-import AgentTile from 'sly/components/molecules/AgentTile';
 
 const StyledButton = styled(Button)`
   width: 100%;
@@ -35,11 +34,6 @@ const AgentSectionWrapper = styled.div`
 const AgentSectionText = styled.div`
   font-weight: bold;  
   margin-bottom: ${size('spacing.regular')};
-`;
-
-const AgentTileWrapper = styled.div`
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.tiny')};
 `;
 
 const SubHeading = styled.div`
@@ -96,11 +90,6 @@ const ConversionForm = ({
           We have matched you with a Seniorly partner agent to help you along the way.{' '}
           <Link palette="primary" onClick={onAdvisorHelpClick}>Learn More</Link>
         </AgentSectionText>
-        <AgentTileWrapper>
-          <AgentTile
-            user={{ name: agent.user.name, title: 'Seniorly Partner Agent', picture: agent.mainImage }}
-          />
-        </AgentTileWrapper>
       </AgentSectionWrapper>
     }
   </div>
