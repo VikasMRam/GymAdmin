@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
-import { func } from 'prop-types';
-import Helmet from 'react-helmet';
+import { func, object } from 'prop-types';
 
 import { size, assetPath } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
@@ -15,6 +14,7 @@ import MostSearchedRegions, { ColumnWrapper } from 'sly/components/molecules/Mos
 import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
 import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
 import { mostSearchedRegions } from 'sly/services/helpers/agents';
+import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -71,49 +71,72 @@ const FormSection = StyledSection.extend`
   }
 `;
 
-const AgentsPage = ({ onSubmitForm, onLocationSearch }) => {
-  const headerContent = (
-    <Fragment>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      <HeaderContainer />
-      <HeroWrapper>
-        <HeroBackgroundImage src={assetPath('images/agent-hero.png')} alt="A Home To Love" />
-        <HeroTextWrapper>
-          <FindLocalAgent onLocationSearch={onLocationSearch} />
-        </HeroTextWrapper>
-      </HeroWrapper>
-    </Fragment>
-  );
+class AgentsPage extends Component {
+  static propTypes = {
+    onLocationSearch: func,
+    userDetails: object,
+    postUserAction: func.isRequired,
+  };
 
-  return (
-    <Fragment>
-      {getHelmetForAgentsPage()}
-      <TemplateHeader>{headerContent}</TemplateHeader>
-      <TemplateContent>
-        <StyledSection>
-          <ColumnWrapper>
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="house" heading="100% free" content="Seniorly Partner Agents are commissioned by the community you choose only when you move-in. They are on your side to find and choose the right option." />
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="star" heading="Personalized Service" content="Navigating this process can be a challenge. Your agent will help you throughout to answer questions, weigh your options, accompany you on tours and help you get the best deal for your budget." />
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="loyalty" heading="Local Insider Expertise" content="Your agent will know and share the unique details of communities and care options in your area." />
-          </ColumnWrapper>
-        </StyledSection>
-        <Hr fullWidth />
-        <StyledSection centerTitle title="Search senior living agents by region">
-          <MostSearchedRegions mostSearchedRegions={mostSearchedRegions} />
-        </StyledSection>
-        <Hr fullWidth />
-        <FormSection>
-          <TalkToAgentFormContainer onSubmit={onSubmitForm} />
-        </FormSection>
-      </TemplateContent>
-      <Footer />
-    </Fragment>
-  );
-};
+  constructor(props) {
+    super(props);
+    this.heroRef = React.createRef();
+  }
 
-AgentsPage.propTypes = {
-  onSubmitForm: func,
-  onLocationSearch: func,
-};
+  render() {
+    const {
+      onLocationSearch, userDetails, postUserAction,
+    } = this.props;
+    const headerContent = (
+      <Fragment>
+        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+        <HeaderContainer />
+        <HeroWrapper innerRef={this.heroRef}>
+          <HeroBackgroundImage src={assetPath('images/agent-hero.png')} alt="A Home To Love" />
+          <HeroTextWrapper>
+            <FindLocalAgent onLocationSearch={onLocationSearch} />
+          </HeroTextWrapper>
+        </HeroWrapper>
+      </Fragment>
+    );
+    return (
+      <Fragment>
+        {getHelmetForAgentsPage()}
+        <TemplateHeader>{headerContent}</TemplateHeader>
+        <TemplateContent>
+          <StyledSection>
+            <ColumnWrapper>
+              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="house" heading="100% free" content="Seniorly Partner Agents are commissioned by the community you choose only when you move-in. They are on your side to find and choose the right option." />
+              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="star" heading="Personalized Service" content="Navigating this process can be a challenge. Your agent will help you throughout to answer questions, weigh your options, accompany you on tours and help you get the best deal for your budget." />
+              <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="loyalty" heading="Local Insider Expertise" content="Your agent will know and share the unique details of communities and care options in your area." />
+            </ColumnWrapper>
+          </StyledSection>
+          <Hr fullWidth />
+          <StyledSection centerTitle title="Search senior living agents by region">
+            <MostSearchedRegions mostSearchedRegions={mostSearchedRegions} />
+          </StyledSection>
+          <Hr fullWidth />
+          <FormSection>
+            <BannerNotificationController>
+              {({ notifyInfo }) => (
+                <TalkToAgentFormContainer
+                  postUserAction={postUserAction}
+                  userDetails={userDetails}
+                  postSubmit={() => {
+                    notifyInfo('We have received your request and we will get back to you soon.');
+                    if (this.heroRef.current.scrollIntoView) {
+                      this.heroRef.current.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                />
+              )}
+            </BannerNotificationController>
+          </FormSection>
+        </TemplateContent>
+        <Footer />
+      </Fragment>
+    );
+  }
+}
 
 export default AgentsPage;

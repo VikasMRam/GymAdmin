@@ -1,39 +1,86 @@
-import React from 'react';
-import { func } from 'prop-types';
-import { reduxForm } from 'redux-form';
+import React, { Component } from 'react';
+import { func, object } from 'prop-types';
+import { reduxForm, reset } from 'redux-form';
 
 import { createValidator, required, usPhone } from 'sly/services/validation';
 import TalkToAgentForm from 'sly/components/organisms/TalkToAgentForm';
+import { REQUEST_AGENT_CONSULT } from 'sly/services/api/actions';
+import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
+import SlyEvent from 'sly/services/helpers/events';
 
+const handleLocationChange = () => {
+
+};
+
+const form = 'TalkToAgentForm';
 const validate = createValidator({
   location: [required],
   phone: [usPhone, required],
   message: [required],
 });
 
+const afterSubmit = (result, dispatch) => dispatch(reset(form));
+
 const ReduxForm = reduxForm({
+  form,
   validate,
-  form: 'TalkToAgentFormContainer',
-  destroyOnUnmount: true,
-  // required to refresh when initialValues change. Ref: https://redux-form.com/6.7.0/examples/initializefromstate/
-  enableReinitialize: true,
-  keepDirtyOnReinitialize: false,
+  onSubmitSuccess: afterSubmit,
+  destroyOnUnmount: false,
 })(TalkToAgentForm);
 
-const handleLocationChange = () => {
+class TalkToAgentFormContainer extends Component {
+  static propTypes = {
+    userDetails: object.isRequired,
+    postUserAction: func.isRequired,
+    postSubmit: func,
+  };
 
-};
+  handleSubmit = (data) => {
+    const { message, location } = data;
+    const {
+      userDetails, postUserAction, postSubmit,
+    } = this.props;
+    const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
+    const { formatted_address, geometry } = location;
+    const { lat, lng } = geometry.location;
+    const value = {
+      user,
+      details: {
+        message,
+        location_text: formatted_address,
+        latitude: lat(),
+        longitude: lng(),
+      },
+    };
+    const payload = {
+      action: REQUEST_AGENT_CONSULT,
+      value,
+    };
 
-const TalkToAgentFormContainer = ({ submitForm, ...props }) => (
-  <ReduxForm
-    onSubmit={submitForm}
-    onLocationChange={handleLocationChange}
-    {...props}
-  />
-);
+    return postUserAction(payload)
+      .then(() => {
+        const event = {
+          action: 'ask_question', category: 'agent', label: '',
+        };
+        SlyEvent.getInstance().sendEvent(event);
+        if (postSubmit) {
+          postSubmit();
+        }
+      });
+  }
 
-TalkToAgentFormContainer.propTypes = {
-  submitForm: func.isRequired,
-};
+  render() {
+    const { ...props } = this.props;
+    const initialValues = {};
+    return (
+      <ReduxForm
+        initialValues={initialValues}
+        onLocationChange={handleLocationChange}
+        onSubmit={this.handleSubmit}
+        {...props}
+      />
+    );
+  }
+}
 
 export default TalkToAgentFormContainer;

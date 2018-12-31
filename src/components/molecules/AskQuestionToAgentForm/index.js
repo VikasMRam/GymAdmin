@@ -54,7 +54,7 @@ const AskQuestionToAgentForm = ({
         />
       }
       <Field
-        name="notes"
+        name="question"
         label={`What can ${firstName} help you with? *`}
         type="textarea"
         rows="5"
