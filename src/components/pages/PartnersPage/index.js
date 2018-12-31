@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 
 import { size, assetPath } from 'sly/components/themes';
 import { getHelmetForPartnersPage } from 'sly/services/helpers/html_headers';
+import { partnerFAQs } from 'sly/services/helpers/agents';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Hr, Paragraph } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';
@@ -15,6 +16,7 @@ import FactBox from 'sly/components/molecules/FactBox';
 import { ColumnWrapper } from 'sly/components/molecules/MostSearchedRegions';
 import PartnerReview from 'sly/components/molecules/PartnerReview';
 import BecomeSlyPartnerBanner from 'sly/components/molecules/BecomeSlyPartnerBanner';
+import FAQSection from 'sly/components/organisms/FAQSection';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -119,6 +121,11 @@ const PartnersPage = () => {
         </StyledSection>
       </TemplateContent>
       <BecomeSlyPartnerBanner />
+      <StyledSection>
+        <TemplateContent>
+          <FAQSection faqs={partnerFAQs} />
+        </TemplateContent>
+      </StyledSection>
       <Footer />
     </Fragment>
   );
