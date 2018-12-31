@@ -1,5 +1,5 @@
 import React from 'react';
-import { number, string } from 'prop-types';
+import { number, string, node } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
@@ -13,15 +13,20 @@ const StyledBlock = styled(Block)`
   align-items: center;
   height: 100%;
   justify-content: space-between;
-  padding: 0 ${size('spacing.large')};
+  padding: 0 ${size('spacing.regular')};
+`;
+
+const Label = styled.div`
+  white-space: nowrap;
+  margin-right: ${size('spacing.large')};
 `;
 
 const PriceBar = ({
-  width, price, label, palette, variation,
+  width, price, children, palette, variation, className,
 }) => (
-  <Bar width={width / 2.5} palette={palette} variation={variation}>
+  <Bar className={className} width={width / 2.5} palette={palette} variation={variation}>
     <StyledBlock size="caption">
-      <div>{label}</div>
+      <Label>{children}</Label>
       <NumberFormat value={price} displayType="text" thousandSeparator prefix="$" />
     </StyledBlock>
   </Bar>
@@ -30,9 +35,10 @@ const PriceBar = ({
 PriceBar.propTypes = {
   width: number.isRequired,
   price: number.isRequired,
-  label: string,
+  children: node,
   palette: palettePropType,
   variation: variationPropType,
+  className: string,
 };
 
 export default PriceBar;

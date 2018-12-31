@@ -11,8 +11,8 @@ storiesOf('Molecules|PriceBar', module)
     <PriceBar width={width} price={price} />
   ))
   .add('with label', () => (
-    <PriceBar width={width} price={price} label="Assisted living within 20 miles" />
+    <PriceBar width={width} price={price}>Assisted living within 20 miles</PriceBar>
   ))
   .add('with label, variation and palette', () => (
-    <PriceBar width={width} price={price} label="Assisted living within 20 miles" palette="grey" variation="background" />
+    <PriceBar width={width} price={price} palette="grey" variation="background">Assisted living within 20 miles</PriceBar>
   ));
