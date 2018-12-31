@@ -1,7 +1,7 @@
 import ReactGA from 'react-ga';
 import cookie from 'react-cookie';
 import { stringify } from 'query-string';
-import { isServer, isTest, gAnalyticsKey, eventServerUrl, isDev } from 'sly/config';
+import { isServer, isTest, gAnalyticsKey, eventServerUrl, isDev, gaEnv } from 'sly/config';
 
 export default class SlyEvent {
   static seInstance = null;
@@ -15,6 +15,8 @@ export default class SlyEvent {
         let ga = ReactGA.ga();
         ga('require', 'displayfeatures');
         ga('set', 'dimension1',cookie.load('sly_uuid'));
+        ga('set', 'dimension3',gaEnv);
+
       }
     }
     return this.seInstance;
