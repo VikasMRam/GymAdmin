@@ -6,7 +6,7 @@ import { Lazy } from 'react-lazy';
 
 import { size, assetPath } from 'sly/components/themes';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, FLOOR_PLAN, CONCIERGE } from 'sly/constants/modalType';
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, FLOOR_PLAN, CONCIERGE, ADVISOR_HELP } from 'sly/constants/modalType';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
@@ -55,6 +55,8 @@ import EstimatedCost from 'sly/components/molecules/EstimatedCost';
 import PriceBar from 'sly/components/molecules/PriceBar';
 import CommunityReviewsBottomSection from 'sly/components/molecules/CommunityReviewsBottomSection/index';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
+import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
+import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -235,6 +237,7 @@ export default class CommunityDetailPage extends Component {
       videoGallery = {},
       questions,
       mainImage,
+      partnerAgents,
     } = community;
 
     let initedUserSave;
@@ -323,6 +326,8 @@ export default class CommunityDetailPage extends Component {
       community, estimatedPrice: rgsAux.estimatedPrice, address,
     });
 
+    const partnerAgent = partnerAgents.length > 0 ? partnerAgents[0] : null;
+
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -369,7 +374,24 @@ export default class CommunityDetailPage extends Component {
                   hasLearnMore
                 />
               )}
-
+            {partnerAgent &&
+              <CollapsibleSection
+                title={`Your advisor for ${name}`}
+              >
+                <ModalController>
+                  {({ show }) => (
+                    <CommunityAgentSection agent={partnerAgent} onAdvisorHelpClick={() => show(ADVISOR_HELP)} />
+                  )}
+                </ModalController>
+              </CollapsibleSection>
+            }
+            <ModalController>
+              {({ modalType, hide }) => (
+                <Modal closeable isOpen={modalType === ADVISOR_HELP} onClose={hide}>
+                  <AdvisorHelpPopup onButtonClick={hide} />
+                </Modal>
+              )}
+            </ModalController>
             <CollapsibleSection
               title={`Pricing and Floor Plans at ${name}`}
               botttomSection={
