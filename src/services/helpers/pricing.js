@@ -11,23 +11,22 @@ export const sortProperties = (obj) => {
   return sortable;
 };
 
-export const calculatePricing = ({
-  community, estimatedPrice, address,
-}) => {
+export const calculatePricing = (community, estimatedPrice) => {
+  const { startingRate, name } = community;
   const mEstimatedPrice = { ...estimatedPrice };
   if (mEstimatedPrice && mEstimatedPrice.providedAverage) {
-    mEstimatedPrice.providedAverage = community.startingRate || mEstimatedPrice.providedAverage;
+    mEstimatedPrice.providedAverage = startingRate || mEstimatedPrice.providedAverage;
   }
   if (mEstimatedPrice && mEstimatedPrice.estimatedAverage) {
-    mEstimatedPrice.estimatedAverage = community.startingRate || mEstimatedPrice.estimatedAverage;
+    mEstimatedPrice.estimatedAverage = startingRate || mEstimatedPrice.estimatedAverage;
   }
 
   const estimatedPriceLabelMap = {
-    providedAverage: community.name,
-    estimatedAverage: community.name, // TODO: figure out correct label
-    cityAverage: address.city,
-    stateAverage: address.state,
-    nationalAverage: address.country,
+    providedAverage: name,
+    estimatedAverage: name,
+    cityAverage: 'Assisted living within 20 miles',
+    homeCareMAverage: 'In-home care',
+    adultDayAverage: 'Adult Daycare',
   };
 
   let sortedEstimatedPrice = [];
@@ -46,7 +45,7 @@ export const calculatePricing = ({
         [, maxPrice] = sortedEstimatedPrice[sortedEstimatedPrice.length - 1];
       }
     }
-    estimatedPriceBase = community.startingRate || mEstimatedPrice.providedAverage || mEstimatedPrice.estimatedAverage;
+    estimatedPriceBase = startingRate || mEstimatedPrice.providedAverage || mEstimatedPrice.estimatedAverage;
   }
   return {
     estimatedPriceLabelMap, maxPrice, estimatedPriceBase, sortedEstimatedPrice,
