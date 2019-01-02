@@ -39,6 +39,7 @@ const CommunityPricingComparison = ({ community }) => {
 
   return (
     <article>
+      {!topSectionPrices.length && !bottomSectionPrices.length && <div>No pricing info available.</div> }
       {topSectionPrices.length > 0 &&
         <Fragment>
           {topSectionPrices.map((object, i) => (

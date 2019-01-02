@@ -11,7 +11,7 @@ import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
-import { Link, Heading, Hr, Button, Icon, Block } from 'sly/components/atoms';
+import { Hr, Button, Icon, Block } from 'sly/components/atoms';
 import { CommunityDetailPageTemplate, makeHeader, makeColumn, makeBody, makeFooter }
   from 'sly/components/templates/CommunityDetailPageTemplate';
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
@@ -25,7 +25,7 @@ import Section from 'sly/components/molecules/Section';
 import CareServicesList from 'sly/components/organisms/CareServicesList';
 import EntityReviews from 'sly/components/organisms/EntityReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
-import PricingAndAvailability from 'sly/components/organisms/PricingAndAvailability';
+import CommunityPricingComparison from 'sly/components/organisms/CommunityPricingComparison';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
 import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
@@ -39,7 +39,6 @@ import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetail
 import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import Thankyou from 'sly/components/molecules/Thankyou';
-import CommunitySidebarWidget from 'sly/components/organisms/CommunitySidebarWidget';
 import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
 import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
@@ -200,9 +199,6 @@ export default class CommunityDetailPage extends Component {
       isShareCommunityModalVisible,
       user,
       onReviewLinkClicked,
-      onConciergeNumberClicked,
-      onLiveChatClicked,
-      onReceptionNumberClicked,
       setModal,
       setQuestionToAsk,
       userSave,
@@ -222,8 +218,6 @@ export default class CommunityDetailPage extends Component {
     const {
       id,
       name,
-      rates,
-      startingRate,
       propInfo,
       propRatings,
       reviews,
@@ -293,12 +287,10 @@ export default class CommunityDetailPage extends Component {
     // TODO: move this to a container for EntityReviews handling posts
     const onLeaveReview = () => {};
     // TODO: move this to a container PricingAndAvailability for handling bookings
-    const { hasSlyReviews, hasWebReviews, reviewsValue } = propRatings;
+    const { reviewsValue } = propRatings;
     const ratingsArray = propRatings.ratingsArray || [];
     const reviewsFinal = reviews || [];
     const serviceHighlightsFinal = serviceHighlights || [];
-    const isCCRC = typeCare && (typeCare.indexOf('Continuing Care Retirement Community(CCRC)') !== -1);
-    const ratesProvided = (rates && rates === 'Provided');
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
@@ -462,6 +454,9 @@ export default class CommunityDetailPage extends Component {
                 />
               </CollapsibleSection>
             }
+            <CollapsibleSection paddedContent title="Compare to other communities in the area">
+              <CommunityPricingComparison community={community} />
+            </CollapsibleSection>
             <CollapsibleSection paddedContent title="Care Services">
               <CareServicesList
                 communityName={name}

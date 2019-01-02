@@ -12,17 +12,18 @@ export const sortProperties = (obj) => {
 };
 
 export const calculatePricing = (community, estimatedPrice) => {
+  const { startingRate, name } = community;
   const mEstimatedPrice = { ...estimatedPrice };
   if (mEstimatedPrice && mEstimatedPrice.providedAverage) {
-    mEstimatedPrice.providedAverage = community.startingRate || mEstimatedPrice.providedAverage;
+    mEstimatedPrice.providedAverage = startingRate || mEstimatedPrice.providedAverage;
   }
   if (mEstimatedPrice && mEstimatedPrice.estimatedAverage) {
-    mEstimatedPrice.estimatedAverage = community.startingRate || mEstimatedPrice.estimatedAverage;
+    mEstimatedPrice.estimatedAverage = startingRate || mEstimatedPrice.estimatedAverage;
   }
 
   const estimatedPriceLabelMap = {
-    providedAverage: community.name,
-    estimatedAverage: community.name,
+    providedAverage: name,
+    estimatedAverage: name,
     cityAverage: 'Assisted living within 20 miles',
     homeCareMAverage: 'In-home care',
     adultDayAverage: 'Adult Daycare',
@@ -44,7 +45,7 @@ export const calculatePricing = (community, estimatedPrice) => {
         [, maxPrice] = sortedEstimatedPrice[sortedEstimatedPrice.length - 1];
       }
     }
-    estimatedPriceBase = community.startingRate || mEstimatedPrice.providedAverage || mEstimatedPrice.estimatedAverage;
+    estimatedPriceBase = startingRate || mEstimatedPrice.providedAverage || mEstimatedPrice.estimatedAverage;
   }
   return {
     estimatedPriceLabelMap, maxPrice, estimatedPriceBase, sortedEstimatedPrice,
