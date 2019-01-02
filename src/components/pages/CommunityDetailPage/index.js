@@ -314,9 +314,7 @@ export default class CommunityDetailPage extends Component {
     const Header = makeHeader(bannerNotification);
     const {
       estimatedPriceBase, estimatedPriceLabelMap, sortedEstimatedPrice, maxPrice,
-    } = calculatePricing({
-      community, estimatedPrice: rgsAux.estimatedPrice, address,
-    });
+    } = calculatePricing(community, rgsAux.estimatedPrice);
 
     const partnerAgent = partnerAgents.length > 0 ? partnerAgents[0] : null;
 
