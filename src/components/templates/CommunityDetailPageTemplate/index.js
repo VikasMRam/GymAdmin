@@ -14,7 +14,7 @@ export const CommunityDetailPageTemplate = styled.main`
   width: 100%;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.col8')};
+    width: ${size('tabletLayout.col8')};
   }
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: grid;
