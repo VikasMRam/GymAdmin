@@ -285,7 +285,6 @@ export default class CommunityDetailPage extends Component {
     const { reviewsValue } = propRatings;
     const ratingsArray = propRatings.ratingsArray || [];
     const reviewsFinal = reviews || [];
-    const serviceHighlightsFinal = serviceHighlights || [];
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
@@ -304,9 +303,10 @@ export default class CommunityDetailPage extends Component {
       bannerNotification = 'We have received your pricing request. Your partner agent is checking with this community and will get back to you shortly.';
     }
     const Header = makeHeader(bannerNotification);
-    const { estimatedPriceBase } = calculatePricing(community, rgsAux.estimatedPrice);
 
-    const partnerAgent = partnerAgents.length > 0 ? partnerAgents[0] : null;
+    const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
+
+    const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 
     return (
       <Fragment>
@@ -436,9 +436,11 @@ export default class CommunityDetailPage extends Component {
                 />
               }
             </CollapsibleSection>
-            <CollapsibleSection paddedContent title="Compare to other communities in the area">
-              <CommunityPricingComparison community={community} />
-            </CollapsibleSection>
+            {sortedEstimatedPrice.length > 0 &&
+              <CollapsibleSection paddedContent title="Compare to other communities in the area">
+                <CommunityPricingComparison community={community} />
+              </CollapsibleSection>
+            }
             {(communityDescription || rgsAux.communityDescription) &&
               <CollapsibleSection title="Community Details">
                 <CommunityDetails

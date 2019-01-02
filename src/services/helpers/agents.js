@@ -52,6 +52,33 @@ export const partnerFAQs = [
   },
 ];
 
+export const agentsFAQs = [
+  {
+    title: 'What is a Seniorly Partner Agent?',
+    description: 'Seniorly Partner Agents, also known as Senior Living Referral Agents or Senior Living Placement Agents are similar to real estate agents in that they know the communities in your area and specialize in helping you find the right fit for your unique budget, location, care, social and other needs. ',
+  },
+  {
+    title: 'How can I benefit from a Seniorly Partner Agent?',
+    description: 'The process of choosing the right Senior Living option can be a challenge. A Seniorly Partner Agent will help you seamlessly navigate this process by providing insight into  the best communities in your area for your specific situation. Your agent will also help with other aspects of your transition such as knowing what to look for on a tour, questions to ask, how to negotiate rent and care costs.  In addition, they can help with other items such as moving, financing or furniture. Your agent is there to be your personal guide.',
+  },
+  {
+    title: 'Should I use a Seniorly Partner Agent even if I already know the community I’d like to visit?',
+    description: 'Yes. Since they do not charge for their services we recommend you speak with an agent. You may already have a great community in mind., An agent can give a second opinion based on their extensive knowledge, as well as offer best practices for going through the transition process. By the way, visiting additional communities is helpful to ensure you have made the best choice.',
+  },
+  {
+    title: 'How much do Seniorly Partner Agents cost?',
+    description: 'There is no cost to you.  Our agents are paid a commission by the senior living community you eventually choose.',
+  },
+  {
+    title: 'How does Seniorly choose its partner agents?',
+    description: 'All Seniorly Partner Agents are vetted through a rigorous interview, background check and review process.',
+  },
+  {
+    title: 'How do I get started working with a Seniorly Partner Agent?',
+    description: "It's easy. Simply sign up below or complete an inquiry form on any page throughout our site and we will connect you with a preferred agent in your area.",
+  },
+];
+
 export const agents =[
   {
     "id":"oasis-denver-metro-daphne-jean-and-lisa-theard",

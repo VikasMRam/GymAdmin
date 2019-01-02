@@ -46,7 +46,7 @@ const StyledBlock = styled(Block)`
   padding-bottom: 0;
 `;
 
-const FAQSection = ({ faqs }) => {
+const FAQSection = ({ faqs, className }) => {
   const [firstFaq, ...restFaqs] = faqs;
 
   const restFaqComponents = restFaqs.map(({ title, description }) => (
@@ -58,7 +58,7 @@ const FAQSection = ({ faqs }) => {
   ));
 
   return (
-    <div>
+    <div className={className}>
       <StyledBox>
         <StyledBlock size="title">Frequently asked questions</StyledBlock>
         {faqs.length === 1 &&
@@ -86,6 +86,7 @@ FAQSection.propTypes = {
     title: string.isRequired,
     description: string.isRequired,
   })),
+  className: string,
 };
 
 export default FAQSection;
