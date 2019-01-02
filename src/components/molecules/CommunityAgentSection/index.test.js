@@ -61,4 +61,14 @@ describe('CommunityAgentSection', () => {
     emailLink.simulate('click');
     expect(onEmailClick).toHaveBeenCalledTimes(1);
   });
+
+  it('handles onAdvisorHelpClick', () => {
+    const onAdvisorHelpClick = jest.fn();
+    const wrapper = wrap({ onAdvisorHelpClick });
+    expect(onAdvisorHelpClick).not.toHaveBeenCalled();
+    const emailLink = wrapper.find('SubHeadingSection');
+    expect(emailLink).toHaveLength(1);
+    emailLink.simulate('click');
+    expect(onAdvisorHelpClick).toHaveBeenCalledTimes(1);
+  });
 });

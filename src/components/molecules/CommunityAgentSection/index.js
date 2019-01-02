@@ -10,6 +10,7 @@ import agentPropType from 'sly/propTypes/agent';
 const SubHeadingSection = styled.div`
   display: flex;
   margin-bottom: ${size('spacing.xLarge')};
+  cursor: pointer;
 `;
 
 const AdvisorHelpBlock = styled(Block)`
@@ -59,14 +60,16 @@ const ReviewBlock = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const CommunityAgentSection = ({ agent, onPhoneClick, onEmailClick }) => {
+const CommunityAgentSection = ({
+  agent, onPhoneClick, onEmailClick, onAdvisorHelpClick,
+}) => {
   const {
     displayName, profileImageUrl, slyPhone, email, chosenReview,
   } = agent.info;
   const reviewedBy = 'Resident\'s family member';
   return (
     <Fragment>
-      <SubHeadingSection>
+      <SubHeadingSection onClick={onAdvisorHelpClick}>
         <AdvisorHelpBlock size="caption" weight="medium" palette="primary">What can my advisor help me with?</AdvisorHelpBlock>
         <Icon icon="help" palette="primary" />
       </SubHeadingSection>
@@ -101,6 +104,7 @@ CommunityAgentSection.propTypes = {
   agent: agentPropType.isRequired,
   onPhoneClick: func,
   onEmailClick: func,
+  onAdvisorHelpClick: func,
 };
 
 export default CommunityAgentSection;
