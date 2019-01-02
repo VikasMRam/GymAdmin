@@ -446,21 +446,9 @@ export default class CommunityDetailPage extends Component {
                 />
               }
             </CollapsibleSection>
-            {sortedEstimatedPrice.length > 0 &&
-              <CollapsibleSection title="Compare to other communities in the area">
-                <article id="pricing-and-floor-plans-comparison">
-                  {sortedEstimatedPrice.map(object => (
-                    <Fragment key={object[1]}>
-                      <PriceLabel>{estimatedPriceLabelMap[object[0]]}</PriceLabel>
-                      <StyledPriceBar
-                        width={findPercentage(object[1], maxPrice)}
-                        price={object[1]}
-                      />
-                    </Fragment>
-                  ))}
-                </article>
-              </CollapsibleSection>
-            }
+            <CollapsibleSection paddedContent title="Compare to other communities in the area">
+              <CommunityPricingComparison community={community} />
+            </CollapsibleSection>
             {(communityDescription || rgsAux.communityDescription) &&
               <CollapsibleSection title="Community Details">
                 <CommunityDetails
@@ -474,9 +462,6 @@ export default class CommunityDetailPage extends Component {
                 />
               </CollapsibleSection>
             }
-            <CollapsibleSection paddedContent title="Compare to other communities in the area">
-              <CommunityPricingComparison community={community} />
-            </CollapsibleSection>
             <CollapsibleSection paddedContent title="Care Services">
               <CareServicesList
                 communityName={name}
