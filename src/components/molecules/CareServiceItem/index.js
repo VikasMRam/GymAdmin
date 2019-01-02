@@ -20,19 +20,29 @@ const TextSection = styled(Block)`
   padding-top: ${size('spacing.regular')};
 `;
 
-const CareServiceItem = ({ icon, palette, text }) => (
+const CareServiceItem = ({
+  icon, iconPalette, iconVariation, text, textPalette, textVariation,
+}) => (
   <Wrapper>
     <IconWrapper>
-      <Icon icon={icon} palette={palette} />
+      <Icon icon={icon} palette={iconPalette} variation={iconVariation} />
     </IconWrapper>
-    <TextSection>{text}</TextSection>
+    <TextSection palette={textPalette} variation={textVariation} >{text}</TextSection>
   </Wrapper>
 );
 
 CareServiceItem.propTypes = {
   icon: string.isRequired,
-  palette: string,
   text: string.isRequired,
+  iconPalette: string,
+  iconVariation: string,
+  textPalette: string,
+  textVariation: string,
+};
+
+CareServiceItem.defaultProps = {
+  iconPalette: 'secondary',
+  iconVariation: 'base',
 };
 
 export default CareServiceItem;

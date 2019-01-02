@@ -22,7 +22,6 @@ import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFoote
 import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
-import CareServicesList from 'sly/components/organisms/CareServicesList';
 import EntityReviews from 'sly/components/organisms/EntityReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import CommunityPricingComparison from 'sly/components/organisms/CommunityPricingComparison';
@@ -49,13 +48,14 @@ import { createBooleanValidator, email, required, usPhone } from 'sly/services/v
 import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList/index';
 import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
 import ModalController from 'sly/controllers/ModalController';
-import { calculatePricing, findPercentage } from 'sly/services/helpers/pricing';
+import { calculatePricing } from 'sly/services/helpers/pricing';
 import EstimatedCost from 'sly/components/molecules/EstimatedCost';
-import PriceBar from 'sly/components/molecules/PriceBar';
 import CommunityReviewsBottomSection from 'sly/components/molecules/CommunityReviewsBottomSection/index';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
+import CommunityCareService from 'sly/components/organisms/CommunityCareService';
+import { careServiceMap } from 'sly/services/helpers/community';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -90,14 +90,6 @@ const StyledOfferNotification = styled(OfferNotification)`
 const Body = makeBody('main');
 const Column = makeColumn('aside');
 const Footer = makeFooter('footer');
-
-const PriceLabel = styled.div`
-  margin-bottom: ${size('spacing.small')};
-`;
-
-const StyledPriceBar = styled(PriceBar)`
-  margin-bottom: ${size('spacing.small')};
-`;
 
 export default class CommunityDetailPage extends Component {
   static propTypes = {
@@ -312,9 +304,7 @@ export default class CommunityDetailPage extends Component {
       bannerNotification = 'We have received your pricing request. Your partner agent is checking with this community and will get back to you shortly.';
     }
     const Header = makeHeader(bannerNotification);
-    const {
-      estimatedPriceBase, estimatedPriceLabelMap, sortedEstimatedPrice, maxPrice,
-    } = calculatePricing(community, rgsAux.estimatedPrice);
+    const { estimatedPriceBase } = calculatePricing(community, rgsAux.estimatedPrice);
 
     const partnerAgent = partnerAgents.length > 0 ? partnerAgents[0] : null;
 
@@ -384,7 +374,7 @@ export default class CommunityDetailPage extends Component {
             </ModalController>
             <CollapsibleSection
               title={`Pricing and Floor Plans at ${name}`}
-              botttomSection={
+              bottomSection={
                 floorPlans.length > 0 &&
                 <ConciergeController
                   communitySlug={community.id}
@@ -462,12 +452,8 @@ export default class CommunityDetailPage extends Component {
                 />
               </CollapsibleSection>
             }
-            <CollapsibleSection paddedContent title="Care Services">
-              <CareServicesList
-                communityName={name}
-                careServices={careServices}
-                serviceHighlights={serviceHighlightsFinal}
-              />
+            <CollapsibleSection title={`Care Services at ${name}`}>
+              <CommunityCareService careServiceMap={careServiceMap} careServices={careServices} />
             </CollapsibleSection>
             <CollapsibleSection
               paddedContent
@@ -490,7 +476,7 @@ export default class CommunityDetailPage extends Component {
             <CollapsibleSection
               title={`Reviews at ${name}`}
               innerRef={this.communityReviewsRef}
-              botttomSection={<CommunityReviewsBottomSection communityName={name} onButtonClick={() => setModal(ADD_RATING)} />}
+              bottomSection={<CommunityReviewsBottomSection communityName={name} onButtonClick={() => setModal(ADD_RATING)} />}
             >
               <EntityReviews
                 reviewsValue={reviewsValue}

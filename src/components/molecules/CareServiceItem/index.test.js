@@ -15,17 +15,4 @@ describe('CareServiceItem', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBe(false);
   });
-
-  it('renders CareServiceItem', () => {
-    const wrapper = wrap({ });
-    expect(wrapper.find('Icon').prop('icon')).toEqual(defaultProps.icon);
-    expect(wrapper.contains(defaultProps.text)).toBe(true);
-  });
-
-  it('renders CareServiceItem with palette', () => {
-    const wrapper = wrap({ palette: 'grey' });
-    expect(wrapper.find('Icon').prop('icon')).toEqual(defaultProps.icon);
-    expect(wrapper.find('Icon').prop('palette')).toEqual('grey');
-    expect(wrapper.contains(defaultProps.text)).toBe(true);
-  });
 });
