@@ -14,13 +14,13 @@ const CenteredHeading = StyledHeading.extend`
 `;
 
 const Section = ({
-  title, children, centerTitle, ...props
+  title, children, centerTitle, titleSize, ...props
 }) => (
   <section {...props}>
     {title && (
       centerTitle ?
-        <CenteredHeading>{title}</CenteredHeading> :
-        <StyledHeading>{title}</StyledHeading>
+        <CenteredHeading size={titleSize}>{title}</CenteredHeading> :
+        <StyledHeading size={titleSize}>{title}</StyledHeading>
     )}
     <article>{children}</article>
   </section>
@@ -30,6 +30,7 @@ Section.propTypes = {
   title: string,
   centerTitle: bool,
   children: node,
+  titleSize: string,
 };
 
 export default Section;
