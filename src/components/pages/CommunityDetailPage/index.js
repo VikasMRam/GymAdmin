@@ -50,7 +50,7 @@ import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorP
 import ModalController from 'sly/controllers/ModalController';
 import { calculatePricing } from 'sly/services/helpers/pricing';
 import EstimatedCost from 'sly/components/molecules/EstimatedCost';
-import CommunityReviewsBottomSection from 'sly/components/molecules/CommunityReviewsBottomSection/index';
+import TextBottomSection from 'sly/components/molecules/TextBottomSection';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
@@ -365,6 +365,14 @@ export default class CommunityDetailPage extends Component {
                     )}
                   </ModalController>
                 </MainSection>
+                <BottomSection>
+                  <TextBottomSection
+                    heading="Have a question for your advisor?"
+                    subHeading="Your advisor can help you make the best decisions."
+                    buttonText="Send a message"
+                    onButtonClick={() => {}}
+                  />
+                </BottomSection>
               </CollapsibleSection>
             }
             <ModalController>
@@ -467,6 +475,14 @@ export default class CommunityDetailPage extends Component {
               <MainSection>
                 <CommunityCareService careServiceMap={careServiceMap} careServices={careServices} />
               </MainSection>
+              <BottomSection>
+                <TextBottomSection
+                  heading="Want to know more about care services?"
+                  subHeading="Your advisor can help you make the best decisions."
+                  buttonText="Ask about care services"
+                  onButtonClick={() => {}}
+                />
+              </BottomSection>
             </CollapsibleSection>
             <CollapsibleSection
               paddedContent
@@ -502,7 +518,12 @@ export default class CommunityDetailPage extends Component {
                 />
               </MainSection>
               <BottomSection>
-                <CommunityReviewsBottomSection communityName={name} onButtonClick={() => setModal(ADD_RATING)} />
+                <TextBottomSection
+                  heading={`Have experience with ${name}?`}
+                  subHeading="Your review can help other families with their senior living search."
+                  buttonText="Write a review"
+                  onButtonClick={() => setModal(ADD_RATING)}
+                />
               </BottomSection>
             </CollapsibleSection>
             <CollapsibleSection title="Questions">

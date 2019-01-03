@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
 
-
 import Block from 'sly/components/atoms/Block/index';
 import { size } from 'sly/components/themes/index';
 import Button from 'sly/components/atoms/Button/index';
@@ -29,19 +28,23 @@ const SubheadingBlock = styled(Block)`
   }
 `;
 
-const CommunityReviewsBottomSection = ({ communityName, onButtonClick }) => (
+const TextBottomSection = ({
+  heading, subHeading, buttonText, onButtonClick,
+}) => (
   <Wrapper>
     <TextSection>
-      <HeadingBlock>{`Have experience with ${communityName}?`}</HeadingBlock>
-      <SubheadingBlock size="caption" palette="grey">Your review can help other families with their senior living search.</SubheadingBlock>
+      <HeadingBlock weight="medium">{heading}</HeadingBlock>
+      {subHeading && <SubheadingBlock size="caption">{subHeading}</SubheadingBlock>}
     </TextSection>
-    <Button ghost onClick={onButtonClick}> Write a review</Button>
+    <Button ghost onClick={onButtonClick}>{buttonText}</Button>
   </Wrapper>
 );
 
-CommunityReviewsBottomSection.propTypes = {
-  communityName: string.isRequired,
+TextBottomSection.propTypes = {
+  heading: string.isRequired,
+  subHeading: string,
+  buttonText: string.isRequired,
   onButtonClick: func,
 };
 
-export default CommunityReviewsBottomSection;
+export default TextBottomSection;
