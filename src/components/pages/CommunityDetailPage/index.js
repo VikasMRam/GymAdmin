@@ -11,7 +11,7 @@ import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
-import { Hr, Button, Icon, Block } from 'sly/components/atoms';
+import { Button, Icon, Block } from 'sly/components/atoms';
 import { CommunityDetailPageTemplate, makeHeader, makeColumn, makeBody, makeFooter }
   from 'sly/components/templates/CommunityDetailPageTemplate';
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
@@ -85,6 +85,10 @@ const hasAllUserData = createBooleanValidator({
 
 const StyledOfferNotification = styled(OfferNotification)`
   margin-bottom: ${size('spacing.xLarge')};
+`;
+
+const StyledCollapsibleSection = styled(CollapsibleSection)`
+  margin-bottom: ${size('spacing.xxxLarge')};
 `;
 
 const Body = makeBody('main');
@@ -540,8 +544,7 @@ export default class CommunityDetailPage extends Component {
                 />
               </MainSection>
             </CollapsibleSection>
-
-            <CollapsibleSection title="Similar Communities">
+            <StyledCollapsibleSection title="Similar Communities" id="sticky-sidebar-boundary">
               <MainSection>
                 <SimilarCommunities similarProperties={similarProperties} />
                 <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
@@ -562,8 +565,7 @@ export default class CommunityDetailPage extends Component {
                   </Button>
                 </BackToSearch>
               </MainSection>
-            </CollapsibleSection>
-            <Hr id="sticky-sidebar-boundary" />
+            </StyledCollapsibleSection>
             <CommunityStickyFooter
               isAlreadyTourScheduled={isAlreadyTourScheduled}
               isAlreadyPricingRequested={isAlreadyPricingRequested}
@@ -702,6 +704,11 @@ export default class CommunityDetailPage extends Component {
               }}
               </NotificationController>
             </Modal>
+            {(images.length > 1) &&
+              <Section title={`More photos of ${name} at ${address.city}`} titleSize="subtitle">
+                <MorePictures gallery={gallery} communityName={name} city={address.city} state={address.state} onPictureClick={this.handleMorePicturesClick} />
+              </Section>
+            }
             <Section title={`Map View of ${name}`}>
               <Lazy ltIE9 component="div">
                 <CommunityMap
@@ -710,11 +717,6 @@ export default class CommunityDetailPage extends Component {
                 />
               </Lazy>
             </Section>
-            {(images.length > 1) &&
-              <Section title="More Pictures">
-                <MorePictures gallery={gallery} communityName={name} city={address.city} state={address.state} onPictureClick={this.handleMorePicturesClick} />
-              </Section>
-            }
             <Section title="How Seniorly Works">
               <HowSlyWorks />
             </Section>
