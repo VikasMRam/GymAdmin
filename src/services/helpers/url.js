@@ -255,8 +255,8 @@ export const getBreadCrumbsForLocation = ({ toc, state, city }) => {
   return baseBcs;
 };
 
+const agentsPath = '/agents';
 export const getBreadCrumbsForAgent = ({ name, state, city }) => {
-  const agentsPath = '/agents';
   const baseBcs = [{
     path: '/',
     label: 'Home',
@@ -290,6 +290,12 @@ export const getBreadCrumbsForAgent = ({ name, state, city }) => {
     return baseBcs;
   }
   return baseBcs;
+};
+
+export const getAgentUrl = ({ id, address }) => {
+  const { state, city } = address;
+  const region = stateRegionMap[state];
+  return `${agentsPath}/${urlize(region)}/${urlize(city)}/${id}`;
 };
 
 export const getCitySearchUrl = ({ propInfo, address }) => {
