@@ -68,7 +68,7 @@ const getHeadingSize = (size) => {
   }
 };
 
-const ChildrenSection = styled.div`
+export const MainSection = styled.div`
   padding: 0 ${size('spacing.xLarge')};
   padding-bottom: ${size('spacing.xLarge')};
   ${ifProp('collapsed', css`
@@ -76,7 +76,7 @@ const ChildrenSection = styled.div`
   `)};
 `;
 
-const BottomSection = styled.div`
+export const BottomSection = styled.div`
   background-color: ${palette('grey', 'background')};
   padding: ${size('spacing.xLarge')};
   border-top: ${size('border.regular')} solid ${palette('slate', 'stroke')};
@@ -85,7 +85,6 @@ const BottomSection = styled.div`
 export default class CollapsibleSection extends Component {
   static propTypes = {
     children: node,
-    botttomSection: node,
     title: string.isRequired,
     collapsedDefault: bool.isRequired,
     size: oneOf(['small', 'regular', 'large']),
@@ -122,7 +121,6 @@ export default class CollapsibleSection extends Component {
   render() {
     const {
       children,
-      botttomSection,
       title,
       collapsedDefault,
       size,
@@ -159,14 +157,7 @@ export default class CollapsibleSection extends Component {
             </Header>
             <Content maxHeight={maxHeight} collapsed={collapsed}>
               <div ref={measureRef} {...props}>
-                <ChildrenSection collapsed={collapsed}>
-                  {children}
-                </ChildrenSection>
-                {botttomSection &&
-                  <BottomSection>
-                    {botttomSection}
-                  </BottomSection>
-                }
+                {children}
               </div>
             </Content>
           </Section>
