@@ -112,7 +112,7 @@ class AgentRegionPage extends Component {
           <StyledHr />
           {agentsList.length > 0 &&
             <AgentTilesWrapper>
-              {agentsList.map(agent => <Link key={agent.id} to="/"><AgentTile agent={agent} /></Link>)}
+              {agentsList.map(agent => <Link key={agent.id} to={agent.url}><AgentTile agent={agent} /></Link>)}
             </AgentTilesWrapper>
           }
           {agentsList.length === 0 &&

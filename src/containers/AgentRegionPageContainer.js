@@ -7,6 +7,7 @@ import { resourceListReadRequest, resourceCreateRequest, resourceDetailReadReque
 import { getList, getDetail } from 'sly/store/selectors';
 import withServerState from 'sly/store/withServerState';
 import { titleize } from 'sly/services/helpers/strings';
+import { getAgentUrl } from 'sly/services/helpers/url';
 
 const AgentRegionPageContainer = ({
   agentsList, regionSlug, citySlug, postUserAction, userAction, pathName,
@@ -14,6 +15,11 @@ const AgentRegionPageContainer = ({
   if (!userAction) {
     return null;
   }
+  agentsList.map((agent) => {
+    const url = getAgentUrl(agent);
+    agent.url = url;
+    return agent;
+  });
   let locationName = null;
   if (citySlug) {
     locationName = titleize(citySlug);
