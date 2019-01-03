@@ -70,7 +70,7 @@ const CommunityPricingComparison = ({ community }) => {
               {object[0] === 'adultDayAverage' && <sup>1</sup>}
             </StyledPriceBar>
           ))}
-          {hasAdultDayAverage && <Block size="tiny" palette="grey">1 This text is contains details/disclaimer about the number of hours for Adult Daycare</Block>}
+          {hasAdultDayAverage && <Block size="tiny" palette="grey">1 The estimate above is based on data provided by Genworth&apos;s Cost of Care estimate. Home care assumes 44 hours per week, and Adult Day assumes 5 days per week.</Block>}
         </Fragment>
       }
     </article>
