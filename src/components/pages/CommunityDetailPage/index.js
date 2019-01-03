@@ -20,7 +20,7 @@ import SaveCommunityController from 'sly/controllers/SaveCommunityController';
 import NotificationController from 'sly/controllers/NotificationController';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
 import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
-import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
+import CollapsibleSection, { MainSection, BottomSection } from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
 import EntityReviews from 'sly/components/organisms/EntityReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
@@ -358,11 +358,13 @@ export default class CommunityDetailPage extends Component {
               <CollapsibleSection
                 title={`Your advisor for ${name}`}
               >
-                <ModalController>
-                  {({ show }) => (
-                    <CommunityAgentSection agent={partnerAgent} onAdvisorHelpClick={() => show(ADVISOR_HELP)} />
-                  )}
-                </ModalController>
+                <MainSection>
+                  <ModalController>
+                    {({ show }) => (
+                      <CommunityAgentSection agent={partnerAgent} onAdvisorHelpClick={() => show(ADVISOR_HELP)} />
+                    )}
+                  </ModalController>
+                </MainSection>
               </CollapsibleSection>
             }
             <ModalController>
@@ -374,8 +376,33 @@ export default class CommunityDetailPage extends Component {
             </ModalController>
             <CollapsibleSection
               title={`Pricing and Floor Plans at ${name}`}
-              bottomSection={
-                floorPlans.length > 0 &&
+              innerRef={this.pricingAndFloorPlansRef}
+            >
+              <MainSection>
+                {floorPlans.length > 0 &&
+                  <ModalController>
+                    {({ show }) => (
+                      <CommunityFloorPlansList
+                        typeOfCare={typeOfCare}
+                        floorPlans={floorPlans}
+                        onItemClick={(floorPlan) => {
+                          show(FLOOR_PLAN, floorPlan);
+                          onFloorPlanModalToggle(floorPlan);
+                        }}
+                      />
+                    )}
+                  </ModalController>
+                }
+                {floorPlans.length === 0 &&
+                  <EstimatedCost
+                    getPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
+                    community={community}
+                    price={estimatedPriceBase}
+                  />
+                }
+              </MainSection>
+              {floorPlans.length > 0 &&
+              <BottomSection>
                 <ConciergeController
                   communitySlug={community.id}
                   queryParams={{ modal, currentStep }}
@@ -411,115 +438,109 @@ export default class CommunityDetailPage extends Component {
                     }
                   }
                 </ConciergeController>
-                }
-              innerRef={this.pricingAndFloorPlansRef}
-            >
-              {floorPlans.length > 0 &&
-                <ModalController>
-                  {({ show }) => (
-                    <CommunityFloorPlansList
-                      typeOfCare={typeOfCare}
-                      floorPlans={floorPlans}
-                      onItemClick={(floorPlan) => {
-                        show(FLOOR_PLAN, floorPlan);
-                        onFloorPlanModalToggle(floorPlan);
-                      }}
-                    />
-                  )}
-                </ModalController>
-              }
-              {floorPlans.length === 0 &&
-                <EstimatedCost
-                  getPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-                  community={community}
-                  price={estimatedPriceBase}
-                />
+              </BottomSection>
               }
             </CollapsibleSection>
             {sortedEstimatedPrice.length > 0 &&
               <CollapsibleSection paddedContent title="Compare to other communities in the area">
-                <CommunityPricingComparison community={community} />
+                <MainSection>
+                  <CommunityPricingComparison community={community} />
+                </MainSection>
               </CollapsibleSection>
             }
             {(communityDescription || rgsAux.communityDescription) &&
               <CollapsibleSection title="Community Details">
-                <CommunityDetails
-                  communityName={name}
-                  communityDescription={communityDescription}
-                  rgsAuxDescription={rgsAux.communityDescription}
-                  staffDescription={staffDescription}
-                  residentDescription={residentDescription}
-                  ownerExperience={ownerExperience}
-                  contract={community.contacts && community.contacts.length > 0} // TODO: cheange to use contract info once api sends it
-                />
+                <MainSection>
+                  <CommunityDetails
+                    communityName={name}
+                    communityDescription={communityDescription}
+                    rgsAuxDescription={rgsAux.communityDescription}
+                    staffDescription={staffDescription}
+                    residentDescription={residentDescription}
+                    ownerExperience={ownerExperience}
+                    contract={community.contacts && community.contacts.length > 0} // TODO: cheange to use contract info once api sends it
+                  />
+                </MainSection>
               </CollapsibleSection>
             }
             <CollapsibleSection title={`Care Services at ${name}`}>
-              <CommunityCareService careServiceMap={careServiceMap} careServices={careServices} />
+              <MainSection>
+                <CommunityCareService careServiceMap={careServiceMap} careServices={careServices} />
+              </MainSection>
             </CollapsibleSection>
             <CollapsibleSection
               paddedContent
               title="Amenities & Features"
               innerRef={this.amenitiesAndFeaturesRef}
             >
-              <AmenitiesAndFeatures
-                communityName={name}
-                communityHighlights={communityHighlights}
-                personalSpace={personalSpace}
-                personalSpaceOther={personalSpaceOther}
-                communitySpace={communitySpace}
-                communitySpaceOther={communitySpaceOther}
-                nonCareServices={nonCareServices}
-                nonCareServicesOther={nonCareServicesOther}
-                languages={languages}
-                languagesOther={languagesOther}
-              />
+              <MainSection>
+                <AmenitiesAndFeatures
+                  communityName={name}
+                  communityHighlights={communityHighlights}
+                  personalSpace={personalSpace}
+                  personalSpaceOther={personalSpaceOther}
+                  communitySpace={communitySpace}
+                  communitySpaceOther={communitySpaceOther}
+                  nonCareServices={nonCareServices}
+                  nonCareServicesOther={nonCareServicesOther}
+                  languages={languages}
+                  languagesOther={languagesOther}
+                />
+              </MainSection>
             </CollapsibleSection>
             <CollapsibleSection
               title={`Reviews at ${name}`}
               innerRef={this.communityReviewsRef}
-              bottomSection={<CommunityReviewsBottomSection communityName={name} onButtonClick={() => setModal(ADD_RATING)} />}
             >
-              <EntityReviews
-                reviewsValue={reviewsValue}
-                reviews={reviewsFinal}
-                reviewRatings={ratingsArray}
-                onLeaveReview={onLeaveReview}
-                onReviewLinkClicked={onReviewLinkClicked}
-              />
+              <MainSection>
+                <EntityReviews
+                  reviewsValue={reviewsValue}
+                  reviews={reviewsFinal}
+                  reviewRatings={ratingsArray}
+                  onLeaveReview={onLeaveReview}
+                  onReviewLinkClicked={onReviewLinkClicked}
+                />
+              </MainSection>
+              <BottomSection>
+                <CommunityReviewsBottomSection communityName={name} onButtonClick={() => setModal(ADD_RATING)} />
+              </BottomSection>
             </CollapsibleSection>
             <CollapsibleSection title="Questions">
-              <CommunityQuestionAnswers
-                communityName={name}
-                communitySlug={id}
-                questions={questions}
-                setModal={setModal}
-                isQuestionModalOpenValue={modal === ASK_QUESTION}
-                answerQuestion={setQuestionToAsk}
-                answerQuestionValue={questionToAnswer}
-                user={user}
-              />
+              <MainSection>
+                <CommunityQuestionAnswers
+                  communityName={name}
+                  communitySlug={id}
+                  questions={questions}
+                  setModal={setModal}
+                  isQuestionModalOpenValue={modal === ASK_QUESTION}
+                  answerQuestion={setQuestionToAsk}
+                  answerQuestionValue={questionToAnswer}
+                  user={user}
+                />
+              </MainSection>
             </CollapsibleSection>
 
             <CollapsibleSection title="Similar Communities">
-              <SimilarCommunities similarProperties={similarProperties} />
-              <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
-                {({ gotoAdvancedInfo }) => (
-                  <AdTileWrapper>
-                    <AdTile {...adProps} onClick={() => gotoAdvancedInfo()} />
-                  </AdTileWrapper>
-                )
-                }
-              </ConciergeController>
-              <BackToSearch>
-                <Button
-                  ghost
-                  onClick={onBackToSearchClicked}
-                  href={getCitySearchUrl({ propInfo, address })}
-                >
-                  Communities In {address.city}
-                </Button>
-              </BackToSearch>
+              <MainSection>
+                <SimilarCommunities similarProperties={similarProperties} />
+                <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
+                  {({ gotoAdvancedInfo }) => (
+                    <AdTileWrapper>
+                      <AdTile {...adProps} onClick={() => gotoAdvancedInfo()} />
+                    </AdTileWrapper>
+                  )
+                  }
+                </ConciergeController>
+                <BackToSearch>
+                  <Button
+                    ghost
+                    onClick={onBackToSearchClicked}
+                    href={getCitySearchUrl({ propInfo, address })}
+                  >
+                    Communities In {address.city}
+                  </Button>
+                </BackToSearch>
+              </MainSection>
             </CollapsibleSection>
             <Hr id="sticky-sidebar-boundary" />
             <CommunityStickyFooter
