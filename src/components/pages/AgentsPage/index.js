@@ -6,6 +6,7 @@ import { size, assetPath } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Image, Hr } from 'sly/components/atoms';
 import { getHelmetForAgentsPage } from 'sly/services/helpers/html_headers';
+import { agentsFAQs } from 'sly/services/helpers/agents';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import Section from 'sly/components/molecules/Section';
@@ -15,6 +16,7 @@ import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
 import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
 import { mostSearchedRegions } from 'sly/services/helpers/agents';
 import BannerNotificationController from 'sly/controllers/BannerNotificationController';
+import FAQSection from 'sly/components/organisms/FAQSection';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -134,6 +136,10 @@ class AgentsPage extends Component {
               )}
             </BannerNotificationController>
           </FormSection>
+          <Hr fullWidth />
+          <StyledSection>
+            <FAQSection faqs={agentsFAQs} />
+          </StyledSection>
         </TemplateContent>
         <Footer />
       </Fragment>
