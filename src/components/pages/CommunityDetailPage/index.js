@@ -12,6 +12,8 @@ import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
+import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
+import { careServiceMap } from 'sly/services/helpers/community';
 import { Button, Icon, Block } from 'sly/components/atoms';
 import {
   CommunityDetailPageTemplate, makeHeader, makeColumn, makeBody, makeFooter,
@@ -47,8 +49,7 @@ import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQ
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
-import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
-import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList/index';
+import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList';
 import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
 import ModalController from 'sly/controllers/ModalController';
 import { calculatePricing } from 'sly/services/helpers/pricing';
@@ -58,7 +59,7 @@ import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFo
 import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
-import { careServiceMap } from 'sly/services/helpers/community';
+import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -96,6 +97,10 @@ const StyledCollapsibleSection = styled(CollapsibleSection)`
 
 const StyledSection = styled(Section)`
   margin-bottom: ${size('spacing.xxxLarge')};
+`;
+
+const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const Body = makeBody('div');
@@ -556,6 +561,14 @@ export default class CommunityDetailPage extends Component {
                   />
                 </MainSection>
               </CollapsibleSection>
+              {rgsAux.stateLicensingWebsite &&
+                <StyledCommunityExtraInfoSection
+                  title={`${name} at ${address.city} State licensing info`}
+                  description={`${name} is licensed by the state of ${address.state}.`}
+                  url={rgsAux.stateLicensingWebsite}
+                  urlText="Visit the state licensing website"
+                />
+              }
               <StyledCollapsibleSection title="Similar Communities" id="sticky-sidebar-boundary">
                 <MainSection>
                   <SimilarCommunities similarProperties={similarProperties} />

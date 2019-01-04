@@ -4,9 +4,12 @@ import styled from 'styled-components';
 
 import { Heading } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
+import { spacing as spacingPropType } from 'sly/propTypes/spacing';
+
+const margin = ({ headingMargin }) => size('spacing', headingMargin);
 
 const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.xLarge')};
+  margin-bottom: ${margin};
 `;
 
 const CenteredHeading = StyledHeading.extend`
@@ -14,13 +17,13 @@ const CenteredHeading = StyledHeading.extend`
 `;
 
 const Section = ({
-  title, children, centerTitle, titleSize, ...props
+  title, children, centerTitle, titleSize, headingMargin, ...props
 }) => (
   <section {...props}>
     {title && (
       centerTitle ?
-        <CenteredHeading size={titleSize}>{title}</CenteredHeading> :
-        <StyledHeading size={titleSize}>{title}</StyledHeading>
+        <CenteredHeading size={titleSize} headingMargin={headingMargin}>{title}</CenteredHeading> :
+        <StyledHeading size={titleSize} headingMargin={headingMargin}>{title}</StyledHeading>
     )}
     <article>{children}</article>
   </section>
@@ -31,6 +34,11 @@ Section.propTypes = {
   centerTitle: bool,
   children: node,
   titleSize: string,
+  headingMargin: spacingPropType,
+};
+
+Section.defaultProps = {
+  headingMargin: 'xLarge',
 };
 
 export default Section;
