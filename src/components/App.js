@@ -7,9 +7,10 @@ import smoothscroll from 'smoothscroll-polyfill';
 import { func } from 'prop-types';
 
 // https://github.com/diegohaz/arc/wiki/Styling
+
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
-import { facebookPixelId, googleTagManagerId, isProd, facebookAppId, googleAppId } from 'sly/config';
+import { facebookPixelId, googleTagManagerId, isProd, facebookAppId, googleAppId, rokoApiKey } from 'sly/config';
 import { assetPath } from 'sly/components/themes';
 // import AppController from 'sly/controllers/Appcontroller';
 import CommunityDetailPageController from 'sly/controllers/CommunityDetailPageController';
@@ -305,6 +306,14 @@ export default class App extends Component {
         {/* Begin Google Platform Library Code */}
         <script src="https://apis.google.com/js/platform.js" async defer></script>
         {/* End Google Platform Library Code */}
+
+
+        {/* Begin Instabot Code */}
+        <script type="text/javascript"
+                src ="//app.instabot.io/jsapi/v2/rokoInstabot.js"
+                dangerouslySetInnerHTML={{ __html: `apiKey: '${rokoApiKey}'`}}>
+        </script>
+        {/* End Instabot Code */}
 
         {/* eslint-enable */}
       </Fragment>
