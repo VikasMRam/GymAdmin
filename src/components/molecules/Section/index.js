@@ -8,11 +8,11 @@ import { spacing as spacingPropType } from 'sly/propTypes/spacing';
 
 const margin = ({ headingMargin }) => size('spacing', headingMargin);
 
-const StyledHeading = styled(Heading)`
+const HeadingWrapper = styled.div`
   margin-bottom: ${margin};
 `;
 
-const CenteredHeading = StyledHeading.extend`
+const CenteredHeading = styled(Heading)`
   text-align: center;
 `;
 
@@ -20,11 +20,13 @@ const Section = ({
   title, children, centerTitle, titleSize, headingMargin, ...props
 }) => (
   <section {...props}>
-    {title && (
-      centerTitle ?
-        <CenteredHeading size={titleSize} headingMargin={headingMargin}>{title}</CenteredHeading> :
-        <StyledHeading size={titleSize} headingMargin={headingMargin}>{title}</StyledHeading>
-    )}
+    <HeadingWrapper headingMargin={headingMargin}>
+      {title && (
+        centerTitle ?
+          <CenteredHeading size={titleSize} >{title}</CenteredHeading> :
+          <Heading size={titleSize}>{title}</Heading>
+      )}
+    </HeadingWrapper>
     <article>{children}</article>
   </section>
 );
