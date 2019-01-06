@@ -10,17 +10,18 @@ import FooterOrganism from 'sly/components/organisms/Footer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 
 export const CommunityDetailPageTemplate = styled.main`
-  margin: auto;
-  width: 100%;
+  .overlayTwoColumnBody, .overlayOneColumnBody {
+    margin: auto;
+    width: 100%;
+    padding: 0 ${size('spacing.large')};
 
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('tabletLayout.col8')};
-  }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: grid;
-    width: ${size('layout.col12')};
-    grid-template-columns: ${size('layout.col8')} auto;
-    grid-gap: 0 ${size('layout.gutter')};
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      padding: 0;
+      width: ${size('tabletLayout.col8')};
+    }
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      width: ${size('layout.col12')};
+    }
   }
 
   .overlayHeader {
@@ -43,7 +44,71 @@ export const CommunityDetailPageTemplate = styled.main`
       display: block;
     }
   }
+
+  .overlayTwoColumnBody {
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      display: grid;
+      grid-template-columns: ${size('layout.col8')} auto;
+      grid-gap: 0 ${size('layout.gutter')};
+    }
+  }
+
+  .overlayFullWidthBody {
+
+  }
+
+  .overlayOneColumnBody {
+
+  }
 `;
+
+export const makeTwoColumnBody = (Component) => {
+  function TopTwoColumnBody({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayTwoColumnBody', className)}
+        {...props}
+      />
+    );
+  }
+  TopTwoColumnBody.propTypes = {
+    className: string,
+  };
+
+  return TopTwoColumnBody;
+};
+
+export const makeOneColumnBody = (Component) => {
+  function TopOneColumnBody({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayOneColumnBody', className)}
+        {...props}
+      />
+    );
+  }
+  TopOneColumnBody.propTypes = {
+    className: string,
+  };
+
+  return TopOneColumnBody;
+};
+
+export const makeFullWidthBody = (Component) => {
+  function TopFullWidthBody({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayFullWidthBody', className)}
+        {...props}
+      />
+    );
+  }
+  TopFullWidthBody.propTypes = {
+    className: string,
+  };
+
+  return TopFullWidthBody;
+};
 
 export const makeHeader = (bannerNotification) => {
   function Header({ className, ...props }) {

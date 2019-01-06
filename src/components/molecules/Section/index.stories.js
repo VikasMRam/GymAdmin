@@ -14,4 +14,9 @@ storiesOf('Molecules|Section', module)
     <Section centerTitle title="Section title">
       { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
     </Section>
+  ))
+  .add('with headingMargin', () => (
+    <Section centerTitle title="Section title" headingMargin="xxLarge">
+      { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
+    </Section>
   ));

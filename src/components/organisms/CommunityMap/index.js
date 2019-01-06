@@ -25,23 +25,18 @@ const Wrapper = styled.article`
 
 const MapContainerElement = styled.div`
   width: 100%;
-  height: ${size('map.propertyDetail.small.height')};
-
+  height: 100%;
   object-fit: cover;
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     position: unset;
-    width: ${size('map.propertyDetail.regular.width')};
     height: ${size('map.propertyDetail.regular.height')};
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('map.propertyDetail.large.width')};
     height: ${size('map.propertyDetail.large.height')};
   }
 `;
@@ -71,6 +66,7 @@ class CommunityMap extends Component {
       latitude: number.isRequired,
       longitude: number.isRequired,
     })),
+    className: string,
   };
 
   state = {
@@ -93,6 +89,7 @@ class CommunityMap extends Component {
     const {
       community,
       similarProperties,
+      className,
     } = this.props;
     const { latitude, longitude } = community.address;
     const center = {
@@ -173,7 +170,7 @@ class CommunityMap extends Component {
     }
 
     return (
-      <Wrapper>
+      <Wrapper className={className}>
         <Map
           center={center}
           defaultZoom={defaultZoom}
