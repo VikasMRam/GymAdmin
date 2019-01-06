@@ -29,6 +29,7 @@ const config = {
     externalWizardsPath: process.env.EXTERNAL_WIZARDS_PATH,
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-NTC7HG2',
+    rokoApikey: 'OgRs7tffvTdiKOKqsDSwwLgyJF6wHYVxFAK+qQO4paU=',
     version: process.env.VERSION,
     facebookAppId: process.env.FB_CLIENT_ID,
     googleAppId: process.env.GOOGLE_CLIENT_ID,
