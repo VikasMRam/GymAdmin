@@ -38,7 +38,7 @@ const HeroTextWrapper = styled.div`
   align-items: center;
   background-position: right 50%;
   background-image: url(${assetPath('images/agents-partners-hero.png')});
-
+  background-size: cover;
   > * {
     max-width: calc(100% - ${size('spacing.large')});
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
