@@ -3,9 +3,10 @@ import { arrayOf, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import CareServiceItem from 'sly/components/molecules/CareServiceItem/index';
+import CareServiceItem from 'sly/components/molecules/CareServiceItem';
+import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 
-const Wrapper = styled.div`
+const Wrapper = styled(CollapsibleBlock)`
   display: grid;
   grid-template-columns: 100%;
   grid-row-gap: ${size('spacing.large')};
@@ -39,7 +40,8 @@ const CommunityCareService = ({ careServices }) => {
     />
   ));
   return (
-    <Wrapper>
+    // TODO: 21 rem on height looked good for Collapsible Block
+    <Wrapper minHeight="regular">
       {itemComponents}
     </Wrapper>
   );
