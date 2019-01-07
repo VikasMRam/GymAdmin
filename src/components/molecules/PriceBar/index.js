@@ -2,6 +2,7 @@ import React from 'react';
 import { number, string, node } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
+import { isString } from 'lodash';
 
 import { size } from 'sly/components/themes';
 import { Bar, Block, ClampedText } from 'sly/components/atoms';
@@ -28,14 +29,23 @@ const StyledBar = styled(Bar)`
 
 const PriceBar = ({
   width, price, children, palette, variation, className,
-}) => (
-  <StyledBlock size="caption" className={className}>
-    <StyledBar width={width / 2.5} palette={palette} variation={variation}>
-      <Label size="caption" title={children && children.toString()}>{children}</Label>
-    </StyledBar>
-    <NumberFormat value={price} displayType="text" thousandSeparator prefix="$" />
-  </StyledBlock>
-);
+}) => {
+  let title = '';
+  if (isString(children)) {
+    title = children;
+  } else if (children) {
+    ([title] = children);
+  }
+
+  return (
+    <StyledBlock size="caption" className={className}>
+      <StyledBar width={width / 2.5} palette={palette} variation={variation}>
+        <Label size="caption" title={title}>{children}</Label>
+      </StyledBar>
+      <NumberFormat value={price} displayType="text" thousandSeparator prefix="$" />
+    </StyledBlock>
+  );
+};
 
 PriceBar.propTypes = {
   width: number.isRequired,

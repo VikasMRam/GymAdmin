@@ -14,10 +14,10 @@ export const sortProperties = (obj) => {
 export const calculatePricing = (community, estimatedPrice) => {
   const { startingRate, name } = community;
   const mEstimatedPrice = { ...estimatedPrice };
-  if (mEstimatedPrice && mEstimatedPrice.providedAverage) {
+  if (mEstimatedPrice && !mEstimatedPrice.providedAverage && mEstimatedPrice.providedAverage) {
     mEstimatedPrice.providedAverage = startingRate || mEstimatedPrice.providedAverage;
   }
-  if (mEstimatedPrice && mEstimatedPrice.estimatedAverage) {
+  if (mEstimatedPrice && !mEstimatedPrice.providedAverage && mEstimatedPrice.estimatedAverage) {
     mEstimatedPrice.estimatedAverage = startingRate || mEstimatedPrice.estimatedAverage;
   }
 
@@ -43,6 +43,12 @@ export const calculatePricing = (community, estimatedPrice) => {
         sortedEstimatedPrice = [];
       } else {
         [, maxPrice] = sortedEstimatedPrice[sortedEstimatedPrice.length - 1];
+      }
+      // if has both providedAverage & estimatedAverage return only one, precedence providerAverage > estimatedAverage
+      const hasProvidedAverage = sortedEstimatedPrice.find(ep => ep[0] === 'providedAverage');
+      const hasEstimatedAverage = sortedEstimatedPrice.find(ep => ep[0] === 'estimatedAverage');
+      if (hasProvidedAverage && hasEstimatedAverage) {
+        sortedEstimatedPrice = sortedEstimatedPrice.filter(ep => ep[0] !== 'estimatedAverage');
       }
     }
     estimatedPriceBase = startingRate || mEstimatedPrice.providedAverage || mEstimatedPrice.estimatedAverage;
