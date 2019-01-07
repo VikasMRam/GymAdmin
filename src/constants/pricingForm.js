@@ -52,14 +52,7 @@ export const MEDICAID_OPTIONS = [
 export const WHAT_TO_NEXT_OPTIONS = [
   { value: 'schedule-tour', label: 'Schedule a tour' },
   { value: 'talk-advisor', label: 'Talk to an advisor', type: 'submit' },
-  { value: 'learn-similar-communities', label: 'Learn about similar communities' },
   { value: 'explore-affordable-options', label: 'Explore more affordable options', type: 'submit' },
-  {
-    value: 'apply-financing',
-    label: 'Learn about financing',
-    href: 'https://try.seniorly.com/getfinancing/',
-    target: '_blank',
-  },
 ];
 
 export const EXPLORE_AFFORDABLE_PRICING_OPTIONS = [

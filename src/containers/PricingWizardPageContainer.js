@@ -20,7 +20,8 @@ const PricingWizardPageContainer = ({
     return null;
   }
   const { id, url } = community;
-  const handleComplete = (data, toggleConfirmationModal) => {
+
+  const submitUserAction = (data) => {
     const {
       name, phone, medicaidCoverage, roomType, careType, contactByTextMsg, interest, ...restData
     } = data;
@@ -35,23 +36,29 @@ const PricingWizardPageContainer = ({
       action: CUSTOM_PRICING,
       value,
     };
-
-    return postUserAction(payload)
-      .then(() => {
-        const event = {
-          action: 'pricing-requested', category: eventCategory, label: id,
-        };
-        SlyEvent.getInstance().sendEvent(event);
-        history.push(url);
-        toggleConfirmationModal('pricing');
-      });
+    const event = {
+      action: 'pricing-requested', category: eventCategory, label: id,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+    return postUserAction(payload);
   };
+
+  const handleComplete = (data, toggleConfirmationModal) => {
+    history.push(url);
+    toggleConfirmationModal('pricing');
+    // return submitUserAction(data)
+    //   .then(() => {
+    //
+    //   });
+  };
+
   const userDetails = userAction ? userAction.userDetails : null;
   return (
     <PricingWizardPage
       community={community}
       user={user}
       userDetails={userDetails}
+      userActionSubmit={submitUserAction}
       onComplete={handleComplete}
     />
   );
