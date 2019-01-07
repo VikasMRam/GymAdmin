@@ -89,7 +89,7 @@ const CommunitySummary = ({
         <div>
           {conciergeNumber &&
             <Fragment>
-              For pricing and avilability, call&nbsp;
+              For pricing and availability, call&nbsp;
               <Link href={`tel:${conciergeNumber}`} onClick={onConciergeNumberClicked}>
                 <NumberFormat
                   value={conciergeNumber}

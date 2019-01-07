@@ -499,9 +499,9 @@ export default class CommunityDetailPage extends Component {
                 <BottomSection>
                   <TextBottomSection
                     heading="Want to know more about care services?"
-                    subHeading="Your advisor can help you make the best decisions."
+                    subHeading="Your advisor can help you make better decisions."
                     buttonText="Ask about care services"
-                    onButtonClick={() => {}}
+                    onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
                   />
                 </BottomSection>
               </CollapsibleSection>
@@ -705,13 +705,17 @@ export default class CommunityDetailPage extends Component {
                     if (askAgentQuestionType === 'tour') {
                       heading = 'We have received your tour request.';
                       description = 'Your partner agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
-                      placeholder = `Hi Rachel, I have a question about my tour with ${name}...`;
+                      placeholder = `Hi, I have a question about my tour with ${name}...`;
                     } else if (askAgentQuestionType === 'pricing') {
                       heading = 'We have received your custom pricing request.';
                       description = 'Your partner agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
                     } else if (askAgentQuestionType === 'offer') {
                       heading = `Ask your partner agent about the holiday incentive at ${name}`;
                       question = `Hi, I am interested in knowing more about the holiday promotion at ${name}. I am looking for...`;
+                    }
+                    else if (askAgentQuestionType === 'services') {
+                      heading = `Ask your partner agent about services provided at ${name}`;
+                      question = `Hi, I need .... and am interested in knowing whether ${name} has ...`;
                     }
 
                     return (

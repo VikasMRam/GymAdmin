@@ -27,7 +27,7 @@ const CommunityFloorPlansList = ({ typeOfCare, floorPlans, onItemClick }) => (
         );
       })}
     </ListWrapper>
-    <Block size="tiny" palette="grey">*Care services not included in price. Your pricing will vary depending on your specific room and care service needs.</Block>
+    <Block size="tiny" palette="grey">*Care services are not included in price. Your pricing will vary depending on your specific room and care needs.</Block>
   </Fragment>
 );
 
