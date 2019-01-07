@@ -6,16 +6,12 @@ import { isBrowser, olarkSiteId } from 'sly/config';
 import { getKey } from 'sly/components/themes';
 
 injectGlobal`
-  @media screen and (max-width: ${getKey('sizes.breakpoint.laptop')}) {
-    body.ChatBox-page-with-sticky-footer #hbl-live-chat-wrapper .olark-launch-button {
+  body.ChatBox-page-with-sticky-footer #hbl-live-chat-wrapper .olark-launch-button {
       bottom: ${getKey('sizes.chatBox.pageWithStickyFooterBottomMargin')}!important;
     }
-  }
-  @media screen and (min-width: ${getKey('sizes.breakpoint.tablet')}) {
-    body.ChatBox-footer-reached #hbl-live-chat-wrapper .olark-launch-button {
+  body.ChatBox-footer-reached #hbl-live-chat-wrapper .olark-launch-button {
       bottom: ${getKey('sizes.chatBox.footerReachedBottomMargin')}!important;
-    }
-  }
+    }  
 `;
 
 const loadOlark = () => {
