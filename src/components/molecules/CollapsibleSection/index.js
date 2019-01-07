@@ -21,15 +21,15 @@ const Section = styled.section`
   max-width: 100%;
 
   margin-bottom: ${size('spacing.large')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.small')};
+  border: ${p => p.borderless ? 'none' : size('border.regular')} solid ${palette('slate', 'stroke')};
+  border-radius: ${p => p.borderless ? 'none' : size('spacing.small')};
 `;
 
 export const Header = styled.div`
   display: grid;
   justify-content: space-between;
   grid-template-columns: auto auto;
-  padding: ${size('spacing.xLarge')};
+  padding: ${size('spacing.xLarge')} ${p => p.borderless ? 0 : ''};
 
   :hover {
     cursor: pointer;
@@ -93,6 +93,7 @@ export default class CollapsibleSection extends Component {
     className: string,
     clampTitle: bool,
     headingWeight: weightPropType,
+    borderless: bool,
   };
 
   static defaultProps = {
@@ -101,6 +102,7 @@ export default class CollapsibleSection extends Component {
     paddedContent: false,
     clampTitle: true,
     headingWeight: 'medium',
+    borderless: false,
   };
 
   state = {
@@ -129,6 +131,7 @@ export default class CollapsibleSection extends Component {
       className,
       clampTitle,
       headingWeight,
+      borderless,
       ...props
     } = this.props;
     const { collapsed, maxHeight } = this.state;
@@ -138,11 +141,12 @@ export default class CollapsibleSection extends Component {
           <Section
             paddedContent={paddedContent}
             collapsed={collapsed}
+            borderless={borderless}
             size={size}
             innerRef={innerRef}
             className={className}
           >
-            <Header onClick={this.toggle}>
+            <Header onClick={this.toggle} borderless={borderless}>
               {clampTitle &&
                 <ClampedText weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
                   {title}
