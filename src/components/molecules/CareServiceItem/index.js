@@ -7,17 +7,14 @@ import { Icon, Block } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 const IconWrapper = styled.div`
   margin-right: ${size('spacing.large')};
-  padding: ${size('spacing.regular')};
+  padding: calc(${size('spacing.regular')} - ${size('border.regular')});
   border: ${size('border.regular')} solid ${palette('grey', 'filler')};
   border-radius: ${size('border.xLarge')};
-`;
-
-const TextSection = styled(Block)`
-  padding-top: ${size('spacing.regular')};
 `;
 
 const CareServiceItem = ({
@@ -27,7 +24,7 @@ const CareServiceItem = ({
     <IconWrapper>
       <Icon icon={icon} palette={iconPalette} variation={iconVariation} />
     </IconWrapper>
-    <TextSection palette={textPalette} variation={textVariation} >{text}</TextSection>
+    <Block palette={textPalette} variation={textVariation} >{text}</Block>
   </Wrapper>
 );
 

@@ -1,11 +1,12 @@
 import React from 'react';
-import { arrayOf, string, object } from 'prop-types';
+import { arrayOf, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import CareServiceItem from 'sly/components/molecules/CareServiceItem/index';
+import CareServiceItem from 'sly/components/molecules/CareServiceItem';
+import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 
-const Wrapper = styled.div`
+const Wrapper = styled(CollapsibleBlock)`
   display: grid;
   grid-template-columns: 100%;
   grid-row-gap: ${size('spacing.large')};
@@ -16,42 +17,37 @@ const Wrapper = styled.div`
   }
 `;
 
-const CommunityCareService = ({ careServiceMap, careServices }) => {
-  const careServiceMapKeys = Object.keys(careServiceMap);
-  const itemComponents = careServiceMapKeys.map((key) => {
-    let icon = 'close';
-    let iconPalette = 'slate';
-    let iconVariation = 'filler';
-    const textPalette = 'slate';
-    let textVariation = 'filler';
-    if (careServices.indexOf(key) !== -1) {
-      icon = 'check';
-      iconPalette = 'secondary';
-      iconVariation = 'base';
-      textVariation = 'base';
-    }
-    const careService = careServiceMap[key];
-    return (
-      <CareServiceItem
-        key={careService}
-        icon={icon}
-        text={careService}
-        iconPalette={iconPalette}
-        iconVariation={iconVariation}
-        textPalette={textPalette}
-        textVariation={textVariation}
-      />
-    );
-  });
+const preset = {
+  present: {
+    icon: 'check', iconPalette: 'secondary', iconVariation: 'base', textPalette: 'slate', textVariation: 'base',
+  },
+  notPresent: {
+    icon: 'close', iconPalette: 'slate', iconVariation: 'filler', textPalette: 'slate', textVariation: 'filler',
+  },
+};
+
+const CommunityCareService = ({ careServices }) => {
+  const presetValue = preset.present;
+  const itemComponents = careServices.map(careService => (
+    <CareServiceItem
+      key={careService}
+      icon={presetValue.icon}
+      text={careService}
+      iconPalette={presetValue.iconPalette}
+      iconVariation={presetValue.iconVariation}
+      textPalette={presetValue.textPalette}
+      textVariation={presetValue.textVariation}
+    />
+  ));
   return (
-    <Wrapper>
+    // TODO: 21 rem on height looked good for Collapsible Block
+    <Wrapper minHeight="regular">
       {itemComponents}
     </Wrapper>
   );
 };
 
 CommunityCareService.propTypes = {
-  careServiceMap: object.isRequired,
   careServices: arrayOf(string).isRequired,
 };
 
