@@ -13,11 +13,10 @@ import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/con
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
 import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
-import { careServiceMap } from 'sly/services/helpers/community';
 import { Button, Icon, Block } from 'sly/components/atoms';
 import {
   CommunityDetailPageTemplate, makeHeader, makeColumn, makeBody, makeFooter,
-  makeOneColumnBody, makeTwoColumnBody, makeFullWidthBody
+  makeOneColumnBody, makeTwoColumnBody, makeFullWidthBody,
 } from 'sly/components/templates/CommunityDetailPageTemplate';
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
@@ -494,7 +493,7 @@ export default class CommunityDetailPage extends Component {
               }
               <CollapsibleSection title={`Care Services at ${name}`}>
                 <MainSection>
-                  <CommunityCareService careServiceMap={careServiceMap} careServices={careServices} />
+                  <CommunityCareService careServices={careServices} />
                 </MainSection>
                 <BottomSection>
                   <TextBottomSection
