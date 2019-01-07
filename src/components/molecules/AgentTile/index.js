@@ -73,7 +73,7 @@ const AgentTile = ({
           <Link to={url}>{info.displayName}</Link>
         </Name>
         <List>
-          {phoneNumber !== '' &&
+          {phoneNumber &&
             <li>
               <IconItem size="caption" icon="phone">{phoneNumber}</IconItem>
             </li>
