@@ -4,7 +4,6 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
-import { Experiment, Variant } from 'sly/services/experiments';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import { Heading, Block, Image } from 'sly/components/atoms';
 import Link from 'sly/components/atoms/Link';
@@ -48,30 +47,15 @@ const CommunityBookATourContactForm = ({
         placeholder="Full name"
         component={ReduxField}
       />}
-      <Experiment name="Organisms_CommunityBookATourContactForm" defaultVariant="phone">
-        {!(userDetails && userDetails.phone) &&
-          <Variant name="phone">
-            <Field
-              name="phone"
-              label="Phone"
-              type="text"
-              placeholder="925-555-5555"
-              component={ReduxField}
-            />
-          </Variant>
-          }
-        {!(userDetails && userDetails.email) &&
-          <Variant name="email">
-            <Field
-              name="email"
-              label="Email"
-              type="email"
-              placeholder="Your email"
-              component={ReduxField}
-            />
-          </Variant>
-        }
-      </Experiment>
+      {!(userDetails && userDetails.phone) &&
+        <Field
+          name="phone"
+          label="Phone"
+          type="text"
+          placeholder="925-555-5555"
+          component={ReduxField}
+        />
+      }
       {userDetails && userDetails.fullName &&
       <Field
         name="notes"

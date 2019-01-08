@@ -7,11 +7,6 @@ import { Field } from 'redux-form';
 import { size } from 'sly/components/themes';
 import { Heading, Block, Link, Button, Image } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { Experiment, Variant } from 'sly/services/experiments';
-
-const Wrapper = styled.div`
-
-`;
 
 const DetailsSection = styled.div`
   padding: ${size('spacing.xLarge')};
@@ -61,7 +56,7 @@ const CommunityFloorPlanPopupForm = ({
   }
 
   return (
-    <Wrapper>
+    <div>
       {image && <StyledImage src={image} aspectRatio="3:2" />}
       <DetailsSection>
         <HeadingBlock size="subtitle" weight="medium">{typeOfCare} - {roomType}</HeadingBlock>
@@ -103,30 +98,15 @@ const CommunityFloorPlanPopupForm = ({
             placeholder="Full name"
             component={ReduxField}
           />}
-          <Experiment name="Organisms_CommunityBookATourContactForm" defaultVariant="phone">
-            {!(userDetails && userDetails.phone) &&
-              <Variant name="phone">
-                <Field
-                  name="phone"
-                  label="Phone"
-                  type="text"
-                  placeholder="925-555-5555"
-                  component={ReduxField}
-                />
-              </Variant>
-              }
-            {!(userDetails && userDetails.email) &&
-              <Variant name="email">
-                <Field
-                  name="email"
-                  label="Email"
-                  type="email"
-                  placeholder="Your email"
-                  component={ReduxField}
-                />
-              </Variant>
-            }
-          </Experiment>
+          {!(userDetails && userDetails.phone) &&
+            <Field
+              name="phone"
+              label="Phone"
+              type="text"
+              placeholder="925-555-5555"
+              component={ReduxField}
+            />
+          }
           {userDetails && userDetails.fullName &&
           <Field
             name="notes"
@@ -142,7 +122,7 @@ const CommunityFloorPlanPopupForm = ({
           <StyledButton type="submit" kind="jumbo" disabled={submitting}>Submit</StyledButton>
         </form>
       </DetailsSection>
-    </Wrapper>
+    </div>
   );
 };
 
