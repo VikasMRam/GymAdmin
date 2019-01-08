@@ -22,10 +22,10 @@ describe('CollapsibleBlock', () => {
     const readMore = wrapper.find(ReadMore);
 
     expect(wrapper.state()).toEqual({ collapsed: true });
-    expect(readMore.text()).toEqual('Read more');
+    expect(readMore.text()).toContain('Show more');
     readMore.simulate('click');
     expect(wrapper.state()).toEqual({ collapsed: false });
-    expect(readMore.text()).toEqual('Read less');
+    expect(readMore.text()).toContain('Show less');
   });
 
   it('renders default collapsed, calls toggle', () => {
@@ -33,10 +33,10 @@ describe('CollapsibleBlock', () => {
     const readMore = wrapper.find(ReadMore);
 
     expect(wrapper.state()).toEqual({ collapsed: false });
-    expect(readMore.text()).toEqual('Read less');
+    expect(readMore.text()).toContain('Show less');
     readMore.simulate('click');
     expect(wrapper.state()).toEqual({ collapsed: true });
-    expect(readMore.text()).toEqual('Read more');
+    expect(readMore.text()).toContain('Show more');
   });
 
   it('receives onResize event', () => {
