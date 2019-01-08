@@ -10,17 +10,29 @@ import FooterOrganism from 'sly/components/organisms/Footer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 
 export const CommunityDetailPageTemplate = styled.main`
-  .overlayTwoColumnBody, .overlayOneColumnBody {
+  .overlayWrapper {
     margin: auto;
     width: 100%;
     padding: 0 ${size('spacing.large')};
 
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       padding: 0;
-      width: ${size('tabletLayout.col8')};
+      width: calc(${size('tabletLayout.col8')} + (2 * ${size('tabletLayout.gutter')}));
     }
     @media screen and (min-width: ${size('breakpoint.laptop')}) {
       width: ${size('layout.col12')};
+    }
+  }
+
+  .overlayGallery {
+    margin: 0 -${size('spacing.large')};
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      width: calc(${size('tabletLayout.col8')} + (2 * ${size('tabletLayout.gutter')}));
+      margin-left: -${size('tabletLayout.gutter')};
+    }
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      width: auto;
+      margin: 0;
     }
   }
 
@@ -28,8 +40,25 @@ export const CommunityDetailPageTemplate = styled.main`
     grid-row: 1;
   }
 
+  .overlayTwoColumn {
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      width: ${size('mobileLayout.col4')};
+    }
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      width: ${size('tabletLayout.col8')};
+      margin: auto;
+    }
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      width: auto;
+      display: grid;
+      grid-template-columns: ${size('layout.col8')} auto;
+      grid-gap: 0 ${size('layout.gutter')};
+    }
+  }
+
   .overlayBody {
     grid-row: 2;
+
     @media screen and (min-width: ${size('breakpoint.laptop')}) {
       grid-column: 1 / 2;
     }
@@ -44,71 +73,7 @@ export const CommunityDetailPageTemplate = styled.main`
       display: block;
     }
   }
-
-  .overlayTwoColumnBody {
-    @media screen and (min-width: ${size('breakpoint.laptop')}) {
-      display: grid;
-      grid-template-columns: ${size('layout.col8')} auto;
-      grid-gap: 0 ${size('layout.gutter')};
-    }
-  }
-
-  .overlayFullWidthBody {
-
-  }
-
-  .overlayOneColumnBody {
-
-  }
 `;
-
-export const makeTwoColumnBody = (Component) => {
-  function TopTwoColumnBody({ className, ...props }) {
-    return (
-      <Component
-        className={classes('overlayTwoColumnBody', className)}
-        {...props}
-      />
-    );
-  }
-  TopTwoColumnBody.propTypes = {
-    className: string,
-  };
-
-  return TopTwoColumnBody;
-};
-
-export const makeOneColumnBody = (Component) => {
-  function TopOneColumnBody({ className, ...props }) {
-    return (
-      <Component
-        className={classes('overlayOneColumnBody', className)}
-        {...props}
-      />
-    );
-  }
-  TopOneColumnBody.propTypes = {
-    className: string,
-  };
-
-  return TopOneColumnBody;
-};
-
-export const makeFullWidthBody = (Component) => {
-  function TopFullWidthBody({ className, ...props }) {
-    return (
-      <Component
-        className={classes('overlayFullWidthBody', className)}
-        {...props}
-      />
-    );
-  }
-  TopFullWidthBody.propTypes = {
-    className: string,
-  };
-
-  return TopFullWidthBody;
-};
 
 export const makeHeader = (bannerNotification) => {
   function Header({ className, ...props }) {
@@ -127,6 +92,54 @@ export const makeHeader = (bannerNotification) => {
   };
 
   return Header;
+};
+
+export const makeGallery = (Component) => {
+  function Gallery({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayGallery', className)}
+        {...props}
+      />
+    );
+  }
+  Gallery.propTypes = {
+    className: string,
+  };
+
+  return Gallery;
+};
+
+export const makeWrapper = (Component) => {
+  function Wrapper({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayWrapper', className)}
+        {...props}
+      />
+    );
+  }
+  Wrapper.propTypes = {
+    className: string,
+  };
+
+  return Wrapper;
+};
+
+export const makeTwoColumn = (Component) => {
+  function TwoColumn({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayTwoColumn', className)}
+        {...props}
+      />
+    );
+  }
+  TwoColumn.propTypes = {
+    className: string,
+  };
+
+  return TwoColumn;
 };
 
 export const makeColumn = (Component) => {
