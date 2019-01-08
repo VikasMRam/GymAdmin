@@ -12,12 +12,10 @@ import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricing
 const StyledBlock = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
-StyledBlock.displayName = 'StyledBlock';
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.small')};
 `;
-StyledHeading.displayName = 'StyledHeading';
 
 const StyledHr = styled(Hr)`
   margin-bottom: ${size('spacing.xxLarge')};
@@ -40,12 +38,15 @@ const Wrapper = styled.div`
     }
   }
 `;
-Wrapper.displayName = 'Wrapper';
 
 const StyledButton = styled(Button)`
   margin-right: ${size('spacing.regular')};
 `;
-StyledButton.displayName = 'StyledButton';
+
+const StyledBox = styled(Box)`
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+`;
 
 const CommunitySummary = ({
   community, innerRef, isAdmin, onConciergeNumberClicked, className,
@@ -70,7 +71,7 @@ const CommunitySummary = ({
   }
 
   return (
-    <Box innerRef={innerRef} className={className}>
+    <StyledBox innerRef={innerRef} className={className}>
       <StyledHeading>
         {name} {city ? `at ${city}` : ''}
         {isAdmin &&
@@ -116,7 +117,7 @@ const CommunitySummary = ({
           }
         </div>
       </Wrapper>
-    </Box>
+    </StyledBox>
   );
 };
 
