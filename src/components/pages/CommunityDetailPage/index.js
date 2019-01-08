@@ -59,6 +59,7 @@ import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSectio
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
+import CareServiceItem from 'sly/components/molecules/CareServiceItem/index';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -77,6 +78,10 @@ const GetAvailabilitySuccessBox = styled.div`
 `;
 
 const StyledCommunitySummary = styled(CommunitySummary)`
+  margin-bottom: ${size('spacing.large')};
+`;
+
+const CareServiceItemWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -324,7 +329,7 @@ export default class CommunityDetailPage extends Component {
     const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
     const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
-
+    const { autoHighlights } = rgsAux;
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
@@ -374,6 +379,20 @@ export default class CommunityDetailPage extends Component {
                     hasLearnMore
                   />
                 )}
+              {autoHighlights &&
+                <CollapsibleSection
+                  title={`Community highlights at  ${name}`}
+                >
+                  <MainSection>
+                    {autoHighlights.map(item => (
+                      <CareServiceItemWrapper>
+                        <CareServiceItem icon="care" iconPalette="secondary" text={item} />
+                      </CareServiceItemWrapper>))
+                    }
+                  </MainSection>
+                </CollapsibleSection>
+
+              }
               {partnerAgent &&
                 <CollapsibleSection
                   title={`Your advisor for ${name}`}
