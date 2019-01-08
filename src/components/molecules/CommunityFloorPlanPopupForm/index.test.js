@@ -53,7 +53,6 @@ describe('CommunityFloorPlanPopupForm', () => {
   it('renders inputs when userDetails is not passed', () => {
     const wrapper = wrap();
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
-    expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(0);
   });
@@ -61,7 +60,6 @@ describe('CommunityFloorPlanPopupForm', () => {
   it('does not renders inputs when userDetails is passed', () => {
     const wrapper = wrap({ userDetails });
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(0);
-    expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
   });
