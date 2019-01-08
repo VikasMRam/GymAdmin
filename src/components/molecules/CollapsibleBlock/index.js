@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { bool, number, string, oneOfType, oneOf, node } from 'prop-types';
 
 import { size, key } from 'sly/components/themes';
-import { Link } from 'sly/components/atoms';
+import { Link, Icon, Block } from 'sly/components/atoms';
 
 export const blockCapHeight = (props) => {
   if (!props.collapsed) {
@@ -17,7 +17,8 @@ export const blockCapHeight = (props) => {
 };
 
 export const ReadMore = styled(Link)`
-  display: block;
+  display: flex;
+  align-items: center;
 `;
 
 const BlockCap = styled.div`
@@ -32,6 +33,10 @@ const OnePix = styled.div`
   // getBoundingBox will return the right measure
   height: 1px;
   margin-top: -1px;
+`;
+
+const StyledBlock = styled(Block)`
+  margin-right: ${size('spacing.large')};
 `;
 
 export default class CollapsibleBlock extends Component {
@@ -79,7 +84,10 @@ export default class CollapsibleBlock extends Component {
               onClick={this.toggle}
               transparent
             >
-              {collapsed ? 'Read more' : 'Read less'}
+              <StyledBlock weight="medium" palette="primary">
+                {collapsed ? 'Show more' : 'Show less'}
+              </StyledBlock>
+              <Icon icon="chevron" palette="slate" size="small" flip={!collapsed} />
             </ReadMore>
           </div>
         )

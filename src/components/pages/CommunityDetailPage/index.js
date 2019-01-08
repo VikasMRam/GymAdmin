@@ -477,7 +477,7 @@ export default class CommunityDetailPage extends Component {
                 </CollapsibleSection>
               }
               {(communityDescription || rgsAux.communityDescription) &&
-                <CollapsibleSection title="Community Details">
+                <CollapsibleSection title={`Details on ${name} at ${address.city}`}>
                   <MainSection>
                     <CommunityDetails
                       communityName={name}
