@@ -48,39 +48,24 @@ const CommunityBookATourContactForm = ({
         placeholder="Full name"
         component={ReduxField}
       />}
-      <Experiment name="Organisms_CommunityBookATourContactForm" defaultVariant="phone">
-        {!(userDetails && userDetails.phone) &&
-          <Variant name="phone">
-            <Field
-              name="phone"
-              label="Phone"
-              type="text"
-              placeholder="925-555-5555"
-              component={ReduxField}
-            />
-          </Variant>
-          }
-        {!(userDetails && userDetails.email) &&
-          <Variant name="email">
-            <Field
-              name="email"
-              label="Email"
-              type="email"
-              placeholder="Your email"
-              component={ReduxField}
-            />
-          </Variant>
-        }
-      </Experiment>
+      {!(userDetails && userDetails.phone) &&
+        <Field
+          name="phone"
+          label="Phone"
+          type="text"
+          placeholder="925-555-5555"
+          component={ReduxField}
+        />
+      }
       {userDetails && userDetails.fullName &&
-      <Field
-        name="notes"
-        label="Add a note"
-        type="textarea"
-        rows="5"
-        placeholder="Anything you'd like your partner agent to know or any questions"
-        component={ReduxField}
-      />
+        <Field
+          name="notes"
+          label="Add a note"
+          type="textarea"
+          rows="5"
+          placeholder="Anything you'd like your partner agent to know or any questions"
+          component={ReduxField}
+        />
       }
       {error && <Block palette="danger">{error}</Block>}
       {!user && <Block size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></Block>}
