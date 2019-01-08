@@ -50,7 +50,7 @@ describe('AgentTile', () => {
   it('renders full', () => {
     const wrapper = wrap();
     expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImageUrl);
-    expect(wrapper.find('Badge').render().text()).toEqual('17 recent placements');
+    expect(wrapper.find('Badge').render().text()).toEqual('17 families helped');
 
     const links = wrapper.find('Link');
     expect(links.length).toBe(2);
@@ -96,7 +96,7 @@ describe('AgentTile', () => {
   it('no ratings', () => {
     const wrapper = wrap({ agent: agentNoRatings });
     expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImageUrl);
-    expect(wrapper.find('Badge').render().text()).toEqual('17 recent placements');
+    expect(wrapper.find('Badge').render().text()).toEqual('17 families helped');
 
     const links = wrapper.find('Link');
     expect(links.length).toBe(1);
