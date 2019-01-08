@@ -15,11 +15,13 @@ const AgentRegionPageContainer = ({
   if (!userAction) {
     return null;
   }
-  agentsList.map((agent) => {
-    const url = getAgentUrl(agent);
-    agent.url = url;
-    return agent;
-  });
+  const newAgentsList = agentsList
+    .filter(agent => agent.status > 0)
+    .map((agent) => {
+      const url = getAgentUrl(agent);
+      const newAgent = { ...agent, url };
+      return newAgent;
+    });
   let locationName = null;
   if (citySlug) {
     locationName = titleize(citySlug);
@@ -29,7 +31,7 @@ const AgentRegionPageContainer = ({
   const title = `${locationName} Partner Agents`;
   return (
     <AgentRegionPage
-      agentsList={agentsList}
+      agentsList={newAgentsList}
       title={title}
       locationName={locationName}
       postUserAction={postUserAction}

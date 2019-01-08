@@ -64,7 +64,7 @@ const AgentTile = ({
       <ProfileImage src={info.profileImageUrl} aspectRatio="3:2">
         {info.recentFamiliesHelped &&
           <Badge size="caption" palette="white">
-            <b>{info.recentFamiliesHelped}</b> recent placements
+            <b>{info.recentFamiliesHelped}</b> families helped
           </Badge>
         }
       </ProfileImage>

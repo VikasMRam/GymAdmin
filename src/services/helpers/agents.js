@@ -3,19 +3,19 @@ import { assetPath } from 'sly/components/themes';
 
 export const mostSearchedRegions = [
   {
-    to: '/agents/west-coast',
+    to: '/agents/pacific-west',
     image: assetPath('images/cities/SanFrancisco.jpeg'),
-    title: 'West Coast',
+    title: 'Pacific West',
   },
   {
-    to: '/agents/east-coast',
+    to: '/agents/northeast',
     image: assetPath('images/cities/SanFrancisco.jpeg'),
-    title: 'East Coast',
+    title: 'Northeast',
   },
   {
-    to: '/agents/south-east',
+    to: '/agents/south',
     image: assetPath('images/cities/SanFrancisco.jpeg'),
-    title: 'Southeast',
+    title: 'South',
   },
   {
     to: '/agents/midwest',
@@ -23,9 +23,19 @@ export const mostSearchedRegions = [
     title: 'Midwest',
   },
   {
-    to: '/agents/south',
+    to: '/agents/southeast',
     image: assetPath('images/cities/SanFrancisco.jpeg'),
-    title: 'South',
+    title: 'Southeast',
+  },
+  {
+    to: '/agents/southwest',
+    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    title: 'Southwest',
+  },
+  {
+    to: '/agents/mountain-west',
+    image: assetPath('images/cities/SanFrancisco.jpeg'),
+    title: 'Mountain West',
   },
 ];
 
