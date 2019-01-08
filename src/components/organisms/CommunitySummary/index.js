@@ -43,11 +43,6 @@ const StyledButton = styled(Button)`
   margin-right: ${size('spacing.regular')};
 `;
 
-const StyledBox = styled(Box)`
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-`;
-
 const CommunitySummary = ({
   community, innerRef, isAdmin, onConciergeNumberClicked, className,
   onFavouriteClick, isFavourited, onShareClick,
@@ -71,7 +66,7 @@ const CommunitySummary = ({
   }
 
   return (
-    <StyledBox innerRef={innerRef} className={className}>
+    <Box innerRef={innerRef} className={className}>
       <StyledHeading>
         {name} {city ? `at ${city}` : ''}
         {isAdmin &&
@@ -117,7 +112,7 @@ const CommunitySummary = ({
           }
         </div>
       </Wrapper>
-    </StyledBox>
+    </Box>
   );
 };
 
