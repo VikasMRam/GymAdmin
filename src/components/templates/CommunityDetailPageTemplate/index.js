@@ -17,17 +17,27 @@ export const CommunityDetailPageTemplate = styled.main`
 
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       padding: 0;
-      width: calc(${size('tabletLayout.col8')} + (2 * ${size('tabletLayout.gutter')}));
+      width: ${size('layout.col9')};
+
+      > section {
+        width: ${size('tabletLayout.col8')};
+        margin: auto;
+      }
     }
     @media screen and (min-width: ${size('breakpoint.laptop')}) {
       width: ${size('layout.col12')};
+
+      > section {
+        width: auto;
+        margin: auto;
+      }
     }
   }
 
   .overlayGallery {
     margin: 0 -${size('spacing.large')};
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      width: calc(${size('tabletLayout.col8')} + (2 * ${size('tabletLayout.gutter')}));
+      width: ${size('layout.col9')};
       margin-left: -${size('tabletLayout.gutter')};
     }
     @media screen and (min-width: ${size('breakpoint.laptop')}) {
