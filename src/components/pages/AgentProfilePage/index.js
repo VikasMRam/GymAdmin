@@ -146,17 +146,23 @@ class AgentProfilePage extends Component {
               <StyledHr />
             </Fragment>
           }
-          <StyledSection title={`${firstName}'s reviews`} >
-            <EntityReviews
-              reviewsValue={ratingValue}
-              reviews={reviews}
-              user={user}
-            />
-          </StyledSection>
-          <StyledSection title={`About ${firstName}`}>
-            {bio}
-          </StyledSection>
-          <StyledHr />
+          {reviews.length > 0 &&
+            <StyledSection title={`${firstName}'s reviews`} >
+              <EntityReviews
+                reviewsValue={ratingValue}
+                reviews={reviews}
+                user={user}
+              />
+            </StyledSection>
+          }
+          {bio &&
+            <Fragment>
+              <StyledSection title={`About ${firstName}`}>
+                {bio}
+              </StyledSection>
+              <StyledHr />
+            </Fragment>
+          }
           <StyledSection>
             <AskQuestionToAgentWrapper innerRef={this.askAgentAQuestionRef}>
               <BannerNotificationController>
