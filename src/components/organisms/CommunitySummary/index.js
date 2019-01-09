@@ -64,6 +64,9 @@ const CommunitySummary = ({
   if (twilioNumber && twilioNumber.numbers && twilioNumber.numbers.length) {
     [conciergeNumber] = twilioNumber.numbers;
   }
+  if (!conciergeNumber) {
+    conciergeNumber = '8558664515';
+  }
 
   return (
     <Box innerRef={innerRef} className={className}>
