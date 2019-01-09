@@ -50,7 +50,7 @@ const FAQSection = ({ faqs, className }) => {
   const [firstFaq, ...restFaqs] = faqs;
 
   const restFaqComponents = restFaqs.map(({ title, description }) => (
-    <StyledCollapsibleSection key={title} clampTitle={false} headingWeight="regular" title={title}>
+    <StyledCollapsibleSection key={title} headingWeight="regular" title={title}>
       <MainSection>
         <Block palette="grey">
           {description}
@@ -64,7 +64,7 @@ const FAQSection = ({ faqs, className }) => {
       <StyledBox>
         <StyledBlock size="title">Frequently asked questions</StyledBlock>
         {faqs.length === 1 &&
-          <OneCollapsibleSection clampTitle={false} headingWeight="regular" title={firstFaq.title}>
+          <OneCollapsibleSection headingWeight="regular" title={firstFaq.title}>
             <MainSection>
               <Block palette="grey">
                 {firstFaq.description}
@@ -73,7 +73,7 @@ const FAQSection = ({ faqs, className }) => {
           </OneCollapsibleSection>
         }
         {faqs.length > 1 &&
-          <FirstCollapsibleSection clampTitle={false} headingWeight="regular" title={firstFaq.title}>
+          <FirstCollapsibleSection headingWeight="regular" title={firstFaq.title}>
             <MainSection>
               <Block palette="grey">
                 {firstFaq.description}

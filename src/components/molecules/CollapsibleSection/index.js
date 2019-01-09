@@ -100,7 +100,6 @@ export default class CollapsibleSection extends Component {
     collapsedDefault: false,
     size: 'regular',
     paddedContent: false,
-    clampTitle: true,
     headingWeight: 'medium',
     borderless: false,
   };
