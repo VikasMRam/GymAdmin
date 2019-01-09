@@ -8,13 +8,25 @@ import { getList, getDetail } from 'sly/store/selectors';
 import withServerState from 'sly/store/withServerState';
 import { titleize } from 'sly/services/helpers/strings';
 import { getAgentUrl } from 'sly/services/helpers/url';
+import SlyEvent from 'sly/services/helpers/events';
+import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
 
 const AgentRegionPageContainer = ({
-  agentsList, regionSlug, citySlug, postUserAction, userAction, pathName,
+  agentsList, regionSlug, citySlug, postUserAction, userAction, pathName, history,
 }) => {
   if (!userAction) {
     return null;
   }
+  const handleLocationSearch = (result) => {
+    const event = {
+      action: 'submit', category: 'agentsSearch', label: result.formatted_address,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+
+    const searchParams = getSearchParamFromPlacesResponse(result);
+    const { path } = filterLinkPath(searchParams);
+    history.push(path);
+  };
   const newAgentsList = agentsList
     .filter(agent => agent.status > 0)
     .map((agent) => {
@@ -31,6 +43,7 @@ const AgentRegionPageContainer = ({
   const title = `${locationName} Partner Agents`;
   return (
     <AgentRegionPage
+      onLocationSearch={handleLocationSearch}
       agentsList={newAgentsList}
       title={title}
       locationName={locationName}
@@ -93,6 +106,7 @@ AgentRegionPageContainer.propTypes = {
   postUserAction: func.isRequired,
   userAction: object,
   pathName: string.isRequired,
+  history: object,
 };
 
 export default withServerState({

@@ -79,6 +79,7 @@ class AgentRegionPage extends Component {
     postUserAction: func.isRequired,
     userDetails: object,
     pathName: string.isRequired,
+    onLocationSearch: func.isRequired,
   }
   constructor(props) {
     super(props);
@@ -87,7 +88,7 @@ class AgentRegionPage extends Component {
   }
   render() {
     const {
-      title, locationName, agentsList, postUserAction, userDetails, pathName,
+      title, locationName, agentsList, postUserAction, userDetails, pathName, onLocationSearch,
     } = this.props;
     if (!agentsList) {
       return null;
@@ -138,7 +139,7 @@ class AgentRegionPage extends Component {
           </FormSection>
           <StyledHr />
           <FindLocalAgentWrapper innerRef={this.findLocalAgentRef}>
-            <FindLocalAgent onLocationSearch={() => {}} />
+            <FindLocalAgent onLocationSearch={onLocationSearch} />
           </FindLocalAgentWrapper>
           <StyledSection centerTitle title="Search senior living agents by region">
             <MostSearchedRegions mostSearchedRegions={mostSearchedRegions} />
