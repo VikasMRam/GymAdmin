@@ -4,7 +4,7 @@ import { bool, string, func } from 'prop-types';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size, palette } from 'sly/components/themes';
-import { Icon, Block, Link } from 'sly/components/atoms';
+import { Icon, Span, Link } from 'sly/components/atoms';
 
 const getColor = ({ palette: paletteProp }) => palette(paletteProp, 'filler');
 
@@ -12,22 +12,19 @@ const Wrapper = styled.div`
   padding: ${size('spacing.large')};
   display: flex;
   background-color: ${getColor};
+  border-radius: ${size('border.xLarge')};
 `;
 
 const LoyaltyIcon = styled(Icon)`
   margin-right: ${size('spacing.large')};
 `;
 
-const TextSection = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledHeading = styled(Block)`
+const TopWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
 `;
 
 const SmallScreenLearnMore = styled(Link)`
+  font-weight: ${size('weight.medium')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: none;
   }
@@ -35,6 +32,7 @@ const SmallScreenLearnMore = styled(Link)`
 
 const BigScreenLearnMore = styled(Link)`
   display: none;
+  font-weight: ${size('weight.medium')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: initial;
   }
@@ -45,15 +43,18 @@ const OfferNotification = ({
 }) => (
   <Wrapper palette={paletteProp} className={className}>
     <LoyaltyIcon icon="baseline-loyalty" size="large" palette={paletteProp} variation="dark" />
-    <TextSection>
-      {title && <StyledHeading weight="medium" size="body">{title}</StyledHeading>}
-      {description && <Block size="caption" weight="medium">{description}</Block>}
+    <div>
+      <TopWrapper>
+        {title && <Span weight="medium" size="body">{title}</Span>}
+        {title && description && <Fragment>&nbsp;-&nbsp;</Fragment>}
+        {description && <Span>{description}</Span>}
+      </TopWrapper>
       {hasLearnMore &&
         <Fragment>
-          <BigScreenLearnMore onClick={onLearnMoreClick}>Click here to learn more</BigScreenLearnMore>
-          <SmallScreenLearnMore onClick={onLearnMoreClick}>Learn more</SmallScreenLearnMore>
+          <BigScreenLearnMore onClick={onLearnMoreClick}>Click here to learn more.</BigScreenLearnMore>
+          <SmallScreenLearnMore onClick={onLearnMoreClick}>Learn more.</SmallScreenLearnMore>
         </Fragment>}
-    </TextSection>
+    </div>
   </Wrapper>
 );
 
