@@ -10,6 +10,7 @@ import { titleize } from 'sly/services/helpers/strings';
 import { getAgentUrl } from 'sly/services/helpers/url';
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
+import { getSearchParams } from 'sly/services/helpers/search';
 
 const AgentRegionPageContainer = ({
   agentsList, regionSlug, citySlug, postUserAction, userAction, pathName, history,
@@ -73,11 +74,10 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const fetchData = (dispatch, { match }) => {
-  const { params } = match;
-  const { region, city } = params;
+const fetchData = (dispatch, { match, location }) => {
+  const searchParams = getSearchParams(match, location);
   return Promise.all([
-    dispatch(resourceListReadRequest('agent', { region, city })),
+    dispatch(resourceListReadRequest('agent', searchParams)),
     dispatch(resourceDetailReadRequest('userAction')),
   ]);
 };
