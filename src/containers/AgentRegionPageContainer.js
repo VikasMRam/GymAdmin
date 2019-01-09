@@ -59,10 +59,11 @@ const mapStateToProps = (state, { match, location }) => {
   const { params } = match;
   const { region, city } = params;
   const { pathname } = location;
+  const searchParams = getSearchParams(match, location);
   return {
     regionSlug: region,
     citySlug: city,
-    agentsList: getList(state, 'agent', { region, city }),
+    agentsList: getList(state, 'agent', searchParams),
     userAction: getDetail(state, 'userAction'),
     pathName: pathname,
   };
