@@ -82,6 +82,7 @@ const searchParamsWhitelist = [
   'currentStep',
   'redirectTo',
   'action',
+  'region',
 ];
 
 export const tocs = [
