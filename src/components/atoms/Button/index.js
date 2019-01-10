@@ -64,8 +64,6 @@ const height = ({ kind }) => {
   switch (kind) {
     case 'jumbo':
       return size('element.xLarge');
-    case 'label':
-      return size('element.small');
     default:
       return size('element.regular');
   }
@@ -74,11 +72,9 @@ const height = ({ kind }) => {
 const fontSize = ({ kind }) => {
   switch (kind) {
     case 'jumbo':
-      return size('text', 'subtitle');
-    case 'label':
-      return size('text', 'caption');
-    default:
       return size('text', 'body');
+    default:
+      return size('text', 'caption');
   }
 };
 
@@ -99,7 +95,7 @@ export const styles = css`
   height: ${height};
   padding: 0 1em;
   text-decoration: none;
-  font-weight: ${ifProp({ kind: 'jumbo' }, '500', 'normal')};
+  font-weight: 500;
   white-space: nowrap;
   font-size: ${fontSize};
   border: ${size('border.regular')} solid ${borderColor};
