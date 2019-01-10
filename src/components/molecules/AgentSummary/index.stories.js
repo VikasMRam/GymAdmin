@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import AgentSummary from 'sly/components/molecules/AgentSummary';
-import { agents } from 'sly/services/helpers/agents';
+import { agents } from 'sly/constants/agents';
 
 const agent = agents[0];
 
