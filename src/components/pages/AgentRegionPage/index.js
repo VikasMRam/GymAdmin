@@ -33,7 +33,7 @@ const StyledHr = styled(Hr)`
   margin: ${size('spacing.xxxLarge')} 0;
 `;
 
-const AgentTilesWrapper = styled.div`
+const AgentTiles = styled.div`
   width: 100%;
   justify-content: center;
   display: grid;
@@ -112,9 +112,9 @@ class AgentRegionPage extends Component {
           </PageHeadingSection>
           <StyledHr />
           {agentsList.length > 0 &&
-            <AgentTilesWrapper>
+            <AgentTiles>
               {agentsList.map(agent => <Link key={agent.id} to={agent.url}><AgentTile agent={agent} /></Link>)}
-            </AgentTilesWrapper>
+            </AgentTiles>
           }
           {agentsList.length === 0 &&
             <NoResultBlock>{`It looks like we do not have any agents listed in ${locationName}. We are currently adding new partners everyday who might not be listed yet. Fill out the form below and we will help you find your local partner agent.`}</NoResultBlock>
