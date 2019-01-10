@@ -1,10 +1,29 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import styled from 'styled-components';
 
+import { size } from 'sly/components/themes';
 import AgentSummary from 'sly/components/molecules/AgentSummary';
 import { agents } from 'sly/constants/agents';
 
 const agent = agents[0];
+
+const Wrapper = styled.div`
+  margin: ${size('spacing.large')};
+  width: 100%;
+  
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    width: ${size('mobileLayout.col4')};
+    margin: ${size('spacing.large')} auto;
+  }
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('tabletLayout.col8')};
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('layout.col8')};
+  }
+`;
+
 
 const defaultProp = {
   displayName: 'Stephen Anderson',
@@ -17,4 +36,8 @@ const defaultProp = {
 };
 
 storiesOf('Molecules|AgentSummary', module)
-  .add('default', () => <AgentSummary {...defaultProp} />);
+  .add('default', () => (
+    <Wrapper>
+      <AgentSummary {...defaultProp} />
+    </Wrapper>
+  ));
