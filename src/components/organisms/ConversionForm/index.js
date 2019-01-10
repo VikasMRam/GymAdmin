@@ -32,7 +32,7 @@ const AgentSectionWrapper = styled.div`
 `;
 
 const AgentSectionText = styled.div`
-  font-weight: bold;  
+  font-weight: bold;
   margin-bottom: ${size('spacing.regular')};
 `;
 
@@ -50,7 +50,7 @@ const ConversionForm = ({
 }) => (
   <div>
     <StyledForm onSubmit={handleSubmit}>
-      <Heading level="title" size="title">Get Pricing & Availability</Heading>
+      <Heading level="title" size="subtitle">Get Pricing & Availability</Heading>
       {contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
 
       <Hr />
