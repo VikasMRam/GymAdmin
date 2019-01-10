@@ -20,8 +20,6 @@ const SaveCommunity = ({
 }) => (
   <Modal
     closeable
-    noPadding={currentStep === SAVE_COMMUNITY_STEPS_UPDATE}
-    layout={currentStep === SAVE_COMMUNITY_STEPS_COMPLETE ? 'single' : 'double'}
     onClose={onModalClose}
     isOpen={currentStep === SAVE_COMMUNITY_STEPS_UPDATE || currentStep === SAVE_COMMUNITY_STEPS_COMPLETE}
   >
