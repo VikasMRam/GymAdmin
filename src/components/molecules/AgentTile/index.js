@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import agentPropType from 'sly/propTypes/agent';
+import { styles as linkStyles } from 'sly/components/atoms/Link';
 import { Box, Image, Block, Link } from 'sly/components/atoms';
 import { size, palette } from 'sly/components/themes';
 import IconItem from 'sly/components/molecules/IconItem';
@@ -29,7 +30,13 @@ const Badge = styled(Block)`
 
 const Name = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
+  ${linkStyles};
 `;
+
+Name.defaultProps = {
+  palette: 'primary',
+  variation: 'base',
+};
 
 const List = styled.ul`
   margin: 0;
@@ -70,7 +77,7 @@ const AgentTile = ({
       </ProfileImage>
       <Box snap="top">
         <Name size="subtitle">
-          <Link to={url}>{info.displayName}</Link>
+          {info.displayName}
         </Name>
         <List>
           {phoneNumber &&

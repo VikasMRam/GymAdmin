@@ -14,7 +14,7 @@ const isLinkToAllowed = (routes, to) => {
   return routes.some(route => matchPath(to, route));
 };
 
-const styles = css`
+export const styles = css`
   color: ${getColor};
   text-decoration: none;
 

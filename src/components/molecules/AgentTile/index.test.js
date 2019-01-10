@@ -52,15 +52,14 @@ describe('AgentTile', () => {
     expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImageUrl);
     expect(wrapper.find('Badge').render().text()).toEqual('17 families helped');
 
-    const links = wrapper.find('Link');
-    expect(links.length).toBe(2);
+    const name = wrapper.find('Name');
+    expect(name.render().text()).toEqual(agentInfo.displayName);
 
-    expect(links.first().prop('to')).toEqual(agent.url);
-    expect(links.first().prop('children')).toEqual(agentInfo.displayName);
+    const link = wrapper.find('Link');
+    expect(link.prop('to')).toEqual(agent.url);
 
-    expect(links.last().prop('to')).toEqual(agent.url);
-    const secondLinkContent = shallow(<div>{links.last().prop('children')}</div>);
-    expect(secondLinkContent.render().text()).toEqual(`${aggregateRating.numRatings} reviews`);
+    const linkContent = shallow(<div>{link.prop('children')}</div>);
+    expect(linkContent.render().text()).toEqual(`${aggregateRating.numRatings} reviews`);
 
     expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone');
     expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575');
@@ -75,15 +74,14 @@ describe('AgentTile', () => {
     expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImageUrl);
     expect(wrapper.find('Badge').length).toEqual(0);
 
-    const links = wrapper.find('Link');
-    expect(links.length).toBe(2);
+    const name = wrapper.find('Name');
+    expect(name.render().text()).toEqual(agentInfo.displayName);
 
-    expect(links.first().prop('to')).toEqual(agent.url);
-    expect(links.first().prop('children')).toEqual(agentInfo.displayName);
+    const link = wrapper.find('Link');
+    expect(link.prop('to')).toEqual(agent.url);
 
-    expect(links.last().prop('to')).toEqual(agent.url);
-    const secondLinkContent = shallow(<div>{links.last().prop('children')}</div>);
-    expect(secondLinkContent.render().text()).toEqual(`${aggregateRating.numRatings} reviews`);
+    const linkContent = shallow(<div>{link.prop('children')}</div>);
+    expect(linkContent.render().text()).toEqual(`${aggregateRating.numRatings} reviews`);
 
     expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone');
     expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575');
@@ -98,11 +96,11 @@ describe('AgentTile', () => {
     expect(wrapper.find('ProfileImage').prop('src')).toEqual(agentInfo.profileImageUrl);
     expect(wrapper.find('Badge').render().text()).toEqual('17 families helped');
 
-    const links = wrapper.find('Link');
-    expect(links.length).toBe(1);
+    const name = wrapper.find('Name');
+    expect(name.render().text()).toEqual(agentInfo.displayName);
 
-    expect(links.first().prop('to')).toEqual(agent.url);
-    expect(links.first().prop('children')).toEqual(agentInfo.displayName);
+    const links = wrapper.find('Link');
+    expect(links.length).toBe(0);
 
     expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone');
     expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575');
