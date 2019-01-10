@@ -13,7 +13,7 @@ import { Block, Link, Hr } from 'sly/components/atoms';
 import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
 import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
 import MostSearchedRegions from 'sly/components/molecules/MostSearchedRegions';
-import { mostSearchedRegions } from 'sly/services/helpers/agents';
+import { mostSearchedRegions } from 'sly/constants/agents';
 import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 
 const PageHeadingSection = styled.div`

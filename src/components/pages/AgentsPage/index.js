@@ -6,7 +6,7 @@ import { size, assetPath } from 'sly/components/themes';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Image, Hr } from 'sly/components/atoms';
 import { getHelmetForAgentsPage } from 'sly/services/helpers/html_headers';
-import { agentsFAQs } from 'sly/services/helpers/agents';
+import { agentsFAQs, mostSearchedRegions } from 'sly/constants/agents';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import Footer from 'sly/components/organisms/Footer';
 import Section from 'sly/components/molecules/Section';
@@ -14,7 +14,6 @@ import IconInfoTile from 'sly/components/molecules/IconInfoTile';
 import MostSearchedRegions, { ColumnWrapper } from 'sly/components/molecules/MostSearchedRegions';
 import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
 import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
-import { mostSearchedRegions } from 'sly/services/helpers/agents';
 import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 import FAQSection from 'sly/components/organisms/FAQSection';
 
@@ -95,7 +94,7 @@ class AgentsPage extends Component {
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <HeaderContainer />
         <HeroWrapper innerRef={this.heroRef}>
-          <HeroBackgroundImage src={assetPath('images/agent-hero.png')} alt="A Home To Love" />
+          <HeroBackgroundImage src={assetPath('images/agents/agent-hero.png')} alt="A Home To Love" />
           <HeroTextWrapper>
             <FindLocalAgent onLocationSearch={onLocationSearch} />
           </HeroTextWrapper>
