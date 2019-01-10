@@ -10,7 +10,6 @@ const agent = agents[0];
 
 const Wrapper = styled.div`
   margin: ${size('spacing.large')};
-  width: 100%;
   
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
     width: ${size('mobileLayout.col4')};
