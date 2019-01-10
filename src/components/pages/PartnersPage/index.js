@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 
 import { size, assetPath } from 'sly/components/themes';
 import { getHelmetForPartnersPage } from 'sly/services/helpers/html_headers';
-import { partnerFAQs } from 'sly/services/helpers/agents';
+import { partnerFAQs } from 'sly/constants/agents';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import { Hr, Paragraph } from 'sly/components/atoms';
 import HeaderContainer from 'sly/containers/HeaderContainer';

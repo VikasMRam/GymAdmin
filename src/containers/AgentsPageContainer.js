@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { object, func, string } from 'prop-types';
 
 import SlyEvent from 'sly/services/helpers/events';
-import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
+import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/constants/agents';
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { getDetail } from 'sly/store/selectors';
 import withServerState from 'sly/store/withServerState';
