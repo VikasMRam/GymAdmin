@@ -64,9 +64,12 @@ describe('AgentTile', () => {
     expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone');
     expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575');
 
-    expect(wrapper.find('IconItem').last().prop('icon')).toEqual('star');
+    expect(wrapper.find('IconItem').last().prop('icon')).toEqual('location');
 
-    expect(wrapper.find('Block').render().text()).toEqual('San Anselmo, CA');
+    expect(wrapper.find('IconItem').last().dive().dive()
+      .find('Span')
+      .dive()
+      .text()).toEqual('San Anselmo, CA');
   });
 
   it('no families', () => {
@@ -86,9 +89,13 @@ describe('AgentTile', () => {
     expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone');
     expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575');
 
-    expect(wrapper.find('IconItem').last().prop('icon')).toEqual('star');
+    expect(wrapper.find('IconItem').at(1).prop('icon')).toEqual('star');
+    expect(wrapper.find('IconItem').last().prop('icon')).toEqual('location');
 
-    expect(wrapper.find('Block').render().text()).toEqual('San Anselmo, CA');
+    expect(wrapper.find('IconItem').last().dive().dive()
+      .find('Span')
+      .dive()
+      .text()).toEqual('San Anselmo, CA');
   });
 
   it('no ratings', () => {
@@ -105,6 +112,9 @@ describe('AgentTile', () => {
     expect(wrapper.find('IconItem').first().prop('icon')).toEqual('phone');
     expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575');
 
-    expect(wrapper.find('Block').render().text()).toEqual('San Anselmo, CA');
+    expect(wrapper.find('IconItem').last().dive().dive()
+      .find('Span')
+      .dive()
+      .text()).toEqual('San Anselmo, CA');
   });
 });
