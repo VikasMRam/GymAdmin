@@ -30,7 +30,8 @@ const FindLocalAgentLink = styled(Link)`
 `;
 
 const StyledHr = styled(Hr)`
-  margin: ${size('spacing.xxxLarge')} 0;
+  margin-top: ${size('spacing.xxxLarge')};
+  margin-bottom: ${size('spacing.xxxLarge')};
 `;
 
 const AgentTiles = styled.div`
@@ -110,7 +111,7 @@ class AgentRegionPage extends Component {
               Looking for agents in other areas?
             </FindLocalAgentLink>
           </PageHeadingSection>
-          <StyledHr />
+          <StyledHr fullWidth />
           {agentsList.length > 0 &&
             <AgentTiles>
               {agentsList.map(agent => <Link key={agent.id} to={agent.url}><AgentTile agent={agent} /></Link>)}
@@ -119,7 +120,7 @@ class AgentRegionPage extends Component {
           {agentsList.length === 0 &&
             <NoResultBlock>{`It looks like we do not have any agents listed in ${locationName}. We are currently adding new partners everyday who might not be listed yet. Fill out the form below and we will help you find your local partner agent.`}</NoResultBlock>
           }
-          <StyledHr />
+          <StyledHr fullWidth />
           <FormSection>
             <BannerNotificationController>
               {({ notifyInfo }) => (
@@ -137,7 +138,7 @@ class AgentRegionPage extends Component {
               )}
             </BannerNotificationController>
           </FormSection>
-          <StyledHr />
+          <StyledHr fullWidth />
           <FindLocalAgentWrapper innerRef={this.findLocalAgentRef}>
             <FindLocalAgent onLocationSearch={onLocationSearch} />
           </FindLocalAgentWrapper>
