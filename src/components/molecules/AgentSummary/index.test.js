@@ -31,7 +31,11 @@ describe('AgentSummary', () => {
     expect(wrapper.find(Image).prop('src')).toEqual(defaultProp.agent.info.profileImageUrl);
     expect(wrapper.contains(defaultProp.agent.info.displayName)).toBeTruthy();
     expect(wrapper.find('AgentsCitiesSection').childAt(0).dive().text()).toEqual('Stephen\'s Cities: ');
-    expect(wrapper.find('AgentsCitiesSection').childAt(1).dive().text()).toEqual('Sausalito, Mill Valley');
+    expect(wrapper.find('AgentsCitiesSection').childAt(1).dive().dive()
+      .dive()
+      .find('BlockCap')
+      .dive()
+      .text()).toContain('Sausalito, Mill Valley');
   });
 
   it('renders aggregateRating and numRatings', () => {
