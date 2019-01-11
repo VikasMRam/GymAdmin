@@ -46,7 +46,7 @@ const List = styled.ul`
   li {
     margin-bottom: ${size('spacing.regular')};
     break-inside: avoid-column;
-    overflow: hidden;
+    list-style-type: none;
   }
 
   li:last-child {
@@ -82,18 +82,20 @@ const AgentTile = ({
         <List>
           {phoneNumber &&
             <li>
-              <IconItem size="caption" icon="phone">{phoneNumber}</IconItem>
+              <IconItem size="caption" icon="phone" iconSize="regular">{phoneNumber}</IconItem>
             </li>
           }
           {rating.numRatings > 0 &&
             <li>
-              <IconItem size="caption" icon="star">
+              <IconItem size="caption" icon="star" iconSize="regular">
                 {rating.ratingValue} from  <Link to={url}>{rating.numRatings} reviews</Link>
               </IconItem>
             </li>
           }
+          <li>
+            <IconItem size="caption" icon="location" iconSize="regular">{address.city}, {address.state}</IconItem>
+          </li>
         </List>
-        <Block palette="grey" size="caption">{address.city}, {address.state}</Block>
       </Box>
     </Wrapper>
   );
