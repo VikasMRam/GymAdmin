@@ -30,8 +30,8 @@ const FindLocalAgentLink = styled(Link)`
 `;
 
 const StyledHr = styled(Hr)`
-  margin-top: ${size('spacing.xxxLarge')};
-  margin-bottom: ${size('spacing.xxxLarge')};
+  margin-top: ${size('spacing.huge')};
+  margin-bottom: ${size('spacing.huge')};
 `;
 
 const AgentTiles = styled.div`

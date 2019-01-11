@@ -17,8 +17,8 @@ import { getBreadCrumbsForAgent } from 'sly/services/helpers/url';
 import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 
 const StyledHr = styled(Hr)`
-  margin-top: ${size('spacing.xxxLarge')};
-  margin-bottom: ${size('spacing.xxxLarge')};
+  margin-top: ${size('spacing.huge')};
+  margin-bottom: ${size('spacing.huge')};
 `;
 
 const StyledSection = styled(Section)`
