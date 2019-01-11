@@ -1,11 +1,12 @@
 import React from 'react';
-import { string, number, arrayOf, func, shape } from 'prop-types';
+import { string, func } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
-import { size } from 'sly/components/themes/index';
+import { size } from 'sly/components/themes';
 import { Image, Icon, Block, Button, Span, Hr, Link } from 'sly/components/atoms';
 import { formatRating } from 'sly/services/helpers/rating';
+import agentPropType from 'sly/propTypes/agent';
 
 const Wrapper = styled.div`
   display: flex;
@@ -103,8 +104,12 @@ const AskQuestionPhoneSection = styled.div`
   }
 `;
 const AgentSummary = ({
-  profileImageUrl, displayName, firstName, aggregateRating, recentFamiliesHelped, citiesServed, slyPhone, onButtonClick, onPhoneClick,
+  firstName, agent, onButtonClick, onPhoneClick,
 }) => {
+  const { info, aggregateRating } = agent;
+  const {
+    profileImageUrl, displayName, recentFamiliesHelped, citiesServed, slyPhone,
+  } = info;
   let ratingsSection = null;
   if (aggregateRating && aggregateRating.ratingValue > 0) {
     const { numRatings, ratingValue } = aggregateRating;
@@ -160,16 +165,8 @@ const AgentSummary = ({
 };
 
 AgentSummary.propTypes = {
-  profileImageUrl: string.isRequired,
-  displayName: string.isRequired,
+  agent: agentPropType.isRequired,
   firstName: string.isRequired,
-  aggregateRating: shape({
-    numRatings: number,
-    ratingValue: number,
-  }),
-  recentFamiliesHelped: number,
-  citiesServed: arrayOf(string),
-  slyPhone: string,
   onButtonClick: func,
   onPhoneClick: func,
 };

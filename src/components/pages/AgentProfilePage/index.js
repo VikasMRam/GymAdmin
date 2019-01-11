@@ -107,8 +107,7 @@ class AgentProfilePage extends Component {
           <AgentSummaryWrapper innerRef={this.agentSummaryRef}>
             <BreadCrumb items={getBreadCrumbsForAgent({ name: displayName, state, city })} />
             <AgentSummary
-              {...info}
-              aggregateRating={aggregateRating}
+              agent={agent}
               firstName={firstName}
               onButtonClick={() => {
                 if (this.askAgentAQuestionRef.current.scrollIntoView) {

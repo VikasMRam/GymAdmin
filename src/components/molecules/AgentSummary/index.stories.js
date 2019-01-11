@@ -25,13 +25,18 @@ const Wrapper = styled.div`
 
 
 const defaultProp = {
-  displayName: 'Stephen Anderson',
-  profileImageUrl: agent.mainImage,
-  numRatings: 15,
-  aggregateRating: 3.53223232,
-  recentFamiliesHelped: 20,
-  citiesServed: ['Sausalito', 'Mill Valley', 'Tiburon', 'Belvedere', 'Corte Madera', 'Larkspur', 'Greenbrae', 'Kentfield', 'Ross', 'San Anselmo'],
-  slyPhone: '9258312050',
+  agent: {
+    info: {
+      displayName: 'Stephen Anderson',
+      profileImageUrl: agent.mainImage,
+      numRatings: 15,
+      aggregateRating: 3.53223232,
+      recentFamiliesHelped: 20,
+      citiesServed: ['Sausalito', 'Mill Valley', 'Tiburon', 'Belvedere', 'Corte Madera', 'Larkspur', 'Greenbrae', 'Kentfield', 'Ross', 'San Anselmo'],
+      slyPhone: '9258312050',
+    },
+  },
+  firstName: 'Stephen',
 };
 
 storiesOf('Molecules|AgentSummary', module)
