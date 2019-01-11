@@ -7,11 +7,12 @@ import { Icon, Span } from 'sly/components/atoms/index';
 
 const Wrapper = styled.div`
   display: flex;
-  
+  align-items: center;
+
   > :first-child {
     flex-grow: 0;
     margin-right: ${size('spacing.regular')};
-  } 
+  }
 `;
 
 const IconItem = ({
