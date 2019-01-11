@@ -5,14 +5,15 @@ import AgentSummary from 'sly/components/molecules/AgentSummary';
 import Image from 'sly/components/atoms/Image';
 
 const defaultProp = {
-  displayName: 'Stephen Anderson',
   firstName: 'Stephen',
-  profileImageUrl: 'abc.def',
-  // numRatings: 15,
-  // aggregateRating: 3.53223232,
-  // recentFamiliesHelped: 20,
-  // citiesServed: ['Sausalito', 'Mill Valley'],
-  // slyPhone: '9258312050',
+  agent: {
+    info: {
+      displayName: 'Stephen Anderson',
+      profileImageUrl: 'abc.def',
+      citiesServed: ['Sausalito', 'Mill Valley'],
+      slyPhone: '9258312050',
+    },
+  },
 };
 
 const wrap = (props = {}) =>
@@ -27,30 +28,21 @@ describe('AgentSummary', () => {
   it('renders AgentSummary', () => {
     const wrapper = wrap();
     expect(wrapper.find(Image)).toHaveLength(1);
-    expect(wrapper.find(Image).prop('src')).toEqual(defaultProp.profileImageUrl);
-    expect(wrapper.contains(defaultProp.displayName)).toBeTruthy();
-  });
-
-  it('renders aggregateRating', () => {
-    const wrapper = wrap({ aggregateRating: { ratingValue: 3.53223232 } });
-    expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.5 ');
+    expect(wrapper.find(Image).prop('src')).toEqual(defaultProp.agent.info.profileImageUrl);
+    expect(wrapper.contains(defaultProp.agent.info.displayName)).toBeTruthy();
+    expect(wrapper.find('AgentsCitiesSection').childAt(0).dive().text()).toEqual('Stephen\'s Cities: ');
+    expect(wrapper.find('AgentsCitiesSection').childAt(1).dive().text()).toEqual('Sausalito, Mill Valley');
   });
 
   it('renders aggregateRating and numRatings', () => {
-    const wrapper = wrap({ aggregateRating: { ratingValue: 3.53223232, numRatings: 15 } });
+    const wrapper = wrap({ agent: { info: { ...defaultProp.agent.info }, aggregateRating: { ratingValue: 3.53223232, numRatings: 15 } } });
     expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.5 ');
     expect(wrapper.find('ReviewValueSection').childAt(2).dive().text()).toEqual('15 reviews');
   });
 
   it('renders recentFamiliesHelped', () => {
-    const wrapper = wrap({ recentFamiliesHelped: 20 });
+    const wrapper = wrap({ agent: { info: { ...defaultProp.agent.info, recentFamiliesHelped: 20 } } });
     expect(wrapper.find('FamiliesHelpedSection').childAt(1).dive().text()).toEqual('20');
-  });
-
-  it('renders citiesServed', () => {
-    const wrapper = wrap({ citiesServed: ['Sausalito', 'Mill Valley'] });
-    expect(wrapper.find('AgentsCitiesSection').childAt(0).dive().text()).toEqual('Stephen\'s Cities: ');
-    expect(wrapper.find('AgentsCitiesSection').childAt(1).dive().text()).toEqual('Sausalito, Mill Valley');
   });
 
   it('handles onButtonClick', () => {
