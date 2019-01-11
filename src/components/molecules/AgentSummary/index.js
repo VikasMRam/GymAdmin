@@ -30,7 +30,7 @@ const AgentImageWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex: 1;
     img {
-      border-radius: initial;
+      border-radius: ${size('border.xxLarge')};
     }
   }
 `;
