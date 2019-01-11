@@ -30,7 +30,7 @@ const AgentImageWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex: 1;
     img {
-      border-radius: initial;
+      border-radius: ${size('border.xxLarge')};
     }
   }
 `;
@@ -117,7 +117,7 @@ const AgentSummary = ({
       <ReviewValueSection>
         <Icon icon="star" size="regular" palette="secondary" />
         <Span size="subtitle" weight="medium"> {formatRating(ratingValue)} </Span>
-        {numRatings && <Span size="caption" palette="grey">{numRatings} reviews</Span>}
+        {numRatings && <Span size="caption" palette="grey">from {numRatings} {numRatings > 1 ? 'reviews' : 'review'}</Span>}
       </ReviewValueSection>
     );
   }

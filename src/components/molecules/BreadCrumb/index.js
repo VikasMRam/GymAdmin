@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { arrayOf, shape, string, object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import { Link } from 'sly/components/atoms';
+import { Link, Span } from 'sly/components/atoms';
 
 const Wrapper = styled.nav`
   margin-bottom: ${size('spacing.large')};
@@ -24,7 +24,7 @@ const Wrapper = styled.nav`
   }
 `;
 
-const BreadCrumb = ({ items, innerRef }) => (
+const BreadCrumb = ({ items, innerRef, size }) => (
   <Wrapper innerRef={innerRef}>
     <ol itemScope itemType="http://schema.org/BreadcrumbList">
       {
@@ -39,13 +39,13 @@ const BreadCrumb = ({ items, innerRef }) => (
               itemType="http://schema.org/ListItem"
             >
               {key === items.length - 1 ?
-                <span itemProp="name">{label}</span>
+                <Span itemProp="name" size={size}>{label}</Span>
               :
                 <Link itemProp="item" to={path}>
-                  <span itemProp="name">{label}</span>
+                  <Span itemProp="name" palette="primary" size={size}>{label}</Span>
                 </Link>
               }
-              {key < items.length - 1 ? <span>/</span> : null}
+              {key < items.length - 1 ? <Span>/</Span> : null}
             </li>
           );
         })
@@ -60,6 +60,7 @@ BreadCrumb.propTypes = {
     path: string.isRequired,
   })).isRequired,
   innerRef: object,
+  size: string,
 };
 
 export default BreadCrumb;

@@ -37,7 +37,13 @@ describe('AgentSummary', () => {
   it('renders aggregateRating and numRatings', () => {
     const wrapper = wrap({ agent: { info: { ...defaultProp.agent.info }, aggregateRating: { ratingValue: 3.53223232, numRatings: 15 } } });
     expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.5 ');
-    expect(wrapper.find('ReviewValueSection').childAt(2).dive().text()).toEqual('15 reviews');
+    expect(wrapper.find('ReviewValueSection').childAt(2).dive().text()).toEqual('from 15 reviews');
+  });
+
+  it('renders aggregateRating and one numRatings', () => {
+    const wrapper = wrap({ agent: { info: { ...defaultProp.agent.info }, aggregateRating: { ratingValue: 3.53223232, numRatings: 1 } } });
+    expect(wrapper.find('ReviewValueSection').childAt(1).dive().text()).toEqual(' 3.5 ');
+    expect(wrapper.find('ReviewValueSection').childAt(2).dive().text()).toEqual('from 1 review');
   });
 
   it('renders recentFamiliesHelped', () => {

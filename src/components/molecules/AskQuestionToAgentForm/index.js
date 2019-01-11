@@ -15,10 +15,7 @@ const HeadingSection = styled(Heading)`
 
 const StyledButton = styled(Button)`
   width: 100%;
-`;
-
-const TosBlock = styled(Block)`
-  margin-bottom: ${size('spacing.xLarge')};
+  margin-bottom: ${size('spacing.regular')};
 `;
 
 const AskQuestionToAgentForm = ({
@@ -62,8 +59,8 @@ const AskQuestionToAgentForm = ({
         component={ReduxField}
       />
       {error && <Block palette="danger">{error}</Block>}
-      {!(userDetails && userDetails.fullName) && <TosBlock size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></TosBlock>}
       <StyledButton type="submit" kind="jumbo">Send</StyledButton>
+      {!(userDetails && userDetails.fullName) && <Block size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></Block>}
     </form>
   );
 };

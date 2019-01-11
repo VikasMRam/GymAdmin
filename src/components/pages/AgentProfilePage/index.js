@@ -17,7 +17,8 @@ import { getBreadCrumbsForAgent } from 'sly/services/helpers/url';
 import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 
 const StyledHr = styled(Hr)`
-  margin: ${size('spacing.xxxLarge')} 0;
+  margin-top: ${size('spacing.huge')};
+  margin-bottom: ${size('spacing.huge')};
 `;
 
 const StyledSection = styled(Section)`
@@ -105,7 +106,7 @@ class AgentProfilePage extends Component {
         </TemplateHeader>
         <TemplateContent>
           <AgentSummaryWrapper innerRef={this.agentSummaryRef}>
-            <BreadCrumb items={getBreadCrumbsForAgent({ name: displayName, state, city })} />
+            <BreadCrumb size="caption" items={getBreadCrumbsForAgent({ name: displayName, state, city })} />
             <AgentSummary
               agent={agent}
               firstName={firstName}
@@ -116,7 +117,7 @@ class AgentProfilePage extends Component {
               }}
             />
           </AgentSummaryWrapper>
-          <StyledHr />
+          <StyledHr fullWidth />
           {communities &&
             <Fragment>
               <Section title={`${firstName}'s communities`}>
@@ -142,7 +143,7 @@ class AgentProfilePage extends Component {
                   })}
                 </AgentCommunitiesWrapper>
               </Section>
-              <StyledHr />
+              <StyledHr fullWidth />
             </Fragment>
           }
           {reviews.length > 0 &&
@@ -159,7 +160,7 @@ class AgentProfilePage extends Component {
               <StyledSection title={`About ${firstName}`}>
                 {bio}
               </StyledSection>
-              <StyledHr />
+              <StyledHr fullWidth />
             </Fragment>
           }
           <StyledSection>
