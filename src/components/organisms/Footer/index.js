@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
+import config from 'sly/config';
 import { size, palette } from 'sly/components/themes';
 import { Icon, Link, Hr } from 'sly/components/atoms';
-import config from 'sly/config';
 
 const FooterWrapper = styled.footer`
   background-color: ${palette('slate', 'base')};
@@ -147,29 +146,29 @@ const Join = styled.div`
 
 const groups = {
   Company: [
-    { name: 'Our Company', url: '/about' },
-    { name: 'Seniorly Guides', url: '/agents' },
+    { name: 'Our Company', url: '/about', target: '_blank' },
+    { name: 'Seniorly Partner Agents', url: '/agents', target: '_blank' },
     { name: 'Career', url: 'https://angel.co/seniorly/jobs', target: '_blank' },
-    { name: 'Press', url: '/about#/#press' },
-    { name: 'Contact', url: '/contact' },
-    { name: 'Terms', url: '/tos' },
-    { name: 'Privacy', url: '/privacy' },
-    { name: 'Sitemap', url: '/sitemap' },
+    { name: 'Press', url: '/about#/#press', target: '_blank' },
+    { name: 'Contact', url: '/contact', target: '_blank' },
+    { name: 'Terms', url: '/tos', target: '_blank' },
+    { name: 'Privacy', url: '/privacy', target: '_blank' },
+    { name: 'Sitemap', url: '/sitemap', target: '_blank' },
   ],
   Listings: [
-    { name: 'For Referral Agents', url: '/providers/crm' },
-    { name: 'List Your Property', url: '/providers' },
-    { name: 'How It Works', url: '/how-it-works' },
+    { name: 'For Referral Agents', url: '/providers/crm', target: '_blank' },
+    { name: 'List Your Property', url: '/providers', target: '_blank' },
+    { name: 'How It Works', url: '/how-it-works', target: '_blank' },
   ],
   Resources: [
-    { name: 'Articles', url: '/resources' },
-    { name: 'Moving Center', url: '/resources/tags/moving+center' },
-    { name: 'Assisted Living', url: '/assisted-living' },
-    { name: 'Independent Living', url: '/independent-living' },
-    { name: 'Memory Care', url: '/memory-care' },
-    { name: 'Home Care', url: '/in-home-care' },
-    { name: 'Respite Care', url: '/respite-care' },
-    { name: 'CCRC', url: '/continuing-care-retirement-community' },
+    { name: 'Articles', url: '/resources', target: '_blank' },
+    { name: 'Moving Center', url: '/resources/tags/moving+center', target: '_blank' },
+    { name: 'Assisted Living', url: '/assisted-living', target: '_blank' },
+    { name: 'Independent Living', url: '/independent-living', target: '_blank' },
+    { name: 'Memory Care', url: '/memory-care', target: '_blank' },
+    { name: 'Home Care', url: '/in-home-care', target: '_blank' },
+    { name: 'Respite Care', url: '/respite-care', target: '_blank' },
+    { name: 'CCRC', url: '/continuing-care-retirement-community', target: '_blank' },
   ],
 };
 
