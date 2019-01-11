@@ -106,7 +106,7 @@ class AgentProfilePage extends Component {
         </TemplateHeader>
         <TemplateContent>
           <AgentSummaryWrapper innerRef={this.agentSummaryRef}>
-            <BreadCrumb items={getBreadCrumbsForAgent({ name: displayName, state, city })} />
+            <BreadCrumb size="caption" items={getBreadCrumbsForAgent({ name: displayName, state, city })} />
             <AgentSummary
               agent={agent}
               firstName={firstName}
