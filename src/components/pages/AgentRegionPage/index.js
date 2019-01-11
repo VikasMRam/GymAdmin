@@ -19,6 +19,7 @@ import BannerNotificationController from 'sly/controllers/BannerNotificationCont
 const PageHeadingSection = styled.div`
   text-align: center;
   margin: 0 auto;
+  margin-top: ${size('spacing.huge')};
   width: ${size('mobileLayout.col4')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${size('tabletLayout.col6')};
