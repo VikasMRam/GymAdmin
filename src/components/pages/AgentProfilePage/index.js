@@ -6,13 +6,13 @@ import { size } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import Footer from 'sly/components/organisms/Footer';
-import AgentSummary from 'sly/components/molecules/AgentSummary/index';
-import Section from 'sly/components/molecules/Section/index';
+import AgentSummary from 'sly/components/molecules/AgentSummary';
+import Section from 'sly/components/molecules/Section';
 import { Link, Hr } from 'sly/components/atoms';
 import AskQuestionToAgentFormContainer from 'sly/containers/AskQuestionToAgentFormContainer';
-import EntityReviews from 'sly/components/organisms/EntityReviews/index';
-import SimilarCommunityNearbyTile from 'sly/components/molecules/SimilarCommunityNearbyTile/index';
-import BreadCrumb from 'sly/components/molecules/BreadCrumb/index';
+import EntityReviews from 'sly/components/organisms/EntityReviews';
+import SimilarCommunityNearbyTile from 'sly/components/molecules/SimilarCommunityNearbyTile';
+import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import { getBreadCrumbsForAgent } from 'sly/services/helpers/url';
 import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 

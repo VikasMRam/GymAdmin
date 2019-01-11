@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
-import { Image, Icon, Block, Button, Span, Hr, Link } from 'sly/components/atoms';
 import { formatRating } from 'sly/services/helpers/rating';
 import agentPropType from 'sly/propTypes/agent';
+import { Image, Icon, Block, Button, Span, Hr, Link } from 'sly/components/atoms';
+import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 
 const Wrapper = styled.div`
   display: flex;
@@ -139,7 +140,7 @@ const AgentSummary = ({
         {citiesServed.length > 0 &&
           <AgentsCitiesSection>
             <Span weight="medium">{`${firstName}'s Cities: `}</Span>
-            <Span>{citiesServed.join(', ')}</Span>
+            <CollapsibleBlock>{citiesServed.join(', ')}</CollapsibleBlock>
           </AgentsCitiesSection>
         }
         <AskQuestionPhoneSection>

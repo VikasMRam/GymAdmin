@@ -3,10 +3,13 @@ import Measure from 'react-measure';
 import styled from 'styled-components';
 import { bool, number, string, oneOfType, oneOf, node } from 'prop-types';
 
-import { size, key } from 'sly/components/themes';
+import { size, key, getKey } from 'sly/components/themes';
 import { Link, Icon, Block } from 'sly/components/atoms';
 
 export const blockCapHeight = (props) => {
+  if (!props.isRenderedHeightBigger) {
+    return 'auto';
+  }
   if (!props.collapsed) {
     return `${props.maxHeight}px`;
   }
@@ -69,26 +72,30 @@ export default class CollapsibleBlock extends Component {
       children, minHeight, collapsedDefault, blockClassName, ...props
     } = this.props;
     const { collapsed, maxHeight } = this.state;
+    const collapsibleMinHeight =
+      getKey(`sizes.collapsible.${minHeight}`).replace('rem', '') * parseFloat(getComputedStyle(document.documentElement).fontSize);
 
     return (
       <Measure onResize={this.onResize} margin>
         {({ measureRef }) => (
           <div className={blockClassName}>
-            <BlockCap maxHeight={maxHeight} minHeight={minHeight} collapsed={collapsed}>
+            <BlockCap maxHeight={maxHeight} minHeight={minHeight} collapsed={collapsed} isRenderedHeightBigger={maxHeight > collapsibleMinHeight}>
               <div ref={measureRef} {...props}>
                 { children }
                 <OnePix />
               </div>
             </BlockCap>
-            <ReadMore
-              onClick={this.toggle}
-              transparent
-            >
-              <StyledBlock weight="medium" palette="primary">
-                {collapsed ? 'Show more' : 'Show less'}
-              </StyledBlock>
-              <Icon icon="chevron" palette="slate" size="small" flip={!collapsed} />
-            </ReadMore>
+            {maxHeight > collapsibleMinHeight &&
+              <ReadMore
+                onClick={this.toggle}
+                transparent
+              >
+                <StyledBlock weight="medium" palette="primary">
+                  {collapsed ? 'Show more' : 'Show less'}
+                </StyledBlock>
+                <Icon icon="chevron" palette="slate" size="small" flip={!collapsed} />
+              </ReadMore>
+            }
           </div>
         )
         }
