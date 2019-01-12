@@ -73,7 +73,7 @@ export default class CollapsibleBlock extends Component {
     } = this.props;
     const { collapsed, maxHeight } = this.state;
     const collapsibleMinHeight =
-      getKey(`sizes.collapsible.${minHeight}`).replace('rem', '') * parseFloat(getComputedStyle(document.documentElement).fontSize || 16);
+      getKey(`sizes.collapsible.${minHeight}`).replace('rem', '') * parseFloat(16);
 
     return (
       <Measure onResize={this.onResize} margin>
