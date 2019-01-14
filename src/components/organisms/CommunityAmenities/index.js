@@ -27,76 +27,33 @@ const CommunityAmenities = ({ community }) => {
     nonCareServices = [],
     languages = [],
   } = propInfo;
-  let noData = false;
-  if (!communityHighlights.length && !personalSpace.length && !communitySpace.length &&
-      !nonCareServices.length && !languages.length) {
-    noData = true;
-  }
-
-  const communityHighlightsComponents = communityHighlights.map(communityHighlight => (
+  const amenities = [
+    ...communityHighlights,
+    ...personalSpace,
+    ...communitySpace,
+    ...nonCareServices,
+    ...languages,
+  ];
+  const amenitiesComponents = amenities.map(amenity => (
     <IconItem
-      key={communityHighlight}
+      key={amenity}
       icon="check"
       iconPalette="slate"
       borderless={false}
     >
-      {communityHighlight}
-    </IconItem>
-  ));
-  const personalSpaceComponents = personalSpace.map(personalSpace => (
-    <IconItem
-      key={personalSpace}
-      icon="check"
-      iconPalette="slate"
-      borderless={false}
-    >
-      {personalSpace}
-    </IconItem>
-  ));
-  const communitySpaceComponents = communitySpace.map(communitySpace => (
-    <IconItem
-      key={communitySpace}
-      icon="check"
-      iconPalette="slate"
-      borderless={false}
-    >
-      {communitySpace}
-    </IconItem>
-  ));
-  const nonCareServicesComponents = nonCareServices.map(nonCareService => (
-    <IconItem
-      key={nonCareService}
-      icon="check"
-      iconPalette="slate"
-      borderless={false}
-    >
-      {nonCareService}
-    </IconItem>
-  ));
-  const languagesComponents = languages.map(language => (
-    <IconItem
-      key={language}
-      icon="check"
-      iconPalette="slate"
-      borderless={false}
-    >
-      {language}
+      {amenity}
     </IconItem>
   ));
 
   return (
     <section>
-      {noData &&
+      {amenities.length === 0 &&
         <Paragraph>
           No information about amenities currently available
         </Paragraph>
       }
       <Wrapper minHeight="regular">
-        {communityHighlightsComponents}
-        {personalSpaceComponents}
-        {communitySpaceComponents}
-        {nonCareServicesComponents}
-        {languagesComponents}
+        {amenitiesComponents}
       </Wrapper>
     </section>
   );
