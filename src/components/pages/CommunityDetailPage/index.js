@@ -29,7 +29,6 @@ import ConciergeController from 'sly/controllers/ConciergeController';
 import SaveCommunityController from 'sly/controllers/SaveCommunityController';
 import NotificationController from 'sly/controllers/NotificationController';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
-import CommunityStickyHeader from 'sly/components/organisms/CommunityStickyHeader';
 import CollapsibleSection, { MainSection, BottomSection } from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
 import EntityReviews from 'sly/components/organisms/EntityReviews';
@@ -143,9 +142,7 @@ export default class CommunityDetailPage extends Component {
     onMediaGalleryFavouriteClick: func,
     onMediaGalleryShareClick: func,
     onShareCommunityModalClose: func,
-    isStickyHeaderVisible: bool,
     isShareCommunityModalVisible: bool,
-    onToggleStickyHeader: func,
     onBackToSearchClicked: func,
     onReviewLinkClicked: func,
     onConciergeNumberClicked: func,
@@ -165,36 +162,6 @@ export default class CommunityDetailPage extends Component {
     askAgentQuestionType: string,
     userAction: object,
     onFloorPlanModalToggle: func,
-  };
-
-  componentDidMount() {
-    // if page is reloaded at scroll position where sticky header should be visible, don't wait for scroll to happen
-    this.handleScroll();
-    window.addEventListener('scroll', this.handleScroll);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  }
-
-  // TODO: use ref forwarding once we upgrade to react 16.3+: https://reactjs.org/docs/forwarding-refs.html
-  communityReviewsRef = React.createRef();
-  pricingAndFloorPlansRef = React.createRef();
-  communitySummaryRef = React.createRef();
-  amenitiesAndFeaturesRef = React.createRef();
-
-  handleScroll = () => {
-    if (this.communitySummaryRef.current) {
-      const { onToggleStickyHeader, isStickyHeaderVisible } = this.props;
-      const rect = this.communitySummaryRef.current.getBoundingClientRect();
-      const elemTop = rect.top;
-      const isVisible = elemTop < 0;
-
-      // Important: don't trigger rerender if sticky header visiblity hasn't changed
-      if (isStickyHeaderVisible !== isVisible) {
-        onToggleStickyHeader();
-      }
-    }
   };
 
   handleMorePicturesClick = (image) => {
@@ -229,7 +196,6 @@ export default class CommunityDetailPage extends Component {
       onMediaGalleryShareClick,
       onBackToSearchClicked,
       onShareCommunityModalClose,
-      isStickyHeaderVisible,
       isShareCommunityModalVisible,
       user,
       onReviewLinkClicked,
@@ -327,11 +293,6 @@ export default class CommunityDetailPage extends Component {
 
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
-    const stickyHeaderItems = [
-      { label: 'Summary', ref: this.communitySummaryRef },
-      { label: 'Pricing & Floor Plans', ref: this.pricingAndFloorPlansRef },
-      { label: 'Reviews', ref: this.communityReviewsRef },
-    ];
 
     let bannerNotification = null;
     if (isAlreadyTourScheduled && isAlreadyPricingRequested) {
@@ -351,10 +312,6 @@ export default class CommunityDetailPage extends Component {
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         {getHelmetForCommunityPage(community, location)}
-        <CommunityStickyHeader
-          items={stickyHeaderItems}
-          visible={isStickyHeaderVisible}
-        />
         <Header />
         <CommunityDetailPageTemplate>
           <Wrapper>
@@ -378,7 +335,6 @@ export default class CommunityDetailPage extends Component {
                   </Gallery>
                 }
                 <StyledCommunitySummary
-                  innerRef={this.communitySummaryRef}
                   community={community}
                   isAdmin={user && user.admin}
                   isFavourited={!!initedUserSave}
@@ -439,7 +395,6 @@ export default class CommunityDetailPage extends Component {
                 </ModalController>
                 <CollapsibleSection
                   title={`Pricing and Floor Plans at ${name}`}
-                  innerRef={this.pricingAndFloorPlansRef}
                 >
                   <MainSection>
                     {floorPlans.length > 0 &&
@@ -542,7 +497,6 @@ export default class CommunityDetailPage extends Component {
                 <CollapsibleSection
                   paddedContent
                   title="Amenities & Features"
-                  innerRef={this.amenitiesAndFeaturesRef}
                 >
                   <MainSection>
                     <AmenitiesAndFeatures
@@ -561,7 +515,6 @@ export default class CommunityDetailPage extends Component {
                 </CollapsibleSection>
                 <CollapsibleSection
                   title={`Reviews at ${name}`}
-                  innerRef={this.communityReviewsRef}
                 >
                   <MainSection>
                     <EntityReviews
@@ -770,7 +723,7 @@ export default class CommunityDetailPage extends Component {
               </Body>
               <Column>
                 <Sticky
-                  top={isStickyHeaderVisible ? 84 : 24}
+                  top={24}
                   bottomBoundary="#sticky-sidebar-boundary"
                 >
                   <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />

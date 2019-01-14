@@ -30,7 +30,6 @@ class CommunityDetailPageController extends Component {
     location: object,
     mediaGallerySlideIndex: number,
     isMediaGalleryFullscreenActive: bool,
-    isStickyHeaderVisible: bool,
     user: object,
     isQuestionModalOpenValue: bool,
     searchParams: object,
@@ -215,13 +214,6 @@ class CommunityDetailPageController extends Component {
     });
   };
 
-  handleToggleStickyHeader = () => {
-    const { set, isStickyHeaderVisible } = this.props;
-    set({
-      isStickyHeaderVisible: !isStickyHeaderVisible,
-    });
-  };
-
   handleMediaGalleryFavouriteClick = () => {
     const { setQueryParams, community, userSaveOfCommunity } = this.props;
     const { id } = community;
@@ -336,7 +328,6 @@ class CommunityDetailPageController extends Component {
       errorCode,
       redirectUrl,
       history,
-      isStickyHeaderVisible,
       searchParams,
       setQueryParams,
       userAction,
@@ -392,9 +383,7 @@ class CommunityDetailPageController extends Component {
         onMediaGalleryShareClick={this.handleMediaGalleryShareClick}
         onShareCommunityModalClose={this.handleShareCommunityModalClose}
         isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
-        isStickyHeaderVisible={isStickyHeaderVisible}
         isShareCommunityModalVisible={isShareCommunityModalVisible}
-        onToggleStickyHeader={this.handleToggleStickyHeader}
         onBackToSearchClicked={this.handleBackToSearchClick}
         onReviewLinkClicked={this.handleReviewLinkClick}
         onConciergeNumberClicked={this.handleConciergeNumberClick}
@@ -434,7 +423,7 @@ const mapStateToProps = (state, {
 }) => {
   // default state for ssr
   const {
-    mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false, isStickyHeaderVisible = false,
+    mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false,
     isShareCommunityModalVisible = false, isAskAgentQuestionModalVisible, askAgentQuestionType,
   } = controller;
 
@@ -454,7 +443,6 @@ const mapStateToProps = (state, {
     userSaveOfCommunity,
     mediaGallerySlideIndex,
     isMediaGalleryFullscreenActive,
-    isStickyHeaderVisible,
     searchParams,
     setQueryParams,
     isShareCommunityModalVisible,
