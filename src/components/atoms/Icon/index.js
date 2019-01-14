@@ -19,7 +19,7 @@ const Wrapper = styled.span`
   // sizes relative to set font-size
   width: ${fontSize};
   height: ${fontSize};
-  transform: ${ifProp('flip', 'rotate(180deg)', 'rotate(0deg)')};
+  ${ifProp('flip', 'transform: rotate(180deg)', '')};
   transition: transform ${key('transitions.fast')};
   & > svg {
     font-size: ${fontSize};

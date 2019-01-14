@@ -35,7 +35,7 @@ import EntityReviews from 'sly/components/organisms/EntityReviews';
 import CommunityDetails from 'sly/components/organisms/CommunityDetails';
 import CommunityPricingComparison from 'sly/components/organisms/CommunityPricingComparison';
 import SimilarCommunities from 'sly/components/organisms/SimilarCommunities';
-import AmenitiesAndFeatures from 'sly/components/organisms/AmenitiesAndFeatures';
+import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
 import MorePictures from 'sly/components/organisms/MorePictures';
@@ -64,7 +64,7 @@ import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSectio
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
-import CareServiceItem from 'sly/components/molecules/CareServiceItem/index';
+import IconItem from 'sly/components/molecules/IconItem';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -97,7 +97,7 @@ const StyledCommunitySummary = styled(CommunitySummary)`
   }
 `;
 
-const CareServiceItemWrapper = styled.div`
+const IconItemWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
@@ -262,17 +262,6 @@ export default class CommunityDetailPage extends Component {
       typeCare,
     } = propInfo;
 
-    const {
-      communityHighlights,
-      personalSpace,
-      personalSpaceOther,
-      communitySpace,
-      communitySpaceOther,
-      nonCareServices,
-      nonCareServicesOther,
-      languages,
-      languagesOther,
-    } = propInfo;
     const typeOfCare = typeCare[0];
     const { modal, entityId, currentStep } = searchParams;
     let questionToAnswer = null;
@@ -358,9 +347,9 @@ export default class CommunityDetailPage extends Component {
                   >
                     <MainSection>
                       {autoHighlights.map(item => (
-                        <CareServiceItemWrapper>
-                          <CareServiceItem icon="care" iconPalette="secondary" text={item} />
-                        </CareServiceItemWrapper>))
+                        <IconItemWrapper>
+                          <IconItem icon="care" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                        </IconItemWrapper>))
                       }
                     </MainSection>
                   </CollapsibleSection>
@@ -496,22 +485,19 @@ export default class CommunityDetailPage extends Component {
                 </CollapsibleSection>
                 <CollapsibleSection
                   paddedContent
-                  title="Amenities & Features"
+                  title={`Amenities at ${name}`}
                 >
                   <MainSection>
-                    <AmenitiesAndFeatures
-                      communityName={name}
-                      communityHighlights={communityHighlights}
-                      personalSpace={personalSpace}
-                      personalSpaceOther={personalSpaceOther}
-                      communitySpace={communitySpace}
-                      communitySpaceOther={communitySpaceOther}
-                      nonCareServices={nonCareServices}
-                      nonCareServicesOther={nonCareServicesOther}
-                      languages={languages}
-                      languagesOther={languagesOther}
-                    />
+                    <CommunityAmenities community={community} />
                   </MainSection>
+                  <BottomSection>
+                    <TextBottomSection
+                      heading="Have a question about amenities at this community?"
+                      subHeading="Your advisor can give you expert advice about this community."
+                      buttonText="Ask about amenities"
+                      onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
+                    />
+                  </BottomSection>
                 </CollapsibleSection>
                 <CollapsibleSection
                   title={`Reviews at ${name}`}

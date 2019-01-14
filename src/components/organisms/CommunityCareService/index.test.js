@@ -17,8 +17,8 @@ describe('CommunityCareService', () => {
 
   it('renders CommunityCareService', () => {
     const wrapper = wrap();
-    expect(wrapper.find('CareServiceItem')).toHaveLength(2);
-    expect(wrapper.find('CareServiceItem').filter('[icon="check"]')).toHaveLength(2);
-    // expect(wrapper.find('CareServiceItem').filter('[icon="close"]')).toHaveLength(1);
+    expect(wrapper.find('IconItem')).toHaveLength(2);
+    expect(wrapper.find('IconItem').filter('[icon="check"]')).toHaveLength(2);
+    // expect(wrapper.find('IconItem').filter('[icon="close"]')).toHaveLength(1);
   });
 });
