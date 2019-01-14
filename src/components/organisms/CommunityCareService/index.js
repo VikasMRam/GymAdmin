@@ -3,7 +3,7 @@ import { arrayOf, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import CareServiceItem from 'sly/components/molecules/CareServiceItem';
+import IconItem from 'sly/components/molecules/IconItem';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
 
 const Wrapper = styled(CollapsibleBlock)`
@@ -19,7 +19,7 @@ const Wrapper = styled(CollapsibleBlock)`
 
 const preset = {
   present: {
-    icon: 'check', iconPalette: 'secondary', iconVariation: 'base', textPalette: 'slate', textVariation: 'base',
+    icon: 'check', iconPalette: 'slate', iconVariation: 'base', textPalette: 'slate', textVariation: 'base',
   },
   notPresent: {
     icon: 'close', iconPalette: 'slate', iconVariation: 'filler', textPalette: 'slate', textVariation: 'filler',
@@ -29,15 +29,17 @@ const preset = {
 const CommunityCareService = ({ careServices }) => {
   const presetValue = preset.present;
   const itemComponents = careServices.map(careService => (
-    <CareServiceItem
+    <IconItem
       key={careService}
       icon={presetValue.icon}
-      text={careService}
       iconPalette={presetValue.iconPalette}
       iconVariation={presetValue.iconVariation}
       textPalette={presetValue.textPalette}
       textVariation={presetValue.textVariation}
-    />
+      borderless={false}
+    >
+      {careService}
+    </IconItem>
   ));
   return (
     // TODO: 21 rem on height looked good for Collapsible Block

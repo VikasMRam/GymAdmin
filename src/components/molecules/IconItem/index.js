@@ -1,28 +1,36 @@
 import React from 'react';
-import { string, any } from 'prop-types';
+import { string, node, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
-import { Icon, Span } from 'sly/components/atoms/index';
+import { size, palette } from 'sly/components/themes';
+import { palette as palettePropType } from 'sly/propTypes/palette';
+import { variation as variationPropType } from 'sly/propTypes/variation';
+import { Icon, Block } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+`;
 
-  > :first-child {
-    flex-grow: 0;
-    margin-right: ${size('spacing.regular')};
-  }
+const IconWrapper = styled.div`
+  margin-right: ${p => p.borderless ? size('spacing.small') : size('spacing.large')};
+  padding: calc(${size('spacing.regular')} - ${size('border.regular')});
+  border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('grey', 'filler')};
+  border-radius: ${size('border.xLarge')};
 `;
 
 const IconItem = ({
-  icon, iconSize, iconPalette, palette, size, children,
+  icon, iconSize, iconPalette, iconVariation, size, children, borderless,
+  textPalette, textVariation,
 }) => {
-  const defIconSize = iconSize || size || undefined;
+  const defIconSize = iconSize || size;
+
   return (
     <Wrapper>
-      <Icon icon={icon} size={defIconSize} palette={iconPalette} />
-      <Span palette={palette} size={size}>{children}</Span>
+      <IconWrapper borderless={borderless}>
+        <Icon icon={icon} size={defIconSize} palette={iconPalette} variation={iconVariation} />
+      </IconWrapper>
+      <Block palette={textPalette} variation={textVariation}>{children}</Block>
     </Wrapper>
   );
 };
@@ -30,10 +38,21 @@ const IconItem = ({
 IconItem.propTypes = {
   icon: string.isRequired,
   iconSize: string,
-  iconPalette: string,
+  iconPalette: palettePropType,
+  iconVariation: variationPropType,
   size: string,
-  palette: string,
-  children: any,
+  children: node,
+  borderless: bool,
+  textPalette: palettePropType,
+  textVariation: variationPropType,
+};
+
+IconItem.defaultProps = {
+  borderless: true,
+  iconPalette: 'secondary',
+  iconVariation: 'base',
+  textPalette: 'slate',
+  textVariation: 'base',
 };
 
 export default IconItem;

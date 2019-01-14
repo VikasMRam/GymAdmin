@@ -67,7 +67,7 @@ describe('AgentTile', () => {
     expect(wrapper.find('IconItem').last().prop('icon')).toEqual('location');
 
     expect(wrapper.find('IconItem').last().dive().dive()
-      .find('Span')
+      .find('Block')
       .dive()
       .text()).toEqual('San Anselmo, CA');
   });
@@ -93,7 +93,7 @@ describe('AgentTile', () => {
     expect(wrapper.find('IconItem').last().prop('icon')).toEqual('location');
 
     expect(wrapper.find('IconItem').last().dive().dive()
-      .find('Span')
+      .find('Block')
       .dive()
       .text()).toEqual('San Anselmo, CA');
   });
@@ -113,7 +113,7 @@ describe('AgentTile', () => {
     expect(wrapper.find('IconItem').first().prop('children')).toEqual('925-890-6575');
 
     expect(wrapper.find('IconItem').last().dive().dive()
-      .find('Span')
+      .find('Block')
       .dive()
       .text()).toEqual('San Anselmo, CA');
   });
