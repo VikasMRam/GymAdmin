@@ -231,7 +231,7 @@ export default class CommunityDetailPage extends Component {
       mainImage,
       partnerAgents,
     } = community;
-    console.log(community);
+
     let initedUserSave;
     if (userSave) {
       initedUserSave = userSave.status !== USER_SAVE_DELETE_STATUS ? userSave : null;
