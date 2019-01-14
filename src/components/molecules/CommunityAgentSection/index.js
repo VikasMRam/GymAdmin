@@ -4,8 +4,9 @@ import { func } from 'prop-types';
 import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
-import { Icon, Block, Image, Link } from 'sly/components/atoms';
 import agentPropType from 'sly/propTypes/agent';
+import { getAgentUrl } from 'sly/services/helpers/url';
+import { Icon, Block, Image, Link } from 'sly/components/atoms';
 
 const SubHeadingSection = styled.div`
   display: flex;
@@ -70,14 +71,16 @@ const CommunityAgentSection = ({
   return (
     <Fragment>
       <SubHeadingSection onClick={onAdvisorHelpClick}>
-        <AdvisorHelpBlock size="caption" weight="medium" palette="primary">What can my advisor help me with?</AdvisorHelpBlock>
+        <AdvisorHelpBlock size="caption" weight="medium" palette="primary">What can my partner agent help me with?</AdvisorHelpBlock>
         <Icon icon="help" palette="primary" />
       </SubHeadingSection>
       <AgentInfoSection>
-        <AgentImageWrapper>
-          <Image src={profileImageUrl} aspectRatio="1:1" />
-        </AgentImageWrapper>
-        <AgentName weight="medium" palette="slate">{displayName}</AgentName>
+        <Link href={getAgentUrl(agent)}>
+          <AgentImageWrapper>
+            <Image src={profileImageUrl} aspectRatio="1:1" />
+          </AgentImageWrapper>
+          <AgentName weight="medium" palette="slate">{displayName}</AgentName>
+        </Link>
         <PhoneLink href={`tel:${slyPhone}`} onClick={onPhoneClick}>
           <NumberFormat
             value={slyPhone}
