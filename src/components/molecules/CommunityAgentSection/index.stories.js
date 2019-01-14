@@ -5,6 +5,17 @@ import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSectio
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 
 const agent = {
+  id: 'golden-placement-services-ca-lidia-parman-',
+  address: {
+    city: 'Menifee',
+    county: 'Riverside',
+    latitude: 33.6831035,
+    line1: '30141 Antelope Road #D-127',
+    line2: '',
+    longitude: -117.1700328,
+    state: 'CA',
+    zip: '92584',
+  },
   info: {
     displayName: 'Rachel Wasserstrom',
     slyPhone: '9258906575',

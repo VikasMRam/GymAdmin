@@ -411,7 +411,7 @@ export default class CommunityDetailPage extends Component {
                 }
                 {partnerAgent &&
                   <CollapsibleSection
-                    title={`Your advisor for ${name}`}
+                    title={`Your Partner Agent for ${name}`}
                   >
                     <MainSection>
                       <ModalController>
@@ -422,8 +422,8 @@ export default class CommunityDetailPage extends Component {
                     </MainSection>
                     <BottomSection>
                       <TextBottomSection
-                        heading="Have a question for your advisor?"
-                        subHeading="Your advisor can help you make the best decisions."
+                        heading="Have a question for your partner?"
+                        subHeading="Your partner can help you make the best decisions."
                         buttonText="Send a message"
                         onButtonClick={() => {}}
                       />
@@ -603,7 +603,7 @@ export default class CommunityDetailPage extends Component {
                     urlText="Visit the state licensing website"
                   />
                 }
-                <StyledCollapsibleSection title="Similar Communities" id="sticky-sidebar-boundary">
+                <StyledCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                   <MainSection>
                     <SimilarCommunities similarProperties={similarProperties} />
                     <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
@@ -778,11 +778,11 @@ export default class CommunityDetailPage extends Component {
               </Column>
             </TwoColumn>
             {(images.length > 1) &&
-              <StyledSection title={`More photos of ${name} at ${address.city}`} titleSize="subtitle">
+              <StyledSection title={`More photos of ${name}`} titleSize="subtitle">
                 <MorePictures gallery={gallery} communityName={name} city={address.city} state={address.state} onPictureClick={this.handleMorePicturesClick} />
               </StyledSection>
             }
-            <Section title={`Map view of ${name} at ${address.city}`} titleSize="subtitle" />
+            <Section title={`Map view of ${name}`} titleSize="subtitle" />
           </Wrapper>
           <StyledSection>
             <Lazy ltIE9 component="div">

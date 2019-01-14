@@ -4,6 +4,17 @@ import { shallow } from 'enzyme';
 import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
 
 const agent = {
+  id: 'golden-placement-services-ca-lidia-parman-',
+  address: {
+    city: 'Menifee',
+    county: 'Riverside',
+    latitude: 33.6831035,
+    line1: '30141 Antelope Road #D-127',
+    line2: '',
+    longitude: -117.1700328,
+    state: 'CA',
+    zip: '92584',
+  },
   url: 'agent.url',
   info: {
     displayName: 'Rachel Wasserstrom',
@@ -33,7 +44,9 @@ describe('CommunityAgentSection', () => {
   });
 
   it('renders chosenReview', () => {
-    const wrapper = wrap({ agent: { url: agent.url, info: { ...agent.info, chosenReview: 'abc' } } });
+    const mAgent = { ...agent };
+    mAgent.info.chosenReview = 'abc';
+    const wrapper = wrap({ agent: mAgent });
     expect(wrapper.contains(agent.info.displayName)).toBe(true);
     expect(wrapper.contains(agent.info.email)).toBe(true);
     expect(wrapper.contains('abc')).toBe(true);
@@ -53,11 +66,12 @@ describe('CommunityAgentSection', () => {
   });
 
   it('handles onEmailClick', () => {
+    const { email } = agent.info;
     const onEmailClick = jest.fn();
     const wrapper = wrap({ onEmailClick });
     expect(onEmailClick).not.toHaveBeenCalled();
-    const emailLink = wrapper.find('Link');
-    expect(emailLink).toHaveLength(1);
+    const emailLink = wrapper.find('Link').at(1);
+    expect(emailLink.prop('href')).toBe(`mailto:${email}`);
     emailLink.simulate('click');
     expect(onEmailClick).toHaveBeenCalledTimes(1);
   });
