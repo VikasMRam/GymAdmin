@@ -71,7 +71,7 @@ const CommunitySummary = ({
   return (
     <Box innerRef={innerRef} className={className}>
       <StyledHeading>
-        {name} {city ? `at ${city}` : ''}
+        {name}
         {isAdmin &&
           <Link
             to={`/mydashboard#/mydashboard/communities/${community.id}/about`}
