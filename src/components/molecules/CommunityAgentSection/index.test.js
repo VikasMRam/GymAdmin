@@ -70,7 +70,7 @@ describe('CommunityAgentSection', () => {
     const onEmailClick = jest.fn();
     const wrapper = wrap({ onEmailClick });
     expect(onEmailClick).not.toHaveBeenCalled();
-    const emailLink = wrapper.find('Link').at(1);
+    const emailLink = wrapper.find('Link').at(0);
     expect(emailLink.prop('href')).toBe(`mailto:${email}`);
     emailLink.simulate('click');
     expect(onEmailClick).toHaveBeenCalledTimes(1);
