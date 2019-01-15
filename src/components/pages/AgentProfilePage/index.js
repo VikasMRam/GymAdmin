@@ -120,7 +120,7 @@ class AgentProfilePage extends Component {
           <StyledHr fullWidth />
           {communities &&
             <Fragment>
-              <Section title={`${firstName}'s communities`}>
+              <Section title={`Communities near ${firstName}`}>
                 <AgentCommunitiesWrapper>
                   {communities.map((community) => {
                     const { mainService } = community;

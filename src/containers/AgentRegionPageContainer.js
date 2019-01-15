@@ -9,7 +9,7 @@ import withServerState from 'sly/store/withServerState';
 import { titleize } from 'sly/services/helpers/strings';
 import { getAgentUrl } from 'sly/services/helpers/url';
 import SlyEvent from 'sly/services/helpers/events';
-import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/constants/agents';
+import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
 import { getSearchParams } from 'sly/services/helpers/search';
 
 const AgentRegionPageContainer = ({

@@ -370,7 +370,7 @@ export default class CommunityDetailPage extends Component {
                         heading="Have a question for your partner agent?"
                         subHeading="Your partner agent can help you make the best decisions."
                         buttonText="Send a message"
-                        onButtonClick={() => {}}
+                        onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
                       />
                     </BottomSection>
                   </CollapsibleSection>
