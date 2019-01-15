@@ -23,19 +23,6 @@ const StyledForm = styled.form`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const AgentSectionWrapper = styled.div`
-  width: 100%;
-  padding: ${size('spacing.xLarge')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  margin-bottom: ${size('spacing.xLarge')};
-
-`;
-
-const AgentSectionText = styled.div`
-  font-weight: bold;
-  margin-bottom: ${size('spacing.regular')};
-`;
-
 const SubHeading = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
@@ -44,9 +31,7 @@ const ConversionForm = ({
   handleSubmit,
   submitting,
   hasOnlyEmail,
-  agent,
   contact,
-  onAdvisorHelpClick,
 }) => (
   <div>
     <StyledForm onSubmit={handleSubmit}>
@@ -84,14 +69,6 @@ const ConversionForm = ({
 
       <TosAndPrivacy />
     </StyledForm>
-    {agent &&
-      <AgentSectionWrapper>
-        <AgentSectionText>
-          We have matched you with a Seniorly partner agent to help you along the way.{' '}
-          <Link palette="primary" onClick={onAdvisorHelpClick}>Learn More</Link>
-        </AgentSectionText>
-      </AgentSectionWrapper>
-    }
   </div>
 );
 

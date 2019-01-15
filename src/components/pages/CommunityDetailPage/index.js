@@ -354,34 +354,6 @@ export default class CommunityDetailPage extends Component {
                     </MainSection>
                   </CollapsibleSection>
                 }
-                {partnerAgent &&
-                  <CollapsibleSection
-                    title={`Your Partner Agent for ${name}`}
-                  >
-                    <MainSection>
-                      <ModalController>
-                        {({ show }) => (
-                          <CommunityAgentSection agent={partnerAgent} onAdvisorHelpClick={() => show(ADVISOR_HELP)} />
-                        )}
-                      </ModalController>
-                    </MainSection>
-                    <BottomSection>
-                      <TextBottomSection
-                        heading="Have a question for your partner agent?"
-                        subHeading="Your partner agent can help you make the best decisions."
-                        buttonText="Send a message"
-                        onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
-                      />
-                    </BottomSection>
-                  </CollapsibleSection>
-                }
-                <ModalController>
-                  {({ modalType, hide }) => (
-                    <Modal closeable isOpen={modalType === ADVISOR_HELP} onClose={hide}>
-                      <AdvisorHelpPopup onButtonClick={hide} />
-                    </Modal>
-                  )}
-                </ModalController>
                 <CollapsibleSection
                   title={`Pricing and Floor Plans at ${name}`}
                 >
@@ -448,15 +420,8 @@ export default class CommunityDetailPage extends Component {
                   </BottomSection>
                   }
                 </CollapsibleSection>
-                {sortedEstimatedPrice.length > 0 &&
-                  <CollapsibleSection paddedContent title="Compare to other communities in the area">
-                    <MainSection>
-                      <CommunityPricingComparison community={community} />
-                    </MainSection>
-                  </CollapsibleSection>
-                }
                 {(communityDescription || rgsAux.communityDescription) &&
-                  <CollapsibleSection title={`Details on ${name} at ${address.city}`}>
+                  <CollapsibleSection title={`Details on ${name}`}>
                     <MainSection>
                       <CommunityDetails
                         communityName={name}
@@ -470,6 +435,34 @@ export default class CommunityDetailPage extends Component {
                     </MainSection>
                   </CollapsibleSection>
                 }
+                {partnerAgent &&
+                <CollapsibleSection
+                  title={`Your Partner Agent for ${name}`}
+                >
+                  <MainSection>
+                    <ModalController>
+                      {({ show }) => (
+                        <CommunityAgentSection agent={partnerAgent} onAdvisorHelpClick={() => show(ADVISOR_HELP)} />
+                      )}
+                    </ModalController>
+                  </MainSection>
+                  <BottomSection>
+                    <TextBottomSection
+                      heading="Have a question for your partner agent?"
+                      subHeading="Your partner agent can help you make the best decisions."
+                      buttonText="Send a message"
+                      onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
+                    />
+                  </BottomSection>
+                </CollapsibleSection>
+                }
+                <ModalController>
+                  {({ modalType, hide }) => (
+                    <Modal closeable isOpen={modalType === ADVISOR_HELP} onClose={hide}>
+                      <AdvisorHelpPopup onButtonClick={hide} />
+                    </Modal>
+                  )}
+                </ModalController>
                 {careServices && careServices.length > 0 &&
                   <CollapsibleSection title={`Care Services at ${name}`}>
                     <MainSection>
@@ -501,6 +494,13 @@ export default class CommunityDetailPage extends Component {
                     />
                   </BottomSection>
                 </CollapsibleSection>
+                {sortedEstimatedPrice.length > 0 &&
+                <CollapsibleSection paddedContent title="Compare to other communities in the area">
+                  <MainSection>
+                    <CommunityPricingComparison community={community} />
+                  </MainSection>
+                </CollapsibleSection>
+                }
                 <CollapsibleSection
                   title={`Reviews at ${name}`}
                 >
@@ -538,8 +538,8 @@ export default class CommunityDetailPage extends Component {
                 </CollapsibleSection>
                 {rgsAux.stateLicensingWebsite &&
                   <StyledCommunityExtraInfoSection
-                    title={`${name} at ${address.city} State licensing info`}
-                    description={`${name} is licensed by the state of ${address.state}.`}
+                    title={`${name} at ${address.city} State Licensing`}
+                    description={`${name} is licensed by the state of ${address.state}`}
                     url={rgsAux.stateLicensingWebsite}
                     urlText="Visit the state licensing website"
                   />
