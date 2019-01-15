@@ -470,19 +470,21 @@ export default class CommunityDetailPage extends Component {
                     </MainSection>
                   </CollapsibleSection>
                 }
-                <CollapsibleSection title={`Care Services at ${name}`}>
-                  <MainSection>
-                    <CommunityCareService careServices={careServices} />
-                  </MainSection>
-                  <BottomSection>
-                    <TextBottomSection
-                      heading="Want to know more about care services?"
-                      subHeading="Your advisor can help you make better decisions."
-                      buttonText="Ask about care services"
-                      onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
-                    />
-                  </BottomSection>
-                </CollapsibleSection>
+                {careServices && careServices.length > 0 &&
+                  <CollapsibleSection title={`Care Services at ${name}`}>
+                    <MainSection>
+                      <CommunityCareService careServices={careServices} />
+                    </MainSection>
+                    <BottomSection>
+                      <TextBottomSection
+                        heading="Want to know more about care services?"
+                        subHeading="Your advisor can help you make better decisions."
+                        buttonText="Ask about care services"
+                        onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
+                      />
+                    </BottomSection>
+                  </CollapsibleSection>
+                }
                 <CollapsibleSection
                   paddedContent
                   title={`Amenities at ${name}`}
