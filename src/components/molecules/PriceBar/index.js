@@ -39,7 +39,7 @@ const PriceBar = ({
 
   return (
     <StyledBlock size="caption" className={className}>
-      <StyledBar width={width / 2.5} palette={palette} variation={variation}>
+      <StyledBar width={width * 0.8} palette={palette} variation={variation}>
         <Label size="caption" title={title}>{children}</Label>
       </StyledBar>
       <NumberFormat value={price} displayType="text" thousandSeparator prefix="$" />

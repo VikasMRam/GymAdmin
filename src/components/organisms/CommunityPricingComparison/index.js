@@ -31,6 +31,7 @@ const CommunityPricingComparison = ({ community }) => {
   const {
     estimatedPriceLabelMap, sortedEstimatedPrice, maxPrice,
   } = calculatePricing(community, filteredEstimatedPrice);
+
   const topSectionPrices = sortedEstimatedPrice
     .filter(price => !bottomSection.includes(price[0]));
   const bottomSectionPrices = sortedEstimatedPrice

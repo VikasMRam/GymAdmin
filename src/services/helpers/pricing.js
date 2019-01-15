@@ -36,6 +36,12 @@ export const calculatePricing = (community, estimatedPrice) => {
     sortedEstimatedPrice = sortProperties(mEstimatedPrice);
     // remove items with 0 price
     sortedEstimatedPrice = sortedEstimatedPrice.filter(price => price[1] > 0);
+    // if has both providedAverage & estimatedAverage return only one, precedence providerAverage > estimatedAverage
+    const hasProvidedAverage = sortedEstimatedPrice.find(ep => ep[0] === 'providedAverage');
+    const hasEstimatedAverage = sortedEstimatedPrice.find(ep => ep[0] === 'estimatedAverage');
+    if (hasProvidedAverage && hasEstimatedAverage) {
+      sortedEstimatedPrice = sortedEstimatedPrice.filter(ep => ep[0] !== 'estimatedAverage');
+    }
     if (sortedEstimatedPrice.length) {
       // what if only providedAverage or estimatedAverage is non zero. just show nothing
       if (sortedEstimatedPrice.length === 1 &&
@@ -43,12 +49,6 @@ export const calculatePricing = (community, estimatedPrice) => {
         sortedEstimatedPrice = [];
       } else {
         [, maxPrice] = sortedEstimatedPrice[sortedEstimatedPrice.length - 1];
-      }
-      // if has both providedAverage & estimatedAverage return only one, precedence providerAverage > estimatedAverage
-      const hasProvidedAverage = sortedEstimatedPrice.find(ep => ep[0] === 'providedAverage');
-      const hasEstimatedAverage = sortedEstimatedPrice.find(ep => ep[0] === 'estimatedAverage');
-      if (hasProvidedAverage && hasEstimatedAverage) {
-        sortedEstimatedPrice = sortedEstimatedPrice.filter(ep => ep[0] !== 'estimatedAverage');
       }
     }
     estimatedPriceBase = startingRate || mEstimatedPrice.providedAverage || mEstimatedPrice.estimatedAverage;
