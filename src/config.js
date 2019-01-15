@@ -44,11 +44,13 @@ const config = {
   },
   development: {
     enableExperimentsDebugger: true,
+    gMapsApiKey: 'AIzaSyALxJg-oMW7SvkQ27KFTuWjTLedXcAhrZE',
   },
 
   staging: {
     isDev: false,
     eventServerUrl: 'http://event.myseniorly.com/events/new',
+    gMapsApiKey: 'AIzaSyALxJg-oMW7SvkQ27KFTuWjTLedXcAhrZE',
     facebookAppId: '614862451969442',
     googleAppId: '522248695659-ces03d2ptbgegiusk0c6v8j9abc7pdbf.apps.googleusercontent.com',
   },
