@@ -11,8 +11,7 @@ import { ServerStateProvider } from 'react-router-server';
 import Modal from 'react-modal';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { basename, host } from 'sly/config';
-import { getOrigin } from 'sly/services/helpers/url';
+import { basename} from 'sly/config';
 import configureStore from 'sly/store/configure';
 import api from 'sly/services/api';
 import App from 'sly/components/App';
@@ -33,15 +32,10 @@ const renderApp = () => (
 );
 
 const root = document.getElementById('app');
-const origin = getOrigin();
 
 Modal.setAppElement('#app');
 
-if (origin.indexOf(host) !== -1) {
-  render(renderApp(), root);
-} else {
-  console.warn('Javascript not loading because CORS: got', origin, 'but was expecting', host);
-}
+render(renderApp(), root);
 
 if (module.hot) {
   module.hot.accept('components/App', () => {
