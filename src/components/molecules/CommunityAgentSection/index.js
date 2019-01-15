@@ -5,7 +5,7 @@ import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
 import agentPropType from 'sly/propTypes/agent';
-import { getAgentUrl } from 'sly/services/helpers/url';
+// import { getAgentUrl } from 'sly/services/helpers/url';
 import { Icon, Block, Image, Link } from 'sly/components/atoms';
 
 const SubHeadingSection = styled.div`
@@ -75,12 +75,12 @@ const CommunityAgentSection = ({
         <Icon icon="help" palette="primary" />
       </SubHeadingSection>
       <AgentInfoSection>
-        <Link href={getAgentUrl(agent)}>
-          <AgentImageWrapper>
-            <Image src={profileImageUrl} aspectRatio="1:1" />
-          </AgentImageWrapper>
-          <AgentName weight="medium" palette="slate">{displayName}</AgentName>
-        </Link>
+        {/* <Link href={getAgentUrl(agent)}> */}
+        <AgentImageWrapper>
+          <Image src={profileImageUrl} aspectRatio="1:1" />
+        </AgentImageWrapper>
+        <AgentName weight="medium" palette="slate">{displayName}</AgentName>
+        {/* </Link> */}
         <PhoneLink href={`tel:${slyPhone}`} onClick={onPhoneClick}>
           <NumberFormat
             value={slyPhone}
