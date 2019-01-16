@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
-import { string, arrayOf, func, object } from 'prop-types';
+import { string, arrayOf, func, object, bool } from 'prop-types';
+import Helmet from 'react-helmet';
 
 import agentPropType from 'sly/propTypes/agent';
 import { size, palette } from 'sly/components/themes';
@@ -82,6 +83,7 @@ class AgentRegionPage extends Component {
     userDetails: object,
     pathName: string.isRequired,
     onLocationSearch: func.isRequired,
+    isRegionPage: bool,
   }
   constructor(props) {
     super(props);
@@ -91,12 +93,18 @@ class AgentRegionPage extends Component {
   render() {
     const {
       title, locationName, agentsList, postUserAction, userDetails, pathName, onLocationSearch,
+      isRegionPage,
     } = this.props;
     if (!agentsList) {
       return null;
     }
     return (
       <Fragment>
+        {!isRegionPage &&
+          <Helmet>
+            <meta name="robots" content="noindex" />
+          </Helmet>
+        }
         <TemplateHeader><HeaderContainer /></TemplateHeader>
         <TemplateContent>
           <PageHeadingSection>

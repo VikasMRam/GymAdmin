@@ -51,6 +51,7 @@ const AgentRegionPageContainer = ({
       postUserAction={postUserAction}
       userDetails={userAction.userDetails}
       pathName={pathName}
+      isRegionPage={!citySlug}
     />
   );
 };
