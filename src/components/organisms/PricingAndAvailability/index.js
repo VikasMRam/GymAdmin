@@ -81,27 +81,35 @@ export const sortProperties = (obj) => {
 const PricingAndAvailability = ({
   community,
   roomPrices,
-  address,
   estimatedPrice,
   onInquireOrBookClicked,
   queryParams,
   setQueryParams,
   gotoGetCustomPricing,
 }) => {
-  const mEstimatedPrice = { ...estimatedPrice };
-  if (mEstimatedPrice && mEstimatedPrice.providedAverage) {
-    mEstimatedPrice.providedAverage = community.startingRate || mEstimatedPrice.providedAverage;
+  const { startingRate, name } = community;
+  let mEstimatedPrice = { ...estimatedPrice };
+  const allowed = ['providedAverage', 'estimatedAverage', 'cityAverage', 'homeCareMAverage', 'adultDayAverage'];
+  mEstimatedPrice = Object.keys(mEstimatedPrice)
+    .filter(key => allowed.includes(key))
+    .reduce((obj, key) => {
+      const nobj = obj;
+      nobj[key] = estimatedPrice[key];
+      return nobj;
+    }, {});
+  if (mEstimatedPrice && !mEstimatedPrice.providedAverage && mEstimatedPrice.providedAverage) {
+    mEstimatedPrice.providedAverage = startingRate || mEstimatedPrice.providedAverage;
   }
-  if (mEstimatedPrice && mEstimatedPrice.estimatedAverage) {
-    mEstimatedPrice.estimatedAverage = community.startingRate || mEstimatedPrice.estimatedAverage;
+  if (mEstimatedPrice && !mEstimatedPrice.providedAverage && mEstimatedPrice.estimatedAverage) {
+    mEstimatedPrice.estimatedAverage = startingRate || mEstimatedPrice.estimatedAverage;
   }
 
   const estimatedPriceLabelMap = {
-    providedAverage: community.name,
-    estimatedAverage: community.name, // TODO: figure out correct label
-    cityAverage: address.city,
-    stateAverage: address.state,
-    nationalAverage: address.country,
+    providedAverage: name,
+    estimatedAverage: name,
+    cityAverage: 'Assisted living within 20 miles',
+    homeCareMAverage: 'In-home care',
+    adultDayAverage: 'Adult Daycare',
   };
 
   let sortedEstimatedPrice = [];
@@ -111,6 +119,14 @@ const PricingAndAvailability = ({
     sortedEstimatedPrice = sortProperties(mEstimatedPrice);
     // remove items with 0 price
     sortedEstimatedPrice = sortedEstimatedPrice.filter(price => price[1] > 0);
+
+    // if has both providedAverage & estimatedAverage return only one, precedence providerAverage > estimatedAverage
+    const hasProvidedAverage = sortedEstimatedPrice.find(ep => ep[0] === 'providedAverage');
+    const hasEstimatedAverage = sortedEstimatedPrice.find(ep => ep[0] === 'estimatedAverage');
+    if (hasProvidedAverage && hasEstimatedAverage) {
+      sortedEstimatedPrice = sortedEstimatedPrice.filter(ep => ep[0] !== 'estimatedAverage');
+    }
+
     if (sortedEstimatedPrice.length) {
       // what if only providedAverage or estimatedAverage is non zero. just show nothing
       if (sortedEstimatedPrice.length === 1 &&
