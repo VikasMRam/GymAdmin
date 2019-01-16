@@ -85,8 +85,8 @@ export const CommunityDetailPageTemplate = styled.main`
   }
 `;
 
-export const makeHeader = (bannerNotification) => {
-  function Header({ className, ...props }) {
+export const makeHeader = () => {
+  function Header({ className, bannerNotification, ...props }) {
     return (
       <TemplateHeader
         className={classes('overlayHeader', className)}
@@ -99,6 +99,7 @@ export const makeHeader = (bannerNotification) => {
   }
   Header.propTypes = {
     className: string,
+    bannerNotification: string,
   };
 
   return Header;

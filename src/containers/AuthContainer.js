@@ -22,6 +22,8 @@ steps[MODAL_TYPE_LOG_IN] = LoginFormContainer;
 steps[MODAL_TYPE_SIGN_UP] = SignupFormContainer;
 steps[MODAL_TYPE_RESET_PASSWORD] = ResetPasswordFormContainer;
 
+let instance = 0;
+
 class AuthContainer extends Component {
   static propTypes = {
     authenticated: object,
@@ -42,12 +44,26 @@ class AuthContainer extends Component {
     return null;
   }
 
+  constructor(props) {
+    super(props);
+    this.instance = instance++;
+    // alert(JSON.stringify(props));
+  }
+
   state = { currentStep: null };
 
-  gotoJoin = () => this.setState({ currentStep: MODAL_TYPE_JOIN_SLY });
-  gotoLogin = () => this.setState({ currentStep: MODAL_TYPE_LOG_IN });
-  gotoSignup = () => this.setState({ currentStep: MODAL_TYPE_SIGN_UP });
-  gotoResetPassword = () => this.setState({ currentStep: MODAL_TYPE_RESET_PASSWORD });
+  gotoJoin = () => {
+    this.setState({ currentStep: MODAL_TYPE_JOIN_SLY });
+  }
+  gotoLogin = () => {
+    this.setState({ currentStep: MODAL_TYPE_LOG_IN });
+  }
+  gotoSignup = () => {
+    this.setState({ currentStep: MODAL_TYPE_SIGN_UP });
+  }
+  gotoResetPassword = () => {
+    this.setState({ currentStep: MODAL_TYPE_RESET_PASSWORD });
+  }
 
   handleLoginSuccess = () => {
     const { authenticateSuccess, fetchUser } = this.props;
@@ -70,6 +86,7 @@ class AuthContainer extends Component {
     const StepComponent = steps[currentStep];
 
     const componentProps = {};
+    // if (typeof alert !== 'undefined') alert(JSON.stringify({ currentStep, instance: this.instance }));
     switch (currentStep) {
       case MODAL_TYPE_JOIN_SLY:
         componentProps.onLoginClicked = this.gotoLogin;

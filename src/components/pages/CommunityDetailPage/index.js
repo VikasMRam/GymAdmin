@@ -123,6 +123,7 @@ const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
+const Header = makeHeader();
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
 const Column = makeColumn('aside');
@@ -291,8 +292,6 @@ export default class CommunityDetailPage extends Component {
     } else if (isAlreadyPricingRequested) {
       bannerNotification = 'We have received your pricing request. Your partner agent is checking with this community and will get back to you shortly.';
     }
-    const Header = makeHeader(bannerNotification);
-
     const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
     const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
@@ -301,7 +300,7 @@ export default class CommunityDetailPage extends Component {
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         {getHelmetForCommunityPage(community, location)}
-        <Header />
+        <Header bannerNotification={bannerNotification} />
         <CommunityDetailPageTemplate>
           <Wrapper>
             <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} />
