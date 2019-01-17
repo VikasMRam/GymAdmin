@@ -43,7 +43,7 @@ const VideoThumbnail = ({
         Watch Video
       </Block>
     </CenterContent>
-    <StyledImage src={src} />
+    <StyledImage src={src} aspectRatio="3:2" />
   </Wrapper>
 );
 
