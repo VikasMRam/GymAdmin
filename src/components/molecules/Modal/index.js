@@ -7,6 +7,8 @@ import { ifProp, switchProp } from 'styled-tools';
 import { size, palette, key } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 
+const closeButtonOutsideLayouts = ['gallery', 'fullScreen'];
+
 injectGlobal`
   body.ReactModal__Body--open {
     overflow: hidden;
@@ -57,8 +59,6 @@ const ModalContext = styled.article`
   background-color: ${palette('white', 'base')};
   color: ${palette('slate', 'base')};
   position: absolute;
-  display: flex;
-  flex-direction: column;
   outline: none;
   top: 50%;
   left: 50%;
@@ -79,6 +79,11 @@ const ModalContext = styled.article`
     searchBox: css`
       // same as single without overflow auto
       overflow: visible;
+    `,
+    fullScreen: css`
+      width: 100%!important;
+      border-radius: 0!important;
+      max-height: 100%;
     `,
     gallery: css`
       background-color: transparent;
@@ -109,16 +114,19 @@ const ModalContext = styled.article`
   })}
 `;
 
+const fixedHeadStyles = css`
+  padding: 0;
+  position: fixed;
+  left: ${size('spacing.large')};
+  top: ${size('spacing.large')};
+  z-index: ${key('zIndexes.modal.galleryLayoutHeading')};`;
+
 const Head = styled.div`
   padding: ${size('spacing.large')};
 
 ${switchProp('layout', {
-    gallery: css`
-      padding: 0;
-      position: fixed;
-      left: ${size('spacing.large')};
-      top: ${size('spacing.large')};
-      z-index: ${key('zIndexes.modal.galleryLayoutHeading')};`,
+    fullScreen: fixedHeadStyles,
+    gallery: fixedHeadStyles,
   })}
 `;
 
@@ -147,18 +155,18 @@ const Modal = ({
       onClose={onClose}
       {...props}
     >
-      {(closeable && layout === 'gallery') && (
+      {(closeable && closeButtonOutsideLayouts.includes(layout)) && (
         <Head layout={layout}>
           {closeable && iconClose('white')}
         </Head>
       )}
       <ModalContext layout={layout}>
-        {(closeable && layout !== 'gallery') && (
+        {(closeable && !closeButtonOutsideLayouts.includes(layout)) && (
           <Head layout={layout}>
             {closeable && iconClose()}
           </Head>
         )}
-        <Body noPadding={noPadding || layout === 'gallery'}>
+        <Body noPadding={noPadding || closeButtonOutsideLayouts.includes(layout)}>
           {children}
         </Body>
       </ModalContext>
@@ -167,7 +175,7 @@ const Modal = ({
 };
 
 Modal.propTypes = {
-  layout: oneOf(['default', 'gallery', 'sidebar', 'wizard', 'searchBox']).isRequired,
+  layout: oneOf(['default', 'fullScreen', 'gallery', 'sidebar', 'wizard', 'searchBox']).isRequired,
   children: node,
   closeable: bool,
   onClose: func.isRequired,

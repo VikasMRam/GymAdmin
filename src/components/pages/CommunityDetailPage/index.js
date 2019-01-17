@@ -6,7 +6,7 @@ import { Lazy } from 'react-lazy';
 
 import { size, palette, assetPath } from 'sly/components/themes';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, FLOOR_PLAN, CONCIERGE, ADVISOR_HELP }
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, FLOOR_PLAN, CONCIERGE, ADVISOR_HELP, HOW_SLY_WORKS_VIDEO }
   from 'sly/constants/modalType';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
@@ -65,6 +65,7 @@ import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
 import IconItem from 'sly/components/molecules/IconItem';
+import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -121,6 +122,12 @@ const StyledSection = styled(Section)`
 
 const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
   margin-bottom: ${size('spacing.xLarge')};
+`;
+
+const StyledVideo = styled.video`
+  width: 100%!important;
+  height: 100%!important;
+  object-fit: fill;
 `;
 
 const Header = makeHeader();
@@ -434,6 +441,29 @@ export default class CommunityDetailPage extends Component {
                     </MainSection>
                   </CollapsibleSection>
                 }
+                <CollapsibleSection title="How Seniorly Works">
+                  <MainSection noPadding>
+                    <ModalController>
+                      {({
+                        show, modalType, hide,
+                      }) => (
+                        <Fragment>
+                          <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={() => show(HOW_SLY_WORKS_VIDEO)} />
+                          <Modal
+                            onClose={() => hide()}
+                            isOpen={modalType === HOW_SLY_WORKS_VIDEO}
+                            layout="fullScreen"
+                            closeable
+                          >
+                            <StyledVideo autoPlay>
+                              <source src="https://s3-us-west-1.amazonaws.com/seniorly/assets/videos/Seniorly_ver_1.mp4" type="video/mp4" />
+                            </StyledVideo>
+                          </Modal>
+                        </Fragment>
+                      )}
+                    </ModalController>
+                  </MainSection>
+                </CollapsibleSection>
                 {partnerAgent &&
                 <CollapsibleSection
                   title={`Your Partner Agent for ${name}`}

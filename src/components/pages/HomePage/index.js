@@ -3,18 +3,21 @@ import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
 import { size, assetPath, palette, gridColumns } from 'sly/components/themes';
-import HeaderContainer from 'sly/containers/HeaderContainer';
+import { HOW_SLY_WORKS_VIDEO } from 'sly/constants/modalType';
+import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
+import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
+import ConciergeContainer from 'sly/containers/ConciergeContainer';
+import HeaderContainer from 'sly/containers/HeaderContainer';
+import ModalController from 'sly/controllers/ModalController';
 import { Image, Centered, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
-import Footer from 'sly/components/organisms/Footer';
+import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 import Modal from 'sly/components/molecules/Modal';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
-import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
+import Footer from 'sly/components/organisms/Footer';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -143,6 +146,21 @@ const CWTColumnWrapper = styled.div`
 // this is required for IE as it won't consider inline elements as flex children
 const StyledLink = styled(Link)`
   display: block;
+`;
+
+const StyledVideo = styled.video`
+  width: 100%!important;
+  height: 100%!important;
+  object-fit: fill;
+`;
+
+const VideoThumbnailWrapper = styled.div`
+  margin: auto;
+  width: 100%;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.col8')};
+  }
 `;
 
 const CenteredTile = styled(({
@@ -362,13 +380,13 @@ const HomePage = ({
   ));
 
   const usefulInformationTilesComponents = usefulInformationTiles.map(usefulInformation => (
-    <CenteredTile {...usefulInformation}>
+    <CenteredTile key={usefulInformation.title} {...usefulInformation}>
       <Heading palette="white">{usefulInformation.title}</Heading>
     </CenteredTile>
   ));
 
   const mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
-    <CenteredTile size="small" {...mostSearchedCity}>
+    <CenteredTile key={mostSearchedCity.title} size="small" {...mostSearchedCity}>
       <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
       <Block palette="white">{mostSearchedCity.title}</Block>
     </CenteredTile>
@@ -387,7 +405,32 @@ const HomePage = ({
     <Fragment>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
-        <Modal layout="searchBox" closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}><Heading size="subtitle">Please enter a location:</Heading><SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} /></Modal>
+        <Modal layout="searchBox" closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}>
+          <Heading size="subtitle">Please enter a location:</Heading>
+          <SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} />
+        </Modal>
+        <StyledSection title="How Can Seniorly Help You Find A Home" subtitle="subtitle here">
+          <ModalController>
+            {({
+              show, modalType, hide,
+            }) => (
+              <VideoThumbnailWrapper>
+                <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={() => show(HOW_SLY_WORKS_VIDEO)} />
+                <Modal
+                  onClose={() => hide()}
+                  isOpen={modalType === HOW_SLY_WORKS_VIDEO}
+                  layout="fullScreen"
+                  closeable
+                >
+                  <StyledVideo autoPlay>
+                    <source src="https://s3-us-west-1.amazonaws.com/seniorly/assets/videos/Seniorly_ver_1.mp4" type="video/mp4" />
+                  </StyledVideo>
+                </Modal>
+              </VideoThumbnailWrapper>
+            )}
+          </ModalController>
+        </StyledSection>
+        <Hr />
         <StyledSection title="Discover Homes Near You">
           <TwoColumnWrapper>
             {firstRowDiscoverHomesComponents}
