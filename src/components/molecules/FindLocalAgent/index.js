@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { func } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
-import { Block } from 'sly/components/atoms';
+import { Block, Heading } from 'sly/components/atoms';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
-const TitleBlock = styled(Block)`
+const TitleHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
+  font-weight: ${size('weight.regular')};
 `;
 
 const StyledBlock = styled(Block)`
@@ -34,7 +35,7 @@ const StyledSearchBoxContainer = styled(SearchBoxContainer)`
 const FindLocalAgent = ({ onLocationSearch }) => (
   <Wrapper>
     <ContentWrapper>
-      <TitleBlock size="hero">Find your local senior living agent</TitleBlock>
+      <TitleHeading level="hero" size="hero">Find your local senior living agent</TitleHeading>
       <StyledBlock>Seniorly agents are local experts who can find homes that fit your care needs and budget</StyledBlock>
     </ContentWrapper>
     <StyledSearchBoxContainer layout="homeHero" onLocationSearch={onLocationSearch} />

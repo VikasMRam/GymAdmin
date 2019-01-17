@@ -10,7 +10,7 @@ import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePa
 import AgentTile from 'sly/components/molecules/AgentTile';
 import Section from 'sly/components/molecules/Section';
 import Footer from 'sly/components/organisms/Footer';
-import { Block, Link, Hr } from 'sly/components/atoms';
+import { Heading, Block, Link, Hr } from 'sly/components/atoms';
 import TalkToAgentFormContainer from 'sly/containers/TalkToAgentFormContainer';
 import FindLocalAgent from 'sly/components/molecules/FindLocalAgent';
 import MostSearchedRegions from 'sly/components/molecules/MostSearchedRegions';
@@ -74,6 +74,10 @@ const NoResultBlock = styled(Block)`
   text-align: center;
 `;
 
+const TitleHeading = styled(Heading)`
+  font-weight: ${size('weight.regular')};
+`;
+
 class AgentRegionPage extends Component {
   static propTypes = {
     title: string.isRequired,
@@ -108,7 +112,7 @@ class AgentRegionPage extends Component {
         <TemplateHeader><HeaderContainer /></TemplateHeader>
         <TemplateContent>
           <PageHeadingSection>
-            <Block size="hero" innerRef={this.titleRef}>{title}</Block>
+            <TitleHeading level="hero" size="hero" innerRef={this.titleRef}>{title}</TitleHeading>
             <FindLocalAgentLink
               palette="slate"
               onClick={() => {
