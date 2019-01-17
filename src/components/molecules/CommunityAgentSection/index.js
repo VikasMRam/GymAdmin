@@ -5,7 +5,7 @@ import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
 import agentPropType from 'sly/propTypes/agent';
-// import { getAgentUrl } from 'sly/services/helpers/url';
+import { getAgentUrl } from 'sly/services/helpers/url';
 import { Icon, Block, Image, Link } from 'sly/components/atoms';
 
 const SubHeadingSection = styled.div`
@@ -68,6 +68,22 @@ const CommunityAgentSection = ({
     displayName, profileImageUrl, slyPhone, email, chosenReview,
   } = agent.info;
   const reviewedBy = 'Resident\'s family member';
+  const { id, address } = agent;
+  let agentImageComponent = (
+    <Fragment>
+      <AgentImageWrapper>
+        <Image src={profileImageUrl} aspectRatio="1:1" />
+      </AgentImageWrapper>
+      <AgentName weight="medium" palette="slate">{displayName}</AgentName>
+    </Fragment>
+  );
+  if (id && address) {
+    agentImageComponent = (
+      <Link href={getAgentUrl({ id, address })}>
+        {agentImageComponent}
+      </Link>
+    );
+  }
   return (
     <Fragment>
       <SubHeadingSection onClick={onAdvisorHelpClick}>
@@ -75,12 +91,7 @@ const CommunityAgentSection = ({
         <Icon icon="help" palette="primary" />
       </SubHeadingSection>
       <AgentInfoSection>
-        {/* <Link href={getAgentUrl(agent)}> */}
-        <AgentImageWrapper>
-          <Image src={profileImageUrl} aspectRatio="1:1" />
-        </AgentImageWrapper>
-        <AgentName weight="medium" palette="slate">{displayName}</AgentName>
-        {/* </Link> */}
+        {agentImageComponent}
         <PhoneLink href={`tel:${slyPhone}`} onClick={onPhoneClick}>
           <NumberFormat
             value={slyPhone}
