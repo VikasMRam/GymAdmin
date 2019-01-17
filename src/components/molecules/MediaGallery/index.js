@@ -26,6 +26,12 @@ const CarouselWrapper = styled.div`
         height: ${size('carousel.tablet')};
       }
     `};
+
+  ${props =>
+    props.showThumbnails &&
+    css`
+      margin-bottom: ${size('spacing.large')};
+    `};
 `;
 const StyledImg = styled(Image)`
   width: 100%;

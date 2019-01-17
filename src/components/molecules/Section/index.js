@@ -2,9 +2,9 @@ import React from 'react';
 import { string, node, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import { Heading } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
 import { spacing as spacingPropType } from 'sly/propTypes/spacing';
+import { Heading, Block } from 'sly/components/atoms';
 
 const margin = ({ headingMargin }) => size('spacing', headingMargin);
 
@@ -17,7 +17,7 @@ const CenteredHeading = styled(Heading)`
 `;
 
 const Section = ({
-  title, children, centerTitle, titleSize, headingMargin, ...props
+  title, subtitle, children, centerTitle, titleSize, headingMargin, ...props
 }) => (
   <section {...props}>
     <HeadingWrapper headingMargin={headingMargin}>
@@ -26,6 +26,11 @@ const Section = ({
           <CenteredHeading size={titleSize} >{title}</CenteredHeading> :
           <Heading size={titleSize}>{title}</Heading>
       )}
+      {subtitle &&
+        <Block>
+          {subtitle}
+        </Block>
+      }
     </HeadingWrapper>
     <article>{children}</article>
   </section>
@@ -33,6 +38,7 @@ const Section = ({
 
 Section.propTypes = {
   title: string,
+  subtitle: string,
   centerTitle: bool,
   children: node,
   titleSize: string,
