@@ -41,11 +41,6 @@ const Content = styled.div`
   @keyframes delay-overflow {
     from { overflow: hidden; }
   }
-
-  // required to remove unnecessary line-height added by theme
-  > * {
-    line-height: 0;
-  }
 `;
 
 const getHeadingLevel = (size) => {
