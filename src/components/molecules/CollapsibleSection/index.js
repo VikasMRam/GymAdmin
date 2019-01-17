@@ -8,14 +8,6 @@ import { size, key, palette } from 'sly/components/themes';
 import { Icon, ClampedText, Block } from 'sly/components/atoms';
 import { weight as weightPropType } from 'sly/propTypes/weight';
 
-// const marginBottom = (p) => {
-//   if (p.collapsed) {
-//     return 0;
-//   }
-//   return p.paddedContent ?
-//     size('spacing.large') : size('spacing.xLarge');
-// };
-
 const Section = styled.section`
   transition: padding-bottom ${key('transitions.default')};
   max-width: 100%;
@@ -49,6 +41,11 @@ const Content = styled.div`
   @keyframes delay-overflow {
     from { overflow: hidden; }
   }
+
+  // required to remove unnecessary line-height added by theme
+  > * {
+    line-height: 0;
+  }
 `;
 
 const getHeadingLevel = (size) => {
@@ -74,6 +71,9 @@ export const MainSection = styled.div`
   ${ifProp('collapsed', css`
     padding-bottom: 0;
   `)};
+  ${ifProp('noPadding', css`
+    padding: 0;
+  `)};
 `;
 
 export const BottomSection = styled.div`
@@ -89,7 +89,6 @@ export default class CollapsibleSection extends Component {
     collapsedDefault: bool.isRequired,
     size: oneOf(['small', 'regular', 'large']),
     innerRef: object,
-    paddedContent: bool,
     className: string,
     clampTitle: bool,
     headingWeight: weightPropType,
@@ -99,7 +98,6 @@ export default class CollapsibleSection extends Component {
   static defaultProps = {
     collapsedDefault: false,
     size: 'regular',
-    paddedContent: false,
     headingWeight: 'medium',
     borderless: false,
   };
@@ -126,7 +124,6 @@ export default class CollapsibleSection extends Component {
       collapsedDefault,
       size,
       innerRef,
-      paddedContent,
       className,
       clampTitle,
       headingWeight,
@@ -138,7 +135,6 @@ export default class CollapsibleSection extends Component {
       <Measure onResize={this.onResize}>
         {({ measureRef }) => (
           <Section
-            paddedContent={paddedContent}
             collapsed={collapsed}
             borderless={borderless}
             size={size}
