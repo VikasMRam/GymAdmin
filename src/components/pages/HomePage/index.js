@@ -11,6 +11,7 @@ import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ModalController from 'sly/controllers/ModalController';
 import { Image, Centered, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
+import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 import Modal from 'sly/components/molecules/Modal';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
@@ -147,14 +148,19 @@ const StyledLink = styled(Link)`
   display: block;
 `;
 
-const VideoThumbnail = styled(Image)`
-  cursor: pointer;
-`;
-
 const StyledVideo = styled.video`
   width: 100%!important;
   height: 100%!important;
   object-fit: fill;
+`;
+
+const VideoThumbnailWrapper = styled.div`
+  margin: auto;
+  width: 100%;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${size('layout.col8')};
+  }
 `;
 
 const CenteredTile = styled(({
@@ -399,13 +405,16 @@ const HomePage = ({
     <Fragment>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
-        <Modal layout="searchBox" closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}><Heading size="subtitle">Please enter a location:</Heading><SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} /></Modal>
+        <Modal layout="searchBox" closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}>
+          <Heading size="subtitle">Please enter a location:</Heading>
+          <SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} />
+        </Modal>
         <StyledSection title="How Can Seniorly Help You Find A Home" subtitle="subtitle here">
           <ModalController>
             {({
               show, modalType, hide,
             }) => (
-              <Fragment>
+              <VideoThumbnailWrapper>
                 <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={() => show(HOW_SLY_WORKS_VIDEO)} />
                 <Modal
                   onClose={() => hide()}
@@ -417,7 +426,7 @@ const HomePage = ({
                     <source src="https://s3-us-west-1.amazonaws.com/seniorly/assets/videos/Seniorly_ver_1.mp4" type="video/mp4" />
                   </StyledVideo>
                 </Modal>
-              </Fragment>
+              </VideoThumbnailWrapper>
             )}
           </ModalController>
         </StyledSection>
