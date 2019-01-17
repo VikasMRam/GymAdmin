@@ -79,7 +79,7 @@ const CommunityAgentSection = ({
   );
   if (id && address) {
     agentImageComponent = (
-      <Link href={getAgentUrl({ id, address })}>
+      <Link href={getAgentUrl(agent)}>
         {agentImageComponent}
       </Link>
     );
