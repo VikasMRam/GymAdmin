@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
+import { ifProp } from 'styled-tools';
 
 import Block from 'sly/components/atoms/Block/index';
 import { size } from 'sly/components/themes/index';
@@ -10,15 +11,12 @@ const Wrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 `;
 
-const TextSection = styled.div`
-
-`;
-
 const HeadingBlock = styled(Block)`
-  margin-bottom: ${size('spacing.regular')};
+  margin-bottom: ${ifProp('hasSubHeading', size('spacing.regular'), 0)};
 `;
 
 const SubheadingBlock = styled(Block)`
@@ -32,10 +30,10 @@ const TextBottomSection = ({
   heading, subHeading, buttonText, onButtonClick,
 }) => (
   <Wrapper>
-    <TextSection>
-      <HeadingBlock weight="medium">{heading}</HeadingBlock>
+    <div>
+      <HeadingBlock weight="medium" hasSubHeading={!!subHeading}>{heading}</HeadingBlock>
       {subHeading && <SubheadingBlock size="caption">{subHeading}</SubheadingBlock>}
-    </TextSection>
+    </div>
     <Button ghost onClick={onButtonClick}>{buttonText}</Button>
   </Wrapper>
 );

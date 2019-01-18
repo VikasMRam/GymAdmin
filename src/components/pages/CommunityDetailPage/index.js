@@ -66,6 +66,7 @@ import CommunityCareService from 'sly/components/organisms/CommunityCareService'
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
 import IconItem from 'sly/components/molecules/IconItem';
 import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
+import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -507,10 +508,7 @@ export default class CommunityDetailPage extends Component {
                     </BottomSection>
                   </CollapsibleSection>
                 }
-                <CollapsibleSection
-                  paddedContent
-                  title={`Amenities at ${name}`}
-                >
+                <CollapsibleSection title={`Amenities at ${name}`}>
                   <MainSection>
                     <CommunityAmenities community={community} />
                   </MainSection>
@@ -524,7 +522,7 @@ export default class CommunityDetailPage extends Component {
                   </BottomSection>
                 </CollapsibleSection>
                 {sortedEstimatedPrice.length > 0 &&
-                <CollapsibleSection paddedContent title="Compare to other communities in the area">
+                <CollapsibleSection title="Compare to other communities in the area">
                   <MainSection>
                     <CommunityPricingComparison community={community} />
                   </MainSection>
@@ -551,7 +549,7 @@ export default class CommunityDetailPage extends Component {
                     />
                   </BottomSection>
                 </CollapsibleSection>
-                <CollapsibleSection title="Questions">
+                <CollapsibleSection title={`Questions about ${name}`}>
                   <MainSection>
                     <CommunityQuestionAnswers
                       communityName={name}
@@ -564,7 +562,40 @@ export default class CommunityDetailPage extends Component {
                       user={user}
                     />
                   </MainSection>
+                  <BottomSection>
+                    <ModalController>
+                      {({ show }) => (
+                        <TextBottomSection
+                          heading="Don't see your question? Be the first to ask this community!"
+                          buttonText="Ask a Question"
+                          onButtonClick={() => show(ASK_QUESTION)}
+                        />
+                      )}
+                    </ModalController>
+                  </BottomSection>
                 </CollapsibleSection>
+                <ModalController>
+                  {({ modalType, show, hide }) => (
+                    <Modal
+                      closeable
+                      isOpen={modalType === ASK_QUESTION}
+                      onClose={() => hide()}
+                    >
+                      <CommunityAskQuestionFormContainer communityName={name} communitySlug={id} setModal={show} user={user} />
+                    </Modal>
+                  )}
+                </ModalController>
+                <ModalController>
+                  {({ modalType, hide }) => (
+                    <Modal
+                      closeable
+                      isOpen={modalType === THANK_YOU}
+                      onClose={() => hide()}
+                    >
+                      <Thankyou />
+                    </Modal>
+                  )}
+                </ModalController>
                 {rgsAux.stateLicensingWebsite &&
                   <StyledCommunityExtraInfoSection
                     title={`${name} at ${address.city} State Licensing`}

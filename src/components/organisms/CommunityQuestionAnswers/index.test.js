@@ -91,23 +91,10 @@ describe('CommuntityQuestionAndAnswer', () => {
     expect(wrapper.find(CommunityLeaveAnAnswerFormContainer)).toHaveLength(0);
   });
 
-  it('verify open Ask a Question Modal', () => {
-    const wrapper = wrap({ isQuestionModalOpenValue: true });
-    expect(wrapper.find(CommunityAskQuestionFormContainer)).toHaveLength(1);
-    expect(wrapper.find(CommunityLeaveAnAnswerFormContainer)).toHaveLength(0);
-  });
-
   it('verify open Leave an Answer Modal', () => {
     const wrapper = wrap({ answerQuestionValue: { foo: 'bar' } });
     expect(wrapper.find(CommunityAskQuestionFormContainer)).toHaveLength(0);
     expect(wrapper.find(CommunityLeaveAnAnswerFormContainer)).toHaveLength(1);
-  });
-
-  it('verify click on Ask a Question Button', () => {
-    const wrapper = wrap({ setModal });
-    const askQuestionButton = wrapper.find(AskQuestionButton);
-    askQuestionButton.simulate('click');
-    expect(setModal.getCalls()).toHaveLength(1);
   });
 
   it('verify render Question', () => {
