@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { string, arrayOf, shape, func, object, bool } from 'prop-types';
 
-import { question as questionPropType } from 'sly/propTypes/question';
+import { content as contentPropType } from 'sly/propTypes/content';
 import { size } from 'sly/components/themes';
 import cursor from 'sly/components/helpers/cursor';
 import { Hr, Block } from 'sly/components/atoms';
@@ -79,7 +79,7 @@ const CommuntityQuestionAndAnswer = ({
 CommuntityQuestionAndAnswer.propTypes = {
   communityName: string.isRequired,
   communitySlug: string.isRequired,
-  questions: arrayOf(questionPropType).isRequired,
+  questions: arrayOf(contentPropType).isRequired,
   answerQuestion: func,
   answerQuestionValue: object,
 };

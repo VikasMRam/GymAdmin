@@ -1,7 +1,7 @@
 import React from 'react';
 import { string } from 'prop-types';
 
-import { question as questionPropType } from 'sly/propTypes/question';
+import { content as contentPropType } from 'sly/propTypes/content';
 import { Block } from 'sly/components/atoms';
 
 const CommunityQuestion = ({ question, className }) => {
@@ -15,7 +15,7 @@ const CommunityQuestion = ({ question, className }) => {
 };
 
 CommunityQuestion.propTypes = {
-  question: questionPropType.isRequired,
+  question: contentPropType.isRequired,
   className: string,
 };
 

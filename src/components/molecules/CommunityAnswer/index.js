@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { answer as answerPropType } from 'sly/propTypes/answer';
+import { content as contentPropType } from 'sly/propTypes/content';
 import { Block } from 'sly/components/atoms';
 
 const CommunityAnswer = ({ answer }) => {
@@ -13,7 +13,7 @@ const CommunityAnswer = ({ answer }) => {
 };
 
 CommunityAnswer.propTypes = {
-  answer: answerPropType.isRequired,
+  answer: contentPropType.isRequired,
 };
 
 export default CommunityAnswer;

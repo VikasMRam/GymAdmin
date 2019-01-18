@@ -3,7 +3,7 @@ import {
   shape,
 } from 'prop-types';
 
-export const question = shape({
+export const content = shape({
   creator: string.isRequired,
   createdAt: string.isRequired,
   contentData: string.isRequired,
