@@ -3,15 +3,11 @@ import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { string, func } from 'prop-types';
 
-// import { getDetail } from 'sly/store/selectors';
-
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
-
 import {
   createValidator,
   required,
 } from 'sly/services/validation';
-
 import CommunityLeaveAnAnswerForm from 'sly/components/organisms/CommunityLeaveAnAnswerForm';
 import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 
@@ -30,20 +26,20 @@ class CommunityLeaveAnAnswerFormContainer extends Component {
     communitySlug: string.isRequired,
     leaveAnAnswer: func,
     loadCommunity: func,
-    answerQuestion: func,
+    onSuccess: func,
     questionId: string,
   };
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, leaveAnAnswer, loadCommunity, answerQuestion, questionId,
+      communitySlug, leaveAnAnswer, loadCommunity, questionId, onSuccess,
     } = this.props;
     const payload = {
       questionId,
       answer: values.answer,
     };
     return leaveAnAnswer(payload).then(() => {
-      answerQuestion(null);
+      onSuccess();
       loadCommunity(communitySlug);
     }).catch((r) => {
       // TODO: Need to set a proper way to handle server side errors
@@ -92,4 +88,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(null, mapDispatchToProps)(CommunityLeaveAnAnswerFormContainer);
-

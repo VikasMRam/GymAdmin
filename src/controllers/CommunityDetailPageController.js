@@ -16,7 +16,6 @@ import { resourceDetailReadRequest, resourceListReadRequest }
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
-import { ANSWER_QUESTION } from 'sly/constants/modalType';
 
 class CommunityDetailPageController extends Component {
   static propTypes = {
@@ -75,14 +74,6 @@ class CommunityDetailPageController extends Component {
       this.changeSearchParams({ changedParams: { modal: value } });
     } else {
       this.handleParamsRemove({ paramsToRemove: ['modal'] });
-    }
-  };
-
-  setQuestionToAsk = (question) => {
-    if (question) {
-      this.changeSearchParams({ changedParams: { modal: ANSWER_QUESTION, entityId: question.id } });
-    } else {
-      this.changeSearchParams({ changedParams: { modal: null, entityId: null } });
     }
   };
 
@@ -390,7 +381,6 @@ class CommunityDetailPageController extends Component {
         onLiveChatClicked={this.handleLiveChatClick}
         onReceptionNumberClicked={this.handleReceptionNumberClick}
         setModal={this.setModal}
-        setQuestionToAsk={this.setQuestionToAsk}
         userSave={userSaveOfCommunity}
         searchParams={searchParams}
         setQueryParams={setQueryParams}

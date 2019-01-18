@@ -8,8 +8,6 @@ import cursor from 'sly/components/helpers/cursor';
 import { Hr, Block } from 'sly/components/atoms';
 import CommunityQuestion from 'sly/components/molecules/CommunityQuestion';
 import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
-import Modal from 'sly/components/molecules/Modal';
-import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 
 const AnswersDiv = styled.div`
   margin-left: ${size('spacing.huge')};
@@ -30,7 +28,7 @@ CursorBlock.displayName = 'CursorBlock';
 const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
 
 const CommuntityQuestionAndAnswer = ({
-  communitySlug, communityName, questions, answerQuestion, answerQuestionValue,
+  communityName, questions, onLeaveAnswerClick,
 }) => {
   const questionsComponent = questions.sort(sortByCreatedAt).map((question, i) => {
     const { contents = [] } = question;
@@ -53,7 +51,7 @@ const CommuntityQuestionAndAnswer = ({
         <AnswersDiv>
           {answersComponents}
         </AnswersDiv>
-        <CursorBlock palette="primary" weight="medium" onClick={() => answerQuestion(question)}>Leave an Answer</CursorBlock>
+        <CursorBlock palette="primary" weight="medium" onClick={() => onLeaveAnswerClick(question.id)}>Leave an Answer</CursorBlock>
         {i < questions.length - 1 && <StyledHr />}
       </div>
     );
@@ -63,25 +61,14 @@ const CommuntityQuestionAndAnswer = ({
     <div>
       {questionsComponent}
       {questionsComponent.length === 0 && <div>What would you like to know about senior living options at {communityName}? Send a message on the right.</div>}
-      {answerQuestionValue !== null && answerQuestionValue !== undefined &&
-        <Modal
-          onClose={() => answerQuestion(null)}
-          isOpen
-          closeable
-        >
-          <CommunityLeaveAnAnswerFormContainer questionText={answerQuestionValue.contentData} questionId={answerQuestionValue.id} communitySlug={communitySlug} answerQuestion={answerQuestion} />
-        </Modal>
-      }
     </div>
   );
 };
 
 CommuntityQuestionAndAnswer.propTypes = {
   communityName: string.isRequired,
-  communitySlug: string.isRequired,
   questions: arrayOf(contentPropType).isRequired,
-  answerQuestion: func,
-  answerQuestionValue: object,
+  onLeaveAnswerClick: func.isRequired,
 };
 
 export default CommuntityQuestionAndAnswer;

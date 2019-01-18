@@ -5,9 +5,11 @@ import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestion
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const { questions } = RhodaGoldmanPlaza;
+const communityName = 'Rhoda Goldman Plaza';
 
 storiesOf('Organisms|CommunityQuestionAnswers', module).add('default', () => (
   <CommunityQuestionAnswers
     questions={questions}
+    communityName={communityName}
   />
 ));

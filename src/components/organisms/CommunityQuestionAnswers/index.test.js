@@ -2,16 +2,14 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import CommuntityQuestionAndAnswer from 'sly/components/organisms/CommunityQuestionAnswers/index';
-import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
-import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
 
 const communityName = 'Rhoda Goldman Plaza';
-const communitySlug = 'rhoda-goldman-plaza';
 const questions = [];
+const onLeaveAnswerClick = jest.fn();
 
 const defaultProps = {
-  communityName, communitySlug, questions,
+  communityName, questions, onLeaveAnswerClick,
 };
 
 const question1 = {
@@ -81,18 +79,6 @@ describe('CommuntityQuestionAnswers', () => {
     expect(wrapper.text()).toContain(communityName);
   });
 
-  it('verify no Modals are open by default', () => {
-    const wrapper = wrap();
-    expect(wrapper.find(CommunityAskQuestionFormContainer)).toHaveLength(0);
-    expect(wrapper.find(CommunityLeaveAnAnswerFormContainer)).toHaveLength(0);
-  });
-
-  it('verify open Leave an Answer Modal', () => {
-    const wrapper = wrap({ answerQuestionValue: { foo: 'bar' } });
-    expect(wrapper.find(CommunityAskQuestionFormContainer)).toHaveLength(0);
-    expect(wrapper.find(CommunityLeaveAnAnswerFormContainer)).toHaveLength(1);
-  });
-
   it('verify render Question', () => {
     const wrapper = wrap({ questions: [question1] });
     const communityQuestion = wrapper.find('StyledCommunityQuestion');
@@ -120,10 +106,10 @@ describe('CommuntityQuestionAnswers', () => {
   });
 
   it('verify click on Leave Answer Button', () => {
-    const onLeaveAnswerButtonClick = jest.fn();
-    const wrapper = wrap({ questions: [question1], answerQuestion: onLeaveAnswerButtonClick });
+    const onLeaveAnswerClick = jest.fn();
+    const wrapper = wrap({ questions: [question1], onLeaveAnswerClick });
     const leaveAnswer = wrapper.find('CursorBlock');
     leaveAnswer.simulate('click');
-    expect(onLeaveAnswerButtonClick).toHaveBeenCalled();
+    expect(onLeaveAnswerClick).toHaveBeenCalled();
   });
 });
