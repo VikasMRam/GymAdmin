@@ -4,16 +4,21 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
+import fullWidth from 'sly/components/helpers/fullWidth';
 import ReduxField from 'sly/components/organisms/ReduxField/index';
 import { Heading, Button } from 'sly/components/atoms';
 
 const QuestionTextDiv = styled.div`
-  margin-top: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.large')};
 `;
-QuestionTextDiv.displayName = 'QuestionTextDiv';
 
-const StyledButton = styled(Button)`
+const StyledButton = fullWidth(styled(Button)`
   margin-bottom: ${size('spacing.regular')};
+`);
+StyledButton.displayName = 'StyledButton';
+
+const StyledHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const CommunityLeaveAnAnswerForm = ({
@@ -21,7 +26,7 @@ const CommunityLeaveAnAnswerForm = ({
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <Heading level="title" size="title">Provide an Answer</Heading>
+      <StyledHeading level="subtitle" size="subtitle">Provide an Answer</StyledHeading>
       <QuestionTextDiv>{questionText}</QuestionTextDiv>
       <Field
         name="answer"

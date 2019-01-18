@@ -67,6 +67,7 @@ import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraIn
 import IconItem from 'sly/components/molecules/IconItem';
 import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
+import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -158,7 +159,6 @@ export default class CommunityDetailPage extends Component {
     onLiveChatClicked: func,
     onReceptionNumberClicked: func,
     setModal: func,
-    setQuestionToAsk: func,
     userSave: object,
     searchParams: object,
     setQueryParams: func,
@@ -209,7 +209,6 @@ export default class CommunityDetailPage extends Component {
       user,
       onReviewLinkClicked,
       setModal,
-      setQuestionToAsk,
       userSave,
       searchParams,
       setQueryParams,
@@ -272,15 +271,7 @@ export default class CommunityDetailPage extends Component {
     } = propInfo;
 
     const typeOfCare = typeCare[0];
-    const { modal, entityId, currentStep } = searchParams;
-    let questionToAnswer = null;
-    if (modal === ANSWER_QUESTION && entityId) {
-      questionToAnswer = questions.find(question => question.id === entityId);
-    }
-    // To clear the flag incase the question is not found
-    if (questionToAnswer === undefined && entityId) {
-      setQuestionToAsk(null);
-    }
+    const { modal, currentStep } = searchParams;
 
     // TODO: move this to a container for EntityReviews handling posts
     const onLeaveReview = () => {};
@@ -466,25 +457,23 @@ export default class CommunityDetailPage extends Component {
                   </MainSection>
                 </CollapsibleSection>
                 {partnerAgent &&
-                <CollapsibleSection
-                  title={`Your Partner Agent for ${name}`}
-                >
-                  <MainSection>
-                    <ModalController>
-                      {({ show }) => (
-                        <CommunityAgentSection agent={partnerAgent} onAdvisorHelpClick={() => show(ADVISOR_HELP)} />
-                      )}
-                    </ModalController>
-                  </MainSection>
-                  <BottomSection>
-                    <TextBottomSection
-                      heading="Have a question for your partner agent?"
-                      subHeading="Your partner agent can help you make the best decisions."
-                      buttonText="Send a message"
-                      onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
-                    />
-                  </BottomSection>
-                </CollapsibleSection>
+                  <CollapsibleSection title={`Your Partner Agent for ${name}`}>
+                    <MainSection>
+                      <ModalController>
+                        {({ show }) => (
+                          <CommunityAgentSection agent={partnerAgent} onAdvisorHelpClick={() => show(ADVISOR_HELP)} />
+                        )}
+                      </ModalController>
+                    </MainSection>
+                    <BottomSection>
+                      <TextBottomSection
+                        heading="Have a question for your partner agent?"
+                        subHeading="Your partner agent can help you make the best decisions."
+                        buttonText="Send a message"
+                        onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
+                      />
+                    </BottomSection>
+                  </CollapsibleSection>
                 }
                 <ModalController>
                   {({ modalType, hide }) => (
@@ -522,11 +511,11 @@ export default class CommunityDetailPage extends Component {
                   </BottomSection>
                 </CollapsibleSection>
                 {sortedEstimatedPrice.length > 0 &&
-                <CollapsibleSection title="Compare to other communities in the area">
-                  <MainSection>
-                    <CommunityPricingComparison community={community} />
-                  </MainSection>
-                </CollapsibleSection>
+                  <CollapsibleSection title="Compare to other communities in the area">
+                    <MainSection>
+                      <CommunityPricingComparison community={community} />
+                    </MainSection>
+                  </CollapsibleSection>
                 }
                 <CollapsibleSection
                   title={`Reviews at ${name}`}
@@ -551,16 +540,17 @@ export default class CommunityDetailPage extends Component {
                 </CollapsibleSection>
                 <CollapsibleSection title={`Questions about ${name}`}>
                   <MainSection>
-                    <CommunityQuestionAnswers
-                      communityName={name}
-                      communitySlug={id}
-                      questions={questions}
-                      setModal={setModal}
-                      isQuestionModalOpenValue={modal === ASK_QUESTION}
-                      answerQuestion={setQuestionToAsk}
-                      answerQuestionValue={questionToAnswer}
-                      user={user}
-                    />
+                    <ModalController>
+                      {({ show }) => (
+                        <CommunityQuestionAnswers
+                          communityName={name}
+                          communitySlug={id}
+                          questions={questions}
+                          onLeaveAnswerClick={questionId => show(ANSWER_QUESTION, questionId)}
+                          user={user}
+                        />
+                      )}
+                    </ModalController>
                   </MainSection>
                   <BottomSection>
                     <ModalController>
@@ -584,6 +574,28 @@ export default class CommunityDetailPage extends Component {
                       <CommunityAskQuestionFormContainer communityName={name} communitySlug={id} setModal={show} user={user} />
                     </Modal>
                   )}
+                </ModalController>
+                <ModalController>
+                  {({ modalType, modalEntity, hide }) => {
+                    const questionToAnswer = questions.find(question => question.id === modalEntity);
+
+                    return (
+                      <Modal
+                        closeable
+                        isOpen={modalType === ANSWER_QUESTION}
+                        onClose={() => hide()}
+                      >
+                        {questionToAnswer &&
+                          <CommunityLeaveAnAnswerFormContainer
+                            onSuccess={() => hide()}
+                            communitySlug={id}
+                            questionText={questionToAnswer.contentData}
+                            questionId={questionToAnswer.id}
+                          />
+                        }
+                      </Modal>
+                    );
+                  }}
                 </ModalController>
                 <ModalController>
                   {({ modalType, hide }) => (
@@ -747,8 +759,7 @@ export default class CommunityDetailPage extends Component {
                       } else if (askAgentQuestionType === 'offer') {
                         heading = `Ask your partner agent about the holiday incentive at ${name}`;
                         question = `Hi, I am interested in knowing more about the holiday promotion at ${name}. I am looking for...`;
-                      }
-                      else if (askAgentQuestionType === 'services') {
+                      } else if (askAgentQuestionType === 'services') {
                         heading = `Ask your partner agent about services provided at ${name}`;
                         question = `Hi, I need .... and am interested in knowing whether ${name} has ...`;
                       }
