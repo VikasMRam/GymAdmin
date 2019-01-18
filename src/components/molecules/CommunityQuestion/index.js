@@ -1,52 +1,22 @@
 import React from 'react';
-import styled from 'styled-components';
-import { string, shape } from 'prop-types';
+import { string } from 'prop-types';
 
+import { question as questionPropType } from 'sly/propTypes/question';
+import { Block } from 'sly/components/atoms';
 
-import { size, palette } from 'sly/components/themes';
-import { formatDate } from 'sly/services/helpers/date';
+const CommunityQuestion = ({ question, className }) => {
+  const { contentData } = question;
 
-const Wrapper = styled.div`
-  
-`;
-
-const QuestionTextDiv = styled.div`
-  margin-bottom: ${size('spacing.regular')};
-  font-size: ${size('text.subtitle')};
-  font-weight: bold;
-`;
-
-const CreatorDateDiv = styled.div`
-  display: flex;
-  color: ${palette('slate', 'stroke')};
-  margin-bottom: ${size('spacing.regular')};
-`;
-
-const CreatorDiv = styled.div`
-  padding-right: ${size('spacing.large')};
-`;
-
-const ContentDiv = styled.div`
-
-`;
-
-const CommunityQuestion = ({ question }) => {
-  const { creator, createdAt, contentData } = question;
   return (
-    <Wrapper>
-      <QuestionTextDiv>Question</QuestionTextDiv>
-      <CreatorDateDiv><CreatorDiv>{creator}</CreatorDiv><div>{formatDate(createdAt)}</div></CreatorDateDiv>
-      <ContentDiv>{contentData}</ContentDiv>
-    </Wrapper>
+    <article className={className}>
+      <Block size="subtitle" weight="regular">{contentData}{contentData.slice(-1) !== '?' && '?'}</Block>
+    </article>
   );
 };
 
 CommunityQuestion.propTypes = {
-  question: shape({
-    creator: string.isRequired,
-    createdAt: string.isRequired,
-    contentData: string.isRequired,
-  }).isRequired,
+  question: questionPropType.isRequired,
+  className: string,
 };
 
 export default CommunityQuestion;
