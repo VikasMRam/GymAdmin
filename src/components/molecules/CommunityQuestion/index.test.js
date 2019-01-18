@@ -18,7 +18,7 @@ describe('CommunityQuestion', () => {
   });
 
   it('renders Community Question', () => {
-    const wrapper = wrap().dive();
+    const wrapper = wrap();
     expect(wrapper.contains(question.contentData)).toBe(true);
   });
 });

@@ -1,18 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import sinon from 'sinon';
 
-import CommuntityQuestionAndAnswer, { AskQuestionButton, LeaveAnswerButton, AnswersCountTextDiv } from 'sly/components/organisms/CommunityQuestionAnswers/index';
+import CommuntityQuestionAndAnswer from 'sly/components/organisms/CommunityQuestionAnswers/index';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
-import CommunityQuestion from 'sly/components/molecules/CommunityQuestion';
 import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
 
 const communityName = 'Rhoda Goldman Plaza';
 const communitySlug = 'rhoda-goldman-plaza';
 const questions = [];
-const setModal = sinon.spy();
-const onLeaveAnswerButtonClick = sinon.spy();
 
 const defaultProps = {
   communityName, communitySlug, questions,
@@ -74,19 +70,19 @@ const question2 = {
 
 const wrap = (props = {}) => shallow(<CommuntityQuestionAndAnswer {...defaultProps} {...props} />);
 
-describe('CommuntityQuestionAndAnswer', () => {
+describe('CommuntityQuestionAnswers', () => {
   it('renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
     expect(wrapper.contains('test')).toBe(false);
   });
 
   it('verify communityName is shown', () => {
-    const wrapper = wrap({});
+    const wrapper = wrap();
     expect(wrapper.text()).toContain(communityName);
   });
 
   it('verify no Modals are open by default', () => {
-    const wrapper = wrap({});
+    const wrapper = wrap();
     expect(wrapper.find(CommunityAskQuestionFormContainer)).toHaveLength(0);
     expect(wrapper.find(CommunityLeaveAnAnswerFormContainer)).toHaveLength(0);
   });
@@ -99,26 +95,35 @@ describe('CommuntityQuestionAndAnswer', () => {
 
   it('verify render Question', () => {
     const wrapper = wrap({ questions: [question1] });
-    const communityQuestion = wrapper.find(CommunityQuestion);
+    const communityQuestion = wrapper.find('StyledCommunityQuestion');
     expect(communityQuestion).toHaveLength(1);
     const communityAnswer = wrapper.find(CommunityAnswer);
     expect(communityAnswer).toHaveLength(0);
-    expect(wrapper.find(AnswersCountTextDiv).render().text()).toEqual('No answers yet.');
+  });
+
+  it('verify without any questions', () => {
+    const wrapper = wrap({ questions: [] });
+    const communityQuestion = wrapper.find('StyledCommunityQuestion');
+    expect(communityQuestion).toHaveLength(0);
+    const communityAnswer = wrapper.find(CommunityAnswer);
+    expect(communityAnswer).toHaveLength(0);
+    expect(wrapper.text())
+      .toContain(`What would you like to know about senior living options at ${communityName}? Send a message on the right.`);
   });
 
   it('verify render Question with Answer', () => {
     const wrapper = wrap({ questions: [question2] });
-    const communityQuestion = wrapper.find(CommunityQuestion);
+    const communityQuestion = wrapper.find('StyledCommunityQuestion');
     expect(communityQuestion).toHaveLength(1);
     const communityAnswer = wrapper.find(CommunityAnswer);
     expect(communityAnswer).toHaveLength(1);
-    expect(wrapper.find(AnswersCountTextDiv).render().text()).toEqual('1 Answer');
   });
 
   it('verify click on Leave Answer Button', () => {
+    const onLeaveAnswerButtonClick = jest.fn();
     const wrapper = wrap({ questions: [question1], answerQuestion: onLeaveAnswerButtonClick });
-    const leaveAnswerButton = wrapper.find(LeaveAnswerButton);
-    leaveAnswerButton.simulate('click');
-    expect(onLeaveAnswerButtonClick.getCalls()).toHaveLength(1);
+    const leaveAnswer = wrapper.find('CursorBlock');
+    leaveAnswer.simulate('click');
+    expect(onLeaveAnswerButtonClick).toHaveBeenCalled();
   });
 });

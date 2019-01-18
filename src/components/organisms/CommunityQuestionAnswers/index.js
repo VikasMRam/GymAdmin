@@ -25,6 +25,7 @@ const StyledCommunityQuestion = styled(CommunityQuestion)`
 `;
 
 const CursorBlock = cursor(Block);
+CursorBlock.displayName = 'CursorBlock';
 
 const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
 

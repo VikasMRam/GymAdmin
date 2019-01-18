@@ -9,7 +9,7 @@ const CommunityQuestion = ({ question, className }) => {
 
   return (
     <article className={className}>
-      <Block size="subtitle" weight="regular">{contentData}{contentData.slice(-1) !== '?' && '?'}</Block>
+      <Block size="subtitle" weight="regular">{contentData}</Block>
     </article>
   );
 };
