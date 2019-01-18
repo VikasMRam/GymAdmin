@@ -237,6 +237,90 @@ export default class App extends Component {
           <meta name="google-signin-client_id" content={googleAppId} />
 
           <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
+          {/* eslint-disable */}
+
+          {/* Facebook Pixel Code */}
+          <script dangerouslySetInnerHTML={{ __html: `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window,document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '${facebookPixelId}');
+            fbq('track', 'PageView');`}}
+          />
+
+          <noscript>
+            {`<img height="1" width="1" src="https://www.facebook.com/tr?id=586147298262302&ev=PageView&noscript=1"/>`}
+          </noscript>
+          {/* End Facebook Pixel Code */}
+
+          {/* Google Tag Manager */}
+          <script  dangerouslySetInnerHTML={{ __html: `
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','${googleTagManagerId}');`}}
+          />
+          <noscript>
+            {`<iframe src="https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}" height="0" width="0" />`}
+          </noscript>
+          {/* End Google Tag Manager */}
+
+          {/* Begin Inspectlet Asynchronous Code */}
+          {
+            (isProd) && (
+              <script dangerouslySetInnerHTML={{ __html: `
+                (function() {
+                window.__insp = window.__insp || [];
+                __insp.push(['wid', 1731141391]);
+                var ldinsp = function(){
+                if(typeof window.__inspld != "undefined") return; window.__inspld = 1; var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js?wid=1731141391&r=' + Math.floor(new Date().getTime()/3600000); var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); };
+                setTimeout(ldinsp, 0);
+              })();`}}
+              />
+            )
+          }
+          {/* End Inspectlet Asynchronous Code */}
+
+          {/* Begin Facebook SDK Code */}
+          <script dangerouslySetInnerHTML={{ __html: `
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId            : '${facebookAppId}',
+                autoLogAppEvents : true,
+                xfbml            : true,
+                version          : 'v3.1'
+              });
+            };
+
+            (function(d, s, id){
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) {return;}
+              js = d.createElement(s); js.id = id;
+              js.src = "https://connect.facebook.net/en_US/sdk.js";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));`}}
+          />
+          {/* End Facebook SDK Code */}
+
+          {/* Begin Google Platform Library Code */}
+          <script src="https://apis.google.com/js/platform.js" async defer></script>
+          {/* End Google Platform Library Code */}
+
+          {/* Begin Instabot Code */}
+          <script type="text/javascript"
+                  src ="//app.instabot.io/jsapi/v2/rokoInstabot.js"
+                  async defer
+                  dangerouslySetInnerHTML={{ __html: `apiKey: '${rokoApiKey}'`}}>
+          </script>
+          {/* End Instabot Code */}
+
+          {/* eslint-enable */}
         </Helmet>
 
         <ThemeProvider theme={theme}>
@@ -256,89 +340,6 @@ export default class App extends Component {
           </Router>
         </ThemeProvider>
 
-        {/* eslint-disable */}
-
-        {/* Facebook Pixel Code */}
-        <script dangerouslySetInnerHTML={{ __html: `
-          !function(f,b,e,v,n,t,s)
-          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-          n.queue=[];t=b.createElement(e);t.async=!0;
-          t.src=v;s=b.getElementsByTagName(e)[0];
-          s.parentNode.insertBefore(t,s)}(window,document,'script',
-          'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '${facebookPixelId}');
-          fbq('track', 'PageView');`}}
-        />
-        <noscript>
-          <img height="1" width="1" src="https://www.facebook.com/tr?id=586147298262302&ev=PageView&noscript=1"/>
-        </noscript>
-        {/* End Facebook Pixel Code */}
-
-        {/* Google Tag Manager */}
-        <script  dangerouslySetInnerHTML={{ __html: `
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','${googleTagManagerId}');`}}
-        />
-        <noscript>
-          <iframe src={`https://www.googletagmanager.com/ns.html?id=${googleTagManagerId}`} height="0" width="0" style={{display: 'none', visibility: 'hidden'}}/>
-        </noscript>
-        {/* End Google Tag Manager */}
-
-        {/* Begin Inspectlet Asynchronous Code */}
-        {
-          (isProd) && (
-            <script dangerouslySetInnerHTML={{ __html: `
-                (function() {
-                window.__insp = window.__insp || [];
-                __insp.push(['wid', 1731141391]);
-                var ldinsp = function(){
-                if(typeof window.__inspld != "undefined") return; window.__inspld = 1; var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js?wid=1731141391&r=' + Math.floor(new Date().getTime()/3600000); var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); };
-                setTimeout(ldinsp, 0);
-              })();`}}
-            />
-          )
-        }
-        {/* End Inspectlet Asynchronous Code */}
-
-        {/* Begin Facebook SDK Code */}
-        <script dangerouslySetInnerHTML={{ __html: `
-          window.fbAsyncInit = function() {
-            FB.init({
-              appId            : '${facebookAppId}',
-              autoLogAppEvents : true,
-              xfbml            : true,
-              version          : 'v3.1'
-            });
-          };
-
-          (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, 'script', 'facebook-jssdk'));`}}
-        />
-        {/* End Facebook SDK Code */}
-
-        {/* Begin Google Platform Library Code */}
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-        {/* End Google Platform Library Code */}
-
-
-        {/* Begin Instabot Code */}
-        <script type="text/javascript"
-                src ="//app.instabot.io/jsapi/v2/rokoInstabot.js"
-                dangerouslySetInnerHTML={{ __html: `apiKey: '${rokoApiKey}'`}}>
-        </script>
-        {/* End Instabot Code */}
-
-        {/* eslint-enable */}
       </Fragment>
     );
   }
