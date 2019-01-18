@@ -6,11 +6,9 @@ import { size } from 'sly/components/themes';
 import CommunityQuestion from 'sly/components/molecules/CommunityQuestion';
 import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
 import Modal from 'sly/components/molecules/Modal';
-import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import Hr from 'sly/components/atoms/Hr';
 import Button from 'sly/components/atoms/Button';
-import { ASK_QUESTION } from 'sly/constants/modalType';
 
 const AnswersDiv = styled.div`
   margin-left: ${size('spacing.huge')};
@@ -37,7 +35,7 @@ export const LeaveAnswerButton = styled(Button)`
 const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
 
 const CommuntityQuestionAndAnswer = ({
-  user, communitySlug, communityName, questions, isQuestionModalOpenValue, setModal, answerQuestion, answerQuestionValue,
+  communitySlug, communityName, questions, answerQuestion, answerQuestionValue,
 }) => {
   const questionsComponent = questions.sort(sortByCreatedAt).map((question) => {
     if (typeof question.contents === 'undefined') {
@@ -76,17 +74,7 @@ const CommuntityQuestionAndAnswer = ({
   return (
     <div>
       {questionsComponent}
-      <div>What would you like to know about senior living options at {communityName}? Send a message on the right.</div>
-      <AskQuestionButton onClick={() => setModal(ASK_QUESTION)}>Ask a Question</AskQuestionButton>
-      {isQuestionModalOpenValue &&
-        <Modal
-          onClose={() => setModal(null)}
-          isOpen
-          closeable
-        >
-          <CommunityAskQuestionFormContainer communityName={communityName} communitySlug={communitySlug} setModal={setModal} user={user} />
-        </Modal>
-      }
+      {questionsComponent.length === 0 && <div>What would you like to know about senior living options at {communityName}? Send a message on the right.</div>}
       {(answerQuestionValue !== null && answerQuestionValue !== undefined) &&
         <Modal
           onClose={() => answerQuestion(null)}
@@ -104,11 +92,8 @@ CommuntityQuestionAndAnswer.propTypes = {
   communityName: string.isRequired,
   communitySlug: string.isRequired,
   questions: arrayOf(shape).isRequired,
-  isQuestionModalOpenValue: bool,
-  setModal: func,
   answerQuestion: func,
   answerQuestionValue: object,
-  user: object,
 };
 
 export default CommuntityQuestionAndAnswer;
