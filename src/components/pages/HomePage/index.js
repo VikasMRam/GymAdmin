@@ -150,7 +150,7 @@ const StyledLink = styled(Link)`
 
 const StyledVideo = styled.video`
   width: 100%!important;
-  height: 100%!important;
+  max-height: 100%;
   object-fit: fill;
 `;
 
@@ -409,7 +409,7 @@ const HomePage = ({
           <Heading size="subtitle">Please enter a location:</Heading>
           <SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} />
         </Modal>
-        <StyledSection title="How Can Seniorly Help You Find A Home" subtitle="subtitle here">
+        <StyledSection title="How Can Seniorly Help You Find A Home" subtitle="">
           <ModalController>
             {({
               show, modalType, hide,
@@ -422,8 +422,9 @@ const HomePage = ({
                   layout="fullScreen"
                   closeable
                 >
-                  <StyledVideo autoPlay>
-                    <source src="https://s3-us-west-1.amazonaws.com/seniorly/assets/videos/Seniorly_ver_1.mp4" type="video/mp4" />
+                  <StyledVideo autoPlay controls controlsList="nodownload">
+                    <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
+                    <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
                   </StyledVideo>
                 </Modal>
               </VideoThumbnailWrapper>

@@ -128,7 +128,7 @@ const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
 
 const StyledVideo = styled.video`
   width: 100%!important;
-  height: 100%!important;
+  max-height: 100%;
   object-fit: fill;
 `;
 
@@ -447,8 +447,9 @@ export default class CommunityDetailPage extends Component {
                             layout="fullScreen"
                             closeable
                           >
-                            <StyledVideo autoPlay>
-                              <source src="https://s3-us-west-1.amazonaws.com/seniorly/assets/videos/Seniorly_ver_1.mp4" type="video/mp4" />
+                            <StyledVideo autoPlay controls controlsList="nodownload">
+                              <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
+                              <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
                             </StyledVideo>
                           </Modal>
                         </Fragment>
