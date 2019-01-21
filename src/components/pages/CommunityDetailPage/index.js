@@ -616,6 +616,12 @@ export default class CommunityDetailPage extends Component {
                     urlText="Visit the state licensing website"
                   />
                 }
+                <StyledCommunityExtraInfoSection
+                  title="Disclaimer"
+                  description="The information on this page has been created to the best of our abilities. To ensure accuracy, please confirm with your local Seniorly Partner Agent or directly with the property. If this is your senior living community, we would welcome any updates you wish to provide."
+                  url="/providers/housing"
+                  urlText="Simply claim your profile by clicking here"
+                />
                 <StyledCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                   <MainSection>
                     <SimilarCommunities similarProperties={similarProperties} />
