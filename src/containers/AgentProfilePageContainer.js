@@ -4,13 +4,13 @@ import { object, func, bool } from 'prop-types';
 import agentPropType from 'sly/propTypes/agent';
 import AgentProfilePage from 'sly/components/pages/AgentProfilePage';
 import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/resource/actions';
-import { getDetail, isResourceDetailRequestComplete } from 'sly/store/selectors';
+import { getDetail } from 'sly/store/selectors';
 import withServerState from 'sly/store/withServerState';
 
 const AgentProfilePageContainer = ({
-  agent, user, userAction, isUserFetchDone, postUserAction,
+  agent, user, userAction, postUserAction,
 }) => {
-  if (!agent || !userAction || !isUserFetchDone) {
+  if (!agent || !userAction) {
     return null;
   }
   return (
@@ -29,8 +29,7 @@ const mapStateToProps = (state, { match }) => {
   return {
     user: getDetail(state, 'user', 'me'),
     agent: getDetail(state, 'agent', agentSlug),
-    userAction: getDetail(state, 'userAction'),
-    isUserFetchDone: isResourceDetailRequestComplete(state, 'user'),
+    userAction: getDetail(state, 'userAction') || {},
   };
 };
 
@@ -68,7 +67,6 @@ AgentProfilePageContainer.propTypes = {
   user: object,
   userAction: object,
   postUserAction: func.isRequired,
-  isUserFetchDone: bool,
 };
 
 export default withServerState({

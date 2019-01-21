@@ -10,7 +10,7 @@ import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getSearchParams } from 'sly/services/helpers/search';
-import { getDetail, getList, isResourceDetailRequestComplete } from 'sly/store/selectors';
+import { getDetail, getList } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceListReadRequest }
   from 'sly/store/resource/actions';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
@@ -22,7 +22,6 @@ class CommunityDetailPageController extends Component {
     set: func,
     community: object,
     userAction: object,
-    isUserFetchDone: bool,
     userSaveOfCommunity: object,
     errorCode: number,
     history: object,
@@ -314,7 +313,6 @@ class CommunityDetailPageController extends Component {
       isShareCommunityModalVisible,
       user,
       community,
-      isUserFetchDone,
       userSaveOfCommunity,
       errorCode,
       redirectUrl,
@@ -346,7 +344,7 @@ class CommunityDetailPageController extends Component {
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
-    if (!community || !userAction || !isUserFetchDone) {
+    if (!community || !userAction) {
       return null;
     }
 
@@ -428,8 +426,7 @@ const mapStateToProps = (state, {
   return {
     user: getDetail(state, 'user', 'me'),
     community: getDetail(state, 'community', communitySlug),
-    userAction: getDetail(state, 'userAction'),
-    isUserFetchDone: isResourceDetailRequestComplete(state, 'user'),
+    userAction: getDetail(state, 'userAction') || {},
     userSaveOfCommunity,
     mediaGallerySlideIndex,
     isMediaGalleryFullscreenActive,

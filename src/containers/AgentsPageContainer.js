@@ -48,7 +48,7 @@ class AgentsPageContainer extends Component {
 const mapStateToProps = (state, { location }) => {
   const { pathname } = location;
   return {
-    userAction: getDetail(state, 'userAction'),
+    userAction: getDetail(state, 'userAction') || {},
     pathName: pathname,
   };
 };
