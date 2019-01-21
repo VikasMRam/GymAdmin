@@ -244,3 +244,18 @@ export const getHelmetForCommunityPage = (community, location) => {
   );
 };
 
+export const getHelmetForAgentsPage = () => {
+  return (
+    <Helmet>
+      <title>Our Senior Living Partner Agents</title>
+    </Helmet>
+  );
+};
+
+export const getHelmetForPartnersPage = () => {
+  return (
+    <Helmet>
+      <title>Partner Agent Program</title>
+    </Helmet>
+  );
+};

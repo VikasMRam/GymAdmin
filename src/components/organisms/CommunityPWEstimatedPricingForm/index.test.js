@@ -11,28 +11,28 @@ describe('CommunityPWEstimatedPricingForm', () => {
   it('renders', () => {
     const wrapper = wrap();
 
-    expect(wrapper.find('Styled(Field)')).toHaveLength(3);
+    expect(wrapper.find('StyledField')).toHaveLength(3);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
   });
 
   it('render error when error is passed', () => {
     const wrapper = wrap({ error });
 
-    expect(wrapper.find('Styled(Field)')).toHaveLength(3);
+    expect(wrapper.find('StyledField')).toHaveLength(3);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(1);
   });
 
   it('does not render medicaid when medicaidCoverage is passed', () => {
     const wrapper = wrap({ userDetails: { medicaidCoverage: 'no' } });
 
-    expect(wrapper.find('Styled(Field)')).toHaveLength(2);
+    expect(wrapper.find('StyledField')).toHaveLength(2);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
   });
 
   it('onRoomTypeChange gets called', () => {
     const onRoomTypeChange = jest.fn();
     const wrapper = wrap({ onRoomTypeChange });
-    const roomTypeField = wrapper.find('Styled(Field)');
+    const roomTypeField = wrapper.find('StyledField');
 
     expect(roomTypeField).toHaveLength(3);
     roomTypeField.at(0).simulate('change');
@@ -42,7 +42,7 @@ describe('CommunityPWEstimatedPricingForm', () => {
   it('onCareTypeChange gets called', () => {
     const onCareTypeChange = jest.fn();
     const wrapper = wrap({ onCareTypeChange });
-    const careTypeField = wrapper.find('Styled(Field)');
+    const careTypeField = wrapper.find('StyledField');
 
     expect(careTypeField).toHaveLength(3);
     careTypeField.at(1).simulate('change');

@@ -14,9 +14,9 @@ const styles = css`
   margin: 0;
   font-size: ${size('text', 'body')};
   padding: ${size('padding', 'regular')};
-  height: ${ifProp({ type: 'textarea' }, size('element.textarea'), height)};
+  height: ${ifProp({ type: 'textarea' }, size('element.huge'), height)};
   color: ${ifProp('invalid', palette('danger', 'base'), palette('slate', 'base'))};
-  background-color: ${palette('grey', 'stroke')};
+  background-color: ${palette('white', 'base')};
   border: 1px solid
     ${ifProp('invalid', palette('danger', 'stroke'), palette('slate', 'stroke'))};
   border-radius: 2px;
@@ -64,7 +64,9 @@ class Input extends Component {
     if (this.props.onFocus) {
       this.props.onFocus(...args);
     }
-    this.ref.current.scrollIntoView(true);
+    if (this.ref && this.ref.current) {
+      this.ref.current.scrollIntoView(true);
+    }
   };
 
   render() {

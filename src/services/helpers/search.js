@@ -82,6 +82,7 @@ const searchParamsWhitelist = [
   'currentStep',
   'redirectTo',
   'action',
+  'region',
 ];
 
 export const tocs = [
@@ -274,7 +275,3 @@ export const getTocSearchLabel = (toc) => {
   }
   return actualToc.searchLabel;
 };
-
-export const getCommunitySearchUrl = (community) => {
-
-}

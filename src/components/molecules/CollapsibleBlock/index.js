@@ -3,10 +3,13 @@ import Measure from 'react-measure';
 import styled from 'styled-components';
 import { bool, number, string, oneOfType, oneOf, node } from 'prop-types';
 
-import { size, key } from 'sly/components/themes';
-import { Link } from 'sly/components/atoms';
+import { size, key, getKey } from 'sly/components/themes';
+import { Link, Icon, Block } from 'sly/components/atoms';
 
 export const blockCapHeight = (props) => {
+  if (!props.isRenderedHeightBigger) {
+    return 'auto';
+  }
   if (!props.collapsed) {
     return `${props.maxHeight}px`;
   }
@@ -17,7 +20,8 @@ export const blockCapHeight = (props) => {
 };
 
 export const ReadMore = styled(Link)`
-  display: block;
+  display: flex;
+  align-items: center;
 `;
 
 const BlockCap = styled.div`
@@ -32,6 +36,10 @@ const OnePix = styled.div`
   // getBoundingBox will return the right measure
   height: 1px;
   margin-top: -1px;
+`;
+
+const StyledBlock = styled(Block)`
+  margin-right: ${size('spacing.large')};
 `;
 
 export default class CollapsibleBlock extends Component {
@@ -64,23 +72,30 @@ export default class CollapsibleBlock extends Component {
       children, minHeight, collapsedDefault, blockClassName, ...props
     } = this.props;
     const { collapsed, maxHeight } = this.state;
+    const collapsibleMinHeight =
+      getKey(`sizes.collapsible.${minHeight}`).replace('rem', '') * 16;
 
     return (
       <Measure onResize={this.onResize} margin>
         {({ measureRef }) => (
           <div className={blockClassName}>
-            <BlockCap maxHeight={maxHeight} minHeight={minHeight} collapsed={collapsed}>
+            <BlockCap maxHeight={maxHeight} minHeight={minHeight} collapsed={collapsed} isRenderedHeightBigger={maxHeight > collapsibleMinHeight}>
               <div ref={measureRef} {...props}>
                 { children }
                 <OnePix />
               </div>
             </BlockCap>
-            <ReadMore
-              onClick={this.toggle}
-              transparent
-            >
-              {collapsed ? 'Read more' : 'Read less'}
-            </ReadMore>
+            {maxHeight > collapsibleMinHeight &&
+              <ReadMore
+                onClick={this.toggle}
+                transparent
+              >
+                <StyledBlock weight="medium" palette="primary">
+                  {collapsed ? 'Show more' : 'Show less'}
+                </StyledBlock>
+                <Icon icon="chevron" palette="slate" size="small" flip={!collapsed} />
+              </ReadMore>
+            }
           </div>
         )
         }

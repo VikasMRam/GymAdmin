@@ -4,20 +4,25 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import ReduxField from 'sly/components/organisms/ReduxField/index';
+import fullWidth from 'sly/components/helpers/fullWidth';
 import { Heading, Button } from 'sly/components/atoms';
+import ReduxField from 'sly/components/organisms/ReduxField';
 
-const StyledButton = styled(Button)`
+const StyledButton = fullWidth(styled(Button)`
   margin-bottom: ${size('spacing.regular')};
-`;
+`);
+StyledButton.displayName = 'StyledButton';
 
+const StyledHeading = styled(Heading)`
+  margin-bottom: ${size('spacing.xLarge')};
+`;
 
 const CommunityAskQuestionForm = ({
   handleSubmit, pristine, submitting, communityName, user, error,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
-      <Heading level="title" size="title">Ask our experts about {communityName}</Heading>
+      <StyledHeading level="subtitle" size="subtitle">Ask our experts about {communityName}</StyledHeading>
       {!user && <Field
         name="name"
         label=""

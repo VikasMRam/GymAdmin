@@ -15,7 +15,7 @@ describe('CommunityLeaveAnAnswerForm', () => {
     const wrapper = wrap({ });
     expect(wrapper.find('QuestionTextDiv').html()).toContain(questionText);
     expect(wrapper.find(Field).filter({ name: 'answer' })).toHaveLength(1);
-    expect(wrapper.find('Styled(Button)')).toHaveLength(1);
+    expect(wrapper.find('StyledButton')).toHaveLength(1);
     expect(wrapper.find('strong')).toHaveLength(0);
   });
 
@@ -23,7 +23,7 @@ describe('CommunityLeaveAnAnswerForm', () => {
     const wrapper = wrap({ error });
     expect(wrapper.find('QuestionTextDiv').html()).toContain(questionText);
     expect(wrapper.find(Field).filter({ name: 'answer' })).toHaveLength(1);
-    expect(wrapper.find('Styled(Button)')).toHaveLength(1);
+    expect(wrapper.find('StyledButton')).toHaveLength(1);
     expect(wrapper.find('strong')).toHaveLength(1);
   });
 

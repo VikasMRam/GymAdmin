@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { bool, func, arrayOf, shape, string, number } from 'prop-types';
 import styled from 'styled-components';
 
-
 import { size, palette, key } from 'sly/components/themes';
 import { Icon, Hr, Link } from 'sly/components/atoms';
 import Logo from 'sly/components/atoms/Logo';
@@ -125,6 +124,13 @@ const HeaderItem = styled(Link)`
   }
 `;
 
+const StyledSearchBoxContainer = styled(SearchBoxContainer)`
+  width: 100%;
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('header.SearchBox.width')};
+  }
+`;
+
 const Header = ({
   menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur, className,
 }) => {
@@ -180,7 +186,7 @@ const Header = ({
           </Fragment>
         )}
       </SeniorlyIconMenu>
-      <SearchBoxContainer layout="header" onLocationSearch={onLocationSearch} />
+      <StyledSearchBoxContainer layout="header" onLocationSearch={onLocationSearch} />
       <HeaderItems>
         {headerItemComponents}
       </HeaderItems>

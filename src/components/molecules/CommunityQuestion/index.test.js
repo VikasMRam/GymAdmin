@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { formatDate } from 'sly/services/helpers/date';
 import CommunityQuestion from 'sly/components/molecules/CommunityQuestion';
 
 const question = {
@@ -19,9 +18,7 @@ describe('CommunityQuestion', () => {
   });
 
   it('renders Community Question', () => {
-    const wrapper = wrap().dive();
-    expect(wrapper.contains(question.creator)).toBe(true);
-    expect(wrapper.contains(formatDate(question.createdAt))).toBe(true);
+    const wrapper = wrap();
     expect(wrapper.contains(question.contentData)).toBe(true);
   });
 });

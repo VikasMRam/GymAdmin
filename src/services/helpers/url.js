@@ -107,69 +107,95 @@ const stateNames = {
 };
 
 const stateAbbr = {
-  'Alabama': 'AL',
-  'Alaska': 'AK',
-  'Arizona': 'AZ',
-  'Arkansas': 'AR',
+  Alabama: 'AL',
+  Alaska: 'AK',
+  Arizona: 'AZ',
+  Arkansas: 'AR',
   'American Samoa': 'AS',
-  'California': 'CA',
-  'Colorado': 'CO',
-  'Connecticut': 'CT',
+  California: 'CA',
+  Colorado: 'CO',
+  Connecticut: 'CT',
   'District Of Columbia': 'DC',
-  'Delaware': 'DE',
-  'Florida': 'FL',
-  'Georgia': 'GA',
-  'Guam': 'GU',
-  'Hawaii': 'HI',
-  'Idaho': 'ID',
-  'Illinois': 'IL',
-  'Indiana': 'IN',
-  'Iowa': 'IA',
-  'Kansas': 'KS',
-  'Kentucky': 'KY',
-  'Louisiana': 'LA',
-  'Maine': 'ME',
-  'Maryland': 'MD',
-  'Massachusetts': 'MA',
-  'Michigan': 'MI',
-  'Minnesota': 'MN',
-  'Mississippi': 'MS',
-  'Missouri': 'MO',
-  'Montana': 'MT',
-  'Nebraska': 'NE',
-  'Nevada': 'NV',
+  Delaware: 'DE',
+  Florida: 'FL',
+  Georgia: 'GA',
+  Guam: 'GU',
+  Hawaii: 'HI',
+  Idaho: 'ID',
+  Illinois: 'IL',
+  Indiana: 'IN',
+  Iowa: 'IA',
+  Kansas: 'KS',
+  Kentucky: 'KY',
+  Louisiana: 'LA',
+  Maine: 'ME',
+  Maryland: 'MD',
+  Massachusetts: 'MA',
+  Michigan: 'MI',
+  Minnesota: 'MN',
+  Mississippi: 'MS',
+  Missouri: 'MO',
+  Montana: 'MT',
+  Nebraska: 'NE',
+  Nevada: 'NV',
   'New Hampshire': 'NH',
   'New Jersey': 'NJ',
   'New Mexico': 'NM',
   'New York': 'NY',
   'North Carolina': 'NC',
   'North Dakota': 'ND',
-  'Ohio': 'OH',
-  'Oklahoma': 'OK',
-  'Oregon': 'OR',
-  'Pennsylvania': 'PA',
+  Ohio: 'OH',
+  Oklahoma: 'OK',
+  Oregon: 'OR',
+  Pennsylvania: 'PA',
   'Puerto Rico': 'PR',
   'Rhode Island': 'RI',
   'South Carolina': 'SC',
   'South Dakota': 'SD',
-  'Tennessee': 'TN',
-  'Texas': 'TX',
-  'Utah': 'UT',
-  'Vermont': 'VT',
-  'Virginia': 'VA',
+  Tennessee: 'TN',
+  Texas: 'TX',
+  Utah: 'UT',
+  Vermont: 'VT',
+  Virginia: 'VA',
   'U.S. Virgin Islands': 'VI',
-  'Washington': 'WA',
+  Washington: 'WA',
   'West Virginia': 'WV',
-  'Wisconsin': 'WI',
-  'Wyoming': 'WY',
+  Wisconsin: 'WI',
+  Wyoming: 'WY',
 };
+
+const regionStateMap = {
+  Northeast: ['CT', 'ME', 'MA', 'NH', 'RI', 'VT', 'NJ', 'NY', 'PA'],
+  Midwest: ['IL', 'IN', 'MI', 'OH', 'WI', 'IA', 'KS', 'MN', 'MO', 'NE', 'ND', 'SD'],
+  South: ['DE', 'FL', 'GA', 'MD', 'NC', 'SC', 'VA', 'DC', 'WV'],
+  Southeast: ['AL', 'KY', 'MS', 'TN'],
+  Southwest: ['AR', 'LA', 'OK', 'TX'],
+  'Mountain West': ['AZ', 'CO', 'ID', 'MT', 'NV', 'NM', 'PR', 'UT', 'VI', 'WY'],
+  'Pacific West': ['AS', 'GU', 'AK', 'CA', 'HI', 'OR', 'WA'],
+};
+
+export const stateRegionMap = Object.entries(regionStateMap).reduce((res, [region, states]) => {
+  states.forEach((state) => {
+    res[state] = region;
+  });
+  return res;
+}, {});
 
 export const urlize = inString =>
   inString
     .trim()
     .toLowerCase()
-    .replace(/\s+/g, ' ')
+    .replace(/[^\w\s-]+/g, '')
+    .replace(/[\s-]+/g, ' ')
     .replace(/\s/g, '-');
+
+global.stateData = {
+  names: stateNames,
+  slugs: Object.entries(stateNames).reduce((res, [key, name]) => (res[key] = urlize(name), res), {}),
+  stateRegionMap,
+  regionStateMap,
+  regionSlugs: Object.keys(regionStateMap).reduce((res, name) => (res[name] = urlize(name), res), {}),
+};
 
 export const getBreadCrumbsForCommunity = ({ name, propInfo, address }) => {
   const tocBc = tocPaths(propInfo.typeCare);
@@ -227,6 +253,49 @@ export const getBreadCrumbsForLocation = ({ toc, state, city }) => {
   }
 
   return baseBcs;
+};
+
+const agentsPath = '/agents';
+export const getBreadCrumbsForAgent = ({ name, state, city }) => {
+  const baseBcs = [{
+    path: '/',
+    label: 'Home',
+  },
+  {
+    path: agentsPath,
+    label: 'Agents',
+  }];
+
+  if (state) {
+    const region = stateRegionMap[state];
+    baseBcs.push({
+      path: `${agentsPath}/${urlize(region)}`,
+      label: region,
+    });
+    if (city) {
+      baseBcs.push({
+        path: `${agentsPath}/${urlize(region)}/${urlize(city)}`,
+        label: city,
+      });
+      if (name) {
+        baseBcs.push({
+          path: `${agentsPath}/${urlize(region)}/${urlize(city)}/${urlize(name)}`,
+          label: name,
+        });
+      }
+    } else {
+      return baseBcs;
+    }
+  } else {
+    return baseBcs;
+  }
+  return baseBcs;
+};
+
+export const getAgentUrl = ({ id, address }) => {
+  const { state, city } = address;
+  const region = stateRegionMap[state];
+  return `${agentsPath}/${urlize(region)}/${urlize(city)}/${id}`;
 };
 
 export const getCitySearchUrl = ({ propInfo, address }) => {

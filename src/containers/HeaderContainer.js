@@ -14,6 +14,8 @@ import AuthContainer from 'sly/containers/AuthContainer';
 import NotificationController from 'sly/controllers/NotificationController';
 import Notifications from 'sly/components/organisms/Notifications';
 import Header from 'sly/components/organisms/Header';
+import BannerNotification from 'sly/components/molecules/BannerNotification';
+import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 
 const defaultHeaderItems = [
   { name: '(855) 866-4515', url: 'tel:+18558664515' },
@@ -138,6 +140,11 @@ class HeaderContainer extends Component {
               {user !== null && <SavedCommunitiesPopupController notifyInfo={notifyInfo} />}
               <AuthContainer notifyInfo={notifyInfo} />
               <Notifications messages={messages} dismiss={dismiss} />
+              <BannerNotificationController>
+                {({ messages }) => {
+                  return messages.map(message => <BannerNotification key={message.id}>{message.content}</BannerNotification>);
+                }}
+              </BannerNotificationController>
             </Fragment>
           )}
         </NotificationController>

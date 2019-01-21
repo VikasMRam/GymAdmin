@@ -1,9 +1,10 @@
 import { oneOf } from 'prop-types';
-import styled, { css } from 'styled-components';
-import { switchProp } from 'styled-tools';
+import styled from 'styled-components';
 
 import { getKey, size, palette } from 'sly/components/themes';
 import { variation as variationPropType } from 'sly/propTypes/variation';
+import { weight as weightPropType } from 'sly/propTypes/weight';
+import { palette as palettePropType } from 'sly/propTypes/palette';
 
 const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
@@ -12,21 +13,14 @@ const Block = styled.div`
   color: ${getColor};
   font-size: ${getSize('text')};
   line-height: ${getSize('lineHeight')};
-  ${switchProp('weight', {
-    medium: css`font-weight: 500;`,
-    bold: css`font-weight: bold;`,
-  })};
-
-  // TODO: review this with @jared,
-  // for now let's make margin-bottom relative to font-size
-  margin: 0 0 calc(${getSize('text')} * 0.25) 0;
+  font-weight: ${p => size('weight', p.weight)};
 `;
 
 Block.propTypes = {
-  palette: oneOf(Object.keys(getKey('palette'))),
+  palette: palettePropType,
   variation: variationPropType,
   size: oneOf(Object.keys(getKey('sizes.text'))),
-  weight: oneOf(['regular', 'medium', 'bold']),
+  weight: weightPropType,
 };
 
 Block.defaultProps = {

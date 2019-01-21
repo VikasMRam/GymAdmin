@@ -28,7 +28,7 @@ describe('SimilarCommunityInfo', () => {
 
   it('renders similarProperty', () => {
     const wrapper = wrap();
-    expect(wrapper.childAt(0).contains(similarProperty.name)).toBe(true);
+    expect(wrapper.find('Link').contains(similarProperty.name)).toBe(true);
     expect(parseInt(wrapper.childAt(1)
       .childAt(0)
       .childAt(0)
@@ -46,5 +46,13 @@ describe('SimilarCommunityInfo', () => {
     expect(wrapper.childAt(5).contains(similarProperty.description)).toBe(true);
 
     // expect(wrapper.find('Rating[size="medium"]')).toHaveLength(1);
+  });
+
+  it('renders similarProperty heading without url', () => {
+    const similarPropertyWithoutUrl = { ...similarProperty };
+    similarPropertyWithoutUrl.url = null;
+    const wrapper = wrap({ similarProperty: similarPropertyWithoutUrl });
+
+    expect(wrapper.find('StyledHeading').contains(similarProperty.name)).toBe(true);
   });
 });

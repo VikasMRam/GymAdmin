@@ -10,7 +10,7 @@ describe('BookingFormFooter', () => {
     const wrapper = wrap();
     expect(wrapper.find('PreferenceWrapper').childAt(0).dive().text()).toContain('Select a Date');
     expect(wrapper.find('PreferenceWrapper').childAt(1).text()).toContain('Select a Time');
-    expect(wrapper.find('Styled(Button)').dive().dive().dive()
+    expect(wrapper.find('StyledButton').dive().dive().dive()
       .text()).toContain('Continue');
   });
 
@@ -36,7 +36,7 @@ describe('BookingFormFooter', () => {
     const wrapper = wrap({ isFinalStep: true });
     expect(wrapper.find('PreferenceWrapper').childAt(0).dive().text()).toContain('Select a Date');
     expect(wrapper.find('PreferenceWrapper').childAt(1).text()).toContain('Select a Time');
-    expect(wrapper.find('Styled(Button)').dive().dive().dive()
+    expect(wrapper.find('StyledButton').dive().dive().dive()
       .text()).toContain('Send Tour Request');
   });
 
@@ -44,19 +44,19 @@ describe('BookingFormFooter', () => {
     const wrapper = wrap({ date: '2018-1-9', time: 'Anytime', isFinalStep: true });
     expect(wrapper.find('PreferenceWrapper').childAt(0).dive().text()).toContain('Tuesday, Jan 9');
     expect(wrapper.find('PreferenceWrapper').childAt(1).text()).toContain('Anytime');
-    expect(wrapper.find('Styled(Button)').dive().dive().dive()
+    expect(wrapper.find('StyledButton').dive().dive().dive()
       .text()).toContain('Send Tour Request');
   });
 
   it('onProgressClick is called', () => {
     const onProgressClick = jest.fn();
     const wrapper = wrap({ onProgressClick });
-    wrapper.find('Styled(Button)').simulate('click');
+    wrapper.find('StyledButton').simulate('click');
     expect(onProgressClick).toHaveBeenCalled();
   });
 
   it('renders when isButtonDisabled', () => {
     const wrapper = wrap({ isButtonDisabled: true });
-    expect(wrapper.find('Styled(Button)').at(0).props().disabled).toBe(true);
+    expect(wrapper.find('StyledButton').at(0).props().disabled).toBe(true);
   });
 });

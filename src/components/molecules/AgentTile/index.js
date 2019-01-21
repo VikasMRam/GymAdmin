@@ -1,84 +1,109 @@
 import React from 'react';
-import { string, shape, number } from 'prop-types';
 import styled from 'styled-components';
-import Link from 'react-router-dom/Link';
-import Dotdotdot from 'react-dotdotdot';
 
-import { size } from 'sly/components/themes';
-import { Avatar } from 'sly/components/atoms';
-import Rating from 'sly/components/molecules/Rating';
-import { community as communityPropType } from 'sly/propTypes/community';
+import agentPropType from 'sly/propTypes/agent';
+import { styles as linkStyles } from 'sly/components/atoms/Link';
+import { Box, Image, Block, Link } from 'sly/components/atoms';
+import { size, palette } from 'sly/components/themes';
+import IconItem from 'sly/components/molecules/IconItem';
+import { phoneFormatter } from 'sly/services/helpers/phone';
 
-const AgentDiv = styled.div`
-  display: flex;
-  align-items: center;
-  padding: ${size('spacing.small')};
-  margin-left: ${size('spacing.regular')};
-  > :first-child {
-    margin-right: ${size('spacing.regular')};
+const Wrapper = 'div';
+
+const ProfileImage = styled(Image)`
+  overflow: hidden;
+  border-radius: ${size('spacing.small')};
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+`;
+
+const Badge = styled(Block)`
+  position: absolute;
+  top: ${size('spacing.large')};
+  left: 0;
+  background: ${palette('secondary.base')};
+  padding: ${size('spacing.regular')};
+  border-radius: 0;
+  border-top-right-radius: ${size('spacing.xLarge')};
+  border-bottom-right-radius: ${size('spacing.xLarge')};
+`;
+
+const Name = styled(Block)`
+  margin-bottom: ${size('spacing.regular')};
+  ${linkStyles};
+`;
+
+Name.defaultProps = {
+  palette: 'primary',
+  variation: 'base',
+};
+
+const List = styled.ul`
+  margin: 0;
+  padding: 0;
+  margin-bottom: ${size('spacing.xLarge')};
+
+  li {
+    margin-bottom: ${size('spacing.regular')};
+    break-inside: avoid-column;
+    list-style-type: none;
+  }
+
+  li:last-child {
+    margin-bottom: 0;
   }
 `;
 
-const NameTextSpan = styled.span`
-  margin-bottom: ${size('spacing.small')};
-`;
-
-const TitleTextDiv = styled.div`
-`;
-
-const TitleDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: ${size('spacing.small')};
-`;
-
-export const CaptionSpan = styled.span`
-`;
-
-const Title = ({
-  name, title, rating, community,
-}) => (
-  <TitleDiv>
-    <NameTextSpan>
-      <Dotdotdot clamp={1}>{name}</Dotdotdot>
-    </NameTextSpan>
-    <CaptionSpan>
-      {title && <TitleTextDiv>{title}</TitleTextDiv>}
-      {title && community && ', '}
-      {community && <Link to={community.url}>{community.name}</Link>}
-    </CaptionSpan>
-    {rating && <Rating size="small" value={rating} />}
-  </TitleDiv>
-);
-
-
-Title.propTypes = {
-  name: string,
-  title: string,
-  rating: number,
-  community: communityPropType,
-};
-
 const AgentTile = ({
-  user, palette, community,
-}) => (
-  <AgentDiv>
-    <Avatar user={user} palette={palette} />
-    <Title {...user} community={community} />
-  </AgentDiv>
-);
+  agent,
+}) => {
+  const {
+    info,
+    aggregateRating: rating,
+    url,
+    address,
+  } = agent;
+
+  const phoneNumber = phoneFormatter(info.slyPhone);
+
+  return (
+    <Wrapper>
+      <ProfileImage src={info.profileImageUrl} aspectRatio="3:2">
+        {info.recentFamiliesHelped &&
+          <Badge size="caption" palette="white">
+            <b>{info.recentFamiliesHelped}</b> families helped
+          </Badge>
+        }
+      </ProfileImage>
+      <Box snap="top">
+        <Name size="subtitle">
+          {info.displayName}
+        </Name>
+        <List>
+          {phoneNumber &&
+            <li>
+              <IconItem size="caption" icon="phone" iconSize="regular">{phoneNumber}</IconItem>
+            </li>
+          }
+          {rating.numRatings > 0 &&
+            <li>
+              <IconItem size="caption" icon="star" iconSize="regular">
+                {rating.ratingValue} from  <Link to={url}>{rating.numRatings} reviews</Link>
+              </IconItem>
+            </li>
+          }
+          <li>
+            <IconItem size="caption" icon="location" iconSize="regular">{address.city}, {address.state}</IconItem>
+          </li>
+        </List>
+      </Box>
+    </Wrapper>
+  );
+};
 
 AgentTile.propTypes = {
-  palette: string,
-  user: shape({
-    name: string.isRequired,
-    picture: string,
-  }),
-  community: communityPropType,
+  agent: agentPropType,
 };
 
-AgentTile.defaultProps = {
-  palette: 'primary',
-};
 
 export default AgentTile;

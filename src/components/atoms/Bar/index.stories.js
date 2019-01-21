@@ -7,9 +7,12 @@ storiesOf('Atoms|Bar', module)
   .add('default', () => (
     <Bar />
   ))
-  .add('withPalette', () => (
+  .add('with palette', () => (
     <Bar palette="danger" />
   ))
-  .add('50%Width', () => (
+  .add('with palette and variation', () => (
+    <Bar palette="grey" variation="background" />
+  ))
+  .add('with width', () => (
     <Bar width={50} />
   ));

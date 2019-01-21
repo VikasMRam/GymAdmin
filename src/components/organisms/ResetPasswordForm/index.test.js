@@ -12,8 +12,8 @@ describe('ResetPasswordForm', () => {
   it('render ResetPasswordForm', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit });
-    expect(wrapper.find('Styled(Field)').filter({ name: 'email' })).toHaveLength(1);
-    expect(wrapper.find('Styled(Button)')).toHaveLength(1);
+    expect(wrapper.find('StyledField').filter({ name: 'email' })).toHaveLength(1);
+    expect(wrapper.find('StyledButton')).toHaveLength(1);
     expect(wrapper.find(Block)).toHaveLength(0);
     expect(wrapper.find('LoginLink')).toHaveLength(1);
   });
@@ -21,8 +21,8 @@ describe('ResetPasswordForm', () => {
   it('render error when error is passed', () => {
     const handleSubmit = jest.fn();
     const wrapper = wrap({ handleSubmit, error });
-    expect(wrapper.find('Styled(Field)').filter({ name: 'email' })).toHaveLength(1);
-    expect(wrapper.find('Styled(Button)')).toHaveLength(1);
+    expect(wrapper.find('StyledField').filter({ name: 'email' })).toHaveLength(1);
+    expect(wrapper.find('StyledButton')).toHaveLength(1);
     expect(wrapper.find(Block)).toHaveLength(1);
     expect(wrapper.find('LoginLink')).toHaveLength(1);
   });

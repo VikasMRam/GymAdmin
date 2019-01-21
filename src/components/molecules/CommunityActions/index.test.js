@@ -14,7 +14,7 @@ describe('CommunityActions', () => {
 
   it('renders with isAlreadyTourScheduled', () => {
     const wrapper = wrap({ isAlreadyTourScheduled: true });
-    expect(wrapper.find('Styled(Button)').contains('Tour requested')).toBe(true);
+    expect(wrapper.find('StyledButton').contains('Tour requested')).toBe(true);
   });
 
   it('renders with isAlreadyPricingRequested', () => {
@@ -25,7 +25,7 @@ describe('CommunityActions', () => {
   it('does handles onBookATourClick', () => {
     const onBookATourClick = jest.fn();
     const wrapper = wrap({ onBookATourClick });
-    const BookATourButton = wrapper.find('Styled(Button)');
+    const BookATourButton = wrapper.find('StyledButton');
 
     expect(BookATourButton).toHaveLength(2);
     BookATourButton.at(1).simulate('click');
@@ -45,7 +45,7 @@ describe('CommunityActions', () => {
   it('does handles onAQClick', () => {
     const onAQClick = jest.fn();
     const wrapper = wrap({ onAQClick });
-    const AQButton = wrapper.find('Styled(Button)');
+    const AQButton = wrapper.find('StyledButton');
 
     expect(AQButton).toHaveLength(2);
     AQButton.at(0).simulate('click');

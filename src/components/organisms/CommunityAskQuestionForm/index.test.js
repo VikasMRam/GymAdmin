@@ -14,31 +14,34 @@ const wrap = (props = {}) => shallow(<CommunityAskQuestionForm handleSubmit={han
 describe('CommunityAskQuestionForm', () => {
   it('render name and email when user is not passed', () => {
     const wrapper = wrap({ });
-    expect(wrapper.find('Styled(Component)').html()).toContain(communityName);
+    expect(wrapper.find('StyledHeading').dive().dive().dive()
+      .text()).toContain(communityName);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'question' })).toHaveLength(1);
-    expect(wrapper.find('Styled(Button)')).toHaveLength(1);
+    expect(wrapper.find('StyledButton')).toHaveLength(1);
     expect(wrapper.find('strong')).toHaveLength(0);
   });
 
   it('does not render name and email when user is passed', () => {
     const wrapper = wrap({ user });
-    expect(wrapper.find('Styled(Component)').html()).toContain(communityName);
+    expect(wrapper.find('StyledHeading').dive().dive().dive()
+      .text()).toContain(communityName);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(0);
     expect(wrapper.find(Field).filter({ name: 'question' })).toHaveLength(1);
-    expect(wrapper.find('Styled(Button)')).toHaveLength(1);
+    expect(wrapper.find('StyledButton')).toHaveLength(1);
     expect(wrapper.find('strong')).toHaveLength(0);
   });
 
   it('render error when error is passed', () => {
     const wrapper = wrap({ error });
-    expect(wrapper.find('Styled(Component)').html()).toContain(communityName);
+    expect(wrapper.find('StyledHeading').dive().dive().dive()
+      .text()).toContain(communityName);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'question' })).toHaveLength(1);
-    expect(wrapper.find('Styled(Button)')).toHaveLength(1);
+    expect(wrapper.find('StyledButton')).toHaveLength(1);
     expect(wrapper.find('strong')).toHaveLength(1);
   });
 

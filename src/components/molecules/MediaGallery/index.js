@@ -7,6 +7,7 @@ import { ifProp } from 'styled-tools';
 import { size, palette } from 'sly/components/themes';
 import { Icon, Image } from 'sly/components/atoms';
 import ThumbnailScroller from 'sly/components/molecules/ThumbnailScroller';
+import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 
 const videoMimeTypes = {
   mp4: 'video/mp4',
@@ -17,7 +18,7 @@ const CarouselWrapper = styled.div`
   position: relative;
   background: ${ifProp('transparent', 'transparent', palette('grey', 'base'))};
   text-align: center;
-  margin-bottom: ${size('spacing.large')};
+
   ${props =>
     !props.autoHeight &&
     css`
@@ -26,11 +27,23 @@ const CarouselWrapper = styled.div`
         height: ${size('carousel.tablet')};
       }
     `};
+
+  ${props =>
+    props.showThumbnails &&
+    css`
+      margin-bottom: ${size('spacing.large')};
+    `};
 `;
-const StyledImg = styled(Image)`
+const imageStyles = css`
   width: 100%;
   object-fit: cover;
   height: inherit;
+`;
+const StyledImg = styled(Image)`
+  ${imageStyles};
+`;
+const StyledVideoThumbnail = styled(VideoThumbnail)`
+  ${imageStyles};
 `;
 const StyledVideo = styled.video`
   width: 100%;
@@ -88,19 +101,7 @@ const sliderSlideStyle = {
   overflow: 'hidden',
   height: 'inherit',
 };
-const PlayIcon = styled(Icon)`
-  z-index: 1;
-  position: absolute;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  font-size: ${size('icon.xLarge')};
 
-  :hover {
-    cursor: pointer;
-  }
-`;
 const StyledSlide = styled.div`
   height: inherit;
   :hover {
@@ -207,14 +208,21 @@ export default class MediaGallery extends Component {
   };
 
   generateSlideContent = (media, index) => {
-    const { autoHeight, currentSlide } = this.props;
+    const { currentSlide } = this.props;
 
     switch (media.type) {
       case 'image':
-        return (
+        return media.ofVideo !== undefined ? (
+          <StyledVideoThumbnail
+            key="media-gallery-slide"
+            src={this.shouldLoadMedia(index) ? media.src : ''}
+            data-src={media.src}
+            alt={media.alt}
+            innerRef={(c) => { this.mediaRefs[index] = c; }}
+          />
+        ) : (
           <StyledImg
             key="media-gallery-slide"
-            autoHeight={autoHeight}
             src={this.shouldLoadMedia(index) ? media.src : ''}
             data-src={media.src}
             alt={media.alt}
@@ -225,7 +233,6 @@ export default class MediaGallery extends Component {
         return (
           <StyledVideo
             key="media-gallery-slide"
-            autoHeight={autoHeight}
             autoPlay={index === currentSlide}
             controls
             controlsList="nodownload"
@@ -295,14 +302,6 @@ export default class MediaGallery extends Component {
             <TopRightWrapper>
               {topRightSection(this.allMedia[currentSlide])}
             </TopRightWrapper>
-          }
-          {this.allMedia[currentSlide].ofVideo !== undefined &&
-            <PlayIcon
-              icon="play"
-              size="large"
-              palette="white"
-              onClick={() => onSlideClick && onSlideClick(currentSlide)}
-            />
           }
           <SwipeableViews
             style={sliderRootElementStyle}

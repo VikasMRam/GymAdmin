@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { string, func, object } from 'prop-types';
 import { Field } from 'redux-form';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
@@ -22,6 +22,7 @@ const StyledField = styled(Field)`
   display: grid;
   grid-gap: ${size('spacing.large')};
   grid-template-columns: repeat(auto-fit, ${size('mobileLayout.col2')});
+  margin-right: -${size('spacing.regular')};
   margin-bottom: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {

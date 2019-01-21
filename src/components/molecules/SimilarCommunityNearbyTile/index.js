@@ -19,7 +19,7 @@ const ImageWrapper = styled(Image)`
   margin-bottom: ${size('spacing.regular')};
 
   > img {
-    border-radius: ${size('border.xxLarge')};
+    border-radius: ${size('spacing.small')};
   }
 `;
 ImageWrapper.displayName = 'ImageWrapper';
@@ -44,7 +44,6 @@ const PriceAndRatingWrapper = styled.div`
 `;
 
 const StyledIcon = styled(Icon)`
-  padding-top: ${size('spacing.small')};
   margin-right: ${size('spacing.regular')};
 `;
 

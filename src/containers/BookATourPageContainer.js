@@ -4,7 +4,7 @@ import { object, func, bool } from 'prop-types';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { connectController } from 'sly/controllers';
 import withServerState from 'sly/store/withServerState';
-import { getDetail, isResourceDetailRequestComplete } from 'sly/store/selectors';
+import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
 import { BOOK_A_TOUR } from 'sly/services/api/actions';
@@ -14,9 +14,9 @@ import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 const eventCategory = 'BAT';
 
 const BookATourPageContainer = ({
-  community, user, postUserAction, history, userAction, isUserFetchDone,
+  community, user, postUserAction, history, userAction,
 }) => {
-  if (!community || !userAction || !isUserFetchDone) {
+  if (!community || !userAction) {
     return null;
   }
   const { id, url } = community;
@@ -64,7 +64,6 @@ BookATourPageContainer.propTypes = {
   userAction: object,
   postUserAction: func.isRequired,
   history: object.isRequired,
-  isUserFetchDone: bool,
 };
 
 const getCommunitySlug = match => match.params.communitySlug;
@@ -72,9 +71,8 @@ const mapStateToProps = (state, { match }) => {
   const communitySlug = getCommunitySlug(match);
   return {
     user: getDetail(state, 'user', 'me'),
-    userAction: getDetail(state, 'userAction'),
+    userAction: getDetail(state, 'userAction') || {},
     community: getDetail(state, 'community', communitySlug),
-    isUserFetchDone: isResourceDetailRequestComplete(state, 'user'),
   };
 };
 const mapDispatchToProps = (dispatch) => {

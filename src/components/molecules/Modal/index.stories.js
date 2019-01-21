@@ -11,16 +11,11 @@ storiesOf('Molecules|Modal', module)
       Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
     </Modal>
   ))
-  .add('with heading', () => (
-    <Modal onClose={action('closed')} heading={<h1>Hello</h1>} isOpen>
-      Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.
-    </Modal>
-  ))
   .add('closeable', () => (
     <Modal onClose={action('closed')} closeable isOpen>
       <Heading>
-        {`Hey ho,
-        let's go`}
+        Hey ho,
+        let&apos;s go
       </Heading>
       <Block>
         Ullamco et reprehenderit magna cillum ullamco consectetur et enim aliqua.

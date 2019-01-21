@@ -1,17 +1,20 @@
 import React from 'react';
-import { string, bool } from 'prop-types';
+import { bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
+import { variation as variationPropType } from 'sly/propTypes/variation';
+import { palette as palettePropType } from 'sly/propTypes/palette';
+
+const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
 const HRStyled = styled.hr`
   border: 0;
   padding: 0;
-  margin: 0;
-  margin-bottom: ${size('spacing.xLarge')};
-  border-top: 1px solid ${palette('slate', 'stroke')};
-  
+  margin: ${size('spacing.xLarge')} 0;
+  border-top: 1px solid ${getColor};
+
   ${ifProp('fullWidth', css`
     // Hacky way to implement a Hr beyond the fixed width container
     width: 100vw;
@@ -22,12 +25,14 @@ const HRStyled = styled.hr`
 const Hr = props => <HRStyled {...props} />;
 
 Hr.propTypes = {
-  palette: string,
+  palette: palettePropType,
   fullWidth: bool,
+  variation: variationPropType,
 };
 
 Hr.defaultProps = {
   palette: 'slate',
+  variation: 'stroke',
 };
 
 export default Hr;

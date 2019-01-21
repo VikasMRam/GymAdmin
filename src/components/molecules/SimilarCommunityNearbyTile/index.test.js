@@ -30,7 +30,7 @@ describe('SimilarCommunityNearbyTile', () => {
     expect(wrapper.find('ImageWrapper')).toHaveLength(1);
     expect(wrapper.find('Name')).toHaveLength(1);
     expect(wrapper.find(Block)).toHaveLength(1);
-    expect(wrapper.find(Block).dive().text()).toContain('<Styled(Icon) />4.4');
+    expect(wrapper.find(Block).dive().text()).toContain('<StyledIcon />4.4');
     expect(wrapper.contains('4.4')).toBeTruthy;
   });
 
@@ -58,7 +58,7 @@ describe('SimilarCommunityNearbyTile', () => {
     expect(wrapper.find('ImageWrapper')).toHaveLength(1);
     expect(wrapper.find('Name')).toHaveLength(1);
     expect(wrapper.find(Block)).toHaveLength(1);
-    expect(wrapper.find(Block).dive().text()).toContain('<Styled(Icon) />4.4');
+    expect(wrapper.find(Block).dive().text()).toContain('<StyledIcon />4.4');
     expect(wrapper.contains('4.4')).toBeTruthy;
   });
 
@@ -74,7 +74,7 @@ describe('SimilarCommunityNearbyTile', () => {
     expect(wrapper.find('ImageWrapper')).toHaveLength(1);
     expect(wrapper.find('Name')).toHaveLength(1);
     expect(wrapper.find(Block)).toHaveLength(1);
-    expect(wrapper.find(Block).dive().text()).toContain('<Styled(Icon) />4.4');
+    expect(wrapper.find(Block).dive().text()).toContain('<StyledIcon />4.4');
     expect(wrapper.contains('4.4')).toBeTruthy;
   });
 
@@ -90,7 +90,7 @@ describe('SimilarCommunityNearbyTile', () => {
     expect(wrapper.find('ImageWrapper')).toHaveLength(1);
     expect(wrapper.find('Name')).toHaveLength(1);
     expect(wrapper.find(Block)).toHaveLength(1);
-    expect(wrapper.find(Block).dive().text()).toContain('<Styled(Icon) />4.4');
+    expect(wrapper.find(Block).dive().text()).toContain('<StyledIcon />4.4');
     expect(wrapper.contains('4.4')).toBeTruthy;
   });
 });

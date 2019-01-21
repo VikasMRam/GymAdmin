@@ -36,8 +36,9 @@ const Column = makeColumn(styled.div`
     height: 100%;
   }
 `);
-const Body = makeBody(styled.div``);
-const Controls = makeControls(styled.div``);
+
+const Body = makeBody('div');
+const Controls = makeControls('div');
 
 const StyledCommunityInfo = styled(CommunityInfo)`
   background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));

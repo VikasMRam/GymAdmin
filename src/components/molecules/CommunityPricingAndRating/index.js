@@ -22,6 +22,7 @@ const DescriptionBlock = styled(Block)`
 
 const MoSpan = styled.span`
   font-size: ${size('text.caption')};
+  font-weight: normal;
 `;
 
 const StyledIcon = styled(Icon)`
@@ -41,7 +42,7 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
         {price > 0 &&
           <StyledCommunityPricingWrapper>
             <DescriptionBlock size="caption">{priceDescription}</DescriptionBlock>
-            <Block size="title">
+            <Block size="title" weight="medium">
               ${price}
               <MoSpan size="caption">/mo<sup>*</sup></MoSpan>
             </Block>
@@ -50,15 +51,15 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
         {ratingFixed > 0 &&
           <div>
             <DescriptionBlock size="caption">Average Rating</DescriptionBlock>
-            <Block size="title">
-              <StyledIcon icon="star" palette="primary" />
+            <Block size="title" weight="medium">
+              <StyledIcon icon="star" palette="secondary" />
               {ratingFixed}
             </Block>
           </div>
         }
       </Wrapper>
       {price > 0 &&
-        <StyledBlock size="caption">
+        <StyledBlock size="caption" palette="grey">
           * Your pricing will vary depending on your specific room and care service needs.
         </StyledBlock>
       }
@@ -73,7 +74,7 @@ CommunityPricingAndRating.propTypes = {
 };
 
 CommunityPricingAndRating.defaultProps = {
-  priceDescription: 'Est. pricing from',
+  priceDescription: 'Estimated pricing',
   price: 0,
   rating: 0,
 };

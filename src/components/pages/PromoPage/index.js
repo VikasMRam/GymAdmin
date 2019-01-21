@@ -416,7 +416,7 @@ const PromoPage = ({
     <Fragment>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
-        <Modal layout="searchBox" closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}><Heading>Please enter a location:</Heading><SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} /></Modal>
+        <Modal layout="searchBox" closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}><Heading size="subtitle">Please enter a location:</Heading><SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} /></Modal>
         <StyledSection title="Discover Homes Near You">
           <TwoColumnWrapper>
             {firstRowDiscoverHomesComponents}

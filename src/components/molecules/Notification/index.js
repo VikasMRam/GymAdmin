@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   white-space: nowrap;
-  padding: ${size('spacing.small')} ${size('spacing.large')};
+  padding: ${size('spacing.regular')} ${size('spacing.large')};
   border-radius: ${size('spacing.small')};
   ${switchProp('type', {
     default: css`background-color: ${palette('slate', 'base')};`,

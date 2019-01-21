@@ -3,31 +3,35 @@ import { arrayOf, shape, string, number, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
-// import { Button, Hr } from 'sly/components/atoms';
+import { Block } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
 
-const ReviewHeadingDiv = styled.div`
-  font-weight: bold;
+const ReviewHeadingDiv = styled(Block)`
+  margin-bottom: ${size('spacing.large')};
 `;
 
 const RatingsDiv = styled.div`
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: ${size('spacing.large')};
   margin-bottom: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    grid-template-columns: 50% 50%;
+  }
 `;
 
 const StartNumDiv = styled.div`
   display: flex;
+  margin-right: ${size('spacing.large')};
 `;
 
 export const ReviewDiv = styled.div`
-  padding-top: ${size('spacing.large')};
-  padding-right: ${size('spacing.large')};
   display: flex;
 `;
 
 const ReviewProviderDiv = styled.div`
   display: flex;
-  padding-top: ${size('spacing.small')};
-  padding-left: ${size('spacing.large')};
   > a {
     text-decoration: none;
   }
@@ -50,17 +54,13 @@ const Link = styled.a`
   color: ${palette('primary', 'base')};
 `;
 
-const DisclaimerDiv = styled.div`
-  margin-bottom: ${size('spacing.large')};
-`;
-
 const GatheredReviewRatings = ({ reviewRatings, onReviewLinkClicked }) => {
   /* eslint-disable react/no-array-index-key */
   const ratings = reviewRatings.map((review, i) => {
     return (
       <ReviewDiv key={review.name + i}>
         <StartNumDiv>
-          <Rating value={review.avgRating} />
+          <Rating value={review.avgRating} palette="secondary" />
           {' ('}{review.numReviews }{')'}
         </StartNumDiv>
         <ReviewProviderDiv>
@@ -80,7 +80,7 @@ const GatheredReviewRatings = ({ reviewRatings, onReviewLinkClicked }) => {
     <div>
       {reviewRatings.length > 0 && (
         <div>
-          <ReviewHeadingDiv>
+          <ReviewHeadingDiv weight="medium">
             Reviews gathered from across the web
           </ReviewHeadingDiv>
           <RatingsDiv>{ratings}</RatingsDiv>
@@ -94,11 +94,11 @@ const GatheredReviewRatings = ({ reviewRatings, onReviewLinkClicked }) => {
             <Button onClick={onLeaveReview}>Leave a Review</Button>
           </LeaveAReviewButtonDiv>
           <Hr /> */}
-          <DisclaimerDiv>
+          <Block size="caption" palette="grey">
             {`Disclaimer: All trademarks and copyrights for names are owned by the respective companies.
             They do not endorse Seniorly and are not
             related to Seniorly's service in any way.`}
-          </DisclaimerDiv>
+          </Block>
         </div>
       )}
     </div>
@@ -112,7 +112,7 @@ GatheredReviewRatings.propTypes = {
     reviewsUrl: string.isRequired,
     avgRating: number.isRequired,
   })).isRequired,
-  onLeaveReview: func,
+  // onLeaveReview: func,
   onReviewLinkClicked: func,
 };
 

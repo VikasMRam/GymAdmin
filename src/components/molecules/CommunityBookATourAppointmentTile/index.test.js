@@ -21,6 +21,6 @@ describe('CommunityBookATourAppointmentTile', () => {
     const wrapper = wrap().dive();
     expect(wrapper.contains(defaultProps.communityName)).toBe(true);
     expect(wrapper.contains(defaultProps.appointmentText)).toBe(true);
-    expect(wrapper.find('Styled(Image)')).toHaveLength(1);
+    expect(wrapper.find('StyledImage')).toHaveLength(1);
   });
 });

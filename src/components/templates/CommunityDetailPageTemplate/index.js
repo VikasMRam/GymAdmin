@@ -1,60 +1,202 @@
-import React, { Fragment } from 'react';
-import { any } from 'prop-types';
+import React from 'react';
+import { string } from 'prop-types';
 import styled from 'styled-components';
+import classes from 'classnames';
 
 import { size } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
-import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
-import Footer from 'sly/components/organisms/Footer';
+import { TemplateHeader } from 'sly/components/templates/BasePageTemplate';
+import FooterOrganism from 'sly/components/organisms/Footer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 
-const TwoColummnWrapper = styled.div`
-  display: flex;
-`;
-const MainWrapper = styled.div`
-  width: 100%;
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${size('layout.col8')};
+export const CommunityDetailPageTemplate = styled.main`
+  .overlayWrapper {
+    margin: auto;
+    width: 100%;
+    padding: 0 ${size('spacing.large')};
+
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      padding: 0;
+      width: ${size('layout.col9')};
+
+      > section {
+        width: ${size('tabletLayout.col8')};
+        margin: auto;
+      }
+    }
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      width: ${size('layout.col12')};
+
+      > section {
+        width: auto;
+        margin: auto;
+      }
+    }
   }
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    margin-right: ${size('spacing.xLarge')};
+
+  .overlayGallery {
+    margin: 0 -${size('spacing.large')};
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      width: ${size('layout.col9')};
+      margin-left: -${size('tabletLayout.gutter')};
+    }
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      width: auto;
+      margin: 0;
+    }
   }
-`;
-const ColumnWrapper = styled.aside`
-  display: none;
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: ${size('layout.col4')};
-    display: block;
+
+  .overlayHeader {
+    grid-row: 1;
+  }
+
+  .overlayTwoColumn {
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      width: ${size('mobileLayout.col4')};
+    }
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      width: ${size('tabletLayout.col8')};
+      margin: auto;
+    }
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      width: auto;
+      display: grid;
+      grid-template-columns: ${size('layout.col8')} auto;
+      grid-gap: 0 ${size('layout.gutter')};
+    }
+  }
+
+  .overlayBody {
+    grid-row: 2;
+
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      grid-column: 1 / 2;
+    }
+  }
+
+  .overlayColumn {
+    grid-row: 2;
+    grid-column: 2 / 2;
+    display: none;
+
+    @media screen and (min-width: ${size('breakpoint.laptop')}) {
+      display: block;
+    }
   }
 `;
 
-const CommunityDetailPageTemplate = ({
-  children,
-  column,
-  bottom,
-  bannerNotification,
-}) => (
-  <Fragment>
-    <TemplateHeader>
-      <HeaderContainer />
-      {bannerNotification && <BannerNotification>{bannerNotification}</BannerNotification>}
-    </TemplateHeader>
-    <TemplateContent hasStickyFooter>
-      <TwoColummnWrapper>
-        <MainWrapper>{children}</MainWrapper>
-        <ColumnWrapper>{column}</ColumnWrapper>
-      </TwoColummnWrapper>
-      {bottom}
-    </TemplateContent>
-    <Footer />
-  </Fragment>
-);
+export const makeHeader = () => {
+  function Header({ className, bannerNotification, ...props }) {
+    return (
+      <TemplateHeader
+        className={classes('overlayHeader', className)}
+        {...props}
+      >
+        <HeaderContainer />
+        {bannerNotification && <BannerNotification>{bannerNotification}</BannerNotification>}
+      </TemplateHeader>
+    );
+  }
+  Header.propTypes = {
+    className: string,
+    bannerNotification: string,
+  };
 
-CommunityDetailPageTemplate.propTypes = {
-  children: any.isRequired,
-  column: any.isRequired,
-  bottom: any.isRequired,
-  bannerNotification: any,
+  return Header;
 };
 
-export default CommunityDetailPageTemplate;
+export const makeGallery = (Component) => {
+  function Gallery({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayGallery', className)}
+        {...props}
+      />
+    );
+  }
+  Gallery.propTypes = {
+    className: string,
+  };
+
+  return Gallery;
+};
+
+export const makeWrapper = (Component) => {
+  function Wrapper({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayWrapper', className)}
+        {...props}
+      />
+    );
+  }
+  Wrapper.propTypes = {
+    className: string,
+  };
+
+  return Wrapper;
+};
+
+export const makeTwoColumn = (Component) => {
+  function TwoColumn({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayTwoColumn', className)}
+        {...props}
+      />
+    );
+  }
+  TwoColumn.propTypes = {
+    className: string,
+  };
+
+  return TwoColumn;
+};
+
+export const makeColumn = (Component) => {
+  function Column({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayColumn', className)}
+        {...props}
+      />
+    );
+  }
+  Column.propTypes = {
+    className: string,
+  };
+
+  return Column;
+};
+
+export const makeBody = (Component) => {
+  function Body({ className, ...props }) {
+    return (
+      <Component
+        className={classes('overlayBody', className)}
+        {...props}
+      />
+    );
+  }
+  Body.propTypes = {
+    className: string,
+  };
+
+  return Body;
+};
+
+export const makeFooter = () => {
+  function Footer({ className, ...props }) {
+    return (
+      <FooterOrganism
+        className={classes('overlayFooter', className)}
+        {...props}
+      />
+    );
+  }
+  Footer.propTypes = {
+    className: string,
+  };
+
+  return Footer;
+};

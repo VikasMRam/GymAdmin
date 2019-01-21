@@ -4,7 +4,6 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
-import { Experiment, Variant } from 'sly/services/experiments';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import { Heading, Block, Image } from 'sly/components/atoms';
 import Link from 'sly/components/atoms/Link';

@@ -681,9 +681,12 @@
     "estimatedPrice": {
       "providedAverage": 7046,
       "estimatedAverage": 0,
-      "cityAverage": 0,
+      "cityAverage": 1000,
       "stateAverage": 4000,
-      "nationalAverage": 3628
+      "nationalAverage": 3628,
+      "homeCareMAverage": 2000,
+      "homeCareHAverage": 1500,
+      "adultDayAverage": 2500
     },
     "communityDescription": "",
     "localDetails": "<p><strong>Local Health: </strong>The nearest hospital is Marc M. Zare, MD: Advanced Laparoscopic Surgery, which is located within 8 miles from Friendship House. There are 19 other hospitals within 8 miles of the community. There are also 20 doctors' offices, 20 dentists, and 20 other related places including  and .<br><strong>Local Wellness: </strong>Residents living at Friendship House can enjoy easy access to 20 nearby beauty salons like Face It Beautiful! Skin Care. There area also 20 spas within a 8 mile radius of the community. For those residents that are a bit more active and enjoy staying in shape, The Club at Los Gatos is located just 4.653948709025562 miles.There are also 20 other gyms nearby including 24 Hour Fitness. <br><strong>Local Amenities: </strong>Friendship House is located near many local amenities like Kings Court, Campbell and Hooters. There are 20 cafes and 20 restaurants within a 5-mile radius of the community. There are also 20 supermarkets and 20 shopping malls nearby. <br><strong>Local Spirituality: </strong> There are 20 nearby places of worship for residents living at Friendship House. WestGate Church | South Hills Campus is the closest Church.</p>"
