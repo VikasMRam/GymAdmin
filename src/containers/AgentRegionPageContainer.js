@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { string, arrayOf, func, object } from 'prop-types';
 
 import agentPropType from 'sly/propTypes/agent';
@@ -11,14 +11,11 @@ import { getAgentUrl } from 'sly/services/helpers/url';
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/agents';
 import { getSearchParams } from 'sly/services/helpers/search';
+import { connectController } from 'sly/controllers';
 
-const AgentRegionPageContainer = ({
-  agentsList, regionSlug, citySlug, postUserAction, userAction, pathName, history,
-}) => {
-  if (!userAction) {
-    return null;
-  }
-  const handleLocationSearch = (result) => {
+class AgentRegionPageContainer extends Component {
+  handleLocationSearch = (result) => {
+    const { history } = this.props;
     const event = {
       action: 'submit', category: 'agentsSearch', label: result.formatted_address,
     };
@@ -28,44 +25,50 @@ const AgentRegionPageContainer = ({
     const { path } = filterLinkPath(searchParams);
     history.push(path);
   };
-  const newAgentsList = agentsList
-    .filter(agent => agent.status > 0)
-    .map((agent) => {
-      const url = getAgentUrl(agent);
-      const newAgent = { ...agent, url };
-      return newAgent;
-    });
-  let locationName = null;
-  if (citySlug) {
-    locationName = titleize(citySlug);
-  } else {
-    locationName = titleize(regionSlug);
+  render() {
+    const {
+      agentsList, regionSlug, citySlug, postUserAction, userAction, pathName,
+    } = this.props;
+    const newAgentsList = agentsList
+      .filter(agent => agent.status > 0)
+      .map((agent) => {
+        const url = getAgentUrl(agent);
+        const newAgent = { ...agent, url };
+        return newAgent;
+      });
+    let locationName = null;
+    if (citySlug) {
+      locationName = titleize(citySlug);
+    } else {
+      locationName = titleize(regionSlug);
+    }
+    const title = `${locationName} Partner Agents`;
+    return (
+      <AgentRegionPage
+        onLocationSearch={this.handleLocationSearch}
+        agentsList={newAgentsList}
+        title={title}
+        locationName={locationName}
+        postUserAction={postUserAction}
+        userDetails={userAction.userDetails}
+        pathName={pathName}
+        isRegionPage={!citySlug}
+      />
+    );
   }
-  const title = `${locationName} Partner Agents`;
-  return (
-    <AgentRegionPage
-      onLocationSearch={handleLocationSearch}
-      agentsList={newAgentsList}
-      title={title}
-      locationName={locationName}
-      postUserAction={postUserAction}
-      userDetails={userAction.userDetails}
-      pathName={pathName}
-      isRegionPage={!citySlug}
-    />
-  );
-};
+}
 
 const mapStateToProps = (state, { match, location }) => {
   const { params } = match;
   const { region, city } = params;
   const { pathname } = location;
   const searchParams = getSearchParams(match, location);
+  const userAction = getDetail(state, 'userAction') || {};
   return {
     regionSlug: region,
     citySlug: city,
     agentsList: getList(state, 'agent', searchParams),
-    userAction: getDetail(state, 'userAction'),
+    userAction,
     pathName: pathname,
   };
 };
@@ -112,8 +115,9 @@ AgentRegionPageContainer.propTypes = {
 };
 
 export default withServerState({
-  mapStateToProps,
-  mapDispatchToProps,
   fetchData,
   handleError,
-})(AgentRegionPageContainer);
+})(connectController(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AgentRegionPageContainer));
