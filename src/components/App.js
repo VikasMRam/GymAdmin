@@ -19,7 +19,7 @@ import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
 import NearMePageContainer from 'sly/containers/NearMePageContainer';
 import PromoPageContainer from 'sly/containers/PromoPageContainer';
-import AgentsProfilePageContainer from 'sly/containers/AgentsProfilePageContainer';
+import AgentsPageContainer from 'sly/containers/AgentsPageContainer';
 import OurHistoryPage from 'sly/components/pages/OurHistoryPage';
 import PasswordResetPageContainer from 'sly/containers/PasswordResetPageContainer';
 import HowItWorksDetailPageContainer from 'sly/containers/HowItWorksDetailPageContainer';
@@ -30,6 +30,9 @@ import LegalPolicyPage from 'sly/components/pages/LegalPolicyPage';
 import EntityApprovalContainer from 'sly/containers/EntityApprovalContainer';
 import BookATourPageContainer from 'sly/containers/BookATourPageContainer';
 import PricingWizardPageContainer from 'sly/containers/PricingWizardPageContainer';
+import AgentProfilePageContainer from 'sly/containers/AgentProfilePageContainer';
+import AgentRegionPageContainer from 'sly/containers/AgentRegionPageContainer';
+import PartnersPage from 'sly/components/pages/PartnersPage';
 
 setGlobalStyles();
 
@@ -110,7 +113,27 @@ export default class App extends Component {
     },
     {
       path: '/agents',
-      component: AgentsProfilePageContainer,
+      component: AgentsPageContainer,
+      exact: true,
+    },
+    {
+      path: '/agents/partners',
+      component: PartnersPage,
+      exact: true,
+    },
+    {
+      path: '/agents/:region/:city/:agentSlug',
+      component: AgentProfilePageContainer,
+      exact: true,
+    },
+    {
+      path: '/agents/:region/:city/',
+      component: AgentRegionPageContainer,
+      exact: true,
+    },
+    {
+      path: '/agents/:region',
+      component: AgentRegionPageContainer,
       exact: true,
     },
     {

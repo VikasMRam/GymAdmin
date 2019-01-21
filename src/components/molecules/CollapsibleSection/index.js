@@ -4,40 +4,28 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
 
-import { size, key } from 'sly/components/themes';
-import { Hr, Heading, Icon } from 'sly/components/atoms';
-
-const marginBottom = (p) => {
-  if (p.collapsed) {
-    return 0;
-  }
-  return p.paddedContent ?
-    size('spacing.large') : size('spacing.xLarge');
-};
+import { size, key, palette } from 'sly/components/themes';
+import { Icon, ClampedText, Heading } from 'sly/components/atoms';
+import { weight as weightPropType } from 'sly/propTypes/weight';
 
 const Section = styled.section`
-  padding-bottom: ${marginBottom};
   transition: padding-bottom ${key('transitions.default')};
   max-width: 100%;
-`;
 
-const StyledHr = styled(Hr)`
-  margin-bottom: 0;
+  margin-bottom: ${size('spacing.large')};
+  border: ${p => p.borderless ? 'none' : size('border.regular')} solid ${palette('slate', 'stroke')};
+  border-radius: ${p => p.borderless ? 'none' : size('spacing.small')};
 `;
 
 export const Header = styled.div`
-  display: flex;
+  display: grid;
   justify-content: space-between;
-  align-items: center;
-  padding: ${ifProp('noHr', size('spacing.large'), size('spacing.xLarge'))} 0;
+  grid-template-columns: auto auto;
+  padding: ${size('spacing.xLarge')} ${p => p.borderless ? 0 : ''};
 
   :hover {
     cursor: pointer;
   }
-`;
-
-const StyledHeading = styled(Heading)`
-  margin: 0;
 `;
 
 const contentHeight = ({ collapsed, maxHeight }) => (!collapsed ? `${maxHeight}px` : 0);
@@ -58,7 +46,7 @@ const Content = styled.div`
 const getHeadingLevel = (size) => {
   switch (size) {
     case 'small':
-      return 'subtitle';
+      return 'body';
     default:
       return 'title';
   }
@@ -66,11 +54,33 @@ const getHeadingLevel = (size) => {
 const getHeadingSize = (size) => {
   switch (size) {
     case 'small':
-      return 'subtitle';
+      return 'body';
     default:
-      return 'title';
+      return 'subtitle';
   }
 };
+
+export const MainSection = styled.div`
+  padding: 0 ${size('spacing.xLarge')};
+  padding-bottom: ${size('spacing.xLarge')};
+  ${ifProp('collapsed', css`
+    padding-bottom: 0;
+  `)};
+  ${ifProp('noPadding', css`
+    padding: 0;
+  `)};
+`;
+
+export const BottomSection = styled.div`
+  background-color: ${palette('grey', 'background')};
+  padding: ${size('spacing.xLarge')};
+  border-top: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+`;
+
+const StyledHeading = styled(Heading)`
+  margin: 0;
+  display: inherit;
+`;
 
 export default class CollapsibleSection extends Component {
   static propTypes = {
@@ -79,15 +89,17 @@ export default class CollapsibleSection extends Component {
     collapsedDefault: bool.isRequired,
     size: oneOf(['small', 'regular', 'large']),
     innerRef: object,
-    noHr: bool,
-    paddedContent: bool,
+    className: string,
+    clampTitle: bool,
+    headingWeight: weightPropType,
+    borderless: bool,
   };
 
   static defaultProps = {
     collapsedDefault: false,
     size: 'regular',
-    noHr: false,
-    paddedContent: false,
+    headingWeight: 'medium',
+    borderless: false,
   };
 
   state = {
@@ -112,9 +124,10 @@ export default class CollapsibleSection extends Component {
       collapsedDefault,
       size,
       innerRef,
-      paddedContent,
-      // TODO: Add Stories and Test for noHr
-      noHr,
+      className,
+      clampTitle,
+      headingWeight,
+      borderless,
       ...props
     } = this.props;
     const { collapsed, maxHeight } = this.state;
@@ -122,17 +135,26 @@ export default class CollapsibleSection extends Component {
       <Measure onResize={this.onResize}>
         {({ measureRef }) => (
           <Section
-            paddedContent={paddedContent}
             collapsed={collapsed}
+            borderless={borderless}
             size={size}
             innerRef={innerRef}
+            className={className}
           >
-            {!noHr && <StyledHr />}
-            <Header onClick={this.toggle} noHr={noHr}>
-              <StyledHeading level={getHeadingLevel(size)} size={getHeadingSize(size)}>
-                {title}
-              </StyledHeading>
-              <Icon icon="chevron" size="large" palette="slate" flip={!collapsed} />
+            <Header onClick={this.toggle} borderless={borderless}>
+              {clampTitle &&
+                <StyledHeading weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
+                  <ClampedText weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
+                    {title}
+                  </ClampedText>
+                </StyledHeading>
+              }
+              {!clampTitle &&
+                <StyledHeading weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
+                  {title}
+                </StyledHeading>
+              }
+              <Icon icon="chevron" palette="slate" flip={!collapsed} />
             </Header>
             <Content maxHeight={maxHeight} collapsed={collapsed}>
               <div ref={measureRef} {...props}>

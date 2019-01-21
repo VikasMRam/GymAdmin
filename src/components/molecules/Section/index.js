@@ -1,26 +1,52 @@
 import React from 'react';
-import { string, node } from 'prop-types';
+import { string, node, bool } from 'prop-types';
 import styled from 'styled-components';
 
-import { Heading } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
+import { spacing as spacingPropType } from 'sly/propTypes/spacing';
+import { Heading, Block } from 'sly/components/atoms';
 
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.xLarge')};
+const margin = ({ headingMargin }) => size('spacing', headingMargin);
+
+const HeadingWrapper = styled.div`
+  margin-bottom: ${margin};
 `;
 
-const Section = ({ title, children, ...props }) => (
+const CenteredHeading = styled(Heading)`
+  text-align: center;
+`;
+
+const Section = ({
+  title, subtitle, children, centerTitle, titleSize, headingMargin, ...props
+}) => (
   <section {...props}>
-    {title &&
-      <StyledHeading>{title}</StyledHeading>
-    }
+    <HeadingWrapper headingMargin={headingMargin}>
+      {title && (
+        centerTitle ?
+          <CenteredHeading size={titleSize} >{title}</CenteredHeading> :
+          <Heading size={titleSize}>{title}</Heading>
+      )}
+      {subtitle &&
+        <Block>
+          {subtitle}
+        </Block>
+      }
+    </HeadingWrapper>
     <article>{children}</article>
   </section>
 );
 
 Section.propTypes = {
   title: string,
+  subtitle: string,
+  centerTitle: bool,
   children: node,
+  titleSize: string,
+  headingMargin: spacingPropType,
+};
+
+Section.defaultProps = {
+  headingMargin: 'xLarge',
 };
 
 export default Section;

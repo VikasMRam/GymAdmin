@@ -226,7 +226,7 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.use((err, req, res, next) => {
+app.use((err, req) => {
   if (err) {
     const errorObj = {
       url: req.originalUrl,

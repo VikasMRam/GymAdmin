@@ -11,17 +11,22 @@ storiesOf('Molecules|CollapsibleSection', module)
     </CollapsibleSection>
   ))
   .add('small', () => (
-    <CollapsibleSection title="Section title">
+    <CollapsibleSection size="small" title="Section title">
       { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
     </CollapsibleSection>
   ))
   .add('large', () => (
-    <CollapsibleSection title="Section title">
+    <CollapsibleSection size="large" title="Section title">
       { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
     </CollapsibleSection>
   ))
   .add('splicit minHeight', () => (
     <CollapsibleSection title="Section title">
+      { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
+    </CollapsibleSection>
+  ))
+  .add('clampTitle', () => (
+    <CollapsibleSection clampTitle title="Section title Section title Section title Section title Section title Section title Section title Section title Section title Section title">
       { 'Officia aliqua reprehenderit fugiat occaecat quis non eiusmod. '.repeat(25) }
     </CollapsibleSection>
   ));

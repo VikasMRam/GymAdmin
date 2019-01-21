@@ -28,6 +28,10 @@ export const FullScreenWizard = styled.div`
       }
 
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
+        width: ${size('tabletLayout.col6')};
+      }
+      
+      @media screen and (min-width: ${size('breakpoint.laptop')}) {
         width: ${size('layout.col6')};
       }
     }

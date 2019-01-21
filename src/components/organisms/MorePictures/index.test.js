@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import MorePictures from 'sly/components/organisms/MorePictures';
-import PictureTile from 'sly/components/molecules/PictureTile';
+import { Image } from 'sly/components/atoms';
 
 const gallery = {
   images: [
@@ -34,14 +34,14 @@ describe('MorePictures', () => {
     expect(wrapper.contains('test')).toBe(false);
   });
 
-  it('renders PictureTile properly', () => {
+  it('renders Image properly', () => {
     const wrapper = wrap();
-    expect(wrapper.find(PictureTile)).toHaveLength(2);
+    expect(wrapper.find(Image)).toHaveLength(2);
   });
 
-  it('renders PictureTile with correct image alt', () => {
+  it('renders Image with correct image alt', () => {
     const wrapper = wrap();
-    const tiles = wrapper.find(PictureTile);
+    const tiles = wrapper.find(Image);
 
     tiles.forEach((t, i) => {
       expect(t.prop('alt')).toBe(`${communityName} ${city} ${state} ${i + 1}`);

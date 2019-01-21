@@ -4,13 +4,28 @@ import { shallow } from 'enzyme';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
 
 const title = 'test title';
+const description = 'test description';
 const wrap = (props = {}) =>
   shallow(<OfferNotification title={title} {...props} />);
 
-// todo: add tests
 describe('OfferNotification', () => {
-  it('does not renders children when passed in', () => {
-    const wrapper = wrap();
-    expect(wrapper.contains('test')).toBe(false);
+  it('renders', () => {
+    const wrapper = wrap({ description });
+    const tWRapper = wrapper.find('TopWrapper');
+
+    expect(tWRapper).toHaveLength(1);
+    expect(tWRapper.contains(title)).toBe(true);
+    expect(tWRapper.contains(description)).toBe(true);
+    expect(wrapper.find('BigScreenLearnMore')).toHaveLength(0);
+  });
+
+  it('renders with hasLearnMore', () => {
+    const wrapper = wrap({ description, hasLearnMore: true });
+    const tWRapper = wrapper.find('TopWrapper');
+
+    expect(tWRapper).toHaveLength(1);
+    expect(tWRapper.contains(title)).toBe(true);
+    expect(tWRapper.contains(description)).toBe(true);
+    expect(wrapper.find('BigScreenLearnMore')).toHaveLength(1);
   });
 });

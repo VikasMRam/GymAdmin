@@ -11,7 +11,6 @@ const ClampedText = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
   font-size: ${textSize};
   color: ${palette('base')};
   ${switchProp('weight', {

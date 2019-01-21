@@ -4,13 +4,13 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
+import fullWidth from 'sly/components/helpers/fullWidth';
 import { Heading, Button, Block, Image } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
-const StyledButton = styled(Button)`
+const StyledButton = fullWidth(styled(Button)`
   margin-bottom: ${size('spacing.regular')};
-  width: 100%;
-`;
+`);
 
 const TopSection = styled.div`
   display: flex;

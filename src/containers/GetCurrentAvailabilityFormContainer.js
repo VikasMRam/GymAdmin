@@ -4,9 +4,7 @@ import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
 
 import { getDetail } from 'sly/store/selectors';
-import { resourceCreateRequest } from 'sly/store/resource/actions';
 import { createValidator, required, email } from 'sly/services/validation';
-
 import GetCurrentAvailabilityForm from 'sly/components/molecules/GetCurrentAvailabilityForm';
 
 const validate = createValidator({
@@ -22,7 +20,7 @@ const ReduxForm = reduxForm({
 })(GetCurrentAvailabilityForm);
 
 const GetCurrentAvailabilityFormContainer = ({
-  userDetails, submitExpressConversion, community,
+  userDetails, submitExpressConversion,
 }) => {
   const { email } = userDetails;
   const initialValues = { email };
@@ -31,13 +29,11 @@ const GetCurrentAvailabilityFormContainer = ({
     <ReduxForm
       initialValues={initialValues}
       onSubmit={submitExpressConversion}
-      community={community}
     />
   );
 };
 
 GetCurrentAvailabilityFormContainer.propTypes = {
-  community: object.isRequired,
   submitExpressConversion: func.isRequired,
   userDetails: object,
 };

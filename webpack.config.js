@@ -30,6 +30,7 @@ const {
 const { STORYBOOK_GIT_BRANCH, GOOGLE_MAPS_API_KEY } = process.env;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const SLY_ENV = process.env.SLY_ENV || 'development';
+const GA_ENV = process.env.GA_ENV || 'development';
 const PUBLIC_PATH = process.env.PUBLIC_PATH || '/react-assets';
 const HOST = process.env.HOST || 'http://www.lvh.me';
 const PORT = process.env.PORT || 8000;
@@ -55,6 +56,7 @@ console.info('Using config', JSON.stringify({
   STORYBOOK_GIT_BRANCH,
   NODE_ENV,
   SLY_ENV,
+  GA_ENV,
   PUBLIC_PATH,
   HOST,
   PORT,
@@ -147,6 +149,7 @@ const base = () =>
       'process.env.STORYBOOK_GIT_BRANCH': STORYBOOK_GIT_BRANCH,
       'process.env.NODE_ENV': NODE_ENV,
       'process.env.SLY_ENV': SLY_ENV,
+      'process.env.GA_ENV': GA_ENV,
       'process.env.PUBLIC_PATH': PUBLIC_PATH,
       'process.env.HOST': HOST,
       'process.env.PORT': PORT,

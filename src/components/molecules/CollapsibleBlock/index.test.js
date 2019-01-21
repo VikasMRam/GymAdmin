@@ -4,39 +4,18 @@ import Measure from 'react-measure';
 
 import CollapsibleBlock, { ReadMore } from 'sly/components/molecules/CollapsibleBlock';
 
-const wrap = (props = {}) => mount(<CollapsibleBlock {...props} />);
+const children = 'test '.repeat(1000);
+const wrap = (props = {}) => mount(<CollapsibleBlock {...props}>{children}</CollapsibleBlock>);
 
 describe('CollapsibleBlock', () => {
   it('renders children when passed in', () => {
-    const wrapper = wrap({ children: 'test' });
-    expect(wrapper.contains('test')).toBe(true);
+    const wrapper = wrap();
+    expect(wrapper.contains(children)).toBe(true);
   });
 
   it('renders props when passed in', () => {
     const wrapper = wrap({ id: 'foo' });
     expect(wrapper.find('div[id="foo"]')).toHaveLength(1);
-  });
-
-  it('renders default collapsed, calls toggle', () => {
-    const wrapper = wrap();
-    const readMore = wrapper.find(ReadMore);
-
-    expect(wrapper.state()).toEqual({ collapsed: true });
-    expect(readMore.text()).toEqual('Read more');
-    readMore.simulate('click');
-    expect(wrapper.state()).toEqual({ collapsed: false });
-    expect(readMore.text()).toEqual('Read less');
-  });
-
-  it('renders default collapsed, calls toggle', () => {
-    const wrapper = wrap({ collapsedDefault: false });
-    const readMore = wrapper.find(ReadMore);
-
-    expect(wrapper.state()).toEqual({ collapsed: false });
-    expect(readMore.text()).toEqual('Read less');
-    readMore.simulate('click');
-    expect(wrapper.state()).toEqual({ collapsed: true });
-    expect(readMore.text()).toEqual('Read more');
   });
 
   it('receives onResize event', () => {
@@ -49,6 +28,30 @@ describe('CollapsibleBlock', () => {
 
     onResize({ entry: { height: 600 } });
     expect(wrapper.state('maxHeight')).toEqual(600);
+  });
+
+  it('renders default collapsed, calls toggle', () => {
+    const wrapper = wrap();
+    wrapper.setState({ maxHeight: 600 });
+    const readMore = wrapper.find(ReadMore);
+
+    expect(wrapper.state()).toEqual({ maxHeight: 600, collapsed: true });
+    expect(readMore.text()).toContain('Show more');
+    readMore.simulate('click');
+    expect(wrapper.state()).toEqual({ maxHeight: 600, collapsed: false });
+    expect(readMore.text()).toContain('Show less');
+  });
+
+  it('renders default collapsed, calls toggle', () => {
+    const wrapper = wrap({ collapsedDefault: false });
+    wrapper.setState({ maxHeight: 600 });
+    const readMore = wrapper.find(ReadMore);
+
+    expect(wrapper.state()).toEqual({ maxHeight: 600, collapsed: false });
+    expect(readMore.text()).toContain('Show less');
+    readMore.simulate('click');
+    expect(wrapper.state()).toEqual({ maxHeight: 600, collapsed: true });
+    expect(readMore.text()).toContain('Show more');
   });
 
   it('passes block className to the parent', () => {

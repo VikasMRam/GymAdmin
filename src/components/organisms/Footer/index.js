@@ -6,7 +6,7 @@ import { size, palette } from 'sly/components/themes';
 import { Icon, Link, Hr } from 'sly/components/atoms';
 
 const FooterWrapper = styled.footer`
-  background-color: ${palette('slate', 'stroke')};
+  background-color: ${palette('slate', 'base')};
   color: ${palette('white', 'base')};
 `;
 
@@ -147,7 +147,7 @@ const Join = styled.div`
 const groups = {
   Company: [
     { name: 'Our Company', url: '/about', target: '_blank' },
-    { name: 'Seniorly Partner Agents', url: '/agents', target: '_blank' },
+    { name: 'Our Partner Agents', url: '/agents', target: '_blank' },
     { name: 'Career', url: 'https://angel.co/seniorly/jobs', target: '_blank' },
     { name: 'Press', url: '/about#/#press', target: '_blank' },
     { name: 'Contact', url: '/contact', target: '_blank' },

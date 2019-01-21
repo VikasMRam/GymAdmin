@@ -13,12 +13,13 @@ const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, v
 
 const Wrapper = styled.span`
   display: inline-block;
+  vertical-align: top;
   font-size: ${fontSize};
   color: ${prop('fill', getColor)};
   // sizes relative to set font-size
   width: ${fontSize};
   height: ${fontSize};
-  transform: ${ifProp('flip', 'rotate(180deg)', 'rotate(0deg)')};
+  ${ifProp('flip', 'transform: rotate(180deg)', '')};
   transition: transform ${key('transitions.fast')};
   & > svg {
     font-size: ${fontSize};
@@ -30,8 +31,12 @@ const Wrapper = styled.span`
 
 const Icon = ({ icon, size, ...props }) => {
   let svg;
+  // FIXME: hack to use captionsize icons with current icons until we clarify with Jared
+  const iconSize = size === 'caption'
+    ? 'regular'
+    : size;
   try {
-    svg = require(`!raw-loader!./icons/${icon}-${size}.svg`);
+    svg = require(`!raw-loader!./icons/${icon}-${iconSize}.svg`);
   } catch (e) {
     // eslint-disable-next-line no-console
     console.error('Icon not found:', `${icon}-${size}`);
@@ -45,7 +50,7 @@ const Icon = ({ icon, size, ...props }) => {
 Icon.propTypes = {
   icon: string.isRequired,
   width: number,
-  size: oneOf(['tiny', 'small', 'regular', 'large', 'xLarge', 'xxLarge']),
+  size: oneOf(['tiny', 'small', 'regular', 'caption', 'large', 'xLarge', 'xxLarge']),
   palette: palettePropType,
   variation: variationPropType,
   fill: string,
@@ -56,7 +61,7 @@ Icon.propTypes = {
 Icon.defaultProps = {
   flip: false,
   size: 'regular',
-  palette: 'primary',
+  palette: 'secondary',
   variation: 'base',
 };
 

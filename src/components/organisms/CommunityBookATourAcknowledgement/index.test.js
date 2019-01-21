@@ -25,6 +25,6 @@ describe('CommunityBookATourAcknowledgement', () => {
 
   it('onButtonClick is called', () => {
     const wrapper = wrap();
-    expect(wrapper.find('Styled(Button)').prop('href')).toEqual(similarCommunititesHref);
+    expect(wrapper.find('StyledButton').prop('href')).toEqual(similarCommunititesHref);
   });
 });

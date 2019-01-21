@@ -4,40 +4,27 @@ import { arrayOf, shape, string, func } from 'prop-types';
 import { Lazy } from 'react-lazy';
 import { ifProp } from 'styled-tools';
 
-
-import { size, palette } from 'sly/components/themes';
-import PictureTile from 'sly/components/molecules/PictureTile';
+import { size } from 'sly/components/themes';
+import { Image } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  > * {
-    width: 100%;
-    margin-bottom: ${size('spacing.xLarge')};
-    line-height: 0;
-    background-color: ${palette('slate', 'filler')};
-  }
+  margin-bottom: ${size('spacing.xLarge')};
   > *:hover {
     cursor: ${ifProp('hasOnPictureClick', 'pointer', 'initial')};
   }
 
+  display: grid;
+  grid-gap: ${size('mobileLayout.gutter')};
+  grid-template-columns: auto auto;
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    > * {
-      width: auto;
-      margin-right: ${size('spacing.xLarge')};
-    }
-    > *:nth-child(2n) {
-      margin-right: 0;
-    }
+    grid-gap: ${size('tabletLayout.gutter')};
+    grid-template-columns: ${size('tabletLayout.col4')} ${size('tabletLayout.col4')};
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    > *:nth-child(2n) {
-      margin-right: ${size('spacing.xLarge')};
-    }
-    > *:nth-child(4n) {
-      margin-right: 0;
-    }
+    grid-gap: ${size('layout.gutter')};
+    grid-template-columns: ${size('layout.col3')} ${size('layout.col3')} ${size('layout.col3')} ${size('layout.col3')};
   }
 `;
 
@@ -52,7 +39,7 @@ const MorePictures = ({
       key={image.id}
       onClick={() => onPictureClick && onPictureClick(image)}
     >
-      <PictureTile src={image.hd} aspectRatio="4:3" alt={`${communityName} ${city} ${state} ${i + 1}`} />
+      <Image src={image.hd} aspectRatio="4:3" alt={`${communityName} ${city} ${state} ${i + 1}`} />
     </Lazy>
   ));
   return (

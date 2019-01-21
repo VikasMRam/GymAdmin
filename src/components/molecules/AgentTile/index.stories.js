@@ -1,31 +1,43 @@
 import React from 'react';
+import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 
 import AgentTile from 'sly/components/molecules/AgentTile';
+import { size } from 'sly/components/themes';
 
-const name = 'Fonz';
-const picture = 'https://avatars.githubusercontent.com/u/113003';
-const title = 'Property Manager';
-const community = {
-  name: 'Rhoda Goldman Plaza',
-  url: '/assisted-living/california/san-francisco/rhoda-goldman-plaza',
+const Wrapper = styled.div`
+  width: ${size('layout.col4')};
+  margin: ${size('spacing.large')};
+`;
+
+const address = {
+  city: 'San Anselmo',
+  state: 'CA',
 };
 
-const userFull = {
-  name,
-  picture,
-  title,
+const aggregateRating = {
+  ratingValue: 4.5,
+  numRatings: 14,
 };
-const userNoTitle = { name, picture };
-const userNothing = { name };
-const userWithRating = { ...userFull, rating: 3.5 };
+
+const agentInfo = {
+  displayName: 'Fonz Wasserstrom',
+  slyPhone: '9258906575',
+  recentFamiliesHelped: 17,
+  profileImageUrl: 'https://avatars.githubusercontent.com/u/113003',
+  citiesServed: ['Utah', 'Calcuta'],
+};
+
+export const agent = {
+  url: '/agents/midwest/fonz-wasserstrom',
+  address,
+  aggregateRating,
+  info: agentInfo,
+};
 
 storiesOf('Molecules|AgentTile', module)
-  .add('default', () => <AgentTile user={userFull} community={community} />)
-  .add('with nothing', () => <AgentTile user={userNothing} />)
-  .add('with rating', () => (
-    <AgentTile user={userWithRating} community={community} />
-  ))
-  .add('with on title', () => (
-    <AgentTile user={userNoTitle} community={community} />
+  .add('default', () => (
+    <Wrapper>
+      <AgentTile agent={agent} />
+    </Wrapper>
   ));

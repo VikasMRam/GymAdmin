@@ -5,10 +5,10 @@ import styled from 'styled-components';
 
 
 import { size, palette } from 'sly/components/themes';
+import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { Button, Heading, Link, Hr, Block } from 'sly/components/atoms';
+import { Button, Heading, Link, Hr } from 'sly/components/atoms';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
-import AgentTile from 'sly/components/molecules/AgentTile';
 
 const StyledButton = styled(Button)`
   width: 100%;
@@ -23,55 +23,19 @@ const StyledForm = styled.form`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const AgentSectionWrapper = styled.div`
-  width: 100%;
-  padding: ${size('spacing.xLarge')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  margin-bottom: ${size('spacing.xLarge')};
-
-`;
-
-const AgentSectionText = styled.div`
-  font-weight: bold;  
-  margin-bottom: ${size('spacing.regular')};
-`;
-
-const AgentTileWrapper = styled.div`
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.tiny')};
-`;
-
 const SubHeading = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
-
-const phoneParser = str => str.replace(/[^\d]/g, '');
-const phoneFormatter = (value) => {
-  if (!value) {
-    return value;
-  }
-
-  const onlyNums = value.replace(/[^\d]/g, '');
-  if (onlyNums.length <= 3) {
-    return onlyNums;
-  }
-  if (onlyNums.length <= 6) {
-    return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3)}`;
-  }
-  return `${onlyNums.slice(0, 3)}-${onlyNums.slice(3, 6)}-${onlyNums.slice(6)}`;
-};
 
 const ConversionForm = ({
   handleSubmit,
   submitting,
   hasOnlyEmail,
-  agent,
   contact,
-  onAdvisorHelpClick,
 }) => (
   <div>
     <StyledForm onSubmit={handleSubmit}>
-      <Heading level="title" size="title">Get Pricing & Availability</Heading>
+      <Heading level="title" size="subtitle">Get Pricing & Availability</Heading>
       {contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
 
       <Hr />
@@ -105,19 +69,6 @@ const ConversionForm = ({
 
       <TosAndPrivacy />
     </StyledForm>
-    {agent &&
-      <AgentSectionWrapper>
-        <AgentSectionText>
-          We have matched you with a Seniorly partner agent to help you along the way.{' '}
-          <Link palette="primary" onClick={onAdvisorHelpClick}>Learn More</Link>
-        </AgentSectionText>
-        <AgentTileWrapper>
-          <AgentTile
-            user={{ name: agent.user.name, title: 'Seniorly Partner Agent', picture: agent.mainImage }}
-          />
-        </AgentTileWrapper>
-      </AgentSectionWrapper>
-    }
   </div>
 );
 

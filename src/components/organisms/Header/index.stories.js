@@ -42,7 +42,7 @@ class HeaderWithState extends Component {
   }
 }
 
-storiesOf('Molecules|Header', module)
+storiesOf('Organisms|Header', module)
   .add('default', () => (
     <Header headerItems={headerItems} menuItems={menuItems} />
   ))

@@ -14,10 +14,8 @@ import { getDetail, getList } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceListReadRequest }
   from 'sly/store/resource/actions';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
-
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
-import { ANSWER_QUESTION } from 'sly/constants/modalType';
 
 class CommunityDetailPageController extends Component {
   static propTypes = {
@@ -30,7 +28,6 @@ class CommunityDetailPageController extends Component {
     location: object,
     mediaGallerySlideIndex: number,
     isMediaGalleryFullscreenActive: bool,
-    isStickyHeaderVisible: bool,
     user: object,
     isQuestionModalOpenValue: bool,
     searchParams: object,
@@ -76,14 +73,6 @@ class CommunityDetailPageController extends Component {
       this.changeSearchParams({ changedParams: { modal: value } });
     } else {
       this.handleParamsRemove({ paramsToRemove: ['modal'] });
-    }
-  };
-
-  setQuestionToAsk = (question) => {
-    if (question) {
-      this.changeSearchParams({ changedParams: { modal: ANSWER_QUESTION, entityId: question.id } });
-    } else {
-      this.changeSearchParams({ changedParams: { modal: null, entityId: null } });
     }
   };
 
@@ -215,13 +204,6 @@ class CommunityDetailPageController extends Component {
     });
   };
 
-  handleToggleStickyHeader = () => {
-    const { set, isStickyHeaderVisible } = this.props;
-    set({
-      isStickyHeaderVisible: !isStickyHeaderVisible,
-    });
-  };
-
   handleMediaGalleryFavouriteClick = () => {
     const { setQueryParams, community, userSaveOfCommunity } = this.props;
     const { id } = community;
@@ -266,6 +248,21 @@ class CommunityDetailPageController extends Component {
     set({
       isShareCommunityModalVisible: false,
     });
+  };
+
+  handleFloorPlanModalToggle= (floorPlan) => {
+    const { community } = this.props;
+    const { id } = community;
+    let action = 'close-modal';
+    let value = null;
+    if (floorPlan) {
+      action = 'open-modal';
+      value = floorPlan.info.roomType || null;
+    }
+    const event = {
+      action, category: 'floorPlan', label: id, value,
+    };
+    SlyEvent.getInstance().sendEvent(event);
   };
 
   handleBookATourClick = () => {
@@ -320,7 +317,6 @@ class CommunityDetailPageController extends Component {
       errorCode,
       redirectUrl,
       history,
-      isStickyHeaderVisible,
       searchParams,
       setQueryParams,
       userAction,
@@ -348,7 +344,7 @@ class CommunityDetailPageController extends Component {
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
-    if (!community) {
+    if (!community || !userAction) {
       return null;
     }
 
@@ -376,16 +372,13 @@ class CommunityDetailPageController extends Component {
         onMediaGalleryShareClick={this.handleMediaGalleryShareClick}
         onShareCommunityModalClose={this.handleShareCommunityModalClose}
         isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
-        isStickyHeaderVisible={isStickyHeaderVisible}
         isShareCommunityModalVisible={isShareCommunityModalVisible}
-        onToggleStickyHeader={this.handleToggleStickyHeader}
         onBackToSearchClicked={this.handleBackToSearchClick}
         onReviewLinkClicked={this.handleReviewLinkClick}
         onConciergeNumberClicked={this.handleConciergeNumberClick}
         onLiveChatClicked={this.handleLiveChatClick}
         onReceptionNumberClicked={this.handleReceptionNumberClick}
         setModal={this.setModal}
-        setQuestionToAsk={this.setQuestionToAsk}
         userSave={userSaveOfCommunity}
         searchParams={searchParams}
         setQueryParams={setQueryParams}
@@ -398,6 +391,8 @@ class CommunityDetailPageController extends Component {
         isAlreadyPricingRequested={isAlreadyPricingRequested}
         isAskAgentQuestionModalVisible={isAskAgentQuestionModalVisible}
         askAgentQuestionType={askAgentQuestionType}
+        onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
+        userAction={userAction}
       />
     );
   }
@@ -416,7 +411,7 @@ const mapStateToProps = (state, {
 }) => {
   // default state for ssr
   const {
-    mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false, isStickyHeaderVisible = false,
+    mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false,
     isShareCommunityModalVisible = false, isAskAgentQuestionModalVisible, askAgentQuestionType,
   } = controller;
 
@@ -431,11 +426,10 @@ const mapStateToProps = (state, {
   return {
     user: getDetail(state, 'user', 'me'),
     community: getDetail(state, 'community', communitySlug),
-    userAction: getDetail(state, 'userAction'),
+    userAction: getDetail(state, 'userAction') || {},
     userSaveOfCommunity,
     mediaGallerySlideIndex,
     isMediaGalleryFullscreenActive,
-    isStickyHeaderVisible,
     searchParams,
     setQueryParams,
     isShareCommunityModalVisible,

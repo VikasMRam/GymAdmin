@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import { bool, string, oneOf } from 'prop-types';
 
+import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
 
@@ -20,6 +21,7 @@ const backgroundColor = ({
 
 const foregroundColor = ({
   ghost, disabled, transparent, selectable, selected,
+  foregroundPalette,
 }) => {
   if (disabled) {
     return palette('slate', 'stroke');
@@ -30,7 +32,7 @@ const foregroundColor = ({
   if (selectable && !selected) {
     return palette('slate', 'base');
   }
-  return transparent ? 'none' : palette('white', 'base');
+  return transparent ? 'none' : palette(foregroundPalette, 'base');
 };
 
 const borderColor = ({
@@ -62,8 +64,6 @@ const height = ({ kind }) => {
   switch (kind) {
     case 'jumbo':
       return size('element.xLarge');
-    case 'label':
-      return size('element.small');
     default:
       return size('element.regular');
   }
@@ -72,11 +72,9 @@ const height = ({ kind }) => {
 const fontSize = ({ kind }) => {
   switch (kind) {
     case 'jumbo':
-      return size('text', 'subtitle');
-    case 'label':
-      return size('text', 'caption');
-    default:
       return size('text', 'body');
+    default:
+      return size('text', 'caption');
   }
 };
 
@@ -97,7 +95,7 @@ export const styles = css`
   height: ${height};
   padding: 0 1em;
   text-decoration: none;
-  font-weight: ${ifProp({ kind: 'jumbo' }, '500', 'normal')};
+  font-weight: 500;
   white-space: nowrap;
   font-size: ${fontSize};
   border: ${size('border.regular')} solid ${borderColor};
@@ -157,7 +155,8 @@ Button.propTypes = {
   disabled: bool,
   ghost: bool,
   transparent: bool,
-  palette: string,
+  palette: palettePropType,
+  foregroundPalette: palettePropType,
   kind: oneOf(['jumbo', 'regular', 'label']),
   selectable: bool,
   selected: bool,
@@ -172,6 +171,7 @@ Button.defaultProps = {
   palette: 'primary',
   kind: 'regular',
   type: 'button',
+  foregroundPalette: 'white',
 };
 
 export default Button;

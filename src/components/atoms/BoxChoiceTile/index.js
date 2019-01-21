@@ -13,6 +13,7 @@ const StyledBox = styled(Box)`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  border-color: ${ifProp('highlighted', palette('base'), palette('stroke'))}};
   background: ${ifProp('highlighted', palette('grey', 'stroke'), 'none')};
 `;
 

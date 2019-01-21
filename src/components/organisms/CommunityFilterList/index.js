@@ -164,16 +164,16 @@ const CommunityFilterList = ({
           <StyledHr />
         </Fragment>
       }
-      <CollapsibleSection size="small" title="Type of care" noHr>
+      <CollapsibleSection size="small" title="Type of care" borderless>
         {tocFields}
       </CollapsibleSection>
-      <CollapsibleSection size="small" title="Budget" noHr>
+      <CollapsibleSection size="small" title="Budget" borderless>
         {budgetFields}
       </CollapsibleSection>
-      <CollapsibleSection size="small" title="Size" noHr>
+      <CollapsibleSection size="small" title="Size" borderless>
         {sizeFields}
       </CollapsibleSection>
-      <CollapsibleSection size="small" title="Sort" noHr>
+      <CollapsibleSection size="small" title="Sort" borderless>
         <Field
           name="Sort"
           type="select"

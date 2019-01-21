@@ -23,11 +23,7 @@ describe('GatheredReviewRatings', () => {
 
   it('renders Property review', () => {
     const wrapper = wrap();
-    expect(wrapper
-      .childAt(0)
-      .childAt(0)
-      .dive()
-      .text()).toEqual('Reviews gathered from across the web');
+    expect(wrapper.contains('Reviews gathered from across the web')).toBeTruthy();
     expect(wrapper.find(ReviewDiv)).toHaveLength(3);
     const reviewDiv = wrapper.find(ReviewDiv).at(0);
     expect(reviewDiv.find('Rating[value=4]')).toHaveLength(1);
@@ -38,5 +34,13 @@ describe('GatheredReviewRatings', () => {
       .text()).toContain('Yelp');
     expect(reviewDiv.childAt(1).find('[href="foo"]')).toHaveLength(1);
     expect(reviewDiv.childAt(1).find('[rel="nofollow"]')).toHaveLength(1);
+  });
+
+  it('handles onReviewLinkClicked', () => {
+    const onReviewLinkClicked = jest.fn();
+    const wrapper = wrap({ onReviewLinkClicked });
+    const link = wrapper.find(ReviewDiv).at(0).childAt(1).childAt(0);
+    link.simulate('click');
+    expect(onReviewLinkClicked).toHaveBeenCalled();
   });
 });
