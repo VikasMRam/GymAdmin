@@ -31,7 +31,7 @@ const StyledImage = styled(Image)`
 
 // has to be Class component as ref won't work with function components
 // eslint-disable-next-line react/prefer-stateless-function
-class VideoThumbnail extends Component {
+export default class VideoThumbnail extends Component {
   static propTypes = {
     src: string.isRequired,
     onClick: func,
@@ -57,5 +57,3 @@ class VideoThumbnail extends Component {
     );
   }
 }
-
-export default VideoThumbnail;
