@@ -7,8 +7,7 @@ import { withRouter } from 'react-router-dom';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { createValidator, required } from 'sly/services/validation';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
-import { MODAL_TYPE_LOG_IN } from 'sly/constants/modalType';
-
+import { MODAL_TYPE_LOG_IN } from 'sly/constants/authenticated';
 import PasswordResetPage from 'sly/components/pages/PasswordResetPage';
 
 const validate = createValidator({
