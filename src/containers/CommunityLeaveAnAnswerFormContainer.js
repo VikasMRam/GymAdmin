@@ -17,7 +17,6 @@ const validate = createValidator({
 
 const ReduxForm = reduxForm({
   form: 'CommunityLeaveAnAnswerForm',
-  destroyOnUnmount: false,
   validate,
 })(CommunityLeaveAnAnswerForm);
 
