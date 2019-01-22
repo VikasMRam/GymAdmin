@@ -21,7 +21,9 @@ const Main = styled.main`
 export const TemplateContent = ({ hasStickyFooter, children }) => (
   <Fragment>
     <Main>{children}</Main>
-    <ChatBoxContainer pageWithStickyFooter={hasStickyFooter} />
+    {/*
+      <ChatBoxContainer pageWithStickyFooter={hasStickyFooter} />
+    */}
   </Fragment>
 );
 TemplateContent.propTypes = {
