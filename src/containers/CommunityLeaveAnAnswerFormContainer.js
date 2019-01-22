@@ -17,7 +17,6 @@ const validate = createValidator({
 
 const ReduxForm = reduxForm({
   form: 'CommunityLeaveAnAnswerForm',
-  destroyOnUnmount: false,
   validate,
 })(CommunityLeaveAnAnswerForm);
 
@@ -35,6 +34,7 @@ class CommunityLeaveAnAnswerFormContainer extends Component {
       communitySlug, leaveAnAnswer, loadCommunity, questionId, onSuccess,
     } = this.props;
     const payload = {
+      communitySlug,
       questionId,
       answer: values.answer,
     };

@@ -22,8 +22,15 @@ describe('EstimatedCost', () => {
 
   it('verify correct description', () => {
     const wrapper = wrap({ price });
+    const estimatedCostWrapper = wrapper.find('EstimatedCostWrapper');
+    expect(estimatedCostWrapper).toHaveLength(1);
     const description = '*Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.';
-    expect(wrapper.find(Block).at(1).contains(description)).toBeTruthy();
+    expect(estimatedCostWrapper.find(Block).at(1).contains(description)).toBeTruthy();
+  });
+
+  it('verify estimated price hidden when zero', () => {
+    const wrapper = wrap({ price: 0 });
+    expect(wrapper.find('EstimatedCostWrapper')).toHaveLength(0);
   });
 
   it('verify getPricing callback', () => {

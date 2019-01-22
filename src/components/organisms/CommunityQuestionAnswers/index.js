@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, arrayOf, shape, func, object, bool } from 'prop-types';
 
@@ -25,10 +25,14 @@ const StyledCommunityQuestion = styled(CommunityQuestion)`
 const CursorBlock = cursor(Block);
 CursorBlock.displayName = 'CursorBlock';
 
+const StyledBlock = styled(Block)`
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
 const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
 
-const CommuntityQuestionAndAnswer = ({
-  communityName, questions, onLeaveAnswerClick,
+const CommunityQuestionAnswers = ({
+  communityName, questions, onLeaveAnswerClick, communityFaQs,
 }) => {
   const questionsComponent = questions.sort(sortByCreatedAt).map((question, i) => {
     const { contents = [] } = question;
@@ -51,24 +55,44 @@ const CommuntityQuestionAndAnswer = ({
         <AnswersDiv>
           {answersComponents}
         </AnswersDiv>
-        <CursorBlock palette="primary" weight="medium" onClick={() => onLeaveAnswerClick(question.id)}>Leave an Answer</CursorBlock>
+        <CursorBlock palette="primary" weight="medium" onClick={() => onLeaveAnswerClick(question.type, question.id)}>Leave an Answer</CursorBlock>
         {i < questions.length - 1 && <StyledHr />}
       </div>
     );
   });
 
+  const communityFaQsComponent = communityFaQs.sort(sortByCreatedAt).map((communityFaQ, i) => (
+    <div key={communityFaQ.id}>
+      <StyledCommunityQuestion question={communityFaQ} />
+      <CursorBlock palette="primary" weight="medium" onClick={() => onLeaveAnswerClick(communityFaQ.type, communityFaQ.id)}>Be the first to ask this question</CursorBlock>
+      {i < communityFaQs.length - 1 && <StyledHr />}
+    </div>
+  ));
+
   return (
     <div>
       {questionsComponent}
       {questionsComponent.length === 0 && <div>What would you like to know about senior living options at {communityName}? Send a message on the right.</div>}
+      {communityFaQsComponent.length > 0 &&
+        <Fragment>
+          <StyledHr />
+          <StyledBlock size="subtitle" weight="medium">Other questions to consider</StyledBlock>
+          {communityFaQsComponent}
+        </Fragment>
+      }
     </div>
   );
 };
 
-CommuntityQuestionAndAnswer.propTypes = {
+CommunityQuestionAnswers.propTypes = {
   communityName: string.isRequired,
   questions: arrayOf(contentPropType).isRequired,
+  communityFaQs: arrayOf(contentPropType),
   onLeaveAnswerClick: func.isRequired,
 };
 
-export default CommuntityQuestionAndAnswer;
+CommunityQuestionAnswers.defaultProps = {
+  communityFaQs: [],
+};
+
+export default CommunityQuestionAnswers;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
 
@@ -29,27 +29,33 @@ const StyledImage = styled(Image)`
   height: inherit;
 `;
 
-const VideoThumbnail = ({
-  src, onClick,
-}) => (
-  <Wrapper>
-    <CenterContent onClick={onClick}>
-      <Icon
-        icon="play"
-        size="xxLarge"
-        palette="white"
-      />
-      <Block size="subtitle" weight="medium" palette="white">
-        Watch Video
-      </Block>
-    </CenterContent>
-    <StyledImage src={src} aspectRatio="3:2" />
-  </Wrapper>
-);
+// has to be Class component as ref won't work with function components
+// eslint-disable-next-line react/prefer-stateless-function
+class VideoThumbnail extends Component {
+  static propTypes = {
+    src: string.isRequired,
+    onClick: func,
+  };
 
-VideoThumbnail.propTypes = {
-  src: string.isRequired,
-  onClick: func,
-};
+  render() {
+    const { src, onClick } = this.props;
+
+    return (
+      <Wrapper>
+        <CenterContent onClick={onClick}>
+          <Icon
+            icon="play"
+            size="xxLarge"
+            palette="white"
+          />
+          <Block size="subtitle" weight="medium" palette="white">
+            Watch Video
+          </Block>
+        </CenterContent>
+        <StyledImage src={src} aspectRatio="3:2" />
+      </Wrapper>
+    );
+  }
+}
 
 export default VideoThumbnail;

@@ -236,6 +236,7 @@ export default class CommunityDetailPage extends Component {
       gallery = {},
       videoGallery = {},
       questions,
+      communityFaQs,
       mainImage,
       partnerAgents,
     } = community;
@@ -547,7 +548,8 @@ export default class CommunityDetailPage extends Component {
                           communityName={name}
                           communitySlug={id}
                           questions={questions}
-                          onLeaveAnswerClick={questionId => show(ANSWER_QUESTION, questionId)}
+                          communityFaQs={[]} // TODO: add communityFaQs after api changes are merged
+                          onLeaveAnswerClick={(type, questionId) => show(ANSWER_QUESTION, { type, questionId })}
                           user={user}
                         />
                       )}
@@ -578,7 +580,17 @@ export default class CommunityDetailPage extends Component {
                 </ModalController>
                 <ModalController>
                   {({ modalType, modalEntity, hide }) => {
-                    const questionToAnswer = questions.find(question => question.id === modalEntity);
+                    let questionToAnswer = {
+                      contentData: '',
+                      id: '',
+                    };
+                    if (modalEntity && modalType === ANSWER_QUESTION) {
+                      const { type, questionId } = modalEntity;
+                      questionToAnswer = questions.find(question => question.type === type && question.id === questionId);
+                      if (!questionToAnswer) {
+                        questionToAnswer = communityFaQs.find(communityFaQ => communityFaQ.type === type && communityFaQ.id === questionId);
+                      }
+                    }
 
                     return (
                       <Modal
@@ -586,14 +598,12 @@ export default class CommunityDetailPage extends Component {
                         isOpen={modalType === ANSWER_QUESTION}
                         onClose={() => hide()}
                       >
-                        {questionToAnswer &&
-                          <CommunityLeaveAnAnswerFormContainer
-                            onSuccess={() => hide()}
-                            communitySlug={id}
-                            questionText={questionToAnswer.contentData}
-                            questionId={questionToAnswer.id}
-                          />
-                        }
+                        <CommunityLeaveAnAnswerFormContainer
+                          onSuccess={() => hide()}
+                          communitySlug={id}
+                          questionText={questionToAnswer.contentData}
+                          questionId={questionToAnswer.id}
+                        />
                       </Modal>
                     );
                   }}

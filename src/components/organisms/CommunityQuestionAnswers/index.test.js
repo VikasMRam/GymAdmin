@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommuntityQuestionAndAnswer from 'sly/components/organisms/CommunityQuestionAnswers/index';
+import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
 
 const communityName = 'Rhoda Goldman Plaza';
@@ -66,7 +66,25 @@ const question2 = {
   ],
 };
 
-const wrap = (props = {}) => shallow(<CommuntityQuestionAndAnswer {...defaultProps} {...props} />);
+const communityFaQ1 = {
+  id: '828',
+  contentData: 'are the rental fees per person?  i.e. double for a married couple?',
+  contentOwnerId: 2549,
+  contentOwnerType: 'User',
+  createdAt: '2017-02-08T22:48:30Z',
+  creator: 'Marvin Friedman',
+  parentId: 0,
+  published: false,
+  taglist: 'community profile, rhoda-goldman-plaza',
+  title: 'are the rental fees per person?  i.e. double for a',
+  type: 'CommunityFAQ',
+  updatedAt: '2017-02-09T00:40:27Z',
+  url: 'are-the-rental-fees-per-person-i-e-double-for-a',
+  votes: 5,
+  contents: [],
+};
+
+const wrap = (props = {}) => shallow(<CommunityQuestionAnswers {...defaultProps} {...props} />);
 
 describe('CommuntityQuestionAnswers', () => {
   it('renders children when passed in', () => {
@@ -83,6 +101,24 @@ describe('CommuntityQuestionAnswers', () => {
     const wrapper = wrap({ questions: [question1] });
     const communityQuestion = wrapper.find('StyledCommunityQuestion');
     expect(communityQuestion).toHaveLength(1);
+    const communityAnswer = wrapper.find(CommunityAnswer);
+    expect(communityAnswer).toHaveLength(0);
+  });
+
+  it('verify render FAQ', () => {
+    const wrapper = wrap({ communityFaQs: [communityFaQ1] });
+    const communityQuestion = wrapper.find('StyledCommunityQuestion');
+    expect(communityQuestion).toHaveLength(1);
+    const communityAnswer = wrapper.find(CommunityAnswer);
+    expect(communityAnswer).toHaveLength(0);
+  });
+
+  it('verify render Question & FAQ', () => {
+    const wrapper = wrap({ questions: [question1], communityFaQs: [communityFaQ1] });
+    const communityQuestion = wrapper.find('StyledCommunityQuestion');
+    expect(communityQuestion).toHaveLength(2);
+    expect(communityQuestion.at(0).prop('question')).toEqual(question1);
+    expect(communityQuestion.at(1).prop('question')).toEqual(communityFaQ1);
     const communityAnswer = wrapper.find(CommunityAnswer);
     expect(communityAnswer).toHaveLength(0);
   });
@@ -105,11 +141,19 @@ describe('CommuntityQuestionAnswers', () => {
     expect(communityAnswer).toHaveLength(1);
   });
 
-  it('verify click on Leave Answer Button', () => {
+  it('verify click on question Leave Answer Button', () => {
     const onLeaveAnswerClick = jest.fn();
     const wrapper = wrap({ questions: [question1], onLeaveAnswerClick });
     const leaveAnswer = wrapper.find('CursorBlock');
     leaveAnswer.simulate('click');
-    expect(onLeaveAnswerClick).toHaveBeenCalled();
+    expect(onLeaveAnswerClick).toHaveBeenCalledWith(question1.type, question1.id);
+  });
+
+  it('verify click on FAQ Leave Answer Button', () => {
+    const onLeaveAnswerClick = jest.fn();
+    const wrapper = wrap({ communityFaQs: [communityFaQ1], onLeaveAnswerClick });
+    const leaveAnswer = wrapper.find('CursorBlock');
+    leaveAnswer.simulate('click');
+    expect(onLeaveAnswerClick).toHaveBeenCalledWith(communityFaQ1.type, communityFaQ1.id);
   });
 });

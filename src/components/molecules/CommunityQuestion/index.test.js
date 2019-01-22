@@ -6,6 +6,7 @@ import CommunityQuestion from 'sly/components/molecules/CommunityQuestion';
 const question = {
   creator: 'Guest User',
   createdAt: '2016-08-24 04:35:15',
+  type: 'Question',
   contentData: 'Do the apartments at AgeSong Hayes Valley Care have their own private bathrooms?',
 };
 
