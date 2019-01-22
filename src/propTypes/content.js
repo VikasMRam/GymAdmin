@@ -7,4 +7,5 @@ export const content = shape({
   creator: string.isRequired,
   createdAt: string.isRequired,
   contentData: string.isRequired,
+  type: string.isRequired,
 });

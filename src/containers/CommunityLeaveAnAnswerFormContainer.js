@@ -35,6 +35,7 @@ class CommunityLeaveAnAnswerFormContainer extends Component {
       communitySlug, leaveAnAnswer, loadCommunity, questionId, onSuccess,
     } = this.props;
     const payload = {
+      slug: communitySlug,
       questionId,
       answer: values.answer,
     };
