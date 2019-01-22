@@ -34,15 +34,17 @@ const EstimatedCost = ({
 
   return (
     <Fragment>
-      <EstimatedCostWrapper>
-        <StyledBlock size="caption" palette="grey">Estimated Pricing*</StyledBlock>
-        <Block size="title">
-          <StyledNumberFormat value={from} displayType="text" thousandSeparator prefix="$" /> - <StyledNumberFormat value={to} displayType="text" thousandSeparator prefix="$" /><Span size="caption"> /mo</Span>
-        </Block>
-        <Block size="caption" palette="grey">
-          *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.
-        </Block>
-      </EstimatedCostWrapper>
+      {(from > 0 || to > 0) &&
+        <EstimatedCostWrapper>
+          <StyledBlock size="caption" palette="grey">Estimated Pricing*</StyledBlock>
+          <Block size="title">
+            <StyledNumberFormat value={from} displayType="text" thousandSeparator prefix="$" /> - <StyledNumberFormat value={to} displayType="text" thousandSeparator prefix="$" /><Span size="caption"> /mo</Span>
+          </Block>
+          <Block size="caption" palette="grey">
+            *Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.
+          </Block>
+        </EstimatedCostWrapper>
+      }
       <Button ghost onClick={getPricing}>Get Detailed Pricing</Button>
     </Fragment>
   );
