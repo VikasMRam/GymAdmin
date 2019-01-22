@@ -6,15 +6,15 @@ import ReactTooltip from 'react-tooltip';
 
 import { size } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { Link, Box, Block, Heading, Hr, Icon, Button } from 'sly/components/atoms';
+import { Link, Box, Heading, Hr, Icon, Button } from 'sly/components/atoms';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
 
-const StyledBlock = styled(Block)`
+const Address = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
 const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.small')};
+  margin-bottom: ${size('spacing.regular')};
 `;
 
 const StyledHr = styled(Hr)`
@@ -70,7 +70,7 @@ const CommunitySummary = ({
 
   return (
     <Box innerRef={innerRef} className={className}>
-      <StyledHeading>
+      <StyledHeading level="hero" size="title">
         {name}
         {isAdmin &&
           <Link
@@ -80,7 +80,7 @@ const CommunitySummary = ({
           </Link>
         }
       </StyledHeading>
-      <StyledBlock palette="grey">{formattedAddress}</StyledBlock>
+      <Address weight="regular" level="subtitle" size="body" palette="grey">{formattedAddress}</Address>
       {startingRate > 0 && reviewsValue > 0 && <StyledHr />}
       <CommunityPricingAndRating price={startingRate} rating={reviewsValue} />
       <StyledHr />

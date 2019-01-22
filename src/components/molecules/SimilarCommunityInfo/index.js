@@ -5,7 +5,7 @@ import Dotdotdot from 'react-dotdotdot';
 import NumberFormat from 'react-number-format';
 
 import { size, palette } from 'sly/components/themes';
-import { Heading, Icon } from 'sly/components/atoms';
+import { Heading, Icon, Link } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
 
 const clamp = css`
@@ -117,6 +117,7 @@ export default class SimilarCommunityInfo extends Component {
 
     const {
       name,
+      url,
       addressString,
       description,
       webViewInfo,
@@ -129,10 +130,21 @@ export default class SimilarCommunityInfo extends Component {
     const roomTypes = secondLineValue.split(',');
     const livingTypes = firstLineValue.split(',');
 
+    let heading = (
+      <StyledHeading level="title" size="subtitle">{name}</StyledHeading>
+    );
+    if (url) {
+      heading = (
+        <Link href={url}>
+          {heading}
+        </Link>
+      );
+    }
+
     // TODO : Get the following values from API Response
     return (
       <Wrapper {...props}>
-        <StyledHeading level="title" size="subtitle">{name}</StyledHeading>
+        {heading}
         <RatingWrapper>
           {this.renderRate(community)}
           {this.renderReviews(community)}

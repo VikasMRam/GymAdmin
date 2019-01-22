@@ -11,7 +11,7 @@ import { ServerStateProvider } from 'react-router-server';
 import Modal from 'react-modal';
 
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { basename} from 'sly/config';
+import { basename } from 'sly/config';
 import configureStore from 'sly/store/configure';
 import api from 'sly/services/api';
 import App from 'sly/components/App';

@@ -5,7 +5,7 @@ import { ifProp } from 'styled-tools';
 import { bool, string, node, oneOf, object } from 'prop-types';
 
 import { size, key, palette } from 'sly/components/themes';
-import { Icon, ClampedText, Block } from 'sly/components/atoms';
+import { Icon, ClampedText, Heading } from 'sly/components/atoms';
 import { weight as weightPropType } from 'sly/propTypes/weight';
 
 const Section = styled.section`
@@ -48,7 +48,7 @@ const getHeadingLevel = (size) => {
     case 'small':
       return 'body';
     default:
-      return 'subtitle';
+      return 'title';
   }
 };
 const getHeadingSize = (size) => {
@@ -75,6 +75,11 @@ export const BottomSection = styled.div`
   background-color: ${palette('grey', 'background')};
   padding: ${size('spacing.xLarge')};
   border-top: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+`;
+
+const StyledHeading = styled(Heading)`
+  margin: 0;
+  display: inherit;
 `;
 
 export default class CollapsibleSection extends Component {
@@ -138,14 +143,16 @@ export default class CollapsibleSection extends Component {
           >
             <Header onClick={this.toggle} borderless={borderless}>
               {clampTitle &&
-                <ClampedText weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
-                  {title}
-                </ClampedText>
+                <StyledHeading weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
+                  <ClampedText weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
+                    {title}
+                  </ClampedText>
+                </StyledHeading>
               }
               {!clampTitle &&
-                <Block weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
+                <StyledHeading weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
                   {title}
-                </Block>
+                </StyledHeading>
               }
               <Icon icon="chevron" palette="slate" flip={!collapsed} />
             </Header>

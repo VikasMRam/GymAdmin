@@ -57,14 +57,14 @@ const CommunityBookATourContactForm = ({
         />
       }
       {userDetails && userDetails.fullName &&
-      <Field
-        name="notes"
-        label="Add a note"
-        type="textarea"
-        rows="5"
-        placeholder="Anything you'd like your partner agent to know or any questions"
-        component={ReduxField}
-      />
+        <Field
+          name="notes"
+          label="Add a note"
+          type="textarea"
+          rows="5"
+          placeholder="Anything you'd like your partner agent to know or any questions"
+          component={ReduxField}
+        />
       }
       {error && <Block palette="danger">{error}</Block>}
       {!user && <Block size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></Block>}

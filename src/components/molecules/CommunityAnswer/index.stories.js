@@ -5,6 +5,7 @@ import CommunityAnswer from '.';
 
 const answer = {
   creator: 'The Seniorly Team',
+  type: 'Question',
   createdAt: '2016-11-30 20:23:35',
   contentData: 'Yes pricing does include both cable and wifi.',
 };
