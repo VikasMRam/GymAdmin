@@ -276,6 +276,10 @@ export default class App extends Component {
           </script>
           {/* End Instabot Code */}
 
+          {/* Begin Google Platform Library Code */}
+          <script type="text/javascript" src="https://apis.google.com/js/platform.js" async defer></script>
+          {/* End Google Platform Library Code */}
+
           {/* eslint-enable */}
         </Helmet>
 
