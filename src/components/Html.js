@@ -27,7 +27,7 @@ const Html = ({
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
         {state.trim().length > 0 && <script dangerouslySetInnerHTML={{ __html: state }} />}
-        {assets.js.map(path => <script key={path} src={`${path}`} />)}
+        {assets.js.map(path => <script key={path} src={`${path}`} async defer />)}
         {helmet.script.toComponent()}
         {helmet.noscript.toComponent()}
       </body>
