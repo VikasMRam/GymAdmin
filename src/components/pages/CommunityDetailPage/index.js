@@ -582,9 +582,9 @@ export default class CommunityDetailPage extends Component {
                   {({ modalType, modalEntity, hide }) => {
                     let questionToAnswer = {
                       contentData: '',
-                      id: 0,
+                      id: '',
                     };
-                    if (modalEntity) {
+                    if (modalEntity && modalType === ANSWER_QUESTION) {
                       const { type, questionId } = modalEntity;
                       questionToAnswer = questions.find(question => question.type === type && question.id === questionId);
                       if (!questionToAnswer) {
