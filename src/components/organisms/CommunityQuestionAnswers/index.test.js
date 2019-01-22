@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CommuntityQuestionAndAnswer from 'sly/components/organisms/CommunityQuestionAnswers/index';
+import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
 
 const communityName = 'Rhoda Goldman Plaza';
@@ -84,7 +84,7 @@ const communityFaQ1 = {
   contents: [],
 };
 
-const wrap = (props = {}) => shallow(<CommuntityQuestionAndAnswer {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<CommunityQuestionAnswers {...defaultProps} {...props} />);
 
 describe('CommuntityQuestionAnswers', () => {
   it('renders children when passed in', () => {

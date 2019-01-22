@@ -31,7 +31,7 @@ const StyledBlock = styled(Block)`
 
 const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
 
-const CommuntityQuestionAndAnswer = ({
+const CommunityQuestionAnswers = ({
   communityName, questions, onLeaveAnswerClick, communityFaQs,
 }) => {
   const questionsComponent = questions.sort(sortByCreatedAt).map((question, i) => {
@@ -84,15 +84,15 @@ const CommuntityQuestionAndAnswer = ({
   );
 };
 
-CommuntityQuestionAndAnswer.propTypes = {
+CommunityQuestionAnswers.propTypes = {
   communityName: string.isRequired,
   questions: arrayOf(contentPropType).isRequired,
   communityFaQs: arrayOf(contentPropType),
   onLeaveAnswerClick: func.isRequired,
 };
 
-CommuntityQuestionAndAnswer.defaultProps = {
+CommunityQuestionAnswers.defaultProps = {
   communityFaQs: [],
 };
 
-export default CommuntityQuestionAndAnswer;
+export default CommunityQuestionAnswers;
