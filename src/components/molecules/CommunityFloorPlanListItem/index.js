@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   display: flex;
   padding: ${size('spacing.xLarge')};
   margin: 0 -${size('spacing.xLarge')};
-  
+
   &:hover {
     cursor: pointer;
     background-color: ${palette('primary', 'background')};
@@ -23,16 +23,11 @@ const Wrapper = styled.div`
 const StyledBox = styled(Box)`
   flex-grow: 0;
   flex-shrink: 0;
+  padding: 0;
   width: ${size('element.xxLarge')};
   height: ${size('element.xxLarge')};
   background: ${palette('white.base')};
   margin-right: ${size('spacing.large')};
-`;
-
-const StyledImage = styled(Image)`
-  img {
-    object-fit: contain;
-  }
 `;
 
 const TextSection = styled.div`
@@ -50,7 +45,7 @@ const TextSection = styled.div`
 
 const RoomTypeText = styled(Block)`
   margin-bottom: ${size('spacing.small')};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
     flex-direction: column;
@@ -71,8 +66,8 @@ const PriceSection = styled.div`
 
 const PricingFromText = styled(Block)`
   margin-right: ${size('spacing.small')};
-  line-height: ${bodyLineHeight}; 
-  
+  line-height: ${bodyLineHeight};
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin: 0;
     margin-bottom: ${size('spacing.small')};
@@ -80,7 +75,7 @@ const PricingFromText = styled(Block)`
 `;
 
 const FullPriceSection = styled.div`
-  line-height: ${bodyLineHeight}; 
+  line-height: ${bodyLineHeight};
 `;
 
 const priceTypeMap = {
@@ -106,9 +101,9 @@ const CommunityFloorPlanListItem = ({
 
   return (
     <Wrapper onClick={onItemClick}>
-      <StyledBox padding="small">
+      <StyledBox>
         <Lazy component="div" ltIE9>
-          <StyledImage src={imgSrc} aspectRatio="1:1" />
+          <Image src={imgSrc} aspectRatio="1:1" />
         </Lazy>
       </StyledBox>
       <TextSection>

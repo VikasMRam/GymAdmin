@@ -17,10 +17,6 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const StyledHr = styled(Hr)`
-  margin-bottom: ${size('spacing.xxLarge')};
-`;
-
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -81,9 +77,9 @@ const CommunitySummary = ({
         }
       </StyledHeading>
       <Address weight="regular" level="subtitle" size="body" palette="grey">{formattedAddress}</Address>
-      {startingRate > 0 && reviewsValue > 0 && <StyledHr />}
+      {startingRate > 0 && reviewsValue > 0 && <Hr />}
       <CommunityPricingAndRating price={startingRate} rating={reviewsValue} />
-      <StyledHr />
+      <Hr />
       <Wrapper>
         <div>
           {conciergeNumber &&

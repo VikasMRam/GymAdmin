@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import { arrayOf, shape, string, object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
+import { text as textPropType } from 'sly/propTypes/text';
 import { Link, Span } from 'sly/components/atoms';
+
+const getSize = p => size('text', p.size);
 
 const Wrapper = styled.nav`
   margin-bottom: ${size('spacing.large')};
@@ -12,10 +15,12 @@ const Wrapper = styled.nav`
     list-style-type: none;
     margin: 0;
     padding: 0;
+    font-size: ${getSize};
 
     li {
       display: inline-block;
       text-transform: capitalize;
+      font-size: ${getSize};
 
       span:not(:first-child) {
         margin: 0 ${size('spacing.regular')};
@@ -25,7 +30,7 @@ const Wrapper = styled.nav`
 `;
 
 const BreadCrumb = ({ items, innerRef, size }) => (
-  <Wrapper innerRef={innerRef}>
+  <Wrapper innerRef={innerRef} size={size}>
     <ol itemScope itemType="http://schema.org/BreadcrumbList">
       {
         items.map((item, key) => {
@@ -45,7 +50,7 @@ const BreadCrumb = ({ items, innerRef, size }) => (
                   <Span itemProp="name" palette="primary" size={size}>{label}</Span>
                 </Link>
               }
-              {key < items.length - 1 ? <Span>/</Span> : null}
+              {key < items.length - 1 ? <Span size={size}>/</Span> : null}
             </li>
           );
         })
@@ -60,7 +65,11 @@ BreadCrumb.propTypes = {
     path: string.isRequired,
   })).isRequired,
   innerRef: object,
-  size: string,
+  size: textPropType,
+};
+
+BreadCrumb.defaultProps = {
+  size: 'tiny',
 };
 
 export default BreadCrumb;

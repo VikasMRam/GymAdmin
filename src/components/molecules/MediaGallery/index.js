@@ -69,7 +69,7 @@ const NextSlide = styled(StyledIcon)`
 `;
 const TopRightWrapper = styled.span`
   right: ${size('spacing.large')};
-  top: ${size('spacing.xLarge')};
+  top: ${size('spacing.large')};
   position: absolute;
   z-index: 1;
 `;

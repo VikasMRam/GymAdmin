@@ -86,7 +86,7 @@ const GetAvailabilitySuccessBox = styled.div`
 `;
 
 const StyledCommunitySummary = styled(CommunitySummary)`
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${size('spacing.xLarge')};
   margin-top: -${size('spacing.xLarge')};
   position: relative;
   background: ${palette('white', 'base')};
@@ -114,12 +114,16 @@ const StyledOfferNotification = styled(OfferNotification)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const StyledCollapsibleSection = styled(CollapsibleSection)`
+const BottomCollapsibleSection = styled(CollapsibleSection)`
   margin-bottom: ${size('spacing.xxxLarge')};
 `;
 
+const TopCollapsibleSection = styled(CollapsibleSection)`
+  margin-bottom: ${size('spacing.xLarge')};
+`;
+
 const StyledSection = styled(Section)`
-  margin-bottom: ${size('spacing.xxxLarge')};
+  margin-bottom: ${size('spacing.xxxLarge')}!important;
 `;
 
 const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
@@ -341,7 +345,7 @@ export default class CommunityDetailPage extends Component {
                   )
                 }
                 {autoHighlights &&
-                  <CollapsibleSection
+                  <TopCollapsibleSection
                     title={`Community highlights at  ${name}`}
                   >
                     <MainSection>
@@ -351,9 +355,9 @@ export default class CommunityDetailPage extends Component {
                         </IconItemWrapper>))
                       }
                     </MainSection>
-                  </CollapsibleSection>
+                  </TopCollapsibleSection>
                 }
-                <CollapsibleSection
+                <TopCollapsibleSection
                   title={`Pricing and Floor Plans at ${name}`}
                 >
                   <MainSection>
@@ -418,9 +422,9 @@ export default class CommunityDetailPage extends Component {
                     </ConciergeController>
                   </BottomSection>
                   }
-                </CollapsibleSection>
+                </TopCollapsibleSection>
                 {(communityDescription || rgsAux.communityDescription) &&
-                  <CollapsibleSection title={`Details on ${name}`}>
+                  <TopCollapsibleSection title={`Details on ${name}`}>
                     <MainSection>
                       <CommunityDetails
                         communityName={name}
@@ -432,9 +436,9 @@ export default class CommunityDetailPage extends Component {
                         contract={community.contacts && community.contacts.length > 0} // TODO: cheange to use contract info once api sends it
                       />
                     </MainSection>
-                  </CollapsibleSection>
+                  </TopCollapsibleSection>
                 }
-                <CollapsibleSection title="How Seniorly Works">
+                <TopCollapsibleSection title="How Seniorly Works">
                   <MainSection noPadding>
                     <ModalController>
                       {({
@@ -457,9 +461,9 @@ export default class CommunityDetailPage extends Component {
                       )}
                     </ModalController>
                   </MainSection>
-                </CollapsibleSection>
+                </TopCollapsibleSection>
                 {partnerAgent &&
-                  <CollapsibleSection title={`Your Partner Agent for ${name}`}>
+                  <TopCollapsibleSection title={`Your Partner Agent for ${name}`}>
                     <MainSection>
                       <ModalController>
                         {({ show }) => (
@@ -469,13 +473,13 @@ export default class CommunityDetailPage extends Component {
                     </MainSection>
                     <BottomSection>
                       <TextBottomSection
-                        heading="Have a question for your partner agent?"
-                        subHeading="Your partner agent can help you make the best decisions."
+                        heading="Ask you local advisor about pricing, floor plans, availability, anything."
+                        subHeading="Your advisor is a free service to you."
                         buttonText="Send a message"
                         onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
                       />
                     </BottomSection>
-                  </CollapsibleSection>
+                  </TopCollapsibleSection>
                 }
                 <ModalController>
                   {({ modalType, hide }) => (
@@ -485,41 +489,41 @@ export default class CommunityDetailPage extends Component {
                   )}
                 </ModalController>
                 {careServices && careServices.length > 0 &&
-                  <CollapsibleSection title={`Care Services at ${name}`}>
+                  <TopCollapsibleSection title={`Care Services at ${name}`}>
                     <MainSection>
                       <CommunityCareService careServices={careServices} />
                     </MainSection>
                     <BottomSection>
                       <TextBottomSection
-                        heading="Want to know more about care services?"
-                        subHeading="Your advisor can help you make better decisions."
+                        heading="Need more detailed information on care services?"
+                        subHeading="Your advisor can consult with you on your individual care needs."
                         buttonText="Ask about care services"
                         onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
                       />
                     </BottomSection>
-                  </CollapsibleSection>
+                  </TopCollapsibleSection>
                 }
-                <CollapsibleSection title={`Amenities at ${name}`}>
+                <TopCollapsibleSection title={`Amenities at ${name}`}>
                   <MainSection>
                     <CommunityAmenities community={community} />
                   </MainSection>
                   <BottomSection>
                     <TextBottomSection
-                      heading="Have a question about amenities at this community?"
-                      subHeading="Your advisor can give you expert advice about this community."
+                      heading="Need more detailed information on amenities?"
+                      subHeading="Your advisor can consult with you for free."
                       buttonText="Ask about amenities"
                       onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
                     />
                   </BottomSection>
-                </CollapsibleSection>
+                </TopCollapsibleSection>
                 {sortedEstimatedPrice.length > 0 &&
-                  <CollapsibleSection title="Compare to other communities in the area">
+                  <TopCollapsibleSection title="Compare to other communities in the area">
                     <MainSection>
                       <CommunityPricingComparison community={community} />
                     </MainSection>
-                  </CollapsibleSection>
+                  </TopCollapsibleSection>
                 }
-                <CollapsibleSection
+                <TopCollapsibleSection
                   title={`Reviews at ${name}`}
                 >
                   <MainSection>
@@ -539,8 +543,8 @@ export default class CommunityDetailPage extends Component {
                       onButtonClick={() => setModal(ADD_RATING)}
                     />
                   </BottomSection>
-                </CollapsibleSection>
-                <CollapsibleSection title={`Questions about ${name}`}>
+                </TopCollapsibleSection>
+                <TopCollapsibleSection title={`Questions about ${name}`}>
                   <MainSection>
                     <ModalController>
                       {({ show }) => (
@@ -566,7 +570,7 @@ export default class CommunityDetailPage extends Component {
                       )}
                     </ModalController>
                   </BottomSection>
-                </CollapsibleSection>
+                </TopCollapsibleSection>
                 <ModalController>
                   {({ modalType, show, hide }) => (
                     <Modal
@@ -633,7 +637,7 @@ export default class CommunityDetailPage extends Component {
                   url="/providers/housing"
                   urlText="Simply claim your profile by clicking here"
                 />
-                <StyledCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
+                <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                   <MainSection>
                     <SimilarCommunities similarProperties={similarProperties} />
                     <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
@@ -654,7 +658,7 @@ export default class CommunityDetailPage extends Component {
                       </Button>
                     </BackToSearch>
                   </MainSection>
-                </StyledCollapsibleSection>
+                </BottomCollapsibleSection>
                 <CommunityStickyFooter
                   isAlreadyTourScheduled={isAlreadyTourScheduled}
                   isAlreadyPricingRequested={isAlreadyPricingRequested}

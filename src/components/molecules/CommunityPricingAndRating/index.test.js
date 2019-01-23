@@ -14,7 +14,7 @@ describe('CommunityPricingAndRating', () => {
 
   it('does renders price and fixed rating', () => {
     const wrapper = wrap();
-    expect(wrapper.contains(4300)).toBe(true);
+    expect(wrapper.find('NumberFormat').prop('value')).toEqual(4300);
     expect(wrapper.contains('3.6')).toBe(true);
   });
 

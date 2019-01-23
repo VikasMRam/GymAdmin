@@ -8,12 +8,14 @@ import { Image } from 'sly/components/atoms';
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  position: relative
+  position: relative;
+  background: black;
 `;
 export const StyledImage = styled(Image)`
   border-radius: ${size('spacing.tiny')};
   width: 100%;
   height: 100%;
+  opacity: .75;
 `;
 export const ContentWrapper = styled.div`
   position: absolute;
