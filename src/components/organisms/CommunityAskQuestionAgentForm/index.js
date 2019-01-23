@@ -35,7 +35,6 @@ const CommunityAskQuestionAgentForm = ({
         <Heading level="subtitle" size="subtitle">{heading}</Heading>
         {description && <Block>{description}</Block>}
       </TextWrapper>
-      <div><Image src={agentImageUrl} /></div>
     </TopSection>
     {!(userDetails && userDetails.fullName) && <Field
       name="full_name"

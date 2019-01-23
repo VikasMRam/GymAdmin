@@ -174,7 +174,7 @@ class AgentProfilePage extends Component {
                     userDetails={userDetails}
                     postUserAction={postUserAction}
                     postSubmit={() => {
-                      notifyInfo(`We have received your request and our partner agent, ${displayName} will get back to you soon.`);
+                      notifyInfo(`We have received your request and our Seniorly Partner Agent, ${displayName} will get back to you soon.`);
                       if (this.agentSummaryRef.current.scrollIntoView) {
                         this.agentSummaryRef.current.scrollIntoView({ behavior: 'smooth' });
                       }
