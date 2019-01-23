@@ -32,6 +32,7 @@ import PricingWizardPageContainer from 'sly/containers/PricingWizardPageContaine
 import AgentProfilePageContainer from 'sly/containers/AgentProfilePageContainer';
 import AgentRegionPageContainer from 'sly/containers/AgentRegionPageContainer';
 import PartnersPage from 'sly/components/pages/PartnersPage';
+import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 
 setGlobalStyles();
 
@@ -237,6 +238,7 @@ export default class App extends Component {
           </Router>
         </ThemeProvider>
 
+        <ChatBoxContainer />
       </Fragment>
     );
   }

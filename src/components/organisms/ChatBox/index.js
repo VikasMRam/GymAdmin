@@ -28,7 +28,7 @@ const loadOlark = () => {
   /* eslint-enable */
 };
 
-class ChatBox extends Component {
+export default class ChatBox extends Component {
   static propTypes = {
     footerReached: bool,
     pageWithStickyFooter: bool,
@@ -69,5 +69,3 @@ class ChatBox extends Component {
     return null;
   }
 }
-
-export default ChatBox;

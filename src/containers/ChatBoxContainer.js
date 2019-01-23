@@ -10,7 +10,6 @@ class ChatBoxContainer extends Component {
   static propTypes = {
     footerReached: bool,
     dispatchToggleAction: func,
-    pageWithStickyFooter: bool,
   };
 
   componentDidMount() {
@@ -33,10 +32,10 @@ class ChatBoxContainer extends Component {
   };
 
   render() {
-    const { footerReached, pageWithStickyFooter } = this.props;
+    const { footerReached } = this.props;
 
     return (
-      <ChatBox footerReached={footerReached} pageWithStickyFooter={pageWithStickyFooter} />
+      <ChatBox footerReached={footerReached} />
     );
   }
 }
