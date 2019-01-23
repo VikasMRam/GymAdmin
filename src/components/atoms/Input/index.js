@@ -19,7 +19,7 @@ const styles = css`
   background-color: ${palette('white', 'base')};
   border: ${size('border.regular')} solid
     ${ifProp('invalid', palette('danger', 'stroke'), palette('slate', 'stroke'))};
-  border-radius: ${size('border.large')};
+  border-radius: ${size('border.xxLarge')};
   min-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
   max-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
 
