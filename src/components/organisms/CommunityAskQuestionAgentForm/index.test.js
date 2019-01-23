@@ -7,7 +7,7 @@ import { Block, Image } from 'sly/components/atoms';
 const defaultProps = {
   placeholder: 'rhoda',
   heading: 'We&apos;ve received your tour request.',
-  description: 'Your advisor will reach out to you soon. Feel free to ask them any questions in the meantime.',
+  description: 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.',
   agentImageUrl: 'abc.url',
 };
 
@@ -21,7 +21,6 @@ describe('CommunityAskQuestionAgentForm', () => {
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
     expect(wrapper.contains(defaultProps.heading)).toBeTruthy();
     expect(wrapper.contains(defaultProps.description)).toBeTruthy();
-    expect(wrapper.find(Image).prop('src')).toEqual(defaultProps.agentImageUrl);
   });
 
   it('render error when error is passed', () => {
@@ -30,6 +29,5 @@ describe('CommunityAskQuestionAgentForm', () => {
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(1);
     expect(wrapper.contains(defaultProps.heading)).toBeTruthy();
     expect(wrapper.contains(defaultProps.description)).toBeTruthy();
-    expect(wrapper.find(Image).prop('src')).toEqual(defaultProps.agentImageUrl);
   });
 });

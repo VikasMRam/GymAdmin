@@ -25,7 +25,7 @@ theme.palette = {
   green    : makeColor('#4FB75F', ['dark', 'base', 'filler', 'stroke']),
 };
 
-if (isDev) console.table(makeColorTable(theme.palette));
+//if (isDev) console.table(makeColorTable(theme.palette));
 
 theme.fonts = {
   primary: 'Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif',
