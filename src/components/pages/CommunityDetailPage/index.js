@@ -469,8 +469,8 @@ export default class CommunityDetailPage extends Component {
                     </MainSection>
                     <BottomSection>
                       <TextBottomSection
-                        heading="Have a question for your partner agent?"
-                        subHeading="Your partner agent can help you make the best decisions."
+                        heading="Ask you local advisor about pricing, floor plans, availability, anything."
+                        subHeading="Your advisor is a free service to you."
                         buttonText="Send a message"
                         onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
                       />
@@ -491,8 +491,8 @@ export default class CommunityDetailPage extends Component {
                     </MainSection>
                     <BottomSection>
                       <TextBottomSection
-                        heading="Want to know more about care services?"
-                        subHeading="Your advisor can help you make better decisions."
+                        heading="Need more detailed information on care services?"
+                        subHeading="Your advisor can consult with you on your individual care needs."
                         buttonText="Ask about care services"
                         onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
                       />
@@ -505,8 +505,8 @@ export default class CommunityDetailPage extends Component {
                   </MainSection>
                   <BottomSection>
                     <TextBottomSection
-                      heading="Have a question about amenities at this community?"
-                      subHeading="Your advisor can give you expert advice about this community."
+                      heading="Need more detailed information on amenities?"
+                      subHeading="Your advisor can consult with you for free."
                       buttonText="Ask about amenities"
                       onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
                     />
