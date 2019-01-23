@@ -17,9 +17,11 @@ const styles = css`
   height: ${ifProp({ type: 'textarea' }, size('element.huge'), height)};
   color: ${ifProp('invalid', palette('danger', 'base'), palette('slate', 'base'))};
   background-color: ${palette('white', 'base')};
-  border: 1px solid
+  border: ${size('border.regular')} solid
     ${ifProp('invalid', palette('danger', 'stroke'), palette('slate', 'stroke'))};
-  border-radius: 2px;
+  border-radius: ${size('border.large')};
+  min-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
+  max-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
 
   &:focus {
     outline: none;
@@ -41,7 +43,7 @@ const styles = css`
     border-radius: 0;
     width: auto;
     height: auto;
-    margin: 0 0.2rem 0 0;
+    margin: 0 ${size('spacing.small')} 0 0;
   }
 `;
 
