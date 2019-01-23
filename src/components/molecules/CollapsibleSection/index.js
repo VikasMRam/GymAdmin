@@ -12,7 +12,6 @@ const Section = styled.section`
   transition: padding-bottom ${key('transitions.default')};
   max-width: 100%;
 
-  margin-bottom: ${size('spacing.large')};
   border: ${p => p.borderless ? 'none' : size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${p => p.borderless ? 'none' : size('spacing.small')};
 `;
@@ -43,14 +42,6 @@ const Content = styled.div`
   }
 `;
 
-const getHeadingLevel = (size) => {
-  switch (size) {
-    case 'small':
-      return 'body';
-    default:
-      return 'title';
-  }
-};
 const getHeadingSize = (size) => {
   switch (size) {
     case 'small':
@@ -143,14 +134,14 @@ export default class CollapsibleSection extends Component {
           >
             <Header onClick={this.toggle} borderless={borderless}>
               {clampTitle &&
-                <StyledHeading weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
-                  <ClampedText weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
+                <StyledHeading weight={headingWeight} level="title" size={getHeadingSize(size)}>
+                  <ClampedText weight={headingWeight} level="title" size={getHeadingSize(size)}>
                     {title}
                   </ClampedText>
                 </StyledHeading>
               }
               {!clampTitle &&
-                <StyledHeading weight={headingWeight} level={getHeadingLevel(size)} size={getHeadingSize(size)}>
+                <StyledHeading weight={headingWeight} level="title" size={getHeadingSize(size)}>
                   {title}
                 </StyledHeading>
               }
