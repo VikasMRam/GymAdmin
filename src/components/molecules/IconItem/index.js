@@ -16,7 +16,7 @@ const IconWrapper = styled.div`
   margin-right: ${p => p.borderless ? size('spacing.small') : size('spacing.large')};
   padding: calc(${size('spacing.regular')} - ${size('border.regular')});
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('grey', 'filler')};
-  border-radius: ${size('border.xLarge')};
+  border-radius: ${size('border.xxLarge')};
 `;
 
 const IconItem = ({
