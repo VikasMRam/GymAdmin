@@ -130,7 +130,7 @@ describe('CommuntityQuestionAnswers', () => {
     const communityAnswer = wrapper.find(CommunityAnswer);
     expect(communityAnswer).toHaveLength(0);
     expect(wrapper.text())
-      .toContain(`What would you like to know about senior living options at ${communityName}? Send a message on the right.`);
+      .toContain(`What would you like to know about senior living options at ${communityName}? To ask a question, click the button below.`);
   });
 
   it('verify render Question with Answer', () => {

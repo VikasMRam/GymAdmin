@@ -412,8 +412,8 @@ const HomePage = ({
         <StyledSection title="How Can Seniorly Help You Find A Home" subtitle="">
           <ModalController>
             {({
-              show, modalType, hide,
-            }) => (
+                show, modalType, hide,
+              }) => (
               <VideoThumbnailWrapper>
                 <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={() => show(HOW_SLY_WORKS_VIDEO)} />
                 <Modal

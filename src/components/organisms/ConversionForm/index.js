@@ -15,20 +15,14 @@ const StyledButton = styled(Button)`
   font-weight: normal;
 `;
 
-const SubHeading = styled.div`
-  margin-bottom: ${size('spacing.large')};
-`;
-
 const ConversionForm = ({
   handleSubmit,
   submitting,
   hasOnlyEmail,
-  contact,
 }) => (
   <Box>
     <form onSubmit={handleSubmit}>
       <Heading level="title" size="subtitle">Get Pricing & Availability</Heading>
-      {contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
 
       <Hr />
 

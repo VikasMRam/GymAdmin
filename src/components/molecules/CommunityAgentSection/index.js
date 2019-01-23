@@ -87,7 +87,7 @@ const CommunityAgentSection = ({
   return (
     <Fragment>
       <SubHeadingSection onClick={onAdvisorHelpClick}>
-        <AdvisorHelpBlock size="caption" weight="medium" palette="primary">What can my partner agent help me with?</AdvisorHelpBlock>
+        <AdvisorHelpBlock size="caption" weight="medium" palette="primary">What can my Seniorly Partner Agent help me with?</AdvisorHelpBlock>
         <Icon icon="help" palette="primary" />
       </SubHeadingSection>
       <AgentInfoSection>

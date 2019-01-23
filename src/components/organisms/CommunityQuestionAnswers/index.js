@@ -72,7 +72,7 @@ const CommunityQuestionAnswers = ({
   return (
     <div>
       {questionsComponent}
-      {questionsComponent.length === 0 && <div>What would you like to know about senior living options at {communityName}? Send a message on the right.</div>}
+      {questionsComponent.length === 0 && <div>What would you like to know about senior living options at {communityName}? To ask a question, click the button below.</div>}
       {communityFaQsComponent.length > 0 &&
         <Fragment>
           <StyledHr />

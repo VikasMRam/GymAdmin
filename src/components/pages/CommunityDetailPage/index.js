@@ -290,11 +290,11 @@ export default class CommunityDetailPage extends Component {
 
     let bannerNotification = null;
     if (isAlreadyTourScheduled && isAlreadyPricingRequested) {
-      bannerNotification = 'We have received your tour and pricing request. Your partner agent is checking with this community and will get back to you shortly.';
+      bannerNotification = 'We have received your tour and pricing request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.';
     } else if (isAlreadyTourScheduled) {
-      bannerNotification = 'We have received your tour request. Your partner agent is checking with this community and will get back to you shortly.';
+      bannerNotification = 'We have received your tour request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.';
     } else if (isAlreadyPricingRequested) {
-      bannerNotification = 'We have received your pricing request. Your partner agent is checking with this community and will get back to you shortly.';
+      bannerNotification = 'We have received your pricing request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.';
     }
     const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
@@ -440,30 +440,33 @@ export default class CommunityDetailPage extends Component {
                 }
                 <TopCollapsibleSection title="How Seniorly Works">
                   <MainSection noPadding>
-                    <ModalController>
-                      {({
-                        show, modalType, hide,
-                      }) => (
-                        <Fragment>
-                          <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={() => show(HOW_SLY_WORKS_VIDEO)} />
-                          <Modal
-                            onClose={() => hide()}
-                            isOpen={modalType === HOW_SLY_WORKS_VIDEO}
-                            layout="fullScreen"
-                            closeable
-                          >
-                            <StyledVideo autoPlay controls controlsList="nodownload">
-                              <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
-                              <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
-                            </StyledVideo>
-                          </Modal>
-                        </Fragment>
-                      )}
-                    </ModalController>
+                    <Fragment>
+                      <ModalController>
+                        {({
+                            show, modalType, hide,
+                          }) => (
+                          <VideoThumbnailWrapper>
+                            <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={() => show(HOW_SLY_WORKS_VIDEO)} />
+                            <Modal
+                              onClose={() => hide()}
+                              isOpen={modalType === HOW_SLY_WORKS_VIDEO}
+                              layout="fullScreen"
+                              closeable
+                            >
+                              <StyledVideo autoPlay controls controlsList="nodownload">
+                                <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
+                                <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
+                              </StyledVideo>
+                            </Modal>
+                          </VideoThumbnailWrapper>
+                        )}
+                      </ModalController>
+
+                    </Fragment>
                   </MainSection>
                 </TopCollapsibleSection>
                 {partnerAgent &&
-                  <TopCollapsibleSection title={`Your Partner Agent for ${name}`}>
+                  <TopCollapsibleSection title={`Your Seniorly Partner Agent for ${name}`}>
                     <MainSection>
                       <ModalController>
                         {({ show }) => (
@@ -473,8 +476,8 @@ export default class CommunityDetailPage extends Component {
                     </MainSection>
                     <BottomSection>
                       <TextBottomSection
-                        heading="Ask you local advisor about pricing, floor plans, availability, anything."
-                        subHeading="Your advisor is a free service to you."
+                        heading="Ask about pricing, floor plans, availability, anything."
+                        subHeading=" Using a Seniorly Partner Agent is a free service for you."
                         buttonText="Send a message"
                         onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
                       />
@@ -496,7 +499,7 @@ export default class CommunityDetailPage extends Component {
                     <BottomSection>
                       <TextBottomSection
                         heading="Need more detailed information on care services?"
-                        subHeading="Your advisor can consult with you on your individual care needs."
+                        subHeading="Your Seniorly Partner Agent can consult with you on your individual care needs."
                         buttonText="Ask about care services"
                         onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
                       />
@@ -510,14 +513,14 @@ export default class CommunityDetailPage extends Component {
                   <BottomSection>
                     <TextBottomSection
                       heading="Need more detailed information on amenities?"
-                      subHeading="Your advisor can consult with you for free."
+                      subHeading=" Using a Seniorly Partner Agent is a free service for you."
                       buttonText="Ask about amenities"
                       onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
                     />
                   </BottomSection>
                 </TopCollapsibleSection>
                 {sortedEstimatedPrice.length > 0 &&
-                  <TopCollapsibleSection title="Compare to other communities in the area">
+                  <TopCollapsibleSection title={`Compare to other ${typeOfCare} communities in the area`}>
                     <MainSection>
                       <CommunityPricingComparison community={community} />
                     </MainSection>
@@ -633,7 +636,7 @@ export default class CommunityDetailPage extends Component {
                 }
                 <StyledCommunityExtraInfoSection
                   title="Disclaimer"
-                  description="The information on this page has been created to the best of our abilities. To ensure accuracy, please confirm with your local Seniorly Partner Agent or directly with the property. If this is your senior living community, we would welcome any updates you wish to provide."
+                  description="The information on this page has been created to the best of our abilities. To ensure accuracy, please confirm with your local Seniorly Seniorly Partner Agent or directly with the property. If this is your senior living community, we would welcome any updates you wish to provide."
                   url="/providers/housing"
                   urlText="Simply claim your profile by clicking here"
                 />
@@ -731,9 +734,9 @@ export default class CommunityDetailPage extends Component {
                       }
                       let subheading = null;
                       if (type === 'booking') {
-                        subheading = 'Your partner agent will check if this community is available at this time. They will get back to you shortly by phone or email.';
+                        subheading = 'Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email.';
                       } else if (type === 'pricing') {
-                        subheading = 'Your partner agent will work with you to get your exact pricing. They will reach out to you soon.';
+                        subheading = 'Your Seniorly Partner Agent will work with you to get your exact pricing. They will reach out to you soon.';
                       }
                       const props = {
                         similarCommunities: similarProperties,
@@ -764,7 +767,7 @@ export default class CommunityDetailPage extends Component {
                     }) => {
                       const { name, address } = community;
                       const { city } = address;
-                      let heading = `Ask your partner agent a question about ${name} in ${city}.`;
+                      let heading = `Ask your Seniorly Partner Agent a question about ${name} in ${city}.`;
                       let placeholder = `Hi Rachel, I have a question about ${name} in ${city}...`;
                       let description = null;
                       let question = null;
@@ -772,16 +775,16 @@ export default class CommunityDetailPage extends Component {
 
                       if (askAgentQuestionType === 'tour') {
                         heading = 'We have received your tour request.';
-                        description = 'Your partner agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
+                        description = 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
                         placeholder = `Hi, I have a question about my tour with ${name}...`;
                       } else if (askAgentQuestionType === 'pricing') {
                         heading = 'We have received your custom pricing request.';
-                        description = 'Your partner agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
+                        description = 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
                       } else if (askAgentQuestionType === 'offer') {
-                        heading = `Ask your partner agent about the holiday incentive at ${name}`;
+                        heading = `Ask your Seniorly Partner Agent about the holiday incentive at ${name}`;
                         question = `Hi, I am interested in knowing more about the holiday promotion at ${name}. I am looking for...`;
                       } else if (askAgentQuestionType === 'services') {
-                        heading = `Ask your partner agent about services provided at ${name}`;
+                        heading = `Ask your Seniorly Partner Agent about services provided at ${name}`;
                         question = `Hi, I need .... and am interested in knowing whether ${name} has ...`;
                       }
 
@@ -826,9 +829,6 @@ export default class CommunityDetailPage extends Component {
             </Lazy>
           </StyledSection>
           <Wrapper>
-            <Section title="How Seniorly Works" titleSize="subtitle">
-              <HowSlyWorks />
-            </Section>
             {(rgsAux && rgsAux.localDetails !== '') ? (
               <Section title="Local Details" titleSize="subtitle">
                 <CommunityLocalDetails localDetails={rgsAux.localDetails} />
