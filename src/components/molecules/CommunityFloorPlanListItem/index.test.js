@@ -22,7 +22,7 @@ describe('CommunityFloorPlanListItem', () => {
 
   it('renders with image passed', () => {
     const wrapper = wrap({ image: 'abc.png' });
-    expect(wrapper.find('StyledImage')).toHaveLength(1);
+    expect(wrapper.find('Image')).toHaveLength(1);
   });
 
   it('renders shared price', () => {
