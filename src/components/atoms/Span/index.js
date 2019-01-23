@@ -1,8 +1,9 @@
 import { oneOf } from 'prop-types';
-import { ifProp } from 'styled-tools';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { getKey, size, palette } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
+import { text as textPropType } from 'sly/propTypes/text';
+import { palette as palettePropType } from 'sly/propTypes/palette';
 import { variation as variationPropType } from 'sly/propTypes/variation';
 
 const getSize = type => p => size(type, p.size);
@@ -10,18 +11,15 @@ const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, v
 
 const Span = styled.span`
   color: ${getColor};
-  ${ifProp('size', css`
-    font-size: ${getSize('text')};
-  `)};
   font-size: ${getSize('text')};
   line-height: ${getSize('lineHeight')};
-  font-weight: ${p => size('weight', p.weight)}; 
+  font-weight: ${p => size('weight', p.weight)};
 `;
 
 Span.propTypes = {
-  palette: oneOf(Object.keys(getKey('palette'))),
+  palette: palettePropType,
   variation: variationPropType,
-  size: oneOf(Object.keys(getKey('sizes.text'))),
+  size: textPropType,
   weight: oneOf(['regular', 'medium', 'light']),
 };
 
