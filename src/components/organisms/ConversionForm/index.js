@@ -5,8 +5,9 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
+import pad from 'sly/components/helpers/pad';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { Button, Heading, Box, Hr } from 'sly/components/atoms';
+import { Button, Heading, Box } from 'sly/components/atoms';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 
 const StyledButton = styled(Button)`
@@ -15,23 +16,17 @@ const StyledButton = styled(Button)`
   font-weight: normal;
 `;
 
-const SubHeading = styled.div`
-  margin-bottom: ${size('spacing.large')};
-`;
+const PaddedHeading = pad(Heading);
+const LastField = pad(Field);
 
 const ConversionForm = ({
   handleSubmit,
   submitting,
   hasOnlyEmail,
-  contact,
 }) => (
   <Box>
     <form onSubmit={handleSubmit}>
-      <Heading level="title" size="subtitle">Get Pricing & Availability</Heading>
-      {contact && <SubHeading>{`${contact.firstName} ${contact.lastName}`}</SubHeading>}
-
-      <Hr />
-
+      <PaddedHeading level="title" size="subtitle">Get Pricing & Availability</PaddedHeading>
       <Field
         name="full_name"
         label="Full Name"
@@ -47,7 +42,7 @@ const ConversionForm = ({
           component={ReduxField}
         />
       )}
-      <Field
+      <LastField
         name="phone"
         label="Phone"
         parse={phoneParser}
@@ -58,7 +53,6 @@ const ConversionForm = ({
       <StyledButton type="submit" kind="jumbo" disabled={submitting}>
         Request Info
       </StyledButton>
-
       <TosAndPrivacy />
     </form>
   </Box>
@@ -68,7 +62,6 @@ ConversionForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
   agent: object,
-  contact: object,
   hasOnlyEmail: bool,
   onAdvisorHelpClick: func,
 };
