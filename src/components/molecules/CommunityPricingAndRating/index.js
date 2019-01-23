@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { number, string } from 'prop-types';
 import styled from 'styled-components';
+import NumberFormat from 'react-number-format';
 
 import { formatRating } from 'sly/services/helpers/rating';
 import { size } from 'sly/components/themes';
@@ -43,7 +44,7 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
           <StyledCommunityPricingWrapper>
             <DescriptionBlock size="caption">{priceDescription}</DescriptionBlock>
             <Block size="title" weight="medium">
-              ${price}
+              <NumberFormat value={price} displayType="text" thousandSeparator prefix="$" />
               <MoSpan size="caption">/mo<sup>*</sup></MoSpan>
             </Block>
           </StyledCommunityPricingWrapper>
