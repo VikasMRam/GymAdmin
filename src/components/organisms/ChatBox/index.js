@@ -60,8 +60,10 @@ class ChatBox extends Component {
 
   render() {
     if (isBrowser) {
-      loadOlark();
-      window.olark.identify(olarkSiteId);
+      setTimeout(() => {
+        loadOlark();
+        window.olark.identify(olarkSiteId);
+      }, 30000);
     }
 
     return null;
