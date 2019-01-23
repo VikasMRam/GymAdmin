@@ -43,7 +43,7 @@ const ConversionForm = ({
       <Field
         name="full_name"
         label="Full Name"
-        placeholder="Jane Doe"
+        placeholder="Full name"
         component={ReduxField}
       />
       {!hasOnlyEmail && (
@@ -51,7 +51,7 @@ const ConversionForm = ({
           name="email"
           label="Email"
           type="email"
-          placeholder="janedoe@gmail.com"
+          placeholder="Email"
           component={ReduxField}
         />
       )}
@@ -60,7 +60,7 @@ const ConversionForm = ({
         label="Phone"
         parse={phoneParser}
         format={phoneFormatter}
-        placeholder="925-555-5555"
+        placeholder="Phone"
         component={ReduxField}
       />
       <StyledButton type="submit" kind="jumbo" disabled={submitting}>
