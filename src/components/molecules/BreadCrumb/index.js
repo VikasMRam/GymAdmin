@@ -54,10 +54,6 @@ const BreadCrumb = ({ items, innerRef, size }) => (
                 </Link>
               }
 
-              <Link itemProp="item" to={path} name={label}>
-                <Span itemProp="name" palette="primary" size={size}>{label}</Span>
-              </Link>
-
               {key < items.length - 1 ? <Span size={size}>/</Span> : null}
             </li>
           );
