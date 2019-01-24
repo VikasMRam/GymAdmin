@@ -544,7 +544,7 @@ export default class CommunityDetailPage extends Component {
                           communityName={name}
                           communitySlug={id}
                           questions={questions}
-                          communityFaQs={[]} // TODO: add communityFaQs after api changes are merged
+                          communityFaQs={communityFaQs}
                           onLeaveAnswerClick={(type, questionId) => show(ANSWER_QUESTION, { type, questionId })}
                           user={user}
                         />
