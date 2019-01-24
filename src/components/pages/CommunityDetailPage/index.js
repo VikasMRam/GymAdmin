@@ -6,7 +6,7 @@ import { Lazy } from 'react-lazy';
 
 import { size, palette, assetPath } from 'sly/components/themes';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, FLOOR_PLAN, CONCIERGE, ADVISOR_HELP, HOW_SLY_WORKS_VIDEO }
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, FLOOR_PLAN, CONCIERGE, ADVISOR_HELP }
   from 'sly/constants/modalType';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
@@ -39,7 +39,6 @@ import CommunityAmenities from 'sly/components/organisms/CommunityAmenities';
 import CommunityMap from 'sly/components/organisms/CommunityMap';
 import CommunityMediaGallery from 'sly/components/organisms/CommunityMediaGallery';
 import MorePictures from 'sly/components/organisms/MorePictures';
-import HowSlyWorks from 'sly/components/organisms/HowSlyWorks';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
@@ -175,6 +174,8 @@ export default class CommunityDetailPage extends Component {
     askAgentQuestionType: string,
     userAction: object,
     onFloorPlanModalToggle: func,
+    toggleHowSlyWorksVideoPlaying: func,
+    isHowSlyWorksVideoPlaying: bool,
   };
 
   handleMorePicturesClick = (image) => {
@@ -225,6 +226,8 @@ export default class CommunityDetailPage extends Component {
       askAgentQuestionType,
       userAction,
       onFloorPlanModalToggle,
+      toggleHowSlyWorksVideoPlaying,
+      isHowSlyWorksVideoPlaying,
     } = this.props;
 
     const {
@@ -440,27 +443,15 @@ export default class CommunityDetailPage extends Component {
                 }
                 <TopCollapsibleSection title="How Seniorly Works">
                   <MainSection noPadding>
-                    <ModalController>
-                      {({
-                          show, modalType, hide,
-                        }) => (
-                          <Fragment>
-                            <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={() => show(HOW_SLY_WORKS_VIDEO)} />
-                            <Modal
-                              onClose={() => hide()}
-                              isOpen={modalType === HOW_SLY_WORKS_VIDEO}
-                              layout="fullScreen"
-                              closeable
-                            >
-                              <StyledVideo autoPlay controls controlsList="nodownload">
-                                <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
-                                <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
-                              </StyledVideo>
-                            </Modal>
-                          </Fragment>
-                      )}
-                    </ModalController>
-
+                    {!isHowSlyWorksVideoPlaying &&
+                      <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={toggleHowSlyWorksVideoPlaying} />
+                    }
+                    {isHowSlyWorksVideoPlaying &&
+                      <StyledVideo autoPlay controls controlsList="nodownload">
+                        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
+                        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
+                      </StyledVideo>
+                    }
                   </MainSection>
                 </TopCollapsibleSection>
                 {partnerAgent &&

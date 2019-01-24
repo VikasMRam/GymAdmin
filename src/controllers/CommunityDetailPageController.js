@@ -38,6 +38,7 @@ class CommunityDetailPageController extends Component {
     isShareCommunityModalVisible: bool,
     isAskAgentQuestionModalVisible: bool,
     askAgentQuestionType: string,
+    isHowSlyWorksVideoPlaying: bool,
   };
 
   componentDidMount() {
@@ -142,6 +143,11 @@ class CommunityDetailPageController extends Component {
       action: 'click', category: 'receptionPhone', label: id,
     };
     SlyEvent.getInstance().sendEvent(event);
+  };
+
+  handleToggleHowSlyWorksVideoPlaying = () => {
+    const { isHowSlyWorksVideoPlaying, set } = this.props;
+    set({ isHowSlyWorksVideoPlaying: !isHowSlyWorksVideoPlaying });
   };
 
   handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
@@ -322,6 +328,7 @@ class CommunityDetailPageController extends Component {
       userAction,
       isAskAgentQuestionModalVisible,
       askAgentQuestionType,
+      isHowSlyWorksVideoPlaying,
     } = this.props;
 
     if (errorCode) {
@@ -393,6 +400,8 @@ class CommunityDetailPageController extends Component {
         askAgentQuestionType={askAgentQuestionType}
         onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
         userAction={userAction}
+        toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
+        isHowSlyWorksVideoPlaying={isHowSlyWorksVideoPlaying}
       />
     );
   }
@@ -413,6 +422,7 @@ const mapStateToProps = (state, {
   const {
     mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false,
     isShareCommunityModalVisible = false, isAskAgentQuestionModalVisible, askAgentQuestionType,
+    isHowSlyWorksVideoPlaying,
   } = controller;
 
   const searchParams = getSearchParams(match, location);
@@ -435,6 +445,7 @@ const mapStateToProps = (state, {
     isShareCommunityModalVisible,
     isAskAgentQuestionModalVisible,
     askAgentQuestionType,
+    isHowSlyWorksVideoPlaying,
   };
 };
 

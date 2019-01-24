@@ -15,5 +15,3 @@ export const CONCIERGE = 'concierge';
 export const FLOOR_PLAN = 'floorPlan';
 
 export const ADVISOR_HELP = 'advisorHelp';
-
-export const HOW_SLY_WORKS_VIDEO = 'howSlyWorksVideo';

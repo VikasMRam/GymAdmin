@@ -18,6 +18,7 @@ class HomePageContainer extends Component {
 
   state = {
     activeDiscoverHome: null,
+    howSlyWorksVideoPlaying: false,
   };
 
   setActiveDiscoverHome = (activeDiscoverHome) => {
@@ -34,6 +35,11 @@ class HomePageContainer extends Component {
       };
     }
     SlyEvent.getInstance().sendEvent(event);
+  };
+
+  handleToggleHowSlyWorksVideoPlaying = () => {
+    const { howSlyWorksVideoPlaying } = this;
+    this.setState({ howSlyWorksVideoPlaying: !howSlyWorksVideoPlaying });
   };
 
   handleOnLocationSearch = (result, isFromModal) => {
@@ -57,17 +63,20 @@ class HomePageContainer extends Component {
   };
 
   render() {
-    const { activeDiscoverHome } = this.state;
+    const { setActiveDiscoverHome, handleOnLocationSearch, handleToggleHowSlyWorksVideoPlaying } = this;
+    const { activeDiscoverHome, howSlyWorksVideoPlaying } = this.state;
     const { searchParams, setQueryParams, pathName } = this.props;
     const { modal, currentStep } = searchParams;
     return (
       <HomePage
         isModalOpen={activeDiscoverHome !== null}
-        setActiveDiscoverHome={this.setActiveDiscoverHome}
-        onLocationSearch={this.handleOnLocationSearch}
+        setActiveDiscoverHome={setActiveDiscoverHome}
+        onLocationSearch={handleOnLocationSearch}
+        toggleHowSlyWorksVideoPlaying={handleToggleHowSlyWorksVideoPlaying}
         queryParams={{ modal, currentStep }}
         setQueryParams={setQueryParams}
         pathName={pathName}
+        ishowSlyWorksVideoPlaying={howSlyWorksVideoPlaying}
       />
     );
   }
