@@ -76,6 +76,11 @@ const FamiliesHelpedSection = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
+const ParentCompanySection = styled.div`
+  text-align: left;
+  margin-bottom: ${size('spacing.large')};
+`;
+
 const AgentsCitiesSection = styled.div`
   text-align: left;
   margin-bottom: ${size('spacing.xLarge')};
@@ -109,7 +114,7 @@ const AgentSummary = ({
 }) => {
   const { info, aggregateRating } = agent;
   const {
-    profileImageUrl, displayName, recentFamiliesHelped, citiesServed, slyPhone,
+    profileImageUrl, displayName, recentFamiliesHelped, citiesServed, slyPhone, parentCompany,
   } = info;
   let ratingsSection = null;
   if (aggregateRating && aggregateRating.ratingValue > 0) {
@@ -136,6 +141,12 @@ const AgentSummary = ({
             <Span weight="medium">Families helped: </Span>
             <Span>{recentFamiliesHelped}</Span>
           </FamiliesHelpedSection>
+        }
+        {parentCompany &&
+          <ParentCompanySection>
+            <Span weight="medium">Parent Company: </Span>
+            <Span>{parentCompany}</Span>
+          </ParentCompanySection>
         }
         {citiesServed.length > 0 &&
           <AgentsCitiesSection>

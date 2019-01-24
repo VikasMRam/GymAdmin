@@ -55,6 +55,11 @@ describe('AgentSummary', () => {
     expect(wrapper.find('FamiliesHelpedSection').childAt(1).dive().text()).toEqual('20');
   });
 
+  it('renders parentCompany', () => {
+    const wrapper = wrap({ agent: { info: { ...defaultProp.agent.info, parentCompany: 'testParentCompany' } } });
+    expect(wrapper.find('ParentCompanySection').childAt(1).dive().text()).toEqual('testParentCompany');
+  });
+
   it('handles onButtonClick', () => {
     const onButtonClick = jest.fn();
     const wrapper = wrap({ onButtonClick });
