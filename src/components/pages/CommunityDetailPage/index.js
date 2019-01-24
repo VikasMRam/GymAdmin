@@ -440,12 +440,11 @@ export default class CommunityDetailPage extends Component {
                 }
                 <TopCollapsibleSection title="How Seniorly Works">
                   <MainSection noPadding>
-                    <Fragment>
-                      <ModalController>
-                        {({
-                            show, modalType, hide,
-                          }) => (
-                          <VideoThumbnailWrapper>
+                    <ModalController>
+                      {({
+                          show, modalType, hide,
+                        }) => (
+                          <Fragment>
                             <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={() => show(HOW_SLY_WORKS_VIDEO)} />
                             <Modal
                               onClose={() => hide()}
@@ -458,11 +457,10 @@ export default class CommunityDetailPage extends Component {
                                 <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
                               </StyledVideo>
                             </Modal>
-                          </VideoThumbnailWrapper>
-                        )}
-                      </ModalController>
+                          </Fragment>
+                      )}
+                    </ModalController>
 
-                    </Fragment>
                   </MainSection>
                 </TopCollapsibleSection>
                 {partnerAgent &&
