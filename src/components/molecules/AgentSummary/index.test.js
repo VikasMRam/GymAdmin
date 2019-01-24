@@ -30,12 +30,8 @@ describe('AgentSummary', () => {
     expect(wrapper.find(Image)).toHaveLength(1);
     expect(wrapper.find(Image).prop('src')).toEqual(defaultProp.agent.info.profileImageUrl);
     expect(wrapper.contains(defaultProp.agent.info.displayName)).toBeTruthy();
-    expect(wrapper.find('AgentsCitiesSection').childAt(0).dive().text()).toEqual('Stephen\'s Cities: ');
-    expect(wrapper.find('AgentsCitiesSection').childAt(1).dive().dive()
-      .dive()
-      .find('BlockCap')
-      .dive()
-      .text()).toContain('Sausalito, Mill Valley');
+    expect(wrapper.contains('Stephen\'s Cities: ')).toBeTruthy();
+    expect(wrapper.contains('Sausalito, Mill Valley')).toBeTruthy();
   });
 
   it('renders aggregateRating and numRatings', () => {
@@ -52,7 +48,12 @@ describe('AgentSummary', () => {
 
   it('renders recentFamiliesHelped', () => {
     const wrapper = wrap({ agent: { info: { ...defaultProp.agent.info, recentFamiliesHelped: 20 } } });
-    expect(wrapper.find('FamiliesHelpedSection').childAt(1).dive().text()).toEqual('20');
+    expect(wrapper.contains(20)).toBeTruthy();
+  });
+
+  it('renders parentCompany', () => {
+    const wrapper = wrap({ agent: { info: { ...defaultProp.agent.info, parentCompany: 'testParentCompany' } } });
+    expect(wrapper.contains('testParentCompany')).toBeTruthy();
   });
 
   it('handles onButtonClick', () => {

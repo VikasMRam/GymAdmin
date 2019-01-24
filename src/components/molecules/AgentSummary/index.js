@@ -8,6 +8,7 @@ import { formatRating } from 'sly/services/helpers/rating';
 import agentPropType from 'sly/propTypes/agent';
 import { Image, Icon, Block, Button, Span, Hr, Link } from 'sly/components/atoms';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
+import pad from 'sly/components/helpers/pad';
 
 const Wrapper = styled.div`
   display: flex;
@@ -71,15 +72,11 @@ const StyledHr = styled(Hr)`
   }
 `;
 
-const FamiliesHelpedSection = styled.div`
-  text-align: left;
-  margin-bottom: ${size('spacing.large')};
-`;
+const FamiliesHelpedSection = pad('div', 'large');
 
-const AgentsCitiesSection = styled.div`
-  text-align: left;
-  margin-bottom: ${size('spacing.xLarge')};
-`;
+const ParentCompanySection = pad('div', 'large');
+
+const AgentsCitiesSection = pad('div');
 
 const AskQuestionButton = styled(Button)`
   width: 100%;
@@ -109,7 +106,7 @@ const AgentSummary = ({
 }) => {
   const { info, aggregateRating } = agent;
   const {
-    profileImageUrl, displayName, recentFamiliesHelped, citiesServed, slyPhone,
+    profileImageUrl, displayName, recentFamiliesHelped, citiesServed, slyPhone, parentCompany,
   } = info;
   let ratingsSection = null;
   if (aggregateRating && aggregateRating.ratingValue > 0) {
@@ -136,6 +133,12 @@ const AgentSummary = ({
             <Span weight="medium">Families helped: </Span>
             <Span>{recentFamiliesHelped}</Span>
           </FamiliesHelpedSection>
+        }
+        {parentCompany &&
+          <ParentCompanySection>
+            <Span weight="medium">Parent Company: </Span>
+            <Span>{parentCompany}</Span>
+          </ParentCompanySection>
         }
         {citiesServed.length > 0 &&
           <AgentsCitiesSection>
