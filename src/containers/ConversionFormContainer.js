@@ -75,11 +75,9 @@ class ConversionFormContainer extends Component {
       full_name: fullName,
     };
     let agent = null;
-    let contact = null;
     if (community) {
-      const {agents, contacts} = community;
+      const {agents } = community;
       agent = agents[0];
-      contact = contacts[0];
     }
     const submitConversion = express
       ? submitExpressConversion
@@ -99,7 +97,6 @@ class ConversionFormContainer extends Component {
               initialValues={initialValues}
               onSubmit={submitConversion}
               agent={agent}
-              contact={contact}
               gotoWhatNext={gotoWhatNext}
               community={community}
               hasOnlyEmail={hasOnlyEmail(userDetails)}
