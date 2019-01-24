@@ -8,6 +8,7 @@ import { formatRating } from 'sly/services/helpers/rating';
 import agentPropType from 'sly/propTypes/agent';
 import { Image, Icon, Block, Button, Span, Hr, Link } from 'sly/components/atoms';
 import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
+import pad from 'sly/components/helpers/pad';
 
 const Wrapper = styled.div`
   display: flex;
@@ -71,20 +72,11 @@ const StyledHr = styled(Hr)`
   }
 `;
 
-const FamiliesHelpedSection = styled.div`
-  text-align: left;
-  margin-bottom: ${size('spacing.large')};
-`;
+const FamiliesHelpedSection = pad('div', 'large');
 
-const ParentCompanySection = styled.div`
-  text-align: left;
-  margin-bottom: ${size('spacing.large')};
-`;
+const ParentCompanySection = pad('div', 'large');
 
-const AgentsCitiesSection = styled.div`
-  text-align: left;
-  margin-bottom: ${size('spacing.xLarge')};
-`;
+const AgentsCitiesSection = pad('div');
 
 const AskQuestionButton = styled(Button)`
   width: 100%;
