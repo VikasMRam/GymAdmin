@@ -42,14 +42,18 @@ const BreadCrumb = ({ items, innerRef, size }) => (
               itemProp="itemListElement"
               itemScope
               itemType="http://schema.org/ListItem"
+              position={key + 1}
             >
               {key === items.length - 1 ?
-                <Span itemProp="name" size={size}>{label}</Span>
+                <Link itemProp="item" to={path} name={label}>
+                  <Span itemProp="name" size={size}>{label}</Span>
+                </Link>
               :
-                <Link itemProp="item" to={path}>
+                <Link itemProp="item" to={path} name={label}>
                   <Span itemProp="name" palette="primary" size={size}>{label}</Span>
                 </Link>
               }
+
               {key < items.length - 1 ? <Span size={size}>/</Span> : null}
             </li>
           );
