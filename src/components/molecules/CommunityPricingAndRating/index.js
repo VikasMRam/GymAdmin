@@ -51,10 +51,11 @@ const CommunityPricingAndRating = ({ priceDescription, price, rating }) => {
         }
         {ratingFixed > 0 &&
           <div>
-            <DescriptionBlock size="caption">Average 5-star Rating</DescriptionBlock>
+            <DescriptionBlock size="caption">Average Rating</DescriptionBlock>
             <Block size="title" weight="medium">
               <StyledIcon icon="star" palette="secondary" />
               {ratingFixed}
+              <MoSpan size="caption">/5.0</MoSpan>
             </Block>
           </div>
         }
