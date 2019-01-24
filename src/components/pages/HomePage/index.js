@@ -3,13 +3,11 @@ import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
 import { size, assetPath, palette, gridColumns } from 'sly/components/themes';
-import { HOW_SLY_WORKS_VIDEO } from 'sly/constants/modalType';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
-import ModalController from 'sly/controllers/ModalController';
 import { Image, Centered, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 import Modal from 'sly/components/molecules/Modal';
@@ -327,7 +325,8 @@ const familiesWeHaveHelpedTiles = [
 ];
 
 const HomePage = ({
-  isModalOpen, onLocationSearch, setActiveDiscoverHome, queryParams, setQueryParams, pathName,
+  isModalOpen, onLocationSearch, setActiveDiscoverHome, queryParams, setQueryParams, pathName, ishowSlyWorksVideoPlaying,
+  toggleHowSlyWorksVideoPlaying,
 }) => {
   const HeaderContent = (
     <Fragment>
@@ -410,26 +409,17 @@ const HomePage = ({
           <SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} />
         </Modal>
         <StyledSection title="How Can Seniorly Help You Find A Home" subtitle="">
-          <ModalController>
-            {({
-                show, modalType, hide,
-              }) => (
-              <VideoThumbnailWrapper>
-                <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={() => show(HOW_SLY_WORKS_VIDEO)} />
-                <Modal
-                  onClose={() => hide()}
-                  isOpen={modalType === HOW_SLY_WORKS_VIDEO}
-                  layout="fullScreen"
-                  closeable
-                >
-                  <StyledVideo autoPlay controls controlsList="nodownload">
-                    <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
-                    <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
-                  </StyledVideo>
-                </Modal>
-              </VideoThumbnailWrapper>
-            )}
-          </ModalController>
+          <VideoThumbnailWrapper>
+            {!ishowSlyWorksVideoPlaying &&
+              <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={toggleHowSlyWorksVideoPlaying} />
+            }
+            {ishowSlyWorksVideoPlaying &&
+              <StyledVideo autoPlay controls controlsList="nodownload">
+                <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
+                <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
+              </StyledVideo>
+            }
+          </VideoThumbnailWrapper>
         </StyledSection>
         <Hr />
         <StyledSection title="Discover Homes Near You">
@@ -504,6 +494,8 @@ HomePage.propTypes = {
   pathName: string,
   queryParams: object,
   setQueryParams: func,
+  ishowSlyWorksVideoPlaying: bool,
+  toggleHowSlyWorksVideoPlaying: func,
 };
 
 export default HomePage;
