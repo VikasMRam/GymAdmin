@@ -37,7 +37,7 @@ const CommunityBookATourContactForm = ({
     <form onSubmit={handleSubmit}>
       <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
       <SubheadingWrapper>
-        <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can a partner agent help?</Link></SubHeading>
+        <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can a Seniorly Partner Agent help?</Link></SubHeading>
         <AgentImage src={assetPath('images/agent-xLarge.png')} alt="Agent" />
       </SubheadingWrapper>
       {!(userDetails && userDetails.fullName) && <Field
@@ -62,7 +62,7 @@ const CommunityBookATourContactForm = ({
           label="Add a note"
           type="textarea"
           rows="5"
-          placeholder="Anything you'd like your partner agent to know or any questions"
+          placeholder="Anything you'd like your Seniorly Partner Agent to know or any questions"
           component={ReduxField}
         />
       }

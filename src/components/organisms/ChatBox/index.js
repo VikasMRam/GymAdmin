@@ -28,7 +28,7 @@ const loadOlark = () => {
   /* eslint-enable */
 };
 
-class ChatBox extends Component {
+export default class ChatBox extends Component {
   static propTypes = {
     footerReached: bool,
     pageWithStickyFooter: bool,
@@ -60,12 +60,12 @@ class ChatBox extends Component {
 
   render() {
     if (isBrowser) {
-      loadOlark();
-      window.olark.identify(olarkSiteId);
+      setTimeout(() => {
+        loadOlark();
+        window.olark.identify(olarkSiteId);
+      }, 30000);
     }
 
     return null;
   }
 }
-
-export default ChatBox;

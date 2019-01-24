@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { bool, node } from 'prop-types';
 
 import { size } from 'sly/components/themes';
-import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 
 const Main = styled.main`
   width: 100%;
@@ -18,14 +17,12 @@ const Main = styled.main`
   }
 `;
 
-export const TemplateContent = ({ hasStickyFooter, children }) => (
+export const TemplateContent = ({ children }) => (
   <Fragment>
     <Main>{children}</Main>
-    <ChatBoxContainer pageWithStickyFooter={hasStickyFooter} />
   </Fragment>
 );
 TemplateContent.propTypes = {
-  hasStickyFooter: bool,
   children: node,
 };
 

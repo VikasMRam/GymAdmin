@@ -3,6 +3,7 @@ import { func, string } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/constants/loginProviders';
+import loadFB from 'sly/services/helpers/facebookSDK';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
@@ -29,9 +30,13 @@ class JoinSlyButtonsContainer extends Component {
         }
       });
     }
+    this.getFB().then(() => {
+      // do nothing
+      console.log('FB loaded');
+    });
   }
 
-  onGoogleConnected = (resp, setSocialLoginError) => {
+  onGoogleConnected = (resp) => {
     const { thirdpartyLogin, onConnectSuccess } = this.props;
     const r = resp.getAuthResponse();
     const p = resp.getBasicProfile();
@@ -44,33 +49,40 @@ class JoinSlyButtonsContainer extends Component {
 
     thirdpartyLogin(data).then(
       onConnectSuccess,
-      () => setSocialLoginError('Failed to authorize with Google. Please try again.')
+      () => this.setSocialLoginError('Failed to authorize with Google. Please try again.')
     );
   };
 
-  onFacebookConnected = (resp, setSocialLoginError) => {
+  onFacebookConnected = (resp) => {
     const { thirdpartyLogin, onConnectSuccess } = this.props;
     const { accessToken } = resp;
 
-    window.FB.api('/me', { fields: 'name, email' }, (resp) => {
-      // in case of fb accounts having unconfirmed emails api won't return it
-      if (resp.email) {
-        const data = {
-          token: accessToken,
-          provider: LOGIN_PROVIDER_FACEBOOK,
-          name: resp.name,
-          email: resp.email,
-        };
+    this.getFB().then((FB) => {
+      FB.api('/me', { fields: 'name, email' }, (resp) => {
+        // in case of fb accounts having unconfirmed emails api won't return it
+        if (resp.email) {
+          const data = {
+            token: accessToken,
+            provider: LOGIN_PROVIDER_FACEBOOK,
+            name: resp.name,
+            email: resp.email,
+          };
 
-        thirdpartyLogin(data).then(
-          onConnectSuccess,
-          () => setSocialLoginError('Failed to authorize with Facebook. Please try again.')
-        );
-      } else {
-        setSocialLoginError('Failed to fetch required info from Facebook. Please try again.');
-      }
+          thirdpartyLogin(data)
+            .then(
+              onConnectSuccess,
+              () => this.setSocialLoginError('Failed to authorize with Facebook. Please try again.')
+            );
+        } else {
+          this.setSocialLoginError('Failed to fetch required info from Facebook. Please try again.');
+        }
+      });
     });
   };
+
+  getFB = () => loadFB().catch(() => {
+    this.setSocialLoginError('Can\'t load FB SDK');
+  });
 
   setSocialLoginError = (msg) => {
     this.setState({
@@ -78,26 +90,26 @@ class JoinSlyButtonsContainer extends Component {
     });
   };
 
-  handleContinueWithFacebookClick = (setSocialLoginError) => {
-    setSocialLoginError('');
-    if (window.FB) {
-      window.FB.login((response) => {
+  handleContinueWithFacebookClick = () => {
+    this.setSocialLoginError('');
+    this.getFB().then((FB) => {
+      FB.login((response) => {
         if (response.authResponse) {
-          this.onFacebookConnected(response.authResponse, setSocialLoginError);
+          this.onFacebookConnected(response.authResponse, this.setSocialLoginError);
         } else {
-          setSocialLoginError('Failed to connect with Facebook. Please try again.');
+          this.setSocialLoginError('Failed to connect with Facebook. Please try again.');
         }
       }, { scope: 'email' });
-    }
+    });
   };
 
-  handleContinueWithGoogleClick = (setSocialLoginError) => {
-    setSocialLoginError('');
+  handleContinueWithGoogleClick = () => {
+    this.setSocialLoginError('');
     if (window.gapi) {
       const auth2 = window.gapi.auth2.getAuthInstance();
       auth2.signIn().then(
-        resp => this.onGoogleConnected(resp, setSocialLoginError),
-        () => setSocialLoginError('Failed to connect with Google. Please try again.')
+        this.onGoogleConnected,
+        () => this.setSocialLoginError('Failed to connect with Google. Please try again.')
       );
     }
   };
@@ -106,16 +118,13 @@ class JoinSlyButtonsContainer extends Component {
     const {
       onLoginClicked, onEmailSignupClicked, heading,
     } = this.props;
+
     const { socialLoginError } = this.state;
-    const {
-      handleContinueWithFacebookClick, handleContinueWithGoogleClick,
-      setSocialLoginError,
-    } = this;
 
     return (
       <JoinSlyButtons
-        onContinueWithFacebookClicked={() => handleContinueWithFacebookClick(setSocialLoginError)}
-        onContinueWithGoogleClicked={() => handleContinueWithGoogleClick(setSocialLoginError)}
+        onContinueWithFacebookClicked={this.handleContinueWithFacebookClick}
+        onContinueWithGoogleClicked={this.handleContinueWithGoogleClick}
         onLoginClicked={onLoginClicked}
         onEmailSignupClicked={onEmailSignupClicked}
         socialLoginError={socialLoginError}

@@ -64,7 +64,7 @@ const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
 });
 
 const contactFormHeadingMap = {
-  'schedule-tour': { heading: 'Schedule a Tour', subheading: 'We will help you schedule tours and, if you request, we can provide a local Advisor to accompany you. This is a free service. ' },
+  'schedule-tour': { heading: 'Schedule a Tour', subheading: 'We will help you schedule tours and, if you request, we can provide a Partner Agent to accompany you. This is a free service. ' },
   'talk-advisor': { heading: 'Talk to an Advisor', subheading: 'Call us at (855) 866-4515 to talk to us. We offer complete support with an Partner Agent near you.  This is a no-obligation free service. ' },
   'learn-similar-communities': { heading: 'Learn about Similar Communities', subheading: 'We help you evaluate communities, so you can pick the best one. This is a free service. ' },
   'explore-affordable-options': { heading: 'No Problem! We have options in your budget.', subheading: 'Many of our partner agents specialize in options that are hard to find online and are in your price range. How can we reach you? ' },
