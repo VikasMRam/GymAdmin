@@ -74,7 +74,8 @@
     "opn-cli": "^3.1.0",
     "prettier-eslint-cli": "^4.7.1",
     "react-test-renderer": "^16.3.2",
-    "redux-mock-store": "^1.5.1"
+    "redux-mock-store": "^1.5.1",
+    "svgo": "^1.1.1"
   },
   "dependencies": {
     "@webpack-blocks/dev-server2": "^0.4.0",
