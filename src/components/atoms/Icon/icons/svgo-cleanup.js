@@ -1,20 +1,18 @@
-'use strict';
-
 const fs = require('fs');
-const path = require('path');
+
 const Svgo = require('svgo');
 
-fs.readdirSync(__dirname).forEach(filename => {
+fs.readdirSync(__dirname).forEach((filename) => {
   if (!filename.match(/\.svg$/)) return;
 
   const name = filename.substr(0, filename.length - 4);
 
-  fs.readFile(filename, 'utf8', function(err, data) {
-    console.log(name);
+  fs.readFile(filename, 'utf8', (err, data) => {
+    // console.log(name);
     const svgo = new Svgo({
       plugins: [{
         cleanupIDs: {
-          prefix: name + '-',
+          prefix: `${name}-`,
         },
       }],
     });
