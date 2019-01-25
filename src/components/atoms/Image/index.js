@@ -11,6 +11,7 @@ const StyledImage = styled.img`
 `;
 
 const StyledLazy = styled(Lazy)`
+  display: inline;
   width: 100%;
   height: 100%;
 `;
@@ -33,7 +34,7 @@ const responsiveImageStyles = css`
   }
 `;
 
-const ResponsiveLazyWrapper = styled(Lazy)`
+const ResponsiveLazyWrapper = styled(({ aspectRatio, ...props }) => <Lazy {...props} />)`
   ${responsiveImageStyles};
 `;
 
