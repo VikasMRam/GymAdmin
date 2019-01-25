@@ -13,6 +13,7 @@ import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/con
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
 import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
+import SlyEvent from 'sly/services/helpers/events';
 import { Button, Icon, Block } from 'sly/components/atoms';
 import {
   CommunityDetailPageTemplate,
@@ -142,6 +143,13 @@ const Column = makeColumn('aside');
 const Footer = makeFooter('footer');
 const Wrapper = makeWrapper('div');
 const Gallery = makeGallery('div');
+
+const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
+  category,
+  action,
+  label,
+  value,
+});
 
 export default class CommunityDetailPage extends Component {
   static propTypes = {
@@ -447,7 +455,13 @@ export default class CommunityDetailPage extends Component {
                       <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={toggleHowSlyWorksVideoPlaying} />
                     }
                     {isHowSlyWorksVideoPlaying &&
-                      <StyledVideo autoPlay controls controlsList="nodownload">
+                      <StyledVideo
+                        autoPlay
+                        controls
+                        controlsList="nodownload"
+                        onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', id, e.target.currentTime)}
+                        onPlay={e => sendEvent('howSlyWorksVideo', 'play', id, e.target.currentTime)}
+                      >
                         <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
                         <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
                       </StyledVideo>

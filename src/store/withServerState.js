@@ -7,6 +7,7 @@ import { parse as parseSearch } from 'query-string';
 
 import { isBrowser, isServer } from 'sly/config';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { isResourceDetailRequestComplete } from 'sly/store/selectors';
 
 const ensureArray = ary => Array.isArray(ary) ? ary : [ary];
 
@@ -23,6 +24,7 @@ class ServerStateComponent extends Component {
     location: object,
     ignoreSearch: array,
     ChildComponent: any,
+    isUserMeDone: bool,
   };
 
   componentWillMount() {
@@ -34,27 +36,37 @@ class ServerStateComponent extends Component {
       cleanServerState,
       history,
       dispatch,
+      isUserMeDone,
     } = this.props;
 
     global.rhistory = history;
 
+    const dispatchFetch = () => {
+      if (isUserMeDone) {
+        return fetchData(this.props)
+          .catch(handleError);
+      }
+
+      return Promise.all([
+        dispatch(resourceDetailReadRequest('user', 'me'))
+          // handles 401 from user/me (guest users)
+          .catch((e) => {
+            if (e.response && e.response.status && e.response.status !== 401) {
+              console.error(`SSR GET ${e.response.url} error - ${e.toString()}`);
+            }
+          }),
+        fetchData(this.props)
+          .catch(handleError),
+      ]);
+    };
+
     if (!hasServerState) {
       if (isServer) {
-        Promise.all([
-          dispatch(resourceDetailReadRequest('user', 'me'))
-            // handles 401 from user/me (guest users)
-            .catch((e) => {
-              if (e.response && e.response.status && e.response.status !== 401) {
-                console.error(`SSR GET user/me error - ${e.toString()}`);
-              }
-            }),
-          fetchData(this.props)
-            .catch(handleError),
-        ])
+        dispatchFetch()
           .then(setServerState)
           .catch(setServerState);
       } else {
-        fetchData(this.props);
+        dispatchFetch();
       }
     } else if (isBrowser) {
       cleanServerState();
@@ -117,6 +129,10 @@ export default function withServerState({
           }, {});
     };
 
+    const childMapStateToProps = state => ({
+      isUserMeDone: isResourceDetailRequestComplete(state, 'user'),
+    });
+
     const childMapDispatchToProps = (dispatch, props) => ({
       ...getMapDispatchToProps(dispatch, props),
       dispatch,
@@ -127,6 +143,7 @@ export default function withServerState({
     const connector = connect(
       (state, ownProps) => ({
         ...mapStateToProps(state, ownProps),
+        ...childMapStateToProps(state, ownProps),
         ChildComponent,
       }),
       childMapDispatchToProps,

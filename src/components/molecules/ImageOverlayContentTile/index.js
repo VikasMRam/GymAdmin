@@ -16,6 +16,7 @@ export const StyledImage = styled(Image)`
   width: 100%;
   height: 100%;
   opacity: .75;
+  object-fit: cover;
 `;
 export const ContentWrapper = styled.div`
   position: absolute;

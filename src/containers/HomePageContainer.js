@@ -40,6 +40,13 @@ class HomePageContainer extends Component {
   handleToggleHowSlyWorksVideoPlaying = () => {
     const { howSlyWorksVideoPlaying } = this;
     this.setState({ howSlyWorksVideoPlaying: !howSlyWorksVideoPlaying });
+    const event = {
+      action: 'start', category: 'howSlyWorksVideo', label: 'home',
+    };
+    if (howSlyWorksVideoPlaying) {
+      event.action = 'stop';
+    }
+    SlyEvent.getInstance().sendEvent(event);
   };
 
   handleOnLocationSearch = (result, isFromModal) => {

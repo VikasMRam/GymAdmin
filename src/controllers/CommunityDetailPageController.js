@@ -146,8 +146,16 @@ class CommunityDetailPageController extends Component {
   };
 
   handleToggleHowSlyWorksVideoPlaying = () => {
-    const { isHowSlyWorksVideoPlaying, set } = this.props;
+    const { isHowSlyWorksVideoPlaying, set, community } = this.props;
+    const { id } = community;
     set({ isHowSlyWorksVideoPlaying: !isHowSlyWorksVideoPlaying });
+    const event = {
+      action: 'start', category: 'howSlyWorksVideo', label: id,
+    };
+    if (isHowSlyWorksVideoPlaying) {
+      event.action = 'stop';
+    }
+    SlyEvent.getInstance().sendEvent(event);
   };
 
   handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {

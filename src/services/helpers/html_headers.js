@@ -134,7 +134,6 @@ export const getHelmetForSearchPage = ({
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'Webpage';
-  ld['@headline'] = title;
   ld.url = canonicalUrl;
   const ldCommunities = [];
   if (communityList.length > 0) {
