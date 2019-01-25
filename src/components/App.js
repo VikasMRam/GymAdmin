@@ -80,20 +80,13 @@ export default class App extends Component {
   static childContextTypes = {
     routes: routesPropType,
   };
-  static propTypes = {
-    fetchUser: func,
-  };
 
   getChildContext = () => ({
     routes: this.routes,
   });
 
   componentDidMount() {
-    const { fetchUser } = this.props;
     smoothscroll.polyfill();
-    fetchUser()
-      // eslint-disable-next-line no-console
-      .catch(() => console.error('Not logged in'));
   }
 
   routes = [
