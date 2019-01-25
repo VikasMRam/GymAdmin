@@ -4,6 +4,7 @@ import { bool, func, string, object } from 'prop-types';
 
 import { size, assetPath, palette, gridColumns } from 'sly/components/themes';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
+import SlyEvent from 'sly/services/helpers/events';
 import { TemplateHeader, TemplateContent } from 'sly/components/templates/BasePageTemplate';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
@@ -324,6 +325,13 @@ const familiesWeHaveHelpedTiles = [
   },
 ];
 
+const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
+  category,
+  action,
+  label,
+  value,
+});
+
 const HomePage = ({
   isModalOpen, onLocationSearch, setActiveDiscoverHome, queryParams, setQueryParams, pathName, ishowSlyWorksVideoPlaying,
   toggleHowSlyWorksVideoPlaying,
@@ -414,7 +422,13 @@ const HomePage = ({
               <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={toggleHowSlyWorksVideoPlaying} />
             }
             {ishowSlyWorksVideoPlaying &&
-              <StyledVideo autoPlay controls controlsList="nodownload">
+              <StyledVideo
+                autoPlay
+                controls
+                controlsList="nodownload"
+                onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', 'home', e.target.currentTime)}
+                onPlay={e => sendEvent('howSlyWorksVideo', 'play', 'home', e.target.currentTime)}
+              >
                 <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
                 <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
               </StyledVideo>
