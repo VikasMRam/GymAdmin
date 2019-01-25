@@ -17,10 +17,10 @@ import Thankyou from 'sly/components/molecules/Thankyou';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import CareAssessmentController from 'sly/external/wizards/careAssessment/Controller';
 import { THANK_YOU, CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
+import pad from 'sly/components/helpers/pad';
 
-const TopWrapper = styled.div`
+const TopWrapper = pad(styled.div`
   display: flex;
-  margin-bottom: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
@@ -29,14 +29,12 @@ const TopWrapper = styled.div`
   > button {
     margin-right: ${size('spacing.large')};
   }
-`;
+`);
 const SearchMapContainer = styled(SearchMap)`
   width: 100%;
   height: 100%;
 `;
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.large')};
-`;
+const StyledHeading = pad(Heading, 'large');
 
 const StyledHr = styled(Hr)`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -44,12 +42,9 @@ const StyledHr = styled(Hr)`
   }
 `;
 
-const StyledButton = styled(Button)`
-  margin-bottom: ${size('spacing.large')};
-`;
+const StyledButton = pad(Button, 'large');
 
-const LegacyContent = styled.div`
-  margin-bottom: ${size('spacing.large')};
+const LegacyContent = pad(styled.div`
   a {
     text-decoration: none;
     color: ${palette('base')};
@@ -67,7 +62,7 @@ const LegacyContent = styled.div`
       outline: none;
     }
   }
-`;
+`, 'large');
 
 const ApplyFilterButton = styled(Button)`
   width: 100%;
