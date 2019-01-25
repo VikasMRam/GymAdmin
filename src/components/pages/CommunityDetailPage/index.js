@@ -669,8 +669,8 @@ export default class CommunityDetailPage extends Component {
                   isAlreadyTourScheduled={isAlreadyTourScheduled}
                   isAlreadyPricingRequested={isAlreadyPricingRequested}
                   onBookATourClick={!isAlreadyTourScheduled ? onBookATourClick : e => onToggleAskAgentQuestionModal(e, 'tour')}
-                  // onGCPClick={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-                  onGCPClick={() => setQueryParams({ modal: CONCIERGE })}
+                  onGCPClick={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
+                  // onGCPClick={() => setQueryParams({ modal: CONCIERGE })}
                   onAQClick={onToggleAskAgentQuestionModal}
                 />
                 {(searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||

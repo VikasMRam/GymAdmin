@@ -21,15 +21,6 @@ const SubHeading = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const AgentImage = styled(Image)`
-  display: block;
-  align-self: baseline;
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: none;
-  }
-`;
-
 const CommunityBookATourContactForm = ({
   error, user, userDetails, heading, subheading, onAdvisorHelpClick, handleSubmit,
 }) => {
@@ -38,7 +29,6 @@ const CommunityBookATourContactForm = ({
       <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
       <SubheadingWrapper>
         <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can a Seniorly Partner Agent help?</Link></SubHeading>
-        <AgentImage src={assetPath('images/agent-xLarge.png')} alt="Agent" />
       </SubheadingWrapper>
       {!(userDetails && userDetails.fullName) && <Field
         name="name"

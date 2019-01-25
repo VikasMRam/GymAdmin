@@ -172,8 +172,8 @@ class PricingWizardPage extends Component {
     const { id, mainImage, name } = community;
     const { estimatedPrice } = this.state;
     const compiledWhatToDoNextOptions = [...WHAT_TO_NEXT_OPTIONS];
-    const scheduleTourOption = compiledWhatToDoNextOptions.find(o => o.value === 'schedule-tour');
-    scheduleTourOption.to = `/book-a-tour/${id}`;
+    // const scheduleTourOption = compiledWhatToDoNextOptions.find(o => o.value === 'schedule-tour');
+    // scheduleTourOption.to = `/book-a-tour/${id}`;
 
 
     return (
