@@ -8,10 +8,16 @@ import { REQUEST_FLOORPLAN } from 'sly/services/api/actions';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 import CommunityFloorPlanPopupForm from 'sly/components/molecules/CommunityFloorPlanPopupForm';
+import { createValidator, required } from 'sly/services/validation';
 
+const validate = createValidator({
+  name: [required],
+  phone: [required],
+});
 const ReduxForm = reduxForm({
   form: 'CommunityFloorPlanPopupForm',
   destroyOnUnmount: true,
+  validate,
 })(CommunityFloorPlanPopupForm);
 
 class CommunityFloorPlanPopupFormContainer extends Component {
