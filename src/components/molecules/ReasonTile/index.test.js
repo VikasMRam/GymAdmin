@@ -18,7 +18,7 @@ describe('ReasonTile', () => {
     const wrapper = wrap({
       image,
     });
-    expect(wrapper.find('img').props()).toHaveProperty('src', image);
+    expect(wrapper.find('Image').props()).toHaveProperty('src', image);
   });
 
   it('verify title being set', () => {

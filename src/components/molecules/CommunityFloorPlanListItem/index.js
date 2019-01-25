@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { string, number, func, oneOf } from 'prop-types';
-import { Lazy } from 'react-lazy';
 import NumberFormat from 'react-number-format';
 
 import { size, palette, assetPath } from 'sly/components/themes';
@@ -102,9 +101,7 @@ const CommunityFloorPlanListItem = ({
   return (
     <Wrapper onClick={onItemClick}>
       <StyledBox>
-        <Lazy component="div" ltIE9>
-          <Image src={imgSrc} aspectRatio="1:1" />
-        </Lazy>
+        <Image src={imgSrc} aspectRatio="1:1" />
       </StyledBox>
       <TextSection>
         <RoomTypeText>

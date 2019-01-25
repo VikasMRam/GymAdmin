@@ -1,6 +1,7 @@
 import React from 'react';
-import { string, oneOf, node } from 'prop-types';
-import styled from 'styled-components';
+import { string, oneOf, node, bool } from 'prop-types';
+import styled, { css } from 'styled-components';
+import { Lazy } from 'react-lazy';
 
 import { size, assetPath } from 'sly/components/themes';
 
@@ -11,7 +12,7 @@ const StyledImage = styled.img`
 
 const paddingTop = ({ aspectRatio }) => size('picture.ratios', aspectRatio);
 
-const ResponsiveWrapper = styled.div`
+const responsiveImageStyles = css`
   position: relative;
   height: 0;
   width: 100%;
@@ -27,14 +28,29 @@ const ResponsiveWrapper = styled.div`
   }
 `;
 
+const ResponsiveLazyWrapper = styled(Lazy)`
+  ${responsiveImageStyles};
+`;
+
+const ResponsiveActiveWrapper = styled.div`
+  ${responsiveImageStyles};
+`;
+
+const ltIE9 = true;
+
 // TODO: a note for the future if we do the resampling of the images with lambda,
 // <Image /> should accept formatting props so we can manipulate the url to get the right size.
 export default class Image extends React.Component {
   static propTypes = {
+    lazy: bool.isRequired,
     src: string.isRequired,
     alt: string,
     aspectRatio: oneOf(['16:9', 'golden', '3:2', '4:3', '1:1']),
     children: node,
+  };
+
+  static defaultProps = {
+    lazy: true,
   };
 
   static generateAlt(src) {
@@ -69,8 +85,9 @@ export default class Image extends React.Component {
 
   render() {
     const {
-      src, alt, aspectRatio, children, ...props
+      src, alt, aspectRatio, children, lazy, ...props
     } = this.props;
+
     const { failed } = this.state;
 
     const srcProps = failed
@@ -83,14 +100,25 @@ export default class Image extends React.Component {
     };
 
     if (aspectRatio) {
+      const ResponsiveComponent = lazy
+        ? ResponsiveLazyWrapper
+        : ResponsiveActiveWrapper;
+
+      const responsiveProps = lazy
+        ? { ltIE9, ...props }
+        : props;
+
       return (
-        <ResponsiveWrapper aspectRatio={aspectRatio} {...props}>
+        <ResponsiveComponent aspectRatio={aspectRatio} {...responsiveProps}>
           <StyledImage {...imageProps} />
           {children}
-        </ResponsiveWrapper>
+        </ResponsiveComponent>
       );
     }
 
-    return <StyledImage {...imageProps} {...props} />;
+    const image = <StyledImage {...imageProps} {...props} />;
+    return lazy
+      ? <Lazy ltIE9>{image}</Lazy>
+      : image;
   }
 }

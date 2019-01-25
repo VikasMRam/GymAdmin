@@ -788,8 +788,8 @@ export default class CommunityDetailPage extends Component {
                           placeholder={placeholder}
                           question={question}
                         />
-                    );
-                  }}
+                      );
+                    }}
                   </NotificationController>
                 </Modal>
               </Body>

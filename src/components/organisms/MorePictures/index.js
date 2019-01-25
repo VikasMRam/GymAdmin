@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, shape, string, func } from 'prop-types';
-import { Lazy } from 'react-lazy';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
@@ -33,14 +32,13 @@ const MorePictures = ({
 }) => {
   const { images } = gallery;
   const imageComponents = images.map((image, i) => (
-    <Lazy
-      ltIE9
-      component="div"
+    <Image
       key={image.id}
       onClick={() => onPictureClick && onPictureClick(image)}
-    >
-      <Image src={image.hd} aspectRatio="4:3" alt={`${communityName} ${city} ${state} ${i + 1}`} />
-    </Lazy>
+      src={image.hd}
+      aspectRatio="4:3"
+      alt={`${communityName} ${city} ${state} ${i + 1}`}
+    />
   ));
   return (
     <Wrapper hasOnPictureClick={onPictureClick}>
