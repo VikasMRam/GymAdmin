@@ -19,7 +19,8 @@ import CareAssessmentController from 'sly/external/wizards/careAssessment/Contro
 import { THANK_YOU, CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
 
 const TopWrapper = styled.div`
-  padding-bottom: ${size('spacing.xLarge')};
+  display: flex;
+  margin-bottom: ${size('spacing.xLarge')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
@@ -48,6 +49,7 @@ const StyledButton = styled(Button)`
 `;
 
 const LegacyContent = styled.div`
+  margin-bottom: ${size('spacing.large')};
   a {
     text-decoration: none;
     color: ${palette('base')};
