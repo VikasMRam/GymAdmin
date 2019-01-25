@@ -226,6 +226,7 @@ export default class MediaGallery extends Component {
             src={this.shouldLoadMedia(index) ? media.src : ''}
             data-src={media.src}
             alt={media.alt}
+            lazy={false}
             innerRef={(c) => { this.mediaRefs[index] = c; }}
           />
         );

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Lazy } from 'react-lazy';
 
 import { size, assetPath, palette, key } from 'sly/components/themes';
 import { Image, Button } from 'sly/components/atoms';
@@ -61,7 +60,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const StyledLazy = styled(Lazy)`
+const StyledLazy = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     min-width: 0;
     flex-shrink: 0;
@@ -104,7 +103,7 @@ const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
 
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
-      <StyledLazy component="div" ltIE9>
+      <StyledLazy>
         <ImageWrapper src={imageUrl} aspectRatio="16:9" alt={`${name}`}>
           <Button onClick={onClick}>See More Details</Button>
         </ImageWrapper>

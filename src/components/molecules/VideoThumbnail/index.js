@@ -52,7 +52,7 @@ export default class VideoThumbnail extends Component {
             Watch Video
           </Block>
         </CenterContent>
-        <StyledImage src={src} aspectRatio="3:2" />
+        <StyledImage src={src} aspectRatio="3:2" lazy={false} />
       </Wrapper>
     );
   }

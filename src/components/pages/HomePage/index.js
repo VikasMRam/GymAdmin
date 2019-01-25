@@ -468,12 +468,12 @@ const HomePage = ({
             <CenteredTile image={assetPath('images/home/partner-with-us.jpeg')} to="/providers/crm" title="For Local Referral Agents">
               <Heading palette="white">Partner With Us</Heading>
               <StyledBlock palette="white" level="subtitle">For Local Referral Agents</StyledBlock>
-              <Button to="/providers/crm">Get Started</Button>
+              <Button>Get Started</Button>
             </CenteredTile>
             <CenteredTile image={assetPath('images/home/list-a-property.jpeg')} to="/providers/housing" tile="For Senior Housing Providers">
               <Heading palette="white">List a Property</Heading>
               <StyledBlock palette="white" level="subtitle">For Senior Housing Providers</StyledBlock>
-              <Button to="/providers/housing">Get Started</Button>
+              <Button>Get Started</Button>
             </CenteredTile>
           </TwoColumnWrapper>
         </StyledSection>
