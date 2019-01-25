@@ -10,6 +10,11 @@ const StyledImage = styled.img`
   border: none;
 `;
 
+const StyledLazy = styled(Lazy)`
+  width: 100%;
+  height: 100%;
+`;
+
 const paddingTop = ({ aspectRatio }) => size('picture.ratios', aspectRatio);
 
 const responsiveImageStyles = css`
@@ -118,7 +123,7 @@ export default class Image extends React.Component {
 
     const image = <StyledImage {...imageProps} {...props} />;
     return lazy
-      ? <Lazy ltIE9>{image}</Lazy>
+      ? <StyledLazy ltIE9>{image}</StyledLazy>
       : image;
   }
 }
