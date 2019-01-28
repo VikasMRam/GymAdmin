@@ -6,10 +6,9 @@ import { Lazy } from 'react-lazy';
 
 import { size, palette, assetPath } from 'sly/components/themes';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, FLOOR_PLAN, CONCIERGE, ADVISOR_HELP }
+import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, FLOOR_PLAN, ADVISOR_HELP, SAVE_COMMUNITY }
   from 'sly/constants/modalType';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
-import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
 import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
@@ -27,7 +26,7 @@ import {
 } from 'sly/components/templates/CommunityDetailPageTemplate';
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
-import SaveCommunityController from 'sly/controllers/SaveCommunityController';
+import SaveCommunityContainer from 'sly/containers/SaveCommunityContainer';
 import NotificationController from 'sly/controllers/NotificationController';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
 import CollapsibleSection, { MainSection, BottomSection } from 'sly/components/molecules/CollapsibleSection';
@@ -184,6 +183,7 @@ export default class CommunityDetailPage extends Component {
     onFloorPlanModalToggle: func,
     toggleHowSlyWorksVideoPlaying: func,
     isHowSlyWorksVideoPlaying: bool,
+    onUnsaveCommunity: func,
   };
 
   handleMorePicturesClick = (image) => {
@@ -236,6 +236,7 @@ export default class CommunityDetailPage extends Component {
       onFloorPlanModalToggle,
       toggleHowSlyWorksVideoPlaying,
       isHowSlyWorksVideoPlaying,
+      onUnsaveCommunity,
     } = this.props;
 
     const {
@@ -337,13 +338,31 @@ export default class CommunityDetailPage extends Component {
                     />
                   </Gallery>
                 }
-                <StyledCommunitySummary
-                  community={community}
-                  isAdmin={user && user.admin}
-                  isFavourited={!!initedUserSave}
-                  onFavouriteClick={onMediaGalleryFavouriteClick}
-                  onShareClick={onMediaGalleryShareClick}
-                />
+                <ModalController>
+                  {({ show }) => (
+                    <NotificationController>
+                      {({
+                        notifyInfo,
+                        notifyError,
+                      }) => (
+                        <StyledCommunitySummary
+                          community={community}
+                          isAdmin={user && user.admin}
+                          isFavourited={!!initedUserSave}
+                          onFavouriteClick={() => {
+                            if (initedUserSave) {
+                              onUnsaveCommunity(notifyInfo, notifyError);
+                            } else {
+                              show(SAVE_COMMUNITY, id);
+                            }
+                            onMediaGalleryFavouriteClick();
+                          }}
+                          onShareClick={onMediaGalleryShareClick}
+                        />
+                      )}
+                    </NotificationController>
+                  )}
+                </ModalController>
                 {(promoDescription || promoTitle) &&
                   (
                     <StyledOfferNotification
@@ -673,15 +692,27 @@ export default class CommunityDetailPage extends Component {
                   // onGCPClick={() => setQueryParams({ modal: CONCIERGE })}
                   onAQClick={onToggleAskAgentQuestionModal}
                 />
-                {(searchParams.action === ACTIONS_ADD_TO_FAVOURITE ||
-                searchParams.action === ACTIONS_REMOVE_FROM_FAVOURITE) &&
-                <NotificationController>
-                  {({
-                    notifyInfo,
-                    notifyError,
-                  }) => <SaveCommunityController notifyInfo={notifyInfo} notifyError={notifyError} />}
-                </NotificationController>
-                }
+                <ModalController>
+                  {({ modalType, modalEntity, hide }) => (
+                    <NotificationController>
+                      {({
+                        notifyInfo,
+                        notifyError,
+                      }) => (
+                        <Modal closeable isOpen={modalType === SAVE_COMMUNITY} onClose={hide}>
+                          {modalEntity &&
+                            <SaveCommunityContainer
+                              onDoneButtonClicked={hide}
+                              slug={modalEntity}
+                              notifyInfo={notifyInfo}
+                              notifyError={notifyError}
+                            />
+                          }
+                        </Modal>
+                      )}
+                    </NotificationController>
+                  )}
+                </ModalController>
                 <Modal
                   closeable
                   isOpen={searchParams.modal === THANK_YOU}

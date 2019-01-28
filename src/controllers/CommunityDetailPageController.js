@@ -8,14 +8,18 @@ import SlyEvent from 'sly/services/helpers/events';
 import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
-import { ACTIONS_ADD_TO_FAVOURITE, ACTIONS_REMOVE_FROM_FAVOURITE } from 'sly/constants/actions';
 import { getSearchParams } from 'sly/services/helpers/search';
-import { getDetail, getList } from 'sly/store/selectors';
-import { resourceDetailReadRequest, resourceListReadRequest }
+import { getDetail, getDetails } from 'sly/store/selectors';
+import { resourceDetailReadRequest, resourceListReadRequest, resourceUpdateRequest }
   from 'sly/store/resource/actions';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
+import { ensureAuthenticated } from 'sly/store/authenticated/actions';
+import {
+  NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
+  NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS,
+} from 'sly/constants/notifications';
 
 class CommunityDetailPageController extends Component {
   static propTypes = {
@@ -31,7 +35,6 @@ class CommunityDetailPageController extends Component {
     user: object,
     isQuestionModalOpenValue: bool,
     searchParams: object,
-    getCommunityUserSave: func,
     isLoadingUserSaves: bool,
     redirectUrl: string,
     setQueryParams: func,
@@ -39,35 +42,8 @@ class CommunityDetailPageController extends Component {
     isAskAgentQuestionModalVisible: bool,
     askAgentQuestionType: string,
     isHowSlyWorksVideoPlaying: bool,
+    updateUserSave: func,
   };
-
-  componentDidMount() {
-    const {
-      getCommunityUserSave, user, community,
-    } = this.props;
-
-    if (!this.userSavedLoaded && user && community) {
-      this.loadingUserSave = true;
-      getCommunityUserSave(community.id).then(() => {
-        this.userSavedLoaded = true;
-        this.loadingUserSave = false;
-      });
-    }
-  }
-
-  componentDidUpdate() {
-    const {
-      getCommunityUserSave, user, community,
-    } = this.props;
-
-    if (!this.userSavedLoaded && !this.loadingUserSave && user && community) {
-      this.loadingUserSave = true;
-      getCommunityUserSave(community.id).then(() => {
-        this.userSavedLoaded = true;
-        this.loadingUserSave = false;
-      });
-    }
-  }
 
   setModal = (value) => {
     if (value) {
@@ -219,7 +195,7 @@ class CommunityDetailPageController extends Component {
   };
 
   handleMediaGalleryFavouriteClick = () => {
-    const { setQueryParams, community, userSaveOfCommunity } = this.props;
+    const { community, userSaveOfCommunity } = this.props;
     const { id } = community;
     let initedUserSave;
     if (userSaveOfCommunity) {
@@ -231,9 +207,6 @@ class CommunityDetailPageController extends Component {
     };
     if (initedUserSave) {
       event.category = 'unsaveCommunity';
-      setQueryParams({ action: ACTIONS_REMOVE_FROM_FAVOURITE, entityId: id });
-    } else {
-      setQueryParams({ action: ACTIONS_ADD_TO_FAVOURITE, entityId: id });
     }
     SlyEvent.getInstance().sendEvent(event);
   };
@@ -318,6 +291,20 @@ class CommunityDetailPageController extends Component {
       isAskAgentQuestionModalVisible: !isAskAgentQuestionModalVisible,
       askAgentQuestionType: type,
     });
+  };
+
+  handleUnsaveCommunity = (notifyInfo, notifyError) => {
+    const { updateUserSave, userSaveOfCommunity } = this.props;
+    const { id } = userSaveOfCommunity;
+
+    updateUserSave(id, {
+      status: USER_SAVE_DELETE_STATUS,
+    })
+      .then(() => {
+        notifyInfo(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS);
+      }, () => {
+        notifyError(NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED);
+      });
   };
 
   render() {
@@ -410,17 +397,11 @@ class CommunityDetailPageController extends Component {
         userAction={userAction}
         toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
         isHowSlyWorksVideoPlaying={isHowSlyWorksVideoPlaying}
+        onUnsaveCommunity={this.handleUnsaveCommunity}
       />
     );
   }
 }
-
-const mapDispatchToProps = dispatch => ({
-  getCommunityUserSave: slug => dispatch(resourceListReadRequest('userSave', {
-    'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
-    'filter[entity_slug]': slug,
-  })),
-});
 
 const getCommunitySlug = match => match.params.communitySlug;
 const mapStateToProps = (state, {
@@ -432,15 +413,12 @@ const mapStateToProps = (state, {
     isShareCommunityModalVisible = false, isAskAgentQuestionModalVisible, askAgentQuestionType,
     isHowSlyWorksVideoPlaying,
   } = controller;
-
   const searchParams = getSearchParams(match, location);
   const communitySlug = getCommunitySlug(match);
-  const userSaveOfCommunity = getList(state, 'userSave', {
-    'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
-    'filter[entity_slug]': communitySlug,
-  }).find(userSave =>
-    userSave.entityType === COMMUNITY_ENTITY_TYPE && userSave.entitySlug === communitySlug);
+  const userSaves = getDetails(state, 'userSave');
+  const userSaveOfCommunity = userSaves.find(us => us.entityType === COMMUNITY_ENTITY_TYPE && us.entitySlug === communitySlug);
   const setQueryParams = getQueryParamsSetter(history, location);
+
   return {
     user: getDetail(state, 'user', 'me'),
     community: getDetail(state, 'community', communitySlug),
@@ -463,7 +441,18 @@ const fetchData = (dispatch, { match }) =>
       include: 'similar-communities,questions,agents',
     })),
     dispatch(resourceDetailReadRequest('userAction')),
+    dispatch(resourceListReadRequest('userSave', {
+      'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
+      'filter[entity_slug]': getCommunitySlug(match),
+    })),
   ]);
+
+const mapDispatchToProps = dispatch => ({
+  updateUserSave: (id, data) => dispatch(ensureAuthenticated(
+    'Sign up to add to your favorites list',
+    resourceUpdateRequest('userSave', id, data),
+  )),
+});
 
 const handleError = (err) => {
   if (err.response) {
@@ -485,7 +474,4 @@ const handleError = (err) => {
 export default withServerState({
   fetchData,
   handleError,
-})(connectController(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CommunityDetailPageController));
+})(connectController(mapStateToProps, mapDispatchToProps)(CommunityDetailPageController));

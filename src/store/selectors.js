@@ -7,6 +7,9 @@ import * as chatBox from './chatBox/selectors';
 
 import { getThunkName } from './resource/helpers';
 
+export const getDetails = (state, resource) =>
+  entities.getDetails(state.entities, resource);
+
 export const getDetail = (state, resource, id, queryParms) =>
   entities.getDetail(
     state.entities,
