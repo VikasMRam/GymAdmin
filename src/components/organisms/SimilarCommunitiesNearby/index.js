@@ -8,22 +8,15 @@ import Link from 'sly/components/atoms/Link';
 import SimilarCommunityNearbyTile from 'sly/components/molecules/SimilarCommunityNearbyTile';
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row-gap: ${size('spacing.xLarge')};
+  grid-column-gap: ${size('spacing.large')};
 `;
-
-const StyledLink = styled(Link)`
-  margin-right: ${size('spacing.xLarge')};
-  :nth-child(${prop('communitiesperrow')}n) {
-    margin-right: 0;
-  }
-  margin-bottom: ${size('spacing.large')};
-`;
-StyledLink.displayName = 'StyledLink';
 
 const SimilarCommunitiesNearby = ({ similarCommunities, communitiesPerRow }) => {
   const components = similarCommunities.map(similarCommunity => (
-    <StyledLink
+    <Link
       key={similarCommunity.id}
       to={similarCommunity.url}
       communitiesperrow={communitiesPerRow}
@@ -36,7 +29,7 @@ const SimilarCommunitiesNearby = ({ similarCommunities, communitiesPerRow }) => 
         reviewsValue={similarCommunity.reviewsValue}
         numReviews={similarCommunity.numReviews}
       />
-    </StyledLink>
+    </Link>
   ));
 
   return <Wrapper>{components}</Wrapper>;

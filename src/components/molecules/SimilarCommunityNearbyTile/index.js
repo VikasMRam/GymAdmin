@@ -1,19 +1,11 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { string, number } from 'prop-types';
 import NumberFormat from 'react-number-format';
 
 import { size } from 'sly/components/themes';
-import { Image, Block, Icon } from 'sly/components/atoms';
+import { Image, Block, Icon, ClampedText } from 'sly/components/atoms';
 import { formatRating } from 'sly/services/helpers/rating';
-
-const clamp = css`
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  width: 100%;
-`;
 
 const ImageWrapper = styled(Image)`
   margin-bottom: ${size('spacing.regular')};
@@ -24,8 +16,7 @@ const ImageWrapper = styled(Image)`
 `;
 ImageWrapper.displayName = 'ImageWrapper';
 
-const Name = styled(Block)`
-  ${clamp};
+const Name = styled(ClampedText)`
   margin-bottom: ${size('spacing.small')};
 `;
 Name.displayName = 'Name';
