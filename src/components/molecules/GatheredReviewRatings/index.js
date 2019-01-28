@@ -68,7 +68,7 @@ const GatheredReviewRatings = ({ reviewRatings, onReviewLinkClicked }) => {
             onClick={() => onReviewLinkClicked(review.name)}
             href={review.reviewsUrl}
             target="_blank"
-            rel="nofollow"
+            rel="nofollow noopener"
           >
             {review.name}&reg;
           </Link>

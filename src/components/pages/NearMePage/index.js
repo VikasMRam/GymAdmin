@@ -226,7 +226,7 @@ const NearMePage = ({
           <Paragraph>
             Assisted living can be defined as 24-hour non-medical care delivered in a residential setting.
             Previously  known as{' '}
-            <Link href="https://www.medicare.gov/nursinghomecompare/Resources/Nursing-Home-Alternatives.html" target="_blank">
+            <Link href="https://www.medicare.gov/nursinghomecompare/Resources/Nursing-Home-Alternatives.html" target="_blank" rel="noopener">
               nursing homes
             </Link>
             , the properties and amenities have improved immensely over the years
@@ -415,7 +415,7 @@ const NearMePage = ({
           </Paragraph>
           <Paragraph>
             It’s been proven that{' '}
-            <Link href="https://greatergood.berkeley.edu/article/item/how_social_connections_keep_seniors_healthy" target="_blank">
+            <Link href="https://greatergood.berkeley.edu/article/item/how_social_connections_keep_seniors_healthy" target="_blank" rel="noopener">
               maintaining social connections
             </Link>
             {' '}are essential to keeping senior minds sharp and healthy.
@@ -529,7 +529,7 @@ const NearMePage = ({
           <Paragraph>
             Also commonly called Skilled Nursing, there is a definable difference between Assisted Living communities
             and Nursing Homes, though many use them interchangeably.  According to the CDC, over{' '}
-            <Link href="https://www.cdc.gov/nchs/fastats/alzheimers.htm" target="_blank">
+            <Link href="https://www.cdc.gov/nchs/fastats/alzheimers.htm" target="_blank" rel="noopener">
               50% of Nursing Home residents
             </Link>
             {' '}have either Alzheimer’s disease or other forms of dementia.  Most residents also spend the majority of their time sedentary.
