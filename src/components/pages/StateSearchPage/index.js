@@ -9,7 +9,7 @@ import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearc
 import { Heading } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
-import { getTocSearchLabel } from 'sly/services/helpers/search';
+import { getTocSeoLabel } from 'sly/services/helpers/search';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 
@@ -45,7 +45,7 @@ const StateSearchPage = ({
 }) => {
   const listSize = requestMeta['filtered-count'];
   const state = titleize(searchParams.state);
-  const tocLabel = getTocSearchLabel(searchParams.toc);
+  const tocLabel = getTocSeoLabel(searchParams.toc);
 
   let latitude = 0;
   let longitude = 0;
@@ -137,7 +137,9 @@ const StateSearchPage = ({
   return (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      {getHelmetForSearchPage({ ...searchParams, url: location, communityList })}
+      {getHelmetForSearchPage({
+        ...searchParams, url: location, communityList, listSize,
+        })}
       <CommunitySearchPageTemplate
         column={<div />}
       >
