@@ -419,7 +419,7 @@ const HomePage = ({
         <StyledSection title="How Can Seniorly Help You Find A Home" subtitle="">
           <VideoThumbnailWrapper>
             {!ishowSlyWorksVideoPlaying &&
-              <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={toggleHowSlyWorksVideoPlaying} />
+              <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.jpg')} onClick={toggleHowSlyWorksVideoPlaying} />
             }
             {ishowSlyWorksVideoPlaying &&
               <StyledVideo

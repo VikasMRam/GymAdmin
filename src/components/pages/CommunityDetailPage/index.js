@@ -492,7 +492,7 @@ export default class CommunityDetailPage extends Component {
                     <TopCollapsibleSection title="How Seniorly Works">
                       <MainSection noPadding>
                         {!isHowSlyWorksVideoPlaying &&
-                          <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={toggleHowSlyWorksVideoPlaying} />
+                          <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.jpg')} onClick={toggleHowSlyWorksVideoPlaying} />
                         }
                         {isHowSlyWorksVideoPlaying &&
                           <StyledVideo
