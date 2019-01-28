@@ -12,6 +12,7 @@ import {
   getSearchParamFromPlacesResponse,
 } from 'sly/services/helpers/search';
 import SearchBox from 'sly/components/molecules/SearchBox';
+import SlyEvent from 'sly/services/helpers/events';
 
 class SearchBoxContainer extends Component {
   static propTypes = {
@@ -62,10 +63,13 @@ class SearchBoxContainer extends Component {
   };
 
   handleSelect = (address) => {
-    const { setLocation } = this.props;
+    const { setLocation, address: value } = this.props;
     geocodeByAddress(address)
       .then(results => results[0])
       .then((result) => {
+        SlyEvent.getInstance().sendEvent({
+          action: 'select', category: 'googleSearchOption', label: result.formatted_address, value,
+        });
         setLocation(result);
         this.handleOnLocationSearch(result);
       })
