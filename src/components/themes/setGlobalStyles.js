@@ -9,6 +9,7 @@ const baseColor = styles.palette.slate.base;
 export default function setGlobalStyles() {
   injectGlobal`
     @font-face {
+      font-display: auto;
       font-family: 'Azo Sans';
       src: url('${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2') format('woff2'),
            url('${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff') format('woff');
@@ -17,6 +18,7 @@ export default function setGlobalStyles() {
     }
 
     @font-face {
+      font-display: auto;
       font-family: 'Azo Sans';
       src: url('${publicPath}/fonts/azo/azosans-regular-webfont.woff2') format('woff2'),
            url('${publicPath}/fonts/azo/azosans-regular-webfont.woff') format('woff');
@@ -25,6 +27,7 @@ export default function setGlobalStyles() {
     }
 
     @font-face {
+      font-display: auto;
       font-family: 'Azo Sans';
       src: url('${publicPath}/fonts/azo/azosans-light-webfont.woff2') format('woff2'),
            url('${publicPath}/fonts/azo/azosans-light-webfont.woff') format('woff');
