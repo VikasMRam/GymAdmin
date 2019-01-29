@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { object, number, array } from 'prop-types';
+import { object, number, array, func, bool } from 'prop-types';
 
 import withServerState from 'sly/store/withServerState';
 import { resourceListReadRequest } from 'sly/store/resource/actions';
-import { getList, getListMeta } from 'sly/store/selectors';
+import { getList, getListMeta, isCommunitySearchPageModalFilterPanelActive } from 'sly/store/selectors';
 import ErrorPage from 'sly/components/pages/Error';
 import StateSearchPage from 'sly/components/pages/StateSearchPage';
-
 import {
   filterLinkPath,
   getSearchParams,
 } from 'sly/services/helpers/search';
 import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
+import { toggleModalFilterPanel } from 'sly/store/actions';
 
 class StateSearchPageContainer extends Component {
   static propTypes = {
@@ -22,6 +22,8 @@ class StateSearchPageContainer extends Component {
     geoGuide: array,
     requestMeta: object.isRequired,
     errorCode: number,
+    toggleModalFilterPanel: func,
+    isModalFilterPanelVisible: bool,
   };
 
   // TODO Define Search Parameters
@@ -69,13 +71,15 @@ class StateSearchPageContainer extends Component {
       location,
       geoGuide,
       history,
+      isModalFilterPanelVisible,
+      toggleModalFilterPanel,
     } = this.props;
     // TODO Add Error Page
     if (errorCode) {
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
     const isMapView = searchParams.view === 'map';
-    let gg = geoGuide && geoGuide.length > 0 ? geoGuide[0] : {};
+    const gg = geoGuide && geoGuide.length > 0 ? geoGuide[0] : {};
 
     return (
       <StateSearchPage
@@ -89,6 +93,8 @@ class StateSearchPageContainer extends Component {
         communityList={communityList}
         geoGuide={gg}
         location={location}
+        isModalFilterPanelVisible={isModalFilterPanelVisible}
+        onToggleModalFilterPanel={toggleModalFilterPanel}
       />
     );
   }
@@ -96,11 +102,19 @@ class StateSearchPageContainer extends Component {
 
 const mapStateToProps = (state, { match, location }) => {
   const searchParams = getSearchParams(match, location);
+  const isModalFilterPanelVisible = isCommunitySearchPageModalFilterPanelActive(state);
   return {
     searchParams,
+    isModalFilterPanelVisible,
     communityList: getList(state, 'searchResource', searchParams),
     requestMeta: getListMeta(state, 'searchResource', searchParams),
     geoGuide: getList(state, 'geoGuide', searchParams),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleModalFilterPanel: () => dispatch(toggleModalFilterPanel()),
   };
 };
 
@@ -124,6 +138,7 @@ const handleError = (err) => {
 
 export default withServerState({
   mapStateToProps,
+  mapDispatchToProps,
   fetchData,
   handleError,
 })(StateSearchPageContainer);
