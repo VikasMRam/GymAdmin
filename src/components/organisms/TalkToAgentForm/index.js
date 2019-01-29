@@ -77,6 +77,13 @@ class TalkToAgentForm extends Component {
           />
           <Field name="location" component={noRender} />
           <Field
+            name="full_name"
+            label="Full Name *"
+            type="text"
+            placeholder="Full Name"
+            component={ReduxField}
+          />
+          <Field
             name="phone"
             label="Phone *"
             type="text"

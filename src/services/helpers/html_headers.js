@@ -199,7 +199,7 @@ export const getHelmetForCommunityPage = (community, location) => {
       segment: 'retirement-community',
     };
   }
-  const title = (ratesProvided ? `${name} - Pricing Starting $${startingRate}/mo` : `${name} ${titleize(address.city)}, ${titleize(address.state)}`);
+  const title = (ratesProvided ? `${name} - Price starting at $${startingRate}/mo` : `${name} ${titleize(address.city)}, ${titleize(address.state)}`);
 
   const article = ((toc.label === 'Assisted Living ' || toc.label === 'Memory Care') ? 'an' : 'a');
 

@@ -17,6 +17,7 @@ const validate = createValidator({
   location: [required],
   phone: [usPhone, required],
   message: [required],
+  full_name:[required]
 });
 
 const afterSubmit = (result, dispatch) => dispatch(reset(form));
@@ -37,7 +38,7 @@ class TalkToAgentFormContainer extends Component {
   };
 
   handleSubmit = (data) => {
-    const { message, location } = data;
+    const { message, location, full_name } = data;
     const {
       userDetails, postUserAction, postSubmit, pathName,
     } = this.props;
@@ -48,6 +49,7 @@ class TalkToAgentFormContainer extends Component {
       user,
       details: {
         message,
+        full_name,
         location_text: formatted_address,
         latitude: lat(),
         longitude: lng(),

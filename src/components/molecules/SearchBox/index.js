@@ -126,6 +126,8 @@ const SearchBox = ({
               {...getInputProps({ placeholder })}
               layout={layout}
               onFocus={onTextboxFocus}
+              type="search"
+              autocomplete="off"
             />
             {/*
               it's important that mousedown is used instead of click because it will be fired before blur event.
