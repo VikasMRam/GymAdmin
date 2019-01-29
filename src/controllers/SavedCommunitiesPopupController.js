@@ -8,7 +8,7 @@ import { resourceListReadRequest, resourceUpdateRequest } from 'sly/store/resour
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS }
   from 'sly/constants/userSave';
-import { getList } from 'sly/store/selectors';
+import { getDetails } from 'sly/store/selectors';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
@@ -131,14 +131,12 @@ const mapStateToProps = (state, {
 }) => {
   // default state for ssr
   const { isLoading = false, isLoadSuccess = false } = controller;
+  const userSaves = getDetails(state, 'userSave').filter(us => us.entityType === COMMUNITY_ENTITY_TYPE && us.status === USER_SAVE_INIT_STATUS);
 
   return {
     setQueryParams: getQueryParamsSetter(history, location),
     searchParams: getSearchParams(match, location),
-    userSaves: getList(state, 'userSave', {
-      'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
-      'filter[status]': USER_SAVE_INIT_STATUS,
-    }),
+    userSaves,
     isLoading,
     isLoadSuccess,
     location,

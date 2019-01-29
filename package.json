@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "main": "dist/server",
+  "sideEffects": false,
   "scripts": {
     "start": "node .",
     "start:prod": "npm run env:prod -- node .",

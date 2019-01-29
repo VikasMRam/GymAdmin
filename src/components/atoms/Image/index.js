@@ -5,6 +5,8 @@ import { Lazy } from 'react-lazy';
 
 import { size, assetPath } from 'sly/components/themes';
 
+const CUSHION = 500;
+
 const StyledImage = styled.img`
   user-select: none;
   border: none;
@@ -34,7 +36,7 @@ const responsiveImageStyles = css`
   }
 `;
 
-const ResponsiveLazyWrapper = styled(({ aspectRatio, ...props }) => <Lazy {...props} />)`
+const ResponsiveLazyWrapper = styled(({ aspectRatio, ...props }) => <Lazy cushion={CUSHION} {...props} />)`
   ${responsiveImageStyles};
 `;
 
@@ -124,7 +126,7 @@ export default class Image extends React.Component {
 
     const image = <StyledImage {...imageProps} {...props} />;
     return lazy
-      ? <StyledLazy ltIE9>{image}</StyledLazy>
+      ? <StyledLazy cushion={CUSHION} ltIE9>{image}</StyledLazy>
       : image;
   }
 }

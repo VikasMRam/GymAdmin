@@ -416,10 +416,10 @@ const HomePage = ({
           <Heading size="subtitle">Please enter a location:</Heading>
           <SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} />
         </Modal>
-        <StyledSection title="How Can Seniorly Help You Find A Home" subtitle="">
+        <StyledSection title="How Can Seniorly Help You Find A Home" subtitle="" id="watch-video">
           <VideoThumbnailWrapper>
             {!ishowSlyWorksVideoPlaying &&
-              <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.png')} onClick={toggleHowSlyWorksVideoPlaying} />
+              <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.jpg')} onClick={toggleHowSlyWorksVideoPlaying} />
             }
             {ishowSlyWorksVideoPlaying &&
               <StyledVideo

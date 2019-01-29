@@ -77,7 +77,7 @@ export default class Link extends Component {
       return <StyledLink {...props} />;
     }
     const target = props.href && props.href.match(/https?:\/\//)
-      ? { target: '_blank' }
+      ? { target: '_blank', rel: 'noopener' }
       : { };
     return <Anchor {...target} {...props} />;
   }
