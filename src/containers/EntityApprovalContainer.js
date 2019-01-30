@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { object, func, bool } from 'prop-types';
+import { object, func } from 'prop-types';
 
-import { resourceUpdateRequest } from 'sly/store/resource/actions';
-import { isResourceDetailRequestComplete, isResourceUpdateRequestComplete, isResourceDetailRequestDone } from 'sly/store/selectors';
+import { resourceUpdateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { ensureAuthenticated } from 'sly/store/authenticated/actions';
+import EntityApprovalPage from 'sly/components/pages/EntityApprovalPage/index';
+import { titleize } from 'sly/services/helpers/strings';
 
 class EntityApprovalContainer extends Component {
   static propTypes = {
     match: object.isRequired,
     approveEntity: func.isRequired,
-    userFetchComplete: bool.isRequired,
-    userFetchDone: bool.isRequired,
-    entityUpdateComplete: bool.isRequired,
+    fetchUserMe: func.isRequired,
+    ensureAuthenticated: func.isRequired,
   };
 
   constructor(props) {
@@ -21,54 +22,61 @@ class EntityApprovalContainer extends Component {
     };
   }
 
-  render() {
+  componentDidMount() {
     const {
-      match, approveEntity, userFetchComplete, userFetchDone, entityUpdateComplete,
+      match, approveEntity, fetchUserMe, ensureAuthenticated,
     } = this.props;
     const { params } = match;
     const { entitySlug, entity } = params;
-
-    if (userFetchComplete) {
-      if (!userFetchDone) {
-        // Could not make history push to rail's signin
-        window.location.href = '/signin';
-      } else if (!entityUpdateComplete) {
-        approveEntity(entity, entitySlug).then(() => {
-          this.setState({ message: 'Success' });
-        }).catch((err) => {
-          // console.log(err.response);
+    const { message } = this.state;
+    if (message === 'Loading...') {
+      const callApprove = () => approveEntity(entity, entitySlug).then(() => {
+        this.setState({ message: 'Success' });
+      }).catch((err) => {
+        if (err.response) {
           const { response } = err;
           const { status } = response;
           if (status === 405) {
-            this.setState({ message: `${entity} Already Approved` });
+            this.setState({ message: `${titleize(entity)} Already Approved` });
           } else if (status === 403) {
             this.setState({ message: 'User Not Admin' });
           } else {
             this.setState({ message: 'Failure' });
           }
+        } else {
+          this.setState({ message: 'Unknown Error' });
+          console.trace(err);
+        }
+      });
+      fetchUserMe()
+        .then(callApprove).catch(() => {
+          ensureAuthenticated(() => {}).then(callApprove).catch((err) => {
+            if (err.message) {
+              this.setState({ message: err.message });
+            } else {
+              this.setState({ message: 'Unknown Error' });
+              console.trace(err);
+            }
+          });
         });
-      }
     }
+  }
 
+  render() {
+    const { match } = this.props;
+    const { params } = match;
+    const { entity } = params;
     const { message } = this.state;
-    return <div>{message}</div>;
+    return <EntityApprovalPage heading={`${titleize(entity)} Approval Page`} message={`Status: ${message}`} />;
   }
 }
 
-const mapStateToProps = (state, { match }) => {
-  const { params } = match;
-  const { entity } = params;
-  return {
-    userFetchComplete: isResourceDetailRequestComplete(state, 'user'),
-    userFetchDone: isResourceDetailRequestDone(state, 'user'),
-    entityUpdateComplete: isResourceUpdateRequestComplete(state, entity),
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
-    approveEntity: (entity, entitySlug) => dispatch(resourceUpdateRequest(entity, `${entitySlug}/`, { approve: true })),
+    fetchUserMe: () => dispatch(resourceDetailReadRequest('user', 'me')),
+    approveEntity: (entity, entitySlug) => dispatch(resourceUpdateRequest(entity, `${entitySlug}`, { approve: true })),
+    ensureAuthenticated: action => dispatch(ensureAuthenticated(action)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(EntityApprovalContainer);
+export default connect(null, mapDispatchToProps)(EntityApprovalContainer);
