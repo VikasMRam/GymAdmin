@@ -268,10 +268,10 @@ export const getEvtHandler = (paramsToRemove, origFn) => {
   };
 };
 
-export const getTocSearchLabel = (toc) => {
-  let actualToc = tocs.find(elem => (elem.value === toc));
-  if (typeof actualToc === 'undefined'){
+export const getTocSeoLabel = (toc) => {
+  const actualToc = tocs.find(elem => (elem.value === toc));
+  if (typeof actualToc === 'undefined') {
     return 'retirement communities';
   }
-  return actualToc.searchLabel;
+  return actualToc.seoLabel;
 };

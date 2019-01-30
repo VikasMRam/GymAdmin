@@ -4,7 +4,7 @@ import { array, bool, func, object } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import { titleize } from 'sly/services/helpers/strings';
-import { getTocSearchLabel } from 'sly/services/helpers/search';
+import { getTocSeoLabel } from 'sly/services/helpers/search';
 import { getHelmetForSearchPage } from 'sly/services/helpers/html_headers';
 import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearchPageTemplate';
 import { Heading, Button, Hr } from 'sly/components/atoms';
@@ -89,7 +89,7 @@ const CommunitySearchPage = ({
 }) => {
   const listSize = requestMeta['filtered-count'];
   const city = titleize(searchParams.city);
-  const tocLabel = getTocSearchLabel(searchParams.toc);
+  const tocLabel = getTocSeoLabel(searchParams.toc);
   let latitude = 0;
   let longitude = 0;
   if (communityList.length > 0) {

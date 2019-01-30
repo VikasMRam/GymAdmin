@@ -9,11 +9,14 @@ import CommunitySearchPageTemplate from 'sly/components/templates/CommunitySearc
 import { Heading } from 'sly/components/atoms';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
-import { getTocSearchLabel } from 'sly/services/helpers/search';
+import { getTocSeoLabel } from 'sly/services/helpers/search';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
+import StateSearchFilterList from 'sly/components/organisms/StateSearchFilterList';
+import Modal from 'sly/components/molecules/Modal';
 
 const TopWrapper = styled.div`
+  display: flex;
   padding-bottom: ${size('spacing.xLarge')};
   margin-bottom: ${size('spacing.xLarge')};
   border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
@@ -42,10 +45,12 @@ const StateSearchPage = ({
   communityList,
   geoGuide,
   location,
+  isModalFilterPanelVisible,
+  onToggleModalFilterPanel,
 }) => {
   const listSize = requestMeta['filtered-count'];
   const state = titleize(searchParams.state);
-  const tocLabel = getTocSearchLabel(searchParams.toc);
+  const tocLabel = getTocSeoLabel(searchParams.toc);
 
   let latitude = 0;
   let longitude = 0;
@@ -79,7 +84,17 @@ const StateSearchPage = ({
         </Heading>
       </Fragment>);
   };
-
+  const gg = geoGuide.guideContent ? geoGuide.guideContent : {};
+  const seoLinks = gg.seoLinks || [];
+  const stateSeachFilterList = (
+    <StateSearchFilterList
+      seoLinks={seoLinks}
+      isMapView={isMapView}
+      toggleMap={toggleMap}
+      isModalView={isModalFilterPanelVisible}
+      onToggleModalFilterPanel={onToggleModalFilterPanel}
+    />
+  );
 
   const ListContent = () => {
     /**
@@ -137,9 +152,20 @@ const StateSearchPage = ({
   return (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      {getHelmetForSearchPage({ ...searchParams, url: location, communityList })}
+      {getHelmetForSearchPage({
+        ...searchParams, url: location, communityList, listSize,
+        })}
+      <Modal
+        closeable
+        onClose={onToggleModalFilterPanel}
+        layout="sidebar"
+        isOpen={isModalFilterPanelVisible}
+        closeButtonPalette="slate"
+      >
+        {stateSeachFilterList}
+      </Modal>
       <CommunitySearchPageTemplate
-        column={<div />}
+        column={stateSeachFilterList}
       >
         {!isMapView && (
           TopContent()
@@ -154,6 +180,16 @@ const StateSearchPage = ({
           {!isMapView && (
             <IconButton icon="map" ghost transparent onClick={toggleMap}>
               View Map
+            </IconButton>
+          )}
+          {seoLinks.length > 0 && (
+            <IconButton
+              icon="filter"
+              ghost
+              transparent
+              onClick={onToggleModalFilterPanel}
+            >
+              Cities
             </IconButton>
           )}
         </TopWrapper>
@@ -186,6 +222,8 @@ StateSearchPage.propTypes = {
   onAdTileClick: func,
   location: object,
   searchParams: object,
+  isModalFilterPanelVisible: bool,
+  onToggleModalFilterPanel: bool,
 };
 
 export default StateSearchPage;
