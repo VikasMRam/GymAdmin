@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { object, func, string } from 'prop-types';
+import { connect } from 'react-redux';
 
 import SlyEvent from 'sly/services/helpers/events';
 import { filterLinkPath, getSearchParamFromPlacesResponse } from 'sly/services/helpers/agents';
@@ -83,8 +84,9 @@ const handleError = (err) => {
 };
 
 export default withServerState({
-  mapStateToProps,
-  mapDispatchToProps,
   fetchData,
   handleError,
-})(AgentsPageContainer);
+})(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AgentsPageContainer));

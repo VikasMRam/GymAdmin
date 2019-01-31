@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { object, number, array, func, bool } from 'prop-types';
+import { connect } from 'react-redux';
 
 import withServerState from 'sly/store/withServerState';
 import { resourceListReadRequest } from 'sly/store/resource/actions';
@@ -137,8 +138,9 @@ const handleError = (err) => {
 };
 
 export default withServerState({
-  mapStateToProps,
-  mapDispatchToProps,
   fetchData,
   handleError,
-})(StateSearchPageContainer);
+})(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(StateSearchPageContainer));
