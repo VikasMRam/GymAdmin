@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object, bool, number, string, shape } from 'prop-types';
+import { func, object, bool, number, string } from 'prop-types';
 import { Redirect } from 'react-router';
 
 import { connectController } from 'sly/controllers';
@@ -27,10 +27,7 @@ class CommunityDetailPageController extends Component {
     community: object,
     userAction: object,
     userSaveOfCommunity: object,
-    fetchDataResult: shape({
-      errorCode: number,
-      redirectUrl: string,
-    }),
+    errorCode: number,
     history: object,
     location: object,
     mediaGallerySlideIndex: number,
@@ -39,6 +36,7 @@ class CommunityDetailPageController extends Component {
     isQuestionModalOpenValue: bool,
     searchParams: object,
     isLoadingUserSaves: bool,
+    redirectUrl: string,
     setQueryParams: func,
     isShareCommunityModalVisible: bool,
     isAskAgentQuestionModalVisible: bool,
@@ -317,7 +315,8 @@ class CommunityDetailPageController extends Component {
       user,
       community,
       userSaveOfCommunity,
-      fetchDataResult,
+      errorCode,
+      redirectUrl,
       history,
       searchParams,
       setQueryParams,
@@ -327,27 +326,24 @@ class CommunityDetailPageController extends Component {
       isHowSlyWorksVideoPlaying,
     } = this.props;
 
-    if (fetchDataResult) {
-      const { errorCode, redirectUrl } = fetchDataResult;
-      if (errorCode) {
-        if (redirectUrl) { /* Slug has Changed */
-          const { location } = history;
-          const { pathname } = location;
-          // Replace last part of pathname
-          const fullPaths = pathname.split('/');
-          fullPaths[fullPaths.length - 1] = redirectUrl;
-          return <Redirect to={fullPaths.join('/')} />;
-        }
-        if (errorCode === 404) { /* Not found so redirect to city page */
-          const { location } = history;
-          const { pathname } = location;
-          // Replace last part of pathname
-          const lastIdx = pathname.lastIndexOf('/');
-          return <Redirect to={pathname.substring(0, lastIdx)} state={{ status: 302 }} />;
-        }
-
-        return <ErrorPage errorCode={errorCode} history={history} />;
+    if (errorCode) {
+      if (redirectUrl) { /* Slug has Changed */
+        const { location } = history;
+        const { pathname } = location;
+        // Replace last part of pathname
+        const fullPaths = pathname.split('/');
+        fullPaths[fullPaths.length - 1] = redirectUrl;
+        return <Redirect to={fullPaths.join('/')} />;
       }
+      if (errorCode === 404) { /* Not found so redirect to city page */
+        const { location } = history;
+        const { pathname } = location;
+        // Replace last part of pathname
+        const lastIdx = pathname.lastIndexOf('/');
+        return <Redirect to={pathname.substring(0, lastIdx)} state={{ status: 302 }} />;
+      }
+
+      return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
     if (!community || !userAction) {
