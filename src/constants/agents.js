@@ -72,7 +72,7 @@ export const agentsFAQs = [
   },
   {
     title: 'Should I use a Seniorly Partner Agent even if I already know the community I’d like to visit?',
-    description: 'Yes. Since they do not charge for their services we recommend you speak with an agent. You may already have a great community in mind., An agent can give a second opinion based on their extensive knowledge, as well as offer best practices for going through the transition process. By the way, visiting additional communities is helpful to ensure you have made the best choice.',
+    description: 'Yes. Since they do not charge for their services we recommend you speak with an agent. You may already have a great community in mind. An agent can give a second opinion based on their extensive knowledge, as well as offer best practices for going through the transition process. By the way, visiting additional communities is helpful to ensure you have made the best choice.',
   },
   {
     title: 'How much do Seniorly Partner Agents cost?',
@@ -84,7 +84,7 @@ export const agentsFAQs = [
   },
   {
     title: 'How do I get started working with a Seniorly Partner Agent?',
-    description: "It's easy. Simply sign up below or complete an inquiry form on any page throughout our site and we will connect you with a preferred agent in your area.",
+    description: "It's easy. Simply sign up above or complete an inquiry form on any page throughout our site and we will connect you with a preferred agent in your area.",
   },
 ];
 

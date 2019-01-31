@@ -402,7 +402,7 @@ export default class CommunityDetailPage extends Component {
                         <MainSection>
                           {autoHighlights.map(item => (
                             <IconItemWrapper>
-                              <IconItem icon="care" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                              <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
                             </IconItemWrapper>))
                           }
                         </MainSection>
