@@ -57,7 +57,13 @@ class ServerStateComponent extends Component {
           }),
         fetchData(this.props)
           .catch(handleError),
-      ]);
+      ]).then((results) => {
+        return {
+          // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all#Return_value
+          userMeResult: results[0],
+          fetchDataResult: results[1],
+        };
+      });
     };
 
     if (!hasServerState) {

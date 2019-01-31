@@ -60,6 +60,8 @@ const api = {};
 api.request = (endpoint, settings = {}) => {
   const parsedSettings = parseSettings(settings);
   const parsedEndpoint = parseEndpoint(endpoint);
+  // Redirection is handled manualy, else api returns data of new url
+  parsedSettings.redirect = 'manual';
 
   return fetch(parsedEndpoint, parsedSettings)
     .then(checkStatus)
