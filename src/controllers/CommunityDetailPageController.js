@@ -406,6 +406,49 @@ class CommunityDetailPageController extends Component {
 }
 
 const getCommunitySlug = match => match.params.communitySlug;
+
+const mapPropsToActions = ({ match }) => ({
+  community: resourceDetailReadRequest('community', getCommunitySlug(match), {
+    include: 'similar-communities,questions,agents',
+  }),
+  userAction: resourceDetailReadRequest('userAction'),
+  userSave: resourceListReadRequest('userSave', {
+    'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
+    'filter[entity_slug]': getCommunitySlug(match),
+  }),
+});
+
+const handleError = ({
+  community,
+  userAction,
+  userSave,
+}) => {
+  // console.error(err);
+  if (err.response) {
+    if (err.response.status !== 200) {
+      if (err.location) {
+        const redUrl = err.location.split('/');
+        return {
+          errorCode: err.response.status,
+          redirectUrl: redUrl[redUrl.length - 1],
+        };
+      }
+      return { errorCode: err.response.status };
+    }
+    return { errorCode: null };
+  }
+  throw err;
+};
+
+const ignoreSearchParams = [
+  'modal',
+  'action',
+  'entityId',
+  'currentStep',
+  'token',
+  'modal',
+];
+
 const mapStateToProps = (state, {
   match, location, history, controller,
 }) => {
@@ -437,18 +480,6 @@ const mapStateToProps = (state, {
   };
 };
 
-const fetchData = (dispatch, { match }) =>
-  Promise.all([
-    dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
-      include: 'similar-communities,questions,agents',
-    })),
-    dispatch(resourceDetailReadRequest('userAction')),
-    dispatch(resourceListReadRequest('userSave', {
-      'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
-      'filter[entity_slug]': getCommunitySlug(match),
-    })),
-  ]);
-
 const mapDispatchToProps = dispatch => ({
   updateUserSave: (id, data) => dispatch(ensureAuthenticated(
     'Sign up to add to your favorites list',
@@ -456,35 +487,8 @@ const mapDispatchToProps = dispatch => ({
   )),
 });
 
-const handleError = (err) => {
-  // console.error(err);
-  if (err.response) {
-    if (err.response.status !== 200) {
-      if (err.location) {
-        const redUrl = err.location.split('/');
-        return {
-          errorCode: err.response.status,
-          redirectUrl: redUrl[redUrl.length - 1],
-        };
-      }
-      return { errorCode: err.response.status };
-    }
-    return { errorCode: null };
-  }
-  throw err;
-};
-
-const ignoreSearchParams = [
-  'modal',
-  'action',
-  'entityId',
-  'currentStep',
-  'token',
-  'modal',
-];
-
 export default withServerState({
-  fetchData,
+  mapPropsToActions,
   handleError,
   ignoreSearchParams,
 })(connectController(mapStateToProps, mapDispatchToProps)(CommunityDetailPageController));

@@ -6,14 +6,21 @@ import { isEqual, omit } from 'lodash';
 import { parse as parseSearch } from 'query-string';
 
 import { isBrowser, isServer } from 'sly/config';
+import { isFSA } from 'sly/store/actions';
+
+const preparePromise = promise => promise.catch(e => e);
+
+const getActionDispatcher = (dispatch, actions) => {
+  if (isFSA(actions)) {
+    return () => dispatch(actions);
+  }
+};
 
 const serverStateDecorator = fetchState(
-  state => {
-    return {
-      hasServerState: !!Object.keys(state).length,
-      ...state,
-    };
-  },
+  state => ({
+    hasServerState: !!Object.keys(state).length,
+    ...state,
+  }),
   ({ done }) => ({
     setServerState: data => done(data),
     cleanServerState: () => done(),
@@ -21,12 +28,12 @@ const serverStateDecorator = fetchState(
 );
 
 export default function withServerState({
-  fetchData = Promise.resolve,
+  mapPropsToActions = Promise.resolve,
   handleError = _ => _,
   ignoreSearch = [],
 }) {
   const mapDispatchToProps = (dispatch, props) => ({
-    fetchData: (nextProps = props) => fetchData(dispatch, nextProps),
+    fetchData: () => getActionDispatcher(dispatch, mapPropsToActions(props)),
     handleError,
   });
 
@@ -85,8 +92,17 @@ export default function withServerState({
     }
 
     render() {
-      return <ChildComponent {...this.props } />;
+      const {
+        fetchData,
+        handleError,
+        setServerState,
+        hasServerState,
+        cleanServerState,
+        ...rest
+      } = this.props;
+
+      return <ChildComponent {...rest} />;
     }
   }));
-};
+}
 
