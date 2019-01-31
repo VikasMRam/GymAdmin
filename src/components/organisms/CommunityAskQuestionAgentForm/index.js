@@ -5,16 +5,14 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import fullWidth from 'sly/components/helpers/fullWidth';
-import { Heading, Button, Block, Image } from 'sly/components/atoms';
+import { Heading, Button, Block } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
 const StyledButton = fullWidth(styled(Button)`
   margin-bottom: ${size('spacing.regular')};
 `);
 
-const TopSection = styled.div`
-  display: flex;
-  justify-content: space-between;
+const TopSection = styled.div`;
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
@@ -22,19 +20,13 @@ const StyledField = styled(Field)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const TextWrapper = styled.div`
-  max-width: calc(${size('layout.col4')} + ${size('layout.gutter')} );
-`;
-
 const CommunityAskQuestionAgentForm = ({
-  heading, description, agentImageUrl, handleSubmit, pristine, submitting, error, placeholder, userDetails,
+  heading, description, handleSubmit, pristine, submitting, error, placeholder, userDetails,
 }) => (
   <form onSubmit={handleSubmit}>
     <TopSection>
-      <TextWrapper>
-        <Heading level="subtitle" size="subtitle">{heading}</Heading>
-        {description && <Block>{description}</Block>}
-      </TextWrapper>
+      <Heading level="subtitle" size="subtitle">{heading}</Heading>
+      {description && <Block>{description}</Block>}
     </TopSection>
     {!(userDetails && userDetails.fullName) && <Field
       name="full_name"
@@ -75,7 +67,6 @@ CommunityAskQuestionAgentForm.propTypes = {
   placeholder: string.isRequired,
   heading: string.isRequired,
   description: string,
-  agentImageUrl: string.isRequired,
   userDetails: object,
 };
 

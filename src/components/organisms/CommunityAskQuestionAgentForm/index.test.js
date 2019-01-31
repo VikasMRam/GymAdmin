@@ -2,13 +2,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
-import { Block, Image } from 'sly/components/atoms';
+import { Block } from 'sly/components/atoms';
 
 const defaultProps = {
   placeholder: 'rhoda',
   heading: 'We&apos;ve received your tour request.',
   description: 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.',
-  agentImageUrl: 'abc.url',
 };
 
 const wrap = (props = {}) =>
