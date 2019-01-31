@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { object, number, array, bool, func } from 'prop-types';
+import { connect } from 'react-redux';
 
 import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
@@ -73,7 +74,7 @@ class NearMePageContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, {location}) => {
+const mapStateToProps = (state, { location }) => {
   const qs = parseURLQueryParams(location.search);
   const searchParams = { toc: 'assisted-living', nearme: 'true', 'page-number': qs['page-number'] };
   return {
@@ -104,8 +105,7 @@ const handleError = (err) => {
 
 
 export default withServerState({
-  mapStateToProps,
   fetchData,
   handleError,
-})(NearMePageContainer);
+})(connect(mapStateToProps)(NearMePageContainer));
 

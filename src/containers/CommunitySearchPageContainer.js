@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { object, number, array, bool, func } from 'prop-types';
 import queryString from 'query-string';
+import { connect } from 'react-redux';
 
 import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
@@ -9,6 +10,7 @@ import { resourceListReadRequest } from 'sly/store/resource/actions';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 import { toggleModalFilterPanel } from 'sly/store/communitySearchPage/actions';
+import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
 
 import {
   getList,
@@ -21,7 +23,6 @@ import {
   filterLinkPath,
   getSearchParams,
 } from 'sly/services/helpers/search';
-import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
 
 class CommunitySearchPageContainer extends Component {
   static propTypes = {
@@ -165,8 +166,9 @@ const handleError = (err) => {
 };
 
 export default withServerState({
-  mapStateToProps,
-  mapDispatchToProps,
   fetchData,
   handleError,
-})(CommunitySearchPageContainer);
+})(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CommunitySearchPageContainer));

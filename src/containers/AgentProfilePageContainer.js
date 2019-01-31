@@ -1,5 +1,6 @@
 import React from 'react';
 import { object, func, bool } from 'prop-types';
+import { connect } from 'react-redux';
 
 import agentPropType from 'sly/propTypes/agent';
 import AgentProfilePage from 'sly/components/pages/AgentProfilePage';
@@ -70,8 +71,9 @@ AgentProfilePageContainer.propTypes = {
 };
 
 export default withServerState({
-  mapStateToProps,
-  mapDispatchToProps,
   fetchData,
   handleError,
-})(AgentProfilePageContainer);
+})(connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AgentProfilePageContainer));
