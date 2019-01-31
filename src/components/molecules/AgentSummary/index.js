@@ -78,7 +78,7 @@ const ParentCompanySection = pad('div', 'large');
 
 const AgentsCitiesSection = pad('div');
 
-const AgentSlySection = pad('div','small');
+const AgentSlySection = pad('div', 'small');
 
 const AskQuestionButton = styled(Button)`
   width: 100%;
