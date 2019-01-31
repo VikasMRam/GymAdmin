@@ -94,12 +94,18 @@ api.create = (settings = {}) => ({
     const doRequest = () => api
       .request(endpoint, merge({}, this.settings, settings));
 
+    let firstError = null;
+
     return doRequest()
-      .catch(error => {
+      .catch((error) => {
         if ([401, 403].includes(error.response.status)) {
+          if (firstError === null) {
+            firstError = error;
+          }
+          console.warn(`${error.response.status} ${endpoint} will fetch requestAuthToken`);
           return this.requestAuthToken().then(doRequest);
         }
-        throw error;
+        throw firstError || error;
       });
   },
 

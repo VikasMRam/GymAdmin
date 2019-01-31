@@ -343,6 +343,8 @@ class CommunityDetailPageController extends Component {
         return <Redirect to={pathname.substring(0, lastIdx)} state={{ status: 302 }} />;
       }
 
+      console.error(`${errorCode}, could not go ahead`);
+
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
@@ -455,6 +457,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const handleError = (err) => {
+  console.error(err);
   if (err.response) {
     if (err.response.status !== 200) {
       if (err.location) {
