@@ -457,7 +457,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const handleError = (err) => {
-  console.error(err);
+  // console.error(err);
   if (err.response) {
     if (err.response.status !== 200) {
       if (err.location) {
@@ -474,7 +474,17 @@ const handleError = (err) => {
   throw err;
 };
 
+const ignoreSearchParams = [
+  'modal',
+  'action',
+  'entityId',
+  'currentStep',
+  'token',
+  'modal',
+];
+
 export default withServerState({
   fetchData,
   handleError,
+  ignoreSearchParams,
 })(connectController(mapStateToProps, mapDispatchToProps)(CommunityDetailPageController));
