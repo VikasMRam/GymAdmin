@@ -397,7 +397,7 @@ export default class CommunityDetailPage extends Component {
                     }
                     {autoHighlights &&
                       <TopCollapsibleSection
-                        title={`Community highlights at  ${name}`}
+                        title={`Community Highlights at ${name}`}
                       >
                         <MainSection>
                           {autoHighlights.map(item => (
@@ -563,7 +563,7 @@ export default class CommunityDetailPage extends Component {
                       </BottomSection>
                     </TopCollapsibleSection>
                     {sortedEstimatedPrice.length > 0 &&
-                      <TopCollapsibleSection title={`Compare to other ${typeOfCare} communities in the area`}>
+                      <TopCollapsibleSection title={`Compare to Other ${typeOfCare} Communities in the Area`}>
                         <MainSection>
                           <CommunityPricingComparison community={community} />
                         </MainSection>
@@ -590,7 +590,7 @@ export default class CommunityDetailPage extends Component {
                         />
                       </BottomSection>
                     </TopCollapsibleSection>
-                    <TopCollapsibleSection title={`Questions about ${name}`}>
+                    <TopCollapsibleSection title={`Questions About ${name}`}>
                       <MainSection>
                         <ModalController>
                           {({ show }) => (
@@ -825,11 +825,11 @@ export default class CommunityDetailPage extends Component {
                   </Column>
                 </TwoColumn>
                 {(images.length > 1) &&
-                  <StyledSection title={`More photos of ${name}`} titleSize="subtitle">
+                  <StyledSection title={`More Photos of ${name}`} titleSize="subtitle">
                     <MorePictures gallery={gallery} communityName={name} city={address.city} state={address.state} onPictureClick={this.handleMorePicturesClick} />
                   </StyledSection>
                 }
-                <Section title={`Map view of ${name}`} titleSize="subtitle" />
+                <Section title={`Map View of ${name}`} titleSize="subtitle" />
               </Wrapper>
               <StyledSection>
                 <Lazy ltIE9 component="div">
