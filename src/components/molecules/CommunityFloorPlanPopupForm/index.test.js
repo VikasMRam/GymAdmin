@@ -7,7 +7,6 @@ import CommunityFloorPlanPopupForm from 'sly/components/molecules/CommunityFloor
 const defaultProp = {
   typeOfCare: 'Assisted Living',
   floorPlanInfo: {
-    description: 'Blah',
     price: 7900,
     priceType: 'Monthly Rate',
     roomType: 'Shared',
@@ -36,13 +35,9 @@ describe('CommunityFloorPlanPopupForm', () => {
   it('renders default props', () => {
     const wrapper = wrap();
     expect(wrapper.contains(defaultProp.typeOfCare)).toBeTruthy();
-    expect(wrapper.contains(defaultProp.floorPlanInfo.description)).toBeTruthy();
     expect(wrapper.find('NumberFormat').prop('value')).toEqual(defaultProp.floorPlanInfo.price);
     expect(wrapper.contains(defaultProp.floorPlanInfo.roomType)).toBeTruthy();
     expect(wrapper.contains(defaultProp.floorPlanInfo.shareType)).toBeTruthy();
-    expect(wrapper.contains(defaultProp.floorPlanInfo.accessibility)).toBeTruthy();
-    expect(wrapper.contains(defaultProp.floorPlanInfo.bathroom)).toBeTruthy();
-    expect(wrapper.contains(defaultProp.floorPlanInfo.gender)).toBeTruthy();
   });
 
   it('renders with image passed', () => {
