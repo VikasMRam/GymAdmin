@@ -18,7 +18,7 @@ const HeadingBlock = styled(Heading)`
 
 const DetailsTable = styled.div`
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: ${size('layout.col2')} 1fr;
   grid-gap: ${size('spacing.large')};
   margin-bottom: ${size('spacing.xLarge')};
 `;
