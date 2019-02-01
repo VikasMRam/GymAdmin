@@ -440,7 +440,7 @@ const fetchData = (dispatch, { match }) =>
     dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
       include: 'similar-communities,questions,agents',
     })),
-    dispatch(resourceDetailReadRequest('userAction')),
+    dispatch(resourceDetailReadRequest('userAction')).catch(() => {}),
     dispatch(resourceListReadRequest('userSave', {
       'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
       'filter[entity_slug]': getCommunitySlug(match),

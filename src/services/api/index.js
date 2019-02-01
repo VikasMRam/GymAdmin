@@ -41,7 +41,7 @@ export const parseSettings = ({
   const settings = merge(
     {
       body: data ? JSON.stringify(data) : undefined,
-      redirect: 'follow', // follow redirects - 301,302,303,307,308
+      redirect: 'manual', // follow redirects - 301,302,303,307,308
       method,
       headers,
       credentials: 'same-origin',

@@ -63,7 +63,7 @@ class ServerStateComponent extends Component {
     if (!hasServerState) {
       if (isServer) {
         dispatchFetch()
-          .then(setServerState)
+          .then(([, data]) => setServerState(data))
           .catch(setServerState);
       } else {
         dispatchFetch();
