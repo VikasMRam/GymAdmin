@@ -31,9 +31,9 @@ const PartnerWithSly = () => (
   <Wrapper>
     <ContentWrapper>
       <TitleBlock size="hero">Partner with Seniorly, Expand Your Agency</TitleBlock>
-      <StyledBlock>There’s no upfront cost to help high-quality referrals</StyledBlock>
+      <StyledBlock>There’s no upfront cost to help qualified referrals</StyledBlock>
     </ContentWrapper>
-    <Button href="/providers/crm" kind="jumbo">Apply now</Button>
+    <Button href="https://docs.google.com/forms/d/e/1FAIpQLSeDifmLn0j9rMpZ6_lDGXQLEjoe519BQYZCuUqGk40x6l-umA/viewform" kind="jumbo">Apply now</Button>
   </Wrapper>
 );
 

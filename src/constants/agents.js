@@ -49,7 +49,7 @@ export const partnerFAQs = [
   },
   {
     title: 'Will I receive Assisted Living, Memory Care, Independent Living and Home Care Referrals?',
-    description: 'Seniorly will send referrals based on your area of expertise. You will be asked to set up care types your service in the sign up process.',
+    description: 'Seniorly will send referrals based on your area of expertise. You will be asked to set up the care types you service in the sign up process.',
   },
   {
     title: 'What are my financial obligations to the program?',
