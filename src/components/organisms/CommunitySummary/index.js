@@ -78,8 +78,6 @@ const CommunitySummary = ({
       </StyledHeading>
       <Address weight="regular" level="subtitle" size="body" palette="grey">{formattedAddress}</Address>
       {startingRate > 0 && reviewsValue > 0 && <Hr />}
-      <CommunityPricingAndRating price={startingRate} rating={reviewsValue} />
-      <Hr />
       <Wrapper>
         <div>
           {conciergeNumber &&
@@ -111,6 +109,8 @@ const CommunitySummary = ({
           }
         </div>
       </Wrapper>
+      <Hr />
+      <CommunityPricingAndRating price={startingRate} rating={reviewsValue} />
     </Box>
   );
 };
