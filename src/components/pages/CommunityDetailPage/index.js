@@ -1,13 +1,12 @@
 import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
-import { object, func, number, bool, string } from 'prop-types';
+import { object, func, number, bool } from 'prop-types';
 import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
 import { size, palette, assetPath } from 'sly/components/themes';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, FLOOR_PLAN, ADVISOR_HELP, SAVE_COMMUNITY }
-  from 'sly/constants/modalType';
+import { ADD_RATING, THANK_YOU } from 'sly/constants/modalType';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
@@ -24,10 +23,8 @@ import {
   makeWrapper,
   makeGallery,
 } from 'sly/components/templates/CommunityDetailPageTemplate';
-import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
 import ConciergeController from 'sly/controllers/ConciergeController';
 import SaveCommunityContainer from 'sly/containers/SaveCommunityContainer';
-import NotificationController from 'sly/controllers/NotificationController';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
 import CollapsibleSection, { MainSection, BottomSection } from 'sly/components/molecules/CollapsibleSection';
 import Section from 'sly/components/molecules/Section';
@@ -46,14 +43,11 @@ import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetail
 import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import Thankyou from 'sly/components/molecules/Thankyou';
-import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
-import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
 import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList';
 import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
-import ModalController from 'sly/controllers/ModalController';
 import { calculatePricing } from 'sly/services/helpers/pricing';
 import EstimatedCost from 'sly/components/molecules/EstimatedCost';
 import TextBottomSection from 'sly/components/molecules/TextBottomSection';
@@ -67,6 +61,7 @@ import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
+import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -148,7 +143,6 @@ export default class CommunityDetailPage extends Component {
     onMediaGalleryFavouriteClick: func,
     onMediaGalleryShareClick: func,
     onShareCommunityModalClose: func,
-    isShareCommunityModalVisible: bool,
     onBackToSearchClicked: func,
     onReviewLinkClicked: func,
     onConciergeNumberClicked: func,
@@ -162,13 +156,16 @@ export default class CommunityDetailPage extends Component {
     onGCPClick: func,
     isAlreadyTourScheduled: bool,
     isAlreadyPricingRequested: bool,
-    isAskAgentQuestionModalVisible: bool,
     onToggleAskAgentQuestionModal: func,
-    askAgentQuestionType: string,
     userAction: object,
     onFloorPlanModalToggle: func,
     toggleHowSlyWorksVideoPlaying: func,
     isHowSlyWorksVideoPlaying: bool,
+    notifyInfo: func,
+    notifyError: func,
+    showModal: func,
+    hideModal: func,
+    onToggleAskQuestionModal: func,
     onUnsaveCommunity: func,
   };
 
@@ -187,12 +184,191 @@ export default class CommunityDetailPage extends Component {
     }
   };
 
-  handleShareCommunitySuccess = () => {
-    const { onShareCommunityModalClose } = this.props;
-    onShareCommunityModalClose();
-  }
+  handleShareClick = () => {
+    const {
+      showModal, hideModal, notifyInfo, onMediaGalleryShareClick, community, user, onShareCommunityModalClose,
+    } = this.props;
+    const { id, mainImage } = community;
+    const onSuccess = () => {
+      onShareCommunityModalClose();
+      hideModal();
+    };
+    const onClose = () => {
+      onShareCommunityModalClose(true);
+    };
+
+    const modalComponentProps = {
+      mainImage,
+      fromEnabled: !user,
+      communitySlug: id,
+      notifyInfo,
+      onSuccess,
+    };
+
+    onMediaGalleryShareClick();
+    showModal(<ShareCommunityFormContainer {...modalComponentProps} />, onClose);
+  };
+
+  openFloorPlanModal = (floorPlan) => {
+    const {
+      showModal, hideModal, community, user, userAction, onFloorPlanModalToggle,
+    } = this.props;
+    const { userDetails } = userAction;
+    const { info: floorPlanInfo } = floorPlan;
+    const { id, propInfo } = community;
+    const { typeCare: typeCares } = propInfo;
+    const typeOfCare = typeCares[0];
+
+    const modalComponentProps = {
+      communitySlug: id,
+      typeOfCare,
+      user,
+      floorPlanInfo,
+      userDetails,
+      postSubmit: hideModal,
+    };
+    const onClose = () => {
+      onFloorPlanModalToggle(floorPlan, true);
+    };
+
+    onFloorPlanModalToggle(floorPlan);
+    showModal(<CommunityFloorPlanPopupFormContainer {...modalComponentProps} />, onClose, 'noPadding');
+  };
+
+  openAskQuestionModal = (question) => {
+    const {
+      showModal, community, user, onToggleAskQuestionModal,
+    } = this.props;
+    const {
+      id, name, questions, communityFaQs,
+    } = community;
+    let questionToAnswer = questions.find(q => q.type === question.type && q.id === question.id);
+    if (!questionToAnswer) {
+      questionToAnswer = communityFaQs.find(communityFaQ => communityFaQ.type === question.type && communityFaQ.id === question.id);
+    }
+    let questionId;
+    let contentData;
+    let initialValues;
+    if (questionToAnswer) {
+      ({ id: questionId, contentData } = questionToAnswer);
+      initialValues = { question: contentData };
+    }
+
+    const modalComponentProps = {
+      communityName: name,
+      communitySlug: id,
+      showModal,
+      user,
+      initialValues,
+      parentSlug: questionId,
+    };
+    const onClose = () => {
+      onToggleAskQuestionModal(true);
+    };
+
+    onToggleAskQuestionModal();
+    showModal(<CommunityAskQuestionFormContainer {...modalComponentProps} />, onClose);
+  };
+
+  openAdvisorHelpModal = () => {
+    const { showModal, hideModal } = this.props;
+    showModal(<AdvisorHelpPopup onButtonClick={hideModal} />);
+  };
+
+  openAnswerQuestionModal = (type, questionId) => {
+    const { showModal, hideModal, community } = this.props;
+    const { id, questions, communityFaQs } = community;
+    let questionToAnswer = questions.find(question => question.type === type && question.id === questionId);
+    if (!questionToAnswer) {
+      questionToAnswer = communityFaQs.find(communityFaQ => communityFaQ.type === type && communityFaQ.id === questionId);
+    }
+    if (questionToAnswer) {
+      const { id: questionId, contentData } = questionToAnswer;
+      const modalComponentProps = {
+        onSuccess: hideModal,
+        communitySlug: id,
+        questionText: contentData,
+        questionId,
+      };
+
+      showModal(<CommunityLeaveAnAnswerFormContainer {...modalComponentProps} />);
+    }
+  };
+
+  openAskAgentQuestionModal = (type) => {
+    const {
+      showModal, hideModal, notifyInfo, community, onToggleAskAgentQuestionModal,
+    } = this.props;
+    const { address, name } = community;
+    const { city } = address;
+    let heading = `Ask your Seniorly Partner Agent a question about ${name} in ${city}.`;
+    let placeholder = `Hi Rachel, I have a question about ${name} in ${city}...`;
+    let description = null;
+    let question = null;
+    const agentImageUrl = assetPath('images/agent-xLarge.png');
+
+    if (type === 'tour') {
+      heading = 'We have received your tour request.';
+      description = 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
+      placeholder = `Hi, I have a question about my tour with ${name}...`;
+    } else if (type === 'pricing') {
+      heading = 'We have received your custom pricing request.';
+      description = 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
+    } else if (type === 'offer') {
+      heading = `Ask your Seniorly Partner Agent about the holiday incentive at ${name}`;
+      question = `Hi, I am interested in knowing more about the holiday promotion at ${name}. I am looking for...`;
+    } else if (type === 'services') {
+      heading = `Ask your Seniorly Partner Agent about services provided at ${name}`;
+      question = `Hi, I need .... and am interested in knowing whether ${name} has ...`;
+    }
+
+    const toggleAskAgentQuestionModal = () => {
+      onToggleAskAgentQuestionModal(true, type);
+      hideModal();
+    };
+
+    const modalComponentProps = {
+      toggleAskAgentQuestionModal,
+      notifyInfo,
+      community,
+      heading,
+      description,
+      agentImageUrl,
+      placeholder,
+      question,
+    };
+    const onClose = () => {
+      onToggleAskAgentQuestionModal(true, type);
+    };
+
+    onToggleAskAgentQuestionModal(false, type);
+    showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />, onClose);
+  };
+
+  handleFavouriteClick = () => {
+    const {
+      community, onMediaGalleryFavouriteClick, showModal, notifyInfo, notifyError, userSave, hideModal,
+      onUnsaveCommunity,
+    } = this.props;
+    const { id } = community;
+    let initedUserSave;
+    if (userSave) {
+      initedUserSave = userSave.status !== USER_SAVE_DELETE_STATUS ? userSave : null;
+    }
+
+    if (initedUserSave) {
+      onUnsaveCommunity(notifyInfo, notifyError);
+    } else {
+      showModal(<SaveCommunityContainer slug={id} onDoneButtonClicked={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />);
+    }
+    onMediaGalleryFavouriteClick();
+  };
 
   render() {
+    const {
+      handleShareClick, openAskAgentQuestionModal, openAskQuestionModal, openFloorPlanModal,
+      openAdvisorHelpModal, openAnswerQuestionModal, handleFavouriteClick,
+    } = this;
     const {
       mediaGallerySlideIndex,
       isMediaGalleryFullscreenActive,
@@ -200,11 +376,7 @@ export default class CommunityDetailPage extends Component {
       location,
       onMediaGallerySlideChange,
       onMediaGalleryToggleFullscreen,
-      onMediaGalleryFavouriteClick,
-      onMediaGalleryShareClick,
       onBackToSearchClicked,
-      onShareCommunityModalClose,
-      isShareCommunityModalVisible,
       user,
       onReviewLinkClicked,
       setModal,
@@ -215,14 +387,8 @@ export default class CommunityDetailPage extends Component {
       onGCPClick,
       isAlreadyTourScheduled,
       isAlreadyPricingRequested,
-      isAskAgentQuestionModalVisible,
-      onToggleAskAgentQuestionModal,
-      askAgentQuestionType,
-      userAction,
-      onFloorPlanModalToggle,
       toggleHowSlyWorksVideoPlaying,
       isHowSlyWorksVideoPlaying,
-      onUnsaveCommunity,
     } = this.props;
 
     const {
@@ -264,7 +430,6 @@ export default class CommunityDetailPage extends Component {
       gallery.images = images;
     }
     const videos = videoGallery.videos || [];
-    const { userDetails } = userAction;
     const {
       communityDescription,
       staffDescription,
@@ -298,567 +463,349 @@ export default class CommunityDetailPage extends Component {
 
     const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
 
+    const { autoHighlights, nearbyCities } = rgsAux;
 
-    const { city } = address;
-    let heading = `Ask your Seniorly Partner Agent a question about ${name} in ${city}.`;
-    let placeholder = `Hi Rachel, I have a question about ${name} in ${city}...`;
-    let description = null;
-    let question = null;
-    const agentImageUrl = assetPath('images/agent-xLarge.png');
-
-    if (askAgentQuestionType === 'tour') {
-      heading = 'We have received your tour request.';
-      description = 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
-      placeholder = `Hi, I have a question about my tour with ${name}...`;
-    } else if (askAgentQuestionType === 'pricing') {
-      heading = 'We have received your custom pricing request.';
-      description = 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
-    } else if (askAgentQuestionType === 'offer') {
-      heading = `Ask your Seniorly Partner Agent about the holiday incentive at ${name}`;
-      question = `Hi, I am interested in knowing more about the holiday promotion at ${name}. I am looking for...`;
-    } else if (askAgentQuestionType === 'services') {
-      heading = `Ask your Seniorly Partner Agent about services provided at ${name}`;
-      question = `Hi, I need .... and am interested in knowing whether ${name} has ...`;
-    }
-
-    const {
-      autoHighlights, nearbyCities, } = rgsAux;
     return (
-      <NotificationController>
-        {({
-          notifyInfo,
-          notifyError,
-        }) => (
-          <Fragment>
-            {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-            {getHelmetForCommunityPage(community, location)}
-            <Header bannerNotification={bannerNotification} />
-            <CommunityDetailPageTemplate>
-              <Wrapper>
-                <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} />
-                <TwoColumn>
-                  <Body>
-                    {(images.length > 0 || videos.length > 0) &&
-                      <Gallery>
-                        <CommunityMediaGallery
-                          communityName={name}
-                          city={address.city}
-                          state={address.state}
-                          currentSlide={mediaGallerySlideIndex}
-                          images={images}
-                          videos={videos}
-                          websiteUrl={websiteUrl}
-                          onSlideChange={onMediaGallerySlideChange}
-                          isFullscreenMode={isMediaGalleryFullscreenActive}
-                          onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
-                        />
-                      </Gallery>
-                    }
-                    <ModalController>
-                      {({ show }) => (
-                        <StyledCommunitySummary
-                          community={community}
-                          isAdmin={user && user.admin}
-                          isFavourited={!!initedUserSave}
-                          onFavouriteClick={() => {
-                            if (initedUserSave) {
-                              onUnsaveCommunity(notifyInfo, notifyError);
-                            } else {
-                              show(SAVE_COMMUNITY, id);
-                            }
-                            onMediaGalleryFavouriteClick();
-                          }}
-                          onShareClick={onMediaGalleryShareClick}
-                        />
-                      )}
-                    </ModalController>
-                    {(promoDescription || promoTitle) &&
-                      (
-                        <StyledOfferNotification
-                          palette="warning"
-                          title={promoTitle}
-                          description={promoDescription}
-                          onLearnMoreClick={onToggleAskAgentQuestionModal}
-                          hasLearnMore
-                        />
-                      )
-
-                    }
-                    {autoHighlights &&
-                      <TopCollapsibleSection
-                        title={`Community Highlights at ${name}`}
-                      >
-                        <MainSection>
-                          {autoHighlights.map(item => (
-                            <IconItemWrapper>
-                              <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
-                            </IconItemWrapper>))
-                          }
-                        </MainSection>
-                      </TopCollapsibleSection>
-                    }
-                    <TopCollapsibleSection
-                      title={`Pricing and Floor Plans at ${name}`}
-                    >
-                      <MainSection>
-                        {floorPlans.length > 0 &&
-                          <ModalController>
-                            {({ show }) => (
-                              <CommunityFloorPlansList
-                                typeOfCare={typeOfCare}
-                                floorPlans={floorPlans}
-                                onItemClick={(floorPlan) => {
-                                  show(FLOOR_PLAN, floorPlan);
-                                  onFloorPlanModalToggle(floorPlan);
-                                }}
-                              />
-                            )}
-                          </ModalController>
-                        }
-                        {floorPlans.length === 0 &&
-                          <EstimatedCost
-                            name={name}
-                            getPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-                            typeCares={typeCares}
-                            price={estimatedPriceBase}
-                          />
-                        }
-                      </MainSection>
-                      {floorPlans.length > 0 &&
-                        <BottomSection>
-                          <GetCurrentAvailabilityContainer
-                            community={community}
-                            queryParams={{ modal, currentStep }}
-                            setQueryParams={setQueryParams}
-                            onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-                            onSubmitExpressConversion={(e, submitExpressConversion) => {
-                              if (isAlreadyPricingRequested) {
-                                onToggleAskAgentQuestionModal(e, 'pricing');
-                              } else {
-                                submitExpressConversion(e);
-                                onGCPClick(e);
-                              }
-                            }}
-                          />
-                        </BottomSection>
-                      }
-                    </TopCollapsibleSection>
-                    {floorPlans.length === 0 &&
-                      <TopCollapsibleSection
-                        title={`Get Availability at ${name}`}
-                      >
-                        <MainSection>
-                          <GetCurrentAvailabilityContainer
-                            community={community}
-                            queryParams={{ modal, currentStep }}
-                            setQueryParams={setQueryParams}
-                            onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-                            onSubmitExpressConversion={(e, submitExpressConversion) => {
-                              if (isAlreadyPricingRequested) {
-                                onToggleAskAgentQuestionModal(e, 'pricing');
-                              } else {
-                                submitExpressConversion(e);
-                                onGCPClick(e);
-                              }
-                            }}
-                          />
-                        </MainSection>
-                      </TopCollapsibleSection>
-                    }
-                    {(communityDescription || rgsAux.communityDescription) &&
-                      <TopCollapsibleSection title={`Details on ${name}`}>
-                        <MainSection>
-                          <CommunityDetails
-                            communityName={name}
-                            communityDescription={communityDescription}
-                            rgsAuxDescription={rgsAux.communityDescription}
-                            staffDescription={staffDescription}
-                            residentDescription={residentDescription}
-                            ownerExperience={ownerExperience}
-                            contract={community.contacts && community.contacts.length > 0} // TODO: cheange to use contract info once api sends it
-                          />
-                        </MainSection>
-                      </TopCollapsibleSection>
-                    }
-
-                    <TopCollapsibleSection title="How Seniorly Works">
-                      <MainSection noPadding>
-                        {!isHowSlyWorksVideoPlaying &&
-                          <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.jpg')} onClick={toggleHowSlyWorksVideoPlaying} />
-                        }
-                        {isHowSlyWorksVideoPlaying &&
-                          <StyledVideo
-                            autoPlay
-                            controls
-                            controlsList="nodownload"
-                            onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', id, e.target.currentTime)}
-                            onPlay={e => sendEvent('howSlyWorksVideo', 'play', id, e.target.currentTime)}
-                          >
-                            <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
-                            <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
-                          </StyledVideo>
-                        }
-                      </MainSection>
-                    </TopCollapsibleSection>
-                    {partnerAgent &&
-                      <TopCollapsibleSection title={`Your Seniorly Partner Agent for ${name}`}>
-                        <MainSection>
-                          <ModalController>
-                            {({ show }) => (
-                              <CommunityAgentSection agent={partnerAgent} onAdvisorHelpClick={() => show(ADVISOR_HELP)} />
-                            )}
-                          </ModalController>
-                        </MainSection>
-                        <BottomSection>
-                          <TextBottomSection
-                            heading="Ask about pricing, floor plans, availability, anything."
-                            subHeading=" Using a Seniorly Partner Agent is a free service for you."
-                            buttonText="Send a message"
-                            onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
-                          />
-                        </BottomSection>
-                      </TopCollapsibleSection>
-                    }
-                    <ModalController>
-                      {({ modalType, hide }) => (
-                        <Modal closeable isOpen={modalType === ADVISOR_HELP} onClose={hide}>
-                          <AdvisorHelpPopup onButtonClick={hide} />
-                        </Modal>
-                      )}
-                    </ModalController>
-                    {careServices && careServices.length > 0 &&
-                      <TopCollapsibleSection title={`Care Services at ${name}`}>
-                        <MainSection>
-                          <CommunityCareService careServices={careServices} />
-                        </MainSection>
-                        <BottomSection>
-                          <TextBottomSection
-                            heading="Need more detailed information on care services?"
-                            subHeading="Your Seniorly Partner Agent can consult with you on your individual care needs."
-                            buttonText="Ask about care services"
-                            onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
-                          />
-                        </BottomSection>
-                      </TopCollapsibleSection>
-                    }
-                    <TopCollapsibleSection title={`Amenities at ${name}`}>
-                      <MainSection>
-                        <CommunityAmenities community={community} />
-                      </MainSection>
-                      <BottomSection>
-                        <TextBottomSection
-                          heading="Need more detailed information on amenities?"
-                          subHeading=" Using a Seniorly Partner Agent is a free service for you."
-                          buttonText="Ask about amenities"
-                          onButtonClick={e => onToggleAskAgentQuestionModal(e, 'services')}
-                        />
-                      </BottomSection>
-                    </TopCollapsibleSection>
-                    {sortedEstimatedPrice.length > 0 &&
-                      <TopCollapsibleSection title={`Compare to Other ${typeOfCare} Communities in the Area`}>
-                        <MainSection>
-                          <CommunityPricingComparison community={community} />
-                        </MainSection>
-                      </TopCollapsibleSection>
-                    }
-                    <TopCollapsibleSection
-                      title={`Reviews at ${name}`}
-                    >
-                      <MainSection>
-                        <EntityReviews
-                          reviewsValue={reviewsValue}
-                          reviews={reviewsFinal}
-                          reviewRatings={ratingsArray}
-                          onLeaveReview={onLeaveReview}
-                          onReviewLinkClicked={onReviewLinkClicked}
-                        />
-                      </MainSection>
-                      <BottomSection>
-                        <TextBottomSection
-                          heading={`Have experience with ${name}?`}
-                          subHeading="Your review can help other families with their senior living search."
-                          buttonText="Write a review"
-                          onButtonClick={() => setModal(ADD_RATING)}
-                        />
-                      </BottomSection>
-                    </TopCollapsibleSection>
-                    <TopCollapsibleSection title={`Questions About ${name}`}>
-                      <MainSection>
-                        <ModalController>
-                          {({ show }) => (
-                            <CommunityQuestionAnswers
-                              communityName={name}
-                              communitySlug={id}
-                              questions={questions}
-                              communityFaQs={communityFaQs}
-                              onLeaveAnswerClick={(type, questionId) => show(ANSWER_QUESTION, { type, questionId })}
-                              user={user}
-                              showModal={show}
-                            />
-                          )}
-                        </ModalController>
-                      </MainSection>
-                      <BottomSection>
-                        <ModalController>
-                          {({ show }) => (
-                            <TextBottomSection
-                              heading="Don't see your question? Be the first to ask this community!"
-                              buttonText="Ask a Question"
-                              onButtonClick={() => show(ASK_QUESTION)}
-                            />
-                          )}
-                        </ModalController>
-                      </BottomSection>
-                    </TopCollapsibleSection>
-                    <ModalController>
-                      {({
-                          modalType, show, hide, modalEntity,
-                      }) => (
-                        <Modal
-                          closeable
-                          isOpen={modalType === ASK_QUESTION}
-                          onClose={() => hide()}
-                        >
-                          <CommunityAskQuestionFormContainer
-                            communityName={name}
-                            communitySlug={id}
-                            setModal={show}
-                            user={user}
-                            // Prepopulating the question from the FAQ, if any
-                            initialValues={modalEntity && modalEntity.contentData ? { question: modalEntity.contentData } : null}
-                            parentSlug={modalEntity && modalEntity.id ? modalEntity.id : null}
-                          />
-                        </Modal>
-                      )}
-                    </ModalController>
-                    <ModalController>
-                      {({ modalType, modalEntity, hide }) => {
-                        let questionToAnswer = {
-                          contentData: '',
-                          id: '',
-                        };
-                        if (modalEntity && modalType === ANSWER_QUESTION) {
-                          const { type, questionId } = modalEntity;
-                          questionToAnswer = questions.find(question => question.type === type && question.id === questionId);
-                          if (!questionToAnswer) {
-                            questionToAnswer = communityFaQs.find(communityFaQ => communityFaQ.type === type && communityFaQ.id === questionId);
-                          }
-                        }
-
-                        return (
-                          <Modal
-                            closeable
-                            isOpen={modalType === ANSWER_QUESTION}
-                            onClose={() => hide()}
-                          >
-                            <CommunityLeaveAnAnswerFormContainer
-                              onSuccess={() => hide()}
-                              communitySlug={id}
-                              questionText={questionToAnswer.contentData}
-                              questionId={questionToAnswer.id}
-                            />
-                          </Modal>
-                        );
-                      }}
-                    </ModalController>
-                    <ModalController>
-                      {({ modalType, hide }) => (
-                        <Modal
-                          closeable
-                          isOpen={modalType === THANK_YOU}
-                          onClose={() => hide()}
-                        >
-                          <Thankyou />
-                        </Modal>
-                      )}
-                    </ModalController>
-                    {rgsAux.stateLicensingWebsite &&
-                      <StyledCommunityExtraInfoSection
-                        title={`${name} at ${address.city} State Licensing`}
-                        description={`${name} is licensed by the state of ${address.state}`}
-                        url={rgsAux.stateLicensingWebsite}
-                        urlText="Visit the state licensing website"
-                      />
-                    }
-                    <StyledCommunityExtraInfoSection
-                      title="Disclaimer"
-                      description="The information on this page has been created to the best of our abilities. To ensure accuracy, please confirm with your local Seniorly Seniorly Partner Agent or directly with the property. If this is your senior living community, we would welcome any updates you wish to provide."
-                      url="/providers/housing"
-                      urlText="Simply claim your profile by clicking here"
+      <Fragment>
+        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+        {getHelmetForCommunityPage(community, location)}
+        <Header bannerNotification={bannerNotification} />
+        <CommunityDetailPageTemplate>
+          <Wrapper>
+            <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} />
+            <TwoColumn>
+              <Body>
+                {(images.length > 0 || videos.length > 0) &&
+                  <Gallery>
+                    <CommunityMediaGallery
+                      communityName={name}
+                      city={address.city}
+                      state={address.state}
+                      currentSlide={mediaGallerySlideIndex}
+                      images={images}
+                      videos={videos}
+                      websiteUrl={websiteUrl}
+                      onSlideChange={onMediaGallerySlideChange}
+                      isFullscreenMode={isMediaGalleryFullscreenActive}
+                      onToggleFullscreenMode={onMediaGalleryToggleFullscreen}
                     />
-                    <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
-                      <MainSection>
-                        <SimilarCommunities similarProperties={similarProperties} />
-                        <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
-                          {({ gotoAdvancedInfo }) => (
-                            <AdTileWrapper>
-                              <AdTile {...adProps} onClick={() => gotoAdvancedInfo()} />
-                            </AdTileWrapper>
-                          )
-                          }
-                        </ConciergeController>
-                        <BackToSearch>
-                          <Button
-                            ghost
-                            onClick={onBackToSearchClicked}
-                            href={getCitySearchUrl({ propInfo, address })}
-                          >
-                            Communities In {address.city}
-                          </Button>
-                        </BackToSearch>
-                      </MainSection>
-                    </BottomCollapsibleSection>
-                    <CommunityStickyFooter
-                      isAlreadyTourScheduled={isAlreadyTourScheduled}
-                      isAlreadyPricingRequested={isAlreadyPricingRequested}
-                      onBookATourClick={!isAlreadyTourScheduled ? onBookATourClick : e => onToggleAskAgentQuestionModal(e, 'tour')}
-                      onGCPClick={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-                      // onGCPClick={() => setQueryParams({ modal: CONCIERGE })}
-                      onAQClick={onToggleAskAgentQuestionModal}
-                    />
-                    <ModalController>
-                      {({ modalType, modalEntity, hide }) => (
-                        <Modal closeable isOpen={modalType === SAVE_COMMUNITY} onClose={hide}>
-                          {modalEntity &&
-                            <SaveCommunityContainer
-                              onDoneButtonClicked={hide}
-                              slug={modalEntity}
-                              notifyInfo={notifyInfo}
-                              notifyError={notifyError}
-                            />
-                          }
-                        </Modal>
-                      )}
-                    </ModalController>
-                    <Modal
-                      closeable
-                      isOpen={searchParams.modal === THANK_YOU}
-                      onClose={() => setQueryParams({ modal: null })}
-                    >
-                      <Thankyou />
-                    </Modal>
-                    <Modal
-                      closeable
-                      isOpen={isShareCommunityModalVisible}
-                      onClose={onShareCommunityModalClose}
-                    >
-                      <ShareCommunityFormContainer
-                        mainImage={mainImage}
-                        fromEnabled={!user}
-                        communitySlug={community.id}
-                        notifyInfo={notifyInfo}
-                        onSuccess={this.handleShareCommunitySuccess}
-                      />
-                    </Modal>
-                    <ModalController>
-                      {({ modalType, modalEntity, hide }) => (
-                        <Modal
-                          noPadding
-                          closeable
-                          isOpen={modalType === FLOOR_PLAN}
-                          onClose={() => { onFloorPlanModalToggle(); hide(); }}
-                        >
-                          {modalEntity && <CommunityFloorPlanPopupFormContainer community={community} user={user} typeOfCare={typeOfCare} floorPlanInfo={modalEntity.info} userDetails={userDetails} postSubmit={hide} />}
-                        </Modal>
-                      )}
-                    </ModalController>
-                    <Modal
-                      onClose={() => setModal(null)}
-                      isOpen={modal === ADD_RATING}
-                      closeable
-                    >
-                      <CommunityAddRatingFormContainer user={user} communitySlug={id} communityName={name} setModal={setModal} />
-                    </Modal>
-                    <FullScreenWizardController>
-                      {({ isConfirmationModalVisible, toggleConfirmationModal, type }) => {
-                          let heading = null;
-                          if (type === 'booking') {
-                            heading = 'Tour Request Sent!';
-                          } else if (type === 'pricing') {
-                            heading = 'Custom pricing request sent!';
-                          }
-                          let subheading = null;
-                          if (type === 'booking') {
-                            subheading = 'Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email.';
-                          } else if (type === 'pricing') {
-                            subheading = 'Your Seniorly Partner Agent will work with you to get your exact pricing. They will reach out to you soon.';
-                          }
-                          const props = {
-                            similarCommunities: similarProperties,
-                            similarCommunititesHref: getCitySearchUrl({ propInfo, address }),
-                            onTileClick: toggleConfirmationModal,
-                            heading,
-                            subheading,
-                          };
-                          return (
-                            <Modal
-                              onClose={toggleConfirmationModal}
-                              isOpen={isConfirmationModalVisible}
-                              closeable
-                            >
-                              <CommunityBookATourConfirmationPopup {...props} />
-                            </Modal>
-                          );
-                      }}
-                    </FullScreenWizardController>
-                    <Modal
-                      closeable
-                      isOpen={isAskAgentQuestionModalVisible}
-                      onClose={onToggleAskAgentQuestionModal}
-                    >
-                      <CommunityAskQuestionAgentFormContainer
-                        toggleAskAgentQuestionModal={onToggleAskAgentQuestionModal}
-                        notifyInfo={notifyInfo}
-                        community={community}
-                        heading={heading}
-                        description={description}
-                        agentImageUrl={agentImageUrl}
-                        placeholder={placeholder}
-                        question={question}
-                      />
-                    </Modal>
-                  </Body>
-                  <Column>
-                    <Sticky
-                      top={24}
-                      bottomBoundary="#sticky-sidebar-boundary"
-                    >
-                      <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
-                    </Sticky>
-                  </Column>
-                </TwoColumn>
-                {(images.length > 1) &&
-                  <StyledSection title={`More Photos of ${name}`} titleSize="subtitle">
-                    <MorePictures gallery={gallery} communityName={name} city={address.city} state={address.state} onPictureClick={this.handleMorePicturesClick} />
-                  </StyledSection>
+                  </Gallery>
                 }
-                <Section title={`Map View of ${name}`} titleSize="subtitle" />
-              </Wrapper>
-              <StyledSection>
-                <Lazy ltIE9 component="div">
-                  <CommunityMap
-                    community={community}
-                    similarProperties={similarProperties}
+                <StyledCommunitySummary
+                  community={community}
+                  isAdmin={user && user.admin}
+                  isFavourited={!!initedUserSave}
+                  onFavouriteClick={handleFavouriteClick}
+                  onShareClick={handleShareClick}
+                />
+                {(promoDescription || promoTitle) &&
+                  (
+                    <StyledOfferNotification
+                      palette="warning"
+                      title={promoTitle}
+                      description={promoDescription}
+                      onLearnMoreClick={openAskAgentQuestionModal}
+                      hasLearnMore
+                    />
+                  )
+                }
+                {autoHighlights &&
+                  <TopCollapsibleSection
+                    title={`Community Highlights at ${name}`}
+                  >
+                    <MainSection>
+                      {autoHighlights.map(item => (
+                        <IconItemWrapper>
+                          <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                        </IconItemWrapper>))
+                      }
+                    </MainSection>
+                  </TopCollapsibleSection>
+                }
+                <TopCollapsibleSection
+                  title={`Pricing and Floor Plans at ${name}`}
+                >
+                  <MainSection>
+                    {floorPlans.length > 0 &&
+                      <CommunityFloorPlansList
+                        typeOfCare={typeOfCare}
+                        floorPlans={floorPlans}
+                        onItemClick={openFloorPlanModal}
+                      />
+                    }
+                    {floorPlans.length === 0 &&
+                      <EstimatedCost
+                        name={name}
+                        getPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
+                        typeCares={typeCares}
+                        price={estimatedPriceBase}
+                      />
+                    }
+                  </MainSection>
+                  {floorPlans.length > 0 &&
+                    <BottomSection>
+                      <GetCurrentAvailabilityContainer
+                        community={community}
+                        queryParams={{ modal, currentStep }}
+                        setQueryParams={setQueryParams}
+                        onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
+                        onSubmitExpressConversion={(e, submitExpressConversion) => {
+                          if (isAlreadyPricingRequested) {
+                            openAskAgentQuestionModal('pricing');
+                          } else {
+                            submitExpressConversion(e);
+                            onGCPClick();
+                          }
+                        }}
+                      />
+                    </BottomSection>
+                  }
+                </TopCollapsibleSection>
+                {floorPlans.length === 0 &&
+                  <TopCollapsibleSection
+                    title={`Get Availability at ${name}`}
+                  >
+                    <MainSection>
+                      <GetCurrentAvailabilityContainer
+                        community={community}
+                        queryParams={{ modal, currentStep }}
+                        setQueryParams={setQueryParams}
+                        onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
+                        onSubmitExpressConversion={(e, submitExpressConversion) => {
+                          if (isAlreadyPricingRequested) {
+                            openAskAgentQuestionModal('pricing');
+                          } else {
+                            submitExpressConversion(e);
+                            onGCPClick();
+                          }
+                        }}
+                      />
+                    </MainSection>
+                  </TopCollapsibleSection>
+                }
+                {(communityDescription || rgsAux.communityDescription) &&
+                  <TopCollapsibleSection title={`Details on ${name}`}>
+                    <MainSection>
+                      <CommunityDetails
+                        communityName={name}
+                        communityDescription={communityDescription}
+                        rgsAuxDescription={rgsAux.communityDescription}
+                        staffDescription={staffDescription}
+                        residentDescription={residentDescription}
+                        ownerExperience={ownerExperience}
+                        contract={community.contacts && community.contacts.length > 0} // TODO: cheange to use contract info once api sends it
+                      />
+                    </MainSection>
+                  </TopCollapsibleSection>
+                }
+                <TopCollapsibleSection title="How Seniorly Works">
+                  <MainSection noPadding>
+                    {!isHowSlyWorksVideoPlaying &&
+                      <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.jpg')} onClick={toggleHowSlyWorksVideoPlaying} />
+                    }
+                    {isHowSlyWorksVideoPlaying &&
+                      <StyledVideo
+                        autoPlay
+                        controls
+                        controlsList="nodownload"
+                        onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', id, e.target.currentTime)}
+                        onPlay={e => sendEvent('howSlyWorksVideo', 'play', id, e.target.currentTime)}
+                      >
+                        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
+                        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
+                      </StyledVideo>
+                    }
+                  </MainSection>
+                </TopCollapsibleSection>
+                {partnerAgent &&
+                  <TopCollapsibleSection title={`Your Seniorly Partner Agent for ${name}`}>
+                    <MainSection>
+                      <CommunityAgentSection agent={partnerAgent} onAdvisorHelpClick={openAdvisorHelpModal} />
+                    </MainSection>
+                    <BottomSection>
+                      <TextBottomSection
+                        heading="Ask about pricing, floor plans, availability, anything."
+                        subHeading=" Using a Seniorly Partner Agent is a free service for you."
+                        buttonText="Send a message"
+                        onButtonClick={() => openAskAgentQuestionModal('services')}
+                      />
+                    </BottomSection>
+                  </TopCollapsibleSection>
+                }
+                {careServices && careServices.length > 0 &&
+                  <TopCollapsibleSection title={`Care Services at ${name}`}>
+                    <MainSection>
+                      <CommunityCareService careServices={careServices} />
+                    </MainSection>
+                    <BottomSection>
+                      <TextBottomSection
+                        heading="Need more detailed information on care services?"
+                        subHeading="Your Seniorly Partner Agent can consult with you on your individual care needs."
+                        buttonText="Ask about care services"
+                        onButtonClick={() => openAskAgentQuestionModal('services')}
+                      />
+                    </BottomSection>
+                  </TopCollapsibleSection>
+                }
+                <TopCollapsibleSection title={`Amenities at ${name}`}>
+                  <MainSection>
+                    <CommunityAmenities community={community} />
+                  </MainSection>
+                  <BottomSection>
+                    <TextBottomSection
+                      heading="Need more detailed information on amenities?"
+                      subHeading=" Using a Seniorly Partner Agent is a free service for you."
+                      buttonText="Ask about amenities"
+                      onButtonClick={() => openAskAgentQuestionModal('services')}
+                    />
+                  </BottomSection>
+                </TopCollapsibleSection>
+                {sortedEstimatedPrice.length > 0 &&
+                  <TopCollapsibleSection title={`Compare to Other ${typeOfCare} Communities in the Area`}>
+                    <MainSection>
+                      <CommunityPricingComparison community={community} />
+                    </MainSection>
+                  </TopCollapsibleSection>
+                }
+                <TopCollapsibleSection
+                  title={`Reviews at ${name}`}
+                >
+                  <MainSection>
+                    <EntityReviews
+                      reviewsValue={reviewsValue}
+                      reviews={reviewsFinal}
+                      reviewRatings={ratingsArray}
+                      onLeaveReview={onLeaveReview}
+                      onReviewLinkClicked={onReviewLinkClicked}
+                    />
+                  </MainSection>
+                  <BottomSection>
+                    <TextBottomSection
+                      heading={`Have experience with ${name}?`}
+                      subHeading="Your review can help other families with their senior living search."
+                      buttonText="Write a review"
+                      onButtonClick={() => setModal(ADD_RATING)}
+                    />
+                  </BottomSection>
+                </TopCollapsibleSection>
+                <TopCollapsibleSection title={`Questions About ${name}`}>
+                  <MainSection>
+                    <CommunityQuestionAnswers
+                      communityName={name}
+                      communitySlug={id}
+                      questions={questions}
+                      communityFaQs={communityFaQs}
+                      onLeaveAnswerClick={openAnswerQuestionModal}
+                      onAskQuestionClick={openAskQuestionModal}
+                      user={user}
+                    />
+                  </MainSection>
+                  <BottomSection>
+                    <TextBottomSection
+                      heading="Don't see your question? Be the first to ask this community!"
+                      buttonText="Ask a Question"
+                      onButtonClick={openAskQuestionModal}
+                    />
+                  </BottomSection>
+                </TopCollapsibleSection>
+                {rgsAux.stateLicensingWebsite &&
+                  <StyledCommunityExtraInfoSection
+                    title={`${name} at ${address.city} State Licensing`}
+                    description={`${name} is licensed by the state of ${address.state}`}
+                    url={rgsAux.stateLicensingWebsite}
+                    urlText="Visit the state licensing website"
                   />
-                </Lazy>
+                }
+                <StyledCommunityExtraInfoSection
+                  title="Disclaimer"
+                  description="The information on this page has been created to the best of our abilities. To ensure accuracy, please confirm with your local Seniorly Seniorly Partner Agent or directly with the property. If this is your senior living community, we would welcome any updates you wish to provide."
+                  url="/providers/housing"
+                  urlText="Simply claim your profile by clicking here"
+                />
+                <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
+                  <MainSection>
+                    <SimilarCommunities similarProperties={similarProperties} />
+                    <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
+                      {({ gotoAdvancedInfo }) => (
+                        <AdTileWrapper>
+                          <AdTile {...adProps} onClick={() => gotoAdvancedInfo()} />
+                        </AdTileWrapper>
+                      )
+                      }
+                    </ConciergeController>
+                    <BackToSearch>
+                      <Button
+                        ghost
+                        onClick={onBackToSearchClicked}
+                        href={getCitySearchUrl({ propInfo, address })}
+                      >
+                        Communities In {address.city}
+                      </Button>
+                    </BackToSearch>
+                  </MainSection>
+                </BottomCollapsibleSection>
+                <CommunityStickyFooter
+                  isAlreadyTourScheduled={isAlreadyTourScheduled}
+                  isAlreadyPricingRequested={isAlreadyPricingRequested}
+                  onBookATourClick={!isAlreadyTourScheduled ? onBookATourClick : () => openAskAgentQuestionModal('tour')}
+                  onGCPClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
+                  // onGCPClick={() => setQueryParams({ modal: CONCIERGE })}
+                  onAQClick={openAskAgentQuestionModal}
+                />
+                <Modal
+                  closeable
+                  isOpen={searchParams.modal === THANK_YOU}
+                  onClose={() => setQueryParams({ modal: null })}
+                >
+                  <Thankyou />
+                </Modal>
+                <Modal
+                  onClose={() => setModal(null)}
+                  isOpen={modal === ADD_RATING}
+                  closeable
+                >
+                  <CommunityAddRatingFormContainer user={user} communitySlug={id} communityName={name} setModal={setModal} />
+                </Modal>
+              </Body>
+              <Column>
+                <Sticky
+                  top={24}
+                  bottomBoundary="#sticky-sidebar-boundary"
+                >
+                  <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
+                </Sticky>
+              </Column>
+            </TwoColumn>
+            {(images.length > 1) &&
+              <StyledSection title={`More Photos of ${name}`} titleSize="subtitle">
+                <MorePictures gallery={gallery} communityName={name} city={address.city} state={address.state} onPictureClick={this.handleMorePicturesClick} />
               </StyledSection>
-              {(nearbyCities && nearbyCities.length > 0) &&
-                <Wrapper>
-                  <SeoLinks title={`Top Cities Near ${name}`} links={nearbyCities} />
-                </Wrapper>
-              }
+            }
+            <Section title={`Map View of ${name}`} titleSize="subtitle" />
+          </Wrapper>
+          <StyledSection>
+            <Lazy ltIE9 component="div">
+              <CommunityMap
+                community={community}
+                similarProperties={similarProperties}
+              />
+            </Lazy>
+          </StyledSection>
+          {(nearbyCities && nearbyCities.length > 0) &&
             <Wrapper>
-              {(rgsAux && rgsAux.localDetails !== '') ? (
-                <Section title="Local Details" titleSize="subtitle">
-                  <CommunityLocalDetails localDetails={rgsAux.localDetails} />
-                </Section>) : null
-              }
+              <SeoLinks title={`Top Cities Near ${name}`} links={nearbyCities} />
             </Wrapper>
-            </CommunityDetailPageTemplate>
-            <Footer />
-          </Fragment>
-        )}
-      </NotificationController>
+          }
+          <Wrapper>
+            {(rgsAux && rgsAux.localDetails !== '') ? (
+              <Section title="Local Details" titleSize="subtitle">
+                <CommunityLocalDetails localDetails={rgsAux.localDetails} />
+              </Section>) : null
+            }
+          </Wrapper>
+        </CommunityDetailPageTemplate>
+        <Footer />
+      </Fragment>
     );
   }
 }

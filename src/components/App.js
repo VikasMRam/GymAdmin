@@ -34,6 +34,7 @@ import AgentRegionPageContainer from 'sly/containers/AgentRegionPageContainer';
 import PartnersPage from 'sly/components/pages/PartnersPage';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 import StaticResourcesController from 'sly/controllers/StaticResourcesController';
+import ModalContainer from 'sly/containers/ModalContainer';
 
 setGlobalStyles();
 
@@ -222,6 +223,7 @@ export default class App extends Component {
               {this.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
             </Switch>
+            <ModalContainer />
           </Router>
         </ThemeProvider>
 

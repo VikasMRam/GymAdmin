@@ -16,6 +16,7 @@ import Notifications from 'sly/components/organisms/Notifications';
 import Header from 'sly/components/organisms/Header';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import BannerNotificationController from 'sly/controllers/BannerNotificationController';
+import ModalController from 'sly/controllers/ModalController';
 
 const defaultHeaderItems = [
   { name: '(855) 866-4515', url: 'tel:+18558664515' },
@@ -130,24 +131,29 @@ class HeaderContainer extends Component {
           menuItemHrIndices={menuItemHrIndices}
           className={className}
         />
-        <NotificationController>
+        <ModalController>
           {({
-            notifyInfo,
-            messages,
-            dismiss,
+            show,
+            hide,
           }) => (
-            <Fragment>
-              {user !== null && <SavedCommunitiesPopupController notifyInfo={notifyInfo} />}
-              <AuthContainer notifyInfo={notifyInfo} />
-              <Notifications messages={messages} dismiss={dismiss} />
-              <BannerNotificationController>
-                {({ messages }) => {
-                  return messages.map(message => <BannerNotification key={message.id}>{message.content}</BannerNotification>);
-                }}
-              </BannerNotificationController>
-            </Fragment>
+            <NotificationController>
+              {({
+                notifyInfo,
+                messages,
+                dismiss,
+              }) => (
+                <Fragment>
+                  {user !== null && <SavedCommunitiesPopupController notifyInfo={notifyInfo} />}
+                  <AuthContainer notifyInfo={notifyInfo} showModal={show} hideModal={hide} />
+                  <Notifications messages={messages} dismiss={dismiss} />
+                  <BannerNotificationController>
+                    {({ messages }) => messages.map(message => <BannerNotification key={message.id}>{message.content}</BannerNotification>)}
+                  </BannerNotificationController>
+                </Fragment>
+              )}
+            </NotificationController>
           )}
-        </NotificationController>
+        </ModalController>
       </Fragment>
     );
   }

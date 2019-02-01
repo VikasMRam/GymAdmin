@@ -14,7 +14,7 @@ describe('ModalController', () => {
   });
   const spy = jest.fn();
   const type = 'test-modal';
-  const entity = ['one', 'two'];
+  const content = <span>test</span>;
 
   const wrap = (props = {}) =>
     shallow(<ModalController {...props}>{spy}</ModalController>).dive();
@@ -24,41 +24,38 @@ describe('ModalController', () => {
     jest.clearAllMocks();
   });
 
-  it('show modal without type errors', () => {
+  it('show modal without type', () => {
     const store = initStore();
     const wrapper = wrap({ store });
 
-    expect(wrapper.dive().instance().show).toThrow(new Error('A modal type is required'));
+    wrapper.dive().instance().show(content, null);
+    const action = store.getActions().pop();
+    expect(action.type).toBe(SET);
+    expect(action.payload.data.modalType).toBeFalsy();
+    expect(action.payload.data.modalContent).toBe(content);
+    expect(action.payload.data.isModalOpen).toBeTruthy();
   });
 
   it('show modal', () => {
     const store = initStore();
     const wrapper = wrap({ store });
 
-    wrapper.dive().instance().show(type);
+    wrapper.dive().instance().show(content, null, type);
     const action = store.getActions().pop();
     expect(action.type).toBe(SET);
     expect(action.payload.data.modalType).toBe(type);
-  });
-
-  it('show modal with entity', () => {
-    const store = initStore();
-    const wrapper = wrap({ store });
-
-    wrapper.dive().instance().show(type, entity);
-    const action = store.getActions().pop();
-    expect(action.type).toBe(SET);
-    expect(action.payload.data.modalType).toBe(type);
-    expect(action.payload.data.modalEntity).toEqual(entity);
+    expect(action.payload.data.modalContent).toBe(content);
+    expect(action.payload.data.isModalOpen).toBeTruthy();
   });
 
   it('hide modal', () => {
-    const store = initStore({}, { modalType: type });
+    const store = initStore({}, { modalType: type, modalContent: content });
     const wrapper = wrap({ store });
 
     wrapper.dive().instance().hide();
     const action = store.getActions().pop();
     expect(action.type).toBe(SET);
     expect(action.payload.data.modalType).toBeFalsy();
+    expect(action.payload.data.isModalOpen).toBeFalsy();
   });
 });

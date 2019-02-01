@@ -35,6 +35,7 @@ const SimilarCommunitiesWrapper = styled.div`
     display: grid;
     grid-gap: 1.500rem;
     grid-template-columns: repeat(auto-fit, 252px);
+    justify-content: center;
   }
 `;
 

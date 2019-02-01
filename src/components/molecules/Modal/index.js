@@ -136,7 +136,7 @@ const Body = styled.div`
 `;
 
 const Modal = ({
-  children, closeable, layout, onClose, noPadding, ...props
+  children, closeable, layout, onClose, ...props
 }) => {
   const iconClose = (palette = 'slate') => (
     <IconButton
@@ -166,7 +166,7 @@ const Modal = ({
             {closeable && iconClose()}
           </Head>
         )}
-        <Body noPadding={noPadding || closeButtonOutsideLayouts.includes(layout)}>
+        <Body noPadding={layout === 'noPadding' || closeButtonOutsideLayouts.includes(layout)}>
           {children}
         </Body>
       </ModalContext>
@@ -175,16 +175,14 @@ const Modal = ({
 };
 
 Modal.propTypes = {
-  layout: oneOf(['default', 'fullScreen', 'gallery', 'sidebar', 'wizard', 'searchBox']).isRequired,
+  layout: oneOf(['default', 'fullScreen', 'gallery', 'sidebar', 'wizard', 'searchBox', 'noPadding']).isRequired,
   children: node,
   closeable: bool,
   onClose: func.isRequired,
-  noPadding: bool,
 };
 
 Modal.defaultProps = {
   layout: 'default',
-  noPadding: false,
 };
 
 export default Modal;

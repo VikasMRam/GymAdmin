@@ -1,50 +1,58 @@
 import { Component } from 'react';
-import { string, func, any } from 'prop-types';
+import { string, func, bool, node } from 'prop-types';
 
 import { connectController } from 'sly/controllers';
 
 class ModalController extends Component {
   static propTypes = {
     modalType: string,
-    modalEntity: any,
     set: func,
     children: func,
+    type: string,
+    isModalOpen: bool,
+    modalContent: node,
+    modalOnClose: func,
   };
 
-  show = (type, modalEntity) => {
-    if (!type) {
-      throw new Error('A modal type is required');
-    }
+  show = (content, onClose, modalType) => {
     const { set } = this.props;
 
     return set({
-      modalType: type,
-      modalEntity,
+      isModalOpen: true,
+      modalType,
+      modalContent: content,
+      modalOnClose: onClose,
     });
   };
 
   hide = () => {
     const { set } = this.props;
 
+    // important: don't make modalContent empty so that close animation has content
     set({
-      modalType: null,
-      modalEntity: null,
+      isModalOpen: false,
+      modalType: undefined,
+      modalOnClose: undefined,
     });
   };
 
   render() {
     const { show, hide } = this;
-    const { children, modalType, modalEntity } = this.props;
+    const {
+      children, modalType, modalContent, modalOnClose, isModalOpen,
+    } = this.props;
 
     return children({
-      show, hide, modalType, modalEntity,
+      show, hide, modalType, modalContent, modalOnClose, isModalOpen,
     });
   }
 }
 
 const mapStateToProps = (state, { controller = {} }) => ({
+  isModalOpen: controller.isModalOpen,
   modalType: controller.modalType,
-  modalEntity: controller.modalEntity,
+  modalContent: controller.modalContent,
+  modalOnClose: controller.modalOnClose,
 });
 
 export default connectController(mapStateToProps)(ModalController);
