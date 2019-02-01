@@ -269,10 +269,10 @@ export default class CommunityDetailPage extends Component {
       staffDescription,
       residentDescription,
       ownerExperience,
-      typeCare,
+      typeCare: typeCares,
     } = propInfo;
 
-    const typeOfCare = typeCare[0];
+    const typeOfCare = typeCares[0];
     const { modal, currentStep } = searchParams;
 
     // TODO: move this to a container for EntityReviews handling posts
@@ -379,6 +379,7 @@ export default class CommunityDetailPage extends Component {
                           hasLearnMore
                         />
                       )
+
                     }
                     {autoHighlights &&
                       <TopCollapsibleSection
@@ -413,8 +414,9 @@ export default class CommunityDetailPage extends Component {
                         }
                         {floorPlans.length === 0 &&
                           <EstimatedCost
+                            name={name}
                             getPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-                            community={community}
+                            typeCares={typeCares}
                             price={estimatedPriceBase}
                           />
                         }
