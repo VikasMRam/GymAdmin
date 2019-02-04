@@ -14,7 +14,6 @@ import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
 import SlyEvent from 'sly/services/helpers/events';
 import { Button } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
-
 import {
   CommunityDetailPageTemplate,
   makeHeader,
@@ -594,6 +593,7 @@ export default class CommunityDetailPage extends Component {
                               communityFaQs={communityFaQs}
                               onLeaveAnswerClick={(type, questionId) => show(ANSWER_QUESTION, { type, questionId })}
                               user={user}
+                              showModal={show}
                             />
                           )}
                         </ModalController>
@@ -611,13 +611,23 @@ export default class CommunityDetailPage extends Component {
                       </BottomSection>
                     </TopCollapsibleSection>
                     <ModalController>
-                      {({ modalType, show, hide }) => (
+                      {({
+                          modalType, show, hide, modalEntity,
+                      }) => (
                         <Modal
                           closeable
                           isOpen={modalType === ASK_QUESTION}
                           onClose={() => hide()}
                         >
-                          <CommunityAskQuestionFormContainer communityName={name} communitySlug={id} setModal={show} user={user} />
+                          <CommunityAskQuestionFormContainer
+                            communityName={name}
+                            communitySlug={id}
+                            setModal={show}
+                            user={user}
+                            // Prepopulating the question from the FAQ, if any
+                            initialValues={modalEntity && modalEntity.contentData ? { question: modalEntity.contentData } : null}
+                            parentSlug={modalEntity && modalEntity.id ? modalEntity.id : null}
+                          />
                         </Modal>
                       )}
                     </ModalController>
