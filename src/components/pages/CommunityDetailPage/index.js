@@ -13,6 +13,8 @@ import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
 import SlyEvent from 'sly/services/helpers/events';
 import { Button } from 'sly/components/atoms';
+import SeoLinks from 'sly/components/organisms/SeoLinks';
+
 import {
   CommunityDetailPageTemplate,
   makeHeader,
@@ -296,7 +298,7 @@ export default class CommunityDetailPage extends Component {
     const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
     const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
-    const { autoHighlights } = rgsAux;
+
 
     const { city } = address;
     let heading = `Ask your Seniorly Partner Agent a question about ${name} in ${city}.`;
@@ -320,6 +322,8 @@ export default class CommunityDetailPage extends Component {
       question = `Hi, I need .... and am interested in knowing whether ${name} has ...`;
     }
 
+    const {
+      autoHighlights, nearbyCities, } = rgsAux;
     return (
       <NotificationController>
         {({
@@ -828,13 +832,18 @@ export default class CommunityDetailPage extends Component {
                   />
                 </Lazy>
               </StyledSection>
-              <Wrapper>
-                {(rgsAux && rgsAux.localDetails !== '') ? (
-                  <Section title="Local Details" titleSize="subtitle">
-                    <CommunityLocalDetails localDetails={rgsAux.localDetails} />
-                  </Section>) : null
-                }
-              </Wrapper>
+              {(nearbyCities && nearbyCities.length > 0) &&
+                <Wrapper>
+                  <SeoLinks title={`Top Cities Near ${name}`} links={nearbyCities} />
+                </Wrapper>
+              }
+            <Wrapper>
+              {(rgsAux && rgsAux.localDetails !== '') ? (
+                <Section title="Local Details" titleSize="subtitle">
+                  <CommunityLocalDetails localDetails={rgsAux.localDetails} />
+                </Section>) : null
+              }
+            </Wrapper>
             </CommunityDetailPageTemplate>
             <Footer />
           </Fragment>
