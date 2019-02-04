@@ -8,12 +8,39 @@ import { parse as parseSearch } from 'query-string';
 import { isBrowser, isServer } from 'sly/config';
 import { isFSA } from 'sly/store/actions';
 
-const preparePromise = promise => promise.catch(e => e);
+const dispatchActions = (dispatch, errorHandler, actions) => {
+  // get a map of all the resource names to promise
+  const promises = Object.entries(actions).reduce((cumul, [resource, action]) => {
+    if (!isFSA(action)) {
+      throw new Error(`trying to use ${action} as an action`);
+    }
+    cumul[resource] = dispatch(action);
+    return cumul;
+  }, {});
 
-const getActionDispatcher = (dispatch, actions) => {
-  if (isFSA(actions)) {
-    return () => dispatch(actions);
+  // pass that to the promise handler
+  const handledPromises = errorHandler(promises);
+
+  if (typeof handledPromises !== 'object') {
+    throw new Error('handleErrors didn\'t return an object with promises');
   }
+
+  // if we don't get all the promises handled we throw an error
+  Object.keys(actions).forEach((key) => {
+    if (!handledPromises[key] || Promise.resolve(handledPromises[key]) !== handledPromises[key]) {
+      throw new Error(`${key} promise was unhandled`);
+    }
+  });
+
+  const resources = Object.keys(handledPromises);
+  return Promise.all(Object.values(handledPromises))
+    .then((results) => {
+      return resources.reduce((cumul, resource, i) => {
+        cumul[resource] = results[i];
+        return cumul;
+      }, {});
+    })
+    .catch(console.error);
 };
 
 const serverStateDecorator = fetchState(
@@ -27,14 +54,13 @@ const serverStateDecorator = fetchState(
   }),
 );
 
-export default function withServerState({
+export default function withServerState(
   mapPropsToActions = Promise.resolve,
-  handleError = _ => _,
+  handleErrors = _ => _,
   ignoreSearch = [],
-}) {
+) {
   const mapDispatchToProps = (dispatch, props) => ({
-    fetchData: () => getActionDispatcher(dispatch, mapPropsToActions(props)),
-    handleError,
+    fetchData: () => dispatchActions(dispatch, handleErrors, mapPropsToActions(props)),
   });
 
   return ChildComponent => serverStateDecorator(connect(
@@ -49,7 +75,6 @@ export default function withServerState({
         search: string.isRequired,
       }),
       fetchData: func.isRequired,
-      handleError: func.isRequired,
       setServerState: func.isRequired,
       hasServerState: bool.isRequired,
       cleanServerState: func.isRequired,
@@ -58,7 +83,6 @@ export default function withServerState({
     componentWillMount() {
       const {
         fetchData,
-        handleError,
         setServerState,
         hasServerState,
         cleanServerState,
@@ -67,7 +91,6 @@ export default function withServerState({
       if (!hasServerState) {
         if (isServer) {
           fetchData(this.props)
-            .catch(handleError)
             .then(setServerState)
             .catch(setServerState);
         } else {
@@ -94,7 +117,6 @@ export default function withServerState({
     render() {
       const {
         fetchData,
-        handleError,
         setServerState,
         hasServerState,
         cleanServerState,

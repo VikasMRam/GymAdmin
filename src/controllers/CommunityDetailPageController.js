@@ -423,21 +423,14 @@ const handleError = ({
   userAction,
   userSave,
 }) => {
-  // console.error(err);
-  if (err.response) {
-    if (err.response.status !== 200) {
-      if (err.location) {
-        const redUrl = err.location.split('/');
-        return {
-          errorCode: err.response.status,
-          redirectUrl: redUrl[redUrl.length - 1],
-        };
-      }
-      return { errorCode: err.response.status };
-    }
-    return { errorCode: null };
-  }
-  throw err;
+  community(
+    () => {
+
+    },
+    () => {
+
+    },
+  );
 };
 
 const ignoreSearchParams = [
@@ -487,8 +480,8 @@ const mapDispatchToProps = dispatch => ({
   )),
 });
 
-export default withServerState({
+export default withServerState(
   mapPropsToActions,
   handleError,
   ignoreSearchParams,
-})(connectController(mapStateToProps, mapDispatchToProps)(CommunityDetailPageController));
+)(connectController(mapStateToProps, mapDispatchToProps)(CommunityDetailPageController));
