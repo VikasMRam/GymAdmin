@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { __RouterContext } from 'react-router';
 import { fetchState } from 'react-router-server';
 import { connect } from 'react-redux';
 import { func, bool, string, shape, object } from 'prop-types';
@@ -11,7 +10,6 @@ import { isFSA, isResourceReadRequest } from 'sly/store/actions';
 
 const dispatchActions = (dispatch, handleResponses, actions) => {
   // get a map of all the resource names to promise
-  console.log('dispatchActions', actions);
   const responses = Object.entries(actions).reduce((cumul, [resource, action]) => {
     if (!isFSA(action) && !isResourceReadRequest(action)) {
       throw new Error(`trying to use ${action} as a resource read action`);
@@ -20,20 +18,26 @@ const dispatchActions = (dispatch, handleResponses, actions) => {
     cumul.promises[resource] = promise;
     cumul.handlers[resource] = (fullfilled, rejected) => {
       cumul.promises[resource] = cumul.promises[resource].then(fullfilled, rejected);
+      return cumul.promises[resource];
     };
     return cumul;
   }, { handlers: {}, promises: [] });
 
-  // pass that to the promise handleResponses
-  handleResponses(responses.handlers);
-
-  if (typeof handledPromises !== 'object') {
-    throw new Error('handleResponses didn\'t return an object with promises');
+  if (typeof handleResponses === 'function') {
+    // pass that to the promise handleResponses
+    handleResponses(responses.handlers);
   }
 
-  return Promise.all(Object.values(responses.promises))
-    .catch(console.error)
-    .then(Promise.resolve(responses.promises));
+  const promises = Object.values(responses.promises);
+  return Promise.all(promises)
+    .then((values) => {
+      // rezip the responses
+      return Object.keys(responses.promises)
+        .reduce((cumul, key, i) => {
+          cumul[key] = values[i];
+          return cumul;
+        }, {});
+    });
 };
 
 const serverStateDecorator = fetchState(
@@ -92,7 +96,7 @@ export default function withServerState(
       cleanServerState: func.isRequired,
     };
 
-    componentDidMount() {
+    componentWillMount() {
       const {
         fetchData,
         setServerState,
@@ -113,7 +117,7 @@ export default function withServerState(
       }
     }
 
-    componentDidUpdate(prevProps) {
+    componentWillUpdate(prevProps) {
       const { match, location, fetchData } = this.props;
       if (prevProps.match.url !== match.url) {
         fetchData(this.context);

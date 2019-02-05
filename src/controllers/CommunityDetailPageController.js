@@ -343,8 +343,6 @@ class CommunityDetailPageController extends Component {
         return <Redirect to={pathname.substring(0, lastIdx)} />;
       }
 
-      console.error(`${errorCode}, could not go ahead`);
-
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
@@ -422,15 +420,20 @@ const handleResponses = ({
   community,
   userAction,
   userSave,
-}) => {
-  // community(
-  //   () => {
-
-  //   },
-  //   () => {
-
-  //   },
-  // );
+}, redirect) => {
+  community(null, (error) => {
+    if (error.response && error.response.status === 301) {
+      return redirect('/');
+    }
+    return Promise.reject(error);
+  });
+  userSave(null, (error) => {
+    // ignore 401 errors
+    if (error.response && error.response.status === 401) {
+      return null;
+    }
+    return Promise.reject(error);
+  });
 };
 
 const ignoreSearchParams = [
