@@ -340,7 +340,7 @@ class CommunityDetailPageController extends Component {
         const { pathname } = location;
         // Replace last part of pathname
         const lastIdx = pathname.lastIndexOf('/');
-        return <Redirect to={pathname.substring(0, lastIdx)} state={{ status: 302 }} />;
+        return <Redirect to={pathname.substring(0, lastIdx)} />;
       }
 
       console.error(`${errorCode}, could not go ahead`);
@@ -418,19 +418,19 @@ const mapPropsToActions = ({ match }) => ({
   }),
 });
 
-const handleError = ({
+const handleResponses = ({
   community,
   userAction,
   userSave,
 }) => {
-  community(
-    () => {
+  // community(
+  //   () => {
 
-    },
-    () => {
+  //   },
+  //   () => {
 
-    },
-  );
+  //   },
+  // );
 };
 
 const ignoreSearchParams = [
@@ -482,6 +482,9 @@ const mapDispatchToProps = dispatch => ({
 
 export default withServerState(
   mapPropsToActions,
-  handleError,
+  handleResponses,
   ignoreSearchParams,
-)(connectController(mapStateToProps, mapDispatchToProps)(CommunityDetailPageController));
+)(connectController(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CommunityDetailPageController));
