@@ -40,28 +40,10 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const fetchData = (dispatch, { match }) =>
-  Promise.all([
-    dispatch(resourceDetailReadRequest('agent', getAgentSlug(match))),
-    dispatch(resourceDetailReadRequest('userAction')),
-  ]);
-
-const handleError = (err) => {
-  if (err.response) {
-    if (err.response.status !== 200) {
-      if (err.location) {
-        const redUrl = err.location.split('/');
-        return {
-          errorCode: err.response.status,
-          redirectUrl: redUrl[redUrl.length - 1],
-        };
-      }
-      return { errorCode: err.response.status };
-    }
-    return { errorCode: null };
-  }
-  throw err;
-};
+const mapPropsToActions = ({ match }) => ({
+  agent: resourceDetailReadRequest('agent', getAgentSlug(match)),
+  userAction: resourceDetailReadRequest('userAction'),
+});
 
 AgentProfilePageContainer.propTypes = {
   agent: agentPropType,
@@ -70,10 +52,7 @@ AgentProfilePageContainer.propTypes = {
   postUserAction: func.isRequired,
 };
 
-export default withServerState({
-  fetchData,
-  handleError,
-})(connect(
+export default withServerState(mapPropsToActions)(connect(
   mapStateToProps,
   mapDispatchToProps,
 )(AgentProfilePageContainer));

@@ -60,33 +60,11 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const fetchData = (dispatch) => {
-  return Promise.all([
-    dispatch(resourceDetailReadRequest('userAction')),
-  ]);
-};
+const mapPropsToActions = () => ({
+  userAction: resourceDetailReadRequest('userAction'),
+});
 
-const handleError = (err) => {
-  if (err.response) {
-    if (err.response.status !== 200) {
-      if (err.location) {
-        const redUrl = err.location.split('/');
-        return {
-          errorCode: err.response.status,
-          redirectUrl: redUrl[redUrl.length - 1],
-        };
-      }
-      return { errorCode: err.response.status };
-    }
-    return { errorCode: null };
-  }
-  throw err;
-};
-
-export default withServerState({
-  fetchData,
-  handleError,
-})(connect(
+export default withServerState(mapPropsToActions)(connect(
   mapStateToProps,
   mapDispatchToProps,
 )(AgentsPageContainer));

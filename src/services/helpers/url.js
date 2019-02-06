@@ -339,3 +339,17 @@ export const removeQueryParamFromURL = (key, sourceURL) => {
   }
   return newPath;
 };
+
+export const replaceLastSegment = (orig, id) => {
+  if (!id) {
+    // remove the last segment
+    return orig.replace(/\/[^\/]+\/?$/gm, id);
+  }
+  // replace it
+  return orig.replace(/[^\/]+\/?$/gm, id);
+};
+
+export const getLastSegment = (url) => {
+  const [last] = url.match(/([^\/]+)\/?$/gm);
+  return last;
+};

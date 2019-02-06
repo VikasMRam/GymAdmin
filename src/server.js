@@ -230,7 +230,7 @@ app.use((err, req, res, next) => {
   if (err) {
     const errorObj = {
       ts: new Date().toISOString(),
-      status: 500,
+      status: res.statusCode,
       url: req.originalUrl,
       error: cleanError(err),
     };

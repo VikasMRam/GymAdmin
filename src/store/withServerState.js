@@ -43,7 +43,7 @@ const dispatchActions = (dispatch, handleResponses, actions) => {
 const serverStateDecorator = fetchState(
   state => ({
     hasServerState: !!Object.keys(state).length,
-    ...state,
+    serverState: state,
   }),
   ({ done }) => ({
     setServerState: data => done(data),
@@ -52,11 +52,11 @@ const serverStateDecorator = fetchState(
 );
 
 export default function withServerState(
-  mapPropsToActions = Promise.resolve,
+  mapPropsToActions = () => {},
   handleResponses = _ => _,
   ignoreSearch = [],
 ) {
-  const getResponseHandler = ({ router }) => {
+  const getResponseHandler = ({ router }, props) => {
     const { staticContext, history } = router;
     const redirect = (uri, status = 302) => {
       if (staticContext) {
@@ -64,11 +64,11 @@ export default function withServerState(
       }
       history.replace(uri);
     };
-    return promises => handleResponses(promises, redirect);
+    return promises => handleResponses(promises, props, redirect);
   };
 
   const mapDispatchToProps = (dispatch, props) => ({
-    fetchData: context => dispatchActions(dispatch, getResponseHandler(context), mapPropsToActions(props)),
+    fetchData: context => dispatchActions(dispatch, getResponseHandler(context, props), mapPropsToActions(props)),
   });
 
   return ChildComponent => serverStateDecorator(connect(

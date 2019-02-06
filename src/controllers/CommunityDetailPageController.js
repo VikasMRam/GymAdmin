@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { func, object, bool, number, string } from 'prop-types';
-import { Redirect } from 'react-router';
 
 import { connectController } from 'sly/controllers';
 import { withServerState } from 'sly/store';
 import SlyEvent from 'sly/services/helpers/events';
-import { objectToURLQueryParams, parseURLQueryParams } from 'sly/services/helpers/url';
+import {
+  getLastSegment,
+  objectToURLQueryParams,
+  parseURLQueryParams,
+  replaceLastSegment,
+} from 'sly/services/helpers/url';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getSearchParams } from 'sly/services/helpers/search';
@@ -16,6 +20,8 @@ import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
 import { ensureAuthenticated } from 'sly/store/authenticated/actions';
+import { logWarn } from 'sly/services/helpers/logging';
+
 import {
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS,
@@ -36,7 +42,6 @@ class CommunityDetailPageController extends Component {
     isQuestionModalOpenValue: bool,
     searchParams: object,
     isLoadingUserSaves: bool,
-    redirectUrl: string,
     setQueryParams: func,
     isShareCommunityModalVisible: bool,
     isAskAgentQuestionModalVisible: bool,
@@ -315,8 +320,7 @@ class CommunityDetailPageController extends Component {
       user,
       community,
       userSaveOfCommunity,
-      errorCode,
-      redirectUrl,
+      serverState,
       history,
       searchParams,
       setQueryParams,
@@ -326,27 +330,13 @@ class CommunityDetailPageController extends Component {
       isHowSlyWorksVideoPlaying,
     } = this.props;
 
-    if (errorCode) {
-      if (redirectUrl) { /* Slug has Changed */
-        const { location } = history;
-        const { pathname } = location;
-        // Replace last part of pathname
-        const fullPaths = pathname.split('/');
-        fullPaths[fullPaths.length - 1] = redirectUrl;
-        return <Redirect to={fullPaths.join('/')} />;
-      }
-      if (errorCode === 404) { /* Not found so redirect to city page */
-        const { location } = history;
-        const { pathname } = location;
-        // Replace last part of pathname
-        const lastIdx = pathname.lastIndexOf('/');
-        return <Redirect to={pathname.substring(0, lastIdx)} />;
-      }
-
+    if (serverState instanceof Error) {
+      const errorCode = (serverState.response && serverState.response.status) || 500;
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
     if (!community || !userAction) {
+      logWarn(new Error('Empty community or userAction'));
       return null;
     }
 
@@ -416,20 +406,38 @@ const mapPropsToActions = ({ match }) => ({
   }),
 });
 
-const handleResponses = ({
-  community,
-  userAction,
-  userSave,
-}, redirect) => {
+const handleResponses = (responses, { location }, redirect) => {
+  const {
+    community,
+    // userAction,
+    userSave,
+  } = responses;
+
+  const {
+    pathname,
+  } = location;
+
   community(null, (error) => {
-    if (error.response && error.response.status === 301) {
-      return redirect('/');
+    if (error.response) {
+      if (error.response.status === 301) {
+        redirect(replaceLastSegment(pathname, getLastSegment(error.location)));
+        return null;
+      }
+
+      if (error.response.status === 404) {
+        // Not found so redirect to city page
+        redirect(replaceLastSegment(pathname));
+        return null;
+      }
     }
+
     return Promise.reject(error);
   });
+
   userSave(null, (error) => {
-    // ignore 401 errors
-    if (error.response && error.response.status === 401) {
+    // ignore 401 and 301 errors
+    if (error.response && [401, 301].includes(error.response.status)) {
+      logWarn(error);
       return null;
     }
     return Promise.reject(error);

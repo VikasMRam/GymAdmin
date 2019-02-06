@@ -7,7 +7,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import PromoPage from 'sly/components/pages/PromoPage';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 
-class PromoPageContainer extends Component {
+export default class PromoPageContainer extends Component {
   static propTypes = {
     history: object,
     location: object,
@@ -71,7 +71,7 @@ class PromoPageContainer extends Component {
     }
     if (!utmPresent) {
       const { pathname } = location;
-      return <Redirect to={`${pathname}?utm_campaign=offer150sf&utm_medium=shoppingcart&utm_source=molliestone`} />
+      return <Redirect to={`${pathname}?utm_campaign=offer150sf&utm_medium=shoppingcart&utm_source=molliestone`} />;
     }
     return (
       <PromoPage
@@ -84,5 +84,3 @@ class PromoPageContainer extends Component {
     );
   }
 }
-
-export default PromoPageContainer;

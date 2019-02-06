@@ -10,6 +10,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import { CUSTOM_PRICING } from 'sly/services/api/actions';
 import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
+import {getLastSegment, replaceLastSegment} from "sly/services/helpers/url";
 
 const eventCategory = 'PricingWizard';
 
@@ -81,41 +82,51 @@ const mapStateToProps = (state, { match }) => {
     community: getDetail(state, 'community', communitySlug),
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
     postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
   };
 };
 
-const fetchData = (dispatch, { match }) =>
-  Promise.all([
-    dispatch(resourceDetailReadRequest('community', getCommunitySlug(match), {
-      include: 'similar-communities',
-    })),
-    dispatch(resourceDetailReadRequest('userAction')),
-  ]);
+const mapPropsToActions = ({ match }) => ({
+  community: resourceDetailReadRequest('community', getCommunitySlug(match), {
+    include: 'similar-communities',
+  }),
+  userAction: resourceDetailReadRequest('userAction'),
+});
 
-const handleError = (err) => {
-  if (err.response) {
-    if (err.response.status !== 200) {
-      if (err.location) {
-        const redUrl = err.location.split('/');
-        return {
-          errorCode: err.response.status,
-          redirectUrl: redUrl[redUrl.length - 1],
-        };
+const handleResponses = (responses, { location }, redirect) => {
+  const {
+    community,
+  } = responses;
+
+  const {
+    pathname,
+  } = location;
+
+  community(null, (error) => {
+    if (error.response) {
+      if (error.response.status === 301) {
+        redirect(replaceLastSegment(pathname, getLastSegment(error.location)));
+        return null;
       }
-      return { errorCode: err.response.status };
+
+      if (error.response.status === 404) {
+        // Not found so redirect to city page
+        redirect(replaceLastSegment(pathname));
+        return null;
+      }
     }
-    return { errorCode: null };
-  }
-  throw err;
+
+    return Promise.reject(error);
+  });
 };
 
-export default withServerState({
-  fetchData,
-  handleError,
-})(connectController(
+export default withServerState(
+  mapPropsToActions,
+  handleResponses,
+)(connectController(
   mapStateToProps,
   mapDispatchToProps
 )(PricingWizardPageContainer));

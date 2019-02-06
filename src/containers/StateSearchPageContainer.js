@@ -17,6 +17,7 @@ import { toggleModalFilterPanel } from 'sly/store/actions';
 class StateSearchPageContainer extends Component {
   static propTypes = {
     searchParams: object.isRequired,
+    serverState: object,
     history: object.isRequired,
     location: object.isRequired,
     communityList: array.isRequired,
@@ -66,7 +67,7 @@ class StateSearchPageContainer extends Component {
   render() {
     const {
       searchParams,
-      errorCode,
+      serverState,
       communityList,
       requestMeta,
       location,
@@ -75,8 +76,9 @@ class StateSearchPageContainer extends Component {
       isModalFilterPanelVisible,
       toggleModalFilterPanel,
     } = this.props;
-    // TODO Add Error Page
-    if (errorCode) {
+
+    if (serverState instanceof Error) {
+      const errorCode = (serverState.response && serverState.response.status) || 500;
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
     const isMapView = searchParams.view === 'map';
@@ -119,28 +121,26 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const fetchData = (dispatch, { match, location }) => {
+const mapPropsToActions = ({ match, location }) => {
   const searchParams = getSearchParams(match, location);
-  return Promise.all([
-    dispatch(resourceListReadRequest('searchResource', searchParams)),
-    dispatch(resourceListReadRequest('geoGuide', searchParams)),
-  ]);
+  return {
+    searchResource: resourceListReadRequest('searchResource', searchParams),
+    geoGuide: resourceListReadRequest('geoGuide', searchParams),
+  };
 };
 
-const handleError = (err) => {
-  if (err.response) {
-    if (err.response.status !== 200) {
-      return { errorCode: err.response.status };
-    }
-    return { errorCode: null };
-  }
-  throw err;
+const handleResponses = (responses) => {
+  const { geoGuide } = responses;
+  geoGuide(null, (error) => {
+    // ignore all geoGuides errors
+    logWarn(error);
+  });
 };
 
-export default withServerState({
-  fetchData,
-  handleError,
-})(connect(
+export default withServerState(
+  mapPropsToActions,
+  handleResponses,
+)(connect(
   mapStateToProps,
   mapDispatchToProps,
 )(StateSearchPageContainer));

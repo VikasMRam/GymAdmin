@@ -98,9 +98,7 @@ api.create = (settings = {}) => ({
       .request(endpoint, merge({}, this.settings, settings))
       .catch((error) => {
         if (!firstError && [401, 403].includes(error.response.status)) {
-          if (firstError === null) {
-            firstError = error;
-          }
+          firstError = error;
           return this.requestAuthToken()
             .catch(logWarn)
             .then(doRequest);

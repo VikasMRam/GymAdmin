@@ -23,6 +23,7 @@ import {
   filterLinkPath,
   getSearchParams,
 } from 'sly/services/helpers/search';
+import { logWarn } from 'sly/services/helpers/logging';
 
 class CommunitySearchPageContainer extends Component {
   static propTypes = {
@@ -32,7 +33,7 @@ class CommunitySearchPageContainer extends Component {
     communityList: array.isRequired,
     geoGuide: array,
     requestMeta: object.isRequired,
-    errorCode: number,
+    serverState: object,
     isModalFilterPanelVisible: bool,
     toggleModalFilterPanel: func,
     isFetchingResults: bool,
@@ -87,7 +88,7 @@ class CommunitySearchPageContainer extends Component {
   render() {
     const {
       searchParams,
-      errorCode,
+      serverState,
       communityList,
       geoGuide,
       requestMeta,
@@ -97,8 +98,8 @@ class CommunitySearchPageContainer extends Component {
       isFetchingResults,
     } = this.props;
 
-    // TODO Add Error Page
-    if (errorCode) {
+    if (serverState instanceof Error) {
+      const errorCode = (serverState.response && serverState.response.status) || 500;
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
@@ -142,33 +143,26 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const fetchData = (dispatch, { match, location }) => {
+const mapPropsToActions = ({ match, location }) => {
   const searchParams = getSearchParams(match, location);
-  return Promise.all([
-    dispatch(resourceListReadRequest('searchResource', searchParams)),
-    dispatch(resourceListReadRequest('geoGuide', searchParams)),
-  ]);
-  // return dispatch(resourceListReadRequest('searchResource', searchParams));
+  return {
+    searchResource: resourceListReadRequest('searchResource', searchParams),
+    geoGuide: resourceListReadRequest('geoGuide', searchParams),
+  };
 };
 
-const handleError = (err) => {
-  if (err.response) {
-    if (err.response.url && err.response.url.match(/geo-guide/)) {
-      // Ignore
-      return;
-    }
-    if (err.response.status !== 200) {
-      return { errorCode: err.response.status };
-    }
-    return { errorCode: null };
-  }
-  throw err;
+const handleResponses = (responses) => {
+  const { geoGuide } = responses;
+  geoGuide(null, (error) => {
+    // ignore all geoGuides errors
+    logWarn(error);
+  });
 };
 
-export default withServerState({
-  fetchData,
-  handleError,
-})(connect(
+export default withServerState(
+  mapPropsToActions,
+  handleResponses,
+)(connect(
   mapStateToProps,
   mapDispatchToProps,
 )(CommunitySearchPageContainer));
