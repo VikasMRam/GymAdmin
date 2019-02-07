@@ -79,29 +79,12 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const fetchData = (dispatch, { match, location }) => {
+const mapPropsToActions = ({ match, location }) => {
   const searchParams = getSearchParams(match, location);
-  return Promise.all([
-    dispatch(resourceListReadRequest('agent', searchParams)),
-    dispatch(resourceDetailReadRequest('userAction')),
-  ]);
-};
-
-const handleError = (err) => {
-  if (err.response) {
-    if (err.response.status !== 200) {
-      if (err.location) {
-        const redUrl = err.location.split('/');
-        return {
-          errorCode: err.response.status,
-          redirectUrl: redUrl[redUrl.length - 1],
-        };
-      }
-      return { errorCode: err.response.status };
-    }
-    return { errorCode: null };
-  }
-  throw err;
+  return {
+    agent: resourceListReadRequest('agent', searchParams),
+    userAction: resourceDetailReadRequest('userAction'),
+  };
 };
 
 AgentRegionPageContainer.propTypes = {
@@ -114,10 +97,7 @@ AgentRegionPageContainer.propTypes = {
   history: object,
 };
 
-export default withServerState({
-  fetchData,
-  handleError,
-})(connectController(
+export default withServerState(mapPropsToActions)(connectController(
   mapStateToProps,
   mapDispatchToProps,
 )(AgentRegionPageContainer));
