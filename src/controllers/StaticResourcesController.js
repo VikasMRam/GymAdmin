@@ -20,6 +20,5 @@ export default withServerState(
   mapPropsToActions,
   handleResponses,
 )(() => {
-  console.log('re-render StaticRes')
   return null;
 });
