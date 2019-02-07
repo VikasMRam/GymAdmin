@@ -18,7 +18,7 @@ const StyledHeading = styled(Heading)`
 `;
 
 const CommunityAskQuestionForm = ({
-  handleSubmit, pristine, submitting, communityName, user, error,
+  handleSubmit, submitting, communityName, user, error,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -45,7 +45,7 @@ const CommunityAskQuestionForm = ({
         component={ReduxField}
       />
       {error && <strong>{error}</strong>}
-      <StyledButton type="submit" kind="jumbo" disabled={pristine || submitting}>
+      <StyledButton type="submit" kind="jumbo" disabled={submitting}>
         Submit Question
       </StyledButton>
 
@@ -57,7 +57,6 @@ const CommunityAskQuestionForm = ({
 CommunityAskQuestionForm.propTypes = {
   handleSubmit: func.isRequired,
   communityName: string.isRequired,
-  pristine: bool,
   submitting: bool,
   user: object,
   error: string,

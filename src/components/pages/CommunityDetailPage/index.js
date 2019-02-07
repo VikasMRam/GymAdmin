@@ -11,9 +11,9 @@ import { ASK_QUESTION, ADD_RATING, THANK_YOU, ANSWER_QUESTION, FLOOR_PLAN, ADVIS
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
-import { createBooleanValidator, email, required, usPhone } from 'sly/services/validation';
 import SlyEvent from 'sly/services/helpers/events';
-import { Button, Icon, Block } from 'sly/components/atoms';
+import { Button } from 'sly/components/atoms';
+import SeoLinks from 'sly/components/organisms/SeoLinks';
 import {
   CommunityDetailPageTemplate,
   makeHeader,
@@ -50,7 +50,6 @@ import FullScreenWizardController from 'sly/controllers/FullScreenWizardControll
 import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
-import GetCurrentAvailabilityFormContainer from 'sly/containers/GetCurrentAvailabilityFormContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
 import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList';
 import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
@@ -67,6 +66,7 @@ import IconItem from 'sly/components/molecules/IconItem';
 import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
+import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -74,14 +74,6 @@ const BackToSearch = styled.div`
 
 const AdTileWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
-`;
-
-const GetAvailabilitySuccessBox = styled.div`
-  display: flex;
-
-  > :first-child {
-    margin-right: ${size('spacing.regular')};
-  }
 `;
 
 const StyledCommunitySummary = styled(CommunitySummary)`
@@ -102,12 +94,6 @@ const StyledCommunitySummary = styled(CommunitySummary)`
 const IconItemWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
-
-const hasAllUserData = createBooleanValidator({
-  fullName: [required],
-  email: [required, email],
-  phone: [required, usPhone],
-});
 
 const StyledOfferNotification = styled(OfferNotification)`
   margin-bottom: ${size('spacing.xLarge')};
@@ -284,10 +270,10 @@ export default class CommunityDetailPage extends Component {
       staffDescription,
       residentDescription,
       ownerExperience,
-      typeCare,
+      typeCare: typeCares,
     } = propInfo;
 
-    const typeOfCare = typeCare[0];
+    const typeOfCare = typeCares[0];
     const { modal, currentStep } = searchParams;
 
     // TODO: move this to a container for EntityReviews handling posts
@@ -311,7 +297,7 @@ export default class CommunityDetailPage extends Component {
     const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
     const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
-    const { autoHighlights } = rgsAux;
+
 
     const { city } = address;
     let heading = `Ask your Seniorly Partner Agent a question about ${name} in ${city}.`;
@@ -335,6 +321,8 @@ export default class CommunityDetailPage extends Component {
       question = `Hi, I need .... and am interested in knowing whether ${name} has ...`;
     }
 
+    const {
+      autoHighlights, nearbyCities, } = rgsAux;
     return (
       <NotificationController>
         {({
@@ -394,6 +382,7 @@ export default class CommunityDetailPage extends Component {
                           hasLearnMore
                         />
                       )
+
                     }
                     {autoHighlights &&
                       <TopCollapsibleSection
@@ -402,7 +391,7 @@ export default class CommunityDetailPage extends Component {
                         <MainSection>
                           {autoHighlights.map(item => (
                             <IconItemWrapper>
-                              <IconItem icon="care" iconPalette="secondary" borderless={false}>{item}</IconItem>
+                              <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
                             </IconItemWrapper>))
                           }
                         </MainSection>
@@ -428,52 +417,54 @@ export default class CommunityDetailPage extends Component {
                         }
                         {floorPlans.length === 0 &&
                           <EstimatedCost
+                            name={name}
                             getPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-                            community={community}
+                            typeCares={typeCares}
                             price={estimatedPriceBase}
                           />
                         }
                       </MainSection>
                       {floorPlans.length > 0 &&
-                      <BottomSection>
-                        <ConciergeController
-                          communitySlug={community.id}
-                          queryParams={{ modal, currentStep }}
-                          setQueryParams={setQueryParams}
-                          gotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
-                        >
-                          {({ concierge, submitExpressConversion, userDetails }) => {
-                              if (concierge.contactRequested) {
-                                let availabilityDoneText = 'Your Seniorly Guide will reach out to you regarding this community.';
-                                if (!hasAllUserData(userDetails)) {
-                                  availabilityDoneText = 'We received your request, check your inbox shortly.';
-                                }
-                                return (
-                                  <GetAvailabilitySuccessBox>
-                                    <Icon icon="round-checkmark" />
-                                    <Block weight="bold">{availabilityDoneText}</Block>
-                                  </GetAvailabilitySuccessBox>
-                                );
+                        <BottomSection>
+                          <GetCurrentAvailabilityContainer
+                            community={community}
+                            queryParams={{ modal, currentStep }}
+                            setQueryParams={setQueryParams}
+                            onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
+                            onSubmitExpressConversion={(e, submitExpressConversion) => {
+                              if (isAlreadyPricingRequested) {
+                                onToggleAskAgentQuestionModal(e, 'pricing');
+                              } else {
+                                submitExpressConversion(e);
+                                onGCPClick(e);
                               }
-                              return (
-                                <GetCurrentAvailabilityFormContainer
-                                  submitExpressConversion={(e) => {
-                                    if (isAlreadyPricingRequested) {
-                                      onToggleAskAgentQuestionModal(e, 'pricing');
-                                    } else {
-                                      submitExpressConversion(e);
-                                      onGCPClick(e);
-                                    }
-                                  }}
-                                  community={community}
-                                />
-                              );
-                            }
-                          }
-                        </ConciergeController>
-                      </BottomSection>
+                            }}
+                          />
+                        </BottomSection>
                       }
                     </TopCollapsibleSection>
+                    {floorPlans.length === 0 &&
+                      <TopCollapsibleSection
+                        title={`Get Availability at ${name}`}
+                      >
+                        <MainSection>
+                          <GetCurrentAvailabilityContainer
+                            community={community}
+                            queryParams={{ modal, currentStep }}
+                            setQueryParams={setQueryParams}
+                            onGotoGetCustomPricing={!isAlreadyPricingRequested ? onGCPClick : e => onToggleAskAgentQuestionModal(e, 'pricing')}
+                            onSubmitExpressConversion={(e, submitExpressConversion) => {
+                              if (isAlreadyPricingRequested) {
+                                onToggleAskAgentQuestionModal(e, 'pricing');
+                              } else {
+                                submitExpressConversion(e);
+                                onGCPClick(e);
+                              }
+                            }}
+                          />
+                        </MainSection>
+                      </TopCollapsibleSection>
+                    }
                     {(communityDescription || rgsAux.communityDescription) &&
                       <TopCollapsibleSection title={`Details on ${name}`}>
                         <MainSection>
@@ -489,6 +480,7 @@ export default class CommunityDetailPage extends Component {
                         </MainSection>
                       </TopCollapsibleSection>
                     }
+
                     <TopCollapsibleSection title="How Seniorly Works">
                       <MainSection noPadding>
                         {!isHowSlyWorksVideoPlaying &&
@@ -601,6 +593,7 @@ export default class CommunityDetailPage extends Component {
                               communityFaQs={communityFaQs}
                               onLeaveAnswerClick={(type, questionId) => show(ANSWER_QUESTION, { type, questionId })}
                               user={user}
+                              showModal={show}
                             />
                           )}
                         </ModalController>
@@ -618,13 +611,23 @@ export default class CommunityDetailPage extends Component {
                       </BottomSection>
                     </TopCollapsibleSection>
                     <ModalController>
-                      {({ modalType, show, hide }) => (
+                      {({
+                          modalType, show, hide, modalEntity,
+                      }) => (
                         <Modal
                           closeable
                           isOpen={modalType === ASK_QUESTION}
                           onClose={() => hide()}
                         >
-                          <CommunityAskQuestionFormContainer communityName={name} communitySlug={id} setModal={show} user={user} />
+                          <CommunityAskQuestionFormContainer
+                            communityName={name}
+                            communitySlug={id}
+                            setModal={show}
+                            user={user}
+                            // Prepopulating the question from the FAQ, if any
+                            initialValues={modalEntity && modalEntity.contentData ? { question: modalEntity.contentData } : null}
+                            parentSlug={modalEntity && modalEntity.id ? modalEntity.id : null}
+                          />
                         </Modal>
                       )}
                     </ModalController>
@@ -839,13 +842,18 @@ export default class CommunityDetailPage extends Component {
                   />
                 </Lazy>
               </StyledSection>
-              <Wrapper>
-                {(rgsAux && rgsAux.localDetails !== '') ? (
-                  <Section title="Local Details" titleSize="subtitle">
-                    <CommunityLocalDetails localDetails={rgsAux.localDetails} />
-                  </Section>) : null
-                }
-              </Wrapper>
+              {(nearbyCities && nearbyCities.length > 0) &&
+                <Wrapper>
+                  <SeoLinks title={`Top Cities Near ${name}`} links={nearbyCities} />
+                </Wrapper>
+              }
+            <Wrapper>
+              {(rgsAux && rgsAux.localDetails !== '') ? (
+                <Section title="Local Details" titleSize="subtitle">
+                  <CommunityLocalDetails localDetails={rgsAux.localDetails} />
+                </Section>) : null
+              }
+            </Wrapper>
             </CommunityDetailPageTemplate>
             <Footer />
           </Fragment>

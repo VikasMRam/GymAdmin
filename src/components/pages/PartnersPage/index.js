@@ -96,27 +96,27 @@ const PartnersPage = () => {
       <TemplateContent>
         <StyledSection title="How does it work?">
           <ColumnWrapper>
-            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="house" heading="Stay with your curreny agency" content="As a Seniorly Partner Agent you will still operate under your business name and simply receive extra family referrals in addition to your current business. " />
+            <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="house" heading="Stay with your current agency" content="As a Seniorly Partner Agent you will still operate under your business name and simply receive extra family referrals in addition to your current business. " />
             <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="star" heading="Work with qualified families" content="We are not one of those “online lead companies”. As a Partner Agent, your profile will be highlighted on Seniorly.com. Families can reach out directly or be matched by Seniorly according to your area of expertise." />
             <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="loyalty" heading="Keep over 50% commission" content="You receive over 50% of the referral fee when successfully helping a Seniorly prospect. A referral commission is paid to Seniorly upon a new resident move-in." />
           </ColumnWrapper>
         </StyledSection>
         <Hr fullWidth />
         <StyledSection title="Online Discovery Matched With Local Expertise">
-          <Paragraph>Seniorly is changing the way families find senior housing and care. Thousands of families visit our site everyday, giving you exposure to new high quality clients.</Paragraph>
+          <Paragraph>Seniorly is changing the way families find senior housing and care. Thousands of families visit our site everyday, giving you exposure to new clients.</Paragraph>
           <StyledColumnWrapper>
-            <FactBox title="30,000+" description="families found a home with the help of Seniorly Partner Advisors" />
-            <FactBox title="98%" description="of families who moved in would recommend their Advisor to a friend" />
-            <FactBox title="90%" description="Over 90% of our partners would refer Seniorly to their colleagues" />
+            <FactBox title="200+" description="Partner Agents across the country" />
+            <FactBox title="5000+" description="families helped by Seniorly Partner Agents" />
+            <FactBox title="$30,000+" description="additional annual income by our most successful Partner Agents" />
           </StyledColumnWrapper>
         </StyledSection>
         <Hr fullWidth />
-        <StyledSection title="Meet Seniorly Partner Advisors">
+        <StyledSection title="Meet Seniorly Partner Agents">
           <MSPAColumnWrapper>
-            <PartnerReview name="Steve Villa" location="San Francisco, California" image="https://d1qiigpe5txw4q.cloudfront.net/uploads/3a29a352749330c0495783c6245b5bf0/steve-villa_sd.jpg" review="Steve was very professional, was very knowledgeable, extremely resourceful and most accommodating. It's been a pleasure to work with him. Thank you!" />
-            <PartnerReview name="Rijan Shrestha" location="San Francisco, California" image="https://d1qiigpe5txw4q.cloudfront.net/uploads/fa166abaea9307fae330875fb498eb43/sara%2520and%2520R%25204x4_sd.jpg" review="I am so very grateful for Rijan and for Seniorly. They helped find the perfect place for my daughter, and were so service-oriented. I would recommend this service, and Rijan especially, to anyone looking to locate senior housing. - Donna B." />
-            <PartnerReview name="Brett from Senior Advantages Assisted Living Placement (Florida)" location="San Francisco, California" image={assetPath('images/agent-xLarge.png')} review="Brett has done a great job assuring me that my mom can be assisted in a personalized way, not just warehoused.  He talked with me directly and has emailed me assuring me that there were several ways forward.  I truly appreciate nit just pushing mom into a facility but hearing who she was and her present/future needs might be. Thank you for this service. - Rebecca H" />
-            <PartnerReview name="Megan Wiswell" location="San Francisco, California" image="https://d1qiigpe5txw4q.cloudfront.net/uploads/ede2264b7d3ad70e33ac7e3544658876/Screenshot%25202018-07-12%2520at%25202.15.09%2520PM_sd.png" review="Good morning. Megan Wiswell is amazing. I would recommend her anytime. She is thorough and friendly. She knew the area and respected the budget I was working with. (Didn’t try to push me somewhere that wouldn’t work) I really appreciated that because she didn’t make me feel bad. She said “it is what it is” and we work with it. She’s a good listener and followed up to make sure I had what I needed. Thank you to all of you for being there for me. It is a steep learning curve and you don’t need it until you need it. Blessings for all - Sue G" />
+            <PartnerReview name="Steve Villa" location="San Francisco, California" image="https://d1qiigpe5txw4q.cloudfront.net/uploads/d7ec3977575a476a64e7210857d64985/Steve_Villa_sd.jpg" review="'Steve was very professional, was very knowledgeable, extremely resourceful and most accommodating. It's been a pleasure to work with him. Thank you!'- Raymond T" />
+            <PartnerReview name="Rijan & Sarah Shrestha" location="Phoenix, Arizona" image="https://d1qiigpe5txw4q.cloudfront.net/uploads/fa166abaea9307fae330875fb498eb43/sara%2520and%2520R%25204x4_sd.jpg" review="I am so very grateful for Rijan, Seniorly and Assisted Living Locators. They helped find the perfect place for my daughter, and were so service-oriented. I would recommend this service, and Rijan especially, to anyone looking to locate senior housing. - Donna B." />
+            <PartnerReview name="David Greenwood" location="Springfield, Virginia" image="https://d1qiigpe5txw4q.cloudfront.net/uploads/a352ccccf80f218594eba5772de13b07/David_Greenwood_sd.jpg" review="Mr Greenwood has been nothing but wonderful, very helpful and I trust him. It's so nice to feel like I've got someone I can count on through this arduous and painful process. I will recommend this service to everyone I know. - Maureen B." />
+            <PartnerReview name="Megan Wiswell" location="San Diego, California" image="https://d1qiigpe5txw4q.cloudfront.net/uploads/2adf1680a1abef2901f053e7bcaaf55f/Megan_Wiswell_sd.jpg" review="Good morning. Megan Wiswell is amazing. I would recommend her anytime. She is thorough and friendly. She knew the area and respected the budget I was working with. (Didn’t try to push me somewhere that wouldn’t work) I really appreciated that because she didn’t make me feel bad. She said “it is what it is” and we work with it. She’s a good listener and followed up to make sure I had what I needed. Thank you to all of you for being there for me. It is a steep learning curve and you don’t need it until you need it. Blessings for all - Sue G" />
           </MSPAColumnWrapper>
         </StyledSection>
       </TemplateContent>

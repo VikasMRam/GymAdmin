@@ -5,7 +5,7 @@ import NumberFormat from 'react-number-format';
 import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
-import { Heading, Block, Link, Button, Image } from 'sly/components/atoms';
+import { Heading, Block, Button, Image, Hr } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
 const DetailsSection = styled.div`
@@ -16,13 +16,9 @@ const HeadingBlock = styled(Heading)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const DescriptionBlock = styled(Block)`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
-
 const DetailsTable = styled.div`
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: ${size('layout.col2')} 1fr;
   grid-gap: ${size('spacing.large')};
   margin-bottom: ${size('spacing.xLarge')};
 `;
@@ -36,19 +32,11 @@ const StyledImage = styled(Image)`
   }
 `;
 
-const TosBlock = styled(Block)`
-  margin-bottom: ${size('spacing.xLarge')};
-`;
-
-const CTAHeadingBlock = styled(Heading)`
-  margin-bottom: ${size('spacing.large')};
-`;
-
 const CommunityFloorPlanPopupForm = ({
-  handleSubmit, typeOfCare, floorPlanInfo, userDetails, user, error, submitting,
+  handleSubmit, typeOfCare, floorPlanInfo, userDetails, error, submitting,
 }) => {
   const {
-    roomType, description, price, shareType, bathroom, gender, accessibility, image, priceShared,
+    roomType, price, shareType, image, priceShared,
   } = floorPlanInfo;
   let priceToShow = price;
   if (shareType === 'Shared') {
@@ -57,40 +45,24 @@ const CommunityFloorPlanPopupForm = ({
 
   return (
     <div>
-      {image && <StyledImage src={image} aspectRatio="3:2" />}
+      {image && <StyledImage src={image} aspectRatio="16:9" />}
       <DetailsSection>
-        <HeadingBlock size="subtitle" weight="medium">{typeOfCare} - {roomType}</HeadingBlock>
-        <DescriptionBlock size="caption" palette="grey">{description}</DescriptionBlock>
+        <HeadingBlock size="subtitle" weight="medium">Inquire about {typeOfCare} - {roomType}</HeadingBlock>
         <DetailsTable>
           {priceToShow > 0 &&
           <Fragment>
-            <Block size="caption">Price</Block>
-            <Block size="caption"><NumberFormat value={priceToShow} displayType="text" thousandSeparator prefix="$" />*</Block>
+            <Block size="caption">Pricing starts at</Block>
+            <Block size="caption"><NumberFormat value={priceToShow} displayType="text" thousandSeparator prefix="$" /></Block>
           </Fragment>}
           {!!shareType &&
           <Fragment>
-            <Block size="caption">Available as</Block>
+            <Block size="caption">Room type</Block>
             <Block size="caption">{shareType}</Block>
           </Fragment>}
-          {!!bathroom &&
-          <Fragment>
-            <Block size="caption">Bathroom</Block>
-            <Block size="caption">{bathroom}</Block>
-          </Fragment>}
-          {!!gender &&
-          <Fragment>
-            <Block size="caption">Gender</Block>
-            <Block size="caption">{gender}</Block>
-          </Fragment>}
-          {!!accessibility &&
-          <Fragment>
-            <Block size="caption">Accessibility</Block>
-            <Block size="caption">{accessibility}</Block>
-          </Fragment>}
         </DetailsTable>
+        <Hr />
         {/* FIXME: Copied from CommunityBookATourContactForm. Make it reusable component */}
         <form onSubmit={handleSubmit}>
-          <CTAHeadingBlock size="subtitle" weight="medium">Enquire about this listing</CTAHeadingBlock>
           {!(userDetails && userDetails.fullName) && <Field
             name="name"
             label="Full name"
@@ -118,7 +90,6 @@ const CommunityFloorPlanPopupForm = ({
           />
           }
           {error && <Block palette="danger">{error}</Block>}
-          {!user && <TosBlock size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></TosBlock>}
           <StyledButton type="submit" kind="jumbo" disabled={submitting}>Submit</StyledButton>
         </form>
       </DetailsSection>

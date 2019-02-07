@@ -21,7 +21,6 @@ import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
 import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 import { logWarn } from 'sly/services/helpers/logging';
-
 import {
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS,

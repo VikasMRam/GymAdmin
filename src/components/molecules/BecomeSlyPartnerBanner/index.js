@@ -41,7 +41,7 @@ const BecomeSlyPartnerBanner = ({ palette }) => (
       <div>PARTNERS</div>
     </TopWrapper>
     <StyledBlock palette="white" size="title">Become A Seniorly Partner Agent</StyledBlock>
-    <Button href="/providers/crm" kind="jumbo" palette="white" foregroundPalette="primary">Apply now</Button>
+    <Button href="https://docs.google.com/forms/d/e/1FAIpQLSeDifmLn0j9rMpZ6_lDGXQLEjoe519BQYZCuUqGk40x6l-umA/viewform" kind="jumbo" palette="white" foregroundPalette="primary">Apply now</Button>
   </Wrapper>
 );
 

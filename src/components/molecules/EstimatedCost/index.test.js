@@ -5,11 +5,19 @@ import EstimatedCost from 'sly/components/molecules/EstimatedCost';
 import { Button } from 'sly/components/atoms';
 import Block from 'sly/components/atoms/Block/index';
 
-const wrap = (props = {}) => shallow(<EstimatedCost {...props} />);
-
 const price = 200;
 const priceFrom = 180;
 const priceTo = 220;
+const name = 'dfgfdg';
+const typeCares = ['Independent Living'];
+const typeCaresWithCC = ['Independent Living', 'Continuing Care Retirement Community(CCRC)'];
+
+const defaultProps = {
+  name,
+  typeCares,
+};
+
+const wrap = (props = {}) => shallow(<EstimatedCost {...defaultProps} {...props} />);
 
 describe('EstimatedCost', () => {
   it('verify correct percentage', () => {
@@ -38,5 +46,10 @@ describe('EstimatedCost', () => {
     const wrapper = wrap({ price, getPricing });
     wrapper.find(Button).simulate('click');
     expect(getPricing).toHaveBeenCalled();
+  });
+
+  it('verify estimated price hidden when has CCRC', () => {
+    const wrapper = wrap({ price: 230, typeCares: typeCaresWithCC });
+    expect(wrapper.find('Paragraph').dive().dive().text()).toBe(`Pricing for ${defaultProps.name} may include both a one time buy-in fee and a monthly component. Connect directly with ${defaultProps.name} to find out your pricing.`);
   });
 });
