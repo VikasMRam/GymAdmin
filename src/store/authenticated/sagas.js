@@ -41,10 +41,30 @@ export function* ensureAuthenticated(api, { reason, action }, { thunk }) {
   }
 }
 
+export function* forAuthenticated(api, { action }, { thunk }) {
+  const user = yield select(getUser);
+  if (user) {
+    if (isFSA(action)) {
+      yield put(action);
+    } else if (typeof action === 'function') {
+      yield call(action);
+    } else {
+      throw new Error(`Unknown action type for ${JSON.stringify(action)}`);
+    }
+  } else {
+    yield put(actions.forAuthenticatedSuccess(thunk));
+  }
+}
+
 export function* watchEnsureAuthenticated(api, { payload, meta }) {
   yield call(ensureAuthenticated, api, payload, meta);
 }
 
+export function* watchForAuthenticated(api, { payload, meta }) {
+  yield call(forAuthenticated, api, payload, meta);
+}
+
 export default function* authenticatedSagas({ api }) {
   yield takeEvery(actions.ENSURE_AUTHENTICATED, watchEnsureAuthenticated, api);
+  yield takeEvery(actions.FOR_AUTHENTICATED, watchForAuthenticated, api);
 }
