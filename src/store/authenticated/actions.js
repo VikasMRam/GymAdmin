@@ -1,4 +1,5 @@
 export const ENSURE_AUTHENTICATED = 'ENSURE_AUTHENTICATED';
+export const FOR_AUTHENTICATED = 'FOR_AUTHENTICATED';
 export const ensureAuthenticated = (reason, action) => {
   // default reason
   if (action === undefined) {
@@ -13,6 +14,24 @@ export const ensureAuthenticated = (reason, action) => {
     },
   };
 };
+
+export const forAuthenticated = (action) => {
+  return {
+    type: FOR_AUTHENTICATED,
+    payload: { action },
+    meta: {
+      thunk: 'forAuthenticated',
+    },
+  };
+};
+
+export const FOR_AUTHENTICATED_SUCCESS = 'FOR_AUTHENTICATED_SUCCESS';
+export const forAuthenticatedSuccess = thunk => ({
+  type: FOR_AUTHENTICATED_SUCCESS,
+  meta: {
+    thunk,
+  },
+});
 
 export const ENSURE_AUTHENTICATED_SUCCESS = 'ENSURE_AUTHENTICATED_SUCCESS';
 export const ensureAuthenticatedSuccess = (action, thunk) => ({

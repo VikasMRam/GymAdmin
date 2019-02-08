@@ -16,6 +16,7 @@ import { getSearchParams } from 'sly/services/helpers/search';
 import { getDetail, getDetails } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceListReadRequest, resourceUpdateRequest }
   from 'sly/store/resource/actions';
+import { forAuthenticated } from 'sly/store/authenticated/actions';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
@@ -399,10 +400,10 @@ const mapPropsToActions = ({ match }) => ({
     include: 'similar-communities,questions,agents',
   }),
   userAction: resourceDetailReadRequest('userAction'),
-  userSave: resourceListReadRequest('userSave', {
+  userSave: forAuthenticated(resourceListReadRequest('userSave', {
     'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
     'filter[entity_slug]': getCommunitySlug(match),
-  }),
+  })),
 });
 
 const handleResponses = (responses, { location }, redirect) => {
