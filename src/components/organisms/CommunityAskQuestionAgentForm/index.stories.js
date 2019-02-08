@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import { assetPath } from 'sly/components/themes';
 import { withPreventDefault } from 'sly/services/helpers/forms';
 import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
 import Modal from 'sly/components/molecules/Modal';
@@ -19,7 +18,6 @@ const component = (
     placeholder="Rhoda"
     heading="We&apos;ve received your tour request."
     description="Your advisor will reach out to you soon. Feel free to ask them any questions in the meantime."
-    agentImageUrl={assetPath('images/agent-xLarge.png')}
   />
 );
 

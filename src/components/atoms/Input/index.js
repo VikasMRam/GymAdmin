@@ -77,7 +77,7 @@ class Input extends Component {
     } else if (this.props.type === 'select') {
       return <StyledSelect {...this.props} />;
     }
-    return <StyledInput {...this.props} onFocus={this.onFocus} />;
+    return <StyledInput {...this.props} onFocus={this.onFocus} autoComplete="new-password" />;
   }
 }
 

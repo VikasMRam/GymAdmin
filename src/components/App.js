@@ -33,6 +33,7 @@ import AgentProfilePageContainer from 'sly/containers/AgentProfilePageContainer'
 import AgentRegionPageContainer from 'sly/containers/AgentRegionPageContainer';
 import PartnersPage from 'sly/components/pages/PartnersPage';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
+import StaticResourcesController from 'sly/controllers/StaticResourcesController';
 
 setGlobalStyles();
 
@@ -67,15 +68,6 @@ const TempHowItWorks = ({ ...props }) => (
   />
 );
 
-const ignoreSearchPrams = [
-  'modal',
-  'action',
-  'entityId',
-  'currentStep',
-  'token',
-  'modal',
-];
-
 export default class App extends Component {
   static childContextTypes = {
     routes: routesPropType,
@@ -92,7 +84,7 @@ export default class App extends Component {
   routes = [
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
-      component: props => <CommunityDetailPageController ignoreSearch={ignoreSearchPrams} {...props} />,
+      component: CommunityDetailPageController,
       exact: true,
     },
     {
@@ -213,6 +205,8 @@ export default class App extends Component {
 
           <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
         </Helmet>
+
+        <StaticResourcesController match={{}} location={{}} />
 
         <ThemeProvider theme={theme}>
           <Router>

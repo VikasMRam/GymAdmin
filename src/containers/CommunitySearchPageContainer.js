@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { object, number, array, bool, func } from 'prop-types';
 import queryString from 'query-string';
+import { connect } from 'react-redux';
 
 import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
@@ -9,6 +10,7 @@ import { resourceListReadRequest } from 'sly/store/resource/actions';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 import { toggleModalFilterPanel } from 'sly/store/communitySearchPage/actions';
+import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
 
 import {
   getList,
@@ -21,7 +23,7 @@ import {
   filterLinkPath,
   getSearchParams,
 } from 'sly/services/helpers/search';
-import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
+import { logWarn } from 'sly/services/helpers/logging';
 
 class CommunitySearchPageContainer extends Component {
   static propTypes = {
@@ -31,7 +33,7 @@ class CommunitySearchPageContainer extends Component {
     communityList: array.isRequired,
     geoGuide: array,
     requestMeta: object.isRequired,
-    errorCode: number,
+    serverState: object,
     isModalFilterPanelVisible: bool,
     toggleModalFilterPanel: func,
     isFetchingResults: bool,
@@ -86,7 +88,7 @@ class CommunitySearchPageContainer extends Component {
   render() {
     const {
       searchParams,
-      errorCode,
+      serverState,
       communityList,
       geoGuide,
       requestMeta,
@@ -96,8 +98,8 @@ class CommunitySearchPageContainer extends Component {
       isFetchingResults,
     } = this.props;
 
-    // TODO Add Error Page
-    if (errorCode) {
+    if (serverState instanceof Error) {
+      const errorCode = (serverState.response && serverState.response.status) || 500;
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
@@ -141,32 +143,26 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const fetchData = (dispatch, { match, location }) => {
+const mapPropsToActions = ({ match, location }) => {
   const searchParams = getSearchParams(match, location);
-  return Promise.all([
-    dispatch(resourceListReadRequest('searchResource', searchParams)),
-    dispatch(resourceListReadRequest('geoGuide', searchParams)),
-  ]);
-  // return dispatch(resourceListReadRequest('searchResource', searchParams));
+  return {
+    searchResource: resourceListReadRequest('searchResource', searchParams),
+    geoGuide: resourceListReadRequest('geoGuide', searchParams),
+  };
 };
 
-const handleError = (err) => {
-  if (err.response) {
-    if (err.response.url && err.response.url.match(/geo-guide/)) {
-      // Ignore
-      return;
-    }
-    if (err.response.status !== 200) {
-      return { errorCode: err.response.status };
-    }
-    return { errorCode: null };
-  }
-  throw err;
+const handleResponses = (responses) => {
+  const { geoGuide } = responses;
+  geoGuide(null, (error) => {
+    // ignore all geoGuides errors
+    logWarn(error);
+  });
 };
 
-export default withServerState({
+export default withServerState(
+  mapPropsToActions,
+  handleResponses,
+)(connect(
   mapStateToProps,
   mapDispatchToProps,
-  fetchData,
-  handleError,
-})(CommunitySearchPageContainer);
+)(CommunitySearchPageContainer));

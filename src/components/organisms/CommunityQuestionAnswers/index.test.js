@@ -3,13 +3,15 @@ import { shallow } from 'enzyme';
 
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
+import { ASK_QUESTION } from 'sly/constants/modalType';
 
 const communityName = 'Rhoda Goldman Plaza';
 const questions = [];
 const onLeaveAnswerClick = jest.fn();
+const showModal = jest.fn();
 
 const defaultProps = {
-  communityName, questions, onLeaveAnswerClick,
+  communityName, questions, onLeaveAnswerClick, showModal,
 };
 
 const question1 = {
@@ -154,6 +156,6 @@ describe('CommuntityQuestionAnswers', () => {
     const wrapper = wrap({ communityFaQs: [communityFaQ1], onLeaveAnswerClick });
     const leaveAnswer = wrapper.find('CursorBlock');
     leaveAnswer.simulate('click');
-    expect(onLeaveAnswerClick).toHaveBeenCalledWith(communityFaQ1.type, communityFaQ1.id);
+    expect(showModal).toHaveBeenCalledWith(ASK_QUESTION, communityFaQ1);
   });
 });

@@ -223,7 +223,7 @@ const server = createConfig([
 
   env('development', [
     serverSourceMap(),
-    addPlugins([new SpawnPlugin('node', ['--inspect', '.'])]),
+    addPlugins([new SpawnPlugin('node', [process.env.NODE_DEBUG_OPTION || '--inspect', '.'])]),
     () => ({
       watch: true,
     }),

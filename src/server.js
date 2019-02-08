@@ -14,8 +14,8 @@ import { StaticRouter } from 'react-router';
 import { renderToString } from 'react-router-server';
 import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
-import serializeError from 'serialize-error';
 
+import { cleanError } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
 import { port, host, basename, publicPath, isDev, cookieDomain, externalWizardsPath } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
@@ -226,15 +226,17 @@ app.use((err, req, res, next) => {
   }
 });
 
-app.use((err, req) => {
+app.use((err, req, res, next) => {
   if (err) {
     const errorObj = {
+      ts: new Date().toISOString(),
+      status: res.statusCode,
       url: req.originalUrl,
-      error: serializeError(err),
+      error: cleanError(err),
     };
-    const json = JSON.stringify(errorObj);
-    console.error(`${new Date().toISOString()} ${json}`);
+    console.error(errorObj);
   }
+  next();
 });
 
 app.listen(port, (error) => {

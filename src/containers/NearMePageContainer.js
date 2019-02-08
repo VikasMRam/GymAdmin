@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { object, number, array, bool, func } from 'prop-types';
+import { connect } from 'react-redux';
 
 import withServerState from 'sly/store/withServerState';
 import SlyEvent from 'sly/services/helpers/events';
@@ -46,7 +47,7 @@ class NearMePageContainer extends Component {
   render() {
     const {
       searchParams,
-      errorCode,
+      serverState,
       communityList,
       requestMeta,
       history,
@@ -54,8 +55,8 @@ class NearMePageContainer extends Component {
       location,
     } = this.props;
 
-    // TODO Add Error Page
-    if (errorCode) {
+    if (serverState instanceof Error) {
+      const errorCode = (serverState.response && serverState.response.status) || 500;
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
@@ -73,7 +74,7 @@ class NearMePageContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, {location}) => {
+const mapStateToProps = (state, { location }) => {
   const qs = parseURLQueryParams(location.search);
   const searchParams = { toc: 'assisted-living', nearme: 'true', 'page-number': qs['page-number'] };
   return {
@@ -84,28 +85,15 @@ const mapStateToProps = (state, {location}) => {
   };
 };
 
-const fetchData = (dispatch, {location}) => {
+const mapPropsToActions = (dispatch, {location}) => {
   const qs = parseURLQueryParams(location.search);
   const searchParams = { toc: 'assisted-living', nearme: 'true', 'page-number': qs['page-number'] };
-  return Promise.all([
-    dispatch(resourceListReadRequest('searchResource', searchParams)),
-  ]);
+  return {
+    searchResource: resourceListReadRequest('searchResource', searchParams),
+  };
 };
 
-const handleError = (err) => {
-  if (err.response) {
-    if (err.response.status !== 200) {
-      return { errorCode: err.response.status };
-    }
-    return { errorCode: null };
-  }
-  throw err;
-};
-
-
-export default withServerState({
-  mapStateToProps,
-  fetchData,
-  handleError,
-})(NearMePageContainer);
+export default withServerState(mapPropsToActions)(connect(
+  mapStateToProps
+)(NearMePageContainer));
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { object, func, string } from 'prop-types';
+import { connect } from 'react-redux';
 
 import SlyEvent from 'sly/services/helpers/events';
 import { filterLinkPath, getSearchParamFromPlacesResponse } from 'sly/services/helpers/agents';
@@ -59,32 +60,11 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const fetchData = (dispatch) => {
-  return Promise.all([
-    dispatch(resourceDetailReadRequest('userAction')),
-  ]);
-};
+const mapPropsToActions = () => ({
+  userAction: resourceDetailReadRequest('userAction'),
+});
 
-const handleError = (err) => {
-  if (err.response) {
-    if (err.response.status !== 200) {
-      if (err.location) {
-        const redUrl = err.location.split('/');
-        return {
-          errorCode: err.response.status,
-          redirectUrl: redUrl[redUrl.length - 1],
-        };
-      }
-      return { errorCode: err.response.status };
-    }
-    return { errorCode: null };
-  }
-  throw err;
-};
-
-export default withServerState({
+export default withServerState(mapPropsToActions)(connect(
   mapStateToProps,
   mapDispatchToProps,
-  fetchData,
-  handleError,
-})(AgentsPageContainer);
+)(AgentsPageContainer));

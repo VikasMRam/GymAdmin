@@ -1,13 +1,26 @@
 import isPlainObject from 'lodash/isPlainObject';
 
-export * from './entities/actions';
+import {
+  RESOURCE_DETAIL_READ_REQUEST,
+  RESOURCE_LIST_READ_REQUEST,
+} from './resource/actions';
+
 export * from './modal/actions';
+export * from './chatBox/actions';
+export * from './entities/actions';
 export * from './searchBox/actions';
-export * from './communitySearchPage/actions';
 export * from './authenticated/actions';
+export * from './communitySearchPage/actions';
 
 const validKeys = ['type', 'payload', 'error', 'meta'];
 const isValidKey = key => validKeys.includes(key);
+
+const readActions = [
+  RESOURCE_DETAIL_READ_REQUEST,
+  RESOURCE_LIST_READ_REQUEST,
+];
+
+const isReadActionType = type => readActions.includes(type);
 
 export function isFSA(action) {
   return (
@@ -17,8 +30,14 @@ export function isFSA(action) {
   );
 }
 
+export function isResourceReadRequest(action) {
+  return (
+    isPlainObject(action.meta) &&
+    typeof action.meta.resource === 'string' &&
+    isReadActionType(action.type)
+  );
+}
+
 export function isError(action) {
   return isFSA(action) && action.error === true;
 }
-
-export * from './chatBox/actions';

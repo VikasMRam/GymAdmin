@@ -1,27 +1,31 @@
 import React, { Component } from 'react';
-import { object, number, array } from 'prop-types';
+import { object, number, array, func, bool } from 'prop-types';
+import { connect } from 'react-redux';
 
 import withServerState from 'sly/store/withServerState';
 import { resourceListReadRequest } from 'sly/store/resource/actions';
-import { getList, getListMeta } from 'sly/store/selectors';
+import { getList, getListMeta, isCommunitySearchPageModalFilterPanelActive } from 'sly/store/selectors';
 import ErrorPage from 'sly/components/pages/Error';
 import StateSearchPage from 'sly/components/pages/StateSearchPage';
-
 import {
   filterLinkPath,
   getSearchParams,
 } from 'sly/services/helpers/search';
 import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
+import { toggleModalFilterPanel } from 'sly/store/actions';
 
 class StateSearchPageContainer extends Component {
   static propTypes = {
     searchParams: object.isRequired,
+    serverState: object,
     history: object.isRequired,
     location: object.isRequired,
     communityList: array.isRequired,
     geoGuide: array,
     requestMeta: object.isRequired,
     errorCode: number,
+    toggleModalFilterPanel: func,
+    isModalFilterPanelVisible: bool,
   };
 
   // TODO Define Search Parameters
@@ -63,19 +67,22 @@ class StateSearchPageContainer extends Component {
   render() {
     const {
       searchParams,
-      errorCode,
+      serverState,
       communityList,
       requestMeta,
       location,
       geoGuide,
       history,
+      isModalFilterPanelVisible,
+      toggleModalFilterPanel,
     } = this.props;
-    // TODO Add Error Page
-    if (errorCode) {
+
+    if (serverState instanceof Error) {
+      const errorCode = (serverState.response && serverState.response.status) || 500;
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
     const isMapView = searchParams.view === 'map';
-    let gg = geoGuide && geoGuide.length > 0 ? geoGuide[0] : {};
+    const gg = geoGuide && geoGuide.length > 0 ? geoGuide[0] : {};
 
     return (
       <StateSearchPage
@@ -89,6 +96,8 @@ class StateSearchPageContainer extends Component {
         communityList={communityList}
         geoGuide={gg}
         location={location}
+        isModalFilterPanelVisible={isModalFilterPanelVisible}
+        onToggleModalFilterPanel={toggleModalFilterPanel}
       />
     );
   }
@@ -96,34 +105,42 @@ class StateSearchPageContainer extends Component {
 
 const mapStateToProps = (state, { match, location }) => {
   const searchParams = getSearchParams(match, location);
+  const isModalFilterPanelVisible = isCommunitySearchPageModalFilterPanelActive(state);
   return {
     searchParams,
+    isModalFilterPanelVisible,
     communityList: getList(state, 'searchResource', searchParams),
     requestMeta: getListMeta(state, 'searchResource', searchParams),
     geoGuide: getList(state, 'geoGuide', searchParams),
   };
 };
 
-const fetchData = (dispatch, { match, location }) => {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    toggleModalFilterPanel: () => dispatch(toggleModalFilterPanel()),
+  };
+};
+
+const mapPropsToActions = ({ match, location }) => {
   const searchParams = getSearchParams(match, location);
-  return Promise.all([
-    dispatch(resourceListReadRequest('searchResource', searchParams)),
-    dispatch(resourceListReadRequest('geoGuide', searchParams)),
-  ]);
+  return {
+    searchResource: resourceListReadRequest('searchResource', searchParams),
+    geoGuide: resourceListReadRequest('geoGuide', searchParams),
+  };
 };
 
-const handleError = (err) => {
-  if (err.response) {
-    if (err.response.status !== 200) {
-      return { errorCode: err.response.status };
-    }
-    return { errorCode: null };
-  }
-  throw err;
+const handleResponses = (responses) => {
+  const { geoGuide } = responses;
+  geoGuide(null, (error) => {
+    // ignore all geoGuides errors
+    logWarn(error);
+  });
 };
 
-export default withServerState({
+export default withServerState(
+  mapPropsToActions,
+  handleResponses,
+)(connect(
   mapStateToProps,
-  fetchData,
-  handleError,
-})(StateSearchPageContainer);
+  mapDispatchToProps,
+)(StateSearchPageContainer));

@@ -156,7 +156,7 @@ const groups = {
     { name: 'Sitemap', url: '/sitemap', target: '_blank' },
   ],
   Listings: [
-    { name: 'For Referral Agents', url: '/providers/crm', target: '_blank' },
+    { name: 'For Referral Agents', url: '/agents/partners', target: '_blank' },
     { name: 'List Your Property', url: '/providers', target: '_blank' },
     { name: 'How It Works', url: '/how-it-works', target: '_blank' },
   ],

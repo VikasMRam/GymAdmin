@@ -11,7 +11,7 @@ import Footer from 'sly/components/organisms/Footer';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
-import { getTocSearchLabel } from 'sly/services/helpers/search';
+import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import Link from 'sly/components/atoms/Link';
 
@@ -115,7 +115,7 @@ const NearMePage = ({
   const listSize = requestMeta['filtered-count'];
   const { geo } = requestMeta;
   const city = geo && geo.city;
-  const tocLabel = getTocSearchLabel('assisted-living');
+  const tocLabel = getTocSeoLabel('assisted-living');
   const onAdTileClick = () => {};
   const onParamsChange = () => {};
   const onParamsRemove = () => {};

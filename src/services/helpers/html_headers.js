@@ -116,7 +116,7 @@ export const getHelmetForSearchPage = ({
   url, city, state, toc, latitude, longitude, listSize, communityList
 }) => {
   let actualToc = tocs.find(elem => (elem.value === toc));
-  if (typeof actualToc === 'undefined'){
+  if (typeof actualToc === 'undefined') {
     actualToc = {
       label: 'All Communities',
       value: 'retirement-community',
@@ -124,12 +124,13 @@ export const getHelmetForSearchPage = ({
       seoLabel: 'Retirement Communities',
     };
   }
-
-  let locationStr = city ? `${titleize(city)}, ${getStateAbbr(state)}` : `${titleize(state)}`;
-  let numResultsStr = (listSize && listSize > 5) ? `${listSize}` : 'Best';
+  const locationStr = city ? `${titleize(city)}, ${getStateAbbr(state)}` : `${titleize(state)}`;
+  const numResultsStr = (listSize && listSize > 5) ? `${listSize}` : 'Best';
   const title = `${numResultsStr} ${actualToc.seoLabel} in ${locationStr} `;
-
-  const description = `${actualToc.label} in ${locationStr}. Get pricing information, see picture, read reviews and get help from local senior care service experts.`;
+  let description = `${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, pricing, reviews & local senior care advice for ${locationStr} ${actualToc.label} communities`;
+  if (city) {
+    description = `Get pricing & read reviews for ${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, photos & talk to local ${titleize(city)} senior living experts.`;
+  }
   const canonicalUrl = `${host}${url.pathname}`;
   const ld = {};
   ld['@context'] = 'http://schema.org';
@@ -199,7 +200,7 @@ export const getHelmetForCommunityPage = (community, location) => {
       segment: 'retirement-community',
     };
   }
-  const title = (ratesProvided ? `${name} - Price starting at $${startingRate}/mo` : `${name} ${titleize(address.city)}, ${titleize(address.state)}`);
+  const title = (ratesProvided ? `${name} - Price starting at $${startingRate}/mo` : `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`);
 
   const article = ((toc.label === 'Assisted Living ' || toc.label === 'Memory Care') ? 'an' : 'a');
 

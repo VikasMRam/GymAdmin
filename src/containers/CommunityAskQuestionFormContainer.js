@@ -4,12 +4,10 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { string, func, object } from 'prop-types';
 
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
-
 import {
   createValidator,
   required,
 } from 'sly/services/validation';
-
 import CommunityAskQuestionForm from 'sly/components/organisms/CommunityAskQuestionForm';
 import { THANK_YOU } from 'sly/constants/modalType';
 
@@ -32,11 +30,13 @@ class CommunityAskQuestionFormContainer extends Component {
     askQuestion: func,
     loadCommunity: func,
     setModal: func,
+    initialValues: object,
+    parentSlug: string,
   };
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, askQuestion, loadCommunity, setModal,
+      communitySlug, askQuestion, loadCommunity, setModal, parentSlug,
     } = this.props;
     const { question, name, email } = values;
     const payload = {
@@ -44,6 +44,7 @@ class CommunityAskQuestionFormContainer extends Component {
       question,
       name,
       email,
+      parentSlug,
     };
     return askQuestion(payload).then(() => {
       setModal(THANK_YOU);
@@ -60,12 +61,17 @@ class CommunityAskQuestionFormContainer extends Component {
   }
 
   render() {
-    const { user, ...props } = this.props;
+    const { user, initialValues: initValues, ...props } = this.props;
     const initialValues = {
       question: '',
       name: '',
       email: '',
+      ...initValues,
     };
+    if (user) {
+      initialValues.name = user.name;
+      initialValues.email = user.email;
+    }
     return (
       <ReduxForm
         initialValues={initialValues}

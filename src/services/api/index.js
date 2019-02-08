@@ -1,8 +1,10 @@
 // https://github.com/diegohaz/arc/wiki/API-service
 import 'isomorphic-fetch';
 import merge from 'lodash/merge';
+
 import { apiUrl, authTokenUrl } from 'sly/config';
-import genUri from './genUri';
+import genUri from 'sly/services/api/genUri';
+import { logWarn } from "sly/services/helpers/logging";
 
 export const checkStatus = (response) => {
   if (response.ok) {
@@ -41,7 +43,7 @@ export const parseSettings = ({
   const settings = merge(
     {
       body: data ? JSON.stringify(data) : undefined,
-      redirect: 'follow', // follow redirects - 301,302,303,307,308
+      redirect: 'manual', // follow redirects - 301,302,303,307,308
       method,
       headers,
       credentials: 'same-origin',
@@ -91,16 +93,19 @@ api.create = (settings = {}) => ({
   },
 
   request(endpoint, settings) {
+    let firstError = null;
     const doRequest = () => api
-      .request(endpoint, merge({}, this.settings, settings));
-
-    return doRequest()
-      .catch(error => {
-        if ([401, 403].includes(error.response.status)) {
-          return this.requestAuthToken().then(doRequest);
+      .request(endpoint, merge({}, this.settings, settings))
+      .catch((error) => {
+        if (!firstError && error.response && [401, 403].includes(error.response.status)) {
+          firstError = error;
+          return this.requestAuthToken()
+            .catch(logWarn)
+            .then(doRequest);
         }
-        throw error;
+        return Promise.reject(firstError || error);
       });
+    return doRequest();
   },
 
   post(endpoint, data, settings) {

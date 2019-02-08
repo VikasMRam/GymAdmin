@@ -78,6 +78,8 @@ const ParentCompanySection = pad('div', 'large');
 
 const AgentsCitiesSection = pad('div');
 
+const AgentSlySection = pad('div', 'small');
+
 const AskQuestionButton = styled(Button)`
   width: 100%;
   margin-bottom: ${size('spacing.xLarge')};
@@ -125,6 +127,9 @@ const AgentSummary = ({
         <Image src={profileImageUrl} aspectRatio="1:1" />
       </AgentImageWrapper>
       <TextSection>
+        <AgentSlySection>
+          <Span weight="regular" >Seniorly Partner Agent</Span>
+        </AgentSlySection>
         <AgentName weight="medium" size="title">{displayName}</AgentName>
         {ratingsSection}
         <StyledHr />
@@ -136,8 +141,8 @@ const AgentSummary = ({
         }
         {parentCompany &&
           <ParentCompanySection>
-            <Span weight="medium">Parent Company: </Span>
-            <Span>{parentCompany}</Span>
+            <Span weight="medium">Company: </Span>
+            <Span weight="regular">{parentCompany}</Span>
           </ParentCompanySection>
         }
         {citiesServed.length > 0 &&
