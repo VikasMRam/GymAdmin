@@ -57,7 +57,7 @@ class EntityApprovalContainer extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  approveEntity: (entity, entitySlug) => dispatch(ensureAuthenticated(resourceUpdateRequest(entity, `${entitySlug}`, { approve: true }))),
+  approveEntity: (entity, entitySlug) => dispatch(ensureAuthenticated(resourceUpdateRequest(entity, entitySlug, { approve: true }))),
 });
 
 export default connect(null, mapDispatchToProps)(EntityApprovalContainer);

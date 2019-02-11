@@ -26,17 +26,28 @@ export const forAuthenticated = (action) => {
 };
 
 export const FOR_AUTHENTICATED_SUCCESS = 'FOR_AUTHENTICATED_SUCCESS';
-export const forAuthenticatedSuccess = thunk => ({
+export const forAuthenticatedSuccess = (result, thunk) => ({
   type: FOR_AUTHENTICATED_SUCCESS,
+  payload: result,
+  meta: {
+    thunk,
+  },
+});
+
+export const FOR_AUTHENTICATED_FAILURE = 'FOR_AUTHENTICATED_FAILURE';
+export const forAuthenticatedFailure = (error, thunk) => ({
+  type: FOR_AUTHENTICATED_FAILURE,
+  error: true,
+  payload: error,
   meta: {
     thunk,
   },
 });
 
 export const ENSURE_AUTHENTICATED_SUCCESS = 'ENSURE_AUTHENTICATED_SUCCESS';
-export const ensureAuthenticatedSuccess = (action, thunk) => ({
+export const ensureAuthenticatedSuccess = (result, thunk) => ({
   type: ENSURE_AUTHENTICATED_SUCCESS,
-  payload: { action },
+  payload: result,
   meta: {
     thunk,
   },
