@@ -10,7 +10,6 @@ export * from './chatBox/actions';
 export * from './entities/actions';
 export * from './searchBox/actions';
 export * from './authenticated/actions';
-export * from './communitySearchPage/actions';
 
 const validKeys = ['type', 'payload', 'error', 'meta'];
 const isValidKey = key => validKeys.includes(key);

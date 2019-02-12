@@ -55,7 +55,6 @@ describe('ModalController', () => {
     wrapper.dive().instance().hide();
     const action = store.getActions().pop();
     expect(action.type).toBe(SET);
-    expect(action.payload.data.modalType).toBeFalsy();
     expect(action.payload.data.isModalOpen).toBeFalsy();
   });
 });

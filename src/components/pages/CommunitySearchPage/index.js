@@ -82,10 +82,10 @@ const CommunitySearchPage = ({
   communityList,
   geoGuide,
   location,
-  isModalFilterPanelVisible,
-  onToggleModalFilterPanel,
   onAdTileClick,
   isFetchingResults,
+  showModal,
+  hideModal,
 }) => {
   const listSize = requestMeta['filtered-count'];
   const city = titleize(searchParams.city);
@@ -100,6 +100,27 @@ const CommunitySearchPage = ({
     longitude = parseFloat(searchParams.longitude);
   }
 
+  const handleModalFilterClick = () => {
+    const modalContent = (
+      <Fragment>
+        <CommunityFilterList
+          onFieldChange={onParamsChange}
+          searchParams={searchParams}
+          toggleMap={toggleMap}
+          isMapView={isMapView}
+          isModalView
+          toggleFilter={handleModalFilterClick}
+          onParamsRemove={onParamsRemove}
+        />
+        <ApplyFilterButton kind="jumbo" onClick={hideModal}>
+          Apply Filters
+        </ApplyFilterButton>
+      </Fragment>
+    );
+
+    showModal(modalContent, null, 'sidebar');
+  };
+
   const columnContent = (
     <CommunityFilterList
       latitude={latitude}
@@ -108,7 +129,7 @@ const CommunitySearchPage = ({
       searchParams={searchParams}
       toggleMap={toggleMap}
       isMapView={isMapView}
-      toggleFilter={onToggleModalFilterPanel}
+      toggleFilter={handleModalFilterClick}
       onParamsRemove={onParamsRemove}
     />
   );
@@ -195,27 +216,7 @@ const CommunitySearchPage = ({
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       {getHelmetForSearchPage({
         ...searchParams, url: location, communityList, listSize,
-        })}
-      <Modal
-        closeable
-        onClose={onToggleModalFilterPanel}
-        layout="sidebar"
-        isOpen={isModalFilterPanelVisible}
-        closeButtonPalette="slate"
-      >
-        <CommunityFilterList
-          onFieldChange={onParamsChange}
-          searchParams={searchParams}
-          toggleMap={toggleMap}
-          isMapView={isMapView}
-          isModalView
-          toggleFilter={onToggleModalFilterPanel}
-          onParamsRemove={onParamsRemove}
-        />
-        <ApplyFilterButton kind="jumbo" onClick={onToggleModalFilterPanel}>
-          Apply Filters
-        </ApplyFilterButton>
-      </Modal>
+      })}
       <CommunitySearchPageTemplate
         column={columnContent}
       >
@@ -236,7 +237,7 @@ const CommunitySearchPage = ({
             icon="filter"
             ghost
             transparent
-            onClick={onToggleModalFilterPanel}
+            onClick={handleModalFilterClick}
           >
             Filters
           </IconButton>
@@ -282,10 +283,10 @@ CommunitySearchPage.propTypes = {
   onParamsRemove: func,
   location: object,
   searchParams: object,
-  isModalFilterPanelVisible: bool,
-  onToggleModalFilterPanel: func,
   onAdTileClick: func,
   isFetchingResults: bool,
+  showModal: func,
+  hideModal: func,
 };
 
 export default CommunitySearchPage;

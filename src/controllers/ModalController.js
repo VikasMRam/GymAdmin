@@ -28,10 +28,9 @@ class ModalController extends Component {
   hide = () => {
     const { set } = this.props;
 
-    // important: don't make modalContent empty so that close animation has content
+    // important: don't make modalContent & modalType empty so that close animation has content
     set({
       isModalOpen: false,
-      modalType: undefined,
       modalOnClose: undefined,
     });
   };
