@@ -753,13 +753,6 @@ export default class CommunityDetailPage extends Component {
                   onAQClick={openAskAgentQuestionModal}
                 />
                 <Modal
-                  closeable
-                  isOpen={searchParams.modal === THANK_YOU}
-                  onClose={() => setQueryParams({ modal: null })}
-                >
-                  <Thankyou />
-                </Modal>
-                <Modal
                   onClose={() => setModal(null)}
                   isOpen={modal === ADD_RATING}
                   closeable

@@ -7,5 +7,3 @@ export const CARE_ASSESSMENT_WIZARD = 'cawWizard';
 export const SAVED_COMMUNITIES = 'savedCommunities';
 
 export const CONCIERGE = 'concierge';
-
-export const SAVE_COMMUNITY = 'saveCommunity';

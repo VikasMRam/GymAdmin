@@ -11,6 +11,7 @@ import { func } from 'prop-types';
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
+import { routes as routesPropType } from 'sly/propTypes/routes';
 // import AppController from 'sly/controllers/Appcontroller';
 import CommunityDetailPageController from 'sly/controllers/CommunityDetailPageController';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
@@ -22,7 +23,6 @@ import AgentsPageContainer from 'sly/containers/AgentsPageContainer';
 import OurHistoryPage from 'sly/components/pages/OurHistoryPage';
 import PasswordResetPageContainer from 'sly/containers/PasswordResetPageContainer';
 import HowItWorksDetailPageContainer from 'sly/containers/HowItWorksDetailPageContainer';
-import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
 import LegalPolicyPage from 'sly/components/pages/LegalPolicyPage';
@@ -35,6 +35,8 @@ import PartnersPage from 'sly/components/pages/PartnersPage';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 import StaticResourcesController from 'sly/controllers/StaticResourcesController';
 import ModalContainer from 'sly/containers/ModalContainer';
+import FilthyRedirect from 'sly/components/FilthyRedirect';
+import ModalController from 'sly/controllers/ModalController';
 
 setGlobalStyles();
 
@@ -209,24 +211,31 @@ export default class App extends Component {
 
         {/* <StaticResourcesController match={{}} location={{}} /> */}
 
-        <ThemeProvider theme={theme}>
-          <Router>
-            <Switch>
-              <Route
-                path={`/:toc(${careTypes})/:state/:city/filters`}
-                render={({ match }) => (
-                  <Redirect
-                    to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
+        <ModalController>
+          {({
+            show,
+            isModalOpen,
+          }) => (
+            <ThemeProvider theme={theme}>
+              <Router>
+                <Route path="/" component={props => <FilthyRedirect isModalOpen={isModalOpen} showModal={show} {...props} />} />
+                <Switch>
+                  <Route
+                    path={`/:toc(${careTypes})/:state/:city/filters`}
+                    render={({ match }) => (
+                      <Redirect
+                        to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
+                      />
+                    )}
                   />
-                )}
-              />
-              {this.routes.map(route => <Route key={route.path} {...route} />)}
-              <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
-            </Switch>
-            <ModalContainer />
-          </Router>
-        </ThemeProvider>
-
+                  {this.routes.map(route => <Route key={route.path} {...route} />)}
+                  <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
+                </Switch>
+                <ModalContainer />
+              </Router>
+            </ThemeProvider>
+          )}
+        </ModalController>
         <ChatBoxContainer />
       </Fragment>
     );

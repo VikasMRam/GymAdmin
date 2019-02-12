@@ -8,6 +8,7 @@ import { size, palette, key } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 
 const closeButtonOutsideLayouts = ['gallery', 'fullScreen'];
+const noPaddingLayouts = ['noPadding', 'wizard'];
 
 injectGlobal`
   body.ReactModal__Body--open {
@@ -138,6 +139,7 @@ const Body = styled.div`
 const Modal = ({
   children, closeable, layout, onClose, ...props
 }) => {
+  const noPadding = noPaddingLayouts.includes(layout) || closeButtonOutsideLayouts.includes(layout);
   const iconClose = (palette = 'slate') => (
     <IconButton
       icon="close"
@@ -166,7 +168,7 @@ const Modal = ({
             {closeable && iconClose()}
           </Head>
         )}
-        <Body noPadding={layout === 'noPadding' || closeButtonOutsideLayouts.includes(layout)}>
+        <Body noPadding={noPadding}>
           {children}
         </Body>
       </ModalContext>

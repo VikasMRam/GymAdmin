@@ -12,11 +12,7 @@ import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
-import Modal from 'sly/components/molecules/Modal';
-import Thankyou from 'sly/components/molecules/Thankyou';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
-import CareAssessmentController from 'sly/external/wizards/careAssessment/Controller';
-import { THANK_YOU, CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
 import pad from 'sly/components/helpers/pad';
 
 const TopWrapper = pad(styled.div`
@@ -41,8 +37,6 @@ const StyledHr = styled(Hr)`
     display: none;
   }
 `;
-
-const StyledButton = pad(Button, 'large');
 
 const LegacyContent = pad(styled.div`
   a {
@@ -253,21 +247,6 @@ const CommunitySearchPage = ({
             onParamsChange={onParamsChange}
           />
         )}
-        { searchParams.modal === THANK_YOU &&
-        <Modal closeable isOpen onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}>
-          <Thankyou />
-          <StyledButton
-            kind="jumbo"
-            onClick={() => onParamsRemove({ paramsToRemove: ['modal'] })}
-          >
-              Click to Continue
-          </StyledButton>
-        </Modal>}
-        { searchParams.modal === CARE_ASSESSMENT_WIZARD &&
-        <Modal closeable isOpen layout="wizard" onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}>
-          <CareAssessmentController locationSearchParams={{ city: searchParams.city, state: searchParams.state }} />
-        </Modal>}
-
       </CommunitySearchPageTemplate>
     </Fragment>
   );
