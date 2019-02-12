@@ -15,10 +15,11 @@ import { renderToString } from 'react-router-server';
 import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 
-import { cleanError } from 'sly/services/helpers/logging';
+import { cleanError, logWarn } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
 import { port, host, basename, publicPath, isDev, cookieDomain, externalWizardsPath } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
+import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import apiService from 'sly/services/api';
 import App from 'sly/components/App';
 import Html from 'sly/components/Html';
@@ -163,6 +164,22 @@ app.use(async (req, res, next) => {
   const store = configureStore({ experiments: userExperiments }, { api });
   const sheet = new ServerStyleSheet();
   const context = {};
+
+  // FIXME: @amalseniorly I'm hacking this on here for now, this adds some 20 ms to the
+  // response but fixes the race condition in forAuthenticated, once we tackle
+  // forAuthenticated to react to log in changes and to resume in client after starting
+  // in server, we can fix this too. Fonz
+  try {
+    await store.dispatch(resourceDetailReadRequest('user', 'me'));
+  } catch (e) {
+    if (e.response && e.response.status === 401) {
+      // ignore 401
+      logWarn(e);
+    } else {
+      next(e);
+      return;
+    }
+  }
 
   try {
     const { state: serverState, html: content } = await renderApp({
