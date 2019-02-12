@@ -24,16 +24,18 @@ const FilthyRedirect = ({ location, isModalOpen, showModal }) => {
   switch (qp.modal) {
     case THANK_YOU:
       showModal(<Thankyou />);
+      if (isBrowser) {
+        return <Redirect to={newLocation} />;
+      }
       break;
     case CARE_ASSESSMENT_WIZARD:
       showModal(<CareAssessmentController locationSearchParams={{ city, state }} />, null, 'wizard');
+      if (isBrowser) {
+        return <Redirect to={newLocation} />;
+      }
       break;
     default:
       break;
-  }
-
-  if (qp.modal && isBrowser) {
-    return <Redirect to={newLocation} />;
   }
 
   return null;

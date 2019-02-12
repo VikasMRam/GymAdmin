@@ -6,10 +6,12 @@ import configureStore from 'redux-mock-store';
 import * as actions from 'sly/store/authenticated/actions';
 import authenticated from 'sly/store/authenticated/reducer';
 import AuthContainer from 'sly/containers/AuthContainer';
-import LoginFormContainer from 'sly/containers/LoginFormContainer';
-import SignupFormContainer from 'sly/containers/SignupFormContainer';
-import JoinSlyButtonsContainer from 'sly/containers/JoinSlyButtonsContainer';
-import ResetPasswordFormContainer from 'sly/containers/ResetPasswordFormContainer';
+import {
+  MODAL_TYPE_LOG_IN,
+  MODAL_TYPE_SIGN_UP,
+  MODAL_TYPE_JOIN_SLY,
+  MODAL_TYPE_RESET_PASSWORD,
+} from 'sly/constants/authenticated';
 
 const reducer = combineReducers({ authenticated });
 
@@ -18,6 +20,16 @@ const wrap = (props = {}, state) => {
   const storeInstance = store(state);
   const wrapper = shallow(
     <AuthContainer {...props} />,
+    { context: { store: storeInstance } },
+  );
+  wrapper.store = storeInstance;
+  return wrapper;
+};
+
+const wrapStepComponent = (step, state) => {
+  const storeInstance = store(state);
+  const wrapper = shallow(
+    step,
     { context: { store: storeInstance } },
   );
   wrapper.store = storeInstance;
@@ -39,60 +51,70 @@ const mockWrap = (props = {}, state = {}) => {
   return wrapper;
 };
 
+const getStepComponent = (showModal, i = 0) => {
+  expect(showModal).toHaveBeenCalled();
+  const StepComponent = showModal.mock.calls[i][0];
+  expect(StepComponent).toBeTruthy();
+  return StepComponent;
+};
+
 describe('AuthContainer', () => {
   it('Should derive state correctly', () => {
     const wrapper = wrap();
     expect(wrapper.dive().state('currentStep')).toEqual(null);
     wrapper.store.dispatch(actions.authenticate('For the lolz'));
     wrapper.update();
-    expect(wrapper.dive().state('currentStep')).toEqual('auth');
+    expect(wrapper.dive().state('currentStep')).toEqual(MODAL_TYPE_JOIN_SLY);
     wrapper.store.dispatch(actions.authenticateCancel());
     wrapper.update();
     expect(wrapper.dive().state('currentStep')).toEqual(null);
   });
 
   it('Should display each step correctly', () => {
-    const wrapper = wrap();
+    const showModal = jest.fn();
+    const wrapper = wrap({ showModal });
     expect(wrapper.dive().state('currentStep')).toEqual(null);
     wrapper.store.dispatch(actions.authenticate('For the lolz'));
     wrapper.update();
     const authController = wrapper.dive();
-    const join = authController.find(JoinSlyButtonsContainer);
     const instance = authController.instance();
-    expect(join.props()).toEqual({
-      heading: 'For the lolz',
-      onConnectSuccess: instance.handleLoginSuccess,
-      onEmailSignupClicked: instance.gotoSignup,
-      onLoginClicked: instance.gotoLogin,
-    });
+
+    instance.componentDidUpdate();
+    let StepComponent = getStepComponent(showModal);
+    let sm = wrapStepComponent(StepComponent);
+    let stepMounted = sm.dive().instance();
+    expect(stepMounted.props.heading).toBe('For the lolz');
+    expect(stepMounted.props.onConnectSuccess).toEqual(instance.handleLoginSuccess);
+    expect(stepMounted.props.onEmailSignupClicked).toEqual(instance.gotoSignup);
+    expect(stepMounted.props.onLoginClicked).toEqual(instance.gotoLogin);
 
     instance.gotoLogin();
-    authController.update();
-    expect(instance.state.currentStep).toEqual('auth-login');
-    const login = authController.find(LoginFormContainer);
-    expect(login.props()).toEqual({
-      onForgotPasswordClicked: instance.gotoResetPassword,
-      onSubmitSuccess: instance.handleLoginSuccess,
-      onSignupClicked: instance.gotoJoin,
-    });
+    instance.componentDidUpdate();
+    StepComponent = getStepComponent(showModal, 1);
+    sm = wrapStepComponent(StepComponent);
+    stepMounted = sm.dive().instance();
+    expect(instance.state.currentStep).toEqual(MODAL_TYPE_LOG_IN);
+    expect(stepMounted.props.onForgotPasswordClicked).toEqual(instance.gotoResetPassword);
+    expect(stepMounted.props.onSubmitSuccess).toEqual(instance.handleLoginSuccess);
+    expect(stepMounted.props.onSignupClicked).toEqual(instance.gotoJoin);
 
     instance.gotoSignup();
-    authController.update();
-    expect(instance.state.currentStep).toEqual('auth-signup');
-    const signup = authController.find(SignupFormContainer);
-    expect(signup.props()).toEqual({
-      onSubmitSuccess: instance.handleLoginSuccess,
-      onLoginClicked: instance.gotoLogin,
-    });
+    instance.componentDidUpdate();
+    StepComponent = getStepComponent(showModal, 2);
+    sm = wrapStepComponent(StepComponent);
+    stepMounted = sm.dive().instance();
+    expect(instance.state.currentStep).toEqual(MODAL_TYPE_SIGN_UP);
+    expect(stepMounted.props.onSubmitSuccess).toEqual(instance.handleLoginSuccess);
+    expect(stepMounted.props.onLoginClicked).toEqual(instance.gotoLogin);
 
     instance.gotoResetPassword();
-    authController.update();
-    expect(instance.state.currentStep).toEqual('auth-resetPassword');
-    const reset = authController.find(ResetPasswordFormContainer);
-    expect(reset.props()).toEqual({
-      onSubmitSuccess: instance.handleResetPasswordSuccess,
-      onLoginClicked: instance.gotoLogin,
-    });
+    instance.componentDidUpdate();
+    StepComponent = getStepComponent(showModal, 3);
+    sm = wrapStepComponent(StepComponent);
+    stepMounted = sm.dive().instance();
+    expect(instance.state.currentStep).toEqual(MODAL_TYPE_RESET_PASSWORD);
+    expect(stepMounted.props.onSubmitSuccess).toEqual(instance.handleResetPasswordSuccess);
+    expect(stepMounted.props.onLoginClicked).toEqual(instance.gotoLogin);
   });
 
   it('calls the right callbacks', () => {
