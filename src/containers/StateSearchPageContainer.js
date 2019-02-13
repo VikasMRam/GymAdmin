@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import { object, number, array, func, bool } from 'prop-types';
+import { object, number, array } from 'prop-types';
 import { connect } from 'react-redux';
 
 import withServerState from 'sly/store/withServerState';
+import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
+import { logWarn } from 'sly/services/helpers/logging';
 import { resourceListReadRequest } from 'sly/store/resource/actions';
-import { getList, getListMeta, isCommunitySearchPageModalFilterPanelActive } from 'sly/store/selectors';
+import { getList, getListMeta } from 'sly/store/selectors';
 import ErrorPage from 'sly/components/pages/Error';
 import StateSearchPage from 'sly/components/pages/StateSearchPage';
 import {
   filterLinkPath,
   getSearchParams,
 } from 'sly/services/helpers/search';
-import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
-import { toggleModalFilterPanel } from 'sly/store/actions';
+import ModalController from 'sly/controllers/ModalController';
 
 class StateSearchPageContainer extends Component {
   static propTypes = {
@@ -24,8 +25,6 @@ class StateSearchPageContainer extends Component {
     geoGuide: array,
     requestMeta: object.isRequired,
     errorCode: number,
-    toggleModalFilterPanel: func,
-    isModalFilterPanelVisible: bool,
   };
 
   // TODO Define Search Parameters
@@ -73,8 +72,6 @@ class StateSearchPageContainer extends Component {
       location,
       geoGuide,
       history,
-      isModalFilterPanelVisible,
-      toggleModalFilterPanel,
     } = this.props;
 
     if (serverState instanceof Error) {
@@ -85,39 +82,38 @@ class StateSearchPageContainer extends Component {
     const gg = geoGuide && geoGuide.length > 0 ? geoGuide[0] : {};
 
     return (
-      <StateSearchPage
-        isMapView={isMapView}
-        requestMeta={requestMeta}
-        toggleMap={this.toggleMap}
-        searchParams={searchParams}
-        onParamsChange={this.changeSearchParams}
-        onParamsRemove={this.removeSearchFilters}
-        onAdTileClick={this.handleOnAdTileClick}
-        communityList={communityList}
-        geoGuide={gg}
-        location={location}
-        isModalFilterPanelVisible={isModalFilterPanelVisible}
-        onToggleModalFilterPanel={toggleModalFilterPanel}
-      />
+      <ModalController>
+        {({
+          show,
+          hide,
+        }) => (
+          <StateSearchPage
+            isMapView={isMapView}
+            requestMeta={requestMeta}
+            toggleMap={this.toggleMap}
+            searchParams={searchParams}
+            onParamsChange={this.changeSearchParams}
+            onParamsRemove={this.removeSearchFilters}
+            onAdTileClick={this.handleOnAdTileClick}
+            communityList={communityList}
+            geoGuide={gg}
+            location={location}
+            showModal={show}
+            hideModal={hide}
+          />
+        )}
+      </ModalController>
     );
   }
 }
 
 const mapStateToProps = (state, { match, location }) => {
   const searchParams = getSearchParams(match, location);
-  const isModalFilterPanelVisible = isCommunitySearchPageModalFilterPanelActive(state);
   return {
     searchParams,
-    isModalFilterPanelVisible,
     communityList: getList(state, 'searchResource', searchParams),
     requestMeta: getListMeta(state, 'searchResource', searchParams),
     geoGuide: getList(state, 'geoGuide', searchParams),
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    toggleModalFilterPanel: () => dispatch(toggleModalFilterPanel()),
   };
 };
 
@@ -140,7 +136,4 @@ const handleResponses = (responses) => {
 export default withServerState(
   mapPropsToActions,
   handleResponses,
-)(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(StateSearchPageContainer));
+)(connect(mapStateToProps)(StateSearchPageContainer));

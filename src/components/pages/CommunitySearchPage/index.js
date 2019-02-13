@@ -147,7 +147,8 @@ const CommunitySearchPage = ({
         <StyledHeading level="hero" size="title">
           {listSize} {tocLabel} near {city}
         </StyledHeading>
-      </Fragment>);
+      </Fragment>
+    );
   };
 
   const ListContent = () => {
