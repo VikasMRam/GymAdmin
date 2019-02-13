@@ -503,7 +503,7 @@ export default class CommunityDetailPage extends Component {
                       palette="warning"
                       title={promoTitle}
                       description={promoDescription}
-                      onLearnMoreClick={openAskAgentQuestionModal}
+                      onLearnMoreClick={() => openAskAgentQuestionModal()}
                       hasLearnMore
                     />
                   )
@@ -749,7 +749,7 @@ export default class CommunityDetailPage extends Component {
                   onBookATourClick={!isAlreadyTourScheduled ? onBookATourClick : () => openAskAgentQuestionModal('tour')}
                   onGCPClick={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
                   // onGCPClick={() => setQueryParams({ modal: CONCIERGE })}
-                  onAQClick={openAskAgentQuestionModal}
+                  onAQClick={() => openAskAgentQuestionModal()}
                 />
                 <Modal
                   onClose={() => setModal(null)}
