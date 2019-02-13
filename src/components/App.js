@@ -33,7 +33,7 @@ import AgentProfilePageContainer from 'sly/containers/AgentProfilePageContainer'
 import AgentRegionPageContainer from 'sly/containers/AgentRegionPageContainer';
 import PartnersPage from 'sly/components/pages/PartnersPage';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
-import StaticResourcesController from 'sly/controllers/StaticResourcesController';
+// import StaticResourcesController from 'sly/controllers/StaticResourcesController';
 import ModalContainer from 'sly/containers/ModalContainer';
 import FilthyRedirect from 'sly/components/FilthyRedirect';
 import ModalController from 'sly/controllers/ModalController';
