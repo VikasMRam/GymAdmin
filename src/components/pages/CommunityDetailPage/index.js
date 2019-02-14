@@ -9,7 +9,6 @@ import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpe
 import { ADD_RATING } from 'sly/constants/modalType';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
-import { CommunityPageTileTexts as adProps } from 'sly/services/helpers/ad';
 import SlyEvent from 'sly/services/helpers/events';
 import { Button } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
@@ -727,14 +726,6 @@ export default class CommunityDetailPage extends Component {
                 <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                   <MainSection>
                     <SimilarCommunities similarProperties={similarProperties} />
-                    <ConciergeController history={history} communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
-                      {({ gotoAdvancedInfo }) => (
-                        <AdTileWrapper>
-                          <AdTile {...adProps} onClick={() => gotoAdvancedInfo()} />
-                        </AdTileWrapper>
-                      )
-                      }
-                    </ConciergeController>
                     <BackToSearch>
                       <Button
                         ghost
