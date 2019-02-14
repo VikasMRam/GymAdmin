@@ -83,7 +83,7 @@ const BookATourPage = ({
   };
   const handleStepChange = ({ currentStep, doSubmit, previous }) => {
     sendEvent('step-completed', id, currentStep);
-    if (userDetails.phone && userDetails.fullName) {
+    if (userDetails && userDetails.phone && userDetails.fullName) {
       // hack to show first step while api calls are happening
       previous();
       doSubmit();
@@ -134,7 +134,7 @@ const BookATourPage = ({
                 date={data.scheduledDate}
                 time={data.scheduledTime}
                 onProgressClick={onSubmit}
-                isFinalStep={!!(userDetails.phone && userDetails.fullName) || isFinalStep}
+                isFinalStep={!!(userDetails && userDetails.phone && userDetails.fullName) || isFinalStep}
                 isButtonDisabled={!submitEnabled}
               />
             </Controls>
