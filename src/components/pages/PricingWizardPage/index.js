@@ -132,7 +132,7 @@ class PricingWizardPage extends Component {
     if (currentStep === 2) {
       userActionSubmit(data);
     }
-    if (currentStep === 1 && userDetails.phone && userDetails.fullName) {
+    if (currentStep === 1 && userDetails && userDetails.phone && userDetails.fullName) {
       goto(3);
     }
   };
@@ -269,7 +269,7 @@ class PricingWizardPage extends Component {
                     <PricingFormFooter
                       price={estimatedPrice}
                       onProgressClick={onSubmit}
-                      isFinalStep={!!(userDetails.phone && userDetails.fullName) || isFinalStep}
+                      isFinalStep={!!(userDetails && userDetails.phone && userDetails.fullName) || isFinalStep}
                       isButtonDisabled={!submitEnabled}
                     />
                   }
