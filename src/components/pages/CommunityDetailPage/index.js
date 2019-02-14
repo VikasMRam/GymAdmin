@@ -166,6 +166,7 @@ export default class CommunityDetailPage extends Component {
     hideModal: func,
     onToggleAskQuestionModal: func,
     onUnsaveCommunity: func,
+    history: object,
   };
 
   handleMorePicturesClick = (image) => {
@@ -388,6 +389,8 @@ export default class CommunityDetailPage extends Component {
       isAlreadyPricingRequested,
       toggleHowSlyWorksVideoPlaying,
       isHowSlyWorksVideoPlaying,
+      onUnsaveCommunity,
+      history,
     } = this.props;
 
     const {
@@ -724,7 +727,7 @@ export default class CommunityDetailPage extends Component {
                 <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                   <MainSection>
                     <SimilarCommunities similarProperties={similarProperties} />
-                    <ConciergeController communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
+                    <ConciergeController history={history} communitySlug={community.id} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams}>
                       {({ gotoAdvancedInfo }) => (
                         <AdTileWrapper>
                           <AdTile {...adProps} onClick={() => gotoAdvancedInfo()} />
@@ -764,7 +767,7 @@ export default class CommunityDetailPage extends Component {
                   top={24}
                   bottomBoundary="#sticky-sidebar-boundary"
                 >
-                  <ConciergeContainer community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
+                  <ConciergeContainer history={history} community={community} queryParams={{ modal, currentStep }} setQueryParams={setQueryParams} />
                 </Sticky>
               </Column>
             </TwoColumn>
