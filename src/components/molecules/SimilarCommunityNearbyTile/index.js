@@ -32,6 +32,7 @@ const RateBlock = styled(Block)`
 
 const PriceAndRatingWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
 const StyledIcon = styled(Icon)`

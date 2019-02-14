@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
@@ -11,5 +12,7 @@ storiesOf('Organisms|CommunityQuestionAnswers', module).add('default', () => (
   <CommunityQuestionAnswers
     questions={questions}
     communityName={communityName}
+    onLeaveAnswerClick={action('onLeaveAnswerClick')}
+    onAskQuestionClick={action('onAskQuestionClick')}
   />
 ));

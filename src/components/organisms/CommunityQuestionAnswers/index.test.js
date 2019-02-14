@@ -8,10 +8,10 @@ import { ASK_QUESTION } from 'sly/constants/modalType';
 const communityName = 'Rhoda Goldman Plaza';
 const questions = [];
 const onLeaveAnswerClick = jest.fn();
-const showModal = jest.fn();
+const onAskQuestionClick = jest.fn();
 
 const defaultProps = {
-  communityName, questions, onLeaveAnswerClick, showModal,
+  communityName, questions, onLeaveAnswerClick, onAskQuestionClick,
 };
 
 const question1 = {
@@ -151,11 +151,11 @@ describe('CommuntityQuestionAnswers', () => {
     expect(onLeaveAnswerClick).toHaveBeenCalledWith(question1.type, question1.id);
   });
 
-  it('verify click on FAQ Leave Answer Button', () => {
-    const onLeaveAnswerClick = jest.fn();
-    const wrapper = wrap({ communityFaQs: [communityFaQ1], onLeaveAnswerClick });
+  it('verify click on FAQ be the first to ask this question', () => {
+    const onAskQuestionClick = jest.fn();
+    const wrapper = wrap({ communityFaQs: [communityFaQ1], onAskQuestionClick });
     const leaveAnswer = wrapper.find('CursorBlock');
     leaveAnswer.simulate('click');
-    expect(showModal).toHaveBeenCalledWith(ASK_QUESTION, communityFaQ1);
+    expect(onAskQuestionClick).toHaveBeenCalledWith(communityFaQ1);
   });
 });

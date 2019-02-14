@@ -2,7 +2,6 @@ import * as resources from './resource/selectors';
 import * as experiments from './experiments/selectors';
 import * as entities from './entities/selectors';
 import * as searchBox from './searchBox/selectors';
-import * as communitySearchPage from './communitySearchPage/selectors';
 import * as chatBox from './chatBox/selectors';
 
 import { getThunkName } from './resource/helpers';
@@ -106,9 +105,6 @@ export const searchBoxAddress = state =>
 
 export const searchBoxLocation = state =>
   searchBox.searchBoxLocation(state.searchBox);
-
-export const isCommunitySearchPageModalFilterPanelActive = state =>
-  communitySearchPage.isModalFilterPanelVisible(state.communitySearchPage);
 
 export const hasChatBoxFooterReached = state =>
   chatBox.hasFooterReached(state.chatBox);

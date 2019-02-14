@@ -24,14 +24,13 @@ class CommunityFloorPlanPopupFormContainer extends Component {
   handleSubmit = (data) => {
     const { notes } = data;
     const {
-      community, userDetails, postUserAction, postSubmit, typeOfCare, floorPlanInfo,
+      communitySlug, userDetails, postUserAction, postSubmit, floorPlanInfo, typeOfCare,
     } = this.props;
     const { roomType } = floorPlanInfo;
-    const { id } = community;
     const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
     const value = {
       notes,
-      slug: id,
+      slug: communitySlug,
       listingType: `${typeOfCare} - ${roomType}`,
       user,
     };
@@ -43,7 +42,7 @@ class CommunityFloorPlanPopupFormContainer extends Component {
     return postUserAction(payload)
       .then(() => {
         const event = {
-          action: 'consultation_requested', category: 'floorPlan', label: id,
+          action: 'consultation_requested', category: 'floorPlan', label: communitySlug,
         };
         SlyEvent.getInstance().sendEvent(event);
         if (postSubmit) {
@@ -66,7 +65,7 @@ class CommunityFloorPlanPopupFormContainer extends Component {
 }
 
 CommunityFloorPlanPopupFormContainer.propTypes = {
-  community: object.isRequired,
+  communitySlug: string.isRequired,
   userDetails: object.isRequired,
   postUserAction: func.isRequired,
   typeOfCare: string,

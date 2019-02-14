@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import { authenticateCancel, authenticateSuccess } from 'sly/store/authenticated/actions';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import Modal from 'sly/components/molecules/Modal';
 import LoginFormContainer from 'sly/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/containers/SignupFormContainer';
 import JoinSlyButtonsContainer from 'sly/containers/JoinSlyButtonsContainer';
@@ -29,6 +28,8 @@ class AuthContainer extends Component {
     authenticateSuccess: func,
     fetchUser: func,
     notifyInfo: func,
+    showModal: func,
+    hideModal: func,
   };
 
   static getDerivedStateFromProps({ authenticated }, state) {
@@ -44,27 +45,10 @@ class AuthContainer extends Component {
 
   state = { currentStep: null };
 
-  gotoJoin = () => this.setState({ currentStep: MODAL_TYPE_JOIN_SLY });
-  gotoLogin = () => this.setState({ currentStep: MODAL_TYPE_LOG_IN });
-  gotoSignup = () => this.setState({ currentStep: MODAL_TYPE_SIGN_UP });
-  gotoResetPassword = () => this.setState({ currentStep: MODAL_TYPE_RESET_PASSWORD });
-
-  handleLoginSuccess = () => {
-    const { authenticateSuccess, fetchUser } = this.props;
-    return fetchUser().then(authenticateSuccess);
-  };
-
-  handleResetPasswordSuccess = (json) => {
-    const { notifyInfo } = this.props;
-
-    if (json) {
-      notifyInfo(json.message);
-    }
-    this.gotoLogin();
-  };
-
-  render() {
-    const { authenticated, authenticateCancel } = this.props;
+  componentDidUpdate() {
+    const {
+      authenticated, authenticateCancel, showModal, hideModal,
+    } = this.props;
     const { currentStep } = this.state;
 
     const StepComponent = steps[currentStep];
@@ -93,15 +77,34 @@ class AuthContainer extends Component {
       default:
     }
 
-    return (
-      <Modal
-        closeable
-        isOpen={!!currentStep}
-        onClose={authenticateCancel}
-      >
-        {StepComponent && <StepComponent {...componentProps} />}
-      </Modal>
-    );
+    if (StepComponent) {
+      showModal(<StepComponent {...componentProps} />, authenticateCancel);
+    } else {
+      hideModal();
+    }
+  }
+
+  gotoJoin = () => this.setState({ currentStep: MODAL_TYPE_JOIN_SLY });
+  gotoLogin = () => this.setState({ currentStep: MODAL_TYPE_LOG_IN });
+  gotoSignup = () => this.setState({ currentStep: MODAL_TYPE_SIGN_UP });
+  gotoResetPassword = () => this.setState({ currentStep: MODAL_TYPE_RESET_PASSWORD });
+
+  handleLoginSuccess = () => {
+    const { authenticateSuccess, fetchUser } = this.props;
+    return fetchUser().then(authenticateSuccess);
+  };
+
+  handleResetPasswordSuccess = (json) => {
+    const { notifyInfo } = this.props;
+
+    if (json) {
+      notifyInfo(json.message);
+    }
+    this.gotoLogin();
+  };
+
+  render() {
+    return null;
   }
 }
 

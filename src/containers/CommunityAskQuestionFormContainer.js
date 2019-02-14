@@ -4,12 +4,9 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { string, func, object } from 'prop-types';
 
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
-import {
-  createValidator,
-  required,
-} from 'sly/services/validation';
+import { createValidator, required } from 'sly/services/validation';
 import CommunityAskQuestionForm from 'sly/components/organisms/CommunityAskQuestionForm';
-import { THANK_YOU } from 'sly/constants/modalType';
+import Thankyou from 'sly/components/molecules/Thankyou';
 
 const validate = createValidator({
   question: [required],
@@ -19,7 +16,6 @@ const validate = createValidator({
 
 const ReduxForm = reduxForm({
   form: 'CommunityAskQuestionForm',
-  destroyOnUnmount: false,
   validate,
 })(CommunityAskQuestionForm);
 
@@ -29,14 +25,14 @@ class CommunityAskQuestionFormContainer extends Component {
     communitySlug: string.isRequired,
     askQuestion: func,
     loadCommunity: func,
-    setModal: func,
     initialValues: object,
     parentSlug: string,
+    showModal: func,
   };
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, askQuestion, loadCommunity, setModal, parentSlug,
+      communitySlug, askQuestion, loadCommunity, showModal, parentSlug,
     } = this.props;
     const { question, name, email } = values;
     const payload = {
@@ -47,7 +43,7 @@ class CommunityAskQuestionFormContainer extends Component {
       parentSlug,
     };
     return askQuestion(payload).then(() => {
-      setModal(THANK_YOU);
+      showModal(<Thankyou />);
       // Hacky way. to push created question into array for rerender
       loadCommunity(communitySlug);
     }).catch((r) => {

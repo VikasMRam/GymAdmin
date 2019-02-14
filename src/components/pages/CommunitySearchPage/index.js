@@ -12,11 +12,7 @@ import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import CommunityFilterList from 'sly/components/organisms/CommunityFilterList';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
-import Modal from 'sly/components/molecules/Modal';
-import Thankyou from 'sly/components/molecules/Thankyou';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
-import CareAssessmentController from 'sly/external/wizards/careAssessment/Controller';
-import { THANK_YOU, CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
 import pad from 'sly/components/helpers/pad';
 
 const TopWrapper = pad(styled.div`
@@ -41,8 +37,6 @@ const StyledHr = styled(Hr)`
     display: none;
   }
 `;
-
-const StyledButton = pad(Button, 'large');
 
 const LegacyContent = pad(styled.div`
   a {
@@ -82,10 +76,10 @@ const CommunitySearchPage = ({
   communityList,
   geoGuide,
   location,
-  isModalFilterPanelVisible,
-  onToggleModalFilterPanel,
   onAdTileClick,
   isFetchingResults,
+  showModal,
+  hideModal,
 }) => {
   const listSize = requestMeta['filtered-count'];
   const city = titleize(searchParams.city);
@@ -100,6 +94,27 @@ const CommunitySearchPage = ({
     longitude = parseFloat(searchParams.longitude);
   }
 
+  const handleModalFilterClick = () => {
+    const modalContent = (
+      <Fragment>
+        <CommunityFilterList
+          onFieldChange={onParamsChange}
+          searchParams={searchParams}
+          toggleMap={toggleMap}
+          isMapView={isMapView}
+          isModalView
+          toggleFilter={handleModalFilterClick}
+          onParamsRemove={onParamsRemove}
+        />
+        <ApplyFilterButton kind="jumbo" onClick={hideModal}>
+          Apply Filters
+        </ApplyFilterButton>
+      </Fragment>
+    );
+
+    showModal(modalContent, null, 'sidebar');
+  };
+
   const columnContent = (
     <CommunityFilterList
       latitude={latitude}
@@ -108,7 +123,7 @@ const CommunitySearchPage = ({
       searchParams={searchParams}
       toggleMap={toggleMap}
       isMapView={isMapView}
-      toggleFilter={onToggleModalFilterPanel}
+      toggleFilter={handleModalFilterClick}
       onParamsRemove={onParamsRemove}
     />
   );
@@ -132,7 +147,8 @@ const CommunitySearchPage = ({
         <StyledHeading level="hero" size="title">
           {listSize} {tocLabel} near {city}
         </StyledHeading>
-      </Fragment>);
+      </Fragment>
+    );
   };
 
   const ListContent = () => {
@@ -195,27 +211,7 @@ const CommunitySearchPage = ({
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       {getHelmetForSearchPage({
         ...searchParams, url: location, communityList, listSize,
-        })}
-      <Modal
-        closeable
-        onClose={onToggleModalFilterPanel}
-        layout="sidebar"
-        isOpen={isModalFilterPanelVisible}
-        closeButtonPalette="slate"
-      >
-        <CommunityFilterList
-          onFieldChange={onParamsChange}
-          searchParams={searchParams}
-          toggleMap={toggleMap}
-          isMapView={isMapView}
-          isModalView
-          toggleFilter={onToggleModalFilterPanel}
-          onParamsRemove={onParamsRemove}
-        />
-        <ApplyFilterButton kind="jumbo" onClick={onToggleModalFilterPanel}>
-          Apply Filters
-        </ApplyFilterButton>
-      </Modal>
+      })}
       <CommunitySearchPageTemplate
         column={columnContent}
       >
@@ -236,7 +232,7 @@ const CommunitySearchPage = ({
             icon="filter"
             ghost
             transparent
-            onClick={onToggleModalFilterPanel}
+            onClick={handleModalFilterClick}
           >
             Filters
           </IconButton>
@@ -252,21 +248,6 @@ const CommunitySearchPage = ({
             onParamsChange={onParamsChange}
           />
         )}
-        { searchParams.modal === THANK_YOU &&
-        <Modal closeable isOpen onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}>
-          <Thankyou />
-          <StyledButton
-            kind="jumbo"
-            onClick={() => onParamsRemove({ paramsToRemove: ['modal'] })}
-          >
-              Click to Continue
-          </StyledButton>
-        </Modal>}
-        { searchParams.modal === CARE_ASSESSMENT_WIZARD &&
-        <Modal closeable isOpen layout="wizard" onClose={() => onParamsRemove({ paramsToRemove: ['modal'] })}>
-          <CareAssessmentController locationSearchParams={{ city: searchParams.city, state: searchParams.state }} />
-        </Modal>}
-
       </CommunitySearchPageTemplate>
     </Fragment>
   );
@@ -282,10 +263,10 @@ CommunitySearchPage.propTypes = {
   onParamsRemove: func,
   location: object,
   searchParams: object,
-  isModalFilterPanelVisible: bool,
-  onToggleModalFilterPanel: func,
   onAdTileClick: func,
   isFetchingResults: bool,
+  showModal: func,
+  hideModal: func,
 };
 
 export default CommunitySearchPage;

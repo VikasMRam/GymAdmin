@@ -70,7 +70,7 @@ CommunityBookATourContactForm.propTypes = {
   onContactByTextMsgChange: func,
   handleSubmit: func,
   heading: string.isRequired,
-  subheading: string.isRequired,
+  subheading: string,
 };
 
 export default CommunityBookATourContactForm;
