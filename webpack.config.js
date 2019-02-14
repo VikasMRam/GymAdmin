@@ -300,7 +300,7 @@ const client = createConfig([
 
   addPlugins([
     new AssetsByTypePlugin({ path: assetsPath }),
-    new ModifyAssetsPlugin(),
+    // new ModifyAssetsPlugin(),
     new ChildConfigPlugin(server),
   ]),
 

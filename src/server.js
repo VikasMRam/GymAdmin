@@ -25,14 +25,6 @@ import App from 'sly/components/App';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 
-const utmParams = [
-  'utm_content',
-  'utm_medium',
-  'utm_source',
-  'utm_campaign',
-  'utm_term',
-];
-
 const renderApp = ({
   store, context, location, sheet,
 }) => {
@@ -83,6 +75,8 @@ if (publicPath.match(/^\//)) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
+const DASHBOARD_PATH = '/dashboard';
+
 app.get(`${externalWizardsPath}*`, (req, res) => {
   const content = '';
   const { externalAssets } = global;
@@ -123,7 +117,13 @@ app.use(async (req, res, next) => {
     setCookie('referrer', req.headers.referer);
   }
 
-  const utmStr = utmParams.reduce((cumul, key) => {
+  const utmStr = [
+    'utm_content',
+    'utm_medium',
+    'utm_source',
+    'utm_campaign',
+    'utm_term',
+  ].reduce((cumul, key) => {
     if (req.query[key]) {
       cumul.push(`${key}:${req.query[key]}`);
     }
@@ -167,7 +167,7 @@ app.use(async (req, res, next) => {
 
   // FIXME: @amalseniorly I'm hacking this on here for now, this adds some 20 ms to the
   // response but fixes the race condition in forAuthenticated, once we tackle
-  // forAuthenticated to react to log in changes and to resume in client after starting
+  // forAuthenticated to react to log-in changes and to resume in client after starting
   // in server, we can fix this too. Fonz
   try {
     await store.dispatch(resourceDetailReadRequest('user', 'me'));
@@ -264,4 +264,3 @@ app.listen(port, (error) => {
     console.info(`Server is running at ${boldBlue(`${host}:${port}${basename}`)}`);
   }
 });
-
