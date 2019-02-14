@@ -78,6 +78,7 @@ const sourcePath = path.join(process.cwd(), SOURCE);
 const outputPath = path.join(process.cwd(), 'dist', 'public');
 const assetsPath = path.join(process.cwd(), 'dist', 'assets.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
+const dashboardEntryPath = path.join(sourcePath, 'dashboard.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');
 // external scripts and assets
 const externalSourcePath = path.join(sourcePath, 'external');
@@ -291,6 +292,7 @@ const client = createConfig([
 
   entryPoint({
     client: clientEntryPath,
+    dashboard: dashboardEntryPath,
     'external/wizards': externalWizardsEntryPath,
   }),
 

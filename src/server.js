@@ -86,7 +86,7 @@ if (publicPath.match(/^\//)) {
 app.get(`${externalWizardsPath}*`, (req, res) => {
   const content = '';
   const { externalAssets } = global;
-  return res.send(renderHtml({
+  res.send(renderHtml({
     content,
     assets: externalAssets,
   }));
