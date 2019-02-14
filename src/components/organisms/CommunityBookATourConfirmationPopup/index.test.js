@@ -40,8 +40,8 @@ describe('CommunityBookATourConfirmationPopup', () => {
 
   it('handles onTileClick', () => {
     const wrapper = wrap({ });
-    expect(wrapper.find('StyledLink')).toHaveLength(1);
-    const link = wrapper.find('StyledLink');
+    expect(wrapper.find('Link')).toHaveLength(1);
+    const link = wrapper.find('Link');
     link.simulate('click');
     expect(onTileClick).toHaveBeenCalledTimes(1);
   });

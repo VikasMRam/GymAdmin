@@ -34,12 +34,8 @@ const SimilarCommunitiesWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: grid;
     grid-gap: 1.500rem;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, 252px);
   }
-`;
-
-const StyledLink = styled(Link)`
-  display: block;
 `;
 
 const CommunityBookATourConfirmationPopup = ({
@@ -47,7 +43,7 @@ const CommunityBookATourConfirmationPopup = ({
 }) => {
   const similarCommunitiesComponent = similarCommunities.map(community => (
     <SimilarCommunityTileWrapper key={community.id}>
-      <StyledLink to={community.url} onClick={onTileClick}>
+      <Link to={community.url} onClick={onTileClick}>
         <SimilarCommunityNearbyTile
           image={community.imageUrl}
           name={community.name}
@@ -56,7 +52,7 @@ const CommunityBookATourConfirmationPopup = ({
           reviewsValue={community.reviewsValue}
           numReviews={community.numReviews}
         />
-      </StyledLink>
+      </Link>
     </SimilarCommunityTileWrapper>
   ));
 

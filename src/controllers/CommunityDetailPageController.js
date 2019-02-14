@@ -388,7 +388,6 @@ class CommunityDetailPageController extends Component {
         toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
         isHowSlyWorksVideoPlaying={isHowSlyWorksVideoPlaying}
         onUnsaveCommunity={this.handleUnsaveCommunity}
-        history={history}
       />
     );
   }

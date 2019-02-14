@@ -78,16 +78,15 @@ class WizardController extends Component {
 
   previous = () => {
     const { currentStep, set, progressPath } = this.props;
-    let prevStep = 1;
 
     if (currentStep > 1) {
-      prevStep = progressPath.pop();
-    }
+      const prevStep = progressPath.pop();
 
-    set({
-      currentStep: prevStep,
-      progressPath,
-    });
+      set({
+        currentStep: prevStep,
+        progressPath,
+      });
+    }
   };
 
   doSubmit = (params = {}) => {
