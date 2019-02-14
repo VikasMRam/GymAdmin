@@ -115,11 +115,12 @@ class PricingWizardPage extends Component {
   handleStepChange = ({
     currentStep, data, goto, doSubmit, toggleConfirmationModal,
   }) => {
-    const { community, userActionSubmit, userDetails } = this.props;
+    const { community, userActionSubmit } = this.props;
     const { id } = community;
     const { interest } = data;
 
     sendEvent('step-completed', id, currentStep);
+
 
     if (currentStep === 3) {
       if (interest === 'talk-advisor') {
@@ -130,9 +131,6 @@ class PricingWizardPage extends Component {
     }
     if (currentStep === 2) {
       userActionSubmit(data);
-    }
-    if (currentStep === 1 && userDetails.phone && userDetails.fullName) {
-      goto(3);
     }
   };
 
@@ -176,6 +174,7 @@ class PricingWizardPage extends Component {
     const compiledWhatToDoNextOptions = [...WHAT_TO_NEXT_OPTIONS];
     // const scheduleTourOption = compiledWhatToDoNextOptions.find(o => o.value === 'schedule-tour');
     // scheduleTourOption.to = `/book-a-tour/${id}`;
+
 
     return (
       <FullScreenWizard>
@@ -253,7 +252,7 @@ class PricingWizardPage extends Component {
                           <PricingFormFooter
                             price={estimatedPrice}
                             onProgressClick={onSubmit}
-                            isFinalStep={!!(userDetails.phone && userDetails.fullName) || isFinalStep}
+                            isFinalStep={isFinalStep}
                             isButtonDisabled={!submitEnabled}
                           />
                         }

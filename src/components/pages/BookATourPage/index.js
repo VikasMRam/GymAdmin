@@ -63,16 +63,6 @@ const BookATourPage = ({
     formHeading = 'Do you have any questions about this tour?';
   }
   const formSubheading = 'A local senior living advisor will help get you set up a tour with this community.';
-
-  const handleStepChange = ({ currentStep, doSubmit, previous }) => {
-    sendEvent('step-completed', id, currentStep);
-    if (userDetails.phone && userDetails.fullName) {
-      // hack to show first step while api calls are happening
-      previous();
-      doSubmit();
-    }
-  };
-
   return (
     <FullScreenWizard>
       <Helmet>
@@ -93,7 +83,7 @@ const BookATourPage = ({
             <WizardController
               formName="BookATourWizardForm"
               onComplete={data => onComplete(data, toggleConfirmationModal)}
-              onStepChange={handleStepChange}
+              onStepChange={({ currentStep }) => sendEvent('step-completed', id, currentStep)}
             >
               {({
                 data, onSubmit, isFinalStep, submitEnabled, ...props
@@ -125,7 +115,7 @@ const BookATourPage = ({
                       date={data.scheduledDate}
                       time={data.scheduledTime}
                       onProgressClick={onSubmit}
-                      isFinalStep={!!(userDetails.phone && userDetails.fullName) || isFinalStep}
+                      isFinalStep={isFinalStep}
                       isButtonDisabled={!submitEnabled}
                     />
                   </Controls>

@@ -14,7 +14,7 @@ const hasAllUserData = createBooleanValidator({
 });
 
 const GetCurrentAvailabilityContainer = ({
-  community, queryParams, setQueryParams, onGotoGetCustomPricing, onSubmitExpressConversion, history,
+  community, queryParams, setQueryParams, onGotoGetCustomPricing, onSubmitExpressConversion,
 }) => {
   const { id } = community;
 
@@ -24,7 +24,6 @@ const GetCurrentAvailabilityContainer = ({
       queryParams={queryParams}
       setQueryParams={setQueryParams}
       gotoGetCustomPricing={onGotoGetCustomPricing}
-      history={history}
     >
       {({ concierge, submitExpressConversion, userDetails }) => {
           if (concierge.contactRequested) {
@@ -48,7 +47,6 @@ GetCurrentAvailabilityContainer.propTypes = {
   setQueryParams: func,
   onGotoGetCustomPricing: func,
   onSubmitExpressConversion: func,
-  history: object,
 };
 
 export default GetCurrentAvailabilityContainer;
