@@ -73,13 +73,21 @@ const BookATourPage = ({
     const subheading = 'Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email.';
     const props = {
       similarCommunities: similarProperties,
-      similarCommunititesHref: getCitySearchUrl({ propInfo, address }),
+      similarCommunititesHref: getCitySearchUrl({propInfo, address}),
       onTileClick: hideModal,
       heading,
       subheading,
     };
 
     showModal(<CommunityBookATourConfirmationPopup {...props} />);
+  };
+  const handleStepChange = ({ currentStep, doSubmit, previous }) => {
+    sendEvent('step-completed', id, currentStep);
+    if (userDetails.phone && userDetails.fullName) {
+      // hack to show first step while api calls are happening
+      previous();
+      doSubmit();
+    }
   };
 
   return (
@@ -94,7 +102,7 @@ const BookATourPage = ({
       <WizardController
         formName="BookATourWizardForm"
         onComplete={data => onComplete(data, openConfirmationModal)}
-        onStepChange={({ currentStep }) => sendEvent('step-completed', id, currentStep)}
+        onStepChange={handleStepChange}
       >
         {({
           data, onSubmit, isFinalStep, submitEnabled, ...props
@@ -126,7 +134,7 @@ const BookATourPage = ({
                 date={data.scheduledDate}
                 time={data.scheduledTime}
                 onProgressClick={onSubmit}
-                isFinalStep={isFinalStep}
+                isFinalStep={!!(userDetails.phone && userDetails.fullName) || isFinalStep}
                 isButtonDisabled={!submitEnabled}
               />
             </Controls>

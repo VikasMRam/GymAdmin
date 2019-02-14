@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object, bool, number, string } from 'prop-types';
+import { func, object, bool, number } from 'prop-types';
 
 import { connectController } from 'sly/controllers';
 import { withServerState } from 'sly/store';
@@ -16,11 +16,10 @@ import { getSearchParams } from 'sly/services/helpers/search';
 import { getDetail, getDetails } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceListReadRequest, resourceUpdateRequest }
   from 'sly/store/resource/actions';
-import { forAuthenticated } from 'sly/store/authenticated/actions';
+import { forAuthenticated, ensureAuthenticated } from 'sly/store/authenticated/actions';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
-import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 import { logWarn } from 'sly/services/helpers/logging';
 import {
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
@@ -410,6 +409,7 @@ class CommunityDetailPageController extends Component {
                 showModal={show}
                 hideModal={hide}
                 onUnsaveCommunity={this.handleUnsaveCommunity}
+                history={history}
               />
             )}
           </ModalController>
