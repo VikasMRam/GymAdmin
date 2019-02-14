@@ -334,7 +334,7 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 
 const HomePage = ({
   isModalOpen, onLocationSearch, setActiveDiscoverHome, queryParams, setQueryParams, pathName, ishowSlyWorksVideoPlaying,
-  toggleHowSlyWorksVideoPlaying,
+  toggleHowSlyWorksVideoPlaying, history,
 }) => {
   const HeaderContent = (
     <Fragment>
@@ -492,7 +492,7 @@ const HomePage = ({
             <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
           </CWTColumnWrapper>
         </StyledSection>
-        <ConciergeContainer pathName={pathName} queryParams={queryParams} setQueryParams={setQueryParams} />
+        <ConciergeContainer history={history} pathName={pathName} queryParams={queryParams} setQueryParams={setQueryParams} />
         <SeoLinks title="Assisted living by Cities" links={ALSeoCities} />
         <SeoLinks title="Assisted living by State" links={ALSeoStates} />
       </TemplateContent>
@@ -510,6 +510,7 @@ HomePage.propTypes = {
   setQueryParams: func,
   ishowSlyWorksVideoPlaying: bool,
   toggleHowSlyWorksVideoPlaying: func,
+  history: object,
 };
 
 export default HomePage;

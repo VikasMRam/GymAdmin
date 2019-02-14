@@ -72,7 +72,9 @@ class HomePageContainer extends Component {
   render() {
     const { setActiveDiscoverHome, handleOnLocationSearch, handleToggleHowSlyWorksVideoPlaying } = this;
     const { activeDiscoverHome, howSlyWorksVideoPlaying } = this.state;
-    const { searchParams, setQueryParams, pathName } = this.props;
+    const {
+      searchParams, setQueryParams, pathName, history,
+    } = this.props;
     const { modal, currentStep } = searchParams;
     return (
       <HomePage
@@ -84,6 +86,7 @@ class HomePageContainer extends Component {
         setQueryParams={setQueryParams}
         pathName={pathName}
         ishowSlyWorksVideoPlaying={howSlyWorksVideoPlaying}
+        history={history}
       />
     );
   }

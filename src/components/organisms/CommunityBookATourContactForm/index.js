@@ -46,7 +46,7 @@ const CommunityBookATourContactForm = ({
           component={ReduxField}
         />
       }
-      {userDetails && userDetails.fullName &&
+      {/* userDetails && userDetails.fullName &&
         <Field
           name="notes"
           label="Add a note"
@@ -55,7 +55,7 @@ const CommunityBookATourContactForm = ({
           placeholder="Anything you'd like your Seniorly Partner Agent to know or any questions"
           component={ReduxField}
         />
-      }
+      */}
       {error && <Block palette="danger">{error}</Block>}
       {!user && <Block size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></Block>}
     </form>

@@ -1,20 +1,18 @@
 import { Component } from 'react';
 import { string, func, object } from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import { resourceCreateRequest } from 'sly/store/resource/actions';
-
 import { getDetail } from 'sly/store/selectors';
 import { connectController } from 'sly/controllers';
 import SlyEvent from 'sly/services/helpers/events';
 import { ASSESSMENT, REQUEST_CALLBACK, REQUEST_CONSULTATION, REQUEST_PRICING, REQUEST_AVAILABILITY } from 'sly/services/api/actions';
-
 import {
   createBooleanValidator,
   required,
   email,
   usPhone,
 } from 'sly/services/validation';
-
 import { CONCIERGE } from 'sly/constants/modalType';
 
 export const CONVERSION_FORM = 'conversionForm';
@@ -60,6 +58,7 @@ export class ConciergeController extends Component {
     submit: func,
     gotoGetCustomPricing: func,
     userDetails: object,
+    history: object,
   };
 
   getPricing = () => {
@@ -229,30 +228,35 @@ export class ConciergeController extends Component {
       concierge,
       setQueryParams,
       userDetails,
+      communitySlug,
+      history,
     } = this.props;
 
+    if (communitySlug) {
+      history.push(`/custom-pricing/${communitySlug}`);
+    } else {
+      const {
+        contactRequested,
+        consultationRequested,
+      } = concierge;
 
-    const {
-      contactRequested,
-      consultationRequested,
-    } = concierge;
+      const Done = (
+        (contactRequested || consultationRequested)
+        && isAssessment(userDetails)
+        && hasAllUserData(userDetails)
+      );
 
-    const Done = (
-      (contactRequested || consultationRequested)
-      && isAssessment(userDetails)
-      && hasAllUserData(userDetails)
-    );
+      if (Done) {
+        setQueryParams({ modal: CONCIERGE, currentStep: WHAT_NEXT });
+      }
 
-    if (Done) {
-      setQueryParams({ modal: CONCIERGE, currentStep: WHAT_NEXT });
-    }
+      if (!hasAllUserData(userDetails)) {
+        setQueryParams({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
+      }
 
-    if (!hasAllUserData(userDetails)) {
-      setQueryParams({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
-    }
-
-    if (!isAssessment(userDetails)) {
-      setQueryParams({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
+      if (!isAssessment(userDetails)) {
+        setQueryParams({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
+      }
     }
   };
 
@@ -305,7 +309,7 @@ const isAvailReq = slug => contact =>
   && (contact.contactType === REQUEST_AVAILABILITY);
 
 const mapStateToProps = (state, props) => {
-  const { communitySlug, queryParams } = props;
+  const { communitySlug, queryParams, history } = props;
   const {
     profilesContacted,
     consultationRequested,
@@ -313,6 +317,7 @@ const mapStateToProps = (state, props) => {
   } = getDetail(state, 'userAction') || {};
   const { modal, currentStep } = queryParams;
   return {
+    history,
     communitySlug,
     userDetails,
     concierge: {
