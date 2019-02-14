@@ -68,7 +68,7 @@ export default function withServerState(
   };
 
   const mapDispatchToProps = (dispatch, props) => ({
-    fetchData: context => dispatchActions(dispatch, getResponseHandler(context, props), mapPropsToActions(props)),
+    fetchData: (context, nextProps = props) => dispatchActions(dispatch, getResponseHandler(context, nextProps), mapPropsToActions(nextProps)),
   });
 
   return ChildComponent => serverStateDecorator(connect(
@@ -117,15 +117,15 @@ export default function withServerState(
       }
     }
 
-    componentWillUpdate(prevProps) {
+    componentWillUpdate(nextProps) {
       const { match, location, fetchData } = this.props;
-      if (prevProps.match.url !== match.url) {
-        fetchData(this.context);
+      if (match.url !== nextProps.match.url) {
+        fetchData(this.context, nextProps);
       } else {
-        const prev = omit(parseSearch(prevProps.location.search), ignoreSearch);
-        const next = omit(parseSearch(location.search), ignoreSearch);
+        const prev = omit(parseSearch(location.search), ignoreSearch);
+        const next = omit(parseSearch(nextProps.location.search), ignoreSearch);
         if (!isEqual(prev, next)) {
-          fetchData(this.context);
+          fetchData(this.context, nextProps);
         }
       }
     }

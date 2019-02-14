@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { object, array, bool } from 'prop-types';
 import queryString from 'query-string';
 import { connect } from 'react-redux';
@@ -21,7 +21,7 @@ import {
 import { logWarn } from 'sly/services/helpers/logging';
 import ModalController from 'sly/controllers/ModalController';
 
-class CommunitySearchPageContainer extends Component {
+class CommunitySearchPageContainer extends PureComponent {
   static propTypes = {
     searchParams: object.isRequired,
     history: object.isRequired,
@@ -122,9 +122,10 @@ class CommunitySearchPageContainer extends Component {
 
 const mapStateToProps = (state, { match, location }) => {
   const searchParams = getSearchParams(match, location);
+  const communityList = getList(state, 'searchResource', searchParams);
   return {
     searchParams,
-    communityList: getList(state, 'searchResource', searchParams),
+    communityList,
     isFetchingResults: isResourceListRequestInProgress(state, 'searchResource'),
     requestMeta: getListMeta(state, 'searchResource', searchParams),
     geoGuide: getList(state, 'geoGuide', searchParams),
