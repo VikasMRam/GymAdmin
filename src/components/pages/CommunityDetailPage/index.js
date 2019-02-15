@@ -528,7 +528,6 @@ export default class CommunityDetailPage extends Component {
                   <MainSection>
                     {floorPlans.length > 0 &&
                       <CommunityFloorPlansList
-                        typeOfCare={typeOfCare}
                         floorPlans={floorPlans}
                         onItemClick={openFloorPlanModal}
                       />
