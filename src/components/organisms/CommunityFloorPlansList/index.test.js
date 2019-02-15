@@ -4,20 +4,18 @@ import { shallow } from 'enzyme';
 import CommunityFloorPlanListItem from 'sly/components/molecules/CommunityFloorPlanListItem';
 import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList';
 
+
 const info = {
   typeOfCare: 'Assisted Living',
   price: 7900,
   priceType: 'Monthly Rate',
   roomType: 'Shared',
   shareType: 'Private',
+  careType: 'Assisted Living',
 };
 
-const careType = 'Assisted Living';
-const create = {
-  careType,
-};
-const fp1 = { id: 1, info, create };
-const fp2 = { id: 2, info, create };
+const fp1 = { id: 1, info };
+const fp2 = { id: 2, info };
 const floorPlans = [fp1, fp2];
 
 const defaultProp = { floorPlans };

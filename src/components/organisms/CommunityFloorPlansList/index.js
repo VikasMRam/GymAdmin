@@ -18,8 +18,8 @@ const CommunityFloorPlansList = ({ floorPlans, onItemClick }) => (
   <Fragment>
     <ListWrapper>
       {floorPlans.map((floorPlan) => {
-        const { id, info, create } = floorPlan;
-        const { careType } = create;
+        const { id, info } = floorPlan;
+        const { careType } = info;
         const typeOfCare = careType[0];
         return (
           <Fragment key={id}>
