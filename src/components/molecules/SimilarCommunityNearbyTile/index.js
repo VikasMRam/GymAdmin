@@ -58,7 +58,7 @@ const SimilarCommunityNearbyTile = ({
   image, name, typeOfCare, estimatedRate, startingRate, reviewsValue,
 }) => (
   <div>
-    <ImageWrapper src={image} aspectRatio="3:2" lazy="false" />
+    <ImageWrapper src={image} aspectRatio="3:2" lazy={false} />
     <TypeOfCare size="tiny" palette="primary" weight="bold">{typeOfCare}</TypeOfCare>
     <Name size="body" weight="medium">{name}</Name>
     <PriceAndRatingWrapper>
