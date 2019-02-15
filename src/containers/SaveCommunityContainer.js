@@ -29,6 +29,8 @@ class SaveCommunityContainer extends Component {
     onDoneButtonClicked: func,
   };
 
+  state = { updatingUserSave: false };
+
   componentDidMount() {
     const { createUserSave, updateUserSave } = this;
     const { userSave } = this.props;
@@ -51,10 +53,14 @@ class SaveCommunityContainer extends Component {
       entitySlug: id,
     };
 
-    this.updatingUserSave = true;
+    this.setState({
+      updatingUserSave: true,
+    });
     createUserSave(payload)
       .then(() => {
-        this.updatingUserSave = false;
+        this.setState({
+          updatingUserSave: false,
+        });
       }, () => {
         handleModalClose();
         notifyError(NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED);
@@ -68,12 +74,16 @@ class SaveCommunityContainer extends Component {
     } = this.props;
     const { id } = userSave;
 
-    this.updatingUserSave = true;
+    this.setState({
+      updatingUserSave: true,
+    });
     updateUserSave(id, {
       status,
     })
       .then(() => {
-        this.updatingUserSave = false;
+        this.setState({
+          updatingUserSave: false,
+        });
       }, () => {
         handleModalClose();
         notifyError(NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED);
@@ -113,12 +123,13 @@ class SaveCommunityContainer extends Component {
   };
 
   render() {
-    const { updatingUserSave, handleSubmitSaveCommunityForm } = this;
+    const { handleSubmitSaveCommunityForm } = this;
     const { community, onDoneButtonClicked } = this.props;
+    const { updatingUserSave } = this.state;
     const { similarProperties } = community;
 
     if (updatingUserSave) {
-      return null;
+      return 'Updating...';
     }
 
     return (

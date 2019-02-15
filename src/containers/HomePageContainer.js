@@ -6,6 +6,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import HomePage from 'sly/components/pages/HomePage';
 import { getSearchParamFromPlacesResponse, filterLinkPath, getSearchParams } from 'sly/services/helpers/search';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
+import ModalController from 'sly/controllers/ModalController';
 
 class HomePageContainer extends Component {
   static propTypes = {
@@ -71,20 +72,29 @@ class HomePageContainer extends Component {
 
   render() {
     const { setActiveDiscoverHome, handleOnLocationSearch, handleToggleHowSlyWorksVideoPlaying } = this;
-    const { activeDiscoverHome, howSlyWorksVideoPlaying } = this.state;
-    const { searchParams, setQueryParams, pathName } = this.props;
+    const { howSlyWorksVideoPlaying } = this.state;
+    const { searchParams, setQueryParams, pathName, history } = this.props;
     const { modal, currentStep } = searchParams;
     return (
-      <HomePage
-        isModalOpen={activeDiscoverHome !== null}
-        setActiveDiscoverHome={setActiveDiscoverHome}
-        onLocationSearch={handleOnLocationSearch}
-        toggleHowSlyWorksVideoPlaying={handleToggleHowSlyWorksVideoPlaying}
-        queryParams={{ modal, currentStep }}
-        setQueryParams={setQueryParams}
-        pathName={pathName}
-        ishowSlyWorksVideoPlaying={howSlyWorksVideoPlaying}
-      />
+      <ModalController>
+        {({
+          show,
+          hide,
+        }) => (
+          <HomePage
+            setActiveDiscoverHome={setActiveDiscoverHome}
+            onLocationSearch={handleOnLocationSearch}
+            toggleHowSlyWorksVideoPlaying={handleToggleHowSlyWorksVideoPlaying}
+            queryParams={{ modal, currentStep }}
+            setQueryParams={setQueryParams}
+            pathName={pathName}
+            ishowSlyWorksVideoPlaying={howSlyWorksVideoPlaying}
+            showModal={show}
+            hideModal={hide}
+            history={history}
+          />
+        )}
+      </ModalController>
     );
   }
 }

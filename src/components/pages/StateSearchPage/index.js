@@ -13,7 +13,6 @@ import { getTocSeoLabel } from 'sly/services/helpers/search';
 import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 import StateSearchFilterList from 'sly/components/organisms/StateSearchFilterList';
-import Modal from 'sly/components/molecules/Modal';
 
 const TopWrapper = styled.div`
   display: flex;
@@ -45,8 +44,8 @@ const StateSearchPage = ({
   communityList,
   geoGuide,
   location,
-  isModalFilterPanelVisible,
-  onToggleModalFilterPanel,
+  showModal,
+  hideModal,
 }) => {
   const listSize = requestMeta['filtered-count'];
   const state = titleize(searchParams.state);
@@ -86,15 +85,25 @@ const StateSearchPage = ({
   };
   const gg = geoGuide.guideContent ? geoGuide.guideContent : {};
   const seoLinks = gg.seoLinks || [];
-  const stateSeachFilterList = (
+  const stateSeachFilterList = isModalView => (
     <StateSearchFilterList
       seoLinks={seoLinks}
       isMapView={isMapView}
       toggleMap={toggleMap}
-      isModalView={isModalFilterPanelVisible}
-      onToggleModalFilterPanel={onToggleModalFilterPanel}
+      isModalView={isModalView}
+      onToggleModalFilterPanel={hideModal}
     />
   );
+
+  const handleModalFilterClick = () => {
+    const modalContent = (
+      <Fragment>
+        {stateSeachFilterList(true)}
+      </Fragment>
+    );
+
+    showModal(modalContent, null, 'sidebar');
+  };
 
   const ListContent = () => {
     /**
@@ -137,17 +146,18 @@ const StateSearchPage = ({
     }
 
     // If No Geo Content just return same
-    return (<CommunitySearchList
-      communityList={communityList}
-      onParamsChange={onParamsChange}
-      onParamsRemove={onParamsRemove}
-      searchParams={searchParams}
-      requestMeta={requestMeta}
-      onAdTileClick={onAdTileClick}
-      location={location}
-    />);
+    return (
+      <CommunitySearchList
+        communityList={communityList}
+        onParamsChange={onParamsChange}
+        onParamsRemove={onParamsRemove}
+        searchParams={searchParams}
+        requestMeta={requestMeta}
+        onAdTileClick={onAdTileClick}
+        location={location}
+      />
+    );
   };
-
 
   return (
     <Fragment>
@@ -155,22 +165,12 @@ const StateSearchPage = ({
       {getHelmetForSearchPage({
         ...searchParams, url: location, communityList, listSize,
         })}
-      <Modal
-        closeable
-        onClose={onToggleModalFilterPanel}
-        layout="sidebar"
-        isOpen={isModalFilterPanelVisible}
-        closeButtonPalette="slate"
-      >
-        {stateSeachFilterList}
-      </Modal>
       <CommunitySearchPageTemplate
-        column={stateSeachFilterList}
+        column={stateSeachFilterList()}
       >
         {!isMapView && (
           TopContent()
         )}
-
         <TopWrapper>
           {isMapView && (
             <IconButton icon="list" ghost transparent onClick={toggleMap}>
@@ -187,7 +187,7 @@ const StateSearchPage = ({
               icon="filter"
               ghost
               transparent
-              onClick={onToggleModalFilterPanel}
+              onClick={handleModalFilterClick}
             >
               Cities
             </IconButton>
@@ -222,8 +222,8 @@ StateSearchPage.propTypes = {
   onAdTileClick: func,
   location: object,
   searchParams: object,
-  isModalFilterPanelVisible: bool,
-  onToggleModalFilterPanel: bool,
+  showModal: func,
+  hideModal: func,
 };
 
 export default StateSearchPage;

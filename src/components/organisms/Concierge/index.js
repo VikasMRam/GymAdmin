@@ -1,19 +1,28 @@
 import React, { Fragment } from 'react';
 import { object, func } from 'prop-types';
 
-
 import { isBrowser } from 'sly/config';
 import Modal from 'sly/components/molecules/Modal';
 import ConversionFormContainer from 'sly/containers/ConversionFormContainer';
 import AdvancedInfoFormContainer from 'sly/containers/AdvancedInfoFormContainer';
 import Thankyou from 'sly/components/molecules/Thankyou';
 import WhatNext from 'sly/components/organisms/WhatNext';
+import ModalController from 'sly/controllers/ModalController';
 
 const ExpressConversionFormContainer = props => (
-  <ConversionFormContainer
-    express
-    {...props}
-  />
+  <ModalController>
+    {({
+      show,
+      hide,
+    }) => (
+      <ConversionFormContainer
+        express
+        showModal={show}
+        hideModal={hide}
+        {...props}
+      />
+    )}
+  </ModalController>
 );
 
 const HowItWorks = props => <WhatNext reasons="howItWorks" {...props} />;
@@ -63,21 +72,31 @@ const Concierge = ({
           />
         </Modal>
       )}
-    </Fragment>);
+    </Fragment>
+  );
   let result = modal;
   if (community) {
     result = (
-      <Fragment >
-        <ConversionFormContainer
-          submitRegularConversion={submitRegularConversion}
-          submitExpressConversion={submitExpressConversion}
-          gotoWhatNext={gotoWhatNext}
-          community={community}
-          concierge={concierge}
-          express={false}
-        />
-        {modal}
-      </Fragment>
+      <ModalController>
+        {({
+          show,
+          hide,
+        }) => (
+          <Fragment >
+            <ConversionFormContainer
+              submitRegularConversion={submitRegularConversion}
+              submitExpressConversion={submitExpressConversion}
+              gotoWhatNext={gotoWhatNext}
+              community={community}
+              concierge={concierge}
+              express={false}
+              showModal={show}
+              hideModal={hide}
+            />
+            {modal}
+          </Fragment>
+        )}
+      </ModalController>
     );
   }
   return result;

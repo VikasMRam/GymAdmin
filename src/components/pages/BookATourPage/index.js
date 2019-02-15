@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { object, func, bool } from 'prop-types';
+import { object, func } from 'prop-types';
 import Helmet from 'react-helmet';
 
 import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import CommunityBookATourDateFormContainer from 'sly/containers/CommunityBookATourDateFormContainer';
 import { community as communityPropType } from 'sly/propTypes/community';
+import { getCitySearchUrl } from 'sly/services/helpers/url';
 import { size } from 'sly/components/themes';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import {
@@ -19,9 +20,8 @@ import SlyEvent from 'sly/services/helpers/events';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import BookingFormFooter from 'sly/components/molecules/BookingFormFooter';
-import Modal from 'sly/components/molecules/Modal';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
-import FullScreenWizardController from 'sly/controllers/FullScreenWizardController';
+import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -55,14 +55,41 @@ const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
 });
 
 const BookATourPage = ({
-  community, user, userDetails, onComplete,
+  community, user, userDetails, onComplete, showModal, hideModal,
 }) => {
-  const { id, mainImage } = community;
+  const {
+    id, mainImage, similarProperties, propInfo, address,
+  } = community;
   let formHeading = 'How can we contact you about this community tour?';
   if (user) {
     formHeading = 'Do you have any questions about this tour?';
   }
   const formSubheading = 'A local senior living advisor will help get you set up a tour with this community.';
+  const openAdvisorHelp = () => {
+    showModal(<AdvisorHelpPopup onButtonClick={hideModal} />);
+  };
+  const openConfirmationModal = () => {
+    const heading = 'Tour Request Sent!';
+    const subheading = 'Your Seniorly Partner Agent will check if this community is available at this time. They will get back to you shortly by phone or email.';
+    const props = {
+      similarCommunities: similarProperties,
+      similarCommunititesHref: getCitySearchUrl({propInfo, address}),
+      onTileClick: hideModal,
+      heading,
+      subheading,
+    };
+
+    showModal(<CommunityBookATourConfirmationPopup {...props} />);
+  };
+  const handleStepChange = ({ currentStep, doSubmit, previous }) => {
+    sendEvent('step-completed', id, currentStep);
+    if (userDetails && userDetails.phone && userDetails.fullName) {
+      // hack to show first step while api calls are happening
+      previous();
+      doSubmit();
+    }
+  };
+
   return (
     <FullScreenWizard>
       <Helmet>
@@ -72,59 +99,48 @@ const BookATourPage = ({
       <Column backgroundImage={mainImage}>
         <StyledCommunityInfo palette="white" community={community} />
       </Column>
-      <FullScreenWizardController>
+      <WizardController
+        formName="BookATourWizardForm"
+        onComplete={data => onComplete(data, openConfirmationModal)}
+        onStepChange={handleStepChange}
+      >
         {({
-          isAdvisorHelpVisible, toggleAdvisorHelp, toggleConfirmationModal,
+          data, onSubmit, isFinalStep, submitEnabled, ...props
         }) => (
           <Fragment>
-            <Modal closeable isOpen={isAdvisorHelpVisible} onClose={toggleAdvisorHelp}>
-              <AdvisorHelpPopup onButtonClick={toggleAdvisorHelp} />
-            </Modal>
-            <WizardController
-              formName="BookATourWizardForm"
-              onComplete={data => onComplete(data, toggleConfirmationModal)}
-              onStepChange={({ currentStep }) => sendEvent('step-completed', id, currentStep)}
-            >
-              {({
-                data, onSubmit, isFinalStep, submitEnabled, ...props
-              }) => (
-                <Fragment>
-                  <Body>
-                    <WizardSteps {...props}>
-                      <WizardStep
-                        component={CommunityBookATourDateFormContainer}
-                        name="Date"
-                        userDetails={userDetails}
-                        onDateChange={(e, newValue) => sendEvent('date-changed', id, newValue.toString())}
-                        onTimeChange={(e, newValue) => sendEvent('time-changed', id, newValue.toString())}
-                      />
-                      <WizardStep
-                        component={CommunityBookATourContactFormContainer}
-                        name="Contact"
-                        onContactByTextMsgChange={(e, value) => sendEvent('contactByTextMsg-changed', id, value)}
-                        onAdvisorHelpClick={toggleAdvisorHelp}
-                        user={user}
-                        userDetails={userDetails}
-                        heading={formHeading}
-                        subheading={formSubheading}
-                      />
-                    </WizardSteps>
-                  </Body>
-                  <Controls>
-                    <BookingFormFooter
-                      date={data.scheduledDate}
-                      time={data.scheduledTime}
-                      onProgressClick={onSubmit}
-                      isFinalStep={isFinalStep}
-                      isButtonDisabled={!submitEnabled}
-                    />
-                  </Controls>
-                </Fragment>
-              )}
-            </WizardController>
+            <Body>
+              <WizardSteps {...props}>
+                <WizardStep
+                  component={CommunityBookATourDateFormContainer}
+                  name="Date"
+                  userDetails={userDetails}
+                  onDateChange={(e, newValue) => sendEvent('date-changed', id, newValue.toString())}
+                  onTimeChange={(e, newValue) => sendEvent('time-changed', id, newValue.toString())}
+                />
+                <WizardStep
+                  component={CommunityBookATourContactFormContainer}
+                  name="Contact"
+                  onContactByTextMsgChange={(e, value) => sendEvent('contactByTextMsg-changed', id, value)}
+                  onAdvisorHelpClick={openAdvisorHelp}
+                  user={user}
+                  userDetails={userDetails}
+                  heading={formHeading}
+                  subheading={formSubheading}
+                />
+              </WizardSteps>
+            </Body>
+            <Controls>
+              <BookingFormFooter
+                date={data.scheduledDate}
+                time={data.scheduledTime}
+                onProgressClick={onSubmit}
+                isFinalStep={!!(userDetails && userDetails.phone && userDetails.fullName) || isFinalStep}
+                isButtonDisabled={!submitEnabled}
+              />
+            </Controls>
           </Fragment>
         )}
-      </FullScreenWizardController>
+      </WizardController>
     </FullScreenWizard>
   );
 };
@@ -134,8 +150,9 @@ BookATourPage.propTypes = {
   user: object,
   userDetails: object,
   onComplete: func,
-  isAdvisorHelpVisible: bool,
   onAdvisorHelpClick: func,
+  showModal: func,
+  hideModal: func,
 };
 
 export default BookATourPage;

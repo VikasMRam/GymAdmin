@@ -10,7 +10,8 @@ import SlyEvent from 'sly/services/helpers/events';
 import { BOOK_A_TOUR } from 'sly/services/api/actions';
 import BookATourPage from 'sly/components/pages/BookATourPage';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
-import {getLastSegment, replaceLastSegment} from "sly/services/helpers/url";
+import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
+import ModalController from 'sly/controllers/ModalController';
 
 const eventCategory = 'BAT';
 
@@ -21,7 +22,7 @@ const BookATourPageContainer = ({
     return null;
   }
   const { id, url } = community;
-  const handleComplete = (data, toggleConfirmationModal) => {
+  const handleComplete = (data, openConfirmationModal) => {
     const {
       name, phone, medicaidCoverage, contactByTextMsg, ...restData
     } = data;
@@ -44,18 +45,27 @@ const BookATourPageContainer = ({
         };
         SlyEvent.getInstance().sendEvent(event);
         history.push(url);
-        toggleConfirmationModal('booking');
+        openConfirmationModal();
       });
   };
 
   const userDetails = userAction ? userAction.userDetails : null;
   return (
-    <BookATourPage
-      community={community}
-      user={user}
-      userDetails={userDetails}
-      onComplete={handleComplete}
-    />
+    <ModalController>
+      {({
+        show,
+        hide,
+      }) => (
+        <BookATourPage
+          community={community}
+          user={user}
+          userDetails={userDetails}
+          onComplete={handleComplete}
+          showModal={show}
+          hideModal={hide}
+        />
+      )}
+    </ModalController>
   );
 };
 

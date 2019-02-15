@@ -8,7 +8,6 @@ import cursor from 'sly/components/helpers/cursor';
 import { Hr, Block } from 'sly/components/atoms';
 import CommunityQuestion from 'sly/components/molecules/CommunityQuestion';
 import CommunityAnswer from 'sly/components/molecules/CommunityAnswer';
-import { ASK_QUESTION } from 'sly/constants/modalType';
 
 const AnswersDiv = styled.div`
   margin-left: ${size('spacing.huge')};
@@ -33,7 +32,7 @@ const StyledBlock = styled(Block)`
 const sortByCreatedAt = (a, b) => a.createdAt > b.createdAt;
 
 const CommunityQuestionAnswers = ({
-  communityName, questions, onLeaveAnswerClick, communityFaQs, showModal,
+  communityName, questions, onLeaveAnswerClick, communityFaQs, onAskQuestionClick,
 }) => {
   const questionsComponent = questions.sort(sortByCreatedAt).map((question, i) => {
     const { contents = [] } = question;
@@ -65,7 +64,7 @@ const CommunityQuestionAnswers = ({
   const communityFaQsComponent = communityFaQs.sort(sortByCreatedAt).map((communityFaQ, i) => (
     <div key={communityFaQ.id}>
       <StyledCommunityQuestion question={communityFaQ} />
-      <CursorBlock palette="primary" weight="medium" onClick={() => showModal(ASK_QUESTION, communityFaQ)}>Be the first to ask this question</CursorBlock>
+      <CursorBlock palette="primary" weight="medium" onClick={() => onAskQuestionClick(communityFaQ)}>Be the first to ask this question</CursorBlock>
       {i < communityFaQs.length - 1 && <StyledHr />}
     </div>
   ));
@@ -90,7 +89,7 @@ CommunityQuestionAnswers.propTypes = {
   questions: arrayOf(contentPropType).isRequired,
   communityFaQs: arrayOf(contentPropType),
   onLeaveAnswerClick: func.isRequired,
-  showModal: func.isRequired,
+  onAskQuestionClick: func.isRequired,
 };
 
 CommunityQuestionAnswers.defaultProps = {

@@ -78,6 +78,9 @@ describe('ConciergeController', () => {
   const avdInfoSentEntities = { userAction: avdInfoSentUserAction };
   const emailOnlyEntities = { userAction: onlyEmailUserAction };
 
+  const history = {
+    push: jest.fn(),
+  };
   const spy = jest.fn();
   const setQueryParams = jest.fn();
 
@@ -85,6 +88,7 @@ describe('ConciergeController', () => {
 
   beforeEach(() => {
     spy.mockClear();
+    history.push.mockClear();
   });
 
   // Logic to get Data from controller for Asserting
@@ -109,6 +113,7 @@ describe('ConciergeController', () => {
         children={spy}
         queryParams={{}}
         setQueryParams={setQueryParams}
+        history={history}
       />
     ).dive().dive();
 
@@ -141,16 +146,23 @@ describe('ConciergeController', () => {
     //   });
     // });
 
-    it('should go to conversion form mode when express mode', () => {
+    it('should redirect to custom piricing wizard', () => {
       const store = initStore({ resource, entities: emailOnlyEntities });
       const wrapper = wrap(otherCommunity.id, store);
+      wrapper.instance().next(true);
+      expect(history.push).toBeCalledWith(`/custom-pricing/${otherCommunity.id}`);
+    });
+
+    it('should go to conversion form mode when express mode', () => {
+      const store = initStore({ resource, entities: emailOnlyEntities });
+      const wrapper = wrap(null, store);
       wrapper.instance().next(true);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
 
     it('should not shortcircuit to thankYou when in express mode', () => {
       const store = initStore({ resource, entities });
-      const wrapper = wrap(community.id, store);
+      const wrapper = wrap(null, store);
       wrapper.instance().next(true);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
     });
@@ -201,6 +213,7 @@ describe('ConciergeController', () => {
         queryParams={{}}
         setQueryParams={setQueryParams}
         gotoGetCustomPricing={gotoGetCustomPricing}
+        history={history}
       />
     );
 

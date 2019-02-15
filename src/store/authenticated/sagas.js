@@ -26,13 +26,22 @@ export function* authenticate(reason) {
 export function* ensureAuthenticated(api, { reason, action }, { thunk }) {
   const { authenticated, cancel } = yield call(authenticate, reason);
   if (authenticated) {
-    yield put(actions.ensureAuthenticatedSuccess(authenticated, thunk));
-    if (isFSA(action)) {
-      yield put(action);
-    } else if (typeof action === 'function') {
-      yield call(action);
-    } else {
-      throw new Error(`Unknown action type for ${JSON.stringify(action)}`);
+    try {
+      let result;
+      // double yield in case there is a promise in the return,
+      // in reality the ensureAuthenticated action has already
+      // succeeded, but we have to return an error if the underlying
+      // action fails
+      if (isFSA(action)) {
+        result = yield yield put(action);
+      } else if (typeof action === 'function') {
+        result = yield yield call(action);
+      } else {
+        throw new Error(`Unknown action type for ${JSON.stringify(action)}`);
+      }
+      yield put(actions.ensureAuthenticatedSuccess(result, thunk));
+    } catch (e) {
+      yield put(actions.ensureAuthenticatedFailure(e, thunk));
     }
   } else if (cancel) {
     yield put(actions.ensureAuthenticatedFailure(new Error('User canceled'), thunk));
@@ -44,15 +53,23 @@ export function* ensureAuthenticated(api, { reason, action }, { thunk }) {
 export function* forAuthenticated(api, { action }, { thunk }) {
   const user = yield select(getUser);
   if (user) {
-    if (isFSA(action)) {
-      yield put(action);
-    } else if (typeof action === 'function') {
-      yield call(action);
-    } else {
-      throw new Error(`Unknown action type for ${JSON.stringify(action)}`);
+    try {
+      let result;
+      // double yield in case there is a promise in the return,
+      // see ensureAuthenticated comment
+      if (isFSA(action)) {
+        result = yield yield put(action);
+      } else if (typeof action === 'function') {
+        result = yield yield call(action);
+      } else {
+        throw new Error(`Unknown action type for ${JSON.stringify(action)}`);
+      }
+      yield put(actions.forAuthenticatedSuccess(result, thunk));
+    } catch (e) {
+      yield put(actions.forAuthenticatedFailure(e, thunk));
     }
   } else {
-    yield put(actions.forAuthenticatedSuccess(thunk));
+    yield put(actions.forAuthenticatedSuccess(null, thunk));
   }
 }
 

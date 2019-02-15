@@ -11,7 +11,6 @@ import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { Image, Centered, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
 import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
-import Modal from 'sly/components/molecules/Modal';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
@@ -333,8 +332,8 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 });
 
 const HomePage = ({
-  isModalOpen, onLocationSearch, setActiveDiscoverHome, queryParams, setQueryParams, pathName, ishowSlyWorksVideoPlaying,
-  toggleHowSlyWorksVideoPlaying,
+  showModal, hideModal, onLocationSearch, setActiveDiscoverHome, queryParams, setQueryParams, pathName, ishowSlyWorksVideoPlaying,
+  toggleHowSlyWorksVideoPlaying, history,
 }) => {
   const HeaderContent = (
     <Fragment>
@@ -361,8 +360,21 @@ const HomePage = ({
   );
 
   const onButtonClick = (discoverHome) => {
+    const modalContent = (
+      <Fragment>
+        <Heading size="subtitle">Please enter a location:</Heading>
+        <SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} />
+      </Fragment>
+    );
+    const onClose = () => {
+      setActiveDiscoverHome();
+      hideModal();
+    };
+
     setActiveDiscoverHome(discoverHome);
+    showModal(modalContent, onClose, 'searchBox');
   };
+
 
   const firstRowDiscoverHomesComponents = firstRowDiscoverHomes.map(discoverHome => (
     <DiscoverHomeTile
@@ -412,10 +424,6 @@ const HomePage = ({
     <Fragment>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
-        <Modal layout="searchBox" closeable onClose={() => setActiveDiscoverHome(null)} isOpen={isModalOpen}>
-          <Heading size="subtitle">Please enter a location:</Heading>
-          <SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} />
-        </Modal>
         <StyledSection title="How Seniorly Can Help You Find A Home" subtitle="" id="watch-video">
           <VideoThumbnailWrapper>
             {!ishowSlyWorksVideoPlaying &&
@@ -492,7 +500,7 @@ const HomePage = ({
             <CWTImage src={assetPath('images/home/companies-we-trust/AssistedLivingLocators_BW.png')} alt="Assisted Living Locators Logo" />
           </CWTColumnWrapper>
         </StyledSection>
-        <ConciergeContainer pathName={pathName} queryParams={queryParams} setQueryParams={setQueryParams} />
+        <ConciergeContainer history={history} pathName={pathName} queryParams={queryParams} setQueryParams={setQueryParams} />
         <SeoLinks title="Assisted living by Cities" links={ALSeoCities} />
         <SeoLinks title="Assisted living by State" links={ALSeoStates} />
       </TemplateContent>
@@ -502,7 +510,6 @@ const HomePage = ({
 };
 
 HomePage.propTypes = {
-  isModalOpen: bool,
   onLocationSearch: func,
   setActiveDiscoverHome: func,
   pathName: string,
@@ -510,6 +517,9 @@ HomePage.propTypes = {
   setQueryParams: func,
   ishowSlyWorksVideoPlaying: bool,
   toggleHowSlyWorksVideoPlaying: func,
+  showModal: func,
+  hideModal: func,
+  history: object,
 };
 
 export default HomePage;

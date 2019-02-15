@@ -10,7 +10,8 @@ import SlyEvent from 'sly/services/helpers/events';
 import { CUSTOM_PRICING } from 'sly/services/api/actions';
 import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
-import {getLastSegment, replaceLastSegment} from "sly/services/helpers/url";
+import { getLastSegment, replaceLastSegment } from "sly/services/helpers/url";
+import ModalController from 'sly/controllers/ModalController';
 
 const eventCategory = 'PricingWizard';
 
@@ -44,9 +45,9 @@ const PricingWizardPageContainer = ({
     return postUserAction(payload);
   };
 
-  const handleComplete = (data, toggleConfirmationModal) => {
+  const handleComplete = (data, openConfirmationModal) => {
     history.push(url);
-    toggleConfirmationModal('pricing');
+    openConfirmationModal();
     // return submitUserAction(data)
     //   .then(() => {
     //
@@ -55,13 +56,22 @@ const PricingWizardPageContainer = ({
 
   const userDetails = userAction ? userAction.userDetails : null;
   return (
-    <PricingWizardPage
-      community={community}
-      user={user}
-      userDetails={userDetails}
-      userActionSubmit={submitUserAction}
-      onComplete={handleComplete}
-    />
+    <ModalController>
+      {({
+        show,
+        hide,
+      }) => (
+        <PricingWizardPage
+          community={community}
+          user={user}
+          userDetails={userDetails}
+          userActionSubmit={submitUserAction}
+          onComplete={handleComplete}
+          showModal={show}
+          hideModal={hide}
+        />
+      )}
+    </ModalController>
   );
 };
 

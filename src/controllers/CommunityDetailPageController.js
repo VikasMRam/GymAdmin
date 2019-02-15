@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, object, bool, number, string } from 'prop-types';
+import { func, object, bool, number } from 'prop-types';
 
 import { connectController } from 'sly/controllers';
 import { withServerState } from 'sly/store';
@@ -16,17 +16,19 @@ import { getSearchParams } from 'sly/services/helpers/search';
 import { getDetail, getDetails } from 'sly/store/selectors';
 import { resourceDetailReadRequest, resourceListReadRequest, resourceUpdateRequest }
   from 'sly/store/resource/actions';
-import { forAuthenticated } from 'sly/store/authenticated/actions';
+import { forAuthenticated, ensureAuthenticated } from 'sly/store/authenticated/actions';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
-import { ensureAuthenticated } from 'sly/store/authenticated/actions';
 import { logWarn } from 'sly/services/helpers/logging';
 import {
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS,
 } from 'sly/constants/notifications';
+import NotificationController from 'sly/controllers/NotificationController';
+import ModalController from 'sly/controllers/ModalController';
 
+// todo: convert to container
 class CommunityDetailPageController extends Component {
   static propTypes = {
     set: func,
@@ -43,9 +45,6 @@ class CommunityDetailPageController extends Component {
     searchParams: object,
     isLoadingUserSaves: bool,
     setQueryParams: func,
-    isShareCommunityModalVisible: bool,
-    isAskAgentQuestionModalVisible: bool,
-    askAgentQuestionType: string,
     isHowSlyWorksVideoPlaying: bool,
     updateUserSave: func,
   };
@@ -217,39 +216,32 @@ class CommunityDetailPageController extends Component {
   };
 
   handleMediaGalleryShareClick = () => {
-    const { set, isShareCommunityModalVisible, community } = this.props;
+    const { community } = this.props;
     const { id } = community;
     const event = {
       action: 'click', category: 'shareCommunity', label: id,
     };
 
     SlyEvent.getInstance().sendEvent(event);
-    set({
-      isShareCommunityModalVisible: !isShareCommunityModalVisible,
-    });
   };
 
   handleShareCommunityModalClose = () => {
-    const { set, community } = this.props;
+    const { community } = this.props;
     const { id } = community;
     const event = {
       action: 'close-modal', category: 'shareCommunity', label: id,
     };
 
     SlyEvent.getInstance().sendEvent(event);
-    set({
-      isShareCommunityModalVisible: false,
-    });
   };
 
-  handleFloorPlanModalToggle= (floorPlan) => {
+  handleFloorPlanModalToggle = (floorPlan, isModalOpen) => {
     const { community } = this.props;
     const { id } = community;
-    let action = 'close-modal';
-    let value = null;
-    if (floorPlan) {
-      action = 'open-modal';
-      value = floorPlan.info.roomType || null;
+    const value = (floorPlan && floorPlan.info.roomType) || null;
+    let action = 'open-modal';
+    if (isModalOpen) {
+      action = 'close-modal';
     }
     const event = {
       action, category: 'floorPlan', label: id, value,
@@ -279,8 +271,8 @@ class CommunityDetailPageController extends Component {
     history.push(`/custom-pricing/${id}`);
   };
 
-  handleToggleAskAgentQuestionModal = (e, type = null) => {
-    const { community, set, isAskAgentQuestionModalVisible } = this.props;
+  handleToggleAskAgentQuestionModal = (isAskAgentQuestionModalVisible, type = null) => {
+    const { community } = this.props;
     const { id } = community;
     const action = isAskAgentQuestionModalVisible ? 'close-modal' : 'open-modal';
     let category = 'AskAgentQuestion';
@@ -292,10 +284,18 @@ class CommunityDetailPageController extends Component {
     };
 
     SlyEvent.getInstance().sendEvent(event);
-    set({
-      isAskAgentQuestionModalVisible: !isAskAgentQuestionModalVisible,
-      askAgentQuestionType: type,
-    });
+  };
+
+  handleToggleAskQuestionModal = (isAskQuestionModalVisible) => {
+    const { community } = this.props;
+    const { id } = community;
+    const action = isAskQuestionModalVisible ? 'close-modal' : 'open-modal';
+    const category = 'AskQuestion';
+    const event = {
+      action, category, label: id,
+    };
+
+    SlyEvent.getInstance().sendEvent(event);
   };
 
   handleUnsaveCommunity = (notifyInfo, notifyError) => {
@@ -312,11 +312,22 @@ class CommunityDetailPageController extends Component {
       });
   };
 
+  handleToggleAskQuestionModal = (isAskQuestionModalVisible) => {
+    const { community } = this.props;
+    const { id } = community;
+    const action = isAskQuestionModalVisible ? 'close-modal' : 'open-modal';
+    const category = 'AskQuestion';
+    const event = {
+      action, category, label: id,
+    };
+
+    SlyEvent.getInstance().sendEvent(event);
+  };
+
   render() {
     const {
       mediaGallerySlideIndex,
       isMediaGalleryFullscreenActive,
-      isShareCommunityModalVisible,
       user,
       community,
       userSaveOfCommunity,
@@ -325,8 +336,6 @@ class CommunityDetailPageController extends Component {
       searchParams,
       setQueryParams,
       userAction,
-      isAskAgentQuestionModalVisible,
-      askAgentQuestionType,
       isHowSlyWorksVideoPlaying,
     } = this.props;
 
@@ -353,42 +362,59 @@ class CommunityDetailPageController extends Component {
       !!userAction.profilesContacted.find(b => b.slug === id);
 
     return (
-      <CommunityDetailPage
-        user={user}
-        community={community}
-        location={location}
-        mediaGallerySlideIndex={mediaGallerySlideIndex}
-        onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
-        onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
-        onMediaGalleryFavouriteClick={this.handleMediaGalleryFavouriteClick}
-        onMediaGalleryShareClick={this.handleMediaGalleryShareClick}
-        onShareCommunityModalClose={this.handleShareCommunityModalClose}
-        isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
-        isShareCommunityModalVisible={isShareCommunityModalVisible}
-        onBackToSearchClicked={this.handleBackToSearchClick}
-        onReviewLinkClicked={this.handleReviewLinkClick}
-        onConciergeNumberClicked={this.handleConciergeNumberClick}
-        onLiveChatClicked={this.handleLiveChatClick}
-        onReceptionNumberClicked={this.handleReceptionNumberClick}
-        setModal={this.setModal}
-        userSave={userSaveOfCommunity}
-        searchParams={searchParams}
-        setQueryParams={setQueryParams}
-        onParamsRemove={this.handleParamsRemove}
-        onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
-        onBookATourClick={this.handleBookATourClick}
-        onGCPClick={this.handleGCPClick}
-        onToggleAskAgentQuestionModal={this.handleToggleAskAgentQuestionModal}
-        isAlreadyTourScheduled={isAlreadyTourScheduled}
-        isAlreadyPricingRequested={isAlreadyPricingRequested}
-        isAskAgentQuestionModalVisible={isAskAgentQuestionModalVisible}
-        askAgentQuestionType={askAgentQuestionType}
-        onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
-        userAction={userAction}
-        toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
-        isHowSlyWorksVideoPlaying={isHowSlyWorksVideoPlaying}
-        onUnsaveCommunity={this.handleUnsaveCommunity}
-      />
+      <NotificationController>
+        {({
+          notifyInfo,
+          notifyError,
+        }) => (
+          <ModalController>
+            {({
+              show,
+              hide,
+            }) => (
+              <CommunityDetailPage
+                user={user}
+                community={community}
+                location={location}
+                mediaGallerySlideIndex={mediaGallerySlideIndex}
+                onMediaGallerySlideChange={this.handleMediaGallerySlideChange}
+                onMediaGalleryToggleFullscreen={this.handleToggleMediaGalleryFullscreen}
+                onMediaGalleryFavouriteClick={this.handleMediaGalleryFavouriteClick}
+                onMediaGalleryShareClick={this.handleMediaGalleryShareClick}
+                onShareCommunityModalClose={this.handleShareCommunityModalClose}
+                isMediaGalleryFullscreenActive={isMediaGalleryFullscreenActive}
+                onBackToSearchClicked={this.handleBackToSearchClick}
+                onReviewLinkClicked={this.handleReviewLinkClick}
+                onConciergeNumberClicked={this.handleConciergeNumberClick}
+                onLiveChatClicked={this.handleLiveChatClick}
+                onReceptionNumberClicked={this.handleReceptionNumberClick}
+                setModal={this.setModal}
+                userSave={userSaveOfCommunity}
+                searchParams={searchParams}
+                setQueryParams={setQueryParams}
+                onParamsRemove={this.handleParamsRemove}
+                onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
+                onBookATourClick={this.handleBookATourClick}
+                onGCPClick={this.handleGCPClick}
+                onToggleAskAgentQuestionModal={this.handleToggleAskAgentQuestionModal}
+                onToggleAskQuestionModal={this.handleToggleAskQuestionModal}
+                isAlreadyTourScheduled={isAlreadyTourScheduled}
+                isAlreadyPricingRequested={isAlreadyPricingRequested}
+                onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
+                userAction={userAction}
+                toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}
+                isHowSlyWorksVideoPlaying={isHowSlyWorksVideoPlaying}
+                notifyInfo={notifyInfo}
+                notifyError={notifyError}
+                showModal={show}
+                hideModal={hide}
+                onUnsaveCommunity={this.handleUnsaveCommunity}
+                history={history}
+              />
+            )}
+          </ModalController>
+        )}
+      </NotificationController>
     );
   }
 }
@@ -458,9 +484,7 @@ const mapStateToProps = (state, {
 }) => {
   // default state for ssr
   const {
-    mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false,
-    isShareCommunityModalVisible = false, isAskAgentQuestionModalVisible, askAgentQuestionType,
-    isHowSlyWorksVideoPlaying,
+    mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false, isHowSlyWorksVideoPlaying,
   } = controller;
   const searchParams = getSearchParams(match, location);
   const communitySlug = getCommunitySlug(match);
@@ -477,9 +501,6 @@ const mapStateToProps = (state, {
     isMediaGalleryFullscreenActive,
     searchParams,
     setQueryParams,
-    isShareCommunityModalVisible,
-    isAskAgentQuestionModalVisible,
-    askAgentQuestionType,
     isHowSlyWorksVideoPlaying,
   };
 };
