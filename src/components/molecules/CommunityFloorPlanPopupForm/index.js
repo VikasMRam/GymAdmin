@@ -7,6 +7,8 @@ import { Field } from 'redux-form';
 import { size } from 'sly/components/themes';
 import { Heading, Block, Button, Image, Hr } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
+import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
+
 
 const DetailsSection = styled.div`
   padding: ${size('spacing.xLarge')};
@@ -91,8 +93,10 @@ const CommunityFloorPlanPopupForm = ({
           }
           {error && <Block palette="danger">{error}</Block>}
           <StyledButton type="submit" kind="jumbo" disabled={submitting}>Submit</StyledButton>
+
         </form>
       </DetailsSection>
+      <TosAndPrivacy/>
     </div>
   );
 };

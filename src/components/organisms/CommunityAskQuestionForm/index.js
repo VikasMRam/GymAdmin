@@ -7,6 +7,8 @@ import { size } from 'sly/components/themes';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import { Heading, Button } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
+import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
+
 
 const StyledButton = fullWidth(styled(Button)`
   margin-bottom: ${size('spacing.regular')};
@@ -49,8 +51,9 @@ const CommunityAskQuestionForm = ({
         Submit Question
       </StyledButton>
 
-      {/* <TosAndPrivacy /> */}
+      {<TosAndPrivacy />}
     </form>
+
   );
 };
 
