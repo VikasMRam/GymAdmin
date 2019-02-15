@@ -388,7 +388,6 @@ export default class CommunityDetailPage extends Component {
       isAlreadyPricingRequested,
       toggleHowSlyWorksVideoPlaying,
       isHowSlyWorksVideoPlaying,
-      onUnsaveCommunity,
       history,
     } = this.props;
 
