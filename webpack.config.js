@@ -10,7 +10,6 @@ const devServer = require('@webpack-blocks/dev-server2');
 const happypack = require('webpack-blocks-happypack');
 const serverSourceMap = require('webpack-blocks-server-source-map');
 const nodeExternals = require('webpack-node-externals');
-const AssetsByTypePlugin = require('webpack-assets-by-type-plugin');
 const ChildConfigPlugin = require('webpack-child-config-plugin');
 const SpawnPlugin = require('webpack-spawn-plugin');
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
@@ -25,6 +24,8 @@ const {
   webpack,
   group,
 } = require('@webpack-blocks/webpack2');
+
+const AssetsByTypeAndBundlePlugin = require('./private/webpack/AssestByTypeAndBundlePlugin');
 
 // defaults to dev env, otherwise specify with env vars
 const { STORYBOOK_GIT_BRANCH, GOOGLE_MAPS_API_KEY } = process.env;
@@ -76,7 +77,7 @@ console.info('Using config', JSON.stringify({
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
 const sourcePath = path.join(process.cwd(), SOURCE);
 const outputPath = path.join(process.cwd(), 'dist', 'public');
-const assetsPath = path.join(process.cwd(), 'dist', 'assets.json');
+const assetsPath = path.join(process.cwd(), 'dist', '[bundle].assets.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
 const dashboardEntryPath = path.join(sourcePath, 'dashboard.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');
@@ -86,7 +87,7 @@ const externalWidgetSourcePath = path.join(externalSourcePath, 'widget');
 const externalWidgetEntryPath = path.join(externalWidgetSourcePath, 'widget.js');
 const externalWidgetCssEntryPath = path.join(externalWidgetSourcePath, 'widget.css');
 // todo: need better approach than hardcoding assets
-const closeIconSvg = fs.existsSync(`${externalWidgetSourcePath}/close-regular.svg`) ? fs.readFileSync(`${externalWidgetSourcePath}/close-regular.svg`, 'utf8') : '';
+const closeIconSvg = fs.readFileSync(`${externalWidgetSourcePath}/close-regular.svg`, 'utf8');
 const externalWizardsEntryPath = path.join(externalSourcePath, 'wizards', 'index.js');
 const externalAssetsPath = path.join(process.cwd(), 'dist', 'external-assets.json');
 
@@ -120,24 +121,6 @@ const resolveModules = modules => () => ({
     modules: [].concat(modules, 'node_modules'),
   },
 });
-
-function ModifyAssetsPlugin() {}
-ModifyAssetsPlugin.prototype.apply = (compiler) => {
-  compiler.plugin('done', () => {
-    // always get latest file from disk; require has caching and hence it won't fetch latest file content
-    const assets = JSON.parse(fs.readFileSync(assetsPath));
-    const externalAssets = {};
-    const newAssets = Object.keys(assets).reduce((previous, type) => {
-      externalAssets[type] = externalAssets[type] || [];
-      externalAssets[type] = assets[type].filter(asset => asset.match('external/'));
-      const newPrevious = previous;
-      newPrevious[type] = previous[type].filter(asset => !asset.match('external/'));
-      return newPrevious;
-    }, assets);
-    fs.writeFileSync(assetsPath, JSON.stringify(newAssets));
-    fs.writeFileSync(externalAssetsPath, JSON.stringify(externalAssets));
-  });
-};
 
 const base = () =>
   group([
@@ -174,6 +157,7 @@ const base = () =>
       }),
     ]),
   ]);
+
 const devCORS = () =>
   group([
     env('development', [
@@ -190,6 +174,7 @@ const devCORS = () =>
       addPlugins([new webpack.NamedModulesPlugin()]),
     ]),
   ]);
+
 const uglifyJs = () =>
   group([
     env('production', [
@@ -248,6 +233,7 @@ const replaceExternalConstants = (text) => {
   }, text);
   return replacedText;
 };
+
 const externalWidget = () =>
   group([
     env('development', [
@@ -299,7 +285,7 @@ const client = createConfig([
   externalWidget(),
 
   addPlugins([
-    new AssetsByTypePlugin({ path: assetsPath }),
+    new AssetsByTypeAndBundlePlugin({ path: assetsPath }),
     // new ModifyAssetsPlugin(),
     new ChildConfigPlugin(server),
   ]),
