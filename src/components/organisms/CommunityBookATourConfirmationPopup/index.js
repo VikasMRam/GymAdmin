@@ -30,12 +30,17 @@ const SimilarCommunityTileWrapper = styled.div`
   }
 `;
 
+// https://dev.to/timhecker/grid-cell-issue-with-white-space-nowrap--text-overflow-ellipsis-52g6
 const SimilarCommunitiesWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: grid;
     grid-gap: 1.500rem;
     justify-content: center;
     grid-template-columns: 1fr 1fr;
+
+    > * {
+      min-width: 0;
+    }
   }
 `;
 
