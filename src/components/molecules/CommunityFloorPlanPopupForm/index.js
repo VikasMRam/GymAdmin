@@ -93,7 +93,7 @@ const CommunityFloorPlanPopupForm = ({
           }
           {error && <Block palette="danger">{error}</Block>}
           <StyledButton type="submit" kind="jumbo" disabled={submitting}>Submit</StyledButton>
-          <TosAndPrivacy/>
+          <TosAndPrivacy />
 
         </form>
       </DetailsSection>
