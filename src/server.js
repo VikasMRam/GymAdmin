@@ -215,6 +215,8 @@ app.use(async (req, res, next) => {
       }));
     }
   } catch (error) {
+    console.log('context', context);
+
     next(error);
   }
 });

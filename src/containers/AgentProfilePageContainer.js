@@ -7,6 +7,7 @@ import AgentProfilePage from 'sly/components/pages/AgentProfilePage';
 import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/resource/actions';
 import { getDetail } from 'sly/store/selectors';
 import withServerState from 'sly/store/withServerState';
+import { replaceLastSegment } from 'sly/services/helpers/url';
 
 const AgentProfilePageContainer = ({
   agent, user, userAction, postUserAction,
@@ -45,6 +46,18 @@ const mapPropsToActions = ({ match }) => ({
   userAction: resourceDetailReadRequest('userAction'),
 });
 
+const handleResponses = (responses, { location }, redirect) => {
+  const { agent } = responses;
+  agent(null, (error) => {
+    if (error.response.status === 404) {
+      // Not found so redirect to city page
+      redirect(replaceLastSegment(location.pathname), 301);
+      return null;
+    }
+    return Promise.reject(error);
+  });
+};
+
 AgentProfilePageContainer.propTypes = {
   agent: agentPropType,
   user: object,
@@ -52,7 +65,10 @@ AgentProfilePageContainer.propTypes = {
   postUserAction: func.isRequired,
 };
 
-export default withServerState(mapPropsToActions)(connect(
+export default withServerState(
+  mapPropsToActions,
+  handleResponses,
+)(connect(
   mapStateToProps,
   mapDispatchToProps,
 )(AgentProfilePageContainer));

@@ -7,6 +7,7 @@ import { parse as parseSearch } from 'query-string';
 
 import { isBrowser, isServer } from 'sly/config';
 import { isFSA, isResourceReadRequest } from 'sly/store/actions';
+import { logError } from 'sly/services/helpers/logging';
 
 const dispatchActions = (dispatch, handleResponses, actions) => {
   // get a map of all the resource names to promise
@@ -51,20 +52,20 @@ const serverStateDecorator = fetchState(
   }),
 );
 
+const getRedirect = ({ staticContext, history }) => (uri, status = 302) => {
+  if (staticContext) {
+    staticContext.status = status;
+  }
+  history.replace(uri);
+};
+
 export default function withServerState(
   mapPropsToActions = () => {},
   handleResponses = _ => _,
   ignoreSearch = [],
 ) {
   const getResponseHandler = ({ router }, props) => {
-    const { staticContext, history } = router;
-    const redirect = (uri, status = 302) => {
-      if (staticContext) {
-        staticContext.status = status;
-      }
-      history.replace(uri);
-    };
-    return promises => handleResponses(promises, props, redirect);
+    return promises => handleResponses(promises, props, getRedirect(router));
   };
 
   const mapDispatchToProps = (dispatch, props) => ({
@@ -110,7 +111,7 @@ export default function withServerState(
             .then(setServerState)
             .catch(setServerState);
         } else {
-          fetchData(this.context);
+          fetchData(this.context).catch(logError);
         }
       } else if (isBrowser) {
         cleanServerState();
@@ -120,12 +121,12 @@ export default function withServerState(
     componentWillUpdate(nextProps) {
       const { match, location, fetchData } = this.props;
       if (match.url !== nextProps.match.url) {
-        fetchData(this.context, nextProps);
+        fetchData(this.context, nextProps).catch(logError);
       } else {
         const prev = omit(parseSearch(location.search), ignoreSearch);
         const next = omit(parseSearch(nextProps.location.search), ignoreSearch);
         if (!isEqual(prev, next)) {
-          fetchData(this.context, nextProps);
+          fetchData(this.context, nextProps).catch(logError);
         }
       }
     }
