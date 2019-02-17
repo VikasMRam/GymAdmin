@@ -85,7 +85,7 @@ const mapStateToProps = (state, { location }) => {
   };
 };
 
-const mapPropsToActions = (dispatch, {location}) => {
+const mapPropsToActions = ({ location }) => {
   const qs = parseURLQueryParams(location.search);
   const searchParams = { toc: 'assisted-living', nearme: 'true', 'page-number': qs['page-number'] };
   return {
