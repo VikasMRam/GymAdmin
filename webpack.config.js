@@ -77,7 +77,7 @@ console.info('Using config', JSON.stringify({
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
 const sourcePath = path.join(process.cwd(), SOURCE);
 const outputPath = path.join(process.cwd(), 'dist', 'public');
-const assetsPath = path.join(process.cwd(), 'dist', '[bundle].assets.json');
+const assetsPath = path.join(process.cwd(), 'dist', 'assets.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
 const dashboardEntryPath = path.join(sourcePath, 'dashboard.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');

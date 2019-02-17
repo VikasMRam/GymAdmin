@@ -13,7 +13,7 @@ const getAssetsByType = (
   .filter(p => (new RegExp(`${type}$`).test(p)))
   .map(p => prependPath + p);
 
-const defaultPath = join(process.cwd(), 'assets.[bundle].json');
+const defaultPath = join(process.cwd(), 'assets.json');
 
 const ensureDir = (filePath) => {
   const name = dirname(filePath);
@@ -35,20 +35,16 @@ class AssetsByTypeAndBundlePlugin {
       const { output } = compiler.options;
       const stats = rawStats.toJson({ modules: false });
       const chunks = flatten(sortChunks(stats.chunks).map(chunk => chunk.files));
+      const assetsByBundle = {};
       Object.entries(stats.assetsByChunkName).forEach(([key, files]) => {
         const assets = flatMap([files]).sort((a, b) => chunks.indexOf(b) - chunks.indexOf(a));
-        const assetsByType = {
+        assetsByBundle[key] = {
           js: getAssetsByType(assets, 'js', output.publicPath),
           css: getAssetsByType(assets, 'css', output.publicPath),
         };
-        if (this.options.path.indexOf('[bundle]') === -1) {
-          throw new Error('assets path must include "[bundle]"');
-        }
-        const fileName = this.options.path.replace('[bundle]', key);
-        console.log(key, fileName);
-        ensureDir(fileName);
-        writeFileSync(fileName, JSON.stringify(assetsByType));
       });
+      ensureDir(this.options.path);
+      writeFileSync(this.options.path, JSON.stringify(assetsByBundle));
     });
   }
 }
