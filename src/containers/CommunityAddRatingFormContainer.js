@@ -4,16 +4,14 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { string, func, object } from 'prop-types';
 
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
-
 import {
   createValidator,
   required,
   email,
   notZero,
 } from 'sly/services/validation';
-
 import CommunityAddRatingForm from 'sly/components/organisms/CommunityAddRatingForm';
-import { THANK_YOU } from 'sly/constants/modalType';
+import Thankyou from 'sly/components/molecules/Thankyou';
 
 const validate = createValidator({
   comments: [required],
@@ -24,7 +22,7 @@ const validate = createValidator({
 
 const ReduxForm = reduxForm({
   form: 'CommunityAddRatingForm',
-  destroyOnUnmount: false,
+  destroyOnUnmount: true,
   validate,
 })(CommunityAddRatingForm);
 
@@ -35,11 +33,12 @@ class CommunityAddRatingFormContainer extends Component {
     addRating: func,
     loadCommunity: func,
     setModal: func,
+    showModal: func,
   };
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, addRating, loadCommunity, setModal,
+      communitySlug, addRating, loadCommunity, setModal, showModal,
     } = this.props;
     const {
       comments, value, name, email,
@@ -52,7 +51,8 @@ class CommunityAddRatingFormContainer extends Component {
       email,
     };
     return addRating(payload).then(() => {
-      setModal(THANK_YOU);
+      setModal(null);
+      showModal(<Thankyou subheading="Your review has been submitted for approval." />);
       loadCommunity(communitySlug);
     }).catch((r) => {
       // TODO: Need to set a proper way to handle server side errors
