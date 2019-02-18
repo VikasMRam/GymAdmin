@@ -231,7 +231,6 @@ export default class App extends Component {
                   {this.routes.map(route => <Route key={route.path} {...route} />)}
                   <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
                 </Switch>
-                <ModalContainer />
               </Router>
             </ThemeProvider>
           )}

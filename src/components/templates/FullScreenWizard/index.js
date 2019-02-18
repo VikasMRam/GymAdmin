@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import classes from 'classnames';
 import { string } from 'prop-types';
 
 import { size } from 'sly/components/themes';
+import ModalContainer from 'sly/containers/ModalContainer';
 
 export const FullScreenWizard = styled.div`
   .overlayHeader {
@@ -20,7 +21,7 @@ export const FullScreenWizard = styled.div`
       margin-left: ${size('spacing.xLarge')};
       margin-right: ${size('spacing.xLarge')};
       margin-top: ${size('spacing.xxLarge')};
-      
+
       @media screen and (min-width: ${size('breakpoint.mobile')}) {
         width: ${size('mobileLayout.col4')};
         margin-left: auto;
@@ -30,7 +31,7 @@ export const FullScreenWizard = styled.div`
       @media screen and (min-width: ${size('breakpoint.tablet')}) {
         width: ${size('tabletLayout.col6')};
       }
-      
+
       @media screen and (min-width: ${size('breakpoint.laptop')}) {
         width: ${size('layout.col6')};
       }
@@ -116,10 +117,13 @@ export const makeColumn = (Component) => {
 export const makeBody = (Component) => {
   function Body({ className, ...props }) {
     return (
-      <Component
-        className={classes('overlayBody', className)}
-        {...props}
-      />
+      <Fragment>
+        <Component
+          className={classes('overlayBody', className)}
+          {...props}
+        />
+        <ModalContainer />
+      </Fragment>
     );
   }
   Body.propTypes = {

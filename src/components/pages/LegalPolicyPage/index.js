@@ -10,7 +10,6 @@ import Footer from 'sly/components/organisms/Footer';
 import PPHTML from 'sly/components/pages/LegalPolicyPage/privacypolicytext';
 import TOSHTML from 'sly/components/pages/LegalPolicyPage/tostext';
 
-
 const DescriptionText = styled.div`
   color: ${palette('slate', 'filler')};
   margin-bottom: ${size('spacing.huge')};

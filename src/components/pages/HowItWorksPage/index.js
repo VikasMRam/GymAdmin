@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
-
 import { size, palette } from 'sly/components/themes';
 import { Icon, Hr, Heading, Block, Link, Image } from 'sly/components/atoms';
 import DiscoverTile from 'sly/components/molecules/DiscoverTile';
@@ -99,7 +98,7 @@ const CenterBottom = styled.div`
   flex-direction: column;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    margin: 0 auto;  
+    margin: 0 auto;
     width: ${size('layout.col8')};
   }
 
