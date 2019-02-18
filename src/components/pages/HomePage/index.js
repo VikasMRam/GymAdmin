@@ -16,6 +16,7 @@ import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import Footer from 'sly/components/organisms/Footer';
+import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 
 const HeroWrapper = styled.div`
   position: relative;
@@ -146,14 +147,7 @@ const StyledLink = styled(Link)`
   display: block;
 `;
 
-const StyledVideo = styled.video`
-  width: 100%!important;
-  max-height: 100%;
-  object-fit: fill;
-`;
-
-const VideoThumbnailWrapper = styled.div`
-  margin: auto;
+const VideoSection = StyledSection.extend`
   width: 100%;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -424,25 +418,14 @@ const HomePage = ({
     <Fragment>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
-        <StyledSection title="How Seniorly Can Help You Find A Home" subtitle="" id="watch-video">
-          <VideoThumbnailWrapper>
-            {!ishowSlyWorksVideoPlaying &&
-              <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.jpg')} onClick={toggleHowSlyWorksVideoPlaying} />
-            }
-            {ishowSlyWorksVideoPlaying &&
-              <StyledVideo
-                autoPlay
-                controls
-                controlsList="nodownload"
-                onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', 'home', e.target.currentTime)}
-                onPlay={e => sendEvent('howSlyWorksVideo', 'play', 'home', e.target.currentTime)}
-              >
-                <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
-                <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
-              </StyledVideo>
-            }
-          </VideoThumbnailWrapper>
-        </StyledSection>
+        <VideoSection title="How Seniorly Can Help You Find A Home" subtitle="" id="watch-video">
+          <HowSlyWorksVideo
+            isPlaying={ishowSlyWorksVideoPlaying}
+            onThumbnailClick={toggleHowSlyWorksVideoPlaying}
+            onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', 'home', e.target.currentTime)}
+            onPlay={e => sendEvent('howSlyWorksVideo', 'play', 'home', e.target.currentTime)}
+          />
+        </VideoSection>
         <Hr />
         <StyledSection title="Discover Homes Near You">
           <TwoColumnWrapper>
