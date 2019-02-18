@@ -25,11 +25,11 @@ export class Router extends Component {
     location: object,
     children: node,
     enableEvents: bool,
-  }
+  };
 
   static defaultProps = {
     enableEvents: true,
-  }
+  };
 
   componentDidMount() {
     const { pathname, search } = this.props.location;
