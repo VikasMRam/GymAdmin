@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
 import { getDetail } from 'sly/store/selectors';
+import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import { resourceDeleteRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
@@ -17,11 +18,12 @@ import Header from 'sly/components/organisms/Header';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 import ModalController from 'sly/controllers/ModalController';
+import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 
 const defaultHeaderItems = [
   { name: '(855) 866-4515', url: 'tel:+18558664515' },
   { name: 'Resources', url: '/resources' },
-  { name: 'How It Works', url: '/how-it-works' },
+  { name: 'How It Works' },
   { name: 'Saved' },
   { name: 'List Your Property', url: '/providers' },
 ];
@@ -50,6 +52,13 @@ const loginMenuItems = user => loginHeaderItems(user)
     : []);
 
 const menuItemHrIndices = [7, 10];
+
+const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
+  category,
+  action,
+  label,
+  value,
+});
 
 class HeaderContainer extends Component {
   static propTypes = {
@@ -109,6 +118,8 @@ class HeaderContainer extends Component {
       loginItem.onClick = () => ensureAuthenticated(() => {});
     }
 
+    const howItWorksItem = hItems.find(item => item.name === 'How It Works');
+
     const headerItems = [
       ...hItems,
       ...lhItems,
@@ -119,30 +130,41 @@ class HeaderContainer extends Component {
       ...lmItems,
     ];
 
+    const modalBody = (
+      <HowSlyWorksVideo
+        isPlaying
+        onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', 'header', e.target.currentTime)}
+        onPlay={e => sendEvent('howSlyWorksVideo', 'play', 'header', e.target.currentTime)}
+      />
+    );
+
     return (
-      <Fragment>
-        <Header
-          menuOpen={isDropdownOpen}
-          onMenuIconClick={toggleDropdown}
-          onMenuItemClick={toggleDropdown}
-          onHeaderBlur={toggleDropdown}
-          headerItems={headerItems}
-          menuItems={menuItems}
-          menuItemHrIndices={menuItemHrIndices}
-          className={className}
-        />
-        <ModalController>
-          {({
-            show,
-            hide,
-          }) => (
-            <NotificationController>
-              {({
-                notifyInfo,
-                messages,
-                dismiss,
-              }) => (
+      <ModalController>
+        {({
+          show,
+          hide,
+        }) => (
+          <NotificationController>
+            {({
+              notifyInfo,
+              messages,
+              dismiss,
+            }) => {
+              if (howItWorksItem) {
+                howItWorksItem.onClick = () => show(modalBody, null, 'fullScreen');
+              }
+              return (
                 <Fragment>
+                  <Header
+                    menuOpen={isDropdownOpen}
+                    onMenuIconClick={toggleDropdown}
+                    onMenuItemClick={toggleDropdown}
+                    onHeaderBlur={toggleDropdown}
+                    headerItems={headerItems}
+                    menuItems={menuItems}
+                    menuItemHrIndices={menuItemHrIndices}
+                    className={className}
+                  />
                   {user !== null && <SavedCommunitiesPopupController notifyInfo={notifyInfo} />}
                   <AuthContainer notifyInfo={notifyInfo} showModal={show} hideModal={hide} />
                   <Notifications messages={messages} dismiss={dismiss} />
@@ -150,11 +172,11 @@ class HeaderContainer extends Component {
                     {({ messages }) => messages.map(message => <BannerNotification key={message.id}>{message.content}</BannerNotification>)}
                   </BannerNotificationController>
                 </Fragment>
-              )}
-            </NotificationController>
-          )}
-        </ModalController>
-      </Fragment>
+              );
+            }}
+          </NotificationController>
+        )}
+      </ModalController>
     );
   }
 }

@@ -22,7 +22,6 @@ import {
   makeWrapper,
   makeGallery,
 } from 'sly/components/templates/CommunityDetailPageTemplate';
-import ConciergeController from 'sly/controllers/ConciergeController';
 import SaveCommunityContainer from 'sly/containers/SaveCommunityContainer';
 import CommunityStickyFooter from 'sly/components/organisms/CommunityStickyFooter';
 import CollapsibleSection, { MainSection, BottomSection } from 'sly/components/molecules/CollapsibleSection';
@@ -39,7 +38,6 @@ import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
 import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
-import AdTile from 'sly/components/molecules/AdTile';
 import Modal from 'sly/components/molecules/Modal';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
@@ -55,18 +53,14 @@ import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import CommunityCareService from 'sly/components/organisms/CommunityCareService';
 import CommunityExtraInfoSection from 'sly/components/molecules/CommunityExtraInfoSection';
 import IconItem from 'sly/components/molecules/IconItem';
-import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 import CommunityAskQuestionFormContainer from 'sly/containers/CommunityAskQuestionFormContainer';
 import CommunityLeaveAnAnswerFormContainer from 'sly/containers/CommunityLeaveAnAnswerFormContainer';
 import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabilityContainer';
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
+import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 
 const BackToSearch = styled.div`
   text-align: center
-`;
-
-const AdTileWrapper = styled.div`
-  margin-bottom: ${size('spacing.large')};
 `;
 
 const StyledCommunitySummary = styled(CommunitySummary)`
@@ -106,12 +100,6 @@ const StyledSection = styled(Section)`
 
 const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
   margin-bottom: ${size('spacing.xLarge')};
-`;
-
-const StyledVideo = styled.video`
-  width: 100%!important;
-  max-height: 100%;
-  object-fit: fill;
 `;
 
 const Header = makeHeader();
@@ -600,21 +588,12 @@ export default class CommunityDetailPage extends Component {
                 }
                 <TopCollapsibleSection title="How Seniorly Works">
                   <MainSection noPadding>
-                    {!isHowSlyWorksVideoPlaying &&
-                      <VideoThumbnail src={assetPath('images/how-sly-works-video-thumbnail.jpg')} onClick={toggleHowSlyWorksVideoPlaying} />
-                    }
-                    {isHowSlyWorksVideoPlaying &&
-                      <StyledVideo
-                        autoPlay
-                        controls
-                        controlsList="nodownload"
-                        onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', id, e.target.currentTime)}
-                        onPlay={e => sendEvent('howSlyWorksVideo', 'play', id, e.target.currentTime)}
-                      >
-                        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.mp4" type="video/mp4" />
-                        <source src="https://d1qiigpe5txw4q.cloudfront.net/appassets/seniorly_hiw_1.webm" type="video/webm" />
-                      </StyledVideo>
-                    }
+                    <HowSlyWorksVideo
+                      isPlaying={isHowSlyWorksVideoPlaying}
+                      onThumbnailClick={toggleHowSlyWorksVideoPlaying}
+                      onPause={e => sendEvent('howSlyWorksVideo', e.target.ended ? 'complete' : 'pause', id, e.target.currentTime)}
+                      onPlay={e => sendEvent('howSlyWorksVideo', 'play', id, e.target.currentTime)}
+                    />
                   </MainSection>
                 </TopCollapsibleSection>
                 {partnerAgent &&
