@@ -26,6 +26,7 @@ const {
 } = require('@webpack-blocks/webpack2');
 
 const AssetsByTypeAndBundlePlugin = require('./private/webpack/AssestByTypeAndBundlePlugin');
+const PrependPlugin = require('./private/webpack/PrependPlugin');
 
 // defaults to dev env, otherwise specify with env vars
 const { STORYBOOK_GIT_BRANCH, GOOGLE_MAPS_API_KEY } = process.env;
@@ -41,7 +42,6 @@ const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
 const DOMAIN = process.env.DOMAIN || 'lvh.me';
 const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8').trim() : '';
-const EXTERNAL_WIZARDS_PATH = process.env.EXTERNAL_WIZARDS_PATH || '/external/wizards';
 const SOURCE = process.env.SOURCE || 'src';
 const devDomain = `${HOST}:${DEV_PORT}/`;
 const isDev = NODE_ENV === 'development';
@@ -50,6 +50,7 @@ const FB_CLIENT_ID = process.env.FB_CLIENT_ID || '624602444328776';
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com';
 
 // replacements for widgets.js
+const EXTERNAL_WIZARDS_PATH = process.env.EXTERNAL_WIZARDS_PATH || '/external/wizards';
 const EXTERNAL_ASSET_URL = (isDev ? `${devDomain}external` : `${PUBLIC_PATH}/external`);
 const EXTERNAL_WIZARDS_ROOT_URL = HOST + EXTERNAL_WIZARDS_PATH;
 
@@ -77,7 +78,6 @@ console.info('Using config', JSON.stringify({
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
 const sourcePath = path.join(process.cwd(), SOURCE);
 const outputPath = path.join(process.cwd(), 'dist', 'public');
-const assetsPath = path.join(process.cwd(), 'dist', 'assets.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
 const dashboardEntryPath = path.join(sourcePath, 'dashboard.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');
@@ -89,7 +89,6 @@ const externalWidgetCssEntryPath = path.join(externalWidgetSourcePath, 'widget.c
 // todo: need better approach than hardcoding assets
 const closeIconSvg = fs.readFileSync(`${externalWidgetSourcePath}/close-regular.svg`, 'utf8');
 const externalWizardsEntryPath = path.join(externalSourcePath, 'wizards', 'index.js');
-const externalAssetsPath = path.join(process.cwd(), 'dist', 'external-assets.json');
 
 const when = (condition, setters) =>
   condition ? group(setters) : () => _ => _;
@@ -143,7 +142,6 @@ const base = () =>
       'process.env.DOMAIN': DOMAIN,
       'process.env.GOOGLE_MAPS_API_KEY': GOOGLE_MAPS_API_KEY,
       'process.env.VERSION': VERSION,
-      'process.env.EXTERNAL_WIZARDS_PATH': EXTERNAL_WIZARDS_PATH,
       'process.env.FB_CLIENT_ID': FB_CLIENT_ID,
       'process.env.GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID,
     }),
@@ -187,6 +185,21 @@ const uglifyJs = () =>
     ]),
   ]);
 
+const clientConfigs = {
+  wizards: {
+    ssr: false,
+    path: '/wizard*',
+  },
+  dashboard: {
+    ssr: true,
+    path: '/dashboard*',
+  },
+  client: {
+    ssr: true,
+    path: '*',
+  },
+};
+
 const server = createConfig([
   base(),
   entryPoint({ server: serverEntryPath }),
@@ -195,9 +208,8 @@ const server = createConfig([
     libraryTarget: 'commonjs2',
   }),
   addPlugins([
-    new webpack.BannerPlugin({
-      banner: `global.assets = require("${assetsPath}");global.externalAssets = require("${externalAssetsPath}");`,
-      raw: true,
+    new PrependPlugin({
+      prepend: () => `global.clientConfigs = ${JSON.stringify(clientConfigs, null, 2)}\n`,
     }),
   ]),
   () => ({
@@ -279,13 +291,13 @@ const client = createConfig([
   entryPoint({
     client: clientEntryPath,
     dashboard: dashboardEntryPath,
-    'external/wizards': externalWizardsEntryPath,
+    wizards: externalWizardsEntryPath,
   }),
 
   externalWidget(),
 
   addPlugins([
-    new AssetsByTypeAndBundlePlugin({ path: assetsPath }),
+    new AssetsByTypeAndBundlePlugin({ output: clientConfigs }),
     // new ModifyAssetsPlugin(),
     new ChildConfigPlugin(server),
   ]),

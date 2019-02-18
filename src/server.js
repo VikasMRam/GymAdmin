@@ -25,6 +25,8 @@ import App from 'sly/components/App';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 
+// global.clientConfigs is injected by webpack
+
 const renderApp = ({
   store, context, location, sheet,
 }) => {
@@ -75,20 +77,15 @@ if (publicPath.match(/^\//)) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
-const DASHBOARD_PATH = '/dashboard';
-
-app.get(`${externalWizardsPath}*`, (req, res) => {
-  const content = '';
-  const { externalAssets } = global;
-  res.send(renderHtml({
-    content,
-    assets: externalAssets,
-  }));
+Object.values(global.clientConfigs).forEach((clientConfig) => {
+  app.use(clientConfig.path, (req, res, next) => {
+    req.clientConfig = clientConfig;
+    next('route');
+  });
 });
 
+// headers
 app.use(async (req, res, next) => {
-  const api = apiService.create();
-
   const cookies = [req.headers.cookie];
   const setCookie = createSetCookie(res, cookies);
 
@@ -128,7 +125,8 @@ app.use(async (req, res, next) => {
       cumul.push(`${key}:${req.query[key]}`);
     }
     return cumul;
-  }, []).join(',');
+  }, [])
+    .join(',');
 
   if (!req.cookies.utm && utmStr) {
     setCookie('utm', utmStr);
@@ -138,14 +136,6 @@ app.use(async (req, res, next) => {
     'max-age=0, private, must-revalidate',
     'no-cache="set-cookie"',
   ]);
-
-  api.setHeader('cookie', cookies.join('; '));
-  api.setHeader('user-agent', req.headers['user-agent']);
-  api.setHeader('x-is-sly-ssr', 'true');
-  api.setHeader(
-    'x-forwarded-for',
-    req.headers['x-forwarded-for'] || req.connection.remoteAddress
-  );
 
   const hmac = crypto.createHmac('sha256', slyUUID);
   const slyUUIDHash = hmac.digest('hex');
@@ -160,6 +150,16 @@ app.use(async (req, res, next) => {
       modifiedCumul[key] = variant;
       return modifiedCumul;
     }, {});
+
+  const api = apiService.create();
+
+  api.setHeader('cookie', cookies.join('; '));
+  api.setHeader('user-agent', req.headers['user-agent']);
+  api.setHeader('x-is-sly-ssr', 'true');
+  api.setHeader(
+    'x-forwarded-for',
+    req.headers['x-forwarded-for'] || req.connection.remoteAddress
+  );
 
   const store = configureStore({ experiments: userExperiments }, { api });
   const sheet = new ServerStyleSheet();
@@ -204,7 +204,7 @@ app.use(async (req, res, next) => {
     if (context.url) {
       res.redirect(301, context.url);
     } else {
-      const { assets } = global;
+      const { assets } = req.clientConfig;
       const initialState = store.getState();
       res.send(renderHtml({
         serverState,
@@ -232,10 +232,7 @@ app.use((err, req, res, next) => {
   try {
     const errorContent = getErrorContent(err);
     const content = renderToStaticMarkup(sheet.collectStyles(errorContent));
-    const assets = {
-      ...global.assets,
-      js: [],
-    };
+    const { assets } = req.clientConfig;
     res.status(500).send(renderHtml({ content, sheet, assets }));
     next(err);
   } catch (otherError) {
