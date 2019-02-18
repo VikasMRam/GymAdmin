@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -32,7 +32,9 @@ const BackToSearch = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const Thankyou = ({ community, onClose }) => {
+const Thankyou = ({
+  community, heading, subheading, onClose,
+}) => {
   let backToSearch = null;
   if (community) {
     const { address, propInfo } = community;
@@ -52,10 +54,8 @@ const Thankyou = ({ community, onClose }) => {
   return (
     <Wrapper>
       <StyledIcon icon="logo" size="xLarge" />
-      <StyledHeading>Thank you!</StyledHeading>
-      <StyledBlock>
-        A Seniorly Guide will reach out to you with local expertise and support to ensure you find the right fit for your needs. There is no cost to you!
-      </StyledBlock>
+      <StyledHeading>{heading}</StyledHeading>
+      <StyledBlock>{subheading}</StyledBlock>
       {backToSearch}
       {onClose && <Button onClick={onClose} kind="jumbo">Done</Button>}
     </Wrapper>
@@ -65,6 +65,13 @@ const Thankyou = ({ community, onClose }) => {
 Thankyou.propTypes = {
   community: communityPropType,
   onClose: func,
+  heading: string,
+  subheading: string,
+};
+
+Thankyou.defaultProps = {
+  heading: 'Thank you!',
+  subheading: 'A Seniorly Guide will reach out to you with local expertise and support to ensure you find the right fit for your needs. There is no cost to you!',
 };
 
 export default Thankyou;

@@ -389,6 +389,7 @@ export default class CommunityDetailPage extends Component {
       toggleHowSlyWorksVideoPlaying,
       isHowSlyWorksVideoPlaying,
       history,
+      showModal,
     } = this.props;
 
     const {
@@ -515,7 +516,7 @@ export default class CommunityDetailPage extends Component {
                   >
                     <MainSection>
                       {autoHighlights.map(item => (
-                        <IconItemWrapper>
+                        <IconItemWrapper key={item}>
                           <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
                         </IconItemWrapper>))
                       }
@@ -748,7 +749,7 @@ export default class CommunityDetailPage extends Component {
                   isOpen={modal === ADD_RATING}
                   closeable
                 >
-                  <CommunityAddRatingFormContainer user={user} communitySlug={id} communityName={name} setModal={setModal} />
+                  <CommunityAddRatingFormContainer user={user} communitySlug={id} communityName={name} setModal={setModal} showModal={showModal} />
                 </Modal>
               </Body>
               <Column>
