@@ -10,11 +10,12 @@ import addGlobalStyles from './setGlobalStyles';
 import { Controller as CareAssessmentController } from './careAssessment';
 
 import theme from 'sly/components/themes/default';
-import { externalWizardsPath } from 'sly/config';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Router from 'sly/components/molecules/Router';
 
 addGlobalStyles();
+
+const WIZARD_PATH = '/external/wizards'
 
 export default class WizardApp extends Component {
   static childContextTypes = {
@@ -27,7 +28,7 @@ export default class WizardApp extends Component {
 
   routes = [
     {
-      path: `${externalWizardsPath}/caw`,
+      path: `${WIZARD_PATH}/caw`,
       component: CareAssessmentController,
       exact: true,
     },

@@ -1,6 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-// https://github.com/diegohaz/arc/wiki/Example-app
-// for less frustration - https://stackoverflow.com/questions/46270984/warning-failed-prop-type-invalid-prop-children-of-type-object-supplied-to
 import 'babel-polyfill';
 import 'react-hot-loader/patch';
 import React from 'react';

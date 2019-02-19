@@ -5,32 +5,33 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { ServerStateProvider } from 'react-router-server';
+import Modal from 'react-modal';
 
 import configureStore from 'sly/store/configure';
-import { basename, host, authTokenUrl } from 'sly/config';
-import { getOrigin } from 'sly/services/helpers/url';
+import { basename } from 'sly/config';
 import api from 'sly/services/api';
-import App from 'sly/components/DashboardApp';
+import DashboardApp from 'sly/components/DashboardApp';
 
-const store = configureStore({}, { api: api.create({ credentials: 'include' }) });
+Modal.setAppElement('#app');
+
+const serverState = window.__SERVER_STATE__;
+const initialState = window.__INITIAL_STATE__;
+const store = configureStore(initialState, { api: api.create({ credentials: 'include' }) });
 
 const renderApp = () => (
-  <Provider store={store}>
-    <BrowserRouter basename={basename}>
-      <App />
-    </BrowserRouter>
-  </Provider>
+  <ServerStateProvider state={serverState}>
+    <Provider store={store}>
+      <BrowserRouter basename={basename}>
+        <DashboardApp />
+      </BrowserRouter>
+    </Provider>
+  </ServerStateProvider>
 );
 
 const root = document.getElementById('app');
-const origin = getOrigin();
 
-if (origin.indexOf(host) !== -1) {
-  fetch(authTokenUrl, { credentials: 'same-origin' })
-    .then(() => render(renderApp(), root));
-} else {
-  console.warn('Javascript not loading because CORS: got', origin, 'but was expecting', host);
-}
+render(renderApp(), root);
 
 if (module.hot) {
   module.hot.accept('components/DashboardApp', () => {
