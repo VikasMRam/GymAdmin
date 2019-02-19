@@ -191,6 +191,7 @@ export const getHelmetForCommunityPage = (community, location) => {
   } = location;
 
   const ratesProvided = (rates && rates === 'Provided');
+  const canonicalUrl = `${host}${url.pathname}`;
 
   let toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
   if (typeof toc === 'undefined'){
@@ -235,7 +236,7 @@ export const getHelmetForCommunityPage = (community, location) => {
       {imageUrl && <meta content={imageUrl} property="twitter:image:src" /> }
 
 
-      <link rel="canonical" href={url} />
+      <link rel="canonical" href={canonicalUrl} />
       {
         search && search.length > 0 && <meta name="robots" content="noindex"/>
       }
