@@ -10,9 +10,12 @@ import IconButton from 'sly/components/molecules/IconButton';
 const closeButtonOutsideLayouts = ['gallery', 'fullScreen'];
 const noPaddingLayouts = ['noPadding', 'wizard'];
 
+// https://www.drupal.org/project/drupal/issues/2707291#comment-12797758
 injectGlobal`
   body.ReactModal__Body--open {
     overflow: hidden;
+    position: fixed;
+    width: 100%;
   }
 `;
 
