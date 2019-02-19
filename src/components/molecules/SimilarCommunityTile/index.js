@@ -98,7 +98,12 @@ const SimilarCommunityTile = ({ similarProperty, onClick, borderless }) => {
   let { imageUrl } = similarProperty;
   const { name } = similarProperty;
   if (!imageUrl || imageUrl.indexOf('maps.googleapis.com/maps/api/streetview') > -1) {
-    imageUrl = communityDefaultImages[similarProperty.communitySize];
+    /* default image */
+    let key = 'up to 20 Beds';
+    if (similarProperty.communitySize && similarProperty.communitySize !== '') {
+      key = similarProperty.communitySize;
+    }
+    imageUrl = communityDefaultImages[key];
   }
 
   return (
