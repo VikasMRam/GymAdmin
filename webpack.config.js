@@ -78,6 +78,7 @@ console.info('Using config', JSON.stringify({
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
 const sourcePath = path.join(process.cwd(), SOURCE);
 const outputPath = path.join(process.cwd(), 'dist', 'public');
+const clientConfigsPath = path.join(process.cwd(), 'dist', 'clientConfigs.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
 const dashboardEntryPath = path.join(sourcePath, 'dashboard.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');
@@ -185,20 +186,24 @@ const uglifyJs = () =>
     ]),
   ]);
 
-const clientConfigs = {
-  wizards: {
+// order matters to how the routes are mounted
+const clientConfigs = [
+  {
+    bundle: 'wizards',
     ssr: false,
-    path: '/wizard*',
+    path: '/external/wizards*',
   },
-  dashboard: {
+  {
+    bundle: 'dashboard',
     ssr: true,
     path: '/dashboard*',
   },
-  client: {
+  {
+    bundle: 'client',
     ssr: true,
     path: '*',
   },
-};
+];
 
 const server = createConfig([
   base(),
@@ -209,7 +214,7 @@ const server = createConfig([
   }),
   addPlugins([
     new PrependPlugin({
-      prepend: () => `global.clientConfigs = ${JSON.stringify(clientConfigs, null, 2)}\n`,
+      prepend: () => `global.clientConfigs = require("${clientConfigsPath}");\n`,
     }),
   ]),
   () => ({
@@ -297,8 +302,10 @@ const client = createConfig([
   externalWidget(),
 
   addPlugins([
-    new AssetsByTypeAndBundlePlugin({ output: clientConfigs }),
-    // new ModifyAssetsPlugin(),
+    new AssetsByTypeAndBundlePlugin({
+      path: clientConfigsPath,
+      clientConfigs,
+    }),
     new ChildConfigPlugin(server),
   ]),
 

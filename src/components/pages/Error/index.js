@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { number } from 'prop-types';
+import React, { Component, Fragment } from 'react';
+import { number, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
@@ -42,25 +42,41 @@ const getTextError = (errorCode) => {
   return text;
 };
 
-const ErrorPage = ({ errorCode }) => (
-  <Fragment>
-    <TemplateHeader><HeaderContainer /></TemplateHeader>
-    <TemplateContent>
-      <Wrapper>
-        <IWrapper>{getTextError(errorCode)}</IWrapper>
-        <div>
-          Head back to our
-          <Link href="/"> Homepage </Link> or
-          <Link href="/contact"> Contact Us </Link>
-        </div>
-      </Wrapper>
-    </TemplateContent>
-    <Footer />
-  </Fragment>
-);
+export default class ErrorPage extends Component {
+  static contextTypes = {
+    router: object,
+  };
 
-ErrorPage.propTypes = {
-  errorCode: number.isRequired,
-};
+  static propTypes = {
+    errorCode: number.isRequired,
+  };
 
-export default ErrorPage;
+  componentWillMount() {
+    const { errorCode } = this.props;
+    const { router } = this.context;
+    if (router.staticContext) {
+      router.staticContext.status = errorCode;
+    }
+  }
+
+  render() {
+    const { errorCode } = this.props;
+    return (
+      <Fragment>
+        <TemplateHeader><HeaderContainer /></TemplateHeader>
+        <TemplateContent>
+          <Wrapper>
+            <IWrapper>{getTextError(errorCode)}</IWrapper>
+            <div>
+              Head back to our
+              <Link href="/"> Homepage </Link> or
+              <Link href="/contact"> Contact Us </Link>
+            </div>
+          </Wrapper>
+        </TemplateContent>
+        <Footer />
+      </Fragment>
+    );
+  }
+}
+
