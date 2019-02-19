@@ -124,7 +124,7 @@ app.use((req, res, next) => {
   const { ssr, assets, bundle } = req.clientConfig;
   if (!ssr) {
     const renderApp = getAppRenderer(bundle);
-    const { html: content } = renderApp;
+    const { html: content } = renderApp();
     res.send(renderHtml({
       content,
       assets,
