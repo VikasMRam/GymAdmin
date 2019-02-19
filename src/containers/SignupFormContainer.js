@@ -3,14 +3,13 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { connect } from 'react-redux';
 import { func, bool } from 'prop-types';
 
-import { createValidator, required, email } from 'sly/services/validation';
+import { createValidator, required, email, minLength } from 'sly/services/validation';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
-
 import SignupForm from 'sly/components/organisms/SignupForm';
 
 const validate = createValidator({
   email: [required, email],
-  password: [required],
+  password: [required, minLength(8)],
 });
 
 const ReduxForm = reduxForm({

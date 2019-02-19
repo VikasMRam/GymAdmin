@@ -7,11 +7,9 @@ import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 
 import { enableExperimentsDebugger, isTest } from 'sly/config';
-
 import SlyEvent from 'sly/services/helpers/events';
 import { size } from 'sly/components/themes';
 import { getExperiment } from 'sly/store/selectors';
-
 import { selectedExperimentVariants } from 'sly/services/experiments/helpers';
 
 const DebugWrapper = styled.div`
@@ -38,7 +36,6 @@ export class Experiment extends Component {
   };
 
   componentWillMount() {
-    this.sendExperimentEvent('launch_experiement');
     // read query string: ?experimentEvaluations=Organisms_Concierge_Calendly:original_flow,Organisms_Footer_Calendly:original_flow
     this.experimentsOverrides = {};
     if (isTest) {

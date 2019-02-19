@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { string } from 'prop-types';
 import styled from 'styled-components';
 import classes from 'classnames';
@@ -8,6 +8,7 @@ import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import FooterOrganism from 'sly/components/organisms/Footer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
+import ModalContainer from 'sly/containers/ModalContainer';
 
 export const CommunityDetailPageTemplate = styled.main`
   .overlayWrapper {
@@ -188,10 +189,13 @@ export const makeBody = (Component) => {
 export const makeFooter = () => {
   function Footer({ className, ...props }) {
     return (
-      <FooterOrganism
-        className={classes('overlayFooter', className)}
-        {...props}
-      />
+      <Fragment>
+        <FooterOrganism
+          className={classes('overlayFooter', className)}
+          {...props}
+        />
+        <ModalContainer />
+      </Fragment>
     );
   }
   Footer.propTypes = {
