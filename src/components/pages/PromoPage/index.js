@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { bool, func } from 'prop-types';
 
-
 import { size, assetPath, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';

@@ -14,6 +14,8 @@ import SearchMap from 'sly/components/organisms/SearchMap';
 import IconButton from 'sly/components/molecules/IconButton';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import pad from 'sly/components/helpers/pad';
+import CommunityFilterListContainer
+  from 'sly/containers/CommunityFilterListContainer';
 
 const TopWrapper = pad(styled.div`
   display: flex;
@@ -97,9 +99,8 @@ const CommunitySearchPage = ({
   const handleModalFilterClick = () => {
     const modalContent = (
       <Fragment>
-        <CommunityFilterList
+        <CommunityFilterListContainer
           onFieldChange={onParamsChange}
-          searchParams={searchParams}
           toggleMap={toggleMap}
           isMapView={isMapView}
           isModalView
