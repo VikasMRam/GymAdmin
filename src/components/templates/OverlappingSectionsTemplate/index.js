@@ -5,7 +5,6 @@ import { size, assetPath, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import { Image, Heading, Block } from 'sly/components/atoms';
-import ModalContainer from 'sly/containers/ModalContainer';
 
 const FixedWidthContainer = styled.div`
   width: 100%;
@@ -123,7 +122,6 @@ const OverlappingSectionsTemplate = ({
       {children}
     </TemplateContent>
     {footer}
-    <ModalContainer />
   </Fragment>
 );
 

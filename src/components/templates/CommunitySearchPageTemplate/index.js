@@ -6,7 +6,6 @@ import { size } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import Footer from 'sly/components/organisms/Footer';
-import ModalContainer from 'sly/containers/ModalContainer';
 
 const TwoColumnWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -46,7 +45,6 @@ const CommunitySearchPageTemplate = ({
       </TwoColumnWrapper>
     </TemplateContent>
     <Footer />
-    <ModalContainer />
   </Fragment>
 );
 
