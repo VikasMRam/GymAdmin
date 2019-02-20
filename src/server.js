@@ -283,8 +283,6 @@ app.use(async (req, res, next) => {
       }));
     }
   } catch (error) {
-    console.log('context', context);
-
     next(error);
   }
 });
@@ -292,15 +290,11 @@ app.use(async (req, res, next) => {
 // render error
 app.use((err, req, res, next) => {
   const sheet = new ServerStyleSheet();
-  try {
-    const errorContent = getErrorContent(err);
-    const content = renderToStaticMarkup(sheet.collectStyles(errorContent));
-    const { assets } = req.clientConfig;
-    res.status(500).send(renderHtml({ content, sheet, assets }));
-    next(err);
-  } catch (otherError) {
-    next(otherError);
-  }
+  const errorContent = getErrorContent(err);
+  const content = renderToStaticMarkup(sheet.collectStyles(errorContent));
+  const { assets } = req.clientConfig;
+  res.status(500).send(renderHtml({ content, sheet, assets }));
+  next(err);
 });
 
 // error log
