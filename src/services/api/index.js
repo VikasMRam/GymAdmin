@@ -4,18 +4,17 @@ import merge from 'lodash/merge';
 
 import { apiUrl, authTokenUrl } from 'sly/config';
 import genUri from 'sly/services/api/genUri';
-import { logWarn } from "sly/services/helpers/logging";
+import { logWarn } from 'sly/services/helpers/logging';
 
 export const checkStatus = (response) => {
   if (response.ok) {
     return response;
   }
-  const error = new Error(`${response.status} ${response.statusText}`);
-  if (response.headers && response.headers._headers && response.headers._headers.location ) {
-    error.location = response.headers._headers.location[0];
-  }
 
-  const { status, headers } = response
+  const error = new Error(`${response.status} ${response.statusText}`);
+  error.location = response.headers.get('location');
+
+  const { status, headers } = response;
   error.response = { status, headers };
 
   error.response = response;

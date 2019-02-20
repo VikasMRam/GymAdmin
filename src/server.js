@@ -29,7 +29,9 @@ import DashboardApp from 'sly/components/DashboardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 
-const makeAppRenderer = renderedApp => ({ store, context, location, sheet }) => {
+const makeAppRenderer = renderedApp => ({
+  store, context, location, sheet,
+}) => {
   const app = sheet.collectStyles((
     <Provider store={store}>
       <StaticRouter basename={basename} context={context} location={location}>

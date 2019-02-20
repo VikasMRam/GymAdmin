@@ -32,6 +32,7 @@ export const logError = (e) => {
 export const logWarn = (e) => {
   if (isBrowser) {
     console.warn(e);
+  } else {
+    console.warn(JSON.stringify(cleanError(e)));
   }
-  console.warn(JSON.stringify(cleanError(e)));
 };
