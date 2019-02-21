@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { reducer as form } from 'redux-form';
 import { reducer as thunk } from 'redux-saga-thunk';
+import { reducer as bees } from 'redux-bees';
 
 import entities from './entities/reducer';
 import modal from './modal/reducer';
@@ -11,9 +12,10 @@ import searchBox from './searchBox/reducer';
 import controller from './controller/reducer';
 import chatBox from './chatBox/reducer';
 
-const reducers = {
+export default combineReducers({
   form,
   thunk,
+  bees,
   entities,
   modal,
   authenticated,
@@ -22,7 +24,5 @@ const reducers = {
   searchBox,
   controller,
   chatBox,
-};
-
-export default combineReducers(reducers);
+});
 

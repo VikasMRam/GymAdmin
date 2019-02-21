@@ -134,6 +134,7 @@
     "react-transition-group": "^2.5.0",
     "redbox-react": "^1.6.0",
     "redux": "^3.6.0",
+    "redux-bees": "^0.1.10",
     "redux-form": "^7.2.1",
     "redux-logger": "^3.0.6",
     "redux-object": "0.5.5",
