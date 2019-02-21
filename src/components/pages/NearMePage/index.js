@@ -15,7 +15,6 @@ import { getTocSeoLabel } from 'sly/services/helpers/search';
 import CommunitySearchList from 'sly/components/organisms/CommunitySearchList';
 import Link from 'sly/components/atoms/Link';
 
-
 const HeroWrapper = styled.div`
   position: relative;
   background-color: ${palette('slate', 'stroke')};

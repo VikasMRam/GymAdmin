@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { func, object, bool, number } from 'prop-types';
+import { connect } from 'react-redux';
 
-import { connectController } from 'sly/controllers';
 import { withServerState } from 'sly/store';
 import SlyEvent from 'sly/services/helpers/events';
 import {
@@ -29,7 +29,7 @@ import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 
 // todo: convert to container
-class CommunityDetailPageController extends Component {
+class CommunityDetailPageContainer extends Component {
   static propTypes = {
     set: func,
     community: object,
@@ -38,15 +38,18 @@ class CommunityDetailPageController extends Component {
     errorCode: number,
     history: object,
     location: object,
-    mediaGallerySlideIndex: number,
-    isMediaGalleryFullscreenActive: bool,
     user: object,
     isQuestionModalOpenValue: bool,
     searchParams: object,
     isLoadingUserSaves: bool,
     setQueryParams: func,
-    isHowSlyWorksVideoPlaying: bool,
     updateUserSave: func,
+  };
+
+  state = {
+    mediaGallerySlideIndex: 0,
+    isMediaGalleryFullscreenActive: false,
+    isHowSlyWorksVideoPlaying: false,
   };
 
   setModal = (value) => {
@@ -126,9 +129,12 @@ class CommunityDetailPageController extends Component {
   };
 
   handleToggleHowSlyWorksVideoPlaying = () => {
-    const { isHowSlyWorksVideoPlaying, set, community } = this.props;
+    const { community } = this.props;
+    const { isHowSlyWorksVideoPlaying } = this.state;
     const { id } = community;
-    set({ isHowSlyWorksVideoPlaying: !isHowSlyWorksVideoPlaying });
+
+    this.setState({ isHowSlyWorksVideoPlaying: !isHowSlyWorksVideoPlaying });
+
     const event = {
       action: 'start', category: 'howSlyWorksVideo', label: id,
     };
@@ -139,7 +145,7 @@ class CommunityDetailPageController extends Component {
   };
 
   handleMediaGallerySlideChange = (slideIndex, fromMorePictures) => {
-    const { set, community } = this.props;
+    const { community } = this.props;
     if (fromMorePictures) {
       const { id } = community;
       const { gallery = {}, videoGallery = {} } = community;
@@ -151,15 +157,15 @@ class CommunityDetailPageController extends Component {
       };
       SlyEvent.getInstance().sendEvent(event);
     }
-    set({
+    this.setState({
       mediaGallerySlideIndex: slideIndex,
     });
   };
 
   handleToggleMediaGalleryFullscreen = (fromMorePictures, isVideo, fromSeeMoreButton) => {
-    const {
-      set, isMediaGalleryFullscreenActive, community, mediaGallerySlideIndex,
-    } = this.props;
+    const { community } = this.props;
+    const { isMediaGalleryFullscreenActive, mediaGallerySlideIndex } = this.state;
+
     const { id, gallery = {}, videoGallery = {} } = community;
     const images = gallery.images || [];
     const videos = videoGallery.videos || [];
@@ -193,7 +199,7 @@ class CommunityDetailPageController extends Component {
       }
     }
 
-    set({
+    this.setState({
       isMediaGalleryFullscreenActive: !isMediaGalleryFullscreenActive,
     });
   };
@@ -326,8 +332,6 @@ class CommunityDetailPageController extends Component {
 
   render() {
     const {
-      mediaGallerySlideIndex,
-      isMediaGalleryFullscreenActive,
       user,
       community,
       userSaveOfCommunity,
@@ -336,8 +340,13 @@ class CommunityDetailPageController extends Component {
       searchParams,
       setQueryParams,
       userAction,
-      isHowSlyWorksVideoPlaying,
     } = this.props;
+
+    const {
+      mediaGallerySlideIndex,
+      isMediaGalleryFullscreenActive,
+      isHowSlyWorksVideoPlaying,
+    } = this.state;
 
     if (serverState instanceof Error) {
       const errorCode = (serverState.response && serverState.response.status) || 500;
@@ -480,12 +489,9 @@ const ignoreSearchParams = [
 ];
 
 const mapStateToProps = (state, {
-  match, location, history, controller,
+  match, location, history,
 }) => {
   // default state for ssr
-  const {
-    mediaGallerySlideIndex = 0, isMediaGalleryFullscreenActive = false, isHowSlyWorksVideoPlaying,
-  } = controller;
   const searchParams = getSearchParams(match, location);
   const communitySlug = getCommunitySlug(match);
   const userSaves = getDetails(state, 'userSave');
@@ -497,11 +503,8 @@ const mapStateToProps = (state, {
     community: getDetail(state, 'community', communitySlug),
     userAction: getDetail(state, 'userAction') || {},
     userSaveOfCommunity,
-    mediaGallerySlideIndex,
-    isMediaGalleryFullscreenActive,
     searchParams,
     setQueryParams,
-    isHowSlyWorksVideoPlaying,
   };
 };
 
@@ -516,7 +519,7 @@ export default withServerState(
   mapPropsToActions,
   handleResponses,
   ignoreSearchParams,
-)(connectController(
+)(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CommunityDetailPageController));
+)(CommunityDetailPageContainer));

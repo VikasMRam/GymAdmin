@@ -110,14 +110,13 @@ export default class SimilarCommunityInfo extends Component {
         {' Not Yet Rated'}
       </span>
     );
-  }
+  };
 
   render() {
     const { similarProperty: community, ...props } = this.props;
 
     const {
       name,
-      url,
       addressString,
       description,
       webViewInfo,
@@ -130,21 +129,10 @@ export default class SimilarCommunityInfo extends Component {
     const roomTypes = secondLineValue.split(',');
     const livingTypes = firstLineValue.split(',');
 
-    let heading = (
-      <StyledHeading level="title" size="subtitle">{name}</StyledHeading>
-    );
-    if (url) {
-      heading = (
-        <Link href={url}>
-          {heading}
-        </Link>
-      );
-    }
-
     // TODO : Get the following values from API Response
     return (
       <Wrapper {...props}>
-        {heading}
+        <StyledHeading level="title" size="subtitle">{name}</StyledHeading>
         <RatingWrapper>
           {this.renderRate(community)}
           {this.renderReviews(community)}
