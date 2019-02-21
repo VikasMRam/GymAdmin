@@ -93,7 +93,7 @@ class AgentProfilePage extends Component {
       return null;
     }
     const {
-      info, aggregateRating, reviews, communities, address,
+      id, info, aggregateRating, reviews, communities, address,
     } = agent;
     const { ratingValue } = aggregateRating;
     const { displayName, bio } = info;
@@ -106,7 +106,7 @@ class AgentProfilePage extends Component {
         </TemplateHeader>
         <TemplateContent>
           <AgentSummaryWrapper innerRef={this.agentSummaryRef}>
-            <BreadCrumb size="caption" items={getBreadCrumbsForAgent({ name: displayName, state, city })} />
+            <BreadCrumb size="caption" items={getBreadCrumbsForAgent({ name: displayName, state, city, id })} />
             <AgentSummary
               agent={agent}
               firstName={firstName}
