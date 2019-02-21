@@ -70,6 +70,10 @@ class SearchBoxContainer extends Component {
         SlyEvent.getInstance().sendEvent({
           action: 'select', category: 'googleSearchOption', label: result.formatted_address, value,
         });
+        // TODO: Fix events server to store value in DB
+        SlyEvent.getInstance().sendEvent({
+          action: 'googleSearchTyped', category: result.formatted_address, label: value,
+        });
         setLocation(result);
         this.handleOnLocationSearch(result);
       })
