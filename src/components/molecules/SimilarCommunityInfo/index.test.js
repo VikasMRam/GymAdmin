@@ -28,7 +28,7 @@ describe('SimilarCommunityInfo', () => {
 
   it('renders similarProperty', () => {
     const wrapper = wrap();
-    expect(wrapper.find('Link').contains(similarProperty.name)).toBe(true);
+    expect(wrapper.contains(similarProperty.name)).toBe(true);
     expect(parseInt(wrapper.childAt(1)
       .childAt(0)
       .childAt(0)
