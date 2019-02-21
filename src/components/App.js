@@ -4,7 +4,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
-import { func } from 'prop-types';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 
@@ -12,8 +11,7 @@ import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
 import { routes as routesPropType } from 'sly/propTypes/routes';
-// import AppController from 'sly/controllers/Appcontroller';
-import CommunityDetailPageController from 'sly/controllers/CommunityDetailPageController';
+import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
 import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
 import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
 import HomePageContainer from 'sly/containers/HomePageContainer';
@@ -33,8 +31,6 @@ import AgentProfilePageContainer from 'sly/containers/AgentProfilePageContainer'
 import AgentRegionPageContainer from 'sly/containers/AgentRegionPageContainer';
 import PartnersPage from 'sly/components/pages/PartnersPage';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
-// import StaticResourcesController from 'sly/controllers/StaticResourcesController';
-import ModalContainer from 'sly/containers/ModalContainer';
 import FilthyRedirect from 'sly/components/FilthyRedirect';
 import ModalController from 'sly/controllers/ModalController';
 
@@ -87,7 +83,7 @@ export default class App extends Component {
   routes = [
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
-      component: CommunityDetailPageController,
+      component: CommunityDetailPageContainer,
       exact: true,
     },
     {
