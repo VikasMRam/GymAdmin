@@ -30,7 +30,7 @@ import ModalController from 'sly/controllers/ModalController';
 
 // todo: convert to container
 class CommunityDetailPageContainer extends Component {
-  static propTypes = {
+  static propTypes =
     set: func,
     community: object,
     userAction: object,
