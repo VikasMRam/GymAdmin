@@ -95,6 +95,7 @@ class AgentProfilePage extends Component {
     const {
       id, info, aggregateRating, reviews, communities, address,
     } = agent;
+    console.log(agent);
     const { ratingValue } = aggregateRating;
     const { displayName, bio } = info;
     const firstName = displayName.split(' ')[0];
