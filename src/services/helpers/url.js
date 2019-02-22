@@ -256,7 +256,7 @@ export const getBreadCrumbsForLocation = ({ toc, state, city }) => {
 };
 
 const agentsPath = '/agents';
-export const getBreadCrumbsForAgent = ({ name, state, city, agentId }) => {
+export const getBreadCrumbsForAgent = ({ name, state, city, id }) => {
   const baseBcs = [{
     path: '/',
     label: 'Home',
@@ -279,7 +279,7 @@ export const getBreadCrumbsForAgent = ({ name, state, city, agentId }) => {
       });
       if (name) {
         baseBcs.push({
-          path: `${agentsPath}/${urlize(region)}/${urlize(city)}/${agentId}`,
+          path: `${agentsPath}/${urlize(region)}/${urlize(city)}/${id}`,
           label: name,
         });
       }
