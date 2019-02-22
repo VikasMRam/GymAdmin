@@ -5,7 +5,7 @@ import Dotdotdot from 'react-dotdotdot';
 import NumberFormat from 'react-number-format';
 
 import { size, palette } from 'sly/components/themes';
-import { Heading, Icon, Link } from 'sly/components/atoms';
+import { Heading, Icon } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
 
 const clamp = css`
