@@ -349,10 +349,9 @@ export default class CommunityDetailPage extends Component {
   };
 
   handleAddReviewButtonClick = () => {
-    const { showModal, community, user } = this.props;
-    const { id, name } = community;
+    const { showModal } = this.props;
 
-    showModal(<CommunityAddRatingFormContainer user={user} communitySlug={id} communityName={name} showModal={showModal} />);
+    showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
   };
 
   render() {

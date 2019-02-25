@@ -6,13 +6,12 @@ import { connect } from 'react-redux';
 import { isBrowser } from 'sly/config';
 import { parseURLQueryParams, objectToURLQueryParams } from 'sly/services/helpers/url';
 import { THANK_YOU, CARE_ASSESSMENT_WIZARD, ADD_RATING } from 'sly/constants/modalType';
-import { getDetail } from 'sly/store/selectors';
 import Thankyou from 'sly/components/molecules/Thankyou';
 import CareAssessmentController from 'sly/external/wizards/careAssessment/Controller';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 
 const FilthyRedirect = ({
-  location, isModalOpen, showModal, user, communitySlug, communityName,
+  location, isModalOpen, showModal,
 }) => {
   if (isModalOpen) return null;
   const { search } = location;
@@ -40,11 +39,9 @@ const FilthyRedirect = ({
       }
       break;
     case ADD_RATING:
-      if (communitySlug && communityName) {
-        showModal(<CommunityAddRatingFormContainer user={user} communitySlug={communitySlug} communityName={communityName} showModal={showModal} />);
-        if (isBrowser) {
-          return <Redirect to={newLocation} />;
-        }
+      showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
+      if (isBrowser) {
+        return <Redirect to={newLocation} />;
       }
       break;
     default:
@@ -63,25 +60,4 @@ FilthyRedirect.propTypes = {
   communityName: string,
 };
 
-const getCommunitySlug = match => match.params.communitySlug;
-
-const mapStateToProps = (state, { location, match }) => {
-  const communitySlug = getCommunitySlug(match);
-  let community;
-  let name;
-  if (communitySlug) {
-    (community = getDetail(state, 'community', communitySlug));
-  }
-  if (community) {
-    ({ name } = community);
-  }
-
-  return {
-    user: getDetail(state, 'user', 'me'),
-    communitySlug,
-    communityName: name,
-    location,
-  };
-};
-
-export default connect(mapStateToProps)(FilthyRedirect);
+export default FilthyRedirect;
