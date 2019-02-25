@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { func, object, bool, number } from 'prop-types';
 import { connect } from 'react-redux';
-import { query } from 'redux-bees';
 
 import { withServerState } from 'sly/store';
 import SlyEvent from 'sly/services/helpers/events';
@@ -28,18 +27,8 @@ import {
 } from 'sly/constants/notifications';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
-import api from 'sly/services/api/beesApi';
 
-const getCommunitySlug = match => match.params.communitySlug;
-
-@query('community', api.getCommunity, (perform, { match }) => {
-  const communitySlug = getCommunitySlug(match);
-  perform({
-    slug: communitySlug,
-    include: 'similar-communities,questions,agents',
-  });
-})
-
+// todo: convert to container
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
     set: func,
@@ -344,13 +333,13 @@ class CommunityDetailPageContainer extends Component {
   render() {
     const {
       user,
+      community,
       userSaveOfCommunity,
       serverState,
       history,
       searchParams,
       setQueryParams,
       userAction,
-      community,
     } = this.props;
 
     const {
@@ -439,7 +428,12 @@ class CommunityDetailPageContainer extends Component {
   }
 }
 
+const getCommunitySlug = match => match.params.communitySlug;
+
 const mapPropsToActions = ({ match }) => ({
+  community: resourceDetailReadRequest('community', getCommunitySlug(match), {
+    include: 'similar-communities,questions,agents',
+  }),
   userAction: resourceDetailReadRequest('userAction'),
   userSave: forAuthenticated(resourceListReadRequest('userSave', {
     'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
@@ -449,8 +443,31 @@ const mapPropsToActions = ({ match }) => ({
 
 const handleResponses = (responses, { location }, redirect) => {
   const {
+    community,
+    // userAction,
     userSave,
   } = responses;
+
+  const {
+    pathname,
+  } = location;
+
+  community(null, (error) => {
+    if (error.response) {
+      if (error.response.status === 301) {
+        redirect(replaceLastSegment(pathname, getLastSegment(error.location)));
+        return null;
+      }
+
+      if (error.response.status === 404) {
+        // Not found so redirect to city page
+        redirect(replaceLastSegment(pathname));
+        return null;
+      }
+    }
+
+    return Promise.reject(error);
+  });
 
   userSave(null, (error) => {
     // ignore 401 and 301 errors
@@ -483,6 +500,7 @@ const mapStateToProps = (state, {
 
   return {
     user: getDetail(state, 'user', 'me'),
+    community: getDetail(state, 'community', communitySlug),
     userAction: getDetail(state, 'userAction') || {},
     userSaveOfCommunity,
     searchParams,
