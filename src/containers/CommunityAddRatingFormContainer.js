@@ -32,13 +32,12 @@ class CommunityAddRatingFormContainer extends Component {
     communitySlug: string.isRequired,
     addRating: func,
     loadCommunity: func,
-    setModal: func,
     showModal: func,
   };
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, addRating, loadCommunity, setModal, showModal,
+      communitySlug, addRating, loadCommunity, showModal,
     } = this.props;
     const {
       comments, value, name, email,
@@ -51,7 +50,6 @@ class CommunityAddRatingFormContainer extends Component {
       email,
     };
     return addRating(payload).then(() => {
-      setModal(null);
       showModal(<Thankyou subheading="Your review has been submitted for approval." />);
       loadCommunity(communitySlug);
     }).catch((r) => {
