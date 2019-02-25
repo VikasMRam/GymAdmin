@@ -4,11 +4,14 @@ import { object, func, bool } from 'prop-types';
 
 import { isBrowser } from 'sly/config';
 import { parseURLQueryParams, objectToURLQueryParams } from 'sly/services/helpers/url';
-import { THANK_YOU, CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
+import { THANK_YOU, CARE_ASSESSMENT_WIZARD, ADD_RATING } from 'sly/constants/modalType';
 import Thankyou from 'sly/components/molecules/Thankyou';
 import CareAssessmentController from 'sly/external/wizards/careAssessment/Controller';
+import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 
-const FilthyRedirect = ({ location, isModalOpen, showModal }) => {
+const FilthyRedirect = ({
+  location, isModalOpen, showModal,
+}) => {
   if (isModalOpen) return null;
   const { search } = location;
   const qp = parseURLQueryParams(search);
@@ -34,6 +37,12 @@ const FilthyRedirect = ({ location, isModalOpen, showModal }) => {
         return <Redirect to={newLocation} />;
       }
       break;
+    case ADD_RATING:
+      showModal(<CommunityAddRatingFormContainer showModal={showModal} />);
+      if (isBrowser) {
+        return <Redirect to={newLocation} />;
+      }
+      break;
     default:
       break;
   }
@@ -45,7 +54,6 @@ FilthyRedirect.propTypes = {
   location: object,
   isModalOpen: bool,
   showModal: func,
-  history: object,
 };
 
 export default FilthyRedirect;
