@@ -1,7 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { object, func, bool, string } from 'prop-types';
-import { connect } from 'react-redux';
+import { object, func, bool } from 'prop-types';
 
 import { isBrowser } from 'sly/config';
 import { parseURLQueryParams, objectToURLQueryParams } from 'sly/services/helpers/url';
@@ -55,9 +54,6 @@ FilthyRedirect.propTypes = {
   location: object,
   isModalOpen: bool,
   showModal: func,
-  user: object,
-  communitySlug: string,
-  communityName: string,
 };
 
 export default FilthyRedirect;
