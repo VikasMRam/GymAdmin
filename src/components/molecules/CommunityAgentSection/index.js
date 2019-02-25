@@ -92,14 +92,19 @@ const CommunityAgentSection = ({
       </SubHeadingSection>
       <AgentInfoSection>
         {agentImageComponent}
-        <PhoneLink href={`tel:${slyPhone}`} onClick={onPhoneClick}>
-          <NumberFormat
-            value={slyPhone}
-            format="###-###-####"
-            displayType="text"
-          />
-        </PhoneLink>
-        <Link href={`mailto:${email}`} onClick={onEmailClick}>{email}</Link>
+        {
+          slyPhone &&
+          (
+            <PhoneLink href={`tel:${slyPhone}`} onClick={onPhoneClick}>
+              <NumberFormat
+                value={slyPhone}
+                format="###-###-####"
+                displayType="text"
+              />
+            </PhoneLink>
+          )
+        }
+        {email && <Link href={`mailto:${email}`} onClick={onEmailClick}>{email}</Link>}
       </AgentInfoSection>
       {chosenReview &&
         <AgentReviewSection>

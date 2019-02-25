@@ -6,8 +6,6 @@ import { withServerState } from 'sly/store';
 import SlyEvent from 'sly/services/helpers/events';
 import {
   getLastSegment,
-  objectToURLQueryParams,
-  parseURLQueryParams,
   replaceLastSegment,
 } from 'sly/services/helpers/url';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
@@ -50,36 +48,6 @@ class CommunityDetailPageContainer extends Component {
     mediaGallerySlideIndex: 0,
     isMediaGalleryFullscreenActive: false,
     isHowSlyWorksVideoPlaying: false,
-  };
-
-  setModal = (value) => {
-    if (value) {
-      this.changeSearchParams({ changedParams: { modal: value } });
-    } else {
-      this.handleParamsRemove({ paramsToRemove: ['modal'] });
-    }
-  };
-
-  changeSearchParams = ({ changedParams }) => {
-    const { history, location } = this.props;
-    const { pathname, search } = location;
-
-    const newParams = { ...parseURLQueryParams(search), ...changedParams };
-    const path = `${pathname}?${objectToURLQueryParams(newParams)}`;
-    history.push(path);
-  };
-
-  handleParamsRemove = ({ paramsToRemove }) => {
-    const { set } = this.props;
-    const changedParams = paramsToRemove.reduce((obj, p) => {
-      const nobj = obj;
-      nobj[p] = undefined;
-      return nobj;
-    }, {});
-    this.changeSearchParams({ changedParams });
-    set({
-      userSaveUpdated: false,
-    });
   };
 
   handleBackToSearchClick = () => {
@@ -397,11 +365,9 @@ class CommunityDetailPageContainer extends Component {
                 onConciergeNumberClicked={this.handleConciergeNumberClick}
                 onLiveChatClicked={this.handleLiveChatClick}
                 onReceptionNumberClicked={this.handleReceptionNumberClick}
-                setModal={this.setModal}
                 userSave={userSaveOfCommunity}
                 searchParams={searchParams}
                 setQueryParams={setQueryParams}
-                onParamsRemove={this.handleParamsRemove}
                 onSubmitSaveCommunityForm={this.handleSubmitSaveCommunityForm}
                 onBookATourClick={this.handleBookATourClick}
                 onGCPClick={this.handleGCPClick}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { string, func, object } from 'prop-types';
+import { withRouter } from 'react-router-dom';
 
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 import {
@@ -10,6 +11,7 @@ import {
   email,
   notZero,
 } from 'sly/services/validation';
+import { getDetail } from 'sly/store/selectors';
 import CommunityAddRatingForm from 'sly/components/organisms/CommunityAddRatingForm';
 import Thankyou from 'sly/components/molecules/Thankyou';
 
@@ -32,13 +34,12 @@ class CommunityAddRatingFormContainer extends Component {
     communitySlug: string.isRequired,
     addRating: func,
     loadCommunity: func,
-    setModal: func,
     showModal: func,
   };
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, addRating, loadCommunity, setModal, showModal,
+      communitySlug, addRating, loadCommunity, showModal,
     } = this.props;
     const {
       comments, value, name, email,
@@ -51,7 +52,6 @@ class CommunityAddRatingFormContainer extends Component {
       email,
     };
     return addRating(payload).then(() => {
-      setModal(null);
       showModal(<Thankyou subheading="Your review has been submitted for approval." />);
       loadCommunity(communitySlug);
     }).catch((r) => {
@@ -83,6 +83,27 @@ class CommunityAddRatingFormContainer extends Component {
   }
 }
 
+const getCommunitySlug = match => match.params.communitySlug;
+
+const mapStateToProps = (state, { location, match }) => {
+  const communitySlug = getCommunitySlug(match);
+  let community;
+  let name;
+  if (communitySlug) {
+    (community = getDetail(state, 'community', communitySlug));
+  }
+  if (community) {
+    ({ name } = community);
+  }
+
+  return {
+    user: getDetail(state, 'user', 'me'),
+    communitySlug,
+    communityName: name,
+    location,
+  };
+};
+
 const mapDispatchToProps = dispatch => ({
   addRating: data => dispatch(resourceCreateRequest('rating', data)),
   loadCommunity: slug => dispatch(resourceDetailReadRequest('community', slug, {
@@ -90,7 +111,7 @@ const mapDispatchToProps = dispatch => ({
   })),
 });
 
-export default connect(
-  null,
+export default withRouter(connect(
+  mapStateToProps,
   mapDispatchToProps,
-)(CommunityAddRatingFormContainer);
+)(CommunityAddRatingFormContainer));

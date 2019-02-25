@@ -1,5 +1,4 @@
 /* eslint-disable react/sort-comp */
-
 import React, { Component } from 'react';
 import { bool, oneOf, func } from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -8,15 +7,23 @@ import { ifProp } from 'styled-tools';
 import { size, palette } from 'sly/components/themes';
 
 const height = p => size('element', p.size);
+const color = (p) => {
+  if (p.disabled) {
+    return palette('grey', 'base');
+  }
+  return p.invalid ? palette('danger', 'base') : palette('slate', 'base');
+};
+
 const styles = css`
   display: block;
   width: 100%;
   margin: 0;
-  font-size: ${size('text', 'body')};
-  padding: ${size('padding', 'regular')};
+  font-size: ${size('text', 'caption')};
+  // todo: non standard padding. remove afterwards if added to theme
+  padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')});
   height: ${ifProp({ type: 'textarea' }, size('element.huge'), height)};
-  color: ${ifProp('invalid', palette('danger', 'base'), palette('slate', 'base'))};
-  background-color: ${palette('white', 'base')};
+  color: ${color};
+  background-color: ${ifProp('disabled', palette('grey', 'stroke'), palette('white', 'base'))};
   border: ${size('border.regular')} solid
     ${ifProp('invalid', palette('danger', 'stroke'), palette('slate', 'stroke'))};
   border-radius: ${size('border.xxLarge')};
@@ -33,7 +40,7 @@ const styles = css`
   }
 
   &::placeholder {
-    color: ${palette('stroke')};
+    color: ${palette('stroke', 'filler')};
   }
 
   &[type='checkbox'],
@@ -95,4 +102,3 @@ Input.defaultProps = {
 };
 
 export default Input;
-
