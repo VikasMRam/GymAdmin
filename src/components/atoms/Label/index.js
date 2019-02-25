@@ -9,6 +9,7 @@ const Label = styled.label`
   font-size: ${size('text.caption')};
   color: ${ifProp('invalid', palette('danger', 'base'), palette('base'))};
   margin-bottom: ${size('spacing.small')};
+  line-height: ${size('lineHeight.title')};
 `;
 
 Label.propTypes = {
