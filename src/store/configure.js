@@ -3,7 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import { middleware as sagaThunkMiddleware } from 'redux-saga-thunk';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
-import { middleware as beesMiddleware } from 'redux-bees';
+import { middleware as createBeesMiddleware } from 'redux-bees';
 
 import entitiesMiddleware from './entities/middleware';
 import reducer from './reducer';
@@ -20,6 +20,8 @@ const loggerMiddleware = createLogger();
 
 export default function (initialState, services = {}) {
   const sagaMiddleware = createSagaMiddleware();
+  const beesMiddleware = createBeesMiddleware();
+
   const middlewares = [
     beesMiddleware, entitiesMiddleware, thunkMiddleware, sagaThunkMiddleware, sagaMiddleware,
   ];
