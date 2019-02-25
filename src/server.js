@@ -23,6 +23,7 @@ import { removeQueryParamFromURL } from 'sly/services/helpers/url';
 import { port, host, basename, publicPath, isDev, cookieDomain } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
+import beesApi from 'sly/services/api/beesApi';
 import apiService from 'sly/services/api';
 import ClientApp from 'sly/components/App';
 import DashboardApp from 'sly/components/DashboardApp';
@@ -197,7 +198,7 @@ app.use((req, res, next) => {
 
 // store
 app.use(async (req, res, next) => {
-  const { slyUUID, cookies } = req.clientConfig;
+  const { slyUUID, cookies, bundle } = req.clientConfig;
 
   const hmac = crypto.createHmac('sha256', slyUUID);
   const slyUUIDHash = hmac.digest('hex');
@@ -224,19 +225,32 @@ app.use(async (req, res, next) => {
   );
 
   const store = configureStore({ experiments: userExperiments }, { api });
-  // FIXME: @amalseniorly I'm hacking this on here for now, this adds some 20 ms to the
-  // response but fixes the race condition in forAuthenticated, once we tackle
-  // forAuthenticated to react to log-in changes and to resume in client after starting
-  // in server, we can fix this too. Fonz
-  try {
-    await store.dispatch(resourceDetailReadRequest('user', 'me'));
-  } catch (e) {
-    if (e.response && e.response.status === 401) {
-      // ignore 401
-      logWarn(e);
-    } else {
-      next(e);
-      return;
+
+  // FIXME: hack until SEO app is migrated to bees
+  if (bundle === 'dashboard') {
+    try {
+      await store.dispatch(resourceDetailReadRequest('user', 'me'));
+    } catch (e) {
+      if (e.response && e.response.status === 401) {
+        // ignore 401
+        logWarn(e);
+      } else {
+        next(e);
+        return;
+      }
+    }
+  } else {
+    try {
+      // FIXME: hack until SEO app is migrated to bees
+      await store.dispatch(beesApi.getUser({ userId: 'me' }));
+    } catch (e) {
+      if (e.status === 401) {
+        // ignore 401
+        logWarn(e);
+      } else {
+        next(e);
+        return;
+      }
     }
   }
 
