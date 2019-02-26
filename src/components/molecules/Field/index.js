@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, bool, oneOf, number, oneOfType } from 'prop-types';
+import { string, bool, oneOf, number, oneOfType, node } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -64,6 +64,11 @@ const CheckIcon = styled(Icon)`
   bottom: ${size('spacing.regular')};
 `;
 
+const LabelWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Field = ({
   error,
   name,
@@ -76,6 +81,7 @@ const Field = ({
   className,
   value,
   hideErrors,
+  labelRight,
   ...props
 }) => {
   const inputProps = {
@@ -95,11 +101,18 @@ const Field = ({
   return (
     <Wrapper className={className}>
       {renderInputFirst && <InputComponent {...inputProps} />}
-      {label && (
-        <Label htmlFor={inputProps.id}>
-          {label}
-        </Label>
-      )}
+      {(label || labelRight) &&
+        <LabelWrapper>
+          {label &&
+            <Label htmlFor={inputProps.id}>
+              {label}
+            </Label>
+          }
+          {labelRight &&
+            <span>{labelRight}</span>
+          }
+        </LabelWrapper>
+      }
       {renderInputFirst || <InputComponent {...inputProps} />}
       {invalid && !hideErrors && error && (
         <ErrorWrapper>
@@ -156,6 +169,7 @@ Field.propTypes = {
     'number',
   ]),
   placeholder: string,
+  labelRight: node,
 };
 
 Field.defaultProps = {
