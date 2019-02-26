@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { query } from 'redux-bees';
+import { query } from 'sly/services/newApi';
 
-import api from 'sly/services/api/beesApi';
-
-@query('user', api.getUser, perform => perform({ userId: 'me' }))
+@query('user', 'getUser', getUser => getUser({ userId: 'me' }))
 
 export default class DashboardHomePageContainer extends Component {
   render() {
-    return 'it\'s the dashboard baby';
+    const { user } = this.props
+    return (
+      <pre>
+        {JSON.stringify(user, null, 2)}
+      </pre>
+    );
   }
 }

@@ -5,7 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
 import entitiesMiddleware from './entities/middleware';
-import beesMiddleware from './beesMiddleware';
+import { middleware as beesMiddleware } from '../services/newApi';
 import reducer from './reducer';
 import sagas from './sagas';
 

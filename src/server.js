@@ -13,6 +13,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { renderToString } from 'react-router-server';
+import { matchRoutes } from 'react-router-config';
 import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
@@ -23,7 +24,7 @@ import { removeQueryParamFromURL } from 'sly/services/helpers/url';
 import { port, host, basename, publicPath, isDev, cookieDomain } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import beesApi from 'sly/services/api/beesApi';
+import createBeesApi from 'sly/services/newApi/createApi';
 import apiService from 'sly/services/api';
 import ClientApp from 'sly/components/App';
 import DashboardApp from 'sly/components/DashboardApp';
@@ -45,6 +46,13 @@ const makeAppRenderer = renderedApp => ({
 
 const renderEmptyApp = () => {
   return { html: '', state: {} };
+};
+
+const getAppRoutes = (bundle) => {
+  switch (bundle) {
+    case 'dashboard': return DashboardApp.routes;
+    default: return [];
+  }
 };
 
 // requires compatible configuration
@@ -224,15 +232,33 @@ app.use(async (req, res, next) => {
     req.headers['x-forwarded-for'] || req.connection.remoteAddress
   );
 
+  const beesApi = createBeesApi({
+    configureHeaders: headers => ({
+      ...headers,
+      Cookie: cookies.join('; '),
+      'User-Agent': req.headers['user-agent'],
+      'X-is-sly-ssr': 'true',
+      'X-forwarded-for': req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+    }),
+  });
+
   const store = configureStore({ experiments: userExperiments }, { api });
 
   // FIXME: hack until SEO app is migrated to bees
   if (bundle === 'dashboard') {
     try {
-      await store.dispatch(resourceDetailReadRequest('user', 'me'));
+      await store.dispatch(beesApi.getUser({ userId: 'me' }));
+      const routes = getAppRoutes(bundle);
+      const promises = matchRoutes(routes, req.url).map(({ route, match }) => {
+        return route.component.loadData ?
+          route.component.loadData(store.dispatch, { match }) :
+          Promise.resolve(null);
+      });
+      await Promise.all(promises);
     } catch (e) {
-      if (e.response && e.response.status === 401) {
+      if (e.status === 401) {
         // ignore 401
+        console.log(e);
         logWarn(e);
       } else {
         next(e);
@@ -241,10 +267,9 @@ app.use(async (req, res, next) => {
     }
   } else {
     try {
-      // FIXME: hack until SEO app is migrated to bees
-      await store.dispatch(beesApi.getUser({ userId: 'me' }));
+      await store.dispatch(resourceDetailReadRequest('user', 'me'));
     } catch (e) {
-      if (e.status === 401) {
+      if (e.response && e.response.status === 401) {
         // ignore 401
         logWarn(e);
       } else {

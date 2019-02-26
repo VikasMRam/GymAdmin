@@ -23,6 +23,14 @@ export default class App extends Component {
     routes: routesPropType,
   };
 
+  static routes = [
+    {
+      path: DASHBOARD_PATH,
+      component: DashboardHomePageContainer,
+      exact: true,
+    },
+  ];
+
   getChildContext = () => ({
     routes: this.routes,
   });
@@ -30,14 +38,6 @@ export default class App extends Component {
   componentDidMount() {
     smoothscroll.polyfill();
   }
-
-  routes = [
-    {
-      path: DASHBOARD_PATH,
-      component: DashboardHomePageContainer,
-      exact: true,
-    },
-  ];
 
   render() {
     return (
@@ -56,7 +56,7 @@ export default class App extends Component {
         <ThemeProvider theme={theme}>
           <Router>
             <Switch>
-              {this.routes.map(route => <Route key={route.path} {...route} />)}
+              {App.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
             </Switch>
           </Router>
