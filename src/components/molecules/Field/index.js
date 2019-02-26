@@ -1,6 +1,7 @@
 import React from 'react';
 import { string, bool, oneOf, number, oneOfType, node } from 'prop-types';
 import styled from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import { Label, Input, Block, Icon } from 'sly/components/atoms';
@@ -44,6 +45,13 @@ const Wrapper = styled.div`
   label {
     vertical-align: middle;
   }
+  display: flex;
+  flex-direction: ${ifProp({ orientation: 'horizontal' }, 'row', 'column')};
+  align-items: ${ifProp({ orientation: 'horizontal' }, 'center', 'initial')};
+
+  > * {
+    margin-right: ${ifProp({ orientation: 'horizontal' }, size('spacing.large'), 0)};
+  }
 `;
 
 const ErrorWrapper = styled.div`
@@ -82,6 +90,7 @@ const Field = ({
   value,
   hideErrors,
   labelRight,
+  orientation,
   ...props
 }) => {
   const inputProps = {
@@ -99,7 +108,7 @@ const Field = ({
   const renderInputFirst = type === 'checkbox' || type === 'radio';
 
   return (
-    <Wrapper className={className}>
+    <Wrapper className={className} orientation={orientation}>
       {renderInputFirst && <InputComponent {...inputProps} />}
       {(label || labelRight) &&
         <LabelWrapper>
@@ -168,12 +177,14 @@ Field.propTypes = {
     'rating',
     'number',
   ]),
+  orientation: oneOf(['horizontal', 'vertical']).isRequired,
   placeholder: string,
   labelRight: node,
 };
 
 Field.defaultProps = {
   type: 'text',
+  orientation: 'vertical',
 };
 
 export default Field;

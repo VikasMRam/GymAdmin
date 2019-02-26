@@ -35,6 +35,16 @@ storiesOf('Molecules|Field', module)
       warning
     />
   ))
+  .add('warning with error message horizontal', () => (
+    <Field
+      name="field"
+      label="Label"
+      value="My input"
+      error="Warning message Warning message Warning message Warning message"
+      orientation="horizontal"
+      warning
+    />
+  ))
   .add('success', () => <Field name="field" label="Label" success />)
   .add('type email', () => <Field name="field" label="Email" type="email" />)
   .add('type password', () => <Field name="field" label="Password" labelRight={labelRight} type="password" />)
