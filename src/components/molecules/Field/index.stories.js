@@ -28,6 +28,7 @@ storiesOf('Molecules|Field', module)
       warning
     />
   ))
+  .add('success', () => <Field name="field" label="Label" success />)
   .add('type email', () => <Field name="field" label="Email" type="email" />)
   .add('type textarea', () => (
     <Field name="field" label="Label" type="textarea" />

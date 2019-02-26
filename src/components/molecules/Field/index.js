@@ -35,6 +35,7 @@ const getInputComponent = (type) => {
 };
 
 const Wrapper = styled.div`
+  position: relative;
   margin-bottom: ${size('spacing.large')};
   > input[type='checkbox'],
   > input[type='radio'] {
@@ -57,11 +58,18 @@ const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.regular')};
 `;
 
+const CheckIcon = styled(Icon)`
+  position: absolute;
+  right: ${size('spacing.regular')};
+  bottom: ${size('spacing.regular')};
+`;
+
 const Field = ({
   error,
   name,
   invalid,
   warning,
+  success,
   label,
   type,
   placeholder,
@@ -109,6 +117,9 @@ const Field = ({
           </Block>
         </ErrorWrapper>
       )}
+      {success &&
+        <CheckIcon icon="check" size="regular" palette="green" />
+      }
     </Wrapper>
   );
 };
@@ -122,6 +133,7 @@ Field.propTypes = {
   className: string,
   invalid: bool,
   warning: bool,
+  success: bool,
   error: string,
   hideErrors: bool,
   label: string,
