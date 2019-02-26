@@ -1,9 +1,9 @@
 import React from 'react';
-import { string, bool, oneOf, number, oneOfType } from 'prop-types';
+import { string, bool, oneOf, number, oneOfType, node } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import { Label, Input, Block } from 'sly/components/atoms';
+import { Label, Input, Block, Icon } from 'sly/components/atoms';
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 import CommunityChoice from 'sly/components/molecules/CommunityChoice';
@@ -34,12 +34,8 @@ const getInputComponent = (type) => {
   }
 };
 
-const Error = styled(Block)`
-  margin-top: ${size('spacing.tiny')};
-  font-size: ${size('text.caption')};
-`;
-
 const Wrapper = styled.div`
+  position: relative;
   margin-bottom: ${size('spacing.large')};
   > input[type='checkbox'],
   > input[type='radio'] {
@@ -50,16 +46,42 @@ const Wrapper = styled.div`
   }
 `;
 
+const ErrorWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  // donot use pad to add margin bottom on input as it well lead to
+  // rerender on key stroke that will loose focus
+  margin-top: ${size('spacing.regular')};
+`;
+
+const StyledIcon = styled(Icon)`
+  margin-right: ${size('spacing.regular')};
+`;
+
+const CheckIcon = styled(Icon)`
+  position: absolute;
+  right: ${size('spacing.regular')};
+  bottom: ${size('spacing.regular')};
+`;
+
+const LabelWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Field = ({
   error,
   name,
   invalid,
+  warning,
+  success,
   label,
   type,
   placeholder,
   className,
   value,
   hideErrors,
+  labelRight,
   ...props
 }) => {
   const inputProps = {
@@ -68,27 +90,49 @@ const Field = ({
     value,
     type: getInputType(type),
     invalid,
+    warning,
     placeholder,
     'aria-describedby': `${name}Error`,
     ...props,
   };
   const InputComponent = getInputComponent(type);
   const renderInputFirst = type === 'checkbox' || type === 'radio';
+
   return (
     <Wrapper className={className}>
       {renderInputFirst && <InputComponent {...inputProps} />}
-      {label && (
-        <Label invalid={!hideErrors && invalid} htmlFor={inputProps.id}>
-          {label}
-        </Label>
-      )}
+      {(label || labelRight) &&
+        <LabelWrapper>
+          {label &&
+            <Label htmlFor={inputProps.id}>
+              {label}
+            </Label>
+          }
+          {labelRight &&
+            <span>{labelRight}</span>
+          }
+        </LabelWrapper>
+      }
       {renderInputFirst || <InputComponent {...inputProps} />}
-      {invalid && !hideErrors &&
-        error && (
-          <Error id={`${name}Error`} role="alert" palette="danger">
+      {invalid && !hideErrors && error && (
+        <ErrorWrapper>
+          <StyledIcon icon="close" size="small" palette="danger" />
+          <Block id={`${name}Error`} role="alert" palette="danger" size="caption">
             {error}
-          </Error>
-        )}
+          </Block>
+        </ErrorWrapper>
+      )}
+      {warning && !hideErrors && error && (
+        <ErrorWrapper>
+          <StyledIcon icon="warning" size="small" palette="warning" />
+          <Block id={`${name}Warning`} role="alert" palette="warning" size="caption">
+            {error}
+          </Block>
+        </ErrorWrapper>
+      )}
+      {success &&
+        <CheckIcon icon="check" size="regular" palette="green" />
+      }
     </Wrapper>
   );
 };
@@ -101,6 +145,8 @@ Field.propTypes = {
   ]),
   className: string,
   invalid: bool,
+  warning: bool,
+  success: bool,
   error: string,
   hideErrors: bool,
   label: string,
@@ -123,6 +169,7 @@ Field.propTypes = {
     'number',
   ]),
   placeholder: string,
+  labelRight: node,
 };
 
 Field.defaultProps = {
