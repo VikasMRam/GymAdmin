@@ -187,11 +187,11 @@ export const getHelmetForCommunityPage = (community, location) => {
     name, address, propInfo, rates, startingRate, url, gallery = {}, videoGallery = {},
   } = community;
   const {
-    search,
+    search, pathname,
   } = location;
 
   const ratesProvided = (rates && rates === 'Provided');
-  const canonicalUrl = `${host}${url.pathname}`;
+  const canonicalUrl = `${host}${pathname}`;
 
   let toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
   if (typeof toc === 'undefined'){
