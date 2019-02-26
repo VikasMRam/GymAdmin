@@ -7,11 +7,26 @@ import { ifProp } from 'styled-tools';
 import { size, palette } from 'sly/components/themes';
 
 const height = p => size('element', p.size);
-const color = (p) => {
+const backgroundColor = (p) => {
   if (p.disabled) {
-    return palette('grey', 'base');
+    return palette('grey', 'stroke');
   }
-  return p.invalid ? palette('danger', 'base') : palette('slate', 'base');
+  if (p.warning) {
+    return palette('warning', 'stroke');
+  }
+  return p.invalid ? palette('danger', 'stroke') : palette('white', 'base');
+};
+const borderColor = (p) => {
+  if (p.warning) {
+    return palette('warning', 'base');
+  }
+  return p.invalid ? palette('danger', 'base') : palette('slate', 'stroke');
+};
+const focusBorderColor = (p) => {
+  if (p.warning) {
+    return palette('warning', 'base');
+  }
+  return p.invalid ? palette('danger', 'base') : palette('primary', 'base');
 };
 
 const styles = css`
@@ -22,21 +37,16 @@ const styles = css`
   // todo: non standard padding. remove afterwards if added to theme
   padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')});
   height: ${ifProp({ type: 'textarea' }, size('element.huge'), height)};
-  color: ${color};
-  background-color: ${ifProp('disabled', palette('grey', 'stroke'), palette('white', 'base'))};
-  border: ${size('border.regular')} solid
-    ${ifProp('invalid', palette('danger', 'stroke'), palette('slate', 'stroke'))};
+  color: ${ifProp('disabled', palette('grey', 'base'), palette('slate', 'base'))};
+  background-color: ${backgroundColor};
+  border: ${size('border.regular')} solid ${borderColor};
   border-radius: ${size('border.xxLarge')};
   min-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
   max-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
 
   &:focus {
     outline: none;
-    border-color: ${ifProp(
-    'invalid',
-    palette('danger', 'stroke'),
-    palette('primary', 'base')
-  )};
+    border-color: ${focusBorderColor};
   }
 
   &::placeholder {
@@ -93,6 +103,7 @@ Input.propTypes = {
   size: oneOf(['small', 'regular', 'large', 'xLarge']),
   onFocus: func,
   invalid: bool,
+  warning: bool,
 };
 
 Input.defaultProps = {
