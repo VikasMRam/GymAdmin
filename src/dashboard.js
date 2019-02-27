@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ServerStateProvider } from 'react-router-server';
 import Modal from 'react-modal';
 
-import createApi from 'sly/services/newApi/createApi'
+import { createApi, ApiProvider } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';
 import { basename } from 'sly/config';
 import DashboardApp from 'sly/components/DashboardApp';

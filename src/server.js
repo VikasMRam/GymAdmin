@@ -30,6 +30,7 @@ import ClientApp from 'sly/components/App';
 import DashboardApp from 'sly/components/DashboardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
+import ApiProvider from 'sly/services/newApi/ApiProvider';
 
 const makeAppRenderer = renderedApp => ({
   store, context, location, sheet,
@@ -56,9 +57,13 @@ const getAppRoutes = (bundle) => {
 };
 
 // requires compatible configuration
-const getAppRenderer = (bundle) => {
+const getAppRenderer = ({ bundle, api }) => {
   switch (bundle) {
-    case 'dashboard': return makeAppRenderer(<DashboardApp />);
+    case 'dashboard': return makeAppRenderer((
+      <ApiProvider api={api}>
+        <DashboardApp />
+      </ApiProvider>
+    ));
     case 'client': return makeAppRenderer(<ClientApp />);
     default: return renderEmptyApp;
   }
@@ -280,16 +285,17 @@ app.use(async (req, res, next) => {
   }
 
   req.clientConfig.store = store;
+  req.clientConfig.api = beesApi;
 
   next();
 });
 
 // render
 app.use(async (req, res, next) => {
-  const { assets, bundle, store } = req.clientConfig;
+  const { assets, store } = req.clientConfig;
   const sheet = new ServerStyleSheet();
   const context = {};
-  const renderApp = getAppRenderer(bundle);
+  const renderApp = getAppRenderer(req.clientConfig);
 
   try {
     const { state: serverState, html: content } = await renderApp({

@@ -19,6 +19,7 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
 
       static propTypes = {
+        api: object,
         request: object,
         status: object,
       };
@@ -32,11 +33,6 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       //   return dispatch(dispatcher(apiCall, props));
       // };
 
-      constructor(props) {
-        super(props);
-        this.fetch = this.fetch.bind(this);
-      }
-
       componentDidMount() {
         this.fetch();
       }
@@ -47,13 +43,12 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
         }
       }
 
-      fetch(props = this.props) {
+      fetch = (props = this.props) => {
         const { dispatch, api } = props;
         return dispatch(dispatcher(api[apiCall], props));
-      }
+      };
 
       render() {
-        console.log('props', this.props);
         const props = {
           ...omit(this.props, ['request']),
           [propName]: this.props.request.result,
@@ -76,7 +71,7 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       return {
         request: getRequestInfo(
           state,
-          apiCall,
+          props.api[apiCall],
           dispatcher(argumentsAbsorber, props),
         ),
       };
