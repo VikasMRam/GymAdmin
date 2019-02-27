@@ -34,7 +34,10 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       // };
 
       componentDidMount() {
-        this.fetch();
+        const { request } = this.props;
+        if (!request.isLoading && !request.hasStarted) {
+          this.fetch();
+        }
       }
 
       componentWillReceiveProps(nextProps) {
