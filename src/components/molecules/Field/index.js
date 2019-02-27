@@ -1,6 +1,7 @@
 import React from 'react';
 import { string, bool, oneOf, number, oneOfType, node } from 'prop-types';
 import styled from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import { Label, Input, Block, Icon } from 'sly/components/atoms';
@@ -11,8 +12,10 @@ import RatingInput from 'sly/components/molecules/RatingInput';
 import Slider from 'sly/components/molecules/Slider';
 import DateChoice from 'sly/components/molecules/DateChoice';
 import BoxChoice from 'sly/components/molecules/BoxChoice';
+import IconInput from 'sly/components/molecules/IconInput';
 
-const getInputType = type => (type === 'email' ? 'text' : type);
+const textTypeInputs = ['email', 'iconInput'];
+const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
 const getInputComponent = (type) => {
   switch (type) {
     case 'rating':
@@ -29,6 +32,8 @@ const getInputComponent = (type) => {
       return BoxChoice;
     case 'dateChoice':
       return DateChoice;
+    case 'iconInput':
+      return IconInput;
     default:
       return Input;
   }
@@ -43,6 +48,13 @@ const Wrapper = styled.div`
   }
   label {
     vertical-align: middle;
+  }
+  display: flex;
+  flex-direction: ${ifProp({ orientation: 'horizontal' }, 'row', 'column')};
+  align-items: ${ifProp({ orientation: 'horizontal' }, 'center', 'initial')};
+
+  > * {
+    margin-right: ${ifProp({ orientation: 'horizontal' }, size('spacing.large'), 0)};
   }
 `;
 
@@ -70,7 +82,7 @@ const LabelWrapper = styled.div`
 `;
 
 const Field = ({
-  error,
+  message,
   name,
   invalid,
   warning,
@@ -82,6 +94,7 @@ const Field = ({
   value,
   hideErrors,
   labelRight,
+  orientation,
   ...props
 }) => {
   const inputProps = {
@@ -99,7 +112,7 @@ const Field = ({
   const renderInputFirst = type === 'checkbox' || type === 'radio';
 
   return (
-    <Wrapper className={className}>
+    <Wrapper className={className} orientation={orientation}>
       {renderInputFirst && <InputComponent {...inputProps} />}
       {(label || labelRight) &&
         <LabelWrapper>
@@ -114,19 +127,19 @@ const Field = ({
         </LabelWrapper>
       }
       {renderInputFirst || <InputComponent {...inputProps} />}
-      {invalid && !hideErrors && error && (
+      {invalid && !hideErrors && message && (
         <ErrorWrapper>
           <StyledIcon icon="close" size="small" palette="danger" />
           <Block id={`${name}Error`} role="alert" palette="danger" size="caption">
-            {error}
+            {message}
           </Block>
         </ErrorWrapper>
       )}
-      {warning && !hideErrors && error && (
+      {warning && !hideErrors && message && (
         <ErrorWrapper>
           <StyledIcon icon="warning" size="small" palette="warning" />
           <Block id={`${name}Warning`} role="alert" palette="warning" size="caption">
-            {error}
+            {message}
           </Block>
         </ErrorWrapper>
       )}
@@ -147,7 +160,7 @@ Field.propTypes = {
   invalid: bool,
   warning: bool,
   success: bool,
-  error: string,
+  message: string,
   hideErrors: bool,
   label: string,
   type: oneOf([
@@ -167,13 +180,16 @@ Field.propTypes = {
     'radio',
     'rating',
     'number',
+    'iconInput',
   ]),
+  orientation: oneOf(['horizontal', 'vertical']).isRequired,
   placeholder: string,
   labelRight: node,
 };
 
 Field.defaultProps = {
   type: 'text',
+  orientation: 'vertical',
 };
 
 export default Field;

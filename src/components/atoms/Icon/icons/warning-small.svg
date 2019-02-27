@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
-  <defs>
-    <path id="warning-small-a" d="M0.666666667,14.6666667 L15.3333333,14.6666667 L8,2 L0.666666667,14.6666667 Z M8.66666667,12.6666667 L7.33333333,12.6666667 L7.33333333,11.3333333 L8.66666667,11.3333333 L8.66666667,12.6666667 Z M8.66666667,10 L7.33333333,10 L7.33333333,7.33333333 L8.66666667,7.33333333 L8.66666667,10 Z"/>
-  </defs>
-  <g fill="none" fill-rule="evenodd" transform="translate(0 -2)">
-    <mask id="warning-small-b" fill="#fff">
-      <use xlink:href="#warning-small-a"/>
-    </mask>
-    <use fill="#000" fill-rule="nonzero" xlink:href="#warning-small-a"/>
-    <g fill="currentColor" fill-rule="nonzero" mask="url(#warning-small-b)">
-      <rect width="16" height="16"/>
-    </g>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16"><defs><path id="warning-small-a" d="M.667 14.667h14.666L8 2 .667 14.667zm8-2H7.333v-1.334h1.334v1.334zm0-2.667H7.333V7.333h1.334V10z"/></defs><g fill="none" fill-rule="evenodd" transform="translate(0 -2)"><mask id="warning-small-b" fill="#fff"><use xlink:href="#warning-small-a"/></mask><use fill="#000" fill-rule="nonzero" xlink:href="#warning-small-a"/><g fill="currentColor" fill-rule="nonzero" mask="url(#warning-small-b)"><path d="M0 0h16v16H0z"/></g></g></svg>
