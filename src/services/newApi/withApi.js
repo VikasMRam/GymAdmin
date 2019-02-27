@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { object } from 'prop-types';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 
 export default (ChildComponent) => {
-  return class WithApi extends Component {
-    static displayName = ChildComponent.displayName || ChildComponent.name || 'WithApi';
-    static contextTypes = { api: object };
-    render = () => <ChildComponent api={this.context.api} {...this.props} />;
-  };
+  const WithApi = (props, context) => <ChildComponent api={context.api} {...props} />;
+
+  WithApi.displayName = `WithApi(${ChildComponent.displayName || ChildComponent.name || 'WithApi'})`;
+  WithApi.contextTypes = { api: object };
+
+  hoistNonReactStatic(WithApi, ChildComponent);
+
+  return WithApi;
 };
 

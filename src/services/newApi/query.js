@@ -15,6 +15,18 @@ function getDisplayName(WrappedComponent) {
 
 export default function query(propName, apiCall, dispatcher = defaultDispatcher) {
   return (InnerComponent) => {
+    const mapStateToProps = (state, props) => {
+      const argumentsAbsorber = (...args) => args;
+
+      return {
+        request: getRequestInfo(
+          state,
+          props.api[apiCall],
+          dispatcher(argumentsAbsorber, props),
+        ),
+      };
+    };
+
     class Wrapper extends React.Component {
       static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
 
@@ -24,14 +36,24 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
         status: object,
       };
 
-      static loadData = (dispatch, props) => dispatch(dispatcher(props.api[apiCall], props));
+      static loadData = (store, props) => {
+        const promises = [];
 
-      // Wrapper.loadData = async (dispatch, props) => {
-      //   if (typeof InnerComponent.loadData === 'function') {
-      //     await InnerComponent.loadData();
-      //   }
-      //   return dispatch(dispatcher(apiCall, props));
-      // };
+        if (typeof InnerComponent.loadData === 'function') {
+          promises.push(InnerComponent.loadData(store, props));
+        }
+
+        const { dispatch, getState } = store;
+        const { request } = mapStateToProps(getState(), props);
+        if (!request.isLoading && !request.hasStarted) {
+          promises.push(dispatch(dispatcher(props.api[apiCall], {
+            request,
+            ...props,
+          })));
+        }
+
+        return Promise.all(promises);
+      };
 
       componentDidMount() {
         const { request } = this.props;
@@ -67,18 +89,6 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
         return <InnerComponent {...props} />;
       }
     }
-
-    const mapStateToProps = (state, props) => {
-      const argumentsAbsorber = (...args) => args;
-
-      return {
-        request: getRequestInfo(
-          state,
-          props.api[apiCall],
-          dispatcher(argumentsAbsorber, props),
-        ),
-      };
-    };
 
     return withApi(connect(mapStateToProps)(Wrapper));
   };

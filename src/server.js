@@ -255,9 +255,10 @@ app.use(async (req, res, next) => {
       await store.dispatch(beesApi.getUser({ userId: 'me' }));
       const routes = getAppRoutes(bundle);
       const promises = matchRoutes(routes, req.url).map(({ route, match }) => {
+        console.log('routes matches', route.component.loadData);
         return route.component.loadData ?
-          route.component.loadData(store.dispatch, { match }) :
-          Promise.resolve(null);
+          route.component.loadData(store, { match, api: beesApi }) :
+          Promise.resolve();
       });
       await Promise.all(promises);
     } catch (e) {
