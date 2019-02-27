@@ -144,7 +144,7 @@ theme.sizes = {
 
   element: {
     small   : '2.000rem',   // 34px
-    regular : '2.750rem',   // 44px
+    regular : '2.500rem',   // 40px
     large   : '3.000rem',   // 48px
     xLarge  : '3.250rem',   // 52px
     xxLarge : '4.500rem',   // 72px
