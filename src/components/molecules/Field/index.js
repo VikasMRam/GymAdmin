@@ -12,8 +12,10 @@ import RatingInput from 'sly/components/molecules/RatingInput';
 import Slider from 'sly/components/molecules/Slider';
 import DateChoice from 'sly/components/molecules/DateChoice';
 import BoxChoice from 'sly/components/molecules/BoxChoice';
+import IconInput from 'sly/components/molecules/IconInput';
 
-const getInputType = type => (type === 'email' ? 'text' : type);
+const textTypeInputs = ['email', 'iconInput'];
+const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
 const getInputComponent = (type) => {
   switch (type) {
     case 'rating':
@@ -30,6 +32,8 @@ const getInputComponent = (type) => {
       return BoxChoice;
     case 'dateChoice':
       return DateChoice;
+    case 'iconInput':
+      return IconInput;
     default:
       return Input;
   }
@@ -176,6 +180,7 @@ Field.propTypes = {
     'radio',
     'rating',
     'number',
+    'iconInput',
   ]),
   orientation: oneOf(['horizontal', 'vertical']).isRequired,
   placeholder: string,

@@ -69,4 +69,7 @@ storiesOf('Molecules|Field', module)
   .add('type radio', () => <Field name="field" label="Label" type="radio" />)
   .add('type radio invalid with error message', () => (
     <Field name="field" label="Label" type="radio" error="Invalid" invalid />
+  ))
+  .add('type iconInput', () => (
+    <Field name="field" label="Label" type="iconInput" />
   ));

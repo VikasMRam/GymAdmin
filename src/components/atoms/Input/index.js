@@ -6,7 +6,6 @@ import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 
-const height = p => size('element', p.size);
 const backgroundColor = (p) => {
   if (p.disabled) {
     return palette('grey', 'stroke');
