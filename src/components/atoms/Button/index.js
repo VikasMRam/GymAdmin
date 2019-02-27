@@ -32,6 +32,9 @@ const foregroundColor = ({
   if (secondary) {
     foregroundPalette = 'slate';
   }
+  if (ghost && secondary) {
+    foregroundPalette = 'grey';
+  }
   return transparent ? 'none' : palette(foregroundPalette, 'base');
 };
 
@@ -57,7 +60,7 @@ const hoverForegroundColor = ({
   ghost, selectable, selected, secondary,
 }) => {
   if (ghost && !secondary) {
-    return palette('base');
+    return palette('dark');
   }
   return (selectable && !selected)
     ? palette('white', 'base')
