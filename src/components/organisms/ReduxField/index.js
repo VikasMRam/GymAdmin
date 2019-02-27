@@ -8,7 +8,7 @@ const ReduxField = ({ meta, input, ...props }) => {
     ...props,
     ...input,
     invalid: meta.touched && !!meta.error,
-    error: meta.error,
+    message: meta.error,
   };
   return <Field {...fieldProps} />;
 };
