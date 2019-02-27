@@ -82,7 +82,7 @@ const LabelWrapper = styled.div`
 `;
 
 const Field = ({
-  error,
+  message,
   name,
   invalid,
   warning,
@@ -127,19 +127,19 @@ const Field = ({
         </LabelWrapper>
       }
       {renderInputFirst || <InputComponent {...inputProps} />}
-      {invalid && !hideErrors && error && (
+      {invalid && !hideErrors && message && (
         <ErrorWrapper>
           <StyledIcon icon="close" size="small" palette="danger" />
           <Block id={`${name}Error`} role="alert" palette="danger" size="caption">
-            {error}
+            {message}
           </Block>
         </ErrorWrapper>
       )}
-      {warning && !hideErrors && error && (
+      {warning && !hideErrors && message && (
         <ErrorWrapper>
           <StyledIcon icon="warning" size="small" palette="warning" />
           <Block id={`${name}Warning`} role="alert" palette="warning" size="caption">
-            {error}
+            {message}
           </Block>
         </ErrorWrapper>
       )}
@@ -160,7 +160,7 @@ Field.propTypes = {
   invalid: bool,
   warning: bool,
   success: bool,
-  error: string,
+  message: string,
   hideErrors: bool,
   label: string,
   type: oneOf([

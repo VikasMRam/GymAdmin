@@ -23,12 +23,12 @@ describe('Field', () => {
   });
 
   it('does not render error when passed in without invalid', () => {
-    const wrapper = wrap({ error: 'foo error' });
+    const wrapper = wrap({ message: 'foo error' });
     expect(wrapper.contains('foo error')).toBe(false);
   });
 
   it('renders error when passed in along with invalid', () => {
-    const wrapper = wrap({ error: 'foo error', invalid: true });
+    const wrapper = wrap({ message: 'foo error', invalid: true });
     expect(wrapper.contains('foo error')).toBe(true);
   });
 

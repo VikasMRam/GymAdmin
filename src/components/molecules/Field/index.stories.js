@@ -21,7 +21,7 @@ storiesOf('Molecules|Field', module)
       name="field"
       label="Label"
       value="My input"
-      error="Invalid"
+      message="Invalid"
       invalid
     />
   ))
@@ -31,7 +31,7 @@ storiesOf('Molecules|Field', module)
       name="field"
       label="Label"
       value="My input"
-      error="Warning message"
+      message="Warning message"
       warning
     />
   ))
@@ -40,7 +40,7 @@ storiesOf('Molecules|Field', module)
       name="field"
       label="Label"
       value="My input"
-      error="Warning message Warning message Warning message Warning message"
+      message="Warning message Warning message Warning message Warning message"
       orientation="horizontal"
       warning
     />
@@ -49,7 +49,7 @@ storiesOf('Molecules|Field', module)
   .add('type email', () => <Field name="field" label="Email" type="email" />)
   .add('type password', () => <Field name="field" label="Password" labelRight={labelRight} type="password" />)
   .add('type password invalid', () => <Field name="field" label="Password" labelRight={labelRight} type="password" invalid />)
-  .add('type password invalid with error message', () => <Field name="field" label="Password" labelRight={labelRight} type="password" error="Invalid" invalid />)
+  .add('type password invalid with error message', () => <Field name="field" label="Password" labelRight={labelRight} type="password" message="Invalid" invalid />)
   .add('type textarea', () => (
     <Field name="field" label="Label" type="textarea" />
   ))
@@ -68,7 +68,7 @@ storiesOf('Molecules|Field', module)
   ))
   .add('type radio', () => <Field name="field" label="Label" type="radio" />)
   .add('type radio invalid with error message', () => (
-    <Field name="field" label="Label" type="radio" error="Invalid" invalid />
+    <Field name="field" label="Label" type="radio" message="Invalid" invalid />
   ))
   .add('type iconInput', () => (
     <Field name="field" label="Label" type="iconInput" />

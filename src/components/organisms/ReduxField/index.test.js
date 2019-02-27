@@ -49,5 +49,5 @@ it('renders invalid when was touched and has error', () => {
 
 it('renders error when passed in', () => {
   const wrapper = wrap({ meta: { error: 'test error' } });
-  expect(wrapper.find({ error: 'test error' })).toHaveLength(1);
+  expect(wrapper.find({ message: 'test error' })).toHaveLength(1);
 });
