@@ -1,73 +1,74 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { ifProp } from 'styled-tools';
 import { bool, string, oneOf } from 'prop-types';
+import { ifProp, switchProp } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
 
 const backgroundColor = ({
-  ghost, disabled, transparent, selectable, selected,
+  ghost, transparent, selectable, selected, secondary,
 }) => {
-  if (disabled) {
-    return palette('white', 'base');
-  }
   if (ghost || (selectable && !selected)) {
     return palette('white', 'base');
+  }
+  if (secondary) {
+    return palette('grey', 'background');
   }
   return transparent ? 'transparent' : palette('base');
 };
 
 const foregroundColor = ({
-  ghost, disabled, transparent, selectable, selected,
-  foregroundPalette,
+  ghost, transparent, selectable, selected,
+  foregroundPalette, secondary,
 }) => {
-  if (disabled) {
-    return palette('slate', 'stroke');
-  }
-  if (ghost) {
+  if (ghost && !secondary) {
     return palette('base');
   }
   if (selectable && !selected) {
     return palette('slate', 'base');
   }
+  if (secondary) {
+    foregroundPalette = 'slate';
+  }
   return transparent ? 'none' : palette(foregroundPalette, 'base');
 };
 
 const borderColor = ({
-  ghost, disabled, selectable, selected,
+  ghost, selectable, selected, secondary,
 }) => {
-  if (selectable && !selected) {
+  if ((selectable && !selected) || secondary) {
     return palette('slate', 'stroke');
   }
-  return ghost || disabled ? 'currentcolor' : 'transparent';
+  return ghost ? 'currentcolor' : 'transparent';
 };
 
-const hoverBackgroundColor = ({ disabled, ghost, transparent }) =>
-  !disabled && !ghost && !transparent && palette('dark');
+const hoverBackgroundColor = ({
+  disabled, ghost, transparent, secondary,
+}) => {
+  if (secondary && !ghost) {
+    return palette('grey', 'stroke');
+  }
+  return !disabled && !ghost && !transparent && palette('dark');
+};
 
 const hoverForegroundColor = ({
-  disabled, ghost, selectable, selected,
-}) =>
-  (selectable && !selected)
+  ghost, selectable, selected, secondary,
+}) => {
+  if (ghost && !secondary) {
+    return palette('base');
+  }
+  return (selectable && !selected)
     ? palette('white', 'base')
-    : !disabled && ghost && palette('filler');
+    : null;
+};
 
 const activeBackgroundColor = ({ disabled, ghost, transparent }) =>
   !disabled && !ghost && !transparent && palette('filler');
 
 const activeForegroundColor = ({ disabled, ghost }) =>
   !disabled && ghost && palette('filler');
-
-const height = ({ kind }) => {
-  switch (kind) {
-    case 'jumbo':
-      return size('element.xLarge');
-    default:
-      return size('element.regular');
-  }
-};
 
 const fontSize = ({ kind }) => {
   switch (kind) {
@@ -78,39 +79,38 @@ const fontSize = ({ kind }) => {
   }
 };
 
-const borderRadius = ({ kind }) => {
-  switch (kind) {
-    case 'jumbo':
-      return size('spacing.small');
-    case 'label':
-    default:
-      return size('spacing.tiny');
-  }
-};
-
 export const styles = css`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: ${height};
-  padding: 0 1em;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: ${size('weight.medium')};
   white-space: nowrap;
   font-size: ${fontSize};
   border: ${size('border.regular')} solid ${borderColor};
   cursor: ${ifProp('disabled', 'default', 'pointer')};
+  opacity: ${ifProp('disabled', 0.5, 1)};
   appearance: none;
-  border-radius: ${borderRadius};
+  border-radius: ${size('border.xxLarge')};
   transition: background-color 250ms ease-out, color 250ms ease-out,
     border-color 250ms ease-out;
   background-color: ${backgroundColor};
   color: ${foregroundColor};
   user-select: none;
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
+  ${switchProp('kind', {
+    label: css`
+      padding: 0 ${size('spacing', 'large')};
+      height: ${size('element', 'regular')};`,
+    regular: css`
+      // todo: non standard padding. remove afterwards if added to theme
+      padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')}) ${size('spacing.large')};`,
+    jumbo: css`
+      padding: ${size('spacing', 'large')} ${size('spacing', 'xxLarge')};`,
+  })};
 
   &:hover {
-    border-color: ${borderColor({ selected: true })};
+    border-color: ${p => borderColor({ ...p, selected: true })};
     background-color: ${hoverBackgroundColor};
     color: ${hoverForegroundColor};
   }
@@ -154,10 +154,11 @@ const Button = ({ type, kind, ...props }) => {
 Button.propTypes = {
   disabled: bool,
   ghost: bool,
+  secondary: bool,
   transparent: bool,
   palette: palettePropType,
   foregroundPalette: palettePropType,
-  kind: oneOf(['jumbo', 'regular', 'label']),
+  kind: oneOf(['jumbo', 'regular']),
   selectable: bool,
   selected: bool,
   type: string,
