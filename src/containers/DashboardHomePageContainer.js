@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
-import { query } from 'sly/services/newApi';
 
-const StyledTextarea = styled.textarea`
-  font-family: mono;
-  display: block;
-  width: 100%;
-  height: 600px;
-`;
+import { query, withApi } from 'sly/services/newApi';
 
 @query('user', 'getUser', getUser => getUser({ userId: 'me' }))
 
@@ -17,16 +10,36 @@ const StyledTextarea = styled.textarea`
   toc: 'assisted-living',
 }))
 
-export default class DashboardHomePageContainer extends Component {
+export default withApi(class DashboardTestPageContainer extends Component {
+  nameRef = React.createRef();
+
+  state = {
+    name: this.props.user.attributes.name,
+  };
+
+  nameChange = (ev) => this.setState({
+    name: ev.target.value,
+  });
+
+  submit = () => {
+    const { name } = this.state;
+    const { user, produce, api } = this.props;
+    api.updateUser({ userId: user.id }, produce(user, draft => {
+      draft.attributes.name = name;
+    }));
+  };
+
   render() {
+    const { name } = this.state;
     const { user, communities } = this.props;
     return (
       <div>
         <h2>Example of post data</h2>
-        <StyledTextarea>
+        <pre>
           {JSON.stringify(user, null, 2)}
-        </StyledTextarea>
-        <button>send</button>
+        </pre>
+        <input onChange={this.nameChange} type="text" value={name} />
+        <button onClick={this.submit}>send</button>
         <h2>Example of ssr data</h2>
         <pre>
           {JSON.stringify(communities, null, 2)}
@@ -34,4 +47,4 @@ export default class DashboardHomePageContainer extends Component {
       </div>
     );
   }
-}
+});

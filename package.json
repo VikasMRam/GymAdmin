@@ -101,6 +101,7 @@
     "express": "^4.16.2",
     "file-loader": "^1.1.6",
     "history": "^4.6.1",
+    "immer": "^2.0.0",
     "isomorphic-fetch": "^2.2.1",
     "jest-junit": "^3.7.0",
     "json-api-normalizer": "^0.4.7",

@@ -11,8 +11,12 @@ export default class ApiProvider extends Component {
     api: object.isRequired,
   };
 
+  bindApi = () => {
+    const { api, dispatch } = this.props;
+  }
+
   getChildContext = () => ({
-    api: this.props.api,
+    api: this.bindApi(),
   });
 
   render = () => this.props.children;
