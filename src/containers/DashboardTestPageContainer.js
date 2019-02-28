@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import produce from 'immer';
 
 import { query, withApi } from 'sly/services/newApi';
 
@@ -21,7 +22,7 @@ class DashboardTestPageContainer extends Component {
 
   submit = () => {
     const { name } = this.state;
-    const { user, produce, api } = this.props;
+    const { user, api } = this.props;
     api.updateUser({ userId: user.id }, produce(user, draft => {
       draft.attributes.name = name;
     }));

@@ -8,7 +8,7 @@ import smoothscroll from 'smoothscroll-polyfill';
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
-import DashboardHomePageContainer from 'sly/containers/DashboardHomePageContainer';
+import DashboardHomePageContainer from 'sly/containers/DashboardTestPageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
