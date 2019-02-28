@@ -78,7 +78,7 @@ export default class CommunityMediaGallery extends Component {
       return { ...vid, src, thumb: vid.thumbUrl };
     });
     const topRightSection = () => (
-      <Button ghost palette="slate" transparent={false} onClick={() => onToggleFullscreenMode(false, false, true)}>View Photos</Button>
+      <Button secondary ghost transparent={false} onClick={() => onToggleFullscreenMode(false, false, true)}>View Photos</Button>
     );
 
     if (websiteUrl && !websiteUrl.includes('//')) {
