@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
-import { Link, Button } from 'sly/components/atoms';
+import { Link } from 'sly/components/atoms';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => shallow(<CommunitySummary {...props} />);
@@ -36,7 +36,7 @@ describe('CommunitySummary', () => {
       community: RhodaGoldmanPlaza,
     });
     verify(wrapper);
-    expect(wrapper.find('Wrapper').childAt(1).find(Button).find({ icon: 'favourite-empty' })).toHaveLength(1);
+    expect(wrapper.find('Wrapper').childAt(1).find('StyledIconButton').find({ icon: 'favourite-empty' })).toHaveLength(1);
   });
 
   it('renders with isFavourited', () => {
@@ -45,7 +45,7 @@ describe('CommunitySummary', () => {
       isFavourited: true,
     });
     verify(wrapper);
-    expect(wrapper.find('Wrapper').childAt(1).find(Button).find({ icon: 'favourite-light' })).toHaveLength(1);
+    expect(wrapper.find('Wrapper').childAt(1).find('StyledIconButton').find({ icon: 'favourite-light' })).toHaveLength(1);
   });
 
   it('onShareClick called', () => {
@@ -54,8 +54,7 @@ describe('CommunitySummary', () => {
       community: RhodaGoldmanPlaza,
       onShareClick,
     });
-    wrapper.find('Wrapper').childAt(1).find('StyledButton').find({ icon: 'share' })
-      .parent()
+    wrapper.find('Wrapper').childAt(1).find('StyledIconButton').find({ icon: 'share' })
       .simulate('click');
     expect(onShareClick).toHaveBeenCalled();
   });
@@ -66,7 +65,8 @@ describe('CommunitySummary', () => {
       community: RhodaGoldmanPlaza,
       onFavouriteClick,
     });
-    wrapper.find('Wrapper').childAt(1).find(Button)
+    wrapper.find('Wrapper').childAt(1).find('StyledIconButton')
+      .at(1)
       .simulate('click');
     expect(onFavouriteClick).toHaveBeenCalled();
   });
@@ -78,7 +78,8 @@ describe('CommunitySummary', () => {
       isFavourited: true,
       onFavouriteClick,
     });
-    wrapper.find('Wrapper').childAt(1).find(Button)
+    wrapper.find('Wrapper').childAt(1).find('StyledIconButton')
+      .at(1)
       .simulate('click');
     expect(onFavouriteClick).toHaveBeenCalled();
   });

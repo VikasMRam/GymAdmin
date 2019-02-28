@@ -21,4 +21,7 @@ storiesOf('Molecules|MultipleChoice', module)
   ))
   .add('type buttonlist', () => (
     <MultipleChoice type="buttonlist" orientation="vertical" options={options} />
+  ))
+  .add('type buttonlist jumbo', () => (
+    <MultipleChoice type="buttonlist" buttonKind="jumbo" orientation="vertical" options={options} />
   ));

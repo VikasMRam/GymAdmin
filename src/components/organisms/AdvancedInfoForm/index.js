@@ -64,7 +64,6 @@ const AdvancedInfoForm = ({
 }) => (
   <Form onSubmit={handleSubmit}>
     {community && <StyledHeading level="subtitle" size="subtitle">To connect to {community.name}...</StyledHeading>}
-
     <Field
       name="type_of_care"
       label="What type of care do you need?"
@@ -119,7 +118,6 @@ const AdvancedInfoForm = ({
       rows="3"
       component={ReduxField}
     />
-
     <StyledButton type="submit" kind="jumbo" disabled={submitting}>
       Submit
     </StyledButton>

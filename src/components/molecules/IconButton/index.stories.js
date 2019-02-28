@@ -4,33 +4,32 @@ import { storiesOf } from '@storybook/react';
 import IconButton from 'sly/components/molecules/IconButton';
 
 storiesOf('Molecules|IconButton', module)
-  .add('default', () => <IconButton icon="close">Hello</IconButton>)
+  .add('default', () => <IconButton icon="share">Share</IconButton>)
   .add('transparent', () => (
-    <IconButton icon="close" transparent>
+    <IconButton icon="share" transparent>
       Hello
+    </IconButton>
+  ))
+  .add('Share button', () => (
+    <IconButton icon="share" ghost transparent>
+      Share
     </IconButton>
   ))
   .add('with icon on right', () => (
-    <IconButton icon="close" right>
+    <IconButton icon="share" right>
       Hello
     </IconButton>
   ))
-  .add('without text', () => <IconButton icon="close" />)
+  .add('without text', () => <IconButton icon="share" />)
   .add('collapsed', () => (
-    <IconButton icon="close" collapsed>
-      Hello
-    </IconButton>
-  ))
-  .add('height', () => (
-    <IconButton icon="close" height={100}>
+    <IconButton icon="share" collapsed>
       Hello
     </IconButton>
   ))
   .add('Seach Filter Button', () => (
     <IconButton
       right
-      icon="close"
-      iconSize="small"
+      icon="share"
       palette="slate"
       ghost
       transparent

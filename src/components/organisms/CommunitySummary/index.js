@@ -6,7 +6,8 @@ import ReactTooltip from 'react-tooltip';
 
 import { size } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { Link, Box, Heading, Hr, Icon, Button } from 'sly/components/atoms';
+import { Link, Box, Heading, Hr } from 'sly/components/atoms';
+import IconButton from 'sly/components/molecules/IconButton';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
 
 const Address = styled(Heading)`
@@ -35,7 +36,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const StyledButton = styled(Button)`
+const StyledIconButton = styled(IconButton)`
   margin-right: ${size('spacing.regular')};
 `;
 
@@ -94,18 +95,18 @@ const CommunitySummary = ({
           }
         </div>
         <div>
-          <StyledButton ghost palette="slate" onClick={onShareClick}>
-            <Icon icon="share" size="regular" palette="slate" /> Share
-          </StyledButton>
+          <StyledIconButton ghost transparent icon="share" onClick={onShareClick}>
+            Share
+          </StyledIconButton>
           {!isFavourited &&
-            <Button ghost palette="slate" onClick={onFavouriteClick}>
-              <Icon icon="favourite-empty" size="regular" palette="slate" /> Save
-            </Button>
+            <StyledIconButton ghost transparent icon="favourite-empty" onClick={onFavouriteClick}>
+              Save
+            </StyledIconButton>
           }
           {isFavourited &&
-            <Button ghost palette="slate" onClick={onFavouriteClick}>
-              <Icon icon="favourite-light" size="regular" palette="primary" /> Save
-            </Button>
+            <StyledIconButton ghost transparent icon="favourite-light" onClick={onFavouriteClick}>
+              Save
+            </StyledIconButton>
           }
         </div>
       </Wrapper>
