@@ -36,6 +36,8 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
         status: object,
       };
 
+      // this method called statically from server uses the api from outside the provider,
+      // so it's not bound to dispatch
       static loadData = (store, props) => {
         const promises = [];
 
@@ -68,9 +70,10 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
         }
       }
 
+      // this apiCall is done from the api provided by ApiProvider, so it's bound to dispatch
       fetch = (props = this.props) => {
-        const { dispatch, api } = props;
-        return dispatch(dispatcher(api[apiCall], props));
+        const { api } = props;
+        return dispatcher(api[apiCall], props);
       };
 
       render() {

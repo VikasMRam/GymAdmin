@@ -10,14 +10,12 @@ import { query, withApi } from 'sly/services/newApi';
   toc: 'assisted-living',
 }))
 
-export default withApi(class DashboardTestPageContainer extends Component {
-  nameRef = React.createRef();
-
+class DashboardTestPageContainer extends Component {
   state = {
     name: this.props.user.attributes.name,
   };
 
-  nameChange = (ev) => this.setState({
+  nameChange = ev => this.setState({
     name: ev.target.value,
   });
 
@@ -47,4 +45,6 @@ export default withApi(class DashboardTestPageContainer extends Component {
       </div>
     );
   }
-});
+}
+
+export default withApi(DashboardTestPageContainer);

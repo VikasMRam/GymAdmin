@@ -5,7 +5,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { ServerStateProvider } from 'react-router-server';
 import Modal from 'react-modal';
 
 import { createApi, ApiProvider } from 'sly/services/newApi';
@@ -15,21 +14,18 @@ import DashboardApp from 'sly/components/DashboardApp';
 
 Modal.setAppElement('#app');
 
-const serverState = window.__SERVER_STATE__;
 const initialState = window.__INITIAL_STATE__;
 const api = createApi();
 const store = configureStore(initialState);
 
 const renderApp = () => (
-  <ServerStateProvider state={serverState}>
-    <Provider store={store}>
+  <Provider store={store}>
+    <ApiProvider api={api}>
       <BrowserRouter basename={basename}>
-        <ApiProvider api={api}>
-          <DashboardApp />
-        </ApiProvider>
+        <DashboardApp />
       </BrowserRouter>
-    </Provider>
-  </ServerStateProvider>
+    </ApiProvider>
+  </Provider>
 );
 
 const root = document.getElementById('app');

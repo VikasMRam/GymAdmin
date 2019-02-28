@@ -1,7 +1,8 @@
 import { Component } from 'react';
 import { object, any } from 'prop-types';
+import { connect } from 'react-redux';
 
-export default class ApiProvider extends Component {
+class ApiProvider extends Component {
   static propTypes = {
     api: object.isRequired,
     children: any,
@@ -11,13 +12,20 @@ export default class ApiProvider extends Component {
     api: object.isRequired,
   };
 
-  bindApi = () => {
-    const { api, dispatch } = this.props;
-  }
-
   getChildContext = () => ({
     api: this.bindApi(),
   });
 
+  bindApi = () => {
+    const { api, dispatch } = this.props;
+    return Object.entries(api).reduce((acc, [key, method]) => {
+      acc[key] = (...args) => dispatch(method(...args));
+      acc[key].actionName = method.actionName;
+      return acc;
+    }, {});
+  };
+
   render = () => this.props.children;
 }
+
+export default connect()(ApiProvider);
