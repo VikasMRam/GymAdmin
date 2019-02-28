@@ -32,7 +32,7 @@ const Notification = ({
       <IconButton
         icon="close"
         iconSize="small"
-        iconOnly
+        transparent
         onClick={onClose}
         palette={closeButtonPalette}
       />
