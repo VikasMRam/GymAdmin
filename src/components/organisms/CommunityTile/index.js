@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components';
 import { oneOf } from 'prop-types';
 import { switchProp } from 'styled-tools';
 
-
 import { size } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo/index';
@@ -45,20 +44,11 @@ const StyledCommunityInfo = styled(CommunityInfo)`
 
 const CommunityTile = ({ community, layout }) => {
   const aspectRatio = '3:2';
-  let palette = null;
-  switch (layout) {
-    case 'contained': {
-      palette = 'white';
-      break;
-    }
-    default: {
-      break;
-    }
-  }
+
   return (
     <Wrapper layout={layout} backgroundImage={community.mainImage}>
       <StyledImage layout={layout} aspectRatio={aspectRatio} src={community.mainImage} />
-      <StyledCommunityInfo layout={layout} community={community} palette={palette} />
+      <StyledCommunityInfo layout={layout} community={community} />
     </Wrapper>
   );
 };

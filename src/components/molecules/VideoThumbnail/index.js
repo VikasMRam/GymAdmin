@@ -35,10 +35,15 @@ export default class VideoThumbnail extends Component {
   static propTypes = {
     src: string.isRequired,
     onClick: func,
+    aspectRatio: string,
+  };
+
+  static defaultProps = {
+    aspectRatio: '3:2',
   };
 
   render() {
-    const { src, onClick } = this.props;
+    const { src, onClick, aspectRatio } = this.props;
 
     return (
       <Wrapper>
@@ -52,7 +57,7 @@ export default class VideoThumbnail extends Component {
             Watch Video
           </Block>
         </CenterContent>
-        <StyledImage src={src} aspectRatio="3:2" lazy={false} />
+        <StyledImage src={src} aspectRatio={aspectRatio} lazy={false} />
       </Wrapper>
     );
   }
