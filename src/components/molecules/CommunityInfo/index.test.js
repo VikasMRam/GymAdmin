@@ -8,13 +8,20 @@ import { ClampedText } from 'sly/components/atoms';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => shallow(<CommunityInfo community={RhodaGoldmanPlaza} {...props} />);
-const palette = 'danger';
 
 describe('CommunityInfo', () => {
   const verifyData = (wrapper, community) => {
     const {
-      webViewInfo, startingRate, estimated, propRatings,
+      webViewInfo, startingRate, estimated, propRatings, address,
     } = community;
+    const {
+      line1, line2, city, state, zip,
+    } = address;
+    const formattedAddress = `${line1}, ${line2}, ${city},
+      ${state}
+      ${zip}`
+      .replace(/\s/g, ' ')
+      .replace(/, ,/g, ', ');
     let { reviewsValue } = community;
     if (propRatings) {
       ({ reviewsValue } = propRatings);
@@ -27,24 +34,23 @@ describe('CommunityInfo', () => {
       if (firstLineValue) {
         const livingTypes = firstLineValue.split(',');
         livingTypes.forEach((livingType) => {
-          expect(wrapper.find('LastIconTextWrapper').at(0).find(ClampedText).dive()
+          expect(wrapper.find('IconTextWrapper').at(1).find(ClampedText).dive()
             .contains(livingType)).toBe(true);
         });
-      } else {
-        expect(wrapper.find('LastIconTextWrapper')).toHaveLength(0);
       }
       if (secondLineValue) {
         const roomTypes = secondLineValue.split(',');
         roomTypes.forEach((roomType) => {
-          expect(wrapper.find('IconTextWrapper').at(0).find(ClampedText).dive()
+          expect(wrapper.find('IconTextWrapper').at(2).find(ClampedText).dive()
             .contains(roomType)).toBe(true);
         });
-      } else {
-        expect(wrapper.find('IconTextWrapper')).toHaveLength(0);
       }
     }
-    const rateRendered = wrapper.find('RatingWrapper').find('Rate').dive().dive();
-    expect(rateRendered.find(NumberFormat)
+    expect(wrapper.find('IconTextWrapper').at(0).find(ClampedText).dive()
+      .contains(formattedAddress)).toBe(true);
+    const rateRendered = wrapper.find('TopWrapper').find('Rate').dive().dive();
+    expect(rateRendered
+      .find(NumberFormat)
       .dive()
       .text()
       .replace(',', '')).toContain(startingRate);
@@ -53,9 +59,9 @@ describe('CommunityInfo', () => {
     }
     if (reviewsValue) {
       const reviewsValueFixed = formatRating(reviewsValue);
-      expect(wrapper.find('Rating').contains(reviewsValueFixed)).toBe(true);
+      expect(wrapper.find('RatingValue').contains(reviewsValueFixed)).toBe(true);
     } else {
-      expect(wrapper.find('Rating').contains('Not Yet Rated')).toBe(true);
+      expect(wrapper.find('RatingValue').contains('Not Yet Rated')).toBe(true);
     }
   };
 
@@ -64,9 +70,9 @@ describe('CommunityInfo', () => {
     verifyData(wrapper, RhodaGoldmanPlaza);
   });
 
-  it('renders with palette', () => {
-    const wrapper = wrap({ palette });
-    expect(wrapper.instance().props.palette).toBe(palette);
+  it('renders with inverted', () => {
+    const wrapper = wrap({ inverted: true });
+    expect(wrapper.instance().props.inverted).toBeTruthy();
     verifyData(wrapper, RhodaGoldmanPlaza);
   });
 
