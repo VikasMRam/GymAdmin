@@ -66,10 +66,12 @@ const styles = css`
 const StyledTextarea = styled.textarea`
   ${styles};
 `;
+// TODO: Check how we can bring in a non standard 44px height
 const StyledSelect = styled.select`
   ${styles};
   background: ${palette('white', 'base')};
   color: ${palette('slate', 'base')};
+  height: ${size('element', 'regular')};
 `;
 const StyledInput = styled.input`
   ${styles};

@@ -28,7 +28,7 @@ export const emails = (value) => {
 
 export const url = value => !isEmpty(value) && !isURL(value) && 'Invalid URL';
 
-export const required = value => isEmpty(value) && 'Required field';
+export const required = message => value => isEmpty(value) && (message || 'Required field');
 
 export const notZero = value => value === 0 && 'At least one star';
 
