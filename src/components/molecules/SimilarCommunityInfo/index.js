@@ -125,16 +125,9 @@ export default class SimilarCommunityInfo extends Component {
     const roomTypes = secondLineValue.split(',');
     const livingTypes = firstLineValue.split(',');
 
-    let heading = (
+    const heading = (
       <StyledHeading level="title" size="subtitle">{name}</StyledHeading>
     );
-    if (url) {
-      heading = (
-        <Link href={url}>
-          {heading}
-        </Link>
-      );
-    }
 
     // TODO : Get the following values from API Response
     return (
