@@ -5,7 +5,7 @@ import Dotdotdot from 'react-dotdotdot';
 import NumberFormat from 'react-number-format';
 
 import { size, palette } from 'sly/components/themes';
-import { Heading, Icon, Link, Block } from 'sly/components/atoms';
+import { Heading, Icon, Block } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
 
 const clamp = css`
@@ -88,7 +88,7 @@ export default class SimilarCommunityInfo extends Component {
     this.renderEstimatedRate(startingRate)
   ) : (
     this.renderProviderRate(startingRate)
-  )
+  );
 
   renderReviews = ({ numReviews, reviewsValue }) => {
     if (numReviews > 0) {
@@ -105,14 +105,13 @@ export default class SimilarCommunityInfo extends Component {
         {' Not Yet Rated'}
       </span>
     );
-  }
+  };
 
   render() {
     const { similarProperty: community, ...props } = this.props;
 
     const {
       name,
-      url,
       addressString,
       description,
       webViewInfo,
