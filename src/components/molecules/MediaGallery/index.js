@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import styled, { css } from 'styled-components';
-import PropTypes from 'prop-types';
+import { string, bool, arrayOf, shape, number, func } from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
 import { ifProp } from 'styled-tools';
 
@@ -18,15 +18,6 @@ const CarouselWrapper = styled.div`
   position: relative;
   background: ${ifProp('transparent', 'transparent', palette('grey', 'base'))};
   text-align: center;
-
-  ${props =>
-    !props.autoHeight &&
-    css`
-      height: ${size('carousel.mobile')};
-      @media screen and (min-width: ${size('breakpoint.tablet')}) {
-        height: ${size('carousel.tablet')};
-      }
-    `};
 
   ${props =>
     props.showThumbnails &&
@@ -62,27 +53,27 @@ const StyledIcon = styled(Icon)`
   }
 `;
 const PrevSlide = styled(StyledIcon)`
-  left: ${size('spacing.large')};
+  left: ${size('spacing.regular')};
 `;
 const NextSlide = styled(StyledIcon)`
-  right: ${size('spacing.large')};
+  right: ${size('spacing.regular')};
 `;
 const TopRightWrapper = styled.span`
-  right: ${size('spacing.large')};
-  top: ${size('spacing.large')};
+  right: ${size('spacing.regular')};
+  top: ${size('spacing.regular')};
   position: absolute;
   z-index: 1;
 `;
 const BottomLeftWrapper = styled.span`
-  left: ${size('spacing.large')};
-  bottom: ${size('spacing.large')};
+  left: ${size('spacing.regular')};
+  bottom: ${size('spacing.regular')};
   position: absolute;
   z-index: 1;
 `;
 
 const BottomRightWrapper = styled.span`
-  right: ${size('spacing.large')};
-  bottom: ${size('spacing.large')};
+  right: ${size('spacing.regular')};
+  bottom: ${size('spacing.regular')};
   position: absolute;
   z-index: 1;
 `;
@@ -111,38 +102,38 @@ const StyledSlide = styled.div`
 
 export default class MediaGallery extends Component {
   static propTypes = {
-    images: PropTypes.arrayOf(PropTypes.shape({
-      src: PropTypes.string.isRequired,
-      alt: PropTypes.string.isRequired,
-      thumb: PropTypes.string.isRequired,
-      ofVideo: PropTypes.number,
+    images: arrayOf(shape({
+      src: string.isRequired,
+      alt: string.isRequired,
+      thumb: string.isRequired,
+      ofVideo: number,
     })),
-    videos: PropTypes.arrayOf(PropTypes.shape({
-      src: PropTypes.arrayOf(PropTypes.shape({
-        type: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired,
+    videos: arrayOf(shape({
+      src: arrayOf(shape({
+        type: string.isRequired,
+        url: string.isRequired,
       })),
-      name: PropTypes.string.isRequired,
-      thumb: PropTypes.string.isRequired,
-      alt: PropTypes.string,
+      name: string.isRequired,
+      thumb: string.isRequired,
+      alt: string,
     })),
-    showThumbnails: PropTypes.bool,
-    autoHeight: PropTypes.bool,
-    currentSlide: PropTypes.number,
-    topRightSection: PropTypes.func,
-    bottomLeftSection: PropTypes.func,
-    bottomRightSection: PropTypes.func,
-    transparent: PropTypes.bool,
-    onSlideClick: PropTypes.func,
-    onSlideChange: PropTypes.func.isRequired,
+    showThumbnails: bool,
+    currentSlide: number,
+    topRightSection: func,
+    bottomLeftSection: func,
+    bottomRightSection: func,
+    transparent: bool,
+    onSlideClick: func,
+    onSlideChange: func.isRequired,
+    aspectRatio: string,
   };
 
   static defaultProps = {
     images: [],
     videos: [],
     showThumbnails: false,
-    autoHeight: false,
     currentSlide: 0,
+    aspectRatio: '3:2',
   };
 
   setLoadedImages(index) {
@@ -208,7 +199,7 @@ export default class MediaGallery extends Component {
   };
 
   generateSlideContent = (media, index) => {
-    const { currentSlide } = this.props;
+    const { currentSlide, aspectRatio } = this.props;
 
     switch (media.type) {
       case 'image':
@@ -219,6 +210,7 @@ export default class MediaGallery extends Component {
             data-src={media.src}
             alt={media.alt}
             innerRef={(c) => { this.mediaRefs[index] = c; }}
+            aspectRatio={aspectRatio}
           />
         ) : (
           <StyledImg
@@ -228,6 +220,7 @@ export default class MediaGallery extends Component {
             alt={media.alt}
             lazy={false}
             innerRef={(c) => { this.mediaRefs[index] = c; }}
+            aspectRatio={aspectRatio}
           />
         );
       case 'video':

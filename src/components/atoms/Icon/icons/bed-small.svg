@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <path id="bed-small-a" d="M4.66666667,8 C5.77333333,8 6.66666667,7.10666667 6.66666667,6 C6.66666667,4.89333333 5.77333333,4 4.66666667,4 C3.56,4 2.66666667,4.89333333 2.66666667,6 C2.66666667,7.10666667 3.56,8 4.66666667,8 Z M12.6666667,4 L7.33333333,4 L7.33333333,8.66666667 L2,8.66666667 L2,2.66666667 L0.666666667,2.66666667 L0.666666667,12.6666667 L2,12.6666667 L2,10.6666667 L14,10.6666667 L14,12.6666667 L15.3333333,12.6666667 L15.3333333,6.66666667 C15.3333333,5.19333333 14.14,4 12.6666667,4 Z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="bed-small-b" fill="#fff">
+      <use xlink:href="#bed-small-a"/>
+    </mask>
+    <use fill="#186DC5" fill-rule="nonzero" xlink:href="#bed-small-a"/>
+    <g fill="currentColor" fill-rule="nonzero" mask="url(#bed-small-b)">
+      <rect width="16" height="16"/>
+    </g>
+  </g>
+</svg>

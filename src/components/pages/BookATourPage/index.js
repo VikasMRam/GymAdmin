@@ -97,7 +97,7 @@ const BookATourPage = ({
       </Helmet>
       <Header />
       <Column backgroundImage={mainImage}>
-        <StyledCommunityInfo palette="white" community={community} />
+        <StyledCommunityInfo inverted community={community} />
       </Column>
       <WizardController
         formName="BookATourWizardForm"
