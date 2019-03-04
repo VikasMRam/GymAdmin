@@ -17,12 +17,12 @@ const defaultProps = {
 
 storiesOf('Organisms|CommunityTile', module)
   .add('default', () => <div style={{ maxWidth: '380px' }} ><CommunityTile community={RhodaGoldmanPlaza} {...defaultProps} /></div>)
-  .add('with actions', () => <div style={{ maxWidth: '380px' }} ><CommunityTile community={RhodaGoldmanPlaza} actions={['ask-question']} {...defaultProps} /></div>)
-  .add('with actions and note', () => <div style={{ maxWidth: '380px' }} ><CommunityTile note={note} community={RhodaGoldmanPlaza} actions={['ask-question']} {...defaultProps} /></div>)
-  .add('with actions and add note', () => <div style={{ maxWidth: '380px' }} ><CommunityTile addNote community={RhodaGoldmanPlaza} actions={['ask-question']} {...defaultProps} /></div>)
-  .add('with actions, isFavourite and add note', () => <div style={{ maxWidth: '380px' }} ><CommunityTile addNote isFavourite community={RhodaGoldmanPlaza} actions={['ask-question']} {...defaultProps} /></div>)
+  .add('with actionButtons', () => <div style={{ maxWidth: '380px' }} ><CommunityTile community={RhodaGoldmanPlaza} actionButtons={['ask-question']} {...defaultProps} /></div>)
+  .add('with actionButtons and note', () => <div style={{ maxWidth: '380px' }} ><CommunityTile note={note} community={RhodaGoldmanPlaza} actionButtons={['ask-question']} {...defaultProps} /></div>)
+  .add('with actionButtons and add note', () => <div style={{ maxWidth: '380px' }} ><CommunityTile addNote community={RhodaGoldmanPlaza} actionButtons={['ask-question']} {...defaultProps} /></div>)
+  .add('with actionButtons, isFavourite and add note', () => <div style={{ maxWidth: '380px' }} ><CommunityTile addNote isFavourite community={RhodaGoldmanPlaza} actionButtons={['ask-question']} {...defaultProps} /></div>)
   .add('small size', () => <div style={{ maxWidth: '288px' }} ><CommunityTile community={RhodaGoldmanPlaza} /></div>)
-  .add('small size and with actions', () => <div style={{ maxWidth: '288px' }} ><CommunityTile community={RhodaGoldmanPlaza} actions={['ask-question']} {...defaultProps} /></div>)
-  .add('small size, with actions and note', () => <div style={{ maxWidth: '288px' }} ><CommunityTile note={note} community={RhodaGoldmanPlaza} actions={['ask-question']} {...defaultProps} /></div>)
-  .add('small size, with actions and add note', () => <div style={{ maxWidth: '288px' }} ><CommunityTile addNote community={RhodaGoldmanPlaza} actions={['ask-question']} {...defaultProps} /></div>)
-  .add('small size, with actions, isFavourite and add note', () => <div style={{ maxWidth: '288px' }} ><CommunityTile addNote isFavourite community={RhodaGoldmanPlaza} actions={['ask-question']} {...defaultProps} /></div>);
+  .add('small size and with actionButtons', () => <div style={{ maxWidth: '288px' }} ><CommunityTile community={RhodaGoldmanPlaza} actionButtons={['ask-question']} {...defaultProps} /></div>)
+  .add('small size, with actionButtons and note', () => <div style={{ maxWidth: '288px' }} ><CommunityTile note={note} community={RhodaGoldmanPlaza} actionButtons={['ask-question']} {...defaultProps} /></div>)
+  .add('small size, with actionButtons and add note', () => <div style={{ maxWidth: '288px' }} ><CommunityTile addNote community={RhodaGoldmanPlaza} actionButtons={['ask-question']} {...defaultProps} /></div>)
+  .add('small size, with actionButtons, isFavourite and add note', () => <div style={{ maxWidth: '288px' }} ><CommunityTile addNote isFavourite community={RhodaGoldmanPlaza} actionButtons={['ask-question']} {...defaultProps} /></div>);

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { oneOf, bool, string, func } from 'prop-types';
+import { arrayOf, bool, string, func } from 'prop-types';
 import { ifProp, switchProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
@@ -13,7 +13,9 @@ import MediaGallery from 'sly/components/molecules/MediaGallery';
 import IconButton from 'sly/components/molecules/IconButton';
 
 const FullWidthButton = fullWidth(Button);
+FullWidthButton.displayName = 'FullWidthButton';
 const CursorSpan = cursor(Span);
+CursorSpan.displayName = 'CursorSpan';
 
 const StyledCommunityInfo = styled(CommunityInfo)`
   margin-bottom: ${ifProp('marginBottom', size('spacing.xLarge'), 0)};
@@ -23,23 +25,21 @@ const AddNote = styled(CursorSpan)`
   display: block;
   text-align: center;
 `;
+AddNote.displayName = 'AddNote';
 
-const buildActionButtons = ({ actions, onAskQuestionClick }) => {
-  const buttons = actions.map((action) => {
-    if (action === 'ask-question') {
-      return (
-        <FullWidthButton onClick={onAskQuestionClick}>
-          Ask a question
-        </FullWidthButton>
-      );
-    }
-    return null;
-  });
-  return buttons;
-};
+const buildActionButtons = ({ actionButtons, onAskQuestionClick }) => actionButtons.map((action) => {
+  if (action === 'ask-question') {
+    return (
+      <FullWidthButton onClick={onAskQuestionClick} key={action}>
+        Ask a question
+      </FullWidthButton>
+    );
+  }
+  return null;
+});
 
 const CommunityTile = ({
-  community, actions, note, addNote, onAskQuestionClick, onEditNoteClick, onAddNoteClick, isFavourite,
+  community, actionButtons, note, addNote, onAskQuestionClick, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange,
 }) => {
   const { name, gallery } = community;
@@ -62,8 +62,8 @@ const CommunityTile = ({
         onSlideChange={onSlideChange}
       />
       <Box>
-        <StyledCommunityInfo community={community} marginBottom={!!actions.length} />
-        {buildActionButtons({ actions, onAskQuestionClick })}
+        <StyledCommunityInfo community={community} marginBottom={!!actionButtons.length} />
+        {buildActionButtons({ actionButtons, onAskQuestionClick })}
         {(note || addNote) && <Hr />}
         {note && <Span size="caption">{note}</Span>}
         {note && <CursorSpan palette="primary" size="caption" onClick={onEditNoteClick}> Edit note</CursorSpan>}
@@ -75,7 +75,7 @@ const CommunityTile = ({
 
 CommunityTile.propTypes = {
   community: communityPropType,
-  actions: oneOf(['ask-question']),
+  actionButtons: arrayOf(string),
   onAskQuestionClick: func,
   onEditNoteClick: func,
   onAddNoteClick: func,
@@ -84,11 +84,11 @@ CommunityTile.propTypes = {
   isFavourite: bool,
   onFavouriteClick: func,
   onUnfavouriteClick: func,
-  onSlideChange: func,
+  onSlideChange: func.isRequired,
 };
 
 CommunityTile.defaultProps = {
-  actions: [],
+  actionButtons: [],
 };
 
 export default CommunityTile;
