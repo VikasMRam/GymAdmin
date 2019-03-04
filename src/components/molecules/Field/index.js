@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Label, Input, Block, Icon } from 'sly/components/atoms';
+import { Label, Input, Icon } from 'sly/components/atoms';
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 import CommunityChoice from 'sly/components/molecules/CommunityChoice';
@@ -13,6 +13,7 @@ import Slider from 'sly/components/molecules/Slider';
 import DateChoice from 'sly/components/molecules/DateChoice';
 import BoxChoice from 'sly/components/molecules/BoxChoice';
 import IconInput from 'sly/components/molecules/IconInput';
+import InputMessage from 'sly/components/molecules/InputMessage';
 
 const textTypeInputs = ['email', 'iconInput'];
 const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
@@ -46,28 +47,13 @@ const Wrapper = styled.div`
   > input[type='radio'] {
     margin-right: ${size('spacing.regular')};
   }
-  label {
-    vertical-align: middle;
-  }
   display: flex;
-  flex-direction: ${ifProp({ orientation: 'horizontal' }, 'row', 'column')};
-  align-items: ${ifProp({ orientation: 'horizontal' }, 'center', 'initial')};
-
-  > * {
-    margin-right: ${ifProp({ orientation: 'horizontal' }, size('spacing.large'), 0)};
+  flex-direction: column;
+  align-items: initial;
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    flex-direction: ${ifProp({ wideWidth: true }, 'row')};
   }
-`;
-
-const ErrorWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  // donot use pad to add margin bottom on input as it well lead to
-  // rerender on key stroke that will loose focus
-  margin-top: ${size('spacing.regular')};
-`;
-
-const StyledIcon = styled(Icon)`
-  margin-right: ${size('spacing.regular')};
 `;
 
 const CheckIcon = styled(Icon)`
@@ -78,7 +64,26 @@ const CheckIcon = styled(Icon)`
 
 const LabelWrapper = styled.div`
   display: flex;
+  vertical-align: middle;
   justify-content: space-between;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${ifProp({ wideWidth: true }, size('tabletLayout.col2'))};
+    margin-right: ${ifProp({ wideWidth: true }, size('tabletLayout.gutter'))};
+  }
+`;
+
+const InputWrapper = styled.div`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    width: ${ifProp({ wideWidth: true }, size('tabletLayout.col3'))};
+    margin-right: ${ifProp({ wideWidth: true }, size('spacing.large'))};
+  }
+`;
+
+const InputBeforeLabelWrapper = styled.div`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-left: ${ifProp({ wideWidth: true }, size('tabletLayout.col2'))};
+  }
 `;
 
 const Field = ({
@@ -94,7 +99,7 @@ const Field = ({
   value,
   hideErrors,
   labelRight,
-  orientation,
+  wideWidth,
   ...props
 }) => {
   const inputProps = {
@@ -110,12 +115,11 @@ const Field = ({
   };
   const InputComponent = getInputComponent(type);
   const renderInputFirst = type === 'checkbox' || type === 'radio';
-
   return (
-    <Wrapper className={className} orientation={orientation}>
-      {renderInputFirst && <InputComponent {...inputProps} />}
+    <Wrapper className={className} wideWidth={wideWidth}>
+      {renderInputFirst && (wideWidth ? <InputBeforeLabelWrapper wideWidth={wideWidth}><InputComponent {...inputProps} /></InputBeforeLabelWrapper> : <InputComponent {...inputProps} />)}
       {(label || labelRight) &&
-        <LabelWrapper>
+        <LabelWrapper wideWidth={wideWidth}>
           {label &&
             <Label htmlFor={inputProps.id}>
               {label}
@@ -126,22 +130,12 @@ const Field = ({
           }
         </LabelWrapper>
       }
-      {renderInputFirst || <InputComponent {...inputProps} />}
+      {renderInputFirst || (wideWidth ? <InputWrapper wideWidth={wideWidth}><InputComponent {...inputProps} /></InputWrapper> : <InputComponent {...inputProps} />)}
       {invalid && !hideErrors && message && (
-        <ErrorWrapper>
-          <StyledIcon icon="close" size="small" palette="danger" />
-          <Block id={`${name}Error`} role="alert" palette="danger" size="caption">
-            {message}
-          </Block>
-        </ErrorWrapper>
+        <InputMessage name={`${name}Error`} icon="close" palette="danger" message={message} />
       )}
       {warning && !hideErrors && message && (
-        <ErrorWrapper>
-          <StyledIcon icon="warning" size="small" palette="warning" />
-          <Block id={`${name}Warning`} role="alert" palette="warning" size="caption">
-            {message}
-          </Block>
-        </ErrorWrapper>
+        <InputMessage name={`${name}Warning`} icon="warning" palette="warning" message={message} />
       )}
       {success &&
         <CheckIcon icon="check" size="regular" palette="green" />
@@ -182,14 +176,13 @@ Field.propTypes = {
     'number',
     'iconInput',
   ]),
-  orientation: oneOf(['horizontal', 'vertical']).isRequired,
   placeholder: string,
   labelRight: node,
+  wideWidth: bool,
 };
 
 Field.defaultProps = {
   type: 'text',
-  orientation: 'vertical',
 };
 
 export default Field;

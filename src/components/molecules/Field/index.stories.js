@@ -25,6 +25,16 @@ storiesOf('Molecules|Field', module)
       invalid
     />
   ))
+  .add('invalid with error message horizontal', () => (
+    <Field
+      name="field"
+      label="Label"
+      value="My input"
+      message="Invalid"
+      invalid
+      wideWidth
+    />
+  ))
   .add('warning', () => <Field name="field" label="Label" warning />)
   .add('warning with error message', () => (
     <Field
@@ -41,8 +51,8 @@ storiesOf('Molecules|Field', module)
       label="Label"
       value="My input"
       message="Warning message Warning message Warning message Warning message"
-      orientation="horizontal"
       warning
+      wideWidth
     />
   ))
   .add('success', () => <Field name="field" label="Label" success />)

@@ -122,4 +122,28 @@ test('createValidator', () => {
     password: v.required(''),
     passwordRepeat: v.required(''),
   });
+
+  const validatorWithoutMessage = v.createValidator({
+    email: [v.email, v.required],
+  });
+
+  expect(validatorWithoutMessage({
+    email: '',
+  })).toEqual({
+    email: 'Required field',
+  });
+
+  const validatorWithMessage = v.createValidator({
+    email: [v.email, v.required],
+  }, {
+    email: {
+      required: 'Blah',
+    },
+  });
+
+  expect(validatorWithMessage({
+    email: '',
+  })).toEqual({
+    email: 'Blah',
+  });
 });
