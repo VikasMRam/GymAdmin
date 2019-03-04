@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Label, Input, Block, Icon } from 'sly/components/atoms';
+import { Label, Input, Icon } from 'sly/components/atoms';
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 import CommunityChoice from 'sly/components/molecules/CommunityChoice';
@@ -13,6 +13,7 @@ import Slider from 'sly/components/molecules/Slider';
 import DateChoice from 'sly/components/molecules/DateChoice';
 import BoxChoice from 'sly/components/molecules/BoxChoice';
 import IconInput from 'sly/components/molecules/IconInput';
+import InputMessage from 'sly/components/molecules/InputMessage';
 
 const textTypeInputs = ['email', 'iconInput'];
 const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
@@ -53,24 +54,6 @@ const Wrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex-direction: ${ifProp({ wideWidth: true }, 'row')};
   }
-`;
-
-const ErrorWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  // donot use pad to add margin bottom on input as it well lead to
-  // rerender on key stroke that will loose focus
-  margin-top: ${size('spacing.regular')};
-  align-items: ${ifProp({ wideWidth: true }, 'flex-start')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${ifProp({ wideWidth: true }, size('tabletLayout.col3'))};
-    margin-top: ${ifProp({ wideWidth: true }, 0)};
-  }
-`;
-
-const StyledIcon = styled(Icon)`
-  margin-right: ${size('spacing.regular')};
 `;
 
 const CheckIcon = styled(Icon)`
@@ -149,20 +132,10 @@ const Field = ({
       }
       {renderInputFirst || (wideWidth ? <InputWrapper wideWidth={wideWidth}><InputComponent {...inputProps} /></InputWrapper> : <InputComponent {...inputProps} />)}
       {invalid && !hideErrors && message && (
-        <ErrorWrapper wideWidth={wideWidth}>
-          <StyledIcon icon="close" size="small" palette="danger" />
-          <Block id={`${name}Error`} role="alert" palette="danger" size="caption">
-            {message}
-          </Block>
-        </ErrorWrapper>
+        <InputMessage name={`${name}Error`} icon="close" palette="danger" message={message} />
       )}
       {warning && !hideErrors && message && (
-        <ErrorWrapper wideWidth={wideWidth}>
-          <StyledIcon icon="warning" size="regular" palette="warning" />
-          <Block id={`${name}Warning`} role="alert" palette="warning" size="caption">
-            {message}
-          </Block>
-        </ErrorWrapper>
+        <InputMessage name={`${name}Warning`} icon="warning" palette="warning" message={message} />
       )}
       {success &&
         <CheckIcon icon="check" size="regular" palette="green" />
