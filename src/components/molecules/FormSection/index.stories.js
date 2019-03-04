@@ -10,4 +10,4 @@ const defaultProps = {
 
 storiesOf('Molecules|FormSection', module)
   .add('default', () => <FormSection {...defaultProps} >Hello</FormSection>)
-  .add('with Button', () => <FormSection {...defaultProps} buttonText="Save Changes" onButtonClick={action('Click on Button')} >Hello</FormSection>);
+  .add('with Button', () => <FormSection {...defaultProps} buttonText="Save Changes" onSubmit={action('Click on Button')} >Hello</FormSection>);

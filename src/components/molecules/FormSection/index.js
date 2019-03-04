@@ -6,6 +6,8 @@ import { size, palette } from 'sly/components/themes';
 import { Block, Hr, Button } from 'sly/components/atoms';
 
 const WrapperForm = styled.form`
+  display: flex;
+  flex-direction: column;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('border.xLarge')};
   padding: ${size('spacing.large')};
@@ -17,8 +19,8 @@ const HeadingBlock = styled(Block)`
 `;
 
 const BottomButton = styled(Button)`
-  float: right;
   margin-bottom: ${size('spacing.regular')};
+  margin-left: auto;
 `;
 
 const FormSection = ({
