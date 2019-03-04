@@ -55,13 +55,13 @@ export default class CommunityInfo extends Component {
 
   renderEstimatedRate = startingRate => startingRate ? (
     <Rate palette={this.props.inverted ? 'white' : 'primary'} weight="medium">
-      Estimated <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" /> per month
+      Estimated <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
     </Rate>
   ) : null;
 
   renderProviderRate = startingRate => startingRate ? (
     <Rate palette={this.props.inverted ? 'white' : 'primary'} weight="medium">
-      <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" /> per month
+      <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
     </Rate>
   ) : null;
 

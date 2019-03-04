@@ -53,27 +53,27 @@ const StyledIcon = styled(Icon)`
   }
 `;
 const PrevSlide = styled(StyledIcon)`
-  left: ${size('spacing.large')};
+  left: ${size('spacing.regular')};
 `;
 const NextSlide = styled(StyledIcon)`
-  right: ${size('spacing.large')};
+  right: ${size('spacing.regular')};
 `;
 const TopRightWrapper = styled.span`
-  right: ${size('spacing.large')};
-  top: ${size('spacing.large')};
+  right: ${size('spacing.regular')};
+  top: ${size('spacing.regular')};
   position: absolute;
   z-index: 1;
 `;
 const BottomLeftWrapper = styled.span`
-  left: ${size('spacing.large')};
-  bottom: ${size('spacing.large')};
+  left: ${size('spacing.regular')};
+  bottom: ${size('spacing.regular')};
   position: absolute;
   z-index: 1;
 `;
 
 const BottomRightWrapper = styled.span`
-  right: ${size('spacing.large')};
-  bottom: ${size('spacing.large')};
+  right: ${size('spacing.regular')};
+  bottom: ${size('spacing.regular')};
   position: absolute;
   z-index: 1;
 `;

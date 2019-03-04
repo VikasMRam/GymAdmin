@@ -14,6 +14,7 @@ const fadeIn = keyframes`
 `;
 
 const StyledButton = styled(Button)`
+  ${ifProp('noPadding', css`padding: 0;`)}
   ${ifProp(
     'collapsed',
     css`
@@ -67,6 +68,7 @@ const IconButton = ({
       hasText={!!children}
       transparent={transparent}
       padRight={!!children && !right}
+      noPadding={transparent && !children}
       {...props}
     >
       {right || iconElement}
