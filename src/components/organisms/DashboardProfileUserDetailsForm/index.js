@@ -4,12 +4,9 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import ReduxField from 'sly/components/organisms/ReduxField/index';
-import { Hr, Button } from 'sly/components/atoms';
-
-const WrapperForm = styled.form`
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
-`;
+import { Hr } from 'sly/components/atoms';
+import ReduxField from 'sly/components/organisms/ReduxField';
+import FormSection from 'sly/components/molecules/FormSection';
 
 const TwoColumnField = styled(Field)`
   width: ${size('mobileLayout.col2')};
@@ -19,16 +16,12 @@ const TwoColumnField = styled(Field)`
   }
 `;
 
-const StyledButton = styled(Button)`
-  float: right;
-`;
-
 // TODO: Searching in, should it be a city search?
 const DashboardProfileUserDetailsForm = ({
-  handleSubmit, pristine, submitting,
+  handleSubmit, ...props
 }) => {
   return (
-    <WrapperForm onSubmit={handleSubmit}>
+    <FormSection heading="My Profile" buttonText="Save Changes" onSubmit={handleSubmit} {...props}>
       <Field
         name="name"
         label="Contact Name"
@@ -105,11 +98,7 @@ const DashboardProfileUserDetailsForm = ({
         component={ReduxField}
         wideWidth
       />
-      <Hr fullWidth />
-      <StyledButton type="submit" palette="primary" disabled={pristine || submitting}>
-        Save Changes
-      </StyledButton>
-    </WrapperForm>
+    </FormSection>
   );
 };
 

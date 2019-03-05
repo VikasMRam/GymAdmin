@@ -2,8 +2,8 @@ import React from 'react';
 import { func, string, bool, object } from 'prop-types';
 import { Field } from 'redux-form';
 
-import ReduxField from 'sly/components/organisms/ReduxField/index';
-import FormSection from 'sly/components/molecules/FormSection/index';
+import ReduxField from 'sly/components/organisms/ReduxField';
+import FormSection from 'sly/components/molecules/FormSection';
 
 const DashboardAddPasswordForm = ({
   handleSubmit, ...props
