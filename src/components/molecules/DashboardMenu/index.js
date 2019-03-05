@@ -11,14 +11,14 @@ const Wrapper = styled.div`
   display: flex;
   padding: ${size('spacing.large')};
   padding-bottom: 0;
-  border: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
     padding: 0;
     padding-top: ${size('spacing.xxLarge')};
-    // TODO: Move this to the layout of the dashboard
-    width: ${size('element.xxHuge')};;
+    border-right: ${size('border.regular')} solid ${palette('grey', 'filler')};
+    border-bottom: 0;
   }
 `;
 
@@ -35,7 +35,7 @@ const MenuItem = styled.div`
     border-left: none;
   }
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     flex-direction: column;
     border-bottom: none;
     border-left: ${size('border.xxLarge')} ${ifProp('active', 'solid', 'none')} ${palette('slate', 'base')};
@@ -57,7 +57,7 @@ const MenuIcon = styled(Icon)`
 `;
 
 const MenuItemLabel = styled(Span)`
-  
+
 `;
 
 const DashboardMenu = ({ menuItems, onMenuIconClick }) => {
