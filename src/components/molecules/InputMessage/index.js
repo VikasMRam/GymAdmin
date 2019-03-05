@@ -15,9 +15,9 @@ const StyledIcon = styled(Icon)`
 `;
 
 const InputMessage = ({
-  name, icon, iconSize, palette, message,
+  name, icon, iconSize, palette, message, className,
 }) => (
-  <ErrorWrapper>
+  <ErrorWrapper className={className}>
     <StyledIcon icon={icon} size={iconSize} palette={palette} />
     <Block id={name} role="alert" palette={palette} size="caption">
       {message}
@@ -31,6 +31,7 @@ InputMessage.propTypes = {
   iconSize: string,
   palette: string.isRequired,
   message: string.isRequired,
+  className: string,
 };
 
 export default InputMessage;

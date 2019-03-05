@@ -9,7 +9,7 @@ import { middleware as beesMiddleware } from '../services/newApi';
 import reducer from './reducer';
 import sagas from './sagas';
 
-import { isDev, isBrowser } from 'sly/config';
+import { isDev, isBrowser, muteReduxLogger } from 'sly/config';
 
 const devtools =
   isDev && isBrowser && window.devToolsExtension
@@ -25,7 +25,7 @@ export default function (initialState, services = {}) {
     beesMiddleware, entitiesMiddleware, thunkMiddleware, sagaThunkMiddleware, sagaMiddleware,
   ];
 
-  if (isBrowser && isDev) {
+  if (isBrowser && isDev && !muteReduxLogger) {
     middlewares.push(loggerMiddleware);
   }
 

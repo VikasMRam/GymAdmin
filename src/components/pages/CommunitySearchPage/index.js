@@ -173,7 +173,7 @@ const CommunitySearchPage = ({
         }
       });
       if (gg.seoLinks) {
-        additionalDivs.push(<SeoLinks title="Assisted Living in Nearby Cities" links={gg.seoLinks} />);
+        additionalDivs.push(<SeoLinks key="seoLinks" title="Assisted Living in Nearby Cities" links={gg.seoLinks} />);
       }
 
       return (

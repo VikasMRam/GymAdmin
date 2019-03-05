@@ -48,6 +48,7 @@ const isDev = NODE_ENV === 'development';
 const isStaging = SLY_ENV === 'staging';
 const FB_CLIENT_ID = process.env.FB_CLIENT_ID || '624602444328776';
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com';
+const MUTE_REDUX_LOGGER = process.env.MUTE_REDUX_LOGGER || false;
 
 // replacements for widgets.js
 const EXTERNAL_WIZARDS_PATH = process.env.EXTERNAL_WIZARDS_PATH || '/external/wizards';
@@ -74,6 +75,7 @@ console.info('Using config', JSON.stringify({
   EXTERNAL_WIZARDS_ROOT_URL,
   FB_CLIENT_ID,
   GOOGLE_CLIENT_ID,
+  MUTE_REDUX_LOGGER,
 }, null, 2));
 
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
@@ -147,6 +149,7 @@ const base = () =>
       'process.env.VERSION': VERSION,
       'process.env.FB_CLIENT_ID': FB_CLIENT_ID,
       'process.env.GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID,
+      'process.env.MUTE_REDUX_LOGGER': MUTE_REDUX_LOGGER,
     }),
     addPlugins([new webpack.ProgressPlugin()]),
     happypack([babel()]),
