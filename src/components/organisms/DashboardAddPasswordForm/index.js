@@ -11,7 +11,7 @@ import { size } from 'sly/components/themes';
 const FormElementsWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
-    flex-direction: row-reverse;
+    order: 0;
   }
 `;
 
@@ -22,18 +22,19 @@ const StyledInputMessage = styled(InputMessage)`
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-bottom: 0;
+    order: 1;
   }
 `;
 
 const noPasswordWarning = 'Create a password so you can discover and keep track of your favorite communities.';
 
 const DashboardAddPasswordForm = ({
-  handleSubmit, ...props
+  handleSubmit, pristine, ...props
 }) => {
   return (
-    <FormSection heading="Add Your Password" buttonText="Create Password" onSubmit={handleSubmit} {...props}>
+    <FormSection heading="Add Your Password" buttonText="Create Password" onSubmit={handleSubmit} pristine={pristine} {...props}>
       <FormElementsWrapper>
-        <StyledInputMessage icon="warning" palette="warning" message={noPasswordWarning} />
+        {pristine && <StyledInputMessage name="dashboardAddPasswordFormWarning" icon="warning" palette="warning" message={noPasswordWarning} />}
         <FieldsWrapper>
           <Field
             name="newPassword"
@@ -42,6 +43,7 @@ const DashboardAddPasswordForm = ({
             placeholder=""
             component={ReduxField}
             wideWidth
+            warning={pristine}
           />
           <Field
             name="confirmPassword"
@@ -50,6 +52,7 @@ const DashboardAddPasswordForm = ({
             placeholder=""
             component={ReduxField}
             wideWidth
+            warning={pristine}
           />
         </FieldsWrapper>
       </FormElementsWrapper>

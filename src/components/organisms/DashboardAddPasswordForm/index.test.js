@@ -13,5 +13,14 @@ describe('DashboardAddPasswordForm', () => {
     expect(wrapper.find(Field).filter({ name: 'newPassword' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'confirmPassword' })).toHaveLength(1);
     expect(wrapper.find('FormSection')).toHaveLength(1);
+    expect(wrapper.find('StyledInputMessage')).toHaveLength(0);
+  });
+
+  it('render Create Password Warning', () => {
+    const wrapper = wrap({ pristine: true });
+    expect(wrapper.find(Field).filter({ name: 'newPassword' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'confirmPassword' })).toHaveLength(1);
+    expect(wrapper.find('FormSection')).toHaveLength(1);
+    expect(wrapper.find('StyledInputMessage')).toHaveLength(1);
   });
 });
