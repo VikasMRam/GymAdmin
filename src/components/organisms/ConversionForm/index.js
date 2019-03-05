@@ -25,7 +25,7 @@ const ConversionForm = ({
   hasOnlyEmail,
 }) => (
   <Box>
-    <form onSubmit={handleSubmit}>
+    <form name="ConversionForm" onSubmit={handleSubmit}>
       <PaddedHeading level="title" size="subtitle">Get Pricing & Availability</PaddedHeading>
 
       <Field

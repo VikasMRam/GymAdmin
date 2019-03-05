@@ -50,7 +50,7 @@ const StyledHelpBubble = styled(HelpBubble)`
 const CommunityPWEstimatedPricingForm = ({
   error, handleSubmit, communityName, onRoomTypeChange, onCareTypeChange, userDetails,
 }) => (
-  <form onSubmit={handleSubmit}>
+  <form name="CommunityPWEstimatedPricingForm" onSubmit={handleSubmit}>
     <HeadingSection level="subtitle" size="subtitle">Get your Pricing and Availability for {communityName}</HeadingSection>
     <StyledBlock size="caption">
       What type of room are you looking for?
