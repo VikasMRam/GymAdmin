@@ -12,6 +12,7 @@ const wrap = (props = {}) => shallow(<DashboardProfileUserDetailsForm handleSubm
 describe('DashboardProfileUserDetailsForm', () => {
   it('render DashboardProfileUserDetailsForm', () => {
     const wrapper = wrap({ });
+    expect(wrapper.find('FormSection')).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
@@ -20,7 +21,6 @@ describe('DashboardProfileUserDetailsForm', () => {
     expect(wrapper.find('TwoColumnField').filter({ name: 'timeToMove' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'searchingCity' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'openToNearbyAreas' })).toHaveLength(1);
-    expect(wrapper.find('StyledButton')).toHaveLength(1);
   });
 
   // TODO: Check whether this form needs to handle form level errors
@@ -29,10 +29,4 @@ describe('DashboardProfileUserDetailsForm', () => {
   //   expect(wrapper.find('StyledButton')).toHaveLength(1);
   //   expect(wrapper.find('strong')).toHaveLength(1);
   // });
-
-  it('handles onFormSubmit', () => {
-    const wrapper = wrap({ });
-    wrapper.find('WrapperForm').simulate('submit');
-    expect(handleSubmit).toHaveBeenCalled();
-  });
 });
