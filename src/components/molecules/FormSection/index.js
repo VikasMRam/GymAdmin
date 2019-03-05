@@ -23,16 +23,21 @@ const BottomButton = styled(Button)`
   margin-left: auto;
 `;
 
+const StyledHr = styled(Hr)`
+  margin-left: -${size('spacing.large')};
+  margin-right: -${size('spacing.large')};
+`;
+
 const FormSection = ({
   heading, children, buttonText, onSubmit, pristine, submitting,
 }) => (
   <WrapperForm onSubmit={onSubmit}>
     <HeadingBlock size="subtitle" weight="medium">{heading}</HeadingBlock>
-    <Hr fullWidth />
+    <StyledHr />
     {children}
     {buttonText && onSubmit &&
       <Fragment>
-        <Hr fullWidth />
+        <StyledHr />
         <BottomButton type="submit" palette="primary" disabled={pristine || submitting}>{buttonText}</BottomButton>
       </Fragment>
       }

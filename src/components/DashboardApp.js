@@ -13,10 +13,12 @@ import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
+import DashboardFavoritesPageContainer from 'sly/containers/DashboardFavoritesPageContainer';
 
 setGlobalStyles();
 
-const DASHBOARD_PATH = '/dashboard'
+const DASHBOARD_PATH = '/dashboard';
+const FAMILY_DASHBOARD_PATH = `${DASHBOARD_PATH}/family`;
 
 export default class App extends Component {
   static childContextTypes = {
@@ -27,6 +29,11 @@ export default class App extends Component {
     {
       path: DASHBOARD_PATH,
       component: DashboardTestPageContainer,
+      exact: true,
+    },
+    {
+      path: `${FAMILY_DASHBOARD_PATH}/favorites`,
+      component: DashboardFavoritesPageContainer,
       exact: true,
     },
   ];
