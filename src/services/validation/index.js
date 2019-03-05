@@ -63,9 +63,9 @@ export const createValidator = (rules, messageObj) => (data = {}) => {
     const rule = join([].concat(rules[key]));
     const error = rule(data[key], data);
     if (error) {
-      if (messageObj && messageObj[key] && messageObj[key][error.ruleName]) {
+      if (messageObj && messageObj[key]) {
         const message = messageObj[key][error.ruleName];
-        errors[key] = message || error.result;
+        errors[key] = message;
       } else {
         errors[key] = error.result;
       }

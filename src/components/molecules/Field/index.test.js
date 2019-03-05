@@ -29,7 +29,7 @@ describe('Field', () => {
 
   it('renders error when passed in along with invalid', () => {
     const wrapper = wrap({ message: 'foo error', invalid: true });
-    expect(wrapper.find('InputMessage[message="foo error"][icon="close"]')).toHaveLength(1);
+    expect(wrapper.find('StyledInputMessage[message="foo error"][icon="close"]')).toHaveLength(1);
   });
 
   describe('MultipleChoice', () => {
