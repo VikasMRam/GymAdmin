@@ -66,6 +66,7 @@ const LabelWrapper = styled.div`
   display: flex;
   vertical-align: middle;
   justify-content: space-between;
+  align-items: center;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width: ${ifProp({ wideWidth: true }, size('tabletLayout.col2'))};
@@ -83,6 +84,16 @@ const InputWrapper = styled.div`
 const InputBeforeLabelWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-left: ${ifProp({ wideWidth: true }, size('tabletLayout.col2'))};
+  }
+`;
+
+// donot use pad to add margin bottom on input as it well lead to
+// rerender on key stroke that will loose focus
+const StyledInputMessage = styled(InputMessage)`
+  margin-top: ${size('spacing.regular')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-top: ${ifProp({ wideWidth: true }, 0)};
   }
 `;
 
@@ -132,10 +143,10 @@ const Field = ({
       }
       {renderInputFirst || (wideWidth ? <InputWrapper wideWidth={wideWidth}><InputComponent {...inputProps} /></InputWrapper> : <InputComponent {...inputProps} />)}
       {invalid && !hideErrors && message && (
-        <InputMessage name={`${name}Error`} icon="close" palette="danger" message={message} />
+        <StyledInputMessage name={`${name}Error`} icon="close" palette="danger" message={message} wideWidth={wideWidth} />
       )}
       {warning && !hideErrors && message && (
-        <InputMessage name={`${name}Warning`} icon="warning" palette="warning" message={message} />
+        <StyledInputMessage name={`${name}Warning`} icon="warning" palette="warning" message={message} wideWidth={wideWidth} />
       )}
       {success &&
         <CheckIcon icon="check" size="regular" palette="green" />
