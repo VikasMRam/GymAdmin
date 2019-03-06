@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { arrayOf, bool, string, func } from 'prop-types';
 import { ifProp, switchProp } from 'styled-tools';
 
@@ -26,6 +26,21 @@ const AddNote = styled(CursorSpan)`
   text-align: center;
 `;
 AddNote.displayName = 'AddNote';
+
+const StyledMediaGallery = styled(MediaGallery)`
+  background: none;
+  img {
+    border-top-left-radius: ${size('spacing.small')};
+    border-top-right-radius: ${size('spacing.small')};
+  }
+`;
+
+const StyledBox = styled(Box)`
+  ${p => p.hasImages && css`
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  `}
+`;
 
 const buildActionButtons = ({ actionButtons, onAskQuestionClick }) => actionButtons.map((action) => {
   if (action === 'ask-question') {
@@ -55,20 +70,20 @@ const CommunityTile = ({
 
   return (
     <div>
-      <MediaGallery
+      <StyledMediaGallery
         communityName={name}
         images={galleryImages}
         topRightSection={topRightSection}
         onSlideChange={onSlideChange}
       />
-      <Box>
+      <StyledBox hasImages={galleryImages.length > 0}>
         <StyledCommunityInfo community={community} marginBottom={!!actionButtons.length} />
         {buildActionButtons({ actionButtons, onAskQuestionClick })}
         {(note || addNote) && <Hr />}
         {note && <Span size="caption">{note}</Span>}
         {note && <CursorSpan palette="primary" size="caption" onClick={onEditNoteClick}> Edit note</CursorSpan>}
         {!note && addNote && <AddNote palette="primary" size="caption" onClick={onAddNoteClick}>Add a note</AddNote>}
-      </Box>
+      </StyledBox>
     </div>
   );
 };

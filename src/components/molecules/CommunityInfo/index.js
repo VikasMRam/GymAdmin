@@ -86,9 +86,8 @@ export default class CommunityInfo extends Component {
       name, webViewInfo, floorPlanString, propInfo, propRatings,
       address, addressString,
     } = community;
-    let { numReviews } = community;
+    let { numReviews, typeCare = [] } = community;
     let { reviewsValue } = community;
-    let typeCare = [];
     if (propInfo) {
       ({ typeCare } = propInfo);
     }
