@@ -36,8 +36,9 @@ const Column = styled.aside`
 `;
 
 const Body = styled.main`
-  margin: ${size('spacing.xLarge')};
-  overflow: auto;
+  padding: ${size('spacing.xLarge')};
+  background-color: ${palette('grey.background')};
+
   > * {
     background-color: ${palette('white.base')};
   }
@@ -54,7 +55,6 @@ const DashboardPage = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: ${palette('grey.background')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: grid;

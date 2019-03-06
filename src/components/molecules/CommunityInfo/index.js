@@ -84,14 +84,13 @@ export default class CommunityInfo extends Component {
     const { community, inverted, ...props } = this.props;
     const {
       name, webViewInfo, floorPlanString, propInfo, propRatings,
-      address,
+      address, addressString,
     } = community;
-    const { numReviews } = propRatings;
-    const {
-      line1, line2, city, state, zip,
-    } = address;
+    let { numReviews, typeCare = [] } = community;
     let { reviewsValue } = community;
-    const { typeCare } = propInfo;
+    if (propInfo) {
+      ({ typeCare } = propInfo);
+    }
     let floorPlanComponent = null;
     let livingTypeComponent = null;
     let floorPlan = floorPlanString;
@@ -106,11 +105,20 @@ export default class CommunityInfo extends Component {
     if (propRatings) {
       ({ reviewsValue } = propRatings);
     }
-    const formattedAddress = `${line1}, ${line2}, ${city},
-      ${state}
-      ${zip}`
-      .replace(/\s/g, ' ')
-      .replace(/, ,/g, ', ');
+    if (propRatings) {
+      ({ numReviews } = propRatings);
+    }
+    let formattedAddress = addressString;
+    if (address) {
+      const {
+        line1, line2, city, state, zip,
+      } = address;
+      formattedAddress = `${line1}, ${line2}, ${city},
+        ${state}
+        ${zip}`
+        .replace(/\s/g, ' ')
+        .replace(/, ,/g, ', ');
+    }
 
     if (floorPlan) {
       const roomTypes = floorPlan.split(',');
@@ -125,7 +133,7 @@ export default class CommunityInfo extends Component {
         </IconTextWrapper>
       );
     }
-    if (livingTypes) {
+    if (livingTypes && livingTypes.length) {
       livingTypeComponent = (
         <IconTextWrapper>
           <StyledIcon icon="hospital" palette={inverted ? 'white' : 'grey'} size="small" />
@@ -153,7 +161,7 @@ export default class CommunityInfo extends Component {
           {this.renderRate(community)}
           {this.renderReviews(reviewsValue)}
           <Block size="caption" palette={inverted ? 'white' : 'grey'}>
-            {numReviews} reviews
+            ({numReviews})
           </Block>
         </TopWrapper>
         {addressComponent}

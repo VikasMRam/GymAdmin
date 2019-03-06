@@ -5,6 +5,12 @@ import {
   put,
   destroy,
 
+  invalidateRequests,
+
+  reducer,
+} from 'redux-bees';
+
+import {
   getEntity,
   getRelationship,
   getRequestResult,
@@ -14,11 +20,7 @@ import {
   getRequestHeaders,
   getRequestMeta,
   getRequestInfo,
-
-  invalidateRequests,
-
-  reducer,
-} from 'redux-bees';
+} from './selectors';
 
 export {
   get,

@@ -13,7 +13,7 @@ const wrap = (props = {}) => shallow(<CommunityTile community={RhodaGoldmanPlaza
 describe('CommunityTile', () => {
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('MediaGallery')).toHaveLength(1);
+    expect(wrapper.find('StyledMediaGallery')).toHaveLength(1);
     expect(wrapper.find('StyledCommunityInfo')).toHaveLength(1);
     expect(wrapper.find('FullWidthButton')).toHaveLength(0);
     expect(wrapper.find('Span')).toHaveLength(0);

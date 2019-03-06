@@ -79,11 +79,11 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       render() {
         const props = {
           ...omit(this.props, ['request']),
-          [propName]: this.props.request.result,
+          [propName]: this.props.request.normalized,
           status: {
             ...this.props.status,
             [propName]: {
-              ...omit(this.props.request, ['result']),
+              ...omit(this.props.request, ['normalized']),
               refetch: this.fetch,
             },
           },
