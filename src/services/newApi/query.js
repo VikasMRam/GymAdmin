@@ -27,6 +27,8 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       };
     };
 
+    @connect(mapStateToProps)
+
     class Wrapper extends React.Component {
       static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
 
@@ -93,6 +95,6 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       }
     }
 
-    return withApi(connect(mapStateToProps)(Wrapper));
+    return withApi()(Wrapper);
   };
 }

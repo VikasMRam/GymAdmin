@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import produce from 'immer';
 
-import { query, withApi } from 'sly/services/newApi';
+import { query } from 'sly/services/newApi';
 
 @query('user', 'getUser', getUser => getUser({ id: 'me' }))
-
-@withApi
 
 export default class DashboardTestPageContainer extends Component {
   state = {
