@@ -14,6 +14,7 @@ import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 import DashboardFavoritesPageContainer from 'sly/containers/DashboardFavoritesPageContainer';
+import DashboardMyProfilePageContainer from 'sly/containers/DashboardMyProfilePageContainer';
 
 setGlobalStyles();
 
@@ -34,6 +35,11 @@ export default class App extends Component {
     {
       path: `${FAMILY_DASHBOARD_PATH}/favorites`,
       component: DashboardFavoritesPageContainer,
+      exact: true,
+    },
+    {
+      path: `${FAMILY_DASHBOARD_PATH}/my-profile`,
+      component: DashboardMyProfilePageContainer,
       exact: true,
     },
   ];

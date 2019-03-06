@@ -1,6 +1,6 @@
 import React from 'react';
 import { string, bool, oneOf, number, oneOfType, node } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
@@ -69,15 +69,19 @@ const LabelWrapper = styled.div`
   align-items: center;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${ifProp({ wideWidth: true }, size('tabletLayout.col2'))};
-    margin-right: ${ifProp({ wideWidth: true }, size('tabletLayout.gutter'))};
+    ${({ wideWidth }) => wideWidth && css`
+      margin-right: ${size('tabletLayout.gutter')};
+      flex: 0 0 ${size('tabletLayout.col2')};
+    `}
   }
 `;
 
 const InputWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: ${ifProp({ wideWidth: true }, size('tabletLayout.col3'))};
-    margin-right: ${ifProp({ wideWidth: true }, size('spacing.large'))};
+    ${({ wideWidth }) => wideWidth && css`
+      margin-right: ${size('spacing.large')};
+      flex: 0 0 ${size('tabletLayout.col3')};
+    `}
   }
 `;
 
