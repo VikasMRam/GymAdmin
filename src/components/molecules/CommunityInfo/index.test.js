@@ -12,16 +12,19 @@ const wrap = (props = {}) => shallow(<CommunityInfo community={RhodaGoldmanPlaza
 describe('CommunityInfo', () => {
   const verifyData = (wrapper, community) => {
     const {
-      webViewInfo, startingRate, estimated, propRatings, address,
+      webViewInfo, startingRate, estimated, propRatings, address, addressString,
     } = community;
-    const {
-      line1, line2, city, state, zip,
-    } = address;
-    const formattedAddress = `${line1}, ${line2}, ${city},
-      ${state}
-      ${zip}`
-      .replace(/\s/g, ' ')
-      .replace(/, ,/g, ', ');
+    let formattedAddress = addressString;
+    if (address) {
+      const {
+        line1, line2, city, state, zip,
+      } = address;
+      formattedAddress = `${line1}, ${line2}, ${city},
+        ${state}
+        ${zip}`
+        .replace(/\s/g, ' ')
+        .replace(/, ,/g, ', ');
+    }
     let { reviewsValue } = community;
     if (propRatings) {
       ({ reviewsValue } = propRatings);

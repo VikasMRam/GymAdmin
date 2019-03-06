@@ -252,7 +252,7 @@ app.use(async (req, res, next) => {
   // FIXME: hack until SEO app is migrated to bees
   if (bundle === 'dashboard') {
     try {
-      await store.dispatch(beesApi.getUser({ userId: 'me' }));
+      await store.dispatch(beesApi.getUser({ id: 'me' }));
       const routes = getAppRoutes(bundle);
       const promises = matchRoutes(routes, req.url)
         .filter(({ route }) => typeof route.component.loadData === 'function')

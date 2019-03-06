@@ -43,7 +43,7 @@ const CommunityTile = ({
   onFavouriteClick, onUnfavouriteClick, onSlideChange,
 }) => {
   const { name, gallery } = community;
-  const { images } = gallery;
+  const { images = [] } = gallery;
   const galleryImages = images.map((img, i) => ({ ...img, src: img.sd, alt: `${name} ${i + 1}` }));
   const icon = isFavourite ? 'favourite-dark' : 'favourite-empty';
   const iconPalette = isFavourite ? 'secondary' : 'white';

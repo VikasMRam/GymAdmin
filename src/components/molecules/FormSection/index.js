@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, node, func, bool } from 'prop-types';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { Block, Hr, Button } from 'sly/components/atoms';
@@ -10,22 +11,22 @@ const WrapperForm = styled.form`
   flex-direction: column;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('border.xLarge')};
-  padding: ${size('spacing.large')};
 `;
 
 const HeadingBlock = styled(Block)`
-  padding: ${size('spacing.regular')};
+  padding: ${size('spacing.xLarge')};
   padding-bottom: 0;
 `;
 
 const BottomButton = styled(Button)`
-  margin-bottom: ${size('spacing.regular')};
+  margin-bottom: ${size('spacing.xLarge')};
+  margin-right: ${size('spacing.xLarge')};
   margin-left: auto;
 `;
 
-const StyledHr = styled(Hr)`
-  margin-left: -${size('spacing.large')};
-  margin-right: -${size('spacing.large')};
+const Body = styled.div`
+  padding: 0 ${size('spacing.xLarge')};
+  padding-bottom: ${ifProp('hasBottom', 0, size('spacing.xLarge'))};
 `;
 
 const FormSection = ({
@@ -33,11 +34,13 @@ const FormSection = ({
 }) => (
   <WrapperForm onSubmit={onSubmit}>
     <HeadingBlock size="subtitle" weight="medium">{heading}</HeadingBlock>
-    <StyledHr />
-    {children}
+    <Hr />
+    <Body hasBottom={buttonText && onSubmit}>
+      {children}
+    </Body>
     {buttonText && onSubmit &&
       <Fragment>
-        <StyledHr />
+        <Hr />
         <BottomButton type="submit" palette="primary" disabled={pristine || submitting}>{buttonText}</BottomButton>
       </Fragment>
       }
