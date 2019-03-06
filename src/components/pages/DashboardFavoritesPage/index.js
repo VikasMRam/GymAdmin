@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, object } from 'prop-types';
+import { arrayOf, object, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -31,9 +31,13 @@ const TileWrapper = styled.div`
   }
 `;
 
-const DashboardFavoritesPage = ({ userSaves }) => {
-  const communityTiles = userSaves ? userSaves.map(userSave =>
-    <CommunityTile addNote isFavourite key={userSave.id} community={userSave.community} actionButtons={['ask-question']} note={userSave.info.note} />) : 'loading...';
+const DashboardFavoritesPage = ({ userSaves, onGallerySlideChange, currentGalleryImage }) => {
+  const communityTiles = userSaves ? userSaves.map((userSave) => {
+    const onSlideChange = i => onGallerySlideChange(userSave.id, i);
+    const currentSlide = currentGalleryImage[userSave.id];
+
+    return <CommunityTile addNote isFavourite currentSlide={currentSlide} onSlideChange={onSlideChange} key={userSave.id} community={userSave.community} actionButtons={['ask-question']} note={userSave.info.note} />;
+  }) : 'loading...';
 
   return (
     <DashboardPageTemplate>
@@ -48,6 +52,8 @@ const DashboardFavoritesPage = ({ userSaves }) => {
 
 DashboardFavoritesPage.propTypes = {
   userSaves: arrayOf(object),
+  onGallerySlideChange: func,
+  currentGalleryImage: object,
 };
 
 export default DashboardFavoritesPage;
