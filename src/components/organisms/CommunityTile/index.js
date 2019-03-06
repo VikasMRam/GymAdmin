@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { arrayOf, bool, string, func } from 'prop-types';
+import { arrayOf, bool, string, func, number } from 'prop-types';
 import { ifProp, switchProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
@@ -55,7 +55,7 @@ const buildActionButtons = ({ actionButtons, onAskQuestionClick }) => actionButt
 
 const CommunityTile = ({
   community, actionButtons, note, addNote, onAskQuestionClick, onEditNoteClick, onAddNoteClick, isFavourite,
-  onFavouriteClick, onUnfavouriteClick, onSlideChange,
+  onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide,
 }) => {
   const { name, gallery } = community;
   const { images = [] } = gallery;
@@ -75,6 +75,7 @@ const CommunityTile = ({
         images={galleryImages}
         topRightSection={topRightSection}
         onSlideChange={onSlideChange}
+        currentSlide={currentSlide}
       />
       <StyledBox hasImages={galleryImages.length > 0}>
         <StyledCommunityInfo community={community} marginBottom={!!actionButtons.length} />
@@ -100,6 +101,7 @@ CommunityTile.propTypes = {
   onFavouriteClick: func,
   onUnfavouriteClick: func,
   onSlideChange: func.isRequired,
+  currentSlide: number,
 };
 
 CommunityTile.defaultProps = {
