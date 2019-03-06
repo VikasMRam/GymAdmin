@@ -3,17 +3,13 @@ import produce from 'immer';
 
 import { query, withApi } from 'sly/services/newApi';
 
-@query('user', 'getUser', getUser => getUser({ userId: 'me' }))
+@query('user', 'getUser', getUser => getUser({ id: 'me' }))
 
-@query('communities', 'getSearchResources', search => search({
-  city: 'san-francisco',
-  state: 'california',
-  toc: 'assisted-living',
-}))
+@withApi
 
-class DashboardTestPageContainer extends Component {
+export default class DashboardTestPageContainer extends Component {
   state = {
-    name: this.props.user.attributes.name,
+    name: this.props.user.name,
   };
 
   nameChange = ev => this.setState({
@@ -22,10 +18,13 @@ class DashboardTestPageContainer extends Component {
 
   submit = () => {
     const { name } = this.state;
-    const { user, api } = this.props;
-    api.updateUser({ userId: user.id }, produce(user, draft => {
-      draft.attributes.name = name;
-    }));
+    const { status, api } = this.props;
+    const { result } = status.user;
+    api.updateUser({ id: result.id }, {
+      data: produce(result, draft => {
+        draft.attributes.name = name;
+      }),
+    });
   };
 
   render() {
@@ -39,13 +38,7 @@ class DashboardTestPageContainer extends Component {
         </pre>
         <input onChange={this.nameChange} type="text" value={name} />
         <button onClick={this.submit}>send</button>
-        <h2>Example of ssr data</h2>
-        <pre>
-          {JSON.stringify(communities, null, 2)}
-        </pre>
       </div>
     );
   }
 }
-
-export default withApi(DashboardTestPageContainer);
