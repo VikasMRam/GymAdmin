@@ -64,7 +64,11 @@ const getAppRenderer = ({ bundle, api }) => {
         <DashboardApp />
       </ApiProvider>
     ));
-    case 'client': return makeAppRenderer(<ClientApp />);
+    case 'client': return makeAppRenderer((
+      <ApiProvider api={api}>
+        <ClientApp />
+      </ApiProvider>
+    ));
     default: return renderEmptyApp;
   }
 };

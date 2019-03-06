@@ -12,7 +12,9 @@ import { basename } from 'sly/config';
 import configureStore from 'sly/store/configure';
 import api from 'sly/services/api';
 import App from 'sly/components/App';
+import { ApiProvider, createApi } from 'sly/services/newApi';
 
+const beesApi = createApi();
 const serverState = window.__SERVER_STATE__;
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState, { api: api.create() });
@@ -20,9 +22,11 @@ const store = configureStore(initialState, { api: api.create() });
 const renderApp = () => (
   <ServerStateProvider state={serverState}>
     <Provider store={store}>
-      <BrowserRouter basename={basename}>
-        <App />
-      </BrowserRouter>
+      <ApiProvider api={beesApi}>
+        <BrowserRouter basename={basename}>
+          <App />
+        </BrowserRouter>
+      </ApiProvider>
     </Provider>
   </ServerStateProvider>
 );
