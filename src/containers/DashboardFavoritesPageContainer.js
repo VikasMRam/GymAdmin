@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
 
 import { query } from 'sly/services/newApi';
+import NotificationController from 'sly/controllers/NotificationController';
+import ModalController from 'sly/controllers/ModalController';
 import DashboardFavoritesPage from 'sly/components/pages/DashboardFavoritesPage';
 
 @query('userSaves', 'getUserSaves', getUserSaves => getUserSaves())
@@ -30,7 +32,22 @@ export default class DashboardFavoritesPageContainer extends Component {
     const { currentGalleryImage } = this.state;
 
     return (
-      <DashboardFavoritesPage userSaves={userSaves} onGallerySlideChange={handleOnGallerySlideChange} currentGalleryImage={currentGalleryImage} />
+      <NotificationController>
+        {({ notifyInfo }) => (
+          <ModalController>
+            {({ show, hide }) => (
+              <DashboardFavoritesPage
+                notifyInfo={notifyInfo}
+                showModal={show}
+                hideModal={hide}
+                userSaves={userSaves}
+                onGallerySlideChange={handleOnGallerySlideChange}
+                currentGalleryImage={currentGalleryImage}
+              />
+            )}
+          </ModalController>
+        )}
+      </NotificationController>
     );
   }
 }

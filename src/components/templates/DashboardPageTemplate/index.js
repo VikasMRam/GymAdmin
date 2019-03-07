@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
+import ModalContainer from 'sly/containers/ModalContainer';
 import DashboardMenu from 'sly/components/molecules/DashboardMenu';
 
 const menuItems = [
@@ -69,6 +70,7 @@ const DashboardPageTemplate = ({ children }) => (
     <Header><HeaderContainer /></Header>
     <Column><DashboardMenu menuItems={menuItems} /></Column>
     <Body>{children}</Body>
+    <ModalContainer />
   </DashboardPage>
 );
 

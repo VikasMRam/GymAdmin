@@ -40,10 +40,25 @@ describe('CommunityTile', () => {
     expect(onAddNoteClick).toHaveBeenCalled();
   });
 
-  it('onAskQuestionClick gets called', () => {
-    const onAskQuestionClick = jest.fn();
-    const wrapper = wrap({ onAskQuestionClick, actionButtons: ['ask-question'] });
-    wrapper.find('FullWidthButton').at(0).simulate('click');
-    expect(onAskQuestionClick).toHaveBeenCalled();
+  it('action buttons rendered', () => {
+    const actionButtons = [
+      {
+        text: 'Ask Question',
+        onClick: jest.fn(),
+      },
+      {
+        text: 'Blah',
+        ghost: true,
+        onClick: jest.fn(),
+      },
+    ];
+    const wrapper = wrap({ actionButtons });
+    actionButtons.forEach((actionButton, i) => {
+      expect(wrapper.find('FullWidthButton').at(i).dive().dive()
+        .dive()
+        .text()).toBe(actionButton.text);
+      wrapper.find('FullWidthButton').at(i).simulate('click');
+      expect(actionButton.onClick).toHaveBeenCalled();
+    });
   });
 });

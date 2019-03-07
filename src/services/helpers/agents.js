@@ -70,3 +70,32 @@ export const filterLinkPath = (currentFilters, nextFilters = {}) => {
     selected,
   };
 };
+
+export const generateAskAgentQuestionContents = (name, city, type) => {
+  let heading = `Ask your Seniorly Partner Agent a question about ${name} in ${city}.`;
+  let placeholder = `Hi Rachel, I have a question about ${name} in ${city}...`;
+  let description = null;
+  let question = null;
+
+  if (type === 'tour') {
+    heading = 'We have received your tour request.';
+    description = 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
+    placeholder = `Hi, I have a question about my tour with ${name}...`;
+  } else if (type === 'pricing') {
+    heading = 'We have received your custom pricing request.';
+    description = 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
+  } else if (type === 'offer') {
+    heading = `Ask your Seniorly Partner Agent about the holiday incentive at ${name}`;
+    question = `Hi, I am interested in knowing more about the holiday promotion at ${name}. I am looking for...`;
+  } else if (type === 'services') {
+    heading = `Ask your Seniorly Partner Agent about services provided at ${name}`;
+    question = `Hi, I need .... and am interested in knowing whether ${name} has ...`;
+  }
+
+  return {
+    heading,
+    placeholder,
+    description,
+    question,
+  };
+};

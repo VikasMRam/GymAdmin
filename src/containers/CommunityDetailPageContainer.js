@@ -26,7 +26,6 @@ import {
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 
-// todo: convert to container
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
     set: func,
