@@ -8,7 +8,6 @@ import { BrowserRouter } from 'react-router-dom';
 import { ServerStateProvider } from 'react-router-server';
 import Modal from 'react-modal';
 
-import { basename } from 'sly/config';
 import configureStore from 'sly/store/configure';
 import api from 'sly/services/api';
 import App from 'sly/components/App';
@@ -23,7 +22,7 @@ const renderApp = () => (
   <ServerStateProvider state={serverState}>
     <Provider store={store}>
       <ApiProvider api={beesApi}>
-        <BrowserRouter basename={basename}>
+        <BrowserRouter>
           <App />
         </BrowserRouter>
       </ApiProvider>

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { object } from 'prop-types';
 import omit from 'object.omit';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { withApi, getRequestInfo } from 'sly/services/newApi';
 
@@ -94,6 +95,8 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
         return <InnerComponent {...props} />;
       }
     }
+
+    hoistNonReactStatic(Wrapper, InnerComponent);
 
     return withApi()(Wrapper);
   };

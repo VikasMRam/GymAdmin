@@ -15,7 +15,6 @@ const config = {
     isDev: process.env.NODE_ENV,
     isTest: false,
     isProd: false,
-    basename: process.env.BASENAME,
     host: process.env.HOST,
     port: process.env.PORT,
     isBrowser: typeof window !== 'undefined',

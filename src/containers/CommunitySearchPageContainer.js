@@ -9,20 +9,57 @@ import { resourceListReadRequest } from 'sly/store/resource/actions';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
+
 import {
   getList,
   getListMeta,
   isResourceListRequestInProgress,
 } from 'sly/store/selectors';
+
 import {
   filterLinkPath,
   getSearchParams,
 } from 'sly/services/helpers/search';
+
 import { logWarn } from 'sly/services/helpers/logging';
 import ModalController from 'sly/controllers/ModalController';
+import { query } from 'sly/services/newApi';
+import { withProps } from 'sly/services/helpers/hocs';
 
-class CommunitySearchPageContainer extends PureComponent {
+const mapStateToProps = (state, { searchParams }) => ({
+  isFetchingResults: isResourceListRequestInProgress(state, 'searchResource'),
+  requestMeta: getListMeta(state, 'searchResource', searchParams),
+  geoGuide: getList(state, 'geoGuide', searchParams),
+});
+
+const mapPropsToActions = ({ searchParams }) => ({
+  geoGuide: resourceListReadRequest('geoGuide', searchParams),
+});
+
+const handleResponses = (responses) => {
+  const { geoGuide } = responses;
+  geoGuide(null, (error) => {
+    // ignore all geoGuides errors
+    logWarn(error);
+  });
+};
+
+@withProps(({ match, location }) => ({
+  searchParams: getSearchParams(match, location),
+}))
+
+@withServerState(
+  mapPropsToActions,
+  handleResponses,
+)
+
+@query('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
+
+@connect(mapStateToProps)
+
+export default class CommunitySearchPageContainer extends PureComponent {
   static propTypes = {
+    status: object.isRequired,
     searchParams: object.isRequired,
     history: object.isRequired,
     location: object.isRequired,
@@ -83,8 +120,10 @@ class CommunitySearchPageContainer extends PureComponent {
       requestMeta,
       location,
       history,
-      isFetchingResults,
+      status,
     } = this.props;
+
+    const isFetchingResults = status.communityList.isLoading;
 
     if (serverState instanceof Error) {
       const errorCode = (serverState.response && serverState.response.status) || 500;
@@ -119,36 +158,3 @@ class CommunitySearchPageContainer extends PureComponent {
     );
   }
 }
-
-const mapStateToProps = (state, { match, location }) => {
-  const searchParams = getSearchParams(match, location);
-  const communityList = getList(state, 'searchResource', searchParams);
-  return {
-    searchParams,
-    communityList,
-    isFetchingResults: isResourceListRequestInProgress(state, 'searchResource'),
-    requestMeta: getListMeta(state, 'searchResource', searchParams),
-    geoGuide: getList(state, 'geoGuide', searchParams),
-  };
-};
-
-const mapPropsToActions = ({ match, location }) => {
-  const searchParams = getSearchParams(match, location);
-  return {
-    searchResource: resourceListReadRequest('searchResource', searchParams),
-    geoGuide: resourceListReadRequest('geoGuide', searchParams),
-  };
-};
-
-const handleResponses = (responses) => {
-  const { geoGuide } = responses;
-  geoGuide(null, (error) => {
-    // ignore all geoGuides errors
-    logWarn(error);
-  });
-};
-
-export default withServerState(
-  mapPropsToActions,
-  handleResponses,
-)(connect(mapStateToProps)(CommunitySearchPageContainer));

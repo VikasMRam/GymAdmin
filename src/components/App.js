@@ -70,15 +70,7 @@ export default class App extends Component {
     routes: routesPropType,
   };
 
-  getChildContext = () => ({
-    routes: this.routes,
-  });
-
-  componentDidMount() {
-    smoothscroll.polyfill();
-  }
-
-  routes = [
+  static routes = [
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
       component: CommunityDetailPageContainer,
@@ -174,6 +166,14 @@ export default class App extends Component {
     },
   ];
 
+  getChildContext = () => ({
+    routes: App.routes,
+  });
+
+  componentDidMount() {
+    smoothscroll.polyfill();
+  }
+
   render() {
     return (
       <Fragment>
@@ -216,7 +216,7 @@ export default class App extends Component {
                   />
                 )}
               />
-              {this.routes.map(route => <Route key={route.path} {...route} />)}
+              {App.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
             </Switch>
           </Router>

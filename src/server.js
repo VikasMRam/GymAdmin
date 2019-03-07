@@ -21,7 +21,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import { cleanError, logWarn } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
-import { port, host, basename, publicPath, isDev, cookieDomain } from 'sly/config';
+import { port, host, publicPath, isDev, cookieDomain } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import createBeesApi from 'sly/services/newApi/createApi';
@@ -31,13 +31,32 @@ import DashboardApp from 'sly/components/DashboardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 import ApiProvider from 'sly/services/newApi/ApiProvider';
+import { createLocation } from 'history';
+
+class ResponseError extends Error {
+  constructor(message, response) {
+    let newMessage = message;
+
+    if (response.status) {
+      newMessage = `${newMessage}: ${response.status}`;
+    }
+
+    if (response.body && Array.isArray(response.body.errors)) {
+      response.body.errors.forEach((error) => {
+        newMessage = `${newMessage} - ${error.title}`;
+      });
+    }
+
+    super(newMessage);
+  }
+}
 
 const makeAppRenderer = renderedApp => ({
   store, context, location, sheet,
 }) => {
   const app = sheet.collectStyles((
     <Provider store={store}>
-      <StaticRouter basename={basename} context={context} location={location}>
+      <StaticRouter context={context} location={location}>
         {renderedApp}
       </StaticRouter>
     </Provider>
@@ -52,7 +71,7 @@ const renderEmptyApp = () => {
 const getAppRoutes = (bundle) => {
   switch (bundle) {
     case 'dashboard': return DashboardApp.routes;
-    default: return [];
+    default: return ClientApp.routes;
   }
 };
 
@@ -253,37 +272,49 @@ app.use(async (req, res, next) => {
 
   const store = configureStore({ experiments: userExperiments }, { api });
 
+  try {
+    await store.dispatch(resourceDetailReadRequest('user', 'me'));
+  } catch (e) {
+    if (e.response && e.response.status === 401) {
+      // ignore 401
+      logWarn(e);
+    } else {
+      console.log('old user/me error', e);
+      next(e);
+      return;
+    }
+  }
+
   // FIXME: hack until SEO app is migrated to bees
-  if (bundle === 'dashboard') {
-    try {
-      await store.dispatch(beesApi.getUser({ id: 'me' }));
-      const routes = getAppRoutes(bundle);
-      const promises = matchRoutes(routes, req.url)
-        .filter(({ route }) => typeof route.component.loadData === 'function')
-        .map(({ route, match }) => route.component.loadData(store, { match, api: beesApi }));
-      await Promise.all(promises);
-    } catch (e) {
-      if (e.status === 401) {
-        // ignore 401
-        console.log(e);
-        logWarn(e);
-      } else {
-        next(e);
-        return;
-      }
+  try {
+    await store.dispatch(beesApi.getUser({ id: 'me' }));
+  } catch (e) {
+    console.log(e);
+    if (e.status === 401) {
+      // ignore 401
+      logWarn(e);
+    } else {
+      e.message = `Error trying to fetch user/me: ${e.message}`;
+      console.log('new user/me error', e);
+      next(e);
+      return;
     }
-  } else {
-    try {
-      await store.dispatch(resourceDetailReadRequest('user', 'me'));
-    } catch (e) {
-      if (e.response && e.response.status === 401) {
-        // ignore 401
-        logWarn(e);
-      } else {
-        next(e);
-        return;
-      }
-    }
+  }
+
+  try {
+    const routes = getAppRoutes(bundle);
+    const matchedRoutes = matchRoutes(routes, req.url);
+    const promises = matchedRoutes
+      .filter(({ route }) => typeof route.component.loadData === 'function')
+      .map(({ route, match }) => route.component.loadData(store, {
+        match,
+        location: createLocation(req.url),
+        api: beesApi,
+      }));
+    await Promise.all(promises);
+  } catch (response) {
+    next(new ResponseError('Error trying to pre-fetch route data', response));
+    return;
   }
 
   req.clientConfig.store = store;
@@ -365,6 +396,6 @@ app.listen(port, (error) => {
   if (error) {
     console.error(error);
   } else {
-    console.info(`Server is running at ${boldBlue(`${host}:${port}${basename}`)}`);
+    console.info(`Server is running at ${boldBlue(`${host}:${port}`)}`);
   }
 });
