@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { arrayOf, bool, string, func, number } from 'prop-types';
+import { arrayOf, bool, string, func, number, shape } from 'prop-types';
 import { ifProp, switchProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
@@ -42,19 +42,14 @@ const StyledBox = styled(Box)`
   `}
 `;
 
-const buildActionButtons = ({ actionButtons, onAskQuestionClick }) => actionButtons.map((action) => {
-  if (action === 'ask-question') {
-    return (
-      <FullWidthButton onClick={onAskQuestionClick} key={action}>
-        Ask a question
-      </FullWidthButton>
-    );
-  }
-  return null;
-});
+const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
+  <FullWidthButton onClick={onClick} ghost={ghost} key={text}>
+    {text}
+  </FullWidthButton>
+));
 
 const CommunityTile = ({
-  community, actionButtons, note, addNote, onAskQuestionClick, onEditNoteClick, onAddNoteClick, isFavourite,
+  community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide,
 }) => {
   const { name, gallery } = community;
@@ -79,7 +74,7 @@ const CommunityTile = ({
       />
       <StyledBox hasImages={galleryImages.length > 0}>
         <StyledCommunityInfo community={community} marginBottom={!!actionButtons.length} />
-        {buildActionButtons({ actionButtons, onAskQuestionClick })}
+        {buildActionButtons(actionButtons)}
         {(note || addNote) && <Hr />}
         {note && <Span size="caption">{note}</Span>}
         {note && <CursorSpan palette="primary" size="caption" onClick={onEditNoteClick}> Edit note</CursorSpan>}
@@ -91,8 +86,11 @@ const CommunityTile = ({
 
 CommunityTile.propTypes = {
   community: communityPropType,
-  actionButtons: arrayOf(string),
-  onAskQuestionClick: func,
+  actionButtons: arrayOf(shape({
+    text: string.isRequired,
+    ghost: bool,
+    onClick: func,
+  })),
   onEditNoteClick: func,
   onAddNoteClick: func,
   note: string,
