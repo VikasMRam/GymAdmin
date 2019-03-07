@@ -2,7 +2,8 @@ import React from 'react';
 import { arrayOf, object, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size, assetPath } from 'sly/components/themes';
+import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import FormSection from 'sly/components/molecules/FormSection';
 import CommunityTile from 'sly/components/organisms/CommunityTile';
@@ -31,12 +32,51 @@ const TileWrapper = styled.div`
   }
 `;
 
-const DashboardFavoritesPage = ({ userSaves, onGallerySlideChange, currentGalleryImage }) => {
+const DashboardFavoritesPage = ({
+  userSaves, onGallerySlideChange, currentGalleryImage, notifyInfo, showModal, hideModal,
+}) => {
   const communityTiles = userSaves ? userSaves.map((userSave) => {
-    const onSlideChange = i => onGallerySlideChange(userSave.id, i);
-    const currentSlide = currentGalleryImage[userSave.id];
+    const { community, id } = userSave;
+    const onSlideChange = i => onGallerySlideChange(id, i);
+    const currentSlide = currentGalleryImage[id];
+    const openAskAgentQuestionModal = () => {
+      const { addressString, name } = community;
+      const [, city] = addressString.split(',');
+      const heading = `Ask your Seniorly Partner Agent a question about ${name} in ${city}.`;
+      const placeholder = `Hi Rachel, I have a question about ${name} in ${city}...`;
+      const question = `Hi, I need .... and am interested in knowing whether ${name} has ...`;
+      const agentImageUrl = assetPath('images/agent-xLarge.png');
 
-    return <CommunityTile addNote isFavourite currentSlide={currentSlide} onSlideChange={onSlideChange} key={userSave.id} community={userSave.community} actionButtons={['ask-question']} note={userSave.info.note} />;
+      const toggleAskAgentQuestionModal = () => {
+        hideModal();
+      };
+
+      const modalComponentProps = {
+        toggleAskAgentQuestionModal,
+        notifyInfo,
+        community,
+        heading,
+        agentImageUrl,
+        placeholder,
+        question,
+      };
+
+      showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />);
+    };
+
+    return (
+      <CommunityTile
+        addNote
+        isFavourite
+        currentSlide={currentSlide}
+        onSlideChange={onSlideChange}
+        key={userSave.id}
+        community={userSave.community}
+        actionButtons={['ask-question']}
+        note={userSave.info.note}
+        onAskQuestionClick={openAskAgentQuestionModal}
+      />
+    );
   }) : 'loading...';
 
   return (
@@ -54,6 +94,9 @@ DashboardFavoritesPage.propTypes = {
   userSaves: arrayOf(object),
   onGallerySlideChange: func,
   currentGalleryImage: object,
+  notifyInfo: func,
+  showModal: func,
+  hideModal: func,
 };
 
 export default DashboardFavoritesPage;

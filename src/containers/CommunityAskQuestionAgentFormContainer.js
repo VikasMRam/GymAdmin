@@ -109,7 +109,7 @@ class CommunityAskQuestionAgentFormContainer extends Component {
 const mapStateToProps = (state, ownProps) => {
   const { question } = ownProps;
   return {
-    userAction: getDetail(state, 'userAction'),
+    userAction: getDetail(state, 'userAction') || {},
     initialValues: {
       question,
     },
