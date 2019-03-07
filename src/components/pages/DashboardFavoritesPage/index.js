@@ -3,6 +3,7 @@ import { arrayOf, object, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, assetPath } from 'sly/components/themes';
+import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import FormSection from 'sly/components/molecules/FormSection';
@@ -42,9 +43,7 @@ const DashboardFavoritesPage = ({
     const openAskAgentQuestionModal = () => {
       const { addressString, name } = community;
       const [, city] = addressString.split(',');
-      const heading = `Ask your Seniorly Partner Agent a question about ${name} in ${city}.`;
-      const placeholder = `Hi Rachel, I have a question about ${name} in ${city}...`;
-      const question = `Hi, I need .... and am interested in knowing whether ${name} has ...`;
+      const { heading, placeholder, question } = generateAskAgentQuestionContents(name, city);
       const agentImageUrl = assetPath('images/agent-xLarge.png');
 
       const toggleAskAgentQuestionModal = () => {
@@ -63,6 +62,12 @@ const DashboardFavoritesPage = ({
 
       showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />);
     };
+    const actionButtons = [
+      {
+        text: 'Ask Question',
+        onClick: openAskAgentQuestionModal,
+      },
+    ];
 
     return (
       <CommunityTile
@@ -72,9 +77,8 @@ const DashboardFavoritesPage = ({
         onSlideChange={onSlideChange}
         key={userSave.id}
         community={userSave.community}
-        actionButtons={['ask-question']}
+        actionButtons={actionButtons}
         note={userSave.info.note}
-        onAskQuestionClick={openAskAgentQuestionModal}
       />
     );
   }) : 'loading...';

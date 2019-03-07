@@ -5,10 +5,12 @@ import Sticky from 'react-stickynode';
 import { Lazy } from 'react-lazy';
 
 import { size, palette, assetPath } from 'sly/components/themes';
-import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
+import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import SlyEvent from 'sly/services/helpers/events';
+import { calculatePricing } from 'sly/services/helpers/pricing';
+import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import { Button } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import {
@@ -42,7 +44,6 @@ import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
 import CommunityFloorPlansList from 'sly/components/organisms/CommunityFloorPlansList';
 import CommunityFloorPlanPopupFormContainer from 'sly/containers/CommunityFloorPlanPopupFormContainer';
-import { calculatePricing } from 'sly/services/helpers/pricing';
 import EstimatedCost from 'sly/components/molecules/EstimatedCost';
 import TextBottomSection from 'sly/components/molecules/TextBottomSection';
 import CommunityAgentSection from 'sly/components/molecules/CommunityAgentSection';
@@ -285,26 +286,8 @@ export default class CommunityDetailPage extends Component {
     } = this.props;
     const { address, name } = community;
     const { city } = address;
-    let heading = `Ask your Seniorly Partner Agent a question about ${name} in ${city}.`;
-    let placeholder = `Hi Rachel, I have a question about ${name} in ${city}...`;
-    let description = null;
-    let question = null;
     const agentImageUrl = assetPath('images/agent-xLarge.png');
-
-    if (type === 'tour') {
-      heading = 'We have received your tour request.';
-      description = 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
-      placeholder = `Hi, I have a question about my tour with ${name}...`;
-    } else if (type === 'pricing') {
-      heading = 'We have received your custom pricing request.';
-      description = 'Your Seniorly Partner Agent will reach out to you soon. Feel free to ask them any questions in the meantime.';
-    } else if (type === 'offer') {
-      heading = `Ask your Seniorly Partner Agent about the holiday incentive at ${name}`;
-      question = `Hi, I am interested in knowing more about the holiday promotion at ${name}. I am looking for...`;
-    } else if (type === 'services') {
-      heading = `Ask your Seniorly Partner Agent about services provided at ${name}`;
-      question = `Hi, I need .... and am interested in knowing whether ${name} has ...`;
-    }
+    const { heading, description, placeholder, question } = generateAskAgentQuestionContents(name, city, type);
 
     const toggleAskAgentQuestionModal = () => {
       onToggleAskAgentQuestionModal(true, type);

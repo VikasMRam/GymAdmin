@@ -109,6 +109,7 @@ class CommunityAskQuestionAgentFormContainer extends Component {
 const mapStateToProps = (state, ownProps) => {
   const { question } = ownProps;
   return {
+    // todo: hack for this to not error till it's moved to new api and selector
     userAction: getDetail(state, 'userAction') || {},
     initialValues: {
       question,

@@ -33,14 +33,9 @@ export default class DashboardFavoritesPageContainer extends Component {
 
     return (
       <NotificationController>
-        {({
-          notifyInfo,
-        }) => (
+        {({ notifyInfo }) => (
           <ModalController>
-            {({
-              show,
-              hide,
-            }) => (
+            {({ show, hide }) => (
               <DashboardFavoritesPage
                 notifyInfo={notifyInfo}
                 showModal={show}
