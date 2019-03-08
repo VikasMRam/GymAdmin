@@ -1,37 +1,42 @@
-import React from 'react';
+import React from 'react';
 import { arrayOf, object, func } from 'prop-types';
 import styled from 'styled-components';
 
-import { size, assetPath } from 'sly/components/themes';
+import { assetPath } from 'sly/components/themes';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import FormSection from 'sly/components/molecules/FormSection';
 import CommunityTile from 'sly/components/organisms/CommunityTile';
+import Masonry from 'sly/components/common/masonry';
 
-const TileWrapper = styled.div`
-  > * {
-    margin-bottom: ${size('spacing.xLarge')};
-  }
-
-  > *:last-child {
-    margin-bottom: 0;
-  }
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    > * {
-      margin-bottom: 0;
-    }
-
-    display: grid;
-    grid-template-columns: repeat(auto-fit, calc((50% + ${size('spacing.xLarge')}) / 2));
-    grid-gap: ${size('spacing.xLarge')};
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    grid-template-columns: repeat(auto-fill, calc(33.33% - ${size('spacing.xLarge')}));
-  }
-`;
+const columnCounts = [
+  {
+    from: 0,
+    to: 767,
+    count: 1,
+  },
+  {
+    from: 768,
+    to: 1283,
+    count: 2,
+  },
+  {
+    from: 1284,
+    to: 1847,
+    count: 3,
+  },
+  {
+    from: 1848,
+    to: 2559,
+    count: 4,
+  },
+  {
+    from: 2560,
+    to: 5000,
+    count: 5,
+  },
+];
 
 const DashboardFavoritesPage = ({
   userSaves, onGallerySlideChange, currentGalleryImage, notifyInfo, showModal, hideModal,
@@ -86,9 +91,9 @@ const DashboardFavoritesPage = ({
   return (
     <DashboardPageTemplate>
       <FormSection heading="Favorites">
-        <TileWrapper>
+        <Masonry columnCounts={columnCounts}>
           {communityTiles}
-        </TileWrapper>
+        </Masonry>
       </FormSection>
     </DashboardPageTemplate>
   );
