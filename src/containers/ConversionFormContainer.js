@@ -14,7 +14,7 @@ import {
   usPhone,
 } from 'sly/services/validation';
 import ConversionForm from 'sly/components/organisms/ConversionForm';
-import SlyEvent from "sly/services/helpers/events";
+import SlyEvent from 'sly/services/helpers/events';
 
 const validate = createValidator({
   full_name: [required],
@@ -71,10 +71,13 @@ class ConversionFormContainer extends Component {
     } = this.props;
 
     const { email, fullName, phone } = userDetails;
+
+    // have to put empty values as letting undefined would make the fields
+    // uncontrolled and we would get a warning
     const initialValues = {
-      email,
-      phone,
-      full_name: fullName,
+      email: email || '',
+      phone: phone || '',
+      full_name: fullName || '',
     };
     let agent = null;
     if (community) {

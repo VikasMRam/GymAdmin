@@ -1,5 +1,4 @@
 /* eslint-disable react/sort-comp */
-
 import React, { Component } from 'react';
 import { bool, oneOf, func } from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -7,33 +6,50 @@ import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 
-const height = p => size('element', p.size);
+const backgroundColor = (p) => {
+  if (p.disabled) {
+    return palette('grey', 'stroke');
+  }
+  if (p.warning) {
+    return palette('warning', 'stroke');
+  }
+  return p.invalid ? palette('danger', 'stroke') : palette('white', 'base');
+};
+const borderColor = (p) => {
+  if (p.warning) {
+    return palette('warning', 'base');
+  }
+  return p.invalid ? palette('danger', 'base') : palette('slate', 'stroke');
+};
+const focusBorderColor = (p) => {
+  if (p.warning) {
+    return palette('warning', 'base');
+  }
+  return p.invalid ? palette('danger', 'base') : palette('primary', 'base');
+};
+
 const styles = css`
   display: block;
   width: 100%;
   margin: 0;
-  font-size: ${size('text', 'body')};
-  padding: ${size('padding', 'regular')};
-  height: ${ifProp({ type: 'textarea' }, size('element.huge'), height)};
-  color: ${ifProp('invalid', palette('danger', 'base'), palette('slate', 'base'))};
-  background-color: ${palette('white', 'base')};
-  border: ${size('border.regular')} solid
-    ${ifProp('invalid', palette('danger', 'stroke'), palette('slate', 'stroke'))};
+  font-size: ${size('text', 'caption')};
+  // todo: non standard padding. remove afterwards if added to theme
+  padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')});
+  height: ${ifProp({ type: 'textarea' }, size('element.huge'), 'auto')};
+  color: ${ifProp('disabled', palette('grey', 'base'), palette('slate', 'base'))};
+  background-color: ${backgroundColor};
+  border: ${size('border.regular')} solid ${borderColor};
   border-radius: ${size('border.xxLarge')};
   min-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
   max-width: ${ifProp({ type: 'textarea' }, '100%', 'initial')};
 
   &:focus {
     outline: none;
-    border-color: ${ifProp(
-    'invalid',
-    palette('danger', 'stroke'),
-    palette('primary', 'base')
-  )};
+    border-color: ${focusBorderColor};
   }
 
   &::placeholder {
-    color: ${palette('stroke')};
+    color: ${palette('stroke', 'filler')};
   }
 
   &[type='checkbox'],
@@ -50,10 +66,12 @@ const styles = css`
 const StyledTextarea = styled.textarea`
   ${styles};
 `;
+// TODO: Check how we can bring in a non standard 44px height
 const StyledSelect = styled.select`
   ${styles};
   background: ${palette('white', 'base')};
   color: ${palette('slate', 'base')};
+  height: ${size('element', 'regular')};
 `;
 const StyledInput = styled.input`
   ${styles};
@@ -86,6 +104,7 @@ Input.propTypes = {
   size: oneOf(['small', 'regular', 'large', 'xLarge']),
   onFocus: func,
   invalid: bool,
+  warning: bool,
 };
 
 Input.defaultProps = {
@@ -95,4 +114,3 @@ Input.defaultProps = {
 };
 
 export default Input;
-

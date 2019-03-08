@@ -5,7 +5,7 @@ import Dotdotdot from 'react-dotdotdot';
 import NumberFormat from 'react-number-format';
 
 import { size, palette } from 'sly/components/themes';
-import { Heading, Icon, Link } from 'sly/components/atoms';
+import { Heading, Icon, Block } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
 
 const clamp = css`
@@ -57,11 +57,6 @@ const ClampedLine = styled.div`
   font-size: ${size('text.caption')};
 `;
 
-const Description = styled.div`
-  color: ${palette('base')};
-  font-size: ${size('text.caption')};
-`;
-
 const IconTextWrapper = styled.div`
   display: flex;
   color: ${palette('slate', 'filler')};
@@ -93,7 +88,7 @@ export default class SimilarCommunityInfo extends Component {
     this.renderEstimatedRate(startingRate)
   ) : (
     this.renderProviderRate(startingRate)
-  )
+  );
 
   renderReviews = ({ numReviews, reviewsValue }) => {
     if (numReviews > 0) {
@@ -129,22 +124,26 @@ export default class SimilarCommunityInfo extends Component {
     const roomTypes = secondLineValue.split(',');
     const livingTypes = firstLineValue.split(',');
 
+    const heading = (
+      <StyledHeading level="title" size="subtitle">{name}</StyledHeading>
+    );
+
     // TODO : Get the following values from API Response
     return (
       <Wrapper {...props}>
-        <StyledHeading level="title" size="subtitle">{name}</StyledHeading>
+        {heading}
         <RatingWrapper>
           {this.renderRate(community)}
           {this.renderReviews(community)}
         </RatingWrapper>
         <IconTextWrapper>
-          <StyledIcon icon="place" fill="slate" />
+          <StyledIcon icon="place" palette="grey" variation="filler" />
           <ClampedLine>
             {addressString}
           </ClampedLine>
         </IconTextWrapper>
         <IconTextWrapper>
-          <StyledIcon icon="room" fill="slate" />
+          <StyledIcon icon="room" palette="grey" variation="filler" />
           <ClampedLine title={roomTypes.join('.')}>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {roomTypes.map((roomType, i) =>
@@ -152,7 +151,7 @@ export default class SimilarCommunityInfo extends Component {
           </ClampedLine>
         </IconTextWrapper>
         <IconTextWrapper>
-          <StyledIcon icon="hospital" fill="slate" />
+          <StyledIcon icon="hospital" palette="grey" variation="filler" />
           <ClampedLine title={livingTypes.join('.')}>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {livingTypes.map((livingType, i) =>
@@ -160,11 +159,11 @@ export default class SimilarCommunityInfo extends Component {
           </ClampedLine>
         </IconTextWrapper>
 
-        <Description palette="slate">
+        <Block palette="grey" variation="filler" size="caption">
           <Dotdotdot clamp={2}>
             {description}
           </Dotdotdot>
-        </Description>
+        </Block>
       </Wrapper>
     );
   }

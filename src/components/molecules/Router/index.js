@@ -20,7 +20,7 @@ const blacklisted = (from, to) => pathnameBlacklist
 const bumpOnSearch = (prev, next) => searchWhitelist
   .some(key => next[key] !== prev[key]);
 
-export class Router extends Component {
+export class ClassRouter extends Component {
   static propTypes = {
     location: object,
     children: node,
@@ -66,4 +66,4 @@ export class Router extends Component {
   }
 }
 
-export default withRouter(Router);
+export default withRouter(ClassRouter);

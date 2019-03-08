@@ -146,8 +146,9 @@ const Modal = ({
   const iconClose = (palette = 'slate') => (
     <IconButton
       icon="close"
+      iconSize="regular"
       palette={palette}
-      iconOnly
+      transparent
       layout={layout}
       onClick={onClose}
     />

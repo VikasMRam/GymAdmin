@@ -1,9 +1,10 @@
 import React from 'react';
-import { string, bool, oneOf, number, oneOfType } from 'prop-types';
-import styled from 'styled-components';
+import { string, bool, oneOf, number, oneOfType, node } from 'prop-types';
+import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Label, Input, Block } from 'sly/components/atoms';
+import { Label, Input, Icon } from 'sly/components/atoms';
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 import CommunityChoice from 'sly/components/molecules/CommunityChoice';
@@ -11,8 +12,11 @@ import RatingInput from 'sly/components/molecules/RatingInput';
 import Slider from 'sly/components/molecules/Slider';
 import DateChoice from 'sly/components/molecules/DateChoice';
 import BoxChoice from 'sly/components/molecules/BoxChoice';
+import IconInput from 'sly/components/molecules/IconInput';
+import InputMessage from 'sly/components/molecules/InputMessage';
 
-const getInputType = type => (type === 'email' ? 'text' : type);
+const textTypeInputs = ['email', 'iconInput'];
+const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
 const getInputComponent = (type) => {
   switch (type) {
     case 'rating':
@@ -29,37 +33,88 @@ const getInputComponent = (type) => {
       return BoxChoice;
     case 'dateChoice':
       return DateChoice;
+    case 'iconInput':
+      return IconInput;
     default:
       return Input;
   }
 };
 
-const Error = styled(Block)`
-  margin-top: ${size('spacing.tiny')};
-  font-size: ${size('text.caption')};
-`;
-
 const Wrapper = styled.div`
+  position: relative;
   margin-bottom: ${size('spacing.large')};
   > input[type='checkbox'],
   > input[type='radio'] {
     margin-right: ${size('spacing.regular')};
   }
-  label {
-    vertical-align: middle;
+  display: flex;
+  flex-direction: column;
+  align-items: initial;
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    flex-direction: ${ifProp({ wideWidth: true }, 'row')};
+  }
+`;
+
+const CheckIcon = styled(Icon)`
+  position: absolute;
+  right: ${size('spacing.regular')};
+  bottom: ${size('spacing.regular')};
+`;
+
+const LabelWrapper = styled.div`
+  display: flex;
+  vertical-align: middle;
+  justify-content: space-between;
+  align-items: center;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    ${({ wideWidth }) => wideWidth && css`
+      margin-right: ${size('tabletLayout.gutter')};
+      flex: 0 0 ${size('tabletLayout.col2')};
+    `}
+  }
+`;
+
+const InputWrapper = styled.div`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    ${({ wideWidth }) => wideWidth && css`
+      margin-right: ${size('spacing.large')};
+      flex: 0 0 ${size('tabletLayout.col3')};
+    `}
+  }
+`;
+
+const InputBeforeLabelWrapper = styled.div`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-left: ${ifProp({ wideWidth: true }, size('tabletLayout.col2'))};
+  }
+`;
+
+// donot use pad to add margin bottom on input as it well lead to
+// rerender on key stroke that will loose focus
+const StyledInputMessage = styled(InputMessage)`
+  margin-top: ${size('spacing.regular')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-top: ${ifProp({ wideWidth: true }, 0)};
   }
 `;
 
 const Field = ({
-  error,
+  message,
   name,
   invalid,
+  warning,
+  success,
   label,
   type,
   placeholder,
   className,
   value,
   hideErrors,
+  labelRight,
+  wideWidth,
   ...props
 }) => {
   const inputProps = {
@@ -68,6 +123,7 @@ const Field = ({
     value,
     type: getInputType(type),
     invalid,
+    warning,
     placeholder,
     'aria-describedby': `${name}Error`,
     ...props,
@@ -75,20 +131,30 @@ const Field = ({
   const InputComponent = getInputComponent(type);
   const renderInputFirst = type === 'checkbox' || type === 'radio';
   return (
-    <Wrapper className={className}>
-      {renderInputFirst && <InputComponent {...inputProps} />}
-      {label && (
-        <Label invalid={!hideErrors && invalid} htmlFor={inputProps.id}>
-          {label}
-        </Label>
+    <Wrapper className={className} wideWidth={wideWidth}>
+      {renderInputFirst && (wideWidth ? <InputBeforeLabelWrapper wideWidth={wideWidth}><InputComponent {...inputProps} /></InputBeforeLabelWrapper> : <InputComponent {...inputProps} />)}
+      {(label || labelRight) &&
+        <LabelWrapper wideWidth={wideWidth}>
+          {label &&
+            <Label htmlFor={inputProps.id}>
+              {label}
+            </Label>
+          }
+          {labelRight &&
+            <span>{labelRight}</span>
+          }
+        </LabelWrapper>
+      }
+      {renderInputFirst || (wideWidth ? <InputWrapper wideWidth={wideWidth}><InputComponent {...inputProps} /></InputWrapper> : <InputComponent {...inputProps} />)}
+      {invalid && !hideErrors && message && (
+        <StyledInputMessage name={`${name}Error`} icon="close" palette="danger" message={message} wideWidth={wideWidth} />
       )}
-      {renderInputFirst || <InputComponent {...inputProps} />}
-      {invalid && !hideErrors &&
-        error && (
-          <Error id={`${name}Error`} role="alert" palette="danger">
-            {error}
-          </Error>
-        )}
+      {warning && !hideErrors && message && (
+        <StyledInputMessage name={`${name}Warning`} icon="warning" palette="warning" message={message} wideWidth={wideWidth} />
+      )}
+      {success &&
+        <CheckIcon icon="check" size="regular" palette="green" />
+      }
     </Wrapper>
   );
 };
@@ -101,7 +167,9 @@ Field.propTypes = {
   ]),
   className: string,
   invalid: bool,
-  error: string,
+  warning: bool,
+  success: bool,
+  message: string,
   hideErrors: bool,
   label: string,
   type: oneOf([
@@ -121,8 +189,11 @@ Field.propTypes = {
     'radio',
     'rating',
     'number',
+    'iconInput',
   ]),
   placeholder: string,
+  labelRight: node,
+  wideWidth: bool,
 };
 
 Field.defaultProps = {

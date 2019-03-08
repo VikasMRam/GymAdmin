@@ -11,9 +11,12 @@ import searchBox from './searchBox/reducer';
 import controller from './controller/reducer';
 import chatBox from './chatBox/reducer';
 
-const reducers = {
+import { reducer as bees } from 'sly/services/newApi';
+
+export default combineReducers({
   form,
   thunk,
+  bees,
   entities,
   modal,
   authenticated,
@@ -22,7 +25,5 @@ const reducers = {
   searchBox,
   controller,
   chatBox,
-};
-
-export default combineReducers(reducers);
+});
 

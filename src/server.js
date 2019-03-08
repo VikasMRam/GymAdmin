@@ -13,6 +13,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { renderToString } from 'react-router-server';
+import { matchRoutes } from 'react-router-config';
 import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
@@ -23,11 +24,13 @@ import { removeQueryParamFromURL } from 'sly/services/helpers/url';
 import { port, host, basename, publicPath, isDev, cookieDomain } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
+import createBeesApi from 'sly/services/newApi/createApi';
 import apiService from 'sly/services/api';
 import ClientApp from 'sly/components/App';
 import DashboardApp from 'sly/components/DashboardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
+import ApiProvider from 'sly/services/newApi/ApiProvider';
 
 const makeAppRenderer = renderedApp => ({
   store, context, location, sheet,
@@ -46,10 +49,21 @@ const renderEmptyApp = () => {
   return { html: '', state: {} };
 };
 
-// requires compatible configuration
-const getAppRenderer = (bundle) => {
+const getAppRoutes = (bundle) => {
   switch (bundle) {
-    case 'dashboard': return makeAppRenderer(<DashboardApp />);
+    case 'dashboard': return DashboardApp.routes;
+    default: return [];
+  }
+};
+
+// requires compatible configuration
+const getAppRenderer = ({ bundle, api }) => {
+  switch (bundle) {
+    case 'dashboard': return makeAppRenderer((
+      <ApiProvider api={api}>
+        <DashboardApp />
+      </ApiProvider>
+    ));
     case 'client': return makeAppRenderer(<ClientApp />);
     default: return renderEmptyApp;
   }
@@ -197,7 +211,7 @@ app.use((req, res, next) => {
 
 // store
 app.use(async (req, res, next) => {
-  const { slyUUID, cookies } = req.clientConfig;
+  const { slyUUID, cookies, bundle } = req.clientConfig;
 
   const hmac = crypto.createHmac('sha256', slyUUID);
   const slyUUIDHash = hmac.digest('hex');
@@ -223,34 +237,63 @@ app.use(async (req, res, next) => {
     req.headers['x-forwarded-for'] || req.connection.remoteAddress
   );
 
+  const beesApi = createBeesApi({
+    configureHeaders: headers => ({
+      ...headers,
+      Cookie: cookies.join('; '),
+      'User-Agent': req.headers['user-agent'],
+      'X-is-sly-ssr': 'true',
+      'X-forwarded-for': req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+    }),
+  });
+
   const store = configureStore({ experiments: userExperiments }, { api });
-  // FIXME: @amalseniorly I'm hacking this on here for now, this adds some 20 ms to the
-  // response but fixes the race condition in forAuthenticated, once we tackle
-  // forAuthenticated to react to log-in changes and to resume in client after starting
-  // in server, we can fix this too. Fonz
-  try {
-    await store.dispatch(resourceDetailReadRequest('user', 'me'));
-  } catch (e) {
-    if (e.response && e.response.status === 401) {
-      // ignore 401
-      logWarn(e);
-    } else {
-      next(e);
-      return;
+
+  // FIXME: hack until SEO app is migrated to bees
+  if (bundle === 'dashboard') {
+    try {
+      await store.dispatch(beesApi.getUser({ id: 'me' }));
+      const routes = getAppRoutes(bundle);
+      const promises = matchRoutes(routes, req.url)
+        .filter(({ route }) => typeof route.component.loadData === 'function')
+        .map(({ route, match }) => route.component.loadData(store, { match, api: beesApi }));
+      await Promise.all(promises);
+    } catch (e) {
+      if (e.status === 401) {
+        // ignore 401
+        console.log(e);
+        logWarn(e);
+      } else {
+        next(e);
+        return;
+      }
+    }
+  } else {
+    try {
+      await store.dispatch(resourceDetailReadRequest('user', 'me'));
+    } catch (e) {
+      if (e.response && e.response.status === 401) {
+        // ignore 401
+        logWarn(e);
+      } else {
+        next(e);
+        return;
+      }
     }
   }
 
   req.clientConfig.store = store;
+  req.clientConfig.api = beesApi;
 
   next();
 });
 
 // render
 app.use(async (req, res, next) => {
-  const { assets, bundle, store } = req.clientConfig;
+  const { assets, store } = req.clientConfig;
   const sheet = new ServerStyleSheet();
   const context = {};
-  const renderApp = getAppRenderer(bundle);
+  const renderApp = getAppRenderer(req.clientConfig);
 
   try {
     const { state: serverState, html: content } = await renderApp({

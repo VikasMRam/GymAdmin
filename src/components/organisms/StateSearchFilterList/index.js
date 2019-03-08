@@ -98,7 +98,7 @@ const StateSearchFilterList = ({
           <Fragment>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             <StyledImage src={assetPath('images/map-placeholder.png')} />
-            <IconButton icon="map" onClick={toggleMap} palette="primary" ghost>
+            <IconButton icon="map" iconSize="regular" onClick={toggleMap} palette="primary" ghost>
               View Map
             </IconButton>
           </Fragment>

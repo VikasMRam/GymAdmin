@@ -3,10 +3,13 @@ import createSagaMiddleware from 'redux-saga';
 import { middleware as sagaThunkMiddleware } from 'redux-saga-thunk';
 import thunkMiddleware from 'redux-thunk';
 import { createLogger } from 'redux-logger';
-import { isDev, isBrowser } from 'sly/config';
+
 import entitiesMiddleware from './entities/middleware';
+import { middleware as beesMiddleware } from '../services/newApi';
 import reducer from './reducer';
 import sagas from './sagas';
+
+import { isDev, isBrowser, muteReduxLogger } from 'sly/config';
 
 const devtools =
   isDev && isBrowser && window.devToolsExtension
@@ -15,13 +18,14 @@ const devtools =
 
 const loggerMiddleware = createLogger();
 
-const configureStore = (initialState, services = {}) => {
+export default function (initialState, services = {}) {
   const sagaMiddleware = createSagaMiddleware();
+
   const middlewares = [
-    entitiesMiddleware, thunkMiddleware, sagaThunkMiddleware, sagaMiddleware,
+    beesMiddleware, entitiesMiddleware, thunkMiddleware, sagaThunkMiddleware, sagaMiddleware,
   ];
 
-  if (isBrowser && isDev) {
+  if (isBrowser && isDev && !muteReduxLogger) {
     middlewares.push(loggerMiddleware);
   }
 
@@ -48,6 +52,4 @@ const configureStore = (initialState, services = {}) => {
   }
 
   return store;
-};
-
-export default configureStore;
+}

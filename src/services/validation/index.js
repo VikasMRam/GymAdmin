@@ -6,7 +6,11 @@ import isMobilePhone from 'validator/lib/isMobilePhone';
 
 const isEmpty = value => value === undefined || value === null || value === '';
 const join = rules => (value, data) =>
-  rules.map(rule => rule(value, data)).filter(error => !!error)[0];
+  rules.map((rule) => {
+    const result = rule(value, data);
+    const ruleName = rule.name;
+    return { result, ruleName };
+  }).filter(error => !!error.result)[0];
 
 export const email = value =>
   !isEmpty(value) && !isEmail(value) && 'Invalid email address';
@@ -53,13 +57,18 @@ export const oneOf = values => value =>
 export const match = field => (value, data) =>
   data && value !== data[field] && 'Must match';
 
-export const createValidator = rules => (data = {}) => {
+export const createValidator = (rules, messageObj) => (data = {}) => {
   const errors = {};
   Object.keys(rules).forEach((key) => {
     const rule = join([].concat(rules[key]));
     const error = rule(data[key], data);
     if (error) {
-      errors[key] = error;
+      if (messageObj && messageObj[key]) {
+        const message = messageObj[key][error.ruleName];
+        errors[key] = message;
+      } else {
+        errors[key] = error.result;
+      }
     }
   });
   return errors;

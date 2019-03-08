@@ -31,8 +31,6 @@ import AgentProfilePageContainer from 'sly/containers/AgentProfilePageContainer'
 import AgentRegionPageContainer from 'sly/containers/AgentRegionPageContainer';
 import PartnersPage from 'sly/components/pages/PartnersPage';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
-import FilthyRedirect from 'sly/components/FilthyRedirect';
-import ModalController from 'sly/controllers/ModalController';
 
 setGlobalStyles();
 
@@ -207,30 +205,22 @@ export default class App extends Component {
 
         {/* <StaticResourcesController match={{}} location={{}} /> */}
 
-        <ModalController>
-          {({
-            show,
-            isModalOpen,
-          }) => (
-            <ThemeProvider theme={theme}>
-              <Router>
-                <Route path="/" component={props => <FilthyRedirect isModalOpen={isModalOpen} showModal={show} {...props} />} />
-                <Switch>
-                  <Route
-                    path={`/:toc(${careTypes})/:state/:city/filters`}
-                    render={({ match }) => (
-                      <Redirect
-                        to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
-                      />
-                    )}
+        <ThemeProvider theme={theme}>
+          <Router>
+            <Switch>
+              <Route
+                path={`/:toc(${careTypes})/:state/:city/filters`}
+                render={({ match }) => (
+                  <Redirect
+                    to={`/${match.params.toc}/${match.params.state}/${match.params.city}`}
                   />
-                  {this.routes.map(route => <Route key={route.path} {...route} />)}
-                  <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
-                </Switch>
-              </Router>
-            </ThemeProvider>
-          )}
-        </ModalController>
+                )}
+              />
+              {this.routes.map(route => <Route key={route.path} {...route} />)}
+              <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
+            </Switch>
+          </Router>
+        </ThemeProvider>
         <ChatBoxContainer />
       </Fragment>
     );

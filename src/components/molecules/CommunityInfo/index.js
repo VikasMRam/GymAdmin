@@ -1,13 +1,13 @@
 import React, { Fragment, Component } from 'react';
-import { oneOf } from 'prop-types';
+import { bool } from 'prop-types';
 import styled from 'styled-components';
-import { prop } from 'styled-tools';
 import NumberFormat from 'react-number-format';
 
-import { getKey, palette, size } from 'sly/components/themes';
-import { community as communityPropType } from 'sly/propTypes/community';
+import { size } from 'sly/components/themes';
 import { formatRating } from 'sly/services/helpers/rating';
+import { community as communityPropType } from 'sly/propTypes/community';
 import { Block, Icon, ClampedText } from 'sly/components/atoms';
+import Rating from 'sly/components/molecules/Rating';
 
 const Wrapper = styled.div`
   overflow: hidden;
@@ -15,66 +15,53 @@ const Wrapper = styled.div`
 
 const IconTextWrapper = styled.div`
   display: flex;
-  color: ${palette(prop('palette'), 'base')};
   margin-bottom: ${size('spacing.small')};
   align-items: center;
 `;
-IconTextWrapper.displayName = 'IconTextWrapper';
 
 const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.regular')};
-`;
-
-const StyledRatingIcon = styled(Icon)`
-  margin-right: ${size('spacing.small')};
 `;
 
 const Rate = styled(Block)`
   margin-right: ${size('spacing.large')};
   margin-bottom: 0;
 `;
-Rate.displayName = 'Rate';
 
-const RatingWrapper = styled.div`
+const RatingWrapper = styled(Block)`
+  display: flex;
+  margin-right: ${size('spacing.regular')};
+`;
+
+const TopWrapper = styled(Block)`
   display: flex;
   align-items: center;
-  margin-top: ${size('spacing.small')};
-`;
-RatingWrapper.displayName = 'RatingWrapper';
-
-const Rating = styled(Block)`
-  display: flex;
-`;
-Rating.displayName = 'Rating';
-
-const Name = styled(ClampedText)`
-  margin-bottom: ${size('spacing.large')};
-`;
-
-const LastIconTextWrapper = IconTextWrapper.extend`
   margin-bottom: ${size('spacing.regular')};
 `;
-LastIconTextWrapper.displayName = 'LastIconTextWrapper';
+
+const RatingValue = styled.div`
+  margin-right: ${size('spacing.regular')};
+`;
+
+const Name = styled(ClampedText)`
+  margin-bottom: ${size('spacing.small')};
+`;
 
 export default class CommunityInfo extends Component {
   static propTypes = {
     community: communityPropType,
-    palette: oneOf(Object.keys(getKey('palette'))),
-  };
-
-  static defaultProps = {
-    palette: 'slate',
+    inverted: bool,
   };
 
   renderEstimatedRate = startingRate => startingRate ? (
-    <Rate palette={this.props.palette} weight="medium">
-      Estimated <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" /> per month
+    <Rate palette={this.props.inverted ? 'white' : 'primary'} weight="medium">
+      Estimated <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
     </Rate>
   ) : null;
 
   renderProviderRate = startingRate => startingRate ? (
-    <Rate palette={this.props.palette} weight="medium">
-      <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" /> per month
+    <Rate palette={this.props.inverted ? 'white' : 'primary'} weight="medium">
+      <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
     </Rate>
   ) : null;
 
@@ -85,19 +72,25 @@ export default class CommunityInfo extends Component {
   );
 
   renderReviews = reviewsValue => (
-    <Rating size="caption" palette={this.props.palette}>
-      <StyledRatingIcon icon="star" size="small" palette="primary" />
-      {reviewsValue > 0 ? formatRating(reviewsValue) : 'Not Yet Rated'}
-    </Rating>
+    <RatingWrapper size="caption" palette={this.props.inverted ? 'white' : 'slate'}>
+      <RatingValue>
+        {reviewsValue > 0 ? formatRating(reviewsValue) : 'Not Yet Rated'}
+      </RatingValue>
+      {reviewsValue > 0 && <Rating value={reviewsValue} palette="warning" size="small" />}
+    </RatingWrapper>
   );
 
   render() {
-    const { community, palette: paletteProp, ...props } = this.props;
+    const { community, inverted, ...props } = this.props;
     const {
       name, webViewInfo, floorPlanString, propInfo, propRatings,
+      address, addressString,
     } = community;
+    let { numReviews, typeCare = [] } = community;
     let { reviewsValue } = community;
-    const { typeCare } = propInfo;
+    if (propInfo) {
+      ({ typeCare } = propInfo);
+    }
     let floorPlanComponent = null;
     let livingTypeComponent = null;
     let floorPlan = floorPlanString;
@@ -112,13 +105,27 @@ export default class CommunityInfo extends Component {
     if (propRatings) {
       ({ reviewsValue } = propRatings);
     }
+    if (propRatings) {
+      ({ numReviews } = propRatings);
+    }
+    let formattedAddress = addressString;
+    if (address) {
+      const {
+        line1, line2, city, state, zip,
+      } = address;
+      formattedAddress = `${line1}, ${line2}, ${city},
+        ${state}
+        ${zip}`
+        .replace(/\s/g, ' ')
+        .replace(/, ,/g, ', ');
+    }
 
     if (floorPlan) {
       const roomTypes = floorPlan.split(',');
       floorPlanComponent = (
-        <IconTextWrapper palette={paletteProp}>
-          <StyledIcon icon="room" palette={paletteProp} />
-          <ClampedText title={roomTypes.join(',')} palette={paletteProp}>
+        <IconTextWrapper>
+          <StyledIcon icon="bed" palette={inverted ? 'white' : 'grey'} size="small" />
+          <ClampedText title={roomTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {roomTypes.map((roomType, i) =>
               <Fragment key={roomType}>{!!i && <Fragment>, </Fragment>}{roomType}</Fragment>)}
@@ -126,28 +133,40 @@ export default class CommunityInfo extends Component {
         </IconTextWrapper>
       );
     }
-    if (livingTypes) {
+    if (livingTypes && livingTypes.length) {
       livingTypeComponent = (
-        <LastIconTextWrapper palette={paletteProp}>
-          <StyledIcon icon="hospital" palette={paletteProp} />
-          <ClampedText title={livingTypes.join(',')} palette={paletteProp}>
+        <IconTextWrapper>
+          <StyledIcon icon="hospital" palette={inverted ? 'white' : 'grey'} size="small" />
+          <ClampedText title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {livingTypes.map((livingType, i) =>
               <Fragment key={livingType}>{!!i && <Fragment>{i === livingTypes.length - 1 ? ' & ' : ', '}</Fragment>}{livingType}</Fragment>)}
           </ClampedText>
-        </LastIconTextWrapper>
+        </IconTextWrapper>
       );
     }
+    const addressComponent = (
+      <IconTextWrapper>
+        <StyledIcon icon="location" palette={inverted ? 'white' : 'grey'} size="small" />
+        <ClampedText title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
+          {formattedAddress}
+        </ClampedText>
+      </IconTextWrapper>
+    );
 
     return (
       <Wrapper {...props}>
-        <Name size="subtitle" palette={paletteProp} weight="medium" title={name}>{name}</Name>
-        {floorPlanComponent}
-        {livingTypeComponent}
-        <RatingWrapper>
+        <Name size="subtitle" weight="medium" title={name} palette={inverted ? 'white' : 'slate'}>{name}</Name>
+        <TopWrapper>
           {this.renderRate(community)}
           {this.renderReviews(reviewsValue)}
-        </RatingWrapper>
+          <Block size="caption" palette={inverted ? 'white' : 'grey'}>
+            ({numReviews})
+          </Block>
+        </TopWrapper>
+        {addressComponent}
+        {livingTypeComponent}
+        {floorPlanComponent}
       </Wrapper>
     );
   }

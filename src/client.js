@@ -15,7 +15,7 @@ import App from 'sly/components/App';
 
 const serverState = window.__SERVER_STATE__;
 const initialState = window.__INITIAL_STATE__;
-const store = configureStore(initialState, { api: api.create({ credentials: 'include' }) });
+const store = configureStore(initialState, { api: api.create() });
 
 const renderApp = () => (
   <ServerStateProvider state={serverState}>

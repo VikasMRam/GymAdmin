@@ -1,9 +1,10 @@
 import React from 'react';
-import { string, bool, number, node } from 'prop-types';
+import { string, bool, node } from 'prop-types';
 import styled, { css, keyframes } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
+import { palette as palettePropType } from 'sly/propTypes/palette';
 import { Icon, Button } from 'sly/components/atoms';
 
 const fadeIn = keyframes`
@@ -12,24 +13,8 @@ const fadeIn = keyframes`
   100% { display: block; opacity: 1; }
 `;
 
-const iconWidth = (p) => {
-  if (p.hasText) {
-    return 'auto';
-  }
-  return p.iconOnly ? size('icon.regular') : size('icon.large');
-};
-
-// const iconHeight = p =>
-//   p.iconOnly ? size('icon.regular') : size('icon.large');
-
-// TODO: measurements from theme
 const StyledButton = styled(Button)`
-  height: auto;
-  display: block;
-  width: ${iconWidth};
-  // TODO : Need to fix this
-  padding: ${ifProp('hasText', '0 0.4375em', 0)};
-  flex: 0 0 2.5em;
+  ${ifProp('noPadding', css`padding: 0;`)}
   ${ifProp(
     'collapsed',
     css`
@@ -39,59 +24,56 @@ const StyledButton = styled(Button)`
       & .text {
         display: none;
       }
+      & .icon {
+        margin-right: 0;
+      }
       &:hover {
         max-width: 100%;
         & .text {
           display: block;
           animation: ${fadeIn} 250ms;
         }
+        & .icon {
+          margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
+        }
       }
     `
   )};
 `;
 
-// TODO: measurements from theme
-const Text = styled.span`
-  padding: 0.4375em;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-`;
-
 const StyledIcon = styled(Icon)`
-  flex: none;
+  margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
+`;
+
+const Text = styled.span`
+  margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
 `;
 
 const IconButton = ({
-  icon, iconSize, iconOnly, fill, children, ...props
+  icon, iconSize, transparent, fill, children, ...props
 }) => {
-  const { right, height, palette } = props;
+  const { right, palette, iconPalette } = props;
   const iconElement = (
     <StyledIcon
-      height={height ? height / 2.5 : undefined}
-      fill={fill}
       icon={icon}
       size={iconSize}
-      palette={palette}
+      palette={transparent ? palette : iconPalette}
+      padRight={!!children && !right}
+      className="icon"
     />
   );
+
   return (
     <StyledButton
       hasText={!!children}
-      iconOnly
-      transparent={iconOnly}
+      transparent={transparent}
+      padRight={!!children && !right}
+      noPadding={transparent && !children}
       {...props}
     >
-      <Wrapper>
-        {right || iconElement}
-        {children && <Text className="text">{children}</Text>}
-        {right && iconElement}
-      </Wrapper>
+      {right || iconElement}
+      {children && <Text padRight={right} className="text">{children}</Text>}
+      {right && iconElement}
     </StyledButton>
   );
 };
@@ -100,18 +82,18 @@ IconButton.propTypes = {
   fill: string,
   icon: string.isRequired,
   iconSize: string,
-  palette: string,
-  iconOnly: bool,
+  palette: palettePropType,
+  iconPalette: palettePropType,
+  transparent: bool,
   collapsed: bool,
   right: bool,
-  height: number,
   children: node,
 };
 
 IconButton.defaultProps = {
-  iconOnly: false,
-  iconSize: 'regular',
+  iconSize: 'caption',
   palette: 'primary',
+  iconPalette: 'white',
 };
 
 export default IconButton;

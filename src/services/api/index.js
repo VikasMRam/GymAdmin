@@ -87,8 +87,7 @@ api.create = (settings = {}) => ({
   },
 
   requestAuthToken() {
-    return fetch(authTokenUrl, { credentials: 'same-origin' })
-      .then(checkStatus);
+    return fetch(authTokenUrl).then(checkStatus);
   },
 
   request(endpoint, settings) {

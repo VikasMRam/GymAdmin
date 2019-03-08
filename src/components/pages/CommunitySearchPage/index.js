@@ -173,7 +173,7 @@ const CommunitySearchPage = ({
         }
       });
       if (gg.seoLinks) {
-        additionalDivs.push(<SeoLinks title="Assisted Living in Nearby Cities" links={gg.seoLinks} />);
+        additionalDivs.push(<SeoLinks key="seoLinks" title="Assisted Living in Nearby Cities" links={gg.seoLinks} />);
       }
 
       return (
@@ -225,12 +225,13 @@ const CommunitySearchPage = ({
             </IconButton>
           )}
           {!isMapView && (
-            <IconButton icon="map" ghost transparent onClick={toggleMap}>
+            <IconButton icon="map" iconSize="regular" ghost transparent onClick={toggleMap}>
               View Map
             </IconButton>
           )}
           <IconButton
             icon="filter"
+            iconSize="regular"
             ghost
             transparent
             onClick={handleModalFilterClick}

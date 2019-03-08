@@ -208,7 +208,7 @@ class PricingWizardPage extends Component {
         </Helmet>
         <Header />
         <Column backgroundImage={mainImage}>
-          <StyledCommunityInfo palette="white" community={community} />
+          <StyledCommunityInfo inverted community={community} />
         </Column>
         <WizardController
           formName="PricingWizardForm"

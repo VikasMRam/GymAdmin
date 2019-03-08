@@ -1,6 +1,6 @@
 /* eslint-disable react/no-danger */
 import React, { Component, Fragment } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
@@ -8,20 +8,41 @@ import smoothscroll from 'smoothscroll-polyfill';
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
-import DashboardHomePageContainer from 'sly/containers/DashboardHomePageContainer';
+import DashboardTestPageContainer from 'sly/containers/DashboardTestPageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
+import DashboardFavoritesPageContainer from 'sly/containers/DashboardFavoritesPageContainer';
+import DashboardMyProfilePageContainer from 'sly/containers/DashboardMyProfilePageContainer';
 
 setGlobalStyles();
 
-const DASHBOARD_PATH = '/dashboard'
+const DASHBOARD_PATH = '/dashboard';
+const FAMILY_DASHBOARD_PATH = `${DASHBOARD_PATH}/family`;
 
 export default class App extends Component {
   static childContextTypes = {
     routes: routesPropType,
   };
+
+  static routes = [
+    {
+      path: DASHBOARD_PATH,
+      component: DashboardTestPageContainer,
+      exact: true,
+    },
+    {
+      path: `${FAMILY_DASHBOARD_PATH}/favorites`,
+      component: DashboardFavoritesPageContainer,
+      exact: true,
+    },
+    {
+      path: `${FAMILY_DASHBOARD_PATH}/my-profile`,
+      component: DashboardMyProfilePageContainer,
+      exact: true,
+    },
+  ];
 
   getChildContext = () => ({
     routes: this.routes,
@@ -30,14 +51,6 @@ export default class App extends Component {
   componentDidMount() {
     smoothscroll.polyfill();
   }
-
-  routes = [
-    {
-      path: DASHBOARD_PATH,
-      component: DashboardHomePageContainer,
-      exact: true,
-    },
-  ];
 
   render() {
     return (
@@ -56,7 +69,7 @@ export default class App extends Component {
         <ThemeProvider theme={theme}>
           <Router>
             <Switch>
-              {this.routes.map(route => <Route key={route.path} {...route} />)}
+              {App.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
             </Switch>
           </Router>

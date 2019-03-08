@@ -178,7 +178,7 @@ const StateSearchPage = ({
             </IconButton>
           )}
           {!isMapView && (
-            <IconButton icon="map" ghost transparent onClick={toggleMap}>
+            <IconButton icon="map" iconSize="regular" ghost transparent onClick={toggleMap}>
               View Map
             </IconButton>
           )}
