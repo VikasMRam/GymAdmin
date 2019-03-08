@@ -7,23 +7,27 @@ const UglifyJs = require('uglify-es');
 const cssmin = require('cssmin');
 const devServer = require('@webpack-blocks/dev-server2');
 // const splitVendor = require('webpack-blocks-split-vendor');
-const happypack = require('webpack-blocks-happypack');
 const serverSourceMap = require('webpack-blocks-server-source-map');
 const nodeExternals = require('webpack-node-externals');
 const ChildConfigPlugin = require('webpack-child-config-plugin');
 const SpawnPlugin = require('webpack-spawn-plugin');
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
+const webpack = require('webpack');
+
 const {
   addPlugins,
   createConfig,
   entryPoint,
   env,
   setOutput,
-  sourceMaps,
   defineConstants,
-  webpack,
   group,
-} = require('@webpack-blocks/webpack2');
+  uglify,
+} = require('webpack-blocks');
+
+const {
+  sourceMaps,
+} = require('@webpack-blocks/webpack');
 
 const AssetsByTypeAndBundlePlugin = require('./private/webpack/AssestByTypeAndBundlePlugin');
 const PrependPlugin = require('./private/webpack/PrependPlugin');
@@ -116,7 +120,7 @@ const assets = () => () => ({
   },
 });
 
-const resolveModules = modules => () => ({
+const resolveModules = modules => () => () => ({
   resolve: {
     alias: {
       sly: modules,
@@ -125,71 +129,70 @@ const resolveModules = modules => () => ({
   },
 });
 
-const base = () =>
-  group([
+const base = group([
+  setOutput({
+    filename: '[name].[hash].js',
+    path: outputPath,
+    publicPath: webpackPublicPath,
+  }),
+
+  defineConstants({
+    'process.env.STORYBOOK_GIT_BRANCH': STORYBOOK_GIT_BRANCH,
+    'process.env.NODE_ENV': NODE_ENV,
+    'process.env.SLY_ENV': SLY_ENV,
+    'process.env.GA_ENV': GA_ENV,
+    'process.env.PUBLIC_PATH': PUBLIC_PATH,
+    'process.env.HOST': HOST,
+    'process.env.PORT': PORT,
+    'process.env.BASENAME': BASENAME,
+    'process.env.API_URL': API_URL,
+    'process.env.AUTH_URL': AUTH_URL,
+    'process.env.DOMAIN': DOMAIN,
+    'process.env.GOOGLE_MAPS_API_KEY': GOOGLE_MAPS_API_KEY,
+    'process.env.EXTERNAL_WIZARDS_PATH': EXTERNAL_WIZARDS_PATH,
+    'process.env.VERSION': VERSION,
+    'process.env.FB_CLIENT_ID': FB_CLIENT_ID,
+    'process.env.GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID,
+    'process.env.MUTE_REDUX_LOGGER': MUTE_REDUX_LOGGER,
+  }),
+
+  babel,
+
+  resolveModules(sourcePath),
+
+  env('development', [
     setOutput({
-      filename: '[name].[hash].js',
-      path: outputPath,
-      publicPath: webpackPublicPath,
+      publicPath: devDomain,
     }),
-    defineConstants({
-      'process.env.STORYBOOK_GIT_BRANCH': STORYBOOK_GIT_BRANCH,
-      'process.env.NODE_ENV': NODE_ENV,
-      'process.env.SLY_ENV': SLY_ENV,
-      'process.env.GA_ENV': GA_ENV,
-      'process.env.PUBLIC_PATH': PUBLIC_PATH,
-      'process.env.HOST': HOST,
-      'process.env.PORT': PORT,
-      'process.env.BASENAME': BASENAME,
-      'process.env.API_URL': API_URL,
-      'process.env.AUTH_URL': AUTH_URL,
-      'process.env.DOMAIN': DOMAIN,
-      'process.env.GOOGLE_MAPS_API_KEY': GOOGLE_MAPS_API_KEY,
-      'process.env.EXTERNAL_WIZARDS_PATH': EXTERNAL_WIZARDS_PATH,
-      'process.env.VERSION': VERSION,
-      'process.env.FB_CLIENT_ID': FB_CLIENT_ID,
-      'process.env.GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID,
-      'process.env.MUTE_REDUX_LOGGER': MUTE_REDUX_LOGGER,
+  ]),
+
+  addPlugins([new webpack.ProgressPlugin()]),
+]);
+
+const devCORS = () => group([
+  env('development', [
+    devServer({
+      contentBase: 'public',
+      stats: 'errors-only',
+      historyApiFallback: { index: webpackPublicPath },
+      headers: { 'Access-Control-Allow-Origin': '*' },
+      disableHostCheck: true,
+      host: '0.0.0.0',
+      port: DEV_PORT,
+      compress: true,
     }),
-    addPlugins([new webpack.ProgressPlugin()]),
-    happypack([babel()]),
-    resolveModules(sourcePath),
+    addPlugins([new webpack.NamedModulesPlugin()]),
+  ]),
+]);
 
-    env('development', [
-      setOutput({
-        publicPath: devDomain,
-      }),
-    ]),
-  ]);
-
-const devCORS = () =>
-  group([
-    env('development', [
-      devServer({
-        contentBase: 'public',
-        stats: 'errors-only',
-        historyApiFallback: { index: webpackPublicPath },
-        headers: { 'Access-Control-Allow-Origin': '*' },
-        disableHostCheck: true,
-        host: '0.0.0.0',
-        port: DEV_PORT,
-        compress: true,
-      }),
-      addPlugins([new webpack.NamedModulesPlugin()]),
-    ]),
-  ]);
-
-const uglifyJs = () =>
-  group([
-    env('production', [
-      addPlugins([
-        new webpack.optimize.UglifyJsPlugin({
-          sourceMap: isStaging,
-          compress: { warnings: false },
-        }),
-      ]),
-    ]),
-  ]);
+const uglifyJs = () => group([
+  env('production', [
+    uglify({
+      sourceMap: isStaging,
+      compress: { warnings: false },
+    }),
+  ]),
+]);
 
 // order matters to how the routes are mounted
 const clientConfigs = [
@@ -211,30 +214,41 @@ const clientConfigs = [
 ];
 
 const server = createConfig([
-  base(),
+  base,
+
   entryPoint({ server: serverEntryPath }),
+
   setOutput({
     filename: '../[name].js',
     libraryTarget: 'commonjs2',
   }),
+
+  () => () => ({
+    target: 'node',
+    externals: [nodeExternals()],
+    stats: 'errors-only',
+  }),
+
+  assets,
+
   addPlugins([
     new PrependPlugin({
       prepend: () => `global.clientConfigs = require("${clientConfigsPath}");\n`,
     }),
   ]),
-  () => ({
-    target: 'node',
-    externals: [nodeExternals()],
-    stats: 'errors-only',
-  }),
-  assets(),
 
   env('development', [
-    serverSourceMap(),
-    addPlugins([new SpawnPlugin('node', [process.env.NODE_DEBUG_OPTION || '--inspect', '.'])]),
-    () => ({
+    () => () => ({
       watch: true,
     }),
+    addPlugins([
+      new webpack.BannerPlugin({
+        banner: 'require("source-map-support").install();',
+        raw: true,
+        entryOnly: false,
+      }),
+      new SpawnPlugin('node', [process.env.NODE_DEBUG_OPTION || '--inspect', '.']),
+    ]),
   ]),
 ]);
 
@@ -256,47 +270,46 @@ const replaceExternalConstants = (text) => {
   return replacedText;
 };
 
-const externalWidget = () =>
-  group([
-    env('development', [
-      addPlugins([
-        new MergeIntoSingleFilePlugin({
-          files: {
-            'external/widget.js': [externalWidgetEntryPath],
-            'external/widget.css': [externalWidgetCssEntryPath],
-          },
-          transform: {
-            'external/widget.js': text => replaceExternalConstants(text),
-          },
-        }),
-      ]),
+const externalWidget = group([
+  env('development', [
+    addPlugins([
+      new MergeIntoSingleFilePlugin({
+        files: {
+          'external/widget.js': [externalWidgetEntryPath],
+          'external/widget.css': [externalWidgetCssEntryPath],
+        },
+        transform: {
+          'external/widget.js': text => replaceExternalConstants(text),
+        },
+      }),
     ]),
-    env('production', [
-      addPlugins([
-        new MergeIntoSingleFilePlugin({
-          files: {
-            'external/widget.js': [externalWidgetEntryPath],
-            'external/widget.css': [externalWidgetCssEntryPath],
+  ]),
+  env('production', [
+    addPlugins([
+      new MergeIntoSingleFilePlugin({
+        files: {
+          'external/widget.js': [externalWidgetEntryPath],
+          'external/widget.css': [externalWidgetCssEntryPath],
+        },
+        transform: {
+          'external/widget.js': (text) => {
+            const { error, code } = UglifyJs.minify(replaceExternalConstants(text));
+            if (error) {
+              console.error(error);
+            }
+            return code;
           },
-          transform: {
-            'external/widget.js': (text) => {
-              const { error, code } = UglifyJs.minify(replaceExternalConstants(text));
-              if (error) {
-                console.error(error);
-              }
-              return code;
-            },
-            'external/widget.css': (text) => {
-              return cssmin(text);
-            },
+          'external/widget.css': (text) => {
+            return cssmin(text);
           },
-        }),
-      ]),
+        },
+      }),
     ]),
-  ]);
+  ]),
+]);
 
 const client = createConfig([
-  base(),
+  base,
 
   entryPoint({
     client: clientEntryPath,
@@ -304,7 +317,13 @@ const client = createConfig([
     wizards: externalWizardsEntryPath,
   }),
 
-  externalWidget(),
+  externalWidget,
+
+  assets,
+
+  devCORS,
+
+  uglifyJs,
 
   addPlugins([
     new AssetsByTypeAndBundlePlugin({
@@ -316,15 +335,12 @@ const client = createConfig([
 
   when(isDev || isStaging, [sourceMaps()]),
 
-  assets(),
-
-  devCORS(),
-
-  uglifyJs(),
 
   /* env('production', [
     splitVendor(),
   ]), */
 ]);
+
+console.log(JSON.stringify(client, null, 2));
 
 module.exports = client;
