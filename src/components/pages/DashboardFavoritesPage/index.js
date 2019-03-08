@@ -38,6 +38,11 @@ const columnCounts = [
   },
 ];
 
+// to prevent community tile's gallery causing overlap which prevents hover from working
+const StyledCommunityTile = styled(CommunityTile)`
+  position: relative;
+`;
+
 const DashboardFavoritesPage = ({
   userSaves, onGallerySlideChange, currentGalleryImage, notifyInfo, showModal, hideModal,
 }) => {
@@ -75,7 +80,7 @@ const DashboardFavoritesPage = ({
     ];
 
     return (
-      <CommunityTile
+      <StyledCommunityTile
         addNote
         isFavourite
         currentSlide={currentSlide}
