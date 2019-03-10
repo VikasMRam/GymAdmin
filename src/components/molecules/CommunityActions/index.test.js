@@ -26,5 +26,4 @@ describe('CommunityActions', () => {
     GCPButton.simulate('click');
     expect(onGCPClick).toHaveBeenCalled();
   });
-
 });
