@@ -30,10 +30,10 @@ const CommunityActions = ({
     <MainButton kind="jumbo" onClick={onGCPClick}>Get custom pricing</MainButton>}
     {isAlreadyPricingRequested &&
     <MainButton ghost kind="jumbo" onClick={onGCPClick}>Pricing requested</MainButton>}
-    <Wrapper>
-      <StyledButton ghost onClick={onAQClick}>Ask a question</StyledButton>
-      <StyledButton ghost onClick={onBookATourClick}>{isAlreadyTourScheduled ? 'Tour requested' : 'Book a Tour'}</StyledButton>
-    </Wrapper>
+    {/* <Wrapper> */}
+    {/* <StyledButton ghost onClick={onAQClick}>Ask a question</StyledButton> */}
+    {/* <StyledButton ghost onClick={onBookATourClick}>{isAlreadyTourScheduled ? 'Tour requested' : 'Book a Tour'}</StyledButton> */}
+    {/* </Wrapper> */}
   </div>
 );
 
