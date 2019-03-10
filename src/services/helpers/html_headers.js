@@ -246,9 +246,11 @@ export const getHelmetForCommunityPage = (community, location) => {
 };
 
 export const getHelmetForAgentsPage = () => {
+  const description = 'Talk to our senior living advisors and partner agents at Seniorly. Connect with a local senior living advisor for personalized senior housing support!';
   return (
     <Helmet>
-      <title>Our Senior Living Partner Agents</title>
+      <title>Find Senior Living Advisors | Seniorly Partner Agents</title>
+      <meta name="description" content={description} />
     </Helmet>
   );
 };
@@ -257,6 +259,32 @@ export const getHelmetForPartnersPage = () => {
   return (
     <Helmet>
       <title>Partner Agent Program</title>
+    </Helmet>
+  );
+};
+
+export const getHelmetForAgentProfilePage = ({agent}) => {
+  const { info } = agent;
+  const {displayName, citiesServed} = info;
+  const firstName = displayName.split(' ')[0];
+  const firstThreeCities = citiesServed.slice(3).join(', ');
+  const description = `Talk to expert senior living advisor ${info.displayName}. ${firstName} helps families find senior housing in ${firstThreeCities}& more locations!`;
+  const title = `${info.displayName} Senior Living Advisor | Seniorly Partner Agents`;
+  return (
+    <Helmet>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+    </Helmet>
+  );
+};
+
+export const getHelmetForAgentsRegionPage = ({locationName}) => {
+  const description = `Talk to local senior living advisors and partner agents in the ${locationName} region. Find a ${locationName} senior living advisor for personalized support!`;
+  const title = `${locationName} Senior Living Advisors | Seniorly Partner Agents`;
+  return (
+    <Helmet>
+      <title>{title}</title>
+      <meta name="description" content={description} />
     </Helmet>
   );
 };
