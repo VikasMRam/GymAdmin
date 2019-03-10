@@ -7,7 +7,6 @@ import { Button } from 'sly/components/atoms/index';
 
 const MainButton = styled(Button)`
   width: 100%;
-  margin-bottom: ${size('spacing.large')};
 `;
 MainButton.displayName = 'MainButton';
 
