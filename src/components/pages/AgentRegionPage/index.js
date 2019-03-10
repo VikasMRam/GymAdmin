@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
 import { string, arrayOf, func, object, bool } from 'prop-types';
 import Helmet from 'react-helmet';
-
+import { getHelmetForAgentsRegionPage } from 'sly/services/helpers/html_headers';
 import agentPropType from 'sly/propTypes/agent';
 import { size, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
@@ -104,6 +104,7 @@ class AgentRegionPage extends Component {
     }
     return (
       <Fragment>
+        {getHelmetForAgentsRegionPage({locationName})}
         {!isRegionPage &&
           <Helmet>
             <meta name="robots" content="noindex" />
