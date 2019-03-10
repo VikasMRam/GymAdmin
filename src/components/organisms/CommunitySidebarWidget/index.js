@@ -43,10 +43,7 @@ const CommunitySidebarWidget = ({
         }
         <CommunityActions
           isAlreadyPricingRequested={isAlreadyPricingRequested}
-          isAlreadyTourScheduled={isAlreadyTourScheduled}
-          onBookATourClick={onBookATourClick}
           onGCPClick={onGCPClick}
-          onAQClick={onAQClick}
         />
       </Wrapper>
       {(promoDescription || promoTitle) &&
