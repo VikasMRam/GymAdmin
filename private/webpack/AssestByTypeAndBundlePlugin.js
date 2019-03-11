@@ -35,7 +35,8 @@ module.exports = class AssetsByTypeAndBundlePlugin {
   }
 
   apply(compiler) {
-    compiler.plugin('done', (rawStats) => {
+    const plugin = { name: 'AssetsByTypeAndBundlePlugin' };
+    compiler.hooks.done.tap(plugin, (rawStats) => {
       const { output } = compiler.options;
       const stats = rawStats.toJson({ modules: false });
       const chunks = flatten(sortChunks(stats.chunks).map(chunk => chunk.files));

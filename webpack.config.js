@@ -9,7 +9,6 @@ const devServer = require('@webpack-blocks/dev-server2');
 // const splitVendor = require('webpack-blocks-split-vendor');
 const serverSourceMap = require('webpack-blocks-server-source-map');
 const nodeExternals = require('webpack-node-externals');
-const ChildConfigPlugin = require('webpack-child-config-plugin');
 const SpawnPlugin = require('webpack-spawn-plugin');
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 const webpack = require('webpack');
@@ -29,6 +28,7 @@ const {
   sourceMaps,
 } = require('@webpack-blocks/webpack');
 
+const ChildConfigPlugin = require('./private/webpack/ChildConfigPlugin');
 const AssetsByTypeAndBundlePlugin = require('./private/webpack/AssestByTypeAndBundlePlugin');
 const PrependPlugin = require('./private/webpack/PrependPlugin');
 
@@ -330,7 +330,7 @@ const client = createConfig([
       path: clientConfigsPath,
       clientConfigs,
     }),
-    new ChildConfigPlugin(server),
+    new ChildConfigPlugin(server, { when: 'afterEmit' }),
   ]),
 
   when(isDev || isStaging, [sourceMaps()]),
@@ -341,6 +341,6 @@ const client = createConfig([
   ]), */
 ]);
 
-console.log(JSON.stringify(client, null, 2));
+console.log('client', client);
 
 module.exports = client;

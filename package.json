@@ -81,7 +81,6 @@
     "webpack-blocks": "^2.0.0-rc",
     "webpack-blocks-server-source-map": "^0.2.0",
     "webpack-blocks-split-vendor": "^0.4.0",
-    "webpack-child-config-plugin": "^0.1.2",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1",
     "webpack-merge-and-include-globally": "^2.1.16",
