@@ -11,13 +11,19 @@ const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')}
 `;
 
-const StyledButton = styled(Button)`
-  width: 100%;
+const ButtonsWrapper = styled.div`
+  text-align: right;
 `;
 
-const SaveCommunityForm = ({ submitting, handleSubmit, error }) => (
+const StyledButton = styled(Button)`
+  margin-right: ${size('spacing.large')};
+`;
+
+const SaveCommunityForm = ({
+  submitting, handleSubmit, error, onCancelClick, hasCancel, heading,
+}) => (
   <section>
-    <StyledHeading size="subtitle">Add to your favorites list</StyledHeading>
+    <StyledHeading size="subtitle">{heading}</StyledHeading>
     <form onSubmit={handleSubmit}>
       <Field
         type="textarea"
@@ -28,9 +34,16 @@ const SaveCommunityForm = ({ submitting, handleSubmit, error }) => (
         component={ReduxField}
       />
       {error && <Block palette="danger">{error}</Block>}
-      <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-        Confirm
-      </StyledButton>
+      <ButtonsWrapper>
+        {hasCancel &&
+          <StyledButton secondary disabled={submitting} onClick={onCancelClick}>
+            Cancel
+          </StyledButton>
+        }
+        <Button type="submit" disabled={submitting}>
+          Save
+        </Button>
+      </ButtonsWrapper>
     </form>
   </section>
 );
@@ -39,6 +52,13 @@ SaveCommunityForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
   error: string,
+  onCancelClick: func,
+  hasCancel: bool,
+  heading: string,
+};
+
+SaveCommunityForm.defaultProps = {
+  heading: 'Add to your favorites list',
 };
 
 export default SaveCommunityForm;

@@ -9,6 +9,7 @@ import textAlign from 'sly/components/helpers/textAlign';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import Masonry from 'sly/components/common/masonry';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
+import AddOrEditNoteForSavedCommunityContainer from 'sly/containers/AddOrEditNoteForSavedCommunityContainer';
 import { Heading, Paragraph, Hr } from 'sly/components/atoms';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
@@ -79,9 +80,10 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 
 const DashboardFavoritesPage = ({
   userSaves, onGallerySlideChange, currentGalleryImage, notifyInfo, showModal, hideModal,
-  onLocationSearch, ishowSlyWorksVideoPlaying, toggleHowSlyWorksVideoPlaying,
+  onLocationSearch, ishowSlyWorksVideoPlaying, toggleHowSlyWorksVideoPlaying, rawUserSaves,
+  onUnfavouriteClick,
 }) => {
-  const communityTiles = userSaves ? userSaves.map((userSave) => {
+  const communityTiles = userSaves ? userSaves.map((userSave, i) => {
     const { community, id } = userSave;
     const onSlideChange = i => onGallerySlideChange(id, i);
     const currentSlide = currentGalleryImage[id];
@@ -107,12 +109,31 @@ const DashboardFavoritesPage = ({
 
       showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />);
     };
+    const openAddNote = () => {
+      const rawUserSave = rawUserSaves[i];
+      const onComplete = () => {
+        hideModal();
+        notifyInfo('Note Added');
+      };
+      const modalComponentProps = {
+        hideModal,
+        userSave,
+        rawUserSave,
+        community,
+        onComplete,
+      };
+
+      showModal(<AddOrEditNoteForSavedCommunityContainer {...modalComponentProps} />);
+    };
     const actionButtons = [
       {
         text: 'Ask Question',
         onClick: openAskAgentQuestionModal,
       },
     ];
+    const handleUnfavouriteClick = () => {
+      onUnfavouriteClick(userSave.id);
+    };
 
     return (
       <StyledCommunityTile
@@ -124,6 +145,8 @@ const DashboardFavoritesPage = ({
         community={userSave.community}
         actionButtons={actionButtons}
         note={userSave.info.note}
+        onAddNoteClick={openAddNote}
+        onUnfavouriteClick={handleUnfavouriteClick}
       />
     );
   }) : 'loading...';
@@ -164,6 +187,7 @@ const DashboardFavoritesPage = ({
 
 DashboardFavoritesPage.propTypes = {
   userSaves: arrayOf(object),
+  rawUserSaves: arrayOf(object),
   onGallerySlideChange: func,
   currentGalleryImage: object,
   notifyInfo: func,
@@ -172,6 +196,7 @@ DashboardFavoritesPage.propTypes = {
   onLocationSearch: func,
   ishowSlyWorksVideoPlaying: bool,
   toggleHowSlyWorksVideoPlaying: func,
+  onUnfavouriteClick: func,
 };
 
 export default DashboardFavoritesPage;

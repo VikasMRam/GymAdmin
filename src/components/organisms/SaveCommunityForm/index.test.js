@@ -12,6 +12,15 @@ describe('SaveCommunityForm', () => {
     const wrapper = wrap({ handleSubmit });
 
     expect(wrapper.find(Field)).toHaveLength(1);
+    expect(wrapper.find('Button')).toHaveLength(1);
+  });
+
+  it('renders with cancel button', () => {
+    const handleSubmit = jest.fn();
+    const wrapper = wrap({ handleSubmit, hasCancel: true });
+
+    expect(wrapper.find(Field)).toHaveLength(1);
+    expect(wrapper.find('Button')).toHaveLength(1);
     expect(wrapper.find('StyledButton')).toHaveLength(1);
   });
 
