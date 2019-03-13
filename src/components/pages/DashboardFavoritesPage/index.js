@@ -6,6 +6,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import { size, assetPath } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
+import shadow from 'sly/components/helpers/shadow';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import Masonry from 'sly/components/common/masonry';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
@@ -46,9 +47,9 @@ const columnCounts = [
 ];
 
 // to prevent community tile's gallery causing overlap which prevents hover from working
-const StyledCommunityTile = styled(CommunityTile)`
+const StyledCommunityTile = shadow(styled(CommunityTile)`
   position: relative;
-`;
+`);
 
 const Wrapper = styled.div`
   max-width: ${size('layout.col8')};
