@@ -109,11 +109,14 @@ const DashboardFavoritesPage = ({
 
       showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />);
     };
-    const openAddNote = () => {
+    const openNoteModification = () => {
       const rawUserSave = rawUserSaves[i];
       const onComplete = () => {
         hideModal();
-        notifyInfo('Note Added');
+        notifyInfo(`Note ${userSave.info.note ? 'Edited' : 'Added'}`);
+      };
+      const initialValues = {
+        note: userSave.info.note,
       };
       const modalComponentProps = {
         hideModal,
@@ -121,6 +124,8 @@ const DashboardFavoritesPage = ({
         rawUserSave,
         community,
         onComplete,
+        isEditMode: !!userSave.info.note,
+        initialValues,
       };
 
       showModal(<AddOrEditNoteForSavedCommunityContainer {...modalComponentProps} />);
@@ -145,7 +150,8 @@ const DashboardFavoritesPage = ({
         community={userSave.community}
         actionButtons={actionButtons}
         note={userSave.info.note}
-        onAddNoteClick={openAddNote}
+        onAddNoteClick={openNoteModification}
+        onEditNoteClick={openNoteModification}
         onUnfavouriteClick={handleUnfavouriteClick}
       />
     );

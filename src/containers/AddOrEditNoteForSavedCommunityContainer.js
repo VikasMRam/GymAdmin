@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, func } from 'prop-types';
+import { object, func, bool } from 'prop-types';
 import { SubmissionError } from 'redux-form';
 import produce from 'immer';
 
@@ -20,6 +20,8 @@ class AddOrEditNoteForSavedCommunityContainer extends Component {
     onCancel: func,
     rawUserSave: object,
     userSave: object,
+    isEditMode: bool,
+    initialValues: object,
   };
 
   handleSubmitSaveCommunityForm = (data) => {
@@ -45,7 +47,9 @@ class AddOrEditNoteForSavedCommunityContainer extends Component {
 
   render() {
     const { handleSubmitSaveCommunityForm } = this;
-    const { community, onCancel } = this.props;
+    const {
+      community, onCancel, isEditMode, initialValues,
+    } = this.props;
     const { name } = community;
 
     return (
@@ -60,10 +64,11 @@ class AddOrEditNoteForSavedCommunityContainer extends Component {
               component={SaveCommunityFormContainer}
               name="Note"
               onSubmit={data => handleSubmitSaveCommunityForm(data)}
-              heading={`Add note about ${name}`}
+              heading={`${isEditMode ? 'Edit' : 'Add'} note about ${name}`}
               hasCancel
               onCancelClick={next}
               destroyOnUnmount={false}
+              initialValues={initialValues}
             />
             <WizardStep
               component={ConfirmationDialog}
