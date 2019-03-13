@@ -18,6 +18,8 @@ import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
 import cloneDeep from 'lodash/cloneDeep';
+import { createLocation } from 'history';
+
 
 import { cleanError, logWarn } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
@@ -31,7 +33,6 @@ import DashboardApp from 'sly/components/DashboardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 import ApiProvider from 'sly/services/newApi/ApiProvider';
-import { createLocation } from 'history';
 
 class ResponseError extends Error {
   constructor(message, response) {
@@ -301,21 +302,21 @@ app.use(async (req, res, next) => {
     }
   }
 
-  try {
-    const routes = getAppRoutes(bundle);
-    const matchedRoutes = matchRoutes(routes, req.url);
-    const promises = matchedRoutes
-      .filter(({ route }) => typeof route.component.loadData === 'function')
-      .map(({ route, match }) => route.component.loadData(store, {
-        match,
-        location: createLocation(req.url),
-        api: beesApi,
-      }));
-    await Promise.all(promises);
-  } catch (response) {
-    next(new ResponseError('Error trying to pre-fetch route data', response));
-    return;
-  }
+  // try {
+  //   const routes = getAppRoutes(bundle);
+  //   const matchedRoutes = matchRoutes(routes, req.url);
+  //   const promises = matchedRoutes
+  //     .filter(({ route }) => typeof route.component.loadData === 'function')
+  //     .map(({ route, match }) => route.component.loadData(store, {
+  //       match,
+  //       location: createLocation(req.url),
+  //       api: beesApi,
+  //     }));
+  //   await Promise.all(promises);
+  // } catch (response) {
+  //   next(new ResponseError('Error trying to pre-fetch route data', response));
+  //   return;
+  // }
 
   req.clientConfig.store = store;
   req.clientConfig.api = beesApi;

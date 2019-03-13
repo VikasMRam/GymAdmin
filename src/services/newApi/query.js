@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { object } from 'prop-types';
+import { withDone } from 'react-router-server';
 import omit from 'object.omit';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
@@ -28,6 +29,8 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       };
     };
 
+    @withDone
+
     @connect(mapStateToProps)
 
     class Wrapper extends React.Component {
@@ -41,24 +44,24 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
 
       // this method called statically from server uses the api from outside the provider,
       // so it's not bound to dispatch
-      static loadData = (store, props) => {
-        const promises = [];
+      // static loadData = (store, props) => {
+      //   const promises = [];
 
-        if (typeof InnerComponent.loadData === 'function') {
-          promises.push(InnerComponent.loadData(store, props));
-        }
+      //   if (typeof InnerComponent.loadData === 'function') {
+      //     promises.push(InnerComponent.loadData(store, props));
+      //   }
 
-        const { dispatch, getState } = store;
-        const { request } = mapStateToProps(getState(), props);
-        if (!request.isLoading && !request.hasStarted) {
-          promises.push(dispatch(dispatcher(props.api[apiCall], {
-            request,
-            ...props,
-          })));
-        }
+      //   const { dispatch, getState } = store;
+      //   const { request } = mapStateToProps(getState(), props);
+      //   if (!request.isLoading && !request.hasStarted) {
+      //     promises.push(dispatch(dispatcher(props.api[apiCall], {
+      //       request,
+      //       ...props,
+      //     })));
+      //   }
 
-        return Promise.all(promises);
-      };
+      //   return Promise.all(promises);
+      // };
 
       componentDidMount() {
         const { request } = this.props;
@@ -75,8 +78,8 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
 
       // this apiCall is done from the api provided by ApiProvider, so it's bound to dispatch
       fetch = (props = this.props) => {
-        const { api } = props;
-        return dispatcher(api[apiCall], props);
+        const { api, done } = props;
+        return dispatcher(api[apiCall], props).then(done, done);
       };
 
       render() {
