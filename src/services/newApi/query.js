@@ -61,9 +61,9 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       //   }
 
       //   return Promise.all(promises);
-      // };
+      // }
 
-      componentDidMount() {
+      componentWillMount() {
         const { request } = this.props;
         if (!request.isLoading && !request.hasStarted) {
           this.fetch();
