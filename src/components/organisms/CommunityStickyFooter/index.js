@@ -27,10 +27,7 @@ const CommunityStickyFooter = ({
 }) => (
   <FullWrapper>
     <CommunityActions
-      onBookATourClick={onBookATourClick}
       onGCPClick={onGCPClick}
-      onAQClick={onAQClick}
-      isAlreadyTourScheduled={isAlreadyTourScheduled}
       isAlreadyPricingRequested={isAlreadyPricingRequested}
     />
   </FullWrapper>

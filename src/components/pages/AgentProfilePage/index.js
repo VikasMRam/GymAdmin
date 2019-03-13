@@ -3,6 +3,7 @@ import { shape, object, func } from 'prop-types';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
+import { getHelmetForAgentProfilePage } from 'sly/services/helpers/html_headers';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateContent, TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import Footer from 'sly/components/organisms/Footer';
@@ -101,6 +102,7 @@ class AgentProfilePage extends Component {
     const { state, city } = address;
     return (
       <Fragment>
+        {getHelmetForAgentProfilePage({agent})}
         <TemplateHeader>
           <HeaderContainer />
         </TemplateHeader>

@@ -10,7 +10,6 @@ import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { Image, Centered, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
-import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
