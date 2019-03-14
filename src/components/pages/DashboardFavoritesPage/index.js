@@ -138,7 +138,7 @@ const DashboardFavoritesPage = ({
       },
     ];
     const handleUnfavouriteClick = () => {
-      onUnfavouriteClick(userSave.id);
+      onUnfavouriteClick(userSave.id, notifyInfo);
     };
 
     return (
@@ -161,7 +161,7 @@ const DashboardFavoritesPage = ({
   return (
     <DashboardPageTemplate>
       <FormSection heading="Favorites">
-        {communityTiles.length &&
+        {communityTiles.length > 0 &&
           <Masonry columnCounts={columnCounts}>
             {communityTiles}
           </Masonry>

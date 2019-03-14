@@ -63,7 +63,7 @@ export default class DashboardFavoritesPageContainer extends Component {
     history.push(path);
   };
 
-  handleUnfavouriteClick = (id) => {
+  handleUnfavouriteClick = (id, notifyInfo) => {
     const { api, status } = this.props;
     const { result: rawUserSaves } = status.userSaves;
     const rawUserSave = rawUserSaves.find(us => us.id === id);
@@ -73,16 +73,20 @@ export default class DashboardFavoritesPageContainer extends Component {
         draft.attributes.status = USER_SAVE_DELETE_STATUS;
       }),
     })
-      .then();
+      .then(() => notifyInfo('Community has been removed from favorites'));
   };
 
   render() {
     const {
       handleOnGallerySlideChange, handleOnLocationSearch, handleToggleHowSlyWorksVideoPlaying, handleUnfavouriteClick,
     } = this;
-    const { userSaves, status } = this.props;
-    const { result: rawUserSaves } = status.userSaves;
+    const { status } = this.props;
+    let { userSaves } = this.props;
+    let { result: rawUserSaves } = status.userSaves;
     const { currentGalleryImage, howSlyWorksVideoPlaying } = this.state;
+    // to prevent doing an api call after a user save is unsaved
+    userSaves = userSaves.filter(us => us.status === USER_SAVE_INIT_STATUS);
+    rawUserSaves = rawUserSaves.filter(us => us.attributes.status === USER_SAVE_INIT_STATUS);
 
     return (
       <NotificationController>
