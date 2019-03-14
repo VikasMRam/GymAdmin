@@ -112,7 +112,6 @@ class PricingWizardPage extends Component {
     sendEvent('careType-changed', id, newCareTypes.toString());
   };
 
-
   handleStepChange = ({
     currentStep, data, goto, doSubmit, openConfirmationModal,
   }) => {
@@ -121,16 +120,13 @@ class PricingWizardPage extends Component {
     const { interest } = data;
 
     sendEvent('step-completed', id, currentStep);
-
+    userActionSubmit(data);
     if (currentStep === 3) {
       if (interest === 'talk-advisor') {
         doSubmit(openConfirmationModal);
       } else if (interest !== 'explore-affordable-options') {
         goto(4);
       }
-    }
-    if (currentStep === 2) {
-      userActionSubmit(data);
     }
     if (currentStep === 1 && userDetails && userDetails.phone && userDetails.fullName) {
       goto(3);
