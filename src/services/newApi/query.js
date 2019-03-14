@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { object } from 'prop-types';
 import { withDone } from 'react-router-server';
-import omit from 'object.omit';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
+import { isServer } from 'sly/config';
 import { withApi, getRequestInfo } from 'sly/services/newApi';
 
 const defaultDispatcher = call => call();
@@ -21,7 +21,7 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       const argumentsAbsorber = (...args) => args;
 
       return {
-        request: getRequestInfo(
+        requestInfo: getRequestInfo(
           state,
           props.api[apiCall],
           dispatcher(argumentsAbsorber, props),
@@ -29,49 +29,38 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       };
     };
 
+    const logInfo = (msg, requestInfo) => {
+      const { normalized, result, ...rest } = requestInfo;
+      console.log(msg, rest);
+    };
+    // FIXME: For now we have to continue using withDone (which uses componentWillUpdate)
+    // we have to re-engineer this to be able to use react 17, or to start using hooks in
+    // react 16.8 (methods renamed to UNSAFE_xxxx)
     @withDone
 
     @connect(mapStateToProps)
-
     class Wrapper extends React.Component {
       static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
 
       static propTypes = {
         api: object,
-        request: object,
+        requestInfo: object,
         status: object,
       };
 
-      // this method called statically from server uses the api from outside the provider,
-      // so it's not bound to dispatch
-      // static loadData = (store, props) => {
-      //   const promises = [];
-
-      //   if (typeof InnerComponent.loadData === 'function') {
-      //     promises.push(InnerComponent.loadData(store, props));
-      //   }
-
-      //   const { dispatch, getState } = store;
-      //   const { request } = mapStateToProps(getState(), props);
-      //   if (!request.isLoading && !request.hasStarted) {
-      //     promises.push(dispatch(dispatcher(props.api[apiCall], {
-      //       request,
-      //       ...props,
-      //     })));
-      //   }
-
-      //   return Promise.all(promises);
-      // }
-
       componentWillMount() {
-        const { request } = this.props;
-        if (!request.isLoading && !request.hasStarted) {
+        const { requestInfo, done } = this.props;
+        if (!requestInfo.isLoading && !requestInfo.hasStarted) {
           this.fetch();
+        } else if (isServer && !requestInfo.isLoading && requestInfo.hasStarted && requestInfo.result) {
+          // console.log('bails with result', requestInfo.result);
+          done();
         }
+        logInfo(apiCall, requestInfo);
       }
 
       componentWillReceiveProps(nextProps) {
-        if (!nextProps.request.isLoading && !nextProps.request.hasStarted) {
+        if (!nextProps.requestInfo.isLoading && !nextProps.requestInfo.hasStarted) {
           this.fetch(nextProps);
         }
       }
@@ -83,19 +72,24 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       };
 
       render() {
-        const props = {
-          ...omit(this.props, ['request']),
-          [propName]: this.props.request.normalized,
+        const { requestInfo, status, ...props } = this.props;
+        const { normalized, ...request } = requestInfo;
+
+        if (isServer && (!request.hasStarted || request.isLoading)) return null;
+
+        const innerProps = {
+          ...props,
+          [propName]: normalized,
           status: {
-            ...this.props.status,
+            ...status,
             [propName]: {
-              ...omit(this.props.request, ['normalized']),
+              ...request,
               refetch: this.fetch,
             },
           },
         };
 
-        return <InnerComponent {...props} />;
+        return <InnerComponent {...innerProps} />;
       }
     }
 
