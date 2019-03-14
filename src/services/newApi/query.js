@@ -33,6 +33,7 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       const { normalized, result, ...rest } = requestInfo;
       console.log(msg, rest);
     };
+
     // FIXME: For now we have to continue using withDone (which uses componentWillUpdate)
     // we have to re-engineer this to be able to use react 17, or to start using hooks in
     // react 16.8 (methods renamed to UNSAFE_xxxx)
@@ -54,6 +55,7 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
           this.fetch();
         } else if (isServer && !requestInfo.isLoading && requestInfo.hasStarted && requestInfo.result) {
           // console.log('bails with result', requestInfo.result);
+          console.log('will call done on', apiCall);
           done();
         }
         logInfo(apiCall, requestInfo);
@@ -68,7 +70,11 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       // this apiCall is done from the api provided by ApiProvider, so it's bound to dispatch
       fetch = (props = this.props) => {
         const { api, done } = props;
-        return dispatcher(api[apiCall], props).then(done, done);
+        console.log('will fetch', apiCall);
+        return dispatcher(api[apiCall], props).then((data) => {
+          console.log('calling fetch done on', apiCall);
+          return done(data);
+        }, done);
       };
 
       render() {

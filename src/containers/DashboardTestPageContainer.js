@@ -53,7 +53,7 @@ export default class DashboardTestPageContainer extends Component {
         </pre>
         <input onChange={this.nameChange} type="text" value={name} />
         <button onClick={this.submit}>send</button>
-        {/*<CommunityList searchParams={{ city: 'san-francisco', state: 'california' }} /> */}
+        <CommunityList searchParams={{ city: 'san-francisco', state: 'california' }} />
       </div>
     );
   }
