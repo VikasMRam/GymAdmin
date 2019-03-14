@@ -17,7 +17,7 @@ describe('FormSection', () => {
   it('renders FormSection with buttons', () => {
     const buttonText = 'Submit';
     const handleSubmit = jest.fn();
-    const wrapper = wrap({ buttonText, onSubmit: handleSubmit });
+    const wrapper = wrap({ buttonText, handleSubmit });
     const form = wrapper.find('WrapperForm');
     form.simulate('submit');
     expect(handleSubmit).toHaveBeenCalled();
