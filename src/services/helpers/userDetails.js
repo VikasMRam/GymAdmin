@@ -8,6 +8,9 @@ export const getUserDetailsFromUAAndForm = ({ userDetails, formData }) => {
       medicaid_coverage: userDetails.medicaidCoverage,
       contact_by_text_msg: userDetails.contactByTextMsg,
       interest: userDetails.interest,
+      careType: userDetails.careType,
+      roomType: userDetails.roomType,
+      budget: userDetails.budget,
     };
   }
   let userDataFromForm = {};
@@ -34,6 +37,15 @@ export const getUserDetailsFromUAAndForm = ({ userDetails, formData }) => {
     } else {
       result.interest = [formData.interest];
     }
+  }
+  if (formData.careType) {
+    result.careType = formData.careType;
+  }
+  if (formData.roomType) {
+    result.roomType = formData.roomType;
+  }
+  if (formData.budget) {
+    result.budget = formData.budget;
   }
   return result;
 };
