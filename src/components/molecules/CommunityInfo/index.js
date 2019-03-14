@@ -6,7 +6,7 @@ import NumberFormat from 'react-number-format';
 import { size } from 'sly/components/themes';
 import { formatRating } from 'sly/services/helpers/rating';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { Block, Icon, ClampedText } from 'sly/components/atoms';
+import { Block, Icon, ClampedText, Span } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
 
 const Wrapper = styled.div`
@@ -74,7 +74,7 @@ export default class CommunityInfo extends Component {
   renderReviews = reviewsValue => (
     <RatingWrapper size="caption" palette={this.props.inverted ? 'white' : 'slate'}>
       <RatingValue>
-        {reviewsValue > 0 ? formatRating(reviewsValue) : 'Not Yet Rated'}
+        {reviewsValue > 0 ? formatRating(reviewsValue) : <Span size="tiny">Not Yet Rated</Span>}
       </RatingValue>
       {reviewsValue > 0 && <Rating value={reviewsValue} palette="warning" size="small" />}
     </RatingWrapper>
