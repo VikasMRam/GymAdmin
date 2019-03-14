@@ -102,8 +102,8 @@ export const Consumers = [
   },
   {
     imageUrl: 'images/how-it-works/screenshot.jpg',
-    heading: 'Get Support and Answers from our Seniorly Guides',
-    content: 'Nobody should have to go it alone, trying to navigate all of the choices and challenges.  Our Seniorly Guides are local experts who know all of the communities in your desired city, can personally take you on tours and serve as your advocate for all your unanswered questions.',
+    heading: 'Get Support and Answers from our Seniorly Partner Agents',
+    content: 'Nobody should have to go it alone, trying to navigate all of the choices and challenges.  Our Seniorly Partner Agents are local experts who know all of the communities in your desired city, can personally take you on tours and serve as your advocate for all your unanswered questions.',
   },
   {
     imageUrl: 'vectors/Payments.svg',
@@ -138,7 +138,7 @@ export const FAQ = [
     answer: `We respect your privacy. Therefore, we commit to only sharing your information with the communities you select.
       In addition, we assign a local referral agent to your account to ensure your needs are being met. To provide that valuable
       support for you, the agents have access to your information. Our agreements with agents prevent them from sharing that
-      without anyone else. Anyone in violation of this is removed from our system.`,
+      with anyone else. Anyone in violation of this is removed from our system.`,
   },
 ];
 
