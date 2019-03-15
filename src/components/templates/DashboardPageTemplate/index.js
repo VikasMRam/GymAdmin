@@ -4,16 +4,17 @@ import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
 import { FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH } from 'sly/constants/dashboardAppPaths';
+import { CUSTOMER_ROLE } from 'sly/constants/roles';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ModalContainer from 'sly/containers/ModalContainer';
 import DashboardMenu from 'sly/components/molecules/DashboardMenu';
 
 const menuItems = [
   {
-    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'base', href: FAMILY_DASHBOARD_FAVORITES_PATH,
+    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'base', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE,
   },
   {
-    label: 'Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH,
+    label: 'Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH, role: CUSTOMER_ROLE,
   },
 ];
 
@@ -67,9 +68,12 @@ const DashboardPage = styled.div`
 `;
 
 const DashboardPageTemplate = ({ children, activeMenuItem }) => {
-  const mi = menuItems.find(i => i.label === activeMenuItem);
-  if (mi) {
-    mi.active = true;
+  if (activeMenuItem) {
+    menuItems.forEach(i => i.active = false);
+    const mi = menuItems.find(i => i.label === activeMenuItem);
+    if (mi) {
+      mi.active = true;
+    }
   }
 
   return (
