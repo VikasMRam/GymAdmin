@@ -1,18 +1,19 @@
 import React from 'react';
-import { node } from 'prop-types';
+import { node, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
+import { FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH } from 'sly/constants/dashboardAppPaths';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ModalContainer from 'sly/containers/ModalContainer';
 import DashboardMenu from 'sly/components/molecules/DashboardMenu';
 
 const menuItems = [
   {
-    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'base', active: true,
+    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'base', href: FAMILY_DASHBOARD_FAVORITES_PATH,
   },
   {
-    label: 'Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler',
+    label: 'Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH,
   },
 ];
 
@@ -65,17 +66,25 @@ const DashboardPage = styled.div`
   }
 `;
 
-const DashboardPageTemplate = ({ children }) => (
-  <DashboardPage>
-    <Header><HeaderContainer /></Header>
-    <Column><DashboardMenu menuItems={menuItems} /></Column>
-    <Body>{children}</Body>
-    <ModalContainer />
-  </DashboardPage>
-);
+const DashboardPageTemplate = ({ children, activeMenuItem }) => {
+  const mi = menuItems.find(i => i.label === activeMenuItem);
+  if (mi) {
+    mi.active = true;
+  }
+
+  return (
+    <DashboardPage>
+      <Header><HeaderContainer /></Header>
+      <Column><DashboardMenu menuItems={menuItems} /></Column>
+      <Body>{children}</Body>
+      <ModalContainer />
+    </DashboardPage>
+  );
+};
 
 DashboardPageTemplate.propTypes = {
   children: node,
+  activeMenuItem: string,
 };
 
 export default DashboardPageTemplate;

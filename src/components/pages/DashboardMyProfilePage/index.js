@@ -11,7 +11,7 @@ const ProfileUserDetailsFormWrapper = styled.div`
 `;
 
 const DashboardMyProfilePage = () => (
-  <DashboardPageTemplate>
+  <DashboardPageTemplate activeMenuItem="Profile">
     <ProfileUserDetailsFormWrapper>
       <DashboardProfileUserDetailsFormContainer />
     </ProfileUserDetailsFormWrapper>

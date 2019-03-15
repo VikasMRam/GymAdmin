@@ -159,7 +159,7 @@ const DashboardFavoritesPage = ({
   }) : 'loading...';
 
   return (
-    <DashboardPageTemplate>
+    <DashboardPageTemplate activeMenuItem="Favorites">
       <FormSection heading="Favorites">
         {communityTiles.length > 0 &&
           <Masonry columnCounts={columnCounts}>

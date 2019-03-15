@@ -81,8 +81,8 @@ export default class DashboardFavoritesPageContainer extends Component {
       handleOnGallerySlideChange, handleOnLocationSearch, handleToggleHowSlyWorksVideoPlaying, handleUnfavouriteClick,
     } = this;
     const { status } = this.props;
-    let { userSaves } = this.props;
-    let { result: rawUserSaves } = status.userSaves;
+    let { userSaves = [] } = this.props;
+    let { result: rawUserSaves = [] } = status.userSaves;
     const { currentGalleryImage, howSlyWorksVideoPlaying } = this.state;
     // to prevent doing an api call after a user save is unsaved
     userSaves = userSaves.filter(us => us.status === USER_SAVE_INIT_STATUS);
