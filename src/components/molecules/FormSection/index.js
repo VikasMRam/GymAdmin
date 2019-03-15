@@ -30,18 +30,19 @@ const Body = styled.div`
 `;
 
 const FormSection = ({
-  heading, children, buttonText, handleSubmit, pristine, submitting,
+  heading, children, buttonText, error, handleSubmit, pristine, submitting, invalid,
 }) => (
   <WrapperForm onSubmit={handleSubmit}>
     <HeadingBlock size="subtitle" weight="medium">{heading}</HeadingBlock>
     <Hr />
     <Body hasBottom={buttonText}>
       {children}
+      {error && <Block palette="danger">{error}</Block>}
     </Body>
     {buttonText &&
       <Fragment>
         <Hr />
-        <BottomButton type="submit" kind="jumbo" disabled={pristine || submitting}>{buttonText}</BottomButton>
+        <BottomButton type="submit" kind="jumbo" disabled={invalid || pristine || submitting}>{buttonText}</BottomButton>
       </Fragment>
       }
   </WrapperForm>
@@ -54,6 +55,8 @@ FormSection.propTypes = {
   handleSubmit: func,
   pristine: bool,
   submitting: bool,
+  invalid: bool,
+  error: string,
 };
 
 export default FormSection;
