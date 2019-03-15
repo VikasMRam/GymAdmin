@@ -8,7 +8,7 @@ import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import shadow from 'sly/components/helpers/shadow';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
-import Masonry from 'sly/components/common/masonry';
+import Masonry from 'sly/components/common/Masonry';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import AddOrEditNoteForSavedCommunityContainer from 'sly/containers/AddOrEditNoteForSavedCommunityContainer';
 import { Heading, Paragraph, Hr } from 'sly/components/atoms';
