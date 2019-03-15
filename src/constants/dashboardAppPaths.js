@@ -1,0 +1,6 @@
+export const DASHBOARD_PATH = '/dashboard';
+
+const FAMILY_DASHBOARD_PATH = `${DASHBOARD_PATH}/family`;
+
+export const FAMILY_DASHBOARD_FAVORITES_PATH = `${FAMILY_DASHBOARD_PATH}/favorites`;
+export const FAMILY_DASHBOARD_PROFILE_PATH = `${FAMILY_DASHBOARD_PATH}/my-profile`;

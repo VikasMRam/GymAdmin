@@ -10,6 +10,7 @@ import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
 import DashboardTestPageContainer from 'sly/containers/DashboardTestPageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
+import { DASHBOARD_PATH, FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH } from 'sly/constants/dashboardAppPaths';
 import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
@@ -17,9 +18,6 @@ import DashboardFavoritesPageContainer from 'sly/containers/DashboardFavoritesPa
 import DashboardMyProfilePageContainer from 'sly/containers/DashboardMyProfilePageContainer';
 
 setGlobalStyles();
-
-const DASHBOARD_PATH = '/dashboard';
-const FAMILY_DASHBOARD_PATH = `${DASHBOARD_PATH}/family`;
 
 export default class App extends Component {
   static childContextTypes = {
@@ -33,12 +31,12 @@ export default class App extends Component {
       exact: true,
     },
     {
-      path: `${FAMILY_DASHBOARD_PATH}/favorites`,
+      path: FAMILY_DASHBOARD_FAVORITES_PATH,
       component: DashboardFavoritesPageContainer,
       exact: true,
     },
     {
-      path: `${FAMILY_DASHBOARD_PATH}/my-profile`,
+      path: FAMILY_DASHBOARD_PROFILE_PATH,
       component: DashboardMyProfilePageContainer,
       exact: true,
     },
