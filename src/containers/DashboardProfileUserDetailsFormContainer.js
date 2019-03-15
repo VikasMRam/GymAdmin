@@ -38,25 +38,28 @@ const convertUserToProfileFormValues = (user) => {
   const {
     name, email, phoneNumber, uuidAux,
   } = user;
-  const { uuidInfo } = uuidAux;
-  const {
-    housingInfo, residentInfo, financialInfo, locationInfo,
-  } = uuidInfo;
-  const { lookingFor, moveTimeline } = housingInfo;
-  const { fullName } = residentInfo;
-  const { maxMonthlyBudget } = financialInfo;
-  const { city, state } = locationInfo;
-  const searchingCity = `${city}, ${state}`;
-  return {
-    name,
-    email,
-    phoneNumber,
-    lookingFor,
-    residentName: fullName,
-    timeToMove: moveTimeline,
-    monthlyBudget: maxMonthlyBudget,
-    searchingCity,
-  };
+  if (uuidAux) {
+    const { uuidInfo } = uuidAux;
+    const {
+      housingInfo, residentInfo, financialInfo, locationInfo,
+    } = uuidInfo;
+    const { lookingFor, moveTimeline } = housingInfo;
+    const { fullName } = residentInfo;
+    const { maxMonthlyBudget } = financialInfo;
+    const { city, state } = locationInfo;
+    const searchingCity = `${city}, ${state}`;
+    return {
+      name,
+      email,
+      phoneNumber,
+      lookingFor,
+      residentName: fullName,
+      timeToMove: moveTimeline,
+      monthlyBudget: maxMonthlyBudget,
+      searchingCity,
+    };
+  }
+  return {};
 };
 
 
@@ -66,7 +69,7 @@ const convertUserToProfileFormValues = (user) => {
   uuidAux: getRelationship(state, props.status.user.result, 'uuidAux'),
 }))
 
-class CommunityAskQuestionFormContainer extends Component {
+class DashboardProfileUserDetailsFormContainer extends Component {
   handleSubmit = (values) => {
     const { status, uuidAux, api } = this.props;
     const { user } = status;
@@ -99,7 +102,7 @@ class CommunityAskQuestionFormContainer extends Component {
   }
 }
 
-CommunityAskQuestionFormContainer.propTypes = {
+DashboardProfileUserDetailsFormContainer.propTypes = {
   user: userPropType,
   status: shape({
     user: object,
@@ -108,4 +111,4 @@ CommunityAskQuestionFormContainer.propTypes = {
   api: object,
 };
 
-export default CommunityAskQuestionFormContainer;
+export default DashboardProfileUserDetailsFormContainer;
