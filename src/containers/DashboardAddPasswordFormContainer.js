@@ -5,7 +5,6 @@ import { object } from 'prop-types';
 import DashboardAddPasswordForm from 'sly/components/organisms/DashboardAddPasswordForm';
 import { createValidator, minLength, match } from 'sly/services/validation';
 import userPropType from 'sly/propTypes/user';
-import withApi from 'sly/services/newApi/withApi';
 import query from 'sly/services/newApi/query';
 
 const validate = createValidator({
@@ -18,9 +17,6 @@ const ReduxForm = reduxForm({
   destroyOnUnmount: false,
   validate,
 })(DashboardAddPasswordForm);
-
-
-@withApi()
 
 @query('user', 'getUser', getUser => getUser({ id: 'me' }))
 class DashboardAddPasswordFormContainer extends Component {
