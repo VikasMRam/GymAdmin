@@ -45,6 +45,7 @@ export default class DashboardTestPageContainer extends Component {
   render() {
     const { name } = this.state;
     const { user } = this.props;
+    if (!user) return null;
     return (
       <div>
         <h2>Example of post data</h2>

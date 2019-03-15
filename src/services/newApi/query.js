@@ -29,17 +29,14 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       };
     };
 
-    const logInfo = (msg, requestInfo) => {
-      const { normalized, result, ...rest } = requestInfo;
-      console.log(msg, rest);
-    };
-
+    @withApi()
     // FIXME: For now we have to continue using withDone (which uses componentWillUpdate)
     // we have to re-engineer this to be able to use react 17, or to start using hooks in
     // react 16.8 (methods renamed to UNSAFE_xxxx)
     @withDone
 
     @connect(mapStateToProps)
+
     class Wrapper extends React.Component {
       static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
 
@@ -53,16 +50,14 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
         const { requestInfo, done } = this.props;
         if (!requestInfo.isLoading && !requestInfo.hasStarted) {
           this.fetch();
-        } else if (isServer && !requestInfo.isLoading && requestInfo.hasStarted && requestInfo.result) {
-          // console.log('bails with result', requestInfo.result);
-          console.log('will call done on', apiCall);
+        } else if (isServer) {
           done();
         }
-        logInfo(apiCall, requestInfo);
       }
 
       componentWillReceiveProps(nextProps) {
-        if (!nextProps.requestInfo.isLoading && !nextProps.requestInfo.hasStarted) {
+        const { requestInfo } = nextProps;
+        if (!requestInfo.isLoading && !requestInfo.hasStarted) {
           this.fetch(nextProps);
         }
       }
@@ -70,18 +65,16 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       // this apiCall is done from the api provided by ApiProvider, so it's bound to dispatch
       fetch = (props = this.props) => {
         const { api, done } = props;
-        console.log('will fetch', apiCall);
-        return dispatcher(api[apiCall], props).then((data) => {
-          console.log('calling fetch done on', apiCall);
-          return done(data);
-        }, done);
+        return dispatcher(api[apiCall], props).then(done, done);
       };
 
       render() {
         const { requestInfo, status, ...props } = this.props;
         const { normalized, ...request } = requestInfo;
 
-        if (isServer && (!request.hasStarted || request.isLoading)) return null;
+        if (isServer && (!request.hasStarted || request.isLoading)) {
+          return null;
+        }
 
         const innerProps = {
           ...props,
@@ -101,6 +94,6 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
 
     hoistNonReactStatic(Wrapper, InnerComponent);
 
-    return withApi()(Wrapper);
+    return Wrapper;
   };
 }

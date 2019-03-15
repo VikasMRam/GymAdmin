@@ -302,22 +302,6 @@ app.use(async (req, res, next) => {
     }
   }
 
-  // try {
-  //   const routes = getAppRoutes(bundle);
-  //   const matchedRoutes = matchRoutes(routes, req.url);
-  //   const promises = matchedRoutes
-  //     .filter(({ route }) => typeof route.component.loadData === 'function')
-  //     .map(({ route, match }) => route.component.loadData(store, {
-  //       match,
-  //       location: createLocation(req.url),
-  //       api: beesApi,
-  //     }));
-  //   await Promise.all(promises);
-  // } catch (response) {
-  //   next(new ResponseError('Error trying to pre-fetch route data', response));
-  //   return;
-  // }
-
   req.clientConfig.store = store;
   req.clientConfig.api = beesApi;
 
