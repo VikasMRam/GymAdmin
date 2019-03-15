@@ -3,7 +3,7 @@ import { shape, arrayOf, string, func, number } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
-import RoleContainer from 'sly/containers/RoleContainer';
+import Role from 'sly/components/common/Role';
 import { Icon, Span, Link } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
@@ -72,12 +72,12 @@ const DashboardMenu = ({ menuItems, onMenuIconClick }) => {
   const menuItemComponents = menuItems.map((item) => {
     const ItemComponent = item.active ? ActiveMenuItem : NotActiveMenuItem;
     return (
-      <RoleContainer is={item.role} key={item.label}>
+      <Role className="role" is={item.role} key={item.label}>
         <ItemComponent onClick={item.onClick} to={item.href}>
           <MenuItemIcon icon={item.icon} size={item.iconSize} palette={item.palette} variation={item.variation} />
           <Span weight="medium" size="caption" palette={item.palette} variation={item.variation}>{item.label}</Span>
         </ItemComponent>
-      </RoleContainer>
+      </Role>
     );
   });
   return (

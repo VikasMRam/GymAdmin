@@ -8,7 +8,7 @@ const menuItems = [
     label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'base', active: true, role: 2,
   },
   {
-    label: 'Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', role: 2,
+    label: 'Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', role: 23,
   },
 ];
 
@@ -23,7 +23,16 @@ describe('DashboardMenu', () => {
   it('renders DashboardMenu', () => {
     const wrapper = wrap({ menuItems });
     const menuItemComponents = wrapper.find('MenuItem');
-    expect(menuItemComponents).toHaveLength(2);
+    expect(menuItemComponents).toHaveLength(menuItems.length);
+  });
+
+  it('correct roles are passed to menu items', () => {
+    const wrapper = wrap({ menuItems });
+    const roleComponents = wrapper.children().filter('.role');
+    expect(roleComponents).toHaveLength(menuItems.length);
+    roleComponents.forEach((c, i) => {
+      expect(c.prop('is')).toBe(menuItems[i].role);
+    });
   });
 
   it('handles MenuItem Click', () => {

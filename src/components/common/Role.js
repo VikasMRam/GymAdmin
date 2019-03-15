@@ -1,13 +1,14 @@
 import { Component } from 'react';
-import { number, object, node } from 'prop-types';
+import { number, node } from 'prop-types';
 
 import { query } from 'sly/services/newApi';
+import userPropType from 'sly/propTypes/user';
 
 @query('user', 'getUser', getUser => getUser({ id: 'me' }))
 
-class RoleContainer extends Component {
+class Role extends Component {
   static propTypes = {
-    user: object,
+    user: userPropType,
     children: node,
     is: number.isRequired,
   };
@@ -26,4 +27,4 @@ class RoleContainer extends Component {
   }
 }
 
-export default RoleContainer;
+export default Role;
