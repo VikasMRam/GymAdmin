@@ -209,6 +209,9 @@ export default class App extends Component {
           <Router>
             <Switch>
               <Route
+                path="/ping" render={() => (<h1> pong </h1> )}
+              />
+              <Route
                 path={`/:toc(${careTypes})/:state/:city/filters`}
                 render={({ match }) => (
                   <Redirect
