@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { Component, createRef } from 'react';
 import styled from 'styled-components';
 import { array, shape, number, arrayOf } from 'prop-types';

@@ -5,6 +5,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import Role from 'sly/components/common/Role';
 
+// TODO: fixme - support testing components that use @query decorator
 const wrap = (props = {}, children) => shallow(<Role {...props}>{children}</Role>);
 const mockStore = configureStore([thunkMiddleware]);
 const initStore = (props = {}, controllerProps = {}) => mockStore({
