@@ -87,6 +87,8 @@ const Html = ({
         {/* End Google Platform Library Code */}
 
         {/* eslint-enable */}
+
+        {helmet.script.toComponent()}
       </body>
     </html>
   );
