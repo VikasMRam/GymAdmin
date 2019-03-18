@@ -8,7 +8,7 @@ import smoothscroll from 'smoothscroll-polyfill';
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
-import DashboardTestPageContainer from 'sly/containers/DashboardTestPageContainer';
+import DashboardHomePageContainer from 'sly/containers/DashboardHomePageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import { DASHBOARD_PATH, FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH } from 'sly/constants/dashboardAppPaths';
 import Error from 'sly/components/pages/Error';
@@ -27,7 +27,7 @@ export default class App extends Component {
   static routes = [
     {
       path: DASHBOARD_PATH,
-      component: DashboardTestPageContainer,
+      component: DashboardHomePageContainer,
       exact: true,
     },
     {
