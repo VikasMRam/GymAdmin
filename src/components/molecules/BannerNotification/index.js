@@ -1,5 +1,5 @@
 import React from 'react';
-import { node } from 'prop-types';
+import { node, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
@@ -14,14 +14,15 @@ const Wrapper = styled(Block)`
   padding: ${size('spacing.large')};
 `;
 
-const BannerNotification = ({ children, palette }) => (
-  <Wrapper type={palette} palette="white">
+const BannerNotification = ({ children, palette, className }) => (
+  <Wrapper type={palette} palette="white" className={className}>
     {children}
   </Wrapper>
 );
 
 BannerNotification.propTypes = {
   children: node.isRequired,
+  className: string,
   palette: palettePropType.isRequired,
 };
 

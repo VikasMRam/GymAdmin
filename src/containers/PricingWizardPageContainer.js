@@ -24,8 +24,9 @@ const PricingWizardPageContainer = ({
   const { id, url } = community;
 
   const submitUserAction = (data) => {
+    // here remove only fields that will be populated by getUserDetailsFromUAAndForm
     const {
-      name, phone, medicaidCoverage, roomType, careType, contactByTextMsg, interest, ...restData
+      name, phone, medicaidCoverage, budget, roomType, careType, contactByTextMsg, interest, ...restData
     } = data;
     const { userDetails } = userAction;
     const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
@@ -48,10 +49,7 @@ const PricingWizardPageContainer = ({
   const handleComplete = (data, openConfirmationModal) => {
     history.push(url);
     openConfirmationModal();
-    // return submitUserAction(data)
-    //   .then(() => {
-    //
-    //   });
+    return submitUserAction(data);
   };
 
   const userDetails = userAction ? userAction.userDetails : null;

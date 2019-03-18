@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
+import produce from 'immer';
 
-import SlyEvent from 'sly/services/helpers/events';
 import { query } from 'sly/services/newApi';
+import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
+import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
+import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/helpers/search';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardFavoritesPage from 'sly/components/pages/DashboardFavoritesPage';
 
-@query('userSaves', 'getUserSaves', getUserSaves => getUserSaves())
+@query('userSaves', 'getUserSaves', getUserSaves => getUserSaves({
+  'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
+  'filter[status]': USER_SAVE_INIT_STATUS,
+}))
 
 export default class DashboardFavoritesPageContainer extends Component {
   static propTypes = {
     userSaves: arrayOf(object),
+    status: object,
     history: object,
+    api: object,
   };
 
   state = {
@@ -55,10 +63,30 @@ export default class DashboardFavoritesPageContainer extends Component {
     history.push(path);
   };
 
+  handleUnfavouriteClick = (id, notifyInfo) => {
+    const { api, status } = this.props;
+    const { result: rawUserSaves } = status.userSaves;
+    const rawUserSave = rawUserSaves.find(us => us.id === id);
+
+    return api.updateUserSave({ id }, {
+      data: produce(rawUserSave, (draft) => {
+        draft.attributes.status = USER_SAVE_DELETE_STATUS;
+      }),
+    })
+      .then(() => notifyInfo('Community has been removed from favorites'));
+  };
+
   render() {
-    const { handleOnGallerySlideChange, handleOnLocationSearch, handleToggleHowSlyWorksVideoPlaying } = this;
-    const { userSaves } = this.props;
+    const {
+      handleOnGallerySlideChange, handleOnLocationSearch, handleToggleHowSlyWorksVideoPlaying, handleUnfavouriteClick,
+    } = this;
+    const { status } = this.props;
+    let { userSaves = [] } = this.props;
+    let { result: rawUserSaves = [] } = status.userSaves;
     const { currentGalleryImage, howSlyWorksVideoPlaying } = this.state;
+    // to prevent doing an api call after a user save is unsaved
+    userSaves = userSaves.filter(us => us.status === USER_SAVE_INIT_STATUS);
+    rawUserSaves = rawUserSaves.filter(us => us.attributes.status === USER_SAVE_INIT_STATUS);
 
     return (
       <NotificationController>
@@ -70,11 +98,13 @@ export default class DashboardFavoritesPageContainer extends Component {
                 showModal={show}
                 hideModal={hide}
                 userSaves={userSaves}
+                rawUserSaves={rawUserSaves}
                 onGallerySlideChange={handleOnGallerySlideChange}
                 toggleHowSlyWorksVideoPlaying={handleToggleHowSlyWorksVideoPlaying}
                 currentGalleryImage={currentGalleryImage}
                 onLocationSearch={handleOnLocationSearch}
                 ishowSlyWorksVideoPlaying={howSlyWorksVideoPlaying}
+                onUnfavouriteClick={handleUnfavouriteClick}
               />
             )}
           </ModalController>

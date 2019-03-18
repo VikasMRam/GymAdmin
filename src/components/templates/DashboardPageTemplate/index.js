@@ -1,18 +1,20 @@
 import React from 'react';
-import { node } from 'prop-types';
+import { node, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
+import { FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH } from 'sly/constants/dashboardAppPaths';
+import { CUSTOMER_ROLE } from 'sly/constants/roles';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ModalContainer from 'sly/containers/ModalContainer';
 import DashboardMenu from 'sly/components/molecules/DashboardMenu';
 
 const menuItems = [
   {
-    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'base', active: true,
+    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'base', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE,
   },
   {
-    label: 'Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler',
+    label: 'Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH, role: CUSTOMER_ROLE,
   },
 ];
 
@@ -37,12 +39,8 @@ const Column = styled.aside`
 `;
 
 const Body = styled.main`
-  padding: ${size('spacing.xLarge')};
+  padding: ${size('spacing.large')} ${size('spacing.xLarge')};
   background-color: ${palette('grey.background')};
-
-  > * {
-    background-color: ${palette('white.base')};
-  }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     grid-column: 2 / 2;
@@ -65,17 +63,28 @@ const DashboardPage = styled.div`
   }
 `;
 
-const DashboardPageTemplate = ({ children }) => (
-  <DashboardPage>
-    <Header><HeaderContainer /></Header>
-    <Column><DashboardMenu menuItems={menuItems} /></Column>
-    <Body>{children}</Body>
-    <ModalContainer />
-  </DashboardPage>
-);
+const DashboardPageTemplate = ({ children, activeMenuItem }) => {
+  if (activeMenuItem) {
+    menuItems.forEach(i => i.active = false);
+    const mi = menuItems.find(i => i.label === activeMenuItem);
+    if (mi) {
+      mi.active = true;
+    }
+  }
+
+  return (
+    <DashboardPage>
+      <Header><HeaderContainer /></Header>
+      <Column><DashboardMenu menuItems={menuItems} /></Column>
+      <Body>{children}</Body>
+      <ModalContainer />
+    </DashboardPage>
+  );
+};
 
 DashboardPageTemplate.propTypes = {
   children: node,
+  activeMenuItem: string,
 };
 
 export default DashboardPageTemplate;

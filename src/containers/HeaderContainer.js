@@ -15,8 +15,6 @@ import AuthContainer from 'sly/containers/AuthContainer';
 import NotificationController from 'sly/controllers/NotificationController';
 import Notifications from 'sly/components/organisms/Notifications';
 import Header from 'sly/components/organisms/Header';
-import BannerNotification from 'sly/components/molecules/BannerNotification';
-import BannerNotificationController from 'sly/controllers/BannerNotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 
@@ -168,9 +166,6 @@ class HeaderContainer extends Component {
                   {user !== null && <SavedCommunitiesPopupController notifyInfo={notifyInfo} />}
                   <AuthContainer notifyInfo={notifyInfo} showModal={show} hideModal={hide} />
                   <Notifications messages={messages} dismiss={dismiss} />
-                  <BannerNotificationController>
-                    {({ messages }) => messages.map(message => <BannerNotification key={message.id}>{message.content}</BannerNotification>)}
-                  </BannerNotificationController>
                 </Fragment>
               );
             }}

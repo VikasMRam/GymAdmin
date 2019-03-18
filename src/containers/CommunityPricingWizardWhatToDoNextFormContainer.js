@@ -5,6 +5,5 @@ import CommunityPricingWizardWhatToDoNextForm
 
 export default reduxForm({
   form: 'PricingWizardWhatToDoNextForm',
-  destroyOnUnmount: false,
 })(CommunityPricingWizardWhatToDoNextForm);
 

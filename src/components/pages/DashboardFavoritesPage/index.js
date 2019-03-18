@@ -6,9 +6,11 @@ import SlyEvent from 'sly/services/helpers/events';
 import { size, assetPath } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
+import shadow from 'sly/components/helpers/shadow';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
-import Masonry from 'sly/components/common/masonry';
+import Masonry from 'sly/components/common/Masonry';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
+import AddOrEditNoteForSavedCommunityContainer from 'sly/containers/AddOrEditNoteForSavedCommunityContainer';
 import { Heading, Paragraph, Hr } from 'sly/components/atoms';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
@@ -45,9 +47,9 @@ const columnCounts = [
 ];
 
 // to prevent community tile's gallery causing overlap which prevents hover from working
-const StyledCommunityTile = styled(CommunityTile)`
+const StyledCommunityTile = shadow(styled(CommunityTile)`
   position: relative;
-`;
+`);
 
 const Wrapper = styled.div`
   max-width: ${size('layout.col8')};
@@ -79,9 +81,10 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
 
 const DashboardFavoritesPage = ({
   userSaves, onGallerySlideChange, currentGalleryImage, notifyInfo, showModal, hideModal,
-  onLocationSearch, ishowSlyWorksVideoPlaying, toggleHowSlyWorksVideoPlaying,
+  onLocationSearch, ishowSlyWorksVideoPlaying, toggleHowSlyWorksVideoPlaying, rawUserSaves,
+  onUnfavouriteClick,
 }) => {
-  const communityTiles = userSaves ? userSaves.map((userSave) => {
+  const communityTiles = userSaves ? userSaves.map((userSave, i) => {
     const { community, id } = userSave;
     const onSlideChange = i => onGallerySlideChange(id, i);
     const currentSlide = currentGalleryImage[id];
@@ -107,12 +110,36 @@ const DashboardFavoritesPage = ({
 
       showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />);
     };
+    const openNoteModification = () => {
+      const rawUserSave = rawUserSaves[i];
+      const onComplete = () => {
+        hideModal();
+        notifyInfo(`Note ${userSave.info.note ? 'Edited' : 'Added'}`);
+      };
+      const initialValues = {
+        note: userSave.info.note,
+      };
+      const modalComponentProps = {
+        hideModal,
+        userSave,
+        rawUserSave,
+        community,
+        onComplete,
+        isEditMode: !!userSave.info.note,
+        initialValues,
+      };
+
+      showModal(<AddOrEditNoteForSavedCommunityContainer {...modalComponentProps} />);
+    };
     const actionButtons = [
       {
         text: 'Ask Question',
         onClick: openAskAgentQuestionModal,
       },
     ];
+    const handleUnfavouriteClick = () => {
+      onUnfavouriteClick(userSave.id, notifyInfo);
+    };
 
     return (
       <StyledCommunityTile
@@ -124,14 +151,17 @@ const DashboardFavoritesPage = ({
         community={userSave.community}
         actionButtons={actionButtons}
         note={userSave.info.note}
+        onAddNoteClick={openNoteModification}
+        onEditNoteClick={openNoteModification}
+        onUnfavouriteClick={handleUnfavouriteClick}
       />
     );
   }) : 'loading...';
 
   return (
-    <DashboardPageTemplate>
+    <DashboardPageTemplate activeMenuItem="Favorites">
       <FormSection heading="Favorites">
-        {communityTiles.length &&
+        {communityTiles.length > 0 &&
           <Masonry columnCounts={columnCounts}>
             {communityTiles}
           </Masonry>
@@ -164,6 +194,7 @@ const DashboardFavoritesPage = ({
 
 DashboardFavoritesPage.propTypes = {
   userSaves: arrayOf(object),
+  rawUserSaves: arrayOf(object),
   onGallerySlideChange: func,
   currentGalleryImage: object,
   notifyInfo: func,
@@ -172,6 +203,7 @@ DashboardFavoritesPage.propTypes = {
   onLocationSearch: func,
   ishowSlyWorksVideoPlaying: bool,
   toggleHowSlyWorksVideoPlaying: func,
+  onUnfavouriteClick: func,
 };
 
 export default DashboardFavoritesPage;
