@@ -11,6 +11,7 @@ const WrapperForm = styled.form`
   flex-direction: column;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('border.xLarge')};
+  background-color: ${palette('white.base')};
 `;
 
 const HeadingBlock = styled(Block)`

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm, SubmissionError } from 'redux-form';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 
 import DashboardAddPasswordForm from 'sly/components/organisms/DashboardAddPasswordForm';
 import { createValidator, minLength, match } from 'sly/services/validation';
@@ -23,9 +23,10 @@ class DashboardAddPasswordFormContainer extends Component {
   static propTypes = {
     api: object,
     user: userPropType,
+    notifySuccess: func,
   }
   handleSubmit = (values) => {
-    const { api, user } = this.props;
+    const { api, user, notifySuccess } = this.props;
     const { email } = user;
     const { newPassword, confirmPassword } = values;
     if (newPassword && confirmPassword) {
@@ -40,7 +41,7 @@ class DashboardAddPasswordFormContainer extends Component {
           }
         })
         .then(() => {
-          console.log('success');
+          notifySuccess('Password Set Successfully');
         });
     }
     const errorMessage = 'Password fields cannot be blank';

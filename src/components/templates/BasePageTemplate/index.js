@@ -29,5 +29,5 @@ TemplateContent.propTypes = {
 };
 
 export const TemplateHeader = styled.header`
-  margin-bottom: ${size('spacing.large')};
+  margin-bottom: ${p => p.noBottomMargin ? 0 : size('spacing.large')};
 `;

@@ -38,12 +38,8 @@ const Column = styled.aside`
 `;
 
 const Body = styled.main`
-  padding: ${size('spacing.xLarge')};
+  padding: ${size('spacing.large')} ${size('spacing.xLarge')};
   background-color: ${palette('grey.background')};
-
-  > * {
-    background-color: ${palette('white.base')};
-  }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     grid-column: 2 / 2;

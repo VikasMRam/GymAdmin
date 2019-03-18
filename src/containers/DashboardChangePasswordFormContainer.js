@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm, SubmissionError } from 'redux-form';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 
 import DashboardChangePasswordForm from 'sly/components/organisms/DashboardChangePasswordForm';
 import { createValidator, required, minLength, match } from 'sly/services/validation';
@@ -22,11 +22,12 @@ const ReduxForm = reduxForm({
 class DashboardChangePasswordFormContainer extends Component {
   static propTypes = {
     api: object,
+    notifySuccess: func,
   }
   handleSubmit = (values) => {
     const { oldPassword, newPassword } = values;
     const payload = { oldPassword, newPassword };
-    const { api } = this.props;
+    const { api, notifySuccess } = this.props;
     return api.updatePassword(payload)
       .catch((error) => {
         const { status, body } = error;
@@ -37,7 +38,7 @@ class DashboardChangePasswordFormContainer extends Component {
         }
       })
       .then(() => {
-        console.log('success');
+        notifySuccess('Password Successfully Updated');
       });
   }
   render() {

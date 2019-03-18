@@ -57,6 +57,8 @@ import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabili
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
+import BannerNotification from 'sly/components/molecules/BannerNotification';
+import pad from 'sly/components/helpers/pad';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -100,6 +102,8 @@ const StyledSection = styled(Section)`
 const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
+
+const StyledBannerNotification = pad(BannerNotification, 'large');
 
 const Header = makeHeader();
 const TwoColumn = makeTwoColumn('div');
@@ -442,7 +446,8 @@ export default class CommunityDetailPage extends Component {
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         {getHelmetForCommunityPage(community, location)}
-        <Header bannerNotification={bannerNotification} />
+        <Header />
+        {bannerNotification && <StyledBannerNotification>{bannerNotification}</StyledBannerNotification>}
         <CommunityDetailPageTemplate>
           <Wrapper>
             <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} />
