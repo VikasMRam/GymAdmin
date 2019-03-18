@@ -7,7 +7,7 @@ import { Lazy } from 'react-lazy';
 import { size, palette, assetPath } from 'sly/components/themes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
-import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
+import { getHelmetForCommunityPage, getCriticReviewsHelmet } from 'sly/services/helpers/html_headers';
 import SlyEvent from 'sly/services/helpers/events';
 import { calculatePricing } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
@@ -446,6 +446,7 @@ export default class CommunityDetailPage extends Component {
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         {getHelmetForCommunityPage(community, location)}
+        {getCriticReviewsHelmet(reviews)}
         <Header />
         {bannerNotification && <StyledBannerNotification>{bannerNotification}</StyledBannerNotification>}
         <CommunityDetailPageTemplate>

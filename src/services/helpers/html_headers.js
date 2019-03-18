@@ -288,3 +288,65 @@ export const getHelmetForAgentsRegionPage = ({locationName}) => {
     </Helmet>
   );
 };
+
+export const getCriticReviewsHelmet = (reviews) => {
+  console.log(reviews);
+  const obj = {
+    '@context': 'https://schema.org',
+    '@type': 'Review',
+    author: {
+      '@type': 'Person',
+      name: 'Lisa Kennedy',
+      sameAs: 'https://plus.google.com/114108465800532712602',
+    },
+    url: 'http://www.localreviews.com/restaurants/1/2/3/daves-steak-house.html',
+    datePublished: '2014-03-13T20:00',
+    publisher: {
+      '@type': 'Organization',
+      name: 'Denver Post',
+      sameAs: 'http://www.denverpost.com',
+    },
+    description: 'Great old fashioned steaks but the salads are sub par.',
+    inLanguage: 'en',
+    itemReviewed: {
+      '@type': 'Restaurant',
+      name: "Dave's Steak House",
+      sameAs: 'http://davessteakhouse.example.com',
+      image: 'http://davessteakhouse.example.com/logo.jpg',
+      servesCuisine: 'Steak House',
+      priceRange: '$$$',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '148 W 51st St',
+        addressLocality: 'New York',
+        addressRegion: 'NY',
+        postalCode: '10019',
+        addressCountry: 'US',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: 40.761293,
+        longitude: -73.982294,
+      },
+      telephone: '+12122459600',
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '88',
+        bestRating: '100',
+        ratingCount: '20',
+      },
+    },
+    reviewRating: {
+      '@type': 'Rating',
+      worstRating: 1,
+      bestRating: 4,
+      ratingValue: 3.5,
+    },
+  };
+  return (
+    <Helmet>
+       {/* <script type="application/ld+json">{`${JSON.stringify(obj, stringifyReplacer)}`}</script> */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `${JSON.stringify(obj, stringifyReplacer)}`}} />
+    </Helmet>
+  );
+};
