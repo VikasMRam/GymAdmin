@@ -7,11 +7,9 @@ import FormSection from 'sly/components/molecules/FormSection';
 
 const noPasswordWarning = 'Create a password so you can discover and keep track of your favorite communities.';
 
-const DashboardAddPasswordForm = ({
-  handleSubmit, pristine, ...props
-}) => {
+const DashboardAddPasswordForm = ({ pristine, ...props }) => {
   return (
-    <FormSection heading="Add Your Password" buttonText="Create Password" onSubmit={handleSubmit} pristine={pristine} {...props}>
+    <FormSection heading="Add Your Password" buttonText="Create Password" {...props}>
       <Field
         name="newPassword"
         label="New Password"

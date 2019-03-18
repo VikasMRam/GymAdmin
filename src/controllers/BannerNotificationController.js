@@ -10,7 +10,7 @@ class BannerNotificationController extends Component {
   static propTypes = {
     messages: arrayOf(shape({
       content: string,
-      type: oneOf(['default', 'error']),
+      type: oneOf(['default', 'error', 'green', 'warning']),
     })),
     set: func,
     get: func,
@@ -35,6 +35,14 @@ class BannerNotificationController extends Component {
 
   notifyInfo = (message) => {
     this.addNotification(message);
+  };
+
+  notifySuccess = (message) => {
+    this.addNotification(message, 'green');
+  };
+
+  notifyWarning = (message) => {
+    this.addNotification(message, 'warning');
   };
 
   notifyError = (message) => {

@@ -9,4 +9,6 @@ export default {
   getSearchResources: { method: get, path: '/platform/search-resources' },
   getUserSaves: { method: get, path: '/marketplace/user-saves' },
   getUserSave: { method: get, path: '/marketplace/user-saves/:id' },
+  setPassword: { method: post, path: '/platform/auth/password' },
+  updatePassword: { method: post, path: '/platform/auth/password/update' },
 };

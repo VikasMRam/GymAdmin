@@ -35,34 +35,31 @@ const ReduxForm = reduxForm({
 })(DashboardProfileUserDetailsForm);
 
 const convertUserToProfileFormValues = (user) => {
+  const result = {};
   const {
     name, email, phoneNumber, uuidAux,
   } = user;
+  result.name = name;
+  result.email = email;
+  result.phoneNumber = phoneNumber;
   if (uuidAux) {
     const { uuidInfo } = uuidAux;
-    if (uuidInfo) {
-      const {
-        housingInfo, residentInfo, financialInfo, locationInfo,
-      } = uuidInfo;
-      const { lookingFor, moveTimeline } = housingInfo;
-      const { fullName } = residentInfo;
-      const { maxMonthlyBudget } = financialInfo;
-      const { city, state } = locationInfo;
-      const searchingCity = `${city}, ${state}`;
-      return {
-        name,
-        email,
-        phoneNumber,
-        lookingFor,
-        residentName: fullName,
-        timeToMove: moveTimeline,
-        monthlyBudget: maxMonthlyBudget,
-        searchingCity,
-      };
-    }
-    return {};
+    const {
+      housingInfo, residentInfo, financialInfo, locationInfo,
+    } = uuidInfo;
+    const { lookingFor, moveTimeline } = housingInfo;
+    const { fullName } = residentInfo;
+    const { maxMonthlyBudget } = financialInfo;
+    const { city, state } = locationInfo;
+    const searchingCity = `${city}, ${state}`;
+    result.lookingFor = lookingFor;
+    result.residentName = fullName;
+    result.timeToMove = moveTimeline;
+    result.monthlyBudget = maxMonthlyBudget;
+    result.searchingCity = searchingCity;
+    return result;
   }
-  return {};
+  return result;
 };
 
 
