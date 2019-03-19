@@ -20,6 +20,12 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
     const mapStateToProps = (state, props) => {
       const argumentsAbsorber = (...args) => args;
 
+      if (props[`${propName}RequestInfo`]) {
+        return {
+          request: props[`${propName}RequestInfo`],
+        };
+      }
+
       return {
         requestInfo: getRequestInfo(
           state,
