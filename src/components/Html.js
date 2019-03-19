@@ -25,6 +25,7 @@ const Html = ({
         <meta name="google-signin-client_id" content={googleAppId} />
 
         {helmet.link.toComponent()}
+        {helmet.script.toComponent()}
         {assets.css.map(path => (
           <link rel="stylesheet" type="text/css" key={path} href={path} />
         ))}
@@ -87,6 +88,7 @@ const Html = ({
         {/* End Google Platform Library Code */}
 
         {/* eslint-enable */}
+
       </body>
     </html>
   );
