@@ -22,7 +22,7 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
 
       if (props[`${propName}RequestInfo`]) {
         return {
-          request: props[`${propName}RequestInfo`],
+          requestInfo: props[`${propName}RequestInfo`],
         };
       }
 
