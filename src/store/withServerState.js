@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { func, bool, string, shape, object } from 'prop-types';
 import { isEqual, omit } from 'lodash';
 import { parse as parseSearch } from 'query-string';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { isBrowser, isServer } from 'sly/config';
 import { isFSA, isResourceReadRequest } from 'sly/store/actions';
@@ -72,75 +73,83 @@ export default function withServerState(
     fetchData: (context, nextProps = props) => dispatchActions(dispatch, getResponseHandler(context, nextProps), mapPropsToActions(nextProps)),
   });
 
-  return ChildComponent => serverStateDecorator(connect(
-    null,
-    mapDispatchToProps,
-  )(class ServerStateComponent extends Component {
-    static contextTypes = {
-      router: shape({
-        history: object.isRequired,
-        route: object.isRequired,
-        staticContext: object,
-      }),
-    };
+  return (ChildComponent) => {
+    class Wrapper extends Component {
+      static contextTypes = {
+        router: shape({
+          history: object.isRequired,
+          route: object.isRequired,
+          staticContext: object,
+        }),
+      };
 
-    static propTypes = {
-      match: shape({
-        url: string.isRequired,
-      }),
-      location: shape({
-        search: string.isRequired,
-      }),
-      fetchData: func.isRequired,
-      setServerState: func.isRequired,
-      hasServerState: bool.isRequired,
-      cleanServerState: func.isRequired,
-    };
+      static propTypes = {
+        match: shape({
+          url: string.isRequired,
+        }),
+        location: shape({
+          search: string.isRequired,
+        }),
+        fetchData: func.isRequired,
+        setServerState: func.isRequired,
+        hasServerState: bool.isRequired,
+        cleanServerState: func.isRequired,
+      };
 
-    componentWillMount() {
-      const {
-        fetchData,
-        setServerState,
-        hasServerState,
-        cleanServerState,
-      } = this.props;
+      componentWillMount() {
+        const {
+          fetchData,
+          setServerState,
+          hasServerState,
+          cleanServerState,
+        } = this.props;
 
-      if (!hasServerState) {
-        if (isServer) {
-          fetchData(this.context)
-            .then(setServerState)
-            .catch(setServerState);
-        } else {
-          fetchData(this.context).catch(logError);
+        if (!hasServerState) {
+          if (isServer) {
+            fetchData(this.context)
+              .then(setServerState)
+              .catch(setServerState);
+          } else {
+            fetchData(this.context).catch(logError);
+          }
+        } else if (isBrowser) {
+          cleanServerState();
         }
-      } else if (isBrowser) {
-        cleanServerState();
       }
-    }
 
-    componentWillUpdate(nextProps) {
-      const { match, location, fetchData } = this.props;
-      if (match.url !== nextProps.match.url) {
-        fetchData(this.context, nextProps).catch(logError);
-      } else {
-        const prev = omit(parseSearch(location.search), ignoreSearch);
-        const next = omit(parseSearch(nextProps.location.search), ignoreSearch);
-        if (!isEqual(prev, next)) {
+      componentWillUpdate(nextProps) {
+        const { match, location, fetchData } = this.props;
+        if (match.url !== nextProps.match.url) {
           fetchData(this.context, nextProps).catch(logError);
+        } else {
+          const prev = omit(parseSearch(location.search), ignoreSearch);
+          const next = omit(parseSearch(nextProps.location.search), ignoreSearch);
+          if (!isEqual(prev, next)) {
+            fetchData(this.context, nextProps).catch(logError);
+          }
         }
+      }
+
+      render() {
+        const {
+          fetchData,
+          setServerState,
+          hasServerState,
+          cleanServerState,
+          ...rest
+        } = this.props;
+
+        return <ChildComponent {...rest} />;
       }
     }
 
-    render() {
-      const {
-        fetchData,
-        setServerState,
-        hasServerState,
-        cleanServerState,
-        ...rest
-      } = this.props;
+    const ServerStateComponent = serverStateDecorator(connect(
+      null,
+      mapDispatchToProps,
+    )(Wrapper));
 
-      return <ChildComponent {...rest} />;
-    }
-  }));
+    hoistNonReactStatic(ServerStateComponent, ChildComponent);
+
+    return ServerStateComponent;
+  };
 }

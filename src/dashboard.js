@@ -9,7 +9,6 @@ import Modal from 'react-modal';
 
 import { createApi, ApiProvider } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';
-import { basename } from 'sly/config';
 import api from 'sly/services/api';
 import DashboardApp from 'sly/components/DashboardApp';
 
@@ -22,7 +21,7 @@ const store = configureStore(initialState, { api: api.create() });
 const renderApp = () => (
   <Provider store={store}>
     <ApiProvider api={newApi}>
-      <BrowserRouter basename={basename}>
+      <BrowserRouter>
         <DashboardApp />
       </BrowserRouter>
     </ApiProvider>

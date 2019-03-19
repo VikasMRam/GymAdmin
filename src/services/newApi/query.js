@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { object } from 'prop-types';
-import omit from 'object.omit';
+import { withDone } from 'react-router-server';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 
+import { isServer } from 'sly/config';
 import { withApi, getRequestInfo } from 'sly/services/newApi';
 
 const defaultDispatcher = call => call();
@@ -20,12 +22,12 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
 
       if (props[`${propName}RequestInfo`]) {
         return {
-          request: props[`${propName}RequestInfo`],
+          requestInfo: props[`${propName}RequestInfo`],
         };
       }
 
       return {
-        request: getRequestInfo(
+        requestInfo: getRequestInfo(
           state,
           props.api[apiCall],
           dispatcher(argumentsAbsorber, props),
@@ -33,74 +35,75 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       };
     };
 
-    @connect(mapStateToProps)
+    const mapDispatchToActions = (dispatch, { api }) => ({
+      fetch: props => dispatch(dispatcher(api[apiCall], props)),
+    });
+
+    @withApi()
+    // FIXME: For now we have to continue using withDone (which uses componentWillUpdate)
+    // we have to re-engineer this to be able to use react 17, or to start using hooks in
+    // react 16.8 (methods renamed to UNSAFE_xxxx)
+    @withDone
+
+    @connect(mapStateToProps, mapDispatchToActions)
 
     class Wrapper extends React.Component {
       static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
 
       static propTypes = {
         api: object,
-        request: object,
+        requestInfo: object,
         status: object,
       };
 
-      // this method called statically from server uses the api from outside the provider,
-      // so it's not bound to dispatch
-      static loadData = (store, props) => {
-        const promises = [];
-
-        if (typeof InnerComponent.loadData === 'function') {
-          promises.push(InnerComponent.loadData(store, props));
-        }
-
-        const { dispatch, getState } = store;
-        const { request } = mapStateToProps(getState(), props);
-        if (!request.isLoading && !request.hasStarted) {
-          promises.push(dispatch(dispatcher(props.api[apiCall], {
-            request,
-            ...props,
-          })));
-        }
-
-        return Promise.all(promises);
-      };
-
-      componentDidMount() {
-        const { request } = this.props;
-        if (!request.isLoading && !request.hasStarted) {
+      componentWillMount() {
+        const { requestInfo, done } = this.props;
+        if (!requestInfo.isLoading && !requestInfo.hasStarted) {
           this.fetch();
+        } else if (isServer) {
+          done();
         }
       }
 
       componentWillReceiveProps(nextProps) {
-        if (!nextProps.request.isLoading && !nextProps.request.hasStarted) {
+        const { requestInfo } = nextProps;
+        if (!requestInfo.isLoading && !requestInfo.hasStarted) {
           this.fetch(nextProps);
         }
       }
 
       // this apiCall is done from the api provided by ApiProvider, so it's bound to dispatch
       fetch = (props = this.props) => {
-        const { api } = props;
-        return dispatcher(api[apiCall], props);
+        const { fetch, done } = props;
+        return fetch(props).then(done, done);
       };
 
       render() {
-        const props = {
-          ...omit(this.props, ['request']),
-          [propName]: this.props.request.normalized,
+        const { requestInfo, status, ...props } = this.props;
+        const { normalized, ...request } = requestInfo;
+
+        if (isServer && (!request.hasStarted || request.isLoading)) {
+          return null;
+        }
+
+        const innerProps = {
+          ...props,
+          [propName]: normalized,
           status: {
-            ...this.props.status,
+            ...status,
             [propName]: {
-              ...omit(this.props.request, ['normalized']),
+              ...request,
               refetch: this.fetch,
             },
           },
         };
 
-        return <InnerComponent {...props} />;
+        return <InnerComponent {...innerProps} />;
       }
     }
 
-    return withApi()(Wrapper);
+    hoistNonReactStatic(Wrapper, InnerComponent);
+
+    return Wrapper;
   };
 }

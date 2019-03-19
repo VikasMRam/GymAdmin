@@ -37,7 +37,6 @@ const PUBLIC_PATH = process.env.PUBLIC_PATH || '/react-assets';
 const HOST = process.env.HOST || 'http://www.lvh.me';
 const PORT = process.env.PORT || 8000;
 const DEV_PORT = process.env.DEV_PORT || (+PORT + 1) || 8001;
-const BASENAME = process.env.BASENAME || '';
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
 const DOMAIN = process.env.DOMAIN || 'lvh.me';
@@ -64,7 +63,6 @@ console.info('Using config', JSON.stringify({
   HOST,
   PORT,
   DEV_PORT,
-  BASENAME,
   API_URL,
   AUTH_URL,
   DOMAIN,
@@ -140,7 +138,6 @@ const base = () =>
       'process.env.PUBLIC_PATH': PUBLIC_PATH,
       'process.env.HOST': HOST,
       'process.env.PORT': PORT,
-      'process.env.BASENAME': BASENAME,
       'process.env.API_URL': API_URL,
       'process.env.AUTH_URL': AUTH_URL,
       'process.env.DOMAIN': DOMAIN,
@@ -239,7 +236,7 @@ const server = createConfig([
 ]);
 
 if (isDev || isStaging) {
-  console.log('Will do sourcemaps');
+  console.info('Will do sourcemaps');
 }
 
 const replaceExternalConstants = (text) => {
