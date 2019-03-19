@@ -35,13 +35,17 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       };
     };
 
+    const mapDispatchToActions = (dispatch, { api }) => ({
+      fetch: props => dispatch(dispatcher(api[apiCall], props)),
+    });
+
     @withApi()
     // FIXME: For now we have to continue using withDone (which uses componentWillUpdate)
     // we have to re-engineer this to be able to use react 17, or to start using hooks in
     // react 16.8 (methods renamed to UNSAFE_xxxx)
     @withDone
 
-    @connect(mapStateToProps)
+    @connect(mapStateToProps, mapDispatchToActions)
 
     class Wrapper extends React.Component {
       static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
@@ -70,8 +74,8 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
 
       // this apiCall is done from the api provided by ApiProvider, so it's bound to dispatch
       fetch = (props = this.props) => {
-        const { api, done } = props;
-        return dispatcher(api[apiCall], props).then(done, done);
+        const { fetch, done } = props;
+        return fetch(props).then(done, done);
       };
 
       render() {

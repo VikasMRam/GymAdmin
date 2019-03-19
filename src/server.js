@@ -13,12 +13,10 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { renderToString } from 'react-router-server';
-import { matchRoutes } from 'react-router-config';
 import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
 import cloneDeep from 'lodash/cloneDeep';
-import { createLocation } from 'history';
 
 
 import { cleanError, logWarn } from 'sly/services/helpers/logging';
@@ -32,25 +30,6 @@ import ClientApp from 'sly/components/App';
 import DashboardApp from 'sly/components/DashboardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
-import ApiProvider from 'sly/services/newApi/ApiProvider';
-
-class ResponseError extends Error {
-  constructor(message, response) {
-    let newMessage = message;
-
-    if (response.status) {
-      newMessage = `${newMessage}: ${response.status}`;
-    }
-
-    if (response.body && Array.isArray(response.body.errors)) {
-      response.body.errors.forEach((error) => {
-        newMessage = `${newMessage} - ${error.title}`;
-      });
-    }
-
-    super(newMessage);
-  }
-}
 
 const makeAppRenderer = renderedApp => ({
   store, context, location, sheet,
@@ -69,25 +48,14 @@ const renderEmptyApp = () => {
   return { html: '', state: {} };
 };
 
-const getAppRoutes = (bundle) => {
-  switch (bundle) {
-    case 'dashboard': return DashboardApp.routes;
-    default: return ClientApp.routes;
-  }
-};
-
 // requires compatible configuration
-const getAppRenderer = ({ bundle, api }) => {
+const getAppRenderer = ({ bundle }) => {
   switch (bundle) {
     case 'dashboard': return makeAppRenderer((
-      <ApiProvider api={api}>
-        <DashboardApp />
-      </ApiProvider>
+      <DashboardApp />
     ));
     case 'client': return makeAppRenderer((
-      <ApiProvider api={api}>
-        <ClientApp />
-      </ApiProvider>
+      <ClientApp />
     ));
     default: return renderEmptyApp;
   }
@@ -303,7 +271,6 @@ app.use(async (req, res, next) => {
   }
 
   req.clientConfig.store = store;
-  req.clientConfig.api = beesApi;
 
   next();
 });
