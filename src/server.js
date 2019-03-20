@@ -24,12 +24,12 @@ import { removeQueryParamFromURL } from 'sly/services/helpers/url';
 import { port, host, publicPath, isDev, cookieDomain } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import createBeesApi from 'sly/services/newApi/createApi';
 import apiService from 'sly/services/api';
 import ClientApp from 'sly/components/App';
 import DashboardApp from 'sly/components/DashboardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
+import { ApiProvider, createApi as createBeesApi } from 'sly/services/newApi';
 
 const makeAppRenderer = renderedApp => ({
   store, context, location, sheet,
