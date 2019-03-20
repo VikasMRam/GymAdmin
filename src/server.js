@@ -49,13 +49,17 @@ const renderEmptyApp = () => {
 };
 
 // requires compatible configuration
-const getAppRenderer = ({ bundle }) => {
+const getAppRenderer = ({ bundle, api }) => {
   switch (bundle) {
     case 'dashboard': return makeAppRenderer((
-      <DashboardApp />
+      <ApiProvider api={api}>
+        <DashboardApp />
+      </ApiProvider>
     ));
     case 'client': return makeAppRenderer((
-      <ClientApp />
+      <ApiProvider api={api}>
+        <ClientApp />
+      </ApiProvider>
     ));
     default: return renderEmptyApp;
   }
@@ -271,6 +275,7 @@ app.use(async (req, res, next) => {
   }
 
   req.clientConfig.store = store;
+  req.clientConfig.api = beesApi;
 
   next();
 });
