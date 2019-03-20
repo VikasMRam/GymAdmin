@@ -9,7 +9,7 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import SaveCommunityFormContainer from 'sly/containers/SaveCommunityFormContainer';
 import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
 
-@withApi()
+@withApi
 
 class AddOrEditNoteForSavedCommunityContainer extends Component {
   static propTypes = {

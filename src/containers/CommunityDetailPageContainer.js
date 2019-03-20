@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { func, object, bool, number } from 'prop-types';
+import { func, object, bool, number, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
+import { isEqual, omit } from 'lodash';
+import { parse as parseSearch } from 'query-string';
 
 import { withServerState } from 'sly/store';
 import SlyEvent from 'sly/services/helpers/events';
@@ -25,6 +27,18 @@ import {
 } from 'sly/constants/notifications';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
+import withApi from 'sly/services/newApi/withApi';
+
+const ignoreSearchParams = [
+  'modal',
+  'action',
+  'entityId',
+  'currentStep',
+  'token',
+  'modal',
+];
+
+@withApi
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
@@ -41,6 +55,9 @@ class CommunityDetailPageContainer extends Component {
     isLoadingUserSaves: bool,
     setQueryParams: func,
     updateUserSave: func,
+    match: shape({
+      url: string.isRequired,
+    }),
   };
 
   state = {
@@ -48,6 +65,43 @@ class CommunityDetailPageContainer extends Component {
     isMediaGalleryFullscreenActive: false,
     isHowSlyWorksVideoPlaying: false,
   };
+
+  // FIXME: this goes out with the new query
+  componentDidMount() {
+    this.uuidActionPageView();
+  }
+
+  // FIXME: this goes out with the new query
+  componentWillUpdate(nextProps) {
+    const { match, location } = this.props;
+    if (match.url !== nextProps.match.url) {
+      this.uuidActionPageView(nextProps);
+    } else {
+      const prev = omit(parseSearch(location.search), ignoreSearchParams);
+      const next = omit(parseSearch(nextProps.location.search), ignoreSearchParams);
+      if (!isEqual(prev, next)) {
+        this.uuidActionPageView(nextProps);
+      }
+    }
+  }
+
+  uuidActionPageView(props = this.props) {
+    const { api, community } = props;
+
+    console.log('will post', community.name);
+    // api.postUuidAction({
+    //  data: {
+    //    type: 'UUIDAction',
+    //    attributes: {
+    //      actionInfo: {
+    //        slug: 'test-slug',
+    //      },
+    //      actionPage: 'test-page',
+    //      actionType: 'profileView',
+    //    },
+    //  },
+    // });
+  }
 
   handleBackToSearchClick = () => {
     const { community } = this.props;
@@ -443,15 +497,6 @@ const handleResponses = (responses, { location }, redirect) => {
     return Promise.reject(error);
   });
 };
-
-const ignoreSearchParams = [
-  'modal',
-  'action',
-  'entityId',
-  'currentStep',
-  'token',
-  'modal',
-];
 
 const mapStateToProps = (state, {
   match, location, history,
