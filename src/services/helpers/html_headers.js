@@ -184,7 +184,7 @@ export const getHelmetForSearchPage = ({
 
 export const getHelmetForCommunityPage = (community, location) => {
   const {
-    name, mainImage, address, propInfo, propRatings, rates, startingRate, url, gallery = {}, videoGallery = {}, reviews,
+    name, mainImage, address, propInfo, propRatings, rates, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions,
   } = community;
   const {
     search, pathname,
@@ -282,6 +282,46 @@ export const getHelmetForCommunityPage = (community, location) => {
     return (<script type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
 
+  const getQAAnswerLDObj = (answer) => {
+    return {
+      '@type': 'Answer',
+      text: answer.contentData,
+      dateCreated: answer.createdAt,
+      // upvoteCount: 1337,
+      // url: 'https://example.com/question1#acceptedAnswer',
+      author: {
+        '@type': 'Person',
+        name: answer.creator,
+      },
+    };
+  };
+
+  // TODO: Check whether we want to filter out questions without answers
+  const qaPageLdObjs = questions.filter(question => question.contents.length > 0).map((question) => {
+    const answers = question.contents.slice();
+    const firstAnswer = answers.shift();
+    const acceptedAnswer = getQAAnswerLDObj(firstAnswer);
+    const suggestedAnswer = answers.map(answer => getQAAnswerLDObj(answer));
+    const result = {
+      '@context': 'https://schema.org',
+      '@type': 'QAPage',
+      mainEntity: {
+        '@type': 'Question',
+        name: question.contentData,
+        // text: 'I have taken up a new interest in baking and keep running across directions in ounces and pounds. I have to translate between them and was wondering how many ounces are in a pound?',
+        answerCount: question.contents.length,
+        // upvoteCount: 26,
+        dateCreated: question.createdAt,
+        author: {
+          '@type': 'Person',
+          name: question.creator,
+        },
+        acceptedAnswer,
+        suggestedAnswer: suggestedAnswer.length > 0 ? suggestedAnswer : undefined,
+      },
+    };
+    return (<script type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
+  });
   // TODO Add Image and Video and structured data.
   return (
     <Helmet>
@@ -305,6 +345,7 @@ export const getHelmetForCommunityPage = (community, location) => {
       }
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
       {criticReviewsJsonLDs}
+      {qaPageLdObjs}
     </Helmet>
   );
 };
