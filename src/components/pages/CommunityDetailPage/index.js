@@ -446,7 +446,6 @@ export default class CommunityDetailPage extends Component {
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         {getHelmetForCommunityPage(community, location)}
-        {getCriticReviewsHelmet(reviews)}
         <Header />
         {bannerNotification && <StyledBannerNotification>{bannerNotification}</StyledBannerNotification>}
         <CommunityDetailPageTemplate>

@@ -184,11 +184,16 @@ export const getHelmetForSearchPage = ({
 
 export const getHelmetForCommunityPage = (community, location) => {
   const {
-    name, address, propInfo, rates, startingRate, url, gallery = {}, videoGallery = {},
+    name, mainImage, address, propInfo, propRatings, rates, startingRate, url, gallery = {}, videoGallery = {}, reviews,
   } = community;
   const {
     search, pathname,
   } = location;
+  const {
+    line1, city, state, country, zip, latitude, longitude,
+  } = address;
+  const { websiteUrl } = propInfo;
+  const { numReviews, reviewsValue } = propRatings;
 
   const ratesProvided = (rates && rates === 'Provided');
   const canonicalUrl = `${host}${pathname}`;
@@ -219,6 +224,64 @@ export const getHelmetForCommunityPage = (community, location) => {
 
   const ld = getSDForCommunity({ ...community });
 
+  const criticReviews = reviews.filter(review => review.isCriticReview === true);
+  const criticReviewsJsonLDs = criticReviews.map((criticReview) => {
+    const result = {
+      '@context': 'https://schema.org',
+      '@type': 'Review',
+      author: {
+        '@type': 'Person',
+        name: criticReview.author,
+      },
+      url: `https://www.seniorly.com${url}`,
+      datePublished: criticReview.updatedAt,
+      publisher: {
+        '@type': 'Organization',
+        name: 'Seniorly',
+        sameAs: 'https://www.seniorly.com',
+      },
+      description: criticReview.comments,
+      inLanguage: 'en',
+      itemReviewed: {
+        '@type': 'LocalBusiness',
+        name,
+        sameAs: websiteUrl,
+        image: mainImage,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: line1,
+          addressLocality: city,
+          addressRegion: state,
+          postalCode: zip,
+          addressCountry: country,
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude,
+          longitude,
+        },
+        // telephone: communityPhone, // We use slyPhone as communityProfile, so no need to set
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: reviewsValue,
+          bestRating: 5,
+          ratingCount: numReviews,
+        },
+      },
+      reviewRating: {
+        '@type': 'Rating',
+        worstRating: 1,
+        bestRating: 5,
+        ratingValue: criticReview.value,
+      },
+    };
+    // logic copied from getSDForCommunity
+    if (startingRate > 0) {
+      result.itemReviewed.priceRange = `From ${startingRate} per month`;
+    }
+    return (<script type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
+  });
+
   // TODO Add Image and Video and structured data.
   return (
     <Helmet>
@@ -241,6 +304,7 @@ export const getHelmetForCommunityPage = (community, location) => {
         search && search.length > 0 && <meta name="robots" content="noindex"/>
       }
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
+      {criticReviewsJsonLDs}
     </Helmet>
   );
 };
@@ -285,68 +349,6 @@ export const getHelmetForAgentsRegionPage = ({locationName}) => {
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
-    </Helmet>
-  );
-};
-
-export const getCriticReviewsHelmet = (reviews) => {
-  console.log(reviews);
-  const obj = {
-    '@context': 'https://schema.org',
-    '@type': 'Review',
-    author: {
-      '@type': 'Person',
-      name: 'Lisa Kennedy',
-      sameAs: 'https://plus.google.com/114108465800532712602',
-    },
-    url: 'http://www.localreviews.com/restaurants/1/2/3/daves-steak-house.html',
-    datePublished: '2014-03-13T20:00',
-    publisher: {
-      '@type': 'Organization',
-      name: 'Denver Post',
-      sameAs: 'http://www.denverpost.com',
-    },
-    description: 'Great old fashioned steaks but the salads are sub par.',
-    inLanguage: 'en',
-    itemReviewed: {
-      '@type': 'Restaurant',
-      name: "Dave's Steak House",
-      sameAs: 'http://davessteakhouse.example.com',
-      image: 'http://davessteakhouse.example.com/logo.jpg',
-      servesCuisine: 'Steak House',
-      priceRange: '$$$',
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: '148 W 51st St',
-        addressLocality: 'New York',
-        addressRegion: 'NY',
-        postalCode: '10019',
-        addressCountry: 'US',
-      },
-      geo: {
-        '@type': 'GeoCoordinates',
-        latitude: 40.761293,
-        longitude: -73.982294,
-      },
-      telephone: '+12122459600',
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '88',
-        bestRating: '100',
-        ratingCount: '20',
-      },
-    },
-    reviewRating: {
-      '@type': 'Rating',
-      worstRating: 1,
-      bestRating: 4,
-      ratingValue: 3.5,
-    },
-  };
-  return (
-    <Helmet>
-       {/* <script type="application/ld+json">{`${JSON.stringify(obj, stringifyReplacer)}`}</script> */}
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `${JSON.stringify(obj, stringifyReplacer)}`}} />
     </Helmet>
   );
 };
