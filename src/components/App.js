@@ -209,7 +209,9 @@ export default class App extends Component {
           <Router>
             <Switch>
               <Route
-                path="/ping" render={() => (<h1> pong </h1> )}
+                path="/ping"
+                render={() => (<h1> pong </h1>)}
+                exact
               />
               <Route
                 path={`/:toc(${careTypes})/:state/:city/filters`}

@@ -18,12 +18,14 @@ const ReduxForm = reduxForm({
   validate,
 })(DashboardChangePasswordForm);
 
-@withApi()
+@withApi
+
 class DashboardChangePasswordFormContainer extends Component {
   static propTypes = {
     api: object,
     notifySuccess: func,
-  }
+  };
+
   handleSubmit = (values) => {
     const { oldPassword, newPassword } = values;
     const payload = { oldPassword, newPassword };
@@ -40,7 +42,8 @@ class DashboardChangePasswordFormContainer extends Component {
       .then(() => {
         notifySuccess('Password Successfully Updated');
       });
-  }
+  };
+
   render() {
     return (
       <ReduxForm
