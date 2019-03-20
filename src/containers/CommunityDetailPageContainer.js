@@ -86,21 +86,20 @@ class CommunityDetailPageContainer extends Component {
   }
 
   uuidActionPageView(props = this.props) {
-    const { api, community } = props;
+    const { match, api } = props;
 
-    console.log('will post', community.name);
-    // api.postUuidAction({
-    //  data: {
-    //    type: 'UUIDAction',
-    //    attributes: {
-    //      actionInfo: {
-    //        slug: 'test-slug',
-    //      },
-    //      actionPage: 'test-page',
-    //      actionType: 'profileView',
-    //    },
-    //  },
-    // });
+    api.createUuidAction({
+      data: {
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            slug: match.params.communitySlug,
+          },
+          actionPage: match.url,
+          actionType: 'profileViewed',
+        },
+      },
+    });
   }
 
   handleBackToSearchClick = () => {
