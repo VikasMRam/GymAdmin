@@ -39,16 +39,18 @@ export const parseSettings = ({
     'Content-Type': 'application/json',
     'Accept-Language': locale,
   };
+
   const settings = merge(
     {
       body: data ? JSON.stringify(data) : undefined,
       redirect: 'manual', // follow redirects - 301,302,303,307,308
       method,
       headers,
-      credentials: 'same-origin',
+      credentials: 'include',
     },
     otherSettings
   );
+
   return settings;
 };
 
