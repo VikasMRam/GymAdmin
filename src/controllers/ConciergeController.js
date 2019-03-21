@@ -8,7 +8,7 @@ import SlyEvent from 'sly/services/helpers/events';
 
 import { ASSESSMENT, REQUEST_CALLBACK, REQUEST_CONSULTATION, REQUEST_PRICING, REQUEST_AVAILABILITY } from 'sly/services/api/actions';
 
-import { query } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/newApi';
 
 import {
   createBooleanValidator,
@@ -38,8 +38,8 @@ const hasAllUserData = createBooleanValidator({
   phone: [required, usPhone],
 });
 
-@query('user', 'getUser', req => req({ id: 'me' }))
-@query('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
+@prefetch('user', 'getUser', req => req({ id: 'me' }))
+@prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 
 export class ConciergeController extends Component {
   static propTypes = {
