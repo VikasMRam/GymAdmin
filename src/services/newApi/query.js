@@ -51,35 +51,16 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
         status: object,
       };
 
-      componentWillMount() {
-        const { requestInfo, done } = this.props;
-        if (!requestInfo.isLoading && !requestInfo.hasStarted) {
-          this.fetch();
-        } else if (isServer) {
-          done();
-        }
-      }
-
-      componentWillReceiveProps(nextProps) {
-        const { requestInfo } = nextProps;
-        if (!requestInfo.isLoading && !requestInfo.hasStarted) {
-          this.fetch(nextProps);
-        }
-      }
-
       // this apiCall is done from the api provided by ApiProvider, so it's bound to dispatch
       fetch = (args) => {
         return this.props.fetch(args, this.props);
       };
 
       render() {
-        const { request, status } = this.props;
-
-        if (isServer && (!request.hasStarted || request.isLoading)) {
-          return null;
-        }
+        const { request, status, ...props } = this.props;
 
         const innerProps = {
+          ...props,
           [propName]: this.call,
           status: {
             ...status,
