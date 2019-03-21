@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import DashboardMyProfilePage from 'sly/components/pages/DashboardMyProfilePage';
-import { query } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 
 const incompleteInfoWarning = 'Please enter the incomplete fields below to complete your account.';
 
-@query('user', 'getUser', getUser => getUser({ id: 'me' }))
+@prefetch('user', 'getUser', getUser => getUser({ id: 'me' }))
 class DashboardMyProfilePageContainer extends Component {
   static propTypes = {
     user: userPropType,

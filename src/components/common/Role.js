@@ -1,10 +1,10 @@
 import { Component } from 'react';
 import { number, node } from 'prop-types';
 
-import { query } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 
-@query('user', 'getUser', getUser => getUser({ id: 'me' }))
+@prefetch('user', 'getUser', getUser => getUser({ id: 'me' }))
 
 class Role extends Component {
   static propTypes = {

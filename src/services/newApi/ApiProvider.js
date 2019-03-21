@@ -21,6 +21,7 @@ class ApiProvider extends Component {
     return Object.entries(api).reduce((acc, [key, method]) => {
       acc[key] = (...args) => dispatch(method(...args));
       acc[key].actionName = method.actionName;
+      acc[key].method = method.method;
       return acc;
     }, {});
   };

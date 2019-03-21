@@ -8,7 +8,7 @@ import produce from 'immer';
 import DashboardProfileUserDetailsForm from 'sly/components/organisms/DashboardProfileUserDetailsForm';
 import { createValidator, required, email, usPhone } from 'sly/services/validation/index';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
-import { query } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/newApi';
 
 const emailWarning = 'Enter your email so your agent can help you by answering your questions and sending recommended communities.';
 const messageObj = {
@@ -63,7 +63,7 @@ const convertUserToProfileFormValues = (user) => {
 };
 
 
-@query('user', 'getUser', getUser => getUser({ id: 'me' }))
+@prefetch('user', 'getUser', getUser => getUser({ id: 'me' }))
 
 @connect((state, props) => ({
   uuidAux: getRelationship(state, props.status.user.result, 'uuidAux'),

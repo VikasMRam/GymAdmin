@@ -23,7 +23,7 @@ import {
 
 import { logWarn } from 'sly/services/helpers/logging';
 import ModalController from 'sly/controllers/ModalController';
-import { query } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
 
 const mapStateToProps = (state, { searchParams }) => ({
@@ -53,7 +53,7 @@ const handleResponses = (responses) => {
   handleResponses,
 )
 
-@query('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
+@prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
 
 @connect(mapStateToProps)
 
