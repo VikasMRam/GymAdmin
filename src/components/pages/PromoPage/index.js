@@ -236,7 +236,7 @@ const usefulInformationTiles = [
   {
     to: '/board-and-care-home',
     image: assetPath('images/home/useful-info/board-and-care.jpg'),
-    title: 'Board & Care Residential',
+    title: 'Board & Care Home',
   },
   /* {
     to: '#',
