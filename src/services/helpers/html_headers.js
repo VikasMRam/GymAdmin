@@ -184,11 +184,16 @@ export const getHelmetForSearchPage = ({
 
 export const getHelmetForCommunityPage = (community, location) => {
   const {
-    name, address, propInfo, rates, startingRate, url, gallery = {}, videoGallery = {},
+    name, mainImage, address, propInfo, propRatings, rates, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions,
   } = community;
   const {
     search, pathname,
   } = location;
+  const {
+    line1, city, state, country, zip, latitude, longitude,
+  } = address;
+  const { websiteUrl } = propInfo;
+  const { numReviews, reviewsValue } = propRatings;
 
   const ratesProvided = (rates && rates === 'Provided');
   const canonicalUrl = `${host}${pathname}`;
@@ -219,6 +224,104 @@ export const getHelmetForCommunityPage = (community, location) => {
 
   const ld = getSDForCommunity({ ...community });
 
+  const criticReviews = reviews.filter(review => review.isCriticReview === true);
+  const criticReviewsJsonLDs = criticReviews.map((criticReview) => {
+    const result = {
+      '@context': 'https://schema.org',
+      '@type': 'Review',
+      author: {
+        '@type': 'Person',
+        name: criticReview.author,
+      },
+      url: `https://www.seniorly.com${url}`,
+      datePublished: criticReview.updatedAt,
+      publisher: {
+        '@type': 'Organization',
+        name: 'Seniorly',
+        sameAs: 'https://www.seniorly.com',
+      },
+      description: criticReview.comments,
+      inLanguage: 'en',
+      itemReviewed: {
+        '@type': 'LocalBusiness',
+        name,
+        sameAs: websiteUrl,
+        image: mainImage,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: line1,
+          addressLocality: city,
+          addressRegion: state,
+          postalCode: zip,
+          addressCountry: country,
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude,
+          longitude,
+        },
+        // telephone: communityPhone, // We use slyPhone as communityProfile, so no need to set
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: reviewsValue,
+          bestRating: 5,
+          ratingCount: numReviews,
+        },
+      },
+      reviewRating: {
+        '@type': 'Rating',
+        worstRating: 1,
+        bestRating: 5,
+        ratingValue: criticReview.value,
+      },
+    };
+    // logic copied from getSDForCommunity
+    if (startingRate > 0) {
+      result.itemReviewed.priceRange = `From ${startingRate} per month`;
+    }
+    return (<script type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
+  });
+
+  const getQAAnswerLDObj = (answer) => {
+    return {
+      '@type': 'Answer',
+      text: answer.contentData,
+      dateCreated: answer.createdAt,
+      // upvoteCount: 1337,
+      // url: 'https://example.com/question1#acceptedAnswer',
+      author: {
+        '@type': 'Person',
+        name: answer.creator,
+      },
+    };
+  };
+
+  // TODO: Check whether we want to filter out questions without answers
+  const qaPageLdObjs = questions.filter(question => question.contents.length > 0).map((question) => {
+    const answers = question.contents.slice();
+    const firstAnswer = answers.shift();
+    const acceptedAnswer = getQAAnswerLDObj(firstAnswer);
+    const suggestedAnswer = answers.map(answer => getQAAnswerLDObj(answer));
+    const result = {
+      '@context': 'https://schema.org',
+      '@type': 'QAPage',
+      mainEntity: {
+        '@type': 'Question',
+        name: question.contentData,
+        // text: 'I have taken up a new interest in baking and keep running across directions in ounces and pounds. I have to translate between them and was wondering how many ounces are in a pound?',
+        answerCount: question.contents.length,
+        // upvoteCount: 26,
+        dateCreated: question.createdAt,
+        author: {
+          '@type': 'Person',
+          name: question.creator,
+        },
+        acceptedAnswer,
+        suggestedAnswer: suggestedAnswer.length > 0 ? suggestedAnswer : undefined,
+      },
+    };
+    return (<script type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
+  });
   // TODO Add Image and Video and structured data.
   return (
     <Helmet>
@@ -241,6 +344,8 @@ export const getHelmetForCommunityPage = (community, location) => {
         search && search.length > 0 && <meta name="robots" content="noindex"/>
       }
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
+      {criticReviewsJsonLDs}
+      {qaPageLdObjs}
     </Helmet>
   );
 };
