@@ -5,7 +5,7 @@ import { object, func } from 'prop-types';
 import DashboardAddPasswordForm from 'sly/components/organisms/DashboardAddPasswordForm';
 import { createValidator, minLength, match } from 'sly/services/validation';
 import userPropType from 'sly/propTypes/user';
-import query from 'sly/services/newApi/query';
+import prefetch from 'sly/services/newApi/prefetch';
 
 const validate = createValidator({
   newPassword: [minLength(8)],
@@ -18,7 +18,7 @@ const ReduxForm = reduxForm({
   validate,
 })(DashboardAddPasswordForm);
 
-@query('user', 'getUser', getUser => getUser({ id: 'me' }))
+@prefetch('user', 'getUser', getUser => getUser({ id: 'me' }))
 class DashboardAddPasswordFormContainer extends Component {
   static propTypes = {
     api: object,

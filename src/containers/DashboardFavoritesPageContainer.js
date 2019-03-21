@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
 import produce from 'immer';
 
-import { query } from 'sly/services/newApi';
+import { prefetch } from 'sly/services/newApi';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import SlyEvent from 'sly/services/helpers/events';
@@ -11,7 +11,7 @@ import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardFavoritesPage from 'sly/components/pages/DashboardFavoritesPage';
 
-@query('userSaves', 'getUserSaves', getUserSaves => getUserSaves({
+@prefetch('userSaves', 'getUserSaves', getUserSaves => getUserSaves({
   'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
   'filter[status]': USER_SAVE_INIT_STATUS,
 }))

@@ -15,7 +15,7 @@ function getDisplayName(WrappedComponent) {
       || 'Component';
 }
 
-export default function query(propName, apiCall, dispatcher = defaultDispatcher) {
+export default function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
   return (InnerComponent) => {
     const mapStateToProps = (state, props) => {
       const argumentsAbsorber = (...args) => args;
@@ -48,7 +48,7 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
     @connect(mapStateToProps, mapDispatchToActions)
 
     class Wrapper extends React.Component {
-      static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
+      static displayName = `prefetch(${getDisplayName(InnerComponent)}, ${propName})`;
 
       static propTypes = {
         api: object,
