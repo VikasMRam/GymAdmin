@@ -27,7 +27,7 @@ import {
 } from 'sly/constants/notifications';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
-import withApi from 'sly/services/newApi/withApi';
+import { query } from 'sly/services/newApi';
 
 const ignoreSearchParams = [
   'modal',
@@ -38,7 +38,7 @@ const ignoreSearchParams = [
   'modal',
 ];
 
-@withApi
+@query('createUuidAction', 'createUuidAction')
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
@@ -86,9 +86,9 @@ class CommunityDetailPageContainer extends Component {
   }
 
   uuidActionPageView(props = this.props) {
-    const { match, api } = props;
+    const { match, createUuidAction } = props;
 
-    api.createUuidAction({
+    createUuidAction({
       data: {
         type: 'UUIDAction',
         attributes: {
