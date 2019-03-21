@@ -260,14 +260,17 @@ app.use(async (req, res, next) => {
 
   // FIXME: hack until SEO app is migrated to bees
   try {
-    await store.dispatch(beesApi.getUser({ id: 'me' }));
+    await Promise.all([
+      store.dispatch(beesApi.getUser({ id: 'me' })),
+      store.dispatch(beesApi.getUuidAux({ id: 'me' })),
+    ]);
   } catch (e) {
     console.log(e);
     if (e.status === 401) {
       // ignore 401
       logWarn(e);
     } else {
-      e.message = `Error trying to fetch user/me: ${e.message}`;
+      e.message = `Error trying to prefetch user data: ${e.message}`;
       console.log('new user/me error', e);
       next(e);
       return;

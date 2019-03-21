@@ -1,18 +1,22 @@
 import { Component } from 'react';
 import { string, func, object } from 'prop-types';
-import { withRouter } from 'react-router-dom';
 
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 import { getDetail } from 'sly/store/selectors';
 import { connectController } from 'sly/controllers';
 import SlyEvent from 'sly/services/helpers/events';
+
 import { ASSESSMENT, REQUEST_CALLBACK, REQUEST_CONSULTATION, REQUEST_PRICING, REQUEST_AVAILABILITY } from 'sly/services/api/actions';
+
+import { query } from 'sly/services/newApi';
+
 import {
   createBooleanValidator,
   required,
   email,
   usPhone,
 } from 'sly/services/validation';
+
 import { CONCIERGE } from 'sly/constants/modalType';
 
 export const CONVERSION_FORM = 'conversionForm';
@@ -34,17 +38,8 @@ const hasAllUserData = createBooleanValidator({
   phone: [required, usPhone],
 });
 
-// const hasUserData = createValidator({
-//   fullName: [required],
-//   email: [required, email],
-//   phone: [required, usPhone],
-// });
-
-// const hasOnlyEmail = createBooleanValidator({
-//   fullName: [notProvided],
-//   email: [required, email],
-//   phone: [notProvided],
-// });
+@query('user', 'getUser', req => req({ id: 'me' }))
+@query('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 
 export class ConciergeController extends Component {
   static propTypes = {
