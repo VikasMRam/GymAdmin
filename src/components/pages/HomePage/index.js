@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
+import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
+import { host } from 'sly/config';
 import { size, assetPath, palette, gridColumns } from 'sly/components/themes';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import SlyEvent from 'sly/services/helpers/events';
@@ -229,7 +231,7 @@ const usefulInformationTiles = [
   {
     to: '/board-and-care-home',
     image: assetPath('images/home/useful-info/board-and-care.jpg'),
-    title: 'Board & Care Residential',
+    title: 'Board & Care Home',
   },
   /* {
     to: '#',
@@ -413,8 +415,13 @@ const HomePage = ({
     />
   ));
 
+  const canonicalUrl = `${host}`;
+
   return (
     <Fragment>
+      <Helmet>
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
         <VideoSection title="How Seniorly Can Help You Find A Home" subtitle="" id="watch-video">
