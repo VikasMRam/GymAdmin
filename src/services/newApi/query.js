@@ -13,7 +13,7 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 
-export default function query(apiCall, dispatcher = defaultDispatcher) {
+export default function query(propName, apiCall, dispatcher = defaultDispatcher) {
   return (InnerComponent) => {
     const makeApiCall = call => (...args) => {
       if (['get', 'destroy'].includes(call.method)) {
@@ -40,7 +40,7 @@ export default function query(apiCall, dispatcher = defaultDispatcher) {
     @connect(undefined, mapDispatchToActions)
 
     class Wrapper extends React.Component {
-      static displayName = `query(${getDisplayName(InnerComponent)}, ${apiCall})`;
+      static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
 
       static propTypes = {
         api: object.isRequired,
@@ -57,7 +57,7 @@ export default function query(apiCall, dispatcher = defaultDispatcher) {
 
         const innerProps = {
           ...props,
-          [apiCall]: this.fetch,
+          [propName]: this.fetch,
         };
 
         return <InnerComponent {...innerProps} />;
