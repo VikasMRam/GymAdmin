@@ -8,7 +8,7 @@ import SlyEvent from 'sly/services/helpers/events';
 
 import { ASSESSMENT, REQUEST_CALLBACK, REQUEST_CONSULTATION, REQUEST_PRICING, REQUEST_AVAILABILITY } from 'sly/services/api/actions';
 
-import { prefetch } from 'sly/services/newApi';
+import { prefetch, query } from 'sly/services/newApi';
 
 import {
   createBooleanValidator,
@@ -38,10 +38,54 @@ const hasAllUserData = createBooleanValidator({
   phone: [required, usPhone],
 });
 
+const isCallbackorPricingAvailReq = slug => contact =>
+  contact.slug === slug
+  && (contact.contactType === REQUEST_CALLBACK || contact.contactType === REQUEST_PRICING || contact.contactType === REQUEST_AVAILABILITY);
+
+const isPricingReq = slug => contact =>
+  contact.slug === slug
+  && (contact.contactType === REQUEST_PRICING);
+
+const isAvailReq = slug => contact =>
+  contact.slug === slug
+  && (contact.contactType === REQUEST_AVAILABILITY);
+
+const mapStateToProps = (state, props) => {
+  const { communitySlug, queryParams, history } = props;
+  const {
+    profilesContacted,
+    consultationRequested,
+    userDetails = {},
+  } = getDetail(state, 'userAction') || {};
+  const { modal, currentStep } = queryParams;
+  return {
+    history,
+    communitySlug,
+    userDetails,
+    concierge: {
+      currentStep: currentStep || CONVERSION_FORM,
+      modalIsOpen: modal === CONCIERGE || false,
+      consultationRequested,
+      pricingRequested: (profilesContacted || []).some(isPricingReq(communitySlug)),
+      availabilityRequested: (profilesContacted || []).some(isAvailReq(communitySlug)),
+      contactRequested: (profilesContacted || []).some(isCallbackorPricingAvailReq(communitySlug)),
+    },
+  };
+};
+
+const submit = data => resourceCreateRequest('userAction', data);
+
+@connectController(
+  mapStateToProps,
+  dispatch => ({
+    submit: data => dispatch(submit(data)),
+  }),
+)
 @prefetch('user', 'getUser', req => req({ id: 'me' }))
 @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
+@query('createAction', 'createUuidAction')
 
-export class ConciergeController extends Component {
+export default class ConciergeController extends Component {
   static propTypes = {
     communitySlug: string,
     pathName: string,
@@ -160,6 +204,7 @@ export class ConciergeController extends Component {
       submit,
       communitySlug,
       gotoGetCustomPricing,
+      createAction,
     } = this.props;
     const value = {
       user: { ...data },
@@ -168,10 +213,22 @@ export class ConciergeController extends Component {
     if (communitySlug) {
       value.propertyIds = [communitySlug];
     }
-    submit({
-      action,
-      value,
-    }).then(() => {
+    Promise.all([
+      submit({
+        action,
+        value,
+      }),
+      createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            slug: communitySlug,
+          },
+          actionPage: match.url,
+          actionType: 'profileViewed',
+        },
+      }),
+    ]).then(() => {
       if (communitySlug && gotoGetCustomPricing) {
         gotoGetCustomPricing();
       } else {
@@ -277,6 +334,8 @@ export class ConciergeController extends Component {
       close,
     } = this;
 
+    console.log('rendering');
+
     return children({
       concierge,
       userDetails,
@@ -291,46 +350,3 @@ export class ConciergeController extends Component {
   }
 }
 
-const isCallbackorPricingAvailReq = slug => contact =>
-  contact.slug === slug
-  && (contact.contactType === REQUEST_CALLBACK || contact.contactType === REQUEST_PRICING || contact.contactType === REQUEST_AVAILABILITY);
-
-const isPricingReq = slug => contact =>
-  contact.slug === slug
-  && (contact.contactType === REQUEST_PRICING);
-
-const isAvailReq = slug => contact =>
-  contact.slug === slug
-  && (contact.contactType === REQUEST_AVAILABILITY);
-
-const mapStateToProps = (state, props) => {
-  const { communitySlug, queryParams, history } = props;
-  const {
-    profilesContacted,
-    consultationRequested,
-    userDetails = {},
-  } = getDetail(state, 'userAction') || {};
-  const { modal, currentStep } = queryParams;
-  return {
-    history,
-    communitySlug,
-    userDetails,
-    concierge: {
-      currentStep: currentStep || CONVERSION_FORM,
-      modalIsOpen: modal === CONCIERGE || false,
-      consultationRequested,
-      pricingRequested: (profilesContacted || []).some(isPricingReq(communitySlug)),
-      availabilityRequested: (profilesContacted || []).some(isAvailReq(communitySlug)),
-      contactRequested: (profilesContacted || []).some(isCallbackorPricingAvailReq(communitySlug)),
-    },
-  };
-};
-
-const submit = data => resourceCreateRequest('userAction', data);
-
-export default connectController(
-  mapStateToProps,
-  dispatch => ({
-    submit: data => dispatch(submit(data)),
-  }),
-)(ConciergeController);
