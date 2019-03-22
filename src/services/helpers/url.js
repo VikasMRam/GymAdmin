@@ -300,7 +300,7 @@ export const getAgentUrl = ({ id, address }) => {
 
 export const getCitySearchUrl = ({ propInfo, address }) => {
   const tocBc = tocPaths(propInfo.typeCare);
-  return `${tocBc.path}/${urlize(stateNames[address.state])}/${urlize(address.city)}?latitude=${address.latitude}&longitude=${address.longitude}`;
+  return `${tocBc.path}/${urlize(stateNames[address.state])}/${urlize(address.city)}`;
 };
 
 export const getCitySearchWithSizeUrl = ({ propInfo, address }) => {

@@ -163,13 +163,14 @@ export const getHelmetForSearchPage = ({
       <meta name="description" content={description} />
       <meta content={description} property="og:description" />
       <meta content={`${title} | Seniorly`} property="og:title" />
+      <meta content={canonicalUrl} property="og:url" />
 
       <meta content={description} property="twitter:description" />
       <meta content={`${title} | Seniorly`} property="twitter:title" />
       <link rel="canonical" href={canonicalUrl} />
 
       {
-        url.search && url.search.length > 0 && <meta name="robots" content="noindex"/>
+        url.search && url.search.length > 0 && <meta name="robots" content="noindex" />
       }
 
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>

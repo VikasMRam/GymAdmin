@@ -594,7 +594,7 @@ export default class CommunityDetailPage extends Component {
                       <TextBottomSection
                         heading="Ask about pricing, floor plans, availability, anything."
                         subHeading=" Using a Seniorly Partner Agent is a free service for you."
-                        buttonText="Send a message"
+                        buttonText="Ask a question"
                         onButtonClick={() => openAskAgentQuestionModal('services')}
                       />
                     </BottomSection>
