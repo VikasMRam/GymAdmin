@@ -392,10 +392,29 @@ export default class CommunityDetailPage extends Component {
     }
 
     const {
-      careServices, websiteUrl, promoDescription, promoTitle,
+      careServices, websiteUrl, promoDescription, promoTitle, communitySize,
     } = propInfo;
 
+    // TODO: move this to common helper, used in multiple places
+    const communityDefaultImages = {
+      'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
+      '20 - 51 Beds': assetPath('vectors/Medium_Assisted_Living.svg'),
+      '51 +': assetPath('vectors/Large_Assisted_Living.svg'),
+    };
+    let key = 'up to 20 Beds';
+    if (communitySize !== undefined && communitySize !== '') {
+      key = communitySize;
+    }
+    const defaultImageUrl = communityDefaultImages[key];
+
     let images = gallery.images || [];
+    // if images is empty add default image
+    if (images.length === 0) {
+      const imgShape = { sd: defaultImageUrl, hd: defaultImageUrl, thumb: defaultImageUrl, url: defaultImageUrl};
+      images.unshift(imgShape);
+      gallery.images = images;
+    }
+
     // If there is a mainImage put it in front
     const communityMainImage = images.find((element) => {
       return element.sd === mainImage;
