@@ -4,8 +4,7 @@ import { shallow } from 'enzyme';
 
 import SlyEvent from '../services/helpers/events';
 
-import ConciergeControllerContainer, {
-  ConciergeController,
+import ConciergeController, {
   CONVERSION_FORM,
   ADVANCED_INFO,
 } from './ConciergeController';
@@ -69,9 +68,9 @@ describe('ConciergeController', () => {
         ...userAction.xx.attributes,
         userDetails: {
           email: 'xxx@xxx.xxx',
-        }
-      }
-    }
+        },
+      },
+    },
   };
 
   const entities = { userAction };
@@ -81,7 +80,7 @@ describe('ConciergeController', () => {
   const history = {
     push: jest.fn(),
   };
-  const spy = jest.fn();
+  const spy = jest.fn().mockReturnValue('ok');
   const setQueryParams = jest.fn();
 
   const childProps = () => spy.mock.calls.pop()[0];
@@ -105,17 +104,39 @@ describe('ConciergeController', () => {
   //   currentStep: CONVERSION_FORM,
   // });
 
+  const userRequestInfo = {
+    hasStarted: true,
+    isLoading: false,
+
+    normalized: {},
+  };
+
+  const uuidAuxRequestInfo = userRequestInfo;
+
+  const api = {};
+
   describe('Container', () => {
-    const wrap = (communitySlug, store) => shallow(
-      <ConciergeControllerContainer
-        communitySlug={communitySlug}
-        store={store}
-        children={spy}
-        queryParams={{}}
-        setQueryParams={setQueryParams}
-        history={history}
-      />
-    ).dive().dive();
+    const wrap = (communitySlug, store) => {
+      const rendered = shallow((
+        <ConciergeController
+          communitySlug={communitySlug}
+          store={store}
+          api={api}
+          userRequestInfo={userRequestInfo}
+          uuidAuxRequestInfo={uuidAuxRequestInfo}
+          queryParams={{}}
+          setQueryParams={setQueryParams}
+          history={history}
+          children={spy}
+        />
+      ));
+      // this bs because lots of decorators and I don't want to export
+      // the non decorated component
+      return rendered
+        .dive().dive().dive().dive().dive()
+        .dive().dive().dive().dive().dive()
+        .dive().dive().dive();
+    };
 
     it('should pass default values', () => {
       const store = initStore({ resource, entities });
@@ -135,7 +156,7 @@ describe('ConciergeController', () => {
       expect(childProps().concierge.contactRequested).toBe(false);
     });
 
-    //TODO REENABLE
+    // TODO REENABLE
     // it('should go to express conversion when express mode', () => {
     //   const store = initStore({ resource, entities: emailOnlyEntities });
     //   const wrapper = wrap(otherCommunity, store);
@@ -205,7 +226,7 @@ describe('ConciergeController', () => {
       user: 'USER',
     };
 
-    const wrap = (props={}) => shallow(
+    const wrap = (props = {}) => shallow((
       <ConciergeController
         {...props}
         set={set}
@@ -213,13 +234,23 @@ describe('ConciergeController', () => {
         queryParams={{}}
         setQueryParams={setQueryParams}
         gotoGetCustomPricing={gotoGetCustomPricing}
+        store={initStore({})}
+        userRequestInfo={userRequestInfo}
+        uuidAuxRequestInfo={uuidAuxRequestInfo}
+        api={{}}
         history={history}
       />
-    );
+    ))
+      .dive().dive().dive().dive().dive()
+      .dive().dive().dive().dive().dive()
+      .dive().dive().dive();
 
     it('should prompt the user if is not converted', () => {
-      wrap({ userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
-        communitySlug: community.id, concierge: { advancedInfoSent: true } });
+      wrap({
+        userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
+        communitySlug: community.id,
+        concierge: { advancedInfoSent: true },
+      });
       childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
@@ -232,9 +263,13 @@ describe('ConciergeController', () => {
     });
 
     it('should ask for conversionForm', () => {
-      wrap({ userDetails: {}, communitySlug: community.id, concierge: {
-        contactRequested: true,
-      }});
+      wrap({
+        userDetails: {},
+        communitySlug: community.id,
+        concierge: {
+          contactRequested: true,
+        },
+      });
       childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
@@ -247,14 +282,14 @@ describe('ConciergeController', () => {
         concierge: {
           contactRequested: true,
           advancedInfoSent: true,
-        }
+        },
       });
       childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
 
-    //TODO REENABLE
+    // TODO REENABLE
 
     // it('should show thank you', () => {
     //   wrap({
@@ -277,7 +312,7 @@ describe('ConciergeController', () => {
       const wrapper = wrap({
         communitySlug: community.id,
         submit,
-        concierge: {}
+        concierge: {},
       });
       const instance = wrapper.instance();
       instance.next = jest.fn();
@@ -310,7 +345,7 @@ describe('ConciergeController', () => {
         action: 'LEAD/REQUEST_CONSULTATION',
         value: {
           user: { data: 'DATA' },
-          propertyIds: [ 'my-community' ],
+          propertyIds: ['my-community'],
         },
       });
 
@@ -387,7 +422,7 @@ describe('ConciergeController', () => {
         action: 'LEAD/REQUEST_AVAILABILITY',
         value: {
           user: { data: 'DATA' },
-          propertyIds: [ 'my-community' ],
+          propertyIds: ['my-community'],
         },
       });
 
@@ -440,7 +475,7 @@ describe('ConciergeController', () => {
           message: 'MESSAGE',
           propertyIds: ['my-community'],
           user: { user: 'USER' },
-        }
+        },
       });
       then.mock.calls.pop()[0]();
       expect(instance.next).toHaveBeenCalledWith(false);
