@@ -2,7 +2,7 @@ import React from 'react';
 import { number, string, node } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
-import { isString } from 'lodash';
+import isString from 'lodash/isString';
 
 import { size } from 'sly/components/themes';
 import { Bar, Block, ClampedText } from 'sly/components/atoms';

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { fetchState } from 'react-router-server';
 import { connect } from 'react-redux';
 import { func, bool, string, shape, object } from 'prop-types';
-import { isEqual, omit } from 'lodash';
+import isEqual from 'lodash/isEqual';
+import omit from 'lodash/omit';
 import { parse as parseSearch } from 'query-string';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 

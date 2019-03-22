@@ -1,7 +1,7 @@
 import React from 'react';
 import { node, string } from 'prop-types';
 import ReactTooltip from 'react-tooltip';
-import { uniqueId } from 'lodash';
+import uniqueId from 'lodash/uniqueId';
 import styled from 'styled-components';
 
 import { isServer } from 'sly/config';
