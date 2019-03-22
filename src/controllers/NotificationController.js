@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { string, func, shape, arrayOf, oneOf } from 'prop-types';
-import { uniqueId } from 'lodash';
+import uniqueId from 'lodash/uniqueId';
 
 import { TIMEOUT } from 'sly/constants/notifications';
 import { connectController } from 'sly/controllers';

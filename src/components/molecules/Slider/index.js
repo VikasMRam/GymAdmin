@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { string, number, bool, func, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { prop, switchProp, ifProp } from 'styled-tools';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 
 import { size, palette } from 'sly/components/themes';
 
