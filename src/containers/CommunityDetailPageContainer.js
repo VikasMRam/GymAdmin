@@ -88,16 +88,16 @@ class CommunityDetailPageContainer extends Component {
   uuidActionPageView(props = this.props) {
     const { match, createUuidAction } = props;
 
+    console.log(props);
+
     createUuidAction({
-      data: {
-        type: 'UUIDAction',
-        attributes: {
-          actionInfo: {
-            slug: match.params.communitySlug,
-          },
-          actionPage: match.url,
-          actionType: 'profileViewed',
+      type: 'UUIDAction',
+      attributes: {
+        actionInfo: {
+          slug: match.params.communitySlug,
         },
+        actionPage: match.url,
+        actionType: 'profileViewed',
       },
     });
   }

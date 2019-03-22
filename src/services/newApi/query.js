@@ -19,6 +19,10 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
     const mapStateToProps = (state, props) => {
       const argumentsAbsorber = (...args) => args;
 
+      if (typeof props.api[apiCall] !== 'function') {
+        throw new Error(`${apiCall} is not a function`);
+      }
+
       if (props[`${propName}RequestInfo`]) {
         return {
           request: props[`${propName}RequestInfo`],
@@ -34,8 +38,9 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       };
     };
 
+    const makeApiCall = call => (data, ...args) => call({ data }, ...args);
     const mapDispatchToActions = (dispatch, { api }) => ({
-      fetch: (args, props) => dispatch(dispatcher(api[apiCall], args, props)),
+      fetch: (args, props) => dispatch(dispatcher(makeApiCall(api[apiCall]), args, props)),
     });
 
     @withApi
@@ -61,13 +66,10 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
 
         const innerProps = {
           ...props,
-          [propName]: this.call,
+          [propName]: this.fetch,
           status: {
             ...status,
-            [propName]: {
-              ...request,
-              refetch: this.fetch,
-            },
+            [propName]: request,
           },
         };
 

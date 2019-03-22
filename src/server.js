@@ -332,7 +332,7 @@ app.use((err, req, res, next) => {
   const sheet = new ServerStyleSheet();
   const errorContent = getErrorContent(err);
   const content = renderToStaticMarkup(sheet.collectStyles(errorContent));
-  const { assets } = req.clientConfig;
+  const assets = { css: [], js: [] };
   res.status(500).send(renderHtml({ content, sheet, assets }));
   next(err);
 });
