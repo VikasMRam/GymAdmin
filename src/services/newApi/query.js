@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
-import { isServer } from 'sly/config';
-import { withApi, getRequestInfo } from 'sly/services/newApi';
+import { withApi } from 'sly/services/newApi';
 
-const defaultDispatcher = (call, args) => call(args);
+const defaultDispatcher = (call, props, ...args) => call(...args);
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -14,63 +13,51 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 
-export default function query(propName, apiCall, dispatcher = defaultDispatcher) {
+export default function query(apiCall, dispatcher = defaultDispatcher) {
   return (InnerComponent) => {
-    const mapStateToProps = (state, props) => {
-      const argumentsAbsorber = (...args) => args;
-
-      if (typeof props.api[apiCall] !== 'function') {
-        throw new Error(`${apiCall} is not a function`);
+    const makeApiCall = call => (...args) => {
+      if (['get', 'destroy'].includes(call.method)) {
+        return call(...args);
       }
 
-      if (props[`${propName}RequestInfo`]) {
-        return {
-          request: props[`${propName}RequestInfo`],
-        };
-      }
+      const placeholders = args.length >= 2 ? args[0] : {};
+      const data = args.length >= 2 ? args[1] : args[0];
+      const options = args.length === 3 ? args[2] : {};
+
+      return call(placeholders, { data }, options);
+    };
+
+    const mapDispatchToActions = (dispatch, { api }) => {
+      const call = makeApiCall(api[apiCall]);
 
       return {
-        request: getRequestInfo(
-          state,
-          props.api[apiCall],
-          dispatcher(argumentsAbsorber, props),
-        ),
+        fetch: (props, ...args) => dispatch(dispatcher(call, props, ...args)),
       };
     };
 
-    const makeApiCall = call => (data, ...args) => call({ data }, ...args);
-    const mapDispatchToActions = (dispatch, { api }) => ({
-      fetch: (args, props) => dispatch(dispatcher(makeApiCall(api[apiCall]), args, props)),
-    });
-
     @withApi
 
-    @connect(mapStateToProps, mapDispatchToActions)
+    @connect(undefined, mapDispatchToActions)
 
     class Wrapper extends React.Component {
-      static displayName = `query(${getDisplayName(InnerComponent)}, ${propName})`;
+      static displayName = `query(${getDisplayName(InnerComponent)}, ${apiCall})`;
 
       static propTypes = {
-        api: object,
-        request: object,
-        status: object,
+        api: object.isRequired,
+        fetch: func.isRequired,
       };
 
       // this apiCall is done from the api provided by ApiProvider, so it's bound to dispatch
-      fetch = (args) => {
-        return this.props.fetch(args, this.props);
+      fetch = (...args) => {
+        return this.props.fetch(this.props, ...args);
       };
 
       render() {
-        const { request, status, ...props } = this.props;
+        const { ...props } = this.props;
 
         const innerProps = {
           ...props,
-          [propName]: this.fetch,
-          status: {
-            ...status,
-            [propName]: request,
-          },
+          [apiCall]: this.fetch,
         };
 
         return <InnerComponent {...innerProps} />;

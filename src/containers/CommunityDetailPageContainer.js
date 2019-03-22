@@ -38,7 +38,7 @@ const ignoreSearchParams = [
   'modal',
 ];
 
-@query('createUuidAction', 'createUuidAction')
+@query('createUuidAction')
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
@@ -87,8 +87,6 @@ class CommunityDetailPageContainer extends Component {
 
   uuidActionPageView(props = this.props) {
     const { match, createUuidAction } = props;
-
-    console.log(props);
 
     createUuidAction({
       type: 'UUIDAction',
