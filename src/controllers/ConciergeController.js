@@ -243,9 +243,11 @@ export default class ConciergeController extends Component {
 
   submitAdvancedInfo = (data) => {
     const {
-      submit, communitySlug, pathName, concierge,
+      submit, communitySlug, pathName, concierge, createAction, match,
     } = this.props;
+
     const { message, ...rest } = data;
+
     let eventCategory = 'advancedInfo';
     // Not a 100% correct.
     if (!concierge.pricingRequested && !concierge.availabilityRequested) {
@@ -270,14 +272,27 @@ export default class ConciergeController extends Component {
       propertyIds: [],
       message,
     };
+
     if (communitySlug) {
       value.propertyIds = [communitySlug];
     }
 
-    return submit({
-      action: ASSESSMENT,
-      value,
-    }).then(() => this.next(false));
+    return Promise.all([
+      submit({
+        action: ASSESSMENT,
+        value,
+      }),
+      createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            slug: communitySlug,
+          },
+          actionPage: match.url,
+          actionType: 'profileViewed',
+        },
+      }),
+    ]).then(this.next);
   };
 
   next = () => {
