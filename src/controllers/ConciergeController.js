@@ -334,8 +334,6 @@ export default class ConciergeController extends Component {
       close,
     } = this;
 
-    console.log('rendering');
-
     return children({
       concierge,
       userDetails,
