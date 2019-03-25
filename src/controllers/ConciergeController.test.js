@@ -101,6 +101,7 @@ describe('ConciergeController', () => {
 
   beforeEach(() => {
     spy.mockClear();
+    setQueryParams.mockClear();
     history.push.mockClear();
   });
 
@@ -127,30 +128,26 @@ describe('ConciergeController', () => {
 
   const uuidAuxRequestInfo = userRequestInfo;
 
-  const api = {};
+  const post = () => Promise.resolve(true);
+  post.method = 'post';
+  const api = { createUuidAction: post };
+
+  const match = { url: '/myurl' };
 
   describe('Container', () => {
-    const wrap = (communitySlug, store) => {
-      const rendered = shallow((
-        <ConciergeController
-          communitySlug={communitySlug}
-          store={store}
-          api={api}
-          userRequestInfo={userRequestInfo}
-          uuidAuxRequestInfo={uuidAuxRequestInfo}
-          queryParams={{}}
-          setQueryParams={setQueryParams}
-          history={history}
-          children={spy}
-        />
-      ));
-      // this bs because lots of decorators and I don't want to export
-      // the non decorated component
-      return rendered
-        .dive().dive().dive().dive().dive()
-        .dive().dive().dive().dive().dive()
-        .dive().dive().dive();
-    };
+    const wrap = (communitySlug, store) => dig(shallow(
+      <ConciergeController
+        communitySlug={communitySlug}
+        store={store}
+        api={api}
+        userRequestInfo={userRequestInfo}
+        uuidAuxRequestInfo={uuidAuxRequestInfo}
+        queryParams={{}}
+        setQueryParams={setQueryParams}
+        history={history}
+        children={spy}
+      />
+    ), 'ConciergeController').dive();
 
     it('should pass default values', () => {
       const store = initStore({ resource, entities });
@@ -203,7 +200,7 @@ describe('ConciergeController', () => {
     });
   });
 
-  describe.only('Controller', () => {
+  describe('Controller', () => {
     const sendEvent = jest.fn();
     const gotoGetCustomPricing = jest.fn();
     const events = {
@@ -216,8 +213,7 @@ describe('ConciergeController', () => {
 
     SlyEvent.getInstance.mockImplementation(() => events);
 
-    let promise;
-    const submit = jest.fn().mockImplementation(() => promise);
+    const submit = jest.fn().mockImplementation((...args) => Promise.resolve(args));
     const lastSubmit = () => submit.mock.calls.pop()[0];
     const lastSubmitResult = () => submit.mock.results.pop()[0];
 
@@ -240,29 +236,36 @@ describe('ConciergeController', () => {
       user: 'USER',
     };
 
-    const wrap = (props = {}) => dig(shallow((
-      <ConciergeController
-        {...props}
-        set={set}
-        children={spy}
-        queryParams={{}}
-        setQueryParams={setQueryParams}
-        gotoGetCustomPricing={gotoGetCustomPricing}
-        store={initStore({})}
-        userRequestInfo={userRequestInfo}
-        uuidAuxRequestInfo={uuidAuxRequestInfo}
-        api={{}}
-        history={history}
-      />
-    )), 'ConciergeController').dive();
+    const wrap = (props = {}) => {
+      const component = shallow((
+        <ConciergeController.WrappedComponent
+          {...props}
+          set={set}
+          children={spy}
+          api={api}
+          queryParams={{}}
+          match={match}
+          setQueryParams={setQueryParams}
+          gotoGetCustomPricing={gotoGetCustomPricing}
+          userRequestInfo={userRequestInfo}
+          uuidAuxRequestInfo={uuidAuxRequestInfo}
+          createAction={post}
+          history={history}
+        />
+      ));
 
-    it('should prompt the user if is not converted', () => {
+      const instance = component.instance();
+      instance.next = jest.fn().mockImplementation(instance.next);
+      return component;
+    };
+
+    it('should prompt the user if is not converted', async () => {
       wrap({
         userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
-        communitySlug: community.id,
+        pathName: 'my-community',
         concierge: { advancedInfoSent: true },
       });
-      childProps().getPricing();
+      await childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
@@ -276,7 +279,7 @@ describe('ConciergeController', () => {
     it('should ask for conversionForm', () => {
       wrap({
         userDetails: {},
-        communitySlug: community.id,
+        pathName: 'my-community',
         concierge: {
           contactRequested: true,
         },
@@ -289,7 +292,7 @@ describe('ConciergeController', () => {
     it('should show thank you', () => {
       wrap({
         userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
-        communitySlug: community.id,
+        pathName: 'my-community',
         concierge: {
           contactRequested: true,
           advancedInfoSent: true,
@@ -319,19 +322,15 @@ describe('ConciergeController', () => {
     //   });
     // });
 
-    it('should submit conversion', () => {
-      const wrapper = wrap({
+    it('should submit conversion', async () => {
+      wrap({
         communitySlug: community.id,
         submit,
         concierge: {},
       });
-      const instance = wrapper.instance();
-      instance.next = jest.fn();
-      const then = jest.fn();
-      promise = { then };
-      const data = { data: 'DATA' };
 
-      childProps().submitRegularConversion(data);
+      const data = { data: 'DATA' };
+      await childProps().submitRegularConversion(data);
 
       // expect(lastEvent()).toEqual({
       //   action: 'contactCommunity',
@@ -360,23 +359,19 @@ describe('ConciergeController', () => {
         },
       });
 
-      then.mock.calls.pop()[0]();
       expect(gotoGetCustomPricing).toHaveBeenCalled();
     });
 
-    it('should submit conversion when community not passed', () => {
+    it('should submit conversion when community not passed', async () => {
       const wrapper = wrap({
+        userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
         pathName: 'blah',
         submit,
         concierge: {},
       });
-      const instance = wrapper.instance();
-      instance.next = jest.fn();
-      const then = jest.fn();
-      promise = { then };
-      const data = { data: 'DATA' };
 
-      childProps().submitRegularConversion(data);
+      const data = { data: 'DATA' };
+      await childProps().submitRegularConversion(data);
 
       // expect(lastEvent()).toEqual({
       //   action: 'contactCommunity',
@@ -405,23 +400,19 @@ describe('ConciergeController', () => {
         },
       });
 
-      then.mock.calls.pop()[0]();
-      expect(instance.next).toHaveBeenCalledWith(false);
+      expect(wrapper.instance().next).toHaveBeenCalledWith(false);
     });
 
-    it('should submit express conversion when community is passed', () => {
-      const wrapper = wrap({
+    it('should submit express conversion when community is passed', async () => {
+      wrap({
+        userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
         communitySlug: community.id,
         submit,
         concierge: {},
       });
-      const instance = wrapper.instance();
-      instance.next = jest.fn();
-      const then = jest.fn();
-      promise = { then };
-      const data = { data: 'DATA' };
 
-      childProps().submitExpressConversion(data);
+      const data = { data: 'DATA' };
+      await childProps().submitExpressConversion(data);
 
       expect(lastEvent()).toEqual({
         action: 'contactCommunity',
@@ -437,23 +428,19 @@ describe('ConciergeController', () => {
         },
       });
 
-      then.mock.calls.pop()[0]();
       expect(gotoGetCustomPricing).toHaveBeenCalled();
     });
 
-    it('should submit express conversion', () => {
+    it('should submit express conversion', async () => {
       const wrapper = wrap({
+        userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
         pathName: 'Blah',
         submit,
         concierge: {},
       });
-      const instance = wrapper.instance();
-      instance.next = jest.fn();
-      const then = jest.fn();
-      promise = { then };
       const data = { data: 'DATA' };
 
-      childProps().submitExpressConversion(data);
+      await childProps().submitExpressConversion(data);
 
       expect(lastEvent()).toEqual({
         action: 'contactCommunity',
@@ -469,18 +456,13 @@ describe('ConciergeController', () => {
         },
       });
 
-      then.mock.calls.pop()[0]();
-      expect(instance.next).toHaveBeenCalledWith(true);
+      expect(wrapper.instance().next).toHaveBeenCalledWith(true);
     });
 
-    it('should submit advanced info', () => {
+    it('should submit advanced info', async () => {
       const wrapper = wrap({ communitySlug: community.id, concierge: {} });
       wrapper.setProps({ submit });
-      const instance = wrapper.instance();
-      instance.next = jest.fn();
-      const then = jest.fn();
-      promise = { then };
-      childProps().submitAdvancedInfo(advancedInfoData);
+      await childProps().submitAdvancedInfo(advancedInfoData);
       expect(lastSubmit()).toEqual({
         action: ASSESSMENT,
         value: {
@@ -489,8 +471,7 @@ describe('ConciergeController', () => {
           user: { user: 'USER' },
         },
       });
-      then.mock.calls.pop()[0]();
-      expect(instance.next).toHaveBeenCalledWith(false);
+      expect(wrapper.instance().next).toHaveBeenCalledWith(false);
     });
   });
 });

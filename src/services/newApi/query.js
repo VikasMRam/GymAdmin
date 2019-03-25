@@ -47,6 +47,8 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
         fetch: func.isRequired,
       };
 
+      static WrappedComponent = InnerComponent.WrappedComponent || InnerComponent;
+
       // this apiCall is done from the api provided by ApiProvider, so it's bound to dispatch
       fetch = (...args) => {
         return this.props.fetch(this.props, ...args);

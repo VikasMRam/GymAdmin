@@ -50,6 +50,8 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
     class Wrapper extends React.Component {
       static displayName = `prefetch(${getDisplayName(InnerComponent)}, ${propName})`;
 
+      static WrappedComponent = InnerComponent.WrappedComponent || InnerComponent;
+
       static propTypes = {
         api: object,
         requestInfo: object,
