@@ -13,7 +13,7 @@ const join = rules => (value, data) =>
   }).filter(error => !!error.result)[0];
 
 export const email = value =>
-  !isEmpty(value) && !isEmail(value) && 'Invalid email address';
+  !isEmpty(value) && !isEmail(value.replace(/ /g, '')) && 'Invalid email address';
 
 export const emails = (value) => {
   if (isEmpty(value)) {

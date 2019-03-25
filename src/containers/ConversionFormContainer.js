@@ -18,7 +18,7 @@ import SlyEvent from 'sly/services/helpers/events';
 
 const validate = createValidator({
   full_name: [required],
-  email: [required, email],
+  email: [email],
   phone: [required, usPhone],
 });
 
