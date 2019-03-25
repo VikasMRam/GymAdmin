@@ -8,6 +8,7 @@ export default function withApi(ChildComponent) {
   WithApi.displayName = `WithApi(${ChildComponent.displayName || ChildComponent.name || 'WithApi'})`;
   WithApi.contextTypes = { api: object };
   WithApi.propTypes = { api: object };
+  WithApi.WrappedComponent = ChildComponent.WrappedComponent || ChildComponent;
 
   hoistNonReactStatic(WithApi, ChildComponent);
 

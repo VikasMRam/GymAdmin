@@ -18,6 +18,7 @@ import {
 } from 'sly/services/validation';
 
 import { CONCIERGE } from 'sly/constants/modalType';
+import { withRouter } from 'react-router';
 
 export const CONVERSION_FORM = 'conversionForm';
 export const EXPRESS_CONVERSION_FORM = 'expressConversionForm';
@@ -86,6 +87,8 @@ const submit = data => resourceCreateRequest('userAction', data);
 @query('createAction', 'createUuidAction')
 
 export default class ConciergeController extends Component {
+  static displayName = 'ConciergeController';
+
   static propTypes = {
     communitySlug: string,
     pathName: string,
@@ -119,10 +122,9 @@ export default class ConciergeController extends Component {
     });
 
     if (!pricingRequested && hasAllUserData(userDetails)) {
-      this.doSubmitConversion(userDetails, REQUEST_PRICING, true);
-    } else {
-      this.next(false);
+      return this.doSubmitConversion(userDetails, REQUEST_PRICING, true);
     }
+    return this.next();
   };
 
   gotoAdvancedInfo = () => {
@@ -162,14 +164,14 @@ export default class ConciergeController extends Component {
         category: eventCategory,
         label: communitySlug || pathName,
       });
-      this.doSubmitConversion(data, REQUEST_CONSULTATION, true);
+      return this.doSubmitConversion(data, REQUEST_CONSULTATION, true);
     } else {
       SlyEvent.getInstance().sendEvent({
         action: 'contactCommunity',
         category: 'requestAvailability',
         label: communitySlug || pathName,
       });
-      this.doSubmitConversion(data, REQUEST_AVAILABILITY, true);
+      return this.doSubmitConversion(data, REQUEST_AVAILABILITY, true);
     }
   };
 
@@ -196,7 +198,7 @@ export default class ConciergeController extends Component {
       category: eventCategory,
       label: communitySlug || pathName,
     });
-    this.doSubmitConversion(data, REQUEST_CONSULTATION, false);
+    return this.doSubmitConversion(data, REQUEST_CONSULTATION, false);
   };
 
   doSubmitConversion = (data = {}, action, isExpress = false) => {
@@ -205,6 +207,7 @@ export default class ConciergeController extends Component {
       communitySlug,
       gotoGetCustomPricing,
       createAction,
+      match,
     } = this.props;
     const value = {
       user: { ...data },
@@ -213,7 +216,8 @@ export default class ConciergeController extends Component {
     if (communitySlug) {
       value.propertyIds = [communitySlug];
     }
-    Promise.all([
+
+    return Promise.all([
       submit({
         action,
         value,
@@ -269,7 +273,8 @@ export default class ConciergeController extends Component {
     if (communitySlug) {
       value.propertyIds = [communitySlug];
     }
-    submit({
+
+    return submit({
       action: ASSESSMENT,
       value,
     }).then(() => this.next(false));
