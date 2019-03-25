@@ -14,6 +14,20 @@ import { CONCIERGE } from 'sly/constants/modalType';
 
 jest.mock('../services/helpers/events');
 
+const dig = (wrapper, name) => {
+  const tries = [];
+  try {
+    while (wrapper.name() !== name) {
+      tries.push(wrapper.name());
+      wrapper = wrapper.dive();
+    }
+    return wrapper;
+  } catch (e) {
+    console.log(`Component with name: ${name} not found in this list`, tries);
+    throw e;
+  }
+};
+
 describe('ConciergeController', () => {
   const mockStore = configureStore();
   const initStore = (props = {}, conciergeProps = {}) => mockStore({
@@ -189,7 +203,7 @@ describe('ConciergeController', () => {
     });
   });
 
-  describe('Controller', () => {
+  describe.only('Controller', () => {
     const sendEvent = jest.fn();
     const gotoGetCustomPricing = jest.fn();
     const events = {
@@ -226,7 +240,7 @@ describe('ConciergeController', () => {
       user: 'USER',
     };
 
-    const wrap = (props = {}) => shallow((
+    const wrap = (props = {}) => dig(shallow((
       <ConciergeController
         {...props}
         set={set}
@@ -240,10 +254,7 @@ describe('ConciergeController', () => {
         api={{}}
         history={history}
       />
-    ))
-      .dive().dive().dive().dive().dive()
-      .dive().dive().dive().dive().dive()
-      .dive().dive().dive();
+    )), 'ConciergeController').dive();
 
     it('should prompt the user if is not converted', () => {
       wrap({
@@ -463,7 +474,8 @@ describe('ConciergeController', () => {
     });
 
     it('should submit advanced info', () => {
-      const wrapper = wrap({ communitySlug: community.id, submit, concierge: {} });
+      const wrapper = wrap({ communitySlug: community.id, concierge: {} });
+      wrapper.setProps({ submit });
       const instance = wrapper.instance();
       instance.next = jest.fn();
       const then = jest.fn();
