@@ -137,6 +137,7 @@ describe('ConciergeController', () => {
   describe('Container', () => {
     const wrap = (communitySlug, store) => dig(shallow(
       <ConciergeController
+        children={spy}
         communitySlug={communitySlug}
         store={store}
         api={api}
@@ -145,7 +146,6 @@ describe('ConciergeController', () => {
         queryParams={{}}
         setQueryParams={setQueryParams}
         history={history}
-        children={spy}
       />
     ), 'ConciergeController').dive();
 
@@ -400,7 +400,7 @@ describe('ConciergeController', () => {
         },
       });
 
-      expect(wrapper.instance().next).toHaveBeenCalledWith(false);
+      expect(wrapper.instance().next).toHaveBeenCalled();
     });
 
     it('should submit express conversion when community is passed', async () => {
@@ -456,7 +456,7 @@ describe('ConciergeController', () => {
         },
       });
 
-      expect(wrapper.instance().next).toHaveBeenCalledWith(true);
+      expect(wrapper.instance().next).toHaveBeenCalled();
     });
 
     it('should submit advanced info', async () => {
@@ -471,7 +471,7 @@ describe('ConciergeController', () => {
           user: { user: 'USER' },
         },
       });
-      expect(wrapper.instance().next).toHaveBeenCalledWith(false);
+      expect(wrapper.instance().next).toHaveBeenCalled();
     });
   });
 });
