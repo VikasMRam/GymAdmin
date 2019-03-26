@@ -35,6 +35,9 @@ const PricingWizardPageContainer = ({
       propertyIds: [id],
       user,
     };
+    if (!user.email && !user.phone) {
+      return;
+    }
     const payload = {
       action: CUSTOM_PRICING,
       value,
