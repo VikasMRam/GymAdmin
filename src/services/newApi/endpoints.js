@@ -6,6 +6,7 @@ export default {
   getUser: { method: get, path: '/platform/users/:id' },
   updateUser: { method: patch, path: '/platform/users/:id' },
   getUuidAux: { method: get, path: '/platform/uuid-auxes/:id' },
+  updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },
   updateUserSave: { method: patch, path: '/marketplace/user-saves/:id' },
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
   getCommunities: { method: get, path: '/marketplace/communities' },

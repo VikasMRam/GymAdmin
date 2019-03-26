@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { string, func, object } from 'prop-types';
+import produce from 'immer';
 
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 import { getDetail } from 'sly/store/selectors';
@@ -15,6 +16,7 @@ import {
 } from 'sly/services/api/actions';
 
 import {
+  CONSULTATION_REQUESTED,
   PROFILE_CONTACTED,
 } from 'sly/services/newApi/constants';
 
@@ -28,6 +30,7 @@ import {
 } from 'sly/services/validation';
 
 import { CONCIERGE } from 'sly/constants/modalType';
+import { withRouter } from 'react-router';
 
 export const CONVERSION_FORM = 'conversionForm';
 export const EXPRESS_CONVERSION_FORM = 'expressConversionForm';
@@ -85,15 +88,19 @@ const mapStateToProps = (state, props) => {
 
 const submit = data => resourceCreateRequest('userAction', data);
 
+@withRouter
+
 @connectController(
   mapStateToProps,
   dispatch => ({
     submit: data => dispatch(submit(data)),
   }),
 )
+
 @prefetch('user', 'getUser', req => req({ id: 'me' }))
 @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 @query('createAction', 'createUuidAction')
+@query('updateUuidAux', 'updateUuidAux')
 
 export default class ConciergeController extends Component {
   static displayName = 'ConciergeController';
@@ -218,10 +225,12 @@ export default class ConciergeController extends Component {
       createAction,
       match,
     } = this.props;
+
     const value = {
       user: { ...data },
       propertyIds: [],
     };
+
     if (communitySlug) {
       value.propertyIds = [communitySlug];
     }
@@ -238,7 +247,7 @@ export default class ConciergeController extends Component {
         attributes: {
           actionInfo: { email, phone, name },
           actionPage: match.url,
-          actionType: PROFILE_CONTACTED,
+          actionType: CONSULTATION_REQUESTED,
         },
       }),
     ]).then(() => {
@@ -252,10 +261,19 @@ export default class ConciergeController extends Component {
 
   submitAdvancedInfo = (data) => {
     const {
-      submit, communitySlug, pathName, concierge, createAction, match,
+      submit,
+      communitySlug,
+      pathName,
+      concierge,
+      createAction,
+      match,
+      updateUuidAux,
+      status,
     } = this.props;
 
     const { message, ...rest } = data;
+
+    const uuidAux = status.uuidAux.result;
 
     let eventCategory = 'advancedInfo';
     // Not a 100% correct.
@@ -291,11 +309,29 @@ export default class ConciergeController extends Component {
         action: ASSESSMENT,
         value,
       }),
+      updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
+        const uuidInfo = draft.attributes.uuidInfo || {};
+
+        const housingInfo = uuidInfo.housingInfo || {};
+        housingInfo.roomPreference = data.type_of_room;
+        housingInfo.typeCare = data.type_of_care;
+        housingInfo.moveTimeline = (data.time_to_move || 0).toString();
+        uuidInfo.housingInfo = housingInfo;
+
+        const financialInfo = uuidInfo.financialInfo || {};
+        financialInfo.maxMonthlyBudget = data.budget;
+        financialInfo.medicare = data.medicaid_coverage;
+        uuidInfo.financialInfo = financialInfo;
+
+        draft.attributes.uuidInfo = uuidInfo;
+      })),
       createAction({
         type: 'UUIDAction',
         attributes: {
           actionInfo: {
-            notes: data,
+            slug: communitySlug,
+            contactType: eventCategory,
+            notes: message,
           },
           actionPage: match.url,
           actionType: PROFILE_CONTACTED,
@@ -313,7 +349,7 @@ export default class ConciergeController extends Component {
       history,
     } = this.props;
 
-    if (communitySlug) {
+    if (!communitySlug) {
       history.push(`/custom-pricing/${communitySlug}`);
     } else {
       const {
