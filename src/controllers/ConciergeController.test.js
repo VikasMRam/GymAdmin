@@ -88,7 +88,6 @@ describe('ConciergeController', () => {
   };
 
   const entities = { userAction };
-  const avdInfoSentEntities = { userAction: avdInfoSentUserAction };
   const emailOnlyEntities = { userAction: onlyEmailUserAction };
 
   const history = {
@@ -99,25 +98,15 @@ describe('ConciergeController', () => {
 
   const childProps = () => spy.mock.calls.pop()[0];
 
+  const createAction = jest.fn().mockImplementation(() => Promise.resolve());
+  const api = { createUuidAction: createAction };
+
   beforeEach(() => {
     spy.mockClear();
+    createAction.mockClear();
     setQueryParams.mockClear();
     history.push.mockClear();
   });
-
-  // Logic to get Data from controller for Asserting
-  //
-  // const getControllerAction = store => {
-  //   const { payload, ...lastAction } = store.getActions().pop();
-  //   expect(lastAction.type).toBe('controller/SET');
-  //   expect(payload.controller.indexOf('ConciergeController')).toBe(0);
-  //   return payload.data;
-  // };
-  //
-  // USAGE :
-  //   expect(getControllerAction(store)).toEqual({
-  //   currentStep: CONVERSION_FORM,
-  // });
 
   const userRequestInfo = {
     hasStarted: true,
@@ -127,10 +116,6 @@ describe('ConciergeController', () => {
   };
 
   const uuidAuxRequestInfo = userRequestInfo;
-
-  const post = () => Promise.resolve(true);
-  post.method = 'post';
-  const api = { createUuidAction: post };
 
   const match = { url: '/myurl' };
 
@@ -211,14 +196,14 @@ describe('ConciergeController', () => {
       sendEvent.mock.calls.length - 1
     ][0];
 
+    const lastPost = () => createAction.mock.calls.pop()[0];
+
     SlyEvent.getInstance.mockImplementation(() => events);
 
     const submit = jest.fn().mockImplementation((...args) => Promise.resolve(args));
     const lastSubmit = () => submit.mock.calls.pop()[0];
-    const lastSubmitResult = () => submit.mock.results.pop()[0];
 
     const set = jest.fn();
-    const lastSet = () => set.mock.calls.pop()[0];
 
     beforeEach(() => {
       sendEvent.mockRestore();
@@ -249,13 +234,14 @@ describe('ConciergeController', () => {
           gotoGetCustomPricing={gotoGetCustomPricing}
           userRequestInfo={userRequestInfo}
           uuidAuxRequestInfo={uuidAuxRequestInfo}
-          createAction={post}
+          createAction={createAction}
           history={history}
         />
       ));
 
       const instance = component.instance();
       instance.next = jest.fn().mockImplementation(instance.next);
+
       return component;
     };
 
@@ -265,7 +251,9 @@ describe('ConciergeController', () => {
         pathName: 'my-community',
         concierge: { advancedInfoSent: true },
       });
+
       await childProps().getPricing();
+
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
@@ -329,7 +317,7 @@ describe('ConciergeController', () => {
         concierge: {},
       });
 
-      const data = { data: 'DATA' };
+      const data = { full_name: 'Fonz',  email: 'fonz@fonz.io', phone: '0987654321' };
       await childProps().submitRegularConversion(data);
 
       // expect(lastEvent()).toEqual({
@@ -345,6 +333,20 @@ describe('ConciergeController', () => {
       //     propertyIds: [ 'my-community' ],
       //   },
       // });
+
+      expect(lastPost()).toEqual({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            name: data.full_name,
+            phone: data.phone,
+            email: data.email,
+          },
+          actionPage: '/myurl',
+          actionType: 'profileContacted',
+        },
+      });
+
       expect(lastEvent()).toEqual({
         action: 'contactCommunity',
         category: 'requestConsultation',
@@ -354,7 +356,7 @@ describe('ConciergeController', () => {
       expect(lastSubmit()).toEqual({
         action: 'LEAD/REQUEST_CONSULTATION',
         value: {
-          user: { data: 'DATA' },
+          user: data,
           propertyIds: ['my-community'],
         },
       });
@@ -370,22 +372,23 @@ describe('ConciergeController', () => {
         concierge: {},
       });
 
-      const data = { data: 'DATA' };
+      const data = { full_name: 'Fonz',  email: 'fonz@fonz.io', phone: '0987654321' };
+
       await childProps().submitRegularConversion(data);
 
-      // expect(lastEvent()).toEqual({
-      //   action: 'contactCommunity',
-      //   category: 'requestCallback',
-      //   label: 'my-community',
-      // });
-      //
-      // expect(lastSubmit()).toEqual({
-      //   action: 'LEAD/REQUEST_CALLBACK',
-      //   value: {
-      //     user: { data: 'DATA' },
-      //     propertyIds: [ 'my-community' ],
-      //   },
-      // });
+      expect(lastPost()).toEqual({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            name: data.full_name,
+            phone: data.phone,
+            email: data.email,
+          },
+          actionPage: '/myurl',
+          actionType: 'profileContacted',
+        },
+      });
+
       expect(lastEvent()).toEqual({
         action: 'contactCommunity',
         category: 'requestConsultation',
@@ -395,7 +398,7 @@ describe('ConciergeController', () => {
       expect(lastSubmit()).toEqual({
         action: 'LEAD/REQUEST_CONSULTATION',
         value: {
-          user: { data: 'DATA' },
+          user: data,
           propertyIds: [],
         },
       });
@@ -463,6 +466,17 @@ describe('ConciergeController', () => {
       const wrapper = wrap({ communitySlug: community.id, concierge: {} });
       wrapper.setProps({ submit });
       await childProps().submitAdvancedInfo(advancedInfoData);
+
+      expect(lastPost()).toEqual({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+          },
+          actionPage: '/myurl',
+          actionType: 'profileContacted',
+        },
+      });
+
       expect(lastSubmit()).toEqual({
         action: ASSESSMENT,
         value: {
@@ -471,6 +485,7 @@ describe('ConciergeController', () => {
           user: { user: 'USER' },
         },
       });
+
       expect(wrapper.instance().next).toHaveBeenCalled();
     });
   });
