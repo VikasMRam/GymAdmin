@@ -6,7 +6,17 @@ import { getDetail } from 'sly/store/selectors';
 import { connectController } from 'sly/controllers';
 import SlyEvent from 'sly/services/helpers/events';
 
-import { ASSESSMENT, REQUEST_CALLBACK, REQUEST_CONSULTATION, REQUEST_PRICING, REQUEST_AVAILABILITY } from 'sly/services/api/actions';
+import {
+  ASSESSMENT,
+  REQUEST_CALLBACK,
+  REQUEST_CONSULTATION,
+  REQUEST_PRICING,
+  REQUEST_AVAILABILITY,
+} from 'sly/services/api/actions';
+
+import {
+  PROFILE_CONTACTED,
+} from 'sly/services/newApi/constants';
 
 import { prefetch, query } from 'sly/services/newApi';
 
@@ -18,7 +28,6 @@ import {
 } from 'sly/services/validation';
 
 import { CONCIERGE } from 'sly/constants/modalType';
-import { withRouter } from 'react-router';
 
 export const CONVERSION_FORM = 'conversionForm';
 export const EXPRESS_CONVERSION_FORM = 'expressConversionForm';
@@ -217,6 +226,8 @@ export default class ConciergeController extends Component {
       value.propertyIds = [communitySlug];
     }
 
+    const { email, phone, full_name: name } = data;
+
     return Promise.all([
       submit({
         action,
@@ -225,11 +236,9 @@ export default class ConciergeController extends Component {
       createAction({
         type: 'UUIDAction',
         attributes: {
-          actionInfo: {
-            slug: communitySlug,
-          },
+          actionInfo: { email, phone, name },
           actionPage: match.url,
-          actionType: 'profileViewed',
+          actionType: PROFILE_CONTACTED,
         },
       }),
     ]).then(() => {
@@ -286,10 +295,10 @@ export default class ConciergeController extends Component {
         type: 'UUIDAction',
         attributes: {
           actionInfo: {
-            slug: communitySlug,
+            notes: data,
           },
           actionPage: match.url,
-          actionType: 'profileViewed',
+          actionType: PROFILE_CONTACTED,
         },
       }),
     ]).then(this.next);
@@ -312,21 +321,17 @@ export default class ConciergeController extends Component {
         consultationRequested,
       } = concierge;
 
-      const Done = (
+      const done = (
         (contactRequested || consultationRequested)
         && isAssessment(userDetails)
         && hasAllUserData(userDetails)
       );
 
-      if (Done) {
+      if (done) {
         setQueryParams({ modal: CONCIERGE, currentStep: WHAT_NEXT });
-      }
-
-      if (!hasAllUserData(userDetails)) {
+      } else if (!hasAllUserData(userDetails)) {
         setQueryParams({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
-      }
-
-      if (!isAssessment(userDetails)) {
+      } else if (!isAssessment(userDetails)) {
         setQueryParams({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
       }
     }
