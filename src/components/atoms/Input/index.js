@@ -4,7 +4,7 @@ import { bool, oneOf, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
+import { size, palette, assetPath } from 'sly/components/themes';
 
 const backgroundColor = (p) => {
   if (p.disabled) {
@@ -60,6 +60,10 @@ const styles = css`
     width: auto;
     height: auto;
     margin: 0 ${size('spacing.small')} 0 0;
+  }
+  &[type='search'] {
+    background: url(${assetPath('icons/search-caption.svg')}) no-repeat scroll 12px 12px;
+    padding-left: calc(12px + ${size('spacing', 'xLarge')} + ${size('spacing', 'regular')});
   }
 `;
 
