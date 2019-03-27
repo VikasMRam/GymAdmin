@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
 import { reduxForm, reset } from 'redux-form';
+import { withRouter } from 'react-router';
 
+import { query } from 'sly/services/newApi';
+import { connectController } from 'sly/controllers';
+import { resourceListReadRequest, resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
+import withServerState from 'sly/store/withServerState';
+import { getList, getDetail } from 'sly/store/selectors';
 import { createValidator, required, usPhone } from 'sly/services/validation';
 import TalkToAgentForm from 'sly/components/organisms/TalkToAgentForm';
 import { REQUEST_AGENT_CONSULT } from 'sly/services/api/actions';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 import SlyEvent from 'sly/services/helpers/events';
 
-const handleLocationChange = () => {
-
-};
-
 const form = 'TalkToAgentForm';
 const validate = createValidator({
   location: [required],
   phone: [usPhone, required],
   message: [required],
-  full_name:[required]
+  full_name: [required],
 });
 
 const afterSubmit = (result, dispatch) => dispatch(reset(form));
@@ -29,7 +31,28 @@ const ReduxForm = reduxForm({
   destroyOnUnmount: false,
 })(TalkToAgentForm);
 
-class TalkToAgentFormContainer extends Component {
+const mapStateToProps = (state, { location }) => ({
+  userDetails: (getDetail(state, 'userAction') || {}).userDetails,
+  pathName: location.pathname,
+});
+
+const mapDispatchToProps = dispatch => ({
+  postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
+});
+
+const mapPropsToActions = () => ({
+  userDetails: resourceDetailReadRequest('userAction'),
+});
+
+@withRouter
+
+@withServerState(mapPropsToActions)
+
+@connectController(mapStateToProps, mapDispatchToProps)
+
+@query('createAction', 'createUuidAction')
+
+export default class TalkToAgentFormContainer extends Component {
   static propTypes = {
     userDetails: object.isRequired,
     postUserAction: func.isRequired,
@@ -70,7 +93,7 @@ class TalkToAgentFormContainer extends Component {
           postSubmit();
         }
       });
-  }
+  };
 
   render() {
     const { ...props } = this.props;
@@ -78,12 +101,9 @@ class TalkToAgentFormContainer extends Component {
     return (
       <ReduxForm
         initialValues={initialValues}
-        onLocationChange={handleLocationChange}
         onSubmit={this.handleSubmit}
         {...props}
       />
     );
   }
 }
-
-export default TalkToAgentFormContainer;

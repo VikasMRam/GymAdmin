@@ -7,6 +7,7 @@ import smoothscroll from 'smoothscroll-polyfill';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 
+import { hideChatbox } from 'sly/config';
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
@@ -226,7 +227,7 @@ export default class App extends Component {
             </Switch>
           </Router>
         </ThemeProvider>
-        <ChatBoxContainer />
+        {!hideChatbox && <ChatBoxContainer />}
       </Fragment>
     );
   }

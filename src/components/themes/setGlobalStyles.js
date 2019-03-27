@@ -62,13 +62,5 @@ export default function setGlobalStyles() {
       background-color: transparent;
     }
 
-    .roko-instabot-widget-button  {
-      z-index: 10000!important;
-      margin-bottom: ${getKey('sizes.spacing.massive')}!important;
-    }
-    .olark-launch-button {
-      z-index: 10000!important;
-      margin-bottom: ${getKey('sizes.spacing.massive')}!important;
-    }
   `;
 }
