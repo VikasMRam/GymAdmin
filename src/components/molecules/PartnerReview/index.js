@@ -11,6 +11,11 @@ const Wrapper = styled.div`
 
 const ImageWrapper = styled.div`
   margin-right: ${size('spacing.large')};
+  width: ${size('element.xxLarge')};
+
+  > * {
+    width: inherit;
+  }
 
   img {
     width: ${size('element.xxLarge')};
@@ -31,7 +36,7 @@ const PartnerReview = ({
 }) => (
   <Wrapper>
     <ImageWrapper>
-      <Image src={image} />
+      <Image src={image} aspectRatio="16:9" />
     </ImageWrapper>
     <div>
       <Paragraph>&quot;{review}&quot;</Paragraph>
