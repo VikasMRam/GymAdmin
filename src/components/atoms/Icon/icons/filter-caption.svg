@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <path id="filter-caption-a" d="M8,16 L12,16 L12,14 L8,14 L8,16 Z M1,4 L1,6 L19,6 L19,4 L1,4 Z M4,11 L16,11 L16,9 L4,9 L4,11 Z"/>
+  </defs>
+  <use xlink:href="#filter-caption-a"/>
+</svg>
