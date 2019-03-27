@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { object, number, array } from 'prop-types';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import withServerState from 'sly/store/withServerState';
+import { stateNames, urlize, replaceLastSegment } from  'sly/services/helpers/url';
 import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
 import { logWarn } from 'sly/services/helpers/logging';
 import { resourceListReadRequest } from 'sly/store/resource/actions';
@@ -73,6 +75,7 @@ class StateSearchPageContainer extends Component {
       geoGuide,
       history,
     } = this.props;
+    const { pathname, search } = location;
 
     if (serverState instanceof Error) {
       const errorCode = (serverState.response && serverState.response.status) || 500;
@@ -80,6 +83,16 @@ class StateSearchPageContainer extends Component {
     }
     const isMapView = searchParams.view === 'map';
     const gg = geoGuide && geoGuide.length > 0 ? geoGuide[0] : {};
+
+    const notPermittedSeparators = ['_', '%20'];
+    const ucStateQp = searchParams.state.toUpperCase();
+    if (stateNames[ucStateQp]) {
+      return <Redirect to={replaceLastSegment(pathname, urlize(stateNames[ucStateQp])) + search} />;
+    }
+    const hasNotPermittedSeparators = notPermittedSeparators.some(v => ucStateQp.indexOf(v) >= 0);
+    if (hasNotPermittedSeparators) {
+      return <Redirect to={replaceLastSegment(pathname, urlize(ucStateQp)) + search} />;
+    }
 
     return (
       <ModalController>

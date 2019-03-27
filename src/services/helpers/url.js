@@ -48,7 +48,7 @@ const tocPaths = (toc) => {
   }
 };
 
-const stateNames = {
+export const stateNames = {
   AL: 'Alabama',
   AK: 'Alaska',
   AZ: 'Arizona',
@@ -185,6 +185,8 @@ export const urlize = inString =>
   inString
     .trim()
     .toLowerCase()
+    .replace(/%20/g, '-')
+    .replace(/_/g, '-')
     .replace(/[^\w\s-]+/g, '')
     .replace(/[\s-]+/g, ' ')
     .replace(/\s/g, '-');
