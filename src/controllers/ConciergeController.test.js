@@ -99,11 +99,13 @@ describe('ConciergeController', () => {
   const childProps = () => spy.mock.calls.pop()[0];
 
   const createAction = jest.fn().mockImplementation(() => Promise.resolve());
-  const api = { createUuidAction: createAction };
+  const updateUuidAux = jest.fn().mockImplementation(() => Promise.resolve());
+  const api = { createUuidAction: createAction, updateUuidAux };
 
   beforeEach(() => {
     spy.mockClear();
     createAction.mockClear();
+    updateUuidAux.mockClear();
     setQueryParams.mockClear();
     history.push.mockClear();
   });
@@ -119,6 +121,18 @@ describe('ConciergeController', () => {
 
   const match = { url: '/myurl' };
 
+  const router = {
+    history,
+    route: {
+      location: {
+        pathname: '/my-url',
+      },
+      match: {
+        url: '/my-url',
+      },
+    },
+  };
+
   describe('Container', () => {
     const wrap = (communitySlug, store) => dig(shallow(
       <ConciergeController
@@ -132,7 +146,7 @@ describe('ConciergeController', () => {
         setQueryParams={setQueryParams}
         history={history}
       />
-    ), 'ConciergeController').dive();
+    , { context: { router } }), 'ConciergeController').dive();
 
     it('should pass default values', () => {
       const store = initStore({ resource, entities });
@@ -167,6 +181,7 @@ describe('ConciergeController', () => {
       const store = initStore({ resource, entities: emailOnlyEntities });
       const wrapper = wrap(otherCommunity.id, store);
       wrapper.instance().next(true);
+
       expect(history.push).toBeCalledWith(`/custom-pricing/${otherCommunity.id}`);
     });
 
@@ -191,12 +206,12 @@ describe('ConciergeController', () => {
     const events = {
       sendEvent,
     };
-
     const lastEvent = () => sendEvent.mock.calls[
       sendEvent.mock.calls.length - 1
     ][0];
 
-    const lastPost = () => createAction.mock.calls.pop()[0];
+    const lastUuidPost = () => createAction.mock.calls.pop()[0];
+    const lastUuidAuxUpdate = () => updateUuidAux.mock.calls.pop()[1];
 
     SlyEvent.getInstance.mockImplementation(() => events);
 
@@ -219,6 +234,26 @@ describe('ConciergeController', () => {
     const advancedInfoData = {
       message: 'MESSAGE',
       user: 'USER',
+      type_of_care: ['none'],
+      type_of_room: ['room1'],
+      time_to_move: 1,
+      budget: 5000,
+      medicaid_coverage: false,
+    };
+
+    const status = {
+      uuidAux: {
+        result: {
+          id: 'uuidAuxId',
+          type: 'UUIDAux',
+          attributes: {
+            uuidInfo: {
+              housingInfo: {},
+              financialInfo: {},
+            },
+          },
+        },
+      },
     };
 
     const wrap = (props = {}) => {
@@ -235,7 +270,9 @@ describe('ConciergeController', () => {
           userRequestInfo={userRequestInfo}
           uuidAuxRequestInfo={uuidAuxRequestInfo}
           createAction={createAction}
+          updateUuidAux={updateUuidAux}
           history={history}
+          status={status}
         />
       ));
 
@@ -334,7 +371,7 @@ describe('ConciergeController', () => {
       //   },
       // });
 
-      expect(lastPost()).toEqual({
+      expect(lastUuidPost()).toEqual({
         type: 'UUIDAction',
         attributes: {
           actionInfo: {
@@ -343,7 +380,7 @@ describe('ConciergeController', () => {
             email: data.email,
           },
           actionPage: '/myurl',
-          actionType: 'profileContacted',
+          actionType: 'consultationRequested',
         },
       });
 
@@ -376,7 +413,7 @@ describe('ConciergeController', () => {
 
       await childProps().submitRegularConversion(data);
 
-      expect(lastPost()).toEqual({
+      expect(lastUuidPost()).toEqual({
         type: 'UUIDAction',
         attributes: {
           actionInfo: {
@@ -385,7 +422,7 @@ describe('ConciergeController', () => {
             email: data.email,
           },
           actionPage: '/myurl',
-          actionType: 'profileContacted',
+          actionType: 'consultationRequested',
         },
       });
 
@@ -467,13 +504,34 @@ describe('ConciergeController', () => {
       wrapper.setProps({ submit });
       await childProps().submitAdvancedInfo(advancedInfoData);
 
-      expect(lastPost()).toEqual({
+      expect(lastUuidPost()).toEqual({
         type: 'UUIDAction',
         attributes: {
           actionInfo: {
+            contactType: 'advancedInfo',
+            notes: 'MESSAGE',
+            slug: 'my-community',
           },
           actionPage: '/myurl',
           actionType: 'profileContacted',
+        },
+      });
+
+      expect(lastUuidAuxUpdate()).toEqual({
+        id: 'uuidAuxId',
+        type: 'UUIDAux',
+        attributes: {
+          uuidInfo: {
+            financialInfo: {
+              maxMonthlyBudget: 5000,
+              medicare: false,
+            },
+            housingInfo: {
+              moveTimeline: '1',
+              roomPreference: ['room1'],
+              typeCare: ['none'],
+            },
+          },
         },
       });
 
@@ -482,7 +540,14 @@ describe('ConciergeController', () => {
         value: {
           message: 'MESSAGE',
           propertyIds: ['my-community'],
-          user: { user: 'USER' },
+          user: {
+            user: 'USER',
+            type_of_care: ['none'],
+            type_of_room: ['room1'],
+            time_to_move: 1,
+            budget: 5000,
+            medicaid_coverage: false,
+          },
         },
       });
 
