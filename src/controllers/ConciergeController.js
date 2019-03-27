@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import { string, func, object } from 'prop-types';
+import { string, func, object, shape } from 'prop-types';
 import produce from 'immer';
+import { withRouter } from 'react-router';
 
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 import { getDetail } from 'sly/store/selectors';
@@ -29,8 +30,9 @@ import {
   usPhone,
 } from 'sly/services/validation';
 
+import userPropType from 'sly/propTypes/user';
+
 import { CONCIERGE } from 'sly/constants/modalType';
-import { withRouter } from 'react-router';
 
 export const CONVERSION_FORM = 'conversionForm';
 export const EXPRESS_CONVERSION_FORM = 'expressConversionForm';
@@ -106,17 +108,25 @@ export default class ConciergeController extends Component {
   static displayName = 'ConciergeController';
 
   static propTypes = {
-    communitySlug: string,
-    pathName: string,
-    concierge: object.isRequired,
+    match: shape({ url: string.isRequired }),
+    history: object,
     children: func.isRequired,
     set: func.isRequired,
+    concierge: object.isRequired,
+    communitySlug: string,
+    pathName: string,
+    user: userPropType,
     queryParams: object,
     setQueryParams: func.isRequired,
     submit: func,
     gotoGetCustomPricing: func,
     userDetails: object,
-    history: object,
+    status: shape({
+      uuidAux: object,
+      user: object,
+    }).isRequired,
+    updateUuidAux: func,
+    createAction: func,
   };
 
   getPricing = () => {
@@ -349,7 +359,7 @@ export default class ConciergeController extends Component {
       history,
     } = this.props;
 
-    if (!communitySlug) {
+    if (communitySlug) {
       history.push(`/custom-pricing/${communitySlug}`);
     } else {
       const {

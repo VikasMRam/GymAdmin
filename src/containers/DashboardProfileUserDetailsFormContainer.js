@@ -69,7 +69,16 @@ const convertUserToProfileFormValues = (user) => {
   uuidAux: getRelationship(state, props.status.user.result, 'uuidAux'),
 }))
 
-class DashboardProfileUserDetailsFormContainer extends Component {
+export default class DashboardProfileUserDetailsFormContainer extends Component {
+  static propTypes = {
+    user: userPropType,
+    status: shape({
+      user: object,
+    }),
+    uuidAux: uuidAuxProps,
+    api: object,
+  };
+
   handleSubmit = (values) => {
     const { status, uuidAux, api } = this.props;
     const { user } = status;
@@ -82,13 +91,15 @@ class DashboardProfileUserDetailsFormContainer extends Component {
         draft.attributes.name = values.name;
         // draft.attributes.email = values.email;
         draft.attributes.phoneNumber = values.phoneNumber;
-        draft.relationships.uuidAux.data.attributes.uuidInfo.housingInfo.lookingFor = values.lookingFor;
-        draft.relationships.uuidAux.data.attributes.uuidInfo.residentInfo.fullName = values.residentName;
-        draft.relationships.uuidAux.data.attributes.uuidInfo.financialInfo.maxMonthlyBudget = parseInt(values.monthlyBudget, 10);
-        draft.relationships.uuidAux.data.attributes.uuidInfo.housingInfo.moveTimeline = values.timeToMove;
+
+        const { uuidInfo } = draft.relationships.uuidAux.data.attributes;
+        uuidInfo.housingInfo.lookingFor = values.lookingFor;
+        uuidInfo.residentInfo.fullName = values.residentName;
+        uuidInfo.financialInfo.maxMonthlyBudget = parseInt(values.monthlyBudget, 10);
+        uuidInfo.housingInfo.moveTimeline = values.timeToMove;
       }),
     });
-  }
+  };
   render() {
     const { user, ...props } = this.props;
     const initialValues = convertUserToProfileFormValues(user);
@@ -101,14 +112,3 @@ class DashboardProfileUserDetailsFormContainer extends Component {
     );
   }
 }
-
-DashboardProfileUserDetailsFormContainer.propTypes = {
-  user: userPropType,
-  status: shape({
-    user: object,
-  }),
-  uuidAux: uuidAuxProps,
-  api: object,
-};
-
-export default DashboardProfileUserDetailsFormContainer;
