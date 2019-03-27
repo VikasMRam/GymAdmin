@@ -39,12 +39,18 @@ const foregroundColor = ({
 };
 
 const borderColor = ({
-  ghost, selectable, selected, secondary,
+  ghost, selectable, selected, secondary, borderPalette,
 }) => {
   if ((selectable && !selected) || secondary) {
     return palette('slate', 'stroke');
   }
-  return ghost ? 'currentcolor' : 'transparent';
+  if (ghost) {
+    if (borderPalette) {
+      return palette(borderPalette, 'stroke');
+    }
+    return 'currentcolor';
+  }
+  return 'transparent';
 };
 
 const hoverBackgroundColor = ({
@@ -161,6 +167,7 @@ Button.propTypes = {
   transparent: bool,
   palette: palettePropType,
   foregroundPalette: palettePropType,
+  borderPalette: palettePropType,
   kind: oneOf(['jumbo', 'regular']),
   selectable: bool,
   selected: bool,
