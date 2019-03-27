@@ -173,8 +173,8 @@ const CenteredTile = styled(({
 
 const firstRowDiscoverHomes = [
   {
-    title: 'Care Homes',
-    description: 'Communities combining comfort and care',
+    title: 'Board and Care Home',
+    description: 'A residential personal care home',
     image: assetPath('images/home/discover-home/care-home.jpeg'),
     buttonText: 'See more',
     searchParams: { size: 'small' },
