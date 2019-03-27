@@ -54,7 +54,7 @@ class CommunityAskQuestionFormContainer extends Component {
         throw new SubmissionError({ _error: errorMessage });
       });
     });
-  }
+  };
 
   render() {
     const { user, initialValues: initValues, ...props } = this.props;
