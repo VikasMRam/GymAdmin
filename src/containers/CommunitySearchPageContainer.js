@@ -2,25 +2,28 @@ import React, { PureComponent } from 'react';
 import { object, array, bool } from 'prop-types';
 import queryString from 'query-string';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import withServerState from 'sly/store/withServerState';
+import {
+  stateNames,
+  urlize,
+  replaceLastSegment,
+} from 'sly/services/helpers/url';
 import SlyEvent from 'sly/services/helpers/events';
 import { resourceListReadRequest } from 'sly/store/resource/actions';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
-
 import {
   getList,
   getListMeta,
   isResourceListRequestInProgress,
 } from 'sly/store/selectors';
-
 import {
   filterLinkPath,
   getSearchParams,
 } from 'sly/services/helpers/search';
-
 import { logWarn } from 'sly/services/helpers/logging';
 import ModalController from 'sly/controllers/ModalController';
 import { prefetch } from 'sly/services/newApi';
@@ -122,6 +125,18 @@ export default class CommunitySearchPageContainer extends PureComponent {
       history,
       status,
     } = this.props;
+
+    const { pathname, search } = location;
+    const notPermittedSeparators = ['_', '%20'];
+    const ucStateQp = searchParams.state.toUpperCase();
+    if (stateNames[ucStateQp]) {
+      const nPathname = pathname.replace(searchParams.state, stateNames[ucStateQp]).toLowerCase();
+      return <Redirect to={nPathname + search} />;
+    }
+    const hasNotPermittedSeparators = notPermittedSeparators.some(v => searchParams.city.indexOf(v) >= 0);
+    if (hasNotPermittedSeparators) {
+      return <Redirect to={replaceLastSegment(pathname, urlize(searchParams.city)) + search} />;
+    }
 
     const isFetchingResults = status.communityList.isLoading;
 
