@@ -101,7 +101,7 @@ const BookATourPage = ({
       </Column>
       <WizardController
         formName="BookATourWizardForm"
-        onComplete={data => onComplete(data, openConfirmationModal)}
+        onComplete={data => onComplete(data).then(openConfirmationModal)}
         onStepChange={handleStepChange}
       >
         {({

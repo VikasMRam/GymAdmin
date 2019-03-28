@@ -1,17 +1,25 @@
-import { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { injectGlobal } from 'styled-components';
 import { bool } from 'prop-types';
 
-import { isBrowser, olarkSiteId } from 'sly/config';
+import { isBrowser, olarkSiteId, rokoApiKey} from 'sly/config';
 import { getKey } from 'sly/components/themes';
 
 injectGlobal`
   body.ChatBox-page-with-sticky-footer #hbl-live-chat-wrapper .olark-launch-button {
-      bottom: ${getKey('sizes.chatBox.pageWithStickyFooterBottomMargin')}!important;
-    }
+    bottom: ${getKey('sizes.chatBox.pageWithStickyFooterBottomMargin')}!important;
+  }
   body.ChatBox-footer-reached #hbl-live-chat-wrapper .olark-launch-button {
-      bottom: ${getKey('sizes.chatBox.footerReachedBottomMargin')}!important;
-    }  
+    bottom: ${getKey('sizes.chatBox.footerReachedBottomMargin')}!important;
+  }  
+  .roko-instabot-widget-button  {
+    z-index: 10000!important;
+    margin-bottom: ${getKey('sizes.spacing.massive')}!important;
+  }
+  .olark-launch-button {
+    z-index: 10000!important;
+    margin-bottom: ${getKey('sizes.spacing.massive')}!important;
+  }
 `;
 
 const loadOlark = () => {
@@ -66,6 +74,20 @@ export default class ChatBox extends Component {
       }, 30000);
     }
 
-    return null;
+    return (
+      <Fragment>
+        {/* Begin Instabot Code */}
+        <script type="text/javascript" defer dangerouslySetInnerHTML={{ __html: `
+          setTimeout(function(){
+            (function(s,d,r) {
+              var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
+              j.text="apiKey: '${rokoApiKey}'";j.async=true;j.src=r;
+              f.parentNode.insertBefore(j,f);
+            })('script', document, '//app.instabot.io/jsapi/v2/rokoInstabot.js');
+          }, 30000);
+        `}}></script>
+        {/* End Instabot Code */}
+      </Fragment>
+    );
   }
 }

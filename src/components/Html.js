@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { googleTagManagerId, isProd, googleAppId, rokoApiKey, version } from 'sly/config';
+import { googleTagManagerId, isProd, googleAppId, version } from 'sly/config';
 
 const Html = ({
   styles, assets, state, content,
@@ -65,18 +65,6 @@ const Html = ({
           )
         }
         {/* End Inspectlet Asynchronous Code */}
-
-        {/* Begin Instabot Code */}
-        <script type="text/javascript" defer dangerouslySetInnerHTML={{ __html: `
-          setTimeout(function(){
-            (function(s,d,r) {
-              var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
-              j.text="apiKey: '${rokoApiKey}'";j.async=true;j.src=r;
-              f.parentNode.insertBefore(j,f);
-            })('script', document, '//app.instabot.io/jsapi/v2/rokoInstabot.js');
-          }, 30000);
-        `}}></script>
-        {/* End Instabot Code */}
 
         {/* Begin Google Platform Library Code */}
         <script type="text/javascript" defer dangerouslySetInnerHTML={{ __html: `

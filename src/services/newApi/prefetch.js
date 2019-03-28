@@ -39,7 +39,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       fetch: props => dispatch(dispatcher(api[apiCall], props)),
     });
 
-    @withApi()
+    @withApi
     // FIXME: For now we have to continue using withDone (which uses componentWillUpdate)
     // we have to re-engineer this to be able to use react 17, or to start using hooks in
     // react 16.8 (methods renamed to UNSAFE_xxxx)
@@ -49,6 +49,8 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
 
     class Wrapper extends React.Component {
       static displayName = `prefetch(${getDisplayName(InnerComponent)}, ${propName})`;
+
+      static WrappedComponent = InnerComponent;
 
       static propTypes = {
         api: object,

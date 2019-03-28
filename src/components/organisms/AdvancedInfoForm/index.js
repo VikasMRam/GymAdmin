@@ -48,9 +48,9 @@ const timeToMoveOptions = [
   // { value: 12, label: '12+ Months' },
 ];
 const budgetOptions = [
-  { value: 2, label: 'Under $2K' },
-  { value: '2k-5k', label: '$2K to $5K' },
-  { value: 5, label: 'Over $5K' },
+  { value: 2000, label: 'Under $2K' },
+  { value: 5000, label: '$2K to $5K' },
+  { value: 9999, label: 'Over $5K' },
   // { value: 10, label: 'Over $6000' },
 ];
 

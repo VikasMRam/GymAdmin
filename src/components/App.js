@@ -7,6 +7,7 @@ import smoothscroll from 'smoothscroll-polyfill';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 
+import { hideChatbox } from 'sly/config';
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
@@ -209,7 +210,9 @@ export default class App extends Component {
           <Router>
             <Switch>
               <Route
-                path="/ping" render={() => (<h1> pong </h1> )}
+                path="/ping"
+                render={() => (<h1> pong </h1>)}
+                exact
               />
               <Route
                 path={`/:toc(${careTypes})/:state/:city/filters`}
@@ -224,7 +227,7 @@ export default class App extends Component {
             </Switch>
           </Router>
         </ThemeProvider>
-        <ChatBoxContainer />
+        {!hideChatbox && <ChatBoxContainer />}
       </Fragment>
     );
   }

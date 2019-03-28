@@ -188,9 +188,11 @@ class PricingWizardPage extends Component {
     const {
       handleRoomTypeChange, handleCareTypeChange, handleStepChange, openAdvisorHelp, openConfirmationModal,
     } = this;
+
     const {
       community, user, onComplete, userDetails,
     } = this.props;
+
     const { id, mainImage, name } = community;
     const { estimatedPrice } = this.state;
     const compiledWhatToDoNextOptions = [...WHAT_TO_NEXT_OPTIONS];

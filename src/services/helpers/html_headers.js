@@ -280,7 +280,7 @@ export const getHelmetForCommunityPage = (community, location) => {
     if (startingRate > 0) {
       result.itemReviewed.priceRange = `From ${startingRate} per month`;
     }
-    return (<script type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
+    return (<script key={`helmet_critic-review_${criticReview.author+name}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
 
   const getQAAnswerLDObj = (answer) => {
@@ -321,7 +321,7 @@ export const getHelmetForCommunityPage = (community, location) => {
         suggestedAnswer: suggestedAnswer.length > 0 ? suggestedAnswer : undefined,
       },
     };
-    return (<script type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
+    return (<script key={`helmet_question_${question.creator+question.createdAt}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
   // TODO Add Image and Video and structured data.
   return (
@@ -342,7 +342,7 @@ export const getHelmetForCommunityPage = (community, location) => {
 
       <link rel="canonical" href={canonicalUrl} />
       {
-        search && search.length > 0 && <meta name="robots" content="noindex"/>
+        search && search.length > 0 && <meta name="robots" content="noindex" />
       }
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
       {criticReviewsJsonLDs}
