@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 
 import SlyEvent from 'sly/services/helpers/events';
 import { connectController } from 'sly/controllers';
-import { resourceListReadRequest, resourceUpdateRequest } from 'sly/store/resource/actions';
+import { resourceListReadRequest, resourcePatchRequest } from 'sly/store/resource/actions';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS }
   from 'sly/constants/userSave';
@@ -148,7 +148,7 @@ const mapDispatchToProps = dispatch => ({
     'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
     'filter[status]': USER_SAVE_INIT_STATUS,
   })),
-  deleteUserSave: userSave => dispatch(resourceUpdateRequest('userSave', userSave.id, {
+  deleteUserSave: userSave => dispatch(resourcePatchRequest('userSave', userSave.id, {
     status: USER_SAVE_DELETE_STATUS,
   })),
 });

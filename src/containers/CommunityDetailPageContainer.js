@@ -12,7 +12,7 @@ import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { getDetail, getDetails } from 'sly/store/selectors';
-import { resourceDetailReadRequest, resourceListReadRequest, resourceUpdateRequest }
+import { resourceDetailReadRequest, resourceListReadRequest, resourcePatchRequest }
   from 'sly/store/resource/actions';
 import { forAuthenticated, ensureAuthenticated } from 'sly/store/authenticated/actions';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
@@ -476,7 +476,7 @@ const mapStateToProps = (state, {
 const mapDispatchToProps = dispatch => ({
   updateUserSave: (id, data) => dispatch(ensureAuthenticated(
     'Sign up to add to your favorites list',
-    resourceUpdateRequest('userSave', id, data),
+    resourcePatchRequest('userSave', id, data),
   )),
 });
 

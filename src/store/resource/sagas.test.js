@@ -174,6 +174,11 @@ describe('sagas', () => {
       api
     ));
     expect(generator.next().value).toEqual(takeEvery(
+      actions.RESOURCE_PATCH_REQUEST,
+      sagas.watchResourcePatchRequest,
+      api
+    ));
+    expect(generator.next().value).toEqual(takeEvery(
       actions.RESOURCE_DELETE_REQUEST,
       sagas.watchResourceDeleteRequest,
       api
