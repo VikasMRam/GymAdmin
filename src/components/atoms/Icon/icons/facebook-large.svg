@@ -1,1 +1,18 @@
-<svg width="36" height="36" xmlns="http://www.w3.org/2000/svg"><path d="M13 14.783h1.808v-1.757c0-.774.02-1.97.583-2.71C15.984 9.535 16.8 9 18.198 9c2.282 0 3.243.326 3.243.326l-.452 2.678s-.754-.218-1.457-.218c-.703 0-1.334.252-1.334.955v2.042h2.885l-.201 2.615h-2.684v9.088h-3.39v-9.088H13v-2.615z" fill="#FEFEFE" fill-rule="evenodd"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>facebook</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="24" height="24"></rect>
+    </defs>
+    <g id="facebook" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="facebook-copy" transform="translate(6.000000, 6.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask" fill-rule="nonzero"></g>
+            <path d="M22.6666667,0 L1.33333333,0 C0.596953667,-4.50902501e-17 9.01805001e-17,0.596953667 0,1.33333333 L0,22.6666667 C9.01805001e-17,23.4030463 0.596953667,24 1.33333333,24 L12.82,24 L12.82,14.72 L9.70333333,14.72 L9.70333333,11.0866667 L12.82,11.0866667 L12.82,8.42 C12.82,5.32 14.7133333,3.63333333 17.4866667,3.63333333 C18.4196836,3.63060665 19.3521625,3.67845461 20.28,3.77666667 L20.28,7 L18.36,7 C16.86,7 16.57,7.71333333 16.57,8.76333333 L16.57,11.0766667 L20.1666667,11.0766667 L19.7,14.71 L16.57,14.71 L16.57,24 L22.6666667,24 C23.4030463,24 24,23.4030463 24,22.6666667 L24,1.33333333 C24,0.596953667 23.4030463,4.50902501e-17 22.6666667,0 Z" id="Path" fill="currentColor" fill-rule="nonzero" mask="url(#mask-2)"></path>
+        </g>
+    </g>
+</svg>
