@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { string, func } from 'prop-types';
+import { string, func, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import Span from '../Span/index';
-
-import { size } from 'sly/components/themes/index';
+import { size } from 'sly/components/themes';
+import { Span } from 'sly/components/atoms/Span';
 
 const Wrapper = styled.li`
   display: inline-block;
@@ -27,7 +26,7 @@ const Wrapper = styled.li`
 
 class Tab extends Component {
   static propTypes = {
-    activeTab: string.isRequired,
+    active: bool.isRequired,
     label: string.isRequired,
     onClick: func.isRequired,
   };
@@ -41,7 +40,7 @@ class Tab extends Component {
     const {
       onClick,
       props: {
-        activeTab,
+        active,
         label,
       },
     } = this;
@@ -49,7 +48,7 @@ class Tab extends Component {
     return (
       <Wrapper
         onClick={onClick}
-        active={activeTab === label}
+        active={active}
       >
         <Span weight="medium">{label}</Span>
       </Wrapper>

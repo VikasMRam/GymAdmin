@@ -56,10 +56,10 @@ class Tabs extends Component {
 
             return (
               <Tab
-                activeTab={activeTab}
+                active={activeTab === label}
                 key={label}
                 label={label}
-                onClick={onClickTabItem}
+                onClick={() => onClickTabItem(label)}
               />
             );
           })}
