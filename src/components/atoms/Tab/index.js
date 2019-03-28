@@ -3,7 +3,7 @@ import { string, func, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { size } from 'sly/components/themes';
-import { Span } from 'sly/components/atoms/Span';
+import Span from 'sly/components/atoms/Span';
 
 const Wrapper = styled.li`
   display: inline-block;
