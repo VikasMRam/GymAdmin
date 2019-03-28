@@ -108,6 +108,13 @@ export const tocs = [
     seoLabel: 'Independent Living Communities',
   },
   {
+    label: 'Board and Care Home',
+    value: 'board-and-care-home',
+    segment: 'board-and-care-home',
+    searchLabel: 'Board and Care Homes',
+    seoLabel: 'Board and Care Homes',
+  },
+  {
     label: 'Memory Care',
     value: 'memory-care',
     segment: 'memory-care',

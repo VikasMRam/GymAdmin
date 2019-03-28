@@ -8,7 +8,7 @@ import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { USER_SAVE_INIT_STATUS } from 'sly/constants/userSave';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED } from 'sly/constants/notifications';
-import { resourceCreateRequest, resourceUpdateRequest } from 'sly/store/resource/actions';
+import { resourceCreateRequest, resourcePatchRequest } from 'sly/store/resource/actions';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { getDetail, getDetails } from 'sly/store/selectors';
 import { ensureAuthenticated } from 'sly/store/authenticated/actions';
@@ -179,7 +179,7 @@ const mapDispatchToProps = dispatch => ({
   )),
   updateUserSave: (id, data) => dispatch(ensureAuthenticated(
     'Sign up to add to your favorites list',
-    resourceUpdateRequest('userSave', id, data),
+    resourcePatchRequest('userSave', id, data),
   )),
 });
 

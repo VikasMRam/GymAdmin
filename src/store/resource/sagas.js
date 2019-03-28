@@ -49,6 +49,16 @@ export function* updateResource(api, { needle, data }, { resource, thunk }) {
   }
 }
 
+export function* patchResource(api, { needle, data }, { resource, thunk }) {
+  const uri = api.uri(resource, needle);
+  try {
+    const detail = yield call([api, api.PATCH], uri, data);
+    yield put(actions.resourceUpdateSuccess(resource, detail, { uri, needle, data }, thunk));
+  } catch (e) {
+    yield put(actions.resourceUpdateFailure(resource, e, { uri, needle, data }, thunk));
+  }
+}
+
 export function* deleteResource(api, { needle }, { resource, thunk }) {
   const uri = api.uri(resource, needle);
   try {
@@ -75,6 +85,10 @@ export function* watchResourceUpdateRequest(api, { payload, meta }) {
   yield call(updateResource, api, payload, meta);
 }
 
+export function* watchResourcePatchRequest(api, { payload, meta }) {
+  yield call(patchResource, api, payload, meta);
+}
+
 export function* watchResourceDeleteRequest(api, { payload, meta }) {
   yield call(deleteResource, api, payload, meta);
 }
@@ -98,6 +112,11 @@ export default function* resourceSagas({ api }) {
   yield takeEvery(
     actions.RESOURCE_UPDATE_REQUEST,
     watchResourceUpdateRequest,
+    api
+  );
+  yield takeEvery(
+    actions.RESOURCE_PATCH_REQUEST,
+    watchResourcePatchRequest,
     api
   );
   yield takeEvery(

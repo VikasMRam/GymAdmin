@@ -73,7 +73,7 @@ api.request = (endpoint, settings = {}) => {
     api.request(endpoint, { method, ...settings });
 });
 
-['post', 'put', 'patch'].forEach((method) => {
+['post', 'put', 'PATCH'].forEach((method) => {
   api[method] = (endpoint, data, settings) =>
     api.request(endpoint, { method, data, ...settings });
 });
@@ -120,8 +120,8 @@ api.create = (settings = {}) => ({
     return this.request(endpoint, { method: 'put', data, ...settings });
   },
 
-  patch(endpoint, data, settings) {
-    return this.request(endpoint, { method: 'patch', data, ...settings });
+  PATCH(endpoint, data, settings) {
+    return this.request(endpoint, { method: 'PATCH', data, ...settings });
   },
 
   delete(endpoint, settings) {

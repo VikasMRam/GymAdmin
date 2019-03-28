@@ -291,7 +291,9 @@ export default class CommunityDetailPage extends Component {
     const { address, name } = community;
     const { city } = address;
     const agentImageUrl = assetPath('images/agent-xLarge.png');
-    const { heading, description, placeholder, question } = generateAskAgentQuestionContents(name, city, type);
+    const {
+      heading, description, placeholder, question,
+    } = generateAskAgentQuestionContents(name, city, type);
 
     const toggleAskAgentQuestionModal = () => {
       onToggleAskAgentQuestionModal(true, type);
@@ -410,7 +412,9 @@ export default class CommunityDetailPage extends Component {
     let images = gallery.images || [];
     // if images is empty add default image
     if (images.length === 0) {
-      const imgShape = { sd: defaultImageUrl, hd: defaultImageUrl, thumb: defaultImageUrl, url: defaultImageUrl};
+      const imgShape = {
+        sd: defaultImageUrl, hd: defaultImageUrl, thumb: defaultImageUrl, url: defaultImageUrl,
+      };
       images.unshift(imgShape);
       gallery.images = images;
     }
@@ -521,6 +525,7 @@ export default class CommunityDetailPage extends Component {
                 }
                 <TopCollapsibleSection
                   title={`Pricing and Floor Plans at ${name}`}
+                  id="pricing-and-floor-plans"
                 >
                   <MainSection>
                     {floorPlans.length > 0 &&
@@ -580,7 +585,10 @@ export default class CommunityDetailPage extends Component {
                   </TopCollapsibleSection>
                 }
                 {(communityDescription || rgsAux.communityDescription) &&
-                  <TopCollapsibleSection title={`Details on ${name}`}>
+                  <TopCollapsibleSection
+                    title={`Details on ${name}`}
+                    id="details"
+                  >
                     <MainSection>
                       <CommunityDetails
                         communityName={name}
@@ -656,6 +664,7 @@ export default class CommunityDetailPage extends Component {
                 }
                 <TopCollapsibleSection
                   title={`Reviews at ${name}`}
+                  id="reviews"
                 >
                   <MainSection>
                     <EntityReviews

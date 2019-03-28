@@ -84,6 +84,7 @@ export default class CollapsibleSection extends Component {
     clampTitle: bool,
     headingWeight: weightPropType,
     borderless: bool,
+    id: string,
   };
 
   static defaultProps = {
