@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { func, object, bool, number, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
-import { isEqual, omit } from 'lodash';
+import isEqual from 'lodash/isEqual';
+import omit from 'lodash/omit';
 import { parse as parseSearch } from 'query-string';
 
 import { withServerState } from 'sly/store';

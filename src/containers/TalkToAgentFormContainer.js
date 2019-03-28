@@ -5,9 +5,9 @@ import { withRouter } from 'react-router';
 
 import { query } from 'sly/services/newApi';
 import { connectController } from 'sly/controllers';
-import { resourceListReadRequest, resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 import withServerState from 'sly/store/withServerState';
-import { getList, getDetail } from 'sly/store/selectors';
+import { getDetail } from 'sly/store/selectors';
 import { createValidator, required, usPhone } from 'sly/services/validation';
 import TalkToAgentForm from 'sly/components/organisms/TalkToAgentForm';
 import { REQUEST_AGENT_CONSULT } from 'sly/services/api/actions';

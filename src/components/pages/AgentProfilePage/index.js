@@ -76,19 +76,18 @@ class AgentProfilePage extends Component {
     agent: shape({
       info: object.isRequired,
     }).isRequired,
-    user: object,
-    userDetails: object,
-    postUserAction: func.isRequired,
-  }
+  };
+
   constructor(props) {
     super(props);
+
     this.askAgentAQuestionRef = React.createRef();
     this.agentSummaryRef = React.createRef();
   }
 
   render() {
     const {
-      agent, user, userDetails, postUserAction,
+      agent,
     } = this.props;
     if (!agent) {
       return null;
@@ -103,9 +102,11 @@ class AgentProfilePage extends Component {
     return (
       <Fragment>
         {getHelmetForAgentProfilePage({agent})}
+
         <TemplateHeader>
           <HeaderContainer />
         </TemplateHeader>
+
         <TemplateContent>
           <AgentSummaryWrapper innerRef={this.agentSummaryRef}>
             <BreadCrumb size="caption" items={getBreadCrumbsForAgent({ name: displayName, state, city, id })} />
@@ -119,7 +120,9 @@ class AgentProfilePage extends Component {
               }}
             />
           </AgentSummaryWrapper>
+
           <StyledHr fullWidth />
+
           {communities &&
             <Fragment>
               <Section title={`Communities near ${firstName}`}>
@@ -148,15 +151,16 @@ class AgentProfilePage extends Component {
               <StyledHr fullWidth />
             </Fragment>
           }
+
           {reviews.length > 0 &&
             <StyledSection title={`${firstName}'s reviews`} >
               <EntityReviews
                 reviewsValue={ratingValue}
                 reviews={reviews}
-                user={user}
               />
             </StyledSection>
           }
+
           {bio &&
             <Fragment>
               <StyledSection title={`About ${firstName}`}>
@@ -165,6 +169,7 @@ class AgentProfilePage extends Component {
               <StyledHr fullWidth />
             </Fragment>
           }
+
           <StyledSection>
             <AskQuestionToAgentWrapper innerRef={this.askAgentAQuestionRef}>
               <BannerNotificationController>
@@ -173,8 +178,6 @@ class AgentProfilePage extends Component {
                     agent={agent}
                     heading={`Ask ${firstName} a question`}
                     firstName={firstName}
-                    userDetails={userDetails}
-                    postUserAction={postUserAction}
                     postSubmit={() => {
                       notifyInfo(`We have received your request and our Seniorly Partner Agent, ${displayName} will get back to you soon.`);
                       if (this.agentSummaryRef.current.scrollIntoView) {
