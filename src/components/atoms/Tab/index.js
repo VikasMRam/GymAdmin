@@ -2,24 +2,24 @@ import React, { Component } from 'react';
 import { string, func, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import Span from 'sly/components/atoms/Span';
 
 const Wrapper = styled.li`
   display: inline-block;
   list-style: none;
-  margin-bottom: -1px;
+  margin-bottom: -${size('border', 'regular')};
   margin-right: ${size('spacing.small')};
   padding: ${size('spacing.regular')} ${size('spacing.large')};
   border-top-left-radius: ${size('border.xxLarge')};
   border-top-right-radius: ${size('border.xxLarge')};
-  background-color: #EAEBEC;
-  border-bottom: 1px solid #DFE1E2;
+  background-color: ${palette('grey', 'stroke')};
+  border-bottom: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
 
   ${p => p.active && css`
     background-color: white;
-    border: solid #DFE1E2;
-    border-width: 1px 1px 0 1px;
+    border: solid ${palette('slate', 'stroke')};
+    border-width: ${size('border', 'regular')} ${size('border', 'regular')} 0 ${size('border', 'regular')};
     border-bottom: 0;
   `}
 `;

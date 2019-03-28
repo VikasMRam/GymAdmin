@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import { size, palette } from 'sly/components/themes';
 import Tab from 'sly/components/atoms/Tab';
 
 const Wrapper = styled.div`
@@ -9,13 +10,13 @@ const Wrapper = styled.div`
 `;
 
 const TabWrapper = styled.div`
-  border-bottom: 1px solid #ccc;
+  border-bottom: ${size('border', 'regular')} solid ${palette('grey', 'background')};;
   padding-left: 0;
 `;
 
 const TabContent = styled.div`
   background-color: white;
-  border: 1px solid #DFE1E2;
+  border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
   border-top: 0;
 `;
 
