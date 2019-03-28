@@ -52,7 +52,7 @@ export function* updateResource(api, { needle, data }, { resource, thunk }) {
 export function* patchResource(api, { needle, data }, { resource, thunk }) {
   const uri = api.uri(resource, needle);
   try {
-    const detail = yield call([api, api.patch], uri, data);
+    const detail = yield call([api, api.PATCH], uri, data);
     yield put(actions.resourceUpdateSuccess(resource, detail, { uri, needle, data }, thunk));
   } catch (e) {
     yield put(actions.resourceUpdateFailure(resource, e, { uri, needle, data }, thunk));

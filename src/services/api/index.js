@@ -120,7 +120,7 @@ api.create = (settings = {}) => ({
     return this.request(endpoint, { method: 'put', data, ...settings });
   },
 
-  patch(endpoint, data, settings) {
+  PATCH(endpoint, data, settings) {
     return this.request(endpoint, { method: 'PATCH', data, ...settings });
   },
 
