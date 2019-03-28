@@ -258,7 +258,6 @@ app.use(async (req, res, next) => {
     }
   }
 
-  // FIXME: hack until SEO app is migrated to bees
   try {
     await Promise.all([
       store.dispatch(beesApi.getUser({ id: 'me' })),

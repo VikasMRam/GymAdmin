@@ -28,6 +28,7 @@ import {
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import { query } from 'sly/services/newApi';
+import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 
 const ignoreSearchParams = [
   'modal',
@@ -66,12 +67,10 @@ class CommunityDetailPageContainer extends Component {
     isHowSlyWorksVideoPlaying: false,
   };
 
-  // FIXME: this goes out with the new query
   componentDidMount() {
     this.uuidActionPageView();
   }
 
-  // FIXME: this goes out with the new query
   componentWillUpdate(nextProps) {
     const { match, location } = this.props;
     if (match.url !== nextProps.match.url) {
@@ -95,7 +94,7 @@ class CommunityDetailPageContainer extends Component {
           slug: match.params.communitySlug,
         },
         actionPage: match.url,
-        actionType: 'profileViewed',
+        actionType: PROFILE_VIEWED,
       },
     });
   }
