@@ -43,14 +43,28 @@ const StyledButton = styled(Button)`
 
 const StyledIcon = styled(Icon)`
   margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
+  ${ifProp('hideTextInMobile', css`
+    margin-right: 0;
+
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
+    }
+  `)}
 `;
 
 const Text = styled.span`
   margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
+  ${ifProp('hideTextInMobile', css`
+    display: none;
+
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      display: inline;
+    }
+  `)}
 `;
 
 const IconButton = ({
-  icon, iconSize, transparent, fill, children, ...props
+  icon, iconSize, transparent, fill, children, hideTextInMobile, ...props
 }) => {
   const { right, palette, iconPalette } = props;
   const iconElement = (
@@ -60,6 +74,7 @@ const IconButton = ({
       palette={transparent ? palette : iconPalette}
       padRight={!!children && !right}
       className="icon"
+      hideTextInMobile={hideTextInMobile}
     />
   );
 
@@ -72,7 +87,7 @@ const IconButton = ({
       {...props}
     >
       {right || iconElement}
-      {children && <Text padRight={right} className="text">{children}</Text>}
+      {children && <Text padRight={right} hideTextInMobile={hideTextInMobile} className="text">{children}</Text>}
       {right && iconElement}
     </StyledButton>
   );
@@ -88,6 +103,7 @@ IconButton.propTypes = {
   collapsed: bool,
   right: bool,
   children: node,
+  hideTextInMobile: bool,
 };
 
 IconButton.defaultProps = {

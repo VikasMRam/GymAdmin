@@ -36,26 +36,13 @@ const RightSideButtons = styled.div`
   display: flex;
 `;
 
-// Button Text removal inspired from https://css-tricks.com/snippets/css/remove-button-text-in-ie7/
 const SortButton = styled(IconButton)`
   margin-right: ${size('spacing.regular')};
-  text-indent: -9000px; 
-  text-transform: capitalize;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    text-indent: 0; 
-    text-transform: none;
-  }
 `;
 
 const FilterButton = styled(IconButton)`
-  text-indent: -9000px; 
-  text-transform: capitalize;
-  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-right: ${size('spacing.regular')};
-    text-indent: 0; 
-    text-transform: none;
   }
 `;
 
@@ -69,12 +56,12 @@ const ColumnsButton = styled(IconButton)`
 const TableHeaderButtons = () => {
   return (
     <Wrappper>
-      <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" />
+      <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile />
       <SearchTextInput type="search" placeholder="Type to filter by name" />
       <RightSideButtons>
-        <SortButton icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate">Sort</SortButton>
-        <FilterButton icon="filter" ghost borderPalette="slate" palette="slate" iconPalette="slate">Filter</FilterButton>
-        <ColumnsButton icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate">Columns</ColumnsButton>
+        <SortButton icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>
+        <FilterButton icon="filter" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Filter</FilterButton>
+        <ColumnsButton icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>
       </RightSideButtons>
     </Wrappper>
   );
