@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { object, func, bool } from 'prop-types';
 
 import { community as communityPropType } from 'sly/propTypes/community';
@@ -14,75 +14,6 @@ import { getLastSegment, replaceLastSegment } from "sly/services/helpers/url";
 import ModalController from 'sly/controllers/ModalController';
 
 const eventCategory = 'PricingWizard';
-
-const PricingWizardPageContainer = ({
-  community, user, postUserAction, history, userAction,
-}) => {
-  if (!community || !userAction) {
-    return null;
-  }
-  const { id, url } = community;
-
-  const submitUserAction = (data) => {
-    // here remove only fields that will be populated by getUserDetailsFromUAAndForm
-    const {
-      name, phone, medicaidCoverage, budget, roomType, careType, contactByTextMsg, interest, ...restData
-    } = data;
-    const { userDetails } = userAction;
-    const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
-    const value = {
-      ...restData,
-      propertyIds: [id],
-      user,
-    };
-    if (!user.email && !user.phone) {
-      return;
-    }
-    const payload = {
-      action: CUSTOM_PRICING,
-      value,
-    };
-    const event = {
-      action: 'pricing-requested', category: eventCategory, label: id,
-    };
-    SlyEvent.getInstance().sendEvent(event);
-    return postUserAction(payload);
-  };
-
-  const handleComplete = (data, openConfirmationModal) => {
-    history.push(url);
-    openConfirmationModal();
-    return submitUserAction(data);
-  };
-
-  const userDetails = userAction ? userAction.userDetails : null;
-  return (
-    <ModalController>
-      {({
-        show,
-        hide,
-      }) => (
-        <PricingWizardPage
-          community={community}
-          user={user}
-          userDetails={userDetails}
-          userActionSubmit={submitUserAction}
-          onComplete={handleComplete}
-          showModal={show}
-          hideModal={hide}
-        />
-      )}
-    </ModalController>
-  );
-};
-
-PricingWizardPageContainer.propTypes = {
-  community: communityPropType,
-  user: object,
-  userAction: object,
-  postUserAction: func.isRequired,
-  history: object.isRequired,
-};
 
 const getCommunitySlug = match => match.params.communitySlug;
 const mapStateToProps = (state, { match }) => {
@@ -134,10 +65,91 @@ const handleResponses = (responses, { location }, redirect) => {
   });
 };
 
-export default withServerState(
+@withServerState(
   mapPropsToActions,
   handleResponses,
-)(connectController(
+)
+
+@connectController(
   mapStateToProps,
-  mapDispatchToProps
-)(PricingWizardPageContainer));
+  mapDispatchToProps,
+)
+
+export default class PricingWizardPageContainer extends Component {
+  static propTypes = {
+    community: communityPropType,
+    user: object,
+    userAction: object,
+    postUserAction: func.isRequired,
+    history: object.isRequired,
+  };
+
+  render() {
+    const {
+      community, user, postUserAction, history, userAction,
+    } = this.props;
+
+    if (!community || !userAction) {
+      return null;
+    }
+    const { id, url } = community;
+
+    const submitUserAction = (data) => {
+      // here remove only fields that will be populated by getUserDetailsFromUAAndForm
+      const {
+        name, phone, medicaidCoverage, budget, roomType, careType, contactByTextMsg, interest, ...restData
+      } = data;
+      const { userDetails } = userAction;
+      const user = getUserDetailsFromUAAndForm({
+        userDetails,
+        formData: data
+      });
+      const value = {
+        ...restData,
+        propertyIds: [id],
+        user,
+      };
+      if (!user.email && !user.phone) {
+        return;
+      }
+      const payload = {
+        action: CUSTOM_PRICING,
+        value,
+      };
+      const event = {
+        action: 'pricing-requested',
+        category: eventCategory,
+        label: id,
+      };
+      SlyEvent.getInstance()
+        .sendEvent(event);
+      return postUserAction(payload);
+    };
+
+    const handleComplete = (data, openConfirmationModal) => {
+      history.push(url);
+      openConfirmationModal();
+      return submitUserAction(data);
+    };
+
+    const userDetails = userAction ? userAction.userDetails : null;
+    return (
+      <ModalController>
+        {({
+            show,
+            hide,
+          }) => (
+          <PricingWizardPage
+            community={community}
+            user={user}
+            userDetails={userDetails}
+            userActionSubmit={submitUserAction}
+            onComplete={handleComplete}
+            showModal={show}
+            hideModal={hide}
+          />
+        )}
+      </ModalController>
+    );
+  };
+}

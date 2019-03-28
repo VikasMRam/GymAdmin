@@ -94,7 +94,7 @@ export default class TalkToAgentFormContainer extends Component {
       value,
     };
 
-    const { email, phone } = user;
+    const { email = '', phone } = user;
 
     return Promise.all([
       postUserAction(payload),

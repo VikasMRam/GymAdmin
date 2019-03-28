@@ -75,9 +75,6 @@ const FormSection = StyledSection.extend`
 class AgentsPage extends Component {
   static propTypes = {
     onLocationSearch: func,
-    userDetails: object,
-    postUserAction: func.isRequired,
-    pathName: string.isRequired,
   };
 
   constructor(props) {
@@ -87,7 +84,7 @@ class AgentsPage extends Component {
 
   render() {
     const {
-      onLocationSearch, userDetails, postUserAction, pathName,
+      onLocationSearch,
     } = this.props;
     const headerContent = (
       <Fragment>
@@ -122,9 +119,6 @@ class AgentsPage extends Component {
             <BannerNotificationController>
               {({ notifyInfo }) => (
                 <TalkToAgentFormContainer
-                  postUserAction={postUserAction}
-                  userDetails={userDetails}
-                  pathName={pathName}
                   postSubmit={() => {
                     notifyInfo('We have received your request and we will get back to you soon.');
                     if (this.heroRef.current.scrollIntoView) {
