@@ -13,6 +13,7 @@ import TalkToAgentForm from 'sly/components/organisms/TalkToAgentForm';
 import { REQUEST_AGENT_CONSULT } from 'sly/services/api/actions';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 import SlyEvent from 'sly/services/helpers/events';
+import { CONSULTATION_REQUESTED } from 'sly/services/newApi/constants';
 
 const form = 'TalkToAgentForm';
 const validate = createValidator({
@@ -24,9 +25,16 @@ const validate = createValidator({
 
 const afterSubmit = (result, dispatch) => dispatch(reset(form));
 
+const initialValues = {
+  location: {},
+  phone: '',
+  message: '',
+  full_name: '',
+};
 const ReduxForm = reduxForm({
   form,
   validate,
+  initialValues,
   onSubmitSuccess: afterSubmit,
   destroyOnUnmount: false,
 })(TalkToAgentForm);
@@ -58,13 +66,16 @@ export default class TalkToAgentFormContainer extends Component {
     postUserAction: func.isRequired,
     postSubmit: func,
     pathName: string.isRequired,
+    createAction: func.isRequired,
+    match: object.isRequired,
   };
 
   handleSubmit = (data) => {
     const { message, location, full_name } = data;
     const {
-      userDetails, postUserAction, postSubmit, pathName,
+      userDetails, postUserAction, postSubmit, pathName, createAction, match,
     } = this.props;
+
     const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
     const { formatted_address, geometry } = location;
     const { lat, lng } = geometry.location;
@@ -83,24 +94,33 @@ export default class TalkToAgentFormContainer extends Component {
       value,
     };
 
-    return postUserAction(payload)
-      .then(() => {
-        const event = {
-          action: 'ask_question', category: 'agent', label: pathName,
-        };
-        SlyEvent.getInstance().sendEvent(event);
-        if (postSubmit) {
-          postSubmit();
-        }
-      });
+    const { email, phone } = user;
+
+    return Promise.all([
+      postUserAction(payload),
+      createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: { email, phone, name: full_name },
+          actionPage: match.url,
+          actionType: CONSULTATION_REQUESTED,
+        },
+      }),
+    ]).then(() => {
+      const event = {
+        action: 'ask_question', category: 'agent', label: pathName,
+      };
+      SlyEvent.getInstance().sendEvent(event);
+      if (postSubmit) {
+        postSubmit();
+      }
+    });
   };
 
   render() {
     const { ...props } = this.props;
-    const initialValues = {};
     return (
       <ReduxForm
-        initialValues={initialValues}
         onSubmit={this.handleSubmit}
         {...props}
       />

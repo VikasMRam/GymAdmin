@@ -30,9 +30,9 @@ const styles = css`
 `;
 
 const Heading = styled(({
-  level, children, palette, theme, ...props
+  level, children, palette, theme, _ref, ...props
 }) =>
-  React.createElement(`h${getTag(level)}`, props, children))`
+  React.createElement(`h${getTag(level)}`, { ref: _ref, ...props }, children))`
   ${styles};
 `;
 

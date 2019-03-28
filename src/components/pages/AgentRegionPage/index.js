@@ -114,7 +114,7 @@ export default class AgentRegionPage extends Component {
         <TemplateHeader><HeaderContainer /></TemplateHeader>
         <TemplateContent>
           <PageHeadingSection>
-            <TitleHeading level="hero" size="hero" ref={el => { this.title = el }}>{title}</TitleHeading>
+            <TitleHeading level="hero" size="hero" _ref={el => { this.title = el }}>{title}</TitleHeading>
             <FindLocalAgentLink
               palette="slate"
               onClick={() => {
@@ -142,7 +142,7 @@ export default class AgentRegionPage extends Component {
                 <TalkToAgentFormContainer
                   postSubmit={() => {
                     notifyInfo('We have received your request and we will get back to you soon.');
-                    
+
                     if (this.title.scrollIntoView) {
                       this.title.scrollIntoView({ behavior: 'smooth' });
                     }
