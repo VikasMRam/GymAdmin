@@ -17,7 +17,7 @@ const Wrapper = styled.li`
   border-bottom: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
 
   ${p => p.active && css`
-    background-color: white;
+    background-color: ${palette('white', 'base')};
     border: solid ${palette('slate', 'stroke')};
     border-width: ${size('border', 'regular')} ${size('border', 'regular')} 0 ${size('border', 'regular')};
     border-bottom: 0;

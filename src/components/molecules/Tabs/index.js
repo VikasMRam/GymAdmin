@@ -15,7 +15,7 @@ const TabWrapper = styled.div`
 `;
 
 const TabContent = styled.div`
-  background-color: white;
+  background-color: ${palette('white', 'base')};
   border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
   border-top: 0;
 `;
