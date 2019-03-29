@@ -66,7 +66,7 @@ export default class CommunitySearchPageContainer extends PureComponent {
     searchParams: object.isRequired,
     history: object.isRequired,
     location: object.isRequired,
-    communityList: array.isRequired,
+    communityList: array,
     geoGuide: array,
     requestMeta: object.isRequired,
     serverState: object,
@@ -125,6 +125,11 @@ export default class CommunitySearchPageContainer extends PureComponent {
       history,
       status,
     } = this.props;
+
+    // TODO: remove after fixing api service's isLoading
+    if (!communityList) {
+      return null;
+    }
 
     const { pathname, search } = location;
     const notPermittedSeparators = ['_', '%20'];

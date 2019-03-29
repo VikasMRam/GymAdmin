@@ -89,7 +89,7 @@ const CommunitySearchPage = ({
   let latitude = 0;
   let longitude = 0;
 
-  if (communityList.length > 0) {
+  if (communityList && communityList.length > 0) {
     ([{ latitude, longitude }] = communityList);
   }
 
@@ -212,7 +212,7 @@ const CommunitySearchPage = ({
   return (
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-      {getHelmetForSearchPage({
+      {!isFetchingResults && getHelmetForSearchPage({
         ...searchParams, url: location, communityList, listSize,
       })}
       <CommunitySearchPageTemplate
@@ -258,7 +258,7 @@ const CommunitySearchPage = ({
 };
 
 CommunitySearchPage.propTypes = {
-  communityList: array.isRequired,
+  communityList: array,
   geoGuide: object,
   requestMeta: object.isRequired,
   isMapView: bool,
