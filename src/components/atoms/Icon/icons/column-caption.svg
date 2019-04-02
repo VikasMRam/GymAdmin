@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
-  <defs>
-    <path id="column-caption-a" d="M8,17 L13,17 L13,4 L8,4 L8,17 Z M2,17 L7,17 L7,4 L2,4 L2,17 Z M14,4 L14,17 L19,17 L19,4 L14,4 Z"/>
-  </defs>
-  <g fill="none" fill-rule="evenodd">
-    <mask id="column-caption-b" fill="#fff">
-      <use xlink:href="#column-caption-a"/>
-    </mask>
-    <use fill="#000" fill-rule="nonzero" xlink:href="#column-caption-a"/>
-    <g fill="currentcolor" fill-rule="nonzero" mask="url(#column-caption-b)">
-      <rect width="24" height="24" transform="translate(-2 -2)"/>
-    </g>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20"><defs><path id="column-caption-a" d="M8 17h5V4H8v13zm-6 0h5V4H2v13zM14 4v13h5V4h-5z"/></defs><g fill="none" fill-rule="evenodd"><mask id="column-caption-b" fill="#fff"><use xlink:href="#column-caption-a"/></mask><use fill="#000" fill-rule="nonzero" xlink:href="#column-caption-a"/><g fill="currentcolor" fill-rule="nonzero" mask="url(#column-caption-b)"><path d="M-2-2h24v24H-2z"/></g></g></svg>
