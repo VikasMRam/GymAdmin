@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { string, func, object } from 'prop-types';
 import styled from 'styled-components';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { Field } from 'redux-form';
 
 import { size, gridColumns } from 'sly/components/themes';
@@ -21,7 +21,7 @@ const StyledField = styled(Field)`
   margin-bottom: ${size('spacing.xLarge')};
 
   ${gridColumns(3, regular)};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${gridColumns(4, large)};
   }
@@ -50,10 +50,10 @@ const StyledHelpBubble = styled(HelpBubble)`
 `;
 
 const CommunityBookATourDateForm = ({
-  error, onDateChange, onTimeChange, handleSubmit, userDetails, ...props
+  error, onDateChange, onTimeChange, handleSubmit, userDetails,
 }) => {
-  const from = moment();
-  const to = moment().add(8, 'days');
+  const from = dayjs();
+  const to = dayjs().add(8, 'days');
 
   return (
     <form onSubmit={handleSubmit}>

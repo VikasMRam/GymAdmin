@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import { object, bool, func, string } from 'prop-types';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
-import ReactTooltip from 'react-tooltip';
 
 import { size } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
