@@ -1,14 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
-  <defs>
-    <path id="favorite-light-caption-a" d="M10,17.7916667 L8.79166667,16.6916667 C4.5,12.8 1.66666667,10.2333333 1.66666667,7.08333333 C1.66666667,4.51666667 3.68333333,2.5 6.25,2.5 C7.7,2.5 9.09166667,3.175 10,4.24166667 C10.9083333,3.175 12.3,2.5 13.75,2.5 C16.3166667,2.5 18.3333333,4.51666667 18.3333333,7.08333333 C18.3333333,10.2333333 15.5,12.8 11.2083333,16.7 L10,17.7916667 Z"/>
-  </defs>
-  <g fill="none" fill-rule="evenodd">
-    <mask id="favorite-light-caption-b" fill="#fff">
-      <use xlink:href="#favorite-light-caption-a"/>
-    </mask>
-    <use fill="#000" xlink:href="#favorite-light-caption-a"/>
-    <g fill="currentColor" fill-rule="nonzero" mask="url(#favorite-light-caption-b)">
-      <rect width="20" height="20"/>
-    </g>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20"><defs><path id="favourite-light-caption-a" d="M10 17.792l-1.208-1.1C4.5 12.8 1.667 10.233 1.667 7.083 1.667 4.517 3.683 2.5 6.25 2.5A4.99 4.99 0 0 1 10 4.242 4.99 4.99 0 0 1 13.75 2.5c2.567 0 4.583 2.017 4.583 4.583 0 3.15-2.833 5.717-7.125 9.617L10 17.792z"/></defs><g fill="none" fill-rule="evenodd"><mask id="favourite-light-caption-b" fill="#fff"><use xlink:href="#favourite-light-caption-a"/></mask><use fill="#000" xlink:href="#favourite-light-caption-a"/><g fill="currentColor" fill-rule="nonzero" mask="url(#favourite-light-caption-b)"><path d="M0 0h20v20H0z"/></g></g></svg>
