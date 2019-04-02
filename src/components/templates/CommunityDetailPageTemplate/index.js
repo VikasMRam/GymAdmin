@@ -90,7 +90,6 @@ export const makeHeader = () => {
     return (
       <TemplateHeader
         className={classes('overlayHeader', className)}
-        noBottomMargin
         {...props}
       >
         <HeaderContainer />

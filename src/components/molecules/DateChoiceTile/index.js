@@ -1,7 +1,7 @@
 import React from 'react';
 import { string, bool, func } from 'prop-types';
 import styled from 'styled-components';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { size } from 'sly/components/themes';
 import { Heading, BoxChoiceTile } from 'sly/components/atoms';
@@ -22,7 +22,7 @@ StyledHeading.displayName = 'StyledHeading';
 const DateChoiceTile = ({
   date, selected, onClick,
 }) => {
-  const parsedDate = moment(date, 'YYYY-MM-DD');
+  const parsedDate = dayjs(date);
   if (!parsedDate.isValid()) {
     return 'Failed to parse date';
   }
