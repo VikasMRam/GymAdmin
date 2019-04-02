@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { arrayOf, oneOfType, string, number, func, bool } from 'prop-types';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -54,28 +54,30 @@ export default class DateChoice extends Component {
       from, to, hasLaterDate, multiChoice,
     } = this.props;
     let { value } = this.props;
-    const parsedFromDate = moment(from, 'YYYY-MM-DD');
-    const parsedToDate = moment(to, 'YYYY-MM-DD');
+    const parsedFromDate = dayjs(from);
+    const parsedToDate = dayjs(to);
     if (!parsedFromDate.isValid() || !parsedToDate.isValid()) {
       return 'Failed to parse date';
     }
+
     const options = [];
-    const currDate = parsedFromDate.startOf('day');
+    let currDate = parsedFromDate.startOf('day').add(1, 'day');
     const lastDate = parsedToDate.startOf('day');
 
-    while (currDate.add(1, 'days').diff(lastDate) < 0) {
+    while (lastDate.diff(currDate, 'day') > 0) {
       options.push(currDate.clone().format('YYYY-MM-DD'));
+      currDate = currDate.add(1, 'day');
     }
 
     if (multiChoice) {
       value.forEach((val, i) => {
         if (!hasLaterDate && val !== LATER_DATE) {
-          const parsedDate = moment(val, 'YYYY-MM-DD');
+          const parsedDate = dayjs(val);
           value[i] = parsedDate.format('YYYY-MM-DD');
         }
       });
     } else if (!hasLaterDate && value !== LATER_DATE) {
-      const parsedDate = moment(value, 'YYYY-MM-DD');
+      const parsedDate = dayjs(value);
       value = parsedDate.format('YYYY-MM-DD');
     }
 
