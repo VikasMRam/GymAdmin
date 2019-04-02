@@ -1,11 +1,14 @@
 import { Component } from 'react';
-import { object, any } from 'prop-types';
+import { object, any, func } from 'prop-types';
 import { connect } from 'react-redux';
 
-class ApiProvider extends Component {
+@connect()
+
+export default class ApiProvider extends Component {
   static propTypes = {
     api: object.isRequired,
     children: any,
+    dispatch: func.isRequired,
   };
 
   static childContextTypes = {
@@ -28,5 +31,3 @@ class ApiProvider extends Component {
 
   render = () => this.props.children;
 }
-
-export default connect()(ApiProvider);

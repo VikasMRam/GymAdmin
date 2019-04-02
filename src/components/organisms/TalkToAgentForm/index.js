@@ -48,7 +48,7 @@ class TalkToAgentForm extends Component {
   handleChange = () => {
     const { change } = this.props;
     change('location', null);
-  }
+  };
 
   handleLocationChange = (value) => {
     const { change, onLocationChange } = this.props;
