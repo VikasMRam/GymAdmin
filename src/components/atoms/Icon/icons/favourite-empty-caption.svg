@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20"><defs><path id="favourite-empty-caption-a" d="M13.75 2.5A4.99 4.99 0 0 0 10 4.242 4.99 4.99 0 0 0 6.25 2.5c-2.567 0-4.583 2.017-4.583 4.583 0 3.15 2.833 5.717 7.125 9.617L10 17.792l1.208-1.1c4.292-3.892 7.125-6.459 7.125-9.609 0-2.566-2.016-4.583-4.583-4.583zm-3.667 12.958l-.083.084-.083-.084C5.95 11.867 3.333 9.492 3.333 7.083c0-1.666 1.25-2.916 2.917-2.916 1.283 0 2.533.825 2.975 1.966h1.558c.434-1.141 1.684-1.966 2.967-1.966 1.667 0 2.917 1.25 2.917 2.916 0 2.409-2.617 4.784-6.584 8.375z"/></defs><g fill="none" fill-rule="evenodd"><mask id="favourite-empty-caption-b" fill="#fff"><use xlink:href="#favourite-empty-caption-a"/></mask><use fill="#000" fill-rule="nonzero" xlink:href="#favourite-empty-caption-a"/><g fill="currentColor" fill-rule="nonzero" mask="url(#favourite-empty-caption-b)"><path d="M0 0h20v20H0z"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <path id="favorite-empty-caption-a" d="M13.75,2.5 C12.3,2.5 10.9083333,3.175 10,4.24166667 C9.09166667,3.175 7.7,2.5 6.25,2.5 C3.68333333,2.5 1.66666667,4.51666667 1.66666667,7.08333333 C1.66666667,10.2333333 4.5,12.8 8.79166667,16.7 L10,17.7916667 L11.2083333,16.6916667 C15.5,12.8 18.3333333,10.2333333 18.3333333,7.08333333 C18.3333333,4.51666667 16.3166667,2.5 13.75,2.5 Z M10.0833333,15.4583333 L10,15.5416667 L9.91666667,15.4583333 C5.95,11.8666667 3.33333333,9.49166667 3.33333333,7.08333333 C3.33333333,5.41666667 4.58333333,4.16666667 6.25,4.16666667 C7.53333333,4.16666667 8.78333333,4.99166667 9.225,6.13333333 L10.7833333,6.13333333 C11.2166667,4.99166667 12.4666667,4.16666667 13.75,4.16666667 C15.4166667,4.16666667 16.6666667,5.41666667 16.6666667,7.08333333 C16.6666667,9.49166667 14.05,11.8666667 10.0833333,15.4583333 Z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="favorite-empty-caption-b" fill="#fff">
+      <use xlink:href="#favorite-empty-caption-a"/>
+    </mask>
+    <use fill="#000" fill-rule="nonzero" xlink:href="#favorite-empty-caption-a"/>
+    <g fill="currentColor" fill-rule="nonzero" mask="url(#favorite-empty-caption-b)">
+      <rect width="20" height="20"/>
+    </g>
+  </g>
+</svg>

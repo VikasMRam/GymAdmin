@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24"><defs><path id="warning-regular-a" d="M1 22h22L12 3 1 22zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></defs><g fill="none" fill-rule="evenodd"><mask id="warning-regular-b" fill="#fff"><use xlink:href="#warning-regular-a"/></mask><use fill="#000" fill-rule="nonzero" xlink:href="#warning-regular-a"/><g fill="currentcolor" fill-rule="nonzero" mask="url(#warning-regular-b)"><path d="M0 0h24v24H0z"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <path id="warning-regular-a" d="M1,22 L23,22 L12,3 L1,22 Z M13,19 L11,19 L11,17 L13,17 L13,19 Z M13,15 L11,15 L11,11 L13,11 L13,15 Z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="warning-regular-b" fill="#fff">
+      <use xlink:href="#warning-regular-a"/>
+    </mask>
+    <use fill="#000" fill-rule="nonzero" xlink:href="#warning-regular-a"/>
+    <g fill="currentcolor" fill-rule="nonzero" mask="url(#warning-regular-b)">
+      <rect width="24" height="24"/>
+    </g>
+  </g>
+</svg>
