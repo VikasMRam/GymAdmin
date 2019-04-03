@@ -6,7 +6,7 @@ const fs = require('fs');
 const UglifyJs = require('uglify-es');
 const cssmin = require('cssmin');
 const devServer = require('@webpack-blocks/dev-server2');
-// const splitVendor = require('webpack-blocks-split-vendor');
+const splitVendor = require('webpack-blocks-split-vendor');
 const happypack = require('webpack-blocks-happypack');
 const serverSourceMap = require('webpack-blocks-server-source-map');
 const nodeExternals = require('webpack-node-externals');
@@ -196,6 +196,12 @@ const uglifyJs = () =>
 // order matters to how the routes are mounted
 const clientConfigs = [
   {
+    bundle: 'vendor',
+    ssr: true,
+    isCommon: true,
+    path: '*',
+  },
+  {
     bundle: 'wizards',
     ssr: false,
     path: '/external/wizards*',
@@ -327,9 +333,7 @@ const client = createConfig([
 
   uglifyJs(),
 
-  /* env('production', [
-    splitVendor(),
-  ]), */
+  splitVendor(),
 ]);
 
 module.exports = client;

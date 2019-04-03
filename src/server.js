@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import 'babel-polyfill';
-
 import path from 'path';
 import crypto from 'crypto';
 
@@ -17,7 +16,6 @@ import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
 import cloneDeep from 'lodash/cloneDeep';
-
 
 import { cleanError, logWarn } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
@@ -207,7 +205,7 @@ app.use((req, res, next) => {
 
 // store
 app.use(async (req, res, next) => {
-  const { slyUUID, cookies, bundle } = req.clientConfig;
+  const { slyUUID, cookies } = req.clientConfig;
 
   const hmac = crypto.createHmac('sha256', slyUUID);
   const slyUUIDHash = hmac.digest('hex');
