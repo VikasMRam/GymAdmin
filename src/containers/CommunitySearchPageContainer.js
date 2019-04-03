@@ -66,7 +66,7 @@ export default class CommunitySearchPageContainer extends PureComponent {
     searchParams: object.isRequired,
     history: object.isRequired,
     location: object.isRequired,
-    communityList: array.isRequired,
+    communityList: array,
     geoGuide: array,
     requestMeta: object.isRequired,
     serverState: object,
@@ -138,11 +138,15 @@ export default class CommunitySearchPageContainer extends PureComponent {
       return <Redirect to={replaceLastSegment(pathname, urlize(searchParams.city)) + search} />;
     }
 
-    const isFetchingResults = status.communityList.isLoading;
-
     if (serverState instanceof Error) {
       const errorCode = (serverState.response && serverState.response.status) || 500;
       return <ErrorPage errorCode={errorCode} history={history} />;
+    }
+
+    const isFetchingResults = status.communityList.isLoading || !status.communityList.hasStarted;
+
+    if (isFetchingResults) {
+      return null;
     }
 
     const isMapView = searchParams.view === 'map';
