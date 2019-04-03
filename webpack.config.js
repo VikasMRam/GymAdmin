@@ -24,6 +24,7 @@ const {
   webpack,
   group,
 } = require('@webpack-blocks/webpack2');
+const Visualizer = require('webpack-visualizer-plugin');
 
 const AssetsByTypeAndBundlePlugin = require('./private/webpack/AssestByTypeAndBundlePlugin');
 const PrependPlugin = require('./private/webpack/PrependPlugin');
@@ -239,10 +240,6 @@ const server = createConfig([
   ]),
 ]);
 
-if (isDev || isStaging) {
-  console.info('Will do sourcemaps');
-}
-
 const replaceExternalConstants = (text) => {
   const replacements = {
     'process.env.EXTERNAL_ASSET_URL': EXTERNAL_ASSET_URL,
@@ -316,6 +313,13 @@ const client = createConfig([
   ]),
 
   when(isDev || isStaging, [sourceMaps()]),
+
+  // will become available in /react-assets/stats.html
+  when(isDev || isStaging, [
+    addPlugins([
+      new Visualizer(),
+    ]),
+  ]),
 
   assets(),
 
