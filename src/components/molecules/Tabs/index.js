@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -7,6 +7,7 @@ import Tab from 'sly/components/atoms/Tab';
 import cursor from 'sly/components/helpers/cursor';
 
 const CursorTab = cursor(Tab);
+CursorTab.displayName = 'CursorTab';
 
 const TabWrapper = styled.div`
   border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
