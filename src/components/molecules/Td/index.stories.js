@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 
-import { TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd } from 'sly/components/atoms/Td';
+import { TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd } from 'sly/components/molecules/Td';
 
 const FixedWidthWrapper = styled.div`
   width: 200px;

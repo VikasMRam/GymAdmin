@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Td, TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd } from 'sly/components/atoms/Td';
+import { Td, TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd } from 'sly/components/molecules/Td';
 
 const wrap = (props = {}) => shallow(<Td {...props} />);
 const textTdWrap = (props = {}) => shallow(<TextTd {...props} />);
