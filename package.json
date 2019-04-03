@@ -164,7 +164,7 @@
     "webpack-merge-and-include-globally": "^2.0.11",
     "webpack-node-externals": "^1.5.4",
     "webpack-sort-chunks": "^0.2.0",
-    "webpack-spawn-plugin": "^0.1.1"
+    "webpack-spawn-plugin": "^0.1.1",
     "svgo": "^1.1.1",
     "webpack-visualizer-plugin": "^0.1.11"
   }
