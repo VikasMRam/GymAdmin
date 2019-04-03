@@ -58,11 +58,11 @@ export class Experiment extends Component {
   }
 
   componentDidMount() {
-    this.sendExperimentEvent('view_experiement');
+    this.sendExperimentEvent('view_experiment');
   }
 
   componentWillUnmount() {
-    this.sendExperimentEvent('complete_experiement');
+    this.sendExperimentEvent('complete_experiment');
   }
 
   sendExperimentEvent(action) {

@@ -172,7 +172,7 @@ class PricingWizardPage extends Component {
     } = this.props;
     const { similarProperties, propInfo, address } = community;
     const heading = 'Pricing and Availability request sent!';
-    const subheading = 'Your Seniorly Partner Agent will work with you to get your exact pricing and availability. They will reach out to you soon.';
+    const subheading = 'Your Seniorly Partner Agent will work with you to get your exact pricing and availability. You may get a call from (415) 881-4409.';
     const props = {
       similarCommunities: similarProperties,
       similarCommunititesHref: getCitySearchUrl({ propInfo, address }),
