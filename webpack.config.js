@@ -186,6 +186,7 @@ const uglifyJs = () =>
         new webpack.optimize.UglifyJsPlugin({
           sourceMap: isStaging,
           compress: { warnings: false },
+          output: { comments: false },
         }),
       ]),
     ]),
