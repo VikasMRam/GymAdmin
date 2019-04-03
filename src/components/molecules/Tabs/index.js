@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
 import Tab from 'sly/components/atoms/Tab';
+import cursor from 'sly/components/helpers/cursor';
 
-const Wrapper = styled.div`
-
-`;
+const CursorTab = cursor(Tab);
 
 const TabWrapper = styled.div`
-  border-bottom: ${size('border', 'regular')} solid ${palette('grey', 'background')};;
+  border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
   padding-left: 0;
 `;
 
@@ -18,6 +17,7 @@ const TabContent = styled.div`
   background-color: ${palette('white', 'base')};
   border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
   border-top: 0;
+  padding: ${size('spacing.large')} ${size('spacing.xLarge')};
 `;
 
 class Tabs extends Component {
@@ -50,13 +50,13 @@ class Tabs extends Component {
     } = this;
 
     return (
-      <Wrapper>
+      <div>
         <TabWrapper>
           {children.map((child) => {
             const { label } = child.props;
 
             return (
-              <Tab
+              <CursorTab
                 active={activeTab === label}
                 key={label}
                 label={label}
@@ -71,7 +71,7 @@ class Tabs extends Component {
             return child.props.children;
           })}
         </TabContent>
-      </Wrapper>
+      </div>
     );
   }
 }
