@@ -58,11 +58,11 @@ export class Experiment extends Component {
   }
 
   componentDidMount() {
-    this.sendExperimentEvent('view_experiement');
+    this.sendExperimentEvent('view_experiment');
   }
 
   componentWillUnmount() {
-    this.sendExperimentEvent('complete_experiement');
+    this.sendExperimentEvent('complete_experiment');
   }
 
   sendExperimentEvent(action) {
@@ -90,7 +90,7 @@ export class Experiment extends Component {
       }
     }
     if (!variantKey && enableExperimentsDebugger) {
-      console.info(`[Experiments] failed evaluating experiment ${name}. defaultVaraint will be selected.`);
+      console.info(`[Experiments] failed evaluating experiment ${name}. defaultVariant will be selected.`);
     }
     let childrenArray = Array.isArray(children) ? children : [children];
     childrenArray = childrenArray.filter(a => a); // To remove all false values
