@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import Th from 'sly/components/molecules/Th';
 
-storiesOf('Atoms|Th', module)
+storiesOf('Molecules|Th', module)
   .add('default', () => (
     <Th>Stage</Th>
   ))

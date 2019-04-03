@@ -8,7 +8,7 @@ const FixedWidthWrapper = styled.div`
   width: 200px;
 `;
 
-storiesOf('Atoms|Td', module)
+storiesOf('Molecules|Td', module)
   .add('default', () => (
     <TextTd>Kendrick Chaimberlain</TextTd>
   ))
