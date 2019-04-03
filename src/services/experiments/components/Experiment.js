@@ -79,7 +79,6 @@ export class Experiment extends Component {
     const {
       children, name, variantKey, defaultVariant, disabled,
     } = this.props;
-    
     this.selectedVariant = variantKey || defaultVariant;
     if (disabled) {
       this.selectedVariant = defaultVariant;

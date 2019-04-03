@@ -10,6 +10,6 @@ const wrap = (props = {}) =>
 describe('StickyFooter', () => {
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find(CommunityActions)).toHaveLength(1);
+    expect(wrapper.find(CommunityActions)).toHaveLength(2);
   });
 });
