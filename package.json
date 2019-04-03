@@ -75,9 +75,7 @@
     "opn-cli": "^3.1.0",
     "prettier-eslint-cli": "^4.7.1",
     "react-test-renderer": "^16.3.2",
-    "redux-mock-store": "^1.5.1",
-    "svgo": "^1.1.1",
-    "webpack-visualizer-plugin": "^0.1.11"
+    "redux-mock-store": "^1.5.1"
   },
   "dependencies": {
     "@webpack-blocks/dev-server2": "^0.4.0",
@@ -167,5 +165,7 @@
     "webpack-node-externals": "^1.5.4",
     "webpack-sort-chunks": "^0.2.0",
     "webpack-spawn-plugin": "^0.1.1"
+    "svgo": "^1.1.1",
+    "webpack-visualizer-plugin": "^0.1.11"
   }
 }
