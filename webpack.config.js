@@ -6,7 +6,7 @@ const fs = require('fs');
 const UglifyJs = require('uglify-es');
 const cssmin = require('cssmin');
 const devServer = require('@webpack-blocks/dev-server2');
-// const splitVendor = require('webpack-blocks-split-vendor');
+const splitVendor = require('webpack-blocks-split-vendor');
 const happypack = require('webpack-blocks-happypack');
 const serverSourceMap = require('webpack-blocks-server-source-map');
 const nodeExternals = require('webpack-node-externals');
@@ -24,6 +24,7 @@ const {
   webpack,
   group,
 } = require('@webpack-blocks/webpack2');
+const Visualizer = require('webpack-visualizer-plugin');
 
 const AssetsByTypeAndBundlePlugin = require('./private/webpack/AssestByTypeAndBundlePlugin');
 const PrependPlugin = require('./private/webpack/PrependPlugin');
@@ -186,6 +187,7 @@ const uglifyJs = () =>
         new webpack.optimize.UglifyJsPlugin({
           sourceMap: isStaging,
           compress: { warnings: false },
+          output: { comments: false },
         }),
       ]),
     ]),
@@ -193,6 +195,12 @@ const uglifyJs = () =>
 
 // order matters to how the routes are mounted
 const clientConfigs = [
+  {
+    bundle: 'vendor',
+    ssr: true,
+    isCommon: true,
+    path: '*',
+  },
   {
     bundle: 'wizards',
     ssr: false,
@@ -237,10 +245,6 @@ const server = createConfig([
     }),
   ]),
 ]);
-
-if (isDev || isStaging) {
-  console.info('Will do sourcemaps');
-}
 
 const replaceExternalConstants = (text) => {
   const replacements = {
@@ -316,15 +320,20 @@ const client = createConfig([
 
   when(isDev || isStaging, [sourceMaps()]),
 
+  // will become available in /react-assets/stats.html
+  when(isDev || isStaging, [
+    addPlugins([
+      new Visualizer(),
+    ]),
+  ]),
+
   assets(),
 
   devCORS(),
 
   uglifyJs(),
 
-  /* env('production', [
-    splitVendor(),
-  ]), */
+  splitVendor(),
 ]);
 
 module.exports = client;
