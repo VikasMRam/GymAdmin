@@ -26,7 +26,7 @@ storiesOf('Molecules|IconButton', module)
       Hello
     </IconButton>
   ))
-  .add('Seach Filter Button', () => (
+  .add('Search Filter Button', () => (
     <IconButton
       right
       icon="share"
@@ -35,5 +35,10 @@ storiesOf('Molecules|IconButton', module)
       transparent
     >
       Budget: Up to $2500
+    </IconButton>
+  ))
+  .add('Hide Text in Mobile', () => (
+    <IconButton icon="share" hideTextInMobile>
+      Hello
     </IconButton>
   ));
