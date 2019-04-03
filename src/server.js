@@ -29,7 +29,7 @@ import ClientApp from 'sly/components/App';
 import DashboardApp from 'sly/components/DashboardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
-import { ApiProvider, createApi as createBeesApi } from 'sly/services/newApi';
+import { createApi as createBeesApi } from 'sly/services/newApi';
 
 const makeAppRenderer = renderedApp => ({
   store, context, location, sheet,
@@ -49,17 +49,13 @@ const renderEmptyApp = () => {
 };
 
 // requires compatible configuration
-const getAppRenderer = ({ bundle, api }) => {
+const getAppRenderer = ({ bundle }) => {
   switch (bundle) {
     case 'dashboard': return makeAppRenderer((
-      <ApiProvider api={api}>
-        <DashboardApp />
-      </ApiProvider>
+      <DashboardApp />
     ));
     case 'client': return makeAppRenderer((
-      <ApiProvider api={api}>
-        <ClientApp />
-      </ApiProvider>
+      <ClientApp />
     ));
     default: return renderEmptyApp;
   }
@@ -258,22 +254,26 @@ app.use(async (req, res, next) => {
     }
   }
 
-  try {
-    await Promise.all([
-      store.dispatch(beesApi.getUser({ id: 'me' })),
-      store.dispatch(beesApi.getUuidAux({ id: 'me' })),
-    ]);
-  } catch (e) {
-    console.log(e);
+  const ignoreUnauthorized = (e) => {
     if (e.status === 401) {
       // ignore 401
       logWarn(e);
     } else {
-      e.message = `Error trying to prefetch user data: ${e.message}`;
-      console.log('new user/me error', e);
-      next(e);
-      return;
+      return Promise.reject(e);
     }
+    return null;
+  };
+
+  try {
+    await Promise.all([
+      store.dispatch(beesApi.getUser({ id: 'me' })).catch(ignoreUnauthorized),
+      store.dispatch(beesApi.getUuidAux({ id: 'me' })),
+    ]);
+  } catch (e) {
+    e.message = `Error trying to prefetch user data: ${e.message}`;
+    console.log('new user/me error', e);
+    next(e);
+    return;
   }
 
   req.clientConfig.store = store;

@@ -49,5 +49,4 @@ export query from './query';
 export prefetch from './prefetch';
 export middleware from './middleware';
 
-export ApiProvider from './ApiProvider';
 export withApi from './withApi';
