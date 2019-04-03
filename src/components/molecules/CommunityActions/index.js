@@ -15,14 +15,14 @@ MainButton.displayName = 'MainButton';
 const CommunityActions = ({ onGCPClick, isAlreadyPricingRequested }) => (
   <div>
     <Experiment name="Molecules_CommunityActions" defaultVariant="wizard">
+      <Variant name="phone">
+        <MainButton kind="jumbo" href="tel:+18558664515">Call Now for Pricing</MainButton>
+      </Variant>
       <Variant name="wizard">
         {!isAlreadyPricingRequested &&
         <MainButton kind="jumbo" onClick={onGCPClick}>Get Pricing</MainButton>}
         {isAlreadyPricingRequested &&
         <MainButton ghost kind="jumbo" onClick={onGCPClick}>Pricing requested</MainButton>}
-      </Variant>
-      <Variant name="phone">
-        <MainButton kind="jumbo" href="tel:+18558664515">Call Now for Pricing</MainButton>
       </Variant>
     </Experiment>
 
