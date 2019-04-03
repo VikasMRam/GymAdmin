@@ -14,7 +14,7 @@ MainButton.displayName = 'MainButton';
 
 const CommunityActions = ({ onGCPClick, isAlreadyPricingRequested }) => (
   <div>
-    <Experiment name="Organisms_CommunityActions">
+    <Experiment name="Molecules_CommunityActions" defaultVariant="wizard">
       <Variant name="wizard">
         {!isAlreadyPricingRequested &&
         <MainButton kind="jumbo" onClick={onGCPClick}>Get Pricing</MainButton>}
