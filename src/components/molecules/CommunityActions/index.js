@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { func, bool } from 'prop-types';
 
 import { Button } from 'sly/components/atoms/index';
-import { Experiment } from 'sly/services/experiments/components/Experiment';
-import Variant from 'sly/services/experiments/components/Variant';
+import { Experiment, Variant } from 'sly/services/experiments';
+
 
 const MainButton = styled(Button)`
   width: 100%;
