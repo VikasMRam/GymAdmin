@@ -29,13 +29,18 @@ import ModalController from 'sly/controllers/ModalController';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
 
-const mapStateToProps = (state, { searchParams }) => ({
-  isFetchingResults: isResourceListRequestInProgress(state, 'searchResource'),
-  requestMeta: getListMeta(state, 'searchResource', searchParams),
-  geoGuide: getList(state, 'geoGuide', searchParams),
-});
+const mapStateToProps = (state, { searchParams }) => {
+  const communityList = getList(state, 'searchResource', searchParams);
+  return {
+    communityList,
+    isFetchingResults: isResourceListRequestInProgress(state, 'searchResource'),
+    requestMeta: getListMeta(state, 'searchResource', searchParams),
+    geoGuide: getList(state, 'geoGuide', searchParams),
+  };
+};
 
 const mapPropsToActions = ({ searchParams }) => ({
+  searchResource: resourceListReadRequest('searchResource', searchParams),
   geoGuide: resourceListReadRequest('geoGuide', searchParams),
 });
 
@@ -56,7 +61,7 @@ const handleResponses = (responses) => {
   handleResponses,
 )
 
-@prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
+//@prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
 
 @connect(mapStateToProps)
 
@@ -123,7 +128,7 @@ export default class CommunitySearchPageContainer extends PureComponent {
       requestMeta,
       location,
       history,
-      status,
+      isFetchingResults,
     } = this.props;
 
     const { pathname, search } = location;
@@ -143,7 +148,7 @@ export default class CommunitySearchPageContainer extends PureComponent {
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
 
-    const isFetchingResults = status.communityList.isLoading || !status.communityList.hasStarted;
+    //const isFetchingResults = status.communityList.isLoading || !status.communityList.hasStarted;
 
     if (isFetchingResults) {
       return null;
