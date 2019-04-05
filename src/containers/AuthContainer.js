@@ -3,7 +3,6 @@ import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { authenticateCancel, authenticateSuccess } from 'sly/store/authenticated/actions';
-import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import LoginFormContainer from 'sly/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/containers/SignupFormContainer';
 import JoinSlyButtonsContainer from 'sly/containers/JoinSlyButtonsContainer';
@@ -15,18 +14,34 @@ import {
   MODAL_TYPE_RESET_PASSWORD,
 } from 'sly/constants/authenticated';
 
+import { withUser, prefetch } from 'sly/services/newApi';
+
 const steps = {};
 steps[MODAL_TYPE_JOIN_SLY] = JoinSlyButtonsContainer;
 steps[MODAL_TYPE_LOG_IN] = LoginFormContainer;
 steps[MODAL_TYPE_SIGN_UP] = SignupFormContainer;
 steps[MODAL_TYPE_RESET_PASSWORD] = ResetPasswordFormContainer;
 
-class AuthContainer extends Component {
+const mapStateToProps = state => ({
+  authenticated: state.authenticated,
+});
+
+const mapDispatchToProps = dispatch => ({
+  authenticateCancel: () => dispatch(authenticateCancel()),
+  authenticateSuccess: user => dispatch(authenticateSuccess(user)),
+});
+
+
+@prefetch('user', 'getUser', req => req({ id: 'me' }))
+
+@connect(mapStateToProps, mapDispatchToProps)
+
+export default class AuthContainer extends Component {
   static propTypes = {
+    status: object.isRequired,
     authenticated: object,
     authenticateCancel: func,
     authenticateSuccess: func,
-    fetchUser: func,
     notifyInfo: func,
     showModal: func,
     hideModal: func,
@@ -46,6 +61,7 @@ class AuthContainer extends Component {
   state = { currentStep: null };
 
   componentDidUpdate() {
+    console.log('update', this.props)
     const {
       authenticated, authenticateCancel, showModal, hideModal,
     } = this.props;
@@ -90,8 +106,9 @@ class AuthContainer extends Component {
   gotoResetPassword = () => this.setState({ currentStep: MODAL_TYPE_RESET_PASSWORD });
 
   handleLoginSuccess = () => {
-    const { authenticateSuccess, fetchUser } = this.props;
-    return fetchUser().then(authenticateSuccess);
+    console.log('handleLoginSuccess')
+    const { authenticateSuccess, status } = this.props;
+    return status.user.refetch().then(authenticateSuccess);
   };
 
   handleResetPasswordSuccess = (json) => {
@@ -104,18 +121,7 @@ class AuthContainer extends Component {
   };
 
   render() {
-    return null;
+    return <div>holaaa</div>;
   }
 }
 
-const mapStateToProps = state => ({
-  authenticated: state.authenticated,
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me')),
-  authenticateCancel: () => dispatch(authenticateCancel()),
-  authenticateSuccess: user => dispatch(authenticateSuccess(user)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AuthContainer);

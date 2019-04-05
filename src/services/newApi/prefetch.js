@@ -69,25 +69,33 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       }
 
       componentWillReceiveProps(nextProps) {
-        const { requestInfo } = nextProps;
-        if (!requestInfo.isLoading && !requestInfo.hasStarted) {
+        const { requestInfo, done } = nextProps;
+        const { hasStarted, isLoading } = requestInfo;
+        if (!isLoading && !hasStarted) {
           this.fetch(nextProps);
+        } else if (isServer && hasStarted && !isLoading) {
+          done();
         }
       }
 
       // props fetch bound to dispatch
       fetch = (props = this.props) => {
         const { fetch, done } = props;
+        console.log('fetch', getDisplayName(InnerComponent));
         return fetch(props).then(done, done);
       };
 
+      count = 0;
+
       render() {
-        const { requestInfo, status, ...props } = this.props;
+        const { requestInfo, status, done, fetch, ...props } = this.props;
         const { normalized, ...request } = requestInfo;
 
         if (isServer && (!request.hasStarted || request.isLoading)) {
           return null;
         }
+
+        if (this.count++ > 100) return null;
 
         const innerProps = {
           ...props,

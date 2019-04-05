@@ -4,6 +4,7 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import { object, func } from 'prop-types';
 
 import prefetch from './prefetch';
+import query from './query';
 import withApi from './withApi';
 
 function getDisplayName(WrappedComponent) {
@@ -36,6 +37,7 @@ export default function withUser() {
       static WrappedComponent = InnerComponent;
 
       registerUser = (options = {}) => {
+        console.log('registerUser')
         const { dispatch, api, status } = this.props;
         const { ignoreExisting, ...data } = options;
         // FIXME: API does not give enough info on how to figure ignoreExisting
@@ -52,10 +54,18 @@ export default function withUser() {
         }).then(() => status.user.refetch());
       };
 
+      loginUser = (data) => {
+        console.log('loginUser')
+        const { dispatch, api } = this.props;
+        return dispatch(api.loginUser(data));
+      };
+
       render() {
+        console.log('render', getDisplayName(InnerComponent));
         return (
           <InnerComponent
             {...this.props}
+            loginUser={this.loginUser}
             registerUser={this.registerUser}
           />
         );
