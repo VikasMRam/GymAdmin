@@ -25,7 +25,7 @@ describe('Tabs', () => {
 
   it('renders Tabs with buttons', () => {
     const wrapper = wrap({ children });
-    const tabs = wrapper.find('Tab');
+    const tabs = wrapper.find('CursorTab');
     const crocTab = tabs.at(1);
     crocTab.simulate('click');
     expect(wrapper.state('activeTab')).toEqual('Croc');
