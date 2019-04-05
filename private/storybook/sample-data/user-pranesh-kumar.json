@@ -1,0 +1,55 @@
+{
+  "id":"36017948a4d80ee177c7058d150a533b",
+  "admin":false,
+  "confirmedAt":"2019-04-04T10:46:14Z",
+  "createdAt":"2019-04-04T05:16:14Z",
+  "email":"praneshkmr@gmail.com",
+  "hasPasswordSet":true,
+  "name":"Pranesh Kumar",
+  "phoneNumber":"3122182907",
+  "roleID":1,
+  "updatedAt":"2019-04-05T15:54:06Z",
+  "uuid":"8fb2523b-6a78-43fa-bc80-e86ad6d5d9db",
+  "address":null,
+  "contact":{
+    "id":"12e0fb21724e805ba2027874460edc90",
+    "createdAt":"2019-04-04T05:00:31Z",
+    "email":"praneshkmr@gmail.com",
+    "firstName":"Pranesh",
+    "lastName":"Kumar",
+    "mobilePhone":"",
+    "name":"Pranesh Kumar",
+    "updatedAt":"2019-04-05T15:54:06Z",
+    "validEmail":false,
+    "validSMS":false,
+    "workPhone":"",
+    "entities":[
+    ],
+    "organization":null
+  },
+  "organization":{
+    "id":"4f97ed74e51b9be06817348865babdc7",
+    "name":"",
+    "updated_at":"2019-04-05T15:54:06Z",
+    "users":[
+    ]
+  },
+  "uuidAux":{
+    "id":"cb3464e0ce90d52a5f71c80ce581ec7f",
+    "uuid":"8fb2523b-6a78-43fa-bc80-e86ad6d5d9db",
+    "uuidInfo":{
+      "careInfo":null,
+      "residentInfo":{
+        "fullName":"Blah 5"
+      },
+      "housingInfo":{
+        "lookingFor":"father",
+        "moveTimeline":"In a Week"
+      },
+      "financialInfo":{
+        "maxMonthlyBudget":5000
+      },
+      "locationInfo":null
+    }
+  }
+}
