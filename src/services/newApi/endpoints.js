@@ -4,6 +4,8 @@ import { get, patch, post, put, destroy } from 'redux-bees';
 // patch is prefered over put as per specification
 export default {
   getUser: { method: get, path: '/platform/users/:id' },
+  registerUser: { method: post, path: '/platform/auth/register' },
+  loginUser: { method: post, path: '/platform/auth/login' },
   updateUser: { method: patch, path: '/platform/users/:id' },
   getUuidAux: { method: get, path: '/platform/uuid-auxes/:id' },
   updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },

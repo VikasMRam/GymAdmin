@@ -21,7 +21,7 @@ import {
   PROFILE_CONTACTED,
 } from 'sly/services/newApi/constants';
 
-import { prefetch, query } from 'sly/services/newApi';
+import { prefetch, query, withUser } from 'sly/services/newApi';
 
 import {
   createBooleanValidator,
@@ -99,7 +99,7 @@ const submit = data => resourceCreateRequest('userAction', data);
   }),
 )
 
-@prefetch('user', 'getUser', req => req({ id: 'me' }))
+@withUser()
 @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 @query('createAction', 'createUuidAction')
 @query('updateUuidAux', 'updateUuidAux')
@@ -234,6 +234,7 @@ export default class ConciergeController extends Component {
       gotoGetCustomPricing,
       createAction,
       match,
+      registerUser,
     } = this.props;
 
     const value = {
@@ -260,7 +261,12 @@ export default class ConciergeController extends Component {
           actionType: CONSULTATION_REQUESTED,
         },
       }),
-    ]).then(() => {
+    ]).then(() => registerUser({
+      email,
+      name,
+      phone_number: phone,
+      ignoreExisting: true,
+    })).then(() => {
       if (communitySlug && gotoGetCustomPricing) {
         gotoGetCustomPricing();
       } else {

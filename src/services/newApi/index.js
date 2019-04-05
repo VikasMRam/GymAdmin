@@ -50,3 +50,4 @@ export prefetch from './prefetch';
 export middleware from './middleware';
 
 export withApi from './withApi';
+export withUser from './withUser';
