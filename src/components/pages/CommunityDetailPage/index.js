@@ -468,7 +468,7 @@ export default class CommunityDetailPage extends Component {
     return (
       <Fragment>
         {getHelmetForCommunityPage(community, location)}
-        <Header />
+        <Header noBottomMargin={!!bannerNotification} />
         {bannerNotification && <StyledBannerNotification>{bannerNotification}</StyledBannerNotification>}
         <CommunityDetailPageTemplate>
           <Wrapper>
