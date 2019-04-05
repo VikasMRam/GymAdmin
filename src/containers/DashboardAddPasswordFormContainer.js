@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { reduxForm, SubmissionError } from 'redux-form';
+import { reduxForm, SubmissionError, reset } from 'redux-form';
 import { object, func } from 'prop-types';
 
 import DashboardAddPasswordForm from 'sly/components/organisms/DashboardAddPasswordForm';
@@ -12,8 +12,10 @@ const validate = createValidator({
   confirmPassword: [minLength(8), match('newPassword')],
 });
 
+const formName = 'DashboardAddPasswordForm';
+
 const ReduxForm = reduxForm({
-  form: 'DashboardAddPasswordForm',
+  form: formName,
   destroyOnUnmount: false,
   validate,
 })(DashboardAddPasswordForm);
@@ -25,8 +27,8 @@ class DashboardAddPasswordFormContainer extends Component {
     user: userPropType,
     notifySuccess: func,
   }
-  handleSubmit = (values) => {
-    const { api, user, notifySuccess } = this.props;
+  handleSubmit = (values, dispatch) => {
+    const { api, user, notifySuccess, getUser } = this.props;
     const { email } = user;
     const { newPassword, confirmPassword } = values;
     if (newPassword && confirmPassword) {
@@ -41,6 +43,8 @@ class DashboardAddPasswordFormContainer extends Component {
           }
         })
         .then(() => {
+          getUser({ id: 'me' });
+          dispatch(reset(formName));
           notifySuccess('Password Set Successfully');
         });
     }

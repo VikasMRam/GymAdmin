@@ -13,7 +13,7 @@ const uuidInfo = shape({
   }),
   housingInfo: shape({
     communitySize: arrayOf(string),
-    lookingFor: arrayOf(string),
+    lookingFor: string,
     moveTimeline: string,
     roomPreference: arrayOf(string),
     typeCare: arrayOf(string),
@@ -40,6 +40,7 @@ export const uuidAux = shape({
 
 export default shape({
   id: string,
+  uuid: string.isRequired,
   name: string,
   email: string,
   phoneNumber: string,
