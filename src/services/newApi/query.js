@@ -49,7 +49,7 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
 
       static WrappedComponent = InnerComponent;
 
-      // this apiCall is done from the api provided by ApiProvider, so it's bound to dispatch
+      // props fetch bound to dispatch
       fetch = (...args) => {
         return this.props.fetch(this.props, ...args);
       };

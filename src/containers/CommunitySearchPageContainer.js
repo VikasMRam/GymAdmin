@@ -29,13 +29,18 @@ import ModalController from 'sly/controllers/ModalController';
 import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
 
-const mapStateToProps = (state, { searchParams }) => ({
-  isFetchingResults: isResourceListRequestInProgress(state, 'searchResource'),
-  requestMeta: getListMeta(state, 'searchResource', searchParams),
-  geoGuide: getList(state, 'geoGuide', searchParams),
-});
+const mapStateToProps = (state, { searchParams }) => {
+  const communityList = getList(state, 'searchResource', searchParams);
+  return {
+    communityList,
+    isFetchingResults: isResourceListRequestInProgress(state, 'searchResource'),
+    requestMeta: getListMeta(state, 'searchResource', searchParams),
+    geoGuide: getList(state, 'geoGuide', searchParams),
+  };
+};
 
 const mapPropsToActions = ({ searchParams }) => ({
+  searchResource: resourceListReadRequest('searchResource', searchParams),
   geoGuide: resourceListReadRequest('geoGuide', searchParams),
 });
 
@@ -56,7 +61,7 @@ const handleResponses = (responses) => {
   handleResponses,
 )
 
-@prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
+//@prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
 
 @connect(mapStateToProps)
 
@@ -123,13 +128,8 @@ export default class CommunitySearchPageContainer extends PureComponent {
       requestMeta,
       location,
       history,
-      status,
+      isFetchingResults,
     } = this.props;
-
-    // TODO: remove after fixing api service's isLoading
-    if (!communityList) {
-      return null;
-    }
 
     const { pathname, search } = location;
     const notPermittedSeparators = ['_', '%20'];
@@ -143,11 +143,15 @@ export default class CommunitySearchPageContainer extends PureComponent {
       return <Redirect to={replaceLastSegment(pathname, urlize(searchParams.city)) + search} />;
     }
 
-    const isFetchingResults = status.communityList.isLoading;
-
     if (serverState instanceof Error) {
       const errorCode = (serverState.response && serverState.response.status) || 500;
       return <ErrorPage errorCode={errorCode} history={history} />;
+    }
+
+    //const isFetchingResults = status.communityList.isLoading || !status.communityList.hasStarted;
+
+    if (isFetchingResults) {
+      return null;
     }
 
     const isMapView = searchParams.view === 'map';

@@ -34,7 +34,7 @@ const Html = ({
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
         {state.trim().length > 0 && <script dangerouslySetInnerHTML={{ __html: state }} />}
-        {assets.js.map(path => <script key={path} src={`${path}`} async defer />)}
+        {assets.js.map(path => <script key={path} src={`${path}`} defer />)}
         {/* eslint-disable */}
 
         {/* Google Tag Manager */}

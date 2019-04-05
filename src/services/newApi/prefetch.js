@@ -60,9 +60,10 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
 
       componentWillMount() {
         const { requestInfo, done } = this.props;
-        if (!requestInfo.isLoading && !requestInfo.hasStarted) {
+        const { hasStarted, isLoading } = requestInfo;
+        if (!isLoading && !hasStarted) {
           this.fetch();
-        } else if (isServer) {
+        } else if (isServer && hasStarted && !isLoading) {
           done();
         }
       }
@@ -74,7 +75,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
         }
       }
 
-      // this apiCall is done from the api provided by ApiProvider, so it's bound to dispatch
+      // props fetch bound to dispatch
       fetch = (props = this.props) => {
         const { fetch, done } = props;
         return fetch(props).then(done, done);
