@@ -51,7 +51,6 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
 
       // props fetch bound to dispatch
       fetch = (...args) => {
-        console.log(getDisplayName(InnerComponent), args)
         return this.props.fetch(this.props, ...args);
       };
 

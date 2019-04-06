@@ -26,6 +26,8 @@ const mapDispatchToProps = dispatch => ({
 @connect(null, mapDispatchToProps)
 
 export default class LoginFormContainer extends Component {
+  static displayName = 'LoginFormContainer';
+
   static propTypes = {
     loginUser: func.isRequired,
     clearSubmitErrors: func,

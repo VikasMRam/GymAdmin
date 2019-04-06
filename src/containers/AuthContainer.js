@@ -14,7 +14,7 @@ import {
   MODAL_TYPE_RESET_PASSWORD,
 } from 'sly/constants/authenticated';
 
-import { withUser, prefetch } from 'sly/services/newApi';
+import { withUser } from 'sly/services/newApi';
 
 const steps = {};
 steps[MODAL_TYPE_JOIN_SLY] = JoinSlyButtonsContainer;
@@ -32,7 +32,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-@prefetch('user', 'getUser', req => req({ id: 'me' }))
+@withUser()
 
 @connect(mapStateToProps, mapDispatchToProps)
 
@@ -48,24 +48,25 @@ export default class AuthContainer extends Component {
   };
 
   static getDerivedStateFromProps({ authenticated }, state) {
+    // FIXME: all this hack to convert declarative nature of react into imperative, has to be redone as it's error prone
     if (authenticated.loggingIn) {
       if (!state.currentStep) {
-        return { currentStep: MODAL_TYPE_JOIN_SLY };
+        return { currentStep: MODAL_TYPE_JOIN_SLY, isOpen: false };
       }
     } else {
-      return { currentStep: null };
+      return { currentStep: null, isOpen: false };
     }
     return null;
   }
 
-  state = { currentStep: null };
+  state = { currentStep: null, isOpen: false };
 
   componentDidUpdate() {
-    console.log('update', this.props)
     const {
       authenticated, authenticateCancel, showModal, hideModal,
     } = this.props;
-    const { currentStep } = this.state;
+
+    const { currentStep, isOpen } = this.state;
 
     const StepComponent = steps[currentStep];
 
@@ -93,9 +94,12 @@ export default class AuthContainer extends Component {
       default:
     }
 
-    if (StepComponent) {
+    // FIXME: read above hack
+    if (!isOpen && StepComponent) {
+      this.setState({ isOpen: true });
       showModal(<StepComponent {...componentProps} />, authenticateCancel);
-    } else {
+    } else if (isOpen && !StepComponent) {
+      this.setState({ isOpen: false });
       hideModal();
     }
   }
@@ -106,7 +110,6 @@ export default class AuthContainer extends Component {
   gotoResetPassword = () => this.setState({ currentStep: MODAL_TYPE_RESET_PASSWORD });
 
   handleLoginSuccess = () => {
-    console.log('handleLoginSuccess')
     const { authenticateSuccess, status } = this.props;
     return status.user.refetch().then(authenticateSuccess);
   };

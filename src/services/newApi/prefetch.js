@@ -81,7 +81,6 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       // props fetch bound to dispatch
       fetch = (props = this.props) => {
         const { fetch, done } = props;
-        console.log('fetch', getDisplayName(InnerComponent));
         return fetch(props).then(done, done);
       };
 

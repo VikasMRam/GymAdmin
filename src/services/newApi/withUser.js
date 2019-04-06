@@ -37,7 +37,6 @@ export default function withUser() {
       static WrappedComponent = InnerComponent;
 
       registerUser = (options = {}) => {
-        console.log('registerUser')
         const { dispatch, api, status } = this.props;
         const { ignoreExisting, ...data } = options;
         // FIXME: API does not give enough info on how to figure ignoreExisting
@@ -55,13 +54,11 @@ export default function withUser() {
       };
 
       loginUser = (data) => {
-        console.log('loginUser')
         const { dispatch, api } = this.props;
         return dispatch(api.loginUser(data));
       };
 
       render() {
-        console.log('render', getDisplayName(InnerComponent));
         return (
           <InnerComponent
             {...this.props}
