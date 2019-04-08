@@ -63,4 +63,17 @@ describe('Table', () => {
     const wrapper = wrap();
     expect(wrapper.contains('test')).toBe(false);
   });
+
+  it('renders Table', () => {
+    const wrapper = wrap();
+    expect(wrapper.find('thead')).toHaveLength(1);
+    expect(wrapper.find('tbody')).toHaveLength(1);
+    expect(wrapper.find('Th')).toHaveLength(5);
+    expect(wrapper.find('tr')).toHaveLength(5);
+    expect(wrapper.find('Td')).toHaveLength(1);
+    expect(wrapper.find('TextTd')).toHaveLength(7);
+    expect(wrapper.find('LinkTd')).toHaveLength(4);
+    expect(wrapper.find('StageTd')).toHaveLength(4);
+    expect(wrapper.find('DoubleLineTd')).toHaveLength(4);
+  });
 });
