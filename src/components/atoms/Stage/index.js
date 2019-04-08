@@ -11,6 +11,7 @@ const Wrapper = styled.span`
 
 const TextBlock = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
+  white-space: nowrap;
   ${ifProp('disabled', css`
     color: ${palette('slate', 'filler')};
   `)}
