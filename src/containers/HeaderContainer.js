@@ -17,6 +17,7 @@ import Notifications from 'sly/components/organisms/Notifications';
 import Header from 'sly/components/organisms/Header';
 import ModalController from 'sly/controllers/ModalController';
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
+import { withUser } from 'sly/services/newApi';
 
 const defaultHeaderItems = [
   { name: '(855) 866-4515', url: 'tel:+18558664515' },
@@ -41,7 +42,7 @@ const defaultMenuItems = [
 ];
 
 const loginHeaderItems = user => user
-  ? [{ name: 'Dashboard', url: '/mydashboard' }]
+  ? [{ name: 'Dashboard', url: '/dashboard' }]
   : [{ name: 'Sign in' }];
 
 const loginMenuItems = user => loginHeaderItems(user)
@@ -58,9 +59,12 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
   value,
 });
 
+@withUser()
+
 class HeaderContainer extends Component {
   static propTypes = {
     user: object,
+    status: object,
     setQueryParams: func,
     searchParams: object,
     logoutUser: func,
@@ -81,12 +85,15 @@ class HeaderContainer extends Component {
     });
   };
 
+  logout = () => {
+    const { logoutUser, status } = this.props;
+    return logoutUser().then(() => status.user.refetch());
+  };
+
   render() {
     const {
       user,
       setQueryParams,
-      logoutUser,
-      fetchUser,
       className,
       ensureAuthenticated,
     } = this.props;
@@ -103,9 +110,7 @@ class HeaderContainer extends Component {
     }
     const logoutLeftMenuItem = lmItems.find(item => item.name === 'Log out');
     if (logoutLeftMenuItem) {
-      logoutLeftMenuItem.onClick = () => {
-        logoutUser().then(() => fetchUser());
-      };
+      logoutLeftMenuItem.onClick = this.logout;
     }
     let loginItem = lhItems.find(item => item.name === 'Sign in');
     if (loginItem) {
@@ -181,16 +186,11 @@ const mapStateToProps = (state, {
 }) => ({
   setQueryParams: getQueryParamsSetter(history, location),
   searchParams: getSearchParams(match, location),
-  // this will break as soon as we are requesting other users
-  // TODO: make the me resource remember it's id
-  user: getDetail(state, 'user', 'me'),
 });
 
 const mapDispatchToProps = dispatch => ({
   ensureAuthenticated: action => dispatch(ensureAuthenticated(action)),
   logoutUser: () => dispatch(resourceDeleteRequest('logout')),
-  fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me'))
-    .catch(() => dispatch(entitiesReceive({ user: { me: null } }))),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderContainer));

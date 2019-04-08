@@ -1,16 +1,17 @@
 import { call, put, race, takeEvery, take, select } from 'redux-saga/effects';
 
 import { isFSA } from 'sly/store/actions';
-import { getDetail } from 'sly/store/selectors';
+import { getRequestInfo } from 'sly/services/newApi';
+
 import * as actions from './actions';
 
-const getUser = state => getDetail(state, 'user', 'me');
+const getUser = state => getRequestInfo(state, 'getUser', { id: 'me' });
 export function* authenticate(reason) {
   // check if there is an user
   const user = yield select(getUser);
-  if (user) {
+  if (user.status === 200) {
     return {
-      authenticated: user,
+      authenticated: true,
       cancel: null,
     };
   }

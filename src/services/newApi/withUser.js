@@ -4,7 +4,6 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import { object, func } from 'prop-types';
 
 import prefetch from './prefetch';
-import query from './query';
 import withApi from './withApi';
 
 function getDisplayName(WrappedComponent) {
@@ -54,8 +53,18 @@ export default function withUser() {
       };
 
       loginUser = (data) => {
+        const { dispatch, api, status } = this.props;
+        return dispatch(api.loginUser(data)).then(() => status.user.refetch());
+      };
+
+      recoverPassword = (data) => {
         const { dispatch, api } = this.props;
-        return dispatch(api.loginUser(data));
+        return dispatch(api.recoverPassword(data));
+      };
+
+      thirdpartyLogin = (data) => {
+        const { dispatch, api, status } = this.props;
+        return dispatch(api.thirdpartyLogin(data)).then(() => status.user.refetch());
       };
 
       render() {
@@ -64,6 +73,8 @@ export default function withUser() {
             {...this.props}
             loginUser={this.loginUser}
             registerUser={this.registerUser}
+            recoverPassword={this.recoverPassword}
+            thirdpartyLogin={this.thirdpartyLogin}
           />
         );
       }

@@ -40,12 +40,13 @@ export default class LoginFormContainer extends Component {
     const payload = { email, password };
 
     clearSubmitErrors();
-    return loginUser(payload).then(onSubmitSuccess).catch((r) => {
+    return loginUser(payload).then(onSubmitSuccess).catch((error) => {
       // TODO: Need to set a proper way to handle server side errors
-      const { response } = r;
-      return response.json().then(() => {
-        throw new SubmissionError({ _error: 'Oops! That email / password combination is not valid.' });
-      });
+      if (error.status === 400) {
+        return Promise.reject(new SubmissionError({ _error: 'Oops! That email / password combination is not valid.' }));
+      }
+
+      return Promise.reject(error);
     });
   };
 
