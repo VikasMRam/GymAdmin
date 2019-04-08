@@ -5,7 +5,11 @@ import { Block } from 'sly/components/atoms';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import PraneshKumar from 'sly/../private/storybook/sample-data/user-pranesh-kumar.json';
 
-const wrap = (props = {}) => shallow(<FamilySummary {...props} />);
+const href = '/sdfsdf';
+const defaultProps = {
+  href,
+};
+const wrap = (props = {}) => shallow(<FamilySummary {...defaultProps} {...props} />);
 
 describe('FamilySummary', () => {
   it('renders', () => {
@@ -45,14 +49,11 @@ describe('FamilySummary', () => {
       .contains(PraneshKumar.uuidAux.uuidInfo.housingInfo.moveTimeline)).toBe(true);
   });
 
-  it('onSeeMoreClick is triggered', () => {
-    const onSeeMoreClick = jest.fn();
+  it('see more details href', () => {
     const wrapper = wrap({
       user: PraneshKumar,
-      onSeeMoreClick,
     });
 
-    wrapper.dive().find('SeeMore').simulate('click');
-    expect(onSeeMoreClick).toHaveBeenCalled();
+    expect(wrapper.dive().find('StyledLink').prop('href')).toBe(href);
   });
 });

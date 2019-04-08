@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { func } from 'prop-types';
+import { string } from 'prop-types';
 
 import pad from 'sly/components/helpers/pad';
 import cursor from 'sly/components/helpers/cursor';
 import { size } from 'sly/components/themes';
 import userPropType from 'sly/propTypes/user';
-import { Box, Heading, Label, Block } from 'sly/components/atoms';
+import { Box, Heading, Label, Block, Link } from 'sly/components/atoms';
 
 const ColumWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
@@ -32,12 +32,17 @@ const OuterColumWrapper = styled.div`
   }
 `;
 
+const StyledLink = styled(Link)`
+  font-size: ${size('text.caption')};
+  font-weight: ${size('weight.medium')};
+`;
+
 const PaddedHeading = pad(Heading, 'large');
 const SlyIntro = pad(styled.div``, 'xLarge');
 const SeeMore = cursor(Block);
 SeeMore.displayName = 'SeeMore';
 
-const FamilySummary = ({ user, onSeeMoreClick }) => (
+const FamilySummary = ({ user, href }) => (
   <Box>
     <PaddedHeading size="body">Summary</PaddedHeading>
     <OuterColumWrapper>
@@ -82,13 +87,13 @@ const FamilySummary = ({ user, onSeeMoreClick }) => (
       <Label palette="grey">Seniorly introduction</Label>
       <Block size="caption">intro info here</Block>
     </SlyIntro>
-    <SeeMore size="caption" palette="primary" weight="medium" onClick={onSeeMoreClick}>See more family details</SeeMore>
+    <StyledLink href={href}>See more family details</StyledLink>
   </Box>
 );
 
 FamilySummary.propTypes = {
   user: userPropType,
-  onSeeMoreClick: func,
+  href: string.isRequired,
 };
 
 export default FamilySummary;
