@@ -56,7 +56,7 @@ export default class SlyEvent {
       return;
     }
 
-    let { action, category, label, value } = event;
+    let { action, category, label, value, nonInteraction } = event;
 
     const se = {
       a: action,
@@ -84,6 +84,7 @@ export default class SlyEvent {
       action,
       value,
       label: gaLabel,
+      nonInteraction,
     };
 
     if (isDev) {

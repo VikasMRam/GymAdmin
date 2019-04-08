@@ -1,45 +1,76 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
+import { node } from 'prop-types';
 
 import { TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd } from 'sly/components/molecules/Td';
 
-const FixedWidthWrapper = styled.div`
+const TdWrapper = ({ children }) => (
+  <table>
+    <tbody>
+      <tr>
+        {children}
+      </tr>
+    </tbody>
+  </table>
+);
+
+TdWrapper.propTypes = {
+  children: node,
+};
+
+const FixedWidthWrapper = styled.tr`
   width: 200px;
 `;
 
+const FixedWidthTdWrapper = ({ children }) => (
+  <table>
+    <tbody>
+      <FixedWidthWrapper>
+        {children}
+      </FixedWidthWrapper>
+    </tbody>
+  </table>
+);
+
+FixedWidthTdWrapper.propTypes = {
+  children: node,
+};
+
 storiesOf('Molecules|Td', module)
   .add('default', () => (
-    <TextTd>Kendrick Chaimberlain</TextTd>
+    <TdWrapper><TextTd>Kendrick Chaimberlain</TextTd></TdWrapper>
   ))
   .add('Link', () => (
-    <LinkTd href="/">Taylor Kennedy</LinkTd>
+    <TdWrapper><LinkTd href="/">Taylor Kennedy</LinkTd></TdWrapper>
   ))
   .add('Stage', () => (
-    <StageTd text="New" currentStage={1} />
+    <TdWrapper><StageTd text="New" currentStage={1} /></TdWrapper>
   ))
   .add('DoubleLine', () => (
-    <DoubleLineTd firstLine="Sent another message through app" secondLine="10/10/2019" />
+    <TdWrapper><DoubleLineTd firstLine="Sent another message through app" secondLine="10/10/2019" /></TdWrapper>
   ))
   .add('Text Overflow', () => (
-    <FixedWidthWrapper>
+    <FixedWidthTdWrapper>
       <TextTd>Dominique Dominguez Drommelders</TextTd>
-    </FixedWidthWrapper>
+    </FixedWidthTdWrapper>
   ))
   .add('disabled default', () => (
-    <TextTd disabled>Kendrick Chaimberlain</TextTd>
+    <TdWrapper><TextTd disabled>Kendrick Chaimberlain</TextTd></TdWrapper>
   ))
   .add('disabled Link', () => (
-    <LinkTd href="/" disabled>Taylor Kennedy</LinkTd>
+    <TdWrapper><LinkTd href="/" disabled>Taylor Kennedy</LinkTd></TdWrapper>
   ))
   .add('disabled Stage', () => (
-    <StageTd text="Active Tours" currentStage={2} disabled />
+    <TdWrapper><StageTd text="Active Tours" currentStage={2} disabled /></TdWrapper>
   ))
   .add('disabled DoubleLine', () => (
-    <DoubleLineTd firstLine="Harry is out of the country for the month for some performances" secondLine="10/10/2019" disabled />
+    <TdWrapper>
+      <DoubleLineTd firstLine="Harry is out of the country for the month for some performances" secondLine="10/10/2019" disabled />
+    </TdWrapper>
   ))
   .add('disabled TextIconTd', () => (
-    <FixedWidthWrapper>
+    <FixedWidthTdWrapper>
       <TextIconTd icon="pause" iconPalette="danger" disabled>Harry Erik Sámuel Weisz Houdini</TextIconTd>
-    </FixedWidthWrapper>
+    </FixedWidthTdWrapper>
   ));

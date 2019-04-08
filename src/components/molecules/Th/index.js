@@ -6,11 +6,16 @@ import { size, palette } from 'sly/components/themes';
 import { Icon } from 'sly/components/atoms';
 
 const Wrapper = styled.th`
+  padding: 0;
+`;
+const StyledDiv = styled.div`
   display: flex;
   background-color: ${palette('grey', 'stroke')};
   padding: ${size('spacing.large')};
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   font-weight: ${size('weight.medium')};
   color: ${palette('grey', 'base')};
+  white-space: nowrap;
 `;
 
 const SortIcon = styled(Icon)`
@@ -24,9 +29,11 @@ const DropDownIcon = styled(Icon)`
 const Th = ({ children, sort }) => {
   return (
     <Wrapper>
-      {children}
-      {sort && <SortIcon icon="arrow-up" palette="grey" flip={sort === 'desc'} />}
-      <DropDownIcon icon="dropdown-down" palette="grey" />
+      <StyledDiv>
+        {children}
+        {sort && <SortIcon icon="arrow-up" palette="grey" flip={sort === 'desc'} />}
+        <DropDownIcon icon="dropdown-down" palette="grey" />
+      </StyledDiv>
     </Wrapper>
   );
 };
