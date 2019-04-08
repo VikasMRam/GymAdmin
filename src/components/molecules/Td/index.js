@@ -80,7 +80,7 @@ export const Td = ({ children, disabled, kind }) => (
 );
 
 Td.propTypes = {
-  children: node.isRequired,
+  children: node,
   kind: string,
   disabled: bool,
 };
