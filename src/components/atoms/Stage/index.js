@@ -6,9 +6,6 @@ import { prop, ifProp } from 'styled-tools';
 import { size, palette } from 'sly/components/themes';
 import { Block } from 'sly/components/atoms';
 
-const Wrapper = styled.span`
-`;
-
 const TextBlock = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
   ${ifProp('disabled', css`
@@ -29,7 +26,7 @@ const Indicators = styled.span`
 `;
 
 const Stage = ({
-  text, totalStage, currentStage, palette, disabled,
+  text, totalStage, currentStage, palette, disabled, className,
 }) => {
   const indicators = [];
   for (let i = 0; i < totalStage; i += 1) {
@@ -42,10 +39,10 @@ const Stage = ({
     ));
   }
   return (
-    <Wrapper>
+    <div className={className}>
       <TextBlock size="caption" disabled={disabled}>{text}</TextBlock>
       <Indicators>{indicators}</Indicators>
-    </Wrapper>
+    </div>
   );
 };
 
@@ -55,6 +52,7 @@ Stage.propTypes = {
   totalStage: number,
   palette: string,
   disabled: bool,
+  className: string,
 };
 
 Stage.defaultProps = {
