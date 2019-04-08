@@ -13,7 +13,7 @@ const uuidInfo = shape({
   }),
   housingInfo: shape({
     communitySize: arrayOf(string),
-    lookingFor: arrayOf(string),
+    lookingFor: string,
     moveTimeline: string,
     roomPreference: arrayOf(string),
     typeCare: arrayOf(string),
