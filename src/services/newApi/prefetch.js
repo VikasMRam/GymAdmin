@@ -29,7 +29,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       return {
         requestInfo: getRequestInfo(
           state,
-          props.api[apiCall],
+          apiCall,
           dispatcher(argumentsAbsorber, props),
         ),
       };

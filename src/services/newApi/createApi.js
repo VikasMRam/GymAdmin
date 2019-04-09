@@ -7,7 +7,7 @@ const config = {
   configureOptions: options => ({
     ...options,
     redirect: 'manual',
-    credentials: 'same-origin',
+    credentials: 'include',
   }),
 };
 

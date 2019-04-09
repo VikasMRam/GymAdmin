@@ -30,20 +30,18 @@ const ReduxForm = reduxForm({
   validate,
 })(CommunityAddRatingForm);
 
-const getCommunitySlug = match => match.params.communitySlug;
-
 @withRouter
 
 // FIXME: hack because addRating is not JSON:API so we can't use @query
 @withApi
 @connect(null, (dispatch, { api }) => ({
-  addRating: data => dispatch(api.addRating(data)),
+  createRating: data => dispatch(api.createRating(data)),
 }))
 
 @withUser
 
 @prefetch('community', 'getCommunity', (req, { match }) => req({
-  id: getCommunitySlug((match)),
+  id: match.params.communitySlug,
   include: 'similar-communities,questions,agents',
 }))
 
@@ -51,14 +49,14 @@ export default class CommunityAddRatingFormContainer extends Component {
   static propTypes = {
     user: object,
     community: communityPropType,
-    addRating: func,
+    createRating: func,
     status: object.isRequired,
     showModal: func,
   };
 
   handleOnSubmit = (values) => {
     const {
-      community, addRating, status, showModal,
+      community, createRating, status, showModal,
     } = this.props;
     const {
       comments, value, name, email,
@@ -71,7 +69,7 @@ export default class CommunityAddRatingFormContainer extends Component {
       email,
     };
 
-    return addRating(payload).then(() => {
+    return createRating(payload).then(() => {
       showModal(<Thankyou subheading="Your review has been submitted for approval." />);
       return status.community.refetch();
     }).catch((response) => {

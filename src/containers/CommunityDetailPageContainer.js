@@ -28,7 +28,7 @@ import {
 } from 'sly/constants/notifications';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
-import { query } from 'sly/services/newApi';
+import { query, prefetch, withAuth } from 'sly/services/newApi';
 import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 
 const ignoreSearchParams = [
@@ -40,7 +40,21 @@ const ignoreSearchParams = [
   'modal',
 ];
 
+const getCommunitySlug = match => match.params.communitySlug;
+
+@withAuth
+
 @query('createAction', 'createUuidAction')
+
+@prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: getCommunitySlug(match),
+  include: 'similar-communities,questions,agents',
+}))
+
+@prefetch('userSaves', 'getUserSaves', (req, { match }) => req({
+  'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
+  'filter[entity_slug]': getCommunitySlug(match),
+}))
 
 class CommunityDetailPageContainer extends Component {
   static propTypes = {
@@ -443,8 +457,6 @@ class CommunityDetailPageContainer extends Component {
     );
   }
 }
-
-const getCommunitySlug = match => match.params.communitySlug;
 
 const mapPropsToActions = ({ match }) => ({
   community: resourceDetailReadRequest('community', getCommunitySlug(match), {

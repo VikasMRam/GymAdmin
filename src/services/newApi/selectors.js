@@ -1,17 +1,15 @@
 import build from 'redux-object';
 
 function getRawRequest(state, apiCall, args) {
-  const { actionName } = apiCall;
-
   if (!state.bees.requests) {
     return null;
   }
 
-  if (!state.bees.requests[actionName]) {
+  if (!state.bees.requests[apiCall]) {
     return null;
   }
 
-  return state.bees.requests[actionName][JSON.stringify(args)];
+  return state.bees.requests[apiCall][JSON.stringify(args)];
 }
 
 export function getEntity(state, handle, isNormalized) {
