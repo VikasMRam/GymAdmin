@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { createValidator, required, email, minLength } from 'sly/services/validation';
 import LoginForm from 'sly/components/organisms/LoginForm';
-import { withUser } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/newApi';
 
 const validate = createValidator({
   email: [required, email],
@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => ({
   clearSubmitErrors: () => dispatch(clearSubmitErrors('LoginForm')),
 });
 
-@withUser()
+@withAuth
 
 @connect(null, mapDispatchToProps)
 

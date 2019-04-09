@@ -4,12 +4,9 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
-import { getDetail } from 'sly/store/selectors';
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
-import { resourceDeleteRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { ensureAuthenticated, entitiesReceive } from 'sly/store/actions';
 import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
 import AuthContainer from 'sly/containers/AuthContainer';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -17,7 +14,7 @@ import Notifications from 'sly/components/organisms/Notifications';
 import Header from 'sly/components/organisms/Header';
 import ModalController from 'sly/controllers/ModalController';
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
-import { withUser } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/newApi';
 
 const defaultHeaderItems = [
   { name: '(855) 866-4515', url: 'tel:+18558664515' },
@@ -59,16 +56,25 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
   value,
 });
 
-@withUser()
+const mapStateToProps = (state, {
+  history, match, location,
+}) => ({
+  setQueryParams: getQueryParamsSetter(history, location),
+  searchParams: getSearchParams(match, location),
+});
 
-class HeaderContainer extends Component {
+@withRouter
+
+@withAuth
+
+@connect(mapStateToProps)
+
+export default class HeaderContainer extends Component {
   static propTypes = {
     user: object,
-    status: object,
     setQueryParams: func,
     searchParams: object,
     logoutUser: func,
-    fetchUser: func,
     history: object,
     match: object,
     location: object,
@@ -86,8 +92,8 @@ class HeaderContainer extends Component {
   };
 
   logout = () => {
-    const { logoutUser, status } = this.props;
-    return logoutUser().then(() => status.user.refetch());
+    const { logoutUser } = this.props;
+    return logoutUser();
   };
 
   render() {
@@ -181,16 +187,3 @@ class HeaderContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, {
-  history, match, location,
-}) => ({
-  setQueryParams: getQueryParamsSetter(history, location),
-  searchParams: getSearchParams(match, location),
-});
-
-const mapDispatchToProps = dispatch => ({
-  ensureAuthenticated: action => dispatch(ensureAuthenticated(action)),
-  logoutUser: () => dispatch(resourceDeleteRequest('logout')),
-});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderContainer));

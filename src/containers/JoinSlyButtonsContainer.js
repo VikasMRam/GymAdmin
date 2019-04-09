@@ -5,16 +5,15 @@ import { connect } from 'react-redux';
 import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/constants/loginProviders';
 import loadFB from 'sly/services/helpers/facebookSDK';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
-import { resourceCreateRequest } from 'sly/store/resource/actions';
 import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
-import { withUser } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/newApi';
 
 
 const mapStateToProps = (state, { history, location }) => ({
   setQueryParams: getQueryParamsSetter(history, location),
 });
 
-@withUser()
+@withAuth
 
 @connect(mapStateToProps)
 

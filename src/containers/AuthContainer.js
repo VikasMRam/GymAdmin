@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-@withUser()
+@withUser
 
 @connect(mapStateToProps, mapDispatchToProps)
 

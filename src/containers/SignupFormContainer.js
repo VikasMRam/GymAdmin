@@ -3,7 +3,7 @@ import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
 import { connect } from 'react-redux';
 import { func, bool } from 'prop-types';
 
-import { withUser } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/newApi';
 import { createValidator, required, email, minLength } from 'sly/services/validation';
 import SignupForm from 'sly/components/organisms/SignupForm';
 
@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => ({
   clearSubmitErrors: () => dispatch(clearSubmitErrors('SignupForm')),
 });
 
-@withUser()
+@withAuth
 
 @connect(null, mapDispatchToProps)
 

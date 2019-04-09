@@ -21,7 +21,7 @@ import {
   PROFILE_CONTACTED,
 } from 'sly/services/newApi/constants';
 
-import { prefetch, query, withUser } from 'sly/services/newApi';
+import { prefetch, query, withAuth } from 'sly/services/newApi';
 
 import {
   createBooleanValidator,
@@ -99,7 +99,7 @@ const submit = data => resourceCreateRequest('userAction', data);
   }),
 )
 
-@withUser()
+@withAuth
 @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 @query('createAction', 'createUuidAction')
 @query('updateUuidAux', 'updateUuidAux')
@@ -127,6 +127,7 @@ export default class ConciergeController extends Component {
     }).isRequired,
     updateUuidAux: func,
     createAction: func,
+    registerUser: func,
   };
 
   getPricing = () => {

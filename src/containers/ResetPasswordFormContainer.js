@@ -6,7 +6,7 @@ import { func, bool } from 'prop-types';
 import { createValidator, required, email } from 'sly/services/validation';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 import ResetPasswordForm from 'sly/components/organisms/ResetPasswordForm';
-import { withUser } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/newApi';
 
 const validate = createValidator({
   email: [required, email],
@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
   clearSubmitErrors: () => dispatch(clearSubmitErrors('ResetPasswordForm')),
 });
 
-@withUser()
+@withAuth
 
 @connect(null, mapDispatchToProps)
 
