@@ -5,7 +5,7 @@ import { string } from 'prop-types';
 import pad from 'sly/components/helpers/pad';
 import cursor from 'sly/components/helpers/cursor';
 import { size } from 'sly/components/themes';
-import userPropType from 'sly/propTypes/user';
+import clientPropType from 'sly/propTypes/client';
 import { Box, Heading, Label, Block, Link } from 'sly/components/atoms';
 
 const ColumWrapper = pad(styled.div`
@@ -92,7 +92,7 @@ const FamilySummary = ({ user, href }) => (
 );
 
 FamilySummary.propTypes = {
-  user: userPropType,
+  user: clientPropType,
   href: string.isRequired,
 };
 
