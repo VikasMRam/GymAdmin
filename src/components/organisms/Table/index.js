@@ -17,16 +17,16 @@ const Table = ({ headings, contents }) => {
       const { type, data } = rowItem;
       if (type === 'link') {
         const { href, text } = data;
-        return <LinkTd key={href} href={href}>{text}</LinkTd>;
+        return <LinkTd key={href} href={href} clip>{text}</LinkTd>;
       } else if (type === 'text') {
         const { text } = data;
-        return <TextTd key={text}>{text}</TextTd>;
+        return <TextTd key={text} clip>{text}</TextTd>;
       } else if (type === 'stage') {
         const { text, currentStage } = data;
-        return <StageTd key={text} text={text} currentStage={currentStage} />;
+        return <StageTd key={text} text={text} currentStage={currentStage} clip />;
       } else if (type === 'doubleLine') {
         const { firstLine, secondLine } = data;
-        return <DoubleLineTd key={firstLine} firstLine={firstLine} secondLine={secondLine} />;
+        return <DoubleLineTd key={firstLine} firstLine={firstLine} secondLine={secondLine} clip />;
       }
       return <Td key={`Td_${id}`} />;
     });

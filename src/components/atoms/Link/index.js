@@ -4,10 +4,11 @@ import { matchPath } from 'react-router-dom';
 import RRLink from 'react-router-dom/Link';
 import { string, oneOf } from 'prop-types';
 
-import { palette, getKey } from 'sly/components/themes';
+import { size, palette, getKey } from 'sly/components/themes';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import { variation as variationPropType } from 'sly/propTypes/variation';
 
+const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
 const isLinkToAllowed = (routes, to) => {
@@ -30,6 +31,9 @@ export const styles = css`
   &:focus {
     outline: none;
   }
+  font-size: ${getSize('text')};
+  line-height: ${getSize('lineHeight')};
+  font-weight: ${p => size('weight', p.weight)};
 `;
 
 export const Anchor = styled.a`
@@ -51,6 +55,8 @@ export default class Link extends Component {
   static defaultProps = {
     palette: 'primary',
     variation: 'base',
+    size: 'body',
+    weight: 'regular',
   };
 
   static contextTypes = {
