@@ -263,10 +263,7 @@ app.use(async (req, res, next) => {
   };
 
   try {
-    await Promise.all([
-      store.dispatch(beesApi.getUser({ id: 'me' })).catch(ignoreUnauthorized),
-      store.dispatch(beesApi.getUuidAux({ id: 'me' })),
-    ]);
+    await store.dispatch(beesApi.getUser({ id: 'me' })).catch(ignoreUnauthorized);
   } catch (e) {
     e.message = `Error trying to prefetch user data: ${e.message}`;
     console.log('new user/me error', e);

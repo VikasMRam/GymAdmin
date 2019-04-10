@@ -11,6 +11,10 @@ export function size(...args) {
   return key(['sizes', ...args].join('.'));
 }
 
+export const calcColumns = (selectColumns, totalColumns, gutter) => css`
+  calc((100% + ${gutter}) / ${totalColumns} * ${selectColumns} - ${gutter})
+`;
+
 export const columnWidth = (parts, gutter) => css`
   // WARNING: no semicolon here, keep it that way
   calc((100% + ${gutter}) / ${parts} - ${gutter})

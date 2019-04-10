@@ -32,6 +32,10 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
           apiCall,
           dispatcher(argumentsAbsorber, props),
         ),
+        done: (...args) => {
+          console.log('calling done', getDisplayName(InnerComponent));
+          props.done(...args);
+        },
       };
     };
 
@@ -40,11 +44,11 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
     });
 
     @withApi
+
     // FIXME: For now we have to continue using withDone (which uses componentWillUpdate)
     // we have to re-engineer this to be able to use react 17, or to start using hooks in
     // react 16.8 (methods renamed to UNSAFE_xxxx)
     @withDone
-
     @connect(mapStateToProps, mapDispatchToActions)
 
     class Wrapper extends React.Component {
@@ -57,6 +61,10 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
         requestInfo: object,
         status: object,
       };
+
+      componentDidMount() {
+        this.props.done();
+      }
 
       componentWillMount() {
         const { requestInfo, done } = this.props;
@@ -81,20 +89,13 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       // props fetch bound to dispatch
       fetch = (props = this.props) => {
         const { fetch, done } = props;
+        console.log('fetching', apiCall);
         return fetch(props).then(done, done);
       };
-
-      count = 0;
 
       render() {
         const { requestInfo, status, done, fetch, ...props } = this.props;
         const { normalized, ...request } = requestInfo;
-
-        if (isServer && (!request.hasStarted || request.isLoading)) {
-          return null;
-        }
-
-        if (this.count++ > 100) return null;
 
         const innerProps = {
           ...props,
