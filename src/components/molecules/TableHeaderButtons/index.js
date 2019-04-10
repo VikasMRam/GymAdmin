@@ -1,15 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-
-import IconButton from '../IconButton';
+import { ifProp } from 'styled-tools';
+import { bool } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import Input from 'sly/components/atoms/Input';
+import IconButton from 'sly/components/molecules/IconButton';
 
 const Wrappper = styled.div`
   display: flex;
-  padding: ${size('spacing.regular')}; ${size('spacing.large')};
-  border: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  padding: ${size('spacing.large')};
+  border: ${ifProp('noBorder', 0, size('border.regular'))} solid ${palette('grey', 'filler')};
 `;
 
 const SearchButton = styled(IconButton)`
@@ -48,23 +49,30 @@ const FilterButton = styled(IconButton)`
 
 const ColumnsButton = styled(IconButton)`
   display: none;
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: block;
   }
 `;
-const TableHeaderButtons = () => {
+const TableHeaderButtons = ({ noBorder, hasColumnsButton }) => {
   return (
-    <Wrappper>
+    <Wrappper noBorder={noBorder}>
       <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile />
       <SearchTextInput type="search" placeholder="Type to filter by name" />
       <RightSideButtons>
         <SortButton icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>
         <FilterButton icon="filter" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Filter</FilterButton>
-        <ColumnsButton icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>
+        {hasColumnsButton &&
+          <ColumnsButton icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>
+        }
       </RightSideButtons>
     </Wrappper>
   );
+};
+
+TableHeaderButtons.propTypes = {
+  noBorder: bool,
+  hasColumnsButton: bool,
 };
 
 export default TableHeaderButtons;
