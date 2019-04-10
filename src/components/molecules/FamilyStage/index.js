@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { func, string, number } from 'prop-types';
+import { func, string, number, bool } from 'prop-types';
 
 import pad from 'sly/components/helpers/pad';
 import fullWidth from 'sly/components/helpers/fullWidth';
@@ -30,9 +30,9 @@ const MarginBottomFullWidthButton = pad(FullWidthButton, 'regular');
 MarginBottomFullWidthButton.displayName = 'MarginBottomFullWidthButton';
 
 const FamilyStage = ({
-  stageText, stageLevel, onAcceptClick, onRejectClick,
+  stageText, stageLevel, onAcceptClick, onRejectClick, snap, noBorderRadius,
 }) => (
-  <Box>
+  <Box snap={snap} noBorderRadius={noBorderRadius}>
     <PaddedHeading size="body">Stage</PaddedHeading>
     <PaddedStage text={stageText} currentStage={stageLevel} />
     <MarginBottomFullWidthButton onClick={onAcceptClick}>Accept and contact this family</MarginBottomFullWidthButton>
@@ -45,6 +45,8 @@ FamilyStage.propTypes = {
   stageLevel: number.isRequired,
   onAcceptClick: func,
   onRejectClick: func,
+  snap: string,
+  noBorderRadius: bool,
 };
 
 export default FamilyStage;

@@ -14,7 +14,7 @@ const wrap = (props = {}) => shallow(<FamilySummary {...defaultProps} {...props}
 describe('FamilySummary', () => {
   it('renders', () => {
     const wrapper = wrap({
-      user: PraneshKumar,
+      client: PraneshKumar,
     });
 
     expect(wrapper.dive().find('OuterColumWrapper').dive()
@@ -51,7 +51,7 @@ describe('FamilySummary', () => {
 
   it('see more details href', () => {
     const wrapper = wrap({
-      user: PraneshKumar,
+      client: PraneshKumar,
     });
 
     expect(wrapper.dive().find('StyledLink').prop('href')).toBe(href);

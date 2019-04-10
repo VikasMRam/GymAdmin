@@ -42,44 +42,44 @@ const SlyIntro = pad(styled.div``, 'xLarge');
 const SeeMore = cursor(Block);
 SeeMore.displayName = 'SeeMore';
 
-const FamilySummary = ({ user, href }) => (
-  <Box>
+const FamilySummary = ({ client, snap, href }) => (
+  <Box snap={snap}>
     <PaddedHeading size="body">Summary</PaddedHeading>
     <OuterColumWrapper>
-      {user.name &&
+      {client.name &&
         <ColumWrapper>
           <Label palette="grey">Contact name</Label>
-          <Block size="caption">{user.name}</Block>
+          <Block size="caption">{client.name}</Block>
         </ColumWrapper>
       }
-      {user.uuidAux && user.uuidAux.uuidInfo.residentInfo.fullName &&
+      {client.uuidAux && client.uuidAux.uuidInfo.residentInfo.fullName &&
         <ColumWrapper>
           <Label palette="grey">Resident name</Label>
-          <Block size="caption">{user.uuidAux.uuidInfo.residentInfo.fullName}</Block>
+          <Block size="caption">{client.uuidAux.uuidInfo.residentInfo.fullName}</Block>
         </ColumWrapper>
       }
-      {user.uuidAux && user.uuidAux.uuidInfo.housingInfo.lookingFor &&
+      {client.uuidAux && client.uuidAux.uuidInfo.housingInfo.lookingFor &&
         <ColumWrapper>
           <Label palette="grey">Looking for</Label>
-          <Block size="caption">{user.uuidAux.uuidInfo.housingInfo.lookingFor}</Block>
+          <Block size="caption">{client.uuidAux.uuidInfo.housingInfo.lookingFor}</Block>
         </ColumWrapper>
       }
-      {user.uuidAux && user.uuidAux.uuidInfo.residentInfo.gender &&
+      {client.uuidAux && client.uuidAux.uuidInfo.residentInfo.gender &&
         <ColumWrapper>
           <Label palette="grey">Gender</Label>
-          <Block size="caption">{user.uuidAux.uuidInfo.residentInfo.gender}</Block>
+          <Block size="caption">{client.uuidAux.uuidInfo.residentInfo.gender}</Block>
         </ColumWrapper>
       }
-      {user.uuidAux && user.uuidAux.uuidInfo.locationInfo.city &&
+      {client.uuidAux && client.uuidAux.uuidInfo.locationInfo.city &&
         <ColumWrapper>
           <Label palette="grey">Preferred location</Label>
-          <Block size="caption">{user.uuidAux.uuidInfo.locationInfo.city}</Block>
+          <Block size="caption">{client.uuidAux.uuidInfo.locationInfo.city}</Block>
         </ColumWrapper>
       }
-      {user.uuidAux && user.uuidAux.uuidInfo.housingInfo.moveTimeline &&
+      {client.uuidAux && client.uuidAux.uuidInfo.housingInfo.moveTimeline &&
         <ColumWrapper>
           <Label palette="grey">Time to move</Label>
-          <Block size="caption">{user.uuidAux.uuidInfo.housingInfo.moveTimeline}</Block>
+          <Block size="caption">{client.uuidAux.uuidInfo.housingInfo.moveTimeline}</Block>
         </ColumWrapper>
       }
     </OuterColumWrapper>
@@ -92,8 +92,9 @@ const FamilySummary = ({ user, href }) => (
 );
 
 FamilySummary.propTypes = {
-  user: clientPropType,
+  client: clientPropType,
   href: string.isRequired,
+  snap: string,
 };
 
 export default FamilySummary;
