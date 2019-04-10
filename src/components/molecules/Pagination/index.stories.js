@@ -8,12 +8,14 @@ const firstFive = {
   current: 0,
   total: 5,
   onChange: action('change'),
+  basePath: '/',
 };
 
 const firstLarge = {
   current: 0,
   total: 100,
   onChange: action('change'),
+  basePath: '/',
 };
 
 storiesOf('Molecules|Pagination', module)
@@ -21,7 +23,7 @@ storiesOf('Molecules|Pagination', module)
     <Pagination {...firstFive} />
   ))
   .add('second', () => (
-    <Pagination {...firstFive} current={1} />
+    <Pagination {...firstFive} current={2} />
   ))
   .add('large first', () => (
     <Pagination {...firstLarge} />
