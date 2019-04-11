@@ -10,9 +10,8 @@ export default {
   updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },
   getUserSaves: { method: get, path: '/marketplace/user-saves' },
 
-  getUserSave: { method: get, path: '/marketplace/user-saves/:id' },
-
-  updateUserSave: { method: patch, path: '/marketplace/user-saves/:id' },
+  getUserSave: { method: get, path: '/platform/user-saves/:id' },
+  updateUserSave: { method: patch, path: '/platform/user-saves/:id' },
   createUserSave: { method: post, path: '/platform/user-saves' },
   createUuidAction: { method: post, path: '/platform/uuid-actions' },
 

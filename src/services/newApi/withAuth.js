@@ -15,7 +15,7 @@ function getDisplayName(WrappedComponent) {
 
 export default function withAuth(InnerComponent) {
   const mapDispatchToProps = dispatch => ({
-    ensureAuthenticated: action => dispatch(ensureAuthenticated(action)),
+    ensureAuthenticated: (...args) => dispatch(ensureAuthenticated(...args)),
     dispatch: dispatch => dispatch,
   });
 
@@ -35,9 +35,9 @@ export default function withAuth(InnerComponent) {
 
     static WrappedComponent = InnerComponent;
 
-    ensureAuthenticated = (action) => {
+    ensureAuthenticated = (...args) => {
       const { dispatch, status, ensureAuthenticated } = this.props;
-      return dispatch(ensureAuthenticated(action)).then(() => status.user.refetch());
+      return dispatch(ensureAuthenticated(...args)).then(() => status.user.refetch());
     };
 
     registerUser = (options = {}) => {
