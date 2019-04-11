@@ -8,19 +8,11 @@ import Span from 'sly/components/atoms/Span';
 const Wrapper = styled.li`
   display: inline-block;
   list-style: none;
-  margin-bottom: -${size('border', 'regular')};
-  margin-right: ${size('spacing.small')};
-  padding: ${size('spacing.regular')} ${size('spacing.large')};
-  border-top-left-radius: ${size('border.xxLarge')};
-  border-top-right-radius: ${size('border.xxLarge')};
-  background-color: ${palette('grey', 'stroke')};
-  border-bottom: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
+  padding: ${size('spacing.large')} ${size('spacing.xLarge')};
+  background-color: ${palette('white', 'base')};
 
   ${p => p.active && css`
-    background-color: ${palette('white', 'base')};
-    border: solid ${palette('slate', 'stroke')};
-    border-width: ${size('border', 'regular')} ${size('border', 'regular')} 0 ${size('border', 'regular')};
-    border-bottom: 0;
+    border-bottom: ${size('border', 'xxLarge')} solid ${palette('slate', 'base')};
   `}
 `;
 
@@ -29,6 +21,7 @@ class Tab extends Component {
     active: bool.isRequired,
     label: string.isRequired,
     onClick: func.isRequired,
+    className: string,
   };
 
   onClick = () => {
@@ -42,15 +35,23 @@ class Tab extends Component {
       props: {
         active,
         label,
+        className,
       },
     } = this;
 
+    let spanPalette = 'grey';
+    let spanVariation = 'filler';
+    if (active) {
+      spanPalette = 'slate';
+      spanVariation = 'base';
+    }
     return (
       <Wrapper
         onClick={onClick}
         active={active}
+        className={className}
       >
-        <Span weight="medium">{label}</Span>
+        <Span weight="medium" size="tiny" palette={spanPalette} variation={spanVariation}>{label}</Span>
       </Wrapper>
     );
   }
