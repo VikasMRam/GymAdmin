@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 
   > *:nth-child(1) {
     margin-right: ${size('layout.gutter')};
-    width: ${columnWidth(3, size('layout.gutter'))};
+    flex: 0 0 ${columnWidth(3, size('layout.gutter'))};
   }
 
   > *:nth-child(2) {
