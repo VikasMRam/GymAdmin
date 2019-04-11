@@ -10,17 +10,23 @@ import Modal from 'react-modal';
 import configureStore from 'sly/store/configure';
 import api from 'sly/services/api';
 import DashboardApp from 'sly/components/DashboardApp';
+import ApiProvider from 'sly/services/newApi/ApiProvider';
+import createApi from 'sly/services/newApi/createApi';
 
 Modal.setAppElement('#app');
 
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState, { api: api.create() });
 
+const beesApi = createApi();
+
 const renderApp = () => (
   <Provider store={store}>
-    <BrowserRouter>
-      <DashboardApp />
-    </BrowserRouter>
+    <ApiProvider api={beesApi}>
+      <BrowserRouter>
+        <DashboardApp />
+      </BrowserRouter>
+    </ApiProvider>
   </Provider>
 );
 
