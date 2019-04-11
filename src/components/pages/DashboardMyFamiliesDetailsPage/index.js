@@ -12,6 +12,7 @@ import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
+import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
 // todo: mock data. remove later
 import PraneshKumar from 'sly/../private/storybook/sample-data/user-pranesh-kumar.json';
 // todo: mock data. remove later
@@ -55,6 +56,10 @@ const StyledFamilyActivityItem = styled(FamilyActivityItem)`
   border-left: 0;
 `;
 
+const FamilyDetailsTab = styled.div`
+  padding: ${size('spacing.xLarge')};
+`;
+
 const DashboardMyFamiliesDetailsPage = () => {
   const { name, stageText, stageLevel } = client;
   const activityCards = activities.map((a, i) =>
@@ -88,7 +93,9 @@ const DashboardMyFamiliesDetailsPage = () => {
           {activityCards.length > 0 && activityCards}
         </div>
         <div label="FAMILY DETAILS">
-          See ya later, <em>Alligator</em>!
+          <FamilyDetailsTab>
+            <FamilyDetailsFormContainer intro="temp mock data" />
+          </FamilyDetailsTab>
         </div>
         <div label="COMMUNITIES">
           <CommunitiesTab label="COMMUNITIES">
