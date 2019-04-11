@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string } from 'prop-types';
+import { string, bool } from 'prop-types';
 import dayjs from 'dayjs';
 
 import pad from 'sly/components/helpers/pad';
@@ -24,7 +24,7 @@ const StyledColumn = styled.div`
 `;
 
 const FamilyActivityItem = ({
-  title, description, icon, date,
+  title, description, icon, date, snap, noBorderRadius, className,
 }) => {
   let dateString = '';
   const parsedDate = dayjs(date);
@@ -35,7 +35,7 @@ const FamilyActivityItem = ({
   }
 
   return (
-    <StyledBox padding="large">
+    <StyledBox className={className} padding="large" snap={snap} noBorderRadius={noBorderRadius}>
       <StyledIcon icon={icon} palette="grey" />
       <StyledColumn>
         <StyledBlock size="caption">{title}</StyledBlock>
@@ -51,6 +51,9 @@ FamilyActivityItem.propTypes = {
   description: string,
   icon: string,
   date: string.isRequired,
+  snap: string,
+  noBorderRadius: bool,
+  className: string,
 };
 
 FamilyActivityItem.defaultProps = {
