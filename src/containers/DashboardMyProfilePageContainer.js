@@ -17,7 +17,6 @@ class DashboardMyProfilePageContainer extends Component {
 
   render() {
     const { user, api } = this.props;
-    console.log(user);
     const { getUser } = api;
     if (!user) {
       return <Redirect to="/" />;
