@@ -11,7 +11,9 @@ import { Block, Button, Hr, Label } from 'sly/components/atoms';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 
 const StyledButton = pad(Button, 'regular');
+StyledButton.displayName = 'StyledButton';
 const Form = textAlign(styled.form``, 'right');
+Form.displayName = 'Form';
 
 const TwoColumnWrapper = styled.div`
   display: flex;
@@ -35,6 +37,7 @@ const IntroInfo = textAlign(styled(Block)`
     flex: 0 0 ${columnWidth(3, size('layout.gutter'))};
   }
 `, 'left');
+IntroInfo.displayName = 'IntroInfo';
 
 const FamilyDetailsForm = ({
   handleSubmit, submitting, accepted, intro,
