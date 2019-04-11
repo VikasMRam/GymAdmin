@@ -17,7 +17,6 @@ import userPropType from 'sly/propTypes/user';
   'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
   'filter[status]': USER_SAVE_INIT_STATUS,
 }))
-@prefetch('user', 'getUser', getUser => getUser({ id: 'me' }))
 export default class DashboardFavoritesPageContainer extends Component {
   static propTypes = {
     user: userPropType,
@@ -88,12 +87,10 @@ export default class DashboardFavoritesPageContainer extends Component {
       handleOnGallerySlideChange, handleOnLocationSearch, handleToggleHowSlyWorksVideoPlaying, handleUnfavouriteClick,
     } = this;
     const { status } = this.props;
-    console.log(status);
     let { userSaves } = this.props;
     if (!userSaves) {
-      return 'Loading...';
+      return <Redirect to="/" />;
     }
-    console.log(userSaves);
     let { result: rawUserSaves = [] } = status.userSaves;
     const { currentGalleryImage, howSlyWorksVideoPlaying } = this.state;
     // to prevent doing an api call after a user save is unsaved
