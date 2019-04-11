@@ -11,7 +11,7 @@ import DashboardMenu from 'sly/components/molecules/DashboardMenu';
 
 const menuItems = [
   {
-    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'base', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE,
+    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE,
   },
   {
     label: 'Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH, role: CUSTOMER_ROLE,
@@ -67,18 +67,21 @@ const DashboardPage = styled.div`
 `;
 
 const DashboardPageTemplate = ({ children, activeMenuItem }) => {
-  if (activeMenuItem) {
-    menuItems.forEach(i => i.active = false);
-    const mi = menuItems.find(i => i.label === activeMenuItem);
-    if (mi) {
+  const mi = menuItems.map((mi) => {
+    if (mi.label === activeMenuItem) {
       mi.active = true;
+      mi.variation = 'base';
+    } else {
+      mi.active = false;
+      mi.variation = 'filler';
     }
-  }
+    return mi;
+  });
 
   return (
     <DashboardPage>
       <Header><HeaderContainer /></Header>
-      <Column><DashboardMenu menuItems={menuItems} /></Column>
+      <Column><DashboardMenu menuItems={mi} /></Column>
       <Body>{children}</Body>
       <ModalContainer />
     </DashboardPage>
@@ -87,7 +90,7 @@ const DashboardPageTemplate = ({ children, activeMenuItem }) => {
 
 DashboardPageTemplate.propTypes = {
   children: node,
-  activeMenuItem: string,
+  activeMenuItem: string.isRequired,
 };
 
 export default DashboardPageTemplate;
