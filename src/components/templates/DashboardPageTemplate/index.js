@@ -42,7 +42,7 @@ const Column = styled.aside`
 `;
 
 const Body = styled.main`
-  padding: ${size('spacing.large')} ${size('spacing.xLarge')};
+  padding: ${size('spacing.xLarge')};
   background-color: ${palette('grey.background')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {

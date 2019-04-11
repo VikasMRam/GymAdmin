@@ -83,7 +83,7 @@ describe('Pagination', () => {
     expect(fortyNine.prop('href')).toEqual('/test?page-number=48');
 
     const fiftyOne = wrapper.childAt(5);
-    expect(fiftyOne.prop('ghost')).toEqual(false);
+    expect(fiftyOne.prop('ghost')).toEqual(true);
     expect(fiftyOne.prop('palette')).toEqual('primary');
     expect(fiftyOne.prop('href')).toEqual('/test?page-number=50');
 

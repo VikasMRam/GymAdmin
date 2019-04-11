@@ -18,7 +18,7 @@ const TabContent = styled.div`
   background-color: ${palette('white', 'base')};
   border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
   border-top: 0;
-  padding: ${size('spacing.large')} ${size('spacing.xLarge')};
+  height: 100%;
 `;
 
 class Tabs extends Component {

@@ -23,6 +23,7 @@ const ChevronLink = styled(({ flip, ...props }) => (
   <StyledLink
     ghost
     palette="slate"
+    borderPalette="slate"
     kind="label"
     {...props}
   >
@@ -40,6 +41,7 @@ const ChevronLink = styled(({ flip, ...props }) => (
 
 const PageLink = styled(Link)`
  ${buttonStyles};
+  background-color: ${ifProp('selected', palette('primary', 'background'))};
   margin-right: ${size('spacing.regular')};
   margin-bottom: ${size('spacing.regular')};
   &:last-of-type {
@@ -49,7 +51,8 @@ const PageLink = styled(Link)`
 
 const BreakView = styled.span`
   ${buttonStyles};
-  color: ${palette('slate', 'filler')};
+  color: ${palette('slate', 'base')};
+  border-color: ${palette('white', 'base')};
   cursor: default;
   margin-right: ${size('spacing.regular')};
 `;
@@ -126,6 +129,7 @@ export default class Pagination extends Component {
     const palette = sel
       ? 'primary'
       : 'slate';
+    const borderPalette = sel ? 'primary' : 'slate';
 
     const pageHref = (index === 0) ? basePath : `${basePath}${delim}${pageParam}=${index}`;
 
@@ -133,9 +137,11 @@ export default class Pagination extends Component {
       <PageLink
         kind="label"
         key={index}
-        ghost={!sel}
+        ghost
         palette={palette}
         href={pageHref}
+        borderPalette={borderPalette}
+        selected={sel}
       >
         {index + 1}
       </PageLink>

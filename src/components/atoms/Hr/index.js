@@ -12,7 +12,7 @@ const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, v
 const HRStyled = styled.hr`
   border: 0;
   padding: 0;
-  margin: ${size('spacing.xLarge')} 0;
+  margin: ${ifProp('noMargin', 0, size('spacing.xLarge'))} 0;
   border-top: 1px solid ${getColor};
 
   ${ifProp('fullWidth', css`
@@ -28,6 +28,7 @@ Hr.propTypes = {
   palette: palettePropType,
   fullWidth: bool,
   variation: variationPropType,
+  noMargin: bool,
 };
 
 Hr.defaultProps = {
