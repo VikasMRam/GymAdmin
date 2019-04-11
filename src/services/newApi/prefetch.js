@@ -32,10 +32,6 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
           apiCall,
           dispatcher(argumentsAbsorber, props),
         ),
-        done: (...args) => {
-          console.log('calling done', getDisplayName(InnerComponent));
-          props.done(...args);
-        },
       };
     };
 
@@ -71,7 +67,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
         const { hasStarted, isLoading } = requestInfo;
         if (!isLoading && !hasStarted) {
           this.fetch();
-        } else if (isServer && hasStarted && !isLoading) {
+        } else if (isServer) {
           done();
         }
       }
@@ -81,7 +77,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
         const { hasStarted, isLoading } = requestInfo;
         if (!isLoading && !hasStarted) {
           this.fetch(nextProps);
-        } else if (isServer && hasStarted && !isLoading) {
+        } else if (isServer) {
           done();
         }
       }
@@ -89,7 +85,6 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       // props fetch bound to dispatch
       fetch = (props = this.props) => {
         const { fetch, done } = props;
-        console.log('fetching', apiCall);
         return fetch(props).then(done, done);
       };
 
