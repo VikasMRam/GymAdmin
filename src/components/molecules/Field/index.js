@@ -51,6 +51,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: initial;
   
+  ${ifProp('row', css`
+    flex-direction: row;
+  `)}
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex-direction: ${ifProp({ wideWidth: true }, 'row')};
   }
@@ -131,7 +135,7 @@ const Field = ({
   const InputComponent = getInputComponent(type);
   const renderInputFirst = type === 'checkbox' || type === 'radio';
   return (
-    <Wrapper className={className} wideWidth={wideWidth}>
+    <Wrapper className={className} wideWidth={wideWidth} row={renderInputFirst}>
       {renderInputFirst && (wideWidth ? <InputBeforeLabelWrapper wideWidth={wideWidth}><InputComponent {...inputProps} /></InputBeforeLabelWrapper> : <InputComponent {...inputProps} />)}
       {(label || labelRight) &&
         <LabelWrapper wideWidth={wideWidth}>

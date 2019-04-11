@@ -75,8 +75,7 @@ export default class SaveCommunityContainer extends Component {
   // FIXME: ugly hack to convert a declarative intent in an imperative one
   componentDidMount() {
     const { createUserSave, updateUserSave } = this;
-    const { userSave, status } = this.props;
-    console.log({ status })
+    const { userSave } = this.props;
 
     if (userSave) {
       updateUserSave(USER_SAVE_INIT_STATUS);

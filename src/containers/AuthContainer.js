@@ -119,11 +119,10 @@ export default class AuthContainer extends Component {
   handleResetPasswordSuccess = (response) => {
     const { notifyInfo } = this.props;
 
-    if (response.body) {
+    if (response && response.body) {
       notifyInfo(response.body.message);
+      this.gotoLogin();
     }
-
-    this.gotoLogin();
   };
 
   render() {

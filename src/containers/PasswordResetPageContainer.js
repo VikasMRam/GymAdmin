@@ -35,7 +35,9 @@ class PasswordResetPageContainer extends Component {
 
     clearSubmitErrors();
     return resetPassword(payload).then(() => {
-      history.push('/');
+      history.push('/').then(() => {
+        console.log('thenable');
+      });
     }).catch((r) => {
       // TODO: Need to set a proper way to handle server side errors
       const { response } = r;

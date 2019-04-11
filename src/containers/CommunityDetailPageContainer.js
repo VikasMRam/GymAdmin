@@ -515,6 +515,7 @@ const mapStateToProps = (state, {
   const communitySlug = getCommunitySlug(match);
   const userSaves = getDetails(state, 'userSave');
   const userSaveOfCommunity = userSaves.find(us => us.entityType === COMMUNITY_ENTITY_TYPE && us.entitySlug === communitySlug);
+  console.log({ userSaveOfCommunity });
   const setQueryParams = getQueryParamsSetter(history, location);
 
   return {

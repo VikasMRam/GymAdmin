@@ -18,7 +18,6 @@ const ReduxForm = reduxForm({
 })(ResetPasswordForm);
 
 const mapDispatchToProps = dispatch => ({
-  submit: data => dispatch(resourceCreateRequest('recover', data)),
   clearSubmitErrors: () => dispatch(clearSubmitErrors('ResetPasswordForm')),
 });
 
@@ -37,6 +36,7 @@ export default class ResetPasswordFormContainer extends Component {
   handleSubmit = (data) => {
     const { recoverPassword, clearSubmitErrors, onSubmitSuccess } = this.props;
     clearSubmitErrors();
+    console.log('handleSubmit')
     return recoverPassword(data).then(onSubmitSuccess).catch((response) => {
       // TODO: Need to set a proper way to handle server side errors
       const errorMessage = Object.values(response.body.errors).join('. ');
