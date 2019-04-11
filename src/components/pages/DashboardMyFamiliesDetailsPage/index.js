@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
@@ -11,6 +11,7 @@ import Tabs from 'sly/components/molecules/Tabs';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
+import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 // todo: mock data. remove later
 import PraneshKumar from 'sly/../private/storybook/sample-data/user-pranesh-kumar.json';
 // todo: mock data. remove later
@@ -20,6 +21,20 @@ const client = {
   stageText: 'Prospecting - New',
   stageLevel: 1,
 };
+const activities = [
+  {
+    id: 'sdfsdf234wf',
+    title: 'You got a new lead!',
+    description: 'J. and his mother are looking for Assisted Living in Los Angeles. She is looking for a community that is very active and has a lot of activities and outings.',
+    date: '2019-04-05T15:54:06Z',
+  },
+  {
+    id: 'sdf234wsdfdf',
+    title: 'You got a new lead!dfgdf',
+    description: 'J. and his mother are looking for Assisted Living in Los Angeles. She is looking for a community that is very active and has a lot of activities and outings.',
+    date: '2019-07-05T15:54:06Z',
+  },
+];
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;
@@ -27,6 +42,7 @@ const BackLinkWrapper = pad(styled.div`
 `, 'regular');
 
 const TextAlignCenterBlock = pad(textAlign(Block, 'center'), 'regular');
+const PaddedHr = pad(Hr, 'xLarge');
 
 const CommunitiesTab = styled.div`
   width: ${size('layout.col4')};
@@ -34,14 +50,21 @@ const CommunitiesTab = styled.div`
   padding: ${size('spacing.xxxLarge')} 0;
 `;
 
+const StyledFamilyActivityItem = styled(FamilyActivityItem)`
+  border-right: 0;
+  border-left: 0;
+`;
+
 const DashboardMyFamiliesDetailsPage = () => {
   const { name, stageText, stageLevel } = client;
+  const activityCards = activities.map((a, i) =>
+    <StyledFamilyActivityItem key={a.title} noBorderRadius snap={i === activities.length - 1 ? null : 'bottom'} title={a.title} description={a.description} date={a.date} />);
 
   return (
     <DashboardTwoColumnTemplate activeMenuItem="My Families">
       <section>
         <Box snap="bottom">
-          <Link href={FAMILY_DASHBOARD_FAMILIES_PATH}>
+          <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
             <BackLinkWrapper>
               <Icon icon="arrow-left" size="small" palette="primary" />
               <Span size="tiny" palette="primary">Back to Prospects</Span>
@@ -56,6 +79,13 @@ const DashboardMyFamiliesDetailsPage = () => {
       <Tabs>
         <div label="ACTIVITY">
           <TableHeaderButtons noBorder hasColumnsButton={false} />
+          {activityCards.length === 0 &&
+            <Fragment>
+              <PaddedHr noMargin />
+              <TextAlignCenterBlock>There are no acivities.</TextAlignCenterBlock>
+            </Fragment>
+          }
+          {activityCards.length > 0 && activityCards}
         </div>
         <div label="FAMILY DETAILS">
           See ya later, <em>Alligator</em>!
