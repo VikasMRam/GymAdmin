@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { shape, object } from 'prop-types';
-import { reduxForm } from 'redux-form';
+import { shape, object, func } from 'prop-types';
+import { reduxForm, SubmissionError } from 'redux-form';
 import { getRelationship } from 'redux-bees';
 import { connect } from 'react-redux';
 import produce from 'immer';
@@ -44,19 +44,32 @@ const convertUserToProfileFormValues = (user) => {
   result.phoneNumber = phoneNumber;
   if (uuidAux) {
     const { uuidInfo } = uuidAux;
-    const {
-      housingInfo, residentInfo, financialInfo, locationInfo,
-    } = uuidInfo;
-    const { lookingFor, moveTimeline } = housingInfo;
-    const { fullName } = residentInfo;
-    const { maxMonthlyBudget } = financialInfo;
-    const { city, state } = locationInfo;
-    const searchingCity = `${city}, ${state}`;
-    result.lookingFor = lookingFor;
-    result.residentName = fullName;
-    result.timeToMove = moveTimeline;
-    result.monthlyBudget = maxMonthlyBudget;
-    result.searchingCity = searchingCity;
+    if (uuidInfo) {
+      const {
+        housingInfo, residentInfo, financialInfo, locationInfo,
+      } = uuidInfo;
+      if (housingInfo && housingInfo.lookingFor) {
+        const { lookingFor } = housingInfo;
+        result.lookingFor = lookingFor;
+      }
+      if (housingInfo && housingInfo.moveTimeline) {
+        const { moveTimeline } = housingInfo;
+        result.timeToMove = moveTimeline;
+      }
+      if (residentInfo && residentInfo.fullName) {
+        const { fullName } = residentInfo;
+        result.residentName = fullName;
+      }
+      if (financialInfo && financialInfo.maxMonthlyBudget) {
+        const { maxMonthlyBudget } = financialInfo;
+        result.monthlyBudget = maxMonthlyBudget;
+      }
+      if (locationInfo && locationInfo.city && locationInfo.state) {
+        const { city, state } = locationInfo;
+        const searchingCity = `${city}, ${state}`;
+        result.searchingCity = searchingCity;
+      }
+    }
     return result;
   }
   return result;
@@ -77,13 +90,16 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
     }),
     uuidAux: uuidAuxProps,
     api: object,
+    notifySuccess: func,
   };
 
   handleSubmit = (values) => {
-    const { status, uuidAux, api } = this.props;
+    const {
+      status, uuidAux, api, notifySuccess,
+    } = this.props;
     const { user } = status;
     const { result } = user;
-    api.updateUser({ id: result.id }, {
+    return api.updateUser({ id: result.id }, {
       data: produce(result, (draft) => {
         draft.relationships.uuidAux = {
           data: uuidAux,
@@ -93,12 +109,36 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
         draft.attributes.phoneNumber = values.phoneNumber;
 
         const { uuidInfo } = draft.relationships.uuidAux.data.attributes;
-        uuidInfo.housingInfo.lookingFor = values.lookingFor;
-        uuidInfo.residentInfo.fullName = values.residentName;
-        uuidInfo.financialInfo.maxMonthlyBudget = parseInt(values.monthlyBudget, 10);
-        uuidInfo.housingInfo.moveTimeline = values.timeToMove;
+        let newUuidInfo = null;
+        if (!uuidInfo) {
+          newUuidInfo = {
+            housingInfo: {},
+            residentInfo: {},
+            financialInfo: {},
+          };
+        } else {
+          newUuidInfo = uuidInfo;
+        }
+        newUuidInfo.housingInfo.lookingFor = values.lookingFor;
+        newUuidInfo.residentInfo.fullName = values.residentName;
+        newUuidInfo.financialInfo.maxMonthlyBudget = parseInt(values.monthlyBudget, 10);
+        newUuidInfo.housingInfo.moveTimeline = values.timeToMove;
+
+        draft.relationships.uuidAux.data.attributes.uuidInfo = newUuidInfo;
       }),
-    });
+    })
+      .catch((error) => {
+        console.error(error);
+        const { status, body } = error;
+        if (status === 400) {
+          const { errors } = body;
+          const errorMessage = errors[0] && errors[0].title ? errors[0].title : 'Generic Error';
+          throw new SubmissionError({ _error: errorMessage });
+        }
+      })
+      .then(() => {
+        notifySuccess('Details Updated Successfully');
+      });
   };
   render() {
     const { user, ...props } = this.props;

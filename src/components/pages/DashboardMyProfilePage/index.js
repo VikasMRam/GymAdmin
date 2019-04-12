@@ -28,7 +28,7 @@ const DashboardMyProfilePage = ({ user, warningMessage }) => {
             {messages.map(message => <PaddedBannerNotification key={message.id}>{message.content}</PaddedBannerNotification>)}
             {warningMessage && <PaddedBannerNotification palette="warning">{warningMessage}</PaddedBannerNotification>}
             <ProfileUserDetailsFormWrapper>
-              <DashboardProfileUserDetailsFormContainer />
+              <DashboardProfileUserDetailsFormContainer notifySuccess={notifySuccess} />
             </ProfileUserDetailsFormWrapper>
             {hasPasswordSet ? <DashboardChangePasswordFormContainer notifySuccess={notifySuccess} /> : <DashboardAddPasswordFormContainer notifySuccess={notifySuccess} />}
           </Fragment>

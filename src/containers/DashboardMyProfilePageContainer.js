@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { object } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import DashboardMyProfilePage from 'sly/components/pages/DashboardMyProfilePage';
@@ -11,10 +12,12 @@ const incompleteInfoWarning = 'Please enter the incomplete fields below to compl
 class DashboardMyProfilePageContainer extends Component {
   static propTypes = {
     user: userPropType,
+    api: object,
   }
 
   render() {
-    const { user } = this.props;
+    const { user, api } = this.props;
+    const { getUser } = api;
     if (!user) {
       return <Redirect to="/" />;
     }
@@ -25,7 +28,7 @@ class DashboardMyProfilePageContainer extends Component {
       warningMessage = incompleteInfoWarning;
     }
     return (
-      <DashboardMyProfilePage user={user} warningMessage={warningMessage} />
+      <DashboardMyProfilePage user={user} getUser={getUser} warningMessage={warningMessage} />
     );
   }
 }
