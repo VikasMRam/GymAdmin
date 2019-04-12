@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import { Block } from 'sly/components/atoms';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
-import PraneshKumar from 'sly/../private/storybook/sample-data/user-pranesh-kumar.json';
+import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
 
 const href = '/sdfsdf';
 const defaultProps = {
@@ -21,7 +21,7 @@ describe('FamilySummary', () => {
       .find('ColumWrapper')
       .at(0)
       .find(Block)
-      .contains(PraneshKumar.name)).toBe(true);
+      .contains(PraneshKumar.clientInfo.name)).toBe(true);
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
       .at(1)
@@ -47,6 +47,11 @@ describe('FamilySummary', () => {
       .at(5)
       .find(Block)
       .contains(PraneshKumar.uuidAux.uuidInfo.housingInfo.moveTimeline)).toBe(true);
+    expect(wrapper
+      .dive()
+      .find('SlyIntro')
+      .find(Block)
+      .contains(PraneshKumar.clientInfo.slyMessage)).toBe(true);
   });
 
   it('see more details href', () => {

@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { func, string, number, bool } from 'prop-types';
+import { func, string, number, bool, oneOf } from 'prop-types';
 
 import pad from 'sly/components/helpers/pad';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import { size } from 'sly/components/themes';
+import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
 import { Box, Heading, Button } from 'sly/components/atoms';
 import Stage from 'sly/components/atoms/Stage';
 
@@ -34,14 +35,14 @@ const FamilyStage = ({
 }) => (
   <Box snap={snap} noBorderRadius={noBorderRadius}>
     <PaddedHeading size="body">Stage</PaddedHeading>
-    <PaddedStage text={stageText} currentStage={stageLevel} />
+    <PaddedStage text={stageText} currentStage={stageLevel} totalStage={FAMILY_STAGE_ORDERED.length} palette={stageLevel === FAMILY_STAGE_ORDERED.length ? 'danger' : 'primary'} />
     <MarginBottomFullWidthButton onClick={onAcceptClick}>Accept and contact this family</MarginBottomFullWidthButton>
     <FullWidthButton onClick={onRejectClick} palette="danger" ghost>Reject</FullWidthButton>
   </Box>
 );
 
 FamilyStage.propTypes = {
-  stageText: string.isRequired,
+  stageText: oneOf(FAMILY_STAGE_ORDERED).isRequired,
   stageLevel: number.isRequired,
   onAcceptClick: func,
   onRejectClick: func,
