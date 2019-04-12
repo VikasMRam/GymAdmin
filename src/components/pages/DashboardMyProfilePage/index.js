@@ -18,7 +18,7 @@ const ProfileUserDetailsFormWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
-const DashboardMyProfilePage = ({ user, getUser, warningMessage }) => {
+const DashboardMyProfilePage = ({ user, warningMessage }) => {
   const { hasPasswordSet } = user;
   return (
     <DashboardPageTemplate activeMenuItem="Profile">
@@ -30,7 +30,7 @@ const DashboardMyProfilePage = ({ user, getUser, warningMessage }) => {
             <ProfileUserDetailsFormWrapper>
               <DashboardProfileUserDetailsFormContainer notifySuccess={notifySuccess} />
             </ProfileUserDetailsFormWrapper>
-            {hasPasswordSet ? <DashboardChangePasswordFormContainer notifySuccess={notifySuccess} /> : <DashboardAddPasswordFormContainer getUser={getUser} notifySuccess={notifySuccess} />}
+            {hasPasswordSet ? <DashboardChangePasswordFormContainer notifySuccess={notifySuccess} /> : <DashboardAddPasswordFormContainer notifySuccess={notifySuccess} />}
           </Fragment>
         )}
       </BannerNotificationController>

@@ -28,7 +28,7 @@ class DashboardAddPasswordFormContainer extends Component {
     notifySuccess: func,
   }
   handleSubmit = (values, dispatch) => {
-    const { api, user, notifySuccess, getUser } = this.props;
+    const { api, user, notifySuccess } = this.props;
     const { email } = user;
     const { newPassword, confirmPassword } = values;
     if (newPassword && confirmPassword) {
@@ -43,7 +43,6 @@ class DashboardAddPasswordFormContainer extends Component {
           }
         })
         .then(() => {
-          getUser({ id: 'me' });
           dispatch(reset(formName));
           notifySuccess('Password Set Successfully');
         });

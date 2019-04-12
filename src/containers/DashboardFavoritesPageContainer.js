@@ -88,8 +88,11 @@ export default class DashboardFavoritesPageContainer extends Component {
     } = this;
     const { status } = this.props;
     let { userSaves } = this.props;
-    if (!userSaves) {
+    if (status.userSaves && status.userSaves.error) {
       return <Redirect to="/" />;
+    }
+    if (!userSaves) {
+      return 'Loading...';
     }
     let { result: rawUserSaves = [] } = status.userSaves;
     const { currentGalleryImage, howSlyWorksVideoPlaying } = this.state;
