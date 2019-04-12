@@ -223,7 +223,7 @@ const NearMePage = ({
             What is Assisted Living?
           </StyledHeading>
           <Paragraph>
-            Assisted living can be defined as 24-hour non-medical care delivered in a residential setting.
+            Assisted living near you can be defined as 24-hour non-medical care delivered in a residential setting.
             Previously  known as{' '}
             <Link href="https://www.medicare.gov/nursinghomecompare/Resources/Nursing-Home-Alternatives.html" target="_blank" rel="noopener">
               nursing homes
@@ -231,7 +231,7 @@ const NearMePage = ({
             , the properties and amenities have improved immensely over the years
             and so they are now called  senior living or assisted living communities.  These properties offer seniors
             room and board, 24-hour non-medical care, housekeeping, laundry services, social engagement,
-            wellness programs, and much more. Assisted living communities can be large hotel-like properties
+            wellness programs, and much more. Assisted living communities near you can be large hotel-like properties
             or single family homes (often called{' '}
             <Link href="https://www.seniorly.com/assisted-living/articles/understanding-board-and-care-homes">
               Board and Care
@@ -251,14 +251,16 @@ const NearMePage = ({
             </Link>
           </Paragraph>
           <Paragraph>
-            Many consumer advocacy groups like AARP share statistics that 90% of people want to stay in their own homes
-            as they age. While that is a reality for many seniors, the aging process is different for everyone. As
-            people experience increased daily care needs, cognitive decline, social isolation, and/or the desire for a
-            maintenance free lifestyle, assisted living communities can be the most desirable option.
+            The aging process is different for everyone. As people experience increased daily care needs, cognitive
+            decline, social isolation, and/or the desire for a maintenance free lifestyle, assisted living communities
+            can be the most desirable option.
           </Paragraph>
           <Paragraph>
-            Assisted Living can be the right  balance for seniors who want to be  independent, but also need some
-            day-to-day assistance and care.
+            Assisted Living near you can be the right balance for seniors who want to be independent, but also need
+            some day-to-day assistance and care with their{' '}
+            <Link href="https://www.seniorly.com/resources/articles/what-are-the-activities-of-daily-living-adls">
+              activities of daily living (ADLs).
+            </Link>
           </Paragraph>
           <Paragraph>
             Your loved one will still maintain the all-important feelings of freedom, minus the challenges that can
@@ -320,7 +322,7 @@ const NearMePage = ({
             What Type Of Medical Staff Is Present?
           </StyledHeading>
           <Paragraph>
-            Though every community is different, dedicating themselves to different levels of care and services,
+            Though every assisted living near you is different, dedicating themselves to different levels of care and services,
             most Assisted Living communities will offer regular activities, on-site non-medical health care,
             comfortable living spaces, and prepared meals. Some communities that focus on higher acuity care may
             have licensed nurses on staff, while others focus on dementia or memory care and may have
@@ -374,6 +376,9 @@ const NearMePage = ({
             Always ensure the senior living community you choose is completely certified with a reliable, upbeat
             staff of managers, nurses, caregivers, and other personnel. When asking questions, there should be no hesitation
             to prove total compliance of regulations.
+            <Link href="https://www.seniorly.com/resources/articles/questions-to-ask-on-your-community-tour">
+              Click on this link for a list of over 70 questions you might want to ask the community.
+            </Link>
           </Paragraph>
           <Link
             href={`#${sectionIdMap.top}`}
@@ -409,7 +414,7 @@ const NearMePage = ({
           </StyledHeading>
           <Paragraph>
             Many assume that making the step away from their “old life” and into Assisted Living means the end of a
-            social life and autonomy. This is far from the truth. Any Assisted Living community worth considering
+            social life and autonomy. This is far from the truth. Any Assisted Living community near you worth considering
             should amplify the amount of activities residents can enjoy, and can deepen peer and familial relationships.
           </Paragraph>
           <Paragraph>
@@ -442,7 +447,7 @@ const NearMePage = ({
         <StyledArticle>
           <Paragraph innerRef={costRef} />
           <StyledHeading level="title"size="title">
-            Considering Cost and Payment Options
+            What Does Assisted Living Cost Near You?
           </StyledHeading>
           <Paragraph>
             As of 2017, the national median rate of Assisted Living per month for a 1-bedroom apartment is $3750.
@@ -454,7 +459,7 @@ const NearMePage = ({
           </Paragraph>
           <Paragraph>
             There are also many ways to find that perfect balance of price, services, and comfort.
-            With a wide range of community, from the basic to the luxurious, choosing an Assisted Living community
+            With a wide range of community, from the basic to the luxurious, choosing an Assisted Living community near you
             that fits your budget without skimping on care and amenities is possible.
           </Paragraph>
           <Paragraph>
@@ -508,7 +513,10 @@ const NearMePage = ({
           </Paragraph>
           <Paragraph>
             If you are interested in learning more about the different costs that go into assisted living, explore our
-            resource on the costs of assisted living here.
+            resource on
+            <Link href="https://www.seniorly.com/assisted-living/articles/understanding-the-cost-of-assisted-living">
+              the costs of assisted living near you.
+            </Link>
           </Paragraph>
           <Link
             href={`#${sectionIdMap.top}`}
@@ -519,7 +527,7 @@ const NearMePage = ({
         </StyledArticle>
         <StyledArticle>
           <StyledHeading level="title"size="title">
-            How Assisted Living Varies from other care options
+            How Assisted Living Varies from Other Care Options
           </StyledHeading>
           <Paragraph innerRef={alvsnhRef} />
           <StyledHeading level="subtitle" size="subtitle" >
