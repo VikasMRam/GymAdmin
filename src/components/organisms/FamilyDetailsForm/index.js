@@ -1,15 +1,17 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment } from 'react';
 import { func, bool, string } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size, columnWidth } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import { LOOKING_FOR, GENDER, TIME_TO_MOVE } from 'sly/constants/familyDetails';
-import ReduxField from 'sly/components/organisms/ReduxField';
 import { Block, Button, Hr, Label } from 'sly/components/atoms';
+import ReduxField from 'sly/components/organisms/ReduxField';
+import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -19,6 +21,7 @@ Form.displayName = 'Form';
 const TwoColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: ${ifProp('verticalCenter', 'center', 'initial')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex-direction: row;
@@ -40,113 +43,144 @@ const IntroInfo = textAlign(styled(Block)`
 `, 'left');
 IntroInfo.displayName = 'IntroInfo';
 
+const StyledSearchBoxContainer = styled(SearchBoxContainer)`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    flex: 0 0 ${size('tabletLayout.col3')};
+  }
+`;
+
+const PaddedTwoColumnWrapper = pad(TwoColumnWrapper, 'large');
+
 const lookingForOptions = LOOKING_FOR.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
 const femaleOptions = GENDER.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
 const timeToMoveOptions = TIME_TO_MOVE.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
 
-const FamilyDetailsForm = ({
-  handleSubmit, submitting, accepted, intro,
-}) => (
-  <Form onSubmit={handleSubmit}>
-    <Field
-      name="name"
-      label="Contact name"
-      type="text"
-      component={ReduxField}
-      wideWidth
-    />
-    <Field
-      name="phone"
-      label="Phone"
-      disabled={!accepted}
-      hideValue={!accepted}
-      placeholder={!accepted ? 'Accept family to view' : null}
-      parse={phoneParser}
-      format={phoneFormatter}
-      component={ReduxField}
-      wideWidth
-    />
-    <Field
-      name="email"
-      label="Email"
-      type="email"
-      disabled={!accepted}
-      hideValue={!accepted}
-      placeholder={!accepted ? 'Accept family to view' : null}
-      component={ReduxField}
-      wideWidth
-    />
-    <Field
-      name="residentName"
-      label="Resident name"
-      type="text"
-      component={ReduxField}
-      wideWidth
-    />
-    <Field
-      name="lookingFor"
-      label="Looking for"
-      type="select"
-      component={ReduxField}
-      wideWidth
-    >
-      {lookingForOptions}
-    </Field>
-    <Field
-      name="gender"
-      label="Gender"
-      type="select"
-      component={ReduxField}
-      wideWidth
-    >
-      {femaleOptions}
-    </Field>
-    <Field
-      name="preferredLocation"
-      label="Preferred location"
-      type="text"
-      component={ReduxField}
-      wideWidth
-    />
-    <Field
-      name="budget"
-      label="Monthly budget"
-      type={!accepted ? 'text' : 'iconInput'}
-      disabled={!accepted}
-      hideValue={!accepted}
-      placeholder={!accepted ? 'Accept family to view' : null}
-      component={ReduxField}
-      wideWidth
-    />
-    <Field
-      name="timeToMove"
-      label="Time to move"
-      type="select"
-      component={ReduxField}
-      wideWidth
-    >
-      {timeToMoveOptions}
-    </Field>
-    <TwoColumnWrapper>
-      <StyledLabel>Seniorly introduction</StyledLabel>
-      <IntroInfo size="caption">{intro}</IntroInfo>
-    </TwoColumnWrapper>
-    {accepted &&
-      <Fragment>
-        <Hr />
-        <StyledButton type="submit" disabled={submitting}>
-          Save changes
-        </StyledButton>
-      </Fragment>
-    }
-  </Form>
-);
+class FamilyDetailsForm extends Component {
+  static propTypes = {
+    handleSubmit: func.isRequired,
+    submitting: bool,
+    accepted: bool,
+    intro: string,
+    change: func,
+    onLocationChange: func,
+  };
 
-FamilyDetailsForm.propTypes = {
-  handleSubmit: func.isRequired,
-  submitting: bool,
-  accepted: bool,
-  intro: string,
-};
+  handleChange = () => {
+    const { change } = this.props;
+    change('preferredLocation', null);
+  };
+
+  handleLocationChange = (value) => {
+    const { change, onLocationChange } = this.props;
+    change('preferredLocation', value);
+    if (onLocationChange) {
+      onLocationChange(value);
+    }
+  };
+
+  render() {
+    const { handleChange, handleLocationChange } = this;
+    const {
+      handleSubmit, submitting, accepted, intro,
+    } = this.props;
+
+    return (
+      <Form onSubmit={handleSubmit}>
+        <Field
+          name="name"
+          label="Contact name"
+          type="text"
+          component={ReduxField}
+          wideWidth
+        />
+        <Field
+          name="phone"
+          label="Phone"
+          disabled={!accepted}
+          hideValue={!accepted}
+          placeholder={!accepted ? 'Accept family to view' : null}
+          parse={phoneParser}
+          format={phoneFormatter}
+          component={ReduxField}
+          wideWidth
+        />
+        <Field
+          name="email"
+          label="Email"
+          type="email"
+          disabled={!accepted}
+          hideValue={!accepted}
+          placeholder={!accepted ? 'Accept family to view' : null}
+          component={ReduxField}
+          wideWidth
+        />
+        <Field
+          name="residentName"
+          label="Resident name"
+          type="text"
+          component={ReduxField}
+          wideWidth
+        />
+        <Field
+          name="lookingFor"
+          label="Looking for"
+          type="select"
+          component={ReduxField}
+          wideWidth
+        >
+          {lookingForOptions}
+        </Field>
+        <Field
+          name="gender"
+          label="Gender"
+          type="select"
+          component={ReduxField}
+          wideWidth
+        >
+          {femaleOptions}
+        </Field>
+        <PaddedTwoColumnWrapper verticalCenter>
+          <StyledLabel>Preferred location</StyledLabel>
+          <StyledSearchBoxContainer
+            layout="boxWithoutButton"
+            onLocationSearch={handleLocationChange}
+            onTextChange={handleChange}
+          />
+        </PaddedTwoColumnWrapper>
+        <Field
+          name="budget"
+          label="Monthly budget"
+          type={!accepted ? 'text' : 'iconInput'}
+          disabled={!accepted}
+          hideValue={!accepted}
+          placeholder={!accepted ? 'Accept family to view' : null}
+          component={ReduxField}
+          wideWidth
+        />
+        <Field
+          name="timeToMove"
+          label="Time to move"
+          type="select"
+          component={ReduxField}
+          wideWidth
+        >
+          {timeToMoveOptions}
+        </Field>
+        <TwoColumnWrapper>
+          <StyledLabel>Seniorly introduction</StyledLabel>
+          <IntroInfo size="caption">{intro}</IntroInfo>
+        </TwoColumnWrapper>
+        {accepted &&
+          <Fragment>
+            <Hr />
+            <StyledButton type="submit" disabled={submitting}>
+              Save changes
+            </StyledButton>
+          </Fragment>
+        }
+      </Form>
+    );
+  }
+}
 
 export default FamilyDetailsForm;
