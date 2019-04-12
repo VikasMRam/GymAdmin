@@ -128,7 +128,7 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
       }),
     })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         const { status, body } = error;
         if (status === 400) {
           const { errors } = body;
