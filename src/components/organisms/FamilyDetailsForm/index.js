@@ -6,9 +6,10 @@ import styled from 'styled-components';
 import { size, columnWidth } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
+import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
+import { LOOKING_FOR, GENDER, TIME_TO_MOVE } from 'sly/constants/familyDetails';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import { Block, Button, Hr, Label } from 'sly/components/atoms';
-import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 
 const StyledButton = pad(Button, 'regular');
 StyledButton.displayName = 'StyledButton';
@@ -39,6 +40,10 @@ const IntroInfo = textAlign(styled(Block)`
 `, 'left');
 IntroInfo.displayName = 'IntroInfo';
 
+const lookingForOptions = LOOKING_FOR.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
+const femaleOptions = GENDER.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
+const timeToMoveOptions = TIME_TO_MOVE.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
+
 const FamilyDetailsForm = ({
   handleSubmit, submitting, accepted, intro,
 }) => (
@@ -54,6 +59,7 @@ const FamilyDetailsForm = ({
       name="phone"
       label="Phone"
       disabled={!accepted}
+      hideValue={!accepted}
       placeholder={!accepted ? 'Accept family to view' : null}
       parse={phoneParser}
       format={phoneFormatter}
@@ -65,6 +71,7 @@ const FamilyDetailsForm = ({
       label="Email"
       type="email"
       disabled={!accepted}
+      hideValue={!accepted}
       placeholder={!accepted ? 'Accept family to view' : null}
       component={ReduxField}
       wideWidth
@@ -83,9 +90,7 @@ const FamilyDetailsForm = ({
       component={ReduxField}
       wideWidth
     >
-      <option value="mother">Mother</option>
-      <option value="father">Father</option>
-      <option value="self">Self</option>
+      {lookingForOptions}
     </Field>
     <Field
       name="gender"
@@ -94,8 +99,7 @@ const FamilyDetailsForm = ({
       component={ReduxField}
       wideWidth
     >
-      <option value="male">Male</option>
-      <option value="female">Female</option>
+      {femaleOptions}
     </Field>
     <Field
       name="preferredLocation"
@@ -109,6 +113,7 @@ const FamilyDetailsForm = ({
       label="Monthly budget"
       type={!accepted ? 'text' : 'iconInput'}
       disabled={!accepted}
+      hideValue={!accepted}
       placeholder={!accepted ? 'Accept family to view' : null}
       component={ReduxField}
       wideWidth
@@ -120,9 +125,7 @@ const FamilyDetailsForm = ({
       component={ReduxField}
       wideWidth
     >
-      <option>In a Week</option>
-      <option>In a month</option>
-      <option value="2 months">In 2 month</option>
+      {timeToMoveOptions}
     </Field>
     <TwoColumnWrapper>
       <StyledLabel>Seniorly introduction</StyledLabel>

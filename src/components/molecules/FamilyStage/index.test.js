@@ -3,8 +3,8 @@ import { shallow } from 'enzyme';
 
 import FamilyStage from 'sly/components/molecules/FamilyStage';
 
-const stageText = 'test';
-const stageLevel = 2;
+const stageText = 'New';
+const stageLevel = 1;
 const defaultProps = {
   stageText,
   stageLevel,
@@ -14,7 +14,8 @@ const wrap = (props = {}) => shallow(<FamilyStage {...defaultProps} {...props} /
 describe('FamilyStage', () => {
   it('renders', () => {
     const wrapper = wrap();
-    expect(wrapper.find('PaddedStage').props()).toEqual({ text: stageText, currentStage: stageLevel });
+    expect(wrapper.find('PaddedStage').prop('text')).toBe(stageText);
+    expect(wrapper.find('PaddedStage').prop('currentStage')).toBe(stageLevel);
   });
 
   it('onAcceptClick is triggered', () => {
