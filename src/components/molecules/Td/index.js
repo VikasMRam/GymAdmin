@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { node, bool, string, number } from 'prop-types';
-import { switchProp, ifProp } from 'styled-tools';
+import { switchProp, ifProp, ifNotProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
@@ -9,15 +9,13 @@ import Stage from 'sly/components/atoms/Stage';
 import Block from 'sly/components/atoms/Block';
 import Icon from 'sly/components/atoms/Icon';
 
-const Wrapper = styled.td`
-  width: inherit;
-  padding: ${size('spacing.regular')} ${size('spacing.large')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-
+const disabledWrapperStyles = css`
   ${ifProp('disabled', css`
-    background-color: ${palette('grey', 'background')};
+  background-color: ${palette('grey', 'background')};
   `)}
+`;
 
+const textIconStyles = css`
   ${switchProp('kind', {
     textIcon: css`
       display: flex;
@@ -25,11 +23,24 @@ const Wrapper = styled.td`
   })};
 `;
 
+const TdWrapper = styled.td`
+  width: inherit;
+  ${ifNotProp('borderless', css`
+    padding: ${size('spacing.regular')} ${size('spacing.large')};
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  `)}
+
+  ${disabledWrapperStyles}
+  ${textIconStyles}
+`;
+
 const clipStyles = css`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: clip;
-  width: inherit; 
+  ${ifProp('clip', css`
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+    width: inherit;
+  `)}
 `;
 
 const disabledStyles = css`
@@ -70,24 +81,35 @@ const DoubleLineBlock = styled(Block)`
   ${disabledStyles}
 `;
 
-export const Td = ({ children, disabled, kind }) => (
-  <Wrapper
+const BlockWrapper = styled.div`
+  ${disabledWrapperStyles}
+  ${textIconStyles}
+`;
+
+export const Td = ({
+  children, disabled, borderless, kind,
+}) => (
+  <TdWrapper
     disabled={disabled}
     kind={kind}
+    borderless={borderless}
   >
     {children}
-  </Wrapper>
+  </TdWrapper>
 );
 
 Td.propTypes = {
   children: node,
   kind: string,
   disabled: bool,
+  borderless: bool,
 };
 
-export const TextTd = ({ children, disabled, ...props }) => (
-  <Td disabled={disabled}>
-    <TextChildrenBlock size="caption" disabled={disabled} {...props}>
+export const TextTd = ({
+  children, disabled, borderless, clip, ...props
+}) => (
+  <Td disabled={disabled} borderless={borderless}>
+    <TextChildrenBlock size="caption" disabled={disabled} clip={clip} {...props}>
       {children}
     </TextChildrenBlock>
   </Td>
@@ -96,16 +118,18 @@ export const TextTd = ({ children, disabled, ...props }) => (
 TextTd.propTypes = {
   children: string.isRequired,
   disabled: bool,
+  borderless: bool,
+  clip: bool,
 };
 
 export const DoubleLineTd = ({
-  firstLine, secondLine, disabled, ...props
+  firstLine, secondLine, disabled, borderless, clip, ...props
 }) => (
-  <Td disabled={disabled}>
-    <DoubleLineBlock size="caption" disabled={disabled} {...props}>
+  <Td disabled={disabled} borderless={borderless}>
+    <DoubleLineBlock size="caption" disabled={disabled} clip={clip} {...props}>
       {firstLine}
     </DoubleLineBlock>
-    <DoubleLineBlock size="tiny" palette="grey" disabled={disabled} {...props}>
+    <DoubleLineBlock size="tiny" palette="grey" disabled={disabled} clip={clip} {...props}>
       {secondLine}
     </DoubleLineBlock>
   </Td>
@@ -115,11 +139,35 @@ DoubleLineTd.propTypes = {
   firstLine: string.isRequired,
   secondLine: string.isRequired,
   disabled: bool,
+  borderless: bool,
+  clip: bool,
 };
 
-export const LinkTd = ({ children, disabled, ...props }) => (
-  <Td disabled={disabled}>
-    <LinkChildrenSpan size="caption" disabled={disabled} {...props}>
+export const DoubleLineDiv = ({
+  firstLine, secondLine, disabled, clip, ...props
+}) => (
+  <BlockWrapper disabled={disabled}>
+    <DoubleLineBlock size="caption" disabled={disabled} clip={clip} {...props}>
+      {firstLine}
+    </DoubleLineBlock>
+    <DoubleLineBlock size="tiny" palette="grey" disabled={disabled} clip={clip} {...props}>
+      {secondLine}
+    </DoubleLineBlock>
+  </BlockWrapper>
+);
+
+DoubleLineDiv.propTypes = {
+  firstLine: string.isRequired,
+  secondLine: string.isRequired,
+  disabled: bool,
+  clip: bool,
+};
+
+export const LinkTd = ({
+  children, disabled, borderless, clip, ...props
+}) => (
+  <Td disabled={disabled} borderless={borderless}>
+    <LinkChildrenSpan size="caption" disabled={disabled} clip={clip} {...props}>
       {children}
     </LinkChildrenSpan>
   </Td>
@@ -128,12 +176,14 @@ export const LinkTd = ({ children, disabled, ...props }) => (
 LinkTd.propTypes = {
   children: string.isRequired,
   disabled: bool,
+  borderless: bool,
+  clip: bool,
 };
 
 export const StageTd = ({
-  text, currentStage, disabled, ...props
+  text, currentStage, disabled, borderless, ...props
 }) => (
-  <Td disabled={disabled}>
+  <Td disabled={disabled} borderless={borderless}>
     <Stage text={text} currentStage={currentStage} disabled={disabled} {...props} />
   </Td>
 );
@@ -142,13 +192,29 @@ StageTd.propTypes = {
   text: string.isRequired,
   currentStage: number.isRequired,
   disabled: bool,
+  borderless: bool,
+};
+
+export const StageDiv = ({
+  text, currentStage, disabled, borderless, ...props
+}) => (
+  <BlockWrapper disabled={disabled}>
+    <Stage text={text} currentStage={currentStage} disabled={disabled} {...props} />
+  </BlockWrapper>
+);
+
+StageDiv.propTypes = {
+  text: string.isRequired,
+  currentStage: number.isRequired,
+  disabled: bool,
+  borderless: bool,
 };
 
 export const TextIconTd = ({
-  children, icon, iconPalette, disabled, ...props
+  children, icon, iconPalette, disabled, borderless, clip, ...props
 }) => (
-  <Td disabled={disabled} kind="textIcon">
-    <TextIconChildrenSpan size="caption" disabled={disabled} {...props}>
+  <Td disabled={disabled} kind="textIcon" borderless={borderless}>
+    <TextIconChildrenSpan size="caption" disabled={disabled} clip={clip} {...props}>
       {children}
     </TextIconChildrenSpan>
     <Icon icon={icon} palette={iconPalette} />
@@ -160,4 +226,6 @@ TextIconTd.propTypes = {
   icon: string.isRequired,
   iconPalette: string,
   disabled: bool,
+  borderless: bool,
+  clip: bool,
 };
