@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { instanceOf, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
+import { Link } from 'sly/components/atoms';
 import Tab from 'sly/components/atoms/Tab';
 import cursor from 'sly/components/helpers/cursor';
 
@@ -23,15 +24,20 @@ const TabContent = styled.div`
 
 class Tabs extends Component {
   static propTypes = {
-    children: PropTypes.instanceOf(Array).isRequired,
+    children: instanceOf(Array).isRequired,
+    activeTab: string,
   }
 
   constructor(props) {
     super(props);
     const { children } = this.props;
+    let { activeTab } = this.props;
+    if (!activeTab) {
+      activeTab = children[0].props.label;
+    }
 
     this.state = {
-      activeTab: children[0].props.label,
+      activeTab,
     };
   }
 
@@ -54,9 +60,8 @@ class Tabs extends Component {
       <div>
         <TabWrapper>
           {children.map((child) => {
-            const { label } = child.props;
-
-            return (
+            const { to, label } = child.props;
+            const tab = (
               <CursorTab
                 active={activeTab === label}
                 key={label}
@@ -64,6 +69,11 @@ class Tabs extends Component {
                 onClick={() => onClickTabItem(label)}
               />
             );
+
+            if (to) {
+              return <Link key={label} to={to}>{tab}</Link>;
+            }
+            return tab;
           })}
         </TabWrapper>
         <TabContent>

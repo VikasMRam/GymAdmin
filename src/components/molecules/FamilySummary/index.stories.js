@@ -6,5 +6,5 @@ import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-ku
 
 storiesOf('Molecules|FamilySummary', module)
   .add('default', () => (
-    <FamilySummary client={PraneshKumar} href="see more href" />
+    <FamilySummary client={PraneshKumar} to="see more href" />
   ));

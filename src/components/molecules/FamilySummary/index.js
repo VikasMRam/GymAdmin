@@ -43,7 +43,7 @@ SlyIntro.displayName = 'SlyIntro';
 const SeeMore = cursor(Block);
 SeeMore.displayName = 'SeeMore';
 
-const FamilySummary = ({ client, snap, href }) => (
+const FamilySummary = ({ client, snap, to }) => (
   <Box snap={snap}>
     <PaddedHeading size="body">Summary</PaddedHeading>
     <OuterColumWrapper>
@@ -90,13 +90,13 @@ const FamilySummary = ({ client, snap, href }) => (
         <Block size="caption">{client.clientInfo.slyMessage}</Block>
       </SlyIntro>
     }
-    <StyledLink href={href}>See more family details</StyledLink>
+    <StyledLink to={to}>See more family details</StyledLink>
   </Box>
 );
 
 FamilySummary.propTypes = {
   client: clientPropType,
-  href: string.isRequired,
+  to: string.isRequired,
   snap: string,
 };
 
