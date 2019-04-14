@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
-import { bool } from 'prop-types';
+import { bool, string } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import Input from 'sly/components/atoms/Input';
@@ -54,9 +54,9 @@ const ColumnsButton = styled(IconButton)`
     display: block;
   }
 `;
-const TableHeaderButtons = ({ noBorder, hasColumnsButton }) => {
+const TableHeaderButtons = ({ noBorder, hasColumnsButton, className }) => {
   return (
-    <Wrappper noBorder={noBorder}>
+    <Wrappper noBorder={noBorder} className={className}>
       <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile />
       <SearchTextInput type="search" placeholder="Type to filter by name" />
       <RightSideButtons>
@@ -73,6 +73,7 @@ const TableHeaderButtons = ({ noBorder, hasColumnsButton }) => {
 TableHeaderButtons.propTypes = {
   noBorder: bool,
   hasColumnsButton: bool,
+  className: string,
 };
 
 export default TableHeaderButtons;
