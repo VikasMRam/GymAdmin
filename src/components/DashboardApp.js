@@ -10,14 +10,13 @@ import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
 import DashboardHomePageContainer from 'sly/containers/DashboardHomePageContainer';
 import { routes as routesPropType } from 'sly/propTypes/routes';
-import { DASHBOARD_PATH, FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH, FAMILY_DASHBOARD_FAMILIES_PATH, FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DASHBOARD_FAMILIES_OVERVIEW_PATH }
+import { DASHBOARD_PATH, FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH, FAMILY_DASHBOARD_FAMILIES_PATH, FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH }
   from 'sly/constants/dashboardAppPaths';
 import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 import DashboardFavoritesPageContainer from 'sly/containers/DashboardFavoritesPageContainer';
 import DashboardMyProfilePageContainer from 'sly/containers/DashboardMyProfilePageContainer';
-import DashboardMyFamiliesPageContainer from 'sly/containers/DashboardMyFamiliesPageContainer';
 import DashboardMyFamiliesDetailsPageContainer from 'sly/containers/DashboardMyFamiliesDetailsPageContainer';
 import DashboardAgentFamilyOverviewPageContainer from 'sly/containers/DashboardAgentFamilyOverviewPageContainer';
 
@@ -46,11 +45,6 @@ export default class App extends Component {
     },
     {
       path: FAMILY_DASHBOARD_FAMILIES_PATH,
-      component: DashboardMyFamiliesPageContainer,
-      exact: true,
-    },
-    {
-      path: FAMILY_DASHBOARD_FAMILIES_OVERVIEW_PATH,
       component: DashboardAgentFamilyOverviewPageContainer,
       exact: true,
     },
