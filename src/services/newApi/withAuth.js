@@ -59,12 +59,16 @@ export default function withAuth(InnerComponent) {
 
     loginUser = (data) => {
       const { dispatch, api, status } = this.props;
-      return dispatch(api.loginUser(data)).then(() => status.user.refetch());
+      const action = api.loginUser(data);
+      console.log(action);
+      return dispatch(action).then(() => status.user.refetch());
     };
 
     logoutUser = (data) => {
       const { dispatch, api, status } = this.props;
-      return dispatch(api.logoutUser(data)).then(() => status.user.refetch());
+      const action = api.logoutUser(data)
+      console.log(action)
+      return dispatch(action).then(() => status.user.refetch());
     };
 
     recoverPassword = (data) => {
