@@ -22,40 +22,38 @@ const StyledHr = styled(Hr)`
   margin-right: -${size('spacing.large')};
 `;
 
-const TableRowCard = ({ heading, href, contents }) => {
-  const contentComponents = contents.map((contentRow) => {
-    const { id, rowItems } = contentRow;
-    const itemsLength = rowItems.length;
-    const rowComponent = rowItems.map((rowItem, i) => {
-      const hrComponent = (itemsLength - 1 !== i && <StyledHr size="large" />);
-      const { type, data } = rowItem;
-      if (type === 'stage') {
-        const { text, currentStage } = data;
-        return (
-          <Fragment key={text}>
-            <StageDiv text={text} currentStage={currentStage} borderless />
-            {hrComponent}
-          </Fragment>
-        );
-      } else if (type === 'doubleLine') {
-        const { firstLine, secondLine } = data;
-        return (
-          <Fragment key={firstLine}>
-            <DoubleLineDiv firstLine={firstLine} secondLine={secondLine} borderless />
-            {hrComponent}
-          </Fragment>
-        );
-      }
-      return <Td key={`Td_${id}`} />;
-    });
-    return <div key={id}>{rowComponent}</div>;
+const TableRowCard = ({
+  heading, href, id, rowItems,
+}) => {
+  const itemsLength = rowItems.length;
+  const rowComponent = rowItems.map((rowItem, i) => {
+    const hrComponent = (itemsLength - 1 !== i && <StyledHr size="large" />);
+    const { type, data } = rowItem;
+    if (type === 'stage') {
+      const { text, currentStage } = data;
+      return (
+        <Fragment key={text}>
+          <StageDiv text={text} currentStage={currentStage} borderless />
+          {hrComponent}
+        </Fragment>
+      );
+    } else if (type === 'doubleLine') {
+      const { firstLine, secondLine } = data;
+      return (
+        <Fragment key={firstLine}>
+          <DoubleLineDiv firstLine={firstLine} secondLine={secondLine} borderless />
+          {hrComponent}
+        </Fragment>
+      );
+    }
+    return <Td key={`Td_${id}`} />;
   });
   return (
     <Wrapper>
       <HeadingLinkWrapper>
         <Link href={href} size="caption" weight="medium">{heading}</Link>
       </HeadingLinkWrapper>
-      {contentComponents}
+      {rowComponent}
     </Wrapper>
   );
 };
@@ -63,13 +61,11 @@ const TableRowCard = ({ heading, href, contents }) => {
 TableRowCard.propTypes = {
   heading: string.isRequired,
   href: string.isRequired,
-  contents: arrayOf(shape({
-    id: number,
-    rowItems: arrayOf(shape({
-      type: string.isRequired,
-      data: object.isRequired,
-    }).isRequired),
-  })),
+  id: number,
+  rowItems: arrayOf(shape({
+    type: string.isRequired,
+    data: object.isRequired,
+  }).isRequired),
 };
 
 export default TableRowCard;
