@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { shape, arrayOf, string, object, number } from 'prop-types';
+import { shape, arrayOf, string, object } from 'prop-types';
 
 import Th from 'sly/components/molecules/Th';
 import { Td, LinkTd, TextTd, StageTd, DoubleLineTd } from 'sly/components/molecules/Td';
@@ -52,7 +52,7 @@ Table.propTypes = {
     sort: string,
   })).isRequired,
   contents: arrayOf(shape({
-    id: number,
+    id: string.isRequired,
     rowItems: arrayOf(shape({
       type: string.isRequired,
       data: object.isRequired,
