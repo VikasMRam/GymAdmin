@@ -35,7 +35,8 @@ const MenuItem = styled(Link)`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     flex-direction: column;
     margin-bottom: ${size('spacing.xxLarge')};
-    padding: 0 ${size('spacing.xLarge')};
+    margin-right: 0;
+    padding: 0;
   }
 `;
 
