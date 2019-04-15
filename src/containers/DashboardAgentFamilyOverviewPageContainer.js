@@ -1,77 +1,114 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { arrayOf, object } from 'prop-types';
+import dayjs from 'dayjs';
 
+import { prefetch } from 'sly/services/newApi';
+import clientPropType from 'sly/propTypes/client';
+import { FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
+import { getSearchParams } from 'sly/services/helpers/search';
 
-const mobileContent = {
-  heading: 'Amanda Appleseed',
-  href: '/',
-  contents: [
-    {
-      id: 1,
-      rowItems: [
-        { type: 'doubleLine', data: { firstLine: 'Amanda is looking for Assisted Living for her mother  in Saratoga', secondLine: '10/10/2019' } },
-        { type: 'stage', data: { text: 'New', currentStage: 1 } },
-      ],
-    },
-  ],
+const STAGE_NAME_LEVEL_MAP = {
+  New: 1,
+  '1st Contact Attempt': 2,
+  '2nd Contact Attempt': 3,
+  '3rd+ Contact Attempt': 4,
 };
 
-const tableContents = {
-  headings: [
-    { text: 'Contact Name' },
-    { text: 'Resident Name' },
-    { text: 'Stage', sort: 'asc' },
-    { text: 'Latest Note' },
-    { text: 'Date Added' },
-  ],
-  contents: [
-    {
-      id: 1,
-      rowItems: [
-        { type: 'link', data: { text: 'Amanda Appleseed', href: '/' } },
-        { type: 'text', data: { text: 'Clara Appleseed' } },
-        { type: 'stage', data: { text: 'New', currentStage: 1 } },
-        { type: 'doubleLine', data: { firstLine: 'Amanda is looking for Assisted Living for her mother  in Saratoga', secondLine: '10/10/2019' } },
-        { type: 'text', data: { text: '10/10/2019' } },
-      ],
-    },
-    {
-      id: 2,
-      rowItems: [
-        { type: 'link', data: { text: 'Belinda Baker', href: '/' } },
-        { type: 'text', data: { text: 'Belinda Baker' } },
-        { type: 'stage', data: { text: '1st Contact Attempt', currentStage: 2 } },
-        { type: 'doubleLine', data: { firstLine: 'I called and left a message on her voicemail saying that I have a few communities that she would', secondLine: '10/10/2019' } },
-        { type: 'text', data: { text: '10/10/2019' } },
-      ],
-    },
-    {
-      id: 3,
-      rowItems: [
-        { type: 'link', data: { text: 'Claudia Chamberlain', href: '/' } },
-        { type: 'text', data: { text: 'Kendrick Chaimberlain' } },
-        { type: 'stage', data: { text: '2nd Contact Attempt', currentStage: 3 } },
-        { type: 'doubleLine', data: { firstLine: 'Sent another message through app', secondLine: '10/10/2019' } },
-        { type: 'text', data: { text: '10/10/2019' } },
-      ],
-    },
-    {
-      id: 4,
-      rowItems: [
-        { type: 'link', data: { text: 'Dominique Dominguez Drommelders', href: '/' } },
-        { type: 'text', data: { text: 'Deepa Davenport' } },
-        { type: 'stage', data: { text: '3rd Contact Attempt', currentStage: 4 } },
-        { type: 'doubleLine', data: { firstLine: 'I called and left a message on her voicemail saying that I have a few communities that she would', secondLine: '10/10/2019' } },
-        { type: 'text', data: { text: '10/10/2019' } },
-      ],
-    },
-  ],
+const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
+  { text: 'Contact Name' },
+  { text: 'Resident Name' },
+  { text: 'Stage', sort: 'asc' },
+  { text: 'Latest Note' },
+  { text: 'Date Added' },
+];
+
+const convertClientsToTableContents = (clients) => {
+  const contents = clients.map((client) => {
+    const {
+      id, clientInfo, uuidAux, stage, createdAt, updatedAt,
+    } = client;
+    const { name: clientName, slyMessage } = clientInfo;
+    const { uuidInfo } = uuidAux;
+    const { residentInfo } = uuidInfo;
+    const { fullName: residentName } = residentInfo;
+    const createdAtStr = dayjs(createdAt).format('MM/DD/YYYY');
+    const updatedAtStr = dayjs(updatedAt).format('MM/DD/YYYY');
+    const rowItems = [];
+    rowItems.push({ type: 'link', data: { text: clientName, href: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id) } });
+    rowItems.push({ type: 'text', data: { text: residentName } });
+    rowItems.push({ type: 'stage', data: { text: stage, currentStage: STAGE_NAME_LEVEL_MAP[stage] } });
+    rowItems.push({ type: 'doubleLine', data: { firstLine: slyMessage, secondLine: updatedAtStr } });
+    rowItems.push({ type: 'text', data: { text: createdAtStr } });
+    return {
+      id,
+      rowItems,
+    };
+  });
+  return { headings: AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS, contents };
 };
 
-const mobileContents = [mobileContent, mobileContent, mobileContent, mobileContent, mobileContent];
+const convertClientsToMobileContents = (clients) => {
+  const contents = clients.map((client) => {
+    const {
+      id, clientInfo, stage, updatedAt,
+    } = client;
+    const { name: clientName, slyMessage } = clientInfo;
+    const updatedAtStr = dayjs(updatedAt).format('MM/DD/YYYY');
+    const rowItems = [];
+    rowItems.push({ type: 'doubleLine', data: { firstLine: slyMessage, secondLine: updatedAtStr } });
+    rowItems.push({ type: 'stage', data: { text: stage, currentStage: STAGE_NAME_LEVEL_MAP[stage] } });
+    return {
+      heading: clientName,
+      href: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id),
+      id,
+      rowItems,
+    };
+  });
+  return contents;
+};
 
-const DashboardAgentFamilyOverviewPageContainer = () => (
-  <DashboardAgentFamilyOverviewPage mobileContents={mobileContents} tableContents={tableContents} />
-);
+const getPaginationData = requestMeta => ({
+  current: requestMeta['page-number'],
+  size: requestMeta['page-size'],
+  total: requestMeta.total_count / requestMeta['page-size'],
+  totalCount: requestMeta.total_count,
+});
 
-export default DashboardAgentFamilyOverviewPageContainer;
+
+// TODO: Fix Latest Note and Date Added column after api impl is done
+@prefetch('clients', 'getClients', (getClients, { match, location }) => {
+  const searchParams = getSearchParams(match, location);
+  return getClients(searchParams);
+})
+export default class DashboardAgentFamilyOverviewPageContainer extends Component {
+  static propTypes = {
+    clients: arrayOf(clientPropType),
+    status: object,
+    meta: object,
+  }
+  render() {
+    console.log(this.props);
+    const { clients, status } = this.props;
+    const { clients: clientsStatus } = status;
+    const { isLoading, meta: clientsMeta } = clientsStatus;
+    // const [error] = errors;
+    // console.log(clients);
+    // console.log(clientsStatus);
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
+
+    const tableContents = convertClientsToTableContents(clients);
+    const mobileContents = convertClientsToMobileContents(clients);
+    const pagination = getPaginationData(clientsMeta);
+    const { current, size, totalCount } = pagination;
+    const count = clients.length;
+    const start = (current * size) + 1;
+    const end = (current * size) + count;
+    const paginationString = `Showing ${start}-${end} of ${totalCount} families`;
+    return (
+      <DashboardAgentFamilyOverviewPage mobileContents={mobileContents} tableContents={tableContents} pagination={pagination} paginationString={paginationString} />
+    );
+  }
+}

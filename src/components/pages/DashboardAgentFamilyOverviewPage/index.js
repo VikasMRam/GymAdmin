@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { arrayOf, object } from 'prop-types';
+import { arrayOf, object, string } from 'prop-types';
 
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 import { size, palette } from 'sly/components/themes';
@@ -11,7 +11,7 @@ import TableRowCard from 'sly/components/molecules/TableRowCard';
 import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Table from 'sly/components/organisms/Table';
-
+import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 
 const SmallScreenSection = styled.div`
   display: block;
@@ -26,10 +26,12 @@ const BigScreenSection = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: block;
+    background-color: ${palette('white.base')};
   }
 `;
 const ButtonTabsWrapper = styled.div`
   padding: ${size('spacing.large')};
+  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
 `;
 
 const ButtonTabs = styled(MultipleChoice)`
@@ -39,6 +41,8 @@ const ButtonTabs = styled(MultipleChoice)`
 const TableRowCardsWrapper = styled.div`
   padding: ${size('spacing.large')};
   background-color: ${palette('grey.background')};
+  border-top: ${size('border.regular')} 0 solid ${palette('grey', 'filler')};
+  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
 `;
 
 const FamiliesCountStatusBlock = styled(Block)`
@@ -49,12 +53,6 @@ const FamiliesCountStatusBlock = styled(Block)`
 const TableRowCardWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
   background-color: ${palette('white.base')};
-`;
-
-const MobileTableHeaderButtons = styled(TableHeaderButtons)`
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: none;
-  }
 `;
 
 const TableSectionWrapper = styled.div`
@@ -76,56 +74,63 @@ const tabsOptions = [
   { value: 'closed', label: 'Closed' },
 ];
 
-const firstFive = {
-  current: 0,
-  total: 5,
-  range: 1,
-  // onChange: action('change'),
-  basePath: '/',
-  pageParam: 'page-number',
-};
+const DashboardAgentFamilyOverviewPage = ({
+  mobileContents, tableContents, pagination, paginationString,
+}) => {
+  const { current, total } = pagination;
+  const paginationParams = {
+    current,
+    total,
+    range: 1,
+    basePath: FAMILY_DASHBOARD_FAMILIES_PATH,
+    pageParam: 'page-number',
+  };
 
-const DashboardAgentFamilyOverviewPage = ({ mobileContents, tableContents }) => (
-  <DashboardPageTemplate activeMenuItem="My Families">
-    <SmallScreenSection>
-      <ButtonTabsWrapper>
-        <ButtonTabs type="singlechoice" orientation="horizontal" buttonKind="tab" options={tabsOptions} value="prospects" />
-      </ButtonTabsWrapper>
-      <MobileTableHeaderButtons />
-      <TableRowCardsWrapper>
-        <FamiliesCountStatusBlock size="caption">Showing 1-8 of 200 families</FamiliesCountStatusBlock>
-        {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
-        <Pagination {...firstFive} current={0} />
-      </TableRowCardsWrapper>
-    </SmallScreenSection>
-    <BigScreenSection>
-      <Tabs>
-        <div label="Prospects">
-          <TableHeaderButtons />
-          <TableSectionWrapper>
-            <TableWrapper>
-              <Table {...tableContents} />
-            </TableWrapper>
-            <BigScreenPaginationWrapper>
-              <Pagination {...firstFive} current={0} />
-            </BigScreenPaginationWrapper>
-            <FamiliesCountStatusBlock size="caption">Showing 1-8 of 200 families</FamiliesCountStatusBlock>
-          </TableSectionWrapper>
-        </div>
-        <div label="Connected">
-          After while, <em>Crocodile</em>!
-        </div>
-        <div label="Closed">
-          Nothing to see here, this tab is <em>extinct</em>!
-        </div>
-      </Tabs>
-    </BigScreenSection>
-  </DashboardPageTemplate>
-);
+  const tableHeaderButtons = <TableHeaderButtons />;
+  return (
+    <DashboardPageTemplate activeMenuItem="My Families">
+      <SmallScreenSection>
+        <ButtonTabsWrapper>
+          <ButtonTabs type="singlechoice" orientation="horizontal" buttonKind="tab" options={tabsOptions} value="prospects" />
+        </ButtonTabsWrapper>
+        {tableHeaderButtons}
+        <TableRowCardsWrapper>
+          <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
+          {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
+          <Pagination {...paginationParams} />
+        </TableRowCardsWrapper>
+      </SmallScreenSection>
+      <BigScreenSection>
+        <Tabs>
+          <div label="Prospects">
+            {tableHeaderButtons}
+            <TableSectionWrapper>
+              <TableWrapper>
+                <Table {...tableContents} />
+              </TableWrapper>
+              <BigScreenPaginationWrapper>
+                <Pagination {...paginationParams} />
+              </BigScreenPaginationWrapper>
+              <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
+            </TableSectionWrapper>
+          </div>
+          <div label="Connected">
+            After while, <em>Crocodile</em>!
+          </div>
+          <div label="Closed">
+            Nothing to see here, this tab is <em>extinct</em>!
+          </div>
+        </Tabs>
+      </BigScreenSection>
+    </DashboardPageTemplate>
+  );
+};
 
 DashboardAgentFamilyOverviewPage.propTypes = {
   mobileContents: arrayOf(object),
   tableContents: object,
+  pagination: object,
+  paginationString: string,
 };
 
 DashboardAgentFamilyOverviewPage.defaultProps = {
