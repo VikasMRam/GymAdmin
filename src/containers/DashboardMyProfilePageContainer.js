@@ -9,7 +9,7 @@ const incompleteInfoWarning = 'Please enter the incomplete fields below to compl
 
 @withUser
 
-class DashboardMyProfilePageContainer extends Component {
+export default class DashboardMyProfilePageContainer extends Component {
   static propTypes = {
     user: userPropType,
   };
@@ -31,4 +31,3 @@ class DashboardMyProfilePageContainer extends Component {
   }
 }
 
-export default DashboardMyProfilePageContainer;

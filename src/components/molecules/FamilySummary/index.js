@@ -39,17 +39,18 @@ const StyledLink = styled(Link)`
 
 const PaddedHeading = pad(Heading, 'large');
 const SlyIntro = pad(styled.div``, 'xLarge');
+SlyIntro.displayName = 'SlyIntro';
 const SeeMore = cursor(Block);
 SeeMore.displayName = 'SeeMore';
 
-const FamilySummary = ({ client, snap, href }) => (
+const FamilySummary = ({ client, snap, to }) => (
   <Box snap={snap}>
     <PaddedHeading size="body">Summary</PaddedHeading>
     <OuterColumWrapper>
-      {client.name &&
+      {client.clientInfo && client.clientInfo.name &&
         <ColumWrapper>
           <Label palette="grey">Contact name</Label>
-          <Block size="caption">{client.name}</Block>
+          <Block size="caption">{client.clientInfo.name}</Block>
         </ColumWrapper>
       }
       {client.uuidAux && client.uuidAux.uuidInfo.residentInfo.fullName &&
@@ -83,17 +84,19 @@ const FamilySummary = ({ client, snap, href }) => (
         </ColumWrapper>
       }
     </OuterColumWrapper>
-    <SlyIntro>
-      <Label palette="grey">Seniorly introduction</Label>
-      <Block size="caption">intro info here</Block>
-    </SlyIntro>
-    <StyledLink href={href}>See more family details</StyledLink>
+    {client.clientInfo && client.clientInfo.slyMessage &&
+      <SlyIntro>
+        <Label palette="grey">Seniorly introduction</Label>
+        <Block size="caption">{client.clientInfo.slyMessage}</Block>
+      </SlyIntro>
+    }
+    <StyledLink to={to}>See more family details</StyledLink>
   </Box>
 );
 
 FamilySummary.propTypes = {
   client: clientPropType,
-  href: string.isRequired,
+  to: string.isRequired,
   snap: string,
 };
 

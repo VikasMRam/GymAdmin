@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
 import produce from 'immer';
+import { Redirect } from 'react-router-dom';
 
 import { prefetch } from 'sly/services/newApi';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
@@ -10,19 +11,24 @@ import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/h
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardFavoritesPage from 'sly/components/pages/DashboardFavoritesPage';
+import userPropType from 'sly/propTypes/user';
 
 @prefetch('userSaves', 'getUserSaves', getUserSaves => getUserSaves({
   'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
   'filter[status]': USER_SAVE_INIT_STATUS,
 }))
-
 export default class DashboardFavoritesPageContainer extends Component {
   static propTypes = {
+    user: userPropType,
     userSaves: arrayOf(object),
     status: object,
     history: object,
     api: object,
   };
+
+  static defaultProps = {
+    userSaves: [],
+  }
 
   state = {
     currentGalleryImage: {},
@@ -81,7 +87,13 @@ export default class DashboardFavoritesPageContainer extends Component {
       handleOnGallerySlideChange, handleOnLocationSearch, handleToggleHowSlyWorksVideoPlaying, handleUnfavouriteClick,
     } = this;
     const { status } = this.props;
-    let { userSaves = [] } = this.props;
+    let { userSaves } = this.props;
+    if (status.userSaves && status.userSaves.error) {
+      return <Redirect to="/" />;
+    }
+    if (!userSaves) {
+      return 'Loading...';
+    }
     let { result: rawUserSaves = [] } = status.userSaves;
     const { currentGalleryImage, howSlyWorksVideoPlaying } = this.state;
     // to prevent doing an api call after a user save is unsaved

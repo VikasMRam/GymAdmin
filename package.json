@@ -149,7 +149,8 @@
     "smoothscroll-polyfill": "^0.4.3",
     "styled-components": "^2.4.0",
     "styled-theme": "^0.3.0",
-    "styled-tools": "^0.4.0",
+    "styled-tools": "^1.7.1",
+    "svgo": "^1.1.1",
     "uglify-es": "^3.3.9",
     "universal-cookie": "^3.0.4",
     "url-loader": "^0.6.2",
@@ -165,7 +166,6 @@
     "webpack-node-externals": "^1.5.4",
     "webpack-sort-chunks": "^0.2.0",
     "webpack-spawn-plugin": "^0.1.1",
-    "svgo": "^1.1.1",
     "webpack-visualizer-plugin": "^0.1.11"
   }
 }

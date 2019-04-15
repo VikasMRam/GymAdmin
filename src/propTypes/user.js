@@ -40,6 +40,7 @@ export const uuidAux = shape({
 
 export default shape({
   id: string,
+  uuid: string,
   name: string,
   email: string,
   phoneNumber: string,

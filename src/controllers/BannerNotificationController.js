@@ -64,10 +64,12 @@ class BannerNotificationController extends Component {
 
   render() {
     const { children, messages } = this.props;
-    const { notifyInfo, notifyError, handleDismiss } = this;
+    const {
+      notifyInfo, notifyError, notifySuccess, handleDismiss,
+    } = this;
 
     return children({
-      messages, dismiss: handleDismiss, notifyInfo, notifyError,
+      messages, dismiss: handleDismiss, notifyInfo, notifyError, notifySuccess,
     });
   }
 }

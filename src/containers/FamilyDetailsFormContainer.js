@@ -4,7 +4,8 @@ import { object, func } from 'prop-types';
 
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
 import { createValidator, required, email, usPhone } from 'sly/services/validation';
-import withApi from 'sly/services/newApi/withApi';
+import clientPropType from 'sly/propTypes/client';
+import { withApi } from 'sly/services/newApi';
 
 const validate = createValidator({
   name: [required],
@@ -25,21 +26,49 @@ const ReduxForm = reduxForm({
 
 @withApi
 
-class FamilyDetailsFormContainer extends Component {
+export default class FamilyDetailsFormContainer extends Component {
   static propTypes = {
     api: object,
+    client: clientPropType.isRequired,
   };
 
   handleSubmit = () => {};
 
   render() {
+    const { client } = this.props;
+    const { clientInfo, uuidAux, admin } = client;
+    const { phoneNumber } = admin;
+    const { name, email, slyMessage } = clientInfo;
+    const { uuidInfo } = uuidAux;
+    const {
+      residentInfo, housingInfo, financialInfo, locationInfo,
+    } = uuidInfo;
+    const { fullName, gender } = residentInfo;
+    const { lookingFor, moveTimeline } = housingInfo;
+    const { maxMonthlyBudget } = financialInfo;
+    let preferredLocation = '';
+    if (locationInfo) {
+      const { city, state } = locationInfo;
+      preferredLocation = `${city}, ${state}`;
+    }
+    const initialValues = {
+      name,
+      email,
+      phone: phoneNumber,
+      residentName: fullName,
+      lookingFor,
+      gender,
+      budget: maxMonthlyBudget,
+      timeToMove: moveTimeline,
+      preferredLocation,
+    };
+
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
-        {...this.props}
+        initialValues={initialValues}
+        intro={slyMessage}
       />
     );
   }
 }
-
-export default FamilyDetailsFormContainer;

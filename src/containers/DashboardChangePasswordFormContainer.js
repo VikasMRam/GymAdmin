@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { reduxForm, SubmissionError } from 'redux-form';
+import { reduxForm, SubmissionError, reset } from 'redux-form';
 import { object, func } from 'prop-types';
 
 import DashboardChangePasswordForm from 'sly/components/organisms/DashboardChangePasswordForm';
@@ -12,8 +12,9 @@ const validate = createValidator({
   confirmPassword: [required, minLength(8), match('newPassword')],
 });
 
+const formName = 'DashboardChangePasswordForm';
 const ReduxForm = reduxForm({
-  form: 'DashboardChangePasswordForm',
+  form: formName,
   destroyOnUnmount: false,
   validate,
 })(DashboardChangePasswordForm);
@@ -26,7 +27,7 @@ class DashboardChangePasswordFormContainer extends Component {
     notifySuccess: func,
   };
 
-  handleSubmit = (values) => {
+  handleSubmit = (values, dispatch) => {
     const { oldPassword, newPassword } = values;
     const payload = { oldPassword, newPassword };
     const { api, notifySuccess } = this.props;
@@ -40,6 +41,7 @@ class DashboardChangePasswordFormContainer extends Component {
         }
       })
       .then(() => {
+        dispatch(reset(formName));
         notifySuccess('Password Successfully Updated');
       });
   };

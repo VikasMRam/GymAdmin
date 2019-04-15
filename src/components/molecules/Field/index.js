@@ -53,7 +53,7 @@ const Wrapper = styled.div`
   
   ${ifProp('row', css`
     flex-direction: row;
-  `)}
+  `)};
   
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex-direction: ${ifProp({ wideWidth: true }, 'row')};
@@ -119,12 +119,13 @@ const Field = ({
   hideErrors,
   labelRight,
   wideWidth,
+  hideValue,
   ...props
 }) => {
   const inputProps = {
     id: `${name}_${value || +new Date()}`,
     name,
-    value,
+    value: hideValue ? null : value,
     type: getInputType(type),
     invalid,
     warning,
@@ -198,6 +199,7 @@ Field.propTypes = {
   placeholder: string,
   labelRight: node,
   wideWidth: bool,
+  hideValue: bool,
 };
 
 Field.defaultProps = {
