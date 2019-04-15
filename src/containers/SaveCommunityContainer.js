@@ -24,14 +24,14 @@ const mapStateToProps = (state, ownProps) => {
 
 // FIXME: hack because createUser is not JSON:API, should use @query
 const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
-  createUserSave: data => dispatch(ensureAuthenticated(
+  createUserSave: data => ensureAuthenticated(
     'Sign up to add to your favorites list',
     api.createUserSave(data),
-  )),
-  updateUserSave: (id, data) => dispatch(ensureAuthenticated(
+  ),
+  updateUserSave: (id, data) => ensureAuthenticated(
     'Sign up to add to your favorites list',
     api.updateUserSave({ id }, data),
-  )),
+  ),
 });
 
 const getCommunitySlug = match => match.params.communitySlug;

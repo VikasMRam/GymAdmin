@@ -37,7 +37,7 @@ export function* ensureAuthenticated(api, { reason, action }, { thunk }) {
       if (isFSA(action)) {
         result = yield yield put(action);
       } else if (typeof action === 'function') {
-        result = yield put(yield call(action));
+        result = yield yield call(action);
       } else {
         throw new Error(`Unknown action type for ${JSON.stringify(action)}`);
       }

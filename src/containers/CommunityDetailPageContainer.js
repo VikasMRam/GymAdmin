@@ -49,10 +49,10 @@ const mapPropsToActions = ({ match }) => ({
 
 // FIXME: hack because createUser is not JSON:API, should use @query
 const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
-  updateUserSave: (id, data) => dispatch(ensureAuthenticated(
+  updateUserSave: (id, data) => ensureAuthenticated(
     'Sign up to add to your favorites list',
-    () => api.updateUserSave({ id }, data),
-  )),
+    api.updateUserSave({ id }, data),
+  ),
 });
 
 const handleResponses = (responses, { location }, redirect) => {
