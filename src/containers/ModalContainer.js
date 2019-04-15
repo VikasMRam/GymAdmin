@@ -9,12 +9,12 @@ import FilthyRedirect from 'sly/components/FilthyRedirect';
 const ModalContainer = ({ location, match }) => (
   <ModalController>
     {({
-      isModalOpen, modalContent, modalOnClose, modalType, hide, show,
+      isModalOpen, isModalCloseable, modalContent, modalOnClose, modalType, hide, show,
     }) => (
       <Fragment>
         <FilthyRedirect isModalOpen={isModalOpen} showModal={show} location={location} match={match} />
         <Modal
-          closeable
+          closeable={isModalCloseable}
           layout={modalType}
           isOpen={isModalOpen}
           onClose={() => {

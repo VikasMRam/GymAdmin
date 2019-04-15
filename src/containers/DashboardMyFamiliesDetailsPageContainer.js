@@ -3,6 +3,7 @@ import { object } from 'prop-types';
 
 import { prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
+import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
 
 @prefetch('client', 'getClient', (req, { match }) => req({
@@ -19,7 +20,19 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { client, match } = this.props;
 
     return (
-      <DashboardMyFamiliesDetailsPage client={client} currentTab={match.params.tab} />
+      <ModalController>
+        {({
+          show,
+          hide,
+        }) => (
+          <DashboardMyFamiliesDetailsPage
+            client={client}
+            currentTab={match.params.tab}
+            showModal={show}
+            hideModal={hide}
+          />
+        )}
+      </ModalController>
     );
   }
 }
