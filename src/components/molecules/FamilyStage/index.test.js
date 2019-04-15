@@ -2,14 +2,14 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import FamilyStage from 'sly/components/molecules/FamilyStage';
-import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, TOTAL_STAGES_COUNT } from 'sly/constants/familyDetails';
 
 const stageGroups = Object.keys(FAMILY_STAGE_ORDERED);
 const newStage = FAMILY_STAGE_ORDERED[stageGroups[0]][0];
 const newStageLevel = 1;
 const fitem = FAMILY_STAGE_ORDERED[stageGroups[stageGroups.length - 1]];
 const endStage = fitem[fitem.length - 1];
-const endStageLevel = fitem.length + 1;
+const endStageLevel = TOTAL_STAGES_COUNT;
 const interStage = FAMILY_STAGE_ORDERED[stageGroups[1]][1];
 const interStageLevel = 2;
 const defaultProps = {

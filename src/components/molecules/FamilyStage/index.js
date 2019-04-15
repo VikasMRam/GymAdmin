@@ -5,7 +5,8 @@ import { func, string, bool } from 'prop-types';
 import pad from 'sly/components/helpers/pad';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import { size } from 'sly/components/themes';
-import { FAMILY_STAGE_ORDERED, TOTAL_STAGES_COUNT } from 'sly/constants/familyDetails';
+import { getStageDetails } from 'sly/services/helpers/stage';
+import { TOTAL_STAGES_COUNT } from 'sly/constants/familyDetails';
 import { Box, Heading, Button } from 'sly/components/atoms';
 import Stage from 'sly/components/atoms/Stage';
 
@@ -33,41 +34,18 @@ MarginBottomFullWidthButton.displayName = 'MarginBottomFullWidthButton';
 const FamilyStage = ({
   stageText, onAcceptClick, onRejectClick, snap, noBorderRadius, onAddNoteClick, onUpdateClick,
 }) => {
-  let stageLevel = 0;
-  let text = '';
-  let palette = 'primary';
-  const stageArr = Object.keys(FAMILY_STAGE_ORDERED);
-  let showAcceptRejectButtons = false;
-  let showUpdateAddNoteButtons = false;
-  let disableAddNoteButton = false;
-
-  stageArr.forEach((s, idx) => {
-    if (!stageLevel) {
-      const i = FAMILY_STAGE_ORDERED[s].findIndex(t => t === stageText);
-      if (i !== -1) {
-        stageLevel = i + 1;
-        text = `${s} - ${stageText}`;
-        if (stageArr.length - 1 === idx) {
-          palette = 'danger';
-          stageLevel = TOTAL_STAGES_COUNT;
-          disableAddNoteButton = true;
-        }
-        if (idx === 0) {
-          showAcceptRejectButtons = true;
-        } else {
-          showUpdateAddNoteButtons = true;
-        }
-      }
-    }
-  });
-  if (!stageLevel) {
-    text = 'Unknown';
+  const {
+    level, levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, disableAddNoteButton,
+  } = getStageDetails(stageText);
+  let text = 'Unknown';
+  if (levelGroup) {
+    text = `${levelGroup} - ${stageText}`;
   }
 
   return (
     <Box snap={snap} noBorderRadius={noBorderRadius}>
       <PaddedHeading size="body">Stage</PaddedHeading>
-      <PaddedStage text={text} currentStage={stageLevel} totalStage={TOTAL_STAGES_COUNT} palette={palette} />
+      <PaddedStage text={text} currentStage={level} totalStage={TOTAL_STAGES_COUNT} palette={palette} />
       {showAcceptRejectButtons && <MarginBottomFullWidthButton onClick={onAcceptClick}>Accept and contact this family</MarginBottomFullWidthButton>}
       {showAcceptRejectButtons && <FullWidthButton onClick={onRejectClick} palette="danger" ghost>Reject</FullWidthButton>}
       {showUpdateAddNoteButtons && <MarginBottomFullWidthButton onClick={onUpdateClick}>Update stage</MarginBottomFullWidthButton>}
