@@ -140,12 +140,10 @@ class SearchBoxContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    address: searchBoxAddress(state),
-    location: searchBoxLocation(state),
-  };
-};
+const mapStateToProps = (state, { address }) => ({
+  address: searchBoxAddress(state) || address,
+  location: searchBoxLocation(state),
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {
