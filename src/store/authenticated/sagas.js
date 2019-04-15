@@ -62,7 +62,7 @@ export function* forAuthenticated(api, { action }, { thunk }) {
       if (isFSA(action)) {
         result = yield yield put(action);
       } else if (typeof action === 'function') {
-        result = yield yield call(action);
+        result = yield put(yield call(action));
       } else {
         throw new Error(`Unknown action type for ${JSON.stringify(action)}`);
       }

@@ -8,12 +8,14 @@ export default () => next => (action) => {
     return next(action);
   }
 
-  const { promise } = payload;
+  const { call, args } = payload;
 
-  if (!promise) {
+  if (!call || !arguments) {
     logWarn(new Error('dispatching undefined action, check redux-bees queries'));
     return;
   }
+
+  const promise = call(...args);
 
   if (promise.noop) {
     return;

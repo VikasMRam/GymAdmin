@@ -10,8 +10,7 @@ import { USER_SAVE_INIT_STATUS } from 'sly/constants/userSave';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED } from 'sly/constants/notifications';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { withApi, withUser, prefetch } from 'sly/services/newApi';
-import { ensureAuthenticated } from 'sly/store/authenticated/actions';
+import { withApi, withAuth, prefetch } from 'sly/services/newApi';
 import SaveCommunityFormContainer from 'sly/containers/SaveCommunityFormContainer';
 import CommunitySaved from 'sly/components/organisms/CommunitySaved';
 
@@ -24,24 +23,24 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 // FIXME: hack because createUser is not JSON:API, should use @query
-const mapDispatchToProps = (dispatch, { api }) => ({
+const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
   createUserSave: data => dispatch(ensureAuthenticated(
     'Sign up to add to your favorites list',
-    () => api.createUserSave(data),
+    api.createUserSave(data),
   )),
   updateUserSave: (id, data) => dispatch(ensureAuthenticated(
     'Sign up to add to your favorites list',
-    () => api.updateUserSave({ id }, data),
+    api.updateUserSave({ id }, data),
   )),
 });
 
 const getCommunitySlug = match => match.params.communitySlug;
 
+@withAuth
+
 @withRouter
 
 @withApi
-
-@withUser
 
 @prefetch('community', 'getCommunity', (req, { slug }) => req({
   id: slug,

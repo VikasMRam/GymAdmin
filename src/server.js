@@ -268,7 +268,7 @@ app.use(async (req, res, next) => {
   };
 
   try {
-    await store.dispatch(makeApiCall(beesApi.getUser, { id: 'me' })).catch(ignoreUnauthorized);
+    await store.dispatch(makeApiCall(beesApi.getUser, [{ id: 'me' }])).catch(ignoreUnauthorized);
   } catch (e) {
     e.message = `Error trying to prefetch user data: ${e.message}`;
     console.log('new user/me error', e);

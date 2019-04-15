@@ -3,11 +3,9 @@ import { object, any } from 'prop-types';
 
 import { API_CALL } from './constants';
 
-export const makeApiCall = (call, ...args) => ({
+export const makeApiCall = (call, args) => ({
   type: API_CALL,
-  payload: {
-    promise: call(...args),
-  },
+  payload: { call, args },
 });
 
 export default class ApiProvider extends Component {
@@ -26,7 +24,7 @@ export default class ApiProvider extends Component {
 
   createApiActions = () => Object.entries(this.props.api)
     .reduce((acc, [name, call]) => {
-      acc[name] = (...args) => makeApiCall(call, ...args);
+      acc[name] = (...args) => makeApiCall(call, args);
       return acc;
     }, {});
 
