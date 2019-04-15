@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { string, arrayOf, shape, number, object } from 'prop-types';
+import { string, arrayOf, shape, object } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
@@ -61,7 +61,7 @@ const TableRowCard = ({
 TableRowCard.propTypes = {
   heading: string.isRequired,
   href: string.isRequired,
-  id: number,
+  id: string.isRequired,
   rowItems: arrayOf(shape({
     type: string.isRequired,
     data: object.isRequired,
