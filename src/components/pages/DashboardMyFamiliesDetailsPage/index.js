@@ -11,7 +11,6 @@ import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import clientPropType from 'sly/propTypes/client';
 import { size } from 'sly/components/themes';
-import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import { Box, Block, Icon, Span, Link, Hr } from 'sly/components/atoms';
@@ -86,8 +85,6 @@ const DashboardMyFamiliesDetailsPage = ({ client, currentTab }) => {
   const { name } = clientInfo;
   const activityCards = activities.map((a, i) =>
     <StyledFamilyActivityItem key={a.title} noBorderRadius snap={i === activities.length - 1 ? null : 'bottom'} title={a.title} description={a.description} date={a.date} />);
-  const { name: stageName } = stage;
-  const stageLevel = FAMILY_STAGE_ORDERED.findIndex(i => i === stageName) + 1;
   let activeTab = 'ACTIVITY';
   if (currentTab === 'communities') {
     activeTab = 'COMMUNITIES';
@@ -105,7 +102,7 @@ const DashboardMyFamiliesDetailsPage = ({ client, currentTab }) => {
           <Block weight="medium" size="subtitle">{name}</Block>
         </Box>
         <Hr noMargin />
-        <FamilyStage noBorderRadius snap="top" stageText={stageName} stageLevel={stageLevel} />
+        <FamilyStage noBorderRadius snap="top" stageText={stage} />
         <FamilySummary snap="top" client={client} to={familyDetailsPath} />
       </section>
       <Tabs activeTab={activeTab}>
