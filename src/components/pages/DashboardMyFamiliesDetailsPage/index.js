@@ -96,7 +96,7 @@ const DashboardMyFamiliesDetailsPage = ({ client }) => {
       </section>
       <Tabs>
         <div label="ACTIVITY">
-          <TableHeaderButtons noBorder hasColumnsButton={false} />
+          <TableHeaderButtons hasColumnsButton={false} />
           {activityCards.length === 0 &&
             <Fragment>
               <PaddedHr noMargin />

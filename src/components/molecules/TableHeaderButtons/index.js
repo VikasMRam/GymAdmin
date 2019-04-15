@@ -1,16 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ifProp } from 'styled-tools';
 import { bool, string } from 'prop-types';
 
-import { size, palette } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import Input from 'sly/components/atoms/Input';
 import IconButton from 'sly/components/molecules/IconButton';
 
 const Wrappper = styled.div`
   display: flex;
   padding: ${size('spacing.large')};
-  border: ${ifProp('noBorder', 0, size('border.regular'))} solid ${palette('grey', 'filler')};
 `;
 
 const SearchButton = styled(IconButton)`
@@ -54,9 +52,9 @@ const ColumnsButton = styled(IconButton)`
     display: block;
   }
 `;
-const TableHeaderButtons = ({ noBorder, hasColumnsButton, className }) => {
+const TableHeaderButtons = ({ hasColumnsButton, className }) => {
   return (
-    <Wrappper noBorder={noBorder} className={className}>
+    <Wrappper className={className}>
       <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile />
       <SearchTextInput type="search" placeholder="Type to filter by name" />
       <RightSideButtons>
@@ -71,7 +69,6 @@ const TableHeaderButtons = ({ noBorder, hasColumnsButton, className }) => {
 };
 
 TableHeaderButtons.propTypes = {
-  noBorder: bool,
   hasColumnsButton: bool,
   className: string,
 };
