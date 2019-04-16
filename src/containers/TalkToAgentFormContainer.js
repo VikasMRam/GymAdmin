@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { func, object, string } from 'prop-types';
+import { func, object } from 'prop-types';
 import { reduxForm, reset } from 'redux-form';
 import { withRouter } from 'react-router';
+import produce from 'immer';
 
-import { query } from 'sly/services/newApi';
 import { connectController } from 'sly/controllers';
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 import withServerState from 'sly/store/withServerState';
 import { getDetail } from 'sly/store/selectors';
+import { query, prefetch } from 'sly/services/newApi';
 import { createValidator, required, usPhone } from 'sly/services/validation';
 import TalkToAgentForm from 'sly/components/organisms/TalkToAgentForm';
 import { REQUEST_AGENT_CONSULT } from 'sly/services/api/actions';
@@ -39,9 +40,8 @@ const ReduxForm = reduxForm({
   destroyOnUnmount: false,
 })(TalkToAgentForm);
 
-const mapStateToProps = (state, { location }) => ({
-  userDetails: (getDetail(state, 'userAction') || {}).userDetails,
-  pathName: location.pathname,
+const mapStateToProps = state => ({
+  userDetails: (getDetail(state, 'userAction') || {}).userDetails || {},
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -58,25 +58,36 @@ const mapPropsToActions = () => ({
 
 @connectController(mapStateToProps, mapDispatchToProps)
 
+@prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
+
 @query('createAction', 'createUuidAction')
+@query('updateUuidAux', 'updateUuidAux')
 
 export default class TalkToAgentFormContainer extends Component {
   static propTypes = {
     userDetails: object.isRequired,
     postUserAction: func.isRequired,
+    uuidAux: object.isRequired,
+    updateUuidAux: func.isRequired,
+    status: object.isRequired,
     postSubmit: func,
-    pathName: string.isRequired,
     createAction: func.isRequired,
     match: object.isRequired,
   };
 
   handleSubmit = (data) => {
-    const { message, location, full_name } = data;
     const {
-      userDetails, postUserAction, postSubmit, pathName, createAction, match,
+      userDetails,
+      postUserAction,
+      postSubmit, createAction, match,
+      status,
+      updateUuidAux,
     } = this.props;
 
+    const uuidAux = status.uuidAux.result;
+
     const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
+    const { message, location, full_name, phone } = data;
     const { formatted_address, geometry } = location;
     const { lat, lng } = geometry.location;
     const value = {
@@ -93,27 +104,40 @@ export default class TalkToAgentFormContainer extends Component {
       action: REQUEST_AGENT_CONSULT,
       value,
     };
-
-    const { email = '', phone } = user;
-
     return Promise.all([
       postUserAction(payload),
       createAction({
         type: 'UUIDAction',
         attributes: {
-          actionInfo: { email, phone, name: full_name },
+          actionInfo: { phone, name: full_name, message },
           actionPage: match.url,
           actionType: CONSULTATION_REQUESTED,
         },
       }),
+      updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
+        const uuidInfo = draft.attributes.uuidInfo || {};
+        const locationInfo = uuidInfo.locationInfo || {};
+        const preferredLocations = locationInfo.preferredLocations || [];
+
+        if (!preferredLocations.includes(formatted_address)) {
+          preferredLocations.push(formatted_address);
+        }
+
+        locationInfo.preferredLocations = preferredLocations;
+        uuidInfo.locationInfo = locationInfo;
+        draft.attributes.uuidInfo = uuidInfo;
+      })),
     ]).then(() => {
       const event = {
-        action: 'ask_question', category: 'agent', label: pathName,
+        action: 'ask_question', category: 'agent', label: match.url,
       };
       SlyEvent.getInstance().sendEvent(event);
       if (postSubmit) {
         postSubmit();
       }
+    }).catch((e) => {
+      console.error(e);
+      return Promise.reject(e);
     });
   };
 

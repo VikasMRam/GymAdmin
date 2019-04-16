@@ -4,8 +4,8 @@ import { func } from 'prop-types';
 import { connect } from 'react-redux';
 
 import { createValidator, required, email, minLength } from 'sly/services/validation';
-import { resourceCreateRequest } from 'sly/store/resource/actions';
 import LoginForm from 'sly/components/organisms/LoginForm';
+import { withAuth } from 'sly/services/newApi';
 
 const validate = createValidator({
   email: [required, email],
@@ -17,25 +17,36 @@ const ReduxForm = reduxForm({
   validate,
 })(LoginForm);
 
-class LoginFormContainer extends Component {
+const mapDispatchToProps = dispatch => ({
+  clearSubmitErrors: () => dispatch(clearSubmitErrors('LoginForm')),
+});
+
+@withAuth
+
+@connect(null, mapDispatchToProps)
+
+export default class LoginFormContainer extends Component {
+  static displayName = 'LoginFormContainer';
+
   static propTypes = {
-    login: func,
+    loginUser: func.isRequired,
     clearSubmitErrors: func,
     onSubmitSuccess: func,
   };
 
   handleOnSubmit = (values) => {
-    const { login, onSubmitSuccess, clearSubmitErrors } = this.props;
+    const { loginUser, onSubmitSuccess, clearSubmitErrors } = this.props;
     const { email, password } = values;
     const payload = { email, password };
 
     clearSubmitErrors();
-    return login(payload).then(onSubmitSuccess).catch((r) => {
+    return loginUser(payload).then(onSubmitSuccess).catch((error) => {
       // TODO: Need to set a proper way to handle server side errors
-      const { response } = r;
-      return response.json().then(() => {
-        throw new SubmissionError({ _error: 'Oops! That email / password combination is not valid.' });
-      });
+      if (error.status === 400) {
+        return Promise.reject(new SubmissionError({ _error: 'Oops! That email / password combination is not valid.' }));
+      }
+
+      return Promise.reject(error);
     });
   };
 
@@ -49,9 +60,3 @@ class LoginFormContainer extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  login: data => dispatch(resourceCreateRequest('login', data)),
-  clearSubmitErrors: () => dispatch(clearSubmitErrors('LoginForm')),
-});
-
-export default connect(null, mapDispatchToProps)(LoginFormContainer);

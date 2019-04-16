@@ -8,7 +8,7 @@ import produce from 'immer';
 import DashboardProfileUserDetailsForm from 'sly/components/organisms/DashboardProfileUserDetailsForm';
 import { createValidator, required, email, usPhone } from 'sly/services/validation/index';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
-import { prefetch } from 'sly/services/newApi';
+import { withUser } from 'sly/services/newApi';
 
 const emailWarning = 'Enter your email so your agent can help you by answering your questions and sending recommended communities.';
 const messageObj = {
@@ -76,7 +76,7 @@ const convertUserToProfileFormValues = (user) => {
 };
 
 
-@prefetch('user', 'getUser', getUser => getUser({ id: 'me' }))
+@withUser
 
 @connect((state, props) => ({
   uuidAux: getRelationship(state, props.status.user.result, 'uuidAux'),
@@ -108,7 +108,13 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
         // draft.attributes.email = values.email;
         draft.attributes.phoneNumber = values.phoneNumber;
 
+        if (!draft.relationships.uuidAux.data) {
+          draft.relationships.uuidAux.data = {
+            attributes: {},
+          };
+        }
         const { uuidInfo } = draft.relationships.uuidAux.data.attributes;
+
         let newUuidInfo = null;
         if (!uuidInfo) {
           newUuidInfo = {
@@ -127,6 +133,9 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
         draft.relationships.uuidAux.data.attributes.uuidInfo = newUuidInfo;
       }),
     })
+      .then(() => {
+        notifySuccess('Details Updated Successfully');
+      })
       .catch((error) => {
         console.error(error);
         const { status, body } = error;
@@ -135,9 +144,6 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
           const errorMessage = errors[0] && errors[0].title ? errors[0].title : 'Generic Error';
           throw new SubmissionError({ _error: errorMessage });
         }
-      })
-      .then(() => {
-        notifySuccess('Details Updated Successfully');
       });
   };
   render() {

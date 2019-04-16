@@ -5,7 +5,7 @@ import { object, func } from 'prop-types';
 import DashboardAddPasswordForm from 'sly/components/organisms/DashboardAddPasswordForm';
 import { createValidator, minLength, match } from 'sly/services/validation';
 import userPropType from 'sly/propTypes/user';
-import prefetch from 'sly/services/newApi/prefetch';
+import { withUser } from 'sly/services/newApi';
 
 const validate = createValidator({
   newPassword: [minLength(8)],
@@ -20,13 +20,15 @@ const ReduxForm = reduxForm({
   validate,
 })(DashboardAddPasswordForm);
 
-@prefetch('user', 'getUser', getUser => getUser({ id: 'me' }))
+@withUser
+
 class DashboardAddPasswordFormContainer extends Component {
   static propTypes = {
     api: object,
     user: userPropType,
     notifySuccess: func,
-  }
+  };
+
   handleSubmit = (values, dispatch) => {
     const { api, user, notifySuccess } = this.props;
     const { email } = user;
@@ -49,7 +51,7 @@ class DashboardAddPasswordFormContainer extends Component {
     }
     const errorMessage = 'Password fields cannot be blank';
     throw new SubmissionError({ _error: errorMessage });
-  }
+  };
 
   render() {
     return (

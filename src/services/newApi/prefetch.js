@@ -29,7 +29,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       return {
         requestInfo: getRequestInfo(
           state,
-          props.api[apiCall],
+          apiCall,
           dispatcher(argumentsAbsorber, props),
         ),
       };
@@ -40,11 +40,11 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
     });
 
     @withApi
+
     // FIXME: For now we have to continue using withDone (which uses componentWillUpdate)
     // we have to re-engineer this to be able to use react 17, or to start using hooks in
     // react 16.8 (methods renamed to UNSAFE_xxxx)
     @withDone
-
     @connect(mapStateToProps, mapDispatchToActions)
 
     class Wrapper extends React.Component {
@@ -58,20 +58,27 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
         status: object,
       };
 
+      componentDidMount() {
+        this.props.done();
+      }
+
       componentWillMount() {
         const { requestInfo, done } = this.props;
         const { hasStarted, isLoading } = requestInfo;
         if (!isLoading && !hasStarted) {
           this.fetch();
-        } else if (isServer && hasStarted && !isLoading) {
+        } else if (isServer) {
           done();
         }
       }
 
       componentWillReceiveProps(nextProps) {
-        const { requestInfo } = nextProps;
-        if (!requestInfo.isLoading && !requestInfo.hasStarted) {
+        const { requestInfo, done } = nextProps;
+        const { hasStarted, isLoading } = requestInfo;
+        if (!isLoading && !hasStarted) {
           this.fetch(nextProps);
+        } else if (isServer) {
+          done();
         }
       }
 
@@ -82,12 +89,8 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
       };
 
       render() {
-        const { requestInfo, status, ...props } = this.props;
+        const { requestInfo, status, done, fetch, ...props } = this.props;
         const { normalized, ...request } = requestInfo;
-
-        if (isServer && (!request.hasStarted || request.isLoading)) {
-          return null;
-        }
 
         const innerProps = {
           ...props,

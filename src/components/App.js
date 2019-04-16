@@ -205,8 +205,6 @@ export default class App extends Component {
           <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
         </Helmet>
 
-        {/* <StaticResourcesController match={{}} location={{}} /> */}
-
         <ThemeProvider theme={theme}>
           <Router>
             <Switch>

@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { string, func, object } from 'prop-types';
 
-import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { createValidator, required } from 'sly/services/validation';
 import CommunityAskQuestionForm from 'sly/components/organisms/CommunityAskQuestionForm';
 import Thankyou from 'sly/components/molecules/Thankyou';
+import { prefetch } from 'sly/services/newApi';
 
 const validate = createValidator({
   question: [required],
@@ -19,12 +19,22 @@ const ReduxForm = reduxForm({
   validate,
 })(CommunityAskQuestionForm);
 
-class CommunityAskQuestionFormContainer extends Component {
+const mapDispatchToProps = (dispatch, { api }) => ({
+  createQuestion: data => dispatch(api.createQuestion(data)),
+});
+
+@prefetch('community', 'getCommunity', (req, { communitySlug }) => req({
+  id: communitySlug,
+  include: 'similar-communities,questions,agents',
+}))
+
+@connect(null, mapDispatchToProps)
+
+export default class CommunityAskQuestionFormContainer extends Component {
   static propTypes = {
     user: object,
     communitySlug: string.isRequired,
-    askQuestion: func,
-    loadCommunity: func,
+    createQuestion: func,
     initialValues: object,
     parentSlug: string,
     showModal: func,
@@ -32,7 +42,7 @@ class CommunityAskQuestionFormContainer extends Component {
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, askQuestion, loadCommunity, showModal, parentSlug,
+      communitySlug, createQuestion, status, showModal, parentSlug,
     } = this.props;
     const { question, name, email } = values;
     const payload = {
@@ -42,10 +52,10 @@ class CommunityAskQuestionFormContainer extends Component {
       email,
       parentSlug,
     };
-    return askQuestion(payload).then(() => {
+    return createQuestion(payload).then(() => {
       showModal(<Thankyou />);
       // Hacky way. to push created question into array for rerender
-      loadCommunity(communitySlug);
+      status.community.refetch();
     }).catch((r) => {
       // TODO: Need to set a proper way to handle server side errors
       const { response } = r;
@@ -78,15 +88,4 @@ class CommunityAskQuestionFormContainer extends Component {
     );
   }
 }
-
-const mapDispatchToProps = dispatch => ({
-  askQuestion: (data) => {
-    return dispatch(resourceCreateRequest('question', data));
-  },
-  loadCommunity: slug => dispatch(resourceDetailReadRequest('community', slug, {
-    include: 'similar-communities,questions,agents',
-  })),
-});
-
-export default connect(null, mapDispatchToProps)(CommunityAskQuestionFormContainer);
 

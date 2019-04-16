@@ -42,7 +42,8 @@ const Signup = styled.span`
 `;
 
 const ForgotPassword = Signup.extend`
-  float: right;
+  display: block;
+  text-align: right;
 `;
 
 const LoginForm = ({
@@ -58,7 +59,6 @@ const LoginForm = ({
       placeholder="Email Address"
       component={ReduxField}
     />
-    <ForgotPassword onClick={onForgotPasswordClicked}>Forgot password?</ForgotPassword>
     <Field
       name="password"
       label="Password"
@@ -66,6 +66,7 @@ const LoginForm = ({
       placeholder="Password"
       component={ReduxField}
     />
+    <ForgotPassword onClick={onForgotPasswordClicked}>Forgot password?</ForgotPassword>
     <Field
       name="rememberme"
       label="Remember me"

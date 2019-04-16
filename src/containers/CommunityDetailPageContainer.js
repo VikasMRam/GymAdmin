@@ -14,10 +14,8 @@ import {
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getSearchParams } from 'sly/services/helpers/search';
-import { getDetail, getDetails } from 'sly/store/selectors';
-import { resourceDetailReadRequest, resourceListReadRequest, resourcePatchRequest }
-  from 'sly/store/resource/actions';
-import { forAuthenticated, ensureAuthenticated } from 'sly/store/authenticated/actions';
+import { getDetail } from 'sly/store/selectors';
+import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
 import ErrorPage from 'sly/components/pages/Error';
@@ -28,7 +26,7 @@ import {
 } from 'sly/constants/notifications';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
-import { query } from 'sly/services/newApi';
+import { query, prefetch, withAuth, withApi } from 'sly/services/newApi';
 import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
 
 const ignoreSearchParams = [
@@ -40,9 +38,96 @@ const ignoreSearchParams = [
   'modal',
 ];
 
+const getCommunitySlug = match => match.params.communitySlug;
+
+const mapPropsToActions = ({ match }) => ({
+  community: resourceDetailReadRequest('community', getCommunitySlug(match), {
+    include: 'similar-communities,questions,agents',
+  }),
+  userAction: resourceDetailReadRequest('userAction'),
+});
+
+// FIXME: hack because createUser is not JSON:API, should use @query
+const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
+  updateUserSave: (id, data) => ensureAuthenticated(
+    'Sign up to add to your favorites list',
+    api.updateUserSave({ id }, data),
+  ),
+});
+
+const handleResponses = (responses, { location }, redirect) => {
+  const {
+    community,
+    // userAction,
+  } = responses;
+
+  const {
+    pathname,
+  } = location;
+
+  community(null, (error) => {
+    if (error.response) {
+      if (error.response.status === 301) {
+        redirect(replaceLastSegment(pathname, getLastSegment(error.location)));
+        return null;
+      }
+
+      if (error.response.status === 404) {
+        // Not found so redirect to city page
+        redirect(replaceLastSegment(pathname));
+        return null;
+      }
+    }
+
+    return Promise.reject(error);
+  });
+};
+
+const mapStateToProps = (state, {
+  match, location, history, userSaves,
+}) => {
+  // default state for ssr
+  const searchParams = getSearchParams(match, location);
+  const communitySlug = getCommunitySlug(match);
+  const userSaveOfCommunity = userSaves && userSaves.find(us => us.entityType === COMMUNITY_ENTITY_TYPE && us.entitySlug === communitySlug);
+  console.log({ userSaveOfCommunity });
+  const setQueryParams = getQueryParamsSetter(history, location);
+
+  return {
+    user: getDetail(state, 'user', 'me'),
+    community: getDetail(state, 'community', communitySlug),
+    userAction: getDetail(state, 'userAction') || {},
+    userSaveOfCommunity,
+    searchParams,
+    setQueryParams,
+  };
+};
+
+@withApi
+
+@withAuth
+
 @query('createAction', 'createUuidAction')
 
-class CommunityDetailPageContainer extends Component {
+@prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: getCommunitySlug(match),
+  include: 'similar-communities,questions,agents',
+}))
+
+@prefetch('userSaves', 'getUserSaves', (req, { match }) => req({
+  'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
+  'filter[entity_slug]': getCommunitySlug(match),
+}))
+
+@withServerState(
+  mapPropsToActions,
+  handleResponses,
+  ignoreSearchParams,
+)
+
+@connect(mapStateToProps, mapDispatchToProps)
+
+export default class CommunityDetailPageContainer extends Component {
   static propTypes = {
     set: func,
     community: object,
@@ -443,90 +528,3 @@ class CommunityDetailPageContainer extends Component {
     );
   }
 }
-
-const getCommunitySlug = match => match.params.communitySlug;
-
-const mapPropsToActions = ({ match }) => ({
-  community: resourceDetailReadRequest('community', getCommunitySlug(match), {
-    include: 'similar-communities,questions,agents',
-  }),
-  userAction: resourceDetailReadRequest('userAction'),
-  userSave: forAuthenticated(resourceListReadRequest('userSave', {
-    'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
-    'filter[entity_slug]': getCommunitySlug(match),
-  })),
-});
-
-const handleResponses = (responses, { location }, redirect) => {
-  const {
-    community,
-    // userAction,
-    userSave,
-  } = responses;
-
-  const {
-    pathname,
-  } = location;
-
-  community(null, (error) => {
-    if (error.response) {
-      if (error.response.status === 301) {
-        redirect(replaceLastSegment(pathname, getLastSegment(error.location)));
-        return null;
-      }
-
-      if (error.response.status === 404) {
-        // Not found so redirect to city page
-        redirect(replaceLastSegment(pathname));
-        return null;
-      }
-    }
-
-    return Promise.reject(error);
-  });
-
-  userSave(null, (error) => {
-    // ignore 401 and 301 errors
-    if (error.response && [401, 301].includes(error.response.status)) {
-      logWarn(error);
-      return null;
-    }
-    return Promise.reject(error);
-  });
-};
-
-const mapStateToProps = (state, {
-  match, location, history,
-}) => {
-  // default state for ssr
-  const searchParams = getSearchParams(match, location);
-  const communitySlug = getCommunitySlug(match);
-  const userSaves = getDetails(state, 'userSave');
-  const userSaveOfCommunity = userSaves.find(us => us.entityType === COMMUNITY_ENTITY_TYPE && us.entitySlug === communitySlug);
-  const setQueryParams = getQueryParamsSetter(history, location);
-
-  return {
-    user: getDetail(state, 'user', 'me'),
-    community: getDetail(state, 'community', communitySlug),
-    userAction: getDetail(state, 'userAction') || {},
-    userSaveOfCommunity,
-    searchParams,
-    setQueryParams,
-  };
-};
-
-const mapDispatchToProps = dispatch => ({
-  updateUserSave: (id, data) => dispatch(ensureAuthenticated(
-    'Sign up to add to your favorites list',
-    resourcePatchRequest('userSave', id, data),
-  )),
-});
-
-export default withServerState(
-  mapPropsToActions,
-  handleResponses,
-  ignoreSearchParams,
-)(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CommunityDetailPageContainer));

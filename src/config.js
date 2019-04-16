@@ -47,7 +47,7 @@ const config = {
   development: {
     muteReduxLogger: process.env.MUTE_REDUX_LOGGER,
     hideChatbox: process.env.HIDE_CHATBOX,
-    enableExperimentsDebugger: true,
+    enableExperimentsDebugger: false,
     gMapsApiKey: 'AIzaSyALxJg-oMW7SvkQ27KFTuWjTLedXcAhrZE',
   },
 

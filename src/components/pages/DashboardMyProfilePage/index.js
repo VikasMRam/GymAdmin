@@ -21,7 +21,7 @@ const ProfileUserDetailsFormWrapper = styled.div`
 const DashboardMyProfilePage = ({ user, warningMessage }) => {
   const { hasPasswordSet } = user;
   return (
-    <DashboardPageTemplate activeMenuItem="Profile">
+    <DashboardPageTemplate activeMenuItem="My Profile">
       <BannerNotificationController>
         {({ messages, notifySuccess }) => (
           <Fragment>
