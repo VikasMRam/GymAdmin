@@ -30,10 +30,10 @@ const TableRowCard = ({
     const hrComponent = (itemsLength - 1 !== i && <StyledHr size="large" />);
     const { type, data } = rowItem;
     if (type === 'stage') {
-      const { text, currentStage } = data;
+      const { text, currentStage, palette } = data;
       return (
         <Fragment key={text}>
-          <StageDiv text={text} currentStage={currentStage} borderless />
+          <StageDiv text={text} currentStage={currentStage} palette={palette} borderless />
           {hrComponent}
         </Fragment>
       );

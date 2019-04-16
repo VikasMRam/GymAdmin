@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { arrayOf, object, string } from 'prop-types';
 
@@ -69,13 +69,59 @@ const BigScreenPaginationWrapper = styled.div`
 `;
 
 const tabsOptions = [
-  { value: 'prospects', label: 'Prospects' },
-  { value: 'connected', label: 'Connected' },
-  { value: 'closed', label: 'Closed' },
+  { value: 'Prospects', label: 'Prospects' },
+  { value: 'Connected', label: 'Connected' },
+  { value: 'Closed', label: 'Closed' },
 ];
 
+const tableHeaderButtons = <TableHeaderButtons />;
+
+const SmallScreenView = ({
+  mobileContents, paginationParams, paginationString, activeTab,
+}) => (
+  <SmallScreenSection>
+    <ButtonTabsWrapper>
+      <ButtonTabs type="singlechoice" orientation="horizontal" buttonKind="tab" options={tabsOptions} value={activeTab} />
+    </ButtonTabsWrapper>
+    {tableHeaderButtons}
+    <TableRowCardsWrapper>
+      <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
+      {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
+      <Pagination {...paginationParams} />
+    </TableRowCardsWrapper>
+  </SmallScreenSection>
+);
+
+SmallScreenView.propTypes = {
+  mobileContents: arrayOf(object),
+  paginationParams: object,
+  paginationString: string,
+  activeTab: string,
+};
+
+const BigScreenView = ({ tableContents, paginationParams, paginationString }) => (
+  <Fragment>
+    {tableHeaderButtons}
+    <TableSectionWrapper>
+      <TableWrapper>
+        <Table {...tableContents} />
+      </TableWrapper>
+      <BigScreenPaginationWrapper>
+        <Pagination {...paginationParams} />
+      </BigScreenPaginationWrapper>
+      <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
+    </TableSectionWrapper>
+  </Fragment>
+);
+
+BigScreenView.propTypes = {
+  tableContents: object,
+  paginationParams: object,
+  paginationString: string,
+};
+
 const DashboardAgentFamilyOverviewPage = ({
-  mobileContents, tableContents, pagination, paginationString,
+  mobileContents, tableContents, pagination, paginationString, activeTab,
 }) => {
   const { current, total } = pagination;
   const paginationParams = {
@@ -85,40 +131,20 @@ const DashboardAgentFamilyOverviewPage = ({
     basePath: FAMILY_DASHBOARD_FAMILIES_PATH,
     pageParam: 'page-number',
   };
-
-  const tableHeaderButtons = <TableHeaderButtons />;
+  const bigScreenView = (<BigScreenView tableContents={tableContents} paginationParams={paginationParams} paginationString={paginationString} />);
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
-      <SmallScreenSection>
-        <ButtonTabsWrapper>
-          <ButtonTabs type="singlechoice" orientation="horizontal" buttonKind="tab" options={tabsOptions} value="prospects" />
-        </ButtonTabsWrapper>
-        {tableHeaderButtons}
-        <TableRowCardsWrapper>
-          <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
-          {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
-          <Pagination {...paginationParams} />
-        </TableRowCardsWrapper>
-      </SmallScreenSection>
+      <SmallScreenView mobileContents={mobileContents} paginationParams={paginationParams} paginationString={paginationString} activeTab={activeTab} />
       <BigScreenSection>
-        <Tabs>
-          <div label="Prospects">
-            {tableHeaderButtons}
-            <TableSectionWrapper>
-              <TableWrapper>
-                <Table {...tableContents} />
-              </TableWrapper>
-              <BigScreenPaginationWrapper>
-                <Pagination {...paginationParams} />
-              </BigScreenPaginationWrapper>
-              <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
-            </TableSectionWrapper>
+        <Tabs activeTab={activeTab}>
+          <div label="Prospects" to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+            {bigScreenView}
           </div>
-          <div label="Connected">
-            After while, <em>Crocodile</em>!
+          <div label="Connected" to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`}>
+            {bigScreenView}
           </div>
-          <div label="Closed">
-            Nothing to see here, this tab is <em>extinct</em>!
+          <div label="Closed" to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`}>
+            {bigScreenView}
           </div>
         </Tabs>
       </BigScreenSection>
@@ -131,6 +157,7 @@ DashboardAgentFamilyOverviewPage.propTypes = {
   tableContents: object,
   pagination: object,
   paginationString: string,
+  activeTab: string,
 };
 
 DashboardAgentFamilyOverviewPage.defaultProps = {

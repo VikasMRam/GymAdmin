@@ -22,8 +22,8 @@ const Table = ({ headings, contents }) => {
         const { text } = data;
         return <TextTd key={text} clip>{text}</TextTd>;
       } else if (type === 'stage') {
-        const { text, currentStage } = data;
-        return <StageTd key={text} text={text} currentStage={currentStage} clip />;
+        const { text, currentStage, palette } = data;
+        return <StageTd key={text} text={text} currentStage={currentStage} palette={palette} clip />;
       } else if (type === 'doubleLine') {
         const { firstLine, secondLine } = data;
         return <DoubleLineTd key={firstLine} firstLine={firstLine} secondLine={secondLine} clip />;
