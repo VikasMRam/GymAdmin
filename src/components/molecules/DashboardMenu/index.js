@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { size, palette } from 'sly/components/themes';
 import Role from 'sly/components/common/Role';
 import { Icon, Span, Link } from 'sly/components/atoms';
+import pad from 'sly/components/helpers/pad';
 
 const Wrapper = styled.div`
   display: flex;
@@ -57,9 +58,8 @@ const NotActiveMenuItem = MenuItem.extend`
   display: none;
 `;
 
-const MenuItemIcon = styled(Icon)`
-  margin-right: ${size('spacing.regular')};
-`;
+const MenuItemIcon = pad(Icon, 'small');
+MenuItemIcon.displayName = 'MenuItemIcon';
 
 const MenuIcon = styled(Icon)`
   margin-left: auto;
