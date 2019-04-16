@@ -29,4 +29,5 @@ export default {
   createRating: { method: post, path: '/platform/ratings' },
 
   getClient: { method: get, path: '/marketplace/clients/:id' },
+  updateClient: { method: patch, path: '/marketplace/clients/:id' },
 };
