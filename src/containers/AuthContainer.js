@@ -27,6 +27,7 @@ export default class AuthContainer extends Component {
     notifyInfo: func,
     showModal: func,
     hideModal: func,
+    children: func,
   };
 
   state = { isOpen: false };
@@ -120,6 +121,10 @@ export default class AuthContainer extends Component {
   };
 
   render() {
+    const { children } = this.props;
+    if (typeof children === 'function') {
+      return children(this);
+    }
     return null;
   }
 }

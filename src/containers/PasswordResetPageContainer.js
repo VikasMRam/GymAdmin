@@ -8,6 +8,9 @@ import { getSearchParams } from 'sly/services/helpers/search';
 import { createValidator, required } from 'sly/services/validation';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 import PasswordResetPage from 'sly/components/pages/PasswordResetPage';
+import AuthContainer from 'sly/containers/AuthContainer';
+import ModalController from 'sly/controllers/ModalController';
+import NotificationController from 'sly/controllers/NotificationController';
 
 const validate = createValidator({
   password: [required],
@@ -25,7 +28,7 @@ class PasswordResetPageContainer extends Component {
     searchParams: object,
   };
 
-  handleOnSubmit = (values) => {
+  handleOnSubmit = (values, gotoLogin) => {
     const {
       resetPassword, clearSubmitErrors, searchParams, history,
     } = this.props;
@@ -35,9 +38,8 @@ class PasswordResetPageContainer extends Component {
 
     clearSubmitErrors();
     return resetPassword(payload).then(() => {
-      history.push('/').then(() => {
-        console.log('thenable');
-      });
+      history.push('/');
+      gotoLogin();
     }).catch((r) => {
       // TODO: Need to set a proper way to handle server side errors
       const { response } = r;
@@ -50,10 +52,27 @@ class PasswordResetPageContainer extends Component {
 
   render() {
     return (
-      <ReduxForm
-        onSubmit={this.handleOnSubmit}
-        {...this.props}
-      />
+      <NotificationController>
+        {({
+            notifyInfo,
+        }) => (
+          <ModalController>
+            {({
+              show,
+              hide,
+            }) => (
+              <AuthContainer notifyInfo={notifyInfo} showModal={show} hideModal={hide}>
+                {({ gotoLogin }) => (
+                  <ReduxForm
+                    onSubmit={values => this.handleOnSubmit(values, gotoLogin)}
+                    {...this.props}
+                  />
+                )}
+              </AuthContainer>
+            )}
+          </ModalController>
+        )}
+      </NotificationController>
     );
   }
 }
