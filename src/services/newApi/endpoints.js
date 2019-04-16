@@ -17,4 +17,5 @@ export default {
   updatePassword: { method: post, path: '/platform/auth/password/update' },
   createUuidAction: { method: post, path: '/platform/uuid-actions' },
   getClient: { method: get, path: '/marketplace/clients/:id' },
+  updateClient: { method: patch, path: '/marketplace/clients/:id' },
 };
