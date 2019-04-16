@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { string, func } from 'prop-types';
+import { string, func, object } from 'prop-types';
 
 import {
   FAMILY_DASHBOARD_FAMILIES_PATH,
@@ -20,7 +20,7 @@ import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
-import AcceptAndContactFamilyForm from 'sly/components/organisms/AcceptAndContactFamilyForm';
+import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFamilyContainer';
 
 // todo: mock data
 const activities = [
@@ -65,7 +65,7 @@ const FamilyDetailsTab = styled.div`
 `;
 
 const DashboardMyFamiliesDetailsPage = ({
-  client, currentTab, showModal, hideModal,
+  client, rawClient, currentTab, showModal, hideModal, notifyError,
 }) => {
   const backLink = (
     <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
@@ -98,8 +98,7 @@ const DashboardMyFamiliesDetailsPage = ({
   const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'communities');
 
   const handleOnAcceptClick = () => {
-    // todo: replace with container
-    showModal(<AcceptAndContactFamilyForm onCancelClick={hideModal} />, null, 'noPadding', false);
+    showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
   };
 
   return (
@@ -145,6 +144,8 @@ DashboardMyFamiliesDetailsPage.propTypes = {
   currentTab: string,
   showModal: func,
   hideModal: func,
+  rawClient: object,
+  notifyError: func,
 };
 
 export default DashboardMyFamiliesDetailsPage;

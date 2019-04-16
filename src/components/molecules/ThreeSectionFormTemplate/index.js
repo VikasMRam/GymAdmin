@@ -34,6 +34,7 @@ const ThreeSectionFormTemplate = ({
     </Wrapper>
     <Bottom>
       {hasCancel && <Button secondary onClick={onCancelClick}>Cancel</Button>}
+      {!hasCancel && <div />}
       {hasSubmit && <Button onClick={onSubmitClick}>{submitButtonText}</Button>}
     </Bottom>
   </section>
