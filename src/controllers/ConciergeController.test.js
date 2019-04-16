@@ -99,6 +99,7 @@ describe('ConciergeController', () => {
   const childProps = () => spy.mock.calls.pop()[0];
 
   const createAction = jest.fn().mockImplementation(() => Promise.resolve());
+  const registerUser = jest.fn().mockImplementation(() => Promise.resolve());
   const updateUuidAux = jest.fn().mockImplementation(() => Promise.resolve());
   const api = { createUuidAction: createAction, updateUuidAux };
 
@@ -270,6 +271,7 @@ describe('ConciergeController', () => {
           userRequestInfo={userRequestInfo}
           uuidAuxRequestInfo={uuidAuxRequestInfo}
           createAction={createAction}
+          registerUser={registerUser}
           updateUuidAux={updateUuidAux}
           history={history}
           status={status}

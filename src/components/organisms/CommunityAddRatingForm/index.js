@@ -13,7 +13,7 @@ const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
-const Error = pad(Block);
+const ErrorBlock = pad(Block);
 
 const CommunityAddRatingForm = ({
   handleSubmit, pristine, submitting, community, user, error,
@@ -49,7 +49,7 @@ const CommunityAddRatingForm = ({
         placeholder="Type your Comments here..."
         component={ReduxField}
       />
-      {error && <Error palette="danger">{error}</Error>}
+      {error && <ErrorBlock palette="danger">{error}</ErrorBlock>}
       <StyledButton type="submit" kind="jumbo" disabled={pristine || submitting}>
         Submit Rating
       </StyledButton>

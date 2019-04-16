@@ -82,10 +82,12 @@ export default class CommunityAddRatingFormContainer extends Component {
     const {
       user, ...props
     } = this.props;
+
     const initialValues = {
       comments: '',
       value: 0,
     };
+
     return (
       <ReduxForm
         initialValues={initialValues}

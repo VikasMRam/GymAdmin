@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { func, object, string } from 'prop-types';
 import { reduxForm, reset } from 'redux-form';
 import { withRouter } from 'react-router';
+import produce from 'immer';
 
-import { query } from 'sly/services/newApi';
+import { query, prefetch } from 'sly/services/newApi';
 import { connectController } from 'sly/controllers';
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 import withServerState from 'sly/store/withServerState';
@@ -39,81 +40,69 @@ const ReduxForm = reduxForm({
   destroyOnUnmount: false,
 })(TalkToAgentForm);
 
-const mapStateToProps = (state, { location }) => ({
-  userDetails: (getDetail(state, 'userAction') || {}).userDetails,
-  pathName: location.pathname,
-});
-
-const mapDispatchToProps = dispatch => ({
-  postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
-});
-
-const mapPropsToActions = () => ({
-  userDetails: resourceDetailReadRequest('userAction'),
-});
-
 @withRouter
 
-@withServerState(mapPropsToActions)
-
-@connectController(mapStateToProps, mapDispatchToProps)
+@prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 
 @query('createAction', 'createUuidAction')
+@query('updateUuidAux', 'updateUuidAux')
 
 export default class TalkToAgentFormContainer extends Component {
   static propTypes = {
+    uuidAux: object.isRequired,
+    updateUuidAux: func.isRequired,
     userDetails: object.isRequired,
-    postUserAction: func.isRequired,
+    status: object.isRequired,
     postSubmit: func,
-    pathName: string.isRequired,
     createAction: func.isRequired,
     match: object.isRequired,
   };
 
   handleSubmit = (data) => {
-    const { message, location, full_name } = data;
     const {
-      userDetails, postUserAction, postSubmit, pathName, createAction, match,
+      postSubmit, createAction, match,
+      status,
+      updateUuidAux,
     } = this.props;
 
-    const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
-    const { formatted_address, geometry } = location;
-    const { lat, lng } = geometry.location;
-    const value = {
-      user,
-      details: {
-        message,
-        full_name,
-        location_text: formatted_address,
-        latitude: lat(),
-        longitude: lng(),
-      },
-    };
-    const payload = {
-      action: REQUEST_AGENT_CONSULT,
-      value,
-    };
+    const uuidAux = status.uuidAux.result;
 
-    const { email = '', phone } = user;
+    const { message, location, full_name, phone } = data;
+    const { formatted_address } = location;
 
     return Promise.all([
-      postUserAction(payload),
       createAction({
         type: 'UUIDAction',
         attributes: {
-          actionInfo: { email, phone, name: full_name },
+          actionInfo: { phone, name: full_name, message },
           actionPage: match.url,
           actionType: CONSULTATION_REQUESTED,
         },
       }),
+      updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
+        const uuidInfo = draft.attributes.uuidInfo || {};
+        const locationInfo = uuidInfo.locationInfo || {};
+        const preferredLocations = locationInfo.preferredLocations || [];
+
+        if (!preferredLocations.includes(formatted_address)) {
+          preferredLocations.push(formatted_address);
+        }
+
+        locationInfo.preferredLocations = preferredLocations;
+        uuidInfo.locationInfo = locationInfo;
+        draft.attributes.uuidInfo = uuidInfo;
+      })),
     ]).then(() => {
       const event = {
-        action: 'ask_question', category: 'agent', label: pathName,
+        action: 'ask_question', category: 'agent', label: match.url,
       };
       SlyEvent.getInstance().sendEvent(event);
       if (postSubmit) {
         postSubmit();
       }
+    }).catch((e) => {
+      console.error(e);
+      return Promise.reject(e);
     });
   };
 
