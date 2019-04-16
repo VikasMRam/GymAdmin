@@ -25,7 +25,10 @@ export default {
 
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
   getCommunities: { method: get, path: '/marketplace/communities' },
+
   getSearchResources: { method: get, path: '/platform/search-resources' },
+
+  createQuestion: { method: post, path: '/platform/questions' },
   createRating: { method: post, path: '/platform/ratings' },
 
   getClient: { method: get, path: '/marketplace/clients/:id' },
