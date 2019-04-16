@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { string } from 'prop-types';
+import { string, func, object } from 'prop-types';
 
 import {
   FAMILY_DASHBOARD_FAMILIES_PATH,
@@ -20,6 +20,7 @@ import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
+import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFamilyContainer';
 
 // todo: mock data
 const activities = [
@@ -63,7 +64,9 @@ const FamilyDetailsTab = styled.div`
   padding: ${size('spacing.xLarge')};
 `;
 
-const DashboardMyFamiliesDetailsPage = ({ client, currentTab }) => {
+const DashboardMyFamiliesDetailsPage = ({
+  client, rawClient, currentTab, showModal, hideModal, notifyError,
+}) => {
   const backLink = (
     <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
       <BackLinkWrapper>
@@ -94,6 +97,10 @@ const DashboardMyFamiliesDetailsPage = ({ client, currentTab }) => {
   const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'family-details');
   const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'communities');
 
+  const handleOnAcceptClick = () => {
+    showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
+  };
+
   return (
     <DashboardTwoColumnTemplate activeMenuItem="My Families">
       <section>
@@ -102,7 +109,7 @@ const DashboardMyFamiliesDetailsPage = ({ client, currentTab }) => {
           <Block weight="medium" size="subtitle">{name}</Block>
         </Box>
         <Hr noMargin />
-        <FamilyStage noBorderRadius snap="top" stageText={stage} />
+        <FamilyStage noBorderRadius snap="top" stageText={stage} onAcceptClick={handleOnAcceptClick} />
         <FamilySummary snap="top" client={client} to={familyDetailsPath} />
       </section>
       <Tabs activeTab={activeTab}>
@@ -135,6 +142,10 @@ const DashboardMyFamiliesDetailsPage = ({ client, currentTab }) => {
 DashboardMyFamiliesDetailsPage.propTypes = {
   client: clientPropType,
   currentTab: string,
+  showModal: func,
+  hideModal: func,
+  rawClient: object,
+  notifyError: func,
 };
 
 export default DashboardMyFamiliesDetailsPage;
