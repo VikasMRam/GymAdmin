@@ -40,10 +40,17 @@ export default class FamilyDetailsFormContainer extends Component {
     const { phoneNumber } = admin;
     const { name, email, slyMessage } = clientInfo;
     const { uuidInfo } = uuidAux;
-    const { residentInfo, housingInfo, financialInfo } = uuidInfo;
+    const {
+      residentInfo, housingInfo, financialInfo, locationInfo,
+    } = uuidInfo;
     const { fullName, gender } = residentInfo;
     const { lookingFor, moveTimeline } = housingInfo;
     const { maxMonthlyBudget } = financialInfo;
+    let preferredLocation = '';
+    if (locationInfo) {
+      const { city, state } = locationInfo;
+      preferredLocation = `${city}, ${state}`;
+    }
     const initialValues = {
       name,
       email,
@@ -53,6 +60,7 @@ export default class FamilyDetailsFormContainer extends Component {
       gender,
       budget: maxMonthlyBudget,
       timeToMove: moveTimeline,
+      preferredLocation,
     };
 
     return (

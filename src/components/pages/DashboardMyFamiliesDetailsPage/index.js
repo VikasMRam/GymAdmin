@@ -1,12 +1,16 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
+import { string } from 'prop-types';
 
-import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
+import {
+  FAMILY_DASHBOARD_FAMILIES_PATH,
+  FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
+  FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH,
+} from 'sly/constants/dashboardAppPaths';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import clientPropType from 'sly/propTypes/client';
 import { size } from 'sly/components/themes';
-import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import { Box, Block, Icon, Span, Link, Hr } from 'sly/components/atoms';
@@ -16,6 +20,7 @@ import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
+
 // todo: mock data
 const activities = [
   {
@@ -58,7 +63,7 @@ const FamilyDetailsTab = styled.div`
   padding: ${size('spacing.xLarge')};
 `;
 
-const DashboardMyFamiliesDetailsPage = ({ client }) => {
+const DashboardMyFamiliesDetailsPage = ({ client, currentTab }) => {
   const backLink = (
     <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
       <BackLinkWrapper>
@@ -76,12 +81,18 @@ const DashboardMyFamiliesDetailsPage = ({ client }) => {
       </DashboardPageTemplate>
     );
   }
-  const { clientInfo, stage } = client;
+  const { id, clientInfo, stage } = client;
   const { name } = clientInfo;
   const activityCards = activities.map((a, i) =>
     <StyledFamilyActivityItem key={a.title} noBorderRadius snap={i === activities.length - 1 ? null : 'bottom'} title={a.title} description={a.description} date={a.date} />);
-  const { name: stageName } = stage;
-  const stageLevel = FAMILY_STAGE_ORDERED.findIndex(i => i === stageName) + 1;
+  let activeTab = 'ACTIVITY';
+  if (currentTab === 'communities') {
+    activeTab = 'COMMUNITIES';
+  } else if (currentTab === 'family-details') {
+    activeTab = 'FAMILY DETAILS';
+  }
+  const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'family-details');
+  const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'communities');
 
   return (
     <DashboardTwoColumnTemplate activeMenuItem="My Families">
@@ -91,11 +102,11 @@ const DashboardMyFamiliesDetailsPage = ({ client }) => {
           <Block weight="medium" size="subtitle">{name}</Block>
         </Box>
         <Hr noMargin />
-        <FamilyStage noBorderRadius snap="top" stageText={stageName} stageLevel={stageLevel} />
-        <FamilySummary snap="top" client={client} />
+        <FamilyStage noBorderRadius snap="top" stageText={stage} />
+        <FamilySummary snap="top" client={client} to={familyDetailsPath} />
       </section>
-      <Tabs>
-        <div label="ACTIVITY">
+      <Tabs activeTab={activeTab}>
+        <div label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
           <TableHeaderButtons hasColumnsButton={false} />
           {activityCards.length === 0 &&
             <Fragment>
@@ -105,12 +116,12 @@ const DashboardMyFamiliesDetailsPage = ({ client }) => {
           }
           {activityCards.length > 0 && activityCards}
         </div>
-        <div label="FAMILY DETAILS">
+        <div label="FAMILY DETAILS" to={familyDetailsPath}>
           <FamilyDetailsTab>
             <FamilyDetailsFormContainer client={client} />
           </FamilyDetailsTab>
         </div>
-        <div label="COMMUNITIES">
+        <div label="COMMUNITIES" to={communitiesPath}>
           <CommunitiesTab label="COMMUNITIES">
             <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
             <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
@@ -123,6 +134,7 @@ const DashboardMyFamiliesDetailsPage = ({ client }) => {
 
 DashboardMyFamiliesDetailsPage.propTypes = {
   client: clientPropType,
+  currentTab: string,
 };
 
 export default DashboardMyFamiliesDetailsPage;

@@ -5,9 +5,9 @@ import { Block } from 'sly/components/atoms';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
 
-const href = '/sdfsdf';
+const to = '/sdfsdf';
 const defaultProps = {
-  href,
+  to,
 };
 const wrap = (props = {}) => shallow(<FamilySummary {...defaultProps} {...props} />);
 
@@ -59,6 +59,6 @@ describe('FamilySummary', () => {
       client: PraneshKumar,
     });
 
-    expect(wrapper.dive().find('StyledLink').prop('href')).toBe(href);
+    expect(wrapper.dive().find('StyledLink').prop('to')).toBe(to);
   });
 });

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { func, bool, string } from 'prop-types';
+import { func, bool, string, object } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
@@ -8,7 +8,7 @@ import { size, columnWidth } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
-import { LOOKING_FOR, GENDER, TIME_TO_MOVE } from 'sly/constants/familyDetails';
+import { LOOKING_FOR, GENDER, TIME_TO_MOVE, MONTHLY_BUDGET } from 'sly/constants/familyDetails';
 import { Block, Button, Hr, Label } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
@@ -54,6 +54,7 @@ const PaddedTwoColumnWrapper = pad(TwoColumnWrapper, 'large');
 const lookingForOptions = LOOKING_FOR.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
 const femaleOptions = GENDER.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
 const timeToMoveOptions = TIME_TO_MOVE.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
+const monthlyBudgetOptions = MONTHLY_BUDGET.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
 
 class FamilyDetailsForm extends Component {
   static propTypes = {
@@ -63,11 +64,12 @@ class FamilyDetailsForm extends Component {
     intro: string,
     change: func,
     onLocationChange: func,
+    initialValues: object,
   };
 
   handleChange = () => {
     const { change } = this.props;
-    change('preferredLocation', null);
+    change('preferredLocation', '');
   };
 
   handleLocationChange = (value) => {
@@ -81,8 +83,12 @@ class FamilyDetailsForm extends Component {
   render() {
     const { handleChange, handleLocationChange } = this;
     const {
-      handleSubmit, submitting, accepted, intro,
+      handleSubmit, submitting, accepted, intro, initialValues,
     } = this.props;
+    let preferredLocation = '';
+    if (initialValues) {
+      ({ preferredLocation } = initialValues);
+    }
 
     return (
       <Form onSubmit={handleSubmit}>
@@ -145,18 +151,32 @@ class FamilyDetailsForm extends Component {
             layout="boxWithoutButton"
             onLocationSearch={handleLocationChange}
             onTextChange={handleChange}
+            address={preferredLocation}
           />
         </PaddedTwoColumnWrapper>
-        <Field
-          name="budget"
-          label="Monthly budget"
-          type={!accepted ? 'text' : 'iconInput'}
-          disabled={!accepted}
-          hideValue={!accepted}
-          placeholder={!accepted ? 'Accept family to view' : null}
-          component={ReduxField}
-          wideWidth
-        />
+        {accepted &&
+          <Field
+            name="budget"
+            label="Monthly budget"
+            type="select"
+            component={ReduxField}
+            wideWidth
+          >
+            {monthlyBudgetOptions}
+          </Field>
+        }
+        {!accepted &&
+          <Field
+            name="budget"
+            label="Monthly budget"
+            type="text"
+            disabled
+            hideValue
+            placeholder="Accept family to view"
+            component={ReduxField}
+            wideWidth
+          />
+        }
         <Field
           name="timeToMove"
           label="Time to move"
