@@ -4,12 +4,9 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
-import { getDetail } from 'sly/store/selectors';
 import SlyEvent from 'sly/services/helpers/events';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
-import { resourceDeleteRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
-import { ensureAuthenticated, entitiesReceive } from 'sly/store/actions';
 import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
 import AuthContainer from 'sly/containers/AuthContainer';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -17,6 +14,7 @@ import Notifications from 'sly/components/organisms/Notifications';
 import Header from 'sly/components/organisms/Header';
 import ModalController from 'sly/controllers/ModalController';
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
+import { withAuth } from 'sly/services/newApi';
 
 const defaultHeaderItems = [
   { name: '(855) 866-4515', url: 'tel:+18558664515' },
@@ -41,7 +39,7 @@ const defaultMenuItems = [
 ];
 
 const loginHeaderItems = user => user
-  ? [{ name: 'Dashboard', url: '/mydashboard' }]
+  ? [{ name: 'Dashboard', url: '/dashboard' }]
   : [{ name: 'Sign in' }];
 
 const loginMenuItems = user => loginHeaderItems(user)
@@ -58,13 +56,25 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
   value,
 });
 
-class HeaderContainer extends Component {
+const mapStateToProps = (state, {
+  history, match, location,
+}) => ({
+  setQueryParams: getQueryParamsSetter(history, location),
+  searchParams: getSearchParams(match, location),
+});
+
+@withRouter
+
+@withAuth
+
+@connect(mapStateToProps)
+
+export default class HeaderContainer extends Component {
   static propTypes = {
     user: object,
     setQueryParams: func,
     searchParams: object,
     logoutUser: func,
-    fetchUser: func,
     history: object,
     match: object,
     location: object,
@@ -81,12 +91,15 @@ class HeaderContainer extends Component {
     });
   };
 
+  logout = () => {
+    const { logoutUser } = this.props;
+    return logoutUser();
+  };
+
   render() {
     const {
       user,
       setQueryParams,
-      logoutUser,
-      fetchUser,
       className,
       ensureAuthenticated,
     } = this.props;
@@ -103,9 +116,7 @@ class HeaderContainer extends Component {
     }
     const logoutLeftMenuItem = lmItems.find(item => item.name === 'Log out');
     if (logoutLeftMenuItem) {
-      logoutLeftMenuItem.onClick = () => {
-        logoutUser().then(() => fetchUser());
-      };
+      logoutLeftMenuItem.onClick = this.logout;
     }
     let loginItem = lhItems.find(item => item.name === 'Sign in');
     if (loginItem) {
@@ -176,21 +187,3 @@ class HeaderContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, {
-  history, match, location,
-}) => ({
-  setQueryParams: getQueryParamsSetter(history, location),
-  searchParams: getSearchParams(match, location),
-  // this will break as soon as we are requesting other users
-  // TODO: make the me resource remember it's id
-  user: getDetail(state, 'user', 'me'),
-});
-
-const mapDispatchToProps = dispatch => ({
-  ensureAuthenticated: action => dispatch(ensureAuthenticated(action)),
-  logoutUser: () => dispatch(resourceDeleteRequest('logout')),
-  fetchUser: () => dispatch(resourceDetailReadRequest('user', 'me'))
-    .catch(() => dispatch(entitiesReceive({ user: { me: null } }))),
-});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HeaderContainer));

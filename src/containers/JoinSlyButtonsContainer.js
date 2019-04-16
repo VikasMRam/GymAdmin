@@ -5,10 +5,19 @@ import { connect } from 'react-redux';
 import { LOGIN_PROVIDER_GOOGLE, LOGIN_PROVIDER_FACEBOOK } from 'sly/constants/loginProviders';
 import loadFB from 'sly/services/helpers/facebookSDK';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
-import { resourceCreateRequest } from 'sly/store/resource/actions';
 import JoinSlyButtons from 'sly/components/molecules/JoinSlyButtons';
+import { withAuth } from 'sly/services/newApi';
 
-class JoinSlyButtonsContainer extends Component {
+
+const mapStateToProps = (state, { history, location }) => ({
+  setQueryParams: getQueryParamsSetter(history, location),
+});
+
+@withAuth
+
+@connect(mapStateToProps)
+
+export default class JoinSlyButtonsContainer extends Component {
   static propTypes = {
     setQueryParams: func,
     onSubmitSuccess: func,
@@ -133,13 +142,3 @@ class JoinSlyButtonsContainer extends Component {
     );
   }
 }
-
-const mapDispatchToProps = dispatch => ({
-  thirdpartyLogin: data => dispatch(resourceCreateRequest('thirdpartyLogin', data)),
-});
-
-const mapStateToProps = (state, { history, location }) => ({
-  setQueryParams: getQueryParamsSetter(history, location),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(JoinSlyButtonsContainer);

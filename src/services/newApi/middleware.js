@@ -1,14 +1,21 @@
 import { logWarn } from 'sly/services/helpers/logging';
+import { API_CALL } from 'sly/services/newApi/constants';
 
-export default () => next => (promise) => {
-  if (!promise) {
+export default () => next => (action) => {
+  const { type, payload } = action;
+
+  if (type !== API_CALL) {
+    return next(action);
+  }
+
+  const { call, args } = payload;
+
+  if (!call || !arguments) {
     logWarn(new Error('dispatching undefined action, check redux-bees queries'));
     return;
   }
 
-  if (!promise.then) {
-    return next(promise);
-  }
+  const promise = call(...args);
 
   if (promise.noop) {
     return;
