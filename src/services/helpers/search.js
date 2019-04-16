@@ -83,6 +83,7 @@ const searchParamsWhitelist = [
   'redirectTo',
   'action',
   'region',
+  'type',
 ];
 
 export const tocs = [

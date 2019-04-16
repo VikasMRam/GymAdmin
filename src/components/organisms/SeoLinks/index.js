@@ -50,7 +50,7 @@ export default class SeoLinks extends Component {
       <StyledHeading level="subtitle">{title}</StyledHeading>
       <PatchedCollapsibleBlock minHeight="small">
         <LinkList>
-          {data.map(link => <Link key={link.to} {...link}>{link.title}</Link>)}
+          {data.map(link => <Link size="tiny" key={link.to} {...link}>{link.title}</Link>)}
         </LinkList>
       </PatchedCollapsibleBlock>
     </Fragment>

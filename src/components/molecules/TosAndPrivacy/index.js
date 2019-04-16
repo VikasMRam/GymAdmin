@@ -3,11 +3,11 @@ import { bool } from 'prop-types';
 
 import { Block, Link } from 'sly/components/atoms';
 
-const tos = <Link href="/tos">Terms of Use</Link>;
-const privacy = <Link href="/privacy">Privacy Policy</Link>;
+const tos = <Link size="tiny" href="/tos">Terms of Use</Link>;
+const privacy = <Link size="tiny" href="/privacy">Privacy Policy</Link>;
 
-const tosNewTab = <Link href="/tos" target="_blank">Terms of Use</Link>;
-const privacyNewTab = <Link href="/privacy" target="_blank">Privacy Policy</Link>;
+const tosNewTab = <Link size="tiny" href="/tos" target="_blank">Terms of Use</Link>;
+const privacyNewTab = <Link size="tiny" href="/privacy" target="_blank">Privacy Policy</Link>;
 
 const TosAndPrivacy = ({ openLinkInNewTab }) => (
   <Block palette="slate" size="tiny">

@@ -1,7 +1,6 @@
 import React from 'react';
 import { node, string } from 'prop-types';
 import styled from 'styled-components';
-import classes from 'classnames';
 
 import { size, palette, columnWidth } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';

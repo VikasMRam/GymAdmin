@@ -23,8 +23,8 @@ import Router from 'sly/components/molecules/Router';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
 import DashboardFavoritesPageContainer from 'sly/containers/DashboardFavoritesPageContainer';
 import DashboardMyProfilePageContainer from 'sly/containers/DashboardMyProfilePageContainer';
-import DashboardMyFamiliesPageContainer from 'sly/containers/DashboardMyFamiliesPageContainer';
 import DashboardMyFamiliesDetailsPageContainer from 'sly/containers/DashboardMyFamiliesDetailsPageContainer';
+import DashboardAgentFamilyOverviewPageContainer from 'sly/containers/DashboardAgentFamilyOverviewPageContainer';
 
 setGlobalStyles();
 
@@ -51,7 +51,7 @@ export default class App extends Component {
     },
     {
       path: FAMILY_DASHBOARD_FAMILIES_PATH,
-      component: DashboardMyFamiliesPageContainer,
+      component: DashboardAgentFamilyOverviewPageContainer,
       exact: true,
     },
     {

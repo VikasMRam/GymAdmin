@@ -3,10 +3,11 @@ import { string, object, func } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size, assetPath } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { Heading, Block, Image } from 'sly/components/atoms';
+import { Heading, Block } from 'sly/components/atoms';
 import Link from 'sly/components/atoms/Link';
+import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 
 const SubheadingWrapper = styled.div`
   display: flex;
@@ -57,7 +58,7 @@ const CommunityBookATourContactForm = ({
         />
       */}
       {error && <Block palette="danger">{error}</Block>}
-      {!user && <Block size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></Block>}
+      {!user && <TosAndPrivacy openLinkInNewTab />}
     </form>
   );
 };

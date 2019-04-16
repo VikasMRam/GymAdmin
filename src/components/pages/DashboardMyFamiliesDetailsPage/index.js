@@ -114,7 +114,7 @@ const DashboardMyFamiliesDetailsPage = ({
       </section>
       <Tabs activeTab={activeTab}>
         <div label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
-          <TableHeaderButtons noBorder hasColumnsButton={false} />
+          <TableHeaderButtons hasColumnsButton={false} />
           {activityCards.length === 0 &&
             <Fragment>
               <PaddedHr noMargin />
