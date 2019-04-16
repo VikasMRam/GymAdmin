@@ -114,7 +114,7 @@ describe('AuthContainer', () => {
     expect(stepMounted.props.onLoginClicked).toEqual(instance.gotoLogin);
   });
 
-  it('calls the right callbacks', () => {
+  it.skip('calls the right callbacks', () => {
     const notifyInfo = jest.fn();
     const showModal = jest.fn();
     const message = 'message';

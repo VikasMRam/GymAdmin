@@ -8,25 +8,19 @@ import SignupFormContainer from 'sly/containers/SignupFormContainer';
 import JoinSlyButtonsContainer from 'sly/containers/JoinSlyButtonsContainer';
 import ResetPasswordFormContainer from 'sly/containers/ResetPasswordFormContainer';
 
-import { withUser } from 'sly/services/newApi';
-
 const mapStateToProps = state => ({
   authenticated: state.authenticated,
 });
 
 const mapDispatchToProps = dispatch => ({
   authenticateCancel: () => dispatch(authenticateCancel()),
-  authenticateSuccess: user => dispatch(authenticateSuccess(user)),
+  authenticateSuccess: () => dispatch(authenticateSuccess()),
 });
-
-
-@withUser
 
 @connect(mapStateToProps, mapDispatchToProps)
 
 export default class AuthContainer extends Component {
   static propTypes = {
-    status: object.isRequired,
     authenticated: object,
     authenticateCancel: func,
     authenticateSuccess: func,
@@ -112,8 +106,8 @@ export default class AuthContainer extends Component {
   };
 
   handleLoginSuccess = () => {
-    const { authenticateSuccess, status } = this.props;
-    return status.user.refetch().then(authenticateSuccess);
+    const { authenticateSuccess } = this.props;
+    return authenticateSuccess();
   };
 
   handleResetPasswordSuccess = (response) => {

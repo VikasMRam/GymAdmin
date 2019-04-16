@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { func, object, string } from 'prop-types';
+import { func, object } from 'prop-types';
 import { reduxForm, reset } from 'redux-form';
 import { withRouter } from 'react-router';
 import produce from 'immer';
 
-import { query, prefetch } from 'sly/services/newApi';
 import { connectController } from 'sly/controllers';
 import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 import withServerState from 'sly/store/withServerState';
 import { getDetail } from 'sly/store/selectors';
+import { query, prefetch } from 'sly/services/newApi';
 import { createValidator, required, usPhone } from 'sly/services/validation';
 import TalkToAgentForm from 'sly/components/organisms/TalkToAgentForm';
 import { REQUEST_AGENT_CONSULT } from 'sly/services/api/actions';
@@ -40,7 +40,23 @@ const ReduxForm = reduxForm({
   destroyOnUnmount: false,
 })(TalkToAgentForm);
 
+const mapStateToProps = state => ({
+  userDetails: (getDetail(state, 'userAction') || {}).userDetails || {},
+});
+
+const mapDispatchToProps = dispatch => ({
+  postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
+});
+
+const mapPropsToActions = () => ({
+  userDetails: resourceDetailReadRequest('userAction'),
+});
+
 @withRouter
+
+@withServerState(mapPropsToActions)
+
+@connectController(mapStateToProps, mapDispatchToProps)
 
 @prefetch('uuidAux', 'getUuidAux', req => req({ id: 'me' }))
 
@@ -49,9 +65,10 @@ const ReduxForm = reduxForm({
 
 export default class TalkToAgentFormContainer extends Component {
   static propTypes = {
+    userDetails: object.isRequired,
+    postUserAction: func.isRequired,
     uuidAux: object.isRequired,
     updateUuidAux: func.isRequired,
-    userDetails: object.isRequired,
     status: object.isRequired,
     postSubmit: func,
     createAction: func.isRequired,
@@ -60,6 +77,8 @@ export default class TalkToAgentFormContainer extends Component {
 
   handleSubmit = (data) => {
     const {
+      userDetails,
+      postUserAction,
       postSubmit, createAction, match,
       status,
       updateUuidAux,
@@ -67,10 +86,26 @@ export default class TalkToAgentFormContainer extends Component {
 
     const uuidAux = status.uuidAux.result;
 
+    const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
     const { message, location, full_name, phone } = data;
-    const { formatted_address } = location;
-
+    const { formatted_address, geometry } = location;
+    const { lat, lng } = geometry.location;
+    const value = {
+      user,
+      details: {
+        message,
+        full_name,
+        location_text: formatted_address,
+        latitude: lat(),
+        longitude: lng(),
+      },
+    };
+    const payload = {
+      action: REQUEST_AGENT_CONSULT,
+      value,
+    };
     return Promise.all([
+      postUserAction(payload),
       createAction({
         type: 'UUIDAction',
         attributes: {
