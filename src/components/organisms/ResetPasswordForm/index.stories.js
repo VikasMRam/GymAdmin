@@ -6,7 +6,6 @@ import { reduxForm } from 'redux-form';
 import ResetPasswordForm from 'sly/components/organisms/ResetPasswordForm';
 import { withPreventDefault } from 'sly/services/helpers/forms';
 
-
 const ResetPasswordFormContainer = reduxForm({
   form: 'ResetPasswordForm',
   destroyOnUnmount: false,

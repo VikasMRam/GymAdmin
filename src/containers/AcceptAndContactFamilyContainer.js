@@ -2,33 +2,33 @@ import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 import produce from 'immer';
 
-import { withApi } from 'sly/services/newApi';
+import { query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
 import AcceptAndContactFamilyForm from 'sly/components/organisms/AcceptAndContactFamilyForm';
 import AcceptFamilyContactDetails from 'sly/components/organisms/AcceptFamilyContactDetails';
 
-@withApi
+@query('updateClient', 'updateClient')
 
 class AcceptAndContactFamilyContainer extends Component {
   static propTypes = {
-    api: object,
     onCancel: func,
     client: clientPropType,
     rawClient: object,
     notifyError: func.isRequired,
+    updateClient: func,
   };
 
   state = { contactType: null };
 
   handleUpdateStage = (contactType, next) => {
     const {
-      api, client, rawClient, notifyError,
+      updateClient, client, rawClient, notifyError,
     } = this.props;
     const { id } = client;
 
-    return api.updateClient({ id }, {
+    return updateClient({ id }, {
       data: produce(rawClient, (draft) => {
         const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospecting;
         draft.attributes.stage = contactStatus;
@@ -77,7 +77,7 @@ class AcceptAndContactFamilyContainer extends Component {
             <WizardStep
               component={AcceptFamilyContactDetails}
               name="Details"
-              onSubmitClick={onCancel}
+              onSubmit={onCancel}
               label={contactType === 'phone' ? 'Phone number' : 'Email'}
               detail={detail}
             />

@@ -9,7 +9,7 @@ import {
 } from 'sly/constants/dashboardAppPaths';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
-import clientPropType from 'sly/propTypes/client';
+import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
 import { size } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
@@ -21,6 +21,7 @@ import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
 import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFamilyContainer';
+import RejectFamilyContainer from 'sly/containers/RejectFamilyContainer';
 
 // todo: mock data
 const activities = [
@@ -65,7 +66,7 @@ const FamilyDetailsTab = styled.div`
 `;
 
 const DashboardMyFamiliesDetailsPage = ({
-  client, rawClient, currentTab, showModal, hideModal, notifyError,
+  client, rawClient, currentTab, showModal, hideModal, notifyError, notifyInfo, meta,
 }) => {
   const backLink = (
     <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
@@ -84,6 +85,7 @@ const DashboardMyFamiliesDetailsPage = ({
       </DashboardPageTemplate>
     );
   }
+  const { rejectReasons } = meta;
   const { id, clientInfo, stage } = client;
   const { name } = clientInfo;
   const activityCards = activities.map((a, i) =>
@@ -97,8 +99,12 @@ const DashboardMyFamiliesDetailsPage = ({
   const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'family-details');
   const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'communities');
 
-  const handleOnAcceptClick = () => {
+  const handleAcceptClick = () => {
     showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
+  };
+
+  const handleRejectClick = () => {
+    showModal(<RejectFamilyContainer reasons={rejectReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
   };
 
   return (
@@ -109,7 +115,7 @@ const DashboardMyFamiliesDetailsPage = ({
           <Block weight="medium" size="subtitle">{name}</Block>
         </Box>
         <Hr noMargin />
-        <FamilyStage noBorderRadius snap="top" stageText={stage} onAcceptClick={handleOnAcceptClick} />
+        <FamilyStage noBorderRadius snap="top" stageText={stage} onAcceptClick={handleAcceptClick} onRejectClick={handleRejectClick} />
         <FamilySummary snap="top" client={client} to={familyDetailsPath} />
       </section>
       <Tabs activeTab={activeTab}>
@@ -146,6 +152,8 @@ DashboardMyFamiliesDetailsPage.propTypes = {
   hideModal: func,
   rawClient: object,
   notifyError: func,
+  notifyInfo: func,
+  meta: clientMetaPropType,
 };
 
 export default DashboardMyFamiliesDetailsPage;

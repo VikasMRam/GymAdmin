@@ -1,4 +1,4 @@
-import { string, shape, bool } from 'prop-types';
+import { string, shape, bool, arrayOf } from 'prop-types';
 
 import { uuidAux } from './user';
 
@@ -7,6 +7,10 @@ const clientInfo = shape({
   email: string.isRequired,
   referralSource: string.isRequired,
   slyMessage: string.isRequired,
+});
+
+export const meta = shape({
+  rejectReasons: arrayOf(string).isRequired,
 });
 
 export default shape({

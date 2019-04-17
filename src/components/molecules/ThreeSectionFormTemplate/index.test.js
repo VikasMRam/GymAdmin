@@ -32,14 +32,14 @@ describe('ThreeSectionFormTemplate', () => {
     expect(onCancelClick).toHaveBeenCalled();
   });
 
-  it('onSubmitClick is called', () => {
-    const onSubmitClick = jest.fn();
+  it('onSubmit is called', () => {
+    const onSubmit = jest.fn();
     const wrapper = wrap({
-      onSubmitClick,
+      onSubmit,
       hasSubmit: true,
     });
 
-    wrapper.find('Bottom').find('Button').simulate('click');
-    expect(onSubmitClick).toHaveBeenCalled();
+    wrapper.find('form').simulate('submit');
+    expect(onSubmit).toHaveBeenCalled();
   });
 });
