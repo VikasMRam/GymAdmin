@@ -52,3 +52,8 @@ export const FAMILY_STAGE_ORDERED = {
 };
 
 export const TOTAL_STAGES_COUNT = 5;
+
+export const FAMILY_STATUS_ACTIVE = 'Active';
+export const FAMILY_STATUS_ON_HOLD = 'On Hold';
+export const FAMILY_STATUS_ARCHIVED = 'Archived';
+export const FAMILY_STATUS_DELETED = 'Deleted';
