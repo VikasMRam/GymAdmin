@@ -20,11 +20,11 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   render() {
     const { client, match, status } = this.props;
-    const { result: rawClient } = status.client;
+    const { result: rawClient, meta } = status.client;
 
     return (
       <NotificationController>
-        {({ notifyError }) => (
+        {({ notifyError, notifyInfo }) => (
           <ModalController>
             {({
               show,
@@ -32,11 +32,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
             }) => (
               <DashboardMyFamiliesDetailsPage
                 notifyError={notifyError}
+                notifyInfo={notifyInfo}
                 client={client}
                 rawClient={rawClient}
                 currentTab={match.params.tab}
                 showModal={show}
                 hideModal={hide}
+                meta={meta}
               />
             )}
           </ModalController>

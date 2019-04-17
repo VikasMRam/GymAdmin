@@ -50,11 +50,11 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: initial;
-  
+
   ${ifProp('row', css`
     flex-direction: row;
   `)};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex-direction: ${ifProp({ wideWidth: true }, 'row')};
   }
@@ -176,7 +176,7 @@ Field.propTypes = {
   success: bool,
   message: string,
   hideErrors: bool,
-  label: string,
+  label: node,
   type: oneOf([
     'textarea',
     'select',

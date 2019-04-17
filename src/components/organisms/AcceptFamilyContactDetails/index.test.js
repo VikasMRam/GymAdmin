@@ -2,7 +2,6 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import AcceptFamilyContactDetails from 'sly/components/organisms/AcceptFamilyContactDetails';
-import InteractiveDetail from 'sly/components/molecules/InteractiveDetail';
 
 const label = 'test label';
 const detail = {
