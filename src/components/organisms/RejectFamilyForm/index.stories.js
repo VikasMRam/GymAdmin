@@ -12,7 +12,6 @@ const reasons = [
 ];
 const RejectFamilyFormContainer = reduxForm({
   form: 'RejectFamilyForm',
-  destroyOnUnmount: false,
 })(RejectFamilyForm);
 
 storiesOf('Organisms|RejectFamilyForm', module)
