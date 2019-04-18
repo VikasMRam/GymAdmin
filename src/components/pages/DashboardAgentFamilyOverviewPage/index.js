@@ -76,27 +76,44 @@ const tabsOptions = [
 
 const tableHeaderButtons = <TableHeaderButtons />;
 
+const EmptyTextWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: ${size('spacing.xxxLarge')} ${size('spacing.xxLarge')};
+  height: 100vh;
+  text-align: center;
+`;
+
 const SmallScreenView = ({
-  mobileContents, paginationParams, paginationString, activeTab,
-}) => (
-  <SmallScreenSection>
-    <ButtonTabsWrapper>
-      <ButtonTabs type="singlechoice" orientation="horizontal" buttonKind="tab" options={tabsOptions} value={activeTab} />
-    </ButtonTabsWrapper>
-    {tableHeaderButtons}
-    <TableRowCardsWrapper>
-      <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
-      {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
-      <Pagination {...paginationParams} />
-    </TableRowCardsWrapper>
-  </SmallScreenSection>
-);
+  mobileContents, paginationParams, paginationString, activeTab, tableEmptyText,
+}) => {
+  const emptyTextComponent = <EmptyTextWrapper><Block palette="grey">{tableEmptyText}</Block></EmptyTextWrapper>;
+  return (
+    <SmallScreenSection>
+      <ButtonTabsWrapper>
+        <ButtonTabs type="singlechoice" orientation="horizontal" buttonKind="tab" options={tabsOptions} value={activeTab} />
+      </ButtonTabsWrapper>
+      {tableHeaderButtons}
+      <TableRowCardsWrapper>
+        {mobileContents.length > 0 && (
+          <Fragment>
+            <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
+            {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
+            <Pagination {...paginationParams} />
+          </Fragment>
+        )}
+        {mobileContents.length === 0 && emptyTextComponent}
+      </TableRowCardsWrapper>
+    </SmallScreenSection>
+  );
+};
 
 SmallScreenView.propTypes = {
   mobileContents: arrayOf(object),
   paginationParams: object,
   paginationString: string,
   activeTab: string,
+  tableEmptyText: string,
 };
 
 const BigScreenView = ({ tableContents, paginationParams, paginationString }) => (
@@ -132,9 +149,16 @@ const DashboardAgentFamilyOverviewPage = ({
     pageParam: 'page-number',
   };
   const bigScreenView = (<BigScreenView tableContents={tableContents} paginationParams={paginationParams} paginationString={paginationString} />);
+  const { tableEmptyText } = tableContents;
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
-      <SmallScreenView mobileContents={mobileContents} paginationParams={paginationParams} paginationString={paginationString} activeTab={activeTab} />
+      <SmallScreenView
+        mobileContents={mobileContents}
+        paginationParams={paginationParams}
+        paginationString={paginationString}
+        activeTab={activeTab}
+        tableEmptyText={tableEmptyText}
+      />
       <BigScreenSection>
         <Tabs activeTab={activeTab}>
           <div label="Prospects" to={FAMILY_DASHBOARD_FAMILIES_PATH}>
