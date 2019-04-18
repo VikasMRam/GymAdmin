@@ -23,7 +23,7 @@ export default class JoinSlyButtonsContainer extends Component {
     onSubmitSuccess: func,
     onLoginClicked: func,
     onEmailSignupClicked: func,
-    thirdpartyLogin: func,
+    thirdPartyLogin: func,
     onConnectSuccess: func,
     heading: string,
     children: func,
@@ -46,7 +46,7 @@ export default class JoinSlyButtonsContainer extends Component {
   }
 
   onGoogleConnected = (resp) => {
-    const { thirdpartyLogin, onConnectSuccess } = this.props;
+    const { thirdPartyLogin, onConnectSuccess } = this.props;
     const r = resp.getAuthResponse();
     const p = resp.getBasicProfile();
     const data = {
@@ -56,14 +56,14 @@ export default class JoinSlyButtonsContainer extends Component {
       email: p.getEmail(),
     };
 
-    thirdpartyLogin(data).then(
+    thirdPartyLogin(data).then(
       onConnectSuccess,
       () => this.setSocialLoginError('Failed to authorize with Google. Please try again.')
     );
   };
 
   onFacebookConnected = (resp) => {
-    const { thirdpartyLogin, onConnectSuccess } = this.props;
+    const { thirdPartyLogin, onConnectSuccess } = this.props;
     const { accessToken } = resp;
 
     this.getFB().then((FB) => {
@@ -77,7 +77,7 @@ export default class JoinSlyButtonsContainer extends Component {
             email: resp.email,
           };
 
-          thirdpartyLogin(data)
+          thirdPartyLogin(data)
             .then(
               onConnectSuccess,
               () => this.setSocialLoginError('Failed to authorize with Facebook. Please try again.')

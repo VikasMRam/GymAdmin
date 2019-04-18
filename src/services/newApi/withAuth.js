@@ -54,19 +54,17 @@ export default function withAuth(InnerComponent) {
           return Promise.resolve();
         }
         return Promise.reject(e);
-      }).then(() => status.user.refetch());
+      }).then(status.user.refetch);
     };
 
     loginUser = (data) => {
       const { dispatch, api, status } = this.props;
-      const action = api.loginUser(data);
-      return dispatch(action).then(() => status.user.refetch());
+      return dispatch(api.loginUser(data)).then(status.user.refetch);
     };
 
     logoutUser = (data) => {
       const { dispatch, api, status } = this.props;
-      const action = api.logoutUser(data)
-      return dispatch(action).then(() => status.user.refetch());
+      return dispatch(api.logoutUser(data)).then(status.user.refetch);
     };
 
     recoverPassword = (data) => {
@@ -74,24 +72,34 @@ export default function withAuth(InnerComponent) {
       return dispatch(api.recoverPassword(data));
     };
 
-    thirdpartyLogin = (data) => {
+    setPassword = (data) => {
       const { dispatch, api, status } = this.props;
-      return dispatch(api.thirdpartyLogin(data)).then(() => status.user.refetch());
+      return dispatch(api.setPassword(data)).then(status.user.refetch);
     };
 
-    render() {
-      return (
-        <InnerComponent
-          {...this.props}
-          loginUser={this.loginUser}
-          logoutUser={this.logoutUser}
-          registerUser={this.registerUser}
-          recoverPassword={this.recoverPassword}
-          thirdpartyLogin={this.thirdpartyLogin}
-          ensureAuthenticated={this.ensureAuthenticated}
-        />
-      );
-    }
+    updatePassword = (data) => {
+      const { dispatch, api, status } = this.props;
+      return dispatch(api.updatePassword(data)).then(status.user.refetch);
+    };
+
+    thirdPartyLogin = (data) => {
+      const { dispatch, api, status } = this.props;
+      return dispatch(api.thirdPartyLogin(data)).then(status.user.refetch);
+    };
+
+    render = () => (
+      <InnerComponent
+        {...this.props}
+        loginUser={this.loginUser}
+        logoutUser={this.logoutUser}
+        registerUser={this.registerUser}
+        setPassword={this.setPassword}
+        updatePassword={this.updatePassword}
+        recoverPassword={this.recoverPassword}
+        thirdPartyLogin={this.thirdPartyLogin}
+        ensureAuthenticated={this.ensureAuthenticated}
+      />
+    );
   }
 
   hoistNonReactStatic(Wrapper, InnerComponent);

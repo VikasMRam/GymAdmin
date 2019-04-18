@@ -5,7 +5,7 @@ import { object, func } from 'prop-types';
 import DashboardAddPasswordForm from 'sly/components/organisms/DashboardAddPasswordForm';
 import { createValidator, minLength, match } from 'sly/services/validation';
 import userPropType from 'sly/propTypes/user';
-import { withUser } from 'sly/services/newApi';
+import { withAuth } from 'sly/services/newApi';
 
 const validate = createValidator({
   newPassword: [minLength(8)],
@@ -20,22 +20,22 @@ const ReduxForm = reduxForm({
   validate,
 })(DashboardAddPasswordForm);
 
-@withUser
+@withAuth
 
-class DashboardAddPasswordFormContainer extends Component {
+export default class DashboardAddPasswordFormContainer extends Component {
   static propTypes = {
-    api: object,
+    setPassword: func,
     user: userPropType,
     notifySuccess: func,
   };
 
   handleSubmit = (values, dispatch) => {
-    const { api, user, notifySuccess } = this.props;
+    const { setPassword, user, notifySuccess } = this.props;
     const { email } = user;
     const { newPassword, confirmPassword } = values;
     if (newPassword && confirmPassword) {
       const payload = { email, password: confirmPassword };
-      return api.setPassword(payload)
+      return setPassword(payload)
         .catch((error) => {
           const { status, body } = error;
           if (status === 400) {
@@ -61,6 +61,3 @@ class DashboardAddPasswordFormContainer extends Component {
     );
   }
 }
-
-export default DashboardAddPasswordFormContainer;
-

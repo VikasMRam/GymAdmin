@@ -18,7 +18,7 @@ export default {
   registerUser: { method: post, path: '/platform/auth/register' },
   loginUser: { method: post, path: '/platform/auth/login' },
   logoutUser: { method: destroy, path: '/platform/auth/logout' },
-  thirdpartyLogin: { method: post, path: '/platform/auth/third-party' },
+  thirdPartyLogin: { method: post, path: '/platform/auth/third-party' },
   setPassword: { method: post, path: '/platform/auth/password' },
   updatePassword: { method: post, path: '/platform/auth/password/update' },
   recoverPassword: { method: post, path: '/platform/auth/recover' },

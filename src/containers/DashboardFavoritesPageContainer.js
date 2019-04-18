@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { arrayOf, object } from 'prop-types';
+import { arrayOf, object, func } from 'prop-types';
 import produce from 'immer';
 import { Redirect } from 'react-router-dom';
 
-import { prefetch } from 'sly/services/newApi';
+import { prefetch, query } from 'sly/services/newApi';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import SlyEvent from 'sly/services/helpers/events';
@@ -13,22 +13,25 @@ import ModalController from 'sly/controllers/ModalController';
 import DashboardFavoritesPage from 'sly/components/pages/DashboardFavoritesPage';
 import userPropType from 'sly/propTypes/user';
 
+@query('updateUserSave', 'updateUserSave')
+
 @prefetch('userSaves', 'getUserSaves', getUserSaves => getUserSaves({
   'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
   'filter[status]': USER_SAVE_INIT_STATUS,
 }))
+
 export default class DashboardFavoritesPageContainer extends Component {
   static propTypes = {
     user: userPropType,
     userSaves: arrayOf(object),
+    updateUserSave: func.isRequired,
     status: object,
     history: object,
-    api: object,
   };
 
   static defaultProps = {
     userSaves: [],
-  }
+  };
 
   state = {
     currentGalleryImage: {},
@@ -70,15 +73,13 @@ export default class DashboardFavoritesPageContainer extends Component {
   };
 
   handleUnfavouriteClick = (id, notifyInfo) => {
-    const { api, status } = this.props;
+    const { updateUserSave, status } = this.props;
     const { result: rawUserSaves } = status.userSaves;
     const rawUserSave = rawUserSaves.find(us => us.id === id);
 
-    return api.updateUserSave({ id }, {
-      data: produce(rawUserSave, (draft) => {
-        draft.attributes.status = USER_SAVE_DELETE_STATUS;
-      }),
-    })
+    return updateUserSave({ id }, produce(rawUserSave, (draft) => {
+      draft.attributes.status = USER_SAVE_DELETE_STATUS;
+    }))
       .then(() => notifyInfo('Community has been removed from favorites'));
   };
 
