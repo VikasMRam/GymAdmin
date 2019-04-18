@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
 import dayjs from 'dayjs';
+import { Redirect } from 'react-router-dom';
 
 import { prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
@@ -110,12 +111,15 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const params = getPageParams({ match, location });
     const { type } = params;
     const { clients: clientsStatus } = status;
-    const { isLoading, meta: clientsMeta } = clientsStatus;
+    const { isLoading, meta: clientsMeta, error: clientsError } = clientsStatus;
     // const [error] = errors;
     // console.log(clients);
     // console.log(clientsStatus);
     if (isLoading) {
       return <div>Loading...</div>;
+    }
+    if (clientsError) {
+      return <Redirect to="/" />;
     }
     if (clients === null) {
       return <div>Loading...</div>;
