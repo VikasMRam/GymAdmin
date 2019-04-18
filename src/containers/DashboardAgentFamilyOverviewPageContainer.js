@@ -8,6 +8,7 @@ import { FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardA
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { getStageDetails } from 'sly/services/helpers/stage';
+import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
@@ -40,7 +41,11 @@ const convertClientsToTableContents = (clients) => {
       rowItems,
     };
   });
-  return { headings: AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS, contents };
+  return {
+    headings: AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS,
+    contents,
+    tableEmptyText: "It looks like you don't have any families that match the filters you've set.",
+  };
 };
 
 const convertClientsToMobileContents = (clients) => {
@@ -73,16 +78,23 @@ const getPaginationData = requestMeta => ({
 
 const getPageParams = ({ match, location }) => {
   const searchParams = getSearchParams(match, location);
+  const type = searchParams.type || 'Prospects';
+  const typeStages = FAMILY_STAGE_ORDERED[type];
   return {
     'page-number': searchParams['page-number'],
-    type: searchParams.type || 'Prospects',
+    type,
+    typeStages,
   };
 };
 
 
 // TODO: Fix Latest Note and Date Added column after api impl is done
 @prefetch('clients', 'getClients', (getClients, { match, location }) => {
-  return getClients(getPageParams({ match, location }));
+  const { typeStages } = getPageParams({ match, location });
+  const filters = {
+    'filter[stage]': typeStages,
+  };
+  return getClients(filters);
 })
 export default class DashboardAgentFamilyOverviewPageContainer extends Component {
   static propTypes = {
@@ -92,7 +104,6 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     location: object,
   }
   render() {
-    console.log(this.props);
     const {
       clients, status, match, location,
     } = this.props;
@@ -106,6 +117,9 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     if (isLoading) {
       return <div>Loading...</div>;
     }
+    if (clients === null) {
+      return <div>Loading...</div>;
+    }
 
     const tableContents = convertClientsToTableContents(clients);
     const mobileContents = convertClientsToMobileContents(clients);
@@ -114,7 +128,8 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const count = clients.length;
     const start = (current * size) + 1;
     const end = (current * size) + count;
-    const paginationString = `Showing ${start}-${end} of ${totalCount} families`;
+    const paginationRangeString = count > 0 ? `${start}-${end} of` : '';
+    const paginationString = `Showing ${paginationRangeString} ${totalCount} families`;
     return (
       <DashboardAgentFamilyOverviewPage
         mobileContents={mobileContents}
