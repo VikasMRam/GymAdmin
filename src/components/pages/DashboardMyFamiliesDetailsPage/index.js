@@ -66,7 +66,7 @@ const FamilyDetailsTab = styled.div`
 `;
 
 const DashboardMyFamiliesDetailsPage = ({
-  client, rawClient, currentTab, showModal, hideModal, notifyError, notifyInfo, meta,
+  client, rawClient, currentTab, showModal, hideModal, notifyError, notifyInfo, meta, onRejectSuccess,
 }) => {
   const backLink = (
     <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
@@ -104,7 +104,15 @@ const DashboardMyFamiliesDetailsPage = ({
   };
 
   const handleRejectClick = () => {
-    showModal(<RejectFamilyContainer reasons={rejectReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
+    showModal(<RejectFamilyContainer onSuccess={onRejectSuccess} reasons={rejectReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
+  };
+
+  const handleUpdateClick = () => {
+    // todo  add handler
+  };
+
+  const handleAddNoteClick = () => {
+    // todo  add handler
   };
 
   return (
@@ -115,7 +123,15 @@ const DashboardMyFamiliesDetailsPage = ({
           <Block weight="medium" size="subtitle">{name}</Block>
         </Box>
         <Hr noMargin />
-        <FamilyStage noBorderRadius snap="top" stageText={stage} onAcceptClick={handleAcceptClick} onRejectClick={handleRejectClick} />
+        <FamilyStage
+          noBorderRadius
+          snap="top"
+          stageText={stage}
+          onAcceptClick={handleAcceptClick}
+          onRejectClick={handleRejectClick}
+          onUpdateClick={handleUpdateClick}
+          onAddNoteClick={handleAddNoteClick}
+        />
         <FamilySummary snap="top" client={client} to={familyDetailsPath} />
       </section>
       <Tabs activeTab={activeTab}>
@@ -154,6 +170,7 @@ DashboardMyFamiliesDetailsPage.propTypes = {
   notifyError: func,
   notifyInfo: func,
   meta: clientMetaPropType,
+  onRejectSuccess: func,
 };
 
 export default DashboardMyFamiliesDetailsPage;

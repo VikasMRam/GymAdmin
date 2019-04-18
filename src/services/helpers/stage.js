@@ -21,7 +21,7 @@ export const getStageDetails = (stageName) => {
           level = TOTAL_STAGES_COUNT;
           disableAddNoteButton = true;
         }
-        if (idx === 0) {
+        if (i === 0) {
           showAcceptRejectButtons = true;
         } else {
           showUpdateAddNoteButtons = true;

@@ -21,7 +21,7 @@ export default function query(propName, apiCall, dispatcher = defaultDispatcher)
       }
 
       const placeholders = args.length >= 2 ? args[0] : {};
-      const data = args.length >= 2 ? args[1] : args[0];
+      const data = args.length >= 2 ? args[1].data : args[0];
       const options = args.length === 3 ? args[2] : {};
 
       return call(placeholders, { data }, options);
