@@ -22,6 +22,7 @@ import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
 import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFamilyContainer';
 import RejectFamilyContainer from 'sly/containers/RejectFamilyContainer';
+import UpdateFamilyStageFormContainer from 'sly/containers/UpdateFamilyStageFormContainer';
 
 // todo: mock data
 const activities = [
@@ -108,7 +109,7 @@ const DashboardMyFamiliesDetailsPage = ({
   };
 
   const handleUpdateClick = () => {
-    // todo  add handler
+    showModal(<UpdateFamilyStageFormContainer onSuccess={hideModal} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
   };
 
   const handleAddNoteClick = () => {

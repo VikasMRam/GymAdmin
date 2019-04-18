@@ -46,7 +46,7 @@ class AcceptAndContactFamilyContainer extends Component {
         const { body } = r;
         const errorMessage = body.errors.map(e => e.title).join('. ');
         console.error(errorMessage);
-        notifyError('Failed to update status. Please try again.');
+        notifyError('Failed to update stage. Please try again.');
       });
   };
 
