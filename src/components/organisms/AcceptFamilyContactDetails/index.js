@@ -5,9 +5,9 @@ import InteractiveDetail from 'sly/components/molecules/InteractiveDetail';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
 
 const AcceptFamilyContactDetails = ({
-  label, detail, onSubmit,
+  label, detail, handleSubmit, ...props
 }) => (
-  <ThreeSectionFormTemplate hasSubmit heading="Accept and contact this family" submitButtonText="Continue to family details" onSubmit={onSubmit}>
+  <ThreeSectionFormTemplate {...props} hasSubmit heading="Accept and contact this family" submitButtonText="Continue to family details" onSubmit={handleSubmit}>
     <InteractiveDetail label={label} detail={detail} />
   </ThreeSectionFormTemplate>
 );
@@ -15,7 +15,7 @@ const AcceptFamilyContactDetails = ({
 AcceptFamilyContactDetails.propTypes = {
   label: string.isRequired,
   detail: object.isRequired,
-  onSubmit: func,
+  handleSubmit: func,
 };
 
 export default AcceptFamilyContactDetails;

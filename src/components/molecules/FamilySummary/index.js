@@ -43,8 +43,10 @@ SlyIntro.displayName = 'SlyIntro';
 const SeeMore = cursor(Block);
 SeeMore.displayName = 'SeeMore';
 
-const FamilySummary = ({ client, snap, to }) => (
-  <Box snap={snap}>
+const FamilySummary = ({
+  client, snap, to, className,
+}) => (
+  <Box snap={snap} className={className}>
     <PaddedHeading size="body">Summary</PaddedHeading>
     <OuterColumWrapper>
       {client.clientInfo && client.clientInfo.name &&
@@ -53,31 +55,31 @@ const FamilySummary = ({ client, snap, to }) => (
           <Block size="caption">{client.clientInfo.name}</Block>
         </ColumWrapper>
       }
-      {client.uuidAux && client.uuidAux.uuidInfo.residentInfo.fullName &&
+      {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.residentInfo.fullName &&
         <ColumWrapper>
           <Label palette="grey">Resident name</Label>
           <Block size="caption">{client.uuidAux.uuidInfo.residentInfo.fullName}</Block>
         </ColumWrapper>
       }
-      {client.uuidAux && client.uuidAux.uuidInfo.housingInfo.lookingFor &&
+      {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.housingInfo.lookingFor &&
         <ColumWrapper>
           <Label palette="grey">Looking for</Label>
           <Block size="caption">{client.uuidAux.uuidInfo.housingInfo.lookingFor}</Block>
         </ColumWrapper>
       }
-      {client.uuidAux && client.uuidAux.uuidInfo.residentInfo.gender &&
+      {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.residentInfo.gender &&
         <ColumWrapper>
           <Label palette="grey">Gender</Label>
           <Block size="caption">{client.uuidAux.uuidInfo.residentInfo.gender}</Block>
         </ColumWrapper>
       }
-      {client.uuidAux && client.uuidAux.uuidInfo.locationInfo.city &&
+      {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.locationInfo.city &&
         <ColumWrapper>
           <Label palette="grey">Preferred location</Label>
           <Block size="caption">{client.uuidAux.uuidInfo.locationInfo.city}</Block>
         </ColumWrapper>
       }
-      {client.uuidAux && client.uuidAux.uuidInfo.housingInfo.moveTimeline &&
+      {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.housingInfo.moveTimeline &&
         <ColumWrapper>
           <Label palette="grey">Time to move</Label>
           <Block size="caption">{client.uuidAux.uuidInfo.housingInfo.moveTimeline}</Block>
@@ -98,6 +100,7 @@ FamilySummary.propTypes = {
   client: clientPropType,
   to: string.isRequired,
   snap: string,
+  className: string,
 };
 
 export default FamilySummary;
