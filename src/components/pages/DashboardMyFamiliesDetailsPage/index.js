@@ -11,18 +11,22 @@ import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
 import { size } from 'sly/components/themes';
+import { getStageDetails } from 'sly/services/helpers/stage';
+import { FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
+import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
+import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFamilyContainer';
+import RejectFamilyContainer from 'sly/containers/RejectFamilyContainer';
+import UpdateFamilyStageFormContainer from 'sly/containers/UpdateFamilyStageFormContainer';
+import PlaceFamilyOnPauseFormContainer from 'sly/containers/PlaceFamilyOnPauseFormContainer';
 import { Box, Block, Icon, Span, Link, Hr } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
-import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
-import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFamilyContainer';
-import RejectFamilyContainer from 'sly/containers/RejectFamilyContainer';
-import UpdateFamilyStageFormContainer from 'sly/containers/UpdateFamilyStageFormContainer';
+import PutFamilyOnPause from 'sly/components/molecules/PutFamilyOnPause';
 
 // todo: mock data
 const activities = [
@@ -39,6 +43,8 @@ const activities = [
     date: '2019-07-05T15:54:06Z',
   },
 ];
+
+const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
 const BackLinkWrapper = pad(styled.div`
   display: flex;
@@ -68,6 +74,7 @@ const FamilyDetailsTab = styled.div`
 
 const DashboardMyFamiliesDetailsPage = ({
   client, rawClient, currentTab, showModal, hideModal, notifyError, notifyInfo, meta, onRejectSuccess,
+  onUnPause,
 }) => {
   const backLink = (
     <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
@@ -87,7 +94,11 @@ const DashboardMyFamiliesDetailsPage = ({
     );
   }
   const { rejectReasons } = meta;
-  const { id, clientInfo, stage } = client;
+  const {
+    id, clientInfo, stage, status,
+  } = client;
+  const isPaused = status === FAMILY_STATUS_ON_HOLD;
+  const { showAcceptRejectButtons } = getStageDetails(stage);
   const { name } = clientInfo;
   const activityCards = activities.map((a, i) =>
     <StyledFamilyActivityItem key={a.title} noBorderRadius snap={i === activities.length - 1 ? null : 'bottom'} title={a.title} description={a.description} date={a.date} />);
@@ -116,12 +127,20 @@ const DashboardMyFamiliesDetailsPage = ({
     // todo  add handler
   };
 
+  const handlePauseClick = () => {
+    if (isPaused) {
+      onUnPause();
+    } else {
+      showModal(<PlaceFamilyOnPauseFormContainer onSuccess={hideModal} onCancel={hideModal} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} />, null, 'noPadding', false);
+    }
+  };
+
   return (
     <DashboardTwoColumnTemplate activeMenuItem="My Families">
       <section>
         <Box snap="bottom">
           {backLink}
-          <Block weight="medium" size="subtitle">{name}</Block>
+          <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
         </Box>
         <Hr noMargin />
         <FamilyStage
@@ -133,7 +152,9 @@ const DashboardMyFamiliesDetailsPage = ({
           onUpdateClick={handleUpdateClick}
           onAddNoteClick={handleAddNoteClick}
         />
-        <FamilySummary snap="top" client={client} to={familyDetailsPath} />
+        {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
+        {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
+        {!showAcceptRejectButtons && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
       </section>
       <Tabs activeTab={activeTab}>
         <div label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
@@ -172,6 +193,7 @@ DashboardMyFamiliesDetailsPage.propTypes = {
   notifyInfo: func,
   meta: clientMetaPropType,
   onRejectSuccess: func,
+  onUnPause: func.isRequired,
 };
 
 export default DashboardMyFamiliesDetailsPage;

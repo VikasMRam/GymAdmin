@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { object } from 'prop-types';
+import produce from 'immer';
 
 import { prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
+import { FAMILY_DASHBOARD_FAMILIES_PATH, FAMILY_STATUS_ACTIVE } from 'sly/constants/dashboardAppPaths';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
@@ -18,6 +19,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     match: object,
     status: object,
     history: object,
+    api: object,
   };
 
   onRejectSuccess = () => {
@@ -25,8 +27,30 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     history.push(FAMILY_DASHBOARD_FAMILIES_PATH);
   };
 
+  onUnPause = (notifyInfo, notifyError) => {
+    const { api, client, status } = this.props;
+    const { id } = client;
+    const { result: rawClient } = status.client;
+
+    return api.updateClient({ id }, {
+      data: produce(rawClient, (draft) => {
+        draft.attributes.status = FAMILY_STATUS_ACTIVE;
+      }),
+    })
+      .then(() => {
+        notifyInfo('Family successfully unpaused');
+      })
+      .catch((r) => {
+        // TODO: Need to set a proper way to handle server side errors
+        const { body } = r;
+        const errorMessage = body.errors.map(e => e.title).join('. ');
+        console.error(errorMessage);
+        notifyError('Failed to unpause. Please try again.');
+      });
+  };
+
   render() {
-    const { onRejectSuccess } = this;
+    const { onRejectSuccess, onUnPause } = this;
     const { client, match, status } = this.props;
     const { result: rawClient, meta } = status.client;
 
@@ -48,6 +72,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 hideModal={hide}
                 meta={meta}
                 onRejectSuccess={onRejectSuccess}
+                onUnPause={() => onUnPause(notifyInfo, notifyError)}
               />
             )}
           </ModalController>

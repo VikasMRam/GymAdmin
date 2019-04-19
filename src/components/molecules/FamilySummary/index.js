@@ -43,8 +43,10 @@ SlyIntro.displayName = 'SlyIntro';
 const SeeMore = cursor(Block);
 SeeMore.displayName = 'SeeMore';
 
-const FamilySummary = ({ client, snap, to }) => (
-  <Box snap={snap}>
+const FamilySummary = ({
+  client, snap, to, className,
+}) => (
+  <Box snap={snap} className={className}>
     <PaddedHeading size="body">Summary</PaddedHeading>
     <OuterColumWrapper>
       {client.clientInfo && client.clientInfo.name &&
@@ -98,6 +100,7 @@ FamilySummary.propTypes = {
   client: clientPropType,
   to: string.isRequired,
   snap: string,
+  className: string,
 };
 
 export default FamilySummary;
