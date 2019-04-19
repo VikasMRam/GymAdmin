@@ -27,6 +27,7 @@ export default {
   getCommunities: { method: get, path: '/marketplace/communities' },
 
   getSearchResources: { method: get, path: '/platform/search-resources' },
+  getGeoGuides: { method: get, path: '/platform/geo-guides' },
 
   createQuestion: { method: post, path: '/platform/questions' },
   createRating: { method: post, path: '/platform/ratings' },

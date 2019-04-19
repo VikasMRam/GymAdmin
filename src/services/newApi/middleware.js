@@ -17,10 +17,6 @@ export default () => next => (action) => {
 
   const promise = call(...args);
 
-  if (promise.noop) {
-    return;
-  }
-
   const meta = {
     api: true,
     name: promise.actionName,
