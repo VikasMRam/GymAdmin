@@ -34,10 +34,6 @@ const ButtonTabsWrapper = styled.div`
   border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
 `;
 
-const ButtonTabs = styled(MultipleChoice)`
-  
-`;
-
 const TableRowCardsWrapper = styled.div`
   padding: ${size('spacing.large')};
   background-color: ${palette('grey.background')};
@@ -69,9 +65,9 @@ const BigScreenPaginationWrapper = styled.div`
 `;
 
 const tabsOptions = [
-  { value: 'Prospects', label: 'Prospects' },
-  { value: 'Connected', label: 'Connected' },
-  { value: 'Closed', label: 'Closed' },
+  { value: 'Prospects', label: 'Prospects', href: FAMILY_DASHBOARD_FAMILIES_PATH },
+  { value: 'Connected', label: 'Connected', href: `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected` },
+  { value: 'Closed', label: 'Closed', href: `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed` },
 ];
 
 const tableHeaderButtons = <TableHeaderButtons />;
@@ -91,7 +87,7 @@ const SmallScreenView = ({
   return (
     <SmallScreenSection>
       <ButtonTabsWrapper>
-        <ButtonTabs type="singlechoice" orientation="horizontal" buttonKind="tab" options={tabsOptions} value={activeTab} />
+        <MultipleChoice type="singlechoice" orientation="horizontal" buttonKind="tab" options={tabsOptions} value={activeTab} />
       </ButtonTabsWrapper>
       {tableHeaderButtons}
       <TableRowCardsWrapper>
