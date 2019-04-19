@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
 import { string, func, object } from 'prop-types';
 
@@ -72,62 +72,53 @@ const FamilyDetailsTab = styled.div`
   padding: ${size('spacing.xLarge')};
 `;
 
-const DashboardMyFamiliesDetailsPage = ({
-  client, rawClient, currentTab, showModal, hideModal, notifyError, notifyInfo, meta, onRejectSuccess,
-  onUnPause,
-}) => {
-  const backLink = (
-    <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
-      <BackLinkWrapper>
-        <Icon icon="arrow-left" size="small" palette="primary" />
-        <Span size="caption" palette="primary">Back to Prospects</Span>
-      </BackLinkWrapper>
-    </Link>
-  );
+export default class DashboardMyFamiliesDetailsPage extends Component {
+  static propTypes = {
+    client: clientPropType,
+    currentTab: string,
+    showModal: func,
+    hideModal: func,
+    rawClient: object,
+    notifyError: func,
+    notifyInfo: func,
+    meta: clientMetaPropType,
+    onRejectSuccess: func,
+    onUnPause: func.isRequired,
+  };
 
-  if (!client) {
-    return (
-      <DashboardPageTemplate activeMenuItem="My Families">
-        <TextAlignCenterBlock weight="medium" size="subtitle">Family not found!</TextAlignCenterBlock>
-        <AlignCenterBackLinkWrapper>{backLink}</AlignCenterBackLinkWrapper>
-      </DashboardPageTemplate>
-    );
-  }
-  const { rejectReasons } = meta;
-  const {
-    id, clientInfo, stage, status,
-  } = client;
-  const isPaused = status === FAMILY_STATUS_ON_HOLD;
-  const { showAcceptRejectButtons } = getStageDetails(stage);
-  const { name } = clientInfo;
-  const activityCards = activities.map((a, i) =>
-    <StyledFamilyActivityItem key={a.title} noBorderRadius snap={i === activities.length - 1 ? null : 'bottom'} title={a.title} description={a.description} date={a.date} />);
-  let activeTab = 'ACTIVITY';
-  if (currentTab === 'communities') {
-    activeTab = 'COMMUNITIES';
-  } else if (currentTab === 'family-details') {
-    activeTab = 'FAMILY DETAILS';
-  }
-  const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'family-details');
-  const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'communities');
-
-  const handleAcceptClick = () => {
+  handleAcceptClick = () => {
+    const {
+      showModal, hideModal, notifyError, client, rawClient,
+    } = this.props;
     showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
   };
 
-  const handleRejectClick = () => {
+  handleRejectClick = () => {
+    const {
+      meta, showModal, hideModal, notifyError, notifyInfo, client, rawClient, onRejectSuccess,
+    } = this.props;
+    const { rejectReasons } = meta;
     showModal(<RejectFamilyContainer onSuccess={onRejectSuccess} reasons={rejectReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
   };
 
-  const handleUpdateClick = () => {
+  handleUpdateClick = () => {
+    const {
+      showModal, hideModal, notifyError, client, rawClient, notifyInfo,
+    } = this.props;
     showModal(<UpdateFamilyStageFormContainer onSuccess={hideModal} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
   };
 
-  const handleAddNoteClick = () => {
+  handleAddNoteClick = () => {
     // todo  add handler
   };
 
-  const handlePauseClick = () => {
+  handlePauseClick = () => {
+    const {
+      showModal, hideModal, notifyError, client, rawClient, notifyInfo, onUnPause,
+    } = this.props;
+    const { status } = client;
+    const isPaused = status === FAMILY_STATUS_ON_HOLD;
+
     if (isPaused) {
       onUnPause();
     } else {
@@ -135,65 +126,92 @@ const DashboardMyFamiliesDetailsPage = ({
     }
   };
 
-  return (
-    <DashboardTwoColumnTemplate activeMenuItem="My Families">
-      <section>
-        <Box snap="bottom">
-          {backLink}
-          <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
-        </Box>
-        <Hr noMargin />
-        <FamilyStage
-          noBorderRadius
-          snap="top"
-          stageText={stage}
-          onAcceptClick={handleAcceptClick}
-          onRejectClick={handleRejectClick}
-          onUpdateClick={handleUpdateClick}
-          onAddNoteClick={handleAddNoteClick}
-        />
-        {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
-        {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
-        {!showAcceptRejectButtons && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
-      </section>
-      <Tabs activeTab={activeTab}>
-        <div label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
-          <TableHeaderButtons hasColumnsButton={false} />
-          {activityCards.length === 0 &&
-            <Fragment>
-              <PaddedHr noMargin />
-              <TextAlignCenterBlock>There are no acivities.</TextAlignCenterBlock>
-            </Fragment>
-          }
-          {activityCards.length > 0 && activityCards}
-        </div>
-        <div label="FAMILY DETAILS" to={familyDetailsPath}>
-          <FamilyDetailsTab>
-            <FamilyDetailsFormContainer client={client} />
-          </FamilyDetailsTab>
-        </div>
-        <div label="COMMUNITIES" to={communitiesPath}>
-          <CommunitiesTab label="COMMUNITIES">
-            <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
-            <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
-          </CommunitiesTab>
-        </div>
-      </Tabs>
-    </DashboardTwoColumnTemplate>
-  );
-};
+  render() {
+    const {
+      handleAcceptClick, handleRejectClick, handleUpdateClick, handleAddNoteClick, handlePauseClick,
+    } = this;
+    const { client, currentTab } = this.props;
 
-DashboardMyFamiliesDetailsPage.propTypes = {
-  client: clientPropType,
-  currentTab: string,
-  showModal: func,
-  hideModal: func,
-  rawClient: object,
-  notifyError: func,
-  notifyInfo: func,
-  meta: clientMetaPropType,
-  onRejectSuccess: func,
-  onUnPause: func.isRequired,
-};
+    const backLink = (
+      <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+        <BackLinkWrapper>
+          <Icon icon="arrow-left" size="small" palette="primary" />
+          <Span size="caption" palette="primary">Back to Prospects</Span>
+        </BackLinkWrapper>
+      </Link>
+    );
 
-export default DashboardMyFamiliesDetailsPage;
+    if (!client) {
+      return (
+        <DashboardPageTemplate activeMenuItem="My Families">
+          <TextAlignCenterBlock weight="medium" size="subtitle">Family not found!</TextAlignCenterBlock>
+          <AlignCenterBackLinkWrapper>{backLink}</AlignCenterBackLinkWrapper>
+        </DashboardPageTemplate>
+      );
+    }
+
+    const {
+      id, clientInfo, stage, status,
+    } = client;
+    const isPaused = status === FAMILY_STATUS_ON_HOLD;
+    const { showAcceptRejectButtons } = getStageDetails(stage);
+    const { name } = clientInfo;
+    const activityCards = activities.map((a, i) =>
+      <StyledFamilyActivityItem key={a.title} noBorderRadius snap={i === activities.length - 1 ? null : 'bottom'} title={a.title} description={a.description} date={a.date} />);
+    let activeTab = 'ACTIVITY';
+    if (currentTab === 'communities') {
+      activeTab = 'COMMUNITIES';
+    } else if (currentTab === 'family-details') {
+      activeTab = 'FAMILY DETAILS';
+    }
+    const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'family-details');
+    const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'communities');
+
+    return (
+      <DashboardTwoColumnTemplate activeMenuItem="My Families">
+        <section>
+          <Box snap="bottom">
+            {backLink}
+            <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
+          </Box>
+          <Hr noMargin />
+          <FamilyStage
+            noBorderRadius
+            snap="top"
+            stageText={stage}
+            onAcceptClick={handleAcceptClick}
+            onRejectClick={handleRejectClick}
+            onUpdateClick={handleUpdateClick}
+            onAddNoteClick={handleAddNoteClick}
+          />
+          {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
+          {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
+          {!showAcceptRejectButtons && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
+        </section>
+        <Tabs activeTab={activeTab}>
+          <div label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
+            <TableHeaderButtons hasColumnsButton={false} />
+            {activityCards.length === 0 &&
+              <Fragment>
+                <PaddedHr noMargin />
+                <TextAlignCenterBlock>There are no acivities.</TextAlignCenterBlock>
+              </Fragment>
+            }
+            {activityCards.length > 0 && activityCards}
+          </div>
+          <div label="FAMILY DETAILS" to={familyDetailsPath}>
+            <FamilyDetailsTab>
+              <FamilyDetailsFormContainer client={client} />
+            </FamilyDetailsTab>
+          </div>
+          <div label="COMMUNITIES" to={communitiesPath}>
+            <CommunitiesTab label="COMMUNITIES">
+              <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
+              <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
+            </CommunitiesTab>
+          </div>
+        </Tabs>
+      </DashboardTwoColumnTemplate>
+    );
+  }
+}

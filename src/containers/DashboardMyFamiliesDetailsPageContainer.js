@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import produce from 'immer';
 
-import { prefetch } from 'sly/services/newApi';
+import { prefetch, query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { FAMILY_DASHBOARD_FAMILIES_PATH, FAMILY_STATUS_ACTIVE } from 'sly/constants/dashboardAppPaths';
+import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
+import { FAMILY_STATUS_ACTIVE } from 'sly/constants/familyDetails';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
@@ -13,13 +14,15 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
   id: match.params.id,
 }))
 
+@query('updateClient', 'updateClient')
+
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
     client: clientPropType,
     match: object,
     status: object,
     history: object,
-    api: object,
+    updateClient: func,
   };
 
   onRejectSuccess = () => {
@@ -28,11 +31,11 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   onUnPause = (notifyInfo, notifyError) => {
-    const { api, client, status } = this.props;
+    const { updateClient, client, status } = this.props;
     const { id } = client;
     const { result: rawClient } = status.client;
 
-    return api.updateClient({ id }, {
+    return updateClient({ id }, {
       data: produce(rawClient, (draft) => {
         draft.attributes.status = FAMILY_STATUS_ACTIVE;
       }),
