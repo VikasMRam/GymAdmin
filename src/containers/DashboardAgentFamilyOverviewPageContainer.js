@@ -73,8 +73,9 @@ const convertClientsToMobileContents = (clients) => {
 const getPaginationData = requestMeta => ({
   current: requestMeta['page-number'],
   size: requestMeta['page-size'],
-  total: requestMeta.total_count / requestMeta['page-size'],
+  total: requestMeta.filtered_count / requestMeta['page-size'],
   totalCount: requestMeta.total_count,
+  filteredCount: requestMeta.filtered_count,
 });
 
 const getPageParams = ({ match, location }) => {
@@ -128,12 +129,14 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const tableContents = convertClientsToTableContents(clients);
     const mobileContents = convertClientsToMobileContents(clients);
     const pagination = getPaginationData(clientsMeta);
-    const { current, size, totalCount } = pagination;
+    const {
+      current, size, filteredCount,
+    } = pagination;
     const count = clients.length;
     const start = (current * size) + 1;
     const end = (current * size) + count;
     const paginationRangeString = count > 0 ? `${start}-${end} of` : '';
-    const paginationString = `Showing ${paginationRangeString} ${totalCount} families`;
+    const paginationString = `Showing ${paginationRangeString} ${filteredCount} families`;
     return (
       <DashboardAgentFamilyOverviewPage
         mobileContents={mobileContents}
