@@ -30,7 +30,7 @@ class AcceptAndContactFamilyContainer extends Component {
 
     return updateClient({ id }, {
       data: produce(rawClient, (draft) => {
-        const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospecting;
+        const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
         draft.attributes.stage = contactStatus;
       }),
     })
