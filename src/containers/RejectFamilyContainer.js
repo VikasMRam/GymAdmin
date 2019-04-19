@@ -32,35 +32,29 @@ class RejectFamilyContainer extends Component {
     notifyInfo: func.isRequired,
     updateClient: func,
     reasons: arrayOf(string),
-    onSuccess: func,
   };
 
-  handleUpdateStage = (data) => {
+  handleUpdateStage = () => {
     const {
-      updateClient, client, rawClient, notifyError, notifyInfo, onSuccess,
+      updateClient, client, rawClient, notifyError, notifyInfo,
     } = this.props;
     const { id } = client;
-    const { reason } = data;
 
     return updateClient({ id }, {
       data: produce(rawClient, (draft) => {
         const [, , contactRejected] = FAMILY_STAGE_ORDERED.Closed;
         draft.attributes.stage = contactRejected;
-        draft.attributes.clientInfo.rejectReason = reason;
       }),
     })
       .then(() => {
         notifyInfo('Family successfully rejected');
-        if (onSuccess) {
-          onSuccess();
-        }
       })
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { body } = r;
         const errorMessage = body.errors.map(e => e.title).join('. ');
         console.error(errorMessage);
-        notifyError('Failed to update stage. Please try again.');
+        notifyError('Failed to update status. Please try again.');
       });
   };
 
