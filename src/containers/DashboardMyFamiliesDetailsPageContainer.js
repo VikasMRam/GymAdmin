@@ -35,11 +35,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { id } = client;
     const { result: rawClient } = status.client;
 
-    return updateClient({ id }, {
-      data: produce(rawClient, (draft) => {
-        draft.attributes.status = FAMILY_STATUS_ACTIVE;
-      }),
-    })
+    return updateClient({ id }, produce(rawClient, (draft) => {
+      draft.attributes.status = FAMILY_STATUS_ACTIVE;
+    }))
       .then(() => {
         notifyInfo('Family successfully unpaused');
       })
