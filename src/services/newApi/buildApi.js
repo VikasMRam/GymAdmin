@@ -48,43 +48,46 @@ export default function buildApi(endpoints, config = {}) {
           placeholders[key] == null
         ));
 
+      let promise;
+
       if (missingPlaceholders.length > 0) {
-        const message = `The "${key}" API call cannot be performed. The following params were not specified: ${missingPlaceholders.join(', ')}`;
-        console.error(message);
-        const neverendingPromise = new Promise(() => 1);
-        neverendingPromise.noop = true;
+        promise = Promise.reject({
+          body: {
+            errors: [
+              `The "${key}" API call cannot be performed. The following params were not specified: ${missingPlaceholders.join(', ')}`,
+            ],
+          },
+        });
+      } else {
+        const promiseId = JSON.stringify([key, args]);
 
-        return neverendingPromise;
+        if (pendingPromises[promiseId]) {
+          return pendingPromises[promiseId];
+        }
+
+        const req = request(
+          baseUrl,
+          applyUrlWithPlaceholders(path, placeholders),
+          configureOptions(augmentedOptions)
+        );
+
+        promise = req
+          .then(afterResolve)
+          .then((result) => {
+            delete pendingPromises[promiseId];
+            return result;
+          })
+          .catch((error) => {
+            delete pendingPromises[promiseId];
+            return Promise.reject(error);
+          })
+          .catch(afterReject);
+
+        pendingPromises[promiseId] = promise;
       }
-
-      const promiseId = JSON.stringify([key, args]);
-
-      if (pendingPromises[promiseId]) {
-        return pendingPromises[promiseId];
-      }
-
-      const req = request(
-        baseUrl,
-        applyUrlWithPlaceholders(path, placeholders),
-        configureOptions(augmentedOptions)
-      );
-
-      const promise = req
-        .then(afterResolve)
-        .then((result) => {
-          delete pendingPromises[promiseId];
-          return result;
-        })
-        .catch((error) => {
-          delete pendingPromises[promiseId];
-          return Promise.reject(error);
-        })
-        .catch(afterReject);
 
       promise.actionName = key;
       promise.params = args;
-      pendingPromises[promiseId] = promise;
-
       return promise;
     };
 

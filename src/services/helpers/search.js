@@ -1,5 +1,6 @@
+import { stringify } from 'query-string';
+
 import { urlize, objectToURLQueryParams, parseURLQueryParams } from './url';
-import {assetPath} from "sly/components/themes";
 
 const fnExecutionTracker = {};
 
