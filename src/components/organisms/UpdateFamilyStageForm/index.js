@@ -15,9 +15,9 @@ const Warning = styled(Block)`
   padding: ${size('spacing.large')};
 `;
 
-const options = Object.keys(FAMILY_STAGE_ORDERED).map((sg, ig) => (
+const options = Object.keys(FAMILY_STAGE_ORDERED).map(sg => (
   <optgroup label={sg} key={sg}>
-    {FAMILY_STAGE_ORDERED[sg].map((s, i) => <option disabled={ig === 0 && i === 0} key={s} value={s}>{s}</option>)}
+    {FAMILY_STAGE_ORDERED[sg].map(s => <option key={s} value={s}>{s}</option>)}
   </optgroup>
 ));
 

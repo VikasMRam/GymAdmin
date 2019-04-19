@@ -5,7 +5,6 @@ import produce from 'immer';
 import { query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
-import { withPreventDefault } from 'sly/services/helpers/forms';
 import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
 import AcceptAndContactFamilyForm from 'sly/components/organisms/AcceptAndContactFamilyForm';
 import AcceptFamilyContactDetails from 'sly/components/organisms/AcceptFamilyContactDetails';
@@ -46,7 +45,7 @@ class AcceptAndContactFamilyContainer extends Component {
         const { body } = r;
         const errorMessage = body.errors.map(e => e.title).join('. ');
         console.error(errorMessage);
-        notifyError('Failed to update stage. Please try again.');
+        notifyError('Failed to update status. Please try again.');
       });
   };
 
@@ -78,7 +77,7 @@ class AcceptAndContactFamilyContainer extends Component {
             <WizardStep
               component={AcceptFamilyContactDetails}
               name="Details"
-              handleSubmit={withPreventDefault(onCancel)}
+              onSubmit={onCancel}
               label={contactType === 'phone' ? 'Phone number' : 'Email'}
               detail={detail}
             />
