@@ -29,12 +29,10 @@ class AcceptAndContactFamilyContainer extends Component {
     } = this.props;
     const { id } = client;
 
-    return updateClient({ id }, {
-      data: produce(rawClient, (draft) => {
-        const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
-        draft.attributes.stage = contactStatus;
-      }),
-    })
+    return updateClient({ id }, produce(rawClient, (draft) => {
+      const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
+      draft.attributes.stage = contactStatus;
+    }))
       .then(() => {
         this.setState({
           contactType,
