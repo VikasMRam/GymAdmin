@@ -100,7 +100,6 @@ class UpdateFamilyStageFormContainer extends Component {
         nextStageGroup={nextStageGroup}
         name={name}
         onSubmit={handleUpdateStage}
-
       />
     );
   }

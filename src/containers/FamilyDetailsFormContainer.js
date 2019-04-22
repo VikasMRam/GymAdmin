@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
 import produce from 'immer';
+import { getRelationship } from 'redux-bees';
+import { connect } from 'react-redux';
 
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
 import { createValidator, required, email, usPhone } from 'sly/services/validation';
@@ -27,41 +29,58 @@ const ReduxForm = reduxForm({
 
 @query('updateClient', 'updateClient')
 
+@connect((state, props) => ({
+  uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
+}))
+
 export default class FamilyDetailsFormContainer extends Component {
   static propTypes = {
     updateClient: func.isRequired,
     notifyError: func.isRequired,
     client: clientPropType.isRequired,
     rawClient: object,
+    uuidAux: object,
   };
 
   handleSubmit = (data) => {
     const {
-      client, updateClient, rawClient, notifyError,
+      client, updateClient, rawClient, notifyError, uuidAux,
     } = this.props;
     const { id } = client;
     const {
       name,
       email,
-      phoneNumber,
-      fullName,
+      phone,
+      residentName,
       lookingFor,
       gender,
-      maxMonthlyBudget,
-      moveTimeline,
+      budget,
+      timeToMove,
       preferredLocation,
     } = data;
 
     return updateClient({ id }, produce(rawClient, (draft) => {
+      const newAux = { ...uuidAux };
+      let locationInfo = {};
+      if (preferredLocation) {
+        const [city, state] = preferredLocation.split(',');
+        locationInfo = {
+          city,
+          state,
+        };
+      }
+      newAux.attributes.uuidInfo.residentInfo.fullName = residentName;
+      newAux.attributes.uuidInfo.residentInfo.gender = gender;
+      newAux.attributes.uuidInfo.financialInfo.maxMonthlyBudget = budget;
+      newAux.attributes.uuidInfo.housingInfo.lookingFor = lookingFor;
+      newAux.attributes.uuidInfo.housingInfo.moveTimeline = timeToMove;
+      newAux.attributes.uuidInfo.locationInfo = locationInfo;
       draft.attributes.clientInfo.name = name;
       draft.attributes.clientInfo.email = email;
-      draft.attributes.admin.phoneNumber = phoneNumber;
-      draft.attributes.uuidAux.uuidInfo.residentInfo.fullName = fullName;
-      draft.attributes.uuidAux.uuidInfo.residentInfo.gender = gender;
-      draft.attributes.uuidAux.uuidInfo.financialInfo.maxMonthlyBudget = maxMonthlyBudget;
-      draft.attributes.uuidAux.uuidInfo.housingInfo.lookingFor = lookingFor;
-      draft.attributes.uuidAux.uuidInfo.housingInfo.moveTimeline = moveTimeline;
-      draft.attributes.uuidAux.uuidInfo.locationInfo.preferredLocation = preferredLocation;
+      draft.attributes.clientInfo.phoneNumber = phone;
+      draft.relationships.uuidAux = {
+        data: newAux,
+      };
     }))
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
@@ -74,9 +93,10 @@ export default class FamilyDetailsFormContainer extends Component {
 
   render() {
     const { client, ...props } = this.props;
-    const { clientInfo, uuidAux, admin } = client;
-    const { phoneNumber } = admin;
-    const { name, email, slyMessage } = clientInfo;
+    const { clientInfo, uuidAux } = client;
+    const {
+      name, email, slyMessage, phoneNumber,
+    } = clientInfo;
     const { uuidInfo } = uuidAux;
     const {
       residentInfo, housingInfo, financialInfo, locationInfo,
