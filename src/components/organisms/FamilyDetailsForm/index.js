@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { func, bool, string, object } from 'prop-types';
+import { func, bool, string, object, arrayOf } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
@@ -8,7 +8,6 @@ import { size, columnWidth } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
-import { LOOKING_FOR, GENDER, TIME_TO_MOVE, MONTHLY_BUDGET } from 'sly/constants/familyDetails';
 import { Block, Button, Hr, Label } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
@@ -51,11 +50,6 @@ const StyledSearchBoxContainer = styled(SearchBoxContainer)`
 
 const PaddedTwoColumnWrapper = pad(TwoColumnWrapper, 'large');
 
-const lookingForOptions = LOOKING_FOR.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
-const femaleOptions = GENDER.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
-const timeToMoveOptions = TIME_TO_MOVE.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
-const monthlyBudgetOptions = MONTHLY_BUDGET.map(i => <option key={i.value} value={i.value}>{i.label}</option>);
-
 class FamilyDetailsForm extends Component {
   static propTypes = {
     handleSubmit: func.isRequired,
@@ -65,6 +59,10 @@ class FamilyDetailsForm extends Component {
     change: func,
     onLocationChange: func,
     initialValues: object,
+    lookingFor: arrayOf(string).isRequired,
+    gender: arrayOf(string).isRequired,
+    timeToMove: arrayOf(string).isRequired,
+    monthlyBudget: arrayOf(string).isRequired,
   };
 
   handleChange = () => {
@@ -83,12 +81,18 @@ class FamilyDetailsForm extends Component {
   render() {
     const { handleChange, handleLocationChange } = this;
     const {
-      handleSubmit, submitting, accepted, intro, initialValues,
+      handleSubmit, submitting, accepted, intro, initialValues, lookingFor,
+      gender, timeToMove, monthlyBudget,
     } = this.props;
     let preferredLocation = '';
     if (initialValues) {
       ({ preferredLocation } = initialValues);
     }
+
+    const lookingForOptions = lookingFor.map(i => <option key={i} value={i}>{i}</option>);
+    const femaleOptions = gender.map(i => <option key={i} value={i}>{i}</option>);
+    const timeToMoveOptions = timeToMove.map(i => <option key={i} value={i}>{i}</option>);
+    const monthlyBudgetOptions = monthlyBudget.map(i => <option key={i} value={i}>{i}</option>);
 
     return (
       <Form onSubmit={handleSubmit}>

@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
-import { object, func, string, arrayOf } from 'prop-types';
-import produce from 'immer';
+import { object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
+import produce from 'immer';
 
 import { query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
+import { FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
 import {
   createValidator,
   required,
 } from 'sly/services/validation';
-import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
-import RejectFamilyForm from 'sly/components/organisms/RejectFamilyForm';
+import PlaceFamilyOnPauseForm from 'sly/components/organisms/PlaceFamilyOnPauseForm';
 
 const validate = createValidator({
   reason: [required],
 });
 
 const ReduxForm = reduxForm({
-  form: 'RejectFamilyForm',
+  form: 'PlaceFamilyOnPauseFormContainer',
   validate,
-})(RejectFamilyForm);
+})(PlaceFamilyOnPauseForm);
 
 @query('updateClient', 'updateClient')
 
-class RejectFamilyContainer extends Component {
+class PlaceFamilyOnPauseFormContainer extends Component {
   static propTypes = {
     onCancel: func,
     client: clientPropType,
@@ -31,24 +31,20 @@ class RejectFamilyContainer extends Component {
     notifyError: func.isRequired,
     notifyInfo: func.isRequired,
     updateClient: func,
-    reasons: arrayOf(string),
     onSuccess: func,
   };
 
-  handleUpdateStage = (data) => {
+  handlePause = () => {
     const {
       updateClient, client, rawClient, notifyError, notifyInfo, onSuccess,
     } = this.props;
     const { id } = client;
-    const { reason } = data;
 
     return updateClient({ id }, produce(rawClient, (draft) => {
-      const [, , contactRejected] = FAMILY_STAGE_ORDERED.Closed;
-      draft.attributes.stage = contactRejected;
-      draft.attributes.clientInfo.rejectReason = reason;
+      draft.attributes.status = FAMILY_STATUS_ON_HOLD;
     }))
       .then(() => {
-        notifyInfo('Family successfully rejected');
+        notifyInfo('Family successfully put on pause');
         if (onSuccess) {
           onSuccess();
         }
@@ -58,18 +54,20 @@ class RejectFamilyContainer extends Component {
         const { body } = r;
         const errorMessage = body.errors.map(e => e.title).join('. ');
         console.error(errorMessage);
-        notifyError('Failed to update stage. Please try again.');
+        notifyError('Failed to put family on pause. Please try again.');
       });
   };
 
   render() {
-    const { handleUpdateStage } = this;
-    const { onCancel, reasons } = this.props;
+    const { handlePause } = this;
+    const { onCancel, client } = this.props;
+    const { clientInfo } = client;
+    const { name } = clientInfo;
 
     return (
-      <ReduxForm onSubmit={handleUpdateStage} onCancel={onCancel} reasons={reasons} />
+      <ReduxForm onSubmit={handlePause} onCancel={onCancel} name={name} />
     );
   }
 }
 
-export default RejectFamilyContainer;
+export default PlaceFamilyOnPauseFormContainer;
