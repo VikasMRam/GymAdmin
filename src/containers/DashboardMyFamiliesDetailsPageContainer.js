@@ -25,8 +25,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     updateClient: func,
   };
 
-  onRejectSuccess = () => {
+  onRejectSuccess = (hide) => {
     const { history } = this.props;
+    hide();
     history.push(FAMILY_DASHBOARD_FAMILIES_PATH);
   };
 
@@ -72,7 +73,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 showModal={show}
                 hideModal={hide}
                 meta={meta}
-                onRejectSuccess={onRejectSuccess}
+                onRejectSuccess={() => onRejectSuccess(hide)}
                 onUnPause={() => onUnPause(notifyInfo, notifyError)}
               />
             )}

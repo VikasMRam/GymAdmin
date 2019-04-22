@@ -40,11 +40,9 @@ class PlaceFamilyOnPauseFormContainer extends Component {
     } = this.props;
     const { id } = client;
 
-    return updateClient({ id }, {
-      data: produce(rawClient, (draft) => {
-        draft.attributes.status = FAMILY_STATUS_ON_HOLD;
-      }),
-    })
+    return updateClient({ id }, produce(rawClient, (draft) => {
+      draft.attributes.status = FAMILY_STATUS_ON_HOLD;
+    }))
       .then(() => {
         notifyInfo('Family successfully put on pause');
         if (onSuccess) {

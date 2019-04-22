@@ -42,13 +42,11 @@ class RejectFamilyContainer extends Component {
     const { id } = client;
     const { reason } = data;
 
-    return updateClient({ id }, {
-      data: produce(rawClient, (draft) => {
-        const [, , contactRejected] = FAMILY_STAGE_ORDERED.Closed;
-        draft.attributes.stage = contactRejected;
-        draft.attributes.clientInfo.rejectReason = reason;
-      }),
-    })
+    return updateClient({ id }, produce(rawClient, (draft) => {
+      const [, , contactRejected] = FAMILY_STAGE_ORDERED.Closed;
+      draft.attributes.stage = contactRejected;
+      draft.attributes.clientInfo.rejectReason = reason;
+    }))
       .then(() => {
         notifyInfo('Family successfully rejected');
         if (onSuccess) {

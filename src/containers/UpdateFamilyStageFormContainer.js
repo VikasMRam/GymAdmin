@@ -52,11 +52,9 @@ class UpdateFamilyStageFormContainer extends Component {
     const { id } = client;
     const { stage } = data;
 
-    return updateClient({ id }, {
-      data: produce(rawClient, (draft) => {
-        draft.attributes.stage = stage;
-      }),
-    })
+    return updateClient({ id }, produce(rawClient, (draft) => {
+      draft.attributes.stage = stage;
+    }))
       .then(() => {
         let msg = 'Family stage updated';
         if (currentStage.levelGroup !== nextStage.levelGroup) {
@@ -90,9 +88,20 @@ class UpdateFamilyStageFormContainer extends Component {
       this.nextStage = getStageDetails(nextStage);
       ({ levelGroup: nextStageGroup } = this.nextStage);
     }
+    const initialValues = {
+      stage,
+    };
 
     return (
-      <ReduxForm {...this.props} currentStageGroup={levelGroup} nextStageGroup={nextStageGroup} name={name} onSubmit={handleUpdateStage} />
+      <ReduxForm
+        {...this.props}
+        initialValues={initialValues}
+        currentStageGroup={levelGroup}
+        nextStageGroup={nextStageGroup}
+        name={name}
+        onSubmit={handleUpdateStage}
+
+      />
     );
   }
 }
