@@ -35,7 +35,7 @@ export default class FamilyDetailsFormContainer extends Component {
   handleSubmit = () => {};
 
   render() {
-    const { client } = this.props;
+    const { client, ...props } = this.props;
     const { clientInfo, uuidAux, admin } = client;
     const { phoneNumber } = admin;
     const { name, email, slyMessage } = clientInfo;
@@ -68,6 +68,7 @@ export default class FamilyDetailsFormContainer extends Component {
         onSubmit={this.handleSubmit}
         initialValues={initialValues}
         intro={slyMessage}
+        {...props}
       />
     );
   }

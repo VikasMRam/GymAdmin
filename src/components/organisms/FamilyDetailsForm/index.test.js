@@ -4,11 +4,49 @@ import { Field } from 'redux-form';
 
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
 
+const timeToMove = [
+  'Immediately',
+  '1-3 Months',
+  '3 Months+',
+];
+
+const gender = [
+  'Male',
+  'Female',
+  'Other',
+  'Not Specified',
+];
+
+const lookingFor = [
+  'Self',
+  'Parents',
+  'Mother',
+  'Father',
+  'Grandparents',
+  'Grandmother',
+  'Grandfather',
+  'Husband',
+  'Wife',
+  'Other',
+];
+
+const monthlyBudget = [
+  '<2K',
+  '2K-3K',
+  '3K-4K',
+  '4K-5K',
+  '5K+',
+];
+
 const intro = 'Rhoda Goldman Plaza';
 const handleSubmit = jest.fn();
 const defaultProps = {
   intro,
   handleSubmit,
+  timeToMove,
+  gender,
+  lookingFor,
+  monthlyBudget,
 };
 
 const wrap = (props = {}) => shallow(<FamilyDetailsForm {...defaultProps} {...props} />);

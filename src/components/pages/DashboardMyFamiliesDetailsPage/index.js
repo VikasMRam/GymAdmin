@@ -130,7 +130,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       handleAcceptClick, handleRejectClick, handleUpdateClick, handleAddNoteClick, handlePauseClick,
     } = this;
-    const { client, currentTab } = this.props;
+    const { client, currentTab, meta } = this.props;
 
     const backLink = (
       <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
@@ -150,6 +150,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       );
     }
 
+    const { gender, lookingFor, monthlyBudget, timeToMove } = meta;
     const {
       id, clientInfo, stage, status,
     } = client;
@@ -201,7 +202,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           </div>
           <div label="FAMILY DETAILS" to={familyDetailsPath}>
             <FamilyDetailsTab>
-              <FamilyDetailsFormContainer client={client} />
+              <FamilyDetailsFormContainer
+                client={client}
+                accepted={!showAcceptRejectButtons}
+                gender={gender}
+                lookingFor={lookingFor}
+                monthlyBudget={monthlyBudget}
+                timeToMove={timeToMove}
+              />
             </FamilyDetailsTab>
           </div>
           <div label="COMMUNITIES" to={communitiesPath}>
