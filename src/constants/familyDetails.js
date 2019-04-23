@@ -57,3 +57,9 @@ export const FAMILY_STATUS_ACTIVE = 'Active';
 export const FAMILY_STATUS_ON_HOLD = 'On Hold';
 export const FAMILY_STATUS_ARCHIVED = 'Archived';
 export const FAMILY_STATUS_DELETED = 'Deleted';
+
+export const STAGE_CLIENT_TYPE_MAP = {
+  Prospects: 'prospecting',
+  Connected: 'connected',
+  Closed: 'closed',
+};
