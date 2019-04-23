@@ -6,10 +6,8 @@ import { connect } from 'react-redux';
 
 import { query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import {
-  createValidator,
-  required,
-} from 'sly/services/validation';
+import { FAMILY_STATUS_ACTIVE } from 'sly/constants/familyDetails';
+import { createValidator, required } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
 
@@ -54,6 +52,7 @@ class UpdateFamilyStageFormContainer extends Component {
 
     return updateClient({ id }, produce(rawClient, (draft) => {
       draft.attributes.stage = stage;
+      draft.attributes.status = FAMILY_STATUS_ACTIVE;
     }))
       .then(() => {
         let msg = 'Family stage updated';
