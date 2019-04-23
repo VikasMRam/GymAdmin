@@ -4,6 +4,7 @@ import produce from 'immer';
 
 import { prefetch, query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
+import { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 import { FAMILY_STATUS_ACTIVE } from 'sly/constants/familyDetails';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -12,6 +13,10 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
 
 @prefetch('client', 'getClient', (req, { match }) => req({
   id: match.params.id,
+}))
+
+@prefetch('uuidAux', 'getUuidAux', (req, { client }) => req({
+  id: client && client.uuidAux && client.uuidAux.id,
 }))
 
 @query('updateClient', 'updateClient')
@@ -23,6 +28,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     status: object,
     history: object,
     updateClient: func,
+    uuidAux: uuidAuxProps,
   };
 
   onRejectSuccess = (hide) => {
@@ -53,9 +59,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   render() {
     const { onRejectSuccess, onUnPause } = this;
-    const { client, match, status } = this.props;
+    const { client, match, status, uuidAux } = this.props;
     const { result: rawClient, meta } = status.client;
-
+console.log(uuidAux);
     return (
       <NotificationController>
         {({ notifyError, notifyInfo }) => (

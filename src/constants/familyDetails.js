@@ -28,3 +28,5 @@ export const STAGE_CLIENT_TYPE_MAP = {
   Connected: 'connected',
   Closed: 'closed',
 };
+
+export const NOTE_COMMENTABLE_TYPE_CLIENT = 'Client';
