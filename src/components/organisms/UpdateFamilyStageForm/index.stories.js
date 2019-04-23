@@ -29,4 +29,14 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       handleSubmit={withPreventDefault(action('onSubmit'))}
       onCancel={action('onCancel')}
     />
+  ))
+  .add('with showRejectOption', () => (
+    <UpdateFamilyStageFormContainer
+      showRejectOption
+      name="Amal"
+      currentStageGroup={groups[0]}
+      nextStageGroup={groups[1]}
+      handleSubmit={withPreventDefault(action('onSubmit'))}
+      onCancel={action('onCancel')}
+    />
   ));
