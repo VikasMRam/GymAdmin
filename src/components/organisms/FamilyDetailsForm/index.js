@@ -158,29 +158,15 @@ class FamilyDetailsForm extends Component {
             address={preferredLocation}
           />
         </PaddedTwoColumnWrapper>
-        {accepted &&
-          <Field
-            name="budget"
-            label="Monthly budget"
-            type="select"
-            component={ReduxField}
-            wideWidth
-          >
-            {monthlyBudgetOptions}
-          </Field>
-        }
-        {!accepted &&
-          <Field
-            name="budget"
-            label="Monthly budget"
-            type="text"
-            disabled
-            hideValue
-            placeholder="Accept family to view"
-            component={ReduxField}
-            wideWidth
-          />
-        }
+        <Field
+          name="budget"
+          label="Monthly budget"
+          type="select"
+          component={ReduxField}
+          wideWidth
+        >
+          {monthlyBudgetOptions}
+        </Field>
         <Field
           name="timeToMove"
           label="Time to move"
