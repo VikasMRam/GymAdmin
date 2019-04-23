@@ -9,7 +9,7 @@ import { FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardA
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { getStageDetails } from 'sly/services/helpers/stage';
-import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP } from 'sly/constants/familyDetails';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
@@ -82,19 +82,22 @@ const getPageParams = ({ match, location }) => {
   const searchParams = getSearchParams(match, location);
   const type = searchParams.type || 'Prospects';
   const typeStages = FAMILY_STAGE_ORDERED[type];
+  const clientType = STAGE_CLIENT_TYPE_MAP[type];
   return {
-    'page-number': searchParams['page-number'],
+    pageNumber: searchParams['page-number'],
     type,
     typeStages,
+    clientType,
   };
 };
 
 
 // TODO: Fix Latest Note and Date Added column after api impl is done
 @prefetch('clients', 'getClients', (getClients, { match, location }) => {
-  const { typeStages } = getPageParams({ match, location });
+  const { clientType, pageNumber } = getPageParams({ match, location });
   const filters = {
-    'filter[stage]': typeStages,
+    'filter[client_type]': clientType,
+    'page-number': pageNumber,
   };
   return getClients(filters);
 })
