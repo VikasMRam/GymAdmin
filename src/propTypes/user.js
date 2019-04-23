@@ -7,7 +7,7 @@ const uuidInfo = shape({
     adls: arrayOf(string),
   }),
   financialInfo: shape({
-    maxMonthlyBudget: number,
+    maxMonthlyBudget: string,
     medicare: bool,
     payment: string,
   }),
