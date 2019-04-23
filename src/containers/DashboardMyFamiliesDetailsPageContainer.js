@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 import produce from 'immer';
+import { connect } from 'react-redux';
 
-import { prefetch, query } from 'sly/services/newApi';
+import { prefetch, query, getRelationship } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
@@ -15,8 +16,8 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
   id: match.params.id,
 }))
 
-@prefetch('uuidAux', 'getUuidAux', (req, { client }) => req({
-  id: client && client.uuidAux && client.uuidAux.id,
+@connect((state, props) => ({
+  uuidAux: getRelationship(state, props.status.client.result, 'uuidAux'),
 }))
 
 @query('updateClient', 'updateClient')
