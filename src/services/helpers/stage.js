@@ -9,6 +9,7 @@ export const getStageDetails = (stageName) => {
   let disableAddNoteButton = false;
   let showAcceptRejectButtons = false;
   let showUpdateAddNoteButtons = false;
+  let showPauseButton = false;
 
   stageArr.forEach((s, idx) => {
     if (level === -1) {
@@ -25,6 +26,9 @@ export const getStageDetails = (stageName) => {
           showAcceptRejectButtons = true;
         } else {
           showUpdateAddNoteButtons = true;
+          if (idx === 1) {
+            showPauseButton = true;
+          }
         }
       }
     }
@@ -37,5 +41,6 @@ export const getStageDetails = (stageName) => {
     disableAddNoteButton,
     showAcceptRejectButtons,
     showUpdateAddNoteButtons,
+    showPauseButton,
   };
 };

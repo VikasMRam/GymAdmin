@@ -159,7 +159,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       id, clientInfo, stage, status,
     } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
-    const { showAcceptRejectButtons } = getStageDetails(stage);
+    const { showAcceptRejectButtons, showPauseButton } = getStageDetails(stage);
     const { name } = clientInfo;
     const activityCards = activities.map((a, i) =>
       <StyledFamilyActivityItem key={a.title} noBorderRadius snap={i === activities.length - 1 ? null : 'bottom'} title={a.title} description={a.description} date={a.date} />);
@@ -191,7 +191,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           />
           {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
           {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
-          {!showAcceptRejectButtons && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
+          {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
         </section>
         <Tabs activeTab={activeTab}>
           <div label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
