@@ -27,8 +27,12 @@ const convertClientsToTableContents = (clients) => {
     const { level, palette } = getStageDetails(stage);
     const { name: clientName, slyMessage } = clientInfo;
     const { uuidInfo } = uuidAux;
-    const { residentInfo } = uuidInfo;
-    const { fullName: residentName } = residentInfo;
+    let residentName = '';
+    if (uuidInfo) {
+      const { residentInfo } = uuidInfo;
+      const { fullName } = residentInfo;
+      residentName = fullName;
+    }
     const createdAtStr = dayjs(createdAt).format('MM/DD/YYYY');
     const updatedAtStr = dayjs(updatedAt).format('MM/DD/YYYY');
     const rowItems = [];
