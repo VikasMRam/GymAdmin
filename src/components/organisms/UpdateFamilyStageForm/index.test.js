@@ -13,6 +13,7 @@ const groups = Object.keys(FAMILY_STAGE_ORDERED);
 const optionsLen =
   groups.map(sg => FAMILY_STAGE_ORDERED[sg].length)
     .reduce((sum, x) => sum + x);
+const optionsLenWithoutReject = optionsLen - 1;
 const optionValues =
   groups
     .map(sg => FAMILY_STAGE_ORDERED[sg])
@@ -21,6 +22,21 @@ const optionValues =
 describe('UpdateFamilyStageForm', () => {
   it('renders', () => {
     const wrapper = wrap();
+    const field = wrapper.find('Field');
+
+    expect(field).toHaveLength(1);
+    const options = field.find('option');
+    expect(options).toHaveLength(optionsLenWithoutReject);
+    options.forEach((o, i) => {
+      expect(o.text()).toBe(optionValues[i]);
+    });
+    expect(wrapper.find('Warning')).toHaveLength(0);
+  });
+
+  it('renders with showRejectOption', () => {
+    const wrapper = wrap({
+      showRejectOption: true,
+    });
     const field = wrapper.find('Field');
 
     expect(field).toHaveLength(1);
@@ -42,7 +58,7 @@ describe('UpdateFamilyStageForm', () => {
 
     expect(field).toHaveLength(1);
     const options = field.find('option');
-    expect(options).toHaveLength(optionsLen);
+    expect(options).toHaveLength(optionsLenWithoutReject);
     options.forEach((o, i) => {
       expect(o.text()).toBe(optionValues[i]);
     });
