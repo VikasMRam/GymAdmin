@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import { prefetch, query, getRelationship } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 import { FAMILY_STATUS_ACTIVE } from 'sly/constants/familyDetails';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -29,7 +28,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     status: object,
     history: object,
     updateClient: func,
-    uuidAux: uuidAuxProps,
+    uuidAux: object,
   };
 
   onRejectSuccess = (hide) => {
@@ -60,9 +59,12 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   render() {
     const { onRejectSuccess, onUnPause } = this;
-    const { client, match, status, uuidAux } = this.props;
+    const {
+      client, match, status, uuidAux,
+    } = this.props;
     const { result: rawClient, meta } = status.client;
-console.log(uuidAux);
+    // todo temp
+    console.log(uuidAux);
     return (
       <NotificationController>
         {({ notifyError, notifyInfo }) => (

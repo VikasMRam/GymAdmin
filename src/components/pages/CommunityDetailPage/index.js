@@ -334,7 +334,7 @@ export default class CommunityDetailPage extends Component {
     if (initedUserSave) {
       onUnsaveCommunity(notifyInfo, notifyError);
     } else {
-      showModal(<SaveCommunityContainer slug={id} onDoneButtonClicked={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />);
+      showModal(<SaveCommunityContainer slug={id} onCancelClick={hideModal} onDoneButtonClick={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />, null, 'noPadding', false);
     }
     onMediaGalleryFavouriteClick();
   };

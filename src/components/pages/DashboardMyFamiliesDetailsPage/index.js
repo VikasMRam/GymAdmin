@@ -20,6 +20,7 @@ import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFami
 import RejectFamilyContainer from 'sly/containers/RejectFamilyContainer';
 import UpdateFamilyStageFormContainer from 'sly/containers/UpdateFamilyStageFormContainer';
 import PlaceFamilyOnPauseFormContainer from 'sly/containers/PlaceFamilyOnPauseFormContainer';
+import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import { Box, Block, Icon, Span, Link, Hr } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
@@ -109,7 +110,21 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
   };
 
   handleAddNoteClick = () => {
-    // todo  add handler
+    const { showModal, client, hideModal } = this.props;
+    const { clientInfo } = client;
+    const { name } = clientInfo;
+    showModal(
+      <AddNoteFormContainer
+        hasCancel
+        onCancelClick={hideModal}
+        heading={`Add a note on ${name}`}
+        placeholder="Add a note on why you are updating this family's stage..."
+        submitButtonText="Save note"
+      />,
+      null,
+      'noPadding',
+      false
+    );
   };
 
   handlePauseClick = () => {
