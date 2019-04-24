@@ -60,6 +60,8 @@ import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFo
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import pad from 'sly/components/helpers/pad';
 
+import InplaceWizardPage from 'sly/components/pages/InplaceWizardPage';
+
 const BackToSearch = styled.div`
   text-align: center
 `;
@@ -368,6 +370,8 @@ export default class CommunityDetailPage extends Component {
       toggleHowSlyWorksVideoPlaying,
       isHowSlyWorksVideoPlaying,
       history,
+      showModal,
+      userAction,
     } = this.props;
 
     const {
@@ -683,6 +687,14 @@ export default class CommunityDetailPage extends Component {
                     />
                   </BottomSection>
                 </TopCollapsibleSection>
+                <TopCollapsibleSection>
+                  <InplaceWizardPage
+                    community={community}
+                    showModal={showModal}
+                    user={user}
+                    userAction={userAction}
+                  />
+                </TopCollapsibleSection>
                 <TopCollapsibleSection title={`Questions About ${name}`}>
                   <MainSection>
                     <CommunityQuestionAnswers
@@ -764,6 +776,7 @@ export default class CommunityDetailPage extends Component {
               />
             </Lazy>
           </StyledSection>
+
           {(nearbyCities && nearbyCities.length > 0) &&
             <Wrapper>
               <SeoLinks title={`Top Cities Near ${name}`} links={nearbyCities} />
