@@ -17,6 +17,8 @@ import {
   FAMILY_DASHBOARD_FAMILIES_PATH,
   FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
   FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH,
+  ADMIN_DASHBOARD_CALLS_PATH,
+  ADMIN_DASHBOARD_CALLS_DETAILS_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
@@ -25,6 +27,8 @@ import DashboardFavoritesPageContainer from 'sly/containers/DashboardFavoritesPa
 import DashboardMyProfilePageContainer from 'sly/containers/DashboardMyProfilePageContainer';
 import DashboardMyFamiliesDetailsPageContainer from 'sly/containers/DashboardMyFamiliesDetailsPageContainer';
 import DashboardAgentFamilyOverviewPageContainer from 'sly/containers/DashboardAgentFamilyOverviewPageContainer';
+import DashboardCallsIndexPageContainer from 'sly/containers/DashboardCallsIndexPageContainer';
+import DashboardCallsDetailsPageContainer from 'sly/containers/DashboardCallsDetailsPageContainer';
 
 setGlobalStyles();
 
@@ -62,6 +66,16 @@ export default class App extends Component {
     {
       path: FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH,
       component: DashboardMyFamiliesDetailsPageContainer,
+      exact: true,
+    },
+    {
+      path: ADMIN_DASHBOARD_CALLS_PATH,
+      component: DashboardCallsIndexPageContainer,
+      exact: true,
+    },
+    {
+      path: ADMIN_DASHBOARD_CALLS_DETAILS_PATH,
+      component: DashboardCallsDetailsPageContainer,
       exact: true,
     },
   ];
