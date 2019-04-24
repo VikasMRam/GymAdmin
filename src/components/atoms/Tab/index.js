@@ -14,6 +14,8 @@ const Wrapper = styled.li`
   ${p => p.active && css`
     border-bottom: ${size('border', 'xxLarge')} solid ${palette('slate', 'base')};
   `}
+
+  ${p => p.tabStyles}
 `;
 
 class Tab extends Component {
@@ -22,6 +24,7 @@ class Tab extends Component {
     label: string.isRequired,
     onClick: func.isRequired,
     className: string,
+    tabStyles: string,
   };
 
   onClick = () => {
@@ -36,6 +39,7 @@ class Tab extends Component {
         active,
         label,
         className,
+        tabStyles,
       },
     } = this;
 
@@ -50,6 +54,7 @@ class Tab extends Component {
         onClick={onClick}
         active={active}
         className={className}
+        tabStyles={tabStyles}
       >
         <Span weight="bold" size="tiny" palette={spanPalette} variation={spanVariation}>{label}</Span>
       </Wrapper>

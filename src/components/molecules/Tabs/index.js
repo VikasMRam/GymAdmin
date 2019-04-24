@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { instanceOf, string } from 'prop-types';
+import { instanceOf, string, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -26,6 +26,8 @@ class Tabs extends Component {
   static propTypes = {
     children: instanceOf(Array).isRequired,
     activeTab: string,
+    className: string,
+    tabStyles: bool,
   }
 
   constructor(props) {
@@ -50,6 +52,7 @@ class Tabs extends Component {
       onClickTabItem,
       props: {
         children,
+        className,
       },
       state: {
         activeTab,
@@ -57,16 +60,17 @@ class Tabs extends Component {
     } = this;
 
     return (
-      <div>
+      <div className={className}>
         <TabWrapper>
           {children.map((child) => {
-            const { to, label } = child.props;
+            const { to, label, tabStyles } = child.props;
             const tab = (
               <CursorTab
                 active={activeTab === label}
                 key={label}
                 label={label}
                 onClick={() => onClickTabItem(label)}
+                tabStyles={tabStyles}
               />
             );
 
@@ -79,7 +83,7 @@ class Tabs extends Component {
         <TabContent>
           {children.map((child) => {
             if (child.props.label !== activeTab) return undefined;
-            return child.props.children;
+            return child;
           })}
         </TabContent>
       </div>

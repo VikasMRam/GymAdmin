@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { string, func, object } from 'prop-types';
 
 import {
@@ -10,7 +10,7 @@ import {
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import { FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
@@ -70,6 +70,51 @@ const StyledFamilyActivityItem = styled(FamilyActivityItem)`
 
 const FamilyDetailsTab = styled.div`
   padding: ${size('spacing.xLarge')};
+`;
+
+const TabWrapper = styled.div`
+  padding: ${size('spacing.large')};
+  background-color: ${palette('grey', 'background')};
+
+  > * {
+    background-color: ${palette('white', 'base')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.xLarge')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding: 0;
+  }
+`;
+
+const hideInBigScreenStyles = css`
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
+`;
+
+const BigScreenSummarySection = styled.section`
+  display: none;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: block;
+  }
+`;
+
+const SmallScreenClientNameWrapper = styled.div`
+  display: flex;
+  padding: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
+`;
+
+const SmallScreenClientNameBlock = styled(Block)`
+  width: 100%;
+  text-align: center;
 `;
 
 export default class DashboardMyFamiliesDetailsPage extends Component {
@@ -174,7 +219,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     return (
       <DashboardTwoColumnTemplate activeMenuItem="My Families">
-        <section>
+        <BigScreenSummarySection>
           <Box snap="bottom">
             {backLink}
             <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
@@ -192,37 +237,53 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
           {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
           {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
-        </section>
+        </BigScreenSummarySection>
+        <SmallScreenClientNameWrapper>
+          <Icon icon="arrow-left" palette="slate" />
+          <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
+        </SmallScreenClientNameWrapper>
         <Tabs activeTab={activeTab}>
-          <div label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
-            <TableHeaderButtons hasColumnsButton={false} />
-            {activityCards.length === 0 &&
-              <Fragment>
-                <PaddedHr noMargin />
-                <TextAlignCenterBlock>There are no acivities.</TextAlignCenterBlock>
-              </Fragment>
-            }
-            {activityCards.length > 0 && activityCards}
+          <div label="SUMMARY" tabStyles={hideInBigScreenStyles}>
+            <TabWrapper>
+              <FamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
+            </TabWrapper>
           </div>
+          <div label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
+            <TabWrapper>
+              <TableHeaderButtons hasColumnsButton={false} />
+              {activityCards.length === 0 &&
+                <Fragment>
+                  <PaddedHr noMargin />
+                  <TextAlignCenterBlock>There are no acivities.</TextAlignCenterBlock>
+                </Fragment>
+              }
+              {activityCards.length > 0 && activityCards}
+            </TabWrapper>
+          </div>
+          {/* 4176711, 4176712 */}
           <div label="FAMILY DETAILS" to={familyDetailsPath}>
-            <FamilyDetailsTab>
-              <FamilyDetailsFormContainer
-                client={client}
-                rawClient={rawClient}
-                notifyError={notifyError}
-                accepted={!showAcceptRejectButtons}
-                gender={gender}
-                lookingFor={lookingFor}
-                monthlyBudget={monthlyBudget}
-                timeToMove={timeToMove}
-              />
-            </FamilyDetailsTab>
+            <TabWrapper>
+              <FamilyDetailsTab>
+                <FamilyDetailsFormContainer
+                  client={client}
+                  rawClient={rawClient}
+                  notifyError={notifyError}
+                  accepted={!showAcceptRejectButtons}
+                  gender={gender}
+                  lookingFor={lookingFor}
+                  monthlyBudget={monthlyBudget}
+                  timeToMove={timeToMove}
+                />
+              </FamilyDetailsTab>
+            </TabWrapper>
           </div>
           <div label="COMMUNITIES" to={communitiesPath}>
-            <CommunitiesTab label="COMMUNITIES">
-              <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
-              <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
-            </CommunitiesTab>
+            <TabWrapper>
+              <CommunitiesTab label="COMMUNITIES">
+                <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
+                <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
+              </CommunitiesTab>
+            </TabWrapper>
           </div>
         </Tabs>
       </DashboardTwoColumnTemplate>

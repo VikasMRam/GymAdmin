@@ -43,11 +43,11 @@ const Column = styled.aside`
 
 const Body = styled.main`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: ${size('spacing.xLarge')};
     background-color: ${palette('grey.background')};
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding: ${size('spacing.xLarge')};
     grid-column: 2 / 2;
     grid-row: 2 / 2;
   }
