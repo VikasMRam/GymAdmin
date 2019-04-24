@@ -15,7 +15,7 @@ function getDisplayName(WrappedComponent) {
 }
 
 const mapStateToProps = (state, { status }) => ({
-  contact: getRelationship(status.user.result, 'contact'),
+  contact: status.user.result && getRelationship(status.user.result, 'contact'),
 });
 
 const mapDispatchToProps = dispatch => ({
