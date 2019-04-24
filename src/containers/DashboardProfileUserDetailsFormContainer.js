@@ -9,6 +9,7 @@ import DashboardProfileUserDetailsForm from 'sly/components/organisms/DashboardP
 import { createValidator, required, email, usPhone } from 'sly/services/validation/index';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
 import { withUser } from 'sly/services/newApi';
+import query from 'sly/services/newApi/query';
 
 const emailWarning = 'Enter your email so your agent can help you by answering your questions and sending recommended communities.';
 const messageObj = {
@@ -82,6 +83,8 @@ const convertUserToProfileFormValues = (user) => {
   uuidAux: getRelationship(state, props.status.user.result, 'uuidAux'),
 }))
 
+@query('updateUser', 'updateUser')
+
 export default class DashboardProfileUserDetailsFormContainer extends Component {
   static propTypes = {
     user: userPropType,
@@ -89,17 +92,17 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
       user: object,
     }),
     uuidAux: uuidAuxProps,
-    api: object,
+    updateUser: func,
     notifySuccess: func,
   };
 
   handleSubmit = (values) => {
     const {
-      status, uuidAux, api, notifySuccess,
+      status, uuidAux, updateUser, notifySuccess,
     } = this.props;
     const { user } = status;
     const { result } = user;
-    return api.updateUser({ id: result.id }, {
+    return updateUser({ id: result.id }, {
       data: produce(result, (draft) => {
         draft.relationships.uuidAux = {
           data: uuidAux,
