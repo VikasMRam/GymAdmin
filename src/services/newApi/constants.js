@@ -9,4 +9,6 @@ export const TOUR_BOOKED = 'tourBooked';
 export const AGENT_ASK_QUESTIONS = 'agentAskQuestions';
 export const FLOOR_PLAN_REQUESTED = 'floorPlanRequested';
 
+export const PRICING_REQUEST = 'PricingRequest';
+
 export const API_CALL = 'SLY_API_CALL';

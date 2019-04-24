@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import { object, func } from 'prop-types';
 
-import { withApi, getRequestInfo } from 'sly/services/newApi';
+import { withApi, getRequestInfo, getRelationship } from 'sly/services/newApi';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -13,23 +13,27 @@ function getDisplayName(WrappedComponent) {
 
 export default function withUser(InnerComponent) {
   const mapStateToProps = (state, props) => {
-    if (props.userRequestInfo) {
-      return {
-        requestInfo: props.userRequestInfo,
-      };
-    }
+    const userRequestInfo = props.userRequestInfo || getRequestInfo(
+      state,
+      'getUser',
+      [{ id: 'me' }],
+    );
+
+    const uuidAuxRequestInfo = props.uuidAuxRequestInfo || getRequestInfo(
+      state,
+      'getUuidAux',
+      [{ id: 'me' }],
+    );
 
     return {
-      requestInfo: getRequestInfo(
-        state,
-        'getUser',
-        [{ id: 'me' }],
-      ),
+      userRequestInfo,
+      uuidAuxRequestInfo,
     };
   };
 
   const mapDispatchToActions = (dispatch, { api }) => ({
-    fetch: () => dispatch(api.getUser({ id: 'me' })),
+    fetchUser: () => dispatch(api.getUser({ id: 'me' })),
+    fetchUuidAux: () => dispatch(api.getUuidAux({ id: 'me' })),
   });
 
   @withApi
@@ -43,31 +47,49 @@ export default function withUser(InnerComponent) {
 
     static propTypes = {
       api: object,
-      requestInfo: object,
-      fetch: func,
+      userRequestInfo: object,
+      uuidAuxRequestInfo: object,
+      fetchUser: func,
+      fetchUuidAux: func,
       done: func,
     };
 
     // props fetch bound to dispatch
-    fetch = () => {
-      const { fetch, done } = this.props;
-      return fetch().then(done, done);
+    fetchUser = () => {
+      const { fetchUser, done } = this.props;
+      return fetchUser().then(done, done);
+    };
+
+    fetchUuidAux = () => {
+      const { fetchUuidAux, done } = this.props;
+      return fetchUuidAux().then(done, done);
     };
 
     count = 0;
 
     render() {
-      const { requestInfo, status, done, fetch, ...props } = this.props;
-      const { normalized, ...request } = requestInfo;
+      const { userRequestInfo, uuidAuxRequestInfo, status, done, fetch, ...props } = this.props;
+
+      const { normalized: user, ...userRequest } = userRequestInfo;
+      const { normalized: uuidAux, ...uuidAuxRequest } = uuidAuxRequestInfo;
 
       const innerProps = {
         ...props,
-        user: normalized,
+
+        user,
+        uuidAux,
+
         status: {
           ...status,
+
           user: {
-            ...request,
-            refetch: this.fetch,
+            ...userRequest,
+            refetch: this.fetchUser,
+          },
+
+          uuidAux: {
+            ...uuidAuxRequest,
+            refetch: this.fetchUuidAux,
           },
         },
       };

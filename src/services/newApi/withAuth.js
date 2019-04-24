@@ -6,12 +6,17 @@ import { object, func } from 'prop-types';
 import withUser from './withUser';
 
 import { ensureAuthenticated } from 'sly/store/actions';
+import { getRelationship } from 'sly/services/newApi/index';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
     || WrappedComponent.name
     || 'Component';
 }
+
+const mapStateToProps = (state, { status }) => ({
+  contact: getRelationship(status.user.result, 'contact'),
+});
 
 const mapDispatchToProps = dispatch => ({
   ensureAuthenticated: (...args) => dispatch(ensureAuthenticated(...args)),
@@ -21,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
 export default function withAuth(InnerComponent) {
   @withUser
 
-  @connect(null, mapDispatchToProps)
+  @connect(mapStateToProps, mapDispatchToProps)
 
   class Wrapper extends Component {
     static displayName = `withAuth(${getDisplayName(InnerComponent)})`;
@@ -31,6 +36,7 @@ export default function withAuth(InnerComponent) {
       api: object.isRequired,
       dispatch: func.isRequired,
       status: object.isRequired,
+      user: object.isRequired,
     };
 
     static WrappedComponent = InnerComponent;
@@ -40,11 +46,26 @@ export default function withAuth(InnerComponent) {
       return ensureAuthenticated(...args);
     };
 
+    createOrUpdateUser = (data) => {
+      const { user } = this.props;
+      const { name, phone, email } = data;
+
+      console.log({ data, user })
+      if (!user) {
+        return this.registerUser({
+          name,
+          email,
+          phone_number: phone,
+        });
+      }
+
+      return Promise.resolve();
+    };
+
     registerUser = (options = {}) => {
       const { dispatch, api, status } = this.props;
       const { ignoreExisting, ...data } = options;
-      // FIXME: API does not give enough info on how to figure ignoreExisting
-      // FIXME: @knlshah, please fix this both here and api
+
       return dispatch(api.registerUser(data)).catch((e) => {
         const alreadyExists = e.body
           && e.body.errors
@@ -90,6 +111,8 @@ export default function withAuth(InnerComponent) {
     render = () => (
       <InnerComponent
         {...this.props}
+        isLoggedIn={this.props.status.user.status === 200}
+        createOrUpdateUser={this.createOrUpdateUser}
         loginUser={this.loginUser}
         logoutUser={this.logoutUser}
         registerUser={this.registerUser}
