@@ -85,6 +85,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     meta: clientMetaPropType,
     onRejectSuccess: func,
     onUnPause: func.isRequired,
+    onAddNote: func,
   };
 
   handleAcceptClick = () => {
@@ -110,9 +111,13 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
   };
 
   handleAddNoteClick = () => {
-    const { showModal, client, hideModal } = this.props;
+    const {
+      showModal, client, hideModal, onAddNote, notifyError, notifyInfo,
+    } = this.props;
     const { clientInfo } = client;
     const { name } = clientInfo;
+    const handleSubmit = data => onAddNote(data, notifyError, notifyInfo, hideModal);
+
     showModal(
       <AddNoteFormContainer
         hasCancel
@@ -120,6 +125,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         heading={`Add a note on ${name}`}
         placeholder="Add a note on why you are updating this family's stage..."
         submitButtonText="Save note"
+        onSubmit={handleSubmit}
       />,
       null,
       'noPadding',
