@@ -38,6 +38,7 @@ const StyledDiv = styled.div`
 
 const StyledStepContainer = styled.div`
   padding: ${size('spacing.xLarge')};
+  min-height: 400px;
 `;
 const AvatarIcon = styled(Image)`
   display: none;
@@ -54,11 +55,6 @@ const StyledButton = styled(Button)`
   margin-right: ${size('spacing.regular')};
   margin-bottom: ${size('spacing.xLarge')};
   width: 100%;
-  padding: ${size('spacing.large')};
-  background: white;
-  color: black;
-  border: 1px solid grey;
-  border-radius: 2px;
   
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.small')}
     ${palette('slate', 'stroke')};
@@ -87,14 +83,14 @@ const GenericWizardInfoStep = ({ formData, error }) => {
                       {caption}
                     </StyledDiv>
                   </StyledBlock> }
-      {bodyText && <StyledCBlock size="title">
+      {bodyText && <StyledCBlock size="subtitle">
         <StyledDiv >
           {bodyText}
         </StyledDiv>
       </StyledCBlock> }
 
       {error && <Block palette="danger">{error}</Block>}
-      {canStartOver && <StyledButton
+      {canStartOver && <StyledButton ghost
         onClick={gotoStart}>Start Over
       </StyledButton>}
     </StyledStepContainer>

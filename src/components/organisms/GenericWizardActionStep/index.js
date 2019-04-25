@@ -37,10 +37,7 @@ const StyledButton = styled(Button)`
   margin-right: ${size('spacing.regular')};
   margin-bottom: ${size('spacing.xLarge')};
   width: 100%;
-  text-align: left;
-  // padding: ${size('spacing.large')};
-  // border: ${size('border.regular')} solid ${palette('grey', 'filler')};
-  // border-radius: 2px;
+  
   box-shadow: 0 ${size('spacing.small')} ${size('spacing.small')}
     ${palette('slate', 'stroke')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
@@ -55,6 +52,7 @@ const StyledButton = styled(Button)`
 
 const StyledStepContainer = styled.div`
   padding: ${size('spacing.xLarge')};
+  min-height: 400px;
 `;
 const AvatarIcon = styled(Image)`
   display: none;
@@ -80,13 +78,16 @@ const GenericWizardActionStep = ({ formData, error }) => {
                     </StyledDiv>
                   </StyledBlock> }
       {buttons.map((b,i)=>{
-        return (<StyledButton ghost
-          onClick={b.onClick} key={`${i}m`} to={b.to} target={b.target}>{b.text}
+        return (<StyledButton
+          onClick={b.onClick}
+          key={`${i}m`} to={b.to} target={b.target}
+          ghost
+        >{b.text}
         </StyledButton>);
       })}
 
       {error && <Block palette="danger">{error}</Block>}
-      {canStartOver && <StyledButton
+      {canStartOver && <StyledButton ghost
         onClick={gotoStart}>Start Over
       </StyledButton>}
     </StyledStepContainer>

@@ -21,44 +21,51 @@ const SubHeading = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
+const StyledContainer = styled.div`
+  padding: ${props => props.displayContext ? (props.displayContext === 'wizard' ? size('spacing.xLarge') : 'inherit') : 'inherit'};
+  min-height:  ${props => props.displayContext ? (props.displayContext === 'wizard' ? '400px' : 'inherit') : 'inherit'};
+`;
+
 const CommunityBookATourContactForm = ({
-  error, user, userDetails, heading, subheading, onAdvisorHelpClick, handleSubmit,
+  error, user, userDetails, heading, subheading, onAdvisorHelpClick, handleSubmit, displayContext
 }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
-      <SubheadingWrapper>
-        <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can a Seniorly Partner Agent help?</Link></SubHeading>
-      </SubheadingWrapper>
-      {!(userDetails && userDetails.fullName) && <Field
-        name="name"
-        label="Full name"
-        type="text"
-        placeholder="Full name"
-        component={ReduxField}
-      />}
-      {!(userDetails && userDetails.phone) &&
-        <Field
-          name="phone"
-          label="Phone"
+    <StyledContainer displayContext={displayContext}>
+      <form onSubmit={handleSubmit}>
+        <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
+        <SubheadingWrapper>
+          <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can a Seniorly Partner Agent help?</Link></SubHeading>
+        </SubheadingWrapper>
+        {!(userDetails && userDetails.fullName) && <Field
+          name="name"
+          label="Full name"
           type="text"
-          placeholder="925-555-5555"
+          placeholder="Full name"
           component={ReduxField}
-        />
-      }
-      {/* userDetails && userDetails.fullName &&
-        <Field
-          name="notes"
-          label="Add a note"
-          type="textarea"
-          rows="5"
-          placeholder="Anything you'd like your Seniorly Partner Agent to know or any questions"
-          component={ReduxField}
-        />
-      */}
-      {error && <Block palette="danger">{error}</Block>}
-      {!user && <Block size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></Block>}
-    </form>
+        />}
+        {!(userDetails && userDetails.phone) &&
+          <Field
+            name="phone"
+            label="Phone"
+            type="text"
+            placeholder="925-555-5555"
+            component={ReduxField}
+          />
+        }
+        {userDetails && userDetails.fullName && userDetails.phone &&
+          <Field
+            name="notes"
+            label="Add a note"
+            type="textarea"
+            rows="5"
+            placeholder="Anything you'd like your Seniorly Partner Agent to know or any questions"
+            component={ReduxField}
+          />
+        }
+        {error && <Block palette="danger">{error}</Block>}
+        {!user && <Block size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></Block>}
+      </form>
+    </StyledContainer>
   );
 };
 

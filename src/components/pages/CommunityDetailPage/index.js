@@ -60,7 +60,7 @@ import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFo
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import pad from 'sly/components/helpers/pad';
 
-import InplaceWizardPage from 'sly/components/pages/InplaceWizardPage';
+import CommunityInpageWizardContainer from 'sly/containers/CommunityInpageWizardContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -371,6 +371,7 @@ export default class CommunityDetailPage extends Component {
       isHowSlyWorksVideoPlaying,
       history,
       showModal,
+      hideModal,
       userAction,
     } = this.props;
 
@@ -687,14 +688,15 @@ export default class CommunityDetailPage extends Component {
                     />
                   </BottomSection>
                 </TopCollapsibleSection>
-                <TopCollapsibleSection>
-                  <InplaceWizardPage
-                    community={community}
-                    showModal={showModal}
-                    user={user}
-                    userAction={userAction}
-                  />
-                </TopCollapsibleSection>
+
+                <CommunityInpageWizardContainer
+                  community={community}
+                  showModal={showModal}
+                  hideModal={hideModal}
+                  user={user}
+                  userAction={userAction}
+                />
+
                 <TopCollapsibleSection title={`Questions About ${name}`}>
                   <MainSection>
                     <CommunityQuestionAnswers

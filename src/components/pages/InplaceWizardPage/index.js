@@ -2,6 +2,10 @@ import React, { Component, Fragment } from 'react';
 
 import { object, func, bool } from 'prop-types';
 
+import styled, { css } from 'styled-components';
+
+import { size, palette, assetPath } from 'sly/components/themes/index';
+
 import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import { community as communityPropType } from 'sly/propTypes/community';
 
@@ -18,14 +22,18 @@ import {
 
 import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
-import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
-import GenericStepContainer from 'sly/containers/GenericStepContainer';
+import GenericWizardActionStep from 'sly/components/organisms/GenericWizardActionStep';
 import GenericWizardInfoStep from 'sly/components/organisms/GenericWizardInfoStep';
 
 
 const Body = makeBody('div');
 const Controls = makeControls('div');
 
+const StyledBody = styled(Body)`
+  border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
+  margin-bottom: ${size('spacing.xLarge')};
+  
+`;
 
 const eventCategory = 'InpageWizard';
 const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
@@ -36,14 +44,11 @@ const sendEvent = (action, label, value) => SlyEvent.getInstance().sendEvent({
 });
 
 
-const stepsWithoutControls = [1, 2, 4];
-
 class InplaceWizardPage extends Component {
   static propTypes = {
     community: communityPropType,
     user: object,
-    userAction: object,
-    onComplete: func,
+    userDetails: object,
     userActionSubmit: func,
     isAdvisorHelpVisible: bool,
     onAdvisorHelpClick: func,
@@ -62,24 +67,13 @@ class InplaceWizardPage extends Component {
   }
 
   handleStepChange = ({
-                        currentStep, data, goto, doSubmit, openConfirmationModal,
+                        currentStep, data,
                       }) => {
-    const { community, userActionSubmit, userAction } = this.props;
+    const { community, userActionSubmit } = this.props;
     const { id } = community;
     const { interest } = data;
-    const { userDetails } = userAction;
     sendEvent('step-completed', id, currentStep);
     userActionSubmit(data);
-    if (currentStep === 3) {
-      if (interest === 'talk-advisor') {
-        doSubmit(openConfirmationModal);
-      } else if (interest !== 'explore-affordable-options') {
-        goto(4);
-      }
-    }
-    if (currentStep === 1 && userDetails && userDetails.phone && userDetails.fullName) {
-      goto(3);
-    }
   };
 
 
@@ -88,23 +82,6 @@ class InplaceWizardPage extends Component {
     showModal(<AdvisorHelpPopup onButtonClick={hideModal} />);
   };
 
-  openConfirmationModal = () => {
-    const {
-      showModal, hideModal, community,
-    } = this.props;
-    const { similarProperties, propInfo, address } = community;
-    const heading = 'Thank you! Our team will be calling you from (855) 855-2629.';
-    const subheading = 'Our partner agent will reach out via phone or email within the next day';
-    const props = {
-      similarCommunities: similarProperties,
-      similarCommunititesHref: getCitySearchUrl({ propInfo, address }),
-      onTileClick: hideModal,
-      heading,
-      subheading,
-    };
-
-    showModal(<CommunityBookATourConfirmationPopup {...props} />);
-  };
 
   render() {
     const {
@@ -112,19 +89,15 @@ class InplaceWizardPage extends Component {
     } = this;
 
     const {
-      community, user, onComplete, userAction,
+      community, user, userDetails,
     } = this.props;
-
-    const { userDetails } = userAction;
 
     const { id, name } = community;
     const { estimatedPrice, communityPhone } = this.state;
 
-
     return (
         <WizardController
           formName="CommunityInpageWizardForm"
-          onComplete={data => onComplete(data, openConfirmationModal)}
           onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
         >
           {({
@@ -155,87 +128,91 @@ class InplaceWizardPage extends Component {
             };
 
             const careStepData = {
+              imagePath: 'images/team-avatars.png',
               title: 'What isn\'t working currently?',
+              caption: 'We can help narrow down your choices.',
               buttons: [
                 { onClick: () => { sendEvent('wizard-select-care', 'time'); goto(5); }, text: 'I don\'t have enough time to provide care' },
                 { onClick: () => { sendEvent('wizard-select-care', 'cost'); goto(5); }, text: 'Cost is becoming too high' },
                 { onClick: () => { sendEvent('wizard-select-care', 'distance'); goto(5); }, text: 'I want to move closer to friends and family' },
-                { onClick: () => { sendEvent('wizard-select-care', 'out-home'); goto(5); }, text: 'Care needs aren\'t being met at home' }
+                { onClick: () => { sendEvent('wizard-select-care', 'out-home'); goto(5); }, text: 'Care needs aren\'t being met at home' },
               ],
             };
+
             const resourcesStepData = {
+              imagePath: 'images/team-avatars.png',
               title: 'What did you want to learn more about?',
               caption: 'Tell us what you are interested in.',
               buttons: [
                 { onClick: () => { sendEvent('wizard-select', 'care'); }, text: 'Senior housing types', to: '/resources/tags/housing', target: '_blank' },
-                { onClick: () => { sendEvent('wizard-select', 'research'); }, text: 'Types of care', to: '/resources/', target: '_blank' },
-                { onClick: () => { sendEvent('wizard-select', 'contact-resident'); }, text: 'Financial planning', to: '/resources/articles/veterans-benefits-for-assisted-living', target: '_blank' },
-                { onClick: () => { sendEvent('wizard-select', 'other'); }, text: 'Veterans\' benefits', to: '/resources/', target: '_blank' },
+                { onClick: () => { sendEvent('wizard-select', 'research'); }, text: 'Types of care', to: '/resources/memory-care', target: '_blank' },
+                { onClick: () => { sendEvent('wizard-select', 'contact-resident'); }, text: 'Financial planning', to: '/resources/articles/how-to-manage-the-finances-of-an-aging-parent', target: '_blank' },
+                { onClick: () => { sendEvent('wizard-select', 'other'); }, text: 'Veterans\' benefits', to: '/resources/articles/veterans-benefits-for-assisted-living', target: '_blank' },
               ],
               canStartOver:true,
-              gotoStart: () => {sendEvent('wizard-select-care', 'time'); goto(1);}
+              gotoStart: () => {sendEvent('wizard-select-care', 'time'); goto(1); }
             };
+
             const commPhoneStepData = {
+              imagePath: 'images/team-avatars.png',
               title: 'Great, we can help you with that!',
               caption: `Please contact ${name} directly at:`,
               bodyText: `${communityPhone}`,
               canStartOver:true,
-              gotoStart: () => {sendEvent('wizard-select-care', 'time'); goto(1);}
+              gotoStart: () => {sendEvent('wizard-select-care', 'time'); goto(1); }
 
             };
 
             const confirmationStepData = {
               title: 'Thank you!',
-              bodyText: `You will be hearing from our partner agent within the next day.`,
+              bodyText: 'You will be hearing from our partner agent within the next day.',
               canStartOver:true,
-              gotoStart: () => {sendEvent('wizard-select-care', 'time'); goto(1);}
+              gotoStart: () => {sendEvent('wizard-select-care', 'time'); goto(1); }
 
             };
 
             const contactFormHeading = 'One of our partner agents is ready to help you';
-            const subHeading = 'What is the best way to reach you?';
+            let subHeading = '';
+            if (userDetails && userDetails.phone) {
+               subHeading = 'Tell us how we can best help you.';
+            } else {
+              subHeading = 'What is the best way to reach you?';
+            }
 
 
             return (
               <Fragment>
-                <Body>
+                <StyledBody>
                   <WizardSteps currentStep={currentStep} {...props}>
                     <Experiment name="InplaceWizard_Step1" defaultVariant="wizard">
                       <Variant name="Step1A">
                         <WizardStep
-                          component={GenericStepContainer}
+                          component={GenericWizardActionStep}
                           name="Contact"
-                          onAdvisorHelpClick={openAdvisorHelp}
                           user={user}
-                          goto={goto}
-                          userDetails={userDetails}
                           formData={step1DataA}
                         />
                       </Variant>
                       <Variant name="Step1B">
                         <WizardStep
-                          component={GenericStepContainer}
+                          component={GenericWizardActionStep}
                           name="Contact"
-                          onAdvisorHelpClick={openAdvisorHelp}
                           user={user}
                           goto={goto}
-                          userDetails={userDetails}
                           formData={step1DataB}
                         />
                       </Variant>
                     </Experiment>
                     <WizardStep
-                      component={GenericStepContainer}
+                      component={GenericWizardActionStep}
                       name="Care-Step 2"
-                      onAdvisorHelpClick={openAdvisorHelp}
                       user={user}
                       userDetails={userDetails}
                       formData={careStepData}
                     />
                     <WizardStep
-                      component={GenericStepContainer}
+                      component={GenericWizardActionStep}
                       name="Resources-Step 3"
-                      onAdvisorHelpClick={openAdvisorHelp}
                       user={user}
                       userDetails={userDetails}
                       formData={resourcesStepData}
@@ -243,9 +220,7 @@ class InplaceWizardPage extends Component {
                     <WizardStep
                       component={GenericWizardInfoStep}
                       name="Phone Confirmation- Step 4"
-                      onAdvisorHelpClick={openAdvisorHelp}
                       user={user}
-                      userDetails={userDetails}
                       formData={commPhoneStepData}
                     />
                     <WizardStep
@@ -256,19 +231,18 @@ class InplaceWizardPage extends Component {
                       userDetails={userDetails}
                       heading={contactFormHeading}
                       subheading={subHeading}
+                      displayContext="wizard"
                     />
                     <WizardStep
                       component={GenericWizardInfoStep}
                       name="Confirmation- Step 6"
-                      onAdvisorHelpClick={openAdvisorHelp}
                       user={user}
-                      userDetails={userDetails}
                       formData={confirmationStepData}
                     />
                   </WizardSteps>
-                </Body>
+                </StyledBody>
                 <Controls>
-                  {currentStep == 5 &&
+                  {currentStep === 5 &&
                   <PricingFormFooter
                     price={estimatedPrice}
                     onProgressClick={onSubmit}
