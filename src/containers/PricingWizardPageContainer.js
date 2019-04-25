@@ -11,7 +11,7 @@ import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/reso
 import SlyEvent from 'sly/services/helpers/events';
 import { CUSTOM_PRICING } from 'sly/services/api/actions';
 import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
-import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
+import { getUserDetailsFromUAAndForm, medicareToBool } from 'sly/services/helpers/userDetails';
 import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
 import ModalController from 'sly/controllers/ModalController';
 import { query, withAuth } from 'sly/services/newApi';
@@ -93,6 +93,7 @@ export default class PricingWizardPageContainer extends Component {
     community: communityPropType,
     userDetails: object,
     user: object,
+    userHas: func.isRequired,
     status: object,
     postUserAction: func.isRequired,
     history: object.isRequired,
@@ -150,12 +151,16 @@ export default class PricingWizardPageContainer extends Component {
     return Promise.all([
       postUserAction(payload),
       updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
-        const housingInfo = draft.attributes.housingInfo || {};
-
+        const housingInfo = draft.attributes.uuidInfo.housingInfo || {};
         housingInfo.typeCare = data.careType;
         housingInfo.roomPreference = data.roomType;
+        draft.attributes.uuidInfo.housingInfo = housingInfo;
 
-        draft.attributes.housingInfo = housingInfo;
+        const financialInfo = draft.attributes.uuidInfo.financialInfo || {};
+        if (data.medicaidCoverage) {
+          financialInfo.medicare = medicareToBool(data.medicaidCoverage);
+        }
+        draft.attributes.uuidInfo.financialInfo = financialInfo;
       })),
       createAction({
         type: 'UUIDAction',
@@ -189,7 +194,7 @@ export default class PricingWizardPageContainer extends Component {
 
   render() {
     const {
-      community, user, userDetails,
+      community, user, userHas,
     } = this.props;
 
     if (!community) {
@@ -205,7 +210,7 @@ export default class PricingWizardPageContainer extends Component {
           <PricingWizardPage
             community={community}
             user={user}
-            userDetails={userDetails}
+            userHas={userHas}
             userActionSubmit={this.submitUserAction}
             onComplete={this.handleComplete}
             showModal={show}

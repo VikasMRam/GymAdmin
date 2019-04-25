@@ -7,20 +7,14 @@ import get from 'lodash/get';
 import set from 'lodash/set';
 
 import withUser from './withUser';
-import query from './query';
 
 import { ensureAuthenticated } from 'sly/store/actions';
-import { getRelationship } from 'sly/services/newApi/index';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
     || WrappedComponent.name
     || 'Component';
 }
-
-const mapStateToProps = (state, { status }) => ({
-  contactRaw: status.user.result && getRelationship(state, status.user.result, 'contact'),
-});
 
 const mapDispatchToProps = dispatch => ({
   ensureAuthenticated: (...args) => dispatch(ensureAuthenticated(...args)),
@@ -30,9 +24,7 @@ const mapDispatchToProps = dispatch => ({
 export default function withAuth(InnerComponent) {
   @withUser
 
-  @query('updateContact', 'updateContact')
-
-  @connect(mapStateToProps, mapDispatchToProps)
+  @connect(null, mapDispatchToProps)
 
   class Wrapper extends Component {
     static displayName = `withAuth(${getDisplayName(InnerComponent)})`;
@@ -43,6 +35,7 @@ export default function withAuth(InnerComponent) {
       dispatch: func.isRequired,
       status: object.isRequired,
       user: object.isRequired,
+      contact: object.isRequired,
       contactRaw: object.isRequired,
       updateContact: func.isRequired,
     };
@@ -50,7 +43,7 @@ export default function withAuth(InnerComponent) {
     static WrappedComponent = InnerComponent;
 
     createUserOrUpdateContact = (data) => {
-      const { user, contactRaw } = this.props;
+      const { user, contactRaw, updateContact } = this.props;
       const { name, phone, email } = data;
 
       if (!user) {

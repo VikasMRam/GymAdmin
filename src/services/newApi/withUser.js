@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import { object, func } from 'prop-types';
+import get from 'lodash/get';
 
-import { withApi, getRequestInfo, getRelationship } from 'sly/services/newApi';
+import { query, withApi, getRequestInfo, getEntity, getRelationship } from 'sly/services/newApi';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -25,7 +26,10 @@ export default function withUser(InnerComponent) {
       [{ id: 'me' }],
     );
 
+    const contactRaw = userRequestInfo.result && getRelationship(state, userRequestInfo.result, 'contact');
+
     return {
+      contactRaw,
       userRequestInfo,
       uuidAuxRequestInfo,
     };
@@ -38,6 +42,8 @@ export default function withUser(InnerComponent) {
 
   @withApi
 
+  @query('updateContact', 'updateContact')
+
   @connect(mapStateToProps, mapDispatchToActions)
 
   class Wrapper extends React.Component {
@@ -47,10 +53,13 @@ export default function withUser(InnerComponent) {
 
     static propTypes = {
       api: object,
+      contact: object,
+      contactRaw: object,
       userRequestInfo: object,
       uuidAuxRequestInfo: object,
       fetchUser: func,
       fetchUuidAux: func,
+      status: object,
       done: func,
     };
 
@@ -65,10 +74,24 @@ export default function withUser(InnerComponent) {
       return fetchUuidAux().then(done, done);
     };
 
+    userHas = (fields) => {
+      const { userRequestInfo } = this.props;
+      if (!userRequestInfo.normalized) return false;
+      return !fields.some(field => !get(userRequestInfo.normalized, field, false));
+    };
+
     count = 0;
 
     render() {
-      const { userRequestInfo, uuidAuxRequestInfo, status, done, fetch, ...props } = this.props;
+      const {
+        userRequestInfo,
+        uuidAuxRequestInfo,
+        status,
+        done,
+        fetchUser,
+        fetchUuidAux,
+        ...props
+      } = this.props;
 
       const { normalized: user, ...userRequest } = userRequestInfo;
       const { normalized: uuidAux, ...uuidAuxRequest } = uuidAuxRequestInfo;
@@ -78,15 +101,14 @@ export default function withUser(InnerComponent) {
 
         user,
         uuidAux,
+        userHas: this.userHas,
 
         status: {
           ...status,
-
           user: {
             ...userRequest,
             refetch: this.fetchUser,
           },
-
           uuidAux: {
             ...uuidAuxRequest,
             refetch: this.fetchUuidAux,

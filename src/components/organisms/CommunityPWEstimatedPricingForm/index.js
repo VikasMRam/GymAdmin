@@ -48,7 +48,7 @@ const StyledHelpBubble = styled(HelpBubble)`
 `;
 
 const CommunityPWEstimatedPricingForm = ({
-  error, handleSubmit, communityName, onRoomTypeChange, onCareTypeChange, userDetails,
+  error, handleSubmit, communityName, onRoomTypeChange, onCareTypeChange, user,
 }) => (
   <form name="CommunityPWEstimatedPricingForm" onSubmit={handleSubmit}>
     <HeadingSection level="subtitle" size="subtitle">Get your Pricing and Availability for {communityName}</HeadingSection>
@@ -79,7 +79,7 @@ const CommunityPWEstimatedPricingForm = ({
       onChange={onCareTypeChange}
       multiChoice
     />
-    {!(userDetails && userDetails.medicaidCoverage) &&
+    {!(user && user.uuidAux.uuidInfo.financialInfo.medicare !== undefined) &&
       <Fragment>
         <StyledBlock size="caption">
           Do you qualify for Medicaid?
@@ -106,7 +106,7 @@ CommunityPWEstimatedPricingForm.propTypes = {
   communityName: string,
   onRoomTypeChange: func,
   onCareTypeChange: func,
-  userDetails: object,
+  user: object,
 };
 
 export default CommunityPWEstimatedPricingForm;
