@@ -101,6 +101,7 @@ DashboardMyFamilyStickyFooter.propTypes = {
   stageProps: shape({
     text: string,
     currentStage: number,
+    palette: string,
   }).isRequired,
   onOptionsClick: func,
 };

@@ -205,7 +205,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       id, clientInfo, stage, status,
     } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
-    const { showAcceptRejectButtons, showPauseButton } = getStageDetails(stage);
+    const {
+      level, levelGroup, palette, showAcceptRejectButtons, showPauseButton,
+    } = getStageDetails(stage);
     const { name } = clientInfo;
     const activityCards = activities.map((a, i) =>
       <StyledFamilyActivityItem key={a.title} noBorderRadius snap={i === activities.length - 1 ? null : 'bottom'} title={a.title} description={a.description} date={a.date} />);
@@ -228,8 +230,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     ];
 
     const stickyFooterStageProps = {
-      text: 'Connected - Discussing Options',
-      currentStage: 1,
+      text: `${levelGroup} - ${stage}`,
+      currentStage: level,
+      palette,
     };
 
     return (
@@ -275,7 +278,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               {activityCards.length > 0 && activityCards}
             </TabWrapper>
           </div>
-          {/* 4176711, 4176712 */}
           <div label="FAMILY DETAILS" to={familyDetailsPath}>
             <TabWrapper>
               <FamilyDetailsTab>
