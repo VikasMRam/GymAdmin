@@ -3,7 +3,8 @@ import { shape, object, func } from 'prop-types';
 import { reduxForm, SubmissionError } from 'redux-form';
 import { getRelationship } from 'redux-bees';
 import { connect } from 'react-redux';
-import produce from 'immer';
+import immutable from 'object-path-immutable';
+import pick from 'lodash/pick';
 
 import DashboardProfileUserDetailsForm from 'sly/components/organisms/DashboardProfileUserDetailsForm';
 import { createValidator, required, email, usPhone } from 'sly/services/validation/index';
@@ -78,13 +79,11 @@ const convertUserToProfileFormValues = (user) => {
 
 
 @withUser
-
 @connect((state, props) => ({
   uuidAux: getRelationship(state, props.status.user.result, 'uuidAux'),
 }))
-
 @query('updateUser', 'updateUser')
-
+@query('updateUuidAux', 'updateUuidAux')
 export default class DashboardProfileUserDetailsFormContainer extends Component {
   static propTypes = {
     user: userPropType,
@@ -93,52 +92,33 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
     }),
     uuidAux: uuidAuxProps,
     updateUser: func,
+    updateUuidAux: func,
     notifySuccess: func,
   };
 
   handleSubmit = (values) => {
     const {
-      status, uuidAux, updateUser, notifySuccess,
+      status, uuidAux: rawAux, updateUser, updateUuidAux, notifySuccess,
     } = this.props;
-    const { user } = status;
-    const { result } = user;
-    return updateUser({ id: result.id }, {
-      data: produce(result, (draft) => {
-        draft.relationships.uuidAux = {
-          data: uuidAux,
-        };
-        draft.attributes.name = values.name;
-        // draft.attributes.email = values.email;
-        draft.attributes.phoneNumber = values.phoneNumber;
+    const { user: rawUser } = status;
+    const { result } = rawUser;
+    const { id } = result;
+    const user = immutable(pick(result, ['id', 'type', 'attributes.name', 'attributes.phoneNumber']))
+      .set('attributes.name', values.name)
+      // .set('attributes.email', values.email)
+      .set('attributes.phoneNumber', values.phoneNumber)
+      .value();
+    const uuidAux = immutable(pick(rawAux, ['id', 'type', 'attributes.uuid', 'attributes.uuidInfo']))
+      .set('attributes.uuidInfo.housingInfo.lookingFor', values.lookingFor)
+      .set('attributes.uuidInfo.residentInfo.fullName', values.residentName)
+      .set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', values.monthlyBudget)
+      .set('attributes.uuidInfo.housingInfo.moveTimeline', values.timeToMove)
+      .value();
 
-        if (!draft.relationships.uuidAux.data) {
-          draft.relationships.uuidAux.data = {
-            attributes: {},
-          };
-        }
-        const { uuidInfo } = draft.relationships.uuidAux.data.attributes;
+    const userPromise = () => updateUser({ id }, user);
+    const uuidAuxPromise = () => updateUuidAux({ id: uuidAux.id }, uuidAux);
 
-        let newUuidInfo = null;
-        if (!uuidInfo) {
-          newUuidInfo = {
-            housingInfo: {},
-            residentInfo: {},
-            financialInfo: {},
-          };
-        } else {
-          newUuidInfo = uuidInfo;
-        }
-        newUuidInfo.housingInfo.lookingFor = values.lookingFor;
-        newUuidInfo.residentInfo.fullName = values.residentName;
-        newUuidInfo.financialInfo.maxMonthlyBudget = parseInt(values.monthlyBudget, 10);
-        newUuidInfo.housingInfo.moveTimeline = values.timeToMove;
-
-        draft.relationships.uuidAux.data.attributes.uuidInfo = newUuidInfo;
-      }),
-    })
-      .then(() => {
-        notifySuccess('Details Updated Successfully');
-      })
+    return userPromise().then(uuidAuxPromise).then(notifySuccess('Details Updated Successfully'))
       .catch((error) => {
         console.error(error);
         const { status, body } = error;
