@@ -6,7 +6,7 @@ const fs = require('fs');
 const UglifyJs = require('uglify-es');
 const cssmin = require('cssmin');
 const devServer = require('@webpack-blocks/dev-server2');
-const splitVendor = require('webpack-blocks-split-vendor');
+// const splitVendor = require('webpack-blocks-split-vendor');
 const happypack = require('webpack-blocks-happypack');
 const serverSourceMap = require('webpack-blocks-server-source-map');
 const nodeExternals = require('webpack-node-externals');
@@ -333,7 +333,7 @@ const client = createConfig([
 
   uglifyJs(),
 
-  splitVendor(),
+  // todo: uncomment only after upgrading to bable v7 and webpack v4 splitVendor(),
 ]);
 
 module.exports = client;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { object, func, string, arrayOf } from 'prop-types';
-import produce from 'immer';
+import immutable from 'object-path-immutable';
+import pick from 'lodash/pick';
 import { reduxForm } from 'redux-form';
 
 import { query } from 'sly/services/newApi';
@@ -41,12 +42,14 @@ class RejectFamilyContainer extends Component {
     } = this.props;
     const { id } = client;
     const { reason } = data;
+    const [, , contactRejected] = FAMILY_STAGE_ORDERED.Closed;
+    const newRawClient = pick(rawClient, ['id', 'type', 'attributes.stage', 'attributes.clientInfo']);
+    const newClient = immutable(newRawClient)
+      .set('attributes.stage', contactRejected)
+      .set('attributes.clientInfo.rejectReason', reason)
+      .value();
 
-    return updateClient({ id }, produce(rawClient, (draft) => {
-      const [, , contactRejected] = FAMILY_STAGE_ORDERED.Closed;
-      draft.attributes.stage = contactRejected;
-      draft.attributes.clientInfo.rejectReason = reason;
-    }))
+    return updateClient({ id }, newClient)
       .then(() => {
         notifyInfo('Family successfully rejected');
         if (onSuccess) {

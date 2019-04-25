@@ -5,6 +5,7 @@ import { bool, number, string, oneOfType, oneOf, node } from 'prop-types';
 
 import { size, key, getKey } from 'sly/components/themes';
 import { Link, Icon, Block } from 'sly/components/atoms';
+import SlyEvent from 'sly/services/helpers/events';
 
 export const blockCapHeight = (props) => {
   if (!props.isRenderedHeightBigger) {
@@ -63,9 +64,16 @@ export default class CollapsibleBlock extends Component {
     maxHeight: entry.height,
   });
 
-  toggle = () => this.setState({
-    collapsed: !this.state.collapsed,
-  });
+  toggle = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+    const label = !this.state.collapsed ? 'Show Less' : 'Show More';
+    const event = {
+      action: `toggle-${this.props.blockClassName}`, label,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+  };
 
   render() {
     const {

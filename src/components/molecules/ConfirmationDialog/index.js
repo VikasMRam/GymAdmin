@@ -19,9 +19,9 @@ const ConfirmButon = pad(StyledButton, 'large');
 ConfirmButon.displayName = 'ConfirmButon';
 
 const ConfirmationDialog = ({
-  heading, description, onConfirmClick, onCancelClick, confirmButtonText,
+  heading, description, onConfirmClick, onCancelClick, confirmButtonText, className,
 }) => (
-  <Wrapper>
+  <Wrapper className={className}>
     <StyledHeading level="subtitle">{heading}</StyledHeading>
     {description && <StyledBlock palette="grey" size="caption">{description}</StyledBlock>}
     <ConfirmButon onClick={onConfirmClick}>{confirmButtonText}</ConfirmButon>
@@ -35,6 +35,7 @@ ConfirmationDialog.propTypes = {
   confirmButtonText: string,
   onConfirmClick: func,
   onCancelClick: func,
+  className: string,
 };
 
 ConfirmationDialog.defaultProps = {
