@@ -1,15 +1,15 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 
-import SaveCommunityForm from 'sly/components/organisms/SaveCommunityForm';
+import AddNoteForm from 'sly/components/organisms/AddNoteForm';
 
 const ReduxForm = reduxForm({
-  form: 'SaveCommunityForm',
+  form: 'AddNoteForm',
   // required to refresh when initialValues change. Ref: https://redux-form.com/6.7.0/examples/initializefromstate/
   enableReinitialize: true,
   keepDirtyOnReinitialize: false,
-})(SaveCommunityForm);
+})(AddNoteForm);
 
-const SaveCommunityFormContainer = props => <ReduxForm {...props} />;
+const AddNoteFormContainer = props => <ReduxForm {...props} />;
 
-export default SaveCommunityFormContainer;
+export default AddNoteFormContainer;

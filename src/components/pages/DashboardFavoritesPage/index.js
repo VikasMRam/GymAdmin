@@ -125,11 +125,12 @@ const DashboardFavoritesPage = ({
         rawUserSave,
         community,
         onComplete,
+        onCancel: hideModal,
         isEditMode: !!userSave.info.note,
         initialValues,
       };
 
-      showModal(<AddOrEditNoteForSavedCommunityContainer {...modalComponentProps} />);
+      showModal(<AddOrEditNoteForSavedCommunityContainer {...modalComponentProps} />, null, 'noPadding', false);
     };
     const actionButtons = [
       {
