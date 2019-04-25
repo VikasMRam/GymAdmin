@@ -27,6 +27,7 @@ import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import PutFamilyOnPause from 'sly/components/molecules/PutFamilyOnPause';
+import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 
 // todo: mock data
 const activities = [
@@ -217,6 +218,20 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'family-details');
     const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'communities');
 
+    const stickyFooterOptions = [
+      {
+        text: 'Update Stage', icon: 'flag', iconPalette: 'slate', onClick: () => {},
+      },
+      {
+        text: 'Add Note', icon: 'add-note', iconPalette: 'slate', onClick: () => {}, ghost: true,
+      },
+    ];
+
+    const stickyFooterStageProps = {
+      text: 'Connected - Discussing Options',
+      currentStage: 1,
+    };
+
     return (
       <DashboardTwoColumnTemplate activeMenuItem="My Families">
         <BigScreenSummarySection>
@@ -286,6 +301,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             </TabWrapper>
           </div>
         </Tabs>
+        <DashboardMyFamilyStickyFooterContainer options={stickyFooterOptions} stageProps={stickyFooterStageProps} />
       </DashboardTwoColumnTemplate>
     );
   }

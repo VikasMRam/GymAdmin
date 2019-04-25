@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, func, bool } from 'prop-types';
+import { string, func, bool, array } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -24,7 +24,7 @@ class Tab extends Component {
     label: string.isRequired,
     onClick: func.isRequired,
     className: string,
-    tabStyles: string,
+    tabStyles: array,
   };
 
   onClick = () => {

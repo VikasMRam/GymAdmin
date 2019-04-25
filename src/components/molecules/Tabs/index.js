@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { instanceOf, string, bool } from 'prop-types';
+import { instanceOf, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -27,7 +27,6 @@ class Tabs extends Component {
     children: instanceOf(Array).isRequired,
     activeTab: string,
     className: string,
-    tabStyles: bool,
   }
 
   constructor(props) {
