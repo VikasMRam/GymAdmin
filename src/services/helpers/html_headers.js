@@ -283,13 +283,13 @@ export const getHelmetForCommunityPage = (community, location) => {
     return (<script key={`helmet_critic-review_${criticReview.author+name}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
 
-  const getQAAnswerLDObj = (answer) => {
+  const getQAAnswerLDObj = (answer, question) => {
     return {
       '@type': 'Answer',
       text: answer.contentData,
       dateCreated: answer.createdAt,
-      // upvoteCount: 1337,
-      // url: 'https://example.com/question1#acceptedAnswer',
+      upvoteCount: 1,
+      url: `https://www.seniorly.com/resources/questions/${question.url}`,
       author: {
         '@type': 'Person',
         name: answer.creator,
@@ -301,17 +301,17 @@ export const getHelmetForCommunityPage = (community, location) => {
   const qaPageLdObjs = questions.filter(question => question.contents.length > 0).map((question) => {
     const answers = question.contents.slice();
     const firstAnswer = answers.shift();
-    const acceptedAnswer = getQAAnswerLDObj(firstAnswer);
-    const suggestedAnswer = answers.map(answer => getQAAnswerLDObj(answer));
+    const acceptedAnswer = getQAAnswerLDObj(firstAnswer, question);
+    const suggestedAnswer = answers.map(answer => getQAAnswerLDObj(answer, question));
     const result = {
       '@context': 'https://schema.org',
       '@type': 'QAPage',
       mainEntity: {
         '@type': 'Question',
         name: question.contentData,
-        // text: 'I have taken up a new interest in baking and keep running across directions in ounces and pounds. I have to translate between them and was wondering how many ounces are in a pound?',
+        text: question.contentData,
         answerCount: question.contents.length,
-        // upvoteCount: 26,
+        upvoteCount: 1,
         dateCreated: question.createdAt,
         author: {
           '@type': 'Person',
