@@ -23,10 +23,13 @@ export default class AgentsPageContainer extends Component {
   };
 
   render() {
+    const { history } = this.props;
+    const { location } = history;
     const { handleLocationSearch } = this;
     return (
       <AgentsPage
         onLocationSearch={handleLocationSearch}
+        location={location}
       />
     );
   }
