@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
-import produce from 'immer';
+import immutable from 'object-path-immutable';
+import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
 import { prefetch, query, getRelationship } from 'sly/services/newApi';
@@ -41,10 +42,11 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { updateClient, client, status } = this.props;
     const { id } = client;
     const { result: rawClient } = status.client;
+    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status']))
+      .set('attributes.status', FAMILY_STATUS_ACTIVE)
+      .value();
 
-    return updateClient({ id }, produce(rawClient, (draft) => {
-      draft.attributes.status = FAMILY_STATUS_ACTIVE;
-    }))
+    return updateClient({ id }, newClient)
       .then(() => {
         notifyInfo('Family successfully unpaused');
       })

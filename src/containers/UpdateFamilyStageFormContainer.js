@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
-import produce from 'immer';
+import immutable from 'object-path-immutable';
+import pick from 'lodash/pick';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 
@@ -49,11 +50,12 @@ class UpdateFamilyStageFormContainer extends Component {
     } = this.props;
     const { id } = client;
     const { stage } = data;
+    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage']))
+      .set('attributes.status', FAMILY_STATUS_ACTIVE)
+      .set('attributes.stage', stage)
+      .value();
 
-    return updateClient({ id }, produce(rawClient, (draft) => {
-      draft.attributes.stage = stage;
-      draft.attributes.status = FAMILY_STATUS_ACTIVE;
-    }))
+    return updateClient({ id }, newClient)
       .then(() => {
         let msg = 'Family stage updated';
         if (currentStage.levelGroup !== nextStage.levelGroup) {

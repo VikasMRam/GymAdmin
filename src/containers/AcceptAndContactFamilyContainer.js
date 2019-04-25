@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
-import produce from 'immer';
+import immutable from 'object-path-immutable';
+import pick from 'lodash/pick';
 
 import { query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
@@ -28,11 +29,12 @@ class AcceptAndContactFamilyContainer extends Component {
       updateClient, client, rawClient, notifyError,
     } = this.props;
     const { id } = client;
+    const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
+    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.stage']))
+      .set('attributes.stage', contactStatus)
+      .value();
 
-    return updateClient({ id }, produce(rawClient, (draft) => {
-      const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
-      draft.attributes.stage = contactStatus;
-    }))
+    return updateClient({ id }, newClient)
       .then(() => {
         this.setState({
           contactType,

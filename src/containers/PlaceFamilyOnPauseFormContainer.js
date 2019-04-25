@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
-import produce from 'immer';
+import immutable from 'object-path-immutable';
+import pick from 'lodash/pick';
 
 import { query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
@@ -39,10 +40,11 @@ class PlaceFamilyOnPauseFormContainer extends Component {
       updateClient, client, rawClient, notifyError, notifyInfo, onSuccess,
     } = this.props;
     const { id } = client;
+    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage']))
+      .set('attributes.status', FAMILY_STATUS_ON_HOLD)
+      .value();
 
-    return updateClient({ id }, produce(rawClient, (draft) => {
-      draft.attributes.status = FAMILY_STATUS_ON_HOLD;
-    }))
+    return updateClient({ id }, newClient)
       .then(() => {
         notifyInfo('Family successfully put on pause');
         if (onSuccess) {
