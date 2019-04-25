@@ -127,7 +127,7 @@ export default class ConciergeController extends Component {
     }).isRequired,
     updateUuidAux: func,
     createAction: func,
-    registerUser: func,
+    createUserOrUpdateContact: func,
   };
 
   getPricing = () => {
@@ -235,7 +235,7 @@ export default class ConciergeController extends Component {
       gotoGetCustomPricing,
       createAction,
       match,
-      registerUser,
+      createUserOrUpdateContact,
     } = this.props;
 
     const value = {
@@ -259,14 +259,15 @@ export default class ConciergeController extends Component {
         attributes: {
           actionInfo: { email, phone, name },
           actionPage: match.url,
-          actionType: CONSULTATION_REQUESTED,
+          actionType: action === REQUEST_CONSULTATION
+            ? CONSULTATION_REQUESTED
+            : PROFILE_CONTACTED,
         },
       }),
-    ]).then(() => registerUser({
+    ]).then(() => createUserOrUpdateContact({
       email,
       name,
-      phone_number: phone,
-      ignoreExisting: true,
+      phone,
     })).then(() => {
       if (communitySlug && gotoGetCustomPricing) {
         gotoGetCustomPricing();

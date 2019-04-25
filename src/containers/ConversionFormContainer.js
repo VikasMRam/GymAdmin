@@ -72,7 +72,7 @@ export default class ConversionFormContainer extends Component {
       ...props
     } = this.props;
 
-    const { email, name, phoneNumber } = user;
+    const { email, name, phoneNumber } = user || {};
 
     // have to put empty values as letting undefined would make the fields
     // uncontrolled and we would get a warning
@@ -98,7 +98,7 @@ export default class ConversionFormContainer extends Component {
         agent={agent}
         gotoWhatNext={gotoWhatNext}
         community={community}
-        hasOnlyEmail={hasOnlyEmail(user)}
+        hasOnlyEmail={user && hasOnlyEmail(user)}
         onAdvisorHelpClick={() => {
           SlyEvent.getInstance().sendEvent({
             category: 'advisor-learn-more',
