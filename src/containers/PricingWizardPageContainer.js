@@ -98,7 +98,7 @@ export default class PricingWizardPageContainer extends Component {
     history: object.isRequired,
     createAction: func.isRequired,
     updateUuidAux: func.isRequired,
-    createOrUpdateUser: func.isRequired,
+    createUserOrUpdateContact: func.isRequired,
     match: object.isRequired,
   };
 
@@ -111,7 +111,7 @@ export default class PricingWizardPageContainer extends Component {
       createAction,
       status,
       updateUuidAux,
-      createOrUpdateUser,
+      createUserOrUpdateContact,
     } = this.props;
 
     // here remove only fields that will be populated by getUserDetailsFromUAAndForm
@@ -170,7 +170,7 @@ export default class PricingWizardPageContainer extends Component {
           actionType: PROFILE_CONTACTED,
         },
       }),
-    ]).then(() => createOrUpdateUser({
+    ]).then(() => createUserOrUpdateContact({
       name,
       phone,
     }));

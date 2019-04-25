@@ -5,6 +5,7 @@ import { get, patch, post, put, destroy } from 'redux-bees';
 export default {
   getUser: { method: get, path: '/platform/users/:id' },
   updateUser: { method: patch, path: '/platform/users/:id' },
+  updateContact: { method: patch, path: '/platforms/contacts/:id' },
 
   getUuidAux: { method: get, path: '/platform/uuid-auxes/:id' },
   updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },

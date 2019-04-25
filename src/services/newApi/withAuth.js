@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import { object, func } from 'prop-types';
+import pick from 'lodash/pick';
+import get from 'lodash/get';
+import set from 'lodash/set';
 
 import withUser from './withUser';
+import query from './query';
 
 import { ensureAuthenticated } from 'sly/store/actions';
 import { getRelationship } from 'sly/services/newApi/index';
@@ -15,7 +19,7 @@ function getDisplayName(WrappedComponent) {
 }
 
 const mapStateToProps = (state, { status }) => ({
-  contact: status.user.result && getRelationship(status.user.result, 'contact'),
+  contactRaw: status.user.result && getRelationship(state, status.user.result, 'contact'),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -25,6 +29,8 @@ const mapDispatchToProps = dispatch => ({
 
 export default function withAuth(InnerComponent) {
   @withUser
+
+  @query('updateContact', 'updateContact')
 
   @connect(mapStateToProps, mapDispatchToProps)
 
@@ -37,26 +43,47 @@ export default function withAuth(InnerComponent) {
       dispatch: func.isRequired,
       status: object.isRequired,
       user: object.isRequired,
+      contactRaw: object.isRequired,
+      updateContact: func.isRequired,
     };
 
     static WrappedComponent = InnerComponent;
 
-    ensureAuthenticated = (...args) => {
-      const { ensureAuthenticated } = this.props;
-      return ensureAuthenticated(...args);
-    };
-
-    createOrUpdateUser = (data) => {
-      const { user } = this.props;
+    createUserOrUpdateContact = (data) => {
+      const { user, contactRaw } = this.props;
       const { name, phone, email } = data;
 
-      console.log({ data, user })
       if (!user) {
         return this.registerUser({
           name,
           email,
           phone_number: phone,
         });
+      }
+
+      const contact = pick(contactRaw, [
+        'id',
+        'type',
+        'attributes.firstName',
+        'attributes.mobilePhone',
+        'attributes.email',
+      ]);
+
+
+      const willUpdate = Object.entries({
+        'attributes.firstName': name,
+        'attributes.mobilePhone': phone,
+        'attributes.email': email,
+      }).reduce((willUpdate, [path, newValue]) => {
+        if (newValue && newValue !== get(contact, path)) {
+          set(contact, path, newValue);
+          return true;
+        }
+        return willUpdate;
+      }, false);
+
+      if (willUpdate) {
+        return updateContact({ id: contact.id }, contact);
       }
 
       return Promise.resolve();
@@ -98,6 +125,11 @@ export default function withAuth(InnerComponent) {
       return dispatch(api.setPassword(data)).then(status.user.refetch);
     };
 
+    ensureAuthenticated = (...args) => {
+      const { ensureAuthenticated } = this.props;
+      return ensureAuthenticated(...args);
+    };
+
     updatePassword = (data) => {
       const { dispatch, api, status } = this.props;
       return dispatch(api.updatePassword(data)).then(status.user.refetch);
@@ -112,7 +144,7 @@ export default function withAuth(InnerComponent) {
       <InnerComponent
         {...this.props}
         isLoggedIn={this.props.status.user.status === 200}
-        createOrUpdateUser={this.createOrUpdateUser}
+        createUserOrUpdateContact={this.createUserOrUpdateContact}
         loginUser={this.loginUser}
         logoutUser={this.logoutUser}
         registerUser={this.registerUser}
