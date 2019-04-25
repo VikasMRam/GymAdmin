@@ -35,4 +35,7 @@ export default {
   getClients: { method: get, path: '/marketplace/clients' },
   getClient: { method: get, path: '/marketplace/clients/:id' },
   updateClient: { method: patch, path: '/marketplace/clients/:id' },
+
+  getVoiceCalls: {method: get, path: '/platform/communications/voice'},
+  getVoiceCall: {method: get, path: '/platform/communications/voice/:id'},
 };
