@@ -1,10 +1,10 @@
-import { oneOf } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
 import { text as textPropType } from 'sly/propTypes/text';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { variation as variationPropType } from 'sly/propTypes/variation';
+import { weight as weightPropType } from 'sly/propTypes/weight';
 
 const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
@@ -20,7 +20,7 @@ Span.propTypes = {
   palette: palettePropType,
   variation: variationPropType,
   size: textPropType,
-  weight: oneOf(['regular', 'medium', 'light']),
+  weight: weightPropType,
 };
 
 Span.defaultProps = {

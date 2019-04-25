@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { node } from 'prop-types';
 
-import { TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd } from 'sly/components/molecules/Td';
+import { TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd, DoubleLineDiv } from 'sly/components/molecules/Td';
 
 const TdWrapper = ({ children }) => (
   <table>
@@ -52,7 +52,7 @@ storiesOf('Molecules|Td', module)
   ))
   .add('Text Overflow', () => (
     <FixedWidthTdWrapper>
-      <TextTd>Dominique Dominguez Drommelders</TextTd>
+      <TextTd clip>Dominique Dominguez Drommelders</TextTd>
     </FixedWidthTdWrapper>
   ))
   .add('disabled default', () => (
@@ -69,8 +69,14 @@ storiesOf('Molecules|Td', module)
       <DoubleLineTd firstLine="Harry is out of the country for the month for some performances" secondLine="10/10/2019" disabled />
     </TdWrapper>
   ))
-  .add('disabled TextIconTd', () => (
+  .add('disabled TextIconTd with clip', () => (
     <FixedWidthTdWrapper>
-      <TextIconTd icon="pause" iconPalette="danger" disabled>Harry Erik Sámuel Weisz Houdini</TextIconTd>
+      <TextIconTd icon="pause" iconPalette="danger" disabled clip>Harry Erik Sámuel Weisz Houdini</TextIconTd>
     </FixedWidthTdWrapper>
+  ))
+  .add('DoubleLineDiv', () => (
+    <DoubleLineDiv firstLine="Sent another message through app" secondLine="10/10/2019" />
+  ))
+  .add('disabled DoubleLineDiv', () => (
+    <DoubleLineDiv firstLine="Harry is out of the country for the month for some performances" secondLine="10/10/2019" disabled />
   ));

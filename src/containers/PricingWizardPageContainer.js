@@ -10,8 +10,9 @@ import SlyEvent from 'sly/services/helpers/events';
 import { CUSTOM_PRICING } from 'sly/services/api/actions';
 import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
-import { getLastSegment, replaceLastSegment } from "sly/services/helpers/url";
+import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
 import ModalController from 'sly/controllers/ModalController';
+import { query } from 'sly/services/newApi';
 
 const eventCategory = 'PricingWizard';
 
@@ -64,6 +65,8 @@ const handleResponses = (responses, { location }, redirect) => {
     return Promise.reject(error);
   });
 };
+
+@query('createAction', 'createUuidAction')
 
 @withServerState(
   mapPropsToActions,

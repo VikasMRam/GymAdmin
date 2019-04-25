@@ -51,7 +51,7 @@ class Tab extends Component {
         active={active}
         className={className}
       >
-        <Span weight="medium" size="tiny" palette={spanPalette} variation={spanVariation}>{label}</Span>
+        <Span weight="bold" size="tiny" palette={spanPalette} variation={spanVariation}>{label}</Span>
       </Wrapper>
     );
   }

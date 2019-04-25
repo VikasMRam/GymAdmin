@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import DashboardMyProfilePage from 'sly/components/pages/DashboardMyProfilePage';
-import { prefetch } from 'sly/services/newApi';
+import { withUser } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 
 const incompleteInfoWarning = 'Please enter the incomplete fields below to complete your account.';
 
-@prefetch('user', 'getUser', getUser => getUser({ id: 'me' }))
-class DashboardMyProfilePageContainer extends Component {
+@withUser
+
+export default class DashboardMyProfilePageContainer extends Component {
   static propTypes = {
     user: userPropType,
-  }
+  };
 
   render() {
     const { user } = this.props;
@@ -30,4 +31,3 @@ class DashboardMyProfilePageContainer extends Component {
   }
 }
 
-export default DashboardMyProfilePageContainer;

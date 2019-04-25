@@ -12,14 +12,16 @@ class ModalController extends Component {
     isModalOpen: bool,
     modalContent: node,
     modalOnClose: func,
+    isModalCloseable: bool,
   };
 
-  show = (content, onClose, modalType) => {
+  show = (content, onClose, modalType, isModalCloseable = true) => {
     const { set } = this.props;
 
     return set({
       isModalOpen: true,
       modalType,
+      isModalCloseable,
       modalContent: content,
       modalOnClose: onClose,
     });
@@ -38,11 +40,11 @@ class ModalController extends Component {
   render() {
     const { show, hide } = this;
     const {
-      children, modalType, modalContent, modalOnClose, isModalOpen,
+      children, modalType, modalContent, modalOnClose, isModalOpen, isModalCloseable,
     } = this.props;
 
     return children({
-      show, hide, modalType, modalContent, modalOnClose, isModalOpen,
+      show, hide, modalType, modalContent, modalOnClose, isModalOpen, isModalCloseable,
     });
   }
 }
@@ -50,6 +52,7 @@ class ModalController extends Component {
 const mapStateToProps = (state, { controller = {} }) => ({
   isModalOpen: controller.isModalOpen,
   modalType: controller.modalType,
+  isModalCloseable: controller.isModalCloseable,
   modalContent: controller.modalContent,
   modalOnClose: controller.modalOnClose,
 });

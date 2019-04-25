@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   ${switchProp('orientation', {
     horizontal: css`
       display: flex;
-      button {
+      > * {
         flex: 1;
       }
 
@@ -44,11 +44,10 @@ const Wrapper = styled.div`
 const StyledButton = styled(Button)`
   ${switchProp('orientation', {
     horizontal: css`
-      + Button {
-        margin-left: 0;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
+      margin-left: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      
       :not(:last-child) {
         border-right: none;
         border-top-right-radius: 0;

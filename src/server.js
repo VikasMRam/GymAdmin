@@ -28,6 +28,7 @@ import DashboardApp from 'sly/components/DashboardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 import { createApi as createBeesApi } from 'sly/services/newApi';
+import ApiProvider, { makeApiCall } from 'sly/services/newApi/ApiProvider';
 
 const makeAppRenderer = renderedApp => ({
   store, context, location, sheet,
@@ -47,13 +48,17 @@ const renderEmptyApp = () => {
 };
 
 // requires compatible configuration
-const getAppRenderer = ({ bundle }) => {
+const getAppRenderer = ({ bundle, api }) => {
   switch (bundle) {
     case 'dashboard': return makeAppRenderer((
-      <DashboardApp />
+      <ApiProvider api={api}>
+        <DashboardApp />
+      </ApiProvider>
     ));
     case 'client': return makeAppRenderer((
-      <ClientApp />
+      <ApiProvider api={api}>
+        <ClientApp />
+      </ApiProvider>
     ));
     default: return renderEmptyApp;
   }
@@ -263,10 +268,7 @@ app.use(async (req, res, next) => {
   };
 
   try {
-    await Promise.all([
-      store.dispatch(beesApi.getUser({ id: 'me' })).catch(ignoreUnauthorized),
-      store.dispatch(beesApi.getUuidAux({ id: 'me' })),
-    ]);
+    await store.dispatch(makeApiCall(beesApi.getUser, [{ id: 'me' }])).catch(ignoreUnauthorized);
   } catch (e) {
     e.message = `Error trying to prefetch user data: ${e.message}`;
     console.log('new user/me error', e);

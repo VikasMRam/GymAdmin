@@ -2,21 +2,61 @@ import React, { Component } from 'react';
 import { object, func, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { SubmissionError, clearSubmitErrors } from 'redux-form';
+import { withRouter } from 'react-router';
 
 import SlyEvent from 'sly/services/helpers/events';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { USER_SAVE_INIT_STATUS } from 'sly/constants/userSave';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED } from 'sly/constants/notifications';
-import { resourceCreateRequest, resourcePatchRequest } from 'sly/store/resource/actions';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { getDetail, getDetails } from 'sly/store/selectors';
-import { ensureAuthenticated } from 'sly/store/authenticated/actions';
+import { withApi, withAuth, prefetch } from 'sly/services/newApi';
 import SaveCommunityFormContainer from 'sly/containers/SaveCommunityFormContainer';
 import CommunitySaved from 'sly/components/organisms/CommunitySaved';
 
-class SaveCommunityContainer extends Component {
+const mapStateToProps = (state, ownProps) => {
+  const { slug, userSaves } = ownProps;
+  const userSave = userSaves && userSaves.find(us => us.entityType === COMMUNITY_ENTITY_TYPE && us.entitySlug === slug);
+  return {
+    userSave,
+  };
+};
+
+// FIXME: hack because createUser is not JSON:API, should use @query
+const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
+  createUserSave: data => ensureAuthenticated(
+    'Sign up to add to your favorites list',
+    api.createUserSave(data),
+  ),
+  updateUserSave: (id, data) => ensureAuthenticated(
+    'Sign up to add to your favorites list',
+    api.updateUserSave({ id }, data),
+  ),
+});
+
+const getCommunitySlug = match => match.params.communitySlug;
+
+@withAuth
+
+@withRouter
+
+@withApi
+
+@prefetch('community', 'getCommunity', (req, { slug }) => req({
+  id: slug,
+  include: 'similar-communities,questions,agents',
+}))
+
+@prefetch('userSaves', 'getUserSaves', (req, { match }) => req({
+  'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
+  'filter[entity_slug]': getCommunitySlug(match),
+}))
+
+@connect(mapStateToProps, mapDispatchToProps)
+
+export default class SaveCommunityContainer extends Component {
   static propTypes = {
+    slug: string,
     user: object,
     userSave: object,
     createUserSave: func,
@@ -31,6 +71,7 @@ class SaveCommunityContainer extends Component {
 
   state = { updatingUserSave: false };
 
+  // FIXME: ugly hack to convert a declarative intent in an imperative one
   componentDidMount() {
     const { createUserSave, updateUserSave } = this;
     const { userSave } = this.props;
@@ -126,7 +167,6 @@ class SaveCommunityContainer extends Component {
     const { handleSubmitSaveCommunityForm } = this;
     const { community, onDoneButtonClicked } = this.props;
     const { updatingUserSave } = this.state;
-    const { similarProperties } = community;
 
     if (updatingUserSave) {
       return 'Updating...';
@@ -148,7 +188,7 @@ class SaveCommunityContainer extends Component {
             <WizardStep
               component={CommunitySaved}
               name="Success"
-              similarCommunities={similarProperties}
+              similarCommunities={community.similarProperties}
               onDoneButtonClicked={onDoneButtonClicked}
             />
           </WizardSteps>
@@ -158,29 +198,3 @@ class SaveCommunityContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { slug } = ownProps;
-  const community = getDetail(state, 'community', slug);
-  const user = getDetail(state, 'user', 'me');
-  const userSaves = getDetails(state, 'userSave');
-  const userSave = userSaves.find(us => us.entityType === COMMUNITY_ENTITY_TYPE && us.entitySlug === slug);
-
-  return {
-    user,
-    community,
-    userSave,
-  };
-};
-
-const mapDispatchToProps = dispatch => ({
-  createUserSave: data => dispatch(ensureAuthenticated(
-    'Sign up to add to your favorites list',
-    resourceCreateRequest('userSave', data),
-  )),
-  updateUserSave: (id, data) => dispatch(ensureAuthenticated(
-    'Sign up to add to your favorites list',
-    resourcePatchRequest('userSave', id, data),
-  )),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SaveCommunityContainer);

@@ -37,20 +37,42 @@ const mapDispatchToProps = (dispatch) => {
 @query('createAction', 'createUuidAction')
 
 export default class CommunityFloorPlanPopupFormContainer extends Component {
+  static propTypes = {
+    communitySlug: string.isRequired,
+    userDetails: object.isRequired,
+    postUserAction: func.isRequired,
+    typeOfCare: string,
+    floorPlanInfo: object,
+    postSubmit: func,
+    match: object.isRequired,
+    createAction: func.isRequired,
+  };
+
   handleSubmit = (data) => {
     const { notes } = data;
+
     const {
-      communitySlug, userDetails, postUserAction, postSubmit, floorPlanInfo, typeOfCare,
-      createAction, match,
+      communitySlug,
+      userDetails,
+      postUserAction,
+      postSubmit,
+      floorPlanInfo,
+      typeOfCare,
+      createAction,
+      match,
     } = this.props;
+
     const { roomType } = floorPlanInfo;
+
     const user = getUserDetailsFromUAAndForm({ userDetails, formData: data });
+
     const value = {
       notes,
       slug: communitySlug,
       listingType: `${typeOfCare} - ${roomType}`,
       user,
     };
+
     const payload = {
       action: REQUEST_FLOORPLAN,
       value,
@@ -94,13 +116,4 @@ export default class CommunityFloorPlanPopupFormContainer extends Component {
     );
   }
 }
-
-CommunityFloorPlanPopupFormContainer.propTypes = {
-  communitySlug: string.isRequired,
-  userDetails: object.isRequired,
-  postUserAction: func.isRequired,
-  typeOfCare: string,
-  floorPlanInfo: object,
-  postSubmit: func,
-};
 

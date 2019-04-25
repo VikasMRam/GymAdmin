@@ -1,0 +1,32 @@
+{
+  "id": "36017948a4d80ee177c7058d150a533b",
+  "archived": false,
+  "clientInfo": {
+    "name": "Pranesh Kumar",
+    "email": "praneshkmr@gmail.com",
+    "referralSource": "online",
+    "slyMessage": "this is a new client 2 which should have the same org as the user and first user in the org as admin"
+  },
+  "uuidAux": {
+    "id": "cb3464e0ce90d52a5f71c80ce581ec7f",
+    "uuid": "8fb2523b-6a78-43fa-bc80-e86ad6d5d9db",
+    "uuidInfo": {
+      "careInfo": null,
+      "residentInfo": {
+        "fullName": "Blah 5",
+        "gender": "Male"
+      },
+      "housingInfo": {
+        "lookingFor": "father",
+        "moveTimeline": "In a Week"
+      },
+      "financialInfo": {
+        "maxMonthlyBudget": "<2K"
+      },
+      "locationInfo": {
+        "city": "city name",
+        "state": "state name"
+      }
+    }
+  }
+}

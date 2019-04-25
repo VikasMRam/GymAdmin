@@ -46,6 +46,20 @@ describe('ModalController', () => {
     expect(action.payload.data.modalType).toBe(type);
     expect(action.payload.data.modalContent).toBe(content);
     expect(action.payload.data.isModalOpen).toBeTruthy();
+    expect(action.payload.data.isModalCloseable).toBeTruthy();
+  });
+
+  it('show modal not closeable', () => {
+    const store = initStore();
+    const wrapper = wrap({ store });
+
+    wrapper.dive().instance().show(content, null, type, false);
+    const action = store.getActions().pop();
+    expect(action.type).toBe(SET);
+    expect(action.payload.data.modalType).toBe(type);
+    expect(action.payload.data.modalContent).toBe(content);
+    expect(action.payload.data.isModalOpen).toBeTruthy();
+    expect(action.payload.data.isModalCloseable).toBeFalsy();
   });
 
   it('hide modal', () => {

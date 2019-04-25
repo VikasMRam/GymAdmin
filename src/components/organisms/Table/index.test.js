@@ -13,7 +13,7 @@ const defaultProps = {
   ],
   contents: [
     {
-      id: 1,
+      id: '1',
       rowItems: [
         { type: 'link', data: { text: 'Amanda Appleseed', href: '/' } },
         { type: 'text', data: { text: 'Clara Appleseed' } },
@@ -23,7 +23,7 @@ const defaultProps = {
       ],
     },
     {
-      id: 2,
+      id: '2',
       rowItems: [
         { type: 'link', data: { text: 'Belinda Baker', href: '/' } },
         { type: 'text', data: { text: 'Belinda Baker' } },
@@ -33,7 +33,7 @@ const defaultProps = {
       ],
     },
     {
-      id: 3,
+      id: '3',
       rowItems: [
         { type: 'link', data: { text: 'Claudia Chamberlain', href: '/' } },
         { type: 'text', data: { text: 'Kendrick Chaimberlain' } },
@@ -43,7 +43,7 @@ const defaultProps = {
       ],
     },
     {
-      id: 4,
+      id: '4',
       rowItems: [
         { type: 'link', data: { text: 'Dominique Dominguez Drommelders', href: '/' } },
         { type: 'text', data: { text: 'Deepa Davenport' } },

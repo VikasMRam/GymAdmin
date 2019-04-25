@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { size, palette } from 'sly/components/themes';
 import Role from 'sly/components/common/Role';
 import { Icon, Span, Link } from 'sly/components/atoms';
+import pad from 'sly/components/helpers/pad';
 
 const Wrapper = styled.div`
   display: flex;
@@ -35,7 +36,8 @@ const MenuItem = styled(Link)`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     flex-direction: column;
     margin-bottom: ${size('spacing.xxLarge')};
-    padding: 0 ${size('spacing.xLarge')};
+    margin-right: 0;
+    padding: 0;
   }
 `;
 
@@ -56,9 +58,8 @@ const NotActiveMenuItem = MenuItem.extend`
   display: none;
 `;
 
-const MenuItemIcon = styled(Icon)`
-  margin-right: ${size('spacing.regular')};
-`;
+const MenuItemIcon = pad(Icon, 'small');
+MenuItemIcon.displayName = 'MenuItemIcon';
 
 const MenuIcon = styled(Icon)`
   margin-left: auto;

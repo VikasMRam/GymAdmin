@@ -2,15 +2,17 @@ import React from 'react';
 import { object } from 'prop-types';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
-import createApi from './createApi';
-
-const beesApi = createApi();
+function getDisplayName(WrappedComponent) {
+  return WrappedComponent.displayName
+    || WrappedComponent.name
+    || 'Component';
+}
 
 export default function withApi(ChildComponent) {
-  const WithApi = props => <ChildComponent api={beesApi} {...props} />;
+  const WithApi = (props, context) => <ChildComponent api={context.api} {...props} />;
 
-  WithApi.displayName = `WithApi(${ChildComponent.displayName || ChildComponent.name || 'WithApi'})`;
-  WithApi.propTypes = { api: object };
+  WithApi.contextTypes = { api: object };
+  WithApi.displayName = `WithApi(${getDisplayName(ChildComponent)})`;
   WithApi.WrappedComponent = ChildComponent;
 
   hoistNonReactStatic(WithApi, ChildComponent);
