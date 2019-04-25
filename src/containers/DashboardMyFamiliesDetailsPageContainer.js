@@ -4,7 +4,7 @@ import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
-import { prefetch, query, getRelationship } from 'sly/services/newApi';
+import { prefetch, query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 import { FAMILY_STATUS_ACTIVE } from 'sly/constants/familyDetails';
@@ -16,10 +16,6 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
   id: match.params.id,
 }))
 
-@connect((state, props) => ({
-  uuidAux: getRelationship(state, props.status.client.result, 'uuidAux'),
-}))
-
 @query('updateClient', 'updateClient')
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
@@ -29,7 +25,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     status: object,
     history: object,
     updateClient: func,
-    uuidAux: object,
   };
 
   onRejectSuccess = (hide) => {
@@ -61,12 +56,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   render() {
     const { onRejectSuccess, onUnPause } = this;
-    const {
-      client, match, status, uuidAux,
-    } = this.props;
+    const { client, match, status } = this.props;
     const { result: rawClient, meta } = status.client;
-    // todo temp
-    console.log(uuidAux);
+
     return (
       <NotificationController>
         {({ notifyError, notifyInfo }) => (
