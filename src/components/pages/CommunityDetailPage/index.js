@@ -393,11 +393,6 @@ export default class CommunityDetailPage extends Component {
       partnerAgents,
     } = community;
 
-    let initedUserSave;
-    if (userSave) {
-      initedUserSave = userSave.status !== USER_SAVE_DELETE_STATUS ? userSave : null;
-    }
-
     const {
       careServices, websiteUrl, promoDescription, promoTitle, communitySize,
     } = propInfo;
@@ -499,7 +494,7 @@ export default class CommunityDetailPage extends Component {
                 <StyledCommunitySummary
                   community={community}
                   isAdmin={user && user.admin}
-                  isFavourited={!!initedUserSave}
+                  userSave={userSave}
                   onFavouriteClick={handleFavouriteClick}
                   onShareClick={handleShareClick}
                 />

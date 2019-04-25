@@ -88,6 +88,16 @@ const fontSize = ({ kind }) => {
   }
 };
 
+// TODO: Check with Jared and correct Line heights of Buttons Texts
+const lineHeight = ({ kind }) => {
+  switch (kind) {
+    case 'tab':
+      return size('lineHeight', 'caption');
+    default:
+      return 'normal';
+  }
+};
+
 export const styles = css`
   display: inline-flex;
   align-items: center;
@@ -96,6 +106,7 @@ export const styles = css`
   font-weight: ${size('weight.medium')};
   white-space: nowrap;
   font-size: ${fontSize};
+  line-height: ${lineHeight};
   border: ${size('border.regular')} solid ${borderColor};
   cursor: ${ifProp('disabled', 'default', 'pointer')};
   opacity: ${ifProp('disabled', 0.5, 1)};
@@ -108,6 +119,8 @@ export const styles = css`
   user-select: none;
   pointer-events: ${ifProp('disabled', 'none', 'auto')};
   ${switchProp('kind', {
+    tab: css`
+      padding: ${size('spacing', 'regular')} ${size('spacing', 'large')};`,
     label: css`
       padding: 0 ${size('spacing', 'large')};
       height: ${size('element', 'regular')};`,
@@ -168,7 +181,7 @@ Button.propTypes = {
   palette: palettePropType,
   foregroundPalette: palettePropType,
   borderPalette: palettePropType,
-  kind: oneOf(['jumbo', 'regular']),
+  kind: oneOf(['jumbo', 'regular', 'tab']),
   selectable: bool,
   selected: bool,
   type: string,

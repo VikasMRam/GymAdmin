@@ -21,14 +21,14 @@ const ProfileUserDetailsFormWrapper = styled.div`
 const DashboardMyProfilePage = ({ user, warningMessage }) => {
   const { hasPasswordSet } = user;
   return (
-    <DashboardPageTemplate activeMenuItem="Profile">
+    <DashboardPageTemplate activeMenuItem="My Profile">
       <BannerNotificationController>
         {({ messages, notifySuccess }) => (
           <Fragment>
             {messages.map(message => <PaddedBannerNotification key={message.id}>{message.content}</PaddedBannerNotification>)}
             {warningMessage && <PaddedBannerNotification palette="warning">{warningMessage}</PaddedBannerNotification>}
             <ProfileUserDetailsFormWrapper>
-              <DashboardProfileUserDetailsFormContainer />
+              <DashboardProfileUserDetailsFormContainer notifySuccess={notifySuccess} />
             </ProfileUserDetailsFormWrapper>
             {hasPasswordSet ? <DashboardChangePasswordFormContainer notifySuccess={notifySuccess} /> : <DashboardAddPasswordFormContainer notifySuccess={notifySuccess} />}
           </Fragment>

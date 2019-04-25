@@ -34,11 +34,6 @@ const tocPaths = (toc) => {
           path: '/memory-care',
           label: 'Memory Care',
         };
-      case 'Board And Care Home':
-        return {
-          path: '/board-and-care-home',
-          label: 'Board And Care Home',
-        };
       default:
         return {
           path: '/retirement-community',

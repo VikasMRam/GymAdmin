@@ -1,7 +1,6 @@
 import React from 'react';
 import { node, string } from 'prop-types';
 import styled from 'styled-components';
-import classes from 'classnames';
 
 import { size, palette, columnWidth } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
@@ -15,7 +14,7 @@ const Wrapper = styled.div`
 
   > *:nth-child(1) {
     margin-right: ${size('layout.gutter')};
-    width: ${columnWidth(3, size('layout.gutter'))};
+    flex: 0 0 ${columnWidth(3, size('layout.gutter'))};
   }
 
   > *:nth-child(2) {

@@ -5,19 +5,23 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField/index';
-import { Heading, Button } from 'sly/components/atoms';
+import { Heading, Block, Button } from 'sly/components/atoms';
+import pad from 'sly/components/helpers/pad';
+import { community as communityPropType } from 'sly/propTypes/community';
 
 const StyledButton = styled(Button)`
   margin-bottom: ${size('spacing.regular')};
 `;
 
+const ErrorBlock = pad(Block);
 
 const CommunityAddRatingForm = ({
-  handleSubmit, pristine, submitting, communityName, user, error,
+  handleSubmit, pristine, submitting, community, user, error,
 }) => {
+  const name = community && community.name;
   return (
     <form onSubmit={handleSubmit}>
-      <Heading level="title" size="title">Write a review for {communityName}</Heading>
+      <Heading level="title" size="title">Write a review for {name}</Heading>
       {!user && <Field
         name="name"
         label=""
@@ -45,7 +49,7 @@ const CommunityAddRatingForm = ({
         placeholder="Type your Comments here..."
         component={ReduxField}
       />
-      {error && <strong>{error}</strong>}
+      {error && <ErrorBlock palette="danger">{error}</ErrorBlock>}
       <StyledButton type="submit" kind="jumbo" disabled={pristine || submitting}>
         Submit Rating
       </StyledButton>
@@ -56,8 +60,8 @@ const CommunityAddRatingForm = ({
 };
 
 CommunityAddRatingForm.propTypes = {
+  community: communityPropType,
   handleSubmit: func.isRequired,
-  communityName: string.isRequired,
   pristine: bool,
   submitting: bool,
   user: object,

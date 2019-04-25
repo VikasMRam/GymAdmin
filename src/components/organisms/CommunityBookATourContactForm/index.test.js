@@ -4,6 +4,7 @@ import { Field } from 'redux-form';
 
 import CommunityBookATourContactForm from 'sly/components/organisms/CommunityBookATourContactForm';
 import { Link, Block } from 'sly/components/atoms';
+import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy/index';
 
 const onAdvisorHelpClick = jest.fn();
 const fullName = 'Pranesh Kumar';
@@ -35,7 +36,7 @@ describe('CommunityBookATourContactForm', () => {
 
     expect(wrapper.find('StyledField')).toHaveLength(0);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
-    expect(wrapper.find(Link).filter({ href: '/tos' })).toHaveLength(1);
+    expect(wrapper.find(TosAndPrivacy)).toHaveLength(1);
   });
 
   it('does not render name when name is passed', () => {
@@ -47,7 +48,7 @@ describe('CommunityBookATourContactForm', () => {
     // expect(wrapper.find(Field).filter({ name: 'notes' })).toHaveLength(1);
 
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
-    expect(wrapper.find(Link).filter({ href: '/tos' })).toHaveLength(1);
+    expect(wrapper.find(TosAndPrivacy)).toHaveLength(1);
   });
 
   it('does not render phone when phone is passed', () => {
@@ -57,7 +58,7 @@ describe('CommunityBookATourContactForm', () => {
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(0);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);
-    expect(wrapper.find(Link).filter({ href: '/tos' })).toHaveLength(1);
+    expect(wrapper.find(TosAndPrivacy)).toHaveLength(1);
   });
 
   it('render error when error is passed', () => {
@@ -66,7 +67,7 @@ describe('CommunityBookATourContactForm', () => {
     expect(wrapper.find(Field).filter({ name: 'phone' })).toHaveLength(1);
 
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(1);
-    expect(wrapper.find(Link).filter({ href: '/tos' })).toHaveLength(1);
+    expect(wrapper.find(TosAndPrivacy)).toHaveLength(1);
   });
 
   it('handles onAdvisorHelpClick', () => {
@@ -77,6 +78,6 @@ describe('CommunityBookATourContactForm', () => {
 
   it('renders tos when user is not passed', () => {
     const wrapper = wrap({ user: { name: fullName } });
-    expect(wrapper.find(Link).filter({ href: '/tos' })).toHaveLength(0);
+    expect(wrapper.find(TosAndPrivacy)).toHaveLength(0);
   });
 });

@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
-import { string, func, object } from 'prop-types';
+import { func, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
+import { withUser, withApi, prefetch } from 'sly/services/newApi';
+
 import {
   createValidator,
   required,
   email,
   notZero,
 } from 'sly/services/validation';
-import { getDetail } from 'sly/store/selectors';
+
+import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityAddRatingForm from 'sly/components/organisms/CommunityAddRatingForm';
 import Thankyou from 'sly/components/molecules/Thankyou';
 
@@ -28,39 +30,51 @@ const ReduxForm = reduxForm({
   validate,
 })(CommunityAddRatingForm);
 
-class CommunityAddRatingFormContainer extends Component {
+@withRouter
+
+// FIXME: hack because addRating is not JSON:API so we can't use @query
+@withApi
+@connect(null, (dispatch, { api }) => ({
+  createRating: data => dispatch(api.createRating(data)),
+}))
+
+@withUser
+
+@prefetch('community', 'getCommunity', (req, { match }) => req({
+  id: match.params.communitySlug,
+  include: 'similar-communities,questions,agents',
+}))
+
+export default class CommunityAddRatingFormContainer extends Component {
   static propTypes = {
     user: object,
-    communitySlug: string.isRequired,
-    addRating: func,
-    loadCommunity: func,
+    community: communityPropType,
+    createRating: func,
+    status: object.isRequired,
     showModal: func,
   };
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, addRating, loadCommunity, showModal,
+      community, createRating, status, showModal,
     } = this.props;
     const {
       comments, value, name, email,
     } = values;
     const payload = {
-      communitySlug,
+      communitySlug: community && community.id,
       comments,
       value: parseFloat(value),
       name,
       email,
     };
-    return addRating(payload).then(() => {
+
+    return createRating(payload).then(() => {
       showModal(<Thankyou subheading="Your review has been submitted for approval." />);
-      loadCommunity(communitySlug);
-    }).catch((r) => {
-      // TODO: Need to set a proper way to handle server side errors
-      const { response } = r;
-      return response.json().then((data) => {
-        const errorMessage = data.errors[0].detail;
-        throw new SubmissionError({ _error: errorMessage });
-      });
+      return status.community.refetch();
+    }).catch((response) => {
+      const errorMessage = response.body.errors[0].detail;
+      throw new SubmissionError({ _error: errorMessage });
     });
   };
 
@@ -68,10 +82,12 @@ class CommunityAddRatingFormContainer extends Component {
     const {
       user, ...props
     } = this.props;
+
     const initialValues = {
       comments: '',
       value: 0,
     };
+
     return (
       <ReduxForm
         initialValues={initialValues}
@@ -83,35 +99,3 @@ class CommunityAddRatingFormContainer extends Component {
   }
 }
 
-const getCommunitySlug = match => match.params.communitySlug;
-
-const mapStateToProps = (state, { location, match }) => {
-  const communitySlug = getCommunitySlug(match);
-  let community;
-  let name;
-  if (communitySlug) {
-    (community = getDetail(state, 'community', communitySlug));
-  }
-  if (community) {
-    ({ name } = community);
-  }
-
-  return {
-    user: getDetail(state, 'user', 'me'),
-    communitySlug,
-    communityName: name,
-    location,
-  };
-};
-
-const mapDispatchToProps = dispatch => ({
-  addRating: data => dispatch(resourceCreateRequest('rating', data)),
-  loadCommunity: slug => dispatch(resourceDetailReadRequest('community', slug, {
-    include: 'similar-communities,questions,agents',
-  })),
-});
-
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CommunityAddRatingFormContainer));

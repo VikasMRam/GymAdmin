@@ -8,7 +8,7 @@ export const getQueryParamsSetter = (history, location) => {
     history.push(path);
   };
 
-  const setQueryParams = (queryParams) => {
+  return function setQueryParams(queryParams) {
     const keysToModify = {};
     Object.keys(queryParams).forEach((key) => {
       const value = queryParams[key];
@@ -22,6 +22,4 @@ export const getQueryParamsSetter = (history, location) => {
       changeSearchParams({ changedParams: keysToModify });
     }
   };
-
-  return setQueryParams;
 };
