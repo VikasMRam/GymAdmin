@@ -47,7 +47,7 @@ const defaultProps = {
       rowItems: [
         { type: 'link', data: { text: 'Dominique Dominguez Drommelders', href: '/' } },
         { type: 'text', data: { text: 'Deepa Davenport' } },
-        { type: 'stage', data: { text: '3rd Contact Attempt', currentStage: 4 } },
+        { type: 'stage', data: { text: '3rd+ Contact Attempt', currentStage: 4 } },
         { type: 'doubleLine', data: { firstLine: 'I called and left a message on her voicemail saying that I have a few communities that she would', secondLine: '10/10/2019' } },
         { type: 'text', data: { text: '10/10/2019' } },
       ],
