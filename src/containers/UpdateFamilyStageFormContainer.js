@@ -101,10 +101,11 @@ class UpdateFamilyStageFormContainer extends Component {
     let nextStageGroup;
     let levelGroup;
     let showRejectOption;
+    let nextStage;
     if (formState) {
       this.currentStage = getStageDetails(stage);
       ({ levelGroup, showRejectOption } = this.currentStage);
-      const { stage: nextStage } = formState;
+      ({ stage: nextStage } = formState);
       this.nextStage = getStageDetails(nextStage);
       ({ levelGroup: nextStageGroup } = this.nextStage);
     }
@@ -118,6 +119,7 @@ class UpdateFamilyStageFormContainer extends Component {
         initialValues={initialValues}
         currentStageGroup={levelGroup}
         nextStageGroup={nextStageGroup}
+        nextStage={nextStage}
         name={name}
         onSubmit={handleUpdateStage}
         showRejectOption={showRejectOption}

@@ -51,6 +51,7 @@ export default class FamilyDetailsFormContainer extends Component {
       client, updateClient, rawClient, notifyError, uuidAux, updateUuidAux,
     } = this.props;
     const { id } = client;
+    const { id: uuidID } = uuidAux;
     const {
       name,
       email,
@@ -85,7 +86,7 @@ export default class FamilyDetailsFormContainer extends Component {
       .value();
 
     return updateClient({ id }, newClient)
-      .then(() => updateUuidAux({ id: newUuidAux.attributes.uuid }, newUuidAux).catch(e => Promise.reject(e)))
+      .then(() => updateUuidAux({ id: uuidID }, newUuidAux).catch(e => Promise.reject(e)))
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { body } = r;

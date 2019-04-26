@@ -4,9 +4,11 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { palette, size } from 'sly/components/themes';
-import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_REJECTED } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_REJECTED, FAMILY_STAGE_WON } from 'sly/constants/familyDetails';
 import pad from 'sly/components/helpers/pad';
-import { Block } from 'sly/components/atoms';
+import { phoneParser } from 'sly/services/helpers/phone';
+import { dateFormatter } from 'sly/services/helpers/date';
+import { Block, Span } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
 
@@ -21,7 +23,7 @@ const PaddedField = pad(Field, 'xLarge');
 PaddedField.displayName = 'PaddedField';
 
 const UpdateFamilyStageForm = ({
-  handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, showRejectOption, ...props
+  handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, nextStage, showRejectOption, ...props
 }) => {
   const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
   if (!showRejectOption) {
@@ -59,14 +61,50 @@ const UpdateFamilyStageForm = ({
           Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.
         </Warning>
       }
-      <Field
-        type="textarea"
-        rows="3"
-        name="note"
-        label="Add a note"
-        placeholder="Add a note on why you are updating this family's stage..."
-        component={ReduxField}
-      />
+      {nextStage !== FAMILY_STAGE_WON &&
+        <Field
+          type="textarea"
+          rows="3"
+          name="note"
+          label="Add a note"
+          placeholder="Add a note on why you are updating this family's stage..."
+          component={ReduxField}
+        />
+      }
+      {nextStage === FAMILY_STAGE_WON &&
+        <Field
+          name="moveInDate"
+          label={<span>Move-In date<Span palette="danger">*</Span></span>}
+          type="text"
+          parse={phoneParser}
+          format={dateFormatter}
+          component={ReduxField}
+        />
+      }
+      {nextStage === FAMILY_STAGE_WON &&
+        <Field
+          name="communityName"
+          label={<span>Community name<Span palette="danger">*</Span></span>}
+          type="text"
+          component={ReduxField}
+        />
+      }
+      {nextStage === FAMILY_STAGE_WON &&
+        <Field
+          name="monthlyFees"
+          label={<span>Resident&apos;s monthly fees (rent + care)<Span palette="danger">*</Span></span>}
+          type="iconInput"
+          component={ReduxField}
+        />
+      }
+      {nextStage === FAMILY_STAGE_WON &&
+        <Field
+          name="referralAgreement"
+          label={<span>Your community referral agreement %<Span palette="danger">*</Span></span>}
+          type="iconInput"
+          component={ReduxField}
+        />
+      }
     </ThreeSectionFormTemplate>
   );
 };
@@ -77,6 +115,7 @@ UpdateFamilyStageForm.propTypes = {
   name: string.isRequired,
   currentStageGroup: string,
   nextStageGroup: string,
+  nextStage: string,
   showRejectOption: bool,
 };
 
