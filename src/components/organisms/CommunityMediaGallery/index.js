@@ -87,7 +87,7 @@ export default class CommunityMediaGallery extends Component {
     const bottomRightSection = () => (
       websiteUrl ?
         <BottomRightWrapper>
-          <Link palette="slate" variation="filler" href={websiteUrl} target="_blank" rel="noopener"> Image source </Link>
+          <Link size="tiny" palette="slate" variation="filler" href={websiteUrl} target="_blank" rel="noopener"> Image source </Link>
         </BottomRightWrapper> : null
     );
 

@@ -3,7 +3,9 @@ import { object, func, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { SubmissionError, clearSubmitErrors } from 'redux-form';
 import { withRouter } from 'react-router';
+import styled from 'styled-components';
 
+import { size } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { USER_SAVE_INIT_STATUS } from 'sly/constants/userSave';
@@ -11,8 +13,13 @@ import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED } from 'sly/constants/notifications';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { withApi, withAuth, prefetch } from 'sly/services/newApi';
-import SaveCommunityFormContainer from 'sly/containers/SaveCommunityFormContainer';
+import { Block } from 'sly/components/atoms';
+import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import CommunitySaved from 'sly/components/organisms/CommunitySaved';
+
+const PaddedBlock = styled(Block)`
+  padding: ${size('spacing.xxLarge')};
+`;
 
 const mapStateToProps = (state, ownProps) => {
   const { slug, userSaves } = ownProps;
@@ -66,7 +73,8 @@ export default class SaveCommunityContainer extends Component {
     setQueryParams: func,
     notifyInfo: func,
     notifyError: func,
-    onDoneButtonClicked: func,
+    onDoneButtonClick: func,
+    onCancelClick: func,
   };
 
   state = { updatingUserSave: false };
@@ -153,10 +161,10 @@ export default class SaveCommunityContainer extends Component {
   };
 
   handleModalClose = () => {
-    const { community, onDoneButtonClicked } = this.props;
+    const { community, onDoneButtonClick } = this.props;
     const { id } = community;
 
-    onDoneButtonClicked();
+    onDoneButtonClick();
     const event = {
       action: 'close-modal', category: 'saveCommunity', label: id,
     };
@@ -165,12 +173,18 @@ export default class SaveCommunityContainer extends Component {
 
   render() {
     const { handleSubmitSaveCommunityForm } = this;
-    const { community, onDoneButtonClicked } = this.props;
+    const { community, onDoneButtonClick, onCancelClick } = this.props;
     const { updatingUserSave } = this.state;
 
     if (updatingUserSave) {
-      return 'Updating...';
+      return <PaddedBlock>Updating...</PaddedBlock>;
     }
+
+    const PaddedCommunitySaved = () => (
+      <PaddedBlock>
+        <CommunitySaved name="Success" similarCommunities={community.similarProperties} onDoneButtonClicked={onDoneButtonClick}/>
+      </PaddedBlock>
+    );
 
     return (
       <WizardController
@@ -181,15 +195,17 @@ export default class SaveCommunityContainer extends Component {
         }) => (
           <WizardSteps {...props}>
             <WizardStep
-              component={SaveCommunityFormContainer}
+              component={AddNoteFormContainer}
               name="Note"
               onSubmit={data => handleSubmitSaveCommunityForm(data, next)}
+              heading="Add to your favorites list"
+              placeholder="What are some things about this community that you like..."
+              hasCancel
+              onCancelClick={onCancelClick}
             />
             <WizardStep
-              component={CommunitySaved}
+              component={PaddedCommunitySaved}
               name="Success"
-              similarCommunities={community.similarProperties}
-              onDoneButtonClicked={onDoneButtonClicked}
             />
           </WizardSteps>
         )}

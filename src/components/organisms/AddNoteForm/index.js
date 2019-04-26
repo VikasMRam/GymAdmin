@@ -6,7 +6,7 @@ import { Block } from 'sly/components/atoms';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
-const AddNoteForm = ({
+const SaveCommunityForm = ({
   submitting, handleSubmit, error, onCancelClick, hasCancel, heading, submitButtonText, placeholder, ...props
 }) => (
   <ThreeSectionFormTemplate
@@ -30,7 +30,7 @@ const AddNoteForm = ({
   </ThreeSectionFormTemplate>
 );
 
-AddNoteForm.propTypes = {
+SaveCommunityForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
   error: string,
@@ -41,8 +41,8 @@ AddNoteForm.propTypes = {
   placeholder: string,
 };
 
-AddNoteForm.defaultProps = {
+SaveCommunityForm.defaultProps = {
   submitButtonText: 'Save',
 };
 
-export default AddNoteForm;
+export default SaveCommunityForm;

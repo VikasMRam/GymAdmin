@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
-import produce from 'immer';
+import immutable from 'object-path-immutable';
+import pick from 'lodash/pick';
+import { connect } from 'react-redux';
 
 import { prefetch, query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
-import { FAMILY_STATUS_ACTIVE } from 'sly/constants/familyDetails';
+import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
@@ -16,6 +18,8 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
 
 @query('updateClient', 'updateClient')
 
+@query('createNote', 'createNote')
+
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
     client: clientPropType,
@@ -23,6 +27,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     status: object,
     history: object,
     updateClient: func,
+    createNote: func,
   };
 
   onRejectSuccess = (hide) => {
@@ -32,13 +37,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   onUnPause = (notifyInfo, notifyError) => {
-    const { updateClient, client, status } = this.props;
-    const { id } = client;
-    const { result: rawClient } = status.client;
+    const { setStatusToActive } = this;
 
-    return updateClient({ id }, produce(rawClient, (draft) => {
-      draft.attributes.status = FAMILY_STATUS_ACTIVE;
-    }))
+    return setStatusToActive()
       .then(() => {
         notifyInfo('Family successfully unpaused');
       })
@@ -51,8 +52,49 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       });
   };
 
+  onAddNote = (data, notifyError, notifyInfo, hideModal) => {
+    const { setStatusToActive } = this;
+    const { createNote, client } = this.props;
+    const { id } = client;
+    const { note } = data;
+    const payload = {
+      type: 'Note',
+      attributes: {
+        commentableID: id,
+        commentableType: NOTE_COMMENTABLE_TYPE_CLIENT,
+        body: note,
+      },
+    };
+    const notePromise = () => createNote(payload);
+
+    return setStatusToActive()
+      .then(notePromise)
+      .then(() => {
+        hideModal();
+        notifyInfo('Note successfully added');
+      })
+      .catch((r) => {
+        // TODO: Need to set a proper way to handle server side errors
+        const { body } = r;
+        const errorMessage = body.errors.map(e => e.title).join('. ');
+        console.error(errorMessage);
+        notifyError('Failed to add note. Please try again.');
+      });
+  };
+
+  setStatusToActive = () => {
+    const { updateClient, client, status } = this.props;
+    const { id } = client;
+    const { result: rawClient } = status.client;
+    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage']))
+      .set('attributes.status', FAMILY_STATUS_ACTIVE)
+      .value();
+
+    return updateClient({ id }, newClient);
+  };
+
   render() {
-    const { onRejectSuccess, onUnPause } = this;
+    const { onRejectSuccess, onUnPause, onAddNote } = this;
     const { client, match, status } = this.props;
     const { result: rawClient, meta } = status.client;
 
@@ -75,6 +117,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 meta={meta}
                 onRejectSuccess={() => onRejectSuccess(hide)}
                 onUnPause={() => onUnPause(notifyInfo, notifyError)}
+                onAddNote={onAddNote}
               />
             )}
           </ModalController>

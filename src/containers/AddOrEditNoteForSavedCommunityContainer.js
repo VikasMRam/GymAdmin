@@ -2,19 +2,25 @@ import React, { Component } from 'react';
 import { object, func, bool } from 'prop-types';
 import { SubmissionError } from 'redux-form';
 import produce from 'immer';
+import styled from 'styled-components';
 
-import { withApi } from 'sly/services/newApi';
+import { size } from 'sly/components/themes';
+import { query } from 'sly/services/newApi';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { community as communityPropType } from 'sly/propTypes/community';
-import SaveCommunityFormContainer from 'sly/containers/SaveCommunityFormContainer';
+import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
 
-@withApi
+const StyledConfirmationDialog = styled(ConfirmationDialog)`
+  padding: ${size('spacing.xxLarge')};
+`;
+
+@query('updateUserSave', 'updateUserSave')
 
 class AddOrEditNoteForSavedCommunityContainer extends Component {
   static propTypes = {
     user: object,
-    api: object,
+    updateUserSave: func,
     community: communityPropType,
     onComplete: func,
     onCancel: func,
@@ -26,23 +32,21 @@ class AddOrEditNoteForSavedCommunityContainer extends Component {
 
   handleSubmitSaveCommunityForm = (data) => {
     const {
-      api, onComplete, userSave, rawUserSave,
+      updateUserSave, onComplete, userSave, rawUserSave,
     } = this.props;
     const { id } = userSave;
 
     // todo new clear submit with dispatch clearSubmitErrors();
-    return api.updateUserSave({ id }, {
-      data: produce(rawUserSave, (draft) => {
-        draft.attributes.info.note = data.note;
-      }),
-    })
+    return updateUserSave({ id }, produce(rawUserSave, (draft) => {
+      draft.attributes.info.note = data.note;
+    }))
+      .then(onComplete)
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { body } = r;
         const errorMessage = body.errors.map(e => e.title).join('. ');
         throw new SubmissionError({ _error: errorMessage });
-      })
-      .then(onComplete);
+      });
   };
 
   render() {
@@ -61,8 +65,9 @@ class AddOrEditNoteForSavedCommunityContainer extends Component {
         }) => (
           <WizardSteps {...props}>
             <WizardStep
-              component={SaveCommunityFormContainer}
+              component={AddNoteFormContainer}
               name="Note"
+              placeholder="What are some things about this community that you like..."
               onSubmit={data => handleSubmitSaveCommunityForm(data)}
               heading={`${isEditMode ? 'Edit' : 'Add'} note about ${name}`}
               hasCancel
@@ -71,7 +76,7 @@ class AddOrEditNoteForSavedCommunityContainer extends Component {
               initialValues={initialValues}
             />
             <WizardStep
-              component={ConfirmationDialog}
+              component={StyledConfirmationDialog}
               name="Discard"
               heading="Discard Note"
               description="You can’t undo this, and you'll lose any unsaved changes."

@@ -131,6 +131,10 @@ class PricingWizardPage extends Component {
     if (currentStep === 1 && userDetails && userDetails.phone && userDetails.fullName) {
       goto(3);
     }
+    if (currentStep === 2) {
+      // Track goal events
+      sendEvent('pricing-contact-submitted', id,currentStep);
+    }
   };
 
   calculatePrice = (roomTypes, careTypes) => {

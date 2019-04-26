@@ -20,6 +20,7 @@ import AcceptAndContactFamilyContainer from 'sly/containers/AcceptAndContactFami
 import RejectFamilyContainer from 'sly/containers/RejectFamilyContainer';
 import UpdateFamilyStageFormContainer from 'sly/containers/UpdateFamilyStageFormContainer';
 import PlaceFamilyOnPauseFormContainer from 'sly/containers/PlaceFamilyOnPauseFormContainer';
+import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import { Box, Block, Icon, Span, Link, Hr } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
@@ -130,6 +131,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     meta: clientMetaPropType,
     onRejectSuccess: func,
     onUnPause: func.isRequired,
+    onAddNote: func,
   };
 
   handleAcceptClick = () => {
@@ -155,7 +157,26 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
   };
 
   handleAddNoteClick = () => {
-    // todo  add handler
+    const {
+      showModal, client, hideModal, onAddNote, notifyError, notifyInfo,
+    } = this.props;
+    const { clientInfo } = client;
+    const { name } = clientInfo;
+    const handleSubmit = data => onAddNote(data, notifyError, notifyInfo, hideModal);
+
+    showModal(
+      <AddNoteFormContainer
+        hasCancel
+        onCancelClick={hideModal}
+        heading={`Add a note on ${name}`}
+        placeholder="Add a note on why you are updating this family's stage..."
+        submitButtonText="Save note"
+        onSubmit={handleSubmit}
+      />,
+      null,
+      'noPadding',
+      false
+    );
   };
 
   handlePauseClick = () => {
