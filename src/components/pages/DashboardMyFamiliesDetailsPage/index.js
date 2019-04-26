@@ -227,7 +227,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
     const {
-      level, levelGroup, palette, showAcceptRejectButtons, showPauseButton,
+      level, levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton,
     } = getStageDetails(stage);
     const { name } = clientInfo;
     const activityCards = activities.map((a, i) =>
@@ -241,14 +241,26 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'family-details');
     const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'communities');
 
-    const stickyFooterOptions = [
-      {
-        text: 'Update Stage', icon: 'flag', iconPalette: 'slate', onClick: () => {},
-      },
-      {
-        text: 'Add Note', icon: 'add-note', iconPalette: 'slate', onClick: () => {}, ghost: true,
-      },
-    ];
+    let stickyFooterOptions = [];
+    if (showAcceptRejectButtons) {
+      stickyFooterOptions = [
+        {
+          text: 'Accept and contact this family', icon: 'flag', iconPalette: 'slate', onClick: handleAcceptClick,
+        },
+        {
+          text: 'Reject', icon: 'add-note', iconPalette: 'slate', onClick: handleRejectClick, ghost: true,
+        },
+      ];
+    } else if (showUpdateAddNoteButtons) {
+      stickyFooterOptions = [
+        {
+          text: 'Update Stage', icon: 'flag', iconPalette: 'slate', onClick: handleUpdateClick,
+        },
+        {
+          text: 'Add Note', icon: 'add-note', iconPalette: 'slate', onClick: handleAddNoteClick, ghost: true,
+        },
+      ];
+    }
 
     const stickyFooterStageProps = {
       text: `${levelGroup} - ${stage}`,
@@ -278,7 +290,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
         </BigScreenSummarySection>
         <SmallScreenClientNameWrapper>
-          <Icon icon="arrow-left" palette="slate" />
+          <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+            <Icon icon="arrow-left" palette="slate" />
+          </Link>
           <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
         </SmallScreenClientNameWrapper>
         <Tabs activeTab={activeTab}>
