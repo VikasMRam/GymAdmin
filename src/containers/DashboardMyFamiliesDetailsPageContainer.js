@@ -86,7 +86,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { updateClient, client, status } = this.props;
     const { id } = client;
     const { result: rawClient } = status.client;
-    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage']))
+    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status']))
       .set('attributes.status', FAMILY_STATUS_ACTIVE)
       .value();
 

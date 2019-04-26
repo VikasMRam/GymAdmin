@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
-import produce from 'immer';
+import immutable from 'object-path-immutable';
+import pick from 'lodash/pick';
 import { getRelationship } from 'redux-bees';
 import { connect } from 'react-redux';
 
@@ -29,6 +30,8 @@ const ReduxForm = reduxForm({
 
 @query('updateClient', 'updateClient')
 
+@query('updateUuidAux', 'updateUuidAux')
+
 @connect((state, props) => ({
   uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
 }))
@@ -36,6 +39,7 @@ const ReduxForm = reduxForm({
 export default class FamilyDetailsFormContainer extends Component {
   static propTypes = {
     updateClient: func.isRequired,
+    updateUuidAux: func.isRequired,
     notifyError: func.isRequired,
     client: clientPropType.isRequired,
     rawClient: object,
@@ -44,7 +48,7 @@ export default class FamilyDetailsFormContainer extends Component {
 
   handleSubmit = (data) => {
     const {
-      client, updateClient, rawClient, notifyError, uuidAux,
+      client, updateClient, rawClient, notifyError, uuidAux, updateUuidAux,
     } = this.props;
     const { id } = client;
     const {
@@ -58,30 +62,30 @@ export default class FamilyDetailsFormContainer extends Component {
       timeToMove,
       preferredLocation,
     } = data;
-
-    return updateClient({ id }, produce(rawClient, (draft) => {
-      const newAux = { ...uuidAux };
-      let locationInfo = {};
-      if (preferredLocation) {
-        const [city, state] = preferredLocation.split(',');
-        locationInfo = {
-          city,
-          state,
-        };
-      }
-      newAux.attributes.uuidInfo.residentInfo.fullName = residentName;
-      newAux.attributes.uuidInfo.residentInfo.gender = gender;
-      newAux.attributes.uuidInfo.financialInfo.maxMonthlyBudget = budget;
-      newAux.attributes.uuidInfo.housingInfo.lookingFor = lookingFor;
-      newAux.attributes.uuidInfo.housingInfo.moveTimeline = timeToMove;
-      newAux.attributes.uuidInfo.locationInfo = locationInfo;
-      draft.attributes.clientInfo.name = name;
-      draft.attributes.clientInfo.email = email;
-      draft.attributes.clientInfo.phoneNumber = phone;
-      draft.relationships.uuidAux = {
-        data: newAux,
+    let locationInfo = {};
+    if (preferredLocation) {
+      const [city, state] = preferredLocation.split(',');
+      locationInfo = {
+        city,
+        state,
       };
-    }))
+    }
+    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.clientInfo']))
+      .set('attributes.clientInfo.name', name)
+      .set('attributes.clientInfo.email', email)
+      .set('attributes.clientInfo.phoneNumber', phone)
+      .value();
+    const newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']))
+      .set('attributes.uuidInfo.residentInfo.fullName', residentName)
+      .set('attributes.uuidInfo.residentInfo.gender', gender)
+      .set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', budget)
+      .set('attributes.uuidInfo.housingInfo.lookingFor', lookingFor)
+      .set('attributes.uuidInfo.housingInfo.moveTimeline', timeToMove)
+      .set('attributes.uuidInfo.locationInfo', locationInfo)
+      .value();
+
+    return updateClient({ id }, newClient)
+      .then(() => updateUuidAux({ id: newUuidAux.attributes.uuid }, newUuidAux).catch(e => Promise.reject(e)))
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { body } = r;
