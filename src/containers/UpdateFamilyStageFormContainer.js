@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 
 import { query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { FAMILY_STATUS_ACTIVE } from 'sly/constants/familyDetails';
+import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
+import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
@@ -27,6 +28,8 @@ const mapStateToProps = state => ({
 
 @query('updateClient', 'updateClient')
 
+@query('createNote', 'createNote')
+
 @connect(mapStateToProps)
 
 class UpdateFamilyStageFormContainer extends Component {
@@ -35,7 +38,8 @@ class UpdateFamilyStageFormContainer extends Component {
     rawClient: object,
     notifyError: func.isRequired,
     notifyInfo: func.isRequired,
-    updateClient: func,
+    updateClient: func.isRequired,
+    createNote: func.isRequired,
     onSuccess: func,
     formState: object,
   };
@@ -46,16 +50,30 @@ class UpdateFamilyStageFormContainer extends Component {
   handleUpdateStage = (data) => {
     const { currentStage, nextStage } = this;
     const {
-      updateClient, client, rawClient, notifyError, notifyInfo, onSuccess,
+      updateClient, client, rawClient, notifyError, notifyInfo, onSuccess, createNote,
     } = this.props;
     const { id } = client;
-    const { stage } = data;
+    const { stage, note } = data;
+    let notePromise = () => Promise.resolve();
+    if (note) {
+      const payload = {
+        type: NOTE_RESOURCE_TYPE,
+        attributes: {
+          commentableID: id,
+          commentableType: NOTE_COMMENTABLE_TYPE_CLIENT,
+          body: note,
+        },
+      };
+      notePromise = () => createNote(payload);
+    }
+
     const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage']))
       .set('attributes.status', FAMILY_STATUS_ACTIVE)
       .set('attributes.stage', stage)
       .value();
 
     return updateClient({ id }, newClient)
+      .then(notePromise)
       .then(() => {
         let msg = 'Family stage updated';
         if (currentStage.levelGroup !== nextStage.levelGroup) {

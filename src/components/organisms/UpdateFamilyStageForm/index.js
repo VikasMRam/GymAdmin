@@ -5,15 +5,18 @@ import styled from 'styled-components';
 
 import { palette, size } from 'sly/components/themes';
 import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_REJECTED } from 'sly/constants/familyDetails';
+import pad from 'sly/components/helpers/pad';
 import { Block } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
 
-const Warning = styled(Block)`
+const Warning = pad(styled(Block)`
   background-color: ${palette('warning.filler')};
   border-radius: ${size('border.xxLarge')};
   padding: ${size('spacing.large')};
-`;
+`, 'xLarge');
+
+const PaddedField = pad(Field, 'xLarge');
 
 const UpdateFamilyStageForm = ({
   handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, showRejectOption, ...props
@@ -29,6 +32,8 @@ const UpdateFamilyStageForm = ({
     </optgroup>
   ));
 
+  const StageField = currentStageGroup !== nextStageGroup ? Field : PaddedField;
+
   return (
     <ThreeSectionFormTemplate
       {...props}
@@ -39,19 +44,27 @@ const UpdateFamilyStageForm = ({
       heading={`Updating ${name}'s Status`}
       submitButtonText={currentStageGroup !== nextStageGroup ? 'Update And Move' : 'Update'}
     >
-      <Field
+      <StageField
         name="stage"
         label="Stage"
         type="select"
         component={ReduxField}
       >
         {options}
-      </Field>
+      </StageField>
       {currentStageGroup !== nextStageGroup &&
         <Warning size="caption">
           Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.
         </Warning>
       }
+      <Field
+        type="textarea"
+        rows="3"
+        name="note"
+        label="Add a note"
+        placeholder="Add a note on why you are updating this family's stage..."
+        component={ReduxField}
+      />
     </ThreeSectionFormTemplate>
   );
 };

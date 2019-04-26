@@ -8,6 +8,7 @@ import { prefetch, query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
+import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
@@ -26,8 +27,8 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     match: object,
     status: object,
     history: object,
-    updateClient: func,
-    createNote: func,
+    updateClient: func.isRequired,
+    createNote: func.isRequired,
   };
 
   onRejectSuccess = (hide) => {
@@ -58,7 +59,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { id } = client;
     const { note } = data;
     const payload = {
-      type: 'Note',
+      type: NOTE_RESOURCE_TYPE,
       attributes: {
         commentableID: id,
         commentableType: NOTE_COMMENTABLE_TYPE_CLIENT,
