@@ -57,8 +57,10 @@ export default class AgentRegionPageContainer extends Component {
 
   render() {
     const {
-      agentsList, regionSlug, citySlug,
+      agentsList, regionSlug, citySlug, history
     } = this.props;
+
+    const { location } = history;
 
     const newAgentsList = agentsList
       .filter(agent => agent.status > 0)
@@ -83,6 +85,7 @@ export default class AgentRegionPageContainer extends Component {
         title={title}
         locationName={locationName}
         isRegionPage={!citySlug}
+        location={location}
       />
     );
   }

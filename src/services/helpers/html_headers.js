@@ -283,13 +283,13 @@ export const getHelmetForCommunityPage = (community, location) => {
     return (<script key={`helmet_critic-review_${criticReview.author+name}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
 
-  const getQAAnswerLDObj = (answer) => {
+  const getQAAnswerLDObj = (answer, question) => {
     return {
       '@type': 'Answer',
       text: answer.contentData,
       dateCreated: answer.createdAt,
-      // upvoteCount: 1337,
-      // url: 'https://example.com/question1#acceptedAnswer',
+      upvoteCount: 1,
+      url: `https://www.seniorly.com/resources/questions/${question.url}`,
       author: {
         '@type': 'Person',
         name: answer.creator,
@@ -301,17 +301,17 @@ export const getHelmetForCommunityPage = (community, location) => {
   const qaPageLdObjs = questions.filter(question => question.contents.length > 0).map((question) => {
     const answers = question.contents.slice();
     const firstAnswer = answers.shift();
-    const acceptedAnswer = getQAAnswerLDObj(firstAnswer);
-    const suggestedAnswer = answers.map(answer => getQAAnswerLDObj(answer));
+    const acceptedAnswer = getQAAnswerLDObj(firstAnswer, question);
+    const suggestedAnswer = answers.map(answer => getQAAnswerLDObj(answer, question));
     const result = {
       '@context': 'https://schema.org',
       '@type': 'QAPage',
       mainEntity: {
         '@type': 'Question',
         name: question.contentData,
-        // text: 'I have taken up a new interest in baking and keep running across directions in ounces and pounds. I have to translate between them and was wondering how many ounces are in a pound?',
+        text: question.contentData,
         answerCount: question.contents.length,
-        // upvoteCount: 26,
+        upvoteCount: 1,
         dateCreated: question.createdAt,
         author: {
           '@type': 'Person',
@@ -351,12 +351,15 @@ export const getHelmetForCommunityPage = (community, location) => {
   );
 };
 
-export const getHelmetForAgentsPage = () => {
+export const getHelmetForAgentsPage = ({location}) => {
+  const { pathname } = location;
   const description = 'Talk to our senior living advisors and partner agents at Seniorly. Connect with a local senior living advisor for personalized senior housing support!';
+  const canonicalUrl = `${host}${pathname}`;
   return (
     <Helmet>
       <title>Find Senior Living Advisors | Seniorly Partner Agents</title>
       <meta name="description" content={description} />
+      <link rel="canonical" href={canonicalUrl} />
     </Helmet>
   );
 };
@@ -369,28 +372,34 @@ export const getHelmetForPartnersPage = () => {
   );
 };
 
-export const getHelmetForAgentProfilePage = ({agent}) => {
+export const getHelmetForAgentProfilePage = ({agent, location}) => {
+  const { pathname } = location;
   const { info } = agent;
   const {displayName, citiesServed} = info;
   const firstName = displayName.split(' ')[0];
   const firstThreeCities = citiesServed.slice(3).join(', ');
   const description = `Talk to expert senior living advisor ${info.displayName}. ${firstName} helps families find senior housing in ${firstThreeCities}& more locations!`;
   const title = `${info.displayName} Senior Living Advisor | Seniorly Partner Agents`;
+  const canonicalUrl = `${host}${pathname}`;
   return (
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <link rel="canonical" href={canonicalUrl} />
     </Helmet>
   );
 };
 
-export const getHelmetForAgentsRegionPage = ({locationName}) => {
+export const getHelmetForAgentsRegionPage = ({locationName, location}) => {
+  const { pathname } = location;
   const description = `Talk to local senior living advisors and partner agents in the ${locationName} region. Find a ${locationName} senior living advisor for personalized support!`;
   const title = `${locationName} Senior Living Advisors | Seniorly Partner Agents`;
+  const canonicalUrl = `${host}${pathname}`;
   return (
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <link rel="canonical" href={canonicalUrl} />
     </Helmet>
   );
 };
