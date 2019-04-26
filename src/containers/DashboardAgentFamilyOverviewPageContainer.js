@@ -9,7 +9,7 @@ import { FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardA
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { getStageDetails } from 'sly/services/helpers/stage';
-import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP, FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
@@ -22,7 +22,7 @@ const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
 const convertClientsToTableContents = (clients) => {
   const contents = clients.map((client) => {
     const {
-      id, clientInfo, uuidAux, stage, createdAt, updatedAt,
+      id, clientInfo, uuidAux, stage, createdAt, updatedAt, status,
     } = client;
     const { level, palette } = getStageDetails(stage);
     const { name: clientName, slyMessage } = clientInfo;
@@ -36,11 +36,19 @@ const convertClientsToTableContents = (clients) => {
     const createdAtStr = dayjs(createdAt).format('MM/DD/YYYY');
     const updatedAtStr = dayjs(updatedAt).format('MM/DD/YYYY');
     const rowItems = [];
-    rowItems.push({ type: 'link', data: { text: clientName, href: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id) } });
-    rowItems.push({ type: 'text', data: { text: residentName } });
-    rowItems.push({ type: 'stage', data: { text: stage, currentStage: level, palette } });
-    rowItems.push({ type: 'doubleLine', data: { firstLine: slyMessage, secondLine: updatedAtStr } });
-    rowItems.push({ type: 'text', data: { text: createdAtStr } });
+    const disabled = status === FAMILY_STATUS_ON_HOLD;
+    const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
+    const pausedType = disabled ? 'textIcon' : 'link';
+    rowItems.push({ type: pausedType, data: { text: clientName, href: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id), ...pausedTd } });
+    rowItems.push({ type: 'text', data: { text: residentName, disabled } });
+    rowItems.push({
+      type: 'stage',
+      data: {
+        text: stage, currentStage: level, palette, disabled,
+      },
+    });
+    rowItems.push({ type: 'doubleLine', data: { firstLine: slyMessage, secondLine: updatedAtStr, disabled } });
+    rowItems.push({ type: 'text', data: { text: createdAtStr, disabled } });
     return {
       id,
       rowItems,
@@ -56,12 +64,14 @@ const convertClientsToTableContents = (clients) => {
 const convertClientsToMobileContents = (clients) => {
   const contents = clients.map((client) => {
     const {
-      id, clientInfo, stage, updatedAt,
+      id, clientInfo, stage, status, updatedAt,
     } = client;
     const { level, palette } = getStageDetails(stage);
     const { name: clientName, slyMessage } = clientInfo;
     const updatedAtStr = dayjs(updatedAt).format('MM/DD/YYYY');
     const rowItems = [];
+    const disabled = status === FAMILY_STATUS_ON_HOLD;
+    const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
     rowItems.push({ type: 'doubleLine', data: { firstLine: slyMessage, secondLine: updatedAtStr } });
     rowItems.push({ type: 'stage', data: { text: stage, currentStage: level, palette } });
     return {
@@ -69,6 +79,7 @@ const convertClientsToMobileContents = (clients) => {
       href: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id),
       id,
       rowItems,
+      ...pausedTd,
     };
   });
   return contents;

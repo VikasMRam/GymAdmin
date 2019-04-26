@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 `;
 
 const IconWrapper = styled.div`
-  margin-right: ${p => p.borderless ? size('spacing.small') : size('spacing.large')};
+  margin-right: ${p => p.borderless ? size('spacing', p.iconRightMarginSpacing) : size('spacing.large')};
   padding: calc(${size('spacing.regular')} - ${size('border.regular')});
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('grey', 'filler')};
   border-radius: ${size('border.xxLarge')};
@@ -21,13 +21,13 @@ const IconWrapper = styled.div`
 
 const IconItem = ({
   icon, iconSize, iconPalette, iconVariation, size, children, borderless,
-  textPalette, textVariation,
+  textPalette, textVariation, iconRightMarginSpacing,
 }) => {
   const defIconSize = iconSize || size;
 
   return (
     <Wrapper>
-      <IconWrapper borderless={borderless}>
+      <IconWrapper borderless={borderless} iconRightMarginSpacing={iconRightMarginSpacing}>
         <Icon icon={icon} size={defIconSize} palette={iconPalette} variation={iconVariation} />
       </IconWrapper>
       <Block palette={textPalette} variation={textVariation}>{children}</Block>
@@ -45,6 +45,7 @@ IconItem.propTypes = {
   borderless: bool,
   textPalette: palettePropType,
   textVariation: variationPropType,
+  iconRightMarginSpacing: string,
 };
 
 IconItem.defaultProps = {
@@ -53,6 +54,7 @@ IconItem.defaultProps = {
   iconVariation: 'base',
   textPalette: 'slate',
   textVariation: 'base',
+  iconRightMarginSpacing: 'small',
 };
 
 export default IconItem;

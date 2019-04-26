@@ -26,6 +26,7 @@ class Tabs extends Component {
   static propTypes = {
     children: instanceOf(Array).isRequired,
     activeTab: string,
+    className: string,
   }
 
   constructor(props) {
@@ -50,6 +51,7 @@ class Tabs extends Component {
       onClickTabItem,
       props: {
         children,
+        className,
       },
       state: {
         activeTab,
@@ -57,16 +59,17 @@ class Tabs extends Component {
     } = this;
 
     return (
-      <div>
+      <div className={className}>
         <TabWrapper>
           {children.map((child) => {
-            const { to, label } = child.props;
+            const { to, label, tabStyles } = child.props;
             const tab = (
               <CursorTab
                 active={activeTab === label}
                 key={label}
                 label={label}
                 onClick={() => onClickTabItem(label)}
+                tabStyles={tabStyles}
               />
             );
 

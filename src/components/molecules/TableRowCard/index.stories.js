@@ -14,6 +14,9 @@ const defaultProps = {
   ],
 };
 
-storiesOf('Molecules|TableRowCard', module).add('default', () => (
-  <TableRowCard {...defaultProps} />
-));
+storiesOf('Molecules|TableRowCard', module)
+  .add('default', () => (
+    <TableRowCard {...defaultProps} />
+  )).add('disabled', () => (
+    <TableRowCard {...defaultProps} disabled icon="pause" iconPalette="danger" />
+  ));
