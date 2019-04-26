@@ -298,7 +298,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         <Tabs activeTab={activeTab}>
           <div label="SUMMARY" tabStyles={hideInBigScreenStyles}>
             <TabWrapper>
-              <FamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
+              <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
+              {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
             </TabWrapper>
           </div>
           <div label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
