@@ -22,7 +22,7 @@ const optionValues =
 describe('UpdateFamilyStageForm', () => {
   it('renders', () => {
     const wrapper = wrap();
-    const field = wrapper.find('Field');
+    const field = wrapper.find('PaddedField');
 
     expect(field).toHaveLength(1);
     const options = field.find('option');
@@ -30,6 +30,7 @@ describe('UpdateFamilyStageForm', () => {
     options.forEach((o, i) => {
       expect(o.text()).toBe(optionValues[i]);
     });
+    expect(wrapper.find('Field')).toHaveLength(1);
     expect(wrapper.find('Warning')).toHaveLength(0);
   });
 
@@ -37,7 +38,7 @@ describe('UpdateFamilyStageForm', () => {
     const wrapper = wrap({
       showRejectOption: true,
     });
-    const field = wrapper.find('Field');
+    const field = wrapper.find('PaddedField');
 
     expect(field).toHaveLength(1);
     const options = field.find('option');
@@ -45,6 +46,7 @@ describe('UpdateFamilyStageForm', () => {
     options.forEach((o, i) => {
       expect(o.text()).toBe(optionValues[i]);
     });
+    expect(wrapper.find('Field')).toHaveLength(1);
     expect(wrapper.find('Warning')).toHaveLength(0);
   });
 
@@ -56,8 +58,8 @@ describe('UpdateFamilyStageForm', () => {
     const field = wrapper.find('Field');
     const warning = wrapper.find('Warning');
 
-    expect(field).toHaveLength(1);
-    const options = field.find('option');
+    expect(field).toHaveLength(2);
+    const options = field.at(0).find('option');
     expect(options).toHaveLength(optionsLenWithoutReject);
     options.forEach((o, i) => {
       expect(o.text()).toBe(optionValues[i]);

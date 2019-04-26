@@ -15,8 +15,10 @@ const Warning = pad(styled(Block)`
   border-radius: ${size('border.xxLarge')};
   padding: ${size('spacing.large')};
 `, 'xLarge');
+Warning.displayName = 'Warning';
 
 const PaddedField = pad(Field, 'xLarge');
+PaddedField.displayName = 'PaddedField';
 
 const UpdateFamilyStageForm = ({
   handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, showRejectOption, ...props
