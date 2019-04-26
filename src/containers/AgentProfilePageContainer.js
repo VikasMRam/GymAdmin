@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { object } from 'prop-types';
 import { connect } from 'react-redux';
 
 import agentPropType from 'sly/propTypes/agent';

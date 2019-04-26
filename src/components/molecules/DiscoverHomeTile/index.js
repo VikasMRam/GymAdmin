@@ -36,12 +36,8 @@ export const StyledHeading = styled(Heading)`
 `;
 
 const ButtonWrapper = styled.div`
-  display: none;
+  display: block;
   padding-top: ${size('spacing.large')};
-  
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: block;
-  }
 `;
 
 const DiscoverHomeTile = ({
