@@ -1,20 +1,33 @@
 import React, { Fragment } from 'react';
-import styled from 'styled-components';
-import { string, arrayOf, shape, object } from 'prop-types';
+import styled, { css } from 'styled-components';
+import { string, arrayOf, shape, object, bool } from 'prop-types';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
 import { Td, StageDiv, DoubleLineDiv } from 'sly/components/molecules/Td';
 import Hr from 'sly/components/atoms/Hr';
+import Icon from 'sly/components/atoms/Icon';
 
 const Wrapper = styled.div`
   padding: ${size('spacing.large')};
   border: ${size('border.regular')} solid ${palette('grey', 'filler')};
   border-radius: ${size('border.xLarge')};
+
+  ${ifProp('disabled', css`
+    background-color: ${palette('grey', 'background')};
+  `)};
 `;
 
 const HeadingLinkWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
+
+  ${ifProp('icon', css`
+    display: flex;
+    > span {
+      margin-left: auto;
+    }
+  `)};
 `;
 
 const StyledHr = styled(Hr)`
@@ -23,7 +36,7 @@ const StyledHr = styled(Hr)`
 `;
 
 const TableRowCard = ({
-  heading, href, id, rowItems,
+  heading, href, id, rowItems, disabled, icon, iconPalette,
 }) => {
   const itemsLength = rowItems.length;
   const rowComponent = rowItems.map((rowItem, i) => {
@@ -49,9 +62,10 @@ const TableRowCard = ({
     return <Td key={`Td_${id}`} />;
   });
   return (
-    <Wrapper>
-      <HeadingLinkWrapper>
+    <Wrapper disabled={disabled}>
+      <HeadingLinkWrapper icon={icon}>
         <Link href={href} size="caption" weight="medium">{heading}</Link>
+        {icon && <Icon icon={icon} palette={iconPalette} />}
       </HeadingLinkWrapper>
       {rowComponent}
     </Wrapper>
@@ -66,6 +80,9 @@ TableRowCard.propTypes = {
     type: string.isRequired,
     data: object.isRequired,
   }).isRequired),
+  disabled: bool,
+  icon: string,
+  iconPalette: string,
 };
 
 export default TableRowCard;

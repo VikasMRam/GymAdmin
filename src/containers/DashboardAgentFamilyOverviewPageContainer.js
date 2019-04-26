@@ -64,12 +64,14 @@ const convertClientsToTableContents = (clients) => {
 const convertClientsToMobileContents = (clients) => {
   const contents = clients.map((client) => {
     const {
-      id, clientInfo, stage, updatedAt,
+      id, clientInfo, stage, status, updatedAt,
     } = client;
     const { level, palette } = getStageDetails(stage);
     const { name: clientName, slyMessage } = clientInfo;
     const updatedAtStr = dayjs(updatedAt).format('MM/DD/YYYY');
     const rowItems = [];
+    const disabled = status === FAMILY_STATUS_ON_HOLD;
+    const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
     rowItems.push({ type: 'doubleLine', data: { firstLine: slyMessage, secondLine: updatedAtStr } });
     rowItems.push({ type: 'stage', data: { text: stage, currentStage: level, palette } });
     return {
@@ -77,6 +79,7 @@ const convertClientsToMobileContents = (clients) => {
       href: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id),
       id,
       rowItems,
+      ...pausedTd,
     };
   });
   return contents;
