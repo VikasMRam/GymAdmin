@@ -51,6 +51,9 @@ export const integer = value => !isInt(value) && 'Must be an integer';
 export const usPhone = value =>
   !isEmpty(value) && !isMobilePhone(value.replace(/-/g, ''), 'en-US') && 'Invalid phone number';
 
+export const mmDdYyyyy = value =>
+  !isEmpty(value) && !integer(value.replace(/\//g, '')) && value.replace(/\//g, '').length !== 8 && 'Invalid date';
+
 export const oneOf = values => value =>
   !isIn(value, values) && `Must be one of: ${values.join(', ')}`;
 
