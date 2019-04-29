@@ -4,17 +4,22 @@ import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import dayjs from 'dayjs';
 
 import { query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import { createValidator, required } from 'sly/services/validation';
+import { createValidator, required, mmDdYyyyy, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
 
 const validate = createValidator({
   stage: [required],
+  moveInDate: [required, mmDdYyyyy],
+  communityName: [required],
+  monthlyFees: [required, float],
+  referralAgreement: [required, float],
 });
 
 const ReduxForm = reduxForm({
@@ -53,7 +58,9 @@ class UpdateFamilyStageFormContainer extends Component {
       updateClient, client, rawClient, notifyError, notifyInfo, onSuccess, createNote,
     } = this.props;
     const { id } = client;
-    const { stage, note } = data;
+    const {
+      stage, note, moveInDate, communityName, monthlyFees, referralAgreement,
+    } = data;
     let notePromise = () => Promise.resolve();
     if (note) {
       const payload = {
@@ -67,10 +74,32 @@ class UpdateFamilyStageFormContainer extends Component {
       notePromise = () => createNote(payload);
     }
 
-    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage']))
+    let newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage', 'attributes.clientInfo']))
       .set('attributes.status', FAMILY_STATUS_ACTIVE)
-      .set('attributes.stage', stage)
-      .value();
+      .set('attributes.stage', stage);
+    if (moveInDate) {
+      let moveInDateFormatted;
+      const dateParts = moveInDate.split('/');
+      const moveInDateObj = Date.UTC(dateParts[2], dateParts[1], dateParts[0]);
+      const parsedDate = dayjs(moveInDateObj);
+      if (parsedDate.isValid()) {
+        moveInDateFormatted = parsedDate.format('YYYY-MM-DDTHH:mm:ss[Z]');
+      } else {
+        notifyError('Move-In date is invalid');
+        return false;
+      }
+      newClient.set('attributes.clientInfo.moveInDate', moveInDateFormatted);
+    }
+    if (communityName) {
+      newClient.set('attributes.clientInfo.communityName', communityName);
+    }
+    if (monthlyFees) {
+      newClient.set('attributes.clientInfo.monthlyFees', parseFloat(monthlyFees));
+    }
+    if (referralAgreement) {
+      newClient.set('attributes.clientInfo.referralAgreement', parseFloat(referralAgreement));
+    }
+    newClient = newClient.value();
 
     return updateClient({ id }, newClient)
       .then(notePromise)
