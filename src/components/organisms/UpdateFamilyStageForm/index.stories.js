@@ -8,6 +8,10 @@ import { withPreventDefault } from 'sly/services/helpers/forms';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
 
 const groups = Object.keys(FAMILY_STAGE_ORDERED);
+const optionValues =
+  groups
+    .map(sg => FAMILY_STAGE_ORDERED[sg])
+    .reduce((a, b) => a.concat(b), []);
 
 const UpdateFamilyStageFormContainer = reduxForm({
   form: 'UpdateFamilyStageForm',
@@ -19,6 +23,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       name="Amal"
       handleSubmit={withPreventDefault(action('onSubmit'))}
       onCancel={action('onCancel')}
+      nextAllowedStages={optionValues}
     />
   ))
   .add('with currentStage', () => (
@@ -28,6 +33,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       nextStageGroup={groups[1]}
       handleSubmit={withPreventDefault(action('onSubmit'))}
       onCancel={action('onCancel')}
+      nextAllowedStages={optionValues}
     />
   ))
   .add('with showRejectOption', () => (
@@ -38,5 +44,6 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       nextStageGroup={groups[1]}
       handleSubmit={withPreventDefault(action('onSubmit'))}
       onCancel={action('onCancel')}
+      nextAllowedStages={optionValues}
     />
   ));

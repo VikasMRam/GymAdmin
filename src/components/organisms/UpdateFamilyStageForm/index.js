@@ -1,10 +1,10 @@
 import React from 'react';
-import { func, string, bool, arrayOf } from 'prop-types';
+import { func, string, arrayOf } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { palette, size } from 'sly/components/themes';
-import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_REJECTED, FAMILY_STAGE_WON } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_WON } from 'sly/constants/familyDetails';
 import pad from 'sly/components/helpers/pad';
 import { phoneParser } from 'sly/services/helpers/phone';
 import { dateFormatter } from 'sly/services/helpers/date';
@@ -23,7 +23,7 @@ const PaddedField = pad(Field, 'xLarge');
 PaddedField.displayName = 'PaddedField';
 
 const UpdateFamilyStageForm = ({
-  handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, nextStage, showRejectOption, nextAllowedStages, ...props
+  handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, nextStage, nextAllowedStages, ...props
 }) => {
   const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
 
@@ -72,7 +72,7 @@ const UpdateFamilyStageForm = ({
         <Field
           name="moveInDate"
           label={<span>Move-In date<Span palette="danger">*</Span></span>}
-          type="text"
+          type="date"
           parse={phoneParser}
           format={dateFormatter}
           component={ReduxField}
@@ -114,7 +114,6 @@ UpdateFamilyStageForm.propTypes = {
   nextStageGroup: string,
   nextStage: string,
   nextAllowedStages: arrayOf(string),
-  showRejectOption: bool,
 };
 
 export default UpdateFamilyStageForm;
