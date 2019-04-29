@@ -136,7 +136,7 @@ export default class SaveCommunityContainer extends Component {
   updateUserSave = (status) => {
     const { handleModalClose } = this;
     const {
-      userSave, updateUserSave, notifyError,
+      userSave, updateUserSave, notifyError, createAction, community, match,
     } = this.props;
     const { id } = userSave;
 
@@ -146,6 +146,18 @@ export default class SaveCommunityContainer extends Component {
     updateUserSave(id, {
       status,
     })
+      .then(({ body }) => createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            entitySlug: community.id,
+            entityType: 'Community',
+            userSaveID: body.data.id,
+          },
+          actionPage: match.url,
+          actionType: USER_SAVE,
+        },
+      }))
       .then(() => {
         this.setState({
           updatingUserSave: false,
