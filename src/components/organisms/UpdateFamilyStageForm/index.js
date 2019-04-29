@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { palette, size } from 'sly/components/themes';
 import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_REJECTED, FAMILY_STAGE_WON } from 'sly/constants/familyDetails';
 import pad from 'sly/components/helpers/pad';
-import { phoneParser } from 'sly/services/helpers/phone';
 import { dateFormatter } from 'sly/services/helpers/date';
 import { Block, Span } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
@@ -76,7 +75,6 @@ const UpdateFamilyStageForm = ({
           name="moveInDate"
           label={<span>Move-In date<Span palette="danger">*</Span></span>}
           type="text"
-          parse={phoneParser}
           format={dateFormatter}
           component={ReduxField}
         />

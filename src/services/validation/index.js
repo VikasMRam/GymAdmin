@@ -3,6 +3,7 @@ import isInt from 'validator/lib/isInt';
 import isIn from 'validator/lib/isIn';
 import isURL from 'validator/lib/isURL';
 import isMobilePhone from 'validator/lib/isMobilePhone';
+import isFloat from 'validator/lib/isFloat';
 
 const isEmpty = value => value === undefined || value === null || value === '';
 const join = rules => (value, data) =>
@@ -47,6 +48,8 @@ export const maxLength = max => value =>
   `Must be no more than ${max} characters`;
 
 export const integer = value => !isInt(value) && 'Must be an integer';
+
+export const float = value => !isEmpty(value) && !isFloat(value) && 'Must be a numeric value';
 
 export const usPhone = value =>
   !isEmpty(value) && !isMobilePhone(value.replace(/-/g, ''), 'en-US') && 'Invalid phone number';
