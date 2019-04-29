@@ -17,7 +17,8 @@ import {
 } from 'sly/services/api/actions';
 
 import {
-  CONSULTATION_REQUESTED,
+  AVAILABILITY_REQUEST,
+  CONSULTATION_REQUESTED, PRICING_REQUEST,
   PROFILE_CONTACTED,
 } from 'sly/services/newApi/constants';
 
@@ -64,6 +65,16 @@ const isPricingReq = slug => contact =>
 const isAvailReq = slug => contact =>
   contact.slug === slug
   && (contact.contactType === REQUEST_AVAILABILITY);
+
+const getLegacyActionType = (action) => {
+  if (action === CONSULTATION_REQUESTED) {
+    return REQUEST_CONSULTATION;
+  } else if (action === PROFILE_CONTACTED) {
+    return REQUEST_AVAILABILITY;
+  } else if (action === PRICING_REQUEST) {
+    return REQUEST_PRICING;
+  }
+}
 
 const mapStateToProps = (state, props) => {
   const { communitySlug, queryParams, history } = props;
@@ -149,7 +160,7 @@ export default class ConciergeController extends Component {
     });
 
     if (!pricingRequested && hasAllUserData(userDetails)) {
-      return this.doSubmitConversion(userDetails, REQUEST_PRICING, true);
+      return this.doSubmitConversion(userDetails, PRICING_REQUEST, true);
     }
     return this.next();
   };
@@ -191,14 +202,14 @@ export default class ConciergeController extends Component {
         category: eventCategory,
         label: communitySlug || pathName,
       });
-      return this.doSubmitConversion(data, REQUEST_CONSULTATION, true);
+      return this.doSubmitConversion(data, CONSULTATION_REQUESTED, true);
     } else {
       SlyEvent.getInstance().sendEvent({
         action: 'contactCommunity',
         category: 'requestAvailability',
         label: communitySlug || pathName,
       });
-      return this.doSubmitConversion(data, REQUEST_AVAILABILITY, true);
+      return this.doSubmitConversion(data, PROFILE_CONTACTED, true);
     }
   };
 
@@ -225,7 +236,7 @@ export default class ConciergeController extends Component {
       category: eventCategory,
       label: communitySlug || pathName,
     });
-    return this.doSubmitConversion(data, REQUEST_CONSULTATION, false);
+    return this.doSubmitConversion(data, CONSULTATION_REQUESTED, false);
   };
 
   doSubmitConversion = (data = {}, action, isExpress = false) => {
@@ -249,20 +260,27 @@ export default class ConciergeController extends Component {
 
     const { email, phone, full_name: name } = data;
 
+    const attributes = {
+      actionInfo: { email, phone, name },
+      actionPage: match.url,
+      actionType: action,
+    };
+
+    if (action === PROFILE_CONTACTED) {
+      attributes.actionInfo.slug = communitySlug;
+      attributes.actionInfo.contactType = AVAILABILITY_REQUEST;
+    } else if (action === PRICING_REQUEST) {
+      // attributes.actionType = PRICING_REQUEST;
+    }
+
     return Promise.all([
       submit({
-        action,
+        action: getLegacyActionType(action),
         value,
       }),
       createAction({
         type: 'UUIDAction',
-        attributes: {
-          actionInfo: { email, phone, name },
-          actionPage: match.url,
-          actionType: action === REQUEST_CONSULTATION
-            ? CONSULTATION_REQUESTED
-            : PROFILE_CONTACTED,
-        },
+        attributes,
       }),
     ]).then(() => createUserOrUpdateContact({
       email,
