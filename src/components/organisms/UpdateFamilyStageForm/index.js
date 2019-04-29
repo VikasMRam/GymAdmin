@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, string, bool } from 'prop-types';
+import { func, string, bool, arrayOf } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -23,16 +23,13 @@ const PaddedField = pad(Field, 'xLarge');
 PaddedField.displayName = 'PaddedField';
 
 const UpdateFamilyStageForm = ({
-  handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, nextStage, showRejectOption, ...props
+  handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, nextStage, showRejectOption, nextAllowedStages, ...props
 }) => {
   const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
-  if (!showRejectOption) {
-    NEW_FAMILY_STAGE_ORDERED.Closed = NEW_FAMILY_STAGE_ORDERED.Closed.filter(s => s !== FAMILY_STAGE_REJECTED);
-  }
 
   const options = Object.keys(NEW_FAMILY_STAGE_ORDERED).map((sg, ig) => (
     <optgroup label={sg} key={sg}>
-      {NEW_FAMILY_STAGE_ORDERED[sg].map((s, i) => <option disabled={ig === 0 && i === 0} key={s} value={s}>{s}</option>)}
+      {NEW_FAMILY_STAGE_ORDERED[sg].map((s, i) => nextAllowedStages.indexOf(s) !== -1 && <option disabled={ig === 0 && i === 0} key={s} value={s}>{s}</option>)}
     </optgroup>
   ));
 
@@ -116,6 +113,7 @@ UpdateFamilyStageForm.propTypes = {
   currentStageGroup: string,
   nextStageGroup: string,
   nextStage: string,
+  nextAllowedStages: arrayOf(string),
   showRejectOption: bool,
 };
 
