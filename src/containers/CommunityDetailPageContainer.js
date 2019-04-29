@@ -410,7 +410,7 @@ export default class CommunityDetailPageContainer extends Component {
     const { updateUserSave, userSaveOfCommunity } = this.props;
     const { id } = userSaveOfCommunity;
 
-    updateUserSave(id, {
+    return updateUserSave(id, {
       status: USER_SAVE_DELETE_STATUS,
     })
       .then(() => {

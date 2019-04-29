@@ -138,7 +138,7 @@ export default class ConciergeController extends Component {
     }).isRequired,
     updateUuidAux: func,
     createAction: func,
-    createUserOrUpdateContact: func,
+    createOrUpdateUser: func,
   };
 
   getPricing = () => {
@@ -246,7 +246,7 @@ export default class ConciergeController extends Component {
       gotoGetCustomPricing,
       createAction,
       match,
-      createUserOrUpdateContact,
+      createOrUpdateUser,
     } = this.props;
 
     const value = {
@@ -282,7 +282,7 @@ export default class ConciergeController extends Component {
         type: 'UUIDAction',
         attributes,
       }),
-    ]).then(() => createUserOrUpdateContact({
+    ]).then(() => createOrUpdateUser({
       email,
       name,
       phone,
@@ -308,8 +308,6 @@ export default class ConciergeController extends Component {
     } = this.props;
 
     const { message, ...rest } = data;
-
-    const uuidAux = status.uuidAux.result;
 
     let eventCategory = 'advancedInfo';
     // Not a 100% correct.
@@ -340,12 +338,14 @@ export default class ConciergeController extends Component {
       value.propertyIds = [communitySlug];
     }
 
+    const uuidAux = status.uuidAux.result;
+
     return Promise.all([
       submit({
         action: ASSESSMENT,
         value,
       }),
-      updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
+      updateUuidAux({ id: uuidAux }, produce(uuidAux, (draft) => {
         const uuidInfo = draft.attributes.uuidInfo || {};
 
         const housingInfo = uuidInfo.housingInfo || {};

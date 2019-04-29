@@ -42,7 +42,7 @@ export default function withUser(InnerComponent) {
 
   @withApi
 
-  @query('updateContact', 'updateContact')
+  @query('updateUser', 'updateUser')
 
   @connect(mapStateToProps, mapDispatchToActions)
 

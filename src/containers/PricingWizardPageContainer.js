@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 import produce from 'immer';
 import { withRouter } from 'react-router';
+import pick from 'lodash/pick';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 import { connectController } from 'sly/controllers';
@@ -99,7 +100,7 @@ export default class PricingWizardPageContainer extends Component {
     history: object.isRequired,
     createAction: func.isRequired,
     updateUuidAux: func.isRequired,
-    createUserOrUpdateContact: func.isRequired,
+    createOrUpdateUser: func.isRequired,
     match: object.isRequired,
   };
 
@@ -112,7 +113,7 @@ export default class PricingWizardPageContainer extends Component {
       createAction,
       status,
       updateUuidAux,
-      createUserOrUpdateContact,
+      createOrUpdateUser,
     } = this.props;
 
     // here remove only fields that will be populated by getUserDetailsFromUAAndForm
@@ -175,7 +176,7 @@ export default class PricingWizardPageContainer extends Component {
           actionType: PROFILE_CONTACTED,
         },
       }),
-    ]).then(() => createUserOrUpdateContact({
+    ]).then(() => createOrUpdateUser({
       name,
       phone,
     }));

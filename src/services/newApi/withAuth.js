@@ -37,13 +37,13 @@ export default function withAuth(InnerComponent) {
       user: object.isRequired,
       contact: object.isRequired,
       contactRaw: object.isRequired,
-      updateContact: func.isRequired,
+      updateUser: func.isRequired,
     };
 
     static WrappedComponent = InnerComponent;
 
-    createUserOrUpdateContact = (data) => {
-      const { user, contactRaw, updateContact } = this.props;
+    createOrUpdateUser = (data) => {
+      const { user, updateUser, status } = this.props;
       const { name, phone, email } = data;
 
       if (!user) {
@@ -54,29 +54,29 @@ export default function withAuth(InnerComponent) {
         });
       }
 
-      const contact = pick(contactRaw, [
+      const userData = pick(status.user.result, [
         'id',
         'type',
-        'attributes.firstName',
-        'attributes.mobilePhone',
+        'attributes.name',
+        'attributes.phone',
         'attributes.email',
       ]);
 
 
       const willUpdate = Object.entries({
-        'attributes.firstName': name,
-        'attributes.mobilePhone': phone,
+        'attributes.name': name,
+        'attributes.phoneNumber': phone,
         'attributes.email': email,
       }).reduce((willUpdate, [path, newValue]) => {
-        if (newValue && newValue !== get(contact, path)) {
-          set(contact, path, newValue);
+        if (newValue && newValue !== get(userData, path)) {
+          set(userData, path, newValue);
           return true;
         }
         return willUpdate;
       }, false);
 
       if (willUpdate) {
-        return updateContact({ id: contact.id }, contact);
+        return updateUser({ id: userData.id }, userData);
       }
 
       return Promise.resolve();
@@ -137,7 +137,7 @@ export default function withAuth(InnerComponent) {
       <InnerComponent
         {...this.props}
         isLoggedIn={this.props.status.user.status === 200}
-        createUserOrUpdateContact={this.createUserOrUpdateContact}
+        createOrUpdateUser={this.createOrUpdateUser}
         loginUser={this.loginUser}
         logoutUser={this.logoutUser}
         registerUser={this.registerUser}
