@@ -72,7 +72,7 @@ class FamilyDetailsForm extends Component {
 
   handleLocationChange = (value) => {
     const { change, onLocationChange } = this.props;
-    change('preferredLocation', value);
+    change('preferredLocation', value.formatted_address);
     if (onLocationChange) {
       onLocationChange(value);
     }
