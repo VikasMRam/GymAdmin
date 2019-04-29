@@ -100,6 +100,7 @@ const UpdateFamilyStageForm = ({
           name="referralAgreement"
           label={<span>Your community referral agreement %<Span palette="danger">*</Span></span>}
           type="iconInput"
+          icon="percentage"
           component={ReduxField}
         />
       }
