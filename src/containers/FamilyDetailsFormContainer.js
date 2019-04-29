@@ -7,20 +7,13 @@ import { getRelationship } from 'redux-bees';
 import { connect } from 'react-redux';
 
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
-import { createValidator, required, email, usPhone } from 'sly/services/validation';
+import { createValidator, email, usPhone } from 'sly/services/validation';
 import clientPropType from 'sly/propTypes/client';
 import { query } from 'sly/services/newApi';
 
 const validate = createValidator({
-  name: [required],
-  phone: [required, usPhone],
-  email: [required, email],
-  residentName: [required],
-  lookingFor: [required],
-  gender: [required],
-  preferredLocation: [required],
-  budget: [required],
-  timeToMove: [required],
+  phone: [usPhone],
+  email: [email],
 });
 
 const ReduxForm = reduxForm({
@@ -71,19 +64,37 @@ export default class FamilyDetailsFormContainer extends Component {
         state,
       };
     }
-    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.clientInfo']))
-      .set('attributes.clientInfo.name', name)
-      .set('attributes.clientInfo.email', email)
-      .set('attributes.clientInfo.phoneNumber', phone)
-      .value();
-    const newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']))
-      .set('attributes.uuidInfo.residentInfo.fullName', residentName)
-      .set('attributes.uuidInfo.residentInfo.gender', gender)
-      .set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', budget)
-      .set('attributes.uuidInfo.housingInfo.lookingFor', lookingFor)
-      .set('attributes.uuidInfo.housingInfo.moveTimeline', timeToMove)
-      .set('attributes.uuidInfo.locationInfo', locationInfo)
-      .value();
+    let newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.clientInfo']));
+    if (name) {
+      newClient.set('attributes.clientInfo.name', name);
+    }
+    if (email) {
+      newClient.set('attributes.clientInfo.email', email);
+    }
+    if (phone) {
+      newClient.set('attributes.clientInfo.phoneNumber', phone);
+    }
+    newClient = newClient.value();
+    let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
+    if (residentName) {
+      newUuidAux.set('attributes.uuidInfo.residentInfo.fullName', residentName);
+    }
+    if (gender) {
+      newUuidAux.set('attributes.uuidInfo.residentInfo.gender', gender);
+    }
+    if (budget) {
+      newUuidAux.set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', budget);
+    }
+    if (lookingFor) {
+      newUuidAux.set('attributes.uuidInfo.housingInfo.lookingFor', lookingFor);
+    }
+    if (timeToMove) {
+      newUuidAux.set('attributes.uuidInfo.housingInfo.moveTimeline', timeToMove);
+    }
+    if (locationInfo) {
+      newUuidAux.set('attributes.uuidInfo.locationInfo', locationInfo);
+    }
+    newUuidAux = newUuidAux.value();
 
     return updateClient({ id }, newClient)
       .then(() => updateUuidAux({ id: uuidID }, newUuidAux).catch(e => Promise.reject(e)))
