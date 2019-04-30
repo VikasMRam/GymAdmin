@@ -56,13 +56,9 @@ export default class CommunityAskQuestionFormContainer extends Component {
       showModal(<Thankyou />);
       // Hacky way. to push created question into array for rerender
       status.community.refetch();
-    }).catch((r) => {
-      // TODO: Need to set a proper way to handle server side errors
-      const { response } = r;
-      return response.json().then((data) => {
-        const errorMessage = data.errors[0].detail;
-        throw new SubmissionError({ _error: errorMessage });
-      });
+    }).catch(({ body }) => {
+      const errorMessage = body.errors[0].detail;
+      throw new SubmissionError({ _error: errorMessage });
     });
   };
 

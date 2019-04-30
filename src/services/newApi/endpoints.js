@@ -34,6 +34,7 @@ export default {
 
   createQuestion: { method: post, path: '/platform/questions' },
   createRating: { method: post, path: '/platform/ratings' },
+  createAnswer: { method: post, path: '/platform/answers' },
 
   getClients: { method: get, path: '/marketplace/clients' },
   getClient: { method: get, path: '/marketplace/clients/:id' },
