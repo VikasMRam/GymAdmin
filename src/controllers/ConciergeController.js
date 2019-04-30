@@ -258,7 +258,8 @@ export default class ConciergeController extends Component {
       value.propertyIds = [communitySlug];
     }
 
-    const { email, phone, full_name: name } = data;
+    const { email: dataEmail, phone, full_name: name } = data;
+    const email = dataEmail || undefined;
 
     const attributes = {
       actionInfo: { email, phone, name },

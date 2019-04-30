@@ -7,14 +7,16 @@ export default {
   updateUser: { method: patch, path: '/platform/users/:id' },
   updateContact: { method: patch, path: '/platforms/contacts/:id' },
 
+  createUuidAction: { method: post, path: '/platform/uuid-actions' },
   getUuidAux: { method: get, path: '/platform/uuid-auxes/:id' },
   updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },
-  getUserSaves: { method: get, path: '/marketplace/user-saves' },
 
+  createUserShare: { method: post, path: '/platform/user-shares' },
+
+  getUserSaves: { method: get, path: '/marketplace/user-saves' },
   getUserSave: { method: get, path: '/platform/user-saves/:id' },
   updateUserSave: { method: patch, path: '/platform/user-saves/:id' },
   createUserSave: { method: post, path: '/platform/user-saves' },
-  createUuidAction: { method: post, path: '/platform/uuid-actions' },
 
   registerUser: { method: post, path: '/platform/auth/register' },
   loginUser: { method: post, path: '/platform/auth/login' },

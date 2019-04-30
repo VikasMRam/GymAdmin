@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { func, bool } from 'prop-types';
 
 import { createValidator, required, email } from 'sly/services/validation';
-import { resourceCreateRequest } from 'sly/store/resource/actions';
 import ResetPasswordForm from 'sly/components/organisms/ResetPasswordForm';
 import { withAuth } from 'sly/services/newApi';
 

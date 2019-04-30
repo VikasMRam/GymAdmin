@@ -190,7 +190,7 @@ export default class CommunityDetailPage extends Component {
 
     const modalComponentProps = {
       mainImage,
-      fromEnabled: !user,
+      fromEnabled: !user || !user.email,
       communitySlug: id,
       notifyInfo,
       onSuccess,

@@ -220,5 +220,5 @@ export default class PricingWizardPageContainer extends Component {
         )}
       </ModalController>
     );
-  };
+  }
 }
