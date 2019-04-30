@@ -33,6 +33,7 @@ const mapDispatchToProps = (dispatch, { api }) => ({
 export default class CommunityAskQuestionFormContainer extends Component {
   static propTypes = {
     user: object,
+    status: object,
     communitySlug: string.isRequired,
     createQuestion: func,
     initialValues: object,
