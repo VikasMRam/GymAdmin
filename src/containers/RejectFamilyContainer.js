@@ -3,6 +3,8 @@ import { object, func, string, arrayOf } from 'prop-types';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import { getRelationship } from 'redux-bees';
 
 import { query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
@@ -15,6 +17,8 @@ import RejectFamilyForm from 'sly/components/organisms/RejectFamilyForm';
 
 const validate = createValidator({
   reason: [required],
+  description: [required],
+  preferredLocation: [required],
 });
 
 const ReduxForm = reduxForm({
@@ -22,7 +26,19 @@ const ReduxForm = reduxForm({
   validate,
 })(RejectFamilyForm);
 
+const mapStateToProps = state => ({
+  formState: state.form && state.form.RejectFamilyForm ? state.form.RejectFamilyForm.values : {},
+});
+
 @query('updateClient', 'updateClient')
+
+@query('updateUuidAux', 'updateUuidAux')
+
+@connect((state, props) => ({
+  uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
+}))
+
+@connect(mapStateToProps)
 
 class RejectFamilyContainer extends Component {
   static propTypes = {
@@ -34,22 +50,43 @@ class RejectFamilyContainer extends Component {
     updateClient: func,
     reasons: arrayOf(string),
     onSuccess: func,
+    formState: object,
+    uuidAux: object,
+    updateUuidAux: func,
   };
 
   handleUpdateStage = (data) => {
     const {
-      updateClient, client, rawClient, notifyError, notifyInfo, onSuccess,
+      updateClient, client, rawClient, notifyError, notifyInfo, onSuccess, uuidAux, updateUuidAux,
     } = this.props;
     const { id } = client;
-    const { reason } = data;
+    const { reason, description, preferredLocation } = data;
     const [, , contactRejected] = FAMILY_STAGE_ORDERED.Closed;
     const newRawClient = pick(rawClient, ['id', 'type', 'attributes.stage', 'attributes.clientInfo']);
-    const newClient = immutable(newRawClient)
+    let newClient = immutable(newRawClient)
       .set('attributes.stage', contactRejected)
-      .set('attributes.clientInfo.rejectReason', reason)
-      .value();
+      .set('attributes.clientInfo.rejectReason', reason);
+    if (description) {
+      newClient.set('attributes.clientInfo.otherText', description);
+    }
+    newClient = newClient.value();
+    let uuidAuxPromise = () => Promise.resolve();
+
+    if (preferredLocation) {
+      let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
+      const [city, state] = preferredLocation.split(',');
+      const locationInfo = {
+        city,
+        state,
+      };
+      const { id: uuidID } = uuidAux;
+      newUuidAux.set('attributes.uuidInfo.locationInfo', locationInfo);
+      newUuidAux = newUuidAux.value();
+      uuidAuxPromise = () => updateUuidAux({ id: uuidID }, newUuidAux);
+    }
 
     return updateClient({ id }, newClient)
+      .then(uuidAuxPromise)
       .then(() => {
         notifyInfo('Family successfully rejected');
         if (onSuccess) {
@@ -67,10 +104,19 @@ class RejectFamilyContainer extends Component {
 
   render() {
     const { handleUpdateStage } = this;
-    const { onCancel, reasons } = this.props;
+    const { onCancel, reasons, formState } = this.props;
+    let currentReason;
+    if (formState) {
+      ({ reason: currentReason } = formState);
+    }
 
     return (
-      <ReduxForm onSubmit={handleUpdateStage} onCancel={onCancel} reasons={reasons} />
+      <ReduxForm
+        onSubmit={handleUpdateStage}
+        onCancel={onCancel}
+        reasons={reasons}
+        currentReason={currentReason}
+      />
     );
   }
 }

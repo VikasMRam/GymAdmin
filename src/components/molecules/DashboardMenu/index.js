@@ -11,13 +11,13 @@ const Wrapper = styled.div`
   display: flex;
   padding: ${size('spacing.large')};
   padding-bottom: 0;
-  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
     padding: 0;
     padding-top: ${size('spacing.xxLarge')};
-    border-right: ${size('border.regular')} solid ${palette('grey', 'filler')};
+    border-right: ${size('border.regular')} solid ${palette('slate', 'stroke')};
     border-bottom: 0;
   }
 `;

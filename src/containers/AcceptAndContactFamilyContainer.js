@@ -53,9 +53,8 @@ class AcceptAndContactFamilyContainer extends Component {
   render() {
     const { handleUpdateStage } = this;
     const { onCancel, client } = this.props;
-    const { clientInfo, admin } = client;
-    const { phoneNumber } = admin;
-    const { email } = clientInfo;
+    const { clientInfo } = client;
+    const { email, phoneNumber } = clientInfo;
     const { contactType } = this.state;
     const detail = {
       type: contactType,
@@ -72,8 +71,8 @@ class AcceptAndContactFamilyContainer extends Component {
               component={AcceptAndContactFamilyForm}
               name="Contact"
               onCancelClick={onCancel}
-              onCallClick={() => handleUpdateStage('phone', next)}
-              onEmailClick={() => handleUpdateStage('email', next)}
+              onCallClick={phoneNumber ? () => handleUpdateStage('phone', next) : null}
+              onEmailClick={email ? () => handleUpdateStage('email', next) : null}
             />
             <WizardStep
               component={AcceptFamilyContactDetails}

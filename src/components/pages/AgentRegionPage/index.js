@@ -85,6 +85,7 @@ export default class AgentRegionPage extends Component {
     agentsList: arrayOf(agentPropType),
     onLocationSearch: func.isRequired,
     isRegionPage: bool,
+    location: object.isRequired,
   };
 
   constructor(props) {
@@ -96,7 +97,7 @@ export default class AgentRegionPage extends Component {
   render() {
     const {
       title, locationName, agentsList, onLocationSearch,
-      isRegionPage,
+      isRegionPage, location,
     } = this.props;
 
     if (!agentsList) {
@@ -105,7 +106,7 @@ export default class AgentRegionPage extends Component {
 
     return (
       <Fragment>
-        {getHelmetForAgentsRegionPage({locationName})}
+        {getHelmetForAgentsRegionPage({ locationName, location })}
         {!isRegionPage &&
           <Helmet>
             <meta name="robots" content="noindex" />

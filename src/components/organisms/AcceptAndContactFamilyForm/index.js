@@ -20,8 +20,9 @@ const AcceptAndContactFamilyForm = ({
 }) => (
   <ThreeSectionFormTemplate hasCancel heading="Accept and contact this family" onCancelClick={onCancelClick}>
     <StyledBlock size="caption">Select how you would like to reach this family:</StyledBlock>
-    <StyledIconButton icon="phone" ghost transparent onClick={onCallClick}>Call</StyledIconButton>
-    <IconButton icon="email" ghost transparent onClick={onEmailClick}>Email</IconButton>
+    {onCallClick && <StyledIconButton icon="phone" ghost transparent onClick={onCallClick}>Call</StyledIconButton>}
+    {onEmailClick && <IconButton icon="email" ghost transparent onClick={onEmailClick}>Email</IconButton>}
+    {!onCallClick && !onEmailClick && <Block size="caption">No contact info available!</Block>}
   </ThreeSectionFormTemplate>
 );
 

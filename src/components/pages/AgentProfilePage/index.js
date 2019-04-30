@@ -76,6 +76,7 @@ class AgentProfilePage extends Component {
     agent: shape({
       info: object.isRequired,
     }).isRequired,
+    location: object.isRequired,
   };
 
   constructor(props) {
@@ -88,6 +89,7 @@ class AgentProfilePage extends Component {
   render() {
     const {
       agent,
+      location,
     } = this.props;
     if (!agent) {
       return null;
@@ -101,7 +103,7 @@ class AgentProfilePage extends Component {
     const { state, city } = address;
     return (
       <Fragment>
-        {getHelmetForAgentProfilePage({agent})}
+        {getHelmetForAgentProfilePage({ agent, location })}
 
         <TemplateHeader>
           <HeaderContainer />

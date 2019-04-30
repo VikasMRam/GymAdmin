@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { string, func, object } from 'prop-types';
 
 import {
@@ -10,7 +10,7 @@ import {
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import { FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
@@ -28,6 +28,7 @@ import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import PutFamilyOnPause from 'sly/components/molecules/PutFamilyOnPause';
+import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 
 // todo: mock data
 const activities = [
@@ -73,6 +74,51 @@ const FamilyDetailsTab = styled.div`
   padding: ${size('spacing.xLarge')};
 `;
 
+const TabWrapper = styled.div`
+  padding: ${size('spacing.large')};
+  background-color: ${palette('grey', 'background')};
+
+  > * {
+    background-color: ${palette('white', 'base')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.xLarge')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding: 0;
+  }
+`;
+
+const hideInBigScreenStyles = css`
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
+`;
+
+const BigScreenSummarySection = styled.section`
+  display: none;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: block;
+  }
+`;
+
+const SmallScreenClientNameWrapper = styled.div`
+  display: flex;
+  padding: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
+`;
+
+const SmallScreenClientNameBlock = styled(Block)`
+  width: 100%;
+  text-align: center;
+`;
+
 export default class DashboardMyFamiliesDetailsPage extends Component {
   static propTypes = {
     client: clientPropType,
@@ -105,9 +151,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
   handleUpdateClick = () => {
     const {
-      showModal, hideModal, notifyError, client, rawClient, notifyInfo,
+      showModal, hideModal, notifyError, client, rawClient, notifyInfo, meta,
     } = this.props;
-    showModal(<UpdateFamilyStageFormContainer onSuccess={hideModal} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
+    const { stage, lossReasons } = meta;
+    showModal(<UpdateFamilyStageFormContainer onSuccess={hideModal} lossReasons={lossReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} nextAllowedStages={stage} onCancel={hideModal} />, null, 'noPadding', false);
   };
 
   handleAddNoteClick = () => {
@@ -180,7 +227,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       id, clientInfo, stage, status,
     } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
-    const { showAcceptRejectButtons, showPauseButton } = getStageDetails(stage);
+    const {
+      level, levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton,
+    } = getStageDetails(stage);
     const { name } = clientInfo;
     const activityCards = activities.map((a, i) =>
       <StyledFamilyActivityItem key={a.title} noBorderRadius snap={i === activities.length - 1 ? null : 'bottom'} title={a.title} description={a.description} date={a.date} />);
@@ -193,59 +242,107 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'family-details');
     const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'communities');
 
+    let stickyFooterOptions = [];
+    if (showAcceptRejectButtons) {
+      stickyFooterOptions = [
+        {
+          text: 'Accept and contact this family', icon: 'flag', iconPalette: 'slate', onClick: handleAcceptClick,
+        },
+        {
+          text: 'Reject', icon: 'add-note', iconPalette: 'slate', onClick: handleRejectClick, ghost: true,
+        },
+      ];
+    } else if (showUpdateAddNoteButtons) {
+      stickyFooterOptions = [
+        {
+          text: 'Update Stage', icon: 'flag', iconPalette: 'slate', onClick: handleUpdateClick,
+        },
+        {
+          text: 'Add Note', icon: 'add-note', iconPalette: 'slate', onClick: handleAddNoteClick, ghost: true,
+        },
+      ];
+    }
+
+    const stickyFooterStageProps = {
+      text: `${levelGroup} - ${stage}`,
+      currentStage: level,
+      palette,
+    };
+
     return (
       <DashboardTwoColumnTemplate activeMenuItem="My Families">
-        <section>
-          <Box snap="bottom">
-            {backLink}
-            <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
-          </Box>
-          <Hr noMargin />
-          <FamilyStage
-            noBorderRadius
-            snap="top"
-            stageText={stage}
-            onAcceptClick={handleAcceptClick}
-            onRejectClick={handleRejectClick}
-            onUpdateClick={handleUpdateClick}
-            onAddNoteClick={handleAddNoteClick}
-          />
-          {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
-          {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
-          {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
-        </section>
+        <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
+          <BigScreenSummarySection>
+            <Box snap="bottom">
+              {backLink}
+              <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
+            </Box>
+            <Hr noMargin />
+            <FamilyStage
+              noBorderRadius
+              snap="top"
+              stageText={stage}
+              onAcceptClick={handleAcceptClick}
+              onRejectClick={handleRejectClick}
+              onUpdateClick={handleUpdateClick}
+              onAddNoteClick={handleAddNoteClick}
+            />
+            {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
+            {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
+            {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
+          </BigScreenSummarySection>
+          <SmallScreenClientNameWrapper>
+            <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+              <Icon icon="arrow-left" palette="slate" />
+            </Link>
+            <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
+          </SmallScreenClientNameWrapper>
+        </div>
         <Tabs activeTab={activeTab}>
+          <div label="SUMMARY" tabStyles={hideInBigScreenStyles}>
+            <TabWrapper>
+              <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
+              {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
+            </TabWrapper>
+          </div>
           <div label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
-            <TableHeaderButtons hasColumnsButton={false} />
-            {activityCards.length === 0 &&
-              <Fragment>
-                <PaddedHr noMargin />
-                <TextAlignCenterBlock>There are no acivities.</TextAlignCenterBlock>
-              </Fragment>
-            }
-            {activityCards.length > 0 && activityCards}
+            <TabWrapper>
+              <TableHeaderButtons hasColumnsButton={false} />
+              {activityCards.length === 0 &&
+                <Fragment>
+                  <PaddedHr noMargin />
+                  <TextAlignCenterBlock>There are no acivities.</TextAlignCenterBlock>
+                </Fragment>
+              }
+              {activityCards.length > 0 && activityCards}
+            </TabWrapper>
           </div>
           <div label="FAMILY DETAILS" to={familyDetailsPath}>
-            <FamilyDetailsTab>
-              <FamilyDetailsFormContainer
-                client={client}
-                rawClient={rawClient}
-                notifyError={notifyError}
-                accepted={!showAcceptRejectButtons}
-                gender={gender}
-                lookingFor={lookingFor}
-                monthlyBudget={monthlyBudget}
-                timeToMove={timeToMove}
-              />
-            </FamilyDetailsTab>
+            <TabWrapper>
+              <FamilyDetailsTab>
+                <FamilyDetailsFormContainer
+                  client={client}
+                  rawClient={rawClient}
+                  notifyError={notifyError}
+                  accepted={!showAcceptRejectButtons}
+                  gender={gender}
+                  lookingFor={lookingFor}
+                  monthlyBudget={monthlyBudget}
+                  timeToMove={timeToMove}
+                />
+              </FamilyDetailsTab>
+            </TabWrapper>
           </div>
           <div label="COMMUNITIES" to={communitiesPath}>
-            <CommunitiesTab label="COMMUNITIES">
-              <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
-              <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
-            </CommunitiesTab>
+            <TabWrapper>
+              <CommunitiesTab label="COMMUNITIES">
+                <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
+                <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
+              </CommunitiesTab>
+            </TabWrapper>
           </div>
         </Tabs>
+        <DashboardMyFamilyStickyFooterContainer options={stickyFooterOptions} stageProps={stickyFooterStageProps} />
       </DashboardTwoColumnTemplate>
     );
   }

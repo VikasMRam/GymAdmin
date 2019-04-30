@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { object } from 'prop-types';
 import { connect } from 'react-redux';
 
 import agentPropType from 'sly/propTypes/agent';
@@ -38,16 +39,18 @@ const handleResponses = (responses, { location }, redirect) => {
 export default class AgentProfilePageContainer extends Component {
   static propTypes = {
     agent: agentPropType,
+    history: object,
   };
 
   render() {
-    const { agent } = this.props;
+    const { agent, history } = this.props;
+    const { location } = history;
 
     if (!agent) {
       return null;
     }
 
-    return <AgentProfilePage agent={agent} />;
+    return <AgentProfilePage agent={agent} location={location} />;
   }
 }
 
