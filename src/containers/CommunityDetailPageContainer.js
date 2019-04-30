@@ -90,7 +90,6 @@ const mapStateToProps = (state, {
   const searchParams = getSearchParams(match, location);
   const communitySlug = getCommunitySlug(match);
   const userSaveOfCommunity = userSaves && userSaves.find(us => us.entityType === COMMUNITY_ENTITY_TYPE && us.entitySlug === communitySlug);
-  console.log({ userSaveOfCommunity });
   const setQueryParams = getQueryParamsSetter(history, location);
 
   return {
@@ -109,10 +108,10 @@ const mapStateToProps = (state, {
 
 @query('createAction', 'createUuidAction')
 
-@prefetch('community', 'getCommunity', (req, { match }) => req({
-  id: getCommunitySlug(match),
-  include: 'similar-communities,questions,agents',
-}))
+// @prefetch('community', 'getCommunity', (req, { match }) => req({
+//   id: getCommunitySlug(match),
+//   include: 'similar-communities,questions,agents',
+// }))
 
 @prefetch('userSaves', 'getUserSaves', (req, { match }) => req({
   'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
