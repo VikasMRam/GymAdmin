@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { palette, size } from 'sly/components/themes';
-import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_WON } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_WON, FAMILY_STAGE_LOST, DESCRIPTION_REQUIRED_LOST_REASONS } from 'sly/constants/familyDetails';
 import pad from 'sly/components/helpers/pad';
 import { dateFormatter } from 'sly/services/helpers/date';
 import { Block, Span } from 'sly/components/atoms';
@@ -22,7 +22,7 @@ const PaddedField = pad(Field, 'xLarge');
 PaddedField.displayName = 'PaddedField';
 
 const UpdateFamilyStageForm = ({
-  handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, nextStage, nextAllowedStages, ...props
+  handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, nextStage, nextAllowedStages, lossReasons, currentLossReason, ...props
 }) => {
   const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
 
@@ -31,6 +31,7 @@ const UpdateFamilyStageForm = ({
       {NEW_FAMILY_STAGE_ORDERED[sg].map((s, i) => nextAllowedStages.indexOf(s) !== -1 && <option disabled={ig === 0 && i === 0} key={s} value={s}>{s}</option>)}
     </optgroup>
   ));
+  const lossReasonOptions = lossReasons.map(reason => <option key={reason} value={reason}>{reason}</option>);
 
   const StageField = currentStageGroup !== nextStageGroup ? Field : PaddedField;
 
@@ -50,6 +51,7 @@ const UpdateFamilyStageForm = ({
         type="select"
         component={ReduxField}
       >
+        <option value="" disabled>Select a stage</option>
         {options}
       </StageField>
       {currentStageGroup !== nextStageGroup &&
@@ -57,10 +59,11 @@ const UpdateFamilyStageForm = ({
           Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.
         </Warning>
       }
-      {nextStage !== FAMILY_STAGE_WON &&
+      {nextStage !== FAMILY_STAGE_WON && nextStage !== FAMILY_STAGE_LOST &&
         <Field
           type="textarea"
           rows="3"
+          maxlength="200"
           name="note"
           label="Add a note"
           placeholder="Add a note on why you are updating this family's stage..."
@@ -101,6 +104,28 @@ const UpdateFamilyStageForm = ({
           component={ReduxField}
         />
       }
+      {nextStage === FAMILY_STAGE_LOST &&
+        <Field
+          name="lossReason"
+          label={<span>Loss reason<Span palette="danger">*</Span></span>}
+          type="select"
+          component={ReduxField}
+        >
+          <option value="" disabled>Select a reason</option>
+          {lossReasonOptions}
+        </Field>
+      }
+      {nextStage === FAMILY_STAGE_LOST && DESCRIPTION_REQUIRED_LOST_REASONS.includes(currentLossReason) &&
+        <Field
+          type="textarea"
+          rows="3"
+          name="lostDescription"
+          label={<span>Description<Span palette="danger">*</Span></span>}
+          maxlength="200"
+          placeholder="Please leave a note on the reason for closing this lead..."
+          component={ReduxField}
+        />
+      }
     </ThreeSectionFormTemplate>
   );
 };
@@ -112,7 +137,9 @@ UpdateFamilyStageForm.propTypes = {
   currentStageGroup: string,
   nextStageGroup: string,
   nextStage: string,
-  nextAllowedStages: arrayOf(string),
+  nextAllowedStages: arrayOf(string).isRequired,
+  lossReasons: arrayOf(string).isRequired,
+  currentLossReason: string,
 };
 
 export default UpdateFamilyStageForm;

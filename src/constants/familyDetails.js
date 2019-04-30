@@ -30,3 +30,8 @@ export const STAGE_CLIENT_TYPE_MAP = {
 };
 
 export const NOTE_COMMENTABLE_TYPE_CLIENT = 'Client';
+
+export const DESCRIPTION_REQUIRED_LOST_REASONS = [
+  'Other',
+  'Outside territory',
+];

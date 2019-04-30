@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import { arrayOf, shape } from 'prop-types';
+import { object, arrayOf, shape } from 'prop-types';
 
 import DashboardMyFamilyStickyFooter from 'sly/components/organisms/DashboardMyFamilyStickyFooter/index';
 
 class DashboardMyFamilyStickyFooterContainer extends Component {
-  propTypes = {
-    stageProps: arrayOf(shape({})),
+  static propTypes = {
+    stageProps: object,
     options: arrayOf(shape({})),
-  }
+  };
+
   state = {
     showOptions: false,
-  }
+  };
+
   handleOptionsClick = () => {
     const { showOptions } = this.state;
     this.setState({ showOptions: !showOptions });
