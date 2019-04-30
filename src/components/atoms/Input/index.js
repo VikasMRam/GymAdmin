@@ -104,7 +104,7 @@ class Input extends Component {
 }
 
 Input.propTypes = {
-  type: oneOf(['search', 'textarea', 'select', 'text', 'checkbox', 'radio', 'password', 'number']),
+  type: oneOf(['search', 'textarea', 'select', 'text', 'checkbox', 'radio', 'password', 'number', 'hidden']),
   size: oneOf(['small', 'regular', 'large', 'xLarge']),
   onFocus: func,
   invalid: bool,

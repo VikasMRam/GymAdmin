@@ -1,7 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_WON, FAMILY_STAGE_LOST, DESCRIPTION_REQUIRED_LOST_REASONS } from 'sly/constants/familyDetails';
+import {
+  FAMILY_STAGE_ORDERED,
+  FAMILY_STAGE_WON,
+  FAMILY_STAGE_LOST,
+  DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS,
+  PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
+} from 'sly/constants/familyDetails';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
 
 const name = 'test';
@@ -18,16 +24,18 @@ const lossReasons = [
   "Dosen't want help",
   'Chose community on own',
   'Working with another agency',
-  'Outside territory',
   'Low funds',
   'Passed away',
-  'Other',
+  DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS[0],
+  PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS[0],
 ];
+const change = jest.fn();
 
 const defaultValues = {
   name,
   nextAllowedStages: optionValues,
   lossReasons,
+  change,
 };
 const wrap = (props = {}) => shallow(<UpdateFamilyStageForm {...defaultValues} {...props} />);
 
@@ -98,7 +106,7 @@ describe('UpdateFamilyStageForm', () => {
   });
 
   it('renders lost stage fields with currentLossReason', () => {
-    const wrapper = wrap({ nextStage: FAMILY_STAGE_LOST, nextStageGroup: groups[2], currentLossReason: DESCRIPTION_REQUIRED_LOST_REASONS[0] });
+    const wrapper = wrap({ nextStage: FAMILY_STAGE_LOST, nextStageGroup: groups[2], currentLossReason: DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS[0] });
 
     expect(wrapper.find('Field').find({ name: 'note' })).toHaveLength(0);
     expect(wrapper.find('Field').find({ name: 'moveInDate' })).toHaveLength(0);
@@ -108,5 +116,18 @@ describe('UpdateFamilyStageForm', () => {
 
     expect(wrapper.find('Field').find({ name: 'lossReason' })).toHaveLength(1);
     expect(wrapper.find('Field').find({ name: 'lostDescription' })).toHaveLength(1);
+  });
+
+  it('renders lost stage fields with currentLossReason that requires preferred location', () => {
+    const wrapper = wrap({ nextStage: FAMILY_STAGE_LOST, nextStageGroup: groups[2], currentLossReason: PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS[0] });
+
+    expect(wrapper.find('Field').find({ name: 'note' })).toHaveLength(0);
+    expect(wrapper.find('Field').find({ name: 'moveInDate' })).toHaveLength(0);
+    expect(wrapper.find('Field').find({ name: 'communityName' })).toHaveLength(0);
+    expect(wrapper.find('Field').find({ name: 'monthlyFees' })).toHaveLength(0);
+    expect(wrapper.find('Field').find({ name: 'referralAgreement' })).toHaveLength(0);
+
+    expect(wrapper.find('Field').find({ name: 'lossReason' })).toHaveLength(1);
+    expect(wrapper.find('Field').find({ name: 'preferredLocation' })).toHaveLength(1);
   });
 });

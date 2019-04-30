@@ -195,6 +195,7 @@ Field.propTypes = {
     'rating',
     'number',
     'iconInput',
+    'hidden',
   ]),
   placeholder: string,
   labelRight: node,

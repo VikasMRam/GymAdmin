@@ -31,7 +31,11 @@ export const STAGE_CLIENT_TYPE_MAP = {
 
 export const NOTE_COMMENTABLE_TYPE_CLIENT = 'Client';
 
-export const DESCRIPTION_REQUIRED_LOST_REASONS = [
+export const DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS = [
   'Other',
+];
+
+export const PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS = [
   'Outside territory',
+  'Outside of territory',
 ];
