@@ -456,7 +456,6 @@ export default class CommunityDetailPageContainer extends Component {
     }
 
     if (!community || !userAction) {
-      logWarn(new Error('Empty community or userAction'));
       return null;
     }
 

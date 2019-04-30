@@ -11,6 +11,12 @@ import { isBrowser, isServer } from 'sly/config';
 import { isFSA, isResourceReadRequest } from 'sly/store/actions';
 import { logError } from 'sly/services/helpers/logging';
 
+function getDisplayName(WrappedComponent) {
+  return WrappedComponent.displayName
+    || WrappedComponent.name
+    || 'Component';
+}
+
 const dispatchActions = (dispatch, handleResponses, actions) => {
   // get a map of all the resource names to promise
   const responses = Object.entries(actions).reduce((cumul, [resource, action]) => {
@@ -96,6 +102,10 @@ export default function withServerState(
         hasServerState: bool.isRequired,
         cleanServerState: func.isRequired,
       };
+
+      static WrappedComponent = ChildComponent;
+
+      static displayName = `withServerState(${getDisplayName(ChildComponent)})`;
 
       componentWillMount() {
         const {

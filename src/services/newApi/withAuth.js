@@ -35,8 +35,7 @@ export default function withAuth(InnerComponent) {
       dispatch: func.isRequired,
       status: object.isRequired,
       user: object.isRequired,
-      contact: object.isRequired,
-      contactRaw: object.isRequired,
+      uuidAux: object.isRequired,
       updateUser: func.isRequired,
     };
 

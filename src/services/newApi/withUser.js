@@ -26,10 +26,7 @@ export default function withUser(InnerComponent) {
       [{ id: 'me' }],
     );
 
-    const contactRaw = userRequestInfo.result && getRelationship(state, userRequestInfo.result, 'contact');
-
     return {
-      contactRaw,
       userRequestInfo,
       uuidAuxRequestInfo,
     };
@@ -53,8 +50,6 @@ export default function withUser(InnerComponent) {
 
     static propTypes = {
       api: object,
-      contact: object,
-      contactRaw: object,
       userRequestInfo: object,
       uuidAuxRequestInfo: object,
       fetchUser: func,
