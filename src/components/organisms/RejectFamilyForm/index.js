@@ -5,7 +5,7 @@ import { Field } from 'redux-form';
 import { Span, Label } from 'sly/components/atoms';
 import {
   DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS,
-  PREFFERED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
+  PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
 } from 'sly/constants/familyDetails';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
@@ -71,7 +71,7 @@ export default class RejectFamilyForm extends Component {
             component={ReduxField}
           />
         }
-        {PREFFERED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentReason) &&
+        {PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentReason) &&
           <div>
             <Field
               name="preferredLocation"

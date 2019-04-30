@@ -9,7 +9,7 @@ import {
   FAMILY_STAGE_WON,
   FAMILY_STAGE_LOST,
   DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS,
-  PREFFERED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
+  PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
 } from 'sly/constants/familyDetails';
 import pad from 'sly/components/helpers/pad';
 import { dateFormatter } from 'sly/services/helpers/date';
@@ -164,7 +164,7 @@ export default class UpdateFamilyStageForm extends Component {
             component={ReduxField}
           />
         }
-        {nextStage === FAMILY_STAGE_LOST && PREFFERED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
+        {nextStage === FAMILY_STAGE_LOST && PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
           <div>
             <Field
               name="preferredLocation"

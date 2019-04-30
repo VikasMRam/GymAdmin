@@ -3,7 +3,12 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_LOST, DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS } from 'sly/constants/familyDetails';
+import {
+  FAMILY_STAGE_ORDERED,
+  FAMILY_STAGE_LOST,
+  DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS,
+  PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
+} from 'sly/constants/familyDetails';
 import { withPreventDefault } from 'sly/services/helpers/forms';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
 
@@ -17,10 +22,10 @@ const lossReasons = [
   "Dosen't want help",
   'Chose community on own',
   'Working with another agency',
-  'Outside territory',
   'Low funds',
   'Passed away',
-  'Other',
+  DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS[0],
+  PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS[0],
 ];
 
 const UpdateFamilyStageFormContainer = reduxForm({
@@ -42,10 +47,12 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       name="Amal"
       currentStageGroup={groups[0]}
       nextStageGroup={groups[1]}
+      nextStage={optionValues[3]}
       handleSubmit={withPreventDefault(action('onSubmit'))}
       onCancel={action('onCancel')}
       nextAllowedStages={optionValues}
       lossReasons={lossReasons}
+      initialValues={{ stage: optionValues[4] }}
     />
   ))
   .add('on lost stage', () => (
@@ -58,9 +65,24 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       onCancel={action('onCancel')}
       nextAllowedStages={optionValues}
       lossReasons={lossReasons}
+      initialValues={{ stage: FAMILY_STAGE_LOST }}
     />
   ))
-  .add('on lost stage and currentLossReason', () => (
+  .add('on lost stage with normal reason', () => (
+    <UpdateFamilyStageFormContainer
+      name="Amal"
+      currentStageGroup={groups[0]}
+      nextStageGroup={groups[2]}
+      nextStage={FAMILY_STAGE_LOST}
+      handleSubmit={withPreventDefault(action('onSubmit'))}
+      onCancel={action('onCancel')}
+      nextAllowedStages={optionValues}
+      lossReasons={lossReasons}
+      currentLossReason={lossReasons[0]}
+      initialValues={{ lossReason: lossReasons[0] }}
+    />
+  ))
+  .add('on lost stage and loss description field', () => (
     <UpdateFamilyStageFormContainer
       name="Amal"
       currentStageGroup={groups[0]}
@@ -71,5 +93,20 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       nextAllowedStages={optionValues}
       lossReasons={lossReasons}
       currentLossReason={DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS[0]}
+      initialValues={{ lossReason: DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS[0] }}
+    />
+  ))
+  .add('on lost stage and preffered location field', () => (
+    <UpdateFamilyStageFormContainer
+      name="Amal"
+      currentStageGroup={groups[0]}
+      nextStageGroup={groups[2]}
+      nextStage={FAMILY_STAGE_LOST}
+      handleSubmit={withPreventDefault(action('onSubmit'))}
+      onCancel={action('onCancel')}
+      nextAllowedStages={optionValues}
+      lossReasons={lossReasons}
+      currentLossReason={PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS[0]}
+      initialValues={{ lossReason: PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS[0] }}
     />
   ));

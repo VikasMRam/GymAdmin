@@ -35,7 +35,7 @@ export const DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS = [
   'Other',
 ];
 
-export const PREFFERED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS = [
+export const PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS = [
   'Outside territory',
   'Outside of territory',
 ];
