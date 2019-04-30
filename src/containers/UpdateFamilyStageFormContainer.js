@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, func } from 'prop-types';
+import { object, func, arrayOf, string } from 'prop-types';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { reduxForm } from 'redux-form';
@@ -20,6 +20,8 @@ const validate = createValidator({
   communityName: [required],
   monthlyFees: [required, float],
   referralAgreement: [required, float],
+  lossReason: [required],
+  lostDescription: [required],
 });
 
 const ReduxForm = reduxForm({
@@ -47,6 +49,8 @@ class UpdateFamilyStageFormContainer extends Component {
     createNote: func.isRequired,
     onSuccess: func,
     formState: object,
+    lossReasons: arrayOf(string).isRequired,
+    currentLossReason: string,
   };
 
   currentStage = {};
@@ -124,17 +128,18 @@ class UpdateFamilyStageFormContainer extends Component {
 
   render() {
     const { handleUpdateStage } = this;
-    const { client, formState } = this.props;
+    const { client, formState, lossReasons } = this.props;
     const { clientInfo, stage } = client;
     const { name } = clientInfo;
     let nextStageGroup;
     let levelGroup;
     let showRejectOption;
     let nextStage;
+    let currentLossReason;
     if (formState) {
       this.currentStage = getStageDetails(stage);
       ({ levelGroup, showRejectOption } = this.currentStage);
-      ({ stage: nextStage } = formState);
+      ({ stage: nextStage, lossReason: currentLossReason } = formState);
       this.nextStage = getStageDetails(nextStage);
       ({ levelGroup: nextStageGroup } = this.nextStage);
     }
@@ -152,6 +157,8 @@ class UpdateFamilyStageFormContainer extends Component {
         name={name}
         onSubmit={handleUpdateStage}
         showRejectOption={showRejectOption}
+        lossReasons={lossReasons}
+        currentLossReason={currentLossReason}
       />
     );
   }

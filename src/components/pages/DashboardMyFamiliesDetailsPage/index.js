@@ -153,8 +153,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       showModal, hideModal, notifyError, client, rawClient, notifyInfo, meta,
     } = this.props;
-    const { stage } = meta;
-    showModal(<UpdateFamilyStageFormContainer onSuccess={hideModal} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} nextAllowedStages={stage} onCancel={hideModal} />, null, 'noPadding', false);
+    const { stage, lossReasons } = meta;
+    showModal(<UpdateFamilyStageFormContainer onSuccess={hideModal} lossReasons={lossReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} nextAllowedStages={stage} onCancel={hideModal} />, null, 'noPadding', false);
   };
 
   handleAddNoteClick = () => {
