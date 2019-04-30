@@ -90,11 +90,11 @@ const handleResponses = (responses, { location }, redirect) => {
 
 export default class PricingWizardPageContainer extends Component {
   static propTypes = {
-    uuidAuxResult: object,
     community: communityPropType,
     userDetails: object,
     user: object,
     userHas: func.isRequired,
+    uuidAux: object,
     status: object,
     postUserAction: func.isRequired,
     history: object.isRequired,
@@ -195,7 +195,7 @@ export default class PricingWizardPageContainer extends Component {
 
   render() {
     const {
-      community, user, userHas,
+      community, user, userHas, uuidAux,
     } = this.props;
 
     if (!community) {
@@ -211,6 +211,7 @@ export default class PricingWizardPageContainer extends Component {
           <PricingWizardPage
             community={community}
             user={user}
+            uuidAux={uuidAux}
             userHas={userHas}
             userActionSubmit={this.submitUserAction}
             onComplete={this.handleComplete}

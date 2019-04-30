@@ -78,6 +78,7 @@ class PricingWizardPage extends Component {
     community: communityPropType,
     user: object,
     userHas: func,
+    uuidAux: object,
     onComplete: func,
     userActionSubmit: func,
     isAdvisorHelpVisible: bool,
@@ -195,7 +196,7 @@ class PricingWizardPage extends Component {
     } = this;
 
     const {
-      community, user, userHas, onComplete,
+      community, user, uuidAux, userHas, onComplete,
     } = this.props;
 
     const { id, mainImage, name } = community;
@@ -239,7 +240,7 @@ class PricingWizardPage extends Component {
                       communityName={name}
                       onRoomTypeChange={handleRoomTypeChange}
                       onCareTypeChange={handleCareTypeChange}
-                      user={user}
+                      uuidAux={uuidAux}
                     />
                     <WizardStep
                       component={CommunityBookATourContactFormContainer}
