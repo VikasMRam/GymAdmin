@@ -5,6 +5,7 @@ import pick from 'lodash/pick';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
+import { getRelationship } from 'redux-bees';
 
 import { query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
@@ -22,6 +23,7 @@ const validate = createValidator({
   referralAgreement: [required, float],
   lossReason: [required],
   lostDescription: [required],
+  preferredLocation: [required],
 });
 
 const ReduxForm = reduxForm({
@@ -37,9 +39,15 @@ const mapStateToProps = state => ({
 
 @query('createNote', 'createNote')
 
+@query('updateUuidAux', 'updateUuidAux')
+
 @connect(mapStateToProps)
 
-class UpdateFamilyStageFormContainer extends Component {
+@connect((state, props) => ({
+  uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
+}))
+
+export default class UpdateFamilyStageFormContainer extends Component {
   static propTypes = {
     client: clientPropType,
     rawClient: object,
@@ -51,6 +59,8 @@ class UpdateFamilyStageFormContainer extends Component {
     formState: object,
     lossReasons: arrayOf(string).isRequired,
     currentLossReason: string,
+    updateUuidAux: func.isRequired,
+    uuidAux: object,
   };
 
   currentStage = {};
@@ -60,12 +70,15 @@ class UpdateFamilyStageFormContainer extends Component {
     const { currentStage, nextStage } = this;
     const {
       updateClient, client, rawClient, notifyError, notifyInfo, onSuccess, createNote,
+      updateUuidAux, uuidAux,
     } = this.props;
     const { id } = client;
     const {
-      stage, note, moveInDate, communityName, monthlyFees, referralAgreement,
+      stage, note, moveInDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription,
+      preferredLocation,
     } = data;
     let notePromise = () => Promise.resolve();
+    let uuidAuxPromise = () => Promise.resolve();
     if (note) {
       const payload = {
         type: NOTE_RESOURCE_TYPE,
@@ -78,6 +91,7 @@ class UpdateFamilyStageFormContainer extends Component {
       notePromise = () => createNote(payload);
     }
 
+    let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
     let newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage', 'attributes.clientInfo']))
       .set('attributes.status', FAMILY_STATUS_ACTIVE)
       .set('attributes.stage', stage);
@@ -103,9 +117,27 @@ class UpdateFamilyStageFormContainer extends Component {
     if (referralAgreement) {
       newClient.set('attributes.clientInfo.referralAgreement', parseFloat(referralAgreement));
     }
+    if (lossReason) {
+      newClient.set('attributes.clientInfo.lossReason', lossReason);
+    }
+    if (lostDescription) {
+      newClient.set('attributes.clientInfo.otherText', lostDescription);
+    }
+    if (preferredLocation) {
+      const [city, state] = preferredLocation.split(',');
+      const locationInfo = {
+        city,
+        state,
+      };
+      const { id: uuidID } = uuidAux;
+      newUuidAux.set('attributes.uuidInfo.locationInfo', locationInfo);
+      newUuidAux = newUuidAux.value();
+      uuidAuxPromise = () => updateUuidAux({ id: uuidID }, newUuidAux);
+    }
     newClient = newClient.value();
 
     return updateClient({ id }, newClient)
+      .then(uuidAuxPromise)
       .then(notePromise)
       .then(() => {
         let msg = 'Family stage updated';
@@ -163,5 +195,3 @@ class UpdateFamilyStageFormContainer extends Component {
     );
   }
 }
-
-export default UpdateFamilyStageFormContainer;

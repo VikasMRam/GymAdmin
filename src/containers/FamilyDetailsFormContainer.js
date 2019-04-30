@@ -97,7 +97,7 @@ export default class FamilyDetailsFormContainer extends Component {
     newUuidAux = newUuidAux.value();
 
     return updateClient({ id }, newClient)
-      .then(() => updateUuidAux({ id: uuidID }, newUuidAux).catch(e => Promise.reject(e)))
+      .then(() => updateUuidAux({ id: uuidID }, newUuidAux))
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { body } = r;

@@ -7,8 +7,11 @@ const reasons = [
   'reason 1',
   'reason 2',
 ];
+const change = jest.fn();
+
 const defaultProps = {
   reasons,
+  change,
 };
 const wrap = (props = {}) => shallow(<RejectFamilyForm {...defaultProps} {...props} />);
 

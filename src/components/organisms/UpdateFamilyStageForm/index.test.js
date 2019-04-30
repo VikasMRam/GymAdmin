@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_WON, FAMILY_STAGE_LOST, DESCRIPTION_REQUIRED_LOST_REASONS } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_WON, FAMILY_STAGE_LOST, DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS } from 'sly/constants/familyDetails';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
 
 const name = 'test';
@@ -23,11 +23,13 @@ const lossReasons = [
   'Passed away',
   'Other',
 ];
+const change = jest.fn();
 
 const defaultValues = {
   name,
   nextAllowedStages: optionValues,
   lossReasons,
+  change,
 };
 const wrap = (props = {}) => shallow(<UpdateFamilyStageForm {...defaultValues} {...props} />);
 
@@ -98,7 +100,7 @@ describe('UpdateFamilyStageForm', () => {
   });
 
   it('renders lost stage fields with currentLossReason', () => {
-    const wrapper = wrap({ nextStage: FAMILY_STAGE_LOST, nextStageGroup: groups[2], currentLossReason: DESCRIPTION_REQUIRED_LOST_REASONS[0] });
+    const wrapper = wrap({ nextStage: FAMILY_STAGE_LOST, nextStageGroup: groups[2], currentLossReason: DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS[0] });
 
     expect(wrapper.find('Field').find({ name: 'note' })).toHaveLength(0);
     expect(wrapper.find('Field').find({ name: 'moveInDate' })).toHaveLength(0);
