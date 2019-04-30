@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import { object, func } from 'prop-types';
+import pick from 'lodash/pick';
+import get from 'lodash/get';
+import set from 'lodash/set';
 
 import withUser from './withUser';
 
@@ -31,20 +34,57 @@ export default function withAuth(InnerComponent) {
       api: object.isRequired,
       dispatch: func.isRequired,
       status: object.isRequired,
+      user: object.isRequired,
+      uuidAux: object.isRequired,
+      updateUser: func.isRequired,
     };
 
     static WrappedComponent = InnerComponent;
 
-    ensureAuthenticated = (...args) => {
-      const { ensureAuthenticated } = this.props;
-      return ensureAuthenticated(...args);
+    createOrUpdateUser = (data) => {
+      const { user, updateUser, status } = this.props;
+      const { name, phone, email } = data;
+
+      if (!user) {
+        return this.registerUser({
+          name,
+          email,
+          phone_number: phone,
+        });
+      }
+
+      const userData = pick(status.user.result, [
+        'id',
+        'type',
+        'attributes.name',
+        'attributes.phone',
+        'attributes.email',
+      ]);
+
+
+      const willUpdate = Object.entries({
+        'attributes.name': name,
+        'attributes.phoneNumber': phone,
+        'attributes.email': email,
+      }).reduce((willUpdate, [path, newValue]) => {
+        if (newValue && newValue !== get(userData, path)) {
+          set(userData, path, newValue);
+          return true;
+        }
+        return willUpdate;
+      }, false);
+
+      if (willUpdate) {
+        return updateUser({ id: userData.id }, userData);
+      }
+
+      return Promise.resolve();
     };
 
     registerUser = (options = {}) => {
       const { dispatch, api, status } = this.props;
       const { ignoreExisting, ...data } = options;
-      // FIXME: API does not give enough info on how to figure ignoreExisting
-      // FIXME: @knlshah, please fix this both here and api
+
       return dispatch(api.registerUser(data)).catch((e) => {
         const alreadyExists = e.body
           && e.body.errors
@@ -77,6 +117,11 @@ export default function withAuth(InnerComponent) {
       return dispatch(api.setPassword(data)).then(status.user.refetch);
     };
 
+    ensureAuthenticated = (...args) => {
+      const { ensureAuthenticated } = this.props;
+      return ensureAuthenticated(...args);
+    };
+
     updatePassword = (data) => {
       const { dispatch, api, status } = this.props;
       return dispatch(api.updatePassword(data)).then(status.user.refetch);
@@ -90,6 +135,8 @@ export default function withAuth(InnerComponent) {
     render = () => (
       <InnerComponent
         {...this.props}
+        isLoggedIn={this.props.status.user.status === 200}
+        createOrUpdateUser={this.createOrUpdateUser}
         loginUser={this.loginUser}
         logoutUser={this.logoutUser}
         registerUser={this.registerUser}

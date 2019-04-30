@@ -33,6 +33,10 @@ export function getRelationship(state, entity, relationshipName) {
     return null;
   }
 
+  if (!entity.relationships) {
+    return null;
+  }
+
   if (!entity.relationships[relationshipName]) {
     return null;
   }

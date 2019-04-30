@@ -12,10 +12,11 @@ import { USER_SAVE_INIT_STATUS } from 'sly/constants/userSave';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED } from 'sly/constants/notifications';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { withApi, withAuth, prefetch } from 'sly/services/newApi';
+import { withApi, withAuth, prefetch, query } from 'sly/services/newApi';
 import { Block } from 'sly/components/atoms';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import CommunitySaved from 'sly/components/organisms/CommunitySaved';
+import { USER_SAVE } from 'sly/services/newApi/constants';
 
 const PaddedBlock = styled(Block)`
   padding: ${size('spacing.xxLarge')};
@@ -59,15 +60,19 @@ const getCommunitySlug = match => match.params.communitySlug;
   'filter[entity_slug]': getCommunitySlug(match),
 }))
 
+@query('createAction', 'createUuidAction')
+
 @connect(mapStateToProps, mapDispatchToProps)
 
 export default class SaveCommunityContainer extends Component {
   static propTypes = {
+    match: object,
     slug: string,
     user: object,
     userSave: object,
     createUserSave: func,
     updateUserSave: func,
+    createAction: func,
     community: communityPropType,
     notification: string,
     setQueryParams: func,
@@ -94,7 +99,7 @@ export default class SaveCommunityContainer extends Component {
   createUserSave = () => {
     const { handleModalClose } = this;
     const {
-      community, createUserSave, notifyError,
+      community, createUserSave, notifyError, createAction, match,
     } = this.props;
     const { id } = community;
     const payload = {
@@ -106,6 +111,18 @@ export default class SaveCommunityContainer extends Component {
       updatingUserSave: true,
     });
     createUserSave(payload)
+      .then(({ body }) => createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            entitySlug: community.id,
+            entityType: 'Community',
+            userSaveID: body.data.id,
+          },
+          actionPage: match.url,
+          actionType: USER_SAVE,
+        },
+      }))
       .then(() => {
         this.setState({
           updatingUserSave: false,
@@ -119,7 +136,7 @@ export default class SaveCommunityContainer extends Component {
   updateUserSave = (status) => {
     const { handleModalClose } = this;
     const {
-      userSave, updateUserSave, notifyError,
+      userSave, updateUserSave, notifyError, createAction, community, match,
     } = this.props;
     const { id } = userSave;
 
@@ -129,6 +146,18 @@ export default class SaveCommunityContainer extends Component {
     updateUserSave(id, {
       status,
     })
+      .then(({ body }) => createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            entitySlug: community.id,
+            entityType: 'Community',
+            userSaveID: body.data.id,
+          },
+          actionPage: match.url,
+          actionType: USER_SAVE,
+        },
+      }))
       .then(() => {
         this.setState({
           updatingUserSave: false,
@@ -143,6 +172,7 @@ export default class SaveCommunityContainer extends Component {
     const {
       updateUserSave, userSave,
     } = this.props;
+
     const { id } = userSave;
 
     clearSubmitErrors();

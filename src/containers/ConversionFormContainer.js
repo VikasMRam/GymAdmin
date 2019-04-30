@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { object, func, bool } from 'prop-types';
 
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
-import { getDetail } from 'sly/store/selectors';
+import { withUser } from 'sly/services/newApi';
+
 import {
   createValidator,
   createBooleanValidator,
@@ -23,9 +23,9 @@ const validate = createValidator({
 });
 
 const hasOnlyEmail = createBooleanValidator({
-  fullName: [notProvided],
+  name: [notProvided],
   email: [required, email],
-  phone: [notProvided],
+  phoneNumber: [notProvided],
 });
 
 const ReduxForm = reduxForm({
@@ -37,11 +37,13 @@ const ReduxForm = reduxForm({
   validate,
 })(ConversionForm);
 
-class ConversionFormContainer extends Component {
+@withUser
+
+export default class ConversionFormContainer extends Component {
   static propTypes = {
     community: object,
     gotoWhatNext: func.isRequired,
-    userDetails: object,
+    user: object,
     submitExpressConversion: func.isRequired,
     submitRegularConversion: func.isRequired,
     express: bool.isRequired,
@@ -64,20 +66,20 @@ class ConversionFormContainer extends Component {
       submitExpressConversion,
       submitRegularConversion,
       gotoWhatNext,
-      userDetails,
+      user,
       community,
       express,
       ...props
     } = this.props;
 
-    const { email, fullName, phone } = userDetails;
+    const { email, name, phoneNumber } = user || {};
 
     // have to put empty values as letting undefined would make the fields
     // uncontrolled and we would get a warning
     const initialValues = {
       email: email || '',
-      phone: phone || '',
-      full_name: fullName || '',
+      phone: phoneNumber || '',
+      full_name: name || '',
     };
     let agent = null;
     if (community) {
@@ -96,7 +98,7 @@ class ConversionFormContainer extends Component {
         agent={agent}
         gotoWhatNext={gotoWhatNext}
         community={community}
-        hasOnlyEmail={hasOnlyEmail(userDetails)}
+        hasOnlyEmail={user && hasOnlyEmail(user)}
         onAdvisorHelpClick={() => {
           SlyEvent.getInstance().sendEvent({
             category: 'advisor-learn-more',
@@ -111,10 +113,4 @@ class ConversionFormContainer extends Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  userDetails: (getDetail(state, 'userAction') || {}).userDetails || {},
-});
-
-export default connect(mapStateToProps)(ConversionFormContainer);
 

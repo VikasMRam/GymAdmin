@@ -108,7 +108,7 @@ export default class BookATourPageContainer extends Component {
     return Promise.all([
       postUserAction(payload),
       createAction({
-        type: 'UUIDCreate',
+        type: 'UUIDAction',
         attributes: {
           actionInfo: {
             slug: community.id,

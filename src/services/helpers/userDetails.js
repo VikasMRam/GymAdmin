@@ -1,3 +1,5 @@
+import get from 'lodash/get';
+
 export const getUserDetailsFromUAAndForm = ({ userDetails, formData }) => {
   let userDataFromUA = {};
   if (userDetails) {
@@ -50,3 +52,7 @@ export const getUserDetailsFromUAAndForm = ({ userDetails, formData }) => {
   return result;
 };
 
+export const medicareToBool = medicare => {
+  if (medicare === 'not-sure') return null;
+  return medicare === 'yes';
+};

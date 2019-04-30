@@ -4,7 +4,7 @@ import { reduxForm, SubmissionError } from 'redux-form';
 import { func, object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { withUser, withApi, prefetch } from 'sly/services/newApi';
+import { withUser, withApi, prefetch, query } from 'sly/services/newApi';
 
 import {
   createValidator,
@@ -16,6 +16,7 @@ import {
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityAddRatingForm from 'sly/components/organisms/CommunityAddRatingForm';
 import Thankyou from 'sly/components/molecules/Thankyou';
+import { PROFILE_RATING } from 'sly/services/newApi/constants';
 
 const validate = createValidator({
   comments: [required],
@@ -40,6 +41,8 @@ const ReduxForm = reduxForm({
 
 @withUser
 
+@query('createAction', 'createUuidAction')
+
 @prefetch('community', 'getCommunity', (req, { match }) => req({
   id: match.params.communitySlug,
   include: 'similar-communities,questions,agents',
@@ -52,11 +55,12 @@ export default class CommunityAddRatingFormContainer extends Component {
     createRating: func,
     status: object.isRequired,
     showModal: func,
+    createAction: func,
   };
 
   handleOnSubmit = (values) => {
     const {
-      community, createRating, status, showModal,
+      community, createRating, status, showModal, createAction, match,
     } = this.props;
     const {
       comments, value, name, email,
@@ -69,13 +73,29 @@ export default class CommunityAddRatingFormContainer extends Component {
       email,
     };
 
-    return createRating(payload).then(() => {
-      showModal(<Thankyou subheading="Your review has been submitted for approval." />);
-      return status.community.refetch();
-    }).catch((response) => {
-      const errorMessage = response.body.errors[0].detail;
-      throw new SubmissionError({ _error: errorMessage });
-    });
+    return createRating(payload)
+      .then(({ body }) => createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            slug: community.id,
+            name,
+            email,
+            entityType: 'Community',
+            ratedId: body.data.id,
+            ratedValue: parseInt(value, 10),
+          },
+          actionPage: match.url,
+          actionType: PROFILE_RATING,
+        },
+      }))
+      .then(() => {
+        showModal(<Thankyou subheading="Your review has been submitted for approval." />);
+        return status.community.refetch();
+      }).catch((response) => {
+        const errorMessage = response.body.errors[0].detail;
+        throw new SubmissionError({ _error: errorMessage });
+      });
   };
 
   render() {

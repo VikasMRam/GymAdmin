@@ -3,6 +3,7 @@ import { string, object, func } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
+import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import { Heading, Block } from 'sly/components/atoms';
@@ -28,7 +29,7 @@ const StyledContainer = styled.div`
 `;
 
 const CommunityBookATourContactForm = ({
-  error, user, userDetails, heading, subheading, onAdvisorHelpClick, handleSubmit, displayContext
+  error, user, heading, subheading, onAdvisorHelpClick, handleSubmit, displayContext
 }) => {
   return (
     <StyledContainer displayContext={displayContext}>
@@ -37,23 +38,25 @@ const CommunityBookATourContactForm = ({
         <SubheadingWrapper>
           <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can a Seniorly Partner Agent help?</Link></SubHeading>
         </SubheadingWrapper>
-        {!(userDetails && userDetails.fullName) && <Field
+        {!(user && user.name) && <Field
           name="name"
           label="Full name"
           type="text"
           placeholder="Full name"
           component={ReduxField}
         />}
-        {!(userDetails && userDetails.phone) &&
+        {!(user && user.phoneNumber) &&
           <Field
             name="phone"
             label="Phone"
             type="text"
+            parse={phoneParser}
+            format={phoneFormatter}
             placeholder="925-555-5555"
             component={ReduxField}
           />
         }
-        {userDetails && userDetails.fullName && userDetails.phone &&
+        {user && user.name && user.phoneNumber &&
           <Field
             name="notes"
             label="Add a note"
@@ -73,6 +76,7 @@ const CommunityBookATourContactForm = ({
 CommunityBookATourContactForm.propTypes = {
   user: object,
   userDetails: object,
+  displayContext: string,
   error: string,
   onAdvisorHelpClick: func.isRequired,
   onContactByTextMsgChange: func,

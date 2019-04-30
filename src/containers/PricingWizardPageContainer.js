@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { object, func, bool } from 'prop-types';
+import { object, func } from 'prop-types';
+import produce from 'immer';
+import { withRouter } from 'react-router';
+import pick from 'lodash/pick';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 import { connectController } from 'sly/controllers';
@@ -9,10 +12,11 @@ import { resourceDetailReadRequest, resourceCreateRequest } from 'sly/store/reso
 import SlyEvent from 'sly/services/helpers/events';
 import { CUSTOM_PRICING } from 'sly/services/api/actions';
 import PricingWizardPage from 'sly/components/pages/PricingWizardPage';
-import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
+import { getUserDetailsFromUAAndForm, medicareToBool } from 'sly/services/helpers/userDetails';
 import { getLastSegment, replaceLastSegment } from 'sly/services/helpers/url';
 import ModalController from 'sly/controllers/ModalController';
-import { query } from 'sly/services/newApi';
+import { query, withAuth } from 'sly/services/newApi';
+import { PRICING_REQUEST, PROFILE_CONTACTED } from 'sly/services/newApi/constants';
 
 const eventCategory = 'PricingWizard';
 
@@ -66,6 +70,12 @@ const handleResponses = (responses, { location }, redirect) => {
   });
 };
 
+@withAuth
+
+@withRouter
+
+@query('updateUuidAux', 'updateUuidAux')
+
 @query('createAction', 'createUuidAction')
 
 @withServerState(
@@ -83,13 +93,27 @@ export default class PricingWizardPageContainer extends Component {
     community: communityPropType,
     userDetails: object,
     user: object,
+    userHas: func.isRequired,
+    uuidAux: object,
+    status: object,
     postUserAction: func.isRequired,
     history: object.isRequired,
+    createAction: func.isRequired,
+    updateUuidAux: func.isRequired,
+    createOrUpdateUser: func.isRequired,
+    match: object.isRequired,
   };
 
   submitUserAction = (data) => {
     const {
-      community, postUserAction, userDetails,
+      match,
+      community,
+      postUserAction,
+      userDetails,
+      createAction,
+      status,
+      updateUuidAux,
+      createOrUpdateUser,
     } = this.props;
 
     // here remove only fields that will be populated by getUserDetailsFromUAAndForm
@@ -123,9 +147,39 @@ export default class PricingWizardPageContainer extends Component {
       label: community.id,
     });
 
+    const uuidAux = status.uuidAux.result;
+
     return Promise.all([
       postUserAction(payload),
-    ]);
+      updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
+        const housingInfo = draft.attributes.uuidInfo.housingInfo || {};
+        housingInfo.typeCare = data.careType;
+        housingInfo.roomPreference = data.roomType;
+        draft.attributes.uuidInfo.housingInfo = housingInfo;
+
+        const financialInfo = draft.attributes.uuidInfo.financialInfo || {};
+        if (data.medicaidCoverage) {
+          financialInfo.medicare = medicareToBool(data.medicaidCoverage);
+        }
+        draft.attributes.uuidInfo.financialInfo = financialInfo;
+      })),
+      createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            phone,
+            name,
+            contactType: PRICING_REQUEST,
+            slug: community.id,
+          },
+          actionPage: match.url,
+          actionType: PROFILE_CONTACTED,
+        },
+      }),
+    ]).then(() => createOrUpdateUser({
+      name,
+      phone,
+    }));
   };
 
   handleComplete = (data, openConfirmationModal) => {
@@ -141,7 +195,7 @@ export default class PricingWizardPageContainer extends Component {
 
   render() {
     const {
-      community, user, userDetails,
+      community, user, userHas, uuidAux,
     } = this.props;
 
     if (!community) {
@@ -157,7 +211,8 @@ export default class PricingWizardPageContainer extends Component {
           <PricingWizardPage
             community={community}
             user={user}
-            userDetails={userDetails}
+            uuidAux={uuidAux}
+            userHas={userHas}
             userActionSubmit={this.submitUserAction}
             onComplete={this.handleComplete}
             showModal={show}
@@ -166,5 +221,5 @@ export default class PricingWizardPageContainer extends Component {
         )}
       </ModalController>
     );
-  };
+  }
 }

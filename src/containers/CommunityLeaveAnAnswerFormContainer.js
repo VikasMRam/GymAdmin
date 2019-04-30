@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError } from 'redux-form';
-import { string, func } from 'prop-types';
+import { string, func, object } from 'prop-types';
 
-import { resourceCreateRequest, resourceDetailReadRequest } from 'sly/store/resource/actions';
 import {
   createValidator,
   required,
 } from 'sly/services/validation';
 import CommunityLeaveAnAnswerForm from 'sly/components/organisms/CommunityLeaveAnAnswerForm';
 import { ensureAuthenticated } from 'sly/store/authenticated/actions';
+import { prefetch } from 'sly/services/newApi';
 
 const validate = createValidator({
   answer: [required],
@@ -20,18 +20,32 @@ const ReduxForm = reduxForm({
   validate,
 })(CommunityLeaveAnAnswerForm);
 
-class CommunityLeaveAnAnswerFormContainer extends Component {
+const mapDispatchToProps = (dispatch, { api }) => ({
+  leaveAnAnswer: data => dispatch(ensureAuthenticated(
+    'Please Login to Answer this Question',
+    api.createAnswer(data),
+  )),
+});
+
+@prefetch('community', 'getCommunity', (req, { communitySlug }) => req({
+  id: communitySlug,
+  include: 'similar-communities,questions,agents',
+}))
+
+@connect(null, mapDispatchToProps)
+
+export default class CommunityLeaveAnAnswerFormContainer extends Component {
   static propTypes = {
+    status: object,
     communitySlug: string.isRequired,
     leaveAnAnswer: func,
-    loadCommunity: func,
     onSuccess: func,
     questionId: string,
   };
 
   handleOnSubmit = (values) => {
     const {
-      communitySlug, leaveAnAnswer, loadCommunity, questionId, onSuccess,
+      communitySlug, leaveAnAnswer, status, questionId, onSuccess,
     } = this.props;
     const payload = {
       communitySlug,
@@ -40,25 +54,19 @@ class CommunityLeaveAnAnswerFormContainer extends Component {
     };
     return leaveAnAnswer(payload).then(() => {
       onSuccess();
-      loadCommunity(communitySlug);
-    }).catch((r) => {
-      // TODO: Need to set a proper way to handle server side errors
-      const { response } = r;
+      status.community.refetch();
+    }).catch(({ status, body }) => {
       let errorMessage = 'Error Answering Question';
-      return response.json().then((data) => {
-        if (data.errors) {
-          errorMessage = data.errors[0].detail;
-        } else if (response.status === 401) {
-          errorMessage = 'Please Login to Answer this Question';
-        } else {
-          // Figure out why this error happened. Ideally post to event server
-          console.log(r.status);
-          console.log(data);
-        }
-        throw new SubmissionError({ answer: errorMessage });
-      });
+      if (body.errors) {
+        errorMessage = body.errors[0].detail;
+      } else if (status === 401) {
+        errorMessage = 'Please Login to Answer this Question';
+      } else {
+        console.error(body);
+      }
+      throw new SubmissionError({ answer: errorMessage });
     });
-  }
+  };
 
   render() {
     const { ...props } = this.props;
@@ -74,17 +82,3 @@ class CommunityLeaveAnAnswerFormContainer extends Component {
     );
   }
 }
-
-const mapDispatchToProps = dispatch => ({
-  leaveAnAnswer: (data) => {
-    return dispatch(ensureAuthenticated(
-      'Please Login to Answer this Question',
-      resourceCreateRequest('answer', data),
-    ));
-  },
-  loadCommunity: slug => dispatch(resourceDetailReadRequest('community', slug, {
-    include: 'similar-communities,questions,agents',
-  })),
-});
-
-export default connect(null, mapDispatchToProps)(CommunityLeaveAnAnswerFormContainer);

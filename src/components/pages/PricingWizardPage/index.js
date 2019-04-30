@@ -9,6 +9,7 @@ import { size } from 'sly/components/themes';
 import { getCitySearchUrl } from 'sly/services/helpers/url';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import SlyEvent from 'sly/services/helpers/events';
+
 import {
   FullScreenWizard,
   makeBody,
@@ -76,7 +77,8 @@ class PricingWizardPage extends Component {
   static propTypes = {
     community: communityPropType,
     user: object,
-    userDetails: object,
+    userHas: func,
+    uuidAux: object,
     onComplete: func,
     userActionSubmit: func,
     isAdvisorHelpVisible: bool,
@@ -115,7 +117,7 @@ class PricingWizardPage extends Component {
   handleStepChange = ({
     currentStep, data, goto, doSubmit, openConfirmationModal,
   }) => {
-    const { community, userActionSubmit, userDetails } = this.props;
+    const { community, userActionSubmit, userHas } = this.props;
     const { id } = community;
     const { interest } = data;
 
@@ -128,12 +130,12 @@ class PricingWizardPage extends Component {
         goto(4);
       }
     }
-    if (currentStep === 1 && userDetails && userDetails.phone && userDetails.fullName) {
+    if (currentStep === 1 && userHas(['name', 'phoneNumber'])) {
       goto(3);
     }
     if (currentStep === 2) {
       // Track goal events
-      sendEvent('pricing-contact-submitted', id,currentStep);
+      sendEvent('pricing-contact-submitted', id, currentStep);
     }
   };
 
@@ -194,7 +196,7 @@ class PricingWizardPage extends Component {
     } = this;
 
     const {
-      community, user, onComplete, userDetails,
+      community, user, uuidAux, userHas, onComplete,
     } = this.props;
 
     const { id, mainImage, name } = community;
@@ -227,6 +229,7 @@ class PricingWizardPage extends Component {
               formHeading = contactFormHeadingObj.heading;
               formSubheading = contactFormHeadingObj.subheading;
             }
+
             return (
               <Fragment>
                 <Body>
@@ -237,14 +240,13 @@ class PricingWizardPage extends Component {
                       communityName={name}
                       onRoomTypeChange={handleRoomTypeChange}
                       onCareTypeChange={handleCareTypeChange}
-                      userDetails={userDetails}
+                      uuidAux={uuidAux}
                     />
                     <WizardStep
                       component={CommunityBookATourContactFormContainer}
                       name="Contact"
                       onAdvisorHelpClick={openAdvisorHelp}
                       user={user}
-                      userDetails={userDetails}
                       heading={formHeading}
                       subheading={formSubheading}
                     />
@@ -271,7 +273,7 @@ class PricingWizardPage extends Component {
                     <PricingFormFooter
                       price={estimatedPrice}
                       onProgressClick={onSubmit}
-                      isFinalStep={!!(userDetails && userDetails.phone && userDetails.fullName) || isFinalStep}
+                      isFinalStep={userHas(['phoneNumber', 'name']) || isFinalStep}
                       isButtonDisabled={!submitEnabled}
                     />
                   }

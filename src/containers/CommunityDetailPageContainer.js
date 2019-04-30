@@ -410,7 +410,7 @@ export default class CommunityDetailPageContainer extends Component {
     const { updateUserSave, userSaveOfCommunity } = this.props;
     const { id } = userSaveOfCommunity;
 
-    updateUserSave(id, {
+    return updateUserSave(id, {
       status: USER_SAVE_DELETE_STATUS,
     })
       .then(() => {
@@ -456,7 +456,6 @@ export default class CommunityDetailPageContainer extends Component {
     }
 
     if (!community || !userAction) {
-      logWarn(new Error('Empty community or userAction'));
       return null;
     }
 

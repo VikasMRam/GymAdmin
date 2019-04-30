@@ -17,7 +17,8 @@ import {
 } from 'sly/services/api/actions';
 
 import {
-  CONSULTATION_REQUESTED,
+  AVAILABILITY_REQUEST,
+  CONSULTATION_REQUESTED, PRICING_REQUEST,
   PROFILE_CONTACTED,
 } from 'sly/services/newApi/constants';
 
@@ -64,6 +65,16 @@ const isPricingReq = slug => contact =>
 const isAvailReq = slug => contact =>
   contact.slug === slug
   && (contact.contactType === REQUEST_AVAILABILITY);
+
+const getLegacyActionType = (action) => {
+  if (action === CONSULTATION_REQUESTED) {
+    return REQUEST_CONSULTATION;
+  } else if (action === PROFILE_CONTACTED) {
+    return REQUEST_AVAILABILITY;
+  } else if (action === PRICING_REQUEST) {
+    return REQUEST_PRICING;
+  }
+}
 
 const mapStateToProps = (state, props) => {
   const { communitySlug, queryParams, history } = props;
@@ -127,7 +138,7 @@ export default class ConciergeController extends Component {
     }).isRequired,
     updateUuidAux: func,
     createAction: func,
-    registerUser: func,
+    createOrUpdateUser: func,
   };
 
   getPricing = () => {
@@ -149,7 +160,7 @@ export default class ConciergeController extends Component {
     });
 
     if (!pricingRequested && hasAllUserData(userDetails)) {
-      return this.doSubmitConversion(userDetails, REQUEST_PRICING, true);
+      return this.doSubmitConversion(userDetails, PRICING_REQUEST, true);
     }
     return this.next();
   };
@@ -191,14 +202,14 @@ export default class ConciergeController extends Component {
         category: eventCategory,
         label: communitySlug || pathName,
       });
-      return this.doSubmitConversion(data, REQUEST_CONSULTATION, true);
+      return this.doSubmitConversion(data, CONSULTATION_REQUESTED, true);
     } else {
       SlyEvent.getInstance().sendEvent({
         action: 'contactCommunity',
         category: 'requestAvailability',
         label: communitySlug || pathName,
       });
-      return this.doSubmitConversion(data, REQUEST_AVAILABILITY, true);
+      return this.doSubmitConversion(data, PROFILE_CONTACTED, true);
     }
   };
 
@@ -225,7 +236,7 @@ export default class ConciergeController extends Component {
       category: eventCategory,
       label: communitySlug || pathName,
     });
-    return this.doSubmitConversion(data, REQUEST_CONSULTATION, false);
+    return this.doSubmitConversion(data, CONSULTATION_REQUESTED, false);
   };
 
   doSubmitConversion = (data = {}, action, isExpress = false) => {
@@ -235,7 +246,7 @@ export default class ConciergeController extends Component {
       gotoGetCustomPricing,
       createAction,
       match,
-      registerUser,
+      createOrUpdateUser,
     } = this.props;
 
     const value = {
@@ -247,26 +258,35 @@ export default class ConciergeController extends Component {
       value.propertyIds = [communitySlug];
     }
 
-    const { email, phone, full_name: name } = data;
+    const { email: dataEmail, phone, full_name: name } = data;
+    const email = dataEmail || undefined;
+
+    const attributes = {
+      actionInfo: { email, phone, name },
+      actionPage: match.url,
+      actionType: action,
+    };
+
+    if (action === PROFILE_CONTACTED) {
+      attributes.actionInfo.slug = communitySlug;
+      attributes.actionInfo.contactType = AVAILABILITY_REQUEST;
+    } else if (action === PRICING_REQUEST) {
+      // attributes.actionType = PRICING_REQUEST;
+    }
 
     return Promise.all([
       submit({
-        action,
+        action: getLegacyActionType(action),
         value,
       }),
       createAction({
         type: 'UUIDAction',
-        attributes: {
-          actionInfo: { email, phone, name },
-          actionPage: match.url,
-          actionType: CONSULTATION_REQUESTED,
-        },
+        attributes,
       }),
-    ]).then(() => registerUser({
+    ]).then(() => createOrUpdateUser({
       email,
       name,
-      phone_number: phone,
-      ignoreExisting: true,
+      phone,
     })).then(() => {
       if (communitySlug && gotoGetCustomPricing) {
         gotoGetCustomPricing();
@@ -289,8 +309,6 @@ export default class ConciergeController extends Component {
     } = this.props;
 
     const { message, ...rest } = data;
-
-    const uuidAux = status.uuidAux.result;
 
     let eventCategory = 'advancedInfo';
     // Not a 100% correct.
@@ -321,12 +339,14 @@ export default class ConciergeController extends Component {
       value.propertyIds = [communitySlug];
     }
 
+    const uuidAux = status.uuidAux.result;
+
     return Promise.all([
       submit({
         action: ASSESSMENT,
         value,
       }),
-      updateUuidAux({ id: uuidAux.id }, produce(uuidAux, (draft) => {
+      updateUuidAux({ id: uuidAux }, produce(uuidAux, (draft) => {
         const uuidInfo = draft.attributes.uuidInfo || {};
 
         const housingInfo = uuidInfo.housingInfo || {};
