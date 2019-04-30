@@ -162,7 +162,7 @@ describe('ConciergeController', () => {
       />
     , { context: { router } }), 'ConciergeController').dive();
 
-    it.only('should pass default values', () => {
+    it('should pass default values', () => {
       const store = initStore({ bees, resource, entities });
       wrap(community.id, store);
       const { currentStep } = childProps().concierge;
