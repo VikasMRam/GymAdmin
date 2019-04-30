@@ -36,8 +36,6 @@ const fetchState = (mapStateToProps, mapActionsToProps) => (WrappedComponent) =>
       };
     }
 
-    index;
-
     componentWillMount() {
       this._componentIsMounted = true;
       const {
@@ -67,6 +65,8 @@ const fetchState = (mapStateToProps, mapActionsToProps) => (WrappedComponent) =>
     componentWillUnmount() {
       this._componentIsMounted = false;
     }
+
+    index;
 
     actions = () => ({
       done: this.handleDone,
