@@ -4,7 +4,7 @@ import { Field } from 'redux-form';
 import styled from 'styled-components';
 
 import { palette, size } from 'sly/components/themes';
-import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_WON, FAMILY_STAGE_LOST } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_WON, FAMILY_STAGE_LOST, DESCRIPTION_REQUIRED_LOST_REASONS } from 'sly/constants/familyDetails';
 import pad from 'sly/components/helpers/pad';
 import { dateFormatter } from 'sly/services/helpers/date';
 import { Block, Span } from 'sly/components/atoms';
@@ -115,7 +115,7 @@ const UpdateFamilyStageForm = ({
           {lossReasonOptions}
         </Field>
       }
-      {nextStage === FAMILY_STAGE_LOST && currentLossReason === 'Other' &&
+      {nextStage === FAMILY_STAGE_LOST && DESCRIPTION_REQUIRED_LOST_REASONS.includes(currentLossReason) &&
         <Field
           type="textarea"
           rows="3"

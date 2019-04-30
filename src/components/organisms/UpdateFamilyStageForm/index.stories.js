@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { reduxForm } from 'redux-form';
 
-import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_LOST } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_LOST, DESCRIPTION_REQUIRED_LOST_REASONS } from 'sly/constants/familyDetails';
 import { withPreventDefault } from 'sly/services/helpers/forms';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
 
@@ -70,6 +70,6 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       onCancel={action('onCancel')}
       nextAllowedStages={optionValues}
       lossReasons={lossReasons}
-      currentLossReason="Other"
+      currentLossReason={DESCRIPTION_REQUIRED_LOST_REASONS[0]}
     />
   ));
