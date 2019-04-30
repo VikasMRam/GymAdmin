@@ -271,31 +271,33 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     return (
       <DashboardTwoColumnTemplate activeMenuItem="My Families">
-        <BigScreenSummarySection>
-          <Box snap="bottom">
-            {backLink}
-            <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
-          </Box>
-          <Hr noMargin />
-          <FamilyStage
-            noBorderRadius
-            snap="top"
-            stageText={stage}
-            onAcceptClick={handleAcceptClick}
-            onRejectClick={handleRejectClick}
-            onUpdateClick={handleUpdateClick}
-            onAddNoteClick={handleAddNoteClick}
-          />
-          {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
-          {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
-          {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
-        </BigScreenSummarySection>
-        <SmallScreenClientNameWrapper>
-          <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
-            <Icon icon="arrow-left" palette="slate" />
-          </Link>
-          <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
-        </SmallScreenClientNameWrapper>
+        <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
+          <BigScreenSummarySection>
+            <Box snap="bottom">
+              {backLink}
+              <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
+            </Box>
+            <Hr noMargin />
+            <FamilyStage
+              noBorderRadius
+              snap="top"
+              stageText={stage}
+              onAcceptClick={handleAcceptClick}
+              onRejectClick={handleRejectClick}
+              onUpdateClick={handleUpdateClick}
+              onAddNoteClick={handleAddNoteClick}
+            />
+            {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
+            {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
+            {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
+          </BigScreenSummarySection>
+          <SmallScreenClientNameWrapper>
+            <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+              <Icon icon="arrow-left" palette="slate" />
+            </Link>
+            <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
+          </SmallScreenClientNameWrapper>
+        </div>
         <Tabs activeTab={activeTab}>
           <div label="SUMMARY" tabStyles={hideInBigScreenStyles}>
             <TabWrapper>
