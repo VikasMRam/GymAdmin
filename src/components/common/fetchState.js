@@ -8,42 +8,42 @@ function getDisplayName(WrappedComponent) {
     || WrappedComponent.name
     || 'Component';
 }
-
-const fetchState = (mapStateToProps, mapActionsToProps) => WrappedComponent => {
+/* eslint no-underscore-dangle: 0 */
+const fetchState = (mapStateToProps, mapActionsToProps) => (WrappedComponent) => {
   class Wrapper extends Component {
     static contextTypes = {
       reactRouterServerAsyncRenderer: () => null,
       reactRouterServerServerState: () => null,
-      reactRouterServerFetchStateParentIndex: () => null
+      reactRouterServerFetchStateParentIndex: () => null,
     };
 
     static childContextTypes = {
-      reactRouterServerFetchStateParentIndex: () => null
+      reactRouterServerFetchStateParentIndex: () => null,
     };
 
     static displayName = `fetchState(${getDisplayName(WrappedComponent)})`;
 
     static WrappedComponent = WrappedComponent;
 
-    getChildContext() {
-      return {
-        reactRouterServerFetchStateParentIndex: this.index
-      };
-    }
-
-    index;
-
     constructor() {
       super();
       this.state = {};
     }
+
+    getChildContext() {
+      return {
+        reactRouterServerFetchStateParentIndex: this.index,
+      };
+    }
+
+    index;
 
     componentWillMount() {
       this._componentIsMounted = true;
       const {
         reactRouterServerAsyncRenderer: asyncRenderer,
         reactRouterServerServerState: serverState,
-        reactRouterServerFetchStateParentIndex: parentIndex
+        reactRouterServerFetchStateParentIndex: parentIndex,
       } = this.context;
 
       if (asyncRenderer) {
@@ -69,10 +69,10 @@ const fetchState = (mapStateToProps, mapActionsToProps) => WrappedComponent => {
     }
 
     actions = () => ({
-      done: this.handleDone
+      done: this.handleDone,
     });
 
-    handleDone = data => {
+    handleDone = (data) => {
       if (isServer) {
         const { reactRouterServerAsyncRenderer: asyncRenderer } = this.context;
         if (asyncRenderer) {
@@ -89,7 +89,7 @@ const fetchState = (mapStateToProps, mapActionsToProps) => WrappedComponent => {
       let nextProps = { ...this.props };
       if (mapStateToProps) nextProps = { ...nextProps, ...mapStateToProps(this.state) };
       if (mapActionsToProps) nextProps = { ...nextProps, ...mapActionsToProps(this.actions()) };
-      return <WrappedComponent {...nextProps}/>;
+      return <WrappedComponent {...nextProps} />;
     }
   }
 
@@ -98,6 +98,6 @@ const fetchState = (mapStateToProps, mapActionsToProps) => WrappedComponent => {
   return Wrapper;
 };
 
-export const withDone = fetchState(null, ({ done }) => ({ done }))
+export const withDone = fetchState(null, ({ done }) => ({ done }));
 
 export default fetchState;
