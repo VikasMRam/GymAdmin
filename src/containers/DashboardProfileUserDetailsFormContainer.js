@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { shape, object, func } from 'prop-types';
 import { reduxForm, SubmissionError } from 'redux-form';
-import { getRelationship } from 'redux-bees';
 import { connect } from 'react-redux';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
@@ -9,8 +8,7 @@ import pick from 'lodash/pick';
 import DashboardProfileUserDetailsForm from 'sly/components/organisms/DashboardProfileUserDetailsForm';
 import { createValidator, required, email, usPhone } from 'sly/services/validation/index';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
-import { withUser } from 'sly/services/newApi';
-import query from 'sly/services/newApi/query';
+import { withUser, query, getRelationship } from 'sly/services/newApi';
 
 const emailWarning = 'Enter your email so your agent can help you by answering your questions and sending recommended communities.';
 const messageObj = {

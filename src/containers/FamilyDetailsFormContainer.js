@@ -3,13 +3,12 @@ import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
-import { getRelationship } from 'redux-bees';
 import { connect } from 'react-redux';
 
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
 import { createValidator, email, usPhone } from 'sly/services/validation';
 import clientPropType from 'sly/propTypes/client';
-import { query } from 'sly/services/newApi';
+import { query, getRelationship } from 'sly/services/newApi';
 
 const validate = createValidator({
   phone: [usPhone],

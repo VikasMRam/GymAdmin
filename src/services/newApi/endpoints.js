@@ -1,4 +1,4 @@
-import { get, patch, post, put, destroy } from 'redux-bees';
+import { get, patch, post, put, destroy } from './httpMethods';
 
 // method names should start with `get`, `create`, `update`, `delete`
 // patch is prefered over put as per specification

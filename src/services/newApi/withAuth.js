@@ -34,7 +34,7 @@ export default function withAuth(InnerComponent) {
       api: object.isRequired,
       dispatch: func.isRequired,
       status: object.isRequired,
-      user: object.isRequired,
+      user: object,
       uuidAux: object.isRequired,
       updateUser: func.isRequired,
     };

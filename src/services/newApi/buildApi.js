@@ -1,5 +1,5 @@
-import request from 'redux-bees/lib/request';
-import applyUrlWithPlaceholders from 'redux-bees/lib/applyUrlWithPlaceholders';
+import applyUrlWithPlaceholders from './applyUrlWithPlaceholders';
+import request from './request';
 
 const pendingPromises = {};
 
@@ -88,6 +88,7 @@ export default function buildApi(endpoints, config = {}) {
 
       promise.actionName = key;
       promise.params = args;
+
       return promise;
     };
 
