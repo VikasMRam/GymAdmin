@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { arrayOf, object, string } from 'prop-types';
 
-import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 import { size, palette } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
@@ -28,10 +27,6 @@ const BigScreenSection = styled.div`
     display: block;
     background-color: ${palette('white.base')};
   }
-`;
-const ButtonTabsWrapper = styled.div`
-  padding: ${size('spacing.large')};
-  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
 `;
 
 const TableRowCardsWrapper = styled.div`
@@ -64,12 +59,6 @@ const BigScreenPaginationWrapper = styled.div`
   justify-content: center;
 `;
 
-const tabsOptions = [
-  { value: 'Prospects', label: 'Prospects', href: FAMILY_DASHBOARD_FAMILIES_PATH },
-  { value: 'Connected', label: 'Connected', href: `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected` },
-  { value: 'Closed', label: 'Closed', href: `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed` },
-];
-
 const tableHeaderButtons = <TableHeaderButtons />;
 
 const EmptyTextWrapper = styled.div`
@@ -79,59 +68,6 @@ const EmptyTextWrapper = styled.div`
   height: 100vh;
   text-align: center;
 `;
-
-const SmallScreenView = ({
-  mobileContents, paginationParams, paginationString, activeTab, tableEmptyText,
-}) => {
-  const emptyTextComponent = <EmptyTextWrapper><Block palette="grey">{tableEmptyText}</Block></EmptyTextWrapper>;
-  return (
-    <SmallScreenSection>
-      <ButtonTabsWrapper>
-        <MultipleChoice type="singlechoice" orientation="horizontal" buttonKind="tab" options={tabsOptions} value={activeTab} />
-      </ButtonTabsWrapper>
-      {tableHeaderButtons}
-      <TableRowCardsWrapper>
-        {mobileContents.length > 0 && (
-          <Fragment>
-            <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
-            {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
-            <Pagination {...paginationParams} />
-          </Fragment>
-        )}
-        {mobileContents.length === 0 && emptyTextComponent}
-      </TableRowCardsWrapper>
-    </SmallScreenSection>
-  );
-};
-
-SmallScreenView.propTypes = {
-  mobileContents: arrayOf(object),
-  paginationParams: object,
-  paginationString: string,
-  activeTab: string,
-  tableEmptyText: string,
-};
-
-const BigScreenView = ({ tableContents, paginationParams, paginationString }) => (
-  <Fragment>
-    {tableHeaderButtons}
-    <TableSectionWrapper>
-      <TableWrapper>
-        <Table {...tableContents} />
-      </TableWrapper>
-      <BigScreenPaginationWrapper>
-        <Pagination {...paginationParams} />
-      </BigScreenPaginationWrapper>
-      <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
-    </TableSectionWrapper>
-  </Fragment>
-);
-
-BigScreenView.propTypes = {
-  tableContents: object,
-  paginationParams: object,
-  paginationString: string,
-};
 
 const DashboardAgentFamilyOverviewPage = ({
   mobileContents, tableContents, pagination, paginationString, activeTab,
@@ -144,29 +80,57 @@ const DashboardAgentFamilyOverviewPage = ({
     basePath: FAMILY_DASHBOARD_FAMILIES_PATH,
     pageParam: 'page-number',
   };
-  const bigScreenView = (<BigScreenView tableContents={tableContents} paginationParams={paginationParams} paginationString={paginationString} />);
   const { tableEmptyText } = tableContents;
+  const bigScreenView = (
+    <Fragment>
+      {tableHeaderButtons}
+      <TableSectionWrapper>
+        <TableWrapper>
+          <Table {...tableContents} />
+        </TableWrapper>
+        <BigScreenPaginationWrapper>
+          <Pagination {...paginationParams} />
+        </BigScreenPaginationWrapper>
+        <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
+      </TableSectionWrapper>
+    </Fragment>
+  );
+  const emptyTextComponent = <EmptyTextWrapper><Block palette="grey">{tableEmptyText}</Block></EmptyTextWrapper>;
+  const smallScreenView = (
+    <Fragment>
+      {tableHeaderButtons}
+      <TableRowCardsWrapper>
+        {mobileContents.length > 0 && (
+          <Fragment>
+            <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
+            {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
+            <Pagination {...paginationParams} />
+          </Fragment>
+        )}
+        {mobileContents.length === 0 && emptyTextComponent}
+      </TableRowCardsWrapper>
+    </Fragment>
+  );
+  const tabsViewTemplate = view => (
+    <Tabs activeTab={activeTab}>
+      <div label="Prospects" to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+        {view}
+      </div>
+      <div label="Connected" to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`}>
+        {view}
+      </div>
+      <div label="Closed" to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`}>
+        {view}
+      </div>
+    </Tabs>
+  );
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
-      <SmallScreenView
-        mobileContents={mobileContents}
-        paginationParams={paginationParams}
-        paginationString={paginationString}
-        activeTab={activeTab}
-        tableEmptyText={tableEmptyText}
-      />
+      <SmallScreenSection>
+        {tabsViewTemplate(smallScreenView)}
+      </SmallScreenSection>
       <BigScreenSection>
-        <Tabs activeTab={activeTab}>
-          <div label="Prospects" to={FAMILY_DASHBOARD_FAMILIES_PATH}>
-            {bigScreenView}
-          </div>
-          <div label="Connected" to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`}>
-            {bigScreenView}
-          </div>
-          <div label="Closed" to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`}>
-            {bigScreenView}
-          </div>
-        </Tabs>
+        {tabsViewTemplate(bigScreenView)}
       </BigScreenSection>
     </DashboardPageTemplate>
   );
