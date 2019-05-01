@@ -7,7 +7,9 @@ export default {
   updateUser: { method: patch, path: '/platform/users/:id' },
   updateContact: { method: patch, path: '/platforms/contacts/:id' },
 
+  getUuidActions: { method: get, path: '/platform/uuid-actions' },
   createUuidAction: { method: post, path: '/platform/uuid-actions' },
+
   getUuidAux: { method: get, path: '/platform/uuid-auxes/:id' },
   updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },
 

@@ -9,10 +9,11 @@
  */
 
 export default function request(baseUrl, path, options) {
-  const url = (typeof baseUrl === 'function' ? baseUrl() : baseUrl) + path
+  const url = (typeof baseUrl === 'function' ? baseUrl() : baseUrl) + path;
   return fetch(url, options)
     .then((res) => {
       const headers = {};
+
       res.headers.forEach((value, name) => headers[name] = value);
 
       const response = {
@@ -20,7 +21,7 @@ export default function request(baseUrl, path, options) {
         headers,
       };
 
-      if (res.status !== 204) {
+      if (![204, 301].includes(res.status)) {
         return res.json().then(body => ({ ...response, body }));
       }
 
@@ -33,5 +34,5 @@ export default function request(baseUrl, path, options) {
 
       return Promise.reject(response);
     });
-};
+}
 
