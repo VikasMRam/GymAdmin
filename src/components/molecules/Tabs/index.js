@@ -13,6 +13,10 @@ CursorTab.displayName = 'CursorTab';
 const TabWrapper = styled.div`
   border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
   padding-left: 0;
+
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
 `;
 
 const TabContent = styled.div`
