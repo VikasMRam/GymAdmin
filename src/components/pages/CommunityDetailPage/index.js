@@ -115,6 +115,26 @@ const Footer = makeFooter('footer');
 const Wrapper = makeWrapper('div');
 const Gallery = makeGallery('div');
 
+const makeBanner = (profileContacted) => {
+  const requests = Object.entries(profileContacted).reduce((acc, [key, value]) => {
+    if (value) {
+      if (acc.length) acc.push(', ');
+      acc.push(key);
+    }
+    return acc;
+  }, []);
+
+  if (!requests.length) {
+    return null;
+  }
+
+  if (requests.length > 1) {
+    requests[requests.length - 2] = ' and ';
+  }
+
+  return `We have your ${requests.join('')} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
+};
+
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
   action,
@@ -144,8 +164,7 @@ export default class CommunityDetailPage extends Component {
     setQueryParams: func,
     onBookATourClick: func,
     onGCPClick: func,
-    isAlreadyTourScheduled: bool,
-    isAlreadyPricingRequested: bool,
+    profileContacted: object.isRequired,
     onToggleAskAgentQuestionModal: func,
     userAction: object,
     onFloorPlanModalToggle: func,
@@ -354,6 +373,7 @@ export default class CommunityDetailPage extends Component {
       mediaGallerySlideIndex,
       isMediaGalleryFullscreenActive,
       community,
+      profileContacted,
       location,
       onMediaGallerySlideChange,
       onMediaGalleryToggleFullscreen,
@@ -365,8 +385,6 @@ export default class CommunityDetailPage extends Component {
       setQueryParams,
       onBookATourClick,
       onGCPClick,
-      isAlreadyTourScheduled,
-      isAlreadyPricingRequested,
       toggleHowSlyWorksVideoPlaying,
       isHowSlyWorksVideoPlaying,
       history,
@@ -451,14 +469,11 @@ export default class CommunityDetailPage extends Component {
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
 
-    let bannerNotification = null;
-    if (isAlreadyTourScheduled && isAlreadyPricingRequested) {
-      bannerNotification = 'We have received your tour and pricing request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.';
-    } else if (isAlreadyTourScheduled) {
-      bannerNotification = 'We have received your tour request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.';
-    } else if (isAlreadyPricingRequested) {
-      bannerNotification = 'We have received your pricing request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.';
-    }
+    const bannerNotification = makeBanner(profileContacted);
+    // FIXME: @fonz cleaning this up
+    const isAlreadyPricingRequested = profileContacted.pricing;
+    const isAlreadyTourScheduled = profileContacted.tour;
+
     const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
     const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
