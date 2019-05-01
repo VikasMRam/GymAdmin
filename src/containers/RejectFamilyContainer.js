@@ -4,9 +4,8 @@ import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { getRelationship } from 'redux-bees';
 
-import { query } from 'sly/services/newApi';
+import { query, getRelationship } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import {
   createValidator,

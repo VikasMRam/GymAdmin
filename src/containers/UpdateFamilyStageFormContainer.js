@@ -5,9 +5,8 @@ import pick from 'lodash/pick';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
-import { getRelationship } from 'redux-bees';
 
-import { query } from 'sly/services/newApi';
+import { query, getRelationship } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
