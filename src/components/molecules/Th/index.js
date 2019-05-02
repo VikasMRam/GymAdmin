@@ -7,12 +7,12 @@ import { Icon } from 'sly/components/atoms';
 
 const Wrapper = styled.th`
   padding: 0;
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 `;
 const StyledDiv = styled.div`
   display: flex;
   background-color: ${palette('grey', 'stroke')};
   padding: ${size('spacing.large')};
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   font-weight: ${size('weight.medium')};
   color: ${palette('grey', 'base')};
   white-space: nowrap;
