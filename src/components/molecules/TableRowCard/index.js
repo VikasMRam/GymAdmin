@@ -36,7 +36,7 @@ const StyledHr = styled(Hr)`
 `;
 
 const TableRowCard = ({
-  heading, href, id, rowItems, disabled, icon, iconPalette,
+  heading, href, to, id, rowItems, disabled, icon, iconPalette,
 }) => {
   const itemsLength = rowItems.length;
   const rowComponent = rowItems.map((rowItem, i) => {
@@ -64,7 +64,7 @@ const TableRowCard = ({
   return (
     <Wrapper disabled={disabled}>
       <HeadingLinkWrapper icon={icon}>
-        <Link href={href} size="caption" weight="medium">{heading}</Link>
+        <Link href={href} to={to} size="caption" weight="medium">{heading}</Link>
         {icon && <Icon icon={icon} palette={iconPalette} />}
       </HeadingLinkWrapper>
       {rowComponent}
@@ -74,7 +74,8 @@ const TableRowCard = ({
 
 TableRowCard.propTypes = {
   heading: string.isRequired,
-  href: string.isRequired,
+  href: string,
+  to: string,
   id: string.isRequired,
   rowItems: arrayOf(shape({
     type: string.isRequired,
