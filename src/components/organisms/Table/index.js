@@ -26,8 +26,10 @@ const Table = ({ headings, contents, tableEmptyText }) => {
     const rowComponent = rowItems.map((rowItem) => {
       const { type, data } = rowItem;
       if (type === 'link') {
-        const { href, text, disabled } = data;
-        return <LinkTd key={href} href={href} disabled={disabled} clip>{text}</LinkTd>;
+        const {
+          href, to, text, disabled,
+        } = data;
+        return <LinkTd key={href || to} to={to} href={href} disabled={disabled} clip>{text}</LinkTd>;
       } else if (type === 'text') {
         const { text, disabled } = data;
         return <TextTd key={text} disabled={disabled} clip>{text}</TextTd>;
@@ -41,9 +43,9 @@ const Table = ({ headings, contents, tableEmptyText }) => {
         return <DoubleLineTd key={firstLine} firstLine={firstLine} secondLine={secondLine} disabled={disabled} clip />;
       } else if (type === 'textIcon') {
         const {
-          href, text, disabled, icon, iconPalette,
+          href, to, text, disabled, icon, iconPalette,
         } = data;
-        return <TextIconTd key={href} href={href} disabled={disabled} icon={icon} iconPalette={iconPalette} clip>{text}</TextIconTd>;
+        return <TextIconTd key={href || to} to={to} href={href} disabled={disabled} icon={icon} iconPalette={iconPalette} clip>{text}</TextIconTd>;
       }
       return <Td key={`Td_${id}`} />;
     });

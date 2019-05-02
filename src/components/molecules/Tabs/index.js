@@ -15,7 +15,7 @@ const TabWrapper = styled.div`
   padding-left: 0;
 
   white-space: nowrap;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
 `;
 
