@@ -98,6 +98,11 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { onRejectSuccess, onUnPause, onAddNote } = this;
     const { client, match, status } = this.props;
     const { result: rawClient, meta } = status.client;
+    const { isLoading } = status.client;
+
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
 
     return (
       <NotificationController>
