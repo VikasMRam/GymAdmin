@@ -14,6 +14,7 @@ import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths'
 
 const SmallScreenSection = styled.div`
   display: block;
+  background-color: ${palette('white.base')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: none;

@@ -196,6 +196,7 @@ Field.propTypes = {
     'number',
     'iconInput',
     'hidden',
+    'date',
   ]),
   placeholder: string,
   labelRight: node,

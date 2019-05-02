@@ -46,6 +46,10 @@ const activities = [
   },
 ];
 
+const StyledTabs = styled(Tabs)`
+  background-color: ${palette('white', 'base')};
+`;
+
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
 const BackLinkWrapper = pad(styled.div`
@@ -60,9 +64,18 @@ const AlignCenterBackLinkWrapper = BackLinkWrapper.extend`
 const PaddedHr = pad(Hr, 'xLarge');
 
 const CommunitiesTab = styled.div`
-  width: ${size('layout.col4')};
-  margin: auto;
   padding: ${size('spacing.xxxLarge')} 0;
+  > * {
+    width: ${size('layout.col4')};
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    width: ${size('layout.col4')};
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 
 const StyledFamilyActivityItem = styled(FamilyActivityItem)`
@@ -87,6 +100,7 @@ const TabWrapper = styled.div`
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    background-color: ${palette('white', 'base')};
     padding: 0;
   }
 `;
@@ -100,6 +114,10 @@ const hideInBigScreenStyles = css`
 const BigScreenSummarySection = styled.section`
   display: none;
 
+  > * {
+    background-color: ${palette('white', 'base')};
+  }
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
   }
@@ -108,6 +126,7 @@ const BigScreenSummarySection = styled.section`
 const SmallScreenClientNameWrapper = styled.div`
   display: flex;
   padding: ${size('spacing.large')};
+  background-color: ${palette('white', 'base')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
@@ -298,7 +317,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
           </SmallScreenClientNameWrapper>
         </div>
-        <Tabs activeTab={activeTab}>
+        <StyledTabs activeTab={activeTab}>
           <div label="SUMMARY" tabStyles={hideInBigScreenStyles}>
             <TabWrapper>
               <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
@@ -335,13 +354,13 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           </div>
           <div label="COMMUNITIES" to={communitiesPath}>
             <TabWrapper>
-              <CommunitiesTab label="COMMUNITIES">
+              <CommunitiesTab>
                 <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
                 <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
               </CommunitiesTab>
             </TabWrapper>
           </div>
-        </Tabs>
+        </StyledTabs>
         <DashboardMyFamilyStickyFooterContainer options={stickyFooterOptions} stageProps={stickyFooterStageProps} />
       </DashboardTwoColumnTemplate>
     );
