@@ -20,10 +20,11 @@ Form.displayName = 'Form';
 const TwoColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: ${ifProp('verticalCenter', 'center', 'initial')};
+  align-items: stretch;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex-direction: row;
+    align-items: ${ifProp('verticalCenter', 'center', 'initial')};
   }
 `;
 

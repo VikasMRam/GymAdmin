@@ -20,7 +20,7 @@ const TabWrapper = styled.div`
 `;
 
 const TabContent = styled.div`
-  background-color: ${palette('white', 'base')};
+  background-color: inherit;
   border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
   border-top: 0;
   height: 100%;
