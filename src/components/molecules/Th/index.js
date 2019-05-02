@@ -4,6 +4,7 @@ import { string, oneOf } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import { Icon } from 'sly/components/atoms';
+import { text as textPropTypes } from 'sly/propTypes/text';
 
 const Wrapper = styled.th`
   padding: 0;
@@ -43,7 +44,7 @@ const Th = ({ children, sort, size }) => {
 Th.propTypes = {
   children: string.isRequired,
   sort: oneOf(['asc', 'desc']),
-  size: string,
+  size: textPropTypes,
 };
 
 Th.defaultProps = {
