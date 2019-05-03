@@ -55,6 +55,8 @@ class FamilyDetailsForm extends Component {
   static propTypes = {
     handleSubmit: func.isRequired,
     submitting: bool,
+    pristine: bool,
+    invalid: bool,
     accepted: bool,
     intro: string,
     change: func,
@@ -82,7 +84,7 @@ class FamilyDetailsForm extends Component {
   render() {
     const { handleChange, handleLocationChange } = this;
     const {
-      handleSubmit, submitting, accepted, intro, initialValues, lookingFor,
+      handleSubmit, pristine, submitting, invalid, accepted, intro, initialValues, lookingFor,
       gender, timeToMove, monthlyBudget,
     } = this.props;
     let preferredLocation = '';
@@ -188,7 +190,7 @@ class FamilyDetailsForm extends Component {
         {accepted &&
           <Fragment>
             <Hr />
-            <StyledButton type="submit" disabled={submitting}>
+            <StyledButton type="submit" disabled={invalid || pristine || submitting}>
               Save changes
             </StyledButton>
           </Fragment>
