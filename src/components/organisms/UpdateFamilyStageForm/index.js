@@ -112,7 +112,7 @@ export default class UpdateFamilyStageForm extends Component {
           <Field
             name="moveInDate"
             label={<span>Move-In date<Span palette="danger">*</Span></span>}
-            type="text"
+            type="date"
             format={dateFormatter}
             component={ReduxField}
           />

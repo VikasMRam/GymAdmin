@@ -96,8 +96,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
       .set('attributes.stage', stage);
     if (moveInDate) {
       let moveInDateFormatted;
-      const dateParts = moveInDate.split('/');
-      const moveInDateObj = Date.UTC(dateParts[2], dateParts[1], dateParts[0]);
+      const dateParts = moveInDate.split('-');
+      const moveInDateObj = Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2]);
       const parsedDate = dayjs(moveInDateObj);
       if (parsedDate.isValid()) {
         moveInDateFormatted = parsedDate.format('YYYY-MM-DDTHH:mm:ss[Z]');
