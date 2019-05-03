@@ -52,8 +52,8 @@ const OptionsList = ({ options, onCloseClick }) => {
   return (
     <OptionsListWrapper>
       {options.map(option => (
-        <OptionItemWrapper key={option.text}>
-          <IconItem icon={option.icon} iconPalette={option.iconPalette} onClick={option.onClick} iconRightMarginSpacing="large">
+        <OptionItemWrapper key={option.text} onClick={option.onClick}>
+          <IconItem icon={option.icon} iconPalette={option.iconPalette} iconRightMarginSpacing="large">
             {option.text}
           </IconItem>
         </OptionItemWrapper>))}
