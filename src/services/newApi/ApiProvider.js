@@ -25,6 +25,8 @@ export default class ApiProvider extends Component {
   createApiActions = () => Object.entries(this.props.api)
     .reduce((acc, [name, call]) => {
       acc[name] = (...args) => makeApiCall(call, args);
+      acc[name].actionName = call.actionName;
+      acc[name].method = call.method;
       return acc;
     }, {});
 
