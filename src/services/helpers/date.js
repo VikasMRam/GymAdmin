@@ -8,17 +8,18 @@ export const formatDate = (dateString) => {
   return `${month} ${day}, ${year}`;
 };
 
+// value in yyyy-mm-dd format
 export const dateFormatter = (value) => {
   if (!value) {
     return value;
   }
 
   const onlyNums = value.replace(/[^\d]/g, '');
-  if (onlyNums.length <= 2) {
+  if (onlyNums.length <= 4) {
     return onlyNums;
   }
-  if (onlyNums.length <= 4) {
-    return `${onlyNums.slice(0, 2)}/${onlyNums.slice(2)}`;
+  if (onlyNums.length <= 6) {
+    return `${onlyNums.slice(0, 4)}-${onlyNums.slice(4, 6)}`;
   }
-  return `${onlyNums.slice(0, 2)}/${onlyNums.slice(2, 4)}/${onlyNums.slice(4, 8)}`;
+  return `${onlyNums.slice(0, 4)}-${onlyNums.slice(4, 6)}-${onlyNums.slice(6, 8)}`;
 };
