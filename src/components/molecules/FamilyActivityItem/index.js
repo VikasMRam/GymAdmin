@@ -8,8 +8,7 @@ import { size } from 'sly/components/themes';
 import { Box, Block, Icon } from 'sly/components/atoms';
 
 const StyledBox = styled(Box)`
-  display: grid;
-  grid-template-columns: auto auto auto;
+  display: flex;
 `;
 
 const StyledBlock = pad(Block, 'regular');
@@ -19,8 +18,28 @@ const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.xLarge')};
 `;
 
+const SeconColumn = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    flex-direction: row;
+  }
+`;
+
 const StyledColumn = styled.div`
   margin-right: ${size('spacing.huge')};
+  margin-bottom: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    margin-bottom: initial;
+  }
+`;
+
+const Date = styled(Block)`
+  white-space: nowrap;
 `;
 
 const FamilyActivityItem = ({
@@ -37,11 +56,13 @@ const FamilyActivityItem = ({
   return (
     <StyledBox className={className} padding="large" snap={snap} noBorderRadius={noBorderRadius}>
       <StyledIcon icon={icon} palette="grey" />
-      <StyledColumn>
-        <StyledBlock size="caption">{title}</StyledBlock>
-        <Block size="caption" palette="grey">{description}</Block>
-      </StyledColumn>
-      <Block size="caption" palette="grey">{dateString}</Block>
+      <SeconColumn>
+        <StyledColumn>
+          <StyledBlock size="caption">{title}</StyledBlock>
+          <Block size="caption" palette="grey">{description}</Block>
+        </StyledColumn>
+        <Date size="caption" palette="grey">{dateString}</Date>
+      </SeconColumn>
     </StyledBox>
   );
 };
