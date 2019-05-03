@@ -54,7 +54,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   onAddNote = (data, notifyError, notifyInfo, hideModal) => {
-    const { setStatusToActive } = this;
     const { createNote, client } = this.props;
     const { id } = client;
     const { note } = data;
@@ -68,8 +67,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     };
     const notePromise = () => createNote(payload);
 
-    return setStatusToActive()
-      .then(notePromise)
+    return notePromise()
       .then(() => {
         hideModal();
         notifyInfo('Note successfully added');
