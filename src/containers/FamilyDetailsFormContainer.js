@@ -110,7 +110,7 @@ export default class FamilyDetailsFormContainer extends Component {
     const { client, ...props } = this.props;
     const { clientInfo, uuidAux } = client;
     const {
-      name, email, slyMessage, phoneNumber,
+      name, email, slyMessage, phoneNumber = '',
     } = clientInfo;
     const { uuidInfo } = uuidAux;
     const {
