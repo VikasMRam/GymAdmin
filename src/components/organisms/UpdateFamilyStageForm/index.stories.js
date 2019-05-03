@@ -68,6 +68,20 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       initialValues={{ stage: FAMILY_STAGE_LOST }}
     />
   ))
+  .add('on lost stage and paused', () => (
+    <UpdateFamilyStageFormContainer
+      name="Amal"
+      isPaused
+      currentStageGroup={groups[0]}
+      nextStageGroup={groups[2]}
+      nextStage={FAMILY_STAGE_LOST}
+      handleSubmit={withPreventDefault(action('onSubmit'))}
+      onCancel={action('onCancel')}
+      nextAllowedStages={optionValues}
+      lossReasons={lossReasons}
+      initialValues={{ stage: FAMILY_STAGE_LOST }}
+    />
+  ))
   .add('on lost stage with normal reason', () => (
     <UpdateFamilyStageFormContainer
       name="Amal"
