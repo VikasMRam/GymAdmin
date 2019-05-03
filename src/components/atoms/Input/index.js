@@ -65,6 +65,19 @@ const styles = css`
     background: url(${assetPath('icons/search-caption.svg')}) no-repeat scroll 12px 12px;
     padding-left: calc(12px + ${size('spacing', 'xLarge')} + ${size('spacing', 'regular')});
   }
+
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: ${palette('slate', 'filler')};
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: ${palette('slate', 'filler')};
+  }
+
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: ${palette('slate', 'filler')};
+  }
 `;
 
 const StyledTextarea = styled.textarea`
