@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 
 import { query, getRelationship } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
+import { FAMILY_STATUS_ACTIVE, FAMILY_STATUS_ON_HOLD, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required, mmDdYyyyy, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
@@ -160,7 +160,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
   render() {
     const { handleUpdateStage } = this;
     const { client, formState, lossReasons } = this.props;
-    const { clientInfo, stage } = client;
+    const { clientInfo, stage, status } = client;
+    const isPaused = status === FAMILY_STATUS_ON_HOLD;
     const { name } = clientInfo;
     let nextStageGroup;
     let levelGroup;
@@ -190,6 +191,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
         showRejectOption={showRejectOption}
         lossReasons={lossReasons}
         currentLossReason={currentLossReason}
+        isPaused={isPaused}
       />
     );
   }

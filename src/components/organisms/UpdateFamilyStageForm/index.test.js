@@ -79,6 +79,28 @@ describe('UpdateFamilyStageForm', () => {
     expect(warning.contains(groups[1])).toBeTruthy();
   });
 
+  it('renders with warning when paused', () => {
+    const wrapper = wrap({
+      currentStageGroup: groups[0],
+      nextStageGroup: groups[1],
+      isPaused: true,
+    });
+    const field = wrapper.find('Field');
+    const warning = wrapper.find('Warning');
+
+    expect(wrapper.find('Field').find({ name: 'note' })).toHaveLength(1);
+    expect(wrapper.find('Field').find({ name: 'lossReason' })).toHaveLength(0);
+    expect(wrapper.find('Field').find({ name: 'lostDescription' })).toHaveLength(0);
+    expect(field).toHaveLength(2);
+    const options = field.at(0).find('option').slice(1); // first option is for placeholder
+    expect(options).toHaveLength(optionsLen);
+    options.forEach((o, i) => {
+      expect(o.text()).toBe(optionValues[i]);
+    });
+    expect(warning).toHaveLength(1);
+    expect(warning.contains('Paused')).toBeTruthy();
+  });
+
   it('renders won stage fields', () => {
     const wrapper = wrap({ nextStage: FAMILY_STAGE_WON, nextStageGroup: groups[2] });
 

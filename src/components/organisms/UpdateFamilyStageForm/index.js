@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, string, arrayOf } from 'prop-types';
+import { func, string, arrayOf, bool } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
@@ -41,6 +41,7 @@ export default class UpdateFamilyStageForm extends Component {
     currentLossReason: string,
     change: func.isRequired,
     onLocationChange: func,
+    isPaused: bool,
   };
 
   handleChange = () => {
@@ -59,7 +60,8 @@ export default class UpdateFamilyStageForm extends Component {
   render() {
     const { handleChange, handleLocationChange } = this;
     const {
-      handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, nextStage, nextAllowedStages, lossReasons, currentLossReason, ...props
+      handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, nextStage, nextAllowedStages, lossReasons,
+      currentLossReason, isPaused, ...props
     } = this.props;
 
     const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
@@ -92,9 +94,14 @@ export default class UpdateFamilyStageForm extends Component {
           <option value="" disabled>Select a stage</option>
           {options}
         </StageField>
-        {currentStageGroup !== nextStageGroup &&
+        {currentStageGroup !== nextStageGroup && !isPaused &&
           <Warning size="caption">
             Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.
+          </Warning>
+        }
+        {currentStageGroup !== nextStageGroup && isPaused &&
+          <Warning size="caption">
+            Updating this family&apos;s stage will remove them from being <strong>Paused</strong>.
           </Warning>
         }
         {nextStage !== FAMILY_STAGE_WON && nextStage !== FAMILY_STAGE_LOST &&
