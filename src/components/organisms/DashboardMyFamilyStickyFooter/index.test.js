@@ -3,13 +3,14 @@ import { shallow } from 'enzyme';
 
 import DashboardMyFamilyStickyFooter from 'sly/components/organisms/DashboardMyFamilyStickyFooter';
 
-const onItemClick = jest.fn();
+const onItem1Click = jest.fn();
+const onItem2Click = jest.fn();
 const options = [
   {
-    text: 'Update Stage', icon: 'flag', iconPalette: 'slate', onClick: onItemClick,
+    text: 'Update Stage', icon: 'flag', iconPalette: 'slate', onClick: onItem1Click,
   },
   {
-    text: 'Add Note', icon: 'add-note', iconPalette: 'slate', onClick: onItemClick, ghost: true,
+    text: 'Add Note', icon: 'add-note', iconPalette: 'slate', onClick: onItem2Click, ghost: true,
   },
 ];
 
@@ -29,6 +30,12 @@ describe('DashboardMyFamilyStickyFooter', () => {
   it('render DashboardMyFamilyStickyFooter optionsList', () => {
     const wrapper = wrap({ showOptions: true });
     expect(wrapper.find('OptionsList')).toHaveLength(1);
-    expect(wrapper.find('OptionsList').dive().find('IconItem')).toHaveLength(2);
+    expect(wrapper.find('OptionsList').dive().find('OptionItemWrapper')).toHaveLength(2);
+    const optionItemWrapper1 = wrapper.find('OptionsList').dive().find('OptionItemWrapper').at(0);
+    optionItemWrapper1.simulate('click');
+    expect(onItem1Click).toHaveBeenCalled();
+    const optionItemWrapper2 = wrapper.find('OptionsList').dive().find('OptionItemWrapper').at(1);
+    optionItemWrapper2.simulate('click');
+    expect(onItem2Click).toHaveBeenCalled();
   });
 });
