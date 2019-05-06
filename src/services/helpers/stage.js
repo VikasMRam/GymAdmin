@@ -1,4 +1,4 @@
-import { FAMILY_STAGE_ORDERED, TOTAL_STAGES_COUNT, FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, TOTAL_STAGES_COUNT, FAMILY_STAGE_NEW, FAMILY_STAGE_REJECTED } from 'sly/constants/familyDetails';
 
 const stageArr = Object.keys(FAMILY_STAGE_ORDERED);
 
@@ -6,7 +6,7 @@ export const getStageDetails = (stageName) => {
   let level = -1;
   let levelGroup = '';
   let palette = 'primary';
-  let disableUpdateButton = false;
+  const disableUpdateButton = stageName === FAMILY_STAGE_REJECTED;
   let disableAddNoteButton = false;
   let showAcceptRejectButtons = false;
   let showUpdateAddNoteButtons = false;
@@ -23,7 +23,6 @@ export const getStageDetails = (stageName) => {
           palette = 'danger';
           level = TOTAL_STAGES_COUNT;
           disableAddNoteButton = true;
-          disableUpdateButton = true;
         }
         if (idx === 0 && i === 0) {
           showAcceptRejectButtons = true;
