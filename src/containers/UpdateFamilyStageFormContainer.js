@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 
 import { query, getRelationship } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { FAMILY_STATUS_ACTIVE, FAMILY_STATUS_ON_HOLD, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
+import { FAMILY_STATUS_ACTIVE, FAMILY_STATUS_ON_HOLD, NOTE_COMMENTABLE_TYPE_CLIENT, FAMILY_STAGE_WON } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required, mmDdYyyyy, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
@@ -60,7 +60,8 @@ export default class UpdateFamilyStageFormContainer extends Component {
     currentLossReason: string,
     updateUuidAux: func.isRequired,
     uuidAux: object,
-    refetchClient: func,
+    refetchClient: func.isRequired,
+    refetchNotes: func.isRequired,
   };
 
   currentStage = {};
@@ -70,15 +71,16 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const { currentStage, nextStage } = this;
     const {
       updateClient, client, rawClient, notifyError, notifyInfo, onSuccess, createNote,
-      updateUuidAux, uuidAux, refetchClient,
+      updateUuidAux, uuidAux, refetchClient, refetchNotes,
     } = this.props;
-    const { id } = client;
+    const { id, clientInfo } = client;
     const {
       stage, note, moveInDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription,
       preferredLocation,
     } = data;
     let notePromise = () => Promise.resolve();
     let uuidAuxPromise = () => Promise.resolve();
+    let getNotesPromise = () => Promise.resolve();
     if (note) {
       const payload = {
         type: NOTE_RESOURCE_TYPE,
@@ -89,6 +91,23 @@ export default class UpdateFamilyStageFormContainer extends Component {
         },
       };
       notePromise = () => createNote(payload);
+      getNotesPromise = () => refetchNotes();
+    }
+    if (stage === FAMILY_STAGE_WON) {
+      const { name } = clientInfo;
+      const note = `${name} moved into ${communityName} on ${moveInDate} with Monthly Rent of ${monthlyFees} and a referral fee % from the community of ${referralAgreement}`;
+      const title = 'Status Change';
+      const payload = {
+        type: NOTE_RESOURCE_TYPE,
+        attributes: {
+          commentableID: id,
+          commentableType: NOTE_COMMENTABLE_TYPE_CLIENT,
+          body: note,
+          title,
+        },
+      };
+      notePromise = () => createNote(payload);
+      getNotesPromise = () => refetchNotes();
     }
     const clientPromise = () => refetchClient();
 
@@ -141,6 +160,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       .then(uuidAuxPromise)
       .then(notePromise)
       .then(clientPromise)
+      .then(getNotesPromise)
       .then(() => {
         let msg = 'Family stage updated';
         if (currentStage.levelGroup !== nextStage.levelGroup) {

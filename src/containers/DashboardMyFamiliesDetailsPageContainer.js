@@ -128,6 +128,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 meta={meta}
                 onRejectSuccess={() => onRejectSuccess(hide)}
                 refetchClient={status.client.refetch}
+                refetchNotes={status.notes.refetch}
                 onUnPause={() => onUnPause(notifyInfo, notifyError)}
                 onAddNote={onAddNote}
                 notes={notes}
