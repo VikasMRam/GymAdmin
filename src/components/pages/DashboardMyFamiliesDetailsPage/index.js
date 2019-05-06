@@ -318,13 +318,13 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           </SmallScreenClientNameWrapper>
         </div>
         <StyledTabs activeTab={activeTab}>
-          <div label="SUMMARY" tabStyles={hideInBigScreenStyles}>
+          <div id="SUMMARY" label="SUMMARY" tabStyles={hideInBigScreenStyles}>
             <TabWrapper>
               <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
               {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
             </TabWrapper>
           </div>
-          <div label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
+          <div id="ACTIVITY" label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
             <TabWrapper>
               <TableHeaderButtons hasColumnsButton={false} />
               {activityCards.length === 0 &&
@@ -336,7 +336,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               {activityCards.length > 0 && activityCards}
             </TabWrapper>
           </div>
-          <div label="FAMILY DETAILS" to={familyDetailsPath}>
+          <div id="FAMILY DETAILS" label="FAMILY DETAILS" to={familyDetailsPath}>
             <TabWrapper>
               <FamilyDetailsTab>
                 <FamilyDetailsFormContainer
@@ -352,7 +352,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </FamilyDetailsTab>
             </TabWrapper>
           </div>
-          <div label="COMMUNITIES" to={communitiesPath}>
+          <div id="COMMUNITIES" label="COMMUNITIES" to={communitiesPath}>
             <TabWrapper>
               <CommunitiesTab>
                 <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>

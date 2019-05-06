@@ -12,7 +12,10 @@ CursorTab.displayName = 'CursorTab';
 
 const TabWrapper = styled.div`
   border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
-  padding-left: 0;
+  border-top-left-radius: ${size('border.xxLarge')};
+  border-top-right-radius: ${size('border.xxLarge')};
+  padding: ${size('spacing.large')};
+  padding-bottom: 0;
 
   white-space: nowrap;
   overflow-x: auto;
@@ -38,7 +41,7 @@ class Tabs extends Component {
     const { children } = this.props;
     let { activeTab } = this.props;
     if (!activeTab) {
-      activeTab = children[0].props.label;
+      activeTab = children[0].props.id;
     }
 
     this.state = {
@@ -66,26 +69,28 @@ class Tabs extends Component {
       <div className={className}>
         <TabWrapper>
           {children.map((child) => {
-            const { to, label, tabStyles } = child.props;
+            const {
+              to, id, label, tabStyles,
+            } = child.props;
             const tab = (
               <CursorTab
-                active={activeTab === label}
-                key={label}
+                active={activeTab === id}
+                key={id}
                 label={label}
-                onClick={() => onClickTabItem(label)}
+                onClick={() => onClickTabItem(id)}
                 tabStyles={tabStyles}
               />
             );
 
             if (to) {
-              return <Link key={label} to={to}>{tab}</Link>;
+              return <Link key={id} to={to}>{tab}</Link>;
             }
             return tab;
           })}
         </TabWrapper>
         <TabContent>
           {children.map((child) => {
-            if (child.props.label !== activeTab) return undefined;
+            if (child.props.id !== activeTab) return undefined;
             return child.props.children;
           })}
         </TabContent>
