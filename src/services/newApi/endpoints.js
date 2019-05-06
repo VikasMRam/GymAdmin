@@ -43,4 +43,5 @@ export default {
   updateClient: { method: patch, path: '/marketplace/clients/:id' },
 
   createNote: { method: post, path: '/marketplace/notes' },
+  getNotes: { method: get, path: '/marketplace/notes' },
 };

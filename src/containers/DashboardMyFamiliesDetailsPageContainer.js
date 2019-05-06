@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { object, func } from 'prop-types';
+import { object, func, arrayOf } from 'prop-types';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
 import { prefetch, query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
+import notePropType from 'sly/propTypes/note';
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
@@ -15,6 +16,10 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
 
 @prefetch('client', 'getClient', (req, { match }) => req({
   id: match.params.id,
+}))
+
+@prefetch('notes', 'getNotes', (req, { match }) => req({
+  'filter[commentable_id]': match.params.id,
 }))
 
 @query('updateClient', 'updateClient')
@@ -29,6 +34,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     history: object,
     updateClient: func.isRequired,
     createNote: func.isRequired,
+    notes: arrayOf(notePropType),
   };
 
   onRejectSuccess = (hide) => {
@@ -54,7 +60,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   onAddNote = (data, notifyError, notifyInfo, hideModal) => {
-    const { createNote, client } = this.props;
+    const { createNote, client, status } = this.props;
     const { id } = client;
     const { note } = data;
     const payload = {
@@ -66,8 +72,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       },
     };
     const notePromise = () => createNote(payload);
+    const getNotesPromise = () => status.notes.refetch();
 
     return notePromise()
+      .then(getNotesPromise)
       .then(() => {
         hideModal();
         notifyInfo('Note successfully added');
@@ -94,11 +102,14 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   render() {
     const { onRejectSuccess, onUnPause, onAddNote } = this;
-    const { client, match, status } = this.props;
+    const {
+      client, match, status, notes,
+    } = this.props;
     const { result: rawClient, meta } = status.client;
-    const { isLoading } = status.client;
+    const { isLoading: clientIsLoading } = status.client;
+    const { isLoading: noteIsLoading } = status.notes;
 
-    if (isLoading) {
+    if (clientIsLoading) {
       return <div>Loading...</div>;
     }
 
@@ -122,6 +133,8 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 onRejectSuccess={() => onRejectSuccess(hide)}
                 onUnPause={() => onUnPause(notifyInfo, notifyError)}
                 onAddNote={onAddNote}
+                notes={notes}
+                noteIsLoading={noteIsLoading}
               />
             )}
           </ModalController>

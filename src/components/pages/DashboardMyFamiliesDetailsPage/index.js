@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import styled, { css } from 'styled-components';
-import { string, func, object } from 'prop-types';
+import { string, func, object, arrayOf, bool } from 'prop-types';
 
 import {
   FAMILY_DASHBOARD_FAMILIES_PATH,
@@ -10,6 +10,7 @@ import {
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
+import notePropType from 'sly/propTypes/note';
 import { size, palette } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import { FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
@@ -30,22 +31,6 @@ import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import PutFamilyOnPause from 'sly/components/molecules/PutFamilyOnPause';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 
-// todo: mock data
-const activities = [
-  {
-    id: 'sdfsdf234wf',
-    title: 'You got a new lead!',
-    description: 'J. and his mother are looking for Assisted Living in Los Angeles. She is looking for a community that is very active and has a lot of activities and outings.',
-    date: '2019-04-05T15:54:06Z',
-  },
-  {
-    id: 'sdf234wsdfdf',
-    title: 'You got a new lead!dfgdf',
-    description: 'J. and his mother are looking for Assisted Living in Los Angeles. She is looking for a community that is very active and has a lot of activities and outings.',
-    date: '2019-07-05T15:54:06Z',
-  },
-];
-
 const StyledTabs = styled(Tabs)`
   background-color: ${palette('white', 'base')};
 `;
@@ -61,9 +46,17 @@ const TextAlignCenterBlock = pad(textAlign(Block, 'center'), 'regular');
 const AlignCenterBackLinkWrapper = BackLinkWrapper.extend`
   justify-content: center;
 `;
-const PaddedHr = pad(Hr, 'xLarge');
+
+const SmallScreenBorder = css`
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    border: 0;
+  }
+`;
 
 const CommunitiesTab = styled.div`
+  ${SmallScreenBorder}
   padding: ${size('spacing.xxxLarge')} 0;
   > * {
     width: ${size('layout.col4')};
@@ -78,12 +71,22 @@ const CommunitiesTab = styled.div`
   }
 `;
 
+const SmallScreenBorderDiv = styled.div`
+  ${SmallScreenBorder}
+  ${p => p.padding && css`padding: ${size('spacing', p.padding)};`}
+`;
+
+const SmallScreenBorderPaddedFamilySummary = PaddedFamilySummary.extend`
+  ${SmallScreenBorder}
+`;
+
 const StyledFamilyActivityItem = styled(FamilyActivityItem)`
   border-right: 0;
   border-left: 0;
 `;
 
 const FamilyDetailsTab = styled.div`
+  ${SmallScreenBorder}
   padding: ${size('spacing.xLarge')};
 `;
 
@@ -151,6 +154,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     onRejectSuccess: func,
     onUnPause: func.isRequired,
     onAddNote: func,
+    notes: arrayOf(notePropType),
+    noteIsLoading: bool,
   };
 
   handleAcceptClick = () => {
@@ -218,7 +223,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       handleAcceptClick, handleRejectClick, handleUpdateClick, handleAddNoteClick, handlePauseClick,
     } = this;
     const {
-      client, currentTab, meta, notifyError, rawClient,
+      client, currentTab, meta, notifyError, rawClient, notes, noteIsLoading,
     } = this.props;
 
     const backLink = (
@@ -250,8 +255,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       level, levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton,
     } = getStageDetails(stage);
     const { name } = clientInfo;
-    const activityCards = activities.map((a, i) =>
-      <StyledFamilyActivityItem key={a.title} noBorderRadius snap={i === activities.length - 1 ? null : 'bottom'} title={a.title} description={a.description} date={a.date} />);
+    const activityCards = notes.map((a, i) =>
+      <StyledFamilyActivityItem key={a.title} noBorderRadius snap={i === notes.length - 1 ? null : 'bottom'} title={a.title} description={a.body} date={a.createdAt} />);
     let activeTab = 'ACTIVITY';
     if (currentTab === 'communities') {
       activeTab = 'COMMUNITIES';
@@ -320,20 +325,24 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         <StyledTabs activeTab={activeTab}>
           <div label="SUMMARY" tabStyles={hideInBigScreenStyles}>
             <TabWrapper>
-              <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
+              <SmallScreenBorderPaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
               {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
             </TabWrapper>
           </div>
           <div label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
             <TabWrapper>
-              <TableHeaderButtons hasColumnsButton={false} />
-              {activityCards.length === 0 &&
-                <Fragment>
-                  <PaddedHr noMargin />
-                  <TextAlignCenterBlock>There are no acivities.</TextAlignCenterBlock>
-                </Fragment>
-              }
-              {activityCards.length > 0 && activityCards}
+              <SmallScreenBorderDiv padding={!noteIsLoading && activityCards.length > 0 ? null : 'xLarge'}>
+                {noteIsLoading && <Block size="subtitle">Loading...</Block>}
+                {!noteIsLoading && activityCards.length === 0 &&
+                  <TextAlignCenterBlock>There are no activities.</TextAlignCenterBlock>
+                }
+                {!noteIsLoading && activityCards.length > 0 &&
+                  <Fragment>
+                    <TableHeaderButtons hasColumnsButton={false} />
+                    {activityCards}
+                  </Fragment>
+                }
+              </SmallScreenBorderDiv>
             </TabWrapper>
           </div>
           <div label="FAMILY DETAILS" to={familyDetailsPath}>
