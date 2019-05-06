@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { arrayOf, object, string } from 'prop-types';
+import { arrayOf, object, string, bool } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
@@ -71,7 +71,7 @@ const EmptyTextWrapper = styled.div`
 `;
 
 const DashboardAgentFamilyOverviewPage = ({
-  mobileContents, tableContents, pagination, paginationString, activeTab,
+  mobileContents, tableContents, pagination, paginationString, activeTab, showPagination,
 }) => {
   const { current, total } = pagination;
   const paginationParams = {
@@ -82,6 +82,7 @@ const DashboardAgentFamilyOverviewPage = ({
     pageParam: 'page-number',
   };
   const { tableEmptyText } = tableContents;
+  const paginationComponent = (showPagination && <Pagination {...paginationParams} />);
   const bigScreenView = (
     <Fragment>
       {tableHeaderButtons}
@@ -90,7 +91,7 @@ const DashboardAgentFamilyOverviewPage = ({
           <Table {...tableContents} />
         </TableWrapper>
         <BigScreenPaginationWrapper>
-          <Pagination {...paginationParams} />
+          {paginationComponent}
         </BigScreenPaginationWrapper>
         <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
       </TableSectionWrapper>
@@ -105,7 +106,7 @@ const DashboardAgentFamilyOverviewPage = ({
           <Fragment>
             <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
             {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
-            <Pagination {...paginationParams} />
+            {paginationComponent}
           </Fragment>
         )}
         {mobileContents.length === 0 && emptyTextComponent}
@@ -143,6 +144,7 @@ DashboardAgentFamilyOverviewPage.propTypes = {
   pagination: object,
   paginationString: string,
   activeTab: string,
+  showPagination: bool,
 };
 
 DashboardAgentFamilyOverviewPage.defaultProps = {

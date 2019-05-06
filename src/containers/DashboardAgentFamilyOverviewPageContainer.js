@@ -155,12 +155,14 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const end = (current * size) + count;
     const paginationRangeString = count > 0 ? `${start}-${end} of` : '';
     const paginationString = `Showing ${paginationRangeString} ${filteredCount} families`;
+    const showPagination = filteredCount > size;
     return (
       <DashboardAgentFamilyOverviewPage
         mobileContents={mobileContents}
         tableContents={tableContents}
         pagination={pagination}
         paginationString={paginationString}
+        showPagination={showPagination}
         activeTab={type}
       />
     );
