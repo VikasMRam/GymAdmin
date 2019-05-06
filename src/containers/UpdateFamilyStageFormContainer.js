@@ -60,6 +60,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     currentLossReason: string,
     updateUuidAux: func.isRequired,
     uuidAux: object,
+    refetchClient: func,
   };
 
   currentStage = {};
@@ -69,7 +70,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const { currentStage, nextStage } = this;
     const {
       updateClient, client, rawClient, notifyError, notifyInfo, onSuccess, createNote,
-      updateUuidAux, uuidAux,
+      updateUuidAux, uuidAux, refetchClient,
     } = this.props;
     const { id } = client;
     const {
@@ -89,6 +90,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       };
       notePromise = () => createNote(payload);
     }
+    const clientPromise = () => refetchClient();
 
     let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
     let newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.stage', 'attributes.clientInfo']))
@@ -138,6 +140,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     return updateClient({ id }, newClient)
       .then(uuidAuxPromise)
       .then(notePromise)
+      .then(clientPromise)
       .then(() => {
         let msg = 'Family stage updated';
         if (currentStage.levelGroup !== nextStage.levelGroup) {
@@ -175,14 +178,10 @@ export default class UpdateFamilyStageFormContainer extends Component {
       this.nextStage = getStageDetails(nextStage);
       ({ levelGroup: nextStageGroup } = this.nextStage);
     }
-    const initialValues = {
-      stage,
-    };
 
     return (
       <ReduxForm
         {...this.props}
-        initialValues={initialValues}
         currentStageGroup={levelGroup}
         nextStageGroup={nextStageGroup}
         nextStage={nextStage}

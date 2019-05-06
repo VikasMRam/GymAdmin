@@ -66,11 +66,19 @@ export default class UpdateFamilyStageForm extends Component {
 
     const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
 
-    const options = Object.keys(NEW_FAMILY_STAGE_ORDERED).map((sg, ig) => (
-      <optgroup label={sg} key={sg}>
-        {NEW_FAMILY_STAGE_ORDERED[sg].map((s, i) => nextAllowedStages.indexOf(s) !== -1 && <option disabled={ig === 0 && i === 0} key={s} value={s}>{s}</option>)}
-      </optgroup>
-    ));
+    const options = Object.keys(NEW_FAMILY_STAGE_ORDERED).map((sg, ig) => {
+      let stages = NEW_FAMILY_STAGE_ORDERED[sg].map((s, i) => nextAllowedStages.indexOf(s) !== -1 && <option disabled={ig === 0 && i === 0} key={s} value={s}>{s}</option>);
+      stages = stages.filter(s => s);
+
+      if (stages.length) {
+        return (
+          <optgroup label={sg} key={sg}>
+            {stages}
+          </optgroup>
+        );
+      }
+      return null;
+    });
     const lossReasonOptions = lossReasons.map(reason => <option key={reason} value={reason}>{reason}</option>);
 
     const StageField = currentStageGroup !== nextStageGroup ? Field : PaddedField;

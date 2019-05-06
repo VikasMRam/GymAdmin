@@ -156,13 +156,15 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     onAddNote: func,
     notes: arrayOf(notePropType),
     noteIsLoading: bool,
+    clientIsLoading: bool,
+    refetchClient: func,
   };
 
   handleAcceptClick = () => {
     const {
-      showModal, hideModal, notifyError, client, rawClient,
+      showModal, hideModal, notifyError, client, rawClient, refetchClient,
     } = this.props;
-    showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
+    showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} refetchClient={refetchClient} />, null, 'noPadding', false);
   };
 
   handleRejectClick = () => {
@@ -175,10 +177,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
   handleUpdateClick = () => {
     const {
-      showModal, hideModal, notifyError, client, rawClient, notifyInfo, meta,
+      showModal, hideModal, notifyError, client, rawClient, notifyInfo, meta, refetchClient,
     } = this.props;
     const { stage, lossReasons } = meta;
-    showModal(<UpdateFamilyStageFormContainer onSuccess={hideModal} lossReasons={lossReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} nextAllowedStages={stage} onCancel={hideModal} />, null, 'noPadding', false);
+    showModal(<UpdateFamilyStageFormContainer refetchClient={refetchClient} onSuccess={hideModal} lossReasons={lossReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} nextAllowedStages={stage} onCancel={hideModal} />, null, 'noPadding', false);
   };
 
   handleAddNoteClick = () => {
@@ -223,8 +225,16 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       handleAcceptClick, handleRejectClick, handleUpdateClick, handleAddNoteClick, handlePauseClick,
     } = this;
     const {
-      client, currentTab, meta, notifyError, rawClient, notes, noteIsLoading,
+      client, currentTab, meta, notifyError, rawClient, notes, noteIsLoading, clientIsLoading,
     } = this.props;
+
+    if (clientIsLoading) {
+      return (
+        <DashboardTwoColumnTemplate activeMenuItem="My Families">
+          Loading...
+        </DashboardTwoColumnTemplate>
+      );
+    }
 
     const backLink = (
       <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
@@ -255,8 +265,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       level, levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton,
     } = getStageDetails(stage);
     const { name } = clientInfo;
-    const activityCards = notes.map((a, i) =>
-      <StyledFamilyActivityItem key={a.title} noBorderRadius snap={i === notes.length - 1 ? null : 'bottom'} title={a.title} description={a.body} date={a.createdAt} />);
+    const activityCards = notes ? notes.map((a, i) =>
+      <StyledFamilyActivityItem key={a.title} noBorderRadius snap={i === notes.length - 1 ? null : 'bottom'} title={a.title} description={a.body} date={a.createdAt} />) : [];
     let activeTab = 'ACTIVITY';
     if (currentTab === 'communities') {
       activeTab = 'COMMUNITIES';
