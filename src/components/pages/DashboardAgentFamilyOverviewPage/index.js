@@ -70,10 +70,18 @@ const EmptyTextWrapper = styled.div`
   text-align: center;
 `;
 
+const tabIDLabelMap = {
+  Prospects: 'PROSPECTS',
+  Connected: 'CONNECTED',
+  Closed: 'CLOSED',
+};
+
+const tabIDs = Object.keys(tabIDLabelMap);
+
 const DashboardAgentFamilyOverviewPage = ({
   mobileContents, tableContents, pagination, paginationString, activeTab, showPagination,
 }) => {
-  const { current, total } = pagination;
+  const { current, total, filteredCount } = pagination;
   const paginationParams = {
     current,
     total,
@@ -113,15 +121,25 @@ const DashboardAgentFamilyOverviewPage = ({
       </TableRowCardsWrapper>
     </Fragment>
   );
+  let prospectsTabLabel = tabIDLabelMap[tabIDs[0]];
+  let connectedTabLabel = tabIDLabelMap[tabIDs[1]];
+  let closedTabLabel = tabIDLabelMap[tabIDs[2]];
+  if (activeTab === tabIDs[0]) {
+    prospectsTabLabel += ` (${filteredCount})`;
+  } else if (activeTab === tabIDs[1]) {
+    connectedTabLabel += ` (${filteredCount})`;
+  } else if (activeTab === tabIDs[2]) {
+    closedTabLabel += ` (${filteredCount})`;
+  }
   const tabsViewTemplate = view => (
     <Tabs activeTab={activeTab}>
-      <div label="Prospects" to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+      <div id={tabIDs[0]} label={prospectsTabLabel} to={FAMILY_DASHBOARD_FAMILIES_PATH}>
         {view}
       </div>
-      <div label="Connected" to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`}>
+      <div id={tabIDs[1]} label={connectedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`}>
         {view}
       </div>
-      <div label="Closed" to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`}>
+      <div id={tabIDs[2]} label={closedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`}>
         {view}
       </div>
     </Tabs>
