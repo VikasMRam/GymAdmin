@@ -6,12 +6,12 @@ import Tabs from 'sly/components/molecules/Tabs';
 const wrap = (props = {}) => shallow(<Tabs {...props} />);
 const children = [
   (
-    <div label="Gator">
+    <div id="Gator" label="Gator">
       See ya later, <em>Alligator</em>!
     </div>
   ),
   (
-    <div label="Croc">
+    <div id="Croc" label="Croc">
       After while, <em>Crocodile</em>!
     </div>
   ),
