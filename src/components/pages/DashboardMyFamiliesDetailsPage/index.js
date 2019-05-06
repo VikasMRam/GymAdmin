@@ -141,6 +141,14 @@ const SmallScreenClientNameBlock = styled(Block)`
   text-align: center;
 `;
 
+const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
+  margin-bottom: ${size('element.xxxLarge')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    margin-bottom: 0;
+  }
+`;
+
 export default class DashboardMyFamiliesDetailsPage extends Component {
   static propTypes = {
     client: clientPropType,
@@ -305,7 +313,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     };
 
     return (
-      <DashboardTwoColumnTemplate activeMenuItem="My Families">
+      <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
         <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
           <BigScreenSummarySection>
             <Box snap="bottom">
@@ -382,7 +390,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           </div>
         </StyledTabs>
         <DashboardMyFamilyStickyFooterContainer options={stickyFooterOptions} stageProps={stickyFooterStageProps} />
-      </DashboardTwoColumnTemplate>
+      </StyledDashboardTwoColumnTemplate>
     );
   }
 }
