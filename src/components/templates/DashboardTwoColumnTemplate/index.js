@@ -20,8 +20,8 @@ const Wrapper = styled.div`
   }
 `;
 
-const DashboardTwoColumnTemplate = ({ children, activeMenuItem }) => (
-  <DashboardPageTemplate activeMenuItem={activeMenuItem}>
+const DashboardTwoColumnTemplate = ({ children, className, activeMenuItem }) => (
+  <DashboardPageTemplate className={className} activeMenuItem={activeMenuItem}>
     <Wrapper>
       {children}
     </Wrapper>
@@ -31,6 +31,7 @@ const DashboardTwoColumnTemplate = ({ children, activeMenuItem }) => (
 DashboardTwoColumnTemplate.propTypes = {
   children: node,
   activeMenuItem: string,
+  className: string,
 };
 
 export default DashboardTwoColumnTemplate;
