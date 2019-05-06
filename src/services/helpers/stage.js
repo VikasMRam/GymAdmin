@@ -6,6 +6,7 @@ export const getStageDetails = (stageName) => {
   let level = -1;
   let levelGroup = '';
   let palette = 'primary';
+  let disableUpdateButton = false;
   let disableAddNoteButton = false;
   let showAcceptRejectButtons = false;
   let showUpdateAddNoteButtons = false;
@@ -22,6 +23,7 @@ export const getStageDetails = (stageName) => {
           palette = 'danger';
           level = TOTAL_STAGES_COUNT;
           disableAddNoteButton = true;
+          disableUpdateButton = true;
         }
         if (idx === 0 && i === 0) {
           showAcceptRejectButtons = true;
@@ -40,6 +42,7 @@ export const getStageDetails = (stageName) => {
     levelGroup,
     palette,
     disableAddNoteButton,
+    disableUpdateButton,
     showAcceptRejectButtons,
     showUpdateAddNoteButtons,
     showPauseButton,

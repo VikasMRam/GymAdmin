@@ -109,10 +109,6 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { isLoading: clientIsLoading } = status.client;
     const { isLoading: noteIsLoading } = status.notes;
 
-    if (clientIsLoading) {
-      return <div>Loading...</div>;
-    }
-
     return (
       <NotificationController>
         {({ notifyError, notifyInfo }) => (
@@ -131,10 +127,12 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 hideModal={hide}
                 meta={meta}
                 onRejectSuccess={() => onRejectSuccess(hide)}
+                refetchClient={status.client.refetch}
                 onUnPause={() => onUnPause(notifyInfo, notifyError)}
                 onAddNote={onAddNote}
                 notes={notes}
                 noteIsLoading={noteIsLoading}
+                clientIsLoadig={clientIsLoading}
               />
             )}
           </ModalController>
