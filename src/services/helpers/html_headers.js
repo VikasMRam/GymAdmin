@@ -47,7 +47,7 @@ const getSDForCommunity = ({
   }
 
   if (startingRate > 0) {
-    ld.priceRange = `From ${startingRate} per month`;
+    ld.priceRange = `From ${startingRate.toLocaleString()} a month`;
   }
 
 
@@ -98,7 +98,7 @@ const getSDForSearchResource = ({
   }
 
   if (startingRate > 0) {
-    ld.priceRange = `From $${startingRate} per month`;
+    ld.priceRange = `From $${startingRate.toLocaleString()} a month`;
   }
 
   if (imageUrl) {
@@ -196,7 +196,7 @@ export const getHelmetForCommunityPage = (community, location) => {
   const { websiteUrl } = propInfo;
   const { numReviews, reviewsValue } = propRatings;
 
-  const ratesProvided = (rates && rates === 'Provided');
+  const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
   const canonicalUrl = `${host}${pathname}`;
 
   let toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
@@ -207,7 +207,8 @@ export const getHelmetForCommunityPage = (community, location) => {
       segment: 'retirement-community',
     };
   }
-  const title = (ratesProvided ? `${name} - Price starting at $${startingRate}/mo` : `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`);
+
+  const title = (ratesProvided ? `${name} - Price starting at $${startingRate.toLocaleString()}/mo` : `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`);
 
   const article = ((toc.label === 'Assisted Living ' || toc.label === 'Memory Care') ? 'an' : 'a');
 
@@ -278,7 +279,7 @@ export const getHelmetForCommunityPage = (community, location) => {
     };
     // logic copied from getSDForCommunity
     if (startingRate > 0) {
-      result.itemReviewed.priceRange = `From ${startingRate} per month`;
+      result.itemReviewed.priceRange = `From $${startingRate.toLocaleString()} a month`;
     }
     return (<script key={`helmet_critic-review_${criticReview.author+name}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
