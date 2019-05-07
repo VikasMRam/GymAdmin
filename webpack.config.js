@@ -9,6 +9,7 @@ const devServer = require('@webpack-blocks/dev-server2');
 // const splitVendor = require('webpack-blocks-split-vendor');
 const serverSourceMap = require('webpack-blocks-server-source-map');
 const nodeExternals = require('webpack-node-externals');
+const Visualizer = require('webpack-visualizer-plugin');
 const SpawnPlugin = require('webpack-spawn-plugin');
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 const webpack = require('webpack');
@@ -41,7 +42,6 @@ const PUBLIC_PATH = process.env.PUBLIC_PATH || '/react-assets';
 const HOST = process.env.HOST || 'http://www.lvh.me';
 const PORT = process.env.PORT || 8000;
 const DEV_PORT = process.env.DEV_PORT || (+PORT + 1) || 8001;
-const BASENAME = process.env.BASENAME || '';
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
 const DOMAIN = process.env.DOMAIN || 'lvh.me';
@@ -53,6 +53,7 @@ const isStaging = SLY_ENV === 'staging';
 const FB_CLIENT_ID = process.env.FB_CLIENT_ID || '624602444328776';
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com';
 const MUTE_REDUX_LOGGER = process.env.MUTE_REDUX_LOGGER || false;
+const HIDE_CHATBOX = process.env.HIDE_CHATBOX || false;
 
 // replacements for widgets.js
 const EXTERNAL_WIZARDS_PATH = process.env.EXTERNAL_WIZARDS_PATH || '/external/wizards';
@@ -68,7 +69,6 @@ console.info('Using config', JSON.stringify({
   HOST,
   PORT,
   DEV_PORT,
-  BASENAME,
   API_URL,
   AUTH_URL,
   DOMAIN,
@@ -80,6 +80,7 @@ console.info('Using config', JSON.stringify({
   FB_CLIENT_ID,
   GOOGLE_CLIENT_ID,
   MUTE_REDUX_LOGGER,
+  HIDE_CHATBOX,
 }, null, 2));
 
 const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
@@ -144,7 +145,6 @@ const base = group([
     'process.env.PUBLIC_PATH': PUBLIC_PATH,
     'process.env.HOST': HOST,
     'process.env.PORT': PORT,
-    'process.env.BASENAME': BASENAME,
     'process.env.API_URL': API_URL,
     'process.env.AUTH_URL': AUTH_URL,
     'process.env.DOMAIN': DOMAIN,
@@ -154,6 +154,7 @@ const base = group([
     'process.env.FB_CLIENT_ID': FB_CLIENT_ID,
     'process.env.GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID,
     'process.env.MUTE_REDUX_LOGGER': MUTE_REDUX_LOGGER,
+    'process.env.HIDE_CHATBOX': HIDE_CHATBOX || false,
   }),
 
   babel,
@@ -190,12 +191,19 @@ const uglifyJs = () => group([
     uglify({
       sourceMap: isStaging,
       compress: { warnings: false },
+      output: { comments: false },
     }),
   ]),
 ]);
 
 // order matters to how the routes are mounted
 const clientConfigs = [
+  {
+    bundle: 'vendor',
+    ssr: true,
+    isCommon: true,
+    path: '*',
+  },
   {
     bundle: 'wizards',
     ssr: false,
