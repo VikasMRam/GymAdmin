@@ -24,7 +24,7 @@ const Bottom = styled.div`
 `;
 
 const ThreeSectionFormTemplate = ({
-  onCancelClick, submitButtonText, children, heading, hasCancel, hasSubmit, onSubmit,
+  onCancelClick, submitButtonText, cancelButtonText, children, heading, hasCancel, hasSubmit, onSubmit,
   pristine, submitting, invalid,
 }) => (
   <form onSubmit={onSubmit}>
@@ -34,7 +34,7 @@ const ThreeSectionFormTemplate = ({
       {children}
     </Wrapper>
     <Bottom>
-      {hasCancel && <Button secondary onClick={onCancelClick}>Cancel</Button>}
+      {hasCancel && <Button secondary onClick={onCancelClick}>{cancelButtonText}</Button>}
       {!hasCancel && <div />}
       {hasSubmit && <Button type="submit" disabled={invalid || pristine || submitting}>{submitButtonText}</Button>}
     </Bottom>
@@ -48,6 +48,7 @@ ThreeSectionFormTemplate.propTypes = {
   hasCancel: bool,
   hasSubmit: bool,
   submitButtonText: string.isRequired,
+  cancelButtonText: string.isRequired,
   onSubmit: func,
   pristine: bool,
   submitting: bool,
@@ -56,6 +57,7 @@ ThreeSectionFormTemplate.propTypes = {
 
 ThreeSectionFormTemplate.defaultProps = {
   submitButtonText: 'Submit',
+  cancelButtonText: 'Cancel',
 };
 
 export default ThreeSectionFormTemplate;
