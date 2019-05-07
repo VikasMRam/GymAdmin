@@ -34,11 +34,11 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
   createUserSave: data => ensureAuthenticated(
     'Sign up to add to your favorites list',
-    api.createUserSave(data),
+    api.createOldUserSave(data),
   ),
   updateUserSave: (id, data) => ensureAuthenticated(
     'Sign up to add to your favorites list',
-    api.updateUserSave({ id }, data),
+    api.updateOldUserSave({ id }, data),
   ),
 });
 
