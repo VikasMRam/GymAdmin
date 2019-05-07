@@ -107,6 +107,8 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
             slug: id,
             question: data.question,
             entityType: 'Property',
+            name: data.full_name,
+            phone: data.phone,
           },
         },
       }),
