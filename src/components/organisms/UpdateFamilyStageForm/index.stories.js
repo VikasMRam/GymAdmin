@@ -47,6 +47,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       name="Amal"
       currentStageGroup={groups[0]}
       nextStageGroup={groups[1]}
+      currentStage={optionValues[0]}
       nextStage={optionValues[3]}
       handleSubmit={withPreventDefault(action('onSubmit'))}
       onCancel={action('onCancel')}
@@ -60,6 +61,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       name="Amal"
       currentStageGroup={groups[0]}
       nextStageGroup={groups[2]}
+      currentStage={optionValues[0]}
       nextStage={FAMILY_STAGE_LOST}
       handleSubmit={withPreventDefault(action('onSubmit'))}
       onCancel={action('onCancel')}
@@ -74,6 +76,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       isPaused
       currentStageGroup={groups[0]}
       nextStageGroup={groups[2]}
+      currentStage={optionValues[0]}
       nextStage={FAMILY_STAGE_LOST}
       handleSubmit={withPreventDefault(action('onSubmit'))}
       onCancel={action('onCancel')}
@@ -87,6 +90,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       name="Amal"
       currentStageGroup={groups[0]}
       nextStageGroup={groups[2]}
+      currentStage={optionValues[0]}
       nextStage={FAMILY_STAGE_LOST}
       handleSubmit={withPreventDefault(action('onSubmit'))}
       onCancel={action('onCancel')}
@@ -101,6 +105,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       name="Amal"
       currentStageGroup={groups[0]}
       nextStageGroup={groups[2]}
+      currentStage={optionValues[0]}
       nextStage={FAMILY_STAGE_LOST}
       handleSubmit={withPreventDefault(action('onSubmit'))}
       onCancel={action('onCancel')}
@@ -115,6 +120,7 @@ storiesOf('Organisms|UpdateFamilyStageForm', module)
       name="Amal"
       currentStageGroup={groups[0]}
       nextStageGroup={groups[2]}
+      currentStage={optionValues[0]}
       nextStage={FAMILY_STAGE_LOST}
       handleSubmit={withPreventDefault(action('onSubmit'))}
       onCancel={action('onCancel')}

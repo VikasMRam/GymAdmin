@@ -35,6 +35,7 @@ export default class UpdateFamilyStageForm extends Component {
     name: string.isRequired,
     currentStageGroup: string,
     nextStageGroup: string,
+    currentStage: string,
     nextStage: string,
     nextAllowedStages: arrayOf(string).isRequired,
     lossReasons: arrayOf(string).isRequired,
@@ -60,7 +61,7 @@ export default class UpdateFamilyStageForm extends Component {
   render() {
     const { handleChange, handleLocationChange } = this;
     const {
-      handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, nextStage, nextAllowedStages, lossReasons,
+      handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, nextAllowedStages, lossReasons,
       currentLossReason, isPaused, ...props
     } = this.props;
 
@@ -107,7 +108,7 @@ export default class UpdateFamilyStageForm extends Component {
             Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.
           </Warning>
         }
-        {currentStageGroup !== nextStageGroup && isPaused &&
+        {currentStage !== nextStage && isPaused &&
           <Warning size="caption">
             Updating this family&apos;s stage will remove them from being <strong>Paused</strong>.
           </Warning>
