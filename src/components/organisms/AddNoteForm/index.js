@@ -21,8 +21,8 @@ const SaveCommunityForm = ({
     <Field
       showCharacterCount
       type="textarea"
-      rows="3"
-      maxLength="200"
+      rows={3}
+      maxLength={200}
       name="note"
       label="Add a note"
       placeholder={placeholder}

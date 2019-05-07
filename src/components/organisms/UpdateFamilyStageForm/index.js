@@ -117,8 +117,8 @@ export default class UpdateFamilyStageForm extends Component {
           <Field
             showCharacterCount
             type="textarea"
-            rows="3"
-            maxLength="200"
+            rows={3}
+            maxLength={200}
             name="note"
             label="Add a note"
             placeholder="Add a note on why you are updating this family's stage..."
@@ -174,10 +174,10 @@ export default class UpdateFamilyStageForm extends Component {
           <Field
             showCharacterCount
             type="textarea"
-            rows="3"
+            rows={3}
             name="lostDescription"
             label={<span>Description<Span palette="danger">*</Span></span>}
-            maxLength="200"
+            maxLength={200}
             placeholder="Please leave a note on the reason for closing this lead..."
             component={ReduxField}
           />
