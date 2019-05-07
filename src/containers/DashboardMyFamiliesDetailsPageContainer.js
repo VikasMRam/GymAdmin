@@ -39,6 +39,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     updateClient: func.isRequired,
     createNote: func.isRequired,
     notes: arrayOf(notePropType),
+    invalidateClients: func,
   };
 
   onRejectSuccess = (hide) => {
@@ -49,8 +50,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   onUnPause = (notifyInfo, notifyError) => {
     const { setStatusToActive } = this;
+    const { invalidateClients } = this.props;
 
     return setStatusToActive()
+      .then(invalidateClients)
       .then(() => {
         notifyInfo('Family successfully unpaused');
       })
@@ -64,7 +67,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   onAddNote = (data, notifyError, notifyInfo, hideModal) => {
-    const { createNote, client, status, invalidateClients } = this.props;
+    const {
+      createNote, client, status, invalidateClients,
+    } = this.props;
     const { id } = client;
     const { note } = data;
     const payload = {
