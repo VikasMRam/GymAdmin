@@ -80,9 +80,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
     return notePromise()
       .then(getNotesPromise)
+      .then(invalidateClients)
       .then(() => {
         hideModal();
-        invalidateClients();
         notifyInfo('Note successfully added');
       })
       .catch((r) => {
