@@ -3,8 +3,9 @@ import { object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
+import { connect } from 'react-redux';
 
-import { query } from 'sly/services/newApi';
+import { query, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import { FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
 import {
@@ -24,6 +25,10 @@ const ReduxForm = reduxForm({
 
 @query('updateClient', 'updateClient')
 
+@connect(null, (dispatch, { api }) => ({
+  invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
+}))
+
 class PlaceFamilyOnPauseFormContainer extends Component {
   static propTypes = {
     onCancel: func,
@@ -33,11 +38,12 @@ class PlaceFamilyOnPauseFormContainer extends Component {
     notifyInfo: func.isRequired,
     updateClient: func,
     onSuccess: func,
+    invalidateClients: func,
   };
 
   handlePause = (data) => {
     const {
-      updateClient, client, rawClient, notifyError, notifyInfo, onSuccess,
+      updateClient, client, rawClient, notifyError, notifyInfo, onSuccess, invalidateClients,
     } = this.props;
     const { id } = client;
     const { reason } = data;
@@ -47,6 +53,7 @@ class PlaceFamilyOnPauseFormContainer extends Component {
       .value();
 
     return updateClient({ id }, newClient)
+      .then(invalidateClients)
       .then(() => {
         notifyInfo('Family successfully put on pause');
         if (onSuccess) {

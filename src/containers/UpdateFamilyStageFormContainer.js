@@ -6,7 +6,7 @@ import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 
-import { query, getRelationship } from 'sly/services/newApi';
+import { query, getRelationship, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import { FAMILY_STATUS_ACTIVE, FAMILY_STATUS_ON_HOLD, NOTE_COMMENTABLE_TYPE_CLIENT, FAMILY_STAGE_WON } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
@@ -46,6 +46,10 @@ const mapStateToProps = state => ({
   uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
 }))
 
+@connect(null, (dispatch, { api }) => ({
+  invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
+}))
+
 export default class UpdateFamilyStageFormContainer extends Component {
   static propTypes = {
     client: clientPropType,
@@ -62,6 +66,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     uuidAux: object,
     refetchClient: func.isRequired,
     refetchNotes: func.isRequired,
+    invalidateClients: func,
   };
 
   currentStage = {};
@@ -71,7 +76,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const { currentStage, nextStage } = this;
     const {
       updateClient, client, rawClient, notifyError, notifyInfo, onSuccess, createNote,
-      updateUuidAux, uuidAux, refetchClient, refetchNotes,
+      updateUuidAux, uuidAux, refetchClient, refetchNotes, invalidateClients,
     } = this.props;
     const { id, clientInfo } = client;
     const {
@@ -161,6 +166,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       .then(notePromise)
       .then(clientPromise)
       .then(getNotesPromise)
+      .then(invalidateClients)
       .then(() => {
         let msg = 'Family stage updated';
         if (currentStage.levelGroup !== nextStage.levelGroup) {

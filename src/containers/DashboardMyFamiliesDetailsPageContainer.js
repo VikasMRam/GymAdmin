@@ -4,7 +4,7 @@ import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
-import { prefetch, query } from 'sly/services/newApi';
+import { prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import notePropType from 'sly/propTypes/note';
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
@@ -26,6 +26,10 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
 
 @query('createNote', 'createNote')
 
+@connect(null, (dispatch, { api }) => ({
+  invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
+}))
+
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
     client: clientPropType,
@@ -35,6 +39,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     updateClient: func.isRequired,
     createNote: func.isRequired,
     notes: arrayOf(notePropType),
+    invalidateClients: func,
   };
 
   onRejectSuccess = (hide) => {
@@ -45,8 +50,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   onUnPause = (notifyInfo, notifyError) => {
     const { setStatusToActive } = this;
+    const { invalidateClients } = this.props;
 
     return setStatusToActive()
+      .then(invalidateClients)
       .then(() => {
         notifyInfo('Family successfully unpaused');
       })
@@ -60,7 +67,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   onAddNote = (data, notifyError, notifyInfo, hideModal) => {
-    const { createNote, client, status } = this.props;
+    const {
+      createNote, client, status, invalidateClients,
+    } = this.props;
     const { id } = client;
     const { note } = data;
     const payload = {
@@ -76,6 +85,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
     return notePromise()
       .then(getNotesPromise)
+      .then(invalidateClients)
       .then(() => {
         hideModal();
         notifyInfo('Note successfully added');
