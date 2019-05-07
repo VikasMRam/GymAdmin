@@ -4,7 +4,7 @@ import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
-import { prefetch, query } from 'sly/services/newApi';
+import { prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import notePropType from 'sly/propTypes/note';
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
@@ -25,6 +25,10 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
 @query('updateClient', 'updateClient')
 
 @query('createNote', 'createNote')
+
+@connect(null, (dispatch, { api }) => ({
+  invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
+}))
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
@@ -60,7 +64,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   onAddNote = (data, notifyError, notifyInfo, hideModal) => {
-    const { createNote, client, status } = this.props;
+    const { createNote, client, status, invalidateClients } = this.props;
     const { id } = client;
     const { note } = data;
     const payload = {
@@ -78,6 +82,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       .then(getNotesPromise)
       .then(() => {
         hideModal();
+        invalidateClients();
         notifyInfo('Note successfully added');
       })
       .catch((r) => {
