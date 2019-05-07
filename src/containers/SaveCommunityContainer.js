@@ -70,6 +70,7 @@ export default class SaveCommunityContainer extends Component {
     slug: string,
     user: object,
     userSave: object,
+    status: object.isRequired,
     createUserSave: func,
     updateUserSave: func,
     createAction: func,
@@ -99,7 +100,7 @@ export default class SaveCommunityContainer extends Component {
   createUserSave = () => {
     const { handleModalClose } = this;
     const {
-      community, createUserSave, notifyError, createAction, match,
+      community, createUserSave, notifyError, createAction, match, status,
     } = this.props;
     const { id } = community;
     const payload = {
@@ -123,6 +124,7 @@ export default class SaveCommunityContainer extends Component {
           actionType: USER_SAVE,
         },
       }))
+      .then(() => status.userSaves.refetch())
       .then(() => {
         this.setState({
           updatingUserSave: false,
@@ -204,7 +206,7 @@ export default class SaveCommunityContainer extends Component {
   render() {
     const { handleSubmitSaveCommunityForm } = this;
     const { community, onDoneButtonClick, onCancelClick } = this.props;
-    const { similarProperties} = community;
+    const { similarProperties } = community;
     const { updatingUserSave } = this.state;
 
     if (updatingUserSave) {
