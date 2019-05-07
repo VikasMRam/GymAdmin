@@ -47,7 +47,7 @@ const getSDForCommunity = ({
   }
 
   if (startingRate > 0) {
-    ld.priceRange = `From ${startingRate.toLocaleString()} a month`;
+    ld.priceRange = `From $${startingRate.toLocaleString()} per month`;
   }
 
 
@@ -98,7 +98,7 @@ const getSDForSearchResource = ({
   }
 
   if (startingRate > 0) {
-    ld.priceRange = `From $${startingRate.toLocaleString()} a month`;
+    ld.priceRange = `From $${startingRate.toLocaleString()} per month`;
   }
 
   if (imageUrl) {
@@ -279,7 +279,7 @@ export const getHelmetForCommunityPage = (community, location) => {
     };
     // logic copied from getSDForCommunity
     if (startingRate > 0) {
-      result.itemReviewed.priceRange = `From $${startingRate.toLocaleString()} a month`;
+      result.itemReviewed.priceRange = `From $${startingRate.toLocaleString()} per month`;
     }
     return (<script key={`helmet_critic-review_${criticReview.author+name}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
