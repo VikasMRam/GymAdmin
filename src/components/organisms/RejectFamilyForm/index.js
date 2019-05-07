@@ -62,11 +62,12 @@ export default class RejectFamilyForm extends Component {
         </Field>
         {DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentReason) &&
           <Field
+            showCharacterCount
             type="textarea"
             rows="3"
             name="description"
             label={<span>Description<Span palette="danger">*</Span></span>}
-            maxlength="200"
+            maxLength="200"
             placeholder="Please leave a note on the reason for closing this lead..."
             component={ReduxField}
           />

@@ -19,9 +19,10 @@ const SaveCommunityForm = ({
     submitButtonText={submitButtonText}
   >
     <Field
+      showCharacterCount
       type="textarea"
       rows="3"
-      maxlength="200"
+      maxLength="200"
       name="note"
       label="Add a note"
       placeholder={placeholder}

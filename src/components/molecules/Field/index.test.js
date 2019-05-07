@@ -32,6 +32,23 @@ describe('Field', () => {
     expect(wrapper.find('StyledInputMessage[message="foo error"][icon="close"]')).toHaveLength(1);
   });
 
+  it('renders character count when maxLength is provided', () => {
+    const maxLength = 20;
+    const wrapper = wrap({ showCharacterCount: true, maxLength });
+    expect(wrapper.find('CharCount')).toHaveLength(1);
+    expect(wrapper.find('CharCount').dive().dive().dive()
+      .text()).toBe(`0/${maxLength}`);
+  });
+
+  it('character count is updated', () => {
+    const maxLength = 20;
+    const value = 'test val';
+    const wrapper = wrap({ showCharacterCount: true, value, maxLength });
+    expect(wrapper.find('CharCount')).toHaveLength(1);
+    expect(wrapper.find('CharCount').dive().dive().dive()
+      .text()).toBe(`${value.length}/${maxLength}`);
+  });
+
   describe('MultipleChoice', () => {
     const options = [
       { value: 'first', label: 'First' },
