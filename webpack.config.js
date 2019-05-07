@@ -5,9 +5,7 @@ const fs = require('fs');
 
 const UglifyJs = require('uglify-es');
 const cssmin = require('cssmin');
-const devServer = require('@webpack-blocks/dev-server2');
 // const splitVendor = require('webpack-blocks-split-vendor');
-const serverSourceMap = require('webpack-blocks-server-source-map');
 const nodeExternals = require('webpack-node-externals');
 const Visualizer = require('webpack-visualizer-plugin');
 const SpawnPlugin = require('webpack-spawn-plugin');
@@ -23,11 +21,9 @@ const {
   defineConstants,
   group,
   uglify,
-} = require('webpack-blocks');
-
-const {
   sourceMaps,
-} = require('@webpack-blocks/webpack');
+  devServer,
+} = require('webpack-blocks');
 
 const ChildConfigPlugin = require('./private/webpack/ChildConfigPlugin');
 const AssetsByTypeAndBundlePlugin = require('./private/webpack/AssestByTypeAndBundlePlugin');
@@ -102,7 +98,11 @@ const externalWizardsEntryPath = path.join(externalSourcePath, 'wizards', 'index
 const when = (condition, setters) =>
   condition ? group(setters) : () => _ => _;
 
-const babel = () => () => ({
+const mode = (context, { merge }) => merge({
+  mode: NODE_ENV,
+});
+
+const babel = (context, { merge }) => merge({
   module: {
     rules: [
       { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
@@ -131,6 +131,8 @@ const resolveModules = modules => () => () => ({
 });
 
 const base = group([
+  mode,
+
   setOutput({
     filename: '[name].[hash].js',
     path: outputPath,
@@ -159,15 +161,15 @@ const base = group([
 
   babel,
 
-  resolveModules(sourcePath),
-
-  env('development', [
-    setOutput({
-      publicPath: devDomain,
-    }),
-  ]),
-
-  addPlugins([new webpack.ProgressPlugin()]),
+  // resolveModules(sourcePath),
+  //
+  // env('development', [
+  //   setOutput({
+  //     publicPath: devDomain,
+  //   }),
+  // ]),
+  //
+  // addPlugins([new webpack.ProgressPlugin()]),
 ]);
 
 const devCORS = () => group([
@@ -221,44 +223,44 @@ const clientConfigs = [
   },
 ];
 
-const server = createConfig([
-  base,
-
-  entryPoint({ server: serverEntryPath }),
-
-  setOutput({
-    filename: '../[name].js',
-    libraryTarget: 'commonjs2',
-  }),
-
-  () => () => ({
-    target: 'node',
-    externals: [nodeExternals()],
-    stats: 'errors-only',
-  }),
-
-  assets,
-
-  addPlugins([
-    new PrependPlugin({
-      prepend: () => `global.clientConfigs = require("${clientConfigsPath}");\n`,
-    }),
-  ]),
-
-  env('development', [
-    () => () => ({
-      watch: true,
-    }),
-    addPlugins([
-      new webpack.BannerPlugin({
-        banner: 'require("source-map-support").install();',
-        raw: true,
-        entryOnly: false,
-      }),
-      new SpawnPlugin('node', [process.env.NODE_DEBUG_OPTION || '--inspect', '.']),
-    ]),
-  ]),
-]);
+// const server = createConfig([
+//   base,
+//
+//   entryPoint({ server: serverEntryPath }),
+//
+//   setOutput({
+//     filename: '../[name].js',
+//     libraryTarget: 'commonjs2',
+//   }),
+//
+//   () => () => ({
+//     target: 'node',
+//     externals: [nodeExternals()],
+//     stats: 'errors-only',
+//   }),
+//
+//   assets,
+//
+//   addPlugins([
+//     new PrependPlugin({
+//       prepend: () => `global.clientConfigs = require("${clientConfigsPath}");\n`,
+//     }),
+//   ]),
+//
+//   env('development', [
+//     () => () => ({
+//       watch: true,
+//     }),
+//     addPlugins([
+//       new webpack.BannerPlugin({
+//         banner: 'require("source-map-support").install();',
+//         raw: true,
+//         entryOnly: false,
+//       }),
+//       new SpawnPlugin('node', [process.env.NODE_DEBUG_OPTION || '--inspect', '.']),
+//     ]),
+//   ]),
+// ]);
 
 if (isDev || isStaging) {
   console.log('Will do sourcemaps');
@@ -325,30 +327,25 @@ const client = createConfig([
     wizards: externalWizardsEntryPath,
   }),
 
-  externalWidget,
+  // externalWidget,
 
-  assets,
-
-  devCORS,
-
-  uglifyJs,
-
-  addPlugins([
-    new AssetsByTypeAndBundlePlugin({
-      path: clientConfigsPath,
-      clientConfigs,
-    }),
-    new ChildConfigPlugin(server, { when: 'afterEmit' }),
-  ]),
-
-  when(isDev || isStaging, [sourceMaps()]),
-
-
-  /* env('production', [
-    splitVendor(),
-  ]), */
+  // assets,
+  //
+  // devCORS,
+  //
+  // uglifyJs,
+  //
+  // addPlugins([
+  //   new AssetsByTypeAndBundlePlugin({
+  //     path: clientConfigsPath,
+  //     clientConfigs,
+  //   }),
+  //   new ChildConfigPlugin(server, { when: 'afterEmit' }),
+  // ]),
+  //
+  // when(isDev || isStaging, [sourceMaps()]),
 ]);
 
-console.log('client', client);
+console.log('client', JSON.stringify(client, null, 2));
 
 module.exports = client;
