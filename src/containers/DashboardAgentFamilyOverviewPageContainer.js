@@ -22,10 +22,10 @@ const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
 const convertClientsToTableContents = (clients) => {
   const contents = clients.map((client) => {
     const {
-      id, clientInfo, uuidAux, stage, createdAt, updatedAt, status,
+      id, clientInfo, uuidAux, stage, status, createdAt, notes,
     } = client;
     const { level, palette } = getStageDetails(stage);
-    const { name: clientName, slyMessage } = clientInfo;
+    const { name: clientName } = clientInfo;
     const { uuidInfo } = uuidAux;
     let residentName = '';
     if (uuidInfo) {
@@ -34,7 +34,6 @@ const convertClientsToTableContents = (clients) => {
       residentName = fullName;
     }
     const createdAtStr = dayjs(createdAt).format('MM/DD/YYYY');
-    const updatedAtStr = dayjs(updatedAt).format('MM/DD/YYYY');
     const rowItems = [];
     const disabled = status === FAMILY_STATUS_ON_HOLD;
     const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
@@ -47,7 +46,14 @@ const convertClientsToTableContents = (clients) => {
         text: stage, currentStage: level, palette, disabled,
       },
     });
-    rowItems.push({ type: 'doubleLine', data: { firstLine: slyMessage, secondLine: updatedAtStr, disabled } });
+    if (notes.length > 0) {
+      const latestNote = notes[notes.length - 1];
+      const { title, createdAt } = latestNote;
+      const latestNoteCreatedAtStr = dayjs(createdAt).format('MM/DD/YYYY');
+      rowItems.push({ type: 'doubleLine', data: { firstLine: title, secondLine: latestNoteCreatedAtStr, disabled } });
+    } else {
+      rowItems.push({ type: 'text', data: { text: '', disabled } });
+    }
     rowItems.push({ type: 'text', data: { text: createdAtStr, disabled } });
     return {
       id,
@@ -64,15 +70,19 @@ const convertClientsToTableContents = (clients) => {
 const convertClientsToMobileContents = (clients) => {
   const contents = clients.map((client) => {
     const {
-      id, clientInfo, stage, status, updatedAt,
+      id, clientInfo, stage, status, notes,
     } = client;
     const { level, palette } = getStageDetails(stage);
-    const { name: clientName, slyMessage } = clientInfo;
-    const updatedAtStr = dayjs(updatedAt).format('MM/DD/YYYY');
+    const { name: clientName } = clientInfo;
     const rowItems = [];
     const disabled = status === FAMILY_STATUS_ON_HOLD;
     const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
-    rowItems.push({ type: 'doubleLine', data: { firstLine: slyMessage, secondLine: updatedAtStr } });
+    if (notes.length > 0) {
+      const latestNote = notes[notes.length - 1];
+      const { title, createdAt } = latestNote;
+      const latestNoteCreatedAtStr = dayjs(createdAt).format('MM/DD/YYYY');
+      rowItems.push({ type: 'doubleLine', data: { firstLine: title, secondLine: latestNoteCreatedAtStr } });
+    }
     rowItems.push({ type: 'stage', data: { text: stage, currentStage: level, palette } });
     return {
       heading: clientName,
