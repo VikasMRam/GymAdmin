@@ -246,7 +246,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     const backLink = (
-      <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+      <Link href={FAMILY_DASHBOARD_FAMILIES_PATH}>
         <BackLinkWrapper>
           <Icon icon="arrow-left" size="small" palette="primary" />
           <Span size="caption" palette="primary">Back to Prospects</Span>
