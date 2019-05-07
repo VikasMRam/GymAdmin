@@ -231,7 +231,7 @@ export default class SaveCommunityContainer extends Component {
               component={AddNoteFormContainer}
               name="Note"
               onSubmit={data => handleSubmitSaveCommunityForm(data, next)}
-              heading="Community Saved"
+              heading="Community has been saved"
               placeholder="What are some things about this community that you like..."
               hasCancel
               onCancelClick={onCancelClick}

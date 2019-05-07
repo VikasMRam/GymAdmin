@@ -25,7 +25,7 @@ const SaveCommunityForm = ({
       rows={3}
       maxLength={200}
       name="note"
-      label="Add a note"
+      label="Add a note (optional)"
       placeholder={placeholder}
       component={ReduxField}
     />
