@@ -39,14 +39,14 @@ class SearchBoxContainer extends Component {
 
   componentDidMount() {
     const scriptjs = require('scriptjs');
-    scriptjs(
-      `https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&v=3.exp&libraries=geometry,drawing,places`,
-      () => {
-        this.setState({
-          isMounted: true,
-        });
-      }
-    );
+    // scriptjs(
+    //   `https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&v=3.exp&libraries=geometry,drawing,places`,
+    //   () => {
+    //     this.setState({
+    //       isMounted: true,
+    //     });
+    //   }
+    // );
   }
   componentWillUnmount() {
     this.setState({

@@ -29,8 +29,8 @@ export default class DashboardHomePageContainer extends Component {
           <Redirect to="/mydashboard" />
         </Role>
         <Role is={AGENT_ROLE}>
-          <Redirect to="/mydashboard" />
-          {/* <Redirect to={FAMILY_DASHBOARD_FAMILIES_PATH} /> */}
+          {/*<Redirect to="/mydashboard" />*/}
+          <Redirect to={FAMILY_DASHBOARD_FAMILIES_PATH} />
         </Role>
       </Fragment>
     );

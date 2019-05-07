@@ -1,11 +1,59 @@
+import React, { Fragment } from 'react';
+import styled from 'styled-components';
+import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 
-const DashboardCallsDetailsPage = ({}) => {
+
+import { createValidator, required, usPhone } from 'sly/services/validation';
+import { reduxForm } from 'redux-form';
+import { object } from 'prop-types';
+import DashboardAdminFamilyDetailsForm from 'sly/components/organisms/DashboardAdminFamilyDetailsForm';
+import SearchBoxContainer from 'sly/containers/SearchBoxContainer'
+import { size } from 'sly/components/themes';
+import { Hr } from 'sly/components/atoms';
+import DashboardCallDetailsAgentInfoContainer from 'sly/containers/DashboardCallDetailsAgentInfoContainer';
+
+const validate = createValidator({
+  name: [required],
+  phone: [required, usPhone],
+  residentName: [required],
+  lookingFor: [required],
+  gender: [required],
+  preferredLocation: [required],
+  budget: [required],
+  timeToMove: [required],
+});
+
+const ReduxForm = reduxForm({
+  form: 'DashboardAdminFamilyDetailsForm',
+  validate,
+})(DashboardAdminFamilyDetailsForm);
+
+const DetailsTab = styled.div`
+  width: ${size('layout.col4')};
+  margin: auto;
+  padding: ${size('spacing.xxxLarge')} ${size('spacing.large')};
+`;
+
+const FamilyDetailsTab = styled.div`
+  padding: ${size('spacing.xLarge')};
+`;
+
+const DashboardCallsDetailsPage = ({meta, voiceCall}) => {
+
   return (
-    <div> Details Page</div>
+    <Fragment>
+      <DashboardTwoColumnTemplate>
+
+        <FamilyDetailsTab><ReduxForm {...meta} /></FamilyDetailsTab>
+        <DetailsTab><SearchBoxContainer> </SearchBoxContainer> <Hr /> <DashboardCallDetailsAgentInfoContainer callNumber={voiceCall.toNumber}>Search 2 Container </DashboardCallDetailsAgentInfoContainer> <Hr /> <div>Search 3 Container </div> </DetailsTab>
+      </DashboardTwoColumnTemplate>
+    </Fragment>
+
   );
 };
 
 DashboardCallsDetailsPage.propTypes = {
+  meta: object,
 };
 
 DashboardCallsDetailsPage.defaultProps = {
