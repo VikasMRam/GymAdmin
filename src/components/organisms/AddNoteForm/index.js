@@ -7,7 +7,7 @@ import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormT
 import ReduxField from 'sly/components/organisms/ReduxField';
 
 const SaveCommunityForm = ({
-  submitting, handleSubmit, error, onCancelClick, hasCancel, heading, submitButtonText, placeholder, ...props
+  submitting, handleSubmit, error, onCancelClick, hasCancel, heading, submitButtonText, cancelButtonText, placeholder, ...props
 }) => (
   <ThreeSectionFormTemplate
     {...props}
@@ -17,6 +17,7 @@ const SaveCommunityForm = ({
     onSubmit={handleSubmit}
     heading={heading}
     submitButtonText={submitButtonText}
+    cancelButtonText={cancelButtonText}
   >
     <Field
       showCharacterCount
@@ -40,11 +41,13 @@ SaveCommunityForm.propTypes = {
   hasCancel: bool,
   heading: string,
   submitButtonText: string.isRequired,
+  cancelButtonText: string.isRequired,
   placeholder: string,
 };
 
 SaveCommunityForm.defaultProps = {
-  submitButtonText: 'Save',
+  submitButtonText: 'Save Note',
+  cancelButtonText: 'Done',
 };
 
 export default SaveCommunityForm;
