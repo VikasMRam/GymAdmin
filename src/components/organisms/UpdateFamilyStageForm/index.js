@@ -81,8 +81,8 @@ export default class UpdateFamilyStageForm extends Component {
       return null;
     });
     const lossReasonOptions = lossReasons.map(reason => <option key={reason} value={reason}>{reason}</option>);
-
-    const StageField = currentStageGroup !== nextStageGroup ? Field : PaddedField;
+    const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
+    const StageField = stageGroupChanged ? Field : PaddedField;
 
     return (
       <ThreeSectionFormTemplate
@@ -92,7 +92,7 @@ export default class UpdateFamilyStageForm extends Component {
         hasSubmit
         onSubmit={handleSubmit}
         heading={`Updating ${name}'s Status`}
-        submitButtonText={currentStageGroup !== nextStageGroup ? 'Update And Move' : 'Update'}
+        submitButtonText={stageGroupChanged ? 'Update And Move' : 'Update'}
       >
         <StageField
           name="stage"
@@ -103,7 +103,7 @@ export default class UpdateFamilyStageForm extends Component {
           <option value="" disabled>Select a stage</option>
           {options}
         </StageField>
-        {currentStageGroup !== nextStageGroup && !isPaused &&
+        {stageGroupChanged && !isPaused &&
           <Warning size="caption">
             Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.
           </Warning>
@@ -115,9 +115,10 @@ export default class UpdateFamilyStageForm extends Component {
         }
         {nextStage !== FAMILY_STAGE_WON && nextStage !== FAMILY_STAGE_LOST &&
           <Field
+            showCharacterCount
             type="textarea"
-            rows="3"
-            maxlength="200"
+            rows={3}
+            maxLength={200}
             name="note"
             label="Add a note"
             placeholder="Add a note on why you are updating this family's stage..."
@@ -171,11 +172,12 @@ export default class UpdateFamilyStageForm extends Component {
         }
         {nextStage === FAMILY_STAGE_LOST && DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
           <Field
+            showCharacterCount
             type="textarea"
-            rows="3"
+            rows={3}
             name="lostDescription"
             label={<span>Description<Span palette="danger">*</Span></span>}
-            maxlength="200"
+            maxLength={200}
             placeholder="Please leave a note on the reason for closing this lead..."
             component={ReduxField}
           />
