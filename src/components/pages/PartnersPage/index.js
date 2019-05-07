@@ -101,7 +101,9 @@ const PartnersPage = () => {
             <IconInfoTile iconBorder borderless noPadding layout="iconTop" iconPalette="secondary" icon="loyalty" heading="Keep over 50% commission" content="You receive over 50% of the referral fee when successfully helping a Seniorly prospect. A referral commission is paid to Seniorly upon a new resident move-in." />
           </ColumnWrapper>
         </StyledSection>
-        <Hr fullWidth />
+      </TemplateContent>
+      <Hr />
+      <TemplateContent>
         <StyledSection title="Online Discovery Matched With Local Expertise">
           <Paragraph>Seniorly is changing the way families find senior housing and care. Thousands of families visit our site everyday, giving you exposure to new clients.</Paragraph>
           <StyledColumnWrapper>
@@ -110,7 +112,9 @@ const PartnersPage = () => {
             <FactBox title="$30,000+" description="additional annual income by our most successful Partner Agents" />
           </StyledColumnWrapper>
         </StyledSection>
-        <Hr fullWidth />
+      </TemplateContent>
+      <Hr />
+      <TemplateContent>
         <StyledSection title="Meet Seniorly Partner Agents">
           <MSPAColumnWrapper>
             <PartnerReview name="Steve Villa" location="San Francisco, California" image="https://d1qiigpe5txw4q.cloudfront.net/uploads/d7ec3977575a476a64e7210857d64985/Steve_Villa_sd.jpg" review="'Steve was very professional, was very knowledgeable, extremely resourceful and most accommodating. It's been a pleasure to work with him. Thank you!'- Raymond T" />

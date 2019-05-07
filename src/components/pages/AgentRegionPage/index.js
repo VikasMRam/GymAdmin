@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
 import { string, arrayOf, func, object, bool } from 'prop-types';
 import Helmet from 'react-helmet';
-
+import { getHelmetForAgentsRegionPage } from 'sly/services/helpers/html_headers';
 import agentPropType from 'sly/propTypes/agent';
 import { size, palette } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
@@ -78,32 +78,35 @@ const TitleHeading = styled(Heading)`
   font-weight: ${size('weight.regular')};
 `;
 
-class AgentRegionPage extends Component {
+export default class AgentRegionPage extends Component {
   static propTypes = {
     title: string.isRequired,
     locationName: string.isRequired,
     agentsList: arrayOf(agentPropType),
-    postUserAction: func.isRequired,
-    userDetails: object,
-    pathName: string.isRequired,
     onLocationSearch: func.isRequired,
     isRegionPage: bool,
-  }
+    location: object.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.findLocalAgentRef = React.createRef();
-    this.titleRef = React.createRef();
+    this.title = null;
   }
+
   render() {
     const {
-      title, locationName, agentsList, postUserAction, userDetails, pathName, onLocationSearch,
-      isRegionPage,
+      title, locationName, agentsList, onLocationSearch,
+      isRegionPage, location,
     } = this.props;
+
     if (!agentsList) {
       return null;
     }
+
     return (
       <Fragment>
+        {getHelmetForAgentsRegionPage({ locationName, location })}
         {!isRegionPage &&
           <Helmet>
             <meta name="robots" content="noindex" />
@@ -112,7 +115,7 @@ class AgentRegionPage extends Component {
         <TemplateHeader><HeaderContainer /></TemplateHeader>
         <TemplateContent>
           <PageHeadingSection>
-            <TitleHeading level="hero" size="hero" innerRef={this.titleRef}>{title}</TitleHeading>
+            <TitleHeading level="hero" size="hero" _ref={el => { this.title = el }}>{title}</TitleHeading>
             <FindLocalAgentLink
               palette="slate"
               onClick={() => {
@@ -138,13 +141,11 @@ class AgentRegionPage extends Component {
             <BannerNotificationController>
               {({ notifyInfo }) => (
                 <TalkToAgentFormContainer
-                  postUserAction={postUserAction}
-                  userDetails={userDetails}
-                  pathName={pathName}
                   postSubmit={() => {
                     notifyInfo('We have received your request and we will get back to you soon.');
-                    if (this.titleRef.current.scrollIntoView) {
-                      this.titleRef.current.scrollIntoView({ behavior: 'smooth' });
+
+                    if (this.title.scrollIntoView) {
+                      this.title.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
                 />
@@ -164,5 +165,3 @@ class AgentRegionPage extends Component {
     );
   }
 }
-
-export default AgentRegionPage;

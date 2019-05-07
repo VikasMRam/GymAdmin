@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
-import { func, string, object } from 'prop-types';
+import { func, string, object, shape } from 'prop-types';
+import { withRouter } from 'react-router';
 
 import SlyEvent from 'sly/services/helpers/events';
+import { query } from 'sly/services/newApi';
 import { ASK_QUESTION } from 'sly/services/api/actions';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 import {
@@ -15,6 +17,7 @@ import {
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
 import { getDetail } from 'sly/store/selectors';
+import { AGENT_ASK_QUESTIONS } from 'sly/services/newApi/constants';
 
 const validate = createValidator({
   full_name: [required],
@@ -28,13 +31,40 @@ const ReduxForm = reduxForm({
   validate,
 })(CommunityAskQuestionAgentForm);
 
-class CommunityAskQuestionAgentFormContainer extends Component {
+const mapStateToProps = (state, ownProps) => {
+  const { question } = ownProps;
+  return {
+    // todo: hack for this to not error till it's moved to new api and selector
+    userAction: getDetail(state, 'userAction') || {},
+    initialValues: {
+      question,
+    },
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
+  clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
+});
+
+@withRouter
+
+@connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)
+
+@query('createAction', 'createUuidAction')
+
+export default class CommunityAskQuestionAgentFormContainer extends Component {
   static propTypes = {
     postUserAction: func.isRequired,
     notifyInfo: func.isRequired,
     clearSubmitErrors: func.isRequired,
     toggleAskAgentQuestionModal: func.isRequired,
     community: communityPropType,
+    createAction: func.isRequired,
+    match: shape({ url: string }),
     heading: string,
     description: string,
     agentImageUrl: string,
@@ -46,7 +76,7 @@ class CommunityAskQuestionAgentFormContainer extends Component {
   handleOnSubmit = (data) => {
     const {
       postUserAction, notifyInfo, clearSubmitErrors, toggleAskAgentQuestionModal,
-      community,
+      community, createAction, match,
     } = this.props;
     const { id } = community;
 
@@ -65,7 +95,23 @@ class CommunityAskQuestionAgentFormContainer extends Component {
     };
 
     clearSubmitErrors();
-    return postUserAction(body)
+
+    return Promise.all([
+      postUserAction(body),
+      createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionType: AGENT_ASK_QUESTIONS,
+          actionPage: match.url,
+          actionInfo: {
+            slug: id,
+            question: data.question,
+            entityType: 'Property',
+          },
+        },
+      }),
+    ])
+
       .then(() => {
         const event = {
           action: 'ask-question', category: 'BAT', label: id,
@@ -74,6 +120,7 @@ class CommunityAskQuestionAgentFormContainer extends Component {
         toggleAskAgentQuestionModal();
         notifyInfo('Question sent successfully.');
       })
+
       .catch(() => {
         throw new SubmissionError({ _error: 'Failed to send question. Please try again.' });
       });
@@ -106,23 +153,3 @@ class CommunityAskQuestionAgentFormContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { question } = ownProps;
-  return {
-    // todo: hack for this to not error till it's moved to new api and selector
-    userAction: getDetail(state, 'userAction') || {},
-    initialValues: {
-      question,
-    },
-  };
-};
-
-const mapDispatchToProps = dispatch => ({
-  postUserAction: data => dispatch(resourceCreateRequest('userAction', data)),
-  clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CommunityAskQuestionAgentFormContainer);

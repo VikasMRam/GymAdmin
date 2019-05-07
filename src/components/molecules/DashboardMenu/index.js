@@ -1,29 +1,28 @@
 import React from 'react';
-import { shape, arrayOf, string, func } from 'prop-types';
+import { shape, arrayOf, string, func, number } from 'prop-types';
 import styled from 'styled-components';
-import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
-import Icon from 'sly/components/atoms/Icon';
-import Span from 'sly/components/atoms/Span';
+import Role from 'sly/components/common/Role';
+import { Icon, Span, Link } from 'sly/components/atoms';
+import pad from 'sly/components/helpers/pad';
 
 const Wrapper = styled.div`
   display: flex;
   padding: ${size('spacing.large')};
   padding-bottom: 0;
-  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
     padding: 0;
     padding-top: ${size('spacing.xxLarge')};
-    border-right: ${size('border.regular')} solid ${palette('grey', 'filler')};
+    border-right: ${size('border.regular')} solid ${palette('slate', 'stroke')};
     border-bottom: 0;
   }
 `;
 
-const MenuItem = styled.div`
-  display: ${ifProp('active', 'block', 'none')};
+const MenuItem = styled(Link)`
   align-items: center;
   cursor: pointer;
   margin-right: ${size('spacing.large')};
@@ -31,22 +30,36 @@ const MenuItem = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
-    border-bottom: ${size('border.xxLarge')} ${ifProp('active', 'solid', 'none')} ${palette('slate', 'base')};
     border-left: none;
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     flex-direction: column;
-    border-bottom: none;
-    border-left: ${size('border.xxLarge')} ${ifProp('active', 'solid', 'none')} ${palette('slate', 'base')};
     margin-bottom: ${size('spacing.xxLarge')};
-    padding: 0 ${size('spacing.xLarge')};
+    margin-right: 0;
+    padding: 0;
   }
 `;
 
-const MenuItemIcon = styled(Icon)`
-  margin-right: ${size('spacing.regular')};
+const ActiveMenuItem = MenuItem.extend`
+  display: block;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    border-bottom: ${size('border.xxLarge')} solid ${palette('slate', 'base')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    border-left: ${size('border.xxLarge')} solid ${palette('slate', 'base')};
+    border-bottom: none;
+  }
 `;
+
+const NotActiveMenuItem = MenuItem.extend`
+  display: none;
+`;
+
+const MenuItemIcon = pad(Icon, 'small');
+MenuItemIcon.displayName = 'MenuItemIcon';
 
 const MenuIcon = styled(Icon)`
   margin-left: auto;
@@ -56,17 +69,18 @@ const MenuIcon = styled(Icon)`
   }
 `;
 
-const MenuItemLabel = styled(Span)`
-
-`;
-
 const DashboardMenu = ({ menuItems, onMenuIconClick }) => {
-  const menuItemComponents = menuItems.map(item => (
-    <MenuItem key={item.label} active={item.active} onClick={item.onClick}>
-      <MenuItemIcon icon={item.icon} size={item.iconSize} palette={item.palette} variation={item.variation} />
-      <MenuItemLabel weight="medium" size="caption" palette={item.palette} variation={item.variation}>{item.label}</MenuItemLabel>
-    </MenuItem>
-  ));
+  const menuItemComponents = menuItems.map((item) => {
+    const ItemComponent = item.active ? ActiveMenuItem : NotActiveMenuItem;
+    return (
+      <Role className="role" is={item.role} key={item.label}>
+        <ItemComponent onClick={item.onClick} to={item.href}>
+          <MenuItemIcon icon={item.icon} size={item.iconSize} palette={item.palette} variation={item.variation} />
+          <Span weight="medium" size="caption" palette={item.palette} variation={item.variation}>{item.label}</Span>
+        </ItemComponent>
+      </Role>
+    );
+  });
   return (
     <Wrapper>
       {menuItemComponents}
@@ -82,7 +96,8 @@ DashboardMenu.propTypes = {
     iconSize: string.isRequired,
     palette: string.isRequired,
     variation: string.isRequired,
-    onClick: func,
+    role: number.isRequired,
+    href: string,
   })).isRequired,
   onMenuIconClick: func,
 };

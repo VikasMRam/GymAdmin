@@ -11,6 +11,7 @@ const WrapperForm = styled.form`
   flex-direction: column;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('border.xLarge')};
+  background-color: ${palette('white.base')};
 `;
 
 const HeadingBlock = styled(Block)`
@@ -30,18 +31,19 @@ const Body = styled.div`
 `;
 
 const FormSection = ({
-  heading, children, buttonText, onSubmit, pristine, submitting,
+  heading, children, buttonText, error, handleSubmit, pristine, submitting, invalid,
 }) => (
-  <WrapperForm onSubmit={onSubmit}>
+  <WrapperForm onSubmit={handleSubmit}>
     <HeadingBlock size="subtitle" weight="medium">{heading}</HeadingBlock>
     <Hr />
-    <Body hasBottom={buttonText && onSubmit}>
+    <Body hasBottom={buttonText}>
       {children}
+      {error && <Block palette="danger">{error}</Block>}
     </Body>
-    {buttonText && onSubmit &&
+    {buttonText &&
       <Fragment>
         <Hr />
-        <BottomButton type="submit" palette="primary" disabled={pristine || submitting}>{buttonText}</BottomButton>
+        <BottomButton type="submit" kind="jumbo" disabled={invalid || pristine || submitting}>{buttonText}</BottomButton>
       </Fragment>
       }
   </WrapperForm>
@@ -51,9 +53,11 @@ FormSection.propTypes = {
   heading: string.isRequired,
   children: node.isRequired,
   buttonText: string,
-  onSubmit: func,
+  handleSubmit: func,
   pristine: bool,
   submitting: bool,
+  invalid: bool,
+  error: string,
 };
 
 export default FormSection;

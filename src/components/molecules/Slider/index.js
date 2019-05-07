@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { string, number, bool, func, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { prop, switchProp, ifProp } from 'styled-tools';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 
 import { size, palette } from 'sly/components/themes';
 
@@ -58,7 +58,7 @@ const SliderBar = styled.input`
     width: ${thumbWidth};
     border-radius: ${thumbBorderRadius};
     cursor: pointer;
-    // FIXME: test and fix
+    // hack: test and fix
     margin-top: -0.95rem;
     transition: background 0.15s ease-in-out;
     &:hover {

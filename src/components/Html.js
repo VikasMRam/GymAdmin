@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { googleTagManagerId, isProd, googleAppId, rokoApiKey, version } from 'sly/config';
+import { googleTagManagerId, isProd, googleAppId, version } from 'sly/config';
 
 const Html = ({
   styles, assets, state, content,
@@ -25,6 +25,7 @@ const Html = ({
         <meta name="google-signin-client_id" content={googleAppId} />
 
         {helmet.link.toComponent()}
+        {helmet.script.toComponent()}
         {assets.css.map(path => (
           <link rel="stylesheet" type="text/css" key={path} href={path} />
         ))}
@@ -33,7 +34,7 @@ const Html = ({
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
         {state.trim().length > 0 && <script dangerouslySetInnerHTML={{ __html: state }} />}
-        {assets.js.map(path => <script key={path} src={`${path}`} async defer />)}
+        {assets.js.map(path => <script key={path} src={`${path}`} defer />)}
         {/* eslint-disable */}
 
         {/* Google Tag Manager */}
@@ -65,18 +66,6 @@ const Html = ({
         }
         {/* End Inspectlet Asynchronous Code */}
 
-        {/* Begin Instabot Code */}
-        <script type="text/javascript" defer dangerouslySetInnerHTML={{ __html: `
-          setTimeout(function(){
-            (function(s,d,r) {
-              var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
-              j.text="apiKey: '${rokoApiKey}'";j.async=true;j.src=r;
-              f.parentNode.insertBefore(j,f);
-            })('script', document, '//app.instabot.io/jsapi/v2/rokoInstabot.js');
-          }, 30000);
-        `}}></script>
-        {/* End Instabot Code */}
-
         {/* Begin Google Platform Library Code */}
         <script type="text/javascript" defer dangerouslySetInnerHTML={{ __html: `
           (function(s,d,r) {
@@ -87,6 +76,7 @@ const Html = ({
         {/* End Google Platform Library Code */}
 
         {/* eslint-enable */}
+
       </body>
     </html>
   );

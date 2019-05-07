@@ -40,7 +40,7 @@ module.exports = class AssetsByTypeAndBundlePlugin {
       const { output } = compiler.options;
       const stats = rawStats.toJson({ modules: false });
       const chunks = flatten(sortChunks(stats.chunks).map(chunk => chunk.files));
-      const assetsByBundle = cloneDeep(this.options.clientConfigs);
+      let assetsByBundle = cloneDeep(this.options.clientConfigs);
       Object.entries(stats.assetsByChunkName).forEach(([key, files]) => {
         const assets = flatMap([files]).sort((a, b) => chunks.indexOf(b) - chunks.indexOf(a));
         const clientConfig = assetsByBundle.find(({ bundle }) => bundle === key);
@@ -52,6 +52,25 @@ module.exports = class AssetsByTypeAndBundlePlugin {
           css: getAssetsByType(assets, 'css', output.publicPath),
         };
       });
+      // add common chunks
+      Object.entries(stats.assetsByChunkName).forEach(([key, files]) => {
+        const assets = flatMap([files]).sort((a, b) => chunks.indexOf(b) - chunks.indexOf(a));
+        const clientConfig = assetsByBundle.find(({ bundle }) => bundle === key);
+        if (clientConfig.isCommon) {
+          assetsByBundle.forEach((bundle) => {
+            const nassets = {
+              js: [],
+              css: [],
+            };
+            // order matters: vendor files should be served first
+            nassets.js = [...getAssetsByType(assets, 'js', output.publicPath), ...bundle.assets.js];
+            nassets.css = [...getAssetsByType(assets, 'css', output.publicPath), ...bundle.assets.css];
+            bundle.assets = nassets;
+          });
+        }
+      });
+      assetsByBundle = assetsByBundle.filter(b => !b.isCommon);
+
       ensureDir(this.options.path);
       writeFileSync(this.options.path, JSON.stringify(assetsByBundle, null, 2));
     });

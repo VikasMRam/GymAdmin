@@ -1,44 +1,48 @@
 import React from 'react';
 import { func, bool, string } from 'prop-types';
-import styled from 'styled-components';
 import { Field } from 'redux-form';
 
-import { size } from 'sly/components/themes';
-import { Heading, Button, Block } from 'sly/components/atoms';
+import { Block } from 'sly/components/atoms';
+import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
-const StyledHeading = styled(Heading)`
-  margin-bottom: ${size('spacing.xLarge')}
-`;
-
-const StyledButton = styled(Button)`
-  width: 100%;
-`;
-
-const SaveCommunityForm = ({ submitting, handleSubmit, error }) => (
-  <section>
-    <StyledHeading size="subtitle">Add to your favorites list</StyledHeading>
-    <form onSubmit={handleSubmit}>
-      <Field
-        type="textarea"
-        rows="3"
-        name="note"
-        label="Add a note"
-        placeholder="What are some things about this community that you like..."
-        component={ReduxField}
-      />
-      {error && <Block palette="danger">{error}</Block>}
-      <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-        Confirm
-      </StyledButton>
-    </form>
-  </section>
+const AddNoteForm = ({
+  submitting, handleSubmit, error, onCancelClick, hasCancel, heading, submitButtonText, placeholder, ...props
+}) => (
+  <ThreeSectionFormTemplate
+    {...props}
+    hasCancel={hasCancel}
+    onCancelClick={onCancelClick}
+    hasSubmit
+    onSubmit={handleSubmit}
+    heading={heading}
+    submitButtonText={submitButtonText}
+  >
+    <Field
+      type="textarea"
+      rows="3"
+      name="note"
+      label="Add a note"
+      placeholder={placeholder}
+      component={ReduxField}
+    />
+    {error && <Block palette="danger">{error}</Block>}
+  </ThreeSectionFormTemplate>
 );
 
-SaveCommunityForm.propTypes = {
+AddNoteForm.propTypes = {
   handleSubmit: func.isRequired,
   submitting: bool,
   error: string,
+  onCancelClick: func,
+  hasCancel: bool,
+  heading: string,
+  submitButtonText: string.isRequired,
+  placeholder: string,
 };
 
-export default SaveCommunityForm;
+AddNoteForm.defaultProps = {
+  submitButtonText: 'Save',
+};
+
+export default AddNoteForm;

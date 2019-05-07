@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { string, func, shape, arrayOf, oneOf } from 'prop-types';
-import { uniqueId } from 'lodash';
+import uniqueId from 'lodash/uniqueId';
 
 import { TIMEOUT } from 'sly/constants/notifications';
 import { connectController } from 'sly/controllers';
@@ -10,7 +10,7 @@ class BannerNotificationController extends Component {
   static propTypes = {
     messages: arrayOf(shape({
       content: string,
-      type: oneOf(['default', 'error']),
+      type: oneOf(['default', 'error', 'green', 'warning']),
     })),
     set: func,
     get: func,
@@ -37,6 +37,14 @@ class BannerNotificationController extends Component {
     this.addNotification(message);
   };
 
+  notifySuccess = (message) => {
+    this.addNotification(message, 'green');
+  };
+
+  notifyWarning = (message) => {
+    this.addNotification(message, 'warning');
+  };
+
   notifyError = (message) => {
     this.addNotification(message, 'error');
   };
@@ -56,10 +64,12 @@ class BannerNotificationController extends Component {
 
   render() {
     const { children, messages } = this.props;
-    const { notifyInfo, notifyError, handleDismiss } = this;
+    const {
+      notifyInfo, notifyError, notifySuccess, handleDismiss,
+    } = this;
 
     return children({
-      messages, dismiss: handleDismiss, notifyInfo, notifyError,
+      messages, dismiss: handleDismiss, notifyInfo, notifyError, notifySuccess,
     });
   }
 }

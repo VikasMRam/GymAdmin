@@ -165,7 +165,6 @@ theme.sizes = {
     },
   },
 
-  // FIXME: remove this tiles should expand in avail space
   tile: {
     tiny: {
       width : '7rem',        // 112px
@@ -189,7 +188,6 @@ theme.sizes = {
     },
   },
 
-  // FIXME: remove this images should expand in avail space
   picture: {
     tiny: {
       width: '9.375rem',   // 150px
@@ -311,7 +309,7 @@ theme.sizes = {
 
   lineHeight: {
     tiny    : '1.167',
-    caption : '1.4',
+    caption : '1.429',
     body    : '1.5',
     subtitle: '1.3',
     title   : '1.28',

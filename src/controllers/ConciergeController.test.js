@@ -4,8 +4,7 @@ import { shallow } from 'enzyme';
 
 import SlyEvent from '../services/helpers/events';
 
-import ConciergeControllerContainer, {
-  ConciergeController,
+import ConciergeController, {
   CONVERSION_FORM,
   ADVANCED_INFO,
 } from './ConciergeController';
@@ -15,8 +14,27 @@ import { CONCIERGE } from 'sly/constants/modalType';
 
 jest.mock('../services/helpers/events');
 
+const dig = (wrapper, name) => {
+  const tries = [];
+  try {
+    while (wrapper.name() !== name) {
+      tries.push(wrapper.name());
+      wrapper = wrapper.dive();
+    }
+    return wrapper;
+  } catch (e) {
+    console.log(`Component with name: ${name} not found in this list`, tries);
+    throw e;
+  }
+};
+
+const asyncMiddleware = () => next => (action) => {
+  if (action.then) return action.then(next);
+  return next(action);
+};
+
 describe('ConciergeController', () => {
-  const mockStore = configureStore();
+  const mockStore = configureStore([asyncMiddleware]);
   const initStore = (props = {}, conciergeProps = {}) => mockStore({
     controller: { concierge: { ...conciergeProps } },
     ...props,
@@ -31,6 +49,8 @@ describe('ConciergeController', () => {
     id: 'other-community',
     url: 'baz',
   };
+
+  const bees = {};
 
   const resource = {
     userAction: {
@@ -69,56 +89,81 @@ describe('ConciergeController', () => {
         ...userAction.xx.attributes,
         userDetails: {
           email: 'xxx@xxx.xxx',
-        }
-      }
-    }
+        },
+      },
+    },
   };
 
   const entities = { userAction };
-  const avdInfoSentEntities = { userAction: avdInfoSentUserAction };
   const emailOnlyEntities = { userAction: onlyEmailUserAction };
 
   const history = {
     push: jest.fn(),
   };
-  const spy = jest.fn();
+  const spy = jest.fn().mockReturnValue('ok');
   const setQueryParams = jest.fn();
 
   const childProps = () => spy.mock.calls.pop()[0];
 
+  const createOrUpdateUser = jest.fn().mockImplementation(() => Promise.resolve());
+  const createAction = jest.fn().mockImplementation(() => Promise.resolve());
+  const registerUser = jest.fn().mockImplementation(() => Promise.resolve());
+  const getUuidAux = jest.fn().mockImplementation(() => Promise.resolve());
+  const updateUuidAux = jest.fn().mockImplementation(() => Promise.resolve());
+  const api = {
+    createUuidAction: createAction,
+    getUuidAux,
+    updateUuidAux,
+  };
+
   beforeEach(() => {
     spy.mockClear();
+    createAction.mockClear();
+    updateUuidAux.mockClear();
+    setQueryParams.mockClear();
     history.push.mockClear();
   });
 
-  // Logic to get Data from controller for Asserting
-  //
-  // const getControllerAction = store => {
-  //   const { payload, ...lastAction } = store.getActions().pop();
-  //   expect(lastAction.type).toBe('controller/SET');
-  //   expect(payload.controller.indexOf('ConciergeController')).toBe(0);
-  //   return payload.data;
-  // };
-  //
-  // USAGE :
-  //   expect(getControllerAction(store)).toEqual({
-  //   currentStep: CONVERSION_FORM,
-  // });
+  const userRequestInfo = {
+    hasStarted: true,
+    isLoading: false,
+
+    normalized: {},
+  };
+
+  const uuidAuxRequestInfo = userRequestInfo;
+
+  const match = { url: '/myurl' };
+
+  const router = {
+    history,
+    route: {
+      location: {
+        pathname: '/my-url',
+      },
+      match: {
+        url: '/my-url',
+      },
+    },
+  };
 
   describe('Container', () => {
-    const wrap = (communitySlug, store) => shallow(
-      <ConciergeControllerContainer
+    const wrap = (communitySlug, store) => dig(shallow(
+      <ConciergeController
+        children={spy}
         communitySlug={communitySlug}
         store={store}
-        children={spy}
+        api={api}
+        userRequestInfo={userRequestInfo}
+        uuidAuxRequestInfo={uuidAuxRequestInfo}
         queryParams={{}}
         setQueryParams={setQueryParams}
         history={history}
       />
-    ).dive().dive();
+    , { context: { router } }), 'ConciergeController').dive();
 
     it('should pass default values', () => {
-      const store = initStore({ resource, entities });
+      const store = initStore({ bees, resource, entities });
       wrap(community.id, store);
       const { currentStep } = childProps().concierge;
       expect(setQueryParams).not.toBeCalled();
@@ -126,7 +171,7 @@ describe('ConciergeController', () => {
     });
 
     it('should know when a community has been converted', () => {
-      const store = initStore({ resource, entities });
+      const store = initStore({ bees, resource, entities });
 
       wrap(community.id, store);
       expect(childProps().concierge.contactRequested).toBe(true);
@@ -135,7 +180,7 @@ describe('ConciergeController', () => {
       expect(childProps().concierge.contactRequested).toBe(false);
     });
 
-    //TODO REENABLE
+    // TODO REENABLE
     // it('should go to express conversion when express mode', () => {
     //   const store = initStore({ resource, entities: emailOnlyEntities });
     //   const wrapper = wrap(otherCommunity, store);
@@ -147,21 +192,22 @@ describe('ConciergeController', () => {
     // });
 
     it('should redirect to custom piricing wizard', () => {
-      const store = initStore({ resource, entities: emailOnlyEntities });
+      const store = initStore({ bees, resource, entities: emailOnlyEntities });
       const wrapper = wrap(otherCommunity.id, store);
       wrapper.instance().next(true);
+
       expect(history.push).toBeCalledWith(`/custom-pricing/${otherCommunity.id}`);
     });
 
     it('should go to conversion form mode when express mode', () => {
-      const store = initStore({ resource, entities: emailOnlyEntities });
+      const store = initStore({ bees, resource, entities: emailOnlyEntities });
       const wrapper = wrap(null, store);
       wrapper.instance().next(true);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
 
     it('should not shortcircuit to thankYou when in express mode', () => {
-      const store = initStore({ resource, entities });
+      const store = initStore({ bees, resource, entities });
       const wrapper = wrap(null, store);
       wrapper.instance().next(true);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
@@ -174,20 +220,19 @@ describe('ConciergeController', () => {
     const events = {
       sendEvent,
     };
-
     const lastEvent = () => sendEvent.mock.calls[
       sendEvent.mock.calls.length - 1
     ][0];
 
+    const lastUuidPost = () => createAction.mock.calls.pop()[0];
+    const lastUuidAuxUpdate = () => updateUuidAux.mock.calls.pop()[1];
+
     SlyEvent.getInstance.mockImplementation(() => events);
 
-    let promise;
-    const submit = jest.fn().mockImplementation(() => promise);
+    const submit = jest.fn().mockImplementation((...args) => Promise.resolve(args));
     const lastSubmit = () => submit.mock.calls.pop()[0];
-    const lastSubmitResult = () => submit.mock.results.pop()[0];
 
     const set = jest.fn();
-    const lastSet = () => set.mock.calls.pop()[0];
 
     beforeEach(() => {
       sendEvent.mockRestore();
@@ -203,24 +248,65 @@ describe('ConciergeController', () => {
     const advancedInfoData = {
       message: 'MESSAGE',
       user: 'USER',
+      type_of_care: ['none'],
+      type_of_room: ['room1'],
+      time_to_move: 1,
+      budget: 5000,
+      medicaid_coverage: false,
     };
 
-    const wrap = (props={}) => shallow(
-      <ConciergeController
-        {...props}
-        set={set}
-        children={spy}
-        queryParams={{}}
-        setQueryParams={setQueryParams}
-        gotoGetCustomPricing={gotoGetCustomPricing}
-        history={history}
-      />
-    );
+    const status = {
+      uuidAux: {
+        result: {
+          id: 'uuidAuxId',
+          type: 'UUIDAux',
+          attributes: {
+            uuidInfo: {
+              housingInfo: {},
+              financialInfo: {},
+            },
+          },
+        },
+      },
+    };
 
-    it('should prompt the user if is not converted', () => {
-      wrap({ userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
-        communitySlug: community.id, concierge: { advancedInfoSent: true } });
-      childProps().getPricing();
+    const wrap = (props = {}) => {
+      const component = shallow((
+        <ConciergeController.WrappedComponent
+          {...props}
+          set={set}
+          children={spy}
+          api={api}
+          queryParams={{}}
+          match={match}
+          setQueryParams={setQueryParams}
+          gotoGetCustomPricing={gotoGetCustomPricing}
+          userRequestInfo={userRequestInfo}
+          uuidAuxRequestInfo={uuidAuxRequestInfo}
+          createAction={createAction}
+          createOrUpdateUser={createOrUpdateUser}
+          registerUser={registerUser}
+          updateUuidAux={updateUuidAux}
+          history={history}
+          status={status}
+        />
+      ));
+
+      const instance = component.instance();
+      instance.next = jest.fn().mockImplementation(instance.next);
+
+      return component;
+    };
+
+    it('should prompt the user if is not converted', async () => {
+      wrap({
+        userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
+        pathName: 'my-community',
+        concierge: { advancedInfoSent: true },
+      });
+
+      await childProps().getPricing();
+
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
@@ -232,9 +318,13 @@ describe('ConciergeController', () => {
     });
 
     it('should ask for conversionForm', () => {
-      wrap({ userDetails: {}, communitySlug: community.id, concierge: {
-        contactRequested: true,
-      }});
+      wrap({
+        userDetails: {},
+        pathName: 'my-community',
+        concierge: {
+          contactRequested: true,
+        },
+      });
       childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
@@ -243,18 +333,18 @@ describe('ConciergeController', () => {
     it('should show thank you', () => {
       wrap({
         userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
-        communitySlug: community.id,
+        pathName: 'my-community',
         concierge: {
           contactRequested: true,
           advancedInfoSent: true,
-        }
+        },
       });
       childProps().getPricing();
       expect(lastEvent()).toEqual(setPricingEvent);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
 
-    //TODO REENABLE
+    // TODO REENABLE
 
     // it('should show thank you', () => {
     //   wrap({
@@ -273,19 +363,15 @@ describe('ConciergeController', () => {
     //   });
     // });
 
-    it('should submit conversion', () => {
-      const wrapper = wrap({
+    it('should submit conversion', async () => {
+      wrap({
         communitySlug: community.id,
         submit,
-        concierge: {}
+        concierge: {},
       });
-      const instance = wrapper.instance();
-      instance.next = jest.fn();
-      const then = jest.fn();
-      promise = { then };
-      const data = { data: 'DATA' };
 
-      childProps().submitRegularConversion(data);
+      const data = { full_name: 'Fonz',  email: 'fonz@fonz.io', phone: '0987654321' };
+      await childProps().submitRegularConversion(data);
 
       // expect(lastEvent()).toEqual({
       //   action: 'contactCommunity',
@@ -300,6 +386,20 @@ describe('ConciergeController', () => {
       //     propertyIds: [ 'my-community' ],
       //   },
       // });
+
+      expect(lastUuidPost()).toEqual({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            name: data.full_name,
+            phone: data.phone,
+            email: data.email,
+          },
+          actionPage: '/myurl',
+          actionType: 'consultationRequested',
+        },
+      });
+
       expect(lastEvent()).toEqual({
         action: 'contactCommunity',
         category: 'requestConsultation',
@@ -309,42 +409,39 @@ describe('ConciergeController', () => {
       expect(lastSubmit()).toEqual({
         action: 'LEAD/REQUEST_CONSULTATION',
         value: {
-          user: { data: 'DATA' },
-          propertyIds: [ 'my-community' ],
+          user: data,
+          propertyIds: ['my-community'],
         },
       });
 
-      then.mock.calls.pop()[0]();
       expect(gotoGetCustomPricing).toHaveBeenCalled();
     });
 
-    it('should submit conversion when community not passed', () => {
+    it('should submit conversion when community not passed', async () => {
       const wrapper = wrap({
+        userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
         pathName: 'blah',
         submit,
         concierge: {},
       });
-      const instance = wrapper.instance();
-      instance.next = jest.fn();
-      const then = jest.fn();
-      promise = { then };
-      const data = { data: 'DATA' };
 
-      childProps().submitRegularConversion(data);
+      const data = { full_name: 'Fonz',  email: 'fonz@fonz.io', phone: '0987654321' };
 
-      // expect(lastEvent()).toEqual({
-      //   action: 'contactCommunity',
-      //   category: 'requestCallback',
-      //   label: 'my-community',
-      // });
-      //
-      // expect(lastSubmit()).toEqual({
-      //   action: 'LEAD/REQUEST_CALLBACK',
-      //   value: {
-      //     user: { data: 'DATA' },
-      //     propertyIds: [ 'my-community' ],
-      //   },
-      // });
+      await childProps().submitRegularConversion(data);
+
+      expect(lastUuidPost()).toEqual({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            name: data.full_name,
+            phone: data.phone,
+            email: data.email,
+          },
+          actionPage: '/myurl',
+          actionType: 'consultationRequested',
+        },
+      });
+
       expect(lastEvent()).toEqual({
         action: 'contactCommunity',
         category: 'requestConsultation',
@@ -354,28 +451,24 @@ describe('ConciergeController', () => {
       expect(lastSubmit()).toEqual({
         action: 'LEAD/REQUEST_CONSULTATION',
         value: {
-          user: { data: 'DATA' },
+          user: data,
           propertyIds: [],
         },
       });
 
-      then.mock.calls.pop()[0]();
-      expect(instance.next).toHaveBeenCalledWith(false);
+      expect(wrapper.instance().next).toHaveBeenCalled();
     });
 
-    it('should submit express conversion when community is passed', () => {
-      const wrapper = wrap({
+    it('should submit express conversion when community is passed', async () => {
+      wrap({
+        userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
         communitySlug: community.id,
         submit,
         concierge: {},
       });
-      const instance = wrapper.instance();
-      instance.next = jest.fn();
-      const then = jest.fn();
-      promise = { then };
-      const data = { data: 'DATA' };
 
-      childProps().submitExpressConversion(data);
+      const data = { data: 'DATA' };
+      await childProps().submitExpressConversion(data);
 
       expect(lastEvent()).toEqual({
         action: 'contactCommunity',
@@ -387,27 +480,23 @@ describe('ConciergeController', () => {
         action: 'LEAD/REQUEST_AVAILABILITY',
         value: {
           user: { data: 'DATA' },
-          propertyIds: [ 'my-community' ],
+          propertyIds: ['my-community'],
         },
       });
 
-      then.mock.calls.pop()[0]();
       expect(gotoGetCustomPricing).toHaveBeenCalled();
     });
 
-    it('should submit express conversion', () => {
+    it('should submit express conversion', async () => {
       const wrapper = wrap({
+        userDetails: avdInfoSentUserAction.xx.attributes.userDetails,
         pathName: 'Blah',
         submit,
         concierge: {},
       });
-      const instance = wrapper.instance();
-      instance.next = jest.fn();
-      const then = jest.fn();
-      promise = { then };
       const data = { data: 'DATA' };
 
-      childProps().submitExpressConversion(data);
+      await childProps().submitExpressConversion(data);
 
       expect(lastEvent()).toEqual({
         action: 'contactCommunity',
@@ -423,27 +512,62 @@ describe('ConciergeController', () => {
         },
       });
 
-      then.mock.calls.pop()[0]();
-      expect(instance.next).toHaveBeenCalledWith(true);
+      expect(wrapper.instance().next).toHaveBeenCalled();
     });
 
-    it('should submit advanced info', () => {
-      const wrapper = wrap({ communitySlug: community.id, submit, concierge: {} });
-      const instance = wrapper.instance();
-      instance.next = jest.fn();
-      const then = jest.fn();
-      promise = { then };
-      childProps().submitAdvancedInfo(advancedInfoData);
+    it('should submit advanced info', async () => {
+      const wrapper = wrap({ communitySlug: community.id, concierge: {} });
+      wrapper.setProps({ submit });
+      await childProps().submitAdvancedInfo(advancedInfoData);
+
+      expect(lastUuidPost()).toEqual({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            contactType: 'advancedInfo',
+            notes: 'MESSAGE',
+            slug: 'my-community',
+          },
+          actionPage: '/myurl',
+          actionType: 'profileContacted',
+        },
+      });
+
+      expect(lastUuidAuxUpdate()).toEqual({
+        id: 'uuidAuxId',
+        type: 'UUIDAux',
+        attributes: {
+          uuidInfo: {
+            financialInfo: {
+              maxMonthlyBudget: 5000,
+              medicare: false,
+            },
+            housingInfo: {
+              moveTimeline: '1',
+              roomPreference: ['room1'],
+              typeCare: ['none'],
+            },
+          },
+        },
+      });
+
       expect(lastSubmit()).toEqual({
         action: ASSESSMENT,
         value: {
           message: 'MESSAGE',
           propertyIds: ['my-community'],
-          user: { user: 'USER' },
-        }
+          user: {
+            user: 'USER',
+            type_of_care: ['none'],
+            type_of_room: ['room1'],
+            time_to_move: 1,
+            budget: 5000,
+            medicaid_coverage: false,
+          },
+        },
       });
-      then.mock.calls.pop()[0]();
-      expect(instance.next).toHaveBeenCalledWith(false);
+
+      expect(wrapper.instance().next).toHaveBeenCalled();
     });
   });
 });

@@ -5,7 +5,7 @@ export const selectedExperimentVariants = {};
 export const win = (name) => {
   if (selectedExperimentVariants[name]) {
     const event = {
-      action: 'win_experiement', category: name, label: selectedExperimentVariants[name],
+      action: 'win_experiment', category: name, label: selectedExperimentVariants[name],
     };
     SlyEvent.getInstance().sendEvent(event);
   }

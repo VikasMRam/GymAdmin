@@ -11,6 +11,7 @@ storiesOf('Atoms|Input', module)
   .add('warning', () => <Input warning />)
   .add('warning placeholder', () => <Input warning placeholder="Input some text" />)
   .add('type textarea', () => <Input type="textarea" />)
+  .add('type search', () => <Input type="search" placeholder="Type to filter by name" />)
   .add('type select', () => (
     <Input type="select">
       <option>Option 1</option>

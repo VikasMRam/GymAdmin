@@ -57,6 +57,10 @@ import GetCurrentAvailabilityContainer from 'sly/containers/GetCurrentAvailabili
 import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContainer';
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
+import BannerNotification from 'sly/components/molecules/BannerNotification';
+import pad from 'sly/components/helpers/pad';
+
+import CommunityInpageWizardContainer from 'sly/containers/CommunityInpageWizardContainer';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -101,6 +105,8 @@ const StyledCommunityExtraInfoSection = styled(CommunityExtraInfoSection)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
+const StyledBannerNotification = pad(BannerNotification, 'large');
+
 const Header = makeHeader();
 const TwoColumn = makeTwoColumn('div');
 const Body = makeBody('div');
@@ -108,6 +114,26 @@ const Column = makeColumn('aside');
 const Footer = makeFooter('footer');
 const Wrapper = makeWrapper('div');
 const Gallery = makeGallery('div');
+
+const makeBanner = (profileContacted) => {
+  const requests = Object.entries(profileContacted).reduce((acc, [key, value]) => {
+    if (value) {
+      if (acc.length) acc.push(', ');
+      acc.push(key);
+    }
+    return acc;
+  }, []);
+
+  if (!requests.length) {
+    return null;
+  }
+
+  if (requests.length > 1) {
+    requests[requests.length - 2] = ' and ';
+  }
+
+  return `We have your ${requests.join('')} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
+};
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
@@ -138,8 +164,7 @@ export default class CommunityDetailPage extends Component {
     setQueryParams: func,
     onBookATourClick: func,
     onGCPClick: func,
-    isAlreadyTourScheduled: bool,
-    isAlreadyPricingRequested: bool,
+    profileContacted: object.isRequired,
     onToggleAskAgentQuestionModal: func,
     userAction: object,
     onFloorPlanModalToggle: func,
@@ -184,7 +209,7 @@ export default class CommunityDetailPage extends Component {
 
     const modalComponentProps = {
       mainImage,
-      fromEnabled: !user,
+      fromEnabled: !user || !user.email,
       communitySlug: id,
       notifyInfo,
       onSuccess,
@@ -287,7 +312,9 @@ export default class CommunityDetailPage extends Component {
     const { address, name } = community;
     const { city } = address;
     const agentImageUrl = assetPath('images/agent-xLarge.png');
-    const { heading, description, placeholder, question } = generateAskAgentQuestionContents(name, city, type);
+    const {
+      heading, description, placeholder, question,
+    } = generateAskAgentQuestionContents(name, city, type);
 
     const toggleAskAgentQuestionModal = () => {
       onToggleAskAgentQuestionModal(true, type);
@@ -326,7 +353,7 @@ export default class CommunityDetailPage extends Component {
     if (initedUserSave) {
       onUnsaveCommunity(notifyInfo, notifyError);
     } else {
-      showModal(<SaveCommunityContainer slug={id} onDoneButtonClicked={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />);
+      showModal(<SaveCommunityContainer slug={id} onCancelClick={hideModal} onDoneButtonClick={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />, null, 'noPadding', false);
     }
     onMediaGalleryFavouriteClick();
   };
@@ -346,6 +373,7 @@ export default class CommunityDetailPage extends Component {
       mediaGallerySlideIndex,
       isMediaGalleryFullscreenActive,
       community,
+      profileContacted,
       location,
       onMediaGallerySlideChange,
       onMediaGalleryToggleFullscreen,
@@ -357,11 +385,12 @@ export default class CommunityDetailPage extends Component {
       setQueryParams,
       onBookATourClick,
       onGCPClick,
-      isAlreadyTourScheduled,
-      isAlreadyPricingRequested,
       toggleHowSlyWorksVideoPlaying,
       isHowSlyWorksVideoPlaying,
       history,
+      showModal,
+      hideModal,
+      userAction,
     } = this.props;
 
     const {
@@ -382,16 +411,32 @@ export default class CommunityDetailPage extends Component {
       partnerAgents,
     } = community;
 
-    let initedUserSave;
-    if (userSave) {
-      initedUserSave = userSave.status !== USER_SAVE_DELETE_STATUS ? userSave : null;
-    }
-
     const {
-      careServices, websiteUrl, promoDescription, promoTitle,
+      careServices, websiteUrl, promoDescription, promoTitle, communitySize,
     } = propInfo;
 
+    // TODO: move this to common helper, used in multiple places
+    const communityDefaultImages = {
+      'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
+      '20 - 51 Beds': assetPath('vectors/Medium_Assisted_Living.svg'),
+      '51 +': assetPath('vectors/Large_Assisted_Living.svg'),
+    };
+    let key = 'up to 20 Beds';
+    if (communitySize !== undefined && communitySize !== '') {
+      key = communitySize;
+    }
+    const defaultImageUrl = communityDefaultImages[key];
+
     let images = gallery.images || [];
+    // if images is empty add default image
+    if (images.length === 0) {
+      const imgShape = {
+        sd: defaultImageUrl, hd: defaultImageUrl, thumb: defaultImageUrl, url: defaultImageUrl,
+      };
+      images.unshift(imgShape);
+      gallery.images = images;
+    }
+
     // If there is a mainImage put it in front
     const communityMainImage = images.find((element) => {
       return element.sd === mainImage;
@@ -424,14 +469,11 @@ export default class CommunityDetailPage extends Component {
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
 
-    let bannerNotification = null;
-    if (isAlreadyTourScheduled && isAlreadyPricingRequested) {
-      bannerNotification = 'We have received your tour and pricing request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.';
-    } else if (isAlreadyTourScheduled) {
-      bannerNotification = 'We have received your tour request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.';
-    } else if (isAlreadyPricingRequested) {
-      bannerNotification = 'We have received your pricing request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.';
-    }
+    const bannerNotification = makeBanner(profileContacted);
+    // FIXME: @fonz cleaning this up
+    const isAlreadyPricingRequested = profileContacted.pricing;
+    const isAlreadyTourScheduled = profileContacted.tour;
+
     const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
     const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
@@ -440,9 +482,9 @@ export default class CommunityDetailPage extends Component {
 
     return (
       <Fragment>
-        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         {getHelmetForCommunityPage(community, location)}
-        <Header bannerNotification={bannerNotification} />
+        <Header noBottomMargin={!!bannerNotification} />
+        {bannerNotification && <StyledBannerNotification>{bannerNotification}</StyledBannerNotification>}
         <CommunityDetailPageTemplate>
           <Wrapper>
             <BreadCrumb items={getBreadCrumbsForCommunity({ name, propInfo, address })} />
@@ -467,7 +509,7 @@ export default class CommunityDetailPage extends Component {
                 <StyledCommunitySummary
                   community={community}
                   isAdmin={user && user.admin}
-                  isFavourited={!!initedUserSave}
+                  userSave={userSave}
                   onFavouriteClick={handleFavouriteClick}
                   onShareClick={handleShareClick}
                 />
@@ -497,6 +539,7 @@ export default class CommunityDetailPage extends Component {
                 }
                 <TopCollapsibleSection
                   title={`Pricing and Floor Plans at ${name}`}
+                  id="pricing-and-floor-plans"
                 >
                   <MainSection>
                     {floorPlans.length > 0 &&
@@ -556,7 +599,10 @@ export default class CommunityDetailPage extends Component {
                   </TopCollapsibleSection>
                 }
                 {(communityDescription || rgsAux.communityDescription) &&
-                  <TopCollapsibleSection title={`Details on ${name}`}>
+                  <TopCollapsibleSection
+                    title={`Details on ${name}`}
+                    id="details"
+                  >
                     <MainSection>
                       <CommunityDetails
                         communityName={name}
@@ -589,7 +635,7 @@ export default class CommunityDetailPage extends Component {
                       <TextBottomSection
                         heading="Ask about pricing, floor plans, availability, anything."
                         subHeading=" Using a Seniorly Partner Agent is a free service for you."
-                        buttonText="Send a message"
+                        buttonText="Ask a question"
                         onButtonClick={() => openAskAgentQuestionModal('services')}
                       />
                     </BottomSection>
@@ -632,6 +678,7 @@ export default class CommunityDetailPage extends Component {
                 }
                 <TopCollapsibleSection
                   title={`Reviews at ${name}`}
+                  id="reviews"
                 >
                   <MainSection>
                     <EntityReviews
@@ -651,6 +698,15 @@ export default class CommunityDetailPage extends Component {
                     />
                   </BottomSection>
                 </TopCollapsibleSection>
+
+                <CommunityInpageWizardContainer
+                  community={community}
+                  showModal={showModal}
+                  hideModal={hideModal}
+                  user={user}
+                  userAction={userAction}
+                />
+
                 <TopCollapsibleSection title={`Questions About ${name}`}>
                   <MainSection>
                     <CommunityQuestionAnswers
@@ -732,6 +788,7 @@ export default class CommunityDetailPage extends Component {
               />
             </Lazy>
           </StyledSection>
+
           {(nearbyCities && nearbyCities.length > 0) &&
             <Wrapper>
               <SeoLinks title={`Top Cities Near ${name}`} links={nearbyCities} />

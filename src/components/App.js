@@ -7,6 +7,7 @@ import smoothscroll from 'smoothscroll-polyfill';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 
+import { hideChatbox } from 'sly/config';
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
@@ -38,6 +39,7 @@ const careTypes = [
   'retirement-community',
   'assisted-living',
   'independent-living',
+  'board-and-care-home',
   'memory-care',
   'continuing-care-retirement-community',
 ].join('|');
@@ -70,15 +72,7 @@ export default class App extends Component {
     routes: routesPropType,
   };
 
-  getChildContext = () => ({
-    routes: this.routes,
-  });
-
-  componentDidMount() {
-    smoothscroll.polyfill();
-  }
-
-  routes = [
+  static routes = [
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
       component: CommunityDetailPageContainer,
@@ -174,6 +168,14 @@ export default class App extends Component {
     },
   ];
 
+  getChildContext = () => ({
+    routes: App.routes,
+  });
+
+  componentDidMount() {
+    smoothscroll.polyfill();
+  }
+
   render() {
     return (
       <Fragment>
@@ -203,11 +205,14 @@ export default class App extends Component {
           <link rel="shortcut icon" type="image/x-icon" href={assetPath('favicon.ico')} />
         </Helmet>
 
-        {/* <StaticResourcesController match={{}} location={{}} /> */}
-
         <ThemeProvider theme={theme}>
           <Router>
             <Switch>
+              <Route
+                path="/ping"
+                render={() => (<h1> pong </h1>)}
+                exact
+              />
               <Route
                 path={`/:toc(${careTypes})/:state/:city/filters`}
                 render={({ match }) => (
@@ -216,12 +221,12 @@ export default class App extends Component {
                   />
                 )}
               />
-              {this.routes.map(route => <Route key={route.path} {...route} />)}
+              {App.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
             </Switch>
           </Router>
         </ThemeProvider>
-        <ChatBoxContainer />
+        {!hideChatbox && <ChatBoxContainer />}
       </Fragment>
     );
   }

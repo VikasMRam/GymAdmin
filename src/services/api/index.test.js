@@ -79,7 +79,7 @@ describe('api', () => {
       })
     );
   });
-  ['delete', 'get', 'post', 'put', 'patch'].forEach((method) => {
+  ['delete', 'get', 'post', 'put', 'PATCH'].forEach((method) => {
     test(method, async () => {
       expect(global.fetch).not.toBeCalled();
       await api[method]('/foo');
@@ -124,7 +124,7 @@ describe('api', () => {
         });
       });
     });
-    ['post', 'put', 'patch'].forEach((method) => {
+    ['post', 'put', 'PATCH'].forEach((method) => {
       test(method, () => {
         const obj = api.create({ foo: 'bar' });
         expect(api.request).not.toBeCalled();

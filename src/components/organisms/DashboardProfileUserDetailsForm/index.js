@@ -17,11 +17,9 @@ const TwoColumnField = styled(Field)`
 `;
 
 // TODO: Searching in, should it be a city search?
-const DashboardProfileUserDetailsForm = ({
-  handleSubmit, ...props
-}) => {
+const DashboardProfileUserDetailsForm = ({ ...props }) => {
   return (
-    <FormSection heading="My Profile" buttonText="Save Changes" onSubmit={handleSubmit} {...props}>
+    <FormSection heading="My Profile" buttonText="Save Changes" {...props}>
       <Field
         name="name"
         label="Contact Name"
@@ -39,7 +37,7 @@ const DashboardProfileUserDetailsForm = ({
         wideWidth
       />
       <Field
-        name="phone"
+        name="phoneNumber"
         label="Phone"
         type="text"
         placeholder="925-555-5555"
@@ -54,8 +52,9 @@ const DashboardProfileUserDetailsForm = ({
         component={ReduxField}
         wideWidth
       >
-        <option>Mother</option>
-        <option>Father</option>
+        <option value="mother">Mother</option>
+        <option value="father">Father</option>
+        <option value="self">Self</option>
       </TwoColumnField>
       <Field
         name="residentName"
@@ -82,6 +81,7 @@ const DashboardProfileUserDetailsForm = ({
       >
         <option>In a Week</option>
         <option>In a month</option>
+        <option value="2 months">In 2 month</option>
       </TwoColumnField>
       <Field
         name="searchingCity"

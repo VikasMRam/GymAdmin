@@ -1,5 +1,6 @@
+import { stringify } from 'query-string';
+
 import { urlize, objectToURLQueryParams, parseURLQueryParams } from './url';
-import {assetPath} from "sly/components/themes";
 
 const fnExecutionTracker = {};
 
@@ -83,6 +84,7 @@ const searchParamsWhitelist = [
   'redirectTo',
   'action',
   'region',
+  'type',
 ];
 
 export const tocs = [
@@ -106,6 +108,13 @@ export const tocs = [
     segment: 'independent-living',
     searchLabel: 'Independent Living Communities',
     seoLabel: 'Independent Living Communities',
+  },
+  {
+    label: 'Board and Care Home',
+    value: 'board-and-care-home',
+    segment: 'board-and-care-home',
+    searchLabel: 'Board and Care Homes',
+    seoLabel: 'Board and Care Homes',
   },
   {
     label: 'Memory Care',

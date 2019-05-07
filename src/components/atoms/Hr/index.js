@@ -7,12 +7,13 @@ import { size, palette } from 'sly/components/themes';
 import { variation as variationPropType } from 'sly/propTypes/variation';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 
+const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
 const HRStyled = styled.hr`
   border: 0;
   padding: 0;
-  margin: ${size('spacing.xLarge')} 0;
+  margin: ${ifProp('noMargin', 0, getSize('spacing'))} 0;
   border-top: 1px solid ${getColor};
 
   ${ifProp('fullWidth', css`
@@ -28,11 +29,13 @@ Hr.propTypes = {
   palette: palettePropType,
   fullWidth: bool,
   variation: variationPropType,
+  noMargin: bool,
 };
 
 Hr.defaultProps = {
   palette: 'slate',
   variation: 'stroke',
+  size: 'xLarge',
 };
 
 export default Hr;

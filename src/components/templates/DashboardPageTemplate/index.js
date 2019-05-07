@@ -1,18 +1,23 @@
 import React from 'react';
-import { node } from 'prop-types';
+import { node, string } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
+import { FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH, FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
+import { CUSTOMER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ModalContainer from 'sly/containers/ModalContainer';
 import DashboardMenu from 'sly/components/molecules/DashboardMenu';
 
 const menuItems = [
   {
-    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'base', active: true,
+    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE,
   },
   {
-    label: 'Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler',
+    label: 'My Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH, role: CUSTOMER_ROLE,
+  },
+  {
+    label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAMILIES_PATH, role: AGENT_ROLE,
   },
 ];
 
@@ -37,14 +42,10 @@ const Column = styled.aside`
 `;
 
 const Body = styled.main`
-  padding: ${size('spacing.xLarge')};
   background-color: ${palette('grey.background')};
 
-  > * {
-    background-color: ${palette('white.base')};
-  }
-
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding: ${size('spacing.xLarge')};
     grid-column: 2 / 2;
     grid-row: 2 / 2;
   }
@@ -65,17 +66,31 @@ const DashboardPage = styled.div`
   }
 `;
 
-const DashboardPageTemplate = ({ children }) => (
-  <DashboardPage>
-    <Header><HeaderContainer /></Header>
-    <Column><DashboardMenu menuItems={menuItems} /></Column>
-    <Body>{children}</Body>
-    <ModalContainer />
-  </DashboardPage>
-);
+const DashboardPageTemplate = ({ children, activeMenuItem }) => {
+  const mi = menuItems.map((mi) => {
+    if (mi.label === activeMenuItem) {
+      mi.active = true;
+      mi.variation = 'base';
+    } else {
+      mi.active = false;
+      mi.variation = 'filler';
+    }
+    return mi;
+  });
+
+  return (
+    <DashboardPage>
+      <Header><HeaderContainer /></Header>
+      <Column><DashboardMenu menuItems={mi} /></Column>
+      <Body>{children}</Body>
+      <ModalContainer />
+    </DashboardPage>
+  );
+};
 
 DashboardPageTemplate.propTypes = {
   children: node,
+  activeMenuItem: string.isRequired,
 };
 
 export default DashboardPageTemplate;

@@ -7,7 +7,6 @@ import { size } from 'sly/components/themes';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { TemplateHeader } from 'sly/components/templates/BasePageTemplate';
 import FooterOrganism from 'sly/components/organisms/Footer';
-import BannerNotification from 'sly/components/molecules/BannerNotification';
 import ModalContainer from 'sly/containers/ModalContainer';
 
 export const CommunityDetailPageTemplate = styled.main`
@@ -87,20 +86,18 @@ export const CommunityDetailPageTemplate = styled.main`
 `;
 
 export const makeHeader = () => {
-  function Header({ className, bannerNotification, ...props }) {
+  function Header({ className, ...props }) {
     return (
       <TemplateHeader
         className={classes('overlayHeader', className)}
         {...props}
       >
         <HeaderContainer />
-        {bannerNotification && <BannerNotification>{bannerNotification}</BannerNotification>}
       </TemplateHeader>
     );
   }
   Header.propTypes = {
     className: string,
-    bannerNotification: string,
   };
 
   return Header;

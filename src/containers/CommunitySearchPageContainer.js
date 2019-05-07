@@ -1,36 +1,43 @@
 import React, { PureComponent } from 'react';
-import { object, array, bool } from 'prop-types';
+import { object, array } from 'prop-types';
 import queryString from 'query-string';
-import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-import withServerState from 'sly/store/withServerState';
+import {
+  stateNames,
+  urlize,
+  replaceLastSegment,
+} from 'sly/services/helpers/url';
 import SlyEvent from 'sly/services/helpers/events';
-import { resourceListReadRequest } from 'sly/store/resource/actions';
 import ErrorPage from 'sly/components/pages/Error';
 import CommunitySearchPage from 'sly/components/pages/CommunitySearchPage';
 import { CARE_ASSESSMENT_WIZARD } from 'sly/constants/modalType';
 import {
-  getList,
-  getListMeta,
-  isResourceListRequestInProgress,
-} from 'sly/store/selectors';
-import {
   filterLinkPath,
   getSearchParams,
 } from 'sly/services/helpers/search';
-import { logWarn } from 'sly/services/helpers/logging';
 import ModalController from 'sly/controllers/ModalController';
+import { prefetch } from 'sly/services/newApi';
+import { withProps } from 'sly/services/helpers/hocs';
 
-class CommunitySearchPageContainer extends PureComponent {
+
+@withProps(({ match, location }) => ({
+  searchParams: getSearchParams(match, location),
+}))
+
+@prefetch('geoGuide', 'getGeoGuides', (request, { searchParams }) => request(searchParams))
+
+@prefetch('communityList', 'getSearchResources', (request, { searchParams }) => request(searchParams))
+
+export default class CommunitySearchPageContainer extends PureComponent {
   static propTypes = {
+    status: object.isRequired,
     searchParams: object.isRequired,
     history: object.isRequired,
     location: object.isRequired,
-    communityList: array.isRequired,
+    communityList: array,
     geoGuide: array,
-    requestMeta: object.isRequired,
     serverState: object,
-    isFetchingResults: bool,
   };
 
   // TODO Define Search Parameters
@@ -80,16 +87,35 @@ class CommunitySearchPageContainer extends PureComponent {
       serverState,
       communityList,
       geoGuide,
-      requestMeta,
       location,
       history,
-      isFetchingResults,
+      status,
     } = this.props;
+
+    const { pathname, search } = location;
+    const notPermittedSeparators = ['_', '%20'];
+    const ucStateQp = searchParams.state.toUpperCase();
+    if (stateNames[ucStateQp]) {
+      const nPathname = pathname.replace(searchParams.state, stateNames[ucStateQp]).toLowerCase();
+      return <Redirect to={nPathname + search} />;
+    }
+    const hasNotPermittedSeparators = notPermittedSeparators.some(v => searchParams.city.indexOf(v) >= 0);
+    if (hasNotPermittedSeparators) {
+      return <Redirect to={replaceLastSegment(pathname, urlize(searchParams.city)) + search} />;
+    }
 
     if (serverState instanceof Error) {
       const errorCode = (serverState.response && serverState.response.status) || 500;
       return <ErrorPage errorCode={errorCode} history={history} />;
     }
+
+    const isFetchingResults = status.communityList.isLoading || !status.communityList.hasStarted;
+
+    if (isFetchingResults) {
+      return null;
+    }
+
+    const requestMeta = status.communityList.meta;
 
     const isMapView = searchParams.view === 'map';
     const gg = geoGuide && geoGuide.length > 0 ? geoGuide[0] : {};
@@ -119,36 +145,3 @@ class CommunitySearchPageContainer extends PureComponent {
     );
   }
 }
-
-const mapStateToProps = (state, { match, location }) => {
-  const searchParams = getSearchParams(match, location);
-  const communityList = getList(state, 'searchResource', searchParams);
-  return {
-    searchParams,
-    communityList,
-    isFetchingResults: isResourceListRequestInProgress(state, 'searchResource'),
-    requestMeta: getListMeta(state, 'searchResource', searchParams),
-    geoGuide: getList(state, 'geoGuide', searchParams),
-  };
-};
-
-const mapPropsToActions = ({ match, location }) => {
-  const searchParams = getSearchParams(match, location);
-  return {
-    searchResource: resourceListReadRequest('searchResource', searchParams),
-    geoGuide: resourceListReadRequest('geoGuide', searchParams),
-  };
-};
-
-const handleResponses = (responses) => {
-  const { geoGuide } = responses;
-  geoGuide(null, (error) => {
-    // ignore all geoGuides errors
-    logWarn(error);
-  });
-};
-
-export default withServerState(
-  mapPropsToActions,
-  handleResponses,
-)(connect(mapStateToProps)(CommunitySearchPageContainer));

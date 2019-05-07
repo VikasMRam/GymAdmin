@@ -163,13 +163,14 @@ export const getHelmetForSearchPage = ({
       <meta name="description" content={description} />
       <meta content={description} property="og:description" />
       <meta content={`${title} | Seniorly`} property="og:title" />
+      <meta content={canonicalUrl} property="og:url" />
 
       <meta content={description} property="twitter:description" />
       <meta content={`${title} | Seniorly`} property="twitter:title" />
       <link rel="canonical" href={canonicalUrl} />
 
       {
-        url.search && url.search.length > 0 && <meta name="robots" content="noindex"/>
+        url.search && url.search.length > 0 && <meta name="robots" content="noindex" />
       }
 
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
@@ -184,11 +185,16 @@ export const getHelmetForSearchPage = ({
 
 export const getHelmetForCommunityPage = (community, location) => {
   const {
-    name, address, propInfo, rates, startingRate, url, gallery = {}, videoGallery = {},
+    name, mainImage, address, propInfo, propRatings, rates, startingRate, url, gallery = {}, videoGallery = {}, reviews, questions,
   } = community;
   const {
     search, pathname,
   } = location;
+  const {
+    line1, city, state, country, zip, latitude, longitude,
+  } = address;
+  const { websiteUrl } = propInfo;
+  const { numReviews, reviewsValue } = propRatings;
 
   const ratesProvided = (rates && rates === 'Provided');
   const canonicalUrl = `${host}${pathname}`;
@@ -219,6 +225,104 @@ export const getHelmetForCommunityPage = (community, location) => {
 
   const ld = getSDForCommunity({ ...community });
 
+  const criticReviews = reviews.filter(review => review.isCriticReview === true);
+  const criticReviewsJsonLDs = criticReviews.map((criticReview) => {
+    const result = {
+      '@context': 'https://schema.org',
+      '@type': 'Review',
+      author: {
+        '@type': 'Person',
+        name: criticReview.author,
+      },
+      url: `https://www.seniorly.com${url}`,
+      datePublished: criticReview.updatedAt,
+      publisher: {
+        '@type': 'Organization',
+        name: 'Seniorly',
+        sameAs: 'https://www.seniorly.com',
+      },
+      description: criticReview.comments,
+      inLanguage: 'en',
+      itemReviewed: {
+        '@type': 'LocalBusiness',
+        name,
+        sameAs: websiteUrl,
+        image: mainImage,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: line1,
+          addressLocality: city,
+          addressRegion: state,
+          postalCode: zip,
+          addressCountry: country,
+        },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude,
+          longitude,
+        },
+        // telephone: communityPhone, // We use slyPhone as communityProfile, so no need to set
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: reviewsValue,
+          bestRating: 5,
+          ratingCount: numReviews,
+        },
+      },
+      reviewRating: {
+        '@type': 'Rating',
+        worstRating: 1,
+        bestRating: 5,
+        ratingValue: criticReview.value,
+      },
+    };
+    // logic copied from getSDForCommunity
+    if (startingRate > 0) {
+      result.itemReviewed.priceRange = `From ${startingRate} per month`;
+    }
+    return (<script key={`helmet_critic-review_${criticReview.author+name}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
+  });
+
+  const getQAAnswerLDObj = (answer, question) => {
+    return {
+      '@type': 'Answer',
+      text: answer.contentData,
+      dateCreated: answer.createdAt,
+      upvoteCount: 1,
+      url: `https://www.seniorly.com/resources/questions/${question.url}`,
+      author: {
+        '@type': 'Person',
+        name: answer.creator,
+      },
+    };
+  };
+
+  // TODO: Check whether we want to filter out questions without answers
+  const qaPageLdObjs = questions.filter(question => question.contents.length > 0).map((question) => {
+    const answers = question.contents.slice();
+    const firstAnswer = answers.shift();
+    const acceptedAnswer = getQAAnswerLDObj(firstAnswer, question);
+    const suggestedAnswer = answers.map(answer => getQAAnswerLDObj(answer, question));
+    const result = {
+      '@context': 'https://schema.org',
+      '@type': 'QAPage',
+      mainEntity: {
+        '@type': 'Question',
+        name: question.contentData,
+        text: question.contentData,
+        answerCount: question.contents.length,
+        upvoteCount: 1,
+        dateCreated: question.createdAt,
+        author: {
+          '@type': 'Person',
+          name: question.creator,
+        },
+        acceptedAnswer,
+        suggestedAnswer: suggestedAnswer.length > 0 ? suggestedAnswer : undefined,
+      },
+    };
+    return (<script key={`helmet_question_${question.creator+question.createdAt}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
+  });
   // TODO Add Image and Video and structured data.
   return (
     <Helmet>
@@ -238,17 +342,24 @@ export const getHelmetForCommunityPage = (community, location) => {
 
       <link rel="canonical" href={canonicalUrl} />
       {
-        search && search.length > 0 && <meta name="robots" content="noindex"/>
+        search && search.length > 0 && <meta name="robots" content="noindex" />
       }
       <script type="application/ld+json">{`${JSON.stringify(ld, stringifyReplacer)}`}</script>
+      {criticReviewsJsonLDs}
+      {qaPageLdObjs}
     </Helmet>
   );
 };
 
-export const getHelmetForAgentsPage = () => {
+export const getHelmetForAgentsPage = ({location}) => {
+  const { pathname } = location;
+  const description = 'Talk to our senior living advisors and partner agents at Seniorly. Connect with a local senior living advisor for personalized senior housing support!';
+  const canonicalUrl = `${host}${pathname}`;
   return (
     <Helmet>
-      <title>Our Senior Living Partner Agents</title>
+      <title>Find Senior Living Advisors | Seniorly Partner Agents</title>
+      <meta name="description" content={description} />
+      <link rel="canonical" href={canonicalUrl} />
     </Helmet>
   );
 };
@@ -257,6 +368,38 @@ export const getHelmetForPartnersPage = () => {
   return (
     <Helmet>
       <title>Partner Agent Program</title>
+    </Helmet>
+  );
+};
+
+export const getHelmetForAgentProfilePage = ({agent, location}) => {
+  const { pathname } = location;
+  const { info } = agent;
+  const {displayName, citiesServed} = info;
+  const firstName = displayName.split(' ')[0];
+  const firstThreeCities = citiesServed.slice(3).join(', ');
+  const description = `Talk to expert senior living advisor ${info.displayName}. ${firstName} helps families find senior housing in ${firstThreeCities}& more locations!`;
+  const title = `${info.displayName} Senior Living Advisor | Seniorly Partner Agents`;
+  const canonicalUrl = `${host}${pathname}`;
+  return (
+    <Helmet>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <link rel="canonical" href={canonicalUrl} />
+    </Helmet>
+  );
+};
+
+export const getHelmetForAgentsRegionPage = ({locationName, location}) => {
+  const { pathname } = location;
+  const description = `Talk to local senior living advisors and partner agents in the ${locationName} region. Find a ${locationName} senior living advisor for personalized support!`;
+  const title = `${locationName} Senior Living Advisors | Seniorly Partner Agents`;
+  const canonicalUrl = `${host}${pathname}`;
+  return (
+    <Helmet>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <link rel="canonical" href={canonicalUrl} />
     </Helmet>
   );
 };

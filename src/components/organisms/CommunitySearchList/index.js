@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { object, arrayOf, func } from 'prop-types';
 import queryString from 'query-string';
 
+import theme from 'sly/components/themes/default';
 import { size, gridColumns, assetPath } from 'sly/components/themes';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
 import { Image, Centered, Link, Block } from 'sly/components/atoms';
@@ -115,11 +116,17 @@ const CommunitySearchList = ({
   }
 
   const components = communityList.map((similarProperty) => {
+    const target = global.innerWidth && global.innerWidth >= parseInt(theme.sizes.breakpoint.laptop, 10)
+      ? `community_profile_${similarProperty.id}`
+      : '_self';
     return (
-      <StyledLink key={similarProperty.id} to={similarProperty.url}>
-        <SimilarCommunityTile
-          similarProperty={similarProperty}
-        />
+      <StyledLink
+        target={target}
+        key={similarProperty.id}
+        to={similarProperty.url}
+        rel="noopener"
+      >
+        <SimilarCommunityTile similarProperty={similarProperty} />
       </StyledLink>
     );
   });

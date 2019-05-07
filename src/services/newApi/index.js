@@ -1,16 +1,16 @@
-import {
+export {
   get,
   post,
   patch,
   put,
   destroy,
+} from './httpMethods';
 
-  invalidateRequests,
+export { invalidateRequests } from './actions';
 
-  reducer,
-} from 'redux-bees';
+export reducer from './reducer';
 
-import {
+export {
   getEntity,
   getRelationship,
   getRequestResult,
@@ -22,31 +22,12 @@ import {
   getRequestInfo,
 } from './selectors';
 
-export {
-  get,
-  post,
-  patch,
-  put,
-  destroy,
-
-  getEntity,
-  getRelationship,
-  getRequestResult,
-  isRequestLoading,
-  hasRequestStarted,
-  getRequestError,
-  getRequestHeaders,
-  getRequestMeta,
-  getRequestInfo,
-
-  invalidateRequests,
-
-  reducer,
-};
-
+export ApiProvider from './ApiProvider';
 export createApi from './createApi';
 export query from './query';
+export prefetch from './prefetch';
 export middleware from './middleware';
 
-export ApiProvider from './ApiProvider';
 export withApi from './withApi';
+export withUser from './withUser';
+export withAuth from './withAuth';

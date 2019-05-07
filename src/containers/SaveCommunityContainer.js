@@ -2,35 +2,89 @@ import React, { Component } from 'react';
 import { object, func, string } from 'prop-types';
 import { connect } from 'react-redux';
 import { SubmissionError, clearSubmitErrors } from 'redux-form';
+import { withRouter } from 'react-router';
+import styled from 'styled-components';
 
+import { size } from 'sly/components/themes';
 import SlyEvent from 'sly/services/helpers/events';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { USER_SAVE_INIT_STATUS } from 'sly/constants/userSave';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED } from 'sly/constants/notifications';
-import { resourceCreateRequest, resourceUpdateRequest } from 'sly/store/resource/actions';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { getDetail, getDetails } from 'sly/store/selectors';
-import { ensureAuthenticated } from 'sly/store/authenticated/actions';
-import SaveCommunityFormContainer from 'sly/containers/SaveCommunityFormContainer';
+import { withApi, withAuth, prefetch, query } from 'sly/services/newApi';
+import { Block } from 'sly/components/atoms';
+import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import CommunitySaved from 'sly/components/organisms/CommunitySaved';
+import { USER_SAVE } from 'sly/services/newApi/constants';
 
-class SaveCommunityContainer extends Component {
+const PaddedBlock = styled(Block)`
+  padding: ${size('spacing.xxLarge')};
+`;
+
+const mapStateToProps = (state, ownProps) => {
+  const { slug, userSaves } = ownProps;
+  const userSave = userSaves && userSaves.find(us => us.entityType === COMMUNITY_ENTITY_TYPE && us.entitySlug === slug);
+  return {
+    userSave,
+  };
+};
+
+// FIXME: hack because createUser is not JSON:API, should use @query
+const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
+  createUserSave: data => ensureAuthenticated(
+    'Sign up to add to your favorites list',
+    api.createUserSave(data),
+  ),
+  updateUserSave: (id, data) => ensureAuthenticated(
+    'Sign up to add to your favorites list',
+    api.updateUserSave({ id }, data),
+  ),
+});
+
+const getCommunitySlug = match => match.params.communitySlug;
+
+@withAuth
+
+@withRouter
+
+@withApi
+
+@prefetch('community', 'getCommunity', (req, { slug }) => req({
+  id: slug,
+  include: 'similar-communities,questions,agents',
+}))
+
+@prefetch('userSaves', 'getUserSaves', (req, { match }) => req({
+  'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
+  'filter[entity_slug]': getCommunitySlug(match),
+}))
+
+@query('createAction', 'createUuidAction')
+
+@connect(mapStateToProps, mapDispatchToProps)
+
+export default class SaveCommunityContainer extends Component {
   static propTypes = {
+    match: object,
+    slug: string,
     user: object,
     userSave: object,
     createUserSave: func,
     updateUserSave: func,
+    createAction: func,
     community: communityPropType,
     notification: string,
     setQueryParams: func,
     notifyInfo: func,
     notifyError: func,
-    onDoneButtonClicked: func,
+    onDoneButtonClick: func,
+    onCancelClick: func,
   };
 
   state = { updatingUserSave: false };
 
+  // FIXME: ugly hack to convert a declarative intent in an imperative one
   componentDidMount() {
     const { createUserSave, updateUserSave } = this;
     const { userSave } = this.props;
@@ -45,7 +99,7 @@ class SaveCommunityContainer extends Component {
   createUserSave = () => {
     const { handleModalClose } = this;
     const {
-      community, createUserSave, notifyError,
+      community, createUserSave, notifyError, createAction, match,
     } = this.props;
     const { id } = community;
     const payload = {
@@ -57,6 +111,18 @@ class SaveCommunityContainer extends Component {
       updatingUserSave: true,
     });
     createUserSave(payload)
+      .then(({ body }) => createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            entitySlug: community.id,
+            entityType: 'Community',
+            userSaveID: body.data.id,
+          },
+          actionPage: match.url,
+          actionType: USER_SAVE,
+        },
+      }))
       .then(() => {
         this.setState({
           updatingUserSave: false,
@@ -70,7 +136,7 @@ class SaveCommunityContainer extends Component {
   updateUserSave = (status) => {
     const { handleModalClose } = this;
     const {
-      userSave, updateUserSave, notifyError,
+      userSave, updateUserSave, notifyError, createAction, community, match,
     } = this.props;
     const { id } = userSave;
 
@@ -80,6 +146,18 @@ class SaveCommunityContainer extends Component {
     updateUserSave(id, {
       status,
     })
+      .then(({ body }) => createAction({
+        type: 'UUIDAction',
+        attributes: {
+          actionInfo: {
+            entitySlug: community.id,
+            entityType: 'Community',
+            userSaveID: body.data.id,
+          },
+          actionPage: match.url,
+          actionType: USER_SAVE,
+        },
+      }))
       .then(() => {
         this.setState({
           updatingUserSave: false,
@@ -94,6 +172,7 @@ class SaveCommunityContainer extends Component {
     const {
       updateUserSave, userSave,
     } = this.props;
+
     const { id } = userSave;
 
     clearSubmitErrors();
@@ -112,10 +191,10 @@ class SaveCommunityContainer extends Component {
   };
 
   handleModalClose = () => {
-    const { community, onDoneButtonClicked } = this.props;
+    const { community, onDoneButtonClick } = this.props;
     const { id } = community;
 
-    onDoneButtonClicked();
+    onDoneButtonClick();
     const event = {
       action: 'close-modal', category: 'saveCommunity', label: id,
     };
@@ -124,13 +203,18 @@ class SaveCommunityContainer extends Component {
 
   render() {
     const { handleSubmitSaveCommunityForm } = this;
-    const { community, onDoneButtonClicked } = this.props;
+    const { community, onDoneButtonClick, onCancelClick } = this.props;
     const { updatingUserSave } = this.state;
-    const { similarProperties } = community;
 
     if (updatingUserSave) {
-      return 'Updating...';
+      return <PaddedBlock>Updating...</PaddedBlock>;
     }
+
+    const PaddedCommunitySaved = () => (
+      <PaddedBlock>
+        <CommunitySaved name="Success" similarCommunities={community.similarProperties} onDoneButtonClicked={onDoneButtonClick}/>
+      </PaddedBlock>
+    );
 
     return (
       <WizardController
@@ -141,15 +225,17 @@ class SaveCommunityContainer extends Component {
         }) => (
           <WizardSteps {...props}>
             <WizardStep
-              component={SaveCommunityFormContainer}
+              component={AddNoteFormContainer}
               name="Note"
               onSubmit={data => handleSubmitSaveCommunityForm(data, next)}
+              heading="Add to your favorites list"
+              placeholder="What are some things about this community that you like..."
+              hasCancel
+              onCancelClick={onCancelClick}
             />
             <WizardStep
-              component={CommunitySaved}
+              component={PaddedCommunitySaved}
               name="Success"
-              similarCommunities={similarProperties}
-              onDoneButtonClicked={onDoneButtonClicked}
             />
           </WizardSteps>
         )}
@@ -158,29 +244,3 @@ class SaveCommunityContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const { slug } = ownProps;
-  const community = getDetail(state, 'community', slug);
-  const user = getDetail(state, 'user', 'me');
-  const userSaves = getDetails(state, 'userSave');
-  const userSave = userSaves.find(us => us.entityType === COMMUNITY_ENTITY_TYPE && us.entitySlug === slug);
-
-  return {
-    user,
-    community,
-    userSave,
-  };
-};
-
-const mapDispatchToProps = dispatch => ({
-  createUserSave: data => dispatch(ensureAuthenticated(
-    'Sign up to add to your favorites list',
-    resourceCreateRequest('userSave', data),
-  )),
-  updateUserSave: (id, data) => dispatch(ensureAuthenticated(
-    'Sign up to add to your favorites list',
-    resourceUpdateRequest('userSave', id, data),
-  )),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SaveCommunityContainer);

@@ -88,9 +88,11 @@ const CommunitySearchPage = ({
   const tocLabel = getTocSeoLabel(searchParams.toc);
   let latitude = 0;
   let longitude = 0;
+
   if (communityList.length > 0) {
     ([{ latitude, longitude }] = communityList);
   }
+
   if (searchParams.latitude && searchParams.longitude) {
     latitude = parseFloat(searchParams.latitude);
     longitude = parseFloat(searchParams.longitude);

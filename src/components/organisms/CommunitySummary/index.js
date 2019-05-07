@@ -2,13 +2,13 @@ import React, { Fragment } from 'react';
 import { object, bool, func, string } from 'prop-types';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
-import ReactTooltip from 'react-tooltip';
 
 import { size } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { Link, Box, Heading, Hr } from 'sly/components/atoms';
 import IconButton from 'sly/components/molecules/IconButton';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
+import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 
 const Address = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
@@ -42,7 +42,7 @@ const StyledIconButton = styled(IconButton)`
 
 const CommunitySummary = ({
   community, innerRef, isAdmin, onConciergeNumberClicked, className,
-  onFavouriteClick, isFavourited, onShareClick,
+  onFavouriteClick, userSave, onShareClick,
 }) => {
   const {
     address, name, startingRate, propRatings, propInfo, twilioNumber,
@@ -64,6 +64,9 @@ const CommunitySummary = ({
   if (!conciergeNumber) {
     conciergeNumber = '8558664515';
   }
+
+  const isFavorited = userSave && userSave.status !== USER_SAVE_DELETE_STATUS;
+  const favIcon = isFavorited ? 'favourite-light' : 'favourite-empty';
 
   return (
     <Box innerRef={innerRef} className={className}>
@@ -98,16 +101,9 @@ const CommunitySummary = ({
           <StyledIconButton ghost transparent icon="share" onClick={onShareClick}>
             Share
           </StyledIconButton>
-          {!isFavourited &&
-            <StyledIconButton ghost transparent icon="favourite-empty" onClick={onFavouriteClick}>
-              Save
-            </StyledIconButton>
-          }
-          {isFavourited &&
-            <StyledIconButton ghost transparent icon="favourite-light" onClick={onFavouriteClick}>
-              Save
-            </StyledIconButton>
-          }
+          <StyledIconButton ghost transparent icon={favIcon} onClick={onFavouriteClick}>
+            Save
+          </StyledIconButton>
         </div>
       </Wrapper>
       <Hr />
@@ -124,7 +120,7 @@ CommunitySummary.propTypes = {
   className: string,
   onFavouriteClick: func,
   onShareClick: func,
-  isFavourited: bool,
+  userSave: object,
 };
 
 export default CommunitySummary;

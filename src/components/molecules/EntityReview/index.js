@@ -1,7 +1,7 @@
 import React from 'react';
 import { string, number } from 'prop-types';
 import styled from 'styled-components';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { size } from 'sly/components/themes';
 import Rating from 'sly/components/molecules/Rating';
@@ -39,7 +39,7 @@ const EntityReview = ({
     <CommentBlock>{comments}</CommentBlock>
     <BottomSection>
       <ReviewHeadingText size="caption" palette="grey">{`By ${author}`}</ReviewHeadingText>
-      <ReviewHeadingText size="caption" palette="grey">{moment(createdAt).format('MMMM YYYY')}</ReviewHeadingText>
+      <ReviewHeadingText size="caption" palette="grey">{dayjs(createdAt).format('MMMM YYYY')}</ReviewHeadingText>
     </BottomSection>
     <Hr />
   </Wrapper>

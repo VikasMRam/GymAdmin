@@ -1,17 +1,15 @@
 import build from 'redux-object';
 
 function getRawRequest(state, apiCall, args) {
-  const { actionName } = apiCall;
-
   if (!state.bees.requests) {
     return null;
   }
 
-  if (!state.bees.requests[actionName]) {
+  if (!state.bees.requests[apiCall]) {
     return null;
   }
 
-  return state.bees.requests[actionName][JSON.stringify(args)];
+  return state.bees.requests[apiCall][JSON.stringify(args)];
 }
 
 export function getEntity(state, handle, isNormalized) {
@@ -35,6 +33,10 @@ export function getRelationship(state, entity, relationshipName) {
     return null;
   }
 
+  if (!entity.relationships) {
+    return null;
+  }
+
   if (!entity.relationships[relationshipName]) {
     return null;
   }
@@ -49,9 +51,7 @@ export function getRelationship(state, entity, relationshipName) {
 }
 
 
-export function getRequestResult(state, apiCall, args, isNormalized) {
-  const request = getRawRequest(state, apiCall, args);
-
+export function getRequestResult(state, request, isNormalized) {
   if (!request || !request.response) {
     return null;
   }
@@ -63,24 +63,19 @@ export function getRequestResult(state, apiCall, args, isNormalized) {
   return getEntity(state, request.response, isNormalized);
 }
 
-export function getRequestHeaders(state, apiCall, args) {
-  const request = getRawRequest(state, apiCall, args);
+export function getRequestHeaders(request) {
   return request && request.headers;
 }
 
-export function getRequestMeta(state, apiCall, args) {
-  const request = getRawRequest(state, apiCall, args);
+export function getRequestMeta(request) {
   return request && request.meta;
 }
 
-export function isRequestLoading(state, apiCall, args) {
-  const request = getRawRequest(state, apiCall, args);
+export function isRequestLoading(request) {
   return request && request.isLoading ? true : false;
 }
 
-export function hasRequestStarted(state, apiCall, args) {
-  const request = getRawRequest(state, apiCall, args);
-
+export function hasRequestStarted(request) {
   if (!request) {
     return false;
   }
@@ -92,27 +87,19 @@ export function hasRequestStarted(state, apiCall, args) {
   return true;
 }
 
-export function getRequestError(state, apiCall, args) {
-  const request = getRawRequest(state, apiCall, args);
-
-  if (!request) {
-    return false;
-  }
-
-  return request.error;
-}
-
 export function getRequestInfo(state, apiCall, args) {
-  const error = getRequestError(state, apiCall, args);
+  const request = getRawRequest(state, apiCall, args);
+  const error = request && request.error ? request.error : false;
 
   return {
-    hasStarted: hasRequestStarted(state, apiCall, args),
-    isLoading: isRequestLoading(state, apiCall, args),
+    hasStarted: hasRequestStarted(request),
+    isLoading: isRequestLoading(request),
     hasFailed: !!error,
-    result: getRequestResult(state, apiCall, args),
-    normalized: getRequestResult(state, apiCall, args, true),
-    headers: getRequestHeaders(state, apiCall, args),
-    meta: getRequestMeta(state, apiCall, args),
+    result: getRequestResult(state, request),
+    normalized: getRequestResult(state, request, true),
+    headers: getRequestHeaders(request),
+    meta: getRequestMeta(request),
+    status: request && request.status,
     error,
   };
 }

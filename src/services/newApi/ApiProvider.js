@@ -1,8 +1,14 @@
 import { Component } from 'react';
 import { object, any } from 'prop-types';
-import { connect } from 'react-redux';
 
-class ApiProvider extends Component {
+import { API_CALL } from './constants';
+
+export const makeApiCall = (call, args) => ({
+  type: API_CALL,
+  payload: { call, args },
+});
+
+export default class ApiProvider extends Component {
   static propTypes = {
     api: object.isRequired,
     children: any,
@@ -13,19 +19,16 @@ class ApiProvider extends Component {
   };
 
   getChildContext = () => ({
-    api: this.bindApi(),
+    api: this.createApiActions(),
   });
 
-  bindApi = () => {
-    const { api, dispatch } = this.props;
-    return Object.entries(api).reduce((acc, [key, method]) => {
-      acc[key] = (...args) => dispatch(method(...args));
-      acc[key].actionName = method.actionName;
+  createApiActions = () => Object.entries(this.props.api)
+    .reduce((acc, [name, call]) => {
+      acc[name] = (...args) => makeApiCall(call, args);
+      acc[name].actionName = call.actionName;
+      acc[name].method = call.method;
       return acc;
     }, {});
-  };
 
   render = () => this.props.children;
 }
-
-export default connect()(ApiProvider);

@@ -4,7 +4,7 @@ import { bool, oneOf, func } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
+import { size, palette, assetPath } from 'sly/components/themes';
 
 const backgroundColor = (p) => {
   if (p.disabled) {
@@ -61,6 +61,23 @@ const styles = css`
     height: auto;
     margin: 0 ${size('spacing.small')} 0 0;
   }
+  &[type='search'] {
+    background: url(${assetPath('icons/search-caption.svg')}) no-repeat scroll 12px 12px;
+    padding-left: calc(12px + ${size('spacing', 'xLarge')} + ${size('spacing', 'regular')});
+  }
+
+  ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: ${palette('slate', 'filler')};
+    opacity: 1; /* Firefox */
+  }
+
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: ${palette('slate', 'filler')};
+  }
+
+  ::-ms-input-placeholder { /* Microsoft Edge */
+    color: ${palette('slate', 'filler')};
+  }
 `;
 
 const StyledTextarea = styled.textarea`
@@ -100,7 +117,7 @@ class Input extends Component {
 }
 
 Input.propTypes = {
-  type: oneOf(['textarea', 'select', 'text', 'checkbox', 'radio', 'password', 'number']),
+  type: oneOf(['search', 'textarea', 'select', 'text', 'checkbox', 'radio', 'password', 'number', 'hidden', 'date']),
   size: oneOf(['small', 'regular', 'large', 'xLarge']),
   onFocus: func,
   invalid: bool,

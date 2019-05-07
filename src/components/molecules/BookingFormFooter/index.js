@@ -1,7 +1,7 @@
 import React from 'react';
 import { oneOf, string, bool, func } from 'prop-types';
 import styled from 'styled-components';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { getKey, palette, size } from 'sly/components/themes';
 import { LATER_DATE } from 'sly/constants/date';
@@ -56,7 +56,7 @@ const BookingFormFooter = ({
     if (date === LATER_DATE) {
       dateString = 'Later Date';
     } else {
-      const parsedDate = moment(date, 'YYYY-MM-DD');
+      const parsedDate = dayjs(date);
       if (!parsedDate.isValid()) {
         dateString = 'Failed to parse date';
       } else {

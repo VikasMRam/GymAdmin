@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
+import Helmet from 'react-helmet';
 import styled from 'styled-components';
 import { bool, func, string, object } from 'prop-types';
 
+import { host } from 'sly/config';
 import { size, assetPath, palette, gridColumns } from 'sly/components/themes';
 import { ALSeoCities, ALSeoStates } from 'sly/services/helpers/homepage';
 import SlyEvent from 'sly/services/helpers/events';
@@ -10,7 +12,6 @@ import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import { Image, Centered, Label, Heading, Hr, Link, Block, Button } from 'sly/components/atoms';
-import VideoThumbnail from 'sly/components/molecules/VideoThumbnail';
 import Section from 'sly/components/molecules/Section';
 import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
@@ -172,8 +173,8 @@ const CenteredTile = styled(({
 
 const firstRowDiscoverHomes = [
   {
-    title: 'Care Homes',
-    description: 'Communities combining comfort and care',
+    title: 'Board and Care Home',
+    description: 'A residential personal care home',
     image: assetPath('images/home/discover-home/care-home.jpeg'),
     buttonText: 'See more',
     searchParams: { size: 'small' },
@@ -230,7 +231,7 @@ const usefulInformationTiles = [
   {
     to: '/board-and-care-home',
     image: assetPath('images/home/useful-info/board-and-care.jpg'),
-    title: 'Board & Care Residential',
+    title: 'Board & Care Home',
   },
   /* {
     to: '#',
@@ -414,8 +415,13 @@ const HomePage = ({
     />
   ));
 
+  const canonicalUrl = `${host}`;
+
   return (
     <Fragment>
+      <Helmet>
+        <link rel="canonical" href={canonicalUrl} />
+      </Helmet>
       <TemplateHeader>{HeaderContent}</TemplateHeader>
       <TemplateContent>
         <VideoSection title="How Seniorly Can Help You Find A Home" subtitle="" id="watch-video">

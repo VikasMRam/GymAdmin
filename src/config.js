@@ -15,7 +15,6 @@ const config = {
     isDev: process.env.NODE_ENV,
     isTest: false,
     isProd: false,
-    basename: process.env.BASENAME,
     host: process.env.HOST,
     port: process.env.PORT,
     isBrowser: typeof window !== 'undefined',
@@ -36,6 +35,7 @@ const config = {
     googleAppId: process.env.GOOGLE_CLIENT_ID,
     olarkSiteId: '9319-500-10-7635',
     muteReduxLogger: true,
+    hideChatbox: false,
   },
 
   test: {
@@ -46,7 +46,8 @@ const config = {
 
   development: {
     muteReduxLogger: process.env.MUTE_REDUX_LOGGER,
-    enableExperimentsDebugger: true,
+    hideChatbox: process.env.HIDE_CHATBOX,
+    enableExperimentsDebugger: false,
     gMapsApiKey: 'AIzaSyALxJg-oMW7SvkQ27KFTuWjTLedXcAhrZE',
   },
 

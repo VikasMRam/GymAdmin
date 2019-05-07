@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import 'babel-polyfill';
-
 import path from 'path';
 import crypto from 'crypto';
 
@@ -13,7 +12,6 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router';
 import { renderToString } from 'react-router-server';
-import { matchRoutes } from 'react-router-config';
 import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
@@ -21,23 +19,23 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import { cleanError, logWarn } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
-import { port, host, basename, publicPath, isDev, cookieDomain } from 'sly/config';
+import { port, host, publicPath, isDev, cookieDomain } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
-import createBeesApi from 'sly/services/newApi/createApi';
 import apiService from 'sly/services/api';
 import ClientApp from 'sly/components/App';
 import DashboardApp from 'sly/components/DashboardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
-import ApiProvider from 'sly/services/newApi/ApiProvider';
+import { createApi as createBeesApi } from 'sly/services/newApi';
+import ApiProvider, { makeApiCall } from 'sly/services/newApi/ApiProvider';
 
 const makeAppRenderer = renderedApp => ({
   store, context, location, sheet,
 }) => {
   const app = sheet.collectStyles((
     <Provider store={store}>
-      <StaticRouter basename={basename} context={context} location={location}>
+      <StaticRouter context={context} location={location}>
         {renderedApp}
       </StaticRouter>
     </Provider>
@@ -49,13 +47,6 @@ const renderEmptyApp = () => {
   return { html: '', state: {} };
 };
 
-const getAppRoutes = (bundle) => {
-  switch (bundle) {
-    case 'dashboard': return DashboardApp.routes;
-    default: return [];
-  }
-};
-
 // requires compatible configuration
 const getAppRenderer = ({ bundle, api }) => {
   switch (bundle) {
@@ -64,7 +55,11 @@ const getAppRenderer = ({ bundle, api }) => {
         <DashboardApp />
       </ApiProvider>
     ));
-    case 'client': return makeAppRenderer(<ClientApp />);
+    case 'client': return makeAppRenderer((
+      <ApiProvider api={api}>
+        <ClientApp />
+      </ApiProvider>
+    ));
     default: return renderEmptyApp;
   }
 };
@@ -211,7 +206,7 @@ app.use((req, res, next) => {
 
 // store
 app.use(async (req, res, next) => {
-  const { slyUUID, cookies, bundle } = req.clientConfig;
+  const { slyUUID, cookies } = req.clientConfig;
 
   const hmac = crypto.createHmac('sha256', slyUUID);
   const slyUUIDHash = hmac.digest('hex');
@@ -249,37 +244,39 @@ app.use(async (req, res, next) => {
 
   const store = configureStore({ experiments: userExperiments }, { api });
 
-  // FIXME: hack until SEO app is migrated to bees
-  if (bundle === 'dashboard') {
-    try {
-      await store.dispatch(beesApi.getUser({ id: 'me' }));
-      const routes = getAppRoutes(bundle);
-      const promises = matchRoutes(routes, req.url)
-        .filter(({ route }) => typeof route.component.loadData === 'function')
-        .map(({ route, match }) => route.component.loadData(store, { match, api: beesApi }));
-      await Promise.all(promises);
-    } catch (e) {
-      if (e.status === 401) {
-        // ignore 401
-        console.log(e);
-        logWarn(e);
-      } else {
-        next(e);
-        return;
-      }
+  try {
+    await store.dispatch(resourceDetailReadRequest('user', 'me'));
+  } catch (e) {
+    if (e.response && e.response.status === 401) {
+      // ignore 401
+      logWarn(e);
+    } else {
+      console.log('old user/me error', e);
+      next(e);
+      return;
     }
-  } else {
-    try {
-      await store.dispatch(resourceDetailReadRequest('user', 'me'));
-    } catch (e) {
-      if (e.response && e.response.status === 401) {
-        // ignore 401
-        logWarn(e);
-      } else {
-        next(e);
-        return;
-      }
+  }
+
+  const ignoreUnauthorized = (e) => {
+    if (e.status === 401) {
+      // ignore 401
+      logWarn(e);
+    } else {
+      return Promise.reject(e);
     }
+    return null;
+  };
+
+  try {
+    await Promise.all([
+      store.dispatch(makeApiCall(beesApi.getUser, [{ id: 'me' }])).catch(ignoreUnauthorized),
+      store.dispatch(makeApiCall(beesApi.getUuidAux, [{ id: 'me' }])),
+    ]);
+  } catch (e) {
+    e.message = `Error trying to prefetch user data: ${e.message}`;
+    console.log('new user/me error', e);
+    next(e);
+    return;
   }
 
   req.clientConfig.store = store;
@@ -337,7 +334,7 @@ app.use((err, req, res, next) => {
   const sheet = new ServerStyleSheet();
   const errorContent = getErrorContent(err);
   const content = renderToStaticMarkup(sheet.collectStyles(errorContent));
-  const { assets } = req.clientConfig;
+  const assets = { css: [], js: [] };
   res.status(500).send(renderHtml({ content, sheet, assets }));
   next(err);
 });
@@ -361,6 +358,6 @@ app.listen(port, (error) => {
   if (error) {
     console.error(error);
   } else {
-    console.info(`Server is running at ${boldBlue(`${host}:${port}${basename}`)}`);
+    console.info(`Server is running at ${boldBlue(`${host}:${port}`)}`);
   }
 });

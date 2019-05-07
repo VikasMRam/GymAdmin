@@ -50,7 +50,7 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
-  onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide,
+  onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className,
 }) => {
   const { name, gallery } = community;
   const { images = [] } = gallery;
@@ -64,7 +64,7 @@ const CommunityTile = ({
   );
 
   return (
-    <div>
+    <div className={className}>
       <StyledMediaGallery
         communityName={name}
         images={galleryImages}
@@ -100,6 +100,7 @@ CommunityTile.propTypes = {
   onUnfavouriteClick: func,
   onSlideChange: func.isRequired,
   currentSlide: number,
+  className: string,
 };
 
 CommunityTile.defaultProps = {

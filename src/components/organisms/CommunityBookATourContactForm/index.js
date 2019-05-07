@@ -3,10 +3,12 @@ import { string, object, func } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 
-import { size, assetPath } from 'sly/components/themes';
+import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
+import { size } from 'sly/components/themes';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { Heading, Block, Image } from 'sly/components/atoms';
+import { Heading, Block } from 'sly/components/atoms';
 import Link from 'sly/components/atoms/Link';
+import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 
 const SubheadingWrapper = styled.div`
   display: flex;
@@ -21,50 +23,60 @@ const SubHeading = styled(Block)`
   margin-bottom: ${size('spacing.xLarge')};
 `;
 
+const StyledContainer = styled.div`
+  padding: ${props => props.displayContext ? (props.displayContext === 'wizard' ? size('spacing.xLarge') : 'inherit') : 'inherit'};
+  min-height:  ${props => props.displayContext ? (props.displayContext === 'wizard' ? '400px' : 'inherit') : 'inherit'};
+`;
+
 const CommunityBookATourContactForm = ({
-  error, user, userDetails, heading, subheading, onAdvisorHelpClick, handleSubmit,
+  error, user, heading, subheading, onAdvisorHelpClick, handleSubmit, displayContext
 }) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
-      <SubheadingWrapper>
-        <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can a Seniorly Partner Agent help?</Link></SubHeading>
-      </SubheadingWrapper>
-      {!(userDetails && userDetails.fullName) && <Field
-        name="name"
-        label="Full name"
-        type="text"
-        placeholder="Full name"
-        component={ReduxField}
-      />}
-      {!(userDetails && userDetails.phone) &&
-        <Field
-          name="phone"
-          label="Phone"
+    <StyledContainer displayContext={displayContext}>
+      <form onSubmit={handleSubmit}>
+        <HeadingSection level="subtitle" size="subtitle">{heading}</HeadingSection>
+        <SubheadingWrapper>
+          <SubHeading size="body">{subheading} <Link palette="primary" onClick={onAdvisorHelpClick}>How can a Seniorly Partner Agent help?</Link></SubHeading>
+        </SubheadingWrapper>
+        {!(user && user.name) && <Field
+          name="name"
+          label="Full name"
           type="text"
-          placeholder="925-555-5555"
+          placeholder="Full name"
           component={ReduxField}
-        />
-      }
-      {/* userDetails && userDetails.fullName &&
-        <Field
-          name="notes"
-          label="Add a note"
-          type="textarea"
-          rows="5"
-          placeholder="Anything you'd like your Seniorly Partner Agent to know or any questions"
-          component={ReduxField}
-        />
-      */}
-      {error && <Block palette="danger">{error}</Block>}
-      {!user && <Block size="tiny">By continuing, you agree to our <Link href="/tos" target="_blank">Terms of Service</Link> and <Link href="/privacy" target="_blank">Privacy Policy</Link></Block>}
-    </form>
+        />}
+        {!(user && user.phoneNumber) &&
+          <Field
+            name="phone"
+            label="Phone"
+            type="text"
+            parse={phoneParser}
+            format={phoneFormatter}
+            placeholder="925-555-5555"
+            component={ReduxField}
+          />
+        }
+        {user && user.name && user.phoneNumber &&
+          <Field
+            name="notes"
+            label="Add a note"
+            type="textarea"
+            rows="5"
+            placeholder="Anything you'd like your Seniorly Partner Agent to know or any questions"
+            component={ReduxField}
+          />
+        }
+        {error && <Block palette="danger">{error}</Block>}
+        {!user && <TosAndPrivacy openLinkInNewTab />}
+      </form>
+    </StyledContainer>
   );
 };
 
 CommunityBookATourContactForm.propTypes = {
   user: object,
   userDetails: object,
+  displayContext: string,
   error: string,
   onAdvisorHelpClick: func.isRequired,
   onContactByTextMsgChange: func,

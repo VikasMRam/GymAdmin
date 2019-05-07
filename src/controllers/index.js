@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import get from 'lodash/get';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { randomHexNumber } from 'sly/services/helpers/utils';
 import { set, unset, reset } from 'sly/store/controller/actions';
@@ -43,7 +44,15 @@ export function connectController(parentMapStateToProps, parentDispatchToProps) 
     };
 
     const ConnectedController = connect(mapStateToProps, mapDispatchToProps)(Controller);
+
+    hoistNonReactStatic(ConnectedController, WrappedComponent);
+
+    if (typeof ConnectedController.WrappedComponent === 'undefined') {
+      ConnectedController.WrappedComponent = WrappedComponent;
+    }
+
     ConnectedController.controllerKey = controllerKey;
+
     return ConnectedController;
   };
 }

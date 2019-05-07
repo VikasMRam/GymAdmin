@@ -177,6 +177,44 @@ export const resourceUpdateFailure = (resource, error, request, thunk) => ({
   },
 });
 
+export const RESOURCE_PATCH_REQUEST = 'RESOURCE_PATCH_REQUEST';
+export const RESOURCE_PATCH_SUCCESS = 'RESOURCE_PATCH_SUCCESS';
+export const RESOURCE_PATCH_FAILURE = 'RESOURCE_PATCH_FAILURE';
+
+export const resourcePatchRequest = (resource, needle, data) => ({
+  type: RESOURCE_PATCH_REQUEST,
+  payload: { needle, data },
+  meta: {
+    resource,
+    resourceKey: generateResourceKey(resource),
+    thunk: getThunkName(resource, 'update'),
+  },
+});
+
+export const resourcePatchSuccess = (resource, detail, request, thunk) => ({
+  type: RESOURCE_PATCH_SUCCESS,
+  payload: detail,
+  meta: {
+    request,
+    thunk,
+    resource,
+    resourceKey: generateResourceKey(resource, request),
+    entities: resource,
+  },
+});
+
+export const resourcePatchFailure = (resource, error, request, thunk) => ({
+  type: RESOURCE_PATCH_FAILURE,
+  error: true,
+  payload: error,
+  meta: {
+    request,
+    resourceKey: generateResourceKey(resource, request),
+    thunk,
+    resource,
+  },
+});
+
 export const RESOURCE_DELETE_REQUEST = 'RESOURCE_DELETE_REQUEST';
 export const RESOURCE_DELETE_SUCCESS = 'RESOURCE_DELETE_SUCCESS';
 export const RESOURCE_DELETE_FAILURE = 'RESOURCE_DELETE_FAILURE';

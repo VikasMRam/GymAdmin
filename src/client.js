@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ServerStateProvider } from 'react-router-server';
 import Modal from 'react-modal';
 
-import { basename } from 'sly/config';
+import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';
 import api from 'sly/services/api';
 import App from 'sly/components/App';
@@ -17,13 +17,17 @@ const serverState = window.__SERVER_STATE__;
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState, { api: api.create() });
 
+const beesApi = createApi();
+
 const renderApp = () => (
   <ServerStateProvider state={serverState}>
-    <Provider store={store}>
-      <BrowserRouter basename={basename}>
-        <App />
-      </BrowserRouter>
-    </Provider>
+    <ApiProvider api={beesApi}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </ApiProvider>
   </ServerStateProvider>
 );
 
