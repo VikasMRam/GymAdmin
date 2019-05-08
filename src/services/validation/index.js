@@ -35,8 +35,8 @@ export const url = value => !isEmpty(value) && !isURL(value) && 'Invalid URL';
 
 export const required = value => isEmpty(value) && 'Required field';
 
-export const dependentRequired = (field, fieldName1, fieldName2) =>
-  (value, allValues = {}) => isEmpty(value) && isEmpty(allValues[field]) && `Either ${fieldName1} or ${fieldName2} is required`;
+export const dependentRequired = (field, errorMessage = `Either this field or ${field} is required`) =>
+  (value, allValues = {}) => isEmpty(value) && isEmpty(allValues[field]) && errorMessage;
 
 export const notZero = value => value === 0 && 'At least one star';
 

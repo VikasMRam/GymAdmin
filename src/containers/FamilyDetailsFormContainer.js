@@ -11,8 +11,8 @@ import clientPropType from 'sly/propTypes/client';
 import { query, getRelationship } from 'sly/services/newApi';
 
 const validate = createValidator({
-  phone: [usPhone, dependentRequired('email', 'Phone', 'Email')],
-  email: [email, dependentRequired('phone', 'Phone', 'Email')],
+  phone: [usPhone, dependentRequired('email', 'Either Phone or Email is required')],
+  email: [email, dependentRequired('phone', 'Either Email or Phone is required')],
 });
 
 const ReduxForm = reduxForm({

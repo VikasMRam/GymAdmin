@@ -39,10 +39,10 @@ describe('services/validation', () => {
     const allValues = {
       field2: 'test',
     };
-    expect(v.dependentRequired('field2', 'field 1', 'field 2')('')).toBeTruthy();
-    expect(v.dependentRequired('field2', 'field 1', 'field 2')(null)).toBeTruthy();
-    expect(v.dependentRequired('field2', 'field 1', 'field 2')(undefined)).toBeTruthy();
-    expect(v.dependentRequired('field2', 'field 1', 'field 2')('valid', allValues)).toBeFalsy();
+    expect(v.dependentRequired('field2', 'test message')('')).toBeTruthy();
+    expect(v.dependentRequired('field2', 'test message')(null)).toBeTruthy();
+    expect(v.dependentRequired('field2', 'test message')(undefined)).toBeTruthy();
+    expect(v.dependentRequired('field2', 'test message')('valid', allValues)).toBeFalsy();
   });
 
   test('minLength', () => {
