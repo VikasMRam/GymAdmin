@@ -45,13 +45,4 @@ describe('DashboardMenu', () => {
     menuItemComponents.at(index).simulate('click');
     expect(menuItemOnClick).toHaveBeenCalled();
   });
-
-  it('handles MenuIcon Click', () => {
-    const menuIconOnClick = jest.fn();
-    const wrapper = wrap({ menuItems, onMenuIconClick: menuIconOnClick });
-    const menuIconComponent = wrapper.find('MenuIcon');
-    expect(menuIconComponent).toHaveLength(1);
-    menuIconComponent.simulate('click');
-    expect(menuIconOnClick).toHaveBeenCalled();
-  });
 });
