@@ -14,7 +14,7 @@ import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP, FAMILY_STATUS_ON_HOLD } fr
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
   { text: 'Resident Name' },
-  { text: 'Stage', sort: 'asc' },
+  { text: 'Stage' },
   { text: 'Latest Note' },
   { text: 'Date Added' },
 ];
