@@ -110,11 +110,11 @@ const DashboardAgentFamilyOverviewPage = ({
         <TableWrapper>
           <Table {...tableContents} />
         </TableWrapper>
-        <BigScreenPaginationWrapper>
-          {paginationComponent}
-        </BigScreenPaginationWrapper>
-        <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
       </TableSectionWrapper>
+      <BigScreenPaginationWrapper>
+        {paginationComponent}
+      </BigScreenPaginationWrapper>
+      <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
     </Fragment>
   );
   const emptyTextComponent = <EmptyTextWrapper><Block palette="grey">{tableEmptyText}</Block></EmptyTextWrapper>;
