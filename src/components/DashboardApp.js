@@ -89,14 +89,13 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          <Router>
+          <Router requiresAuth>
             <Switch>
               {App.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
             </Switch>
           </Router>
         </ThemeProvider>
-
         <ChatBoxContainer />
       </Fragment>
     );

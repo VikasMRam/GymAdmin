@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import SlyEvent from '../../../services/helpers/events';
 
-import { ClassRouter } from 'sly/components/molecules/Router';
+import Router from 'sly/components/molecules/Router';
 
 jest.mock('../../../services/helpers/events');
 
@@ -20,7 +20,7 @@ const location = {
   search: '?foo=xyz',
 };
 
-const wrap = (props = {}) => shallow(<ClassRouter {...props} />);
+const wrap = (props = {}) => shallow(<Router.WrappedComponent authenticated={{}} {...props} />);
 
 global.scrollTo = jest.fn();
 

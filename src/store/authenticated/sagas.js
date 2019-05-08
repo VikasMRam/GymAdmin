@@ -38,7 +38,7 @@ export function* ensureAuthenticated(api, { reason, action }, { thunk }) {
         result = yield yield put(action);
       } else if (typeof action === 'function') {
         result = yield yield call(action);
-      } else {
+      } else if (action) {
         throw new Error(`Unknown action type for ${JSON.stringify(action)}`);
       }
       yield put(actions.ensureAuthenticatedSuccess(result, thunk));

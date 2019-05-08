@@ -16,6 +16,10 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 
+const mapStateToProps = state => ({
+  authenticated: state.authenticated,
+});
+
 const mapDispatchToProps = dispatch => ({
   ensureAuthenticated: (...args) => dispatch(ensureAuthenticated(...args)),
   dispatch,
@@ -24,12 +28,13 @@ const mapDispatchToProps = dispatch => ({
 export default function withAuth(InnerComponent) {
   @withUser
 
-  @connect(null, mapDispatchToProps)
+  @connect(mapStateToProps, mapDispatchToProps)
 
   class Wrapper extends Component {
     static displayName = `withAuth(${getDisplayName(InnerComponent)})`;
 
     static propTypes = {
+      authenticated: object.isRequired,
       ensureAuthenticated: func.isRequired,
       api: object.isRequired,
       dispatch: func.isRequired,

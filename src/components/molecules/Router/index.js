@@ -1,8 +1,13 @@
 import { Component } from 'react';
-import { object, node, bool } from 'prop-types';
+import { func, object, node, bool } from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import queryString from 'query-string';
+import { stringify, parse } from 'query-string';
 
+import {
+  parseURLQueryParams,
+  removeQueryParamFromURL,
+} from 'sly/services/helpers/url';
+import { withAuth } from 'sly/services/newApi';
 import SlyEvent from 'sly/services/helpers/events';
 
 const searchWhitelist = [
@@ -20,22 +25,60 @@ const blacklisted = (from, to) => pathnameBlacklist
 const bumpOnSearch = (prev, next) => searchWhitelist
   .some(key => next[key] !== prev[key]);
 
-export class ClassRouter extends Component {
+@withAuth
+
+@withRouter
+
+export default class ClassRouter extends Component {
   static propTypes = {
+    requiresAuth: bool,
     location: object,
     children: node,
     enableEvents: bool,
+    status: object,
+    history: object,
+    authenticated: object,
+    ensureAuthenticated: func,
   };
 
   static defaultProps = {
     enableEvents: true,
+    requiresAuth: false,
   };
 
+  componentWillMount() {
+    const { requiresAuth, status, location, history } = this.props;
+    if (requiresAuth && status.user.status === 401) {
+      const afterLogin = `${location.pathname}${location.search}${location.hash}`;
+      const url = `/?${stringify({ loginRedirect: afterLogin })}`;
+      history.push(url);
+    }
+  }
+
   componentDidMount() {
-    const { pathname, search } = this.props.location;
-    const { enableEvents } = this.props;
+    const {
+      enableEvents,
+      authenticated,
+      location,
+      history,
+      ensureAuthenticated,
+    } = this.props;
+
+    const { pathname, search, hash } = location;
+
     if (enableEvents) {
-      SlyEvent.getInstance().sendPageView(pathname, search);
+      SlyEvent.getInstance()
+        .sendPageView(pathname, search);
+    }
+
+    let params = parseURLQueryParams(search);
+    if (!authenticated.loggingIn && params.loginRedirect) {
+      params = removeQueryParamFromURL('loginRedirect', search);
+      return ensureAuthenticated()
+        .then(() => {
+          window.location.href = decodeURIComponent(params.loginRedirect);
+        })
+        .catch(() => history.push(`${pathname}${stringify(params)}${hash}`));
     }
   }
 
@@ -51,8 +94,8 @@ export class ClassRouter extends Component {
     const { pathname, search } = this.props.location;
     const { pathname: prevPath, search: prevSearch } = prevProps.location;
 
-    const qs = queryString.parse(search);
-    const prevQs = queryString.parse(prevSearch);
+    const qs = parse(search);
+    const prevQs = parse(prevSearch);
 
     if ((!blacklisted(pathname, prevPath)
       && pathname !== prevPath
@@ -65,5 +108,3 @@ export class ClassRouter extends Component {
     return this.props.children;
   }
 }
-
-export default withRouter(ClassRouter);

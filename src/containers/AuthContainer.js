@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
 import { authenticateCancel, authenticateSuccess } from 'sly/store/authenticated/actions';
 import LoginFormContainer from 'sly/containers/LoginFormContainer';
 import SignupFormContainer from 'sly/containers/SignupFormContainer';
 import JoinSlyButtonsContainer from 'sly/containers/JoinSlyButtonsContainer';
 import ResetPasswordFormContainer from 'sly/containers/ResetPasswordFormContainer';
+import { withAuth } from 'sly/services/newApi';
 
 const mapStateToProps = state => ({
   authenticated: state.authenticated,
@@ -16,6 +18,10 @@ const mapDispatchToProps = dispatch => ({
   authenticateCancel: () => dispatch(authenticateCancel()),
   authenticateSuccess: () => dispatch(authenticateSuccess()),
 });
+
+@withRouter
+
+@withAuth
 
 @connect(mapStateToProps, mapDispatchToProps)
 
@@ -32,23 +38,29 @@ export default class AuthContainer extends Component {
 
   state = { isOpen: false };
 
-  componentDidUpdate() {
-    const {
-      authenticated, hideModal,
-    } = this.props;
-
-    const { isOpen } = this.state;
-
-    // FIXME: declarative to imperative conversion could potentially be done better
-    if (!isOpen && authenticated.loggingIn) {
-      this.setState({ isOpen: true });
-      this.gotoJoin();
-    } else if (isOpen && !authenticated.loggingIn) {
-      this.setState({ isOpen: false });
-      hideModal();
-    }
+  componentDidMount() {
+    this.shouldAuth();
   }
 
+  componentDidUpdate() {
+    this.shouldAuth();
+  }
+
+  shouldAuth() {
+    const {
+      authenticated,
+      hideModal,
+    } = this.props;
+
+    // FIXME: declarative to imperative conversion could potentially be done better
+    if (!this.state.isOpen && authenticated.loggingIn) {
+      this.setState({ isOpen: true }, () => this.gotoJoin());
+    } else if (this.state.isOpen && !authenticated.loggingIn) {
+      this.setState({ isOpen: false }, () => hideModal());
+    }
+
+    return null;
+  }
 
   gotoJoin = () => {
     const {
