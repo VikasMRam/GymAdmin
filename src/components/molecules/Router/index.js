@@ -97,7 +97,8 @@ export default class ClassRouter extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { pathname, search } = this.props.location;
+    const { requiresAuth, location, status } = this.props;
+    const { pathname, search } = location;
     const { pathname: prevPath, search: prevSearch } = prevProps.location;
 
     const qs = parse(search);
@@ -107,6 +108,10 @@ export default class ClassRouter extends Component {
       && pathname !== prevPath
     ) || bumpOnSearch(prevQs, qs)) {
       window && window.scrollTo(0, 0);
+    }
+
+    if (requiresAuth && status.user.status === 401) {
+      window.location.href = '/';
     }
   }
 
