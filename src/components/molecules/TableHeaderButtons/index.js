@@ -11,17 +11,15 @@ const Wrappper = styled.div`
   padding: ${size('spacing.large')};
 `;
 
-const SearchButton = styled(IconButton)`
-  @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    display: none;
-  }
-`;
+// const SearchButton = styled(IconButton)`
+//   @media screen and (min-width: ${size('breakpoint.mobile')}) {
+//     display: none;
+//   }
+// `;
 
 const SearchTextInput = styled(Input)`
-  display: none;
 
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    display: block;
     margin-right: ${size('spacing.large')};
   }
 
@@ -57,7 +55,7 @@ const TableHeaderButtons = ({
   onColumnButtonClick, onSortButtonClick, onFilterButtonClick, className,
 }) => (
   <Wrappper className={className}>
-    <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile />
+    {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
     <SearchTextInput type="search" placeholder="Type to filter by name" />
     <RightSideButtons>
       {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
