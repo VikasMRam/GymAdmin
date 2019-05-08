@@ -47,7 +47,13 @@ export default class ClassRouter extends Component {
   };
 
   componentWillMount() {
-    const { requiresAuth, status, location, history } = this.props;
+    const {
+      requiresAuth,
+      status,
+      location,
+      history,
+    } = this.props;
+
     if (requiresAuth && status.user.status === 401) {
       const afterLogin = `${location.pathname}${location.search}${location.hash}`;
       const url = `/?${stringify({ loginRedirect: afterLogin })}`;
@@ -74,7 +80,7 @@ export default class ClassRouter extends Component {
     let params = parseURLQueryParams(search);
     if (!authenticated.loggingIn && params.loginRedirect) {
       params = removeQueryParamFromURL('loginRedirect', search);
-      return ensureAuthenticated()
+      ensureAuthenticated()
         .then(() => {
           window.location.href = decodeURIComponent(params.loginRedirect);
         })
