@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { oneOf, string, func } from 'prop-types';
+import { oneOf, string, func, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { switchProp, ifProp } from 'styled-tools';
 import PlacesAutocomplete from 'react-places-autocomplete';
@@ -113,7 +113,7 @@ const GoogleLogo = styled(Image)`
 `;
 const baseSearchOptions = { types: ['(regions)'] };
 const SearchBox = ({
-  layout, value, onChange, onSelect, onSearchButtonClick, onTextboxFocus, placeholder, ...props
+  layout, value, onChange, onSelect, onSearchButtonClick, onTextboxFocus, placeholder, readOnly, ...props
 }) => (
   <Wrapper layout={layout} {...props}>
     <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion>
@@ -126,6 +126,7 @@ const SearchBox = ({
               {...getInputProps({ placeholder })}
               layout={layout}
               onFocus={onTextboxFocus}
+              readOnly={readOnly}
             />
             {/*
               it's important that mousedown is used instead of click because it will be fired before blur event.
@@ -165,6 +166,7 @@ SearchBox.propTypes = {
   onSearchButtonClick: func.isRequired,
   onTextboxFocus: func,
   placeholder: string,
+  readOnly: bool,
 };
 
 SearchBox.defaultProps = {
