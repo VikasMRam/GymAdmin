@@ -271,7 +271,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
     const {
-      level, levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton,
+      level, levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails,
     } = getStageDetails(stage);
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) =>
@@ -372,6 +372,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   rawClient={rawClient}
                   notifyError={notifyError}
                   accepted={!showAcceptRejectButtons}
+                  canEditFamilyDetails={canEditFamilyDetails}
                   gender={gender}
                   lookingFor={lookingFor}
                   monthlyBudget={monthlyBudget}
