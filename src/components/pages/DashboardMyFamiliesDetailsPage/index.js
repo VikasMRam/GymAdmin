@@ -24,7 +24,7 @@ import PlaceFamilyOnPauseFormContainer from 'sly/containers/PlaceFamilyOnPauseFo
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import { Box, Block, Icon, Span, Link, Hr } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
-import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
+// import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
@@ -271,7 +271,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
     const {
-      level, levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton,
+      level, levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails,
     } = getStageDetails(stage);
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) =>
@@ -357,7 +357,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                 }
                 {!noteIsLoading && activityCards.length > 0 &&
                   <Fragment>
-                    <TableHeaderButtons hasColumnsButton={false} />
+                    {/* <TableHeaderButtons hasColumnsButton={false} /> */}
                     {activityCards}
                   </Fragment>
                 }
@@ -372,6 +372,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   rawClient={rawClient}
                   notifyError={notifyError}
                   accepted={!showAcceptRejectButtons}
+                  canEditFamilyDetails={canEditFamilyDetails}
                   gender={gender}
                   lookingFor={lookingFor}
                   monthlyBudget={monthlyBudget}

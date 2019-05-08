@@ -34,11 +34,11 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
   createUserSave: data => ensureAuthenticated(
     'Sign up to add to your favorites list',
-    api.createUserSave(data),
+    api.createOldUserSave(data),
   ),
   updateUserSave: (id, data) => ensureAuthenticated(
     'Sign up to add to your favorites list',
-    api.updateUserSave({ id }, data),
+    api.updateOldUserSave({ id }, data),
   ),
 });
 
@@ -231,7 +231,7 @@ export default class SaveCommunityContainer extends Component {
               component={AddNoteFormContainer}
               name="Note"
               onSubmit={data => handleSubmitSaveCommunityForm(data, next)}
-              heading="Add to your favorites list"
+              heading="Community has been saved"
               placeholder="What are some things about this community that you like..."
               hasCancel
               onCancelClick={onCancelClick}

@@ -70,6 +70,18 @@ const EmptyTextWrapper = styled.div`
   text-align: center;
 `;
 
+const StyledTabs = styled(Tabs)`
+  > *:nth-child(1) {
+    border-top: 0;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    > *:nth-child(1) {
+      border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+    }
+  }
+`;
+
 const tabIDLabelMap = {
   Prospects: 'PROSPECTS',
   Connected: 'CONNECTED',
@@ -98,11 +110,11 @@ const DashboardAgentFamilyOverviewPage = ({
         <TableWrapper>
           <Table {...tableContents} />
         </TableWrapper>
-        <BigScreenPaginationWrapper>
-          {paginationComponent}
-        </BigScreenPaginationWrapper>
-        <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
       </TableSectionWrapper>
+      <BigScreenPaginationWrapper>
+        {paginationComponent}
+      </BigScreenPaginationWrapper>
+      <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
     </Fragment>
   );
   const emptyTextComponent = <EmptyTextWrapper><Block palette="grey">{tableEmptyText}</Block></EmptyTextWrapper>;
@@ -132,7 +144,7 @@ const DashboardAgentFamilyOverviewPage = ({
     closedTabLabel += ` (${filteredCount})`;
   }
   const tabsViewTemplate = view => (
-    <Tabs activeTab={activeTab}>
+    <StyledTabs activeTab={activeTab}>
       <div id={tabIDs[0]} label={prospectsTabLabel} to={FAMILY_DASHBOARD_FAMILIES_PATH}>
         {view}
       </div>
@@ -142,7 +154,7 @@ const DashboardAgentFamilyOverviewPage = ({
       <div id={tabIDs[2]} label={closedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`}>
         {view}
       </div>
-    </Tabs>
+    </StyledTabs>
   );
   return (
     <DashboardPageTemplate activeMenuItem="My Families">

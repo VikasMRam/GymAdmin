@@ -58,6 +58,7 @@ class FamilyDetailsForm extends Component {
     pristine: bool,
     invalid: bool,
     accepted: bool,
+    canEditFamilyDetails: bool,
     intro: string,
     change: func,
     onLocationChange: func,
@@ -85,7 +86,7 @@ class FamilyDetailsForm extends Component {
     const { handleChange, handleLocationChange } = this;
     const {
       handleSubmit, pristine, submitting, invalid, accepted, intro, initialValues, lookingFor,
-      gender, timeToMove, monthlyBudget,
+      gender, timeToMove, monthlyBudget, canEditFamilyDetails,
     } = this.props;
     let preferredLocation = '';
     if (initialValues) {
@@ -103,12 +104,14 @@ class FamilyDetailsForm extends Component {
           name="name"
           label="Contact name"
           type="text"
+          readOnly={!canEditFamilyDetails}
           component={ReduxField}
           wideWidth
         />
         <Field
           name="phone"
           label="Phone"
+          readOnly={!canEditFamilyDetails}
           disabled={!accepted}
           hideValue={!accepted}
           placeholder={!accepted ? 'Accept family to view' : null}
@@ -121,6 +124,7 @@ class FamilyDetailsForm extends Component {
           name="email"
           label="Email"
           type="email"
+          readOnly={!canEditFamilyDetails}
           disabled={!accepted}
           hideValue={!accepted}
           placeholder={!accepted ? 'Accept family to view' : null}
@@ -131,6 +135,7 @@ class FamilyDetailsForm extends Component {
           name="residentName"
           label="Resident name"
           type="text"
+          readOnly={!canEditFamilyDetails}
           component={ReduxField}
           wideWidth
         />
@@ -138,6 +143,7 @@ class FamilyDetailsForm extends Component {
           name="lookingFor"
           label="Looking for"
           type="select"
+          disabled={!canEditFamilyDetails}
           component={ReduxField}
           wideWidth
         >
@@ -148,6 +154,7 @@ class FamilyDetailsForm extends Component {
           name="gender"
           label="Gender"
           type="select"
+          disabled={!canEditFamilyDetails}
           component={ReduxField}
           wideWidth
         >
@@ -161,12 +168,14 @@ class FamilyDetailsForm extends Component {
             onLocationSearch={handleLocationChange}
             onTextChange={handleChange}
             address={preferredLocation}
+            readOnly={!canEditFamilyDetails}
           />
         </PaddedTwoColumnWrapper>
         <Field
           name="budget"
           label="Monthly budget"
           type="select"
+          disabled={!canEditFamilyDetails}
           component={ReduxField}
           wideWidth
         >
@@ -177,6 +186,7 @@ class FamilyDetailsForm extends Component {
           name="timeToMove"
           label="Time to move"
           type="select"
+          disabled={!canEditFamilyDetails}
           component={ReduxField}
           wideWidth
         >

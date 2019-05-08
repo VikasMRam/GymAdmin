@@ -16,9 +16,11 @@ export default {
   createUserShare: { method: post, path: '/platform/user-shares' },
 
   getUserSaves: { method: get, path: '/marketplace/user-saves' },
-  getUserSave: { method: get, path: '/platform/user-saves/:id' },
-  updateUserSave: { method: patch, path: '/platform/user-saves/:id' },
-  createUserSave: { method: post, path: '/platform/user-saves' },
+  getUserSave: { method: get, path: '/marketplace/user-saves/:id' },
+  updateUserSave: { method: patch, path: '/marketplace/user-saves/:id' },
+  createUserSave: { method: post, path: '/marketplace/user-saves' },
+  updateOldUserSave: { method: patch, path: '/platform/user-saves/:id' },
+  createOldUserSave: { method: post, path: '/platform/user-saves' },
 
   registerUser: { method: post, path: '/platform/auth/register' },
   loginUser: { method: post, path: '/platform/auth/login' },

@@ -4,8 +4,10 @@ import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
-import { prefetch, query, invalidateRequests } from 'sly/services/newApi';
+import RefreshRedirect from 'sly/components/common/RefreshRedirect';
+import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
+import userPropType from 'sly/propTypes/user';
 import notePropType from 'sly/propTypes/note';
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
@@ -30,6 +32,8 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
   invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
 }))
 
+@withUser
+
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
     client: clientPropType,
@@ -40,6 +44,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     createNote: func.isRequired,
     notes: arrayOf(notePropType),
     invalidateClients: func,
+    user: userPropType,
   };
 
   onRejectSuccess = (hide) => {
@@ -113,8 +118,12 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   render() {
     const { onRejectSuccess, onUnPause, onAddNote } = this;
     const {
-      client, match, status, notes,
+      client, match, status, notes, user,
     } = this.props;
+    if (!user) {
+      return <RefreshRedirect to="/" />;
+    }
+
     const { result: rawClient, meta } = status.client;
     const { isLoading: clientIsLoading } = status.client;
     const { isLoading: noteIsLoading } = status.notes;

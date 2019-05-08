@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
 import dayjs from 'dayjs';
-import { Redirect } from 'react-router-dom';
 
-import { prefetch } from 'sly/services/newApi';
+import RefreshRedirect from 'sly/components/common/RefreshRedirect';
+import { withUser, prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
+import userPropType from 'sly/propTypes/user';
 import { FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
 import { getSearchParams } from 'sly/services/helpers/search';
@@ -14,7 +15,7 @@ import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP, FAMILY_STATUS_ON_HOLD } fr
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
   { text: 'Resident Name' },
-  { text: 'Stage', sort: 'asc' },
+  { text: 'Stage' },
   { text: 'Latest Note' },
   { text: 'Date Added' },
 ];
@@ -126,17 +127,25 @@ const getPageParams = ({ match, location }) => {
   };
   return getClients(filters);
 })
+
+@withUser
+
 export default class DashboardAgentFamilyOverviewPageContainer extends Component {
   static propTypes = {
     clients: arrayOf(clientPropType),
     status: object,
     match: object,
     location: object,
+    user: userPropType,
   }
   render() {
     const {
-      clients, status, match, location,
+      clients, status, match, location, user,
     } = this.props;
+    if (!user) {
+      return <RefreshRedirect to="/" />;
+    }
+
     const params = getPageParams({ match, location });
     const { type } = params;
     const { clients: clientsStatus } = status;
@@ -148,7 +157,7 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
       return <div>Loading...</div>;
     }
     if (clientsError) {
-      return <Redirect to="/" />;
+      return <RefreshRedirect to="/" />;
     }
     if (clients === null) {
       return <div>Loading...</div>;

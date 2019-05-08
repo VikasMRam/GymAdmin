@@ -36,6 +36,7 @@ export const getStageDetails = (stageName) => {
     }
   });
 
+  const canEditFamilyDetails = levelGroup === stageArr[1]; // Connected
   return {
     level,
     levelGroup,
@@ -46,5 +47,6 @@ export const getStageDetails = (stageName) => {
     showUpdateAddNoteButtons,
     showPauseButton,
     showRejectOption,
+    canEditFamilyDetails,
   };
 };
