@@ -5,7 +5,6 @@ import dayjs from 'dayjs';
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { withUser, prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import userPropType from 'sly/propTypes/user';
 import { FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
 import { getSearchParams } from 'sly/services/helpers/search';
@@ -136,15 +135,11 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     status: object,
     match: object,
     location: object,
-    user: userPropType,
   }
   render() {
     const {
-      clients, status, match, location, user,
+      clients, status, match, location,
     } = this.props;
-    if (!user) {
-      return <RefreshRedirect to="/" />;
-    }
 
     const params = getPageParams({ match, location });
     const { type } = params;

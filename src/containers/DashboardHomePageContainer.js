@@ -2,13 +2,10 @@ import React, { Fragment, Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
-import { withUser } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 import { CUSTOMER_ROLE, PROVIDER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
 import { FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 import Role from 'sly/components/common/Role';
-
-@withUser
 
 export default class DashboardHomePageContainer extends Component {
   static propTypes = {
@@ -16,11 +13,6 @@ export default class DashboardHomePageContainer extends Component {
   };
 
   render() {
-    const { user } = this.props;
-    if (!user) {
-      return <RefreshRedirect to="/" />;
-    }
-
     return (
       <Fragment>
         <Role is={CUSTOMER_ROLE}>
