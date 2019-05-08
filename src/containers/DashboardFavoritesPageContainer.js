@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
 import produce from 'immer';
-import { Redirect } from 'react-router-dom';
 
-import { prefetch, query } from 'sly/services/newApi';
+import RefreshRedirect from 'sly/components/common/RefreshRedirect';
+import { withUser, prefetch, query } from 'sly/services/newApi';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import SlyEvent from 'sly/services/helpers/events';
@@ -19,6 +19,8 @@ import userPropType from 'sly/propTypes/user';
   'filter[entity_type]': COMMUNITY_ENTITY_TYPE,
   'filter[status]': USER_SAVE_INIT_STATUS,
 }))
+
+@withUser
 
 export default class DashboardFavoritesPageContainer extends Component {
   static propTypes = {
@@ -87,10 +89,10 @@ export default class DashboardFavoritesPageContainer extends Component {
     const {
       handleOnGallerySlideChange, handleOnLocationSearch, handleToggleHowSlyWorksVideoPlaying, handleUnfavouriteClick,
     } = this;
-    const { status } = this.props;
+    const { status, user } = this.props;
     let { userSaves } = this.props;
-    if (status.userSaves && status.userSaves.error) {
-      return <Redirect to="/" />;
+    if (!user || (status.userSaves && status.userSaves.error)) {
+      return <RefreshRedirect to="/" />;
     }
     if (!userSaves) {
       return 'Loading...';
