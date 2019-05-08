@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
 import dayjs from 'dayjs';
-import { Redirect } from 'react-router-dom';
 
-import { prefetch } from 'sly/services/newApi';
+import RefreshRedirect from 'sly/components/common/RefreshRedirect';
+import { withUser, prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import { FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
@@ -126,6 +126,9 @@ const getPageParams = ({ match, location }) => {
   };
   return getClients(filters);
 })
+
+@withUser
+
 export default class DashboardAgentFamilyOverviewPageContainer extends Component {
   static propTypes = {
     clients: arrayOf(clientPropType),
@@ -137,6 +140,7 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const {
       clients, status, match, location,
     } = this.props;
+
     const params = getPageParams({ match, location });
     const { type } = params;
     const { clients: clientsStatus } = status;
@@ -148,7 +152,7 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
       return <div>Loading...</div>;
     }
     if (clientsError) {
-      return <Redirect to="/" />;
+      return <RefreshRedirect to="/" />;
     }
     if (clients === null) {
       return <div>Loading...</div>;

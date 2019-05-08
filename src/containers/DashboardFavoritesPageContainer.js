@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
 import produce from 'immer';
-import { Redirect } from 'react-router-dom';
 
+import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { prefetch, query } from 'sly/services/newApi';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
 import { USER_SAVE_INIT_STATUS, USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
@@ -11,7 +11,6 @@ import { getSearchParamFromPlacesResponse, filterLinkPath } from 'sly/services/h
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardFavoritesPage from 'sly/components/pages/DashboardFavoritesPage';
-import userPropType from 'sly/propTypes/user';
 
 @query('updateUserSave', 'updateUserSave')
 
@@ -22,7 +21,6 @@ import userPropType from 'sly/propTypes/user';
 
 export default class DashboardFavoritesPageContainer extends Component {
   static propTypes = {
-    user: userPropType,
     userSaves: arrayOf(object),
     updateUserSave: func.isRequired,
     status: object,
@@ -90,7 +88,7 @@ export default class DashboardFavoritesPageContainer extends Component {
     const { status } = this.props;
     let { userSaves } = this.props;
     if (status.userSaves && status.userSaves.error) {
-      return <Redirect to="/" />;
+      return <RefreshRedirect to="/" />;
     }
     if (!userSaves) {
       return 'Loading...';

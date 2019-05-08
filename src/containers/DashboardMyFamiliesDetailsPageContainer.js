@@ -4,7 +4,7 @@ import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
-import { prefetch, query, invalidateRequests } from 'sly/services/newApi';
+import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import notePropType from 'sly/propTypes/note';
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
@@ -29,6 +29,8 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
 @connect(null, (dispatch, { api }) => ({
   invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
 }))
+
+@withUser
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
@@ -115,6 +117,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const {
       client, match, status, notes,
     } = this.props;
+
     const { result: rawClient, meta } = status.client;
     const { isLoading: clientIsLoading } = status.client;
     const { isLoading: noteIsLoading } = status.notes;

@@ -52,6 +52,8 @@ describe('ConciergeController', () => {
 
   const bees = {};
 
+  const authenticated = {};
+
   const resource = {
     userAction: {
       detail: { id: 'xx' },
@@ -163,7 +165,7 @@ describe('ConciergeController', () => {
     , { context: { router } }), 'ConciergeController').dive();
 
     it('should pass default values', () => {
-      const store = initStore({ bees, resource, entities });
+      const store = initStore({ bees, resource, entities, authenticated });
       wrap(community.id, store);
       const { currentStep } = childProps().concierge;
       expect(setQueryParams).not.toBeCalled();
@@ -171,7 +173,7 @@ describe('ConciergeController', () => {
     });
 
     it('should know when a community has been converted', () => {
-      const store = initStore({ bees, resource, entities });
+      const store = initStore({ bees, resource, entities, authenticated });
 
       wrap(community.id, store);
       expect(childProps().concierge.contactRequested).toBe(true);
@@ -192,7 +194,7 @@ describe('ConciergeController', () => {
     // });
 
     it('should redirect to custom piricing wizard', () => {
-      const store = initStore({ bees, resource, entities: emailOnlyEntities });
+      const store = initStore({ bees, resource, entities: emailOnlyEntities, authenticated });
       const wrapper = wrap(otherCommunity.id, store);
       wrapper.instance().next(true);
 
@@ -200,14 +202,14 @@ describe('ConciergeController', () => {
     });
 
     it('should go to conversion form mode when express mode', () => {
-      const store = initStore({ bees, resource, entities: emailOnlyEntities });
+      const store = initStore({ bees, resource, entities: emailOnlyEntities, authenticated });
       const wrapper = wrap(null, store);
       wrapper.instance().next(true);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: CONVERSION_FORM });
     });
 
     it('should not shortcircuit to thankYou when in express mode', () => {
-      const store = initStore({ bees, resource, entities });
+      const store = initStore({ bees, resource, entities, authenticated });
       const wrapper = wrap(null, store);
       wrapper.instance().next(true);
       expect(setQueryParams).toBeCalledWith({ modal: CONCIERGE, currentStep: ADVANCED_INFO });
