@@ -77,14 +77,16 @@ export default class ClassRouter extends Component {
         .sendPageView(pathname, search);
     }
 
-    let params = parseURLQueryParams(search);
-    if (!authenticated.loggingIn && params.loginRedirect) {
-      params = removeQueryParamFromURL('loginRedirect', search);
+    const { loginRedirect } = parseURLQueryParams(search);
+    if (!authenticated.loggingIn && loginRedirect) {
       ensureAuthenticated()
         .then(() => {
-          window.location.href = decodeURIComponent(params.loginRedirect);
+          window.location.href = decodeURIComponent(loginRedirect);
         })
-        .catch(() => history.push(`${pathname}${stringify(params)}${hash}`));
+        .catch(() => {
+          const params = removeQueryParamFromURL('loginRedirect', search);
+          history.push(`${pathname}${stringify(params)}${hash}`);
+        });
     }
   }
 
