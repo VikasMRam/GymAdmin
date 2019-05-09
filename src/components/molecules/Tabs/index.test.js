@@ -31,4 +31,35 @@ describe('Tabs', () => {
     expect(wrapper.state('activeTab')).toEqual('Croc');
     expect(wrapper.contains('Crocodile')).toBe(true);
   });
+
+  it('renders a default Tab', () => {
+    const copy = [
+      ...children,
+      <div default id="Extra" label="Extra">
+        One more!
+      </div>,
+    ];
+
+    const wrapper = wrap({
+      children: copy,
+    });
+
+    expect(wrapper.contains('One more!')).toBe(true);
+  });
+
+  it('gets activeTab from props', () => {
+    const wrapper = wrap({ children });
+    expect(wrapper.contains('Alligator')).toBe(true);
+
+    wrapper.setProps({ activeTab: 'Croc' });
+    expect(wrapper.contains('Crocodile')).toBe(true);
+
+    const tabs = wrapper.find('CursorTab');
+    const firstTab = tabs.at(0);
+    firstTab.simulate('click');
+    expect(wrapper.contains('Alligator')).toBe(true);
+
+    wrapper.setProps({ activeTab: 'Croc' });
+    expect(wrapper.contains('Crocodile')).toBe(true);
+  });
 });

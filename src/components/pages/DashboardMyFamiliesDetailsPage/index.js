@@ -5,7 +5,6 @@ import { string, func, object, arrayOf, bool } from 'prop-types';
 import {
   FAMILY_DASHBOARD_FAMILIES_PATH,
   FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
-  FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -33,6 +32,9 @@ import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFa
 
 const StyledTabs = styled(Tabs)`
   background-color: ${palette('white', 'base')};
+  > :first-child {
+    text-transform: uppercase;
+  }
 `;
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
@@ -149,6 +151,11 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   }
 `;
 
+const SUMMARY = 'summary';
+const ACTIVITY = 'activity';
+const FAMILY_DETAILS = 'family-details';
+const COMMUNITIES = 'communities';
+
 const BackArrorIcon = styled(Icon)`
   margin-right: ${size('spacing.small')};
 `;
@@ -212,11 +219,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         placeholder="Add a note on why you are updating this family's stage..."
         submitButtonText="Save note"
         onSubmit={handleSubmit}
-      />,
-      null,
-      'noPadding',
-      false
-    );
+      />, null, 'noPadding', false);
   };
 
   handlePauseClick = () => {
@@ -229,7 +232,15 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     if (isPaused) {
       onUnPause();
     } else {
-      showModal(<PlaceFamilyOnPauseFormContainer onSuccess={hideModal} onCancel={hideModal} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} />, null, 'noPadding', false);
+      showModal(
+        <PlaceFamilyOnPauseFormContainer
+          onSuccess={hideModal}
+          onCancel={hideModal}
+          notifyError={notifyError}
+          notifyInfo={notifyInfo}
+          client={client}
+          rawClient={rawClient}
+        />, null, 'noPadding', false);
     }
   };
 
@@ -237,6 +248,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       handleAcceptClick, handleRejectClick, handleUpdateClick, handleAddNoteClick, handlePauseClick,
     } = this;
+
     const {
       client, currentTab, meta, notifyError, rawClient, notes, noteIsLoading, clientIsLoading,
     } = this.props;
@@ -280,14 +292,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) =>
       <StyledFamilyActivityItem key={a.id} noBorderRadius snap={i === notes.length - 1 ? null : 'bottom'} title={a.title} description={a.body} date={a.createdAt} />) : [];
-    let activeTab = 'ACTIVITY';
-    if (currentTab === 'communities') {
-      activeTab = 'COMMUNITIES';
-    } else if (currentTab === 'family-details') {
-      activeTab = 'FAMILY DETAILS';
-    }
-    const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'family-details');
-    const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH.replace(':id', id).replace(':tab', 'communities');
+
+    const summaryPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
+    const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
+    const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', COMMUNITIES);
 
     let stickyFooterOptions = [];
     if (showAcceptRejectButtons) {
@@ -346,14 +354,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
           </SmallScreenClientNameWrapper>
         </div>
-        <StyledTabs activeTab={activeTab}>
-          <div id="SUMMARY" label="SUMMARY" tabStyles={hideInBigScreenStyles}>
+        <StyledTabs activeTab={currentTab}>
+          <div id={SUMMARY} label="Summary" tabStyles={hideInBigScreenStyles} to={summaryPath}>
             <TabWrapper>
               <SmallScreenBorderPaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
               {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
             </TabWrapper>
           </div>
-          <div id="ACTIVITY" label="ACTIVITY" to={FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id)}>
+          <div id={ACTIVITY} default label="Activity" to={summaryPath}>
             <TabWrapper>
               <SmallScreenBorderDiv padding={!noteIsLoading && activityCards.length > 0 ? null : 'xLarge'}>
                 {noteIsLoading && <Block size="subtitle">Loading...</Block>}
@@ -369,7 +377,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </SmallScreenBorderDiv>
             </TabWrapper>
           </div>
-          <div id="FAMILY DETAILS" label="FAMILY DETAILS" to={familyDetailsPath}>
+          <div id={FAMILY_DETAILS} label="Family Details" to={familyDetailsPath}>
             <TabWrapper>
               <FamilyDetailsTab>
                 <FamilyDetailsFormContainer
@@ -386,7 +394,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </FamilyDetailsTab>
             </TabWrapper>
           </div>
-          <div id="COMMUNITIES" label="COMMUNITIES" to={communitiesPath}>
+          <div id={COMMUNITIES} label="Communities" to={communitiesPath}>
             <TabWrapper>
               <CommunitiesTab>
                 <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>

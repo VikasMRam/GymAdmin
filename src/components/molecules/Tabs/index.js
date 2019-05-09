@@ -37,19 +37,39 @@ const TabContent = styled.div`
   }
 `;
 
-class Tabs extends Component {
+const getDefaultActiveTab = (children) => {
+  for (let i = 0; i < children.length; ++i) {
+    if (children[i].props.default) {
+      return children[i].props.id;
+    }
+  }
+  return children[0].props.id;
+};
+
+export default class Tabs extends Component {
   static propTypes = {
     children: instanceOf(Array).isRequired,
     activeTab: string,
     className: string,
+  };
+
+  static getDerivedStateFromProps(props, state) {
+    const activeTab = props.activeTab || state.activeTab;
+    return {
+      ...state,
+      activeTab,
+    };
   }
 
   constructor(props) {
     super(props);
+
     const { children } = this.props;
+
     let { activeTab } = this.props;
+
     if (!activeTab) {
-      activeTab = children[0].props.id;
+      activeTab = getDefaultActiveTab(children);
     }
 
     this.state = {
@@ -57,21 +77,13 @@ class Tabs extends Component {
     };
   }
 
-  onClickTabItem = (tab) => {
-    this.setState({ activeTab: tab });
-  }
+  onClickTabItem = (id) => {
+    this.setState({ activeTab: id });
+  };
 
   render() {
-    const {
-      onClickTabItem,
-      props: {
-        children,
-        className,
-      },
-      state: {
-        activeTab,
-      },
-    } = this;
+    const { children, className } = this.props;
+    const { activeTab } = this.state;
 
     return (
       <div className={className}>
@@ -85,7 +97,7 @@ class Tabs extends Component {
                 active={activeTab === id}
                 key={id}
                 label={label}
-                onClick={() => onClickTabItem(id)}
+                onClick={() => this.onClickTabItem(id)}
                 tabStyles={tabStyles}
               />
             );
@@ -93,9 +105,11 @@ class Tabs extends Component {
             if (to) {
               return <Link key={id} to={to}>{tab}</Link>;
             }
+
             return tab;
           })}
         </TabWrapper>
+
         <TabContent>
           {children.map((child) => {
             if (child.props.id !== activeTab) return undefined;
@@ -106,5 +120,3 @@ class Tabs extends Component {
     );
   }
 }
-
-export default Tabs;
