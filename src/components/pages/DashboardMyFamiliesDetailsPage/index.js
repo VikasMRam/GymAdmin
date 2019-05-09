@@ -245,11 +245,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       );
     }
 
-    const backLink = (
-      <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+    const getBackLink = (linkText, backLinkHref) => (
+      <Link to={backLinkHref}>
         <BackLinkWrapper>
           <Icon icon="arrow-left" size="small" palette="primary" />
-          <Span size="caption" palette="primary">Back to Prospects</Span>
+          <Span size="caption" palette="primary">{linkText}</Span>
         </BackLinkWrapper>
       </Link>
     );
@@ -258,7 +258,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       return (
         <DashboardPageTemplate activeMenuItem="My Families">
           <TextAlignCenterBlock weight="medium" size="subtitle">Family not found!</TextAlignCenterBlock>
-          <AlignCenterBackLinkWrapper>{backLink}</AlignCenterBackLinkWrapper>
+          <AlignCenterBackLinkWrapper>{getBackLink('Back to Prospects', FAMILY_DASHBOARD_FAMILIES_PATH)}</AlignCenterBackLinkWrapper>
         </DashboardPageTemplate>
       );
     }
@@ -306,6 +306,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       ];
     }
 
+    const backLinkHref = levelGroup === 'Prospects' ? FAMILY_DASHBOARD_FAMILIES_PATH : `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=${levelGroup}`;
     const stickyFooterStageProps = {
       text: `${levelGroup} - ${stage}`,
       currentStage: level,
@@ -317,7 +318,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
           <BigScreenSummarySection>
             <Box snap="bottom">
-              {backLink}
+              {getBackLink(`Back to ${levelGroup}`, backLinkHref)}
               <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
             </Box>
             <Hr noMargin />
