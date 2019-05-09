@@ -1,6 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { Fragment } from 'react';
+import styled, { css } from 'styled-components';
 import { arrayOf, shape, bool, string, func, number } from 'prop-types';
+import { ifNotProp } from 'styled-tools';
 
 import StickyFooter from 'sly/components/atoms/StickyFooter/index';
 import Stage from 'sly/components/atoms/Stage/index';
@@ -8,9 +9,12 @@ import Button from 'sly/components/atoms/Button/index';
 import IconItem from 'sly/components/molecules/IconItem/index';
 import Icon from 'sly/components/atoms/Icon/index';
 import { size } from 'sly/components/themes/index';
+import cursor from 'sly/components/helpers/cursor';
 
 const FooterWrapper = styled.div`
-  display: flex;
+  ${ifNotProp('showAcceptRejectButtons', css`
+    display: flex;
+  `)}
 `;
 
 const OptionsButton = styled(Button)`
@@ -36,16 +40,43 @@ const OptionsListWrapper = styled.div`
   margin: ${size('spacing.large')};
 `;
 
-const OptionItemWrapper = styled.div`
+const OptionItemWrapper = cursor(styled.div`
   margin: ${size('spacing.regular')} 0;
-`;
+`);
+OptionItemWrapper.displayName = 'OptionItemWrapper';
 
 const ClearIconWrapper = styled.div`
   display: flex;
 `;
 
-const ClearIcon = styled(Icon)`
+const ClearIcon = cursor(styled(Icon)`
   margin-left: auto;
+`);
+ClearIcon.displayName = 'ClearIcon';
+
+const AcceptRejectButtonsWrapper = styled.div`
+  > Button {
+    width: 100%;
+    margin-bottom: ${size('spacing.regular')};
+  }
+
+  > Button:last-child {
+    margin-bottom: 0;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: flex;
+
+    > Button {
+      width: 100%;
+      margin-bottom: 0;
+      margin-right: ${size('spacing.regular')};
+    }
+  
+    > Button:last-child {
+      margin-right: 0;
+    }
+  }
 `;
 
 const OptionsList = ({ options, onCloseClick }) => {
@@ -77,17 +108,26 @@ OptionsList.propTypes = {
 };
 
 const DashboardMyFamilyStickyFooter = ({
-  stageProps, showOptions, options, onOptionsClick,
+  stageProps, showOptions, options, onOptionsClick, showAcceptRejectButtons,
 }) => {
   return (
     <StickyFooter>
       {!showOptions && (
-        <FooterWrapper>
-          <Stage {...stageProps} />
-          <OptionsButton onClick={onOptionsClick} >...</OptionsButton>
-          <RightSideButtons>
-            {options.slice(0).reverse().map(option => (<Button key={option.text} onClick={option.onClick} ghost={option.ghost}>{option.text}</Button>))}
-          </RightSideButtons>
+        <FooterWrapper showAcceptRejectButtons={showAcceptRejectButtons}>
+          {!showAcceptRejectButtons && (
+            <Fragment>
+              <Stage {...stageProps} />
+              <OptionsButton onClick={onOptionsClick} >...</OptionsButton>
+              <RightSideButtons>
+                {options.slice(0).reverse().map(option => (<Button key={option.text} onClick={option.onClick} ghost={option.ghost}>{option.text}</Button>))}
+              </RightSideButtons>
+            </Fragment>
+          )}
+          {showAcceptRejectButtons &&
+            <AcceptRejectButtonsWrapper>
+              {options.map(option => (<Button key={option.text} onClick={option.onClick} ghost={option.ghost}>{option.text}</Button>))}
+            </AcceptRejectButtonsWrapper>
+          }
         </FooterWrapper>
       )}
       {showOptions && <OptionsList options={options} onCloseClick={onOptionsClick} />}
@@ -104,6 +144,7 @@ DashboardMyFamilyStickyFooter.propTypes = {
     palette: string,
   }).isRequired,
   onOptionsClick: func,
+  showAcceptRejectButtons: bool,
 };
 
 export default DashboardMyFamilyStickyFooter;
