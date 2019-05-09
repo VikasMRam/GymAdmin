@@ -149,6 +149,10 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   }
 `;
 
+const BackArrorIcon = styled(Icon)`
+  margin-right: ${size('spacing.small')};
+`;
+
 export default class DashboardMyFamiliesDetailsPage extends Component {
   static propTypes = {
     client: clientPropType,
@@ -248,7 +252,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const getBackLink = (linkText, backLinkHref) => (
       <Link to={backLinkHref}>
         <BackLinkWrapper>
-          <Icon icon="arrow-left" size="small" palette="primary" />
+          <BackArrorIcon icon="arrow-left" size="small" palette="primary" />
           <Span size="caption" palette="primary">{linkText}</Span>
         </BackLinkWrapper>
       </Link>
