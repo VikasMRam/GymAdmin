@@ -114,6 +114,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   render() {
     const { onRejectSuccess, onUnPause, onAddNote } = this;
+
     const {
       client, match, status, notes,
     } = this.props;
