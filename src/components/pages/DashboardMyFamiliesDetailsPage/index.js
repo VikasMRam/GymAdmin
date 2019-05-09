@@ -390,7 +390,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             </TabWrapper>
           </div>
         </StyledTabs>
-        <DashboardMyFamilyStickyFooterContainer options={stickyFooterOptions} stageProps={stickyFooterStageProps} />
+        <DashboardMyFamilyStickyFooterContainer
+          options={stickyFooterOptions}
+          stageProps={stickyFooterStageProps}
+          showAcceptRejectButtons={showAcceptRejectButtons}
+        />
       </StyledDashboardTwoColumnTemplate>
     );
   }
