@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { func, object, node, bool } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { stringify, parse } from 'query-string';
@@ -9,6 +9,8 @@ import {
 } from 'sly/services/helpers/url';
 import { withAuth } from 'sly/services/newApi';
 import SlyEvent from 'sly/services/helpers/events';
+import RefreshRedirect from 'sly/components/common/RefreshRedirect';
+import { isServer } from 'sly/config';
 
 const searchWhitelist = [
   'page-number',
@@ -29,7 +31,7 @@ const bumpOnSearch = (prev, next) => searchWhitelist
 
 @withRouter
 
-export default class ClassRouter extends Component {
+export default class Router extends Component {
   static propTypes = {
     requiresAuth: bool,
     location: object,
@@ -37,6 +39,7 @@ export default class ClassRouter extends Component {
     enableEvents: bool,
     status: object,
     history: object,
+    staticContext: object,
     authenticated: object,
     ensureAuthenticated: func,
   };
@@ -45,21 +48,6 @@ export default class ClassRouter extends Component {
     enableEvents: true,
     requiresAuth: false,
   };
-
-  componentWillMount() {
-    const {
-      requiresAuth,
-      status,
-      location,
-      history,
-    } = this.props;
-
-    if (requiresAuth && status.user.status === 401) {
-      const afterLogin = `${location.pathname}${location.search}${location.hash}`;
-      const url = `/?${stringify({ loginRedirect: afterLogin })}`;
-      history.push(url);
-    }
-  }
 
   componentDidMount() {
     const {
@@ -77,14 +65,16 @@ export default class ClassRouter extends Component {
         .sendPageView(pathname, search);
     }
 
-    let params = parseURLQueryParams(search);
-    if (!authenticated.loggingIn && params.loginRedirect) {
-      params = removeQueryParamFromURL('loginRedirect', search);
+    const { loginRedirect } = parseURLQueryParams(search);
+    if (!authenticated.loggingIn && loginRedirect) {
       ensureAuthenticated()
         .then(() => {
-          window.location.href = decodeURIComponent(params.loginRedirect);
+          window.location.href = decodeURIComponent(loginRedirect);
         })
-        .catch(() => history.push(`${pathname}${stringify(params)}${hash}`));
+        .catch(() => {
+          const params = removeQueryParamFromURL('loginRedirect', search);
+          history.push(`${pathname}${stringify(params)}${hash}`);
+        });
     }
   }
 
@@ -97,7 +87,7 @@ export default class ClassRouter extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { requiresAuth, location, status } = this.props;
+    const { location } = this.props;
     const { pathname, search } = location;
     const { pathname: prevPath, search: prevSearch } = prevProps.location;
 
@@ -109,13 +99,26 @@ export default class ClassRouter extends Component {
     ) || bumpOnSearch(prevQs, qs)) {
       window && window.scrollTo(0, 0);
     }
-
-    if (requiresAuth && status.user.status === 401) {
-      window.location.href = '/';
-    }
   }
 
   render() {
-    return this.props.children;
+    const {
+      requiresAuth,
+      status,
+      location,
+      children,
+      staticContext,
+    } = this.props;
+
+    if (requiresAuth && status.user.status === 401) {
+      const afterLogin = `${location.pathname}${location.search}${location.hash}`;
+      const url = `/?${stringify({ loginRedirect: afterLogin })}`;
+      if (isServer) {
+        staticContext.status = 302;
+      }
+      return <RefreshRedirect to={url} />;
+    }
+
+    return children;
   }
 }
