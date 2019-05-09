@@ -32,6 +32,9 @@ export const getStageDetails = (stageName) => {
             showPauseButton = true;
           }
         }
+        if (idx === 2 && i === 0) { // whens stage is WON
+          palette = 'green';
+        }
       }
     }
   });
