@@ -9,6 +9,7 @@ import Button from 'sly/components/atoms/Button/index';
 import IconItem from 'sly/components/molecules/IconItem/index';
 import Icon from 'sly/components/atoms/Icon/index';
 import { size } from 'sly/components/themes/index';
+import cursor from 'sly/components/helpers/cursor';
 
 const FooterWrapper = styled.div`
   ${ifNotProp('showAcceptRejectButtons', css`
@@ -39,19 +40,17 @@ const OptionsListWrapper = styled.div`
   margin: ${size('spacing.large')};
 `;
 
-const OptionItemWrapper = styled.div`
-  cursor: pointer;
+const OptionItemWrapper = cursor(styled.div`
   margin: ${size('spacing.regular')} 0;
-`;
+`);
 
 const ClearIconWrapper = styled.div`
   display: flex;
 `;
 
-const ClearIcon = styled(Icon)`
-  cursor: pointer;
+const ClearIcon = cursor(styled(Icon)`
   margin-left: auto;
-`;
+`);
 
 const AcceptRejectButtonsWrapper = styled.div`
   > Button {
