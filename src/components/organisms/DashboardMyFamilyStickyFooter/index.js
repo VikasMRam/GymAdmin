@@ -43,6 +43,7 @@ const OptionsListWrapper = styled.div`
 const OptionItemWrapper = cursor(styled.div`
   margin: ${size('spacing.regular')} 0;
 `);
+OptionItemWrapper.displayName = 'OptionItemWrapper';
 
 const ClearIconWrapper = styled.div`
   display: flex;
@@ -51,6 +52,7 @@ const ClearIconWrapper = styled.div`
 const ClearIcon = cursor(styled(Icon)`
   margin-left: auto;
 `);
+ClearIcon.displayName = 'ClearIcon';
 
 const AcceptRejectButtonsWrapper = styled.div`
   > Button {
