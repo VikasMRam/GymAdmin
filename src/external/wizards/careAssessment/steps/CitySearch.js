@@ -49,7 +49,6 @@ class CitySearch extends Component {
         <StyledHeading>In what city do you need care?</StyledHeading>
         <SearchBoxContainer
           clearLocationOnBlur={false}
-          layout="boxWithoutButton"
           placeholder="Enter city name..."
           onLocationSearch={this.handleLocationChange}
           onTextChange={this.handleChange}

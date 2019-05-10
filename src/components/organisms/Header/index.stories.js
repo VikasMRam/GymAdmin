@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import { storiesOf } from '@storybook/react';
 
-import Header from '.';
+import Header from 'sly/components/organisms/Header';
 
 const headerItems = [
-  { name: 'List on Seniorly', url: '#' },
-  { name: 'Help Center', url: '#' },
-  { name: 'Saved', url: '#' },
-  { name: 'Sign Up', url: '#' },
-  { name: 'Login', url: '#' },
+  { name: 'List on Seniorly', href: '#' },
+  { name: 'Help Center', href: '#' },
+  { name: 'Saved', href: '#' },
+  { name: 'Sign Up', href: '#' },
+  { name: 'Login', href: '#' },
 ];
 const menuItems = [
-  { name: 'Assisted Living', url: '#' },
-  { name: 'Memory Care', url: '#' },
-  { name: 'Respite Care', url: '#' },
-  { name: 'About Us', url: '#' },
-  { name: 'Contact', url: '#' },
-  { name: 'Careers', url: '#' },
-  { name: 'List on Seniorly', url: '#' },
-  { name: 'Sign Out', url: '#' },
+  { name: 'Assisted Living', href: '#' },
+  { name: 'Memory Care', href: '#' },
+  { name: 'Respite Care', href: '#' },
+  { name: 'About Us', href: '#' },
+  { name: 'Contact', href: '#' },
+  { name: 'Careers', href: '#' },
+  { name: 'List on Seniorly', href: '#' },
+  { name: 'Sign Out', href: '#' },
 ];
 
 class HeaderWithState extends Component {
