@@ -47,7 +47,7 @@ const SignupForm = ({
   handleSubmit, submitting, error, onLoginClicked,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <StyledHeading>Sign Up</StyledHeading>
+    <StyledHeading>Create an account</StyledHeading>
     <Field
       name="email"
       label="Email Address"
@@ -63,12 +63,12 @@ const SignupForm = ({
       component={ReduxField}
     />
     <StyledButton type="submit" kind="jumbo" disabled={submitting}>
-      Sign up
+      Create account
     </StyledButton>
     <StyledBlock error={error}>By continuing, you agree to Seniorly&apos;s Terms of Use and Privacy Policy.</StyledBlock>
     {error && <Block palette="danger">{error}</Block>}
     <StyledHr />
-    <Block>Already have a Seniorly account? <Login onClick={onLoginClicked}>Log In</Login></Block>
+    <Block>Already have a Seniorly account? <Login onClick={onLoginClicked}>Sign in</Login></Block>
   </Form>
 );
 

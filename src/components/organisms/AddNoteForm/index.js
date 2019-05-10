@@ -47,7 +47,7 @@ SaveCommunityForm.propTypes = {
 
 SaveCommunityForm.defaultProps = {
   submitButtonText: 'Save Note',
-  cancelButtonText: 'Done',
+  cancelButtonText: 'Dismiss',
 };
 
 export default SaveCommunityForm;

@@ -61,6 +61,19 @@ const FamilySummary = ({
           <Block size="caption">{client.uuidAux.uuidInfo.residentInfo.fullName}</Block>
         </ColumWrapper>
       }
+      {client.clientInfo && client.clientInfo.phoneNumber &&
+      <ColumWrapper>
+        <Label palette="grey">Phone Number</Label>
+        <StyledLink to=`tel:+1{client.clientInfo.phoneNumber}>See more family details</StyledLink>
+        <Block size="caption">{client.uuidAux.uuidInfo.residentInfo.gender}</Block>
+      </ColumWrapper>
+      }
+      {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.residentInfo.gender &&
+      <ColumWrapper>
+        <Label palette="grey">Gender</Label>
+        <Block size="caption">{client.uuidAux.uuidInfo.residentInfo.gender}</Block>
+      </ColumWrapper>
+      }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.housingInfo.lookingFor &&
         <ColumWrapper>
           <Label palette="grey">Looking for</Label>
