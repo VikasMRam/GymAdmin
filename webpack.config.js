@@ -110,7 +110,16 @@ const babel = (context, { merge }) => merge({
   },
 });
 
-const assets = () => () => ({
+const resolveModules = modules => (context, { merge }) => merge({
+  resolve: {
+    alias: {
+      sly: modules,
+    },
+    modules: [].concat(modules, 'node_modules'),
+  },
+});
+
+const assets = (context, { merge }) => merge({
   module: {
     rules: [
       {
@@ -118,15 +127,6 @@ const assets = () => () => ({
         loader: 'url-loader?limit=8000',
       },
     ],
-  },
-});
-
-const resolveModules = modules => () => () => ({
-  resolve: {
-    alias: {
-      sly: modules,
-    },
-    modules: [].concat(modules, 'node_modules'),
   },
 });
 
@@ -161,7 +161,7 @@ const base = group([
 
   babel,
 
-  // resolveModules(sourcePath),
+  resolveModules(sourcePath),
   //
   // env('development', [
   //   setOutput({
@@ -329,7 +329,7 @@ const client = createConfig([
 
   // externalWidget,
 
-  // assets,
+  assets,
   //
   // devCORS,
   //
