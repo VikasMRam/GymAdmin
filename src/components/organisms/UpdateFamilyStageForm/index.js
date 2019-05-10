@@ -91,7 +91,7 @@ export default class UpdateFamilyStageForm extends Component {
         onCancelClick={onCancel}
         hasSubmit
         onSubmit={handleSubmit}
-        heading={`Updating ${name}'s Status`}
+        heading={`Updating ${name}'s Stage`}
         submitButtonText={stageGroupChanged ? 'Update And Move' : 'Update'}
       >
         <StageField
