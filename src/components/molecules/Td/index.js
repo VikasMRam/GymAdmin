@@ -10,6 +10,7 @@ import Block from 'sly/components/atoms/Block';
 import Icon from 'sly/components/atoms/Icon';
 
 const disabledWrapperStyles = css`
+  background-color: ${palette('white', 'base')};
   ${ifProp('disabled', css`
   background-color: ${palette('grey', 'background')};
   `)}
@@ -24,7 +25,7 @@ const textIconStyles = css`
 `;
 
 const TdWrapper = styled.td`
-  width: inherit;
+  max-width: ${size('layout.col3')};
   ${ifNotProp('borderless', css`
     padding: ${size('spacing.regular')} ${size('spacing.large')};
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};

@@ -1,5 +1,5 @@
 import { getStageDetails } from 'sly/services/helpers/stage';
-import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, FAMILY_STAGE_NEW, FAMILY_STAGE_REJECTED } from 'sly/constants/familyDetails';
 
 describe('stage', () => {
   it('getStageDetails - showPauseButton is false in Prospects stage', () => {
@@ -53,5 +53,15 @@ describe('stage', () => {
       const r = getStageDetails(s);
       expect(r.showRejectOption).toBeFalsy();
     });
+  });
+
+  it('getStageDetails - disableUpdateButton is true in Rejected stage', () => {
+    const r = getStageDetails(FAMILY_STAGE_REJECTED);
+    expect(r.disableUpdateButton).toBeTruthy();
+  });
+
+  it('getStageDetails - disableAddNoteButton is true in Rejected stage', () => {
+    const r = getStageDetails(FAMILY_STAGE_REJECTED);
+    expect(r.disableAddNoteButton).toBeTruthy();
   });
 });

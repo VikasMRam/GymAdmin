@@ -22,7 +22,7 @@ describe('FamilyActivityItem', () => {
     expect(wrapper.dive().find('StyledIcon').prop('icon')).toBe(FamilyActivityItem.defaultProps.icon);
     expect(wrapper.dive().find('StyledColumn').find('StyledBlock').contains(title)).toBeTruthy();
     expect(wrapper.dive().find('StyledColumn').find('Block').contains(description)).toBeTruthy();
-    expect(wrapper.dive().find('Block').contains(dateString)).toBeTruthy();
+    expect(wrapper.dive().find('Date').contains(dateString)).toBeTruthy();
   });
 
   it('renders when icon provided', () => {

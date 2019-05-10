@@ -8,7 +8,8 @@ import Span from 'sly/components/atoms/Span';
 const Wrapper = styled.li`
   display: inline-block;
   list-style: none;
-  padding: ${size('spacing.large')} ${size('spacing.xLarge')};
+  padding-bottom: calc(${size('spacing.large')} - ${size('border.xxLarge')});
+  margin-right: ${size('spacing.xLarge')};
   background-color: ${palette('white', 'base')};
 
   ${p => p.active && css`
@@ -43,7 +44,7 @@ class Tab extends Component {
       },
     } = this;
 
-    let spanPalette = 'grey';
+    let spanPalette = 'slate';
     let spanVariation = 'filler';
     if (active) {
       spanPalette = 'slate';

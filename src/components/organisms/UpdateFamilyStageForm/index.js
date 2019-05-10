@@ -35,6 +35,7 @@ export default class UpdateFamilyStageForm extends Component {
     name: string.isRequired,
     currentStageGroup: string,
     nextStageGroup: string,
+    currentStage: string,
     nextStage: string,
     nextAllowedStages: arrayOf(string).isRequired,
     lossReasons: arrayOf(string).isRequired,
@@ -60,20 +61,28 @@ export default class UpdateFamilyStageForm extends Component {
   render() {
     const { handleChange, handleLocationChange } = this;
     const {
-      handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, nextStage, nextAllowedStages, lossReasons,
+      handleSubmit, onCancel, name, currentStageGroup, nextStageGroup, currentStage, nextStage, nextAllowedStages, lossReasons,
       currentLossReason, isPaused, ...props
     } = this.props;
 
     const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
 
-    const options = Object.keys(NEW_FAMILY_STAGE_ORDERED).map((sg, ig) => (
-      <optgroup label={sg} key={sg}>
-        {NEW_FAMILY_STAGE_ORDERED[sg].map((s, i) => nextAllowedStages.indexOf(s) !== -1 && <option disabled={ig === 0 && i === 0} key={s} value={s}>{s}</option>)}
-      </optgroup>
-    ));
-    const lossReasonOptions = lossReasons.map(reason => <option key={reason} value={reason}>{reason}</option>);
+    const options = Object.keys(NEW_FAMILY_STAGE_ORDERED).map((sg, ig) => {
+      let stages = NEW_FAMILY_STAGE_ORDERED[sg].map((s, i) => nextAllowedStages.indexOf(s) !== -1 && <option disabled={ig === 0 && i === 0} key={s} value={s}>{s}</option>);
+      stages = stages.filter(s => s);
 
-    const StageField = currentStageGroup !== nextStageGroup ? Field : PaddedField;
+      if (stages.length) {
+        return (
+          <optgroup label={sg} key={sg}>
+            {stages}
+          </optgroup>
+        );
+      }
+      return null;
+    });
+    const lossReasonOptions = lossReasons.map(reason => <option key={reason} value={reason}>{reason}</option>);
+    const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
+    const StageField = stageGroupChanged ? Field : PaddedField;
 
     return (
       <ThreeSectionFormTemplate
@@ -83,7 +92,7 @@ export default class UpdateFamilyStageForm extends Component {
         hasSubmit
         onSubmit={handleSubmit}
         heading={`Updating ${name}'s Status`}
-        submitButtonText={currentStageGroup !== nextStageGroup ? 'Update And Move' : 'Update'}
+        submitButtonText={stageGroupChanged ? 'Update And Move' : 'Update'}
       >
         <StageField
           name="stage"
@@ -94,21 +103,22 @@ export default class UpdateFamilyStageForm extends Component {
           <option value="" disabled>Select a stage</option>
           {options}
         </StageField>
-        {currentStageGroup !== nextStageGroup && !isPaused &&
+        {stageGroupChanged && !isPaused &&
           <Warning size="caption">
             Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.
           </Warning>
         }
-        {currentStageGroup !== nextStageGroup && isPaused &&
+        {currentStage !== nextStage && isPaused &&
           <Warning size="caption">
             Updating this family&apos;s stage will remove them from being <strong>Paused</strong>.
           </Warning>
         }
         {nextStage !== FAMILY_STAGE_WON && nextStage !== FAMILY_STAGE_LOST &&
           <Field
+            showCharacterCount
             type="textarea"
-            rows="3"
-            maxlength="200"
+            rows={3}
+            maxLength={200}
             name="note"
             label="Add a note"
             placeholder="Add a note on why you are updating this family's stage..."
@@ -162,11 +172,12 @@ export default class UpdateFamilyStageForm extends Component {
         }
         {nextStage === FAMILY_STAGE_LOST && DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
           <Field
+            showCharacterCount
             type="textarea"
-            rows="3"
+            rows={3}
             name="lostDescription"
             label={<span>Description<Span palette="danger">*</Span></span>}
-            maxlength="200"
+            maxLength={200}
             placeholder="Please leave a note on the reason for closing this lead..."
             component={ReduxField}
           />

@@ -63,6 +63,9 @@ storiesOf('Molecules|Field', module)
   .add('type textarea', () => (
     <Field name="field" label="Label" type="textarea" />
   ))
+  .add('type textarea with showCharacterCount', () => (
+    <Field showCharacterCount name="field" label="Label" type="textarea" />
+  ))
   .add('type select', () => (
     <Field name="field" label="Label" type="select" >
       <option>Name 1</option>

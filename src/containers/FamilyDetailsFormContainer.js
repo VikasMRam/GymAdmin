@@ -6,13 +6,13 @@ import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
-import { createValidator, email, usPhone } from 'sly/services/validation';
+import { createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
 import clientPropType from 'sly/propTypes/client';
 import { query, getRelationship } from 'sly/services/newApi';
 
 const validate = createValidator({
-  phone: [usPhone],
-  email: [email],
+  phone: [usPhone, dependentRequired('email', 'Either Phone or Email is required')],
+  email: [email, dependentRequired('phone', 'Either Email or Phone is required')],
 });
 
 const ReduxForm = reduxForm({

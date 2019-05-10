@@ -34,11 +34,11 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
   createUserSave: data => ensureAuthenticated(
     'Sign up to add to your favorites list',
-    api.createUserSave(data),
+    api.createOldUserSave(data),
   ),
   updateUserSave: (id, data) => ensureAuthenticated(
     'Sign up to add to your favorites list',
-    api.updateUserSave({ id }, data),
+    api.updateOldUserSave({ id }, data),
   ),
 });
 
@@ -70,6 +70,7 @@ export default class SaveCommunityContainer extends Component {
     slug: string,
     user: object,
     userSave: object,
+    status: object.isRequired,
     createUserSave: func,
     updateUserSave: func,
     createAction: func,
@@ -99,7 +100,7 @@ export default class SaveCommunityContainer extends Component {
   createUserSave = () => {
     const { handleModalClose } = this;
     const {
-      community, createUserSave, notifyError, createAction, match,
+      community, createUserSave, notifyError, createAction, match, status,
     } = this.props;
     const { id } = community;
     const payload = {
@@ -123,6 +124,7 @@ export default class SaveCommunityContainer extends Component {
           actionType: USER_SAVE,
         },
       }))
+      .then(() => status.userSaves.refetch())
       .then(() => {
         this.setState({
           updatingUserSave: false,
@@ -204,6 +206,7 @@ export default class SaveCommunityContainer extends Component {
   render() {
     const { handleSubmitSaveCommunityForm } = this;
     const { community, onDoneButtonClick, onCancelClick } = this.props;
+    const { similarProperties } = community;
     const { updatingUserSave } = this.state;
 
     if (updatingUserSave) {
@@ -212,7 +215,7 @@ export default class SaveCommunityContainer extends Component {
 
     const PaddedCommunitySaved = () => (
       <PaddedBlock>
-        <CommunitySaved name="Success" similarCommunities={community.similarProperties} onDoneButtonClicked={onDoneButtonClick}/>
+        <CommunitySaved name="Success" similarCommunities={similarProperties} onDoneButtonClicked={onDoneButtonClick}/>
       </PaddedBlock>
     );
 
@@ -228,7 +231,7 @@ export default class SaveCommunityContainer extends Component {
               component={AddNoteFormContainer}
               name="Note"
               onSubmit={data => handleSubmitSaveCommunityForm(data, next)}
-              heading="Add to your favorites list"
+              heading="Community has been saved"
               placeholder="What are some things about this community that you like..."
               hasCancel
               onCancelClick={onCancelClick}

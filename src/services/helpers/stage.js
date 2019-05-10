@@ -1,4 +1,4 @@
-import { FAMILY_STAGE_ORDERED, TOTAL_STAGES_COUNT, FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, TOTAL_STAGES_COUNT, FAMILY_STAGE_NEW, FAMILY_STAGE_REJECTED } from 'sly/constants/familyDetails';
 
 const stageArr = Object.keys(FAMILY_STAGE_ORDERED);
 
@@ -6,6 +6,7 @@ export const getStageDetails = (stageName) => {
   let level = -1;
   let levelGroup = '';
   let palette = 'primary';
+  const disableUpdateButton = stageName === FAMILY_STAGE_REJECTED;
   let disableAddNoteButton = false;
   let showAcceptRejectButtons = false;
   let showUpdateAddNoteButtons = false;
@@ -31,18 +32,24 @@ export const getStageDetails = (stageName) => {
             showPauseButton = true;
           }
         }
+        if (idx === 2 && i === 0) { // whens stage is WON
+          palette = 'green';
+        }
       }
     }
   });
 
+  const canEditFamilyDetails = levelGroup === stageArr[1]; // Connected
   return {
     level,
     levelGroup,
     palette,
     disableAddNoteButton,
+    disableUpdateButton,
     showAcceptRejectButtons,
     showUpdateAddNoteButtons,
     showPauseButton,
     showRejectOption,
+    canEditFamilyDetails,
   };
 };

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { object, func } from 'prop-types';
+import { object, func, arrayOf } from 'prop-types';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
-import { prefetch, query } from 'sly/services/newApi';
+import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
+import notePropType from 'sly/propTypes/note';
+import { FAMILY_DASHBOARD_FAMILIES_PATH, FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
 import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -17,9 +18,19 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
   id: match.params.id,
 }))
 
+@prefetch('notes', 'getNotes', (req, { match }) => req({
+  'filter[commentable_id]': match.params.id,
+}))
+
 @query('updateClient', 'updateClient')
 
 @query('createNote', 'createNote')
+
+@connect(null, (dispatch, { api }) => ({
+  invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
+}))
+
+@withUser
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
@@ -29,6 +40,8 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     history: object,
     updateClient: func.isRequired,
     createNote: func.isRequired,
+    notes: arrayOf(notePropType),
+    invalidateClients: func,
   };
 
   onRejectSuccess = (hide) => {
@@ -39,8 +52,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
 
   onUnPause = (notifyInfo, notifyError) => {
     const { setStatusToActive } = this;
+    const { invalidateClients } = this.props;
 
     return setStatusToActive()
+      .then(invalidateClients)
       .then(() => {
         notifyInfo('Family successfully unpaused');
       })
@@ -54,7 +69,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   onAddNote = (data, notifyError, notifyInfo, hideModal) => {
-    const { createNote, client } = this.props;
+    const {
+      createNote, client, status, invalidateClients,
+    } = this.props;
     const { id } = client;
     const { note } = data;
     const payload = {
@@ -66,8 +83,11 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       },
     };
     const notePromise = () => createNote(payload);
+    const getNotesPromise = () => status.notes.refetch();
 
     return notePromise()
+      .then(getNotesPromise)
+      .then(invalidateClients)
       .then(() => {
         hideModal();
         notifyInfo('Note successfully added');
@@ -92,15 +112,23 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     return updateClient({ id }, newClient);
   };
 
+  goToFamilyDetails = () => {
+    const { history, client } = this.props;
+    const { id } = client;
+    const path = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
+    history.push(path);
+  };
+
   render() {
     const { onRejectSuccess, onUnPause, onAddNote } = this;
-    const { client, match, status } = this.props;
-    const { result: rawClient, meta } = status.client;
-    const { isLoading } = status.client;
 
-    if (isLoading) {
-      return <div>Loading...</div>;
-    }
+    const {
+      client, match, status, notes,
+    } = this.props;
+
+    const { result: rawClient, meta } = status.client;
+    const { isLoading: clientIsLoading } = status.client;
+    const { isLoading: noteIsLoading } = status.notes;
 
     return (
       <NotificationController>
@@ -120,8 +148,14 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 hideModal={hide}
                 meta={meta}
                 onRejectSuccess={() => onRejectSuccess(hide)}
+                refetchClient={status.client.refetch}
+                refetchNotes={status.notes.refetch}
                 onUnPause={() => onUnPause(notifyInfo, notifyError)}
                 onAddNote={onAddNote}
+                notes={notes}
+                noteIsLoading={noteIsLoading}
+                clientIsLoadig={clientIsLoading}
+                goToFamilyDetails={this.goToFamilyDetails}
               />
             )}
           </ModalController>

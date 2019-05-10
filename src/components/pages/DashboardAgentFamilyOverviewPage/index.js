@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { arrayOf, object, string } from 'prop-types';
+import { arrayOf, object, string, bool } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
@@ -70,10 +70,30 @@ const EmptyTextWrapper = styled.div`
   text-align: center;
 `;
 
+const StyledTabs = styled(Tabs)`
+  > *:nth-child(1) {
+    border-top: 0;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    > *:nth-child(1) {
+      border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+    }
+  }
+`;
+
+const tabIDLabelMap = {
+  Prospects: 'PROSPECTS',
+  Connected: 'CONNECTED',
+  Closed: 'CLOSED',
+};
+
+const tabIDs = Object.keys(tabIDLabelMap);
+
 const DashboardAgentFamilyOverviewPage = ({
-  mobileContents, tableContents, pagination, paginationString, activeTab,
+  mobileContents, tableContents, pagination, paginationString, activeTab, showPagination,
 }) => {
-  const { current, total } = pagination;
+  const { current, total, filteredCount } = pagination;
   const paginationParams = {
     current,
     total,
@@ -82,6 +102,7 @@ const DashboardAgentFamilyOverviewPage = ({
     pageParam: 'page-number',
   };
   const { tableEmptyText } = tableContents;
+  const paginationComponent = (showPagination && <Pagination {...paginationParams} />);
   const bigScreenView = (
     <Fragment>
       {tableHeaderButtons}
@@ -89,11 +110,11 @@ const DashboardAgentFamilyOverviewPage = ({
         <TableWrapper>
           <Table {...tableContents} />
         </TableWrapper>
-        <BigScreenPaginationWrapper>
-          <Pagination {...paginationParams} />
-        </BigScreenPaginationWrapper>
-        <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
       </TableSectionWrapper>
+      <BigScreenPaginationWrapper>
+        {paginationComponent}
+      </BigScreenPaginationWrapper>
+      <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
     </Fragment>
   );
   const emptyTextComponent = <EmptyTextWrapper><Block palette="grey">{tableEmptyText}</Block></EmptyTextWrapper>;
@@ -105,25 +126,35 @@ const DashboardAgentFamilyOverviewPage = ({
           <Fragment>
             <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
             {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
-            <Pagination {...paginationParams} />
+            {paginationComponent}
           </Fragment>
         )}
         {mobileContents.length === 0 && emptyTextComponent}
       </TableRowCardsWrapper>
     </Fragment>
   );
+  let prospectsTabLabel = tabIDLabelMap[tabIDs[0]];
+  let connectedTabLabel = tabIDLabelMap[tabIDs[1]];
+  let closedTabLabel = tabIDLabelMap[tabIDs[2]];
+  if (activeTab === tabIDs[0]) {
+    prospectsTabLabel += ` (${filteredCount})`;
+  } else if (activeTab === tabIDs[1]) {
+    connectedTabLabel += ` (${filteredCount})`;
+  } else if (activeTab === tabIDs[2]) {
+    closedTabLabel += ` (${filteredCount})`;
+  }
   const tabsViewTemplate = view => (
-    <Tabs activeTab={activeTab}>
-      <div label="Prospects" to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+    <StyledTabs activeTab={activeTab}>
+      <div id={tabIDs[0]} label={prospectsTabLabel} to={FAMILY_DASHBOARD_FAMILIES_PATH}>
         {view}
       </div>
-      <div label="Connected" to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`}>
+      <div id={tabIDs[1]} label={connectedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`}>
         {view}
       </div>
-      <div label="Closed" to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`}>
+      <div id={tabIDs[2]} label={closedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`}>
         {view}
       </div>
-    </Tabs>
+    </StyledTabs>
   );
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
@@ -143,6 +174,7 @@ DashboardAgentFamilyOverviewPage.propTypes = {
   pagination: object,
   paginationString: string,
   activeTab: string,
+  showPagination: bool,
 };
 
 DashboardAgentFamilyOverviewPage.defaultProps = {

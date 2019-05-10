@@ -20,19 +20,22 @@ class AcceptAndContactFamilyContainer extends Component {
     rawClient: object,
     notifyError: func.isRequired,
     updateClient: func,
+    refetchClient: func,
+    goToFamilyDetails: func,
   };
 
   state = { contactType: null };
 
   handleUpdateStage = (contactType, next) => {
     const {
-      updateClient, client, rawClient, notifyError,
+      updateClient, client, rawClient, notifyError, refetchClient,
     } = this.props;
     const { id } = client;
     const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
     const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.stage']))
       .set('attributes.stage', contactStatus)
       .value();
+    const clientPromise = () => refetchClient();
 
     return updateClient({ id }, newClient)
       .then(() => {
@@ -41,6 +44,7 @@ class AcceptAndContactFamilyContainer extends Component {
         });
         next();
       })
+      .then(clientPromise)
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { body } = r;
@@ -49,6 +53,12 @@ class AcceptAndContactFamilyContainer extends Component {
         notifyError('Failed to update stage. Please try again.');
       });
   };
+
+  handleAcceptFamilySubmit = () => {
+    const { onCancel, goToFamilyDetails } = this.props;
+    withPreventDefault(onCancel);
+    goToFamilyDetails();
+  }
 
   render() {
     const { handleUpdateStage } = this;
@@ -77,7 +87,7 @@ class AcceptAndContactFamilyContainer extends Component {
             <WizardStep
               component={AcceptFamilyContactDetails}
               name="Details"
-              handleSubmit={withPreventDefault(onCancel)}
+              handleSubmit={this.handleAcceptFamilySubmit}
               label={contactType === 'phone' ? 'Phone number' : 'Email'}
               detail={detail}
             />

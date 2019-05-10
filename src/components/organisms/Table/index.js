@@ -9,6 +9,13 @@ import { Block } from 'sly/components/atoms';
 const Wrapper = styled.table`
   border-collapse: collapse;
   width: 100%;
+  position: relative;
+
+  th:first-child, td:first-child {
+    left: 0;
+    position: sticky;
+    top: auto;
+  }
 `;
 
 const EmptyTextWrapper = styled.div`

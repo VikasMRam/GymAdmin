@@ -61,7 +61,7 @@ const mapPropsToActions = () => ({
 const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
   updateUserSave: (id, data) => ensureAuthenticated(
     'Sign up to add to your favorites list',
-    api.updateUserSave({ id }, data),
+    api.updateOldUserSave({ id }, data),
   ),
 });
 

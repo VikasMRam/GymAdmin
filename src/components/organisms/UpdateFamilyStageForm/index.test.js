@@ -83,6 +83,8 @@ describe('UpdateFamilyStageForm', () => {
     const wrapper = wrap({
       currentStageGroup: groups[0],
       nextStageGroup: groups[1],
+      currentStage: optionValues[0],
+      nextStage: optionValues[4],
       isPaused: true,
     });
     const field = wrapper.find('Field');
