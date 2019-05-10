@@ -25,7 +25,7 @@ const searchTextBoxStyles = css`
 `;
 const ShadowedSearchTextBox = shadow(styled(Input)`
   ${searchTextBoxStyles}
-`);
+`, 'small');
 ShadowedSearchTextBox.displayName = 'ShadowedSearchTextBox';
 const SearchTextBox = styled(Input)`
   ${searchTextBoxStyles}
