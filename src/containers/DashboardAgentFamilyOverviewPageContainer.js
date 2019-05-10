@@ -38,7 +38,7 @@ const convertClientsToTableContents = (clients) => {
     const disabled = status === FAMILY_STATUS_ON_HOLD;
     const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
     const pausedType = disabled ? 'textIcon' : 'link';
-    rowItems.push({ type: pausedType, data: { text: clientName, to: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id), ...pausedTd } });
+    rowItems.push({ type: pausedType, data: { text: clientName, to: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab', ''), ...pausedTd } });
     rowItems.push({ type: 'text', data: { text: residentName, disabled } });
     rowItems.push({
       type: 'stage',
@@ -86,7 +86,7 @@ const convertClientsToMobileContents = (clients) => {
     rowItems.push({ type: 'stage', data: { text: stage, currentStage: level, palette } });
     return {
       heading: clientName,
-      to: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id),
+      to: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab', ''),
       id,
       rowItems,
       ...pausedTd,
