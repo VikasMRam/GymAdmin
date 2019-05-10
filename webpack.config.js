@@ -7,11 +7,10 @@ const UglifyJs = require('uglify-es');
 const cssmin = require('cssmin');
 // const splitVendor = require('webpack-blocks-split-vendor');
 const nodeExternals = require('webpack-node-externals');
-const Visualizer = require('webpack-visualizer-plugin');
+// const Visualizer = require('webpack-visualizer-plugin');
 const SpawnPlugin = require('webpack-spawn-plugin');
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 const webpack = require('webpack');
-
 const {
   match,
   babel,

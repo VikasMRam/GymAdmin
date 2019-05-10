@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import SwipeableViews from 'react-swipeable-views';
 
 import ThumbnailScroller from 'sly/components/molecules/ThumbnailScroller';
-import MediaGallery, { StyledImg } from 'sly/components/molecules/MediaGallery';
+import MediaGallery from 'sly/components/molecules/MediaGallery';
 import RhodaGoldmanPlaza from 'sly/../private/storybook/sample-data/property-rhoda-goldman-plaza.json';
 
 const wrap = (props = {}) => mount(<MediaGallery {...props} />);
@@ -43,8 +43,7 @@ describe('MediaGallery', () => {
     const wrapper = wrap({
       images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false, onSlideChange,
     });
-    console.log('ww', wrapper.instance())
-    expect(wrapper.find(StyledImg)).toHaveLength(galleryImages.length);
+    expect(wrapper.find('Image')).toHaveLength(galleryImages.length);
     expect(wrapper.find('video')).toHaveLength(galleryVideos.length);
     expect(wrapper.find(ThumbnailScroller)).toHaveLength(0);
   });
@@ -53,7 +52,7 @@ describe('MediaGallery', () => {
     const wrapper = wrap({
       images: galleryImages, videos: galleryVideos, onClose, ariaHideApp: false, showThumbnails: true, onSlideChange,
     });
-    expect(wrapper.find(SwipeableViews).find(Image)).toHaveLength(galleryImages.length);
+    expect(wrapper.find(SwipeableViews).find('Image')).toHaveLength(galleryImages.length);
     expect(wrapper.find('video')).toHaveLength(galleryVideos.length);
     expect(wrapper.find(ThumbnailScroller)).toHaveLength(1);
   });
