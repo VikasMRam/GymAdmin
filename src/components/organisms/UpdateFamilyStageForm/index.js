@@ -191,7 +191,6 @@ export default class UpdateFamilyStageForm extends Component {
             />
             <Label><span>Preferred location<Span palette="danger">*</Span></span></Label>
             <SearchBoxContainer
-              layout="boxWithoutButton"
               onLocationSearch={handleLocationChange}
               onTextChange={handleChange}
             />

@@ -1,8 +1,11 @@
 import React, { Fragment } from 'react';
-import { bool, func, arrayOf, shape, string, number } from 'prop-types';
+import { bool, func, arrayOf, shape, string, oneOf } from 'prop-types';
 import styled from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size, palette, key } from 'sly/components/themes';
+import { palette as palettePropType } from 'sly/propTypes/palette';
+import cursor from 'sly/components/helpers/cursor';
 import { Icon, Hr, Link } from 'sly/components/atoms';
 import Logo from 'sly/components/atoms/Logo';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
@@ -13,10 +16,15 @@ const HeaderWrapper = styled.nav`
   border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   // To remove blue line caused by tabIndex
   outline: none;
+  align-items: center;
+  padding: ${size('spacing.regular')} ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.large')} ${size('spacing.xLarge')};
+  }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    padding: ${size('spacing.regular')} ${size('spacing.xLarge')};
-    align-items: center;
+    padding: 0 ${size('spacing.xLarge')};
   }
 `;
 
@@ -35,40 +43,39 @@ const SeniorlyLogoWrapper = styled.div`
 
 export const SeniorlyIconMenu = styled.div`
   display: flex;
-  padding: calc(${size('spacing.small')} + ${size('spacing.regular')})
-    ${size('spacing.large')};
-  border-right: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  align-items: center;
+  margin-right: ${size('spacing.large')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }
 `;
 
-const MenuArrowIcon = styled(Icon)`
-  margin: calc(${size('spacing.small')} + ${size('spacing.regular')}) 0 0
-    ${size('spacing.regular')};
-`;
-
-const MenuIcon = styled(Icon)`
-  display: none;
-  cursor: pointer;
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    display: block;
-  }
-`;
+const MenuIcon = cursor(styled(Icon)`
+  margin-right: ${size('spacing.regular')};
+`);
+MenuIcon.displayName = 'MenuIcon';
 
 export const HeaderMenu = styled.div`
   width: 100%;
+  height: 100%;
   position: absolute;
   top: ${size('header.menu.position.top.mobile')};
+  left: 0;
   background: ${palette('white', 'base')};
   z-index: ${key('zIndexes.header')};
-  padding: ${size('spacing.xLarge')} ${size('spacing.large')};
+  padding: ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    top: ${size('header.menu.position.top.tablet')};
+    padding: ${size('spacing.large')} ${size('spacing.xLarge')};
+  }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    padding: 0;
+    height: inherit;
+    padding: ${size('spacing.large')} 0;
     width: ${size('header.menu.width')};
+    left: auto;
     top: ${size('header.menu.position.top.laptop')};
     right: ${size('spacing.large')};
     border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
@@ -78,22 +85,22 @@ export const HeaderMenu = styled.div`
 `;
 
 export const HeaderMenuItem = styled(Link)`
-  display: block;
-  padding: ${size('spacing.large')};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: ${size('spacing.large')} 0;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding: ${size('spacing.large')};
     :hover {
-      background-color: ${palette('grey', 'stroke')};
+      background-color: ${palette('primary', 'background')};
+      color: initial;
     }
   }
 `;
 
 const MarginnedHR = styled(Hr)`
-  margin: ${size('spacing.xLarge')} ${size('spacing.large')};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    margin: 0 ${size('spacing.large')};
-  }
+  margin: ${size('spacing.regular')} 0;
 `;
 
 export const HeaderItems = styled.div`
@@ -101,22 +108,16 @@ export const HeaderItems = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: flex;
-    justify-content: space-between;
-    flex-grow: 1;
-    align-items: center;
-    padding-left: ${size('spacing.large')};
     margin-left: auto;
-    margin-right: ${size('spacing.xLarge')};
-    max-width: ${size('layout.col7')};
   }
 `;
 
 const HeaderItem = styled(Link)`
   display: none;
-  padding: ${size('spacing.large')} 0;
-  font-size: ${size('text.caption')};
-  &:first-child {
-    padding-left: 0px;
+  padding: calc(${size('spacing.xLarge')} + ${size('spacing.regular')} - ${size('spacing.small')}) 0;
+  margin-right: ${size('spacing.xLarge')};
+  &:last-child {
+    margin-right: 0;
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -125,41 +126,60 @@ const HeaderItem = styled(Link)`
 `;
 
 const StyledSearchBoxContainer = styled(SearchBoxContainer)`
+  visibility: ${ifProp('menuOpen', 'hidden', 'visible')};
   width: 100%;
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    visibility: visible;
     width: ${size('header.SearchBox.width')};
   }
 `;
 
+const OnlyInSmallScreen = styled.div`
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
+`;
+
 const Header = ({
-  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, menuItemHrIndices, onMenuItemClick, onHeaderBlur, className,
+  menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, onMenuItemClick, onHeaderBlur, className, smallScreenMenuItems,
 }) => {
   const headerItemComponents = headerItems.map(item => (
-    <HeaderItem onClick={item.onClick} to={item.url} palette="slate" key={item.name}>
+    <HeaderItem size="caption" onClick={item.onClick} href={item.href} to={item.to} palette={item.palette ? item.palette : 'slate'} key={item.name}>
       {item.name}
     </HeaderItem>
   ));
-  let menuItemPosition = 0;
-  const menuItemsPresent = menuItems.length > 0;
-  const headerMenuItems = menuItemsPresent ? menuItems : headerItems;
-  const headerMenuItemComponents = headerMenuItems.map((item) => {
-    menuItemPosition += 1;
-    if (menuItemHrIndices.indexOf(menuItemPosition) !== -1) {
-      return (
-        <div key={item.name}>
-          <MarginnedHR />
-          <HeaderMenuItem to={item.url} palette="slate" onClick={item.onClick}>
-            {item.name}
-          </HeaderMenuItem>
-        </div>
+  menuItems = menuItems.sort((a, b) => a.section - b.section);
+  let prevSection = menuItems.length ? menuItems[0].section : 0;
+  const headerMenuItemComponents = menuItems
+    .map((item) => {
+      const mi = (
+        <HeaderMenuItem size="caption" href={item.href} to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={item.onClick}>
+          {item.name}
+          {item.icon && <Icon size="caption" icon={item.icon} palette={item.palette ? item.palette : 'slate'} />}
+        </HeaderMenuItem>
       );
-    }
-    return (
-      <HeaderMenuItem to={item.url} palette="slate" key={item.name} onClick={item.onClick}>
+      const ret = item.hideInBigScreen ? (
+        <OnlyInSmallScreen>
+          {mi}
+        </OnlyInSmallScreen>
+      ) : mi;
+      const hr = prevSection !== item.section && <MarginnedHR />;
+      prevSection = item.section;
+
+      return (
+        <Fragment key={item.name}>
+          {hr}
+          {ret}
+        </Fragment>
+      );
+    });
+  const smallScreenMenuItemComponents = smallScreenMenuItems
+    .map(item => (
+      <HeaderMenuItem size="caption" href={item.href} to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={item.onClick}>
         {item.name}
+        {item.icon && <Icon size="caption" icon={item.icon} palette={item.palette ? item.palette : 'slate'} />}
       </HeaderMenuItem>
-    );
-  });
+    ));
   const headerMenuRef = React.createRef();
   const handleHeaderMenuBlur = (e) => {
     // trigger blur event handler only if focus is on an element outside dropdown, mind it
@@ -176,24 +196,31 @@ const Header = ({
           <Logo />
         </Link>
       </SeniorlyLogoWrapper>
-      <SeniorlyIconMenu onClick={onMenuIconClick}>
-        <Icon icon="logo" size="large" />
+      <SeniorlyIconMenu>
         {headerMenuItemComponents.length > 0 && (
           <Fragment>
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-            {!menuOpen && <MenuArrowIcon icon="arrow-down" size="tiny" />}
-            {menuOpen && <MenuArrowIcon icon="arrow-up" size="tiny" />}
+            {!menuOpen && <MenuIcon onClick={onMenuIconClick} icon="menu" palette="secondary" />}
+            {menuOpen && <MenuIcon onClick={onMenuIconClick} icon="close" palette="secondary" />}
           </Fragment>
         )}
+        <Icon icon="logo" size="large" />
       </SeniorlyIconMenu>
-      <StyledSearchBoxContainer layout="header" onLocationSearch={onLocationSearch} />
+      <StyledSearchBoxContainer menuOpen={menuOpen} hasShadow layout="header" onLocationSearch={onLocationSearch} />
       <HeaderItems>
         {headerItemComponents}
       </HeaderItems>
-      {menuItemsPresent && (
-        <MenuIcon icon="menu" size="regular" onClick={onMenuIconClick} />
-      )}
-      {menuOpen && <HeaderMenu innerRef={headerMenuRef} onClick={onMenuItemClick}>{headerMenuItemComponents}</HeaderMenu>}
+      {menuOpen &&
+        <HeaderMenu innerRef={headerMenuRef} onClick={onMenuItemClick}>
+          {smallScreenMenuItemComponents.length > 0 &&
+            <OnlyInSmallScreen>
+              {smallScreenMenuItemComponents}
+              <MarginnedHR />
+            </OnlyInSmallScreen>
+          }
+          {headerMenuItemComponents}
+        </HeaderMenu>
+      }
     </HeaderWrapper>
   );
 };
@@ -205,22 +232,34 @@ Header.propTypes = {
   onLocationSearch: func,
   onHeaderBlur: func,
   headerItems: arrayOf(shape({
-    name: string,
-    url: string,
+    name: string.isRequired,
+    to: string,
+    href: string,
     onClick: func,
+    palette: palettePropType,
   })).isRequired,
   menuItems: arrayOf(shape({
-    name: string,
-    url: string,
+    name: string.isRequired,
+    to: string,
+    href: string,
     onClick: func,
+    hideInBigScreen: bool,
+    icon: string,
+    section: oneOf([1, 2, 3]),
   })),
-  menuItemHrIndices: arrayOf(number),
+  smallScreenMenuItems: arrayOf(shape({
+    name: string.isRequired,
+    to: string,
+    href: string,
+    onClick: func,
+    icon: string,
+  })),
   className: string,
 };
 
 Header.defaultProps = {
   menuItems: [],
-  menuItemHrIndices: [],
+  smallScreenMenuItems: [],
 };
 
 export default Header;

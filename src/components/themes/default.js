@@ -100,8 +100,9 @@ theme.sizes = {
       width   : '16.5rem',   // 264px
       position: {
         top: {
-          mobile     : '3.8125rem',   // 61px
-          laptop     : '3.4375rem',   // 55px
+          mobile     : '3.8125rem',     // 61px
+          tablet     : '4.79rem',      // 78px
+          laptop     : '4rem',        // 64px
         },
       },
     },

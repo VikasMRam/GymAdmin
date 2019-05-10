@@ -4,78 +4,32 @@ import styled, { css } from 'styled-components';
 import { switchProp, ifProp } from 'styled-tools';
 import PlacesAutocomplete from 'react-places-autocomplete';
 
+import shadow from 'sly/components/helpers/shadow';
 import { size, assetPath, palette, key } from 'sly/components/themes';
-import { Icon, Input, Button, Image } from 'sly/components/atoms';
+import { Input, Image } from 'sly/components/atoms';
 
 const Wrapper = styled.div`
   position: relative;
 `;
-const SearchInputButtonWrapper = styled.div`
-  display: flex;
-  height: 100%;
-`;
-const SearchTextBox = styled(Input)`
-  height: ${size('element.large')};
+const searchTextBoxStyles = css`
+  background-color: ${palette('white', 'base')}!important;
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('spacing.tiny')} 0 0 ${size('spacing.tiny')};
-
-${switchProp('layout', {
+  border-radius: ${size('border.xxLarge')};
+  ${switchProp('layout', {
     header: css`
       height: auto;
-      border: none;
-      border-right: 0;
     `,
     homeHero: css`
-      border-right: 0;
-    `,
+      height: ${size('element.large')};`,
   })}
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    height: ${size('element.large')};
-    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-    border-radius: ${size('spacing.tiny')} 0 0 ${size('spacing.tiny')};
-
-${switchProp('layout', {
-    header: css`
-      border-right: 0;
-    `,
-    homeHero: css`
-      border-right: 0;
-    `,
-  })}
-  }
 `;
-
-const SearchButton = styled(Button)`
-  height: ${size('element.large')};
-  border: none;
-  flex-shrink: 0;
-  width: ${size('element.xxLarge')};
-  border-radius: 0 ${size('spacing.tiny')} ${size('spacing.tiny')} 0;
-
-${switchProp('layout', {
-    header: css`
-      margin-right: ${size('spacing.regular')};
-      width: ${size('element.large')};
-      height: auto;
-      background: none;
-      > span {
-        color: ${palette('primary', 'base')};
-      }
-`,
-  })};
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    margin-right: 0px;
-    background-color: ${palette('primary', 'base')};
-    width: ${size('element.xxLarge')};
-    > span {
-      color: ${palette('white', 'base')};
-      vertical-align: middle;
-    }
-  }
+const ShadowedSearchTextBox = shadow(styled(Input)`
+  ${searchTextBoxStyles}
+`);
+ShadowedSearchTextBox.displayName = 'ShadowedSearchTextBox';
+const SearchTextBox = styled(Input)`
+  ${searchTextBoxStyles}
 `;
-
 const SearchSuggestionsWrapper = styled.div`
   z-index: ${key('zIndexes.searchSuggestions')};
   position: absolute;
@@ -111,37 +65,38 @@ const GoogleLogo = styled(Image)`
   width: ${size('picture.tiny.width')};
   float: right;
 `;
+
 const baseSearchOptions = { types: ['(regions)'] };
+
 const SearchBox = ({
-  layout, value, onChange, onSelect, onSearchButtonClick, onTextboxFocus, placeholder, readOnly, ...props
+  layout, value, onChange, onSelect, onSearchButtonClick, onTextboxFocus,
+  placeholder, readOnly, hasShadow, ...props
 }) => (
   <Wrapper layout={layout} {...props}>
     <PlacesAutocomplete value={value} onChange={onChange} onSelect={onSelect} searchOptions={baseSearchOptions} highlightFirstSuggestion>
       {({ getInputProps, suggestions, getSuggestionItemProps }) => (
         <Fragment>
           {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-          <SearchInputButtonWrapper>
-            <SearchTextBox
-              size="large"
+          {hasShadow &&
+            <ShadowedSearchTextBox
               {...getInputProps({ placeholder })}
               layout={layout}
               onFocus={onTextboxFocus}
               readOnly={readOnly}
+              type="search"
+              size="large"
             />
-            {/*
-              it's important that mousedown is used instead of click because it will be fired before blur event.
-              SearchTextBox blur event will clear suggestions. hence to search with first suggestion when SearchButton
-              is clicked, fire onSearchButtonClick before suggestions are cleared.
-            */}
-            {layout !== 'boxWithoutButton' &&
-              <SearchButton
-                layout={layout}
-                onMouseDown={onSearchButtonClick}
-              >
-                <Icon icon="search" size="regular" palette="white" />
-              </SearchButton>
-            }
-          </SearchInputButtonWrapper>
+          }
+          {!hasShadow &&
+            <SearchTextBox
+              {...getInputProps({ placeholder })}
+              layout={layout}
+              onFocus={onTextboxFocus}
+              readOnly={readOnly}
+              type="search"
+              size="large"
+            />
+          }
           {suggestions.length > 0 && (
             <SearchSuggestionsWrapper layout={layout}>
               {suggestions.map(suggestion => (
@@ -159,7 +114,7 @@ const SearchBox = ({
 );
 
 SearchBox.propTypes = {
-  layout: oneOf(['header', 'homeHero', 'boxWithoutButton']),
+  layout: oneOf(['header', 'homeHero']),
   value: string.isRequired,
   onChange: func.isRequired,
   onSelect: func.isRequired,
@@ -167,11 +122,12 @@ SearchBox.propTypes = {
   onTextboxFocus: func,
   placeholder: string,
   readOnly: bool,
+  hasShadow: bool,
 };
 
 SearchBox.defaultProps = {
   layout: 'header',
-  placeholder: 'Search by city or zip code',
+  placeholder: 'Search by city or ZIP code',
   value: '',
 };
 

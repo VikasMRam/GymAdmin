@@ -12,7 +12,4 @@ storiesOf('Molecules|SearchBox', module)
   ))
   .add('with placeholder', () => (
     <SearchBox placeholder="hello world" />
-  ))
-  .add('with boxWithoutButton layout', () => (
-    <SearchBox layout="boxWithoutButton" />
   ));

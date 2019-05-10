@@ -1,13 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import { func, object, string } from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 
-import { SAVED_COMMUNITIES } from 'sly/constants/modalType';
+import { CUSTOMER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
+import { FAMILY_DASHBOARD_FAMILIES_PATH, FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH } from 'sly/constants/dashboardAppPaths';
 import SlyEvent from 'sly/services/helpers/events';
-import { getSearchParams } from 'sly/services/helpers/search';
-import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
-import SavedCommunitiesPopupController from 'sly/controllers/SavedCommunitiesPopupController';
 import AuthContainer from 'sly/containers/AuthContainer';
 import NotificationController from 'sly/controllers/NotificationController';
 import Notifications from 'sly/components/organisms/Notifications';
@@ -17,37 +13,59 @@ import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 import { withAuth } from 'sly/services/newApi';
 
 const defaultHeaderItems = [
-  { name: '(855) 866-4515', url: 'tel:+18558664515' },
-  { name: 'Resources', url: '/resources' },
+  { name: 'Call for help (855) 866-4515', href: 'tel:+18558664515', palette: 'primary' },
+  { name: 'Resources', href: '/resources' },
   { name: 'How It Works' },
-  { name: 'Saved' },
-  { name: 'List Your Property', url: '/providers' },
+];
+
+const smallScreenMenuItems = [
+  { name: 'Home', href: '/' },
 ];
 
 const defaultMenuItems = [
-  { name: 'Home', url: '/' },
-  { name: '(855) 866-4515', url: 'tel:+18558664515' },
-  { name: 'Resources', url: '/resources' },
-  { name: 'How It Works', url: '/how-it-works' },
-  { name: 'Assisted Living', url: '/assisted-living' },
-  { name: 'Memory Care', url: '/memory-care' },
-  { name: 'Respite Care', url: '/respite-care' },
-  { name: 'Our Company', url: '/about' },
-  { name: 'Contact', url: '/contact' },
-  { name: 'Careers', url: 'https://angel.co/seniorly/jobs' },
-  { name: 'List on Seniorly', url: '/providers' },
+  {
+    name: 'Call for help (855) 866-4515', href: 'tel:+18558664515', palette: 'primary', hideInBigScreen: true, section: 2,
+  },
+  {
+    name: 'Resources', href: '/resources', hideInBigScreen: true, section: 2,
+  },
+  { name: 'Contact Us', href: '/contact', section: 2 },
+  { name: 'About Us', href: '/about', section: 2 },
 ];
 
+const customerMenuItems = [
+  {
+    name: 'Favorites', href: FAMILY_DASHBOARD_FAVORITES_PATH, section: 1, icon: 'favourite-light',
+  },
+  {
+    name: 'My Profile', href: FAMILY_DASHBOARD_PROFILE_PATH, section: 1, icon: 'user',
+  },
+];
+
+const agentMenuItems = [
+  {
+    name: 'My Families', href: FAMILY_DASHBOARD_FAMILIES_PATH, section: 1, icon: 'users',
+  },
+];
+
+const loggedInMenuItems = (user) => {
+  const { roleID } = user;
+  let roleBasedItems = [];
+  if (roleID === CUSTOMER_ROLE) {
+    roleBasedItems = customerMenuItems;
+  }
+  if (roleID === AGENT_ROLE) {
+    roleBasedItems = agentMenuItems;
+  }
+  return [...roleBasedItems, { name: 'Log Out', section: 3 }];
+};
+
 const loginHeaderItems = user => user
-  ? [{ name: 'Dashboard', url: '/dashboard' }]
+  ? [{ name: 'My Seniorly' }]
   : [{ name: 'Sign in' }];
 
-const loginMenuItems = user => loginHeaderItems(user)
-  .concat(user
-    ? [{ name: 'Log out' }]
-    : []);
-
-const menuItemHrIndices = [7, 10];
+const generateMenuItems = user => user ?
+  [...defaultMenuItems, ...loggedInMenuItems(user)] : [...defaultMenuItems, { name: 'Sign in', section: 3 }];
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
@@ -56,28 +74,12 @@ const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sen
   value,
 });
 
-const mapStateToProps = (state, {
-  history, match, location,
-}) => ({
-  setQueryParams: getQueryParamsSetter(history, location),
-  searchParams: getSearchParams(match, location),
-});
-
-@withRouter
-
 @withAuth
-
-@connect(mapStateToProps)
 
 export default class HeaderContainer extends Component {
   static propTypes = {
     user: object,
-    setQueryParams: func,
-    searchParams: object,
     logoutUser: func,
-    history: object,
-    match: object,
-    location: object,
     ensureAuthenticated: func,
     className: string,
   };
@@ -99,32 +101,31 @@ export default class HeaderContainer extends Component {
   render() {
     const {
       user,
-      setQueryParams,
       className,
       ensureAuthenticated,
     } = this.props;
     const { isDropdownOpen } = this.state;
-    const { toggleDropdown } = this;
+    const { toggleDropdown, logout } = this;
 
     const hItems = defaultHeaderItems;
     const lhItems = loginHeaderItems(user);
-    const lmItems = loginMenuItems(user);
+    const menuItems = generateMenuItems(user);
 
-    const savedHeaderItem = hItems.find(item => item.name === 'Saved');
-    if (savedHeaderItem) {
-      savedHeaderItem.onClick = () => ensureAuthenticated(() => setQueryParams({ modal: SAVED_COMMUNITIES }));
-    }
-    const logoutLeftMenuItem = lmItems.find(item => item.name === 'Log out');
+    const logoutLeftMenuItem = menuItems.find(item => item.name === 'Log Out');
     if (logoutLeftMenuItem) {
-      logoutLeftMenuItem.onClick = this.logout;
+      logoutLeftMenuItem.onClick = logout;
     }
     let loginItem = lhItems.find(item => item.name === 'Sign in');
     if (loginItem) {
       loginItem.onClick = () => ensureAuthenticated(() => {});
     }
-    loginItem = lmItems.find(item => item.name === 'Sign in');
+    loginItem = menuItems.find(item => item.name === 'Sign in');
     if (loginItem) {
       loginItem.onClick = () => ensureAuthenticated(() => {});
+    }
+    const mySlyMenuItem = lhItems.find(item => item.name === 'My Seniorly');
+    if (mySlyMenuItem) {
+      mySlyMenuItem.onClick = toggleDropdown;
     }
 
     const howItWorksItem = hItems.find(item => item.name === 'How It Works');
@@ -132,11 +133,6 @@ export default class HeaderContainer extends Component {
     const headerItems = [
       ...hItems,
       ...lhItems,
-    ];
-
-    const menuItems = [
-      ...defaultMenuItems,
-      ...lmItems,
     ];
 
     const modalBody = (
@@ -171,10 +167,9 @@ export default class HeaderContainer extends Component {
                     onHeaderBlur={toggleDropdown}
                     headerItems={headerItems}
                     menuItems={menuItems}
-                    menuItemHrIndices={menuItemHrIndices}
+                    smallScreenMenuItems={smallScreenMenuItems}
                     className={className}
                   />
-                  {user !== null && <SavedCommunitiesPopupController notifyInfo={notifyInfo} />}
                   <AuthContainer notifyInfo={notifyInfo} showModal={show} hideModal={hide} />
                   <Notifications messages={messages} dismiss={dismiss} />
                 </Fragment>
@@ -186,4 +181,3 @@ export default class HeaderContainer extends Component {
     );
   }
 }
-

@@ -164,7 +164,6 @@ class FamilyDetailsForm extends Component {
         <PaddedTwoColumnWrapper verticalCenter>
           <StyledLabel>Preferred location</StyledLabel>
           <StyledSearchBoxContainer
-            layout="boxWithoutButton"
             onLocationSearch={handleLocationChange}
             onTextChange={handleChange}
             address={preferredLocation}

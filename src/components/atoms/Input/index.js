@@ -62,7 +62,7 @@ const styles = css`
     margin: 0 ${size('spacing.small')} 0 0;
   }
   &[type='search'] {
-    background: url(${assetPath('icons/search-caption.svg')}) no-repeat scroll 12px 12px;
+    background: url(${assetPath('icons/search-caption.svg')}) no-repeat scroll calc(${size('spacing', 'large')} - ${size('spacing', 'small')}) center;
     padding-left: calc(12px + ${size('spacing', 'xLarge')} + ${size('spacing', 'regular')});
   }
 
