@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { withUser, prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
+import {FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY} from 'sly/constants/dashboardAppPaths';
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { getStageDetails } from 'sly/services/helpers/stage';
@@ -86,7 +86,7 @@ const convertClientsToMobileContents = (clients) => {
     rowItems.push({ type: 'stage', data: { text: stage, currentStage: level, palette } });
     return {
       heading: clientName,
-      to: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab', ''),
+      to: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY),
       id,
       rowItems,
       ...pausedTd,
