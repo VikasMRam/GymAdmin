@@ -5,6 +5,10 @@ import { string, func, object, arrayOf, bool } from 'prop-types';
 import {
   FAMILY_DASHBOARD_FAMILIES_PATH,
   FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
+  SUMMARY,
+  ACTIVITY,
+  FAMILY_DETAILS,
+  COMMUNITIES,
 } from 'sly/constants/dashboardAppPaths';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -151,11 +155,6 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   }
 `;
 
-const SUMMARY = 'summary';
-const ACTIVITY = 'activity';
-const FAMILY_DETAILS = 'family-details';
-const COMMUNITIES = 'communities';
-
 const BackArrorIcon = styled(Icon)`
   margin-right: ${size('spacing.small')};
 `;
@@ -178,13 +177,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     clientIsLoading: bool,
     refetchClient: func.isRequired,
     refetchNotes: func.isRequired,
+    goToFamilyDetails: func,
   };
 
   handleAcceptClick = () => {
     const {
-      showModal, hideModal, notifyError, client, rawClient, refetchClient,
+      showModal, hideModal, notifyError, client, rawClient, refetchClient, goToFamilyDetails,
     } = this.props;
-    showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} refetchClient={refetchClient} />, null, 'noPadding', false);
+    showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} goToFamilyDetails={goToFamilyDetails} refetchClient={refetchClient} />, null, 'noPadding', false);
   };
 
   handleRejectClick = () => {
