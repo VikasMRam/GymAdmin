@@ -92,7 +92,7 @@ export default class UpdateFamilyStageForm extends Component {
         hasSubmit
         onSubmit={handleSubmit}
         heading={`Updating ${name}'s Stage`}
-        submitButtonText={stageGroupChanged ? 'Update And Move' : 'Update'}
+        submitButtonText="Update"
       >
         <StageField
           name="stage"
