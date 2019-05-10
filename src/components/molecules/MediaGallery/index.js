@@ -30,7 +30,7 @@ const imageStyles = css`
   object-fit: cover;
   height: inherit;
 `;
-const StyledImg = styled(Image)`
+export const StyledImg = styled(Image)`
   ${imageStyles};
 `;
 const StyledVideoThumbnail = styled(VideoThumbnail)`
