@@ -21,6 +21,7 @@ class AcceptAndContactFamilyContainer extends Component {
     notifyError: func.isRequired,
     updateClient: func,
     refetchClient: func,
+    goToFamilyDetails: func,
   };
 
   state = { contactType: null };
@@ -53,6 +54,12 @@ class AcceptAndContactFamilyContainer extends Component {
       });
   };
 
+  handleAcceptFamilySubmit = () => {
+    const { onCancel, goToFamilyDetails } = this.props;
+    withPreventDefault(onCancel);
+    goToFamilyDetails();
+  }
+
   render() {
     const { handleUpdateStage } = this;
     const { onCancel, client } = this.props;
@@ -80,7 +87,7 @@ class AcceptAndContactFamilyContainer extends Component {
             <WizardStep
               component={AcceptFamilyContactDetails}
               name="Details"
-              handleSubmit={withPreventDefault(onCancel)}
+              handleSubmit={this.handleAcceptFamilySubmit}
               label={contactType === 'phone' ? 'Phone number' : 'Email'}
               detail={detail}
             />

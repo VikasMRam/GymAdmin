@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import notePropType from 'sly/propTypes/note';
-import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
+import { FAMILY_DASHBOARD_FAMILIES_PATH, FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
 import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -112,6 +112,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     return updateClient({ id }, newClient);
   };
 
+  goToFamilyDetails = () => {
+    const { history, client } = this.props;
+    const { id } = client;
+    const path = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
+    history.push(path);
+  };
+
   render() {
     const { onRejectSuccess, onUnPause, onAddNote } = this;
 
@@ -148,6 +155,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 notes={notes}
                 noteIsLoading={noteIsLoading}
                 clientIsLoadig={clientIsLoading}
+                goToFamilyDetails={this.goToFamilyDetails}
               />
             )}
           </ModalController>
