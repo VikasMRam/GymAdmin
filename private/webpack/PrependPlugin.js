@@ -16,13 +16,12 @@ class PrependPlugin {
   apply(compiler) {
     const prependtext = this.options.prepend();
     const plugin = { name: 'PrependPlugin' };
-    consoe.log('apply prepend')
     compiler.hooks.compilation.tap(plugin, (compilation) => {
-      console.log('prepend compilation hook')
-      compilation.hooks.optimizeChunkAssets(plugin, (chunks, callback) => {
+      console.log('prepend compilation hook');
+      compilation.hooks.optimizeChunkAssets.tapAsync(plugin, (chunks, callback) => {
         console.log('doing prepend')
         chunks.forEach((chunk) => {
-          if (!chunk.isInitial()) {
+          if (!chunk.isOnlyInitial()) {
             return;
           }
 

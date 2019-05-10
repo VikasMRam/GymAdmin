@@ -13,6 +13,8 @@ const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 const webpack = require('webpack');
 
 const {
+  match,
+  babel,
   addPlugins,
   createConfig,
   entryPoint,
@@ -23,6 +25,7 @@ const {
   uglify,
   sourceMaps,
   devServer,
+  when,
 } = require('webpack-blocks');
 
 const ChildConfigPlugin = require('./private/webpack/ChildConfigPlugin');
@@ -95,20 +98,21 @@ const externalWidgetCssEntryPath = path.join(externalWidgetSourcePath, 'widget.c
 const closeIconSvg = fs.readFileSync(`${externalWidgetSourcePath}/close-regular.svg`, 'utf8');
 const externalWizardsEntryPath = path.join(externalSourcePath, 'wizards', 'index.js');
 
-const when = (condition, setters) =>
-  condition ? group(setters) : () => _ => _;
-
 const mode = (context, { merge }) => merge({
   mode: NODE_ENV,
 });
 
-const babel = (context, { merge }) => merge({
-  module: {
-    rules: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader' },
-    ],
-  },
-});
+// const babel = (context, { merge }) => merge({
+//   module: {
+//     rules: [
+//       {
+//         test: /\.jsx?$/,
+//         exclude: /node_modules/,
+//         loader: 'babel-loader'
+//       },
+//     ],
+//   },
+// });
 
 const resolveModules = modules => (context, { merge }) => merge({
   resolve: {
@@ -124,6 +128,7 @@ const assets = (context, { merge }) => merge({
     rules: [
       {
         test: /\.(ico|png|jpe?g|svg|woff2?|ttf|eot)$/,
+        exclude: /node_modules/,
         loader: 'url-loader?limit=8000',
       },
     ],
@@ -159,20 +164,20 @@ const base = group([
     'process.env.HIDE_CHATBOX': HIDE_CHATBOX || false,
   }),
 
-  babel,
+  match(['*.js', '!*node_modules*'], [babel()]),
 
   resolveModules(sourcePath),
-  //
-  // env('development', [
-  //   setOutput({
-  //     publicPath: devDomain,
-  //   }),
-  // ]),
-  //
-  // addPlugins([new webpack.ProgressPlugin()]),
+
+  env('development', [
+    setOutput({
+      publicPath: devDomain,
+    }),
+  ]),
+
+  addPlugins([new webpack.ProgressPlugin()]),
 ]);
 
-const devCORS = () => group([
+const devCORS = group([
   env('development', [
     devServer({
       contentBase: 'public',
@@ -188,7 +193,7 @@ const devCORS = () => group([
   ]),
 ]);
 
-const uglifyJs = () => group([
+const uglifyJs = group([
   env('production', [
     uglify({
       sourceMap: isStaging,
@@ -223,44 +228,44 @@ const clientConfigs = [
   },
 ];
 
-// const server = createConfig([
-//   base,
-//
-//   entryPoint({ server: serverEntryPath }),
-//
-//   setOutput({
-//     filename: '../[name].js',
-//     libraryTarget: 'commonjs2',
-//   }),
-//
-//   () => () => ({
-//     target: 'node',
-//     externals: [nodeExternals()],
-//     stats: 'errors-only',
-//   }),
-//
-//   assets,
-//
-//   addPlugins([
-//     new PrependPlugin({
-//       prepend: () => `global.clientConfigs = require("${clientConfigsPath}");\n`,
-//     }),
-//   ]),
-//
-//   env('development', [
-//     () => () => ({
-//       watch: true,
-//     }),
-//     addPlugins([
-//       new webpack.BannerPlugin({
-//         banner: 'require("source-map-support").install();',
-//         raw: true,
-//         entryOnly: false,
-//       }),
-//       new SpawnPlugin('node', [process.env.NODE_DEBUG_OPTION || '--inspect', '.']),
-//     ]),
-//   ]),
-// ]);
+const server = createConfig([
+  base,
+
+  entryPoint({ server: serverEntryPath }),
+
+  setOutput({
+    filename: '../[name].js',
+    libraryTarget: 'commonjs2',
+  }),
+
+  (context, { merge }) => merge({
+    target: 'node',
+    externals: [nodeExternals()],
+    stats: 'errors-only',
+  }),
+
+  assets,
+
+  addPlugins([
+    new PrependPlugin({
+      prepend: () => `global.clientConfigs = require("${clientConfigsPath}");\n`,
+    }),
+  ]),
+
+  env('development', [
+    (context, { merge }) => merge({
+      watch: true,
+    }),
+    addPlugins([
+      new webpack.BannerPlugin({
+        banner: 'require("source-map-support").install();',
+        raw: true,
+        entryOnly: false,
+      }),
+      new SpawnPlugin('node', [process.env.NODE_DEBUG_OPTION || '--inspect', '.']),
+    ]),
+  ]),
+]);
 
 if (isDev || isStaging) {
   console.log('Will do sourcemaps');
@@ -327,25 +332,23 @@ const client = createConfig([
     wizards: externalWizardsEntryPath,
   }),
 
-  // externalWidget,
+  externalWidget,
 
   assets,
-  //
-  // devCORS,
-  //
-  // uglifyJs,
-  //
-  // addPlugins([
-  //   new AssetsByTypeAndBundlePlugin({
-  //     path: clientConfigsPath,
-  //     clientConfigs,
-  //   }),
-  //   new ChildConfigPlugin(server, { when: 'afterEmit' }),
-  // ]),
-  //
-  // when(isDev || isStaging, [sourceMaps()]),
-]);
 
-console.log('client', JSON.stringify(client, null, 2));
+  devCORS,
+
+  uglifyJs,
+
+  addPlugins([
+    new AssetsByTypeAndBundlePlugin({
+      path: clientConfigsPath,
+      clientConfigs,
+    }),
+    new ChildConfigPlugin(server, { when: 'afterEmit' }),
+  ]),
+
+  when(isDev || isStaging, [sourceMaps()]),
+]);
 
 module.exports = client;

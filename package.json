@@ -70,6 +70,7 @@
     "@storybook/addon-options": "3.4.0-rc.2",
     "@storybook/addons": "3.4.0-rc.2",
     "@storybook/react": "3.4.0-rc.2",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-styled-components": "^1.10.0",
     "enzyme": "^3.9.0",
