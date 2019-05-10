@@ -71,7 +71,7 @@ const FamilySummary = ({
       <ColumWrapper>
         <Label palette="grey">Email</Label>
         <StyledLink href={`mailto:${client.clientInfo.email}`}>Click To Send Email</StyledLink>
-        </ColumWrapper>
+      </ColumWrapper>
       }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.residentInfo.gender &&
       <ColumWrapper>
