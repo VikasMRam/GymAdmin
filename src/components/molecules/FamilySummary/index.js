@@ -64,9 +64,14 @@ const FamilySummary = ({
       {client.clientInfo && client.clientInfo.phoneNumber &&
       <ColumWrapper>
         <Label palette="grey">Phone Number</Label>
-        <StyledLink to=`tel:+1{client.clientInfo.phoneNumber}>See more family details</StyledLink>
-        <Block size="caption">{client.uuidAux.uuidInfo.residentInfo.gender}</Block>
+        <StyledLink href={`tel:+1${client.clientInfo.phoneNumber}`}>Click To Call</StyledLink>
       </ColumWrapper>
+      }
+      {client.clientInfo && client.clientInfo.email &&
+      <ColumWrapper>
+        <Label palette="grey">Email</Label>
+        <StyledLink href={`mailto:${client.clientInfo.email}`}>Click To Send Email</StyledLink>
+        </ColumWrapper>
       }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.residentInfo.gender &&
       <ColumWrapper>
