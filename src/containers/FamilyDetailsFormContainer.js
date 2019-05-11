@@ -67,7 +67,7 @@ export default class FamilyDetailsFormContainer extends Component {
     if (name) {
       newClient.set('attributes.clientInfo.name', name);
     }
-    if (email) {
+    if (email || email === '') {
       newClient.set('attributes.clientInfo.email', email);
     }
     if (phone) {
