@@ -240,17 +240,17 @@ class InplaceWizardPage extends Component {
                       formData={confirmationStepData}
                     />
                   </WizardSteps>
+                  <Controls>
+                    {currentStep === 5 &&
+                    <PricingFormFooter
+                      price={estimatedPrice}
+                      onProgressClick={onSubmit}
+                      isFinalStep={!!(userDetails && userDetails.phone && userDetails.fullName) || isFinalStep}
+                      isButtonDisabled={!submitEnabled}
+                    />
+                    }
+                  </Controls>
                 </StyledBody>
-                <Controls>
-                  {currentStep === 5 &&
-                  <PricingFormFooter
-                    price={estimatedPrice}
-                    onProgressClick={onSubmit}
-                    isFinalStep={!!(userDetails && userDetails.phone && userDetails.fullName) || isFinalStep}
-                    isButtonDisabled={!submitEnabled}
-                  />
-                  }
-                </Controls>
               </Fragment>
             );
           }}
