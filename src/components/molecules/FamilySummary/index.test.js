@@ -29,22 +29,22 @@ describe('FamilySummary', () => {
       .contains(PraneshKumar.uuidAux.uuidInfo.residentInfo.fullName)).toBe(true);
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
-      .at(2)
+      .at(4)
       .find(Block)
       .contains(PraneshKumar.uuidAux.uuidInfo.housingInfo.lookingFor)).toBe(true);
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
-      .at(3)
+      .at(5)
       .find(Block)
       .contains(PraneshKumar.uuidAux.uuidInfo.residentInfo.gender)).toBe(true);
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
-      .at(4)
+      .at(6)
       .find(Block)
       .contains(PraneshKumar.uuidAux.uuidInfo.locationInfo.city)).toBe(true);
     expect(wrapper.dive().find('OuterColumWrapper').dive()
       .find('ColumWrapper')
-      .at(5)
+      .at(7)
       .find(Block)
       .contains(PraneshKumar.uuidAux.uuidInfo.housingInfo.moveTimeline)).toBe(true);
     expect(wrapper
@@ -59,6 +59,6 @@ describe('FamilySummary', () => {
       client: PraneshKumar,
     });
 
-    expect(wrapper.dive().find('StyledLink').prop('to')).toBe(to);
+    expect(wrapper.dive().find('StyledLink').at(2).prop('to')).toBe(to);
   });
 });

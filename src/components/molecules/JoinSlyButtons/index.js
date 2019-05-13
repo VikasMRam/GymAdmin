@@ -71,7 +71,7 @@ const JoinSlyButtons = ({
     <StyledButton onClick={onEmailSignupClicked}>Sign up with Email</StyledButton>
     <Hr />
     <Block>
-      Already have a Seniorly account? <Login onClick={onLoginClicked}>Log in</Login>
+      Already have a Seniorly account? <Login onClick={onLoginClicked}>Sign in</Login>
     </Block>
   </section>
 );
@@ -86,7 +86,7 @@ JoinSlyButtons.propTypes = {
 };
 
 JoinSlyButtons.defaultProps = {
-  heading: 'Join Seniorly',
+  heading: 'Create an account',
 };
 
 export default JoinSlyButtons;
