@@ -6,7 +6,7 @@ import { ifProp } from 'styled-tools';
 import { size, palette, key } from 'sly/components/themes';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import cursor from 'sly/components/helpers/cursor';
-import { Icon, Hr, Link } from 'sly/components/atoms';
+import { Icon, Hr, Link, Button } from 'sly/components/atoms';
 import Logo from 'sly/components/atoms/Logo';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
@@ -108,6 +108,7 @@ export const HeaderItems = styled.div`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: flex;
+    align-items: center;
     margin-left: auto;
   }
 `;
@@ -143,7 +144,11 @@ const OnlyInSmallScreen = styled.div`
 const Header = ({
   menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, onMenuItemClick, onHeaderBlur, className, smallScreenMenuItems,
 }) => {
-  const headerItemComponents = headerItems.map(item => (
+  const headerItemComponents = headerItems.map(item => item.isButton ? (
+    <Button onClick={item.onClick}>
+      {item.name}
+    </Button>
+  ) : (
     <HeaderItem size="caption" onClick={item.onClick} href={item.href} to={item.to} palette={item.palette ? item.palette : 'slate'} key={item.name}>
       {item.name}
     </HeaderItem>
@@ -237,6 +242,7 @@ Header.propTypes = {
     href: string,
     onClick: func,
     palette: palettePropType,
+    isButton: bool,
   })).isRequired,
   menuItems: arrayOf(shape({
     name: string.isRequired,

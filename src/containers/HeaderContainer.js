@@ -49,23 +49,27 @@ const agentMenuItems = [
 ];
 
 const loggedInMenuItems = (user) => {
-  const { roleID } = user;
   let roleBasedItems = [];
-  if (roleID === CUSTOMER_ROLE) {
-    roleBasedItems = customerMenuItems;
+  if (user) {
+    const { roleID } = user;
+    if (roleID === CUSTOMER_ROLE) {
+      roleBasedItems = customerMenuItems;
+    }
+    if (roleID === AGENT_ROLE) {
+      roleBasedItems = agentMenuItems;
+    }
+    roleBasedItems = [...roleBasedItems, { name: 'Log Out', section: 3 }];
+  } else {
+    roleBasedItems = [...roleBasedItems, { name: 'Sign in', section: 3 }];
   }
-  if (roleID === AGENT_ROLE) {
-    roleBasedItems = agentMenuItems;
-  }
-  return [...roleBasedItems, { name: 'Log Out', section: 3 }];
+  return roleBasedItems;
 };
 
 const loginHeaderItems = user => user
   ? [{ name: 'My Seniorly' }]
-  : [{ name: 'Sign in' }];
+  : [{ name: 'Sign in', isButton: true }];
 
-const generateMenuItems = user => user ?
-  [...defaultMenuItems, ...loggedInMenuItems(user)] : [...defaultMenuItems, { name: 'Sign in', section: 3 }];
+const generateMenuItems = user => [...defaultMenuItems, ...loggedInMenuItems(user)];
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
