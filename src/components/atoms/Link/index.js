@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { matchPath } from 'react-router-dom';
 import RRLink from 'react-router-dom/Link';
-import { string, oneOf } from 'prop-types';
+import { string, bool } from 'prop-types';
+import { ifNotProp } from 'styled-tools';
 
-import { size, palette, getKey } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
+import { palette as palettePropType } from 'sly/propTypes/palette';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import { variation as variationPropType } from 'sly/propTypes/variation';
 
@@ -20,7 +22,7 @@ export const styles = css`
   text-decoration: none;
 
   &:hover {
-    color: ${palette('filler')};
+    color: ${ifNotProp('noHoverColorChange', palette('filler'))};
     cursor: pointer;
   }
 
@@ -48,8 +50,9 @@ export default class Link extends Component {
   static propTypes = {
     to: string,
     href: string,
-    palette: oneOf(Object.keys(getKey('palette'))),
+    palette: palettePropType,
     variation: variationPropType,
+    noHoverColorChange: bool,
   };
 
   static defaultProps = {

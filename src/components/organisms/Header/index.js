@@ -92,9 +92,8 @@ export const HeaderMenuItem = styled(Link)`
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: ${size('spacing.large')};
-    :hover {
+    &:hover {
       background-color: ${palette('primary', 'background')};
-      color: initial;
     }
   }
 `;
@@ -119,6 +118,10 @@ const HeaderItem = styled(Link)`
   margin-right: ${size('spacing.xLarge')};
   &:last-child {
     margin-right: 0;
+  }
+  &:hover {
+    padding-bottom: calc(${size('spacing.xLarge')} + ${size('spacing.regular')} - ${size('spacing.small')} - ${size('border.xxLarge')});
+    border-bottom: ${size('border.xxLarge')} solid ${palette('primary', 'base')};
   }
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
@@ -149,7 +152,7 @@ const Header = ({
       {item.name}
     </Button>
   ) : (
-    <HeaderItem size="caption" onClick={item.onClick} href={item.href} to={item.to} palette={item.palette ? item.palette : 'slate'} key={item.name}>
+    <HeaderItem noHoverColorChange size="caption" onClick={item.onClick} href={item.href} to={item.to} palette={item.palette ? item.palette : 'slate'} key={item.name}>
       {item.name}
     </HeaderItem>
   ));
@@ -158,7 +161,7 @@ const Header = ({
   const headerMenuItemComponents = menuItems
     .map((item) => {
       const mi = (
-        <HeaderMenuItem size="caption" href={item.href} to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={item.onClick}>
+        <HeaderMenuItem noHoverColorChange size="caption" href={item.href} to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={item.onClick}>
           {item.name}
           {item.icon && <Icon size="caption" icon={item.icon} palette={item.palette ? item.palette : 'slate'} />}
         </HeaderMenuItem>
@@ -180,7 +183,7 @@ const Header = ({
     });
   const smallScreenMenuItemComponents = smallScreenMenuItems
     .map(item => (
-      <HeaderMenuItem size="caption" href={item.href} to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={item.onClick}>
+      <HeaderMenuItem noHoverColorChange size="caption" href={item.href} to={item.to} palette={item.palette ? item.palette : 'slate'} onClick={item.onClick}>
         {item.name}
         {item.icon && <Icon size="caption" icon={item.icon} palette={item.palette ? item.palette : 'slate'} />}
       </HeaderMenuItem>
