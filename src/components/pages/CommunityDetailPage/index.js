@@ -519,7 +519,7 @@ export default class CommunityDetailPage extends Component {
                       palette="warning"
                       title={promoTitle}
                       description={promoDescription}
-                      onLearnMoreClick={() => openAskAgentQuestionModal()}
+                      onLearnMoreClick={() => openAskAgentQuestionModal('incentive')}
                       hasLearnMore
                     />
                   )
