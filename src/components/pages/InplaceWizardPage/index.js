@@ -1,25 +1,17 @@
 import React, { Component, Fragment } from 'react';
-
 import { object, func, bool } from 'prop-types';
+import styled from 'styled-components';
 
-import styled, { css } from 'styled-components';
-
-import { size, palette, assetPath } from 'sly/components/themes/index';
-
+import { size, palette } from 'sly/components/themes/index';
 import CommunityBookATourContactFormContainer from 'sly/containers/CommunityBookATourContactFormContainer';
 import { community as communityPropType } from 'sly/propTypes/community';
-
-import { getCitySearchUrl } from 'sly/services/helpers/url';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import SlyEvent from 'sly/services/helpers/events';
 import { Experiment, Variant } from 'sly/services/experiments';
-
 import {
   makeBody,
   makeControls,
 } from 'sly/components/templates/FullScreenWizard';
-
-
 import PricingFormFooter from 'sly/components/molecules/PricingFormFooter';
 import AdvisorHelpPopup from 'sly/components/molecules/AdvisorHelpPopup';
 import GenericWizardActionStep from 'sly/components/organisms/GenericWizardActionStep';
@@ -67,11 +59,10 @@ class InplaceWizardPage extends Component {
   }
 
   handleStepChange = ({
-                        currentStep, data,
-                      }) => {
+    currentStep, data,
+  }) => {
     const { community, userActionSubmit } = this.props;
     const { id } = community;
-    const { interest } = data;
     sendEvent('step-completed', id, currentStep);
     userActionSubmit(data);
   };
@@ -92,15 +83,16 @@ class InplaceWizardPage extends Component {
       community, user, userDetails,
     } = this.props;
 
-    const { id, name } = community;
+    const { name } = community;
     const { estimatedPrice, communityPhone } = this.state;
 
+    const phoneDisplay = communityPhone || "Phone Number Can't Be Found";
     return (
-        <WizardController
-          formName="CommunityInpageWizardForm"
-          onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
-        >
-          {({
+      <WizardController
+        formName="CommunityInpageWizardForm"
+        onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
+      >
+        {({
               data, goto, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
             }) => {
             const step1DataA = {
@@ -144,30 +136,38 @@ class InplaceWizardPage extends Component {
               title: 'What did you want to learn more about?',
               caption: 'Tell us what you are interested in.',
               buttons: [
-                { onClick: () => { sendEvent('wizard-select', 'care'); }, text: 'Senior housing types', to: '/resources/tags/housing', target: '_blank' },
-                { onClick: () => { sendEvent('wizard-select', 'research'); }, text: 'Types of care', to: '/resources/memory-care', target: '_blank' },
-                { onClick: () => { sendEvent('wizard-select', 'contact-resident'); }, text: 'Financial planning', to: '/resources/articles/how-to-manage-the-finances-of-an-aging-parent', target: '_blank' },
-                { onClick: () => { sendEvent('wizard-select', 'other'); }, text: 'Veterans\' benefits', to: '/resources/articles/veterans-benefits-for-assisted-living', target: '_blank' },
+                {
+ onClick: () => { sendEvent('wizard-select', 'care'); }, text: 'Senior housing types', to: '/resources/tags/housing', target: '_blank',
+},
+                {
+ onClick: () => { sendEvent('wizard-select', 'research'); }, text: 'Types of care', to: '/resources/memory-care', target: '_blank',
+},
+                {
+ onClick: () => { sendEvent('wizard-select', 'contact-resident'); }, text: 'Financial planning', to: '/resources/articles/how-to-manage-the-finances-of-an-aging-parent', target: '_blank',
+},
+                {
+ onClick: () => { sendEvent('wizard-select', 'other'); }, text: 'Veterans\' benefits', to: '/resources/articles/veterans-benefits-for-assisted-living', target: '_blank',
+},
               ],
-              canStartOver:true,
-              gotoStart: () => {sendEvent('wizard-select-care', 'time'); goto(1); }
+              canStartOver: true,
+              gotoStart: () => { sendEvent('wizard-select-care', 'time'); goto(1); },
             };
 
             const commPhoneStepData = {
               imagePath: 'images/team-avatars.png',
               title: 'Great, we can help you with that!',
               caption: `Please contact ${name} directly at:`,
-              bodyText: `${communityPhone}`,
-              canStartOver:true,
-              gotoStart: () => {sendEvent('wizard-select-care', 'time'); goto(1); }
+              bodyText: `${phoneDisplay}`,
+              canStartOver: true,
+              gotoStart: () => { sendEvent('wizard-select-care', 'time'); goto(1); },
 
             };
 
             const confirmationStepData = {
               title: 'Thank you!',
               bodyText: 'You will be hearing from our partner agent within the next day.',
-              canStartOver:true,
-              gotoStart: () => {sendEvent('wizard-select-care', 'time'); goto(1); }
+              canStartOver: true,
+              gotoStart: () => { sendEvent('wizard-select-care', 'time'); goto(1); },
 
             };
 
@@ -254,7 +254,7 @@ class InplaceWizardPage extends Component {
               </Fragment>
             );
           }}
-        </WizardController>
+      </WizardController>
     );
   }
 }
