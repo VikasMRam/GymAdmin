@@ -101,7 +101,7 @@ theme.sizes = {
       position: {
         top: {
           mobile     : '3.8125rem',     // 61px
-          tablet     : '4.79rem',      // 78px
+          tablet     : '5.08rem',      // 81px
           laptop     : '4rem',        // 64px
         },
       },

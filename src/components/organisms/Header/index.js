@@ -30,7 +30,7 @@ const HeaderWrapper = styled.nav`
 
 const SeniorlyLogoWrapper = styled.div`
   display: none;
-  margin-right: ${size('spacing.large')};
+  margin-right: ${size('spacing.xxLarge')};
   a {
     line-height: 0;
     display: block;
@@ -144,6 +144,22 @@ const OnlyInSmallScreen = styled.div`
   }
 `;
 
+const OnlyInMobile = styled.div`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: none;
+  }
+`;
+
+const OnlyInTablet = styled.div`
+  display: none;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: block;
+  }
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: none;
+  }
+`;
+
 const Header = ({
   menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, onMenuItemClick, onHeaderBlur, className, smallScreenMenuItems,
 }) => {
@@ -212,7 +228,12 @@ const Header = ({
             {menuOpen && <MenuIcon onClick={onMenuIconClick} icon="close" palette="secondary" />}
           </Fragment>
         )}
-        <Icon icon="logo" size="large" />
+        <OnlyInTablet>
+          <Icon icon="logo" size="xLarge" />
+        </OnlyInTablet>
+        <OnlyInMobile>
+          <Icon icon="logo" size="large" />
+        </OnlyInMobile>
       </SeniorlyIconMenu>
       <StyledSearchBoxContainer menuOpen={menuOpen} hasShadow layout="header" onLocationSearch={onLocationSearch} />
       <HeaderItems>
