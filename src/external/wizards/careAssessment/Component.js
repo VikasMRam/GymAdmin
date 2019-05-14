@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { bool, object, number, func, string, arrayOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
@@ -82,7 +82,6 @@ const Component = ({
   const CurrentStepComponent = getStepComponent(flow[currentStep - 1]);
   return (
     <ScrollWrapper>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       {searching &&
         <SearchingWrapper>
           <StyledHeading level="subtitle">Please wait while we search for your options.</StyledHeading>
@@ -90,7 +89,7 @@ const Component = ({
         </SearchingWrapper>
       }
       {!searching &&
-        <Fragment>
+        <>
           <ProgressWrapper>
             <ProgressBar current={currentStep} limit={totalNumberofSteps} />
           </ProgressWrapper>
@@ -143,7 +142,7 @@ const Component = ({
               </BottomWrapper>
             </StyledForm>
           </Wrapper>
-        </Fragment>
+        </>
       }
     </ScrollWrapper>
   );

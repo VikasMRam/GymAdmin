@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { number } from 'prop-types';
 import { Field } from 'redux-form';
@@ -18,8 +18,7 @@ const Description = pad(styled.p`
 `, 'xLarge');
 
 const LeadFound = ({ searchResultCount }) => (
-  <Fragment>
-    {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+  <>
     <PaddedHeading weight="regular">We found {searchResultCount} options near you. Sign up to connect with your local Seniorly Advisor.</PaddedHeading>
     <Description>Exclusive pricing and options - This is a FREE service.</Description>
     <Field
@@ -43,7 +42,7 @@ const LeadFound = ({ searchResultCount }) => (
       component={ReduxField}
     />
     <TosAndPrivacy openLinkInNewTab />
-  </Fragment>
+  </>
 );
 
 LeadFound.propTypes = {

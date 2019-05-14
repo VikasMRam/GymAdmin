@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 
@@ -22,8 +22,7 @@ const Description = pad(styled.p`
 `, 'xLarge');
 
 const CareNeeds = () => (
-  <Fragment>
-    {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+  <>
     <PaddedHeading weight="regular">Do you have any care needs?</PaddedHeading>
     <Description>Select all that apply</Description>
     <StyledField
@@ -33,7 +32,7 @@ const CareNeeds = () => (
       type="boxChoice"
       component={ReduxField}
     />
-  </Fragment>
+  </>
 );
 
 export default CareNeeds;

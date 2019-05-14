@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import { object, func } from 'prop-types';
 import { Field } from 'redux-form';
 
@@ -39,8 +39,7 @@ class CitySearch extends Component {
 
   render() {
     return (
-      <Fragment>
-        {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+      <>
         <PaddedHeading weight="regular">In what city do you need care?</PaddedHeading>
         <SearchBoxContainer
           clearLocationOnBlur={false}
@@ -49,7 +48,7 @@ class CitySearch extends Component {
           onTextChange={this.handleChange}
         />
         <Field name={STEP_INPUT_FIELD_NAMES.CitySearch[0]} component={noRender} />
-      </Fragment>
+      </>
     );
   }
 }

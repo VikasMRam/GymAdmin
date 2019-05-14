@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 
@@ -18,8 +18,7 @@ const StyledField = styled(Field)`
 `;
 
 const BuyingOrRenting = () => (
-  <Fragment>
-    {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+  <>
     <PaddedHeading weight="regular">Are you interested in renting or buying into a retirement community?</PaddedHeading>
     <StyledField
       options={BUYING_OR_RENTING_OPTIONS}
@@ -27,7 +26,7 @@ const BuyingOrRenting = () => (
       type="boxChoice"
       component={ReduxField}
     />
-  </Fragment>
+  </>
 );
 
 export default BuyingOrRenting;

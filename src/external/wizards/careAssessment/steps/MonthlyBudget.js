@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Field } from 'redux-form';
 import NumberFormat from 'react-number-format';
@@ -26,8 +26,7 @@ const moneyValue = val =>
   <MoneyValue weight="regular" palette="secondary">Up to <NumberFormat value={val} displayType="text" thousandSeparator prefix="$" /></MoneyValue>;
 
 const MonthlyBudget = () => (
-  <Fragment>
-    {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
+  <>
     <PaddedHeading weight="regular">What is your monthly budget for rent and care?</PaddedHeading>
     <Description> Monthly budget is an important criteria for narrowing down your search. Slide bar below.</Description>
     <Description>Note: The average monthly budget in US is roughly $3,750</Description>
@@ -50,7 +49,7 @@ const MonthlyBudget = () => (
       responsive
       component={StyledReduxField}
     />
-  </Fragment>
+  </>
 );
 
 export default MonthlyBudget;
