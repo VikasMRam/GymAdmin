@@ -5,20 +5,18 @@ import queryString from 'query-string';
 import Cookies from 'universal-cookie';
 
 import { host, cookieDomain } from 'sly/config';
-
 import { resourceCreateRequest, resourceListReadRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
-
+import { STEP_ORDERS, DEFAULT_STEP_ORDER, STEP_INPUT_FIELD_NAMES } from 'sly/external/constants/steps';
 import { connectController } from 'sly/controllers';
 import { createValidator } from 'sly/services/validation';
 import { selectFormData } from 'sly/services/helpers/forms';
 import { CARE_ASSESSMENT_PROGRESS } from 'sly/services/api/actions';
-
-import CareAssessmentComponent from './Component';
+import CareAssessmentComponent from 'sly/external/wizards/careAssessment/Component';
 import {
-  stepOrders, defaultStepOrder, inputBasedNextSteps, getStepInputFieldValidations,
-  getStepInputFieldDefaultValues, stepInputFieldNames, converStepInputToString,
-} from './helpers';
+  inputBasedNextSteps, getStepInputFieldValidations,
+  getStepInputFieldDefaultValues, converStepInputToString,
+} from 'sly/external/wizards/careAssessment/helpers';
 
 const formName = 'CareAssessmentForm';
 const validate = createValidator(getStepInputFieldValidations());
@@ -51,7 +49,7 @@ class Controller extends Component {
   };
 
   componentWillMount() {
-    this.flowName = defaultStepOrder;
+    this.flowName = DEFAULT_STEP_ORDER;
     let clickID = Math.random().toString().slice(2, 11);
 
     const {
@@ -60,7 +58,7 @@ class Controller extends Component {
     // get query params passed
     if (location && location.search) {
       const params = queryString.parse(location.search);
-      if (params.order && stepOrders[params.order]) {
+      if (params.order && STEP_ORDERS[params.order]) {
         this.flowName = params.order;
       }
       if (params.fromWidgetType) {
@@ -97,7 +95,7 @@ class Controller extends Component {
     }
 
     // important : create a copy since we might modify the array later
-    this.flow = stepOrders[this.flowName].slice();
+    this.flow = STEP_ORDERS[this.flowName].slice();
     const searchStepIndex = this.flow.indexOf('CitySearch');
     if (searchStepIndex !== -1 && this.providedLocationSearchParams) {
       this.flow.splice(searchStepIndex, 1);
@@ -113,14 +111,10 @@ class Controller extends Component {
     if (currentStep === this.flow.length) {
       const newData = { ...data };
       const {
-        email, full_name, phone, ...careAssessment
+        email, fullName, phone, ...careAssessment
       } = newData;
 
-      const user = { email, full_name, phone };
-      if (careAssessment.care_needs) {
-        const transformedCareNeeds = Object.keys(careAssessment.care_needs).filter(key => careAssessment.care_needs[key]);
-        careAssessment.care_needs = transformedCareNeeds;
-      }
+      const user = { email, full_name: fullName, phone };
       const payload = {
         action: CARE_ASSESSMENT_PROGRESS,
         value: {
@@ -209,20 +203,13 @@ class Controller extends Component {
     const { currentStep, set, progressPath } = props;
     const currentStepName = this.flow[currentStep - 1];
 
-    let concatedValues = '';
-    if (currentStepName === 'CareNeeds') {
-      const transformedCareNeeds = Object.keys(values[stepInputFieldNames.CareNeeds])
-        .filter(key => values[stepInputFieldNames.CareNeeds][key]);
-      concatedValues = converStepInputToString(transformedCareNeeds);
-    } else {
-      concatedValues = stepInputFieldNames[currentStepName]
-        .reduce((prev, value) => {
-          if (values[value]) {
-            return `${prev}${prev.length ? '|' : ''}${converStepInputToString(values[value])}`;
-          }
-          return prev;
-        }, '');
-    }
+    const concatedValues = STEP_INPUT_FIELD_NAMES[currentStepName]
+      .reduce((prev, value) => {
+        if (values[value]) {
+          return `${prev}${prev.length ? '|' : ''}${converStepInputToString(values[value])}`;
+        }
+        return prev;
+      }, '');
     const event = {
       action: `step_${currentStepName}`, category: 'cawizard', label: concatedValues,
     };

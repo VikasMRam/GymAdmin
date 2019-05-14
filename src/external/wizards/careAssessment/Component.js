@@ -1,17 +1,15 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { bool, object, number, func, string, arrayOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, assetPath, palette, key } from 'sly/components/themes';
-import { Button, Hr, Heading, Image } from 'sly/components/atoms';
-import Logo from 'sly/components/atoms/Logo';
-
-import { getStepComponent } from './steps';
+import { Button, Hr, Heading, Image, Logo } from 'sly/components/atoms';
+import { getStepComponent } from 'sly/external/wizards/careAssessment/steps';
 
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
 
-export const ProgressWrapper = styled.div`
+const ProgressWrapper = styled.div`
   background-color: ${palette('primary', 'stroke')};
 `;
 const ProgressBar = styled.div`
@@ -20,7 +18,7 @@ const ProgressBar = styled.div`
   width: ${progressBarWidth}%;
   transition: width ${key('transitions.slow.inOut')};
 `;
-export const CurrentStep = styled.p`
+const CurrentStep = styled.p`
   font-size: ${size('text.caption')};
   color: ${ifProp('limitReached', palette('secondary', 'base'), 'initial')};
 `;
@@ -30,7 +28,7 @@ const StyledForm = styled.form`
 const Wrapper = styled.div`
   padding: ${size('spacing.large')} ${size('spacing.xxLarge')} 0 ${size('spacing.xxLarge')};
 `;
-export const ButtonsWrapper = styled.div`
+const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
 
@@ -56,13 +54,14 @@ const BottomWrapper = styled.div`
 const StyledHeading = styled(Heading)`
   font-weight: normal;
 `;
-export const SearchingWrapper = Wrapper.extend`
+const SearchingWrapper = Wrapper.extend`
   top: 50%;
   transform: translate(0%, -50%);
   position: absolute;
   text-align: center;
   width: 100%;
 `;
+SearchingWrapper.displayName = 'SearchingWrapper';
 const ScrollWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -84,7 +83,6 @@ const Component = ({
   const CurrentStepComponent = getStepComponent(flow[currentStep - 1]);
   return (
     <ScrollWrapper>
-      {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       {searching &&
         <SearchingWrapper>
           <StyledHeading level="subtitle">Please wait while we search for your options.</StyledHeading>
@@ -92,7 +90,7 @@ const Component = ({
         </SearchingWrapper>
       }
       {!searching &&
-        <Fragment>
+        <>
           <ProgressWrapper>
             <ProgressBar current={currentStep} limit={totalNumberofSteps} />
           </ProgressWrapper>
@@ -117,7 +115,7 @@ const Component = ({
                   {currentStep < totalNumberofSteps && (
                     <Button
                       type="button"
-                      palette="slate"
+                      ghost
                       disabled={currentStep === 1}
                       onClick={onBackButton}
                     >
@@ -145,7 +143,7 @@ const Component = ({
               </BottomWrapper>
             </StyledForm>
           </Wrapper>
-        </Fragment>
+        </>
       }
     </ScrollWrapper>
   );

@@ -2,8 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { Button } from 'sly/components/atoms';
-
-import Component, { ProgressWrapper, CurrentStep, ButtonsWrapper, SearchingWrapper } from './Component';
+import Component from 'sly/external/wizards/careAssessment/Component';
 
 const wrap = (props = {}) => shallow(<Component {...props} />);
 const totalNumberofSteps = 4;
@@ -17,7 +16,7 @@ const href = 'http://www.lvh.me/assisted-living/california/san-francisco?modal=t
 const flow = ['CitySearch', 'LookingFor', 'CareNeeds', 'BuyingOrRenting', 'MonthlyBudget', 'LeadFound'];
 
 const getButtons = (wrapper, isFinal = false) => {
-  const bwrap = wrapper.find(ButtonsWrapper);
+  const bwrap = wrapper.find('ButtonsWrapper');
   const buttons = bwrap.find(Button);
   expect(bwrap).toHaveLength(1);
   if (isFinal) {
@@ -33,10 +32,10 @@ describe('Component', () => {
     const wrapper = wrap({
       currentStep, totalNumberofSteps, handleSubmit, onBackButton, onSeeMore, href, flow,
     });
-    const cstep = wrapper.find(CurrentStep);
+    const cstep = wrapper.find('CurrentStep');
     const buttons = getButtons(wrapper);
 
-    expect(wrapper.find(ProgressWrapper)).toHaveLength(1);
+    expect(wrapper.find('ProgressWrapper')).toHaveLength(1);
     expect(cstep).toHaveLength(1);
     expect(cstep.dive().text()).toContain(`Step ${currentStep} of ${totalNumberofSteps}`);
 
@@ -54,8 +53,8 @@ describe('Component', () => {
     const wrapper = wrap({
       currentStep, totalNumberofSteps, handleSubmit, onBackButton, onSeeMore, href, flow, searching: true,
     });
-    expect(wrapper.find(SearchingWrapper)).toHaveLength(1);
-    expect(wrapper.find(ProgressWrapper)).toHaveLength(0);
+    expect(wrapper.find('SearchingWrapper')).toHaveLength(1);
+    expect(wrapper.find('ProgressWrapper')).toHaveLength(0);
   });
 
   it('back button becomes active after first step', () => {
@@ -71,7 +70,7 @@ describe('Component', () => {
     const wrapper = wrap({
       currentStep, totalNumberofSteps, handleSubmit, onBackButton, onSeeMore, href, flow,
     });
-    const cstep = wrapper.find(CurrentStep);
+    const cstep = wrapper.find('CurrentStep');
     expect(cstep.dive().text()).toContain(`Step ${currentStep} of ${totalNumberofSteps}`);
   });
 

@@ -2,10 +2,10 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { middleware as thunkMiddleware } from 'redux-saga-thunk';
 import { createLogger } from 'redux-logger';
-import { middleware as beesMiddleware } from 'sly/services/newApi';
-import reducer from './reducer';
-import sagas from 'sly/store/resource/sagas';
 
+import { middleware as beesMiddleware } from 'sly/services/newApi';
+import reducer from 'sly/external/wizards/store/reducer';
+import sagas from 'sly/store/resource/sagas';
 import { isDev, isBrowser } from 'sly/config';
 
 const devtools =

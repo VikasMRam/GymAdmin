@@ -12,13 +12,12 @@ import { host, authTokenUrl } from 'sly/config';
 import { getOrigin } from 'sly/services/helpers/url';
 import api from 'sly/services/api';
 import { ApiProvider, createApi } from 'sly/services/newApi';
-import configureStore from './store/configure';
-import WizardApp from './WizardApp';
+import configureStore from 'sly/external/wizards/store/configure';
+import WizardApp from 'sly/external/wizards/WizardApp';
 
 const store = configureStore({}, { api: api.create({ credentials: 'include' }) });
 const beesApi = createApi();
 
-console.log(beesApi);
 const renderApp = () => (
   <ApiProvider api={beesApi}>
     <Provider store={store}>

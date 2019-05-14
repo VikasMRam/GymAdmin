@@ -1,55 +1,33 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { object } from 'prop-types';
+import { Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
+import pad from 'sly/components/helpers/pad';
+import { LOOKING_FOR_OPTIONS } from 'sly/external/constants/options';
+import { STEP_INPUT_FIELD_NAMES } from 'sly/external/constants/steps';
 import { Heading } from 'sly/components/atoms';
-import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
+import ReduxField from 'sly/components/organisms/ReduxField';
 
-import { stepInputFieldNames } from '../helpers';
+const PaddedHeading = pad(Heading, 'xLarge');
+PaddedHeading.displayName = 'PaddedHeading';
 
-export const options = [
-  'Myself',
-  'Spouse',
-  'Parent',
-  'Grandparent',
-  'Friend',
-  'Client',
-];
-
-export const StyledHeading = styled(Heading)`
-  font-weight: normal;
+const StyledField = styled(Field)`
+  > * {
+    margin-bottom: ${size('spacing.regular')};
+  }
 `;
 
-export const BoxRadioButtonWrapper = styled.div`
-  margin-bottom: ${size('spacing.regular')};
-`;
-
-const LookingFor = ({ data }) => (
-  <Fragment>
-    {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-    <StyledHeading>Who are you looking for?</StyledHeading>
-    {
-      options.map((option, i) => (
-        <BoxRadioButtonWrapper key={i}>
-          <BoxRadioButton
-            name={stepInputFieldNames.LookingFor[0]}
-            value={option}
-            label={option}
-            checked={data[stepInputFieldNames.LookingFor[0]] === option}
-          />
-        </BoxRadioButtonWrapper>
-      ))
-    }
-  </Fragment>
+const LookingFor = () => (
+  <>
+    <PaddedHeading weight="regular">Who are you looking for?</PaddedHeading>
+    <StyledField
+      options={LOOKING_FOR_OPTIONS}
+      name={STEP_INPUT_FIELD_NAMES.LookingFor[0]}
+      type="boxChoice"
+      component={ReduxField}
+    />
+  </>
 );
-
-LookingFor.propTypes = {
-  data: object,
-};
-
-LookingFor.defaultProps = {
-  data: {},
-};
 
 export default LookingFor;

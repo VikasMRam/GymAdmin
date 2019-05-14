@@ -1,66 +1,40 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { object } from 'prop-types';
-
+import { Field } from 'redux-form';
 
 import { size, palette } from 'sly/components/themes';
+import pad from 'sly/components/helpers/pad';
+import { CARE_NEEDS_OPTIONS } from 'sly/external/constants/options';
+import { STEP_INPUT_FIELD_NAMES } from 'sly/external/constants/steps';
 import { Heading } from 'sly/components/atoms';
-import BoxRadioButton from 'sly/components/molecules/BoxRadioButton';
+import ReduxField from 'sly/components/organisms/ReduxField';
 
-import { stepInputFieldNames } from '../helpers';
+const PaddedHeading = pad(Heading, 'xLarge');
+PaddedHeading.displayName = 'PaddedHeading';
 
-export const options = [
-  { label: '24-hour supervision', helpText: 'Provide 24 hour supervision' },
-  { label: 'Memory care', helpText: "Needs include Alzheimer's or other Dementias" },
-  { label: 'Bathing assistance', helpText: 'Provide 24 hour supervision' },
-  { label: 'Eating assistance', helpText: 'More' },
-  { label: 'Transfer assistance', helpText: 'Provide 24 hour supervision' },
-  // { label: 'Medication anagement', helpText: 'Provide 24 hour supervision' },
-  // { label: 'Insulin Injections', helpText: 'Provide 24 hour supervision' },
-  { label: 'Short-Term care', helpText: 'Provide 24 hour supervision' },
-  { label: 'Other', helpText: 'Provide 24 hour supervision' },
-];
-
-export const StyledHeading = styled(Heading)`
-  font-weight: normal;
-  margin-bottom: ${size('spacing.regular')};
+const StyledField = styled(Field)`
+  > * {
+    margin-bottom: ${size('spacing.regular')};
+  }
 `;
-export const BoxRadioButtonWrapper = styled.div`
-  margin-bottom: ${size('spacing.regular')};
-`;
-export const Description = styled.p`
+
+const Description = pad(styled.p`
   color: ${palette('slate', 'filler')};
-  margin-bottom: ${size('spacing.xLarge')};
-`;
+`, 'xLarge');
+Description.displayName = 'Description';
 
-const CareNeeds = ({ data }) => (
-  <Fragment>
-    {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-    <StyledHeading>Do you have any care needs?</StyledHeading>
+const CareNeeds = () => (
+  <>
+    <PaddedHeading weight="regular">Do you have any care needs?</PaddedHeading>
     <Description>Select all that apply</Description>
-    {
-      options.map((option, i) => (
-        <BoxRadioButtonWrapper key={i}>
-          <BoxRadioButton
-            multiSelect
-            name={`${stepInputFieldNames.CareNeeds[0]}[${option.label}]`}
-            value={option.label}
-            label={option.label}
-            checked={Boolean(data[stepInputFieldNames.CareNeeds[0]]) &&
-              Boolean(data[stepInputFieldNames.CareNeeds[0]][option.label])}
-          />
-        </BoxRadioButtonWrapper>
-      ))
-    }
-  </Fragment>
+    <StyledField
+      multiChoice
+      options={CARE_NEEDS_OPTIONS}
+      name={STEP_INPUT_FIELD_NAMES.CareNeeds[0]}
+      type="boxChoice"
+      component={ReduxField}
+    />
+  </>
 );
-
-CareNeeds.propTypes = {
-  data: object,
-};
-
-CareNeeds.defaultProps = {
-  data: {},
-};
 
 export default CareNeeds;

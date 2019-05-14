@@ -1,59 +1,57 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { object, number } from 'prop-types';
+import { number } from 'prop-types';
 import { Field } from 'redux-form';
 
-
-import { size, palette } from 'sly/components/themes';
+import { palette } from 'sly/components/themes';
+import pad from 'sly/components/helpers/pad';
+import { STEP_INPUT_FIELD_NAMES } from 'sly/external/constants/steps';
+import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import { Heading } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 
-import { stepInputFieldNames } from '../helpers';
+const PaddedHeading = pad(Heading, 'regular');
+PaddedHeading.displayName = 'PaddedHeading';
 
-export const StyledHeading = styled(Heading)`
-  font-weight: normal;
-  margin-bottom: ${size('spacing.regular')};
-`;
-export const Description = styled.p`
+const Description = pad(styled.p`
   color: ${palette('slate', 'filler')};
-  margin-bottom: ${size('spacing.xLarge')};
-`;
+`, 'xLarge');
+Description.displayName = 'Description';
 
 const LeadFound = ({ searchResultCount }) => (
-  <Fragment>
-    {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-    <StyledHeading>We found {searchResultCount} options near you. Sign up to connect with your local Seniorly Advisor.</StyledHeading>
+  <>
+    <PaddedHeading weight="regular">We found {searchResultCount} options near you. Sign up to connect with your local Seniorly Advisor.</PaddedHeading>
     <Description>Exclusive pricing and options - This is a FREE service.</Description>
     <Field
-      name={stepInputFieldNames.LeadFound[0]}
+      name={STEP_INPUT_FIELD_NAMES.LeadFound[0]}
       placeholder="Name"
       type="text"
       component={ReduxField}
     />
     <Field
-      name={stepInputFieldNames.LeadFound[1]}
+      name={STEP_INPUT_FIELD_NAMES.LeadFound[1]}
       placeholder="Email"
       type="email"
       component={ReduxField}
     />
     <Field
-      name={stepInputFieldNames.LeadFound[2]}
+      name={STEP_INPUT_FIELD_NAMES.LeadFound[2]}
       placeholder="Phone"
       type="text"
+      parse={phoneParser}
+      format={phoneFormatter}
       component={ReduxField}
     />
     <TosAndPrivacy openLinkInNewTab />
-  </Fragment>
+  </>
 );
 
 LeadFound.propTypes = {
-  data: object,
   searchResultCount: number,
 };
 
 LeadFound.defaultProps = {
-  data: {},
   searchResultCount: 0,
 };
 
