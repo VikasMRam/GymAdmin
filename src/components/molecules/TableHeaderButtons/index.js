@@ -52,11 +52,11 @@ const ColumnsButton = styled(IconButton)`
 `;
 
 const TableHeaderButtons = ({
-  onColumnButtonClick, onSortButtonClick, onFilterButtonClick, className,
+  onColumnButtonClick, onSortButtonClick, onFilterButtonClick, onSearchTextKeyUp, className,
 }) => (
   <Wrappper className={className}>
     {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
-    <SearchTextInput type="search" placeholder="Type to filter by name" />
+    <SearchTextInput type="search" placeholder="Type to filter by name" onKeyUp={onSearchTextKeyUp} />
     <RightSideButtons>
       {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
       {onFilterButtonClick && <FilterButton onClick={onFilterButtonClick} icon="filter" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Filter</FilterButton>}
@@ -72,6 +72,7 @@ TableHeaderButtons.propTypes = {
   className: string,
   onSortButtonClick: func,
   onFilterButtonClick: func,
+  onSearchTextKeyUp: func,
 };
 
 export default TableHeaderButtons;
