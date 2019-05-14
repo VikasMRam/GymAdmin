@@ -1,19 +1,14 @@
 import React, { Fragment, Component } from 'react';
-import styled from 'styled-components';
 import { object, func } from 'prop-types';
 import { Field } from 'redux-form';
 
-import { size } from 'sly/components/themes';
+import pad from 'sly/components/helpers/pad';
+import { STEP_INPUT_FIELD_NAMES } from 'sly/external/constants/steps';
 import { getSearchParamFromPlacesResponse } from 'sly/services/helpers/search';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import { Heading } from 'sly/components/atoms';
 
-import { stepInputFieldNames } from '../helpers';
-
-export const StyledHeading = styled(Heading)`
-  font-weight: normal;
-  margin-bottom: ${size('spacing.xLarge')};
-`;
+const PaddedHeading = pad(Heading, 'xLarge');
 
 const noRender = () => null;
 
@@ -46,14 +41,14 @@ class CitySearch extends Component {
     return (
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-        <StyledHeading>In what city do you need care?</StyledHeading>
+        <PaddedHeading weight="regular">In what city do you need care?</PaddedHeading>
         <SearchBoxContainer
           clearLocationOnBlur={false}
           placeholder="Enter city name..."
           onLocationSearch={this.handleLocationChange}
           onTextChange={this.handleChange}
         />
-        <Field name={stepInputFieldNames.CitySearch[0]} component={noRender} />
+        <Field name={STEP_INPUT_FIELD_NAMES.CitySearch[0]} component={noRender} />
       </Fragment>
     );
   }

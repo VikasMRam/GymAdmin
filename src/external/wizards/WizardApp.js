@@ -4,18 +4,14 @@ import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 
-// https://github.com/diegohaz/arc/wiki/Styling
-import WizardAppErrorPage from './WizardAppErrorPage';
-import addGlobalStyles from './setGlobalStyles';
-import { Controller as CareAssessmentController } from './careAssessment';
-
 import theme from 'sly/components/themes/default';
 import { routes as routesPropType } from 'sly/propTypes/routes';
-import Router from 'sly/components/molecules/Router';
+import { WIZARD_PATH } from 'sly/external/constants/paths';
+import WizardAppErrorPage from 'sly/external/wizards/WizardAppErrorPage';
+import addGlobalStyles from 'sly/external/wizards/setGlobalStyles';
+import { Controller as CareAssessmentController } from 'sly/external/wizards/careAssessment';
 
 addGlobalStyles();
-
-const WIZARD_PATH = '/external/wizards'
 
 export default class WizardApp extends Component {
   static childContextTypes = {

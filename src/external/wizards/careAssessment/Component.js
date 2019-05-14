@@ -4,10 +4,8 @@ import { bool, object, number, func, string, arrayOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, assetPath, palette, key } from 'sly/components/themes';
-import { Button, Hr, Heading, Image } from 'sly/components/atoms';
-import Logo from 'sly/components/atoms/Logo';
-
-import { getStepComponent } from './steps';
+import { Button, Hr, Heading, Image, Logo } from 'sly/components/atoms';
+import { getStepComponent } from 'sly/external/wizards/careAssessment/steps';
 
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
 
@@ -117,7 +115,7 @@ const Component = ({
                   {currentStep < totalNumberofSteps && (
                     <Button
                       type="button"
-                      palette="slate"
+                      ghost
                       disabled={currentStep === 1}
                       onClick={onBackButton}
                     >

@@ -1,5 +1,6 @@
-import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { injectGlobal } from 'styled-components';
+
+import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 
 export default function addGlobalStyles() {
   setGlobalStyles();
