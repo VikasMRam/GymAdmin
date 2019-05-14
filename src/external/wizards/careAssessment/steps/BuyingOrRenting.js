@@ -10,6 +10,7 @@ import { Heading } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
 const PaddedHeading = pad(Heading, 'xLarge');
+PaddedHeading.displayName = 'PaddedHeading';
 
 const StyledField = styled(Field)`
   > * {

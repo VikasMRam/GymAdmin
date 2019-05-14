@@ -12,10 +12,12 @@ import ReduxField from 'sly/components/organisms/ReduxField';
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
 
 const PaddedHeading = pad(Heading, 'regular');
+PaddedHeading.displayName = 'PaddedHeading';
 
 const Description = pad(styled.p`
   color: ${palette('slate', 'filler')};
 `, 'xLarge');
+Description.displayName = 'Description';
 
 const LeadFound = ({ searchResultCount }) => (
   <>

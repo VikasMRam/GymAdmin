@@ -9,7 +9,7 @@ import { getStepComponent } from 'sly/external/wizards/careAssessment/steps';
 
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
 
-export const ProgressWrapper = styled.div`
+const ProgressWrapper = styled.div`
   background-color: ${palette('primary', 'stroke')};
 `;
 const ProgressBar = styled.div`
@@ -18,7 +18,7 @@ const ProgressBar = styled.div`
   width: ${progressBarWidth}%;
   transition: width ${key('transitions.slow.inOut')};
 `;
-export const CurrentStep = styled.p`
+const CurrentStep = styled.p`
   font-size: ${size('text.caption')};
   color: ${ifProp('limitReached', palette('secondary', 'base'), 'initial')};
 `;
@@ -28,7 +28,7 @@ const StyledForm = styled.form`
 const Wrapper = styled.div`
   padding: ${size('spacing.large')} ${size('spacing.xxLarge')} 0 ${size('spacing.xxLarge')};
 `;
-export const ButtonsWrapper = styled.div`
+const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
 
@@ -54,13 +54,14 @@ const BottomWrapper = styled.div`
 const StyledHeading = styled(Heading)`
   font-weight: normal;
 `;
-export const SearchingWrapper = Wrapper.extend`
+const SearchingWrapper = Wrapper.extend`
   top: 50%;
   transform: translate(0%, -50%);
   position: absolute;
   text-align: center;
   width: 100%;
 `;
+SearchingWrapper.displayName = 'SearchingWrapper';
 const ScrollWrapper = styled.div`
   width: 100%;
   height: 100%;

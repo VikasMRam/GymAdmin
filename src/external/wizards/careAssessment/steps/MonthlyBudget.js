@@ -10,12 +10,15 @@ import { Heading } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
 const PaddedHeading = pad(Heading, 'xLarge');
+PaddedHeading.displayName = 'PaddedHeading';
 
 const Description = pad(styled.p`
   color: ${palette('slate', 'filler')};
 `, 'xLarge');
+Description.displayName = 'Description';
 
 const MoneyValue = pad(Heading, 'large');
+MoneyValue.displayName = 'MoneyValue';
 
 const StyledReduxField = styled(ReduxField)`
   display: flex;

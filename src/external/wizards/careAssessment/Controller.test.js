@@ -5,9 +5,8 @@ import queryString from 'query-string';
 
 import { SET } from 'sly/store/controller/actions';
 import { RESOURCE_LIST_READ_REQUEST, RESOURCE_CREATE_REQUEST } from 'sly/store/resource/actions';
-
-import Controller from './Controller';
-import { stepOrders, defaultStepOrder } from './helpers';
+import { STEP_ORDERS, DEFAULT_STEP_ORDER } from 'sly/external/constants/steps';
+import Controller from 'sly/external/wizards/careAssessment/Controller';
 
 const mockStore = configureStore();
 const initStore = (props = {}) => mockStore({
@@ -33,8 +32,8 @@ describe('Controller', () => {
 
     expect(currentStep).toBe(1);
     expect(href).toBe('');
-    expect(flow).toEqual(stepOrders[defaultStepOrder]);
-    expect(totalNumberofSteps).toBe(stepOrders[defaultStepOrder].length);
+    expect(flow).toEqual(STEP_ORDERS[DEFAULT_STEP_ORDER]);
+    expect(totalNumberofSteps).toBe(STEP_ORDERS[DEFAULT_STEP_ORDER].length);
     expect(data).toEqual({});
     expect(searching).toBeFalsy();
     expect(progressPathArr).toEqual(expectedProgressPath);
@@ -57,8 +56,8 @@ describe('Controller', () => {
   });
 
   it('should change flow based on passed prop', () => {
-    let stepOrderNames = Object.keys(stepOrders);
-    stepOrderNames = stepOrderNames.filter(e => e !== defaultStepOrder);
+    let stepOrderNames = Object.keys(STEP_ORDERS);
+    stepOrderNames = stepOrderNames.filter(e => e !== DEFAULT_STEP_ORDER);
     const stepOrder = stepOrderNames[Math.floor(Math.random() * stepOrderNames.length)];
     const locationPassed = {
       search: `?order=${stepOrder}`,
@@ -70,7 +69,7 @@ describe('Controller', () => {
     const { currentStep, flow } = wrapper.props();
 
     expect(currentStep).toBe(1);
-    expect(flow).toEqual(stepOrders[stepOrder]);
+    expect(flow).toEqual(STEP_ORDERS[stepOrder]);
   });
 
   it('handleBackButton not change step when called from first step', () => {
@@ -122,8 +121,8 @@ describe('Controller', () => {
   });
 
   it('handleSubmit calls doSearch when on search step', () => {
-    const stepOrderNames = Object.keys(stepOrders);
-    const citySearchStep = stepOrders[stepOrderNames[0]].indexOf('CitySearch');
+    const stepOrderNames = Object.keys(STEP_ORDERS);
+    const citySearchStep = STEP_ORDERS[stepOrderNames[0]].indexOf('CitySearch');
     const locationPassed = {
       search: `?order=${stepOrderNames[0]}`,
     };
@@ -153,8 +152,8 @@ describe('Controller', () => {
   });
 
   it('handleSubmit does not call doSearch when not on search step', () => {
-    const stepOrderNames = Object.keys(stepOrders);
-    const citySearchStep = stepOrders[stepOrderNames[0]].indexOf('CitySearch');
+    const stepOrderNames = Object.keys(STEP_ORDERS);
+    const citySearchStep = STEP_ORDERS[stepOrderNames[0]].indexOf('CitySearch');
     const currentStep = citySearchStep - 1;
     const locationPassed = {
       search: `?order=${stepOrderNames[0]}`,
@@ -194,13 +193,13 @@ describe('Controller', () => {
   });
 
   it('handleSeeMore creates userAction when called from last step', () => {
-    const stepOrderNames = Object.keys(stepOrders);
+    const stepOrderNames = Object.keys(STEP_ORDERS);
     const locationPassed = {
       search: `?order=${stepOrderNames[0]}`,
     };
     const store = initStore();
     const wrapper = wrap(store, {
-      currentStep: stepOrders[stepOrderNames[0]].length,
+      currentStep: STEP_ORDERS[stepOrderNames[0]].length,
       location: locationPassed,
     });
 

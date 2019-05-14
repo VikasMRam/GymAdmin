@@ -10,6 +10,7 @@ import { Heading } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 
 const PaddedHeading = pad(Heading, 'xLarge');
+PaddedHeading.displayName = 'PaddedHeading';
 
 const StyledField = styled(Field)`
   > * {
@@ -20,6 +21,7 @@ const StyledField = styled(Field)`
 const Description = pad(styled.p`
   color: ${palette('slate', 'filler')};
 `, 'xLarge');
+Description.displayName = 'Description';
 
 const CareNeeds = () => (
   <>

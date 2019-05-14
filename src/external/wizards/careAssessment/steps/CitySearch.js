@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { object, func } from 'prop-types';
+import { func } from 'prop-types';
 import { Field } from 'redux-form';
 
 import pad from 'sly/components/helpers/pad';
@@ -9,18 +9,14 @@ import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import { Heading } from 'sly/components/atoms';
 
 const PaddedHeading = pad(Heading, 'xLarge');
+PaddedHeading.displayName = 'PaddedHeading';
 
 const noRender = () => null;
 
 class CitySearch extends Component {
   static propTypes = {
-    data: object,
     setFormKey: func,
     setStoreKey: func,
-  };
-
-  static defaultProps = {
-    data: {},
   };
 
   handleLocationChange = (result) => {
