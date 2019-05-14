@@ -61,6 +61,18 @@ const FamilySummary = ({
           <Block size="caption">{client.uuidAux.uuidInfo.residentInfo.fullName}</Block>
         </ColumWrapper>
       }
+      {client.clientInfo && client.clientInfo.phoneNumber &&
+        <ColumWrapper>
+          <Label palette="grey">Phone Number</Label>
+          <StyledLink href={`tel:+1${client.clientInfo.phoneNumber}`}>Click To Call</StyledLink>
+        </ColumWrapper>
+      }
+      {client.clientInfo && client.clientInfo.email &&
+        <ColumWrapper>
+          <Label palette="grey">Email</Label>
+          <StyledLink href={`mailto:${client.clientInfo.email}`}>Click To Send Email</StyledLink>
+        </ColumWrapper>
+      }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.housingInfo.lookingFor &&
         <ColumWrapper>
           <Label palette="grey">Looking for</Label>

@@ -106,12 +106,21 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
       // .set('attributes.email', values.email)
       .set('attributes.phoneNumber', values.phoneNumber)
       .value();
-    const uuidAux = immutable(pick(rawAux, ['id', 'type', 'attributes.uuid', 'attributes.uuidInfo']))
+    let uuidAux = immutable(pick(rawAux, ['id', 'type', 'attributes.uuid', 'attributes.uuidInfo']))
       .set('attributes.uuidInfo.housingInfo.lookingFor', values.lookingFor)
       .set('attributes.uuidInfo.residentInfo.fullName', values.residentName)
       .set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', values.monthlyBudget)
-      .set('attributes.uuidInfo.housingInfo.moveTimeline', values.timeToMove)
-      .value();
+      .set('attributes.uuidInfo.housingInfo.moveTimeline', values.timeToMove);
+
+    if (values.searchingCity) {
+      const [city, state] = values.searchingCity.split(',');
+      const locationInfo = {
+        city,
+        state,
+      };
+      uuidAux.set('attributes.uuidInfo.locationInfo', locationInfo);
+    }
+    uuidAux = uuidAux.value();
 
     const userPromise = () => updateUser({ id }, user);
     const uuidAuxPromise = () => updateUuidAux({ id: uuidAux.id }, uuidAux);

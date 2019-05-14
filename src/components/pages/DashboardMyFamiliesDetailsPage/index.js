@@ -5,6 +5,10 @@ import { string, func, object, arrayOf, bool } from 'prop-types';
 import {
   FAMILY_DASHBOARD_FAMILIES_PATH,
   FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
+  SUMMARY,
+  ACTIVITY,
+  FAMILY_DETAILS,
+  COMMUNITIES,
 } from 'sly/constants/dashboardAppPaths';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -151,11 +155,6 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   }
 `;
 
-const SUMMARY = 'summary';
-const ACTIVITY = 'activity';
-const FAMILY_DETAILS = 'family-details';
-const COMMUNITIES = 'communities';
-
 const BackArrorIcon = styled(Icon)`
   margin-right: ${size('spacing.small')};
 `;
@@ -178,13 +177,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     clientIsLoading: bool,
     refetchClient: func.isRequired,
     refetchNotes: func.isRequired,
+    goToFamilyDetails: func,
   };
 
   handleAcceptClick = () => {
     const {
-      showModal, hideModal, notifyError, client, rawClient, refetchClient,
+      showModal, hideModal, notifyError, client, rawClient, refetchClient, goToFamilyDetails,
     } = this.props;
-    showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} refetchClient={refetchClient} />, null, 'noPadding', false);
+    showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} goToFamilyDetails={goToFamilyDetails} refetchClient={refetchClient} />, null, 'noPadding', false);
   };
 
   handleRejectClick = () => {
@@ -293,7 +293,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const activityCards = notes ? notes.map((a, i) =>
       <StyledFamilyActivityItem key={a.id} noBorderRadius snap={i === notes.length - 1 ? null : 'bottom'} title={a.title} description={a.body} date={a.createdAt} />) : [];
 
-    const summaryPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
+    const summaryPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
+    const activityPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id)
     const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
     const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', COMMUNITIES);
 
@@ -361,7 +362,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
             </TabWrapper>
           </div>
-          <div id={ACTIVITY} default label="Activity" to={summaryPath}>
+          <div id={ACTIVITY} default label="Activity" to={activityPath}>
             <TabWrapper>
               <SmallScreenBorderDiv padding={!noteIsLoading && activityCards.length > 0 ? null : 'xLarge'}>
                 {noteIsLoading && <Block size="subtitle">Loading...</Block>}

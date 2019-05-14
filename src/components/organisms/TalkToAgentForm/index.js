@@ -71,7 +71,6 @@ class TalkToAgentForm extends Component {
           <Label size="caption">Where are you searching for homes? *</Label>
           <StyledSearchBoxContainer
             clearLocationOnBlur={false}
-            layout="boxWithoutButton"
             onLocationSearch={handleLocationChange}
             onTextChange={handleChange}
           />
