@@ -358,7 +358,10 @@ const HomePage = ({
     const modalContent = (
       <Fragment>
         <Heading size="subtitle">Please enter a location:</Heading>
-        <SearchBoxContainer layout="homeHero" onLocationSearch={e => onLocationSearch(e, true)} />
+        <SearchBoxContainer layout="homeHero" onLocationSearch={e => {
+          hideModal();
+          onLocationSearch(e, true);
+        }} />
       </Fragment>
     );
     const onClose = () => {
