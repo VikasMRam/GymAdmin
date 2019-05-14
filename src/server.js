@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import 'babel-polyfill';
+import '@babel/polyfill';
 import path from 'path';
 import crypto from 'crypto';
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle, no-console */
-import 'babel-polyfill';
+import '@babel/polyfill';
 import 'react-hot-loader/patch';
 import React from 'react';
 import { render } from 'react-dom';
