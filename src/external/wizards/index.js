@@ -11,17 +11,22 @@ import { BrowserRouter } from 'react-router-dom';
 import { host, authTokenUrl } from 'sly/config';
 import { getOrigin } from 'sly/services/helpers/url';
 import api from 'sly/services/api';
+import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from './store/configure';
 import WizardApp from './WizardApp';
 
 const store = configureStore({}, { api: api.create({ credentials: 'include' }) });
+const beesApi = createApi();
 
+console.log(beesApi);
 const renderApp = () => (
-  <Provider store={store}>
-    <BrowserRouter>
-      <WizardApp />
-    </BrowserRouter>
-  </Provider>
+  <ApiProvider api={beesApi}>
+    <Provider store={store}>
+      <BrowserRouter>
+        <WizardApp />
+      </BrowserRouter>
+    </Provider>
+  </ApiProvider>
 );
 
 const root = document.getElementById('app');
