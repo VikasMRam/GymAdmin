@@ -101,18 +101,6 @@ const mode = (context, { merge }) => merge({
   mode: NODE_ENV,
 });
 
-// const babel = (context, { merge }) => merge({
-//   module: {
-//     rules: [
-//       {
-//         test: /\.jsx?$/,
-//         exclude: /node_modules/,
-//         loader: 'babel-loader'
-//       },
-//     ],
-//   },
-// });
-
 const resolveModules = modules => (context, { merge }) => merge({
   resolve: {
     alias: {
