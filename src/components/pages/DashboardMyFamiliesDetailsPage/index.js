@@ -250,7 +250,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, currentTab, meta, notifyError, rawClient, notes, noteIsLoading, clientIsLoading,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading,
     } = this.props;
 
     if (clientIsLoading) {
@@ -384,6 +384,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                 <FamilyDetailsFormContainer
                   client={client}
                   rawClient={rawClient}
+                  notifyInfo={notifyInfo}
                   notifyError={notifyError}
                   accepted={!showAcceptRejectButtons}
                   canEditFamilyDetails={canEditFamilyDetails}
