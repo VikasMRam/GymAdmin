@@ -5,7 +5,6 @@ const fs = require('fs');
 
 const UglifyJs = require('uglify-es');
 const cssmin = require('cssmin');
-// const splitVendor = require('webpack-blocks-split-vendor');
 const nodeExternals = require('webpack-node-externals');
 // const Visualizer = require('webpack-visualizer-plugin');
 const SpawnPlugin = require('webpack-spawn-plugin');
@@ -54,9 +53,9 @@ const MUTE_REDUX_LOGGER = process.env.MUTE_REDUX_LOGGER || false;
 const HIDE_CHATBOX = process.env.HIDE_CHATBOX || false;
 
 // replacements for widgets.js
-const EXTERNAL_WIZARDS_PATH = process.env.EXTERNAL_WIZARDS_PATH || '/external/wizards';
+const EXTERNAL_PATH = process.env.EXTERNAL_PATH || '/external';
 const EXTERNAL_ASSET_URL = (isDev ? `${devDomain}external` : `${PUBLIC_PATH}/external`);
-const EXTERNAL_WIZARDS_ROOT_URL = HOST + EXTERNAL_WIZARDS_PATH;
+const EXTERNAL_WIZARDS_ROOT_URL = `${HOST}${EXTERNAL_PATH}/wizards`;
 
 console.info('Using config', JSON.stringify({
   STORYBOOK_GIT_BRANCH,
@@ -73,7 +72,7 @@ console.info('Using config', JSON.stringify({
   GOOGLE_MAPS_API_KEY,
   SOURCE,
   EXTERNAL_ASSET_URL,
-  EXTERNAL_WIZARDS_PATH,
+  EXTERNAL_PATH,
   EXTERNAL_WIZARDS_ROOT_URL,
   FB_CLIENT_ID,
   GOOGLE_CLIENT_ID,
@@ -95,7 +94,7 @@ const externalWidgetEntryPath = path.join(externalWidgetSourcePath, 'widget.js')
 const externalWidgetCssEntryPath = path.join(externalWidgetSourcePath, 'widget.css');
 // todo: need better approach than hardcoding assets
 const closeIconSvg = fs.readFileSync(`${externalWidgetSourcePath}/close-regular.svg`, 'utf8');
-const externalWizardsEntryPath = path.join(externalSourcePath, 'apps', 'index.js');
+const externalEntryPath = path.join(externalSourcePath, 'apps', 'index.js');
 
 const mode = (context, { merge }) => merge({
   mode: NODE_ENV,
@@ -143,7 +142,6 @@ const base = group([
     'process.env.AUTH_URL': AUTH_URL,
     'process.env.DOMAIN': DOMAIN,
     'process.env.GOOGLE_MAPS_API_KEY': GOOGLE_MAPS_API_KEY,
-    'process.env.EXTERNAL_WIZARDS_PATH': EXTERNAL_WIZARDS_PATH,
     'process.env.VERSION': VERSION,
     'process.env.FB_CLIENT_ID': FB_CLIENT_ID,
     'process.env.GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID,
@@ -199,9 +197,9 @@ const clientConfigs = [
     path: '*',
   },
   {
-    bundle: 'wizards',
+    bundle: 'external',
     ssr: false,
-    path: '/external/wizards*',
+    path: '/external*',
   },
   {
     bundle: 'dashboard',
@@ -316,7 +314,7 @@ const client = createConfig([
   entryPoint({
     client: clientEntryPath,
     dashboard: dashboardEntryPath,
-    wizards: externalWizardsEntryPath,
+    external: externalEntryPath,
   }),
 
   externalWidget,

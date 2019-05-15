@@ -6,10 +6,11 @@ import Helmet from 'react-helmet';
 
 import theme from 'sly/components/themes/default';
 import { routes as routesPropType } from 'sly/propTypes/routes';
-import { WIZARD_PATH } from 'sly/external/constants/paths';
+import { WIZARD_PATH, SEARCH_PATH } from 'sly/external/constants/paths';
 import ErrorPage from 'sly/external/apps/ErrorPage';
 import addGlobalStyles from 'sly/external/apps/setGlobalStyles';
 import { Controller as CareAssessmentController } from 'sly/external/apps/wizards/careAssessment';
+import { Container as SearchContainer } from 'sly/external/apps/search';
 
 addGlobalStyles();
 
@@ -26,6 +27,11 @@ export default class App extends Component {
     {
       path: `${WIZARD_PATH}/caw`,
       component: CareAssessmentController,
+      exact: true,
+    },
+    {
+      path: SEARCH_PATH,
+      component: SearchContainer,
       exact: true,
     },
   ];
