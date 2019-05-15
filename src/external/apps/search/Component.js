@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
@@ -18,19 +18,17 @@ const StyledHr = styled(Hr)`
   margin-right: -${size('spacing.xLarge')};
 `;
 
-export default class SearchComponent extends Component {
-  render() {
-    return (
-      <Wrapper>
-        <Box>
-          <CenteredHeading size="subtitle">Find The Best Assisted Living Near Me</CenteredHeading>
-          <SearchBoxContainer
-            hasShadow
-            clearLocationOnBlur={false}
-          />
-          <StyledHr />
-        </Box>
-      </Wrapper>
-    );
-  }
-}
+const SearchComponent = () => (
+  <Wrapper>
+    <Box>
+      <CenteredHeading size="subtitle">Find The Best Assisted Living Near Me</CenteredHeading>
+      <SearchBoxContainer
+        hasShadow
+        clearLocationOnBlur={false}
+      />
+      <StyledHr />
+    </Box>
+  </Wrapper>
+);
+
+export default SearchComponent;
