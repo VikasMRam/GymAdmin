@@ -208,7 +208,7 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          <Router>
+          <Router bailRegex={/^\/dashboard/}>
             <Switch>
               <Route
                 path="/ping"

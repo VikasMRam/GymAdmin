@@ -82,7 +82,7 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          <Router requiresAuth>
+          <Router bailRegex={/^\/(?!dashboard)/} requiresAuth>
             <Switch>
               {App.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
