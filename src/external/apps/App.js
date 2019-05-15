@@ -7,13 +7,13 @@ import Helmet from 'react-helmet';
 import theme from 'sly/components/themes/default';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import { WIZARD_PATH } from 'sly/external/constants/paths';
-import WizardAppErrorPage from 'sly/external/wizards/WizardAppErrorPage';
-import addGlobalStyles from 'sly/external/wizards/setGlobalStyles';
-import { Controller as CareAssessmentController } from 'sly/external/wizards/careAssessment';
+import ErrorPage from 'sly/external/apps/ErrorPage';
+import addGlobalStyles from 'sly/external/apps/setGlobalStyles';
+import { Controller as CareAssessmentController } from 'sly/external/apps/wizards/careAssessment';
 
 addGlobalStyles();
 
-export default class WizardApp extends Component {
+export default class App extends Component {
   static childContextTypes = {
     routes: routesPropType,
   };
@@ -42,7 +42,7 @@ export default class WizardApp extends Component {
         <ThemeProvider theme={theme}>
           <Switch>
             {this.routes.map(route => <Route key={route.path} {...route} />)}
-            <Route render={routeProps => <WizardAppErrorPage {...routeProps} errorCode={404} />} />
+            <Route render={routeProps => <ErrorPage {...routeProps} errorCode={404} />} />
           </Switch>
         </ThemeProvider>
       </>

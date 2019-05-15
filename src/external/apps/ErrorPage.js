@@ -2,19 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
+import textAlign from 'sly/components/helpers/textAlign';
 
-const Wrapper = styled.div`
+const Wrapper = textAlign(styled.div`
   position: relative;
   background-color: ${palette('white', 'base')};
   margin: calc(${size('breakpoint.tablet')}/4) auto;
   content-align: center;
-  text-align: center;
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     width:${size('breakpoint.tablet')};
   }
-`;
+`);
 
-const WizardAppErrorPage = () => {
+const ErrorPage = () => {
   return (
     <Wrapper>
       Shhh... Nothing here
@@ -22,4 +23,4 @@ const WizardAppErrorPage = () => {
   );
 };
 
-export default WizardAppErrorPage;
+export default ErrorPage;

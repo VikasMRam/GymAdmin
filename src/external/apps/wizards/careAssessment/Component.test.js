@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { Button } from 'sly/components/atoms';
-import Component from 'sly/external/wizards/careAssessment/Component';
+import Component from 'sly/external/apps/wizards/careAssessment/Component';
 
 const wrap = (props = {}) => shallow(<Component {...props} />);
 const totalNumberofSteps = 4;

@@ -13,7 +13,7 @@ import DiscoverHomeTile from 'sly/components/molecules/DiscoverHomeTile';
 import MeetOthersTile from 'sly/components/molecules/MeetOthersTile';
 import ImageOverlayContentTile from 'sly/components/molecules/ImageOverlayContentTile';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
-import CareAssessmentController from 'sly/external/wizards/careAssessment/Controller';
+import CareAssessmentController from 'sly/external/apps/wizards/careAssessment/Controller';
 
 const HeroWrapper = styled.div`
   position: relative;

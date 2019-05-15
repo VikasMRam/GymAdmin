@@ -1,4 +1,4 @@
-import { converStepInputToString } from './helpers';
+import { converStepInputToString } from 'sly/external/apps/wizards/careAssessment/helpers';
 
 describe('helpers', () => {
   it('converStepInputToString with string input', () => {

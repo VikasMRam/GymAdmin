@@ -95,7 +95,7 @@ const externalWidgetEntryPath = path.join(externalWidgetSourcePath, 'widget.js')
 const externalWidgetCssEntryPath = path.join(externalWidgetSourcePath, 'widget.css');
 // todo: need better approach than hardcoding assets
 const closeIconSvg = fs.readFileSync(`${externalWidgetSourcePath}/close-regular.svg`, 'utf8');
-const externalWizardsEntryPath = path.join(externalSourcePath, 'wizards', 'index.js');
+const externalWizardsEntryPath = path.join(externalSourcePath, 'apps', 'index.js');
 
 const mode = (context, { merge }) => merge({
   mode: NODE_ENV,

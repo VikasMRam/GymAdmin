@@ -6,7 +6,7 @@ import queryString from 'query-string';
 import { SET } from 'sly/store/controller/actions';
 import { RESOURCE_LIST_READ_REQUEST, RESOURCE_CREATE_REQUEST } from 'sly/store/resource/actions';
 import { STEP_ORDERS, DEFAULT_STEP_ORDER } from 'sly/external/constants/steps';
-import Controller from 'sly/external/wizards/careAssessment/Controller';
+import Controller from 'sly/external/apps/wizards/careAssessment/Controller';
 
 const mockStore = configureStore();
 const initStore = (props = {}) => mockStore({

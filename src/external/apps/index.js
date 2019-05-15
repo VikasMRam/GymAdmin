@@ -12,8 +12,8 @@ import { host, authTokenUrl } from 'sly/config';
 import { getOrigin } from 'sly/services/helpers/url';
 import api from 'sly/services/api';
 import { ApiProvider, createApi } from 'sly/services/newApi';
-import configureStore from 'sly/external/wizards/store/configure';
-import WizardApp from 'sly/external/wizards/WizardApp';
+import configureStore from 'sly/external/apps/store/configure';
+import App from 'sly/external/apps/App';
 
 const store = configureStore({}, { api: api.create({ credentials: 'include' }) });
 const beesApi = createApi();
@@ -22,7 +22,7 @@ const renderApp = () => (
   <ApiProvider api={beesApi}>
     <Provider store={store}>
       <BrowserRouter>
-        <WizardApp />
+        <App />
       </BrowserRouter>
     </Provider>
   </ApiProvider>
@@ -39,8 +39,8 @@ if (origin.indexOf(host) !== -1) {
 }
 
 if (module.hot) {
-  module.hot.accept('./WizardApp', () => {
-    require('./WizardApp');
+  module.hot.accept('./App', () => {
+    require('./App');
     render(renderApp(), root);
   });
 }

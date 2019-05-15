@@ -12,11 +12,11 @@ import { connectController } from 'sly/controllers';
 import { createValidator } from 'sly/services/validation';
 import { selectFormData } from 'sly/services/helpers/forms';
 import { CARE_ASSESSMENT_PROGRESS } from 'sly/services/api/actions';
-import CareAssessmentComponent from 'sly/external/wizards/careAssessment/Component';
+import CareAssessmentComponent from 'sly/external/apps/wizards/careAssessment/Component';
 import {
   inputBasedNextSteps, getStepInputFieldValidations,
   getStepInputFieldDefaultValues, converStepInputToString,
-} from 'sly/external/wizards/careAssessment/helpers';
+} from 'sly/external/apps/wizards/careAssessment/helpers';
 
 const formName = 'CareAssessmentForm';
 const validate = createValidator(getStepInputFieldValidations());
