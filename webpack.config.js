@@ -182,8 +182,10 @@ const uglifyJs = group([
   env('production', [
     uglify({
       sourceMap: isStaging,
-      compress: { warnings: false },
-      output: { comments: false },
+      uglifyOptions: {
+        compress: { warnings: false },
+        output: { comments: false },
+      },
     }),
   ]),
 ]);

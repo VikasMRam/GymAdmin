@@ -25,7 +25,8 @@
 
     ["styled-components", {
       "displayName": true
-    }]
+    }],
+    "@babel/plugin-syntax-dynamic-import"
   ],
   "env": {
     "development": {

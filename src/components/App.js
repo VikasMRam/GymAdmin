@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
+import loadable from '@loadable/component';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 
@@ -12,26 +13,27 @@ import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
 import { routes as routesPropType } from 'sly/propTypes/routes';
-import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
-import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
-import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
-import HomePageContainer from 'sly/containers/HomePageContainer';
-import NearMePageContainer from 'sly/containers/NearMePageContainer';
-import PromoPageContainer from 'sly/containers/PromoPageContainer';
-import AgentsPageContainer from 'sly/containers/AgentsPageContainer';
 import OurHistoryPage from 'sly/components/pages/OurHistoryPage';
-import PasswordResetPageContainer from 'sly/containers/PasswordResetPageContainer';
-import HowItWorksDetailPageContainer from 'sly/containers/HowItWorksDetailPageContainer';
 import Error from 'sly/components/pages/Error';
 import Router from 'sly/components/molecules/Router';
 import LegalPolicyPage from 'sly/components/pages/LegalPolicyPage';
-import EntityApprovalContainer from 'sly/containers/EntityApprovalContainer';
-import BookATourPageContainer from 'sly/containers/BookATourPageContainer';
-import PricingWizardPageContainer from 'sly/containers/PricingWizardPageContainer';
-import AgentProfilePageContainer from 'sly/containers/AgentProfilePageContainer';
-import AgentRegionPageContainer from 'sly/containers/AgentRegionPageContainer';
 import PartnersPage from 'sly/components/pages/PartnersPage';
-import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
+
+const CommunityDetailPageContainer = loadable(() => import('sly/containers/CommunityDetailPageContainer'));
+const CommunitySearchPageContainer = loadable(() => import('sly/containers/CommunitySearchPageContainer'));
+const StateSearchPageContainer = loadable(() => import('sly/containers/StateSearchPageContainer'));
+const HomePageContainer = loadable(() => import('sly/containers/HomePageContainer'));
+const NearMePageContainer = loadable(() => import('sly/containers/NearMePageContainer'));
+const PromoPageContainer = loadable(() => import('sly/containers/PromoPageContainer'));
+const AgentsPageContainer = loadable(() => import('sly/containers/AgentsPageContainer'));
+const PasswordResetPageContainer = loadable(() => import('sly/containers/PasswordResetPageContainer'));
+const HowItWorksDetailPageContainer = loadable(() => import('sly/containers/HowItWorksDetailPageContainer'));
+const EntityApprovalContainer = loadable(() => import('sly/containers/EntityApprovalContainer'));
+const BookATourPageContainer = loadable(() => import('sly/containers/BookATourPageContainer'));
+const PricingWizardPageContainer = loadable(() => import('sly/containers/PricingWizardPageContainer'));
+const AgentProfilePageContainer = loadable(() => import('sly/containers/AgentProfilePageContainer'));
+const AgentRegionPageContainer = loadable(() => import('sly/containers/AgentRegionPageContainer'));
+const ChatBoxContainer = loadable(() => import('sly/containers/ChatBoxContainer'));
 
 setGlobalStyles();
 
