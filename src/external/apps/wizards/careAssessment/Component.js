@@ -5,7 +5,7 @@ import { ifProp } from 'styled-tools';
 
 import { size, assetPath, palette, key } from 'sly/components/themes';
 import { Button, Hr, Heading, Image, Logo } from 'sly/components/atoms';
-import { getStepComponent } from 'sly/external/wizards/careAssessment/steps';
+import { getStepComponent } from 'sly/external/apps/wizards/careAssessment/steps';
 
 const progressBarWidth = ({ current, limit }) => (current / limit) * 100;
 
@@ -23,7 +23,8 @@ const CurrentStep = styled.p`
   color: ${ifProp('limitReached', palette('secondary', 'base'), 'initial')};
 `;
 const StyledForm = styled.form`
-  margin-bottom: calc(${size('spacing.huge')} + ${size('spacing.xxxLarge')});
+  // should be more than height of BottomWrapper
+  margin-bottom: calc(2 * ${size('spacing.massive')} + ${size('spacing.xxLarge')});
 `;
 const Wrapper = styled.div`
   padding: ${size('spacing.large')} ${size('spacing.xxLarge')} 0 ${size('spacing.xxLarge')};
@@ -39,6 +40,7 @@ const ButtonsWrapper = styled.div`
 const StyledHr = styled(Hr)`
   margin-left: -${size('spacing.xxLarge')};
   margin-right: -${size('spacing.xxLarge')};
+  margin-top: 0;
 `;
 const BottomWrapper = styled.div`
   // parent elements will have transform; hence this will behave like fixed.
@@ -47,9 +49,10 @@ const BottomWrapper = styled.div`
   position: absolute;
   width: 100%;
   background-color: ${palette('white', 'base')};
-  padding-bottom: ${size('spacing.xLarge')};
   bottom: 0;
-  right: ${size('spacing.xxLarge')};
+  right: 0;
+  padding: ${size('spacing.xxLarge')};
+  padding-top: 0;
 `;
 const StyledHeading = styled(Heading)`
   font-weight: normal;

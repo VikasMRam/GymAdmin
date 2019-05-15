@@ -4,7 +4,7 @@ import { middleware as thunkMiddleware } from 'redux-saga-thunk';
 import { createLogger } from 'redux-logger';
 
 import { middleware as beesMiddleware } from 'sly/services/newApi';
-import reducer from 'sly/external/wizards/store/reducer';
+import reducer from 'sly/external/apps/store/reducer';
 import sagas from 'sly/store/resource/sagas';
 import { isDev, isBrowser } from 'sly/config';
 

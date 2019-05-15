@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { Field } from 'redux-form';
 
 import TosAndPrivacy from 'sly/components/molecules/TosAndPrivacy';
-import LeadFound from 'sly/external/wizards/careAssessment/steps/LeadFound';
+import LeadFound from 'sly/external/apps/wizards/careAssessment/steps/LeadFound';
 
 const wrap = (props = {}) => shallow(<LeadFound {...props} />);
 

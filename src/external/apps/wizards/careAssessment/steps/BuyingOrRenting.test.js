@@ -1,16 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import CareNeeds from 'sly/external/wizards/careAssessment/steps/CareNeeds';
+import BuyingOrRenting from 'sly/external/apps/wizards/careAssessment/steps/BuyingOrRenting';
 
-const wrap = (props = {}) => shallow(<CareNeeds {...props} />);
+const wrap = (props = {}) => shallow(<BuyingOrRenting {...props} />);
 
-describe('CareNeeds', () => {
+describe('BuyingOrRenting', () => {
   it('renders', () => {
     const wrapper = wrap();
 
     expect(wrapper.find('PaddedHeading')).toHaveLength(1);
-    expect(wrapper.find('Description')).toHaveLength(1);
     expect(wrapper.find('StyledField')).toHaveLength(1);
   });
 });
