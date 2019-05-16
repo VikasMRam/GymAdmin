@@ -33,6 +33,14 @@ const StyledMediaGallery = styled(MediaGallery)`
     border-top-left-radius: ${size('spacing.small')};
     border-top-right-radius: ${size('spacing.small')};
   }
+  ${p => p.layout === 'column' && css`
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      img {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+  `}
 `;
 
 const StyledImage = styled(Image)`
@@ -40,6 +48,14 @@ const StyledImage = styled(Image)`
     border-top-left-radius: ${size('spacing.small')};
     border-top-right-radius: ${size('spacing.small')};
   }
+  ${p => p.layout === 'column' && css`
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      img {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+  `}
 `;
 
 const StyledBox = styled(Box)`
@@ -50,7 +66,8 @@ const StyledBox = styled(Box)`
   ${p => p.layout === 'column' && css`
     // required for text clipping
     overflow: hidden;
-    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   `}
 `;
 
@@ -98,10 +115,12 @@ const CommunityTile = ({
           topRightSection={topRightSection}
           onSlideChange={onSlideChange}
           currentSlide={currentSlide}
+          layout={layout}
         />
       }
       {noGallery &&
         <StyledImage
+          layout={layout}
           src={imageUrl || mainImage}
           aspectRatio={layout === 'column' ? '4:3' : '16:9'}
         />
