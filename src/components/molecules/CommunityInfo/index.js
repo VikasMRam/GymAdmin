@@ -54,6 +54,10 @@ export default class CommunityInfo extends Component {
     showFloorPlan: bool,
   };
 
+  static defaultProps = {
+    showFloorPlan: true,
+  };
+
   renderEstimatedRate = startingRate => startingRate ? (
     <Rate palette={this.props.inverted ? 'white' : 'primary'} weight="medium">
       Estimated <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
