@@ -24,6 +24,7 @@ const {
   sourceMaps,
   devServer,
   when,
+  optimization,
 } = require('webpack-blocks');
 
 const ChildConfigPlugin = require('./private/webpack/ChildConfigPlugin');
@@ -126,6 +127,7 @@ const base = group([
 
   setOutput({
     filename: '[name].[hash].js',
+    chunkFilename: '[name].[hash].js',
     path: outputPath,
     publicPath: webpackPublicPath,
   }),
@@ -325,7 +327,13 @@ const client = createConfig([
 
   devCORS,
 
-  uglifyJs,
+  // uglifyJs,
+
+  optimization({
+    splitChunks: {
+      chunks: 'all',
+    },
+  }),
 
   addPlugins([
     new AssetsByTypeAndBundlePlugin({

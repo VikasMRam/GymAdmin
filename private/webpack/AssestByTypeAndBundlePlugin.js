@@ -41,9 +41,13 @@ module.exports = class AssetsByTypeAndBundlePlugin {
       const stats = rawStats.toJson({ modules: false });
       const chunks = flatten(sortChunks(stats.chunks).map(chunk => chunk.files));
       let assetsByBundle = cloneDeep(this.options.clientConfigs);
+      writeFileSync('stats.json', JSON.stringify(stats, null, 2));
       Object.entries(stats.assetsByChunkName).forEach(([key, files]) => {
         const assets = flatMap([files]).sort((a, b) => chunks.indexOf(b) - chunks.indexOf(a));
         const clientConfig = assetsByBundle.find(({ bundle }) => bundle === key);
+        if (!clientConfig) {
+          return;
+        }
         if (typeof clientConfig.assets !== 'undefined') {
           throw new Error(`clientConfig.assets already exist for key: ${key}`);
         }
@@ -56,6 +60,9 @@ module.exports = class AssetsByTypeAndBundlePlugin {
       Object.entries(stats.assetsByChunkName).forEach(([key, files]) => {
         const assets = flatMap([files]).sort((a, b) => chunks.indexOf(b) - chunks.indexOf(a));
         const clientConfig = assetsByBundle.find(({ bundle }) => bundle === key);
+        if (!clientConfig) {
+          return;
+        }
         if (clientConfig.isCommon) {
           assetsByBundle.forEach((bundle) => {
             const nassets = {
