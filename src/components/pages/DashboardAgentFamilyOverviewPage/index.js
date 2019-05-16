@@ -1,8 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { arrayOf, object, string } from 'prop-types';
+import { arrayOf, object, string, bool } from 'prop-types';
 
-import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 import { size, palette } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
@@ -15,6 +14,7 @@ import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths'
 
 const SmallScreenSection = styled.div`
   display: block;
+  background-color: ${palette('white.base')};
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: none;
@@ -28,10 +28,6 @@ const BigScreenSection = styled.div`
     display: block;
     background-color: ${palette('white.base')};
   }
-`;
-const ButtonTabsWrapper = styled.div`
-  padding: ${size('spacing.large')};
-  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
 `;
 
 const TableRowCardsWrapper = styled.div`
@@ -64,12 +60,6 @@ const BigScreenPaginationWrapper = styled.div`
   justify-content: center;
 `;
 
-const tabsOptions = [
-  { value: 'Prospects', label: 'Prospects', href: FAMILY_DASHBOARD_FAMILIES_PATH },
-  { value: 'Connected', label: 'Connected', href: `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected` },
-  { value: 'Closed', label: 'Closed', href: `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed` },
-];
-
 const tableHeaderButtons = <TableHeaderButtons />;
 
 const EmptyTextWrapper = styled.div`
@@ -80,63 +70,30 @@ const EmptyTextWrapper = styled.div`
   text-align: center;
 `;
 
-const SmallScreenView = ({
-  mobileContents, paginationParams, paginationString, activeTab, tableEmptyText,
-}) => {
-  const emptyTextComponent = <EmptyTextWrapper><Block palette="grey">{tableEmptyText}</Block></EmptyTextWrapper>;
-  return (
-    <SmallScreenSection>
-      <ButtonTabsWrapper>
-        <MultipleChoice type="singlechoice" orientation="horizontal" buttonKind="tab" options={tabsOptions} value={activeTab} />
-      </ButtonTabsWrapper>
-      {tableHeaderButtons}
-      <TableRowCardsWrapper>
-        {mobileContents.length > 0 && (
-          <Fragment>
-            <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
-            {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
-            <Pagination {...paginationParams} />
-          </Fragment>
-        )}
-        {mobileContents.length === 0 && emptyTextComponent}
-      </TableRowCardsWrapper>
-    </SmallScreenSection>
-  );
+const StyledTabs = styled(Tabs)`
+  > *:nth-child(1) {
+    border-top: 0;
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    > *:nth-child(1) {
+      border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+    }
+  }
+`;
+
+const tabIDLabelMap = {
+  Prospects: 'PROSPECTS',
+  Connected: 'CONNECTED',
+  Closed: 'CLOSED',
 };
 
-SmallScreenView.propTypes = {
-  mobileContents: arrayOf(object),
-  paginationParams: object,
-  paginationString: string,
-  activeTab: string,
-  tableEmptyText: string,
-};
-
-const BigScreenView = ({ tableContents, paginationParams, paginationString }) => (
-  <Fragment>
-    {tableHeaderButtons}
-    <TableSectionWrapper>
-      <TableWrapper>
-        <Table {...tableContents} />
-      </TableWrapper>
-      <BigScreenPaginationWrapper>
-        <Pagination {...paginationParams} />
-      </BigScreenPaginationWrapper>
-      <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
-    </TableSectionWrapper>
-  </Fragment>
-);
-
-BigScreenView.propTypes = {
-  tableContents: object,
-  paginationParams: object,
-  paginationString: string,
-};
+const tabIDs = Object.keys(tabIDLabelMap);
 
 const DashboardAgentFamilyOverviewPage = ({
-  mobileContents, tableContents, pagination, paginationString, activeTab,
+  mobileContents, tableContents, pagination, paginationString, activeTab, showPagination,
 }) => {
-  const { current, total } = pagination;
+  const { current, total, filteredCount } = pagination;
   const paginationParams = {
     current,
     total,
@@ -144,29 +101,68 @@ const DashboardAgentFamilyOverviewPage = ({
     basePath: FAMILY_DASHBOARD_FAMILIES_PATH,
     pageParam: 'page-number',
   };
-  const bigScreenView = (<BigScreenView tableContents={tableContents} paginationParams={paginationParams} paginationString={paginationString} />);
   const { tableEmptyText } = tableContents;
+  const paginationComponent = (showPagination && <Pagination {...paginationParams} />);
+  const bigScreenView = (
+    <Fragment>
+      {tableHeaderButtons}
+      <TableSectionWrapper>
+        <TableWrapper>
+          <Table {...tableContents} />
+        </TableWrapper>
+      </TableSectionWrapper>
+      <BigScreenPaginationWrapper>
+        {paginationComponent}
+      </BigScreenPaginationWrapper>
+      <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
+    </Fragment>
+  );
+  const emptyTextComponent = <EmptyTextWrapper><Block palette="grey">{tableEmptyText}</Block></EmptyTextWrapper>;
+  const smallScreenView = (
+    <Fragment>
+      {tableHeaderButtons}
+      <TableRowCardsWrapper>
+        {mobileContents.length > 0 && (
+          <Fragment>
+            <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
+            {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
+            {paginationComponent}
+          </Fragment>
+        )}
+        {mobileContents.length === 0 && emptyTextComponent}
+      </TableRowCardsWrapper>
+    </Fragment>
+  );
+  let prospectsTabLabel = tabIDLabelMap[tabIDs[0]];
+  let connectedTabLabel = tabIDLabelMap[tabIDs[1]];
+  let closedTabLabel = tabIDLabelMap[tabIDs[2]];
+  if (activeTab === tabIDs[0]) {
+    prospectsTabLabel += ` (${filteredCount})`;
+  } else if (activeTab === tabIDs[1]) {
+    connectedTabLabel += ` (${filteredCount})`;
+  } else if (activeTab === tabIDs[2]) {
+    closedTabLabel += ` (${filteredCount})`;
+  }
+  const tabsViewTemplate = view => (
+    <StyledTabs activeTab={activeTab}>
+      <div id={tabIDs[0]} label={prospectsTabLabel} to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+        {view}
+      </div>
+      <div id={tabIDs[1]} label={connectedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`}>
+        {view}
+      </div>
+      <div id={tabIDs[2]} label={closedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`}>
+        {view}
+      </div>
+    </StyledTabs>
+  );
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
-      <SmallScreenView
-        mobileContents={mobileContents}
-        paginationParams={paginationParams}
-        paginationString={paginationString}
-        activeTab={activeTab}
-        tableEmptyText={tableEmptyText}
-      />
+      <SmallScreenSection>
+        {tabsViewTemplate(smallScreenView)}
+      </SmallScreenSection>
       <BigScreenSection>
-        <Tabs activeTab={activeTab}>
-          <div label="Prospects" to={FAMILY_DASHBOARD_FAMILIES_PATH}>
-            {bigScreenView}
-          </div>
-          <div label="Connected" to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`}>
-            {bigScreenView}
-          </div>
-          <div label="Closed" to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`}>
-            {bigScreenView}
-          </div>
-        </Tabs>
+        {tabsViewTemplate(bigScreenView)}
       </BigScreenSection>
     </DashboardPageTemplate>
   );
@@ -178,6 +174,7 @@ DashboardAgentFamilyOverviewPage.propTypes = {
   pagination: object,
   paginationString: string,
   activeTab: string,
+  showPagination: bool,
 };
 
 DashboardAgentFamilyOverviewPage.defaultProps = {

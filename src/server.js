@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import 'babel-polyfill';
+import '@babel/polyfill';
 import path from 'path';
 import crypto from 'crypto';
 
@@ -268,7 +268,10 @@ app.use(async (req, res, next) => {
   };
 
   try {
-    await store.dispatch(makeApiCall(beesApi.getUser, [{ id: 'me' }])).catch(ignoreUnauthorized);
+    await Promise.all([
+      store.dispatch(makeApiCall(beesApi.getUser, [{ id: 'me' }])).catch(ignoreUnauthorized),
+      store.dispatch(makeApiCall(beesApi.getUuidAux, [{ id: 'me' }])),
+    ]);
   } catch (e) {
     e.message = `Error trying to prefetch user data: ${e.message}`;
     console.log('new user/me error', e);

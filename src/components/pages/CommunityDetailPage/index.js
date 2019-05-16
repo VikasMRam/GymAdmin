@@ -60,6 +60,8 @@ import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFo
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import pad from 'sly/components/helpers/pad';
 
+import CommunityInpageWizardContainer from 'sly/containers/CommunityInpageWizardContainer';
+
 const BackToSearch = styled.div`
   text-align: center
 `;
@@ -113,6 +115,26 @@ const Footer = makeFooter('footer');
 const Wrapper = makeWrapper('div');
 const Gallery = makeGallery('div');
 
+const makeBanner = (profileContacted) => {
+  const requests = Object.entries(profileContacted).reduce((acc, [key, value]) => {
+    if (value) {
+      if (acc.length) acc.push(', ');
+      acc.push(key);
+    }
+    return acc;
+  }, []);
+
+  if (!requests.length) {
+    return null;
+  }
+
+  if (requests.length > 1) {
+    requests[requests.length - 2] = ' and ';
+  }
+
+  return `We have your ${requests.join('')} request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.`;
+};
+
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,
   action,
@@ -142,8 +164,7 @@ export default class CommunityDetailPage extends Component {
     setQueryParams: func,
     onBookATourClick: func,
     onGCPClick: func,
-    isAlreadyTourScheduled: bool,
-    isAlreadyPricingRequested: bool,
+    profileContacted: object.isRequired,
     onToggleAskAgentQuestionModal: func,
     userAction: object,
     onFloorPlanModalToggle: func,
@@ -188,7 +209,7 @@ export default class CommunityDetailPage extends Component {
 
     const modalComponentProps = {
       mainImage,
-      fromEnabled: !user,
+      fromEnabled: !user || !user.email,
       communitySlug: id,
       notifyInfo,
       onSuccess,
@@ -332,7 +353,7 @@ export default class CommunityDetailPage extends Component {
     if (initedUserSave) {
       onUnsaveCommunity(notifyInfo, notifyError);
     } else {
-      showModal(<SaveCommunityContainer slug={id} onDoneButtonClicked={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />);
+      showModal(<SaveCommunityContainer slug={id} onCancelClick={hideModal} onDoneButtonClick={hideModal} notifyInfo={notifyInfo} notifyError={notifyError} />, null, 'noPadding', false);
     }
     onMediaGalleryFavouriteClick();
   };
@@ -352,6 +373,7 @@ export default class CommunityDetailPage extends Component {
       mediaGallerySlideIndex,
       isMediaGalleryFullscreenActive,
       community,
+      profileContacted,
       location,
       onMediaGallerySlideChange,
       onMediaGalleryToggleFullscreen,
@@ -363,11 +385,12 @@ export default class CommunityDetailPage extends Component {
       setQueryParams,
       onBookATourClick,
       onGCPClick,
-      isAlreadyTourScheduled,
-      isAlreadyPricingRequested,
       toggleHowSlyWorksVideoPlaying,
       isHowSlyWorksVideoPlaying,
       history,
+      showModal,
+      hideModal,
+      userAction,
     } = this.props;
 
     const {
@@ -446,14 +469,11 @@ export default class CommunityDetailPage extends Component {
     // TODO: mock as USA until country becomes available
     address.country = 'USA';
 
-    let bannerNotification = null;
-    if (isAlreadyTourScheduled && isAlreadyPricingRequested) {
-      bannerNotification = 'We have received your tour and pricing request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.';
-    } else if (isAlreadyTourScheduled) {
-      bannerNotification = 'We have received your tour request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.';
-    } else if (isAlreadyPricingRequested) {
-      bannerNotification = 'We have received your pricing request. Your Seniorly Partner Agent is checking with this community and will get back to you shortly.';
-    }
+    const bannerNotification = makeBanner(profileContacted);
+    // FIXME: @fonz cleaning this up
+    const isAlreadyPricingRequested = profileContacted.pricing;
+    const isAlreadyTourScheduled = profileContacted.tour;
+
     const { estimatedPriceBase, sortedEstimatedPrice } = calculatePricing(community, rgsAux.estimatedPrice);
 
     const partnerAgent = partnerAgents && partnerAgents.length > 0 ? partnerAgents[0] : null;
@@ -499,7 +519,7 @@ export default class CommunityDetailPage extends Component {
                       palette="warning"
                       title={promoTitle}
                       description={promoDescription}
-                      onLearnMoreClick={() => openAskAgentQuestionModal()}
+                      onLearnMoreClick={() => openAskAgentQuestionModal('incentive')}
                       hasLearnMore
                     />
                   )
@@ -678,6 +698,15 @@ export default class CommunityDetailPage extends Component {
                     />
                   </BottomSection>
                 </TopCollapsibleSection>
+
+                <CommunityInpageWizardContainer
+                  community={community}
+                  showModal={showModal}
+                  hideModal={hideModal}
+                  user={user}
+                  userAction={userAction}
+                />
+
                 <TopCollapsibleSection title={`Questions About ${name}`}>
                   <MainSection>
                     <CommunityQuestionAnswers
@@ -759,6 +788,7 @@ export default class CommunityDetailPage extends Component {
               />
             </Lazy>
           </StyledSection>
+
           {(nearbyCities && nearbyCities.length > 0) &&
             <Wrapper>
               <SeoLinks title={`Top Cities Near ${name}`} links={nearbyCities} />

@@ -1,19 +1,26 @@
-import { get, patch, post, put, destroy } from 'redux-bees';
+import { get, patch, post, put, destroy } from './httpMethods';
 
 // method names should start with `get`, `create`, `update`, `delete`
 // patch is prefered over put as per specification
 export default {
   getUser: { method: get, path: '/platform/users/:id' },
   updateUser: { method: patch, path: '/platform/users/:id' },
+  updateContact: { method: patch, path: '/platforms/contacts/:id' },
+
+  getUuidActions: { method: get, path: '/platform/uuid-actions' },
+  createUuidAction: { method: post, path: '/platform/uuid-actions' },
 
   getUuidAux: { method: get, path: '/platform/uuid-auxes/:id' },
   updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },
-  getUserSaves: { method: get, path: '/marketplace/user-saves' },
 
-  getUserSave: { method: get, path: '/platform/user-saves/:id' },
-  updateUserSave: { method: patch, path: '/platform/user-saves/:id' },
-  createUserSave: { method: post, path: '/platform/user-saves' },
-  createUuidAction: { method: post, path: '/platform/uuid-actions' },
+  createUserShare: { method: post, path: '/platform/user-shares' },
+
+  getUserSaves: { method: get, path: '/marketplace/user-saves' },
+  getUserSave: { method: get, path: '/marketplace/user-saves/:id' },
+  updateUserSave: { method: patch, path: '/marketplace/user-saves/:id' },
+  createUserSave: { method: post, path: '/marketplace/user-saves' },
+  updateOldUserSave: { method: patch, path: '/platform/user-saves/:id' },
+  createOldUserSave: { method: post, path: '/platform/user-saves' },
 
   registerUser: { method: post, path: '/platform/auth/register' },
   loginUser: { method: post, path: '/platform/auth/login' },
@@ -31,11 +38,17 @@ export default {
 
   createQuestion: { method: post, path: '/platform/questions' },
   createRating: { method: post, path: '/platform/ratings' },
+  createAnswer: { method: post, path: '/platform/answers' },
 
   getClients: { method: get, path: '/marketplace/clients' },
   getClient: { method: get, path: '/marketplace/clients/:id' },
   updateClient: { method: patch, path: '/marketplace/clients/:id' },
 
-  getVoiceCalls: {method: get, path: '/platform/communications/voice'},
-  getVoiceCall: {method: get, path: '/platform/communications/voice/:id'},
+
+  getVoiceCalls: {method: get, path: '/platform/communications/voice' },
+  getVoiceCall: {method: get, path: '/platform/communications/voice/:id' },
+
+  createNote: { method: post, path: '/marketplace/notes' },
+  getNotes: { method: get, path: '/marketplace/notes' },
+
 };

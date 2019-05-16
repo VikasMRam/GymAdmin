@@ -24,7 +24,7 @@ const PutFamilyOnPause = ({ onTogglePause, isPaused }) => (
   <Box>
     <Heading size="caption">Put family on Pause</Heading>
     <Wrapper>
-      <Desc palette="grey" size="tiny">Place a family on Pause when you are still working with them but they temporarilly need to pause their search.</Desc>
+      <Desc palette="grey" size="tiny">Place a family on Pause when you are still working with them but they temporarily need to pause their search.</Desc>
       <IconButton
         icon="toggle-off"
         iconSize="regular"

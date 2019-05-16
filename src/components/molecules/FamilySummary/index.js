@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string } from 'prop-types';
+import { string, bool } from 'prop-types';
 
 import pad from 'sly/components/helpers/pad';
 import cursor from 'sly/components/helpers/cursor';
@@ -44,10 +44,10 @@ const SeeMore = cursor(Block);
 SeeMore.displayName = 'SeeMore';
 
 const FamilySummary = ({
-  client, snap, to, className,
+  client, snap, to, className, noHeading,
 }) => (
   <Box snap={snap} className={className}>
-    <PaddedHeading size="body">Summary</PaddedHeading>
+    {!noHeading && <PaddedHeading size="body">Summary</PaddedHeading>}
     <OuterColumWrapper>
       {client.clientInfo && client.clientInfo.name &&
         <ColumWrapper>
@@ -59,6 +59,18 @@ const FamilySummary = ({
         <ColumWrapper>
           <Label palette="grey">Resident name</Label>
           <Block size="caption">{client.uuidAux.uuidInfo.residentInfo.fullName}</Block>
+        </ColumWrapper>
+      }
+      {client.clientInfo && client.clientInfo.phoneNumber &&
+        <ColumWrapper>
+          <Label palette="grey">Phone Number</Label>
+          <StyledLink href={`tel:+1${client.clientInfo.phoneNumber}`}>Click To Call</StyledLink>
+        </ColumWrapper>
+      }
+      {client.clientInfo && client.clientInfo.email &&
+        <ColumWrapper>
+          <Label palette="grey">Email</Label>
+          <StyledLink href={`mailto:${client.clientInfo.email}`}>Click To Send Email</StyledLink>
         </ColumWrapper>
       }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.housingInfo.lookingFor &&
@@ -101,6 +113,11 @@ FamilySummary.propTypes = {
   to: string.isRequired,
   snap: string,
   className: string,
+  noHeading: bool,
+};
+
+FamilySummary.defaultProps = {
+  noHeading: false,
 };
 
 export default FamilySummary;

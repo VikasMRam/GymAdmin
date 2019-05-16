@@ -1,10 +1,11 @@
 import React from 'react';
-import { string, bool, oneOf, number, oneOfType, node } from 'prop-types';
+import { string, bool, oneOf, number, oneOfType, node, array } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Label, Input, Icon } from 'sly/components/atoms';
+import { Label, Input, Icon, Block } from 'sly/components/atoms';
+import textAlign from 'sly/components/helpers/textAlign';
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
 import CommunityChoice from 'sly/components/molecules/CommunityChoice';
@@ -104,6 +105,12 @@ const StyledInputMessage = styled(InputMessage)`
     margin-top: ${ifProp({ wideWidth: true }, 0)};
   }
 `;
+// donot use pad to add margin bottom on input as it well lead to
+// rerender on key stroke that will loose focus
+const CharCount = styled(textAlign(Block, 'right'))`
+  margin-top: ${size('spacing.regular')};
+`;
+CharCount.displayName = 'CharCount';
 
 const Field = ({
   message,
@@ -120,6 +127,7 @@ const Field = ({
   labelRight,
   wideWidth,
   hideValue,
+  showCharacterCount,
   ...props
 }) => {
   const inputProps = {
@@ -135,6 +143,8 @@ const Field = ({
   };
   const InputComponent = getInputComponent(type);
   const renderInputFirst = type === 'checkbox' || type === 'radio';
+  const valueLength = inputProps.value ? inputProps.value.length : 0;
+
   return (
     <Wrapper className={className} wideWidth={wideWidth} row={renderInputFirst}>
       {renderInputFirst && (wideWidth ? <InputBeforeLabelWrapper wideWidth={wideWidth}><InputComponent {...inputProps} /></InputBeforeLabelWrapper> : <InputComponent {...inputProps} />)}
@@ -160,6 +170,9 @@ const Field = ({
       {success &&
         <CheckIcon icon="check" size="regular" palette="green" />
       }
+      {showCharacterCount && inputProps.maxLength &&
+        <CharCount size="tiny" palette={((valueLength / inputProps.maxLength) * 100) > 90 ? 'danger' : 'slate'}>{valueLength}/{inputProps.maxLength}</CharCount>
+      }
     </Wrapper>
   );
 };
@@ -169,6 +182,8 @@ Field.propTypes = {
   value: oneOfType([
     string,
     number,
+    array,
+    bool,
   ]),
   className: string,
   invalid: bool,
@@ -177,6 +192,7 @@ Field.propTypes = {
   message: string,
   hideErrors: bool,
   label: node,
+  showCharacterCount: bool,
   type: oneOf([
     'textarea',
     'select',
@@ -195,6 +211,8 @@ Field.propTypes = {
     'rating',
     'number',
     'iconInput',
+    'hidden',
+    'date',
   ]),
   placeholder: string,
   labelRight: node,

@@ -1,25 +1,18 @@
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
-import produce from 'immer';
-import { getRelationship } from 'redux-bees';
+import immutable from 'object-path-immutable';
+import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
-import { createValidator, required, email, usPhone } from 'sly/services/validation';
+import { createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
 import clientPropType from 'sly/propTypes/client';
-import { query } from 'sly/services/newApi';
+import { query, getRelationship } from 'sly/services/newApi';
 
 const validate = createValidator({
-  name: [required],
-  phone: [required, usPhone],
-  email: [required, email],
-  residentName: [required],
-  lookingFor: [required],
-  gender: [required],
-  preferredLocation: [required],
-  budget: [required],
-  timeToMove: [required],
+  phone: [usPhone, dependentRequired('email', 'Either Phone or Email is required')],
+  email: [email, dependentRequired('phone', 'Either Email or Phone is required')],
 });
 
 const ReduxForm = reduxForm({
@@ -29,6 +22,8 @@ const ReduxForm = reduxForm({
 
 @query('updateClient', 'updateClient')
 
+@query('updateUuidAux', 'updateUuidAux')
+
 @connect((state, props) => ({
   uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
 }))
@@ -36,6 +31,8 @@ const ReduxForm = reduxForm({
 export default class FamilyDetailsFormContainer extends Component {
   static propTypes = {
     updateClient: func.isRequired,
+    updateUuidAux: func.isRequired,
+    notifyInfo: func.isRequired,
     notifyError: func.isRequired,
     client: clientPropType.isRequired,
     rawClient: object,
@@ -44,9 +41,10 @@ export default class FamilyDetailsFormContainer extends Component {
 
   handleSubmit = (data) => {
     const {
-      client, updateClient, rawClient, notifyError, uuidAux,
+      client, updateClient, rawClient, notifyInfo, notifyError, uuidAux, updateUuidAux,
     } = this.props;
     const { id } = client;
+    const { id: uuidID } = uuidAux;
     const {
       name,
       email,
@@ -58,30 +56,51 @@ export default class FamilyDetailsFormContainer extends Component {
       timeToMove,
       preferredLocation,
     } = data;
-
-    return updateClient({ id }, produce(rawClient, (draft) => {
-      const newAux = { ...uuidAux };
-      let locationInfo = {};
-      if (preferredLocation) {
-        const [city, state] = preferredLocation.split(',');
-        locationInfo = {
-          city,
-          state,
-        };
-      }
-      newAux.attributes.uuidInfo.residentInfo.fullName = residentName;
-      newAux.attributes.uuidInfo.residentInfo.gender = gender;
-      newAux.attributes.uuidInfo.financialInfo.maxMonthlyBudget = budget;
-      newAux.attributes.uuidInfo.housingInfo.lookingFor = lookingFor;
-      newAux.attributes.uuidInfo.housingInfo.moveTimeline = timeToMove;
-      newAux.attributes.uuidInfo.locationInfo = locationInfo;
-      draft.attributes.clientInfo.name = name;
-      draft.attributes.clientInfo.email = email;
-      draft.attributes.clientInfo.phoneNumber = phone;
-      draft.relationships.uuidAux = {
-        data: newAux,
+    let locationInfo = {};
+    if (preferredLocation) {
+      const [city, state] = preferredLocation.split(',');
+      locationInfo = {
+        city,
+        state,
       };
-    }))
+    }
+    let newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.clientInfo']));
+    if (name) {
+      newClient.set('attributes.clientInfo.name', name);
+    }
+    if (email || email === '') {
+      newClient.set('attributes.clientInfo.email', email);
+    }
+    if (phone) {
+      newClient.set('attributes.clientInfo.phoneNumber', phone);
+    }
+    newClient = newClient.value();
+    let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
+    if (residentName) {
+      newUuidAux.set('attributes.uuidInfo.residentInfo.fullName', residentName);
+    }
+    if (gender) {
+      newUuidAux.set('attributes.uuidInfo.residentInfo.gender', gender);
+    }
+    if (budget) {
+      newUuidAux.set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', budget);
+    }
+    if (lookingFor) {
+      newUuidAux.set('attributes.uuidInfo.housingInfo.lookingFor', lookingFor);
+    }
+    if (timeToMove) {
+      newUuidAux.set('attributes.uuidInfo.housingInfo.moveTimeline', timeToMove);
+    }
+    if (locationInfo) {
+      newUuidAux.set('attributes.uuidInfo.locationInfo', locationInfo);
+    }
+    newUuidAux = newUuidAux.value();
+
+    return updateClient({ id }, newClient)
+      .then(() => updateUuidAux({ id: uuidID }, newUuidAux))
+      .then(() => {
+        notifyInfo('Family successfully updated.');
+      })
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { body } = r;
@@ -95,7 +114,7 @@ export default class FamilyDetailsFormContainer extends Component {
     const { client, ...props } = this.props;
     const { clientInfo, uuidAux } = client;
     const {
-      name, email, slyMessage, phoneNumber,
+      name, email, slyMessage, phoneNumber = '',
     } = clientInfo;
     const { uuidInfo } = uuidAux;
     const {

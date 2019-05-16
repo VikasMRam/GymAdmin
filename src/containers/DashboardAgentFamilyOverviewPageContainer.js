@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
 import dayjs from 'dayjs';
-import { Redirect } from 'react-router-dom';
 
-import { prefetch } from 'sly/services/newApi';
+import RefreshRedirect from 'sly/components/common/RefreshRedirect';
+import { withUser, prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
+import {FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY} from 'sly/constants/dashboardAppPaths';
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { getStageDetails } from 'sly/services/helpers/stage';
-import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP, FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
   { text: 'Resident Name' },
-  { text: 'Stage', sort: 'asc' },
+  { text: 'Stage' },
   { text: 'Latest Note' },
   { text: 'Date Added' },
 ];
@@ -22,10 +22,10 @@ const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
 const convertClientsToTableContents = (clients) => {
   const contents = clients.map((client) => {
     const {
-      id, clientInfo, uuidAux, stage, createdAt, updatedAt,
+      id, clientInfo, uuidAux, stage, status, createdAt, notes,
     } = client;
     const { level, palette } = getStageDetails(stage);
-    const { name: clientName, slyMessage } = clientInfo;
+    const { name: clientName } = clientInfo;
     const { uuidInfo } = uuidAux;
     let residentName = '';
     if (uuidInfo) {
@@ -34,13 +34,27 @@ const convertClientsToTableContents = (clients) => {
       residentName = fullName;
     }
     const createdAtStr = dayjs(createdAt).format('MM/DD/YYYY');
-    const updatedAtStr = dayjs(updatedAt).format('MM/DD/YYYY');
     const rowItems = [];
-    rowItems.push({ type: 'link', data: { text: clientName, href: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id) } });
-    rowItems.push({ type: 'text', data: { text: residentName } });
-    rowItems.push({ type: 'stage', data: { text: stage, currentStage: level, palette } });
-    rowItems.push({ type: 'doubleLine', data: { firstLine: slyMessage, secondLine: updatedAtStr } });
-    rowItems.push({ type: 'text', data: { text: createdAtStr } });
+    const disabled = status === FAMILY_STATUS_ON_HOLD;
+    const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
+    const pausedType = disabled ? 'textIcon' : 'link';
+    rowItems.push({ type: pausedType, data: { text: clientName, to: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab', ''), ...pausedTd } });
+    rowItems.push({ type: 'text', data: { text: residentName, disabled } });
+    rowItems.push({
+      type: 'stage',
+      data: {
+        text: stage, currentStage: level, palette, disabled,
+      },
+    });
+    if (notes.length > 0) {
+      const latestNote = notes[notes.length - 1];
+      const { title, createdAt } = latestNote;
+      const latestNoteCreatedAtStr = dayjs(createdAt).format('MM/DD/YYYY');
+      rowItems.push({ type: 'doubleLine', data: { firstLine: title, secondLine: latestNoteCreatedAtStr, disabled } });
+    } else {
+      rowItems.push({ type: 'text', data: { text: '', disabled } });
+    }
+    rowItems.push({ type: 'text', data: { text: createdAtStr, disabled } });
     return {
       id,
       rowItems,
@@ -56,19 +70,26 @@ const convertClientsToTableContents = (clients) => {
 const convertClientsToMobileContents = (clients) => {
   const contents = clients.map((client) => {
     const {
-      id, clientInfo, stage, updatedAt,
+      id, clientInfo, stage, status, notes,
     } = client;
     const { level, palette } = getStageDetails(stage);
-    const { name: clientName, slyMessage } = clientInfo;
-    const updatedAtStr = dayjs(updatedAt).format('MM/DD/YYYY');
+    const { name: clientName } = clientInfo;
     const rowItems = [];
-    rowItems.push({ type: 'doubleLine', data: { firstLine: slyMessage, secondLine: updatedAtStr } });
+    const disabled = status === FAMILY_STATUS_ON_HOLD;
+    const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
+    if (notes.length > 0) {
+      const latestNote = notes[notes.length - 1];
+      const { title, createdAt } = latestNote;
+      const latestNoteCreatedAtStr = dayjs(createdAt).format('MM/DD/YYYY');
+      rowItems.push({ type: 'doubleLine', data: { firstLine: title, secondLine: latestNoteCreatedAtStr } });
+    }
     rowItems.push({ type: 'stage', data: { text: stage, currentStage: level, palette } });
     return {
       heading: clientName,
-      href: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id),
+      to: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY),
       id,
       rowItems,
+      ...pausedTd,
     };
   });
   return contents;
@@ -105,6 +126,9 @@ const getPageParams = ({ match, location }) => {
   };
   return getClients(filters);
 })
+
+@withUser
+
 export default class DashboardAgentFamilyOverviewPageContainer extends Component {
   static propTypes = {
     clients: arrayOf(clientPropType),
@@ -116,6 +140,7 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const {
       clients, status, match, location,
     } = this.props;
+
     const params = getPageParams({ match, location });
     const { type } = params;
     const { clients: clientsStatus } = status;
@@ -127,7 +152,7 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
       return <div>Loading...</div>;
     }
     if (clientsError) {
-      return <Redirect to="/" />;
+      return <RefreshRedirect to="/" />;
     }
     if (clients === null) {
       return <div>Loading...</div>;
@@ -144,12 +169,14 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const end = (current * size) + count;
     const paginationRangeString = count > 0 ? `${start}-${end} of` : '';
     const paginationString = `Showing ${paginationRangeString} ${filteredCount} families`;
+    const showPagination = filteredCount > size;
     return (
       <DashboardAgentFamilyOverviewPage
         mobileContents={mobileContents}
         tableContents={tableContents}
         pagination={pagination}
         paginationString={paginationString}
+        showPagination={showPagination}
         activeTab={type}
       />
     );

@@ -16,7 +16,7 @@ import SlyEvent from 'sly/services/helpers/events';
 
 class SearchBoxContainer extends Component {
   static propTypes = {
-    layout: string.isRequired,
+    layout: string,
     address: string,
     location: object,
     changeAddress: func,

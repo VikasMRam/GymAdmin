@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { object, func } from 'prop-types';
-import produce from 'immer';
+import { object, func, arrayOf } from 'prop-types';
+import immutable from 'object-path-immutable';
+import pick from 'lodash/pick';
+import { connect } from 'react-redux';
 
-import { prefetch, query } from 'sly/services/newApi';
+import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
-import { FAMILY_STATUS_ACTIVE } from 'sly/constants/familyDetails';
+import notePropType from 'sly/propTypes/note';
+import { FAMILY_DASHBOARD_FAMILIES_PATH, FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
+import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
+import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
@@ -14,7 +18,19 @@ import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFami
   id: match.params.id,
 }))
 
+@prefetch('notes', 'getNotes', (req, { match }) => req({
+  'filter[commentable_id]': match.params.id,
+}))
+
 @query('updateClient', 'updateClient')
+
+@query('createNote', 'createNote')
+
+@connect(null, (dispatch, { api }) => ({
+  invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
+}))
+
+@withUser
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
@@ -22,7 +38,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     match: object,
     status: object,
     history: object,
-    updateClient: func,
+    updateClient: func.isRequired,
+    createNote: func.isRequired,
+    notes: arrayOf(notePropType),
+    invalidateClients: func,
   };
 
   onRejectSuccess = (hide) => {
@@ -32,13 +51,11 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   onUnPause = (notifyInfo, notifyError) => {
-    const { updateClient, client, status } = this.props;
-    const { id } = client;
-    const { result: rawClient } = status.client;
+    const { setStatusToActive } = this;
+    const { invalidateClients } = this.props;
 
-    return updateClient({ id }, produce(rawClient, (draft) => {
-      draft.attributes.status = FAMILY_STATUS_ACTIVE;
-    }))
+    return setStatusToActive()
+      .then(invalidateClients)
       .then(() => {
         notifyInfo('Family successfully unpaused');
       })
@@ -51,10 +68,67 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       });
   };
 
+  onAddNote = (data, notifyError, notifyInfo, hideModal) => {
+    const {
+      createNote, client, status, invalidateClients,
+    } = this.props;
+    const { id } = client;
+    const { note } = data;
+    const payload = {
+      type: NOTE_RESOURCE_TYPE,
+      attributes: {
+        commentableID: id,
+        commentableType: NOTE_COMMENTABLE_TYPE_CLIENT,
+        body: note,
+      },
+    };
+    const notePromise = () => createNote(payload);
+    const getNotesPromise = () => status.notes.refetch();
+
+    return notePromise()
+      .then(getNotesPromise)
+      .then(invalidateClients)
+      .then(() => {
+        hideModal();
+        notifyInfo('Note successfully added');
+      })
+      .catch((r) => {
+        // TODO: Need to set a proper way to handle server side errors
+        const { body } = r;
+        const errorMessage = body.errors.map(e => e.title).join('. ');
+        console.error(errorMessage);
+        notifyError('Failed to add note. Please try again.');
+      });
+  };
+
+  setStatusToActive = () => {
+    const { updateClient, client, status } = this.props;
+    const { id } = client;
+    const { result: rawClient } = status.client;
+    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status']))
+      .set('attributes.status', FAMILY_STATUS_ACTIVE)
+      .value();
+
+    return updateClient({ id }, newClient);
+  };
+
+  goToFamilyDetails = () => {
+    const { history, client } = this.props;
+    const { id } = client;
+    const path = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
+    history.push(path);
+  };
+
   render() {
-    const { onRejectSuccess, onUnPause } = this;
-    const { client, match, status } = this.props;
+    const { onRejectSuccess, onUnPause, onAddNote } = this;
+
+    const {
+      client, match, status, notes,
+    } = this.props;
+
     const { result: rawClient, meta } = status.client;
+    const { isLoading: clientIsLoading } = status.client;
+    const { isLoading: noteIsLoading } = status.notes;
 
     return (
       <NotificationController>
@@ -74,7 +148,14 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 hideModal={hide}
                 meta={meta}
                 onRejectSuccess={() => onRejectSuccess(hide)}
+                refetchClient={status.client.refetch}
+                refetchNotes={status.notes.refetch}
                 onUnPause={() => onUnPause(notifyInfo, notifyError)}
+                onAddNote={onAddNote}
+                notes={notes}
+                noteIsLoading={noteIsLoading}
+                clientIsLoadig={clientIsLoading}
+                goToFamilyDetails={this.goToFamilyDetails}
               />
             )}
           </ModalController>

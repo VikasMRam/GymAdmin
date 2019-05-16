@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
-import produce from 'immer';
+import immutable from 'object-path-immutable';
+import pick from 'lodash/pick';
 
 import { query } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
@@ -19,26 +20,31 @@ class AcceptAndContactFamilyContainer extends Component {
     rawClient: object,
     notifyError: func.isRequired,
     updateClient: func,
+    refetchClient: func,
+    goToFamilyDetails: func,
   };
 
   state = { contactType: null };
 
   handleUpdateStage = (contactType, next) => {
     const {
-      updateClient, client, rawClient, notifyError,
+      updateClient, client, rawClient, notifyError, refetchClient,
     } = this.props;
     const { id } = client;
+    const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
+    const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.stage']))
+      .set('attributes.stage', contactStatus)
+      .value();
+    const clientPromise = () => refetchClient();
 
-    return updateClient({ id }, produce(rawClient, (draft) => {
-      const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
-      draft.attributes.stage = contactStatus;
-    }))
+    return updateClient({ id }, newClient)
       .then(() => {
         this.setState({
           contactType,
         });
         next();
       })
+      .then(clientPromise)
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { body } = r;
@@ -48,12 +54,17 @@ class AcceptAndContactFamilyContainer extends Component {
       });
   };
 
+  handleAcceptFamilySubmit = () => {
+    const { onCancel, goToFamilyDetails } = this.props;
+    withPreventDefault(onCancel);
+    goToFamilyDetails();
+  }
+
   render() {
     const { handleUpdateStage } = this;
     const { onCancel, client } = this.props;
-    const { clientInfo, admin } = client;
-    const { phoneNumber } = admin;
-    const { email } = clientInfo;
+    const { clientInfo } = client;
+    const { email, phoneNumber } = clientInfo;
     const { contactType } = this.state;
     const detail = {
       type: contactType,
@@ -70,13 +81,13 @@ class AcceptAndContactFamilyContainer extends Component {
               component={AcceptAndContactFamilyForm}
               name="Contact"
               onCancelClick={onCancel}
-              onCallClick={() => handleUpdateStage('phone', next)}
-              onEmailClick={() => handleUpdateStage('email', next)}
+              onCallClick={phoneNumber ? () => handleUpdateStage('phone', next) : null}
+              onEmailClick={email ? () => handleUpdateStage('email', next) : null}
             />
             <WizardStep
               component={AcceptFamilyContactDetails}
               name="Details"
-              handleSubmit={withPreventDefault(onCancel)}
+              handleSubmit={this.handleAcceptFamilySubmit}
               label={contactType === 'phone' ? 'Phone number' : 'Email'}
               detail={detail}
             />

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 
 import DashboardMyProfilePage from 'sly/components/pages/DashboardMyProfilePage';
 import { withUser } from 'sly/services/newApi';
@@ -16,9 +15,6 @@ export default class DashboardMyProfilePageContainer extends Component {
 
   render() {
     const { user } = this.props;
-    if (!user) {
-      return <Redirect to="/" />;
-    }
     const { email, hasPasswordSet } = user;
     const showIncompleteWarning = !email || !hasPasswordSet;
     let warningMessage = null;

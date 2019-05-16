@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import { object, func } from 'prop-types';
 
 import { getDetail } from 'sly/store/selectors';
 import { createValidator, required, email } from 'sly/services/validation';
+import { withUser } from 'sly/services/newApi';
 import GetCurrentAvailabilityForm from 'sly/components/molecules/GetCurrentAvailabilityForm';
 
 const validate = createValidator({
@@ -19,28 +20,24 @@ const ReduxForm = reduxForm({
   validate,
 })(GetCurrentAvailabilityForm);
 
-const GetCurrentAvailabilityFormContainer = ({
-  userDetails, submitExpressConversion,
-}) => {
-  const { email } = userDetails;
-  const initialValues = { email };
+@withUser
 
-  return (
-    <ReduxForm
-      initialValues={initialValues}
-      onSubmit={submitExpressConversion}
-    />
-  );
-};
+export default class GetCurrentAvailabilityFormContainer extends Component {
+  static propTypes = {
+    submitExpressConversion: func.isRequired,
+    user: object,
+  };
 
-GetCurrentAvailabilityFormContainer.propTypes = {
-  submitExpressConversion: func.isRequired,
-  userDetails: object,
-};
+  render() {
+    const { user, submitExpressConversion } = this.props;
+    const { email } = user || {};
+    const initialValues = { email };
 
-const mapStateToProps = state => ({
-  userDetails: (getDetail(state, 'userAction') || {}).userDetails || {},
-});
-
-export default connect(mapStateToProps)(GetCurrentAvailabilityFormContainer);
-
+    return (
+      <ReduxForm
+        initialValues={initialValues}
+        onSubmit={submitExpressConversion}
+      />
+    );
+  }
+}

@@ -3,12 +3,19 @@ import styled from 'styled-components';
 import { shape, arrayOf, string, object } from 'prop-types';
 
 import Th from 'sly/components/molecules/Th';
-import { Td, LinkTd, TextTd, StageTd, DoubleLineTd } from 'sly/components/molecules/Td';
+import { Td, LinkTd, TextTd, StageTd, DoubleLineTd, TextIconTd } from 'sly/components/molecules/Td';
 import { Block } from 'sly/components/atoms';
 
 const Wrapper = styled.table`
   border-collapse: collapse;
   width: 100%;
+  position: relative;
+
+  th:first-child, td:first-child {
+    left: 0;
+    position: sticky;
+    top: auto;
+  }
 `;
 
 const EmptyTextWrapper = styled.div`
@@ -26,17 +33,26 @@ const Table = ({ headings, contents, tableEmptyText }) => {
     const rowComponent = rowItems.map((rowItem) => {
       const { type, data } = rowItem;
       if (type === 'link') {
-        const { href, text } = data;
-        return <LinkTd key={href} href={href} clip>{text}</LinkTd>;
+        const {
+          href, to, text, disabled,
+        } = data;
+        return <LinkTd key={href || to} to={to} href={href} disabled={disabled} clip>{text}</LinkTd>;
       } else if (type === 'text') {
-        const { text } = data;
-        return <TextTd key={text} clip>{text}</TextTd>;
+        const { text, disabled } = data;
+        return <TextTd key={text} disabled={disabled} clip>{text}</TextTd>;
       } else if (type === 'stage') {
-        const { text, currentStage, palette } = data;
-        return <StageTd key={text} text={text} currentStage={currentStage} palette={palette} clip />;
+        const {
+          text, currentStage, palette, disabled,
+        } = data;
+        return <StageTd key={text} text={text} currentStage={currentStage} palette={palette} disabled={disabled} clip />;
       } else if (type === 'doubleLine') {
-        const { firstLine, secondLine } = data;
-        return <DoubleLineTd key={firstLine} firstLine={firstLine} secondLine={secondLine} clip />;
+        const { firstLine, secondLine, disabled } = data;
+        return <DoubleLineTd key={firstLine} firstLine={firstLine} secondLine={secondLine} disabled={disabled} clip />;
+      } else if (type === 'textIcon') {
+        const {
+          href, to, text, disabled, icon, iconPalette,
+        } = data;
+        return <TextIconTd key={href || to} to={to} href={href} disabled={disabled} icon={icon} iconPalette={iconPalette} clip>{text}</TextIconTd>;
       }
       return <Td key={`Td_${id}`} />;
     });

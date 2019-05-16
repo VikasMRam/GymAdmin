@@ -3,6 +3,7 @@ import isInt from 'validator/lib/isInt';
 import isIn from 'validator/lib/isIn';
 import isURL from 'validator/lib/isURL';
 import isMobilePhone from 'validator/lib/isMobilePhone';
+import isFloat from 'validator/lib/isFloat';
 
 const isEmpty = value => value === undefined || value === null || value === '';
 const join = rules => (value, data) =>
@@ -34,6 +35,9 @@ export const url = value => !isEmpty(value) && !isURL(value) && 'Invalid URL';
 
 export const required = value => isEmpty(value) && 'Required field';
 
+export const dependentRequired = (field, errorMessage = `Either this field or ${field} is required`) =>
+  (value, allValues = {}) => isEmpty(value) && isEmpty(allValues[field]) && errorMessage;
+
 export const notZero = value => value === 0 && 'At least one star';
 
 export const notProvided = value => !isEmpty(value) && 'Value should be empty';
@@ -48,8 +52,13 @@ export const maxLength = max => value =>
 
 export const integer = value => !isInt(value) && 'Must be an integer';
 
+export const float = value => !isEmpty(value) && !isFloat(value) && 'Must be a numeric value';
+
 export const usPhone = value =>
   !isEmpty(value) && !isMobilePhone(value.replace(/-/g, ''), 'en-US') && 'Invalid phone number';
+
+export const mmDdYyyyy = value =>
+  !isEmpty(value) && !integer(value.replace(/\//g, '')) && value.replace(/\//g, '').length !== 8 && 'Invalid date';
 
 export const oneOf = values => value =>
   !isIn(value, values) && `Must be one of: ${values.join(', ')}`;

@@ -23,7 +23,7 @@ describe('CommunityPWEstimatedPricingForm', () => {
   });
 
   it('does not render medicaid when medicaidCoverage is passed', () => {
-    const wrapper = wrap({ userDetails: { medicaidCoverage: 'no' } });
+    const wrapper = wrap({ uuidAux: { uuidInfo: { financialInfo: { medicare: 'no' } } } });
 
     expect(wrapper.find('StyledField')).toHaveLength(2);
     expect(wrapper.find(Block).filter({ palette: 'danger' })).toHaveLength(0);

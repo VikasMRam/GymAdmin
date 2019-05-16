@@ -5,7 +5,7 @@ import { func, string, object, shape } from 'prop-types';
 import { withRouter } from 'react-router';
 
 import SlyEvent from 'sly/services/helpers/events';
-import { query } from 'sly/services/newApi';
+import { query, withUser } from 'sly/services/newApi';
 import { ASK_QUESTION } from 'sly/services/api/actions';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
 import {
@@ -14,6 +14,7 @@ import {
   usPhone,
   email,
 } from 'sly/services/validation';
+import userPropType from 'sly/propTypes/user';
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityAskQuestionAgentForm from 'sly/components/organisms/CommunityAskQuestionAgentForm';
 import { getDetail } from 'sly/store/selectors';
@@ -47,6 +48,8 @@ const mapDispatchToProps = dispatch => ({
   clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
 });
 
+@withUser
+
 @withRouter
 
 @connect(
@@ -71,6 +74,7 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
     placeholder: string,
     userAction: object,
     initialValues: object,
+    user: userPropType,
   };
 
   handleOnSubmit = (data) => {
@@ -107,6 +111,8 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
             slug: id,
             question: data.question,
             entityType: 'Property',
+            name: data.full_name,
+            phone: data.phone,
           },
         },
       }),
@@ -128,21 +134,22 @@ export default class CommunityAskQuestionAgentFormContainer extends Component {
 
   render() {
     const {
-      heading, description, agentImageUrl, placeholder, userAction,
+      heading, description, agentImageUrl, placeholder, user,
     } = this.props;
     let { initialValues } = this.props;
-    const { userDetails } = userAction;
-    if (userDetails) {
+
+    if (user) {
       initialValues = {
         ...initialValues,
-        full_name: userDetails.fullName,
-        phone: userDetails.phone,
+        full_name: user.name,
+        phone: user.phoneNumber,
       };
     }
+
     return (
       <ReduxForm
         initialValues={initialValues}
-        userDetails={userDetails}
+        user={user}
         onSubmit={this.handleOnSubmit}
         placeholder={placeholder}
         heading={heading}

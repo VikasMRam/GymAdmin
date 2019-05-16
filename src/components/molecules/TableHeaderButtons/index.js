@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { bool, string } from 'prop-types';
+import { string, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import Input from 'sly/components/atoms/Input';
@@ -11,17 +11,15 @@ const Wrappper = styled.div`
   padding: ${size('spacing.large')};
 `;
 
-const SearchButton = styled(IconButton)`
-  @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    display: none;
-  }
-`;
+// const SearchButton = styled(IconButton)`
+//   @media screen and (min-width: ${size('breakpoint.mobile')}) {
+//     display: none;
+//   }
+// `;
 
 const SearchTextInput = styled(Input)`
-  display: none;
 
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
-    display: block;
     margin-right: ${size('spacing.large')};
   }
 
@@ -52,25 +50,28 @@ const ColumnsButton = styled(IconButton)`
     display: block;
   }
 `;
-const TableHeaderButtons = ({ hasColumnsButton, className }) => {
-  return (
-    <Wrappper className={className}>
-      <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile />
-      <SearchTextInput type="search" placeholder="Type to filter by name" />
-      <RightSideButtons>
-        <SortButton icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>
-        <FilterButton icon="filter" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Filter</FilterButton>
-        {hasColumnsButton &&
-          <ColumnsButton icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>
-        }
-      </RightSideButtons>
-    </Wrappper>
-  );
-};
+
+const TableHeaderButtons = ({
+  onColumnButtonClick, onSortButtonClick, onFilterButtonClick, className,
+}) => (
+  <Wrappper className={className}>
+    {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
+    <SearchTextInput type="search" placeholder="Type to filter by name" />
+    <RightSideButtons>
+      {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
+      {onFilterButtonClick && <FilterButton onClick={onFilterButtonClick} icon="filter" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Filter</FilterButton>}
+      {onColumnButtonClick &&
+        <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>
+      }
+    </RightSideButtons>
+  </Wrappper>
+);
 
 TableHeaderButtons.propTypes = {
-  hasColumnsButton: bool,
+  onColumnButtonClick: func,
   className: string,
+  onSortButtonClick: func,
+  onFilterButtonClick: func,
 };
 
 export default TableHeaderButtons;

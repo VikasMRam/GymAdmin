@@ -42,25 +42,23 @@ const Column = styled.aside`
 `;
 
 const Body = styled.main`
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    padding: ${size('spacing.xLarge')};
-    background-color: ${palette('grey.background')};
-  }
+  background-color: ${palette('grey.background')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    padding: ${size('spacing.xLarge')};
     grid-column: 2 / 2;
     grid-row: 2 / 2;
   }
 `;
 
 const DashboardPage = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
     display: grid;
     grid-template-columns: ${size('element.xxHuge')} auto;
     grid-gap: 0;
@@ -68,7 +66,7 @@ const DashboardPage = styled.div`
   }
 `;
 
-const DashboardPageTemplate = ({ children, activeMenuItem }) => {
+const DashboardPageTemplate = ({ children, activeMenuItem, className }) => {
   const mi = menuItems.map((mi) => {
     if (mi.label === activeMenuItem) {
       mi.active = true;
@@ -81,7 +79,7 @@ const DashboardPageTemplate = ({ children, activeMenuItem }) => {
   });
 
   return (
-    <DashboardPage>
+    <DashboardPage className={className}>
       <Header><HeaderContainer /></Header>
       <Column><DashboardMenu menuItems={mi} /></Column>
       <Body>{children}</Body>
@@ -93,6 +91,7 @@ const DashboardPageTemplate = ({ children, activeMenuItem }) => {
 DashboardPageTemplate.propTypes = {
   children: node,
   activeMenuItem: string.isRequired,
+  className: string,
 };
 
 export default DashboardPageTemplate;

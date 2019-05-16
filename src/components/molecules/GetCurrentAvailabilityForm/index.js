@@ -14,6 +14,7 @@ const TwoColumnWrapper = styled.div`
   margin-bottom: ${size('spacing.regular')};
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     flex-direction: row;
+    align-items: flex-start;
   }
 `;
 const StyledReduxField = styled(ReduxField)`
@@ -27,7 +28,6 @@ const StyledReduxField = styled(ReduxField)`
 
 const GetCurrentAvailabilityForm = ({ handleSubmit, submitting }) => (
   <form onSubmit={handleSubmit}>
-
     <TwoColumnWrapper>
       <Field
         name="email"

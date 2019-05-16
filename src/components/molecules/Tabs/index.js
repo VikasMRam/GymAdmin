@@ -12,28 +12,64 @@ CursorTab.displayName = 'CursorTab';
 
 const TabWrapper = styled.div`
   border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
-  padding-left: 0;
+  border-left: 0;
+  border-right: 0;
+  padding: ${size('spacing.large')};
+  padding-bottom: 0;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    border-top-left-radius: ${size('border.xxLarge')};
+    border-top-right-radius: ${size('border.xxLarge')};
+    border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
+  }
 `;
 
 const TabContent = styled.div`
-  background-color: ${palette('white', 'base')};
-  border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
-  border-top: 0;
+  background-color: inherit;
   height: 100%;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
+    border-top: 0;
+  }
 `;
 
-class Tabs extends Component {
+const getDefaultActiveTab = (children) => {
+  for (let i = 0; i < children.length; ++i) {
+    if (children[i].props.default) {
+      return children[i].props.id;
+    }
+  }
+  return children[0].props.id;
+};
+
+export default class Tabs extends Component {
   static propTypes = {
     children: instanceOf(Array).isRequired,
     activeTab: string,
+    className: string,
+  };
+
+  static getDerivedStateFromProps(props, state) {
+    const activeTab = props.activeTab || state.activeTab;
+    return {
+      ...state,
+      activeTab,
+    };
   }
 
   constructor(props) {
     super(props);
+
     const { children } = this.props;
+
     let { activeTab } = this.props;
+
     if (!activeTab) {
-      activeTab = children[0].props.label;
+      activeTab = getDefaultActiveTab(children);
     }
 
     this.state = {
@@ -41,44 +77,42 @@ class Tabs extends Component {
     };
   }
 
-  onClickTabItem = (tab) => {
-    this.setState({ activeTab: tab });
-  }
+  onClickTabItem = (id) => {
+    this.setState({ activeTab: id });
+  };
 
   render() {
-    const {
-      onClickTabItem,
-      props: {
-        children,
-      },
-      state: {
-        activeTab,
-      },
-    } = this;
+    const { children, className } = this.props;
+    const { activeTab } = this.state;
 
     return (
-      <div>
+      <div className={className}>
         <TabWrapper>
           {children.map((child) => {
-            const { to, label } = child.props;
+            const {
+              to, id, label, tabStyles,
+            } = child.props;
             const tab = (
               <CursorTab
-                active={activeTab === label}
-                key={label}
+                active={activeTab === id}
+                key={id}
                 label={label}
-                onClick={() => onClickTabItem(label)}
+                onClick={() => this.onClickTabItem(id)}
+                tabStyles={tabStyles}
               />
             );
 
             if (to) {
-              return <Link key={label} to={to}>{tab}</Link>;
+              return <Link key={id} to={to}>{tab}</Link>;
             }
+
             return tab;
           })}
         </TabWrapper>
+
         <TabContent>
           {children.map((child) => {
-            if (child.props.label !== activeTab) return undefined;
+            if (child.props.id !== activeTab) return undefined;
             return child.props.children;
           })}
         </TabContent>
@@ -86,5 +120,3 @@ class Tabs extends Component {
     );
   }
 }
-
-export default Tabs;

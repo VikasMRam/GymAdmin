@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, func, bool } from 'prop-types';
+import { string, func, bool, array } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -8,12 +8,15 @@ import Span from 'sly/components/atoms/Span';
 const Wrapper = styled.li`
   display: inline-block;
   list-style: none;
-  padding: ${size('spacing.large')} ${size('spacing.xLarge')};
+  padding-bottom: calc(${size('spacing.large')} - ${size('border.xxLarge')});
+  margin-right: ${size('spacing.xLarge')};
   background-color: ${palette('white', 'base')};
 
   ${p => p.active && css`
     border-bottom: ${size('border', 'xxLarge')} solid ${palette('slate', 'base')};
   `}
+
+  ${p => p.tabStyles}
 `;
 
 class Tab extends Component {
@@ -22,6 +25,7 @@ class Tab extends Component {
     label: string.isRequired,
     onClick: func.isRequired,
     className: string,
+    tabStyles: array,
   };
 
   onClick = () => {
@@ -36,10 +40,11 @@ class Tab extends Component {
         active,
         label,
         className,
+        tabStyles,
       },
     } = this;
 
-    let spanPalette = 'grey';
+    let spanPalette = 'slate';
     let spanVariation = 'filler';
     if (active) {
       spanPalette = 'slate';
@@ -50,6 +55,7 @@ class Tab extends Component {
         onClick={onClick}
         active={active}
         className={className}
+        tabStyles={tabStyles}
       >
         <Span weight="bold" size="tiny" palette={spanPalette} variation={spanVariation}>{label}</Span>
       </Wrapper>

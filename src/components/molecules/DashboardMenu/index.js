@@ -1,5 +1,5 @@
 import React from 'react';
-import { shape, arrayOf, string, func, number } from 'prop-types';
+import { shape, arrayOf, string, number } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -11,13 +11,13 @@ const Wrapper = styled.div`
   display: flex;
   padding: ${size('spacing.large')};
   padding-bottom: 0;
-  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  border-bottom: ${size('border.regular')} solid ${palette('slate', 'stroke')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: block;
     padding: 0;
     padding-top: ${size('spacing.xxLarge')};
-    border-right: ${size('border.regular')} solid ${palette('grey', 'filler')};
+    border-right: ${size('border.regular')} solid ${palette('slate', 'stroke')};
     border-bottom: 0;
   }
 `;
@@ -61,15 +61,7 @@ const NotActiveMenuItem = MenuItem.extend`
 const MenuItemIcon = pad(Icon, 'small');
 MenuItemIcon.displayName = 'MenuItemIcon';
 
-const MenuIcon = styled(Icon)`
-  margin-left: auto;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: none;
-  }
-`;
-
-const DashboardMenu = ({ menuItems, onMenuIconClick }) => {
+const DashboardMenu = ({ menuItems }) => {
   const menuItemComponents = menuItems.map((item) => {
     const ItemComponent = item.active ? ActiveMenuItem : NotActiveMenuItem;
     return (
@@ -84,7 +76,6 @@ const DashboardMenu = ({ menuItems, onMenuIconClick }) => {
   return (
     <Wrapper>
       {menuItemComponents}
-      <MenuIcon icon="menu" onClick={onMenuIconClick} />
     </Wrapper>
   );
 };
@@ -99,7 +90,6 @@ DashboardMenu.propTypes = {
     role: number.isRequired,
     href: string,
   })).isRequired,
-  onMenuIconClick: func,
 };
 
 export default DashboardMenu;

@@ -54,7 +54,6 @@ describe('SearchBox', () => {
     const autocomplete = wrapper.dive().find(PlacesAutocomplete);
 
     expect(autocomplete).toHaveLength(1);
-    expect(autocomplete.dive().find('SearchButton')).toHaveLength(1);
     expect(autocomplete.dive().find('SearchTextBox')).toHaveLength(1);
   });
 
@@ -63,16 +62,14 @@ describe('SearchBox', () => {
     const autocomplete = wrapper.dive().find(PlacesAutocomplete);
 
     expect(autocomplete).toHaveLength(1);
-    expect(autocomplete.dive().find('SearchButton')).toHaveLength(1);
     expect(autocomplete.dive().find('SearchTextBox')).toHaveLength(1);
   });
 
-  it('renders with boxWithoutButton layout', () => {
-    const wrapper = wrap({ layout: 'boxWithoutButton' });
+  it('renders with hasShadow', () => {
+    const wrapper = wrap({ hasShadow: true });
     const autocomplete = wrapper.dive().find(PlacesAutocomplete);
 
     expect(autocomplete).toHaveLength(1);
-    expect(autocomplete.dive().find('SearchButton')).toHaveLength(0);
-    expect(autocomplete.dive().find('SearchTextBox')).toHaveLength(1);
+    expect(autocomplete.dive().find('ShadowedSearchTextBox')).toHaveLength(1);
   });
 });

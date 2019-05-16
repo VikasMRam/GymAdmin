@@ -22,21 +22,21 @@ const StyledField = styled(Field)`
 `;
 
 const CommunityAskQuestionAgentForm = ({
-  heading, description, handleSubmit, pristine, submitting, error, placeholder, userDetails,
+  heading, description, handleSubmit, pristine, submitting, error, placeholder, user,
 }) => (
   <form onSubmit={handleSubmit}>
     <TopSection>
       <Heading level="subtitle" size="subtitle">{heading}</Heading>
       {description && <Block>{description}</Block>}
     </TopSection>
-    {!(userDetails && userDetails.fullName) && <Field
+    {!(user && user.name) && <Field
       name="full_name"
       label="Full name"
       type="text"
       placeholder="Full name"
       component={ReduxField}
     />}
-    {!(userDetails && userDetails.phone) &&
+    {!(user && user.phoneNumber) &&
       <Field
         name="phone"
         label="Phone"

@@ -51,7 +51,7 @@ const LoginForm = ({
   onForgotPasswordClicked,
 }) => (
   <Form onSubmit={handleSubmit}>
-    <StyledHeading>Log in</StyledHeading>
+    <StyledHeading>Sign in</StyledHeading>
     <Field
       name="email"
       label="Email Address"
@@ -75,11 +75,11 @@ const LoginForm = ({
       component={StyledReduxField}
     />
     <StyledButton error={error} type="submit" kind="jumbo" disabled={submitting}>
-      Log in
+      Sign in
     </StyledButton>
     {error && <Block palette="danger">{error}</Block>}
     <StyledHr />
-    <Block>Don&apos;t have an account? <Signup onClick={onSignupClicked}>Sign up</Signup></Block>
+    <Block>Don&apos;t have an account? <Signup onClick={onSignupClicked}>Create an account</Signup></Block>
   </Form>
 );
 

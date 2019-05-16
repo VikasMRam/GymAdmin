@@ -16,7 +16,6 @@ import {
   FAMILY_DASHBOARD_PROFILE_PATH,
   FAMILY_DASHBOARD_FAMILIES_PATH,
   FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
-  FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH,
   ADMIN_DASHBOARD_CALLS_PATH,
   ADMIN_DASHBOARD_CALLS_DETAILS_PATH,
 } from 'sly/constants/dashboardAppPaths';
@@ -61,12 +60,6 @@ export default class App extends Component {
     {
       path: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
       component: DashboardMyFamiliesDetailsPageContainer,
-      exact: true,
-    },
-    {
-      path: FAMILY_DASHBOARD_FAMILIES_DETAILS_TAB_PATH,
-      component: DashboardMyFamiliesDetailsPageContainer,
-      exact: true,
     },
     {
       path: ADMIN_DASHBOARD_CALLS_PATH,
@@ -103,14 +96,13 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          <Router>
+          <Router bailRegex={/^\/(?!dashboard)/} requiresAuth>
             <Switch>
               {App.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
             </Switch>
           </Router>
         </ThemeProvider>
-
         <ChatBoxContainer />
       </Fragment>
     );

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { func, object, bool, number, shape, string } from 'prop-types';
+import { func, object, array, bool, number, shape, string } from 'prop-types';
 import { connect } from 'react-redux';
 import isEqual from 'lodash/isEqual';
+import isMatch from 'lodash/isMatch';
 import omit from 'lodash/omit';
 import { parse as parseSearch } from 'query-string';
+import { Redirect } from 'react-router-dom';
 
 import { withServerState } from 'sly/store';
 import SlyEvent from 'sly/services/helpers/events';
@@ -18,8 +20,6 @@ import { getDetail } from 'sly/store/selectors';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import { getQueryParamsSetter } from 'sly/services/helpers/queryParams';
 import CommunityDetailPage from 'sly/components/pages/CommunityDetailPage';
-import ErrorPage from 'sly/components/pages/Error';
-import { logWarn } from 'sly/services/helpers/logging';
 import {
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_FAILED,
   NOTIFICATIONS_COMMUNITY_REMOVE_FAVORITE_SUCCESS,
@@ -27,7 +27,13 @@ import {
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import { query, prefetch, withAuth, withApi } from 'sly/services/newApi';
-import { PROFILE_VIEWED } from 'sly/services/newApi/constants';
+import {
+  AVAILABILITY_REQUEST,
+  PRICING_REQUEST,
+  PROFILE_CONTACTED,
+  PROFILE_VIEWED,
+  TOUR_BOOKED,
+} from 'sly/services/newApi/constants';
 
 const ignoreSearchParams = [
   'modal',
@@ -38,12 +44,16 @@ const ignoreSearchParams = [
   'modal',
 ];
 
+const createHasProfileAction = uuidActions => (type, actionInfo) => {
+  if (!uuidActions) return false;
+  return uuidActions.some((uuidAction) => {
+    return uuidAction.actionType === type && isMatch(uuidAction.actionInfo, actionInfo);
+  });
+};
+
 const getCommunitySlug = match => match.params.communitySlug;
 
-const mapPropsToActions = ({ match }) => ({
-  community: resourceDetailReadRequest('community', getCommunitySlug(match), {
-    include: 'similar-communities,questions,agents',
-  }),
+const mapPropsToActions = () => ({
   userAction: resourceDetailReadRequest('userAction'),
 });
 
@@ -51,37 +61,9 @@ const mapPropsToActions = ({ match }) => ({
 const mapDispatchToProps = (dispatch, { api, ensureAuthenticated }) => ({
   updateUserSave: (id, data) => ensureAuthenticated(
     'Sign up to add to your favorites list',
-    api.updateUserSave({ id }, data),
+    api.updateOldUserSave({ id }, data),
   ),
 });
-
-const handleResponses = (responses, { location }, redirect) => {
-  const {
-    community,
-    // userAction,
-  } = responses;
-
-  const {
-    pathname,
-  } = location;
-
-  community(null, (error) => {
-    if (error.response) {
-      if (error.response.status === 301) {
-        redirect(replaceLastSegment(pathname, getLastSegment(error.location)));
-        return null;
-      }
-
-      if (error.response.status === 404) {
-        // Not found so redirect to city page
-        redirect(replaceLastSegment(pathname));
-        return null;
-      }
-    }
-
-    return Promise.reject(error);
-  });
-};
 
 const mapStateToProps = (state, {
   match, location, history, userSaves,
@@ -90,12 +72,9 @@ const mapStateToProps = (state, {
   const searchParams = getSearchParams(match, location);
   const communitySlug = getCommunitySlug(match);
   const userSaveOfCommunity = userSaves && userSaves.find(us => us.entityType === COMMUNITY_ENTITY_TYPE && us.entitySlug === communitySlug);
-  console.log({ userSaveOfCommunity });
   const setQueryParams = getQueryParamsSetter(history, location);
 
   return {
-    user: getDetail(state, 'user', 'me'),
-    community: getDetail(state, 'community', communitySlug),
     userAction: getDetail(state, 'userAction') || {},
     userSaveOfCommunity,
     searchParams,
@@ -119,9 +98,14 @@ const mapStateToProps = (state, {
   'filter[entity_slug]': getCommunitySlug(match),
 }))
 
+@prefetch('uuidActions', 'getUuidActions', (req, { match }) => req({
+  'filter[actionType]': `${PROFILE_CONTACTED},${TOUR_BOOKED}`,
+  'filter[actionInfo][slug]': getCommunitySlug(match),
+}))
+
 @withServerState(
   mapPropsToActions,
-  handleResponses,
+  undefined,
   ignoreSearchParams,
 )
 
@@ -130,7 +114,9 @@ const mapStateToProps = (state, {
 export default class CommunityDetailPageContainer extends Component {
   static propTypes = {
     set: func,
+    status: object,
     community: object,
+    uuidActions: array,
     userAction: object,
     userSaveOfCommunity: object,
     errorCode: number,
@@ -411,7 +397,7 @@ export default class CommunityDetailPageContainer extends Component {
     const { updateUserSave, userSaveOfCommunity } = this.props;
     const { id } = userSaveOfCommunity;
 
-    updateUserSave(id, {
+    return updateUserSave(id, {
       status: USER_SAVE_DELETE_STATUS,
     })
       .then(() => {
@@ -435,15 +421,19 @@ export default class CommunityDetailPageContainer extends Component {
 
   render() {
     const {
+      status,
       user,
+      uuidActions,
       community,
       userSaveOfCommunity,
-      serverState,
       history,
       searchParams,
       setQueryParams,
       userAction,
     } = this.props;
+
+    const { location } = history;
+    const { pathname } = location;
 
     const {
       mediaGallerySlideIndex,
@@ -451,27 +441,40 @@ export default class CommunityDetailPageContainer extends Component {
       isHowSlyWorksVideoPlaying,
     } = this.state;
 
-    if (serverState instanceof Error) {
-      const errorCode = (serverState.response && serverState.response.status) || 500;
-      return <ErrorPage errorCode={errorCode} history={history} />;
+    if (status.community.status === 301) {
+      const newSlug = getLastSegment(status.community.headers.location);
+      return <Redirect to={replaceLastSegment(location.pathname, newSlug)} />;
+    }
+
+    if (status.community.status === 404) {
+      return <Redirect to={replaceLastSegment(location.pathname)} />;
     }
 
     if (!community || !userAction) {
-      logWarn(new Error('Empty community or userAction'));
       return null;
     }
 
     // If request url does not match resource url from api, perform 302 redirect
-    const { location } = history;
-    const { pathname } = location;
-    const { url, id } = community;
-    if (pathname !== url) {
-      history.push(url);
+    if (pathname !== community.url) {
+      return <Redirect to={community.url} />;
     }
-    const isAlreadyTourScheduled = userAction && userAction.toursBooked &&
-      !!userAction.toursBooked.find(b => b.slug === id);
-    const isAlreadyPricingRequested = userAction && userAction.profilesContacted &&
-      !!userAction.profilesContacted.find(b => b.slug === id);
+
+    const hasProfileAction = createHasProfileAction(uuidActions, community.id);
+    const profileContacted = {
+      tour: hasProfileAction(TOUR_BOOKED, {
+        slug: community.id,
+      }),
+
+      pricing: hasProfileAction(PROFILE_CONTACTED, {
+        slug: community.id,
+        contactType: PRICING_REQUEST,
+      }),
+
+      availability: hasProfileAction(PROFILE_CONTACTED, {
+        slug: community.id,
+        contactType: AVAILABILITY_REQUEST,
+      }),
+    };
 
     return (
       <NotificationController>
@@ -508,8 +511,7 @@ export default class CommunityDetailPageContainer extends Component {
                 onGCPClick={this.handleGCPClick}
                 onToggleAskAgentQuestionModal={this.handleToggleAskAgentQuestionModal}
                 onToggleAskQuestionModal={this.handleToggleAskQuestionModal}
-                isAlreadyTourScheduled={isAlreadyTourScheduled}
-                isAlreadyPricingRequested={isAlreadyPricingRequested}
+                profileContacted={profileContacted}
                 onFloorPlanModalToggle={this.handleFloorPlanModalToggle}
                 userAction={userAction}
                 toggleHowSlyWorksVideoPlaying={this.handleToggleHowSlyWorksVideoPlaying}

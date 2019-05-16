@@ -137,6 +137,11 @@ ${switchProp('layout', {
 const Body = styled.div`
   padding: ${ifProp('noPadding', 0, size('spacing.xxLarge'))};
   padding-top: 0;
+
+${switchProp('layout', {
+    wizard: css`
+    height: 100%;`,
+  })}
 `;
 
 const Modal = ({
@@ -172,7 +177,7 @@ const Modal = ({
             {closeable && iconClose()}
           </Head>
         )}
-        <Body noPadding={noPadding}>
+        <Body noPadding={noPadding} layout={layout}>
           {children}
         </Body>
       </ModalContext>

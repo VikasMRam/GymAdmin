@@ -75,6 +75,7 @@ const FormSection = StyledSection.extend`
 class AgentsPage extends Component {
   static propTypes = {
     onLocationSearch: func,
+    location: object.isRequired,
   };
 
   constructor(props) {
@@ -85,6 +86,7 @@ class AgentsPage extends Component {
   render() {
     const {
       onLocationSearch,
+      location,
     } = this.props;
     const headerContent = (
       <Fragment>
@@ -100,7 +102,7 @@ class AgentsPage extends Component {
     );
     return (
       <Fragment>
-        {getHelmetForAgentsPage()}
+        {getHelmetForAgentsPage({ location })}
         <TemplateHeader>{headerContent}</TemplateHeader>
         <TemplateContent>
           <StyledSection>
