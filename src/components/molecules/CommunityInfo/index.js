@@ -51,6 +51,11 @@ export default class CommunityInfo extends Component {
   static propTypes = {
     community: communityPropType,
     inverted: bool,
+    showFloorPlan: bool,
+  };
+
+  static defaultProps = {
+    showFloorPlan: true,
   };
 
   renderEstimatedRate = startingRate => startingRate ? (
@@ -81,7 +86,9 @@ export default class CommunityInfo extends Component {
   );
 
   render() {
-    const { community, inverted, ...props } = this.props;
+    const {
+      community, inverted, showFloorPlan, ...props
+    } = this.props;
     const {
       name, webViewInfo, floorPlanString, propInfo, propRatings,
       address, addressString,
@@ -120,7 +127,7 @@ export default class CommunityInfo extends Component {
         .replace(/, ,/g, ', ');
     }
 
-    if (floorPlan) {
+    if (floorPlan && showFloorPlan) {
       const roomTypes = floorPlan.split(',');
       floorPlanComponent = (
         <IconTextWrapper>
