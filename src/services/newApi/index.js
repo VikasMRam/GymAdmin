@@ -16,7 +16,6 @@ export {
   getRequestResult,
   isRequestLoading,
   hasRequestStarted,
-  getRequestError,
   getRequestHeaders,
   getRequestMeta,
   getRequestInfo,
