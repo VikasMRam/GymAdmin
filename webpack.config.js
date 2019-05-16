@@ -195,12 +195,6 @@ const uglifyJs = group([
 // order matters to how the routes are mounted
 const clientConfigs = [
   {
-    bundle: 'vendor',
-    ssr: true,
-    isCommon: true,
-    path: '*',
-  },
-  {
     bundle: 'external',
     ssr: false,
     path: '/external*',
@@ -327,7 +321,7 @@ const client = createConfig([
 
   devCORS,
 
-  // uglifyJs,
+  uglifyJs,
 
   optimization({
     splitChunks: {

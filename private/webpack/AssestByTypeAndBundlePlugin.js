@@ -1,9 +1,6 @@
 const { join, dirname } = require('path');
 const { writeFileSync, existsSync, mkdirSync } = require('fs');
 
-const sortChunks = require('webpack-sort-chunks').default;
-const flatten = require('lodash/flatten');
-const flatMap = require('lodash/flatMap');
 const cloneDeep = require('lodash/cloneDeep');
 
 const getAssetsByType = (
@@ -39,15 +36,14 @@ module.exports = class AssetsByTypeAndBundlePlugin {
     compiler.hooks.done.tap(plugin, (rawStats) => {
       const { output } = compiler.options;
       const stats = rawStats.toJson({ modules: false });
-      const chunks = flatten(sortChunks(stats.chunks).map(chunk => chunk.files));
-      let assetsByBundle = cloneDeep(this.options.clientConfigs);
-      writeFileSync('stats.json', JSON.stringify(stats, null, 2));
-      Object.entries(stats.assetsByChunkName).forEach(([key, files]) => {
-        const assets = flatMap([files]).sort((a, b) => chunks.indexOf(b) - chunks.indexOf(a));
+      const assetsByBundle = cloneDeep(this.options.clientConfigs);
+
+      // writeFileSync('stats.json', JSON.stringify(stats, null, 2));
+
+      // writeFileSync('output.json', JSON.stringify(output, null, 2));
+
+      Object.entries(stats.entrypoints).forEach(([key, { assets }]) => {
         const clientConfig = assetsByBundle.find(({ bundle }) => bundle === key);
-        if (!clientConfig) {
-          return;
-        }
         if (typeof clientConfig.assets !== 'undefined') {
           throw new Error(`clientConfig.assets already exist for key: ${key}`);
         }
@@ -56,27 +52,6 @@ module.exports = class AssetsByTypeAndBundlePlugin {
           css: getAssetsByType(assets, 'css', output.publicPath),
         };
       });
-      // add common chunks
-      Object.entries(stats.assetsByChunkName).forEach(([key, files]) => {
-        const assets = flatMap([files]).sort((a, b) => chunks.indexOf(b) - chunks.indexOf(a));
-        const clientConfig = assetsByBundle.find(({ bundle }) => bundle === key);
-        if (!clientConfig) {
-          return;
-        }
-        if (clientConfig.isCommon) {
-          assetsByBundle.forEach((bundle) => {
-            const nassets = {
-              js: [],
-              css: [],
-            };
-            // order matters: vendor files should be served first
-            nassets.js = [...getAssetsByType(assets, 'js', output.publicPath), ...bundle.assets.js];
-            nassets.css = [...getAssetsByType(assets, 'css', output.publicPath), ...bundle.assets.css];
-            bundle.assets = nassets;
-          });
-        }
-      });
-      assetsByBundle = assetsByBundle.filter(b => !b.isCommon);
 
       ensureDir(this.options.path);
       writeFileSync(this.options.path, JSON.stringify(assetsByBundle, null, 2));
