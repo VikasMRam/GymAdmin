@@ -6,6 +6,7 @@ import { ifProp } from 'styled-tools';
 import { size, assetPath } from 'sly/components/themes';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import cursor from 'sly/components/helpers/cursor';
+import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/constants/communityTile';
 import { Box, Button, Hr, Span, Image } from 'sly/components/atoms';
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
@@ -56,6 +57,7 @@ const StyledImage = styled(Image)`
   }
   ${p => p.layout === 'column' && css`
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      height: 100%;
       img {
         border-top-left-radius: 0;
         border-top-right-radius: 0;
@@ -82,7 +84,7 @@ const Wrapper = styled.div`
   ${p => p.layout === 'column' && css`
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       display: grid;
-      grid-template-columns: ${size('layout.col3')} auto;
+      grid-template-columns: ${COLUMN_LAYOUT_IMAGE_WIDTH} auto;
     }
   `}
 `;
@@ -141,7 +143,7 @@ const CommunityTile = ({
         <StyledImage
           layout={layout}
           src={imageUrl}
-          aspectRatio={layout === 'column' ? '4:3' : '16:9'}
+          aspectRatio={layout === 'column' ? '3:2' : '16:9'}
         />
       }
       <StyledBox layout={layout} padding="large" hasImages={hasImages}>

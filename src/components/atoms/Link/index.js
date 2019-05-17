@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
-import { matchPath } from 'react-router-dom';
-import RRLink from 'react-router-dom/Link';
+import { matchPath, Link as RRLink } from 'react-router-dom';
 import { string, bool } from 'prop-types';
 import { ifNotProp } from 'styled-tools';
 
@@ -14,7 +13,8 @@ const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
 const isLinkToAllowed = (routes, to) => {
-  return routes.some(route => matchPath(to, route));
+  const pathName = to.replace(/(\?|#).*/, '');
+  return routes.some(route => matchPath(pathName, route));
 };
 
 export const styles = css`
