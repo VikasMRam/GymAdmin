@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { arrayOf, bool, string, func, number, shape, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { size, assetPath } from 'sly/components/themes';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import cursor from 'sly/components/helpers/cursor';
 import { Box, Button, Hr, Span, Image } from 'sly/components/atoms';
@@ -11,6 +11,12 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import IconButton from 'sly/components/molecules/IconButton';
+
+const communityDefaultImages = {
+  'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
+  '20 - 51 Beds': assetPath('vectors/Medium_Assisted_Living.svg'),
+  '51 +': assetPath('vectors/Large_Assisted_Living.svg'),
+};
 
 const FullWidthButton = fullWidth(Button);
 FullWidthButton.displayName = 'FullWidthButton';
@@ -93,15 +99,28 @@ const CommunityTile = ({
   layout, showFloorPlan,
 }) => {
   const {
-    name, gallery, imageUrl, mainImage,
+    name, gallery, mainImage, communitySize,
   } = community;
+  let { imageUrl } = community;
+  imageUrl = imageUrl || mainImage;
   const { images = [] } = gallery;
   const galleryImages = images.map((img, i) => ({ ...img, src: img.sd, alt: `${name} ${i + 1}` }));
   const icon = isFavourite ? 'favourite-dark' : 'favourite-empty';
   const iconPalette = isFavourite ? 'secondary' : 'white';
   const onIconClick = isFavourite ? onUnfavouriteClick : onFavouriteClick;
-  const hasImages = galleryImages.length > 0 || imageUrl || mainImage;
-
+  const hasImages = galleryImages.length > 0 || imageUrl;
+  // one image only
+  if (galleryImages.length < 2 && !noGallery) {
+    noGallery = true;
+  }
+  if (!imageUrl || imageUrl.indexOf('maps.googleapis.com/maps/api/streetview') > -1) {
+    /* default image */
+    let key = 'up to 20 Beds';
+    if (communitySize) {
+      key = communitySize;
+    }
+    imageUrl = communityDefaultImages[key];
+  }
   const topRightSection = () => (
     <IconButton transparent icon={icon} iconSize="regular" palette={iconPalette} onClick={onIconClick} />
   );
@@ -121,7 +140,7 @@ const CommunityTile = ({
       {noGallery &&
         <StyledImage
           layout={layout}
-          src={imageUrl || mainImage}
+          src={imageUrl}
           aspectRatio={layout === 'column' ? '4:3' : '16:9'}
         />
       }
