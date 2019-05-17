@@ -29,7 +29,7 @@ describe('Pagination', () => {
     for (let i = 0; i < 5; i += 1) {
       const button = wrapper.childAt(i);
       expect(button.prop('children')).toEqual(i + 1);
-      expect(button.prop('href')).toEqual(i === 0 ? '/test' : `/test?page-number=${i}`);
+      expect(button.prop('to')).toEqual(i === 0 ? '/test' : `/test?page-number=${i}`);
       expect(button.prop('palette')).toEqual(i === 0 ? 'primary' : 'slate');
     }
   });
@@ -39,7 +39,7 @@ describe('Pagination', () => {
     const nextButton = wrapper.childAt(5);
     const nextIcon = nextButton.dive().dive().find(Icon);
     expect(nextIcon.prop('flip')).toEqual(true);
-    expect(nextButton.prop('href')).toEqual('/test?page-number=1');
+    expect(nextButton.prop('to')).toEqual('/test?page-number=1');
   });
 
   it('should render prev button but not next', () => {
@@ -47,7 +47,7 @@ describe('Pagination', () => {
     const prevButton = wrapper.childAt(0);
     const prevIcon = prevButton.dive().dive().find(Icon);
     expect(prevIcon.prop('flip')).toEqual(false);
-    expect(prevButton.prop('href')).toEqual('/test?page-number=3');
+    expect(prevButton.prop('to')).toEqual('/test?page-number=3');
   });
 
   it('should render both next and prev buttons', () => {
@@ -57,13 +57,13 @@ describe('Pagination', () => {
     const prevButton = wrapper.childAt(0);
     const prevIcon = prevButton.dive().dive().find(Icon);
     expect(prevIcon.prop('flip')).toEqual(false);
-    expect(prevButton.prop('href')).toEqual('/test?page-number=2');
+    expect(prevButton.prop('to')).toEqual('/test?page-number=2');
 
 
     const nextButton = wrapper.childAt(6);
     const nextIcon = nextButton.dive().dive().find(Icon);
     expect(nextIcon.prop('flip')).toEqual(true);
-    expect(nextButton.prop('href')).toEqual('/test?page-number=4');
+    expect(nextButton.prop('to')).toEqual('/test?page-number=4');
   });
 
   it('should render elements above range, centers on selected', () => {
@@ -72,7 +72,7 @@ describe('Pagination', () => {
     const first = wrapper.childAt(1);
     expect(first.prop('children')).toEqual(1);
     first.simulate('click');
-    expect(first.prop('href')).toEqual('/test');
+    expect(first.prop('to')).toEqual('/test');
 
     const firstDots = wrapper.childAt(2);
     expect(firstDots.prop('children')).toEqual('...');
@@ -80,18 +80,18 @@ describe('Pagination', () => {
     const fortyNine = wrapper.childAt(3);
     expect(fortyNine.prop('children')).toEqual(49);
     expect(fortyNine.prop('palette')).toEqual('slate');
-    expect(fortyNine.prop('href')).toEqual('/test?page-number=48');
+    expect(fortyNine.prop('to')).toEqual('/test?page-number=48');
 
     const fiftyOne = wrapper.childAt(5);
     expect(fiftyOne.prop('ghost')).toEqual(true);
     expect(fiftyOne.prop('palette')).toEqual('primary');
-    expect(fiftyOne.prop('href')).toEqual('/test?page-number=50');
+    expect(fiftyOne.prop('to')).toEqual('/test?page-number=50');
 
 
     const fiftyThree = wrapper.childAt(7);
     expect(fiftyThree.prop('ghost')).toEqual(true);
     expect(fiftyThree.prop('palette')).toEqual('slate');
-    expect(fiftyThree.prop('href')).toEqual('/test?page-number=52');
+    expect(fiftyThree.prop('to')).toEqual('/test?page-number=52');
 
     const secondDots = wrapper.childAt(8);
     expect(secondDots.prop('children')).toEqual('...');
@@ -99,7 +99,7 @@ describe('Pagination', () => {
     const hundred = wrapper.childAt(9);
     expect(hundred.prop('ghost')).toEqual(true);
     expect(hundred.prop('palette')).toEqual('slate');
-    expect(hundred.prop('href')).toEqual('/test?page-number=99');
+    expect(hundred.prop('to')).toEqual('/test?page-number=99');
   });
 });
 
