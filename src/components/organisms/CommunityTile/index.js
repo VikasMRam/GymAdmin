@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, bool, string, func, number, shape, oneOf } from 'prop-types';
-import { ifProp, switchProp } from 'styled-tools';
+import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
 import fullWidth from 'sly/components/helpers/fullWidth';

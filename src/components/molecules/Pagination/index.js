@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { number, string } from 'prop-types';
+import { number, string, bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -65,16 +65,21 @@ export default class Pagination extends Component {
     range: number.isRequired,
     basePath: string.isRequired,
     pageParam: string.isRequired,
+    className: string,
+    useHref: bool,
   };
 
   static defaultProps = {
     current: 0,
     margin: 1,
     range: 5,
+    useHref: true,
   };
 
   prevButton() {
-    const { current, basePath, pageParam } = this.props;
+    const {
+      current, basePath, pageParam, useHref,
+    } = this.props;
 
     if (current <= 0) return null;
 
@@ -83,17 +88,33 @@ export default class Pagination extends Component {
       delim = '&';
     }
     const prev = current - 1;
+    let linkProps = {
+      href: basePath,
+    };
+    if (!useHref) {
+      linkProps = {
+        to: basePath,
+      };
+    }
     if (prev === 0) {
-      return <ChevronLink href={basePath} />;
+      return <ChevronLink {...linkProps} />;
     }
 
     const prevHref = `${basePath}${delim}${pageParam}=${prev}`;
-    return <ChevronLink href={prevHref} />;
+    linkProps = {
+      href: prevHref,
+    };
+    if (!useHref) {
+      linkProps = {
+        to: prevHref,
+      };
+    }
+    return <ChevronLink {...linkProps} />;
   }
 
   nextButton() {
     const {
-      current, total, basePath, pageParam,
+      current, total, basePath, pageParam, useHref,
     } = this.props;
 
     if (current >= total - 1) return null;
@@ -105,7 +126,15 @@ export default class Pagination extends Component {
 
     const next = current + 1;
     const nextHref = `${basePath}${delim}${pageParam}=${next}`;
-    return <ChevronLink href={nextHref} flip />;
+    let linkProps = {
+      href: nextHref,
+    };
+    if (!useHref) {
+      linkProps = {
+        to: nextHref,
+      };
+    }
+    return <ChevronLink {...linkProps} flip />;
   }
 
   ellipsis = index => (
@@ -120,7 +149,9 @@ export default class Pagination extends Component {
   );
 
   pageButton(index) {
-    const { current, basePath, pageParam } = this.props;
+    const {
+      current, basePath, pageParam, useHref,
+    } = this.props;
     const sel = current === index;
     let delim = '?';
     if (basePath && basePath.indexOf(delim) > -1) {
@@ -132,6 +163,14 @@ export default class Pagination extends Component {
     const borderPalette = sel ? 'primary' : 'slate';
 
     const pageHref = (index === 0) ? basePath : `${basePath}${delim}${pageParam}=${index}`;
+    let linkProps = {
+      href: pageHref,
+    };
+    if (!useHref) {
+      linkProps = {
+        to: pageHref,
+      };
+    }
 
     return (
       <PageLink
@@ -139,9 +178,9 @@ export default class Pagination extends Component {
         key={index}
         ghost
         palette={palette}
-        href={pageHref}
         borderPalette={borderPalette}
         selected={sel}
+        {...linkProps}
       >
         {index + 1}
       </PageLink>
@@ -191,8 +230,10 @@ export default class Pagination extends Component {
   }
 
   render() {
+    const { className } = this.props;
+
     return (
-      <Wrapper>
+      <Wrapper className={className}>
         { this.prevButton() }
         { this.pagination() }
         { this.nextButton() }

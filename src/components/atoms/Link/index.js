@@ -69,7 +69,6 @@ export default class Link extends Component {
   checkPropsForLinks() {
     const { to, ...props } = this.props;
     const { routes } = this.context;
-
     if (to && routes && !isLinkToAllowed(routes, to)) {
       return {
         href: to,
