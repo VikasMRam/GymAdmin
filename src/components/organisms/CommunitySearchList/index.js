@@ -6,6 +6,7 @@ import queryString from 'query-string';
 import theme from 'sly/components/themes/default';
 import { size, gridColumns, assetPath } from 'sly/components/themes';
 import { getPaginationData } from 'sly/services/helpers/pagination';
+import pad from 'sly/components/helpers/pad';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
 import { Image, Centered, Link, Block } from 'sly/components/atoms';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
@@ -42,6 +43,8 @@ const MSCColumnWrapper = styled.div`
     ${gridColumns(3, size('spacing.xLarge'))};
   }
 `;
+
+const PaddedPagination = pad(Pagination, 'small');
 
 const mostSearchedCities = [
   {
@@ -166,7 +169,7 @@ const CommunitySearchList = ({
       {communityList.length > 0 &&
         <Fragment>
           {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-          <Pagination basePath={basePath} pageParam="page-number" current={current} total={total} />
+          <PaddedPagination basePath={basePath} pageParam="page-number" current={current} total={total} />
           <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
         </Fragment>
       }

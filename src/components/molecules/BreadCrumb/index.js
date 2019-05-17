@@ -22,7 +22,7 @@ const Wrapper = styled.nav`
       text-transform: capitalize;
       font-size: ${getSize};
 
-      span:not(:first-child) {
+      > span:not(:first-child) {
         margin: 0 ${size('spacing.regular')};
       }
     }
