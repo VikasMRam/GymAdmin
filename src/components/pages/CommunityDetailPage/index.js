@@ -250,12 +250,12 @@ export default class CommunityDetailPage extends Component {
       showModal, community, user, onToggleAskQuestionModal,
     } = this.props;
     const {
-      id, name, questions, communityFaQs,
+      id, name, questions,
     } = community;
     let questionToAnswer = questions.find(q => q.type === question.type && q.id === question.id);
-    if (!questionToAnswer) {
-      questionToAnswer = communityFaQs.find(communityFaQ => communityFaQ.type === question.type && communityFaQ.id === question.id);
-    }
+    // if (!questionToAnswer) {
+    //   questionToAnswer = communityFaQs.find(communityFaQ => communityFaQ.type === question.type && communityFaQ.id === question.id);
+    // }
     let questionId;
     let contentData;
     let initialValues;
