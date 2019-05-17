@@ -10,7 +10,6 @@ import { size, palette } from 'sly/components/themes';
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: ${size('spacing.regular')}
 `;
 
 const marginLeftNext = css`
@@ -43,7 +42,6 @@ const PageLink = styled(Link)`
  ${buttonStyles};
   background-color: ${ifProp('selected', palette('primary', 'background'))};
   margin-right: ${size('spacing.regular')};
-  margin-bottom: ${size('spacing.regular')};
   &:last-of-type {
     margin-right: 0;
   }
