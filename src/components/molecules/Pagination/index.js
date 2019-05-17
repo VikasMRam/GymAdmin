@@ -10,7 +10,6 @@ import { size, palette } from 'sly/components/themes';
 const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: ${size('spacing.regular')}
 `;
 
 const marginLeftNext = css`
@@ -43,7 +42,6 @@ const PageLink = styled(Link)`
  ${buttonStyles};
   background-color: ${ifProp('selected', palette('primary', 'background'))};
   margin-right: ${size('spacing.regular')};
-  margin-bottom: ${size('spacing.regular')};
   &:last-of-type {
     margin-right: 0;
   }
@@ -65,6 +63,7 @@ export default class Pagination extends Component {
     range: number.isRequired,
     basePath: string.isRequired,
     pageParam: string.isRequired,
+    className: string,
   };
 
   static defaultProps = {
@@ -74,7 +73,9 @@ export default class Pagination extends Component {
   };
 
   prevButton() {
-    const { current, basePath, pageParam } = this.props;
+    const {
+      current, basePath, pageParam,
+    } = this.props;
 
     if (current <= 0) return null;
 
@@ -84,11 +85,11 @@ export default class Pagination extends Component {
     }
     const prev = current - 1;
     if (prev === 0) {
-      return <ChevronLink href={basePath} />;
+      return <ChevronLink to={basePath} />;
     }
 
     const prevHref = `${basePath}${delim}${pageParam}=${prev}`;
-    return <ChevronLink href={prevHref} />;
+    return <ChevronLink to={prevHref} />;
   }
 
   nextButton() {
@@ -105,7 +106,7 @@ export default class Pagination extends Component {
 
     const next = current + 1;
     const nextHref = `${basePath}${delim}${pageParam}=${next}`;
-    return <ChevronLink href={nextHref} flip />;
+    return <ChevronLink to={nextHref} flip />;
   }
 
   ellipsis = index => (
@@ -120,7 +121,9 @@ export default class Pagination extends Component {
   );
 
   pageButton(index) {
-    const { current, basePath, pageParam } = this.props;
+    const {
+      current, basePath, pageParam,
+    } = this.props;
     const sel = current === index;
     let delim = '?';
     if (basePath && basePath.indexOf(delim) > -1) {
@@ -138,8 +141,8 @@ export default class Pagination extends Component {
         kind="label"
         key={index}
         ghost
+        to={pageHref}
         palette={palette}
-        href={pageHref}
         borderPalette={borderPalette}
         selected={sel}
       >
@@ -191,8 +194,10 @@ export default class Pagination extends Component {
   }
 
   render() {
+    const { className } = this.props;
+
     return (
-      <Wrapper>
+      <Wrapper className={className}>
         { this.prevButton() }
         { this.pagination() }
         { this.nextButton() }

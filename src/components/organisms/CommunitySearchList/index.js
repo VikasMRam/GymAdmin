@@ -5,6 +5,8 @@ import queryString from 'query-string';
 
 import theme from 'sly/components/themes/default';
 import { size, gridColumns, assetPath } from 'sly/components/themes';
+import { getPaginationData } from 'sly/services/helpers/pagination';
+import pad from 'sly/components/helpers/pad';
 import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
 import { Image, Centered, Link, Block } from 'sly/components/atoms';
 import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
@@ -32,21 +34,17 @@ const StyledHeading = styled(Heading)`
 const MSCColumnWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
   ${gridColumns(1, size('spacing.xLarge'))};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${gridColumns(2, size('spacing.xLarge'))};
   }
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     ${gridColumns(3, size('spacing.xLarge'))};
   }
 `;
 
-const getPaginationData = requestMeta => ({
-  current: requestMeta['page-number'],
-  total: requestMeta['filtered-count'] / requestMeta['page-size'],
-});
-
+const PaddedPagination = pad(Pagination, 'small');
 
 const mostSearchedCities = [
   {
@@ -171,7 +169,7 @@ const CommunitySearchList = ({
       {communityList.length > 0 &&
         <Fragment>
           {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-          <Pagination basePath={basePath} pageParam="page-number" current={current} total={total} />
+          <PaddedPagination basePath={basePath} pageParam="page-number" current={current} total={total} />
           <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
         </Fragment>
       }

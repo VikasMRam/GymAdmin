@@ -20,7 +20,7 @@ const StyledHr = styled(Hr)`
   margin-right: -${size('spacing.xLarge')};
 `;
 
-const SearchComponent = ({ onLocationSearch, locationInfo }) => (
+const SearchComponent = ({ onLocationSearch, locationInfo, pageNumber }) => (
   <Wrapper>
     <Box>
       <CenteredHeading size="subtitle">Find The Best Assisted Living Near Me</CenteredHeading>
@@ -30,7 +30,7 @@ const SearchComponent = ({ onLocationSearch, locationInfo }) => (
         onLocationSearch={onLocationSearch}
       />
       <StyledHr />
-      <SearchResultsContainer {...locationInfo} />
+      <SearchResultsContainer {...locationInfo} pageNumber={pageNumber} />
     </Box>
   </Wrapper>
 );
@@ -41,6 +41,7 @@ SearchComponent.propTypes = {
     city: string,
     state: string,
   }),
+  pageNumber: string,
 };
 
 export default SearchComponent;

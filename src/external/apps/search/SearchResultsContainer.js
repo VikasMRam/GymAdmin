@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import { arrayOf, object } from 'prop-types';
+import { arrayOf, object, string } from 'prop-types';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 
-// import { size } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import { prefetch } from 'sly/services/newApi';
+import { getPaginationData } from 'sly/services/helpers/pagination';
+import { getCitySearchUrl, getStateAbbr } from 'sly/services/helpers/url';
 import textAlign from 'sly/components/helpers/textAlign';
+import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
 import pad from 'sly/components/helpers/pad';
 import shadow from 'sly/components/helpers/shadow';
-import { Block, Link } from 'sly/components/atoms';
+import { Block, Link, Button } from 'sly/components/atoms';
 import CommunityTile from 'sly/components/organisms/CommunityTile';
+import Pagination from 'sly/components/molecules/Pagination';
 
 const CenteredBlock = textAlign(Block);
 
@@ -18,19 +23,43 @@ const StyledCommunityTile = styled(shadow(CommunityTile))`
 
 const PaddedStyledCommunityTile = pad(StyledCommunityTile, 'xLarge');
 
-@prefetch('searchResources', 'getSearchResources', (req, { state, city }) => req({
+const BottomWrapper = styled.div`
+  display: grid;
+  grid-gap: ${size('spacing.large')};
+  align-items: baseline;
+  justify-content: center;
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    grid-template-columns: max-content min-content min-content;
+  }
+`;
+
+const OrBlock = displayOnlyIn(Block, ['tablet', 'laptop']);
+
+const ButtonWrapper = textAlign(styled.div``);
+
+@prefetch('searchResources', 'getSearchResources', (req, { state, city, pageNumber }) => req({
   state,
   city,
+  'page-number': pageNumber,
 }))
+
+@withRouter
 
 export default class SearchResultsContainer extends Component {
   static propTypes = {
     status: object.isRequired,
     searchResources: arrayOf(object),
+    location: object,
+    state: string,
+    city: string,
   };
 
   render() {
-    const { searchResources, status } = this.props;
+    const {
+      searchResources, status, location, city, state,
+    } = this.props;
+    const basePath = location.pathname;
 
     if (!status.searchResources.hasStarted || status.searchResources.isLoading) {
       return (
@@ -45,8 +74,24 @@ export default class SearchResultsContainer extends Component {
       );
     }
 
+    const requestMeta = status.searchResources.meta;
+    const { current, total } = getPaginationData(requestMeta);
+    let searchPath;
+    if (total > 1) {
+      const commProp = {
+        address: {
+          city,
+          state: getStateAbbr(state),
+        },
+        propInfo: {
+          typeCare: searchResources[0].typeCare,
+        },
+      };
+      searchPath = getCitySearchUrl(commProp);
+    }
+
     const communityTiles = searchResources.map((sr, i) => {
-      const ct = i === searchResources.length - 1 ?
+      const ct = i === searchResources.length - 1 && total < 2 ?
         <StyledCommunityTile layout="column" showFloorPlan={false} noGallery community={sr} /> :
         <PaddedStyledCommunityTile layout="column" showFloorPlan={false} noGallery community={sr} />;
       return <Link key={sr.id} href={sr.url} target="_blank">{ct}</Link>;
@@ -55,6 +100,21 @@ export default class SearchResultsContainer extends Component {
     return (
       <section>
         {communityTiles}
+        {total > 1 &&
+          <BottomWrapper>
+            <Pagination
+              basePath={basePath}
+              pageParam="page-number"
+              current={current}
+              total={total}
+              useHref={false}
+            />
+            <OrBlock>or</OrBlock>
+            <ButtonWrapper>
+              <Button href={searchPath} target="_blank">See more on Seniorly</Button>
+            </ButtonWrapper>
+          </BottomWrapper>
+        }
       </section>
     );
   }
