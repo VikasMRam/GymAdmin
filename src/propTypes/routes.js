@@ -4,6 +4,10 @@ import { Component } from 'react';
 export const routes = arrayOf(shape({
   path: string.isRequired,
   component: oneOfType([
+    shape({
+      loadable: func,
+      lazy: func,
+    }),
     instanceOf(Component),
     func,
   ]).isRequired,
