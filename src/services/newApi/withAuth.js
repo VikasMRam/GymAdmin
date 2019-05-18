@@ -50,6 +50,8 @@ export default function withAuth(InnerComponent) {
       const { user, updateUser, status } = this.props;
       const { name, phone, email } = data;
 
+      if (!phone && !email) return Promise.resolve();
+
       if (!user) {
         return this.registerUser({
           name,
