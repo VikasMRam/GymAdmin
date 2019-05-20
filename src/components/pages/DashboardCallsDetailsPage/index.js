@@ -38,14 +38,16 @@ const FamilyDetailsTab = styled.div`
   padding: ${size('spacing.xLarge')};
 `;
 
-const DashboardCallsDetailsPage = ({meta, voiceCall}) => {
+const DashboardCallsDetailsPage = ({ meta, voiceCall }) => {
+  console.log("Saw meta info:",meta);
+  console.log("Saw voicecall info:",voiceCall);
 
   return (
     <Fragment>
       <DashboardTwoColumnTemplate>
 
         <FamilyDetailsTab><ReduxForm {...meta} /></FamilyDetailsTab>
-        <DetailsTab><SearchBoxContainer> </SearchBoxContainer> <Hr /> <DashboardCallDetailsAgentInfoContainer callNumber={voiceCall.toNumber}>Search 2 Container </DashboardCallDetailsAgentInfoContainer> <Hr /> <div>Search 3 Container </div> </DetailsTab>
+        <DetailsTab><SearchBoxContainer> </SearchBoxContainer> <Hr /> <DashboardCallDetailsAgentInfoContainer callNumber={voiceCall.toNumber} /> <Hr /> <div>Search 3 Container </div> </DetailsTab>
       </DashboardTwoColumnTemplate>
     </Fragment>
 
@@ -54,6 +56,7 @@ const DashboardCallsDetailsPage = ({meta, voiceCall}) => {
 
 DashboardCallsDetailsPage.propTypes = {
   meta: object,
+  voiceCall: object,
 };
 
 DashboardCallsDetailsPage.defaultProps = {

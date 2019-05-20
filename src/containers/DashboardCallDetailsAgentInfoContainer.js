@@ -4,8 +4,7 @@ import { prefetch, query } from 'sly/services/newApi';
 import AgentSummary from 'sly/components/molecules/AgentSummary';
 
 
-@query('communities', 'getCommunities', (getCommunities, { callNumber }) => {
-
+@prefetch('communities', 'getCommunities', (getCommunities, { callNumber }) => {
   const filters = {
     'filter[phone]': callNumber,
   };
@@ -17,12 +16,19 @@ export default class DashboardCallDetailsAgentInfoContainer extends Component {
     callNumber: string,
   };
   render() {
-    const { communities } = this.props;
-    console.log( "Seeing props",communities);
+    const { communities, callNumber } = this.props;
 
+    console.log('Seeing Communities inside agent info',communities);
     const meta = { lookingFor: [], gender: [], timeToMove:[], monthlyBudget:[] };
+    const possibleAgents = [];
+
     return (
-      <div>Agent summary</div>
+      <div>
+        <h2> The number was from ${callNumber} </h2>
+        <hr />
+        <possibleAgents />
+      </div>
+
     );
   }
 }

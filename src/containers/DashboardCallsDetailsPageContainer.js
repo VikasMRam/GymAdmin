@@ -15,11 +15,11 @@ export default class DashboardCallsDetailsPageContainer extends Component {
   render() {
     const { voiceCall, match } = this.props;
     console.log("Seeing the voice call id and details here", voiceCall);
-    const meta = { lookingFor: [], gender: [], timeToMove:[], monthlyBudget:[] };
+    const meta = { lookingFor: [], gender: ['Female', 'Male'], timeToMove:['1+ Months'], monthlyBudget:[] };
     // const { result: rawClient, meta } = status.voi;
 
     return (
-      <DashboardCallsDetailsPage meta={meta} voiceCall />
+      <DashboardCallsDetailsPage meta={meta} voiceCall={voiceCall} />
     );
   }
 }
