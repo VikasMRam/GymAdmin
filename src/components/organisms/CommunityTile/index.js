@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { arrayOf, bool, string, func, number, shape, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
+import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size, assetPath } from 'sly/components/themes';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import cursor from 'sly/components/helpers/cursor';
@@ -98,7 +99,7 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
-  layout, showFloorPlan,
+  layout, showFloorPlan, palette,
 }) => {
   const {
     name, gallery, mainImage, communitySize,
@@ -147,7 +148,7 @@ const CommunityTile = ({
         />
       }
       <StyledBox layout={layout} padding="large" hasImages={hasImages}>
-        <StyledCommunityInfo community={community} showFloorPlan={showFloorPlan} marginBottom={!!actionButtons.length} />
+        <StyledCommunityInfo palette={palette} community={community} showFloorPlan={showFloorPlan} marginBottom={!!actionButtons.length} />
         {buildActionButtons(actionButtons)}
         {(note || addNote) && <Hr />}
         {note && <Span size="caption">{note}</Span>}
@@ -178,6 +179,7 @@ CommunityTile.propTypes = {
   noGallery: bool,
   showFloorPlan: bool,
   layout: oneOf(['column', 'row']),
+  palette: palettePropType,
 };
 
 CommunityTile.defaultProps = {

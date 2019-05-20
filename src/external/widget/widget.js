@@ -65,7 +65,8 @@
       utm_source: 'data-seniorly-source',
       utm_medium: 'data-seniorly-medium',
       pixel: 'data-seniorly-pixel',
-      height: 'data-seniorly-height'
+      height: 'data-seniorly-height',
+      palette: 'data-seniorly-palette'
     },
     log: {
       prefix: '[Seniorly Widget]',
