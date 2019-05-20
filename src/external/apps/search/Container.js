@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
 import { DEFAULT_LOCATION_CITY, DEFAULT_LOCATION_STATE } from 'sly/external/constants/search';
 import { getSearchParamFromPlacesResponse } from 'sly/services/helpers/agents';
 import { getSearchParams } from 'sly/services/helpers/search';
-import { parseURLQueryParams } from 'sly/services/helpers/url';
+import { parseURLQueryParams, objectToURLQueryParams } from 'sly/services/helpers/url';
 import { withProps } from 'sly/services/helpers/hocs';
 import SearchComponent from 'sly/external/apps/search/Component';
 
@@ -20,6 +20,7 @@ class Container extends Component {
   static propTypes = {
     searchParams: object,
     queryParams: object,
+    history: func,
   };
 
   state = {
@@ -30,10 +31,15 @@ class Container extends Component {
   };
 
   onLocationSearch = (result) => {
+    const { history, queryParams } = this.props;
     const searchParams = getSearchParamFromPlacesResponse(result);
 
     this.setState({
       locationInfo: searchParams,
+    });
+    queryParams['page-number'] = undefined;
+    history.replace({
+      search: objectToURLQueryParams(queryParams),
     });
   }
 
