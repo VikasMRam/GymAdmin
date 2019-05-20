@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { func, shape, string } from 'prop-types';
 
 import { size } from 'sly/components/themes';
+import { palette as palettePropType } from 'sly/propTypes/palette';
 import textAlign from 'sly/components/helpers/textAlign';
 import pad from 'sly/components/helpers/pad';
 import { Box, Heading, Hr } from 'sly/components/atoms';
@@ -20,7 +21,9 @@ const StyledHr = styled(Hr)`
   margin-right: -${size('spacing.xLarge')};
 `;
 
-const SearchComponent = ({ onLocationSearch, locationInfo, pageNumber }) => (
+const SearchComponent = ({
+  onLocationSearch, locationInfo, pageNumber, palette,
+}) => (
   <Wrapper>
     <Box>
       <CenteredHeading size="subtitle">Find The Best Assisted Living Near Me</CenteredHeading>
@@ -30,7 +33,7 @@ const SearchComponent = ({ onLocationSearch, locationInfo, pageNumber }) => (
         onLocationSearch={onLocationSearch}
       />
       <StyledHr />
-      <SearchResultsContainer {...locationInfo} pageNumber={pageNumber} />
+      <SearchResultsContainer {...locationInfo} pageNumber={pageNumber} palette={palette} />
     </Box>
   </Wrapper>
 );
@@ -42,6 +45,7 @@ SearchComponent.propTypes = {
     state: string,
   }),
   pageNumber: string,
+  palette: palettePropType,
 };
 
 export default SearchComponent;

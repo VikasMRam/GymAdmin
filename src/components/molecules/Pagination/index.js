@@ -3,6 +3,7 @@ import { number, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
+import { palette as palettePropType } from 'sly/propTypes/palette';
 import { Link, Icon } from 'sly/components/atoms';
 import { styles as buttonStyles } from 'sly/components/atoms/Button';
 import { size, palette } from 'sly/components/themes';
@@ -40,7 +41,7 @@ const ChevronLink = styled(({ flip, ...props }) => (
 
 const PageLink = styled(Link)`
  ${buttonStyles};
-  background-color: ${ifProp('selected', palette('primary', 'background'))};
+  background-color: ${ifProp('selected', palette('background'))};
   margin-right: ${size('spacing.regular')};
   &:last-of-type {
     margin-right: 0;
@@ -64,12 +65,14 @@ export default class Pagination extends Component {
     basePath: string.isRequired,
     pageParam: string.isRequired,
     className: string,
+    palette: palettePropType,
   };
 
   static defaultProps = {
     current: 0,
     margin: 1,
     range: 5,
+    palette: 'primary',
   };
 
   prevButton() {
@@ -122,7 +125,7 @@ export default class Pagination extends Component {
 
   pageButton(index) {
     const {
-      current, basePath, pageParam,
+      current, basePath, pageParam, palette: paletteProp,
     } = this.props;
     const sel = current === index;
     let delim = '?';
@@ -130,9 +133,9 @@ export default class Pagination extends Component {
       delim = '&';
     }
     const palette = sel
-      ? 'primary'
+      ? paletteProp
       : 'slate';
-    const borderPalette = sel ? 'primary' : 'slate';
+    const borderPalette = sel ? paletteProp : 'slate';
 
     const pageHref = (index === 0) ? basePath : `${basePath}${delim}${pageParam}=${index}`;
 

@@ -56,7 +56,8 @@ const HIDE_CHATBOX = process.env.HIDE_CHATBOX || false;
 // replacements for widgets.js
 const EXTERNAL_PATH = process.env.EXTERNAL_PATH || '/external';
 const EXTERNAL_ASSET_URL = (isDev ? `${devDomain}external` : `${PUBLIC_PATH}/external`);
-const EXTERNAL_WIZARDS_ROOT_URL = `${HOST}${EXTERNAL_PATH}/wizards`;
+const EXTERNAL_URL = `${HOST}${EXTERNAL_PATH}`;
+const EXTERNAL_DEFAULT_WIDGET_TYPE = 'wizards/caw';
 
 console.info('Using config', JSON.stringify({
   STORYBOOK_GIT_BRANCH,
@@ -74,7 +75,8 @@ console.info('Using config', JSON.stringify({
   SOURCE,
   EXTERNAL_ASSET_URL,
   EXTERNAL_PATH,
-  EXTERNAL_WIZARDS_ROOT_URL,
+  EXTERNAL_URL,
+  EXTERNAL_DEFAULT_WIDGET_TYPE,
   FB_CLIENT_ID,
   GOOGLE_CLIENT_ID,
   MUTE_REDUX_LOGGER,
@@ -257,7 +259,8 @@ if (isDev || isStaging) {
 const replaceExternalConstants = (text) => {
   const replacements = {
     'process.env.EXTERNAL_ASSET_URL': EXTERNAL_ASSET_URL,
-    'process.env.EXTERNAL_WIZARDS_ROOT_URL': EXTERNAL_WIZARDS_ROOT_URL,
+    'process.env.EXTERNAL_URL': EXTERNAL_URL,
+    'process.env.EXTERNAL_DEFAULT_WIDGET_TYPE': EXTERNAL_DEFAULT_WIDGET_TYPE,
     'process.env.CLOSE_ICON_SVG': closeIconSvg,
     'process.env.SLY_ENV': SLY_ENV,
     'process.env.VERSION': VERSION,

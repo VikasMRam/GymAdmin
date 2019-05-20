@@ -23,6 +23,7 @@ theme.palette = {
   danger   : makeColor('#dc3133', ['dark', 'base', 'filler', 'stroke']),
   warning  : makeColor('#f3c150', ['dark', 'base', 'filler', 'stroke']),
   green    : makeColor('#4FB75F', ['dark', 'base', 'filler', 'stroke']),
+  pink     : makeColor('#9A268E', ['dark', 'base', 'filler', 'stroke', 'background']),
 };
 
 //if (isDev) console.table(makeColorTable(theme.palette));

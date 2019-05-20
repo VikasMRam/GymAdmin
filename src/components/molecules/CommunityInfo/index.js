@@ -3,6 +3,7 @@ import { bool } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
 
+import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size } from 'sly/components/themes';
 import { formatRating } from 'sly/services/helpers/rating';
 import { community as communityPropType } from 'sly/propTypes/community';
@@ -52,23 +53,34 @@ export default class CommunityInfo extends Component {
     community: communityPropType,
     inverted: bool,
     showFloorPlan: bool,
+    palette: palettePropType,
   };
 
   static defaultProps = {
     showFloorPlan: true,
   };
 
-  renderEstimatedRate = startingRate => startingRate ? (
-    <Rate palette={this.props.inverted ? 'white' : 'primary'} weight="medium">
-      Estimated <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
-    </Rate>
-  ) : null;
+  renderEstimatedRate = (startingRate) => {
+    const { inverted, palette } = this.props;
+    const paletteProp = palette || (inverted ? 'white' : 'primary');
 
-  renderProviderRate = startingRate => startingRate ? (
-    <Rate palette={this.props.inverted ? 'white' : 'primary'} weight="medium">
-      <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
-    </Rate>
-  ) : null;
+    return startingRate ? (
+      <Rate palette={paletteProp} weight="medium">
+        Estimated <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
+      </Rate>
+    ) : null;
+  };
+
+  renderProviderRate = (startingRate) => {
+    const { inverted, palette } = this.props;
+    const paletteProp = palette || (inverted ? 'white' : 'primary');
+
+    return startingRate ? (
+      <Rate palette={paletteProp} weight="medium">
+        <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
+      </Rate>
+    ) : null;
+  };
 
   renderRate = ({ estimated, startingRate }) => estimated ? (
     this.renderEstimatedRate(startingRate)

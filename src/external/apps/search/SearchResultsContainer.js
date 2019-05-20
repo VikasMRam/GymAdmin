@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
 import { size } from 'sly/components/themes';
+import { NUMBER_OF_RESULTS_PER_PAGE } from 'sly/external/constants/search';
+import { palette as palettePropType } from 'sly/propTypes/palette';
 import { prefetch } from 'sly/services/newApi';
 import { getPaginationData } from 'sly/services/helpers/pagination';
 import { getCitySearchUrl, getStateAbbr } from 'sly/services/helpers/url';
@@ -42,6 +44,7 @@ const ButtonWrapper = textAlign(styled.div``);
   state,
   city,
   'page-number': pageNumber,
+  'page-size': NUMBER_OF_RESULTS_PER_PAGE,
 }))
 
 @withRouter
@@ -53,13 +56,17 @@ export default class SearchResultsContainer extends Component {
     location: object,
     state: string,
     city: string,
+    palette: palettePropType,
   };
 
   render() {
     const {
-      searchResources, status, location, city, state,
+      searchResources, status, location, city, state, palette,
     } = this.props;
-    const basePath = location.pathname;
+    let basePath = location.pathname;
+    if (palette) {
+      basePath += `?palette=${palette}`;
+    }
 
     if (!status.searchResources.hasStarted || status.searchResources.isLoading) {
       return (
@@ -92,8 +99,8 @@ export default class SearchResultsContainer extends Component {
 
     const communityTiles = searchResources.map((sr, i) => {
       const ct = i === searchResources.length - 1 && total < 2 ?
-        <StyledCommunityTile layout="column" showFloorPlan={false} noGallery community={sr} /> :
-        <PaddedStyledCommunityTile layout="column" showFloorPlan={false} noGallery community={sr} />;
+        <StyledCommunityTile palette={palette} layout="column" showFloorPlan={false} noGallery community={sr} /> :
+        <PaddedStyledCommunityTile palette={palette} layout="column" showFloorPlan={false} noGallery community={sr} />;
       return <Link key={sr.id} href={sr.url} target="_blank">{ct}</Link>;
     });
 
@@ -108,10 +115,11 @@ export default class SearchResultsContainer extends Component {
               current={current}
               total={total}
               useHref={false}
+              palette={palette}
             />
             <OrBlock>or</OrBlock>
             <ButtonWrapper>
-              <Button href={searchPath} target="_blank">See more on Seniorly</Button>
+              <Button palette={palette} href={searchPath} target="_blank">See more on Seniorly</Button>
             </ButtonWrapper>
           </BottomWrapper>
         }
