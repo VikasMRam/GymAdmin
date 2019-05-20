@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
 import { size } from 'sly/components/themes';
+import { NUMBER_OF_RESULTS_PER_PAGE } from 'sly/external/constants/search';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { prefetch } from 'sly/services/newApi';
 import { getPaginationData } from 'sly/services/helpers/pagination';
@@ -43,6 +44,7 @@ const ButtonWrapper = textAlign(styled.div``);
   state,
   city,
   'page-number': pageNumber,
+  'page-size': NUMBER_OF_RESULTS_PER_PAGE,
 }))
 
 @withRouter
