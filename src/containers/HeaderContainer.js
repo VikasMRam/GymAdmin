@@ -35,7 +35,8 @@ const defaultMenuItems = (user) => {
   ];
   if (user) {
     const { roleID } = user;
-    if (roleID & PROVIDER_ROLE) { //eslint-disable-line no-bitwise
+    /* eslint-disable-next-line no-bitwise */
+    if (roleID & PROVIDER_ROLE) {
       menuItems.unshift({ name: 'Dashboard', href: '/mydashboard', section: 2 });
     }
   }
@@ -61,10 +62,12 @@ const loggedInMenuItems = (user) => {
   let roleBasedItems = [];
   if (user) {
     const { roleID } = user;
-    if (roleID & CUSTOMER_ROLE) { //eslint-disable-line no-bitwise
+    /* eslint-disable-next-line no-bitwise */
+    if (roleID & CUSTOMER_ROLE) {
       roleBasedItems = customerMenuItems;
     }
-    if (roleID & AGENT_ROLE) { //eslint-disable-line no-bitwise
+    /* eslint-disable-next-line no-bitwise */
+    if (roleID & AGENT_ROLE) {
       roleBasedItems = agentMenuItems;
     }
     roleBasedItems = [...roleBasedItems, { name: 'Log Out', section: 3 }];
