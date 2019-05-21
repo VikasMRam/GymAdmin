@@ -2,6 +2,7 @@ import React, { Fragment, Component } from 'react';
 import { bool } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
+import Dotdotdot from 'react-dotdotdot';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size } from 'sly/components/themes';
@@ -59,6 +60,7 @@ export default class CommunityInfo extends Component {
     community: communityPropType,
     inverted: bool,
     showFloorPlan: bool,
+    showDescription: bool,
     palette: palettePropType,
   };
 
@@ -105,16 +107,20 @@ export default class CommunityInfo extends Component {
 
   render() {
     const {
-      community, inverted, showFloorPlan, ...props
+      community, inverted, showFloorPlan, showDescription, ...props
     } = this.props;
     const {
       name, webViewInfo, floorPlanString, propInfo, propRatings,
       address, addressString,
     } = community;
+    let { description } = community;
     let { numReviews, typeCare = [] } = community;
     let { reviewsValue } = community;
     if (propInfo) {
       ({ typeCare } = propInfo);
+      if (!description) {
+        ({ communityDescription: description } = propInfo);
+      }
     }
     let floorPlanComponent = null;
     let livingTypeComponent = null;
@@ -134,6 +140,7 @@ export default class CommunityInfo extends Component {
       ({ numReviews } = propRatings);
     }
     let formattedAddress = addressString;
+    let addressComponent;
     if (address) {
       const {
         line1, line2, city, state, zip,
@@ -170,14 +177,17 @@ export default class CommunityInfo extends Component {
         </IconTextWrapper>
       );
     }
-    const addressComponent = (
-      <IconTextWrapper>
-        <StyledIcon icon="location" palette={inverted ? 'white' : 'grey'} size="small" />
-        <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
-          {formattedAddress}
-        </Info>
-      </IconTextWrapper>
-    );
+
+    if (formattedAddress) {
+      addressComponent = (
+        <IconTextWrapper>
+          <StyledIcon icon="location" palette={inverted ? 'white' : 'grey'} size="small" />
+          <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
+            {formattedAddress}
+          </Info>
+        </IconTextWrapper>
+      );
+    }
 
     return (
       <Wrapper {...props}>
@@ -192,6 +202,13 @@ export default class CommunityInfo extends Component {
         {addressComponent}
         {livingTypeComponent}
         {floorPlanComponent}
+        {showDescription &&
+          <Block palette={inverted ? 'white' : 'grey'} size="caption">
+            <Dotdotdot clamp={2}>
+              {description}
+            </Dotdotdot>
+          </Block>
+        }
       </Wrapper>
     );
   }
