@@ -10,10 +10,6 @@ import { Box, Heading, Hr } from 'sly/components/atoms';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 import SearchResultsContainer from 'sly/external/apps/search/SearchResultsContainer';
 
-const Wrapper = styled.div`
-  padding: ${size('spacing.large')};
-`;
-
 const CenteredHeading = pad(textAlign(Heading), 'large');
 
 const StyledHr = styled(Hr)`
@@ -24,7 +20,7 @@ const StyledHr = styled(Hr)`
 const SearchComponent = ({
   onLocationSearch, locationInfo, pageNumber, palette,
 }) => (
-  <Wrapper>
+  <div>
     <Box>
       <CenteredHeading size="subtitle">Find The Best Assisted Living Near Me</CenteredHeading>
       <SearchBoxContainer
@@ -35,7 +31,7 @@ const SearchComponent = ({
       <StyledHr />
       <SearchResultsContainer {...locationInfo} pageNumber={pageNumber} palette={palette} />
     </Box>
-  </Wrapper>
+  </div>
 );
 
 SearchComponent.propTypes = {
