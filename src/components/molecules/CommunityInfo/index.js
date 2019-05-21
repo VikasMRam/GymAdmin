@@ -27,6 +27,7 @@ const StyledIcon = styled(Icon)`
 const Rate = styled(Block)`
   margin-right: ${size('spacing.large')};
   margin-bottom: 0;
+  line-height: ${size('lineHeight.minimal')};
 `;
 
 const RatingWrapper = styled(Block)`
@@ -45,7 +46,12 @@ const RatingValue = styled.div`
 `;
 
 const Name = styled(ClampedText)`
+  line-height: ${size('text.title')};
   margin-bottom: ${size('spacing.small')};
+`;
+
+const Info = styled(ClampedText)`
+  line-height: ${size('text.subtitle')};
 `;
 
 export default class CommunityInfo extends Component {
@@ -144,11 +150,11 @@ export default class CommunityInfo extends Component {
       floorPlanComponent = (
         <IconTextWrapper>
           <StyledIcon icon="bed" palette={inverted ? 'white' : 'grey'} size="small" />
-          <ClampedText title={roomTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
+          <Info title={roomTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {roomTypes.map((roomType, i) =>
               <Fragment key={roomType}>{!!i && <Fragment>, </Fragment>}{roomType}</Fragment>)}
-          </ClampedText>
+          </Info>
         </IconTextWrapper>
       );
     }
@@ -156,20 +162,20 @@ export default class CommunityInfo extends Component {
       livingTypeComponent = (
         <IconTextWrapper>
           <StyledIcon icon="hospital" palette={inverted ? 'white' : 'grey'} size="small" />
-          <ClampedText title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
+          <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {livingTypes.map((livingType, i) =>
               <Fragment key={livingType}>{!!i && <Fragment>{i === livingTypes.length - 1 ? ' & ' : ', '}</Fragment>}{livingType}</Fragment>)}
-          </ClampedText>
+          </Info>
         </IconTextWrapper>
       );
     }
     const addressComponent = (
       <IconTextWrapper>
         <StyledIcon icon="location" palette={inverted ? 'white' : 'grey'} size="small" />
-        <ClampedText title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
+        <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
           {formattedAddress}
-        </ClampedText>
+        </Info>
       </IconTextWrapper>
     );
 

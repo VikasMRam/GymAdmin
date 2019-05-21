@@ -68,6 +68,7 @@ const StyledImage = styled(Image)`
 `;
 
 const StyledBox = styled(Box)`
+  border: 0;
   ${p => p.hasImages && css`
     border-top-left-radius: 0;
     border-top-right-radius: 0;
