@@ -13,6 +13,7 @@ import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
+import SlyEvent from 'sly/services/helpers/events';
 
 @prefetch('client', 'getClient', (req, { match }) => req({
   id: match.params.id,
@@ -54,6 +55,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { setStatusToActive } = this;
     const { invalidateClients } = this.props;
 
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'unpause-family',
+      label: 'submit',
+      value: '',
+    });
+
     return setStatusToActive()
       .then(invalidateClients)
       .then(() => {
@@ -65,6 +73,12 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         const errorMessage = body.errors.map(e => e.title).join('. ');
         console.error(errorMessage);
         notifyError('Failed to unpause. Please try again.');
+        SlyEvent.getInstance().sendEvent({
+          category: 'fdetails',
+          action: 'unpause-family',
+          label: 'error',
+          value: '',
+        });
       });
   };
 
@@ -82,6 +96,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         body: note,
       },
     };
+
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'add-note',
+      label: 'submit',
+      value: '',
+    });
     const notePromise = () => createNote(payload);
     const getNotesPromise = () => status.notes.refetch();
 
@@ -98,6 +119,12 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         const errorMessage = body.errors.map(e => e.title).join('. ');
         console.error(errorMessage);
         notifyError('Failed to add note. Please try again.');
+        SlyEvent.getInstance().sendEvent({
+          category: 'fdetails',
+          action: 'add-note',
+          label: 'error',
+          value: '',
+        });
       });
   };
 

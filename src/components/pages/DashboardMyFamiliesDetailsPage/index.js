@@ -33,6 +33,8 @@ import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import PutFamilyOnPause from 'sly/components/molecules/PutFamilyOnPause';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
+import SlyEvent from 'sly/services/helpers/events';
+import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 
 const StyledTabs = styled(Tabs)`
   background-color: ${palette('white', 'base')};
@@ -184,6 +186,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       showModal, hideModal, notifyError, client, rawClient, refetchClient, goToFamilyDetails,
     } = this.props;
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: 'accept-lead',
+      value: '',
+    });
     showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} goToFamilyDetails={goToFamilyDetails} refetchClient={refetchClient} />, null, 'noPadding', false);
   };
 
@@ -191,6 +199,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       meta, showModal, hideModal, notifyError, notifyInfo, client, rawClient, onRejectSuccess,
     } = this.props;
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: 'reject-lead',
+      value: '',
+    });
     const { rejectReasons } = meta;
     showModal(<RejectFamilyContainer onSuccess={onRejectSuccess} reasons={rejectReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
   };
@@ -200,6 +214,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       showModal, hideModal, notifyError, client, rawClient, notifyInfo, meta, refetchClient, refetchNotes,
     } = this.props;
     const { stage, lossReasons } = meta;
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: 'update-stage',
+      value: '',
+    });
     showModal(<UpdateFamilyStageFormContainer refetchClient={refetchClient} refetchNotes={refetchNotes} onSuccess={hideModal} lossReasons={lossReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} nextAllowedStages={stage} onCancel={hideModal} />, null, 'noPadding', false);
   };
 
@@ -209,6 +229,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this.props;
     const { clientInfo } = client;
     const { name } = clientInfo;
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: 'add-note',
+      value: '',
+    });
     const handleSubmit = data => onAddNote(data, notifyError, notifyInfo, hideModal);
 
     showModal(
@@ -228,7 +254,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this.props;
     const { status } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
-
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: isPaused,
+      value: '',
+    });
     if (isPaused) {
       onUnPause();
     } else {
@@ -262,7 +293,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     const getBackLink = (linkText, backLinkHref) => (
-      <Link to={backLinkHref}>
+      <Link to={backLinkHref} onCLick={clickEventHandler('fdetails',linkText)}>
         <BackLinkWrapper>
           <BackArrorIcon icon="arrow-left" size="small" palette="primary" />
           <Span size="caption" palette="primary">{linkText}</Span>

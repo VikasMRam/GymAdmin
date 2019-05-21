@@ -13,6 +13,7 @@ import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required, mmDdYyyyy, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
+import SlyEvent from 'sly/services/helpers/events';
 
 const validate = createValidator({
   stage: [required],
@@ -161,6 +162,13 @@ export default class UpdateFamilyStageFormContainer extends Component {
     }
     newClient = newClient.value();
 
+    SlyEvent.getInstance().sendEvent({
+      category: 'f-details',
+      action: 'stage-change',
+      label: `${this.nextStage.levelGroup}-${this.nextStage.level}`,
+      value: this.nextStage.level,
+    });
+
     return updateClient({ id }, newClient)
       .then(uuidAuxPromise)
       .then(notePromise)
@@ -182,7 +190,14 @@ export default class UpdateFamilyStageFormContainer extends Component {
         const { body } = r;
         const errorMessage = body.errors.map(e => e.title).join('. ');
         console.error(errorMessage);
+        SlyEvent.getInstance().sendEvent({
+          category: 'stg-chng-modal-f-details',
+          action: 'stage-change',
+          label: 'error',
+          value: '',
+        });
         notifyError('Failed to update stage. Please try again.');
+
       });
   };
 
