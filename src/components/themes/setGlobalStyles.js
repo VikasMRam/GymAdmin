@@ -44,6 +44,10 @@ export default function setGlobalStyles() {
       margin: 0;
     }
 
+    body {
+      overflow-x: hidden;
+    }
+
     html * {
       font-family: Azo Sans, Helvetica Neue, Helvetica, Roboto, sans-serif;
       box-sizing: border-box;
