@@ -25,7 +25,7 @@ const SearchComponent = ({
   onLocationSearch, locationInfo, pageNumber, palette,
 }) => (
   <Wrapper>
-    <CenteredHeading size="subtitle">Find The Best Assisted Living Near Me</CenteredHeading>
+    <CenteredHeading size="subtitle">Senior Living Communities Near You</CenteredHeading>
     <SearchBoxContainer
       hasShadow
       clearLocationOnBlur={false}
