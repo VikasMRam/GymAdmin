@@ -293,7 +293,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     const getBackLink = (linkText, backLinkHref) => (
-      <Link to={backLinkHref} onCLick={clickEventHandler('fdetails',linkText)}>
+      <Link to={backLinkHref} onClick={clickEventHandler('fdetails',linkText)}>
         <BackLinkWrapper>
           <BackArrorIcon icon="arrow-left" size="small" palette="primary" />
           <Span size="caption" palette="primary">{linkText}</Span>
