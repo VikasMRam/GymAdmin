@@ -7,13 +7,14 @@ import theme from 'sly/components/themes/default';
 import { size, gridColumns, assetPath } from 'sly/components/themes';
 import { getPaginationData } from 'sly/services/helpers/pagination';
 import pad from 'sly/components/helpers/pad';
-import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
+import shadow from 'sly/components/helpers/shadow';
+import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
 import { Image, Centered, Link, Block } from 'sly/components/atoms';
-import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import Pagination from 'sly/components/molecules/Pagination';
 import Heading from 'sly/components/atoms/Heading';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
+import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
+import CommunityTile from 'sly/components/organisms/CommunityTile';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -22,10 +23,9 @@ const CommunityFilterBarWrapper = styled.div`
     display: block;
   }
 `;
-const StyledLink = styled(Link)`
+const StyledLink = pad(styled(Link)`
   display: block;
-  margin-bottom: ${size('spacing.large')};
-`;
+`, 'xLarge');
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
@@ -45,6 +45,8 @@ const MSCColumnWrapper = styled.div`
 `;
 
 const PaddedPagination = pad(Pagination, 'small');
+
+const ShadowCommunityTile = shadow(CommunityTile);
 
 const mostSearchedCities = [
   {
@@ -124,7 +126,7 @@ const CommunitySearchList = ({
         to={similarProperty.url}
         rel="noopener"
       >
-        <SimilarCommunityTile similarProperty={similarProperty} />
+        <ShadowCommunityTile community={similarProperty} layout="column" imageSize="regular" noGallery showDescription showSeeMoreButtonOnHover />
       </StyledLink>
     );
   });
