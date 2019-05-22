@@ -16,6 +16,7 @@ import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
 import cloneDeep from 'lodash/cloneDeep';
+import { ChunkExtractor } from '@loadable/server'
 
 import { cleanError, logWarn } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';

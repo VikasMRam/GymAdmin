@@ -3,6 +3,7 @@
 const path = require('path');
 const fs = require('fs');
 
+const LoadablePlugin = require('@loadable/webpack-plugin');
 const UglifyJs = require('uglify-es');
 const cssmin = require('cssmin');
 const nodeExternals = require('webpack-node-externals');
@@ -163,7 +164,10 @@ const base = group([
     }),
   ]),
 
-  addPlugins([new webpack.ProgressPlugin()]),
+  addPlugins([
+    new webpack.ProgressPlugin(),
+    new LoadablePlugin(),
+  ]),
 ]);
 
 const devCORS = group([
