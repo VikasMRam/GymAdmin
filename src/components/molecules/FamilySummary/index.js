@@ -65,13 +65,13 @@ const FamilySummary = ({
       {client.clientInfo && client.clientInfo.phoneNumber &&
         <ColumWrapper>
           <Label palette="grey">Phone Number</Label>
-          <StyledLink href={`tel:+1${client.clientInfo.phoneNumber}`} onClick={clickEventHandler('fdetails-summary','phone')} target='_blank'>Click To Call</StyledLink>
+          <StyledLink href={`tel:+1${client.clientInfo.phoneNumber}`} onClick={clickEventHandler('fdetails-summary', 'phone')} target="_blank">Click To Call</StyledLink>
         </ColumWrapper>
       }
       {client.clientInfo && client.clientInfo.email &&
         <ColumWrapper>
           <Label palette="grey">Email</Label>
-          <StyledLink href={`mailto:${client.clientInfo.email}`} onClick={clickEventHandler('fdetails-summary','email')} target='_blank' >Click To Send Email</StyledLink>
+          <StyledLink href={`mailto:${client.clientInfo.email}`} onClick={clickEventHandler('fdetails-summary', 'email')} target="_blank" >Click To Send Email</StyledLink>
         </ColumWrapper>
       }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.housingInfo.lookingFor &&
