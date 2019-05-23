@@ -11,6 +11,7 @@ import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Table from 'sly/components/organisms/Table';
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
+import SlyEvent from 'sly/services/helpers/events';
 
 const SmallScreenSection = styled.div`
   display: block;
@@ -90,6 +91,15 @@ const tabIDLabelMap = {
 
 const tabIDs = Object.keys(tabIDLabelMap);
 
+const onTabClick = (label) => {
+  const event = {
+    category: 'AgentDashboardFamilyOverviewTab',
+    action: 'click',
+    label,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
+
 const DashboardAgentFamilyOverviewPage = ({
   mobileContents, tableContents, pagination, paginationString, activeTab, showPagination,
 }) => {
@@ -133,9 +143,12 @@ const DashboardAgentFamilyOverviewPage = ({
       </TableRowCardsWrapper>
     </Fragment>
   );
-  let prospectsTabLabel = tabIDLabelMap[tabIDs[0]];
-  let connectedTabLabel = tabIDLabelMap[tabIDs[1]];
-  let closedTabLabel = tabIDLabelMap[tabIDs[2]];
+  const prospectsLabel = tabIDLabelMap[tabIDs[0]];
+  const connectedLabel = tabIDLabelMap[tabIDs[1]];
+  const closedLabel = tabIDLabelMap[tabIDs[2]];
+  let prospectsTabLabel = prospectsLabel;
+  let connectedTabLabel = connectedLabel;
+  let closedTabLabel = closedLabel;
   if (activeTab === tabIDs[0]) {
     prospectsTabLabel += ` (${filteredCount})`;
   } else if (activeTab === tabIDs[1]) {
@@ -145,13 +158,13 @@ const DashboardAgentFamilyOverviewPage = ({
   }
   const tabsViewTemplate = view => (
     <StyledTabs activeTab={activeTab}>
-      <div id={tabIDs[0]} label={prospectsTabLabel} to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+      <div id={tabIDs[0]} label={prospectsTabLabel} to={FAMILY_DASHBOARD_FAMILIES_PATH} onClick={() => onTabClick(prospectsLabel)}>
         {view}
       </div>
-      <div id={tabIDs[1]} label={connectedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`}>
+      <div id={tabIDs[1]} label={connectedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`} onClick={() => onTabClick(connectedLabel)}>
         {view}
       </div>
-      <div id={tabIDs[2]} label={closedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`}>
+      <div id={tabIDs[2]} label={closedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`} onClick={() => onTabClick(closedLabel)}>
         {view}
       </div>
     </StyledTabs>

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled, { css } from 'styled-components';
-import { string, arrayOf, shape, object, bool } from 'prop-types';
+import { string, arrayOf, shape, object, bool, func } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
@@ -36,7 +36,7 @@ const StyledHr = styled(Hr)`
 `;
 
 const TableRowCard = ({
-  heading, href, to, id, rowItems, disabled, icon, iconPalette,
+  heading, href, to, id, rowItems, disabled, icon, iconPalette, onHeadingClick,
 }) => {
   const itemsLength = rowItems.length;
   const rowComponent = rowItems.map((rowItem, i) => {
@@ -64,7 +64,7 @@ const TableRowCard = ({
   return (
     <Wrapper disabled={disabled}>
       <HeadingLinkWrapper icon={icon}>
-        <Link href={href} to={to} size="caption" weight="medium">{heading}</Link>
+        <Link href={href} to={to} onClick={onHeadingClick} size="caption" weight="medium">{heading}</Link>
         {icon && <Icon icon={icon} palette={iconPalette} />}
       </HeadingLinkWrapper>
       {rowComponent}
@@ -84,6 +84,7 @@ TableRowCard.propTypes = {
   disabled: bool,
   icon: string,
   iconPalette: string,
+  onHeadingClick: func,
 };
 
 export default TableRowCard;
