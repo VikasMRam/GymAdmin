@@ -9,7 +9,6 @@ import { size } from 'sly/components/themes';
 import { getCitySearchUrl } from 'sly/services/helpers/url';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import SlyEvent from 'sly/services/helpers/events';
-
 import {
   FullScreenWizard,
   makeBody,
@@ -32,6 +31,7 @@ import CommunityPricingWizardWhatToDoNextFormContainer from 'sly/containers/Comm
 import CommunityPricingWizardExploreAffordableOptionsFormContainer
   from 'sly/containers/CommunityPricingWizardExploreAffordableOptionsFormContainer';
 import CommunityBookATourConfirmationPopup from 'sly/components/organisms/CommunityBookATourConfirmationPopup';
+import { hasCCRC } from 'sly/services/helpers/community';
 
 const Header = makeHeader(HeaderContainer);
 
@@ -114,6 +114,8 @@ class PricingWizardPage extends Component {
     sendEvent('careType-changed', id, newCareTypes.toString());
   };
 
+  // This function is called after the step is changed,
+  // goto() is a hack to make the page stay in current step
   handleStepChange = ({
     currentStep, data, goto, doSubmit, openConfirmationModal,
   }) => {
@@ -131,11 +133,20 @@ class PricingWizardPage extends Component {
       }
     }
     if (currentStep === 1 && userHas(['name', 'phoneNumber'])) {
-      goto(3);
+      if (hasCCRC(community)) {
+        goto(1);
+        doSubmit(openConfirmationModal);
+      } else {
+        goto(3);
+      }
     }
     if (currentStep === 2) {
       // Track goal events
       sendEvent('pricing-contact-submitted', id, currentStep);
+      if (hasCCRC(community)) {
+        goto(2);
+        doSubmit(openConfirmationModal);
+      }
     }
   };
 
@@ -241,6 +252,7 @@ class PricingWizardPage extends Component {
                       onRoomTypeChange={handleRoomTypeChange}
                       onCareTypeChange={handleCareTypeChange}
                       uuidAux={uuidAux}
+                      onSubmit={onSubmit}
                     />
                     <WizardStep
                       component={CommunityBookATourContactFormContainer}
@@ -249,6 +261,7 @@ class PricingWizardPage extends Component {
                       user={user}
                       heading={formHeading}
                       subheading={formSubheading}
+                      onSubmit={onSubmit}
                     />
                     <WizardStep
                       component={CommunityPricingWizardWhatToDoNextFormContainer}
