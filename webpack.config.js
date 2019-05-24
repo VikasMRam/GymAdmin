@@ -166,7 +166,6 @@ const base = group([
 
   addPlugins([
     new webpack.ProgressPlugin(),
-    new LoadablePlugin(),
   ]),
 ]);
 
@@ -239,6 +238,7 @@ const server = createConfig([
     new PrependPlugin({
       prepend: () => `global.clientConfigs = require("${clientConfigsPath}");\n`,
     }),
+    new LoadablePlugin({ filename: 'loadable-stats-server.json' }),
   ]),
 
   env('development', [

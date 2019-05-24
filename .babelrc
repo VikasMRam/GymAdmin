@@ -27,7 +27,7 @@
       "displayName": true
     }],
     "@babel/plugin-syntax-dynamic-import",
-    // "@loadable/babel-plugin"
+    "@loadable/babel-plugin"
   ],
   "env": {
     "development": {

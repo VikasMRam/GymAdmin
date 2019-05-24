@@ -32,15 +32,16 @@ import { createApi as createBeesApi } from 'sly/services/newApi';
 import ApiProvider, { makeApiCall } from 'sly/services/newApi/ApiProvider';
 
 const makeAppRenderer = renderedApp => ({
-  store, context, location, sheet,
+  store, context, location, sheet, extractor,
 }) => {
-  const app = sheet.collectStyles((
+  const app = sheet.collectStyles(extractor.collectChunks((
     <Provider store={store}>
       <StaticRouter context={context} location={location}>
         {renderedApp}
       </StaticRouter>
     </Provider>
-  ));
+  )));
+
   return renderToString(app);
 };
 
@@ -289,6 +290,9 @@ app.use(async (req, res, next) => {
 // render
 app.use(async (req, res, next) => {
   const { assets, store } = req.clientConfig;
+
+  const statsFile = path.resolve(process.cwd(), 'dist/public/loadable-stats-server.json');
+  const extractor = new ChunkExtractor({ statsFile });
   const sheet = new ServerStyleSheet();
   const context = {};
   const renderApp = getAppRenderer(req.clientConfig);
@@ -299,6 +303,7 @@ app.use(async (req, res, next) => {
       context,
       location: req.url,
       sheet,
+      extractor,
     });
 
     if (serverState) {
