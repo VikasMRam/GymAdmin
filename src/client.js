@@ -2,11 +2,12 @@
 import '@babel/polyfill';
 import 'react-hot-loader/patch';
 import React from 'react';
-import { render } from 'react-dom';
+import { render, hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ServerStateProvider } from 'react-router-server';
 import Modal from 'react-modal';
+import { loadableReady } from '@loadable/component'
 
 import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';
@@ -35,11 +36,13 @@ const root = document.getElementById('app');
 
 Modal.setAppElement('#app');
 
-render(renderApp(), root);
+loadableReady(() => {
+  hydrate(renderApp(), root);
+});
 
 if (module.hot) {
   module.hot.accept('components/App', () => {
     require('components/App');
-    render(renderApp(), root);
+    hydrate(renderApp(), root);
   });
 }

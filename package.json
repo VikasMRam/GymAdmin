@@ -2,7 +2,7 @@
   "name": "sly-react",
   "version": "0.0.0",
   "private": true,
-  "main": "dist/server",
+  "main": "dist/public/server",
   "sideEffects": false,
   "scripts": {
     "start": "node .",

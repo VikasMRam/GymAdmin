@@ -164,9 +164,7 @@ const base = group([
     }),
   ]),
 
-  addPlugins([
-    new webpack.ProgressPlugin(),
-  ]),
+  addPlugins([new webpack.ProgressPlugin()]),
 ]);
 
 const devCORS = group([
@@ -222,7 +220,7 @@ const server = createConfig([
   entryPoint({ server: serverEntryPath }),
 
   setOutput({
-    filename: '../[name].js',
+    filename: '[name].js',
     libraryTarget: 'commonjs2',
   }),
 
