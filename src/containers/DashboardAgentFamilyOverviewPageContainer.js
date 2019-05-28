@@ -48,9 +48,9 @@ const convertClientsToTableContents = (clients) => {
     });
     if (notes.length > 0) {
       const latestNote = notes[notes.length - 1];
-      const { title, createdAt } = latestNote;
+      const { body, createdAt } = latestNote;
       const latestNoteCreatedAtStr = dayjs(createdAt).format('MM/DD/YYYY');
-      rowItems.push({ type: 'doubleLine', data: { firstLine: title, secondLine: latestNoteCreatedAtStr, disabled } });
+      rowItems.push({ type: 'doubleLine', data: { firstLine: body, secondLine: latestNoteCreatedAtStr, disabled } });
     } else {
       rowItems.push({ type: 'text', data: { text: '', disabled } });
     }
@@ -79,9 +79,9 @@ const convertClientsToMobileContents = (clients) => {
     const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
     if (notes.length > 0) {
       const latestNote = notes[notes.length - 1];
-      const { title, createdAt } = latestNote;
+      const { body, createdAt } = latestNote;
       const latestNoteCreatedAtStr = dayjs(createdAt).format('MM/DD/YYYY');
-      rowItems.push({ type: 'doubleLine', data: { firstLine: title, secondLine: latestNoteCreatedAtStr } });
+      rowItems.push({ type: 'doubleLine', data: { firstLine: body, secondLine: latestNoteCreatedAtStr } });
     }
     rowItems.push({ type: 'stage', data: { text: stage, currentStage: level, palette } });
     return {
