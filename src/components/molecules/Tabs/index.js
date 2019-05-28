@@ -90,14 +90,14 @@ export default class Tabs extends Component {
         <TabWrapper>
           {children.map((child) => {
             const {
-              to, id, label, tabStyles,
+              to, id, label, tabStyles, onClick,
             } = child.props;
             const tab = (
               <CursorTab
                 active={activeTab === id}
                 key={id}
                 label={label}
-                onClick={() => this.onClickTabItem(id)}
+                onClick={() => { this.onClickTabItem(id); onClick ? onClick() : null; }}
                 tabStyles={tabStyles}
               />
             );
