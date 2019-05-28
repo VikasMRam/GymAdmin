@@ -105,7 +105,7 @@ const DashboardAgentFamilyOverviewPage = ({
   const paginationComponent = (showPagination && <Pagination {...paginationParams} />);
   const bigScreenView = (
     <Fragment>
-      {tableHeaderButtons}
+      { /* tableHeaderButtons */ }
       <TableSectionWrapper>
         <TableWrapper>
           <Table {...tableContents} />
@@ -120,7 +120,7 @@ const DashboardAgentFamilyOverviewPage = ({
   const emptyTextComponent = <EmptyTextWrapper><Block palette="grey">{tableEmptyText}</Block></EmptyTextWrapper>;
   const smallScreenView = (
     <Fragment>
-      {tableHeaderButtons}
+      { /* tableHeaderButtons */ }
       <TableRowCardsWrapper>
         {mobileContents.length > 0 && (
           <Fragment>
