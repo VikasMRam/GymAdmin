@@ -4,7 +4,7 @@ import { arrayOf, bool, string, func, number, shape, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
-import { size, assetPath } from 'sly/components/themes';
+import { size, assetPath, getKey } from 'sly/components/themes';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import cursor from 'sly/components/helpers/cursor';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/constants/communityTile';
@@ -19,6 +19,8 @@ const communityDefaultImages = {
   '20 - 51 Beds': assetPath('vectors/Medium_Assisted_Living.svg'),
   '51 +': assetPath('vectors/Large_Assisted_Living.svg'),
 };
+
+const getImageSize = ({ imageSize }) => imageSize ? getKey(`sizes.tile.${imageSize}`).width : COLUMN_LAYOUT_IMAGE_WIDTH;
 
 const FullWidthButton = fullWidth(Button);
 FullWidthButton.displayName = 'FullWidthButton';
@@ -86,9 +88,29 @@ const Wrapper = styled.div`
   ${p => p.layout === 'column' && css`
     @media screen and (min-width: ${size('breakpoint.tablet')}) {
       display: grid;
-      grid-template-columns: ${COLUMN_LAYOUT_IMAGE_WIDTH} auto;
+      grid-template-columns: ${getImageSize} auto;
     }
   `}
+
+  &:hover {
+    Button {
+      display: initial;
+    }
+  }
+`;
+
+const ImageWrapper = styled.div`
+  position: relative;
+
+  // because we are passing aspectRatio prop, we have a relative position
+  // in the Image so we can use here absolute
+  Button {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
@@ -100,10 +122,10 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
-  layout, showFloorPlan, palette,
+  layout, showFloorPlan, palette, showDescription, imageSize, showSeeMoreButtonOnHover,
 }) => {
   const {
-    name, gallery, mainImage, communitySize,
+    name, gallery = {}, mainImage, communitySize,
   } = community;
   let { imageUrl } = community;
   imageUrl = imageUrl || mainImage;
@@ -130,7 +152,7 @@ const CommunityTile = ({
   );
 
   return (
-    <Wrapper layout={layout} className={className}>
+    <Wrapper layout={layout} className={className} imageSize={imageSize}>
       {!noGallery &&
         <StyledMediaGallery
           communityName={name}
@@ -142,14 +164,23 @@ const CommunityTile = ({
         />
       }
       {noGallery &&
-        <StyledImage
-          layout={layout}
-          src={imageUrl}
-          aspectRatio={layout === 'column' ? '3:2' : '16:9'}
-        />
+        <ImageWrapper>
+          <StyledImage
+            layout={layout}
+            src={imageUrl}
+            aspectRatio={layout === 'column' ? '3:2' : '16:9'}
+          />
+          {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
+        </ImageWrapper>
       }
       <StyledBox layout={layout} padding="large" hasImages={hasImages}>
-        <StyledCommunityInfo palette={palette} community={community} showFloorPlan={showFloorPlan} marginBottom={!!actionButtons.length} />
+        <StyledCommunityInfo
+          palette={palette}
+          community={community}
+          showFloorPlan={showFloorPlan}
+          marginBottom={!!actionButtons.length}
+          showDescription={showDescription}
+        />
         {buildActionButtons(actionButtons)}
         {(note || addNote) && <Hr />}
         {note && <Span size="caption">{note}</Span>}
@@ -161,7 +192,7 @@ const CommunityTile = ({
 };
 
 CommunityTile.propTypes = {
-  community: communityPropType,
+  community: communityPropType.isRequired,
   actionButtons: arrayOf(shape({
     text: string.isRequired,
     ghost: bool,
@@ -181,6 +212,9 @@ CommunityTile.propTypes = {
   showFloorPlan: bool,
   layout: oneOf(['column', 'row']),
   palette: palettePropType,
+  showDescription: bool,
+  showSeeMoreButtonOnHover: bool,
+  imageSize: oneOf(Object.keys(getKey('sizes.tile'))),
 };
 
 CommunityTile.defaultProps = {

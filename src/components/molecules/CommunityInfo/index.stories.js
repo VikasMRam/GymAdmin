@@ -11,4 +11,7 @@ const StyledCommunityInfo = styled(CommunityInfo)`
 
 storiesOf('Molecules|CommunityInfo', module)
   .add('default', () => <CommunityInfo community={RhodaGoldmanPlaza} />)
-  .add('with inverted', () => <StyledCommunityInfo community={RhodaGoldmanPlaza} inverted />);
+  .add('with showDescription', () => <CommunityInfo community={RhodaGoldmanPlaza} showDescription />)
+  .add('with inverted', () => <StyledCommunityInfo community={RhodaGoldmanPlaza} inverted />)
+  .add('with inverted and showDescription', () => <StyledCommunityInfo community={RhodaGoldmanPlaza} showDescription inverted />);
+
