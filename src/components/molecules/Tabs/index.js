@@ -97,7 +97,7 @@ export default class Tabs extends Component {
                 active={activeTab === id}
                 key={id}
                 label={label}
-                onClick={() => { this.onClickTabItem(id); onClick(); }}
+                onClick={() => { this.onClickTabItem(id); onClick ? onClick() : null; }}
                 tabStyles={tabStyles}
               />
             );
