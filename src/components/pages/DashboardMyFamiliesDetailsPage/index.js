@@ -387,13 +387,13 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           </SmallScreenClientNameWrapper>
         </div>
         <StyledTabs activeTab={currentTab}>
-          <div id={SUMMARY} label="Summary" tabStyles={hideInBigScreenStyles} to={summaryPath}>
+          <div id={SUMMARY} label="Summary" tabStyles={hideInBigScreenStyles} to={summaryPath} onClick={clickEventHandler('fdetails-tab','Summary')} target='_blank'>
             <TabWrapper>
               <SmallScreenBorderPaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
               {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
             </TabWrapper>
           </div>
-          <div id={ACTIVITY} default label="Activity" to={activityPath}>
+          <div id={ACTIVITY} default label="Activity" to={activityPath} onClick={clickEventHandler('fdetails-tab','Activity')} target='_blank'>
             <TabWrapper>
               <SmallScreenBorderDiv padding={!noteIsLoading && activityCards.length > 0 ? null : 'xLarge'}>
                 {noteIsLoading && <Block size="subtitle">Loading...</Block>}
@@ -409,7 +409,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </SmallScreenBorderDiv>
             </TabWrapper>
           </div>
-          <div id={FAMILY_DETAILS} label="Family Details" to={familyDetailsPath}>
+          <div id={FAMILY_DETAILS} label="Family Details" to={familyDetailsPath} onClick={clickEventHandler('fdetails-tab','Family Details')} target='_blank'>
             <TabWrapper>
               <FamilyDetailsTab>
                 <FamilyDetailsFormContainer
@@ -427,7 +427,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </FamilyDetailsTab>
             </TabWrapper>
           </div>
-          <div id={COMMUNITIES} label="Communities" to={communitiesPath}>
+          <div id={COMMUNITIES} label="Communities" to={communitiesPath} onClick={clickEventHandler('fdetails-tab','Communities')} target='_blank'>
             <TabWrapper>
               <CommunitiesTab>
                 <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>

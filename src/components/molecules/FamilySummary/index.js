@@ -113,7 +113,7 @@ const FamilySummary = ({
         <Block size="caption">{client.clientInfo.slyMessage}</Block>
       </SlyIntro>
     }
-    <StyledLink to={to}>See more family details</StyledLink>
+    <StyledLink to={to} onClick={clickEventHandler('fdetails-summary', 'seeMoreFamilyDetails')} target="_blank" >See more family details</StyledLink>
   </Box>
 );
 
