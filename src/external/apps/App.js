@@ -9,11 +9,10 @@ import { routes as routesPropType } from 'sly/propTypes/routes';
 import { WIZARD_PATH, SEARCH_PATH } from 'sly/external/constants/paths';
 import ErrorPage from 'sly/external/apps/ErrorPage';
 import addGlobalStyles from 'sly/external/apps/setGlobalStyles';
-
-addGlobalStyles();
-
 import CareAssessmentControllerPage from /* webpackChunkName: "chunkCareAssessmentControllerPage" */'sly/external/apps/wizards/careAssessment/Controller';
 import SearchContainerPage from /* webpackChunkName: "chunkSearchContainerPage" */'sly/external/apps/search/Container';
+
+addGlobalStyles();
 
 export default class App extends Component {
   static childContextTypes = {
