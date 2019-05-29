@@ -339,6 +339,7 @@ const client = createConfig([
       path: clientConfigsPath,
       clientConfigs,
     }),
+    new LoadablePlugin({ filename: 'loadable-stats-client.json' }),
     new ChildConfigPlugin(server, { when: 'afterEmit' }),
   ]),
 

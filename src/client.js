@@ -2,7 +2,7 @@
 import '@babel/polyfill';
 import 'react-hot-loader/patch';
 import React from 'react';
-import { render, hydrate } from 'react-dom';
+import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ServerStateProvider } from 'react-router-server';
