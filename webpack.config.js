@@ -219,7 +219,7 @@ const server = createConfig([
   entryPoint({ server: serverEntryPath }),
 
   setOutput({
-    filename: '../[name].js',
+    filename: '[name].js',
     libraryTarget: 'commonjs2',
   }),
 
