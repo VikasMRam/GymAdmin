@@ -4,7 +4,6 @@ import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
-import loadable from '@loadable/component';
 
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
@@ -21,12 +20,12 @@ import {
 
 import Router from 'sly/components/molecules/Router';
 
-const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
-const ChatBoxContainer = loadable(() => import(/* webpackChunkName: "chunkChatBox" */ 'sly/containers/ChatBoxContainer'));
-const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/containers/DashboardFavoritesPageContainer'));
-const DashboardMyProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer'));
-const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
-const DashboardAgentFamilyOverviewPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardAgentFamilyOverviewPageContainer'));
+import Error from /* webpackChunkName: "chunkError" */ 'sly/components/pages/Error';
+import ChatBoxContainer from/* webpackChunkName: "chunkChatBox" */ 'sly/containers/ChatBoxContainer';
+import DashboardFavoritesPageContainer from/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/containers/DashboardFavoritesPageContainer';
+import DashboardMyProfilePageContainer from/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer';
+import DashboardMyFamiliesDetailsPageContainer from/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer';
+import DashboardAgentFamilyOverviewPageContainer from/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardAgentFamilyOverviewPageContainer';
 
 setGlobalStyles();
 

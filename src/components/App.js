@@ -4,7 +4,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
-import loadable from '@loadable/component';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 
@@ -16,25 +15,25 @@ import { routes as routesPropType } from 'sly/propTypes/routes';
 
 import Router from 'sly/components/molecules/Router';
 
-const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
-const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
-const LegalPolicyPage = loadable(() => import(/* webpackChunkName: "chunkLegalPolicy" */ 'sly/components/pages/LegalPolicyPage'));
-const PartnersPage = loadable(() => import(/* webpackChunkName: "chunkPartners" */ 'sly/components/pages/PartnersPage'));
-const CommunityDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunityDetail" */ 'sly/containers/CommunityDetailPageContainer'));
-const CommunitySearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkCommunitySearch" */ 'sly/containers/CommunitySearchPageContainer'));
-const StateSearchPageContainer = loadable(() => import(/* webpackChunkName: "chunkStateSearch" */ 'sly/containers/StateSearchPageContainer'));
-const HomePageContainer = loadable(() => import(/* webpackChunkName: "chunkHomePage" */ 'sly/containers/HomePageContainer'));
-const NearMePageContainer = loadable(() => import(/* webpackChunkName: "chunkNearMe" */ 'sly/containers/NearMePageContainer'));
-const PromoPageContainer = loadable(() => import(/* webpackChunkName: "chunkPromo" */ 'sly/containers/PromoPageContainer'));
-const AgentsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgents" */ 'sly/containers/AgentsPageContainer'));
-const PasswordResetPageContainer = loadable(() => import(/* webpackChunkName: "chunkPasswordReset" */ 'sly/containers/PasswordResetPageContainer'));
-const HowItWorksDetailPageContainer = loadable(() => import(/* webpackChunkName: "chunkHowItWorks" */ 'sly/containers/HowItWorksDetailPageContainer'));
-const EntityApprovalContainer = loadable(() => import(/* webpackChunkName: "chunkEntityApprovalContainer" */ 'sly/containers/EntityApprovalContainer'));
-const BookATourPageContainer = loadable(() => import(/* webpackChunkName: "chunkBookATour" */ 'sly/containers/BookATourPageContainer'));
-const PricingWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkPricingWizard" */ 'sly/containers/PricingWizardPageContainer'));
-const AgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentProfile" */ 'sly/containers/AgentProfilePageContainer'));
-const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentRegion" */ 'sly/containers/AgentRegionPageContainer'));
-const ChatBoxContainer = loadable(() => import(/* webpackChunkName: "chunkChatBox" */ 'sly/containers/ChatBoxContainer'));
+import Error from /* webpackChunkName: "chunkError" */ 'sly/components/pages/Error';
+import OurHistoryPage from /* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage';
+import LegalPolicyPage from /* webpackChunkName: "chunkLegalPolicy" */ 'sly/components/pages/LegalPolicyPage';
+import PartnersPage from /* webpackChunkName: "chunkPartners" */ 'sly/components/pages/PartnersPage';
+import CommunityDetailPageContainer from /* webpackChunkName: "chunkCommunityDetail" */ 'sly/containers/CommunityDetailPageContainer';
+import CommunitySearchPageContainer from /* webpackChunkName: "chunkCommunitySearch" */ 'sly/containers/CommunitySearchPageContainer';
+import StateSearchPageContainer from /* webpackChunkName: "chunkStateSearch" */ 'sly/containers/StateSearchPageContainer';
+import HomePageContainer from /* webpackChunkName: "chunkHomePage" */ 'sly/containers/HomePageContainer';
+import NearMePageContainer from /* webpackChunkName: "chunkNearMe" */ 'sly/containers/NearMePageContainer';
+import PromoPageContainer from /* webpackChunkName: "chunkPromo" */ 'sly/containers/PromoPageContainer';
+import AgentsPageContainer from /* webpackChunkName: "chunkAgents" */ 'sly/containers/AgentsPageContainer';
+import PasswordResetPageContainer from /* webpackChunkName: "chunkPasswordReset" */ 'sly/containers/PasswordResetPageContainer';
+import HowItWorksDetailPageContainer from /* webpackChunkName: "chunkHowItWorks" */ 'sly/containers/HowItWorksDetailPageContainer';
+import EntityApprovalContainer from /* webpackChunkName: "chunkEntityApprovalContainer" */ 'sly/containers/EntityApprovalContainer';
+import BookATourPageContainer from /* webpackChunkName: "chunkBookATour" */ 'sly/containers/BookATourPageContainer';
+import PricingWizardPageContainer from /* webpackChunkName: "chunkPricingWizard" */ 'sly/containers/PricingWizardPageContainer';
+import AgentProfilePageContainer from /* webpackChunkName: "chunkAgentProfile" */ 'sly/containers/AgentProfilePageContainer';
+import AgentRegionPageContainer from /* webpackChunkName: "chunkAgentRegion" */ 'sly/containers/AgentRegionPageContainer';
+import ChatBoxContainer from /* webpackChunkName: "chunkChatBox" */ 'sly/containers/ChatBoxContainer';
 
 setGlobalStyles();
 
