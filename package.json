@@ -55,6 +55,8 @@
     "verbose": true
   },
   "devDependencies": {
+  },
+  "dependencies":  {
     "@babel/core": "^7.3.4",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-proposal-decorators": "^7.4.4",
@@ -101,9 +103,7 @@
     "webpack-node-externals": "^1.7.2",
     "webpack-sort-chunks": "^0.2.0",
     "webpack-spawn-plugin": "^0.3.0",
-    "webpack-visualizer-plugin": "^0.1.11"
-  },
-  "dependencies": {
+    "webpack-visualizer-plugin": "^0.1.11",
     "@babel/polyfill": "^7.4.4",
     "color": "^3.1.0",
     "cookie-parser": "^1.4.3",
