@@ -254,12 +254,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this.props;
     const { status } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
-    SlyEvent.getInstance().sendEvent({
-      category: 'fdetails',
-      action: 'launch',
-      label: isPaused,
-      value: '',
-    });
+
     if (isPaused) {
       onUnPause();
     } else {
@@ -273,6 +268,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           rawClient={rawClient}
         />, null, 'noPadding', false);
     }
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: (isPaused ? 'true' : 'false'),
+      value: '',
+    });
   };
 
   render() {
