@@ -89,7 +89,9 @@ const sourcePath = path.join(process.cwd(), SOURCE);
 const outputPath = path.join(process.cwd(), 'dist', 'public');
 const clientConfigsPath = path.join(process.cwd(), 'dist', 'clientConfigs.json');
 const clientEntryPath = path.join(sourcePath, 'client.js');
+const clientAppEntryPath = path.join(sourcePath, 'components/App.js');
 const dashboardEntryPath = path.join(sourcePath, 'dashboard.js');
+const dashboardAppEntryPath = path.join(sourcePath, 'components/DashboardApp.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');
 // external scripts and assets
 const externalSourcePath = path.join(sourcePath, 'external');
@@ -178,6 +180,9 @@ const devCORS = group([
       host: '0.0.0.0',
       port: DEV_PORT,
       compress: true,
+      writeToDisk(filePath) {
+        return /loadable-stats/.test(filePath);
+      },
     }),
     addPlugins([new webpack.NamedModulesPlugin()]),
   ]),
@@ -316,7 +321,9 @@ const client = createConfig([
 
   entryPoint({
     client: clientEntryPath,
+    clientApp: clientAppEntryPath,
     dashboard: dashboardEntryPath,
+    dashboardApp: dashboardAppEntryPath,
     external: externalEntryPath,
   }),
 

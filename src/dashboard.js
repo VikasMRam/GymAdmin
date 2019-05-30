@@ -9,7 +9,7 @@ import Modal from 'react-modal';
 
 import configureStore from 'sly/store/configure';
 import api from 'sly/services/api';
-import DashboardApp from 'sly/components/DashboardApp';
+import DashboardApp from /* webpackChunkName: chunkDashboardApp */ 'sly/components/DashboardApp';
 import ApiProvider from 'sly/services/newApi/ApiProvider';
 import createApi from 'sly/services/newApi/createApi';
 

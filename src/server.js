@@ -24,8 +24,6 @@ import { port, host, publicPath, isDev, cookieDomain } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import apiService from 'sly/services/api';
-import ClientApp from 'sly/components/App';
-import DashboardApp from 'sly/components/DashboardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 import { createApi as createBeesApi } from 'sly/services/newApi';
@@ -50,18 +48,24 @@ const renderEmptyApp = () => {
 };
 
 // requires compatible configuration
-const getAppRenderer = ({ bundle, api }) => {
+const getAppRenderer = ({ bundle, api }, extractor) => {
   switch (bundle) {
-    case 'dashboard': return makeAppRenderer((
-      <ApiProvider api={api}>
-        <DashboardApp />
-      </ApiProvider>
-    ));
-    case 'client': return makeAppRenderer((
-      <ApiProvider api={api}>
-        <ClientApp />
-      </ApiProvider>
-    ));
+    case 'dashboard': {
+      const DashboardApp = extractor.requireEntrypoint('chunkDashboardApp');
+      return makeAppRenderer((
+        <ApiProvider api={api}>
+          <DashboardApp />
+        </ApiProvider>
+      ));
+    }
+    case 'client': {
+      const ClientApp = extractor.requireEntrypoint('chunkClientApp');
+      return makeAppRenderer((
+        <ApiProvider api={api}>
+          <ClientApp />
+        </ApiProvider>
+      ));
+    }
     default: return renderEmptyApp;
   }
 };
@@ -136,7 +140,7 @@ app.use(clientConfigsMiddleware(global.clientConfigs));
 app.use((req, res, next) => {
   const { ssr, assets, bundle } = req.clientConfig;
   if (!ssr) {
-    const renderApp = getAppRenderer(bundle);
+    const renderApp = getAppRenderer(req.clientConfig);
     const { html: content } = renderApp();
     res.send(renderHtml({
       content,
@@ -291,11 +295,11 @@ app.use(async (req, res, next) => {
 app.use(async (req, res, next) => {
   const { assets, store } = req.clientConfig;
 
-  const statsFile = path.resolve(process.cwd(), 'dist/public/loadable-stats-server.json');
+  const statsFile = path.resolve(process.cwd(), 'dist/public/loadable-stats-client.json');
   const extractor = new ChunkExtractor({ statsFile });
   const sheet = new ServerStyleSheet();
   const context = {};
-  const renderApp = getAppRenderer(req.clientConfig);
+  const renderApp = getAppRenderer(req.clientConfig, extractor);
 
   try {
     const { state: serverState, html: content } = await renderApp({

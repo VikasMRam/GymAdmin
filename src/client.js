@@ -7,12 +7,12 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { ServerStateProvider } from 'react-router-server';
 import Modal from 'react-modal';
-import { loadableReady } from '@loadable/component'
+import { loadableReady } from '@loadable/component';
 
+import App from 'sly/components/App';
 import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';
 import api from 'sly/services/api';
-import App from 'sly/components/App';
 
 const serverState = window.__SERVER_STATE__;
 const initialState = window.__INITIAL_STATE__;
