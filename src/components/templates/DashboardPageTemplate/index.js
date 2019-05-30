@@ -43,8 +43,10 @@ const Header = styled.div`
 
 const Column = styled.aside`
   background-color: ${palette('white.base')};
+  display:none;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: block;
     width: ${size('element.xxHuge')};
     display: inherit;
     grid-column: 1 / 2;
