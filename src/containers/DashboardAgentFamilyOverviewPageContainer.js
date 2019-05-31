@@ -77,7 +77,7 @@ const convertClientsToTableContents = (clients) => {
       },
     });
     if (notes.length > 0) {
-      const latestNote = notes[notes.length - 1];
+      const latestNote = notes[0];
       const { body, createdAt } = latestNote;
       const latestNoteCreatedAtStr = dayjs(createdAt).format('MM/DD/YYYY');
       rowItems.push({ type: 'doubleLine', data: { firstLine: body, secondLine: latestNoteCreatedAtStr, disabled } });
@@ -108,7 +108,7 @@ const convertClientsToMobileContents = (clients) => {
     const disabled = status === FAMILY_STATUS_ON_HOLD;
     const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
     if (notes.length > 0) {
-      const latestNote = notes[notes.length - 1];
+      const latestNote = notes[0];
       const { body, createdAt } = latestNote;
       const latestNoteCreatedAtStr = dayjs(createdAt).format('MM/DD/YYYY');
       rowItems.push({ type: 'doubleLine', data: { firstLine: body, secondLine: latestNoteCreatedAtStr } });

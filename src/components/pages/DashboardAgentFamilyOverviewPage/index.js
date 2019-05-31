@@ -100,6 +100,16 @@ const onTabClick = (label) => {
   SlyEvent.getInstance().sendEvent(event);
 };
 
+const getBasePath = (activeTab) => {
+  if (activeTab === tabIDs[1]) {
+    return `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`;
+  } else if (activeTab === tabIDs[2]) {
+    return `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`;
+  } else {
+    return FAMILY_DASHBOARD_FAMILIES_PATH;
+  }
+};
+
 const DashboardAgentFamilyOverviewPage = ({
   mobileContents, tableContents, pagination, paginationString, activeTab, showPagination,
 }) => {
@@ -108,7 +118,7 @@ const DashboardAgentFamilyOverviewPage = ({
     current,
     total,
     range: 1,
-    basePath: FAMILY_DASHBOARD_FAMILIES_PATH,
+    basePath: `${getBasePath(activeTab)}`,
     pageParam: 'page-number',
   };
   const { tableEmptyText } = tableContents;
