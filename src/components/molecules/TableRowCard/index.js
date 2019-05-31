@@ -46,7 +46,7 @@ const TableRowCard = ({
       const { text, currentStage, palette } = data;
       return (
         <Fragment key={text}>
-          <StageDiv text={text} currentStage={currentStage} palette={palette} borderless />
+          <StageDiv text={text} currentStage={currentStage} palette={palette} disabled={disabled} borderless />
           {hrComponent}
         </Fragment>
       );
@@ -54,7 +54,7 @@ const TableRowCard = ({
       const { firstLine, secondLine } = data;
       return (
         <Fragment key={firstLine}>
-          <DoubleLineDiv firstLine={firstLine} secondLine={secondLine} borderless />
+          <DoubleLineDiv firstLine={firstLine} secondLine={secondLine} disabled={disabled} borderless />
           {hrComponent}
         </Fragment>
       );
