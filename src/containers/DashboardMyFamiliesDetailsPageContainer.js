@@ -55,16 +55,15 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { setStatusToActive } = this;
     const { invalidateClients } = this.props;
 
-    SlyEvent.getInstance().sendEvent({
-      category: 'fdetails',
-      action: 'unpause-family',
-      label: 'submit',
-      value: '',
-    });
-
     return setStatusToActive()
       .then(invalidateClients)
       .then(() => {
+        SlyEvent.getInstance().sendEvent({
+          category: 'fdetails',
+          action: 'unpause-family',
+          label: 'submit',
+          value: '',
+        });
         notifyInfo('Family successfully unpaused');
       })
       .catch((r) => {
