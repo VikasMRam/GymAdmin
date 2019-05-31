@@ -16,7 +16,7 @@ const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
   { text: 'Resident Name' },
   { text: 'Stage' },
-  { text: 'Latest Note' },
+  { text: 'Latest Activity' },
   { text: 'Date Added' },
 ];
 
