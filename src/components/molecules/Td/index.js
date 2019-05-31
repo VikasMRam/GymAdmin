@@ -20,7 +20,8 @@ const textIconStyles = css`
   ${switchProp('kind', {
     textIcon: css`
       display: flex;
-      align-items: center;`,
+      align-items: center;
+      max-width: unset;`,
   })};
 `;
 
