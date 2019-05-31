@@ -26,15 +26,12 @@ const Html = ({
 
         {helmet.link.toComponent()}
         {helmet.script.toComponent()}
-        {assets.css.map(path => (
-          <link rel="stylesheet" type="text/css" key={path} href={path} />
-        ))}
         {styles}
       </head>
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
         {state.trim().length > 0 && <script dangerouslySetInnerHTML={{ __html: state }} />}
-        {assets.js.map(path => <script key={path} src={`${path}`} defer />)}
+        {assets.map(path => <script key={path} src={`${path}`} defer />)}
         {/* eslint-disable */}
 
         {/* Google Tag Manager */}
@@ -84,10 +81,7 @@ const Html = ({
 
 Html.propTypes = {
   styles: PropTypes.node.isRequired,
-  assets: PropTypes.shape({
-    css: PropTypes.array.isRequired,
-    js: PropTypes.array.isRequired,
-  }).isRequired,
+  assets: PropTypes.array.isRequired,
   state: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
 };

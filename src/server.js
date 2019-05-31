@@ -2,6 +2,7 @@
 import '@babel/polyfill';
 import path from 'path';
 import crypto from 'crypto';
+import { readFileSync } from 'fs';
 
 import parseUrl from 'parseurl';
 import express from 'express';
@@ -16,7 +17,7 @@ import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
 import cloneDeep from 'lodash/cloneDeep';
-import { ChunkExtractor } from '@loadable/server'
+import { ChunkExtractor } from '@loadable/server';
 
 import { cleanError, logWarn } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
@@ -29,8 +30,26 @@ import Error from 'sly/components/Error';
 import { createApi as createBeesApi } from 'sly/services/newApi';
 import ApiProvider, { makeApiCall } from 'sly/services/newApi/ApiProvider';
 
-const makeAppRenderer = renderedApp => ({
-  store, context, location, sheet, extractor,
+const clientConfigs = [
+  {
+    bundle: 'external',
+    ssr: false,
+    path: '/external*',
+  },
+  {
+    bundle: 'dashboard',
+    ssr: true,
+    path: '/dashboard*',
+  },
+  {
+    bundle: 'client',
+    ssr: true,
+    path: '*',
+  },
+];
+
+const makeAppRenderer = (renderedApp, extractor) => ({
+  store, context, location, sheet,
 }) => {
   const app = sheet.collectStyles(extractor.collectChunks((
     <Provider store={store}>
@@ -51,20 +70,20 @@ const renderEmptyApp = () => {
 const getAppRenderer = ({ bundle, api }, extractor) => {
   switch (bundle) {
     case 'dashboard': {
-      const DashboardApp = extractor.requireEntrypoint('chunkDashboardApp');
+      const DashboardApp = extractor.requireEntrypoint('dashboardApp');
       return makeAppRenderer((
         <ApiProvider api={api}>
           <DashboardApp />
         </ApiProvider>
-      ));
+      ), extractor);
     }
     case 'client': {
-      const ClientApp = extractor.requireEntrypoint('chunkClientApp');
+      const ClientApp = extractor.requireEntrypoint('clientApp');
       return makeAppRenderer((
         <ApiProvider api={api}>
           <ClientApp />
         </ApiProvider>
-      ));
+      ), extractor);
     }
     default: return renderEmptyApp;
   }
@@ -107,6 +126,16 @@ const createSetCookie = (res, cookies) => (key, value, maxAge = 27000000) => {
 
 const makeSid = () => crypto.randomBytes(16).toString('hex');
 
+const loadableMiddleware = () => {
+  const statsFile = path.resolve(process.cwd(), 'dist/public/loadable-stats-client.json');
+  const stats = JSON.parse(readFileSync(statsFile));
+  const extractor = new ChunkExtractor({ statsFile });
+  return (req, res, next) => {
+    req.loadable = { extractor, stats };
+    next();
+  };
+};
+
 const clientConfigsMiddleware = (configs) => {
   configs.forEach((config) => {
     config.regexp = pathToRegexp(config.path);
@@ -133,13 +162,18 @@ if (publicPath.match(/^\//)) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
+app.use(loadableMiddleware());
+
 // global.clientConfigs is injected by plugins in private/webpack
-app.use(clientConfigsMiddleware(global.clientConfigs));
+app.use(clientConfigsMiddleware(clientConfigs));
 
 // non ssr apps
 app.use((req, res, next) => {
-  const { ssr, assets, bundle } = req.clientConfig;
+  const { ssr, bundle } = req.clientConfig;
+  const { stats } = req.loadable;
   if (!ssr) {
+    const assets = stats.entrypoints[bundle]
+      .assets.map(asset => `${process.env.WEBPACK_PUBLIC_PATH}${asset}`);
     const renderApp = getAppRenderer(req.clientConfig);
     const { html: content } = renderApp();
     res.send(renderHtml({
@@ -295,11 +329,9 @@ app.use(async (req, res, next) => {
 app.use(async (req, res, next) => {
   const { assets, store } = req.clientConfig;
 
-  const statsFile = path.resolve(process.cwd(), 'dist/public/loadable-stats-client.json');
-  const extractor = new ChunkExtractor({ statsFile });
   const sheet = new ServerStyleSheet();
   const context = {};
-  const renderApp = getAppRenderer(req.clientConfig, extractor);
+  const renderApp = getAppRenderer(req.clientConfig, req.loadable.extractor);
 
   try {
     const { state: serverState, html: content } = await renderApp({
@@ -307,7 +339,6 @@ app.use(async (req, res, next) => {
       context,
       location: req.url,
       sheet,
-      extractor,
     });
 
     if (serverState) {
@@ -344,7 +375,7 @@ app.use((err, req, res, next) => {
   const sheet = new ServerStyleSheet();
   const errorContent = getErrorContent(err);
   const content = renderToStaticMarkup(sheet.collectStyles(errorContent));
-  const assets = { css: [], js: [] };
+  const assets = [];
   res.status(500).send(renderHtml({ content, sheet, assets }));
   next(err);
 });

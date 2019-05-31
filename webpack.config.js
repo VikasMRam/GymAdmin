@@ -28,37 +28,36 @@ const {
   optimization,
 } = require('webpack-blocks');
 
-const ChildConfigPlugin = require('./private/webpack/ChildConfigPlugin');
-const AssetsByTypeAndBundlePlugin = require('./private/webpack/AssestByTypeAndBundlePlugin');
-const PrependPlugin = require('./private/webpack/PrependPlugin');
-
 // defaults to dev env, otherwise specify with env vars
 const { STORYBOOK_GIT_BRANCH, GOOGLE_MAPS_API_KEY } = process.env;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const SLY_ENV = process.env.SLY_ENV || 'development';
 const GA_ENV = process.env.GA_ENV || 'development';
-const PUBLIC_PATH = process.env.PUBLIC_PATH || '/react-assets';
 const HOST = process.env.HOST || 'http://www.lvh.me';
 const PORT = process.env.PORT || 8000;
 const DEV_PORT = process.env.DEV_PORT || (+PORT + 1) || 8001;
+const PUBLIC_PATH = process.env.PUBLIC_PATH || 'react-assets/';
+const WEBPACK_PUBLIC_PATH = NODE_ENV === 'development' ? `${HOST}:${DEV_PORT}/` : PUBLIC_PATH;
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
 const DOMAIN = process.env.DOMAIN || 'lvh.me';
 const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8').trim() : '';
 const SOURCE = process.env.SOURCE || 'src';
-const devDomain = `${HOST}:${DEV_PORT}/`;
-const isDev = NODE_ENV === 'development';
-const isStaging = SLY_ENV === 'staging';
 const FB_CLIENT_ID = process.env.FB_CLIENT_ID || '624602444328776';
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com';
 const MUTE_REDUX_LOGGER = process.env.MUTE_REDUX_LOGGER || false;
 const HIDE_CHATBOX = process.env.HIDE_CHATBOX || false;
 
+const isDev = NODE_ENV === 'development';
+const isStaging = SLY_ENV === 'staging';
+
 // replacements for widgets.js
 const EXTERNAL_PATH = process.env.EXTERNAL_PATH || '/external';
-const EXTERNAL_ASSET_URL = (isDev ? `${devDomain}external` : `${PUBLIC_PATH}/external`);
+const EXTERNAL_ASSET_URL = `${WEBPACK_PUBLIC_PATH}external`;
 const EXTERNAL_URL = `${HOST}${EXTERNAL_PATH}`;
 const EXTERNAL_DEFAULT_WIDGET_TYPE = 'wizards/caw';
+
+const setConfig = conf => (context, { merge }) => merge(conf);
 
 console.info('Using config', JSON.stringify({
   STORYBOOK_GIT_BRANCH,
@@ -66,6 +65,7 @@ console.info('Using config', JSON.stringify({
   SLY_ENV,
   GA_ENV,
   PUBLIC_PATH,
+  WEBPACK_PUBLIC_PATH,
   HOST,
   PORT,
   DEV_PORT,
@@ -84,14 +84,10 @@ console.info('Using config', JSON.stringify({
   HIDE_CHATBOX,
 }, null, 2));
 
-const webpackPublicPath = `${PUBLIC_PATH}/`.replace(/\/\/$/gi, '/');
 const sourcePath = path.join(process.cwd(), SOURCE);
-const outputPath = path.join(process.cwd(), 'dist', 'public');
-const clientConfigsPath = path.join(process.cwd(), 'dist', 'clientConfigs.json');
+const outputPath = path.join(process.cwd(), 'dist');
 const clientEntryPath = path.join(sourcePath, 'client.js');
-const clientAppEntryPath = path.join(sourcePath, 'components/App.js');
 const dashboardEntryPath = path.join(sourcePath, 'dashboard.js');
-const dashboardAppEntryPath = path.join(sourcePath, 'components/DashboardApp.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');
 // external scripts and assets
 const externalSourcePath = path.join(sourcePath, 'external');
@@ -134,7 +130,7 @@ const base = group([
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].js',
     path: outputPath,
-    publicPath: webpackPublicPath,
+    publicPath: WEBPACK_PUBLIC_PATH,
   }),
 
   defineConstants({
@@ -143,6 +139,7 @@ const base = group([
     'process.env.SLY_ENV': SLY_ENV,
     'process.env.GA_ENV': GA_ENV,
     'process.env.PUBLIC_PATH': PUBLIC_PATH,
+    'process.env.WEBPACK_PUBLIC_PATH': WEBPACK_PUBLIC_PATH,
     'process.env.HOST': HOST,
     'process.env.PORT': PORT,
     'process.env.API_URL': API_URL,
@@ -160,12 +157,6 @@ const base = group([
 
   resolveModules(sourcePath),
 
-  env('development', [
-    setOutput({
-      publicPath: devDomain,
-    }),
-  ]),
-
   addPlugins([new webpack.ProgressPlugin()]),
 ]);
 
@@ -174,14 +165,14 @@ const devCORS = group([
     devServer({
       contentBase: 'public',
       stats: 'errors-only',
-      historyApiFallback: { index: webpackPublicPath },
+      historyApiFallback: { index: WEBPACK_PUBLIC_PATH },
       headers: { 'Access-Control-Allow-Origin': '*' },
       disableHostCheck: true,
       host: '0.0.0.0',
       port: DEV_PORT,
       compress: true,
       writeToDisk(filePath) {
-        return /loadable-stats/.test(filePath);
+        return /dist\/node\//.test(filePath) || /loadable-stats/.test(filePath);
       },
     }),
     addPlugins([new webpack.NamedModulesPlugin()]),
@@ -199,25 +190,6 @@ const uglifyJs = group([
     }),
   ]),
 ]);
-
-// order matters to how the routes are mounted
-const clientConfigs = [
-  {
-    bundle: 'external',
-    ssr: false,
-    path: '/external*',
-  },
-  {
-    bundle: 'dashboard',
-    ssr: true,
-    path: '/dashboard*',
-  },
-  {
-    bundle: 'client',
-    ssr: true,
-    path: '*',
-  },
-];
 
 const server = createConfig([
   base,
@@ -237,13 +209,6 @@ const server = createConfig([
 
   assets,
 
-  addPlugins([
-    new PrependPlugin({
-      prepend: () => `global.clientConfigs = require("${clientConfigsPath}");\n`,
-    }),
-    new LoadablePlugin({ filename: 'loadable-stats-server.json' }),
-  ]),
-
   env('development', [
     (context, { merge }) => merge({
       watch: true,
@@ -259,10 +224,6 @@ const server = createConfig([
   ]),
 ]);
 
-if (isDev || isStaging) {
-  console.log('Will do sourcemaps');
-}
-
 const replaceExternalConstants = (text) => {
   const replacements = {
     'process.env.EXTERNAL_ASSET_URL': EXTERNAL_ASSET_URL,
@@ -272,10 +233,9 @@ const replaceExternalConstants = (text) => {
     'process.env.SLY_ENV': SLY_ENV,
     'process.env.VERSION': VERSION,
   };
-  const replacedText = Object.keys(replacements).reduce((previous, match) => {
+  return Object.keys(replacements).reduce((previous, match) => {
     return previous.replace(new RegExp(match, 'g'), JSON.stringify(replacements[match]));
   }, text);
-  return replacedText;
 };
 
 const externalWidget = group([
@@ -316,16 +276,26 @@ const externalWidget = group([
   ]),
 ]);
 
-const client = createConfig([
+const outputTarget = (target) => {
+  switch (target) {
+    case 'node': return 'node';
+    case 'web': return 'public';
+  }
+};
+
+const client = target => createConfig([
   base,
 
-  entryPoint({
-    client: clientEntryPath,
-    clientApp: clientAppEntryPath,
-    dashboard: dashboardEntryPath,
-    dashboardApp: dashboardAppEntryPath,
-    external: externalEntryPath,
+  setOutput({
+    filename: '[name].[hash].js',
+    chunkFilename: '[name].[hash].js',
+    path: path.join(outputPath, outputTarget(target)),
+    publicPath: WEBPACK_PUBLIC_PATH,
   }),
+
+  setConfig({ target }),
+
+  entryPoint(path.join(sourcePath, `client-${target}.js`)),
 
   externalWidget,
 
@@ -342,15 +312,14 @@ const client = createConfig([
   }),
 
   addPlugins([
-    new AssetsByTypeAndBundlePlugin({
-      path: clientConfigsPath,
-      clientConfigs,
-    }),
-    new LoadablePlugin({ filename: 'loadable-stats-client.json' }),
-    new ChildConfigPlugin(server, { when: 'afterEmit' }),
+    new LoadablePlugin({ filename: `../loadable-stats-${target}.json` }),
   ]),
 
   when(isDev || isStaging, [sourceMaps()]),
 ]);
 
-module.exports = client;
+module.exports = [
+  client('web'),
+  client('node'),
+  server,
+];
