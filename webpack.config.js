@@ -172,7 +172,8 @@ const devCORS = group([
       port: DEV_PORT,
       compress: true,
       writeToDisk(filePath) {
-        return /dist\/node\//.test(filePath) || /loadable-stats/.test(filePath);
+        console.log(filePath)
+        return /dist\/(node|server)\//.test(filePath) || /loadable-stats/.test(filePath);
       },
     }),
     addPlugins([new webpack.NamedModulesPlugin()]),
@@ -219,7 +220,7 @@ const server = createConfig([
         raw: true,
         entryOnly: false,
       }),
-      new SpawnPlugin('node', [process.env.NODE_DEBUG_OPTION || '--inspect', '.']),
+      // new SpawnPlugin('node', [process.env.NODE_DEBUG_OPTION || '--inspect', '.']),
     ]),
   ]),
 ]);
@@ -276,20 +277,13 @@ const externalWidget = group([
   ]),
 ]);
 
-const outputTarget = (target) => {
-  switch (target) {
-    case 'node': return 'node';
-    case 'web': return 'public';
-  }
-};
-
 const client = target => createConfig([
   base,
 
   setOutput({
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].js',
-    path: path.join(outputPath, outputTarget(target)),
+    path: path.join(outputPath, target === 'web' ? 'public' : 'node'),
     publicPath: WEBPACK_PUBLIC_PATH,
   }),
 
@@ -319,7 +313,7 @@ const client = target => createConfig([
 ]);
 
 module.exports = [
-  client('web'),
-  client('node'),
+  // client('web'),
+  // client('node'),
   server,
 ];
