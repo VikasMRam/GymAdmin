@@ -66,7 +66,7 @@ const FamilySummary = ({
       }
       {client.stage !== FAMILY_STAGE_NEW && client.clientInfo && client.clientInfo.phoneNumber &&
         <ColumWrapper>
-          <Label palette="grey">Phone Number</Label>
+          <Label palette="grey">Phone number</Label>
           <StyledLink href={`tel:+1${client.clientInfo.phoneNumber}`} onClick={clickEventHandler('fdetails-summary', 'phone')} target="_blank">
             <NumberFormat
               value={client.clientInfo.phoneNumber}
@@ -113,7 +113,7 @@ const FamilySummary = ({
         <Block size="caption">{client.clientInfo.slyMessage}</Block>
       </SlyIntro>
     }
-    <StyledLink to={to}>See more family details</StyledLink>
+    <StyledLink to={to} onClick={clickEventHandler('fdetails-summary', 'seeMoreFamilyDetails')} >See more family details</StyledLink>
   </Box>
 );
 

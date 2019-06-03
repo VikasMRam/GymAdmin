@@ -254,12 +254,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this.props;
     const { status } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
-    SlyEvent.getInstance().sendEvent({
-      category: 'fdetails',
-      action: 'launch',
-      label: isPaused,
-      value: '',
-    });
+
     if (isPaused) {
       onUnPause();
     } else {
@@ -273,6 +268,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           rawClient={rawClient}
         />, null, 'noPadding', false);
     }
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: (isPaused ? 'true' : 'false'),
+      value: '',
+    });
   };
 
   render() {
@@ -325,7 +326,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       <StyledFamilyActivityItem key={a.id} noBorderRadius snap={i === notes.length - 1 ? null : 'bottom'} title={a.title} description={a.body} date={a.createdAt} />) : [];
 
     const summaryPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
-    const activityPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id)
+    const activityPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
     const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
     const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', COMMUNITIES);
 
@@ -387,13 +388,13 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           </SmallScreenClientNameWrapper>
         </div>
         <StyledTabs activeTab={currentTab}>
-          <div id={SUMMARY} label="Summary" tabStyles={hideInBigScreenStyles} to={summaryPath}>
+          <div id={SUMMARY} label="Summary" tabStyles={hideInBigScreenStyles} to={summaryPath} onClick={clickEventHandler('fdetails-tab','Summary')} target='_blank'>
             <TabWrapper>
               <SmallScreenBorderPaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
               {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
             </TabWrapper>
           </div>
-          <div id={ACTIVITY} default label="Activity" to={activityPath}>
+          <div id={ACTIVITY} default label="Activity" to={activityPath} onClick={clickEventHandler('fdetails-tab','Activity')} target='_blank'>
             <TabWrapper>
               <SmallScreenBorderDiv padding={!noteIsLoading && activityCards.length > 0 ? null : 'xLarge'}>
                 {noteIsLoading && <Block size="subtitle">Loading...</Block>}
@@ -409,7 +410,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </SmallScreenBorderDiv>
             </TabWrapper>
           </div>
-          <div id={FAMILY_DETAILS} label="Family Details" to={familyDetailsPath}>
+          <div id={FAMILY_DETAILS} label="Family Details" to={familyDetailsPath} onClick={clickEventHandler('fdetails-tab','Family Details')} target='_blank'>
             <TabWrapper>
               <FamilyDetailsTab>
                 <FamilyDetailsFormContainer
@@ -427,7 +428,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </FamilyDetailsTab>
             </TabWrapper>
           </div>
-          <div id={COMMUNITIES} label="Communities" to={communitiesPath}>
+          <div id={COMMUNITIES} label="Communities" to={communitiesPath} onClick={clickEventHandler('fdetails-tab','Communities')} target='_blank'>
             <TabWrapper>
               <CommunitiesTab>
                 <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>

@@ -10,14 +10,35 @@ import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgen
 import { getSearchParams } from 'sly/services/helpers/search';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP, FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
+import SlyEvent from 'sly/services/helpers/events';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
   { text: 'Resident Name' },
   { text: 'Stage' },
-  { text: 'Latest Note' },
+  { text: 'Latest Activity' },
   { text: 'Date Added' },
 ];
+
+const onClientDetailTableRowLinkClick = (clientName, to) => {
+  const event = {
+    category: 'TableRow',
+    action: 'click',
+    label: clientName,
+    value: to,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
+
+const onClientDetailTableRowCardHeadingLinkClick = (clientName, to) => {
+  const event = {
+    category: 'TableRowCard',
+    action: 'click',
+    label: clientName,
+    value: to,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
 
 const convertClientsToTableContents = (clients) => {
   const contents = clients.map((client) => {
@@ -38,7 +59,16 @@ const convertClientsToTableContents = (clients) => {
     const disabled = status === FAMILY_STATUS_ON_HOLD;
     const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
     const pausedType = disabled ? 'textIcon' : 'link';
-    rowItems.push({ type: pausedType, data: { text: clientName, to: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab', ''), ...pausedTd } });
+    const to = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
+    rowItems.push({
+      type: pausedType,
+      data: {
+        text: clientName,
+        to,
+        onClick: () => onClientDetailTableRowLinkClick(clientName, to),
+        ...pausedTd,
+      },
+    });
     rowItems.push({ type: 'text', data: { text: residentName, disabled } });
     rowItems.push({
       type: 'stage',
@@ -47,10 +77,10 @@ const convertClientsToTableContents = (clients) => {
       },
     });
     if (notes.length > 0) {
-      const latestNote = notes[notes.length - 1];
-      const { title, createdAt } = latestNote;
+      const latestNote = notes[0];
+      const { body, createdAt } = latestNote;
       const latestNoteCreatedAtStr = dayjs(createdAt).format('MM/DD/YYYY');
-      rowItems.push({ type: 'doubleLine', data: { firstLine: title, secondLine: latestNoteCreatedAtStr, disabled } });
+      rowItems.push({ type: 'doubleLine', data: { firstLine: body, secondLine: latestNoteCreatedAtStr, disabled } });
     } else {
       rowItems.push({ type: 'text', data: { text: '', disabled } });
     }
@@ -78,15 +108,17 @@ const convertClientsToMobileContents = (clients) => {
     const disabled = status === FAMILY_STATUS_ON_HOLD;
     const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
     if (notes.length > 0) {
-      const latestNote = notes[notes.length - 1];
-      const { title, createdAt } = latestNote;
+      const latestNote = notes[0];
+      const { body, createdAt } = latestNote;
       const latestNoteCreatedAtStr = dayjs(createdAt).format('MM/DD/YYYY');
-      rowItems.push({ type: 'doubleLine', data: { firstLine: title, secondLine: latestNoteCreatedAtStr } });
+      rowItems.push({ type: 'doubleLine', data: { firstLine: body, secondLine: latestNoteCreatedAtStr } });
     }
     rowItems.push({ type: 'stage', data: { text: stage, currentStage: level, palette } });
+    const to = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
     return {
       heading: clientName,
-      to: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY),
+      onHeadingClick: () => onClientDetailTableRowCardHeadingLinkClick(clientName, to),
+      to,
       id,
       rowItems,
       ...pausedTd,

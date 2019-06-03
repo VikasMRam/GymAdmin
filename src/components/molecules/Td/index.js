@@ -20,7 +20,8 @@ const textIconStyles = css`
   ${switchProp('kind', {
     textIcon: css`
       display: flex;
-      align-items: center;`,
+      align-items: center;
+      max-width: unset;`,
   })};
 `;
 
@@ -80,6 +81,11 @@ const TextIconChildrenSpan = styled(Link)`
 const DoubleLineBlock = styled(Block)`
   ${clipStyles}
   ${disabledStyles}
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 `;
 
 const BlockWrapper = styled.div`
