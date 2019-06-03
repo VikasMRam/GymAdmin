@@ -37,11 +37,6 @@ const clientConfigs = [
     path: '/external*',
   },
   {
-    bundle: 'dashboard',
-    ssr: true,
-    path: '/dashboard*',
-  },
-  {
     bundle: 'client',
     ssr: true,
     path: '*',
@@ -69,16 +64,8 @@ const renderEmptyApp = () => {
 // requires compatible configuration
 const getAppRenderer = ({ bundle, api }, extractor) => {
   switch (bundle) {
-    case 'dashboard': {
-      const DashboardApp = extractor.requireEntrypoint('dashboardApp');
-      return makeAppRenderer((
-        <ApiProvider api={api}>
-          <DashboardApp />
-        </ApiProvider>
-      ), extractor);
-    }
     case 'client': {
-      const ClientApp = extractor.requireEntrypoint('clientApp');
+      const ClientApp = extractor.requireEntrypoint('client-node');
       return makeAppRenderer((
         <ApiProvider api={api}>
           <ClientApp />
@@ -127,10 +114,10 @@ const createSetCookie = (res, cookies) => (key, value, maxAge = 27000000) => {
 const makeSid = () => crypto.randomBytes(16).toString('hex');
 
 const loadableMiddleware = () => {
-  const statsFile = path.resolve(process.cwd(), 'dist/public/loadable-stats-client.json');
-  const stats = JSON.parse(readFileSync(statsFile));
-  const extractor = new ChunkExtractor({ statsFile });
   return (req, res, next) => {
+    const statsFile = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
+    const stats = JSON.parse(readFileSync(statsFile));
+    const extractor = new ChunkExtractor({ statsFile });
     req.loadable = { extractor, stats };
     next();
   };

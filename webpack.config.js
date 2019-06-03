@@ -26,6 +26,7 @@ const {
   devServer,
   when,
   optimization,
+  setDevTool,
 } = require('webpack-blocks');
 
 // defaults to dev env, otherwise specify with env vars
@@ -153,6 +154,13 @@ const base = group([
     'process.env.HIDE_CHATBOX': HIDE_CHATBOX || false,
   }),
 
+  devServer({
+    inline: false,
+    writeToDisk(filePath) {
+      return /dist\/(node\/|server)/.test(filePath) || /loadable-stats/.test(filePath);
+    },
+  }),
+
   match(['*.js', '!*node_modules*'], [babel()]),
 
   resolveModules(sourcePath),
@@ -171,10 +179,6 @@ const devCORS = group([
       host: '0.0.0.0',
       port: DEV_PORT,
       compress: true,
-      writeToDisk(filePath) {
-        console.log(filePath)
-        return /dist\/(node|server)\//.test(filePath) || /loadable-stats/.test(filePath);
-      },
     }),
     addPlugins([new webpack.NamedModulesPlugin()]),
   ]),
@@ -214,13 +218,14 @@ const server = createConfig([
     (context, { merge }) => merge({
       watch: true,
     }),
+    setDevTool('eval-source-map'),
     addPlugins([
       new webpack.BannerPlugin({
         banner: 'require("source-map-support").install();',
         raw: true,
         entryOnly: false,
       }),
-      // new SpawnPlugin('node', [process.env.NODE_DEBUG_OPTION || '--inspect', '.']),
+      new SpawnPlugin('node', [process.env.NODE_DEBUG_OPTION || '--inspect', '.']),
     ]),
   ]),
 ]);
@@ -313,7 +318,7 @@ const client = target => createConfig([
 ]);
 
 module.exports = [
-  // client('web'),
-  // client('node'),
+  client('web'),
+  client('node'),
   server,
 ];
