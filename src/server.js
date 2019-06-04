@@ -118,7 +118,7 @@ app.use((req, res, next) => {
   if (!ssr) {
     const { stats } = req.loadable;
     const assets = stats.entrypoints[bundle]
-      .assets.map(asset => `${process.env.WEBPACK_PUBLIC_PATH}${asset}`);
+      .assets.map(asset => `${process.env.PUBLIC_PATH}${asset}`);
 
     res.send(renderHtml({
       content: '',

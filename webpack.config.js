@@ -37,8 +37,7 @@ const GA_ENV = process.env.GA_ENV || 'development';
 const HOST = process.env.HOST || 'http://www.lvh.me';
 const PORT = process.env.PORT || 8000;
 const DEV_PORT = process.env.DEV_PORT || (+PORT + 1) || 8001;
-const PUBLIC_PATH = process.env.PUBLIC_PATH || 'react-assets/';
-const WEBPACK_PUBLIC_PATH = NODE_ENV === 'development' ? `${HOST}:${DEV_PORT}/` : PUBLIC_PATH;
+const PUBLIC_PATH = process.env.PUBLIC_PATH || NODE_ENV === 'development' ? `${HOST}:${DEV_PORT}/` : 'react-assets/';
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
 const DOMAIN = process.env.DOMAIN || 'lvh.me';
@@ -54,11 +53,9 @@ const isStaging = SLY_ENV === 'staging';
 
 // replacements for widgets.js
 const EXTERNAL_PATH = process.env.EXTERNAL_PATH || '/external';
-const EXTERNAL_ASSET_URL = `${WEBPACK_PUBLIC_PATH}external`;
+const EXTERNAL_ASSET_URL = `${PUBLIC_PATH}external`;
 const EXTERNAL_URL = `${HOST}${EXTERNAL_PATH}`;
 const EXTERNAL_DEFAULT_WIDGET_TYPE = 'wizards/caw';
-
-const setConfig = conf => (context, { merge }) => merge(conf);
 
 console.info('Using config', JSON.stringify({
   STORYBOOK_GIT_BRANCH,
@@ -66,7 +63,6 @@ console.info('Using config', JSON.stringify({
   SLY_ENV,
   GA_ENV,
   PUBLIC_PATH,
-  WEBPACK_PUBLIC_PATH,
   HOST,
   PORT,
   DEV_PORT,
@@ -87,8 +83,6 @@ console.info('Using config', JSON.stringify({
 
 const sourcePath = path.join(process.cwd(), SOURCE);
 const outputPath = path.join(process.cwd(), 'dist');
-const clientEntryPath = path.join(sourcePath, 'client.js');
-const dashboardEntryPath = path.join(sourcePath, 'dashboard.js');
 const serverEntryPath = path.join(sourcePath, 'server.js');
 // external scripts and assets
 const externalSourcePath = path.join(sourcePath, 'external');
@@ -131,7 +125,7 @@ const base = group([
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].js',
     path: outputPath,
-    publicPath: WEBPACK_PUBLIC_PATH,
+    publicPath: PUBLIC_PATH,
   }),
 
   defineConstants({
@@ -140,7 +134,6 @@ const base = group([
     'process.env.SLY_ENV': SLY_ENV,
     'process.env.GA_ENV': GA_ENV,
     'process.env.PUBLIC_PATH': PUBLIC_PATH,
-    'process.env.WEBPACK_PUBLIC_PATH': WEBPACK_PUBLIC_PATH,
     'process.env.HOST': HOST,
     'process.env.PORT': PORT,
     'process.env.API_URL': API_URL,
@@ -173,7 +166,7 @@ const devCORS = group([
     devServer({
       contentBase: 'public',
       stats: 'errors-only',
-      historyApiFallback: { index: WEBPACK_PUBLIC_PATH },
+      historyApiFallback: { index: PUBLIC_PATH },
       headers: { 'Access-Control-Allow-Origin': '*' },
       disableHostCheck: true,
       host: '0.0.0.0',
@@ -292,7 +285,7 @@ const client = target => createConfig([
     chunkFilename: '[name].[hash].js',
     path: path.join(outputPath, target === 'web' ? 'public' : 'node'),
     libraryTarget: target === 'node' ? 'commonjs2' : undefined,
-    publicPath: WEBPACK_PUBLIC_PATH,
+    publicPath: PUBLIC_PATH,
   }),
 
   when(target === 'node', [node]),
