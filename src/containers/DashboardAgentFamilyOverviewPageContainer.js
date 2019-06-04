@@ -183,13 +183,13 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
       name: value,
     };
     if (pageNumber) {
-      filters.pageNumber = pageNumber
+      filters.pageNumber = pageNumber;
     }
-    this.sendQuery(history, qs.stringify(filters))
+    this.sendQuery(history, qs.stringify(filters));
   };
 
   sendQuery = delayedExecutor((history, filtersQs) => {
-      history.push({ search: `?${filtersQs}` })
+    history.push({ search: `?${filtersQs}` });
   }, 'familyOverviewSearch', 500);
 
   render() {
