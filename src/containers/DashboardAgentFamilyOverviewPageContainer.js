@@ -1,3 +1,5 @@
+import qs from 'querystring';
+
 import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
 import dayjs from 'dayjs';
@@ -5,9 +7,9 @@ import dayjs from 'dayjs';
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { withUser, prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import {FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY} from 'sly/constants/dashboardAppPaths';
+import { FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
-import { getSearchParams } from 'sly/services/helpers/search';
+import { delayedExecutor, getSearchParams } from 'sly/services/helpers/search';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP, FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
 import SlyEvent from 'sly/services/helpers/events';
@@ -140,20 +142,22 @@ const getPageParams = ({ match, location }) => {
   const type = searchParams.type || 'Prospects';
   const typeStages = FAMILY_STAGE_ORDERED[type];
   const clientType = STAGE_CLIENT_TYPE_MAP[type];
+  const clientName = searchParams.name;
   return {
     pageNumber: searchParams['page-number'],
     type,
     typeStages,
     clientType,
+    clientName,
   };
 };
 
-
 // TODO: Fix Latest Note and Date Added column after api impl is done
 @prefetch('clients', 'getClients', (getClients, { match, location }) => {
-  const { clientType, pageNumber } = getPageParams({ match, location });
+  const { clientType, pageNumber, clientName } = getPageParams({ match, location });
   const filters = {
     'filter[client_type]': clientType,
+    'filter[name]': clientName,
     'page-number': pageNumber,
   };
   return getClients(filters);
@@ -167,7 +171,27 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     status: object,
     match: object,
     location: object,
+    history: object,
   }
+
+  handleSearchTextKeyUp = (event) => {
+    const { value } = event.target;
+    const { match, location, history } = this.props;
+    const { type, pageNumber } = getPageParams({ match, location });
+    const filters = {
+      type,
+      name: value,
+    };
+    if (pageNumber) {
+      filters.pageNumber = pageNumber
+    }
+    this.sendQuery(history, qs.stringify(filters))
+  };
+
+  sendQuery = delayedExecutor((history, filtersQs) => {
+      history.push({ search: `?${filtersQs}` })
+  }, 'familyOverviewSearch', 3500);
+
   render() {
     const {
       clients, status, match, location,
@@ -176,20 +200,23 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const params = getPageParams({ match, location });
     const { type } = params;
     const { clients: clientsStatus } = status;
-    const { isLoading, meta: clientsMeta, error: clientsError } = clientsStatus;
+    const {
+      isLoading, hasStarted, meta: clientsMeta, error: clientsError,
+    } = clientsStatus;
     // const [error] = errors;
     // console.log(clients);
     // console.log(clientsStatus);
-    if (isLoading) {
-      return <div>Loading...</div>;
-    }
     if (clientsError) {
       return <RefreshRedirect to="/" />;
     }
-    if (clients === null) {
-      return <div>Loading...</div>;
+    const isPageLoading = !hasStarted || isLoading;
+    if (isPageLoading) {
+      return (
+        <DashboardAgentFamilyOverviewPage
+          isPageLoading={isPageLoading}
+        />
+      );
     }
-
     const tableContents = convertClientsToTableContents(clients);
     const mobileContents = convertClientsToMobileContents(clients);
     const pagination = getPaginationData(clientsMeta);
@@ -210,6 +237,7 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
         paginationString={paginationString}
         showPagination={showPagination}
         activeTab={type}
+        onSearchTextKeyUp={this.handleSearchTextKeyUp}
       />
     );
   }
