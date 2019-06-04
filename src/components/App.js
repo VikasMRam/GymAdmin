@@ -12,26 +12,28 @@ import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
 import { routes as routesPropType } from 'sly/propTypes/routes';
-import CommunityDetailPageContainer from 'sly/containers/CommunityDetailPageContainer';
-import CommunitySearchPageContainer from 'sly/containers/CommunitySearchPageContainer';
-import StateSearchPageContainer from 'sly/containers/StateSearchPageContainer';
-import HomePageContainer from 'sly/containers/HomePageContainer';
-import NearMePageContainer from 'sly/containers/NearMePageContainer';
-import PromoPageContainer from 'sly/containers/PromoPageContainer';
-import AgentsPageContainer from 'sly/containers/AgentsPageContainer';
-import OurHistoryPage from 'sly/components/pages/OurHistoryPage';
-import PasswordResetPageContainer from 'sly/containers/PasswordResetPageContainer';
-import HowItWorksDetailPageContainer from 'sly/containers/HowItWorksDetailPageContainer';
-import Error from 'sly/components/pages/Error';
+
 import Router from 'sly/components/molecules/Router';
-import LegalPolicyPage from 'sly/components/pages/LegalPolicyPage';
-import EntityApprovalContainer from 'sly/containers/EntityApprovalContainer';
-import BookATourPageContainer from 'sly/containers/BookATourPageContainer';
-import PricingWizardPageContainer from 'sly/containers/PricingWizardPageContainer';
-import AgentProfilePageContainer from 'sly/containers/AgentProfilePageContainer';
-import AgentRegionPageContainer from 'sly/containers/AgentRegionPageContainer';
-import PartnersPage from 'sly/components/pages/PartnersPage';
-import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
+
+import Error from /* webpackChunkName: "chunkError" */ 'sly/components/pages/Error';
+import OurHistoryPage from /* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage';
+import LegalPolicyPage from /* webpackChunkName: "chunkLegalPolicy" */ 'sly/components/pages/LegalPolicyPage';
+import PartnersPage from /* webpackChunkName: "chunkPartners" */ 'sly/components/pages/PartnersPage';
+import CommunityDetailPageContainer from /* webpackChunkName: "chunkCommunityDetail" */ 'sly/containers/CommunityDetailPageContainer';
+import CommunitySearchPageContainer from /* webpackChunkName: "chunkCommunitySearch" */ 'sly/containers/CommunitySearchPageContainer';
+import StateSearchPageContainer from /* webpackChunkName: "chunkStateSearch" */ 'sly/containers/StateSearchPageContainer';
+import HomePageContainer from /* webpackChunkName: "chunkHomePage" */ 'sly/containers/HomePageContainer';
+import NearMePageContainer from /* webpackChunkName: "chunkNearMe" */ 'sly/containers/NearMePageContainer';
+import PromoPageContainer from /* webpackChunkName: "chunkPromo" */ 'sly/containers/PromoPageContainer';
+import AgentsPageContainer from /* webpackChunkName: "chunkAgents" */ 'sly/containers/AgentsPageContainer';
+import PasswordResetPageContainer from /* webpackChunkName: "chunkPasswordReset" */ 'sly/containers/PasswordResetPageContainer';
+import HowItWorksDetailPageContainer from /* webpackChunkName: "chunkHowItWorks" */ 'sly/containers/HowItWorksDetailPageContainer';
+import EntityApprovalContainer from /* webpackChunkName: "chunkEntityApprovalContainer" */ 'sly/containers/EntityApprovalContainer';
+import BookATourPageContainer from /* webpackChunkName: "chunkBookATour" */ 'sly/containers/BookATourPageContainer';
+import PricingWizardPageContainer from /* webpackChunkName: "chunkPricingWizard" */ 'sly/containers/PricingWizardPageContainer';
+import AgentProfilePageContainer from /* webpackChunkName: "chunkAgentProfile" */ 'sly/containers/AgentProfilePageContainer';
+import AgentRegionPageContainer from /* webpackChunkName: "chunkAgentRegion" */ 'sly/containers/AgentRegionPageContainer';
+import ChatBoxContainer from /* webpackChunkName: "chunkChatBox" */ 'sly/containers/ChatBoxContainer';
 
 setGlobalStyles();
 
@@ -206,7 +208,7 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          <Router>
+          <Router bailRegex={/^\/dashboard/}>
             <Switch>
               <Route
                 path="/ping"

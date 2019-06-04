@@ -1,16 +1,26 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { arrayOf, bool, string, func, number, shape } from 'prop-types';
-import { ifProp, switchProp } from 'styled-tools';
+import { arrayOf, bool, string, func, number, shape, oneOf } from 'prop-types';
+import { ifProp } from 'styled-tools';
 
-import { size } from 'sly/components/themes';
+import { palette as palettePropType } from 'sly/propTypes/palette';
+import { size, assetPath, getKey } from 'sly/components/themes';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import cursor from 'sly/components/helpers/cursor';
-import { Box, Button, Hr, Span } from 'sly/components/atoms';
+import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/constants/communityTile';
+import { Box, Button, Hr, Span, Image } from 'sly/components/atoms';
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
 import IconButton from 'sly/components/molecules/IconButton';
+
+const communityDefaultImages = {
+  'up to 20 Beds': assetPath('vectors/Board_and_Care.svg'),
+  '20 - 51 Beds': assetPath('vectors/Medium_Assisted_Living.svg'),
+  '51 +': assetPath('vectors/Large_Assisted_Living.svg'),
+};
+
+const getImageSize = ({ imageSize }) => imageSize ? getKey(`sizes.tile.${imageSize}`).width : COLUMN_LAYOUT_IMAGE_WIDTH;
 
 const FullWidthButton = fullWidth(Button);
 FullWidthButton.displayName = 'FullWidthButton';
@@ -33,13 +43,74 @@ const StyledMediaGallery = styled(MediaGallery)`
     border-top-left-radius: ${size('spacing.small')};
     border-top-right-radius: ${size('spacing.small')};
   }
+  ${p => p.layout === 'column' && css`
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      img {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+  `}
+`;
+
+const StyledImage = styled(Image)`
+  img {
+    border-top-left-radius: ${size('spacing.small')};
+    border-top-right-radius: ${size('spacing.small')};
+  }
+  ${p => p.layout === 'column' && css`
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      height: 100%;
+      img {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+  `}
 `;
 
 const StyledBox = styled(Box)`
+  border: 0;
   ${p => p.hasImages && css`
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   `}
+  ${p => p.layout === 'column' && css`
+    // required for text clipping
+    overflow: hidden;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  `}
+`;
+
+const Wrapper = styled.div`
+  // no column layout support below tablet
+  ${p => p.layout === 'column' && css`
+    @media screen and (min-width: ${size('breakpoint.tablet')}) {
+      display: grid;
+      grid-template-columns: ${getImageSize} auto;
+    }
+  `}
+
+  &:hover {
+    Button {
+      display: initial;
+    }
+  }
+`;
+
+const ImageWrapper = styled.div`
+  position: relative;
+
+  // because we are passing aspectRatio prop, we have a relative position
+  // in the Image so we can use here absolute
+  Button {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
@@ -50,42 +121,78 @@ const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, on
 
 const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
-  onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className,
+  onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
+  layout, showFloorPlan, palette, showDescription, imageSize, showSeeMoreButtonOnHover,
 }) => {
-  const { name, gallery } = community;
+  const {
+    name, gallery = {}, mainImage, communitySize,
+  } = community;
+  let { imageUrl } = community;
+  imageUrl = imageUrl || mainImage;
   const { images = [] } = gallery;
   const galleryImages = images.map((img, i) => ({ ...img, src: img.sd, alt: `${name} ${i + 1}` }));
   const icon = isFavourite ? 'favourite-dark' : 'favourite-empty';
   const iconPalette = isFavourite ? 'secondary' : 'white';
   const onIconClick = isFavourite ? onUnfavouriteClick : onFavouriteClick;
-
+  const hasImages = galleryImages.length > 0 || imageUrl;
+  // one image only
+  if (galleryImages.length < 2 && !noGallery) {
+    noGallery = true;
+  }
+  if (!imageUrl || imageUrl.indexOf('maps.googleapis.com/maps/api/streetview') > -1) {
+    /* default image */
+    let key = 'up to 20 Beds';
+    if (communitySize) {
+      key = communitySize;
+    }
+    imageUrl = communityDefaultImages[key];
+  }
   const topRightSection = () => (
     <IconButton transparent icon={icon} iconSize="regular" palette={iconPalette} onClick={onIconClick} />
   );
 
   return (
-    <div className={className}>
-      <StyledMediaGallery
-        communityName={name}
-        images={galleryImages}
-        topRightSection={topRightSection}
-        onSlideChange={onSlideChange}
-        currentSlide={currentSlide}
-      />
-      <StyledBox hasImages={galleryImages.length > 0}>
-        <StyledCommunityInfo community={community} marginBottom={!!actionButtons.length} />
+    <Wrapper layout={layout} className={className} imageSize={imageSize}>
+      {!noGallery &&
+        <StyledMediaGallery
+          communityName={name}
+          images={galleryImages}
+          topRightSection={topRightSection}
+          onSlideChange={onSlideChange}
+          currentSlide={currentSlide}
+          layout={layout}
+        />
+      }
+      {noGallery &&
+        <ImageWrapper>
+          <StyledImage
+            layout={layout}
+            src={imageUrl}
+            aspectRatio={layout === 'column' ? '3:2' : '16:9'}
+          />
+          {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
+        </ImageWrapper>
+      }
+      <StyledBox layout={layout} padding="large" hasImages={hasImages}>
+        <StyledCommunityInfo
+          palette={palette}
+          community={community}
+          showFloorPlan={showFloorPlan}
+          marginBottom={!!actionButtons.length}
+          showDescription={showDescription}
+        />
         {buildActionButtons(actionButtons)}
         {(note || addNote) && <Hr />}
         {note && <Span size="caption">{note}</Span>}
         {note && <CursorSpan palette="primary" size="caption" onClick={onEditNoteClick}> Edit note</CursorSpan>}
         {!note && addNote && <AddNote palette="primary" size="caption" onClick={onAddNoteClick}>Add a note</AddNote>}
       </StyledBox>
-    </div>
+    </Wrapper>
   );
 };
 
 CommunityTile.propTypes = {
-  community: communityPropType,
+  community: communityPropType.isRequired,
   actionButtons: arrayOf(shape({
     text: string.isRequired,
     ghost: bool,
@@ -98,13 +205,21 @@ CommunityTile.propTypes = {
   isFavourite: bool,
   onFavouriteClick: func,
   onUnfavouriteClick: func,
-  onSlideChange: func.isRequired,
+  onSlideChange: func,
   currentSlide: number,
   className: string,
+  noGallery: bool,
+  showFloorPlan: bool,
+  layout: oneOf(['column', 'row']),
+  palette: palettePropType,
+  showDescription: bool,
+  showSeeMoreButtonOnHover: bool,
+  imageSize: oneOf(Object.keys(getKey('sizes.tile'))),
 };
 
 CommunityTile.defaultProps = {
   actionButtons: [],
+  layout: 'row',
 };
 
 export default CommunityTile;

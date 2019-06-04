@@ -8,16 +8,27 @@ import { CUSTOMER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ModalContainer from 'sly/containers/ModalContainer';
 import DashboardMenu from 'sly/components/molecules/DashboardMenu';
+import SlyEvent from 'sly/services/helpers/events';
+
+const onMenuItemClick = (menuItem) => {
+  const { label } = menuItem;
+  const event = {
+    category: 'DashboardMenuItem',
+    action: 'click',
+    label,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
 
 const menuItems = [
   {
-    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE,
+    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick,
   },
   {
-    label: 'My Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH, role: CUSTOMER_ROLE,
+    label: 'My Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick,
   },
   {
-    label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAMILIES_PATH, role: AGENT_ROLE,
+    label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAMILIES_PATH, role: AGENT_ROLE, onClick: onMenuItemClick,
   },
 ];
 
@@ -32,8 +43,10 @@ const Header = styled.div`
 
 const Column = styled.aside`
   background-color: ${palette('white.base')};
+  display:none;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: block;
     width: ${size('element.xxHuge')};
     display: inherit;
     grid-column: 1 / 2;

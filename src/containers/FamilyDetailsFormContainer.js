@@ -9,6 +9,7 @@ import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
 import { createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
 import clientPropType from 'sly/propTypes/client';
 import { query, getRelationship } from 'sly/services/newApi';
+import SlyEvent from 'sly/services/helpers/events';
 
 const validate = createValidator({
   phone: [usPhone, dependentRequired('email', 'Either Phone or Email is required')],
@@ -32,6 +33,7 @@ export default class FamilyDetailsFormContainer extends Component {
   static propTypes = {
     updateClient: func.isRequired,
     updateUuidAux: func.isRequired,
+    notifyInfo: func.isRequired,
     notifyError: func.isRequired,
     client: clientPropType.isRequired,
     rawClient: object,
@@ -40,7 +42,7 @@ export default class FamilyDetailsFormContainer extends Component {
 
   handleSubmit = (data) => {
     const {
-      client, updateClient, rawClient, notifyError, uuidAux, updateUuidAux,
+      client, updateClient, rawClient, notifyInfo, notifyError, uuidAux, updateUuidAux,
     } = this.props;
     const { id } = client;
     const { id: uuidID } = uuidAux;
@@ -97,6 +99,15 @@ export default class FamilyDetailsFormContainer extends Component {
 
     return updateClient({ id }, newClient)
       .then(() => updateUuidAux({ id: uuidID }, newUuidAux))
+      .then(() => {
+        notifyInfo('Family successfully updated.');
+        SlyEvent.getInstance().sendEvent({
+          category: 'fdetails-form',
+          action: 'submit',
+          label: 'user-details',
+          value: '',
+        });
+      })
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { body } = r;

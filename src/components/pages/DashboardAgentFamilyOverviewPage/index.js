@@ -11,6 +11,7 @@ import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Table from 'sly/components/organisms/Table';
 import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
+import SlyEvent from 'sly/services/helpers/events';
 
 const SmallScreenSection = styled.div`
   display: block;
@@ -88,6 +89,25 @@ const tabIDLabelMap = {
 
 const tabIDs = Object.keys(tabIDLabelMap);
 
+const onTabClick = (label) => {
+  const event = {
+    category: 'AgentDashboardFamilyOverviewTab',
+    action: 'click',
+    label,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
+
+const getBasePath = (activeTab) => {
+  if (activeTab === tabIDs[1]) {
+    return `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`;
+  } else if (activeTab === tabIDs[2]) {
+    return `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`;
+  } else {
+    return FAMILY_DASHBOARD_FAMILIES_PATH;
+  }
+};
+
 const DashboardAgentFamilyOverviewPage = ({
   mobileContents, tableContents, pagination, paginationString, activeTab, showPagination, onSearchTextKeyUp, isPageLoading,
 }) => {
@@ -98,13 +118,13 @@ const DashboardAgentFamilyOverviewPage = ({
   );
   const tabsViewTemplate = (view, prospectsTabLabel, connectedTabLabel, closedTabLabel) => (
     <StyledTabs activeTab={activeTab}>
-      <div id={tabIDs[0]} label={prospectsTabLabel} to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+      <div id={tabIDs[0]} label={prospectsTabLabel} to={FAMILY_DASHBOARD_FAMILIES_PATH} onClick={() => onTabClick(prospectsLabel)}>
         {view}
       </div>
-      <div id={tabIDs[1]} label={connectedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`}>
+      <div id={tabIDs[1]} label={connectedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`} onClick={() => onTabClick(connectedLabel)}>
         {view}
       </div>
-      <div id={tabIDs[2]} label={closedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`}>
+      <div id={tabIDs[2]} label={closedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`} onClick={() => onTabClick(closedLabel)}>
         {view}
       </div>
     </StyledTabs>

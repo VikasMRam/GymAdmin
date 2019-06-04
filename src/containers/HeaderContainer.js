@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { func, object, string } from 'prop-types';
 
-import { CUSTOMER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
+import { CUSTOMER_ROLE, PROVIDER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
 import { FAMILY_DASHBOARD_FAMILIES_PATH, FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH } from 'sly/constants/dashboardAppPaths';
 import SlyEvent from 'sly/services/helpers/events';
 import AuthContainer from 'sly/containers/AuthContainer';
@@ -22,16 +22,26 @@ const smallScreenMenuItems = [
   { name: 'Home', href: '/' },
 ];
 
-const defaultMenuItems = [
-  {
-    name: 'Call for help (855) 866-4515', href: 'tel:+18558664515', palette: 'primary', hideInBigScreen: true, section: 2,
-  },
-  {
-    name: 'Resources', href: '/resources', hideInBigScreen: true, section: 2,
-  },
-  { name: 'Contact Us', href: '/contact', section: 2 },
-  { name: 'About Us', href: '/about', section: 2 },
-];
+const defaultMenuItems = (user) => {
+  const menuItems = [
+    {
+      name: 'Call for help (855) 866-4515', href: 'tel:+18558664515', palette: 'primary', hideInBigScreen: true, section: 2,
+    },
+    {
+      name: 'Resources', href: '/resources', hideInBigScreen: true, section: 2,
+    },
+    { name: 'Contact Us', href: '/contact', section: 2 },
+    { name: 'About Us', href: '/about', section: 2 },
+  ];
+  if (user) {
+    const { roleID } = user;
+    /* eslint-disable-next-line no-bitwise */
+    if (roleID & PROVIDER_ROLE) {
+      menuItems.unshift({ name: 'Dashboard', href: '/mydashboard', section: 2 });
+    }
+  }
+  return menuItems;
+};
 
 const customerMenuItems = [
   {
@@ -52,10 +62,12 @@ const loggedInMenuItems = (user) => {
   let roleBasedItems = [];
   if (user) {
     const { roleID } = user;
-    if (roleID === CUSTOMER_ROLE) {
+    /* eslint-disable-next-line no-bitwise */
+    if (roleID & CUSTOMER_ROLE) {
       roleBasedItems = customerMenuItems;
     }
-    if (roleID === AGENT_ROLE) {
+    /* eslint-disable-next-line no-bitwise */
+    if (roleID & AGENT_ROLE) {
       roleBasedItems = agentMenuItems;
     }
     roleBasedItems = [...roleBasedItems, { name: 'Log Out', section: 3 }];
@@ -69,7 +81,7 @@ const loginHeaderItems = user => user
   ? [{ name: 'My Seniorly' }]
   : [{ name: 'Sign in', isButton: true }];
 
-const generateMenuItems = user => [...defaultMenuItems, ...loggedInMenuItems(user)];
+const generateMenuItems = user => [...defaultMenuItems(user), ...loggedInMenuItems(user)];
 
 const sendEvent = (category, action, label, value) => SlyEvent.getInstance().sendEvent({
   category,

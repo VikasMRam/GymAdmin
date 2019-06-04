@@ -2,7 +2,9 @@ import React, { Fragment, Component } from 'react';
 import { bool } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
+import Dotdotdot from 'react-dotdotdot';
 
+import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size } from 'sly/components/themes';
 import { formatRating } from 'sly/services/helpers/rating';
 import { community as communityPropType } from 'sly/propTypes/community';
@@ -26,6 +28,7 @@ const StyledIcon = styled(Icon)`
 const Rate = styled(Block)`
   margin-right: ${size('spacing.large')};
   margin-bottom: 0;
+  line-height: ${size('lineHeight.minimal')};
 `;
 
 const RatingWrapper = styled(Block)`
@@ -44,26 +47,48 @@ const RatingValue = styled.div`
 `;
 
 const Name = styled(ClampedText)`
+  line-height: ${size('text.title')};
   margin-bottom: ${size('spacing.small')};
+`;
+
+const Info = styled(ClampedText)`
+  line-height: ${size('text.subtitle')};
 `;
 
 export default class CommunityInfo extends Component {
   static propTypes = {
     community: communityPropType,
     inverted: bool,
+    showFloorPlan: bool,
+    showDescription: bool,
+    palette: palettePropType,
   };
 
-  renderEstimatedRate = startingRate => startingRate ? (
-    <Rate palette={this.props.inverted ? 'white' : 'primary'} weight="medium">
-      Estimated <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
-    </Rate>
-  ) : null;
+  static defaultProps = {
+    showFloorPlan: true,
+  };
 
-  renderProviderRate = startingRate => startingRate ? (
-    <Rate palette={this.props.inverted ? 'white' : 'primary'} weight="medium">
-      <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
-    </Rate>
-  ) : null;
+  renderEstimatedRate = (startingRate) => {
+    const { inverted, palette } = this.props;
+    const paletteProp = palette || (inverted ? 'white' : 'primary');
+
+    return startingRate ? (
+      <Rate palette={paletteProp} weight="medium">
+        Estimated <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
+      </Rate>
+    ) : null;
+  };
+
+  renderProviderRate = (startingRate) => {
+    const { inverted, palette } = this.props;
+    const paletteProp = palette || (inverted ? 'white' : 'primary');
+
+    return startingRate ? (
+      <Rate palette={paletteProp} weight="medium">
+        <NumberFormat value={startingRate} displayType="text" thousandSeparator prefix="$" />/month
+      </Rate>
+    ) : null;
+  };
 
   renderRate = ({ estimated, startingRate }) => estimated ? (
     this.renderEstimatedRate(startingRate)
@@ -81,15 +106,21 @@ export default class CommunityInfo extends Component {
   );
 
   render() {
-    const { community, inverted, ...props } = this.props;
+    const {
+      community, inverted, showFloorPlan, showDescription, ...props
+    } = this.props;
     const {
       name, webViewInfo, floorPlanString, propInfo, propRatings,
       address, addressString,
     } = community;
+    let { description } = community;
     let { numReviews, typeCare = [] } = community;
     let { reviewsValue } = community;
     if (propInfo) {
       ({ typeCare } = propInfo);
+      if (!description) {
+        ({ communityDescription: description } = propInfo);
+      }
     }
     let floorPlanComponent = null;
     let livingTypeComponent = null;
@@ -109,6 +140,7 @@ export default class CommunityInfo extends Component {
       ({ numReviews } = propRatings);
     }
     let formattedAddress = addressString;
+    let addressComponent;
     if (address) {
       const {
         line1, line2, city, state, zip,
@@ -120,16 +152,16 @@ export default class CommunityInfo extends Component {
         .replace(/, ,/g, ', ');
     }
 
-    if (floorPlan) {
+    if (floorPlan && showFloorPlan) {
       const roomTypes = floorPlan.split(',');
       floorPlanComponent = (
         <IconTextWrapper>
           <StyledIcon icon="bed" palette={inverted ? 'white' : 'grey'} size="small" />
-          <ClampedText title={roomTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
+          <Info title={roomTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {roomTypes.map((roomType, i) =>
               <Fragment key={roomType}>{!!i && <Fragment>, </Fragment>}{roomType}</Fragment>)}
-          </ClampedText>
+          </Info>
         </IconTextWrapper>
       );
     }
@@ -137,22 +169,25 @@ export default class CommunityInfo extends Component {
       livingTypeComponent = (
         <IconTextWrapper>
           <StyledIcon icon="hospital" palette={inverted ? 'white' : 'grey'} size="small" />
-          <ClampedText title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
+          <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
             {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
             {livingTypes.map((livingType, i) =>
               <Fragment key={livingType}>{!!i && <Fragment>{i === livingTypes.length - 1 ? ' & ' : ', '}</Fragment>}{livingType}</Fragment>)}
-          </ClampedText>
+          </Info>
         </IconTextWrapper>
       );
     }
-    const addressComponent = (
-      <IconTextWrapper>
-        <StyledIcon icon="location" palette={inverted ? 'white' : 'grey'} size="small" />
-        <ClampedText title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
-          {formattedAddress}
-        </ClampedText>
-      </IconTextWrapper>
-    );
+
+    if (formattedAddress) {
+      addressComponent = (
+        <IconTextWrapper>
+          <StyledIcon icon="location" palette={inverted ? 'white' : 'grey'} size="small" />
+          <Info title={livingTypes.join(',')} palette={inverted ? 'white' : 'grey'} size="caption">
+            {formattedAddress}
+          </Info>
+        </IconTextWrapper>
+      );
+    }
 
     return (
       <Wrapper {...props}>
@@ -167,6 +202,13 @@ export default class CommunityInfo extends Component {
         {addressComponent}
         {livingTypeComponent}
         {floorPlanComponent}
+        {showDescription &&
+          <Block palette={inverted ? 'white' : 'grey'} size="caption">
+            <Dotdotdot clamp={2}>
+              {description}
+            </Dotdotdot>
+          </Block>
+        }
       </Wrapper>
     );
   }

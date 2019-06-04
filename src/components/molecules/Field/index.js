@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, bool, oneOf, number, oneOfType, node } from 'prop-types';
+import { string, bool, oneOf, number, oneOfType, node, array } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -182,6 +182,8 @@ Field.propTypes = {
   value: oneOfType([
     string,
     number,
+    array,
+    bool,
   ]),
   className: string,
   invalid: bool,

@@ -35,9 +35,7 @@ const updateOrDeleteReducer = (state, { type, payload, meta }) => {
   }
 
   let newIds = [...list.ids.slice(0, index)];
-  if (needleIsObject) {
-    newIds = [...newIds, ...list.ids[index], ...payload.ids];
-  } else if (payload) {
+  if (needleIsObject || payload) {
     newIds = [...newIds, ...payload.ids];
   }
   newIds = [...newIds, ...list.ids.slice(index + 1)];

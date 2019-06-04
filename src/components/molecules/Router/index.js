@@ -42,6 +42,7 @@ export default class Router extends Component {
     staticContext: object,
     authenticated: object,
     ensureAuthenticated: func,
+    bailRegex: object,
   };
 
   static defaultProps = {
@@ -108,7 +109,12 @@ export default class Router extends Component {
       location,
       children,
       staticContext,
+      bailRegex,
     } = this.props;
+
+    if (bailRegex && location.pathname.match(bailRegex)) {
+      return <RefreshRedirect to={`${location.pathname}${location.search}${location.hash}`} />;
+    }
 
     if (requiresAuth && status.user.status === 401) {
       const afterLogin = `${location.pathname}${location.search}${location.hash}`;

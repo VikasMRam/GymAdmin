@@ -17,13 +17,15 @@ import {
   FAMILY_DASHBOARD_FAMILIES_PATH,
   FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
 } from 'sly/constants/dashboardAppPaths';
-import Error from 'sly/components/pages/Error';
+
 import Router from 'sly/components/molecules/Router';
-import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
-import DashboardFavoritesPageContainer from 'sly/containers/DashboardFavoritesPageContainer';
-import DashboardMyProfilePageContainer from 'sly/containers/DashboardMyProfilePageContainer';
-import DashboardMyFamiliesDetailsPageContainer from 'sly/containers/DashboardMyFamiliesDetailsPageContainer';
-import DashboardAgentFamilyOverviewPageContainer from 'sly/containers/DashboardAgentFamilyOverviewPageContainer';
+
+import Error from /* webpackChunkName: "chunkError" */ 'sly/components/pages/Error';
+import ChatBoxContainer from/* webpackChunkName: "chunkChatBox" */ 'sly/containers/ChatBoxContainer';
+import DashboardFavoritesPageContainer from/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/containers/DashboardFavoritesPageContainer';
+import DashboardMyProfilePageContainer from/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer';
+import DashboardMyFamiliesDetailsPageContainer from/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer';
+import DashboardAgentFamilyOverviewPageContainer from/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardAgentFamilyOverviewPageContainer';
 
 setGlobalStyles();
 
@@ -82,7 +84,7 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          <Router requiresAuth>
+          <Router bailRegex={/^\/(?!dashboard)/} requiresAuth>
             <Switch>
               {App.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />

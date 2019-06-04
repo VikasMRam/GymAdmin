@@ -1,21 +1,38 @@
 {
   "presets": [
-    ["env", {
+    ["@babel/preset-env", {
       "modules": false,
-      "useBuiltIns": true
     }],
-    "react",
-    "stage-1"
+    "@babel/preset-react",
   ],
   "plugins": [
-    "react-hot-loader/babel",
-    "transform-decorators-legacy",
-    "transform-export-extensions"
+    // Stage 0
+    // "@babel/plugin-proposal-function-bind",
+
+    // Stage 1
+    "@babel/plugin-proposal-export-default-from",
+    // "@babel/plugin-proposal-logical-assignment-operators",
+    ["@babel/plugin-proposal-optional-chaining", { "loose": false }],
+    ["@babel/plugin-proposal-pipeline-operator", { "proposal": "minimal" }],
+    ["@babel/plugin-proposal-nullish-coalescing-operator", { "loose": false }],
+    "@babel/plugin-proposal-do-expressions",
+
+    // Stage 2
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose" : true }],
+
+    "transform-export-extensions",
+
+    ["styled-components", {
+      "displayName": true
+    }],
+    "@babel/plugin-syntax-dynamic-import"
   ],
   "env": {
     "development": {
       "plugins": [
-        "transform-es2015-modules-commonjs",
+        "react-hot-loader/babel",
+        // "transform-es2015-modules-commonjs",
         ["styled-components", {
           "minify": false
         }]
@@ -26,25 +43,18 @@
         "transform-es2015-modules-commonjs",
         ["styled-components", {
           "fileName": false,
-          "displayName": true,
           "minify": false
         }]
       ]
     },
     "staging": {
       "plugins": [
-        "transform-react-remove-prop-types",
-        ["styled-components", {
-          "displayName": true
-        }]
+        // "transform-react-remove-prop-types",
       ]
     },
     "production": {
       "plugins": [
-        "transform-react-remove-prop-types",
-        ["styled-components", {
-          "displayName": true
-        }]
+        // "transform-react-remove-prop-types",
       ]
     }
   }

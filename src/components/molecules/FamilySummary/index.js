@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { string, bool } from 'prop-types';
+import NumberFormat from 'react-number-format';
 
 import pad from 'sly/components/helpers/pad';
 import cursor from 'sly/components/helpers/cursor';
 import { size } from 'sly/components/themes';
 import clientPropType from 'sly/propTypes/client';
 import { Box, Heading, Label, Block, Link } from 'sly/components/atoms';
+import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
+import { FAMILY_STAGE_NEW } from 'sly/constants/familyDetails';
 
 const ColumWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
@@ -61,16 +64,22 @@ const FamilySummary = ({
           <Block size="caption">{client.uuidAux.uuidInfo.residentInfo.fullName}</Block>
         </ColumWrapper>
       }
-      {client.clientInfo && client.clientInfo.phoneNumber &&
+      {client.stage !== FAMILY_STAGE_NEW && client.clientInfo && client.clientInfo.phoneNumber &&
         <ColumWrapper>
-          <Label palette="grey">Phone Number</Label>
-          <StyledLink href={`tel:+1${client.clientInfo.phoneNumber}`}>Click To Call</StyledLink>
+          <Label palette="grey">Phone number</Label>
+          <StyledLink href={`tel:+1${client.clientInfo.phoneNumber}`} onClick={clickEventHandler('fdetails-summary', 'phone')} target="_blank">
+            <NumberFormat
+              value={client.clientInfo.phoneNumber}
+              format="###-###-####"
+              displayType="text"
+            />
+          </StyledLink>
         </ColumWrapper>
       }
-      {client.clientInfo && client.clientInfo.email &&
+      {client.stage !== FAMILY_STAGE_NEW && client.clientInfo && client.clientInfo.email &&
         <ColumWrapper>
           <Label palette="grey">Email</Label>
-          <StyledLink href={`mailto:${client.clientInfo.email}`}>Click To Send Email</StyledLink>
+          <StyledLink href={`mailto:${client.clientInfo.email}`} onClick={clickEventHandler('fdetails-summary', 'email')} target="_blank" >Click To Send Email</StyledLink>
         </ColumWrapper>
       }
       {client.uuidAux && client.uuidAux.uuidInfo && client.uuidAux.uuidInfo.housingInfo.lookingFor &&
@@ -104,7 +113,7 @@ const FamilySummary = ({
         <Block size="caption">{client.clientInfo.slyMessage}</Block>
       </SlyIntro>
     }
-    <StyledLink to={to}>See more family details</StyledLink>
+    <StyledLink to={to} onClick={clickEventHandler('fdetails-summary', 'seeMoreFamilyDetails')} >See more family details</StyledLink>
   </Box>
 );
 

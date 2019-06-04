@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+// eslint-disable-next-line
 const Svgo = require('svgo');
 
 fs.readdirSync(__dirname).forEach((filename) => {
