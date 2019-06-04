@@ -6,7 +6,7 @@ import Helmet from 'react-helmet';
 import { googleTagManagerId, isProd, googleAppId, version } from 'sly/config';
 
 const Html = ({
-  styles, assets, state, content,
+  linkElements, styleElements, scriptElements, state, content,
 }) => {
   const helmet = Helmet.renderStatic();
   const htmlAttrs = helmet.htmlAttributes.toComponent();
@@ -24,14 +24,15 @@ const Html = ({
         */}
         <meta name="google-signin-client_id" content={googleAppId} />
 
+        {linkElements}
         {helmet.link.toComponent()}
-        {helmet.script.toComponent()}
-        {styles}
+        {styleElements}
       </head>
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
         {state.trim().length > 0 && <script dangerouslySetInnerHTML={{ __html: state }} />}
-        {assets.map(path => <script key={path} src={`${path}`} defer />)}
+        {helmet.script.toComponent()}
+        {scriptElements}
         {/* eslint-disable */}
 
         {/* Google Tag Manager */}
@@ -80,8 +81,9 @@ const Html = ({
 };
 
 Html.propTypes = {
-  styles: PropTypes.node.isRequired,
-  assets: PropTypes.array.isRequired,
+  linkElements: PropTypes.array.isRequired,
+  styleElements: PropTypes.array.isRequired,
+  scriptElements: PropTypes.array.isRequired,
   state: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
 };

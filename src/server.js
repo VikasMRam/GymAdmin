@@ -52,9 +52,11 @@ const getErrorContent = (err) => {
 };
 
 const renderHtml = ({
-  serverState, initialState, content, sheet, assets,
+  serverState, initialState, content, sheet, extractorWeb,
 }) => {
-  const styles = sheet ? sheet.getStyleElement() : '';
+  const linkElements = extractorWeb.getLinkElements();
+  const styleElements = extractorWeb.getStyleElements();
+  const scriptElements = [sheet ? sheet.getStyleElement() : null, ...extractorWeb.getScriptElements()];
 
   const state = `
     ${serverState ? `window.__SERVER_STATE__ = ${serialize(serverState)};` : ''}
@@ -62,10 +64,11 @@ const renderHtml = ({
   `;
 
   const props = {
-    styles,
-    assets,
     state,
     content,
+    linkElements,
+    styleElements,
+    scriptElements,
   };
   const html = <Html {...props} />;
   return `<!doctype html>\n${renderToStaticMarkup(html)}`;
@@ -268,17 +271,18 @@ app.use(async (req, res, next) => {
 
 // render
 app.use(async (req, res, next) => {
-  const { assets, store, api } = req.clientConfig;
+  const { store, api } = req.clientConfig;
 
   const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
   const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
 
   try {
     const extractorNode = new ChunkExtractor({ statsFile: statsNode });
-    const ClientApp = extractorNode.requireEntrypoint();
+    const { default: ClientApp } = extractorNode.requireEntrypoint();
+
+    const extractorWeb = new ChunkExtractor({ statsFile: statsWeb });
 
     const sheet = new ServerStyleSheet();
-    const extractorWeb = new ChunkExtractor({ statsFile: statsWeb });
     const context = {};
 
     const app = sheet.collectStyles(extractorWeb.collectChunks((
@@ -314,7 +318,7 @@ app.use(async (req, res, next) => {
         initialState,
         content,
         sheet,
-        assets,
+        extractorWeb,
       }));
     }
   } catch (error) {

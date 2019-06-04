@@ -196,6 +196,12 @@ const uglifyJs = group([
   ]),
 ]);
 
+const node = (context, { merge }) => merge({
+  target: 'node',
+  externals: [nodeExternals()],
+  stats: 'errors-only',
+});
+
 const server = createConfig([
   base,
 
@@ -206,11 +212,7 @@ const server = createConfig([
     libraryTarget: 'commonjs2',
   }),
 
-  (context, { merge }) => merge({
-    target: 'node',
-    externals: [nodeExternals()],
-    stats: 'errors-only',
-  }),
+  node,
 
   assets,
 
@@ -289,10 +291,11 @@ const client = target => createConfig([
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].js',
     path: path.join(outputPath, target === 'web' ? 'public' : 'node'),
+    libraryTarget: target === 'node' ? 'commonjs2' : undefined,
     publicPath: WEBPACK_PUBLIC_PATH,
   }),
 
-  setConfig({ target }),
+  when(target === 'node', [node]),
 
   entryPoint(path.join(sourcePath, `client-${target}.js`)),
 
