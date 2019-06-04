@@ -190,7 +190,7 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
 
   sendQuery = delayedExecutor((history, filtersQs) => {
       history.push({ search: `?${filtersQs}` })
-  }, 'familyOverviewSearch', 3500);
+  }, 'familyOverviewSearch', 500);
 
   render() {
     const {
