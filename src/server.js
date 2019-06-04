@@ -43,39 +43,6 @@ const clientConfigs = [
   },
 ];
 
-const makeAppRenderer = (renderedApp, extractor) => ({
-  store, context, location, sheet,
-}) => {
-  const app = sheet.collectStyles(extractor.collectChunks((
-    <Provider store={store}>
-      <StaticRouter context={context} location={location}>
-        {renderedApp}
-      </StaticRouter>
-    </Provider>
-  )));
-
-  return renderToString(app);
-};
-
-const renderEmptyApp = () => {
-  return { html: '', state: {} };
-};
-
-// requires compatible configuration
-const getAppRenderer = ({ bundle, api }, extractor) => {
-  switch (bundle) {
-    case 'client': {
-      const ClientApp = extractor.requireEntrypoint('client-node');
-      return makeAppRenderer((
-        <ApiProvider api={api}>
-          <ClientApp />
-        </ApiProvider>
-      ), extractor);
-    }
-    default: return renderEmptyApp;
-  }
-};
-
 const getErrorContent = (err) => {
   if (isDev) {
     const Redbox = require('redbox-react').RedBoxError;
@@ -113,16 +80,6 @@ const createSetCookie = (res, cookies) => (key, value, maxAge = 27000000) => {
 
 const makeSid = () => crypto.randomBytes(16).toString('hex');
 
-const loadableMiddleware = () => {
-  return (req, res, next) => {
-    const statsFile = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
-    const stats = JSON.parse(readFileSync(statsFile));
-    const extractor = new ChunkExtractor({ statsFile });
-    req.loadable = { extractor, stats };
-    next();
-  };
-};
-
 const clientConfigsMiddleware = (configs) => {
   configs.forEach((config) => {
     config.regexp = pathToRegexp(config.path);
@@ -149,22 +106,19 @@ if (publicPath.match(/^\//)) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
-app.use(loadableMiddleware());
-
 // global.clientConfigs is injected by plugins in private/webpack
 app.use(clientConfigsMiddleware(clientConfigs));
 
 // non ssr apps
 app.use((req, res, next) => {
   const { ssr, bundle } = req.clientConfig;
-  const { stats } = req.loadable;
   if (!ssr) {
+    const { stats } = req.loadable;
     const assets = stats.entrypoints[bundle]
       .assets.map(asset => `${process.env.WEBPACK_PUBLIC_PATH}${asset}`);
-    const renderApp = getAppRenderer(req.clientConfig);
-    const { html: content } = renderApp();
+
     res.send(renderHtml({
-      content,
+      content: '',
       assets,
     }));
   } else {
@@ -314,19 +268,30 @@ app.use(async (req, res, next) => {
 
 // render
 app.use(async (req, res, next) => {
-  const { assets, store } = req.clientConfig;
+  const { assets, store, api } = req.clientConfig;
 
-  const sheet = new ServerStyleSheet();
-  const context = {};
-  const renderApp = getAppRenderer(req.clientConfig, req.loadable.extractor);
+  const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
+  const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
 
   try {
-    const { state: serverState, html: content } = await renderApp({
-      store,
-      context,
-      location: req.url,
-      sheet,
-    });
+    const extractorNode = new ChunkExtractor({ statsFile: statsNode });
+    const ClientApp = extractorNode.requireEntrypoint();
+
+    const sheet = new ServerStyleSheet();
+    const extractorWeb = new ChunkExtractor({ statsFile: statsWeb });
+    const context = {};
+
+    const app = sheet.collectStyles(extractorWeb.collectChunks((
+      <Provider store={store}>
+        <StaticRouter context={context} location={req.url}>
+          <ApiProvider api={api}>
+            <ClientApp />
+          </ApiProvider>
+        </StaticRouter>
+      </Provider>
+    )));
+
+    const { state: serverState, html: content } = await renderToString(app);
 
     if (serverState) {
       Object.values(serverState).forEach((val) => {
