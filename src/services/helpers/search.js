@@ -16,7 +16,6 @@ export const delayedExecutor = (fnToEval, key, waitTimeInMillis = 800) => {
   // Add fnExecutionQ
   fnExecutionTracker[key] = { lastExecutionTime: undefined, timer: undefined };
 
-
   return function (...args) {
     const timeNow = new Date();
     if (

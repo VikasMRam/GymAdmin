@@ -3,14 +3,13 @@ import qs from 'querystring';
 import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
 import dayjs from 'dayjs';
-import debounce from 'lodash/debounce';
 
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { withUser, prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import {FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY} from 'sly/constants/dashboardAppPaths';
+import { FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
-import { getSearchParams } from 'sly/services/helpers/search';
+import { delayedExecutor, getSearchParams } from 'sly/services/helpers/search';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP, FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
 
@@ -121,8 +120,6 @@ const getPageParams = ({ match, location }) => {
   };
 };
 
-let debouncedFunction = null;
-
 // TODO: Fix Latest Note and Date Added column after api impl is done
 @prefetch('clients', 'getClients', (getClients, { match, location }) => {
   const { clientType, pageNumber, clientName } = getPageParams({ match, location });
@@ -144,27 +141,25 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     location: object,
     history: object,
   }
+
   handleSearchTextKeyUp = (event) => {
-    if (event.keyCode === 13) {
-      const { value } = event.target;
-      const { match, location, history } = this.props;
-      if (debouncedFunction !== null) {
-        debouncedFunction.cancel();
-      }
-      debouncedFunction = debounce(() => {
-        const { type, pageNumber } = getPageParams({ match, location });
-        const filters = {
-          type,
-          name: value,
-          'page-number': pageNumber,
-        };
-        const filtersQs = qs.stringify(filters);
-        history.push({ search: `?${filtersQs}` });
-        debouncedFunction = null;
-      }, 500);
-      debouncedFunction();
+    const { value } = event.target;
+    const { match, location, history } = this.props;
+    const { type, pageNumber } = getPageParams({ match, location });
+    const filters = {
+      type,
+      name: value,
+    };
+    if (pageNumber) {
+      filters.pageNumber = pageNumber
     }
-  }
+    this.sendQuery(history, qs.stringify(filters))
+  };
+
+  sendQuery = delayedExecutor((history, filtersQs) => {
+      history.push({ search: `?${filtersQs}` })
+  }, 'familyOverviewSearch', 3500);
+
   render() {
     const {
       clients, status, match, location,
