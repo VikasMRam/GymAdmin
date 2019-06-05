@@ -177,18 +177,6 @@ const devCORS = group([
   ]),
 ]);
 
-const uglifyJs = group([
-  env('production', [
-    uglify({
-      sourceMap: isStaging,
-      uglifyOptions: {
-        compress: { warnings: false },
-        output: { comments: false },
-      },
-    }),
-  ]),
-]);
-
 const node = (context, { merge }) => merge({
   target: 'node',
   externals: [nodeExternals()],
@@ -285,7 +273,7 @@ const client = target => createConfig([
     chunkFilename: '[name].[hash].js',
     path: path.join(outputPath, target === 'web' ? 'public' : 'node'),
     libraryTarget: target === 'node' ? 'commonjs2' : undefined,
-    publicPath: PUBLIC_PATH,
+    publicPath: `${PUBLIC_PATH}/`,
   }),
 
   when(target === 'node', [node]),
@@ -297,8 +285,6 @@ const client = target => createConfig([
   assets,
 
   devCORS,
-
-  uglifyJs,
 
   optimization({
     splitChunks: {

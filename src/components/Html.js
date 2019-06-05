@@ -25,8 +25,8 @@ const Html = ({
         <meta name="google-signin-client_id" content={googleAppId} />
 
         {linkElements}
-        {helmet.link.toComponent()}
         {styleElements}
+        {helmet.link.toComponent()}
       </head>
       <body {...bodyAttrs}>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />

@@ -54,8 +54,8 @@ const renderHtml = ({
   serverState, initialState, content, sheet, extractorWeb,
 }) => {
   const linkElements = extractorWeb.getLinkElements();
-  const styleElements = extractorWeb.getStyleElements();
-  const scriptElements = [sheet ? sheet.getStyleElement() : null, ...extractorWeb.getScriptElements()];
+  const styleElements = sheet.getStyleElement();
+  const scriptElements = extractorWeb.getScriptElements();
 
   const state = `
     ${serverState ? `window.__SERVER_STATE__ = ${serialize(serverState)};` : ''}
