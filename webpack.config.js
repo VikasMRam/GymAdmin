@@ -37,7 +37,7 @@ const GA_ENV = process.env.GA_ENV || 'development';
 const HOST = process.env.HOST || 'http://www.lvh.me';
 const PORT = process.env.PORT || 8000;
 const DEV_PORT = process.env.DEV_PORT || (+PORT + 1) || 8001;
-const PUBLIC_PATH = process.env.PUBLIC_PATH || NODE_ENV === 'development' ? `${HOST}:${DEV_PORT}/` : 'react-assets/';
+const PUBLIC_PATH = process.env.PUBLIC_PATH || NODE_ENV === 'development' ? `${HOST}:${DEV_PORT}` : '/react-assets';
 const API_URL = process.env.API_URL || 'http://www.lvh.me/v0';
 const AUTH_URL = process.env.AUTH_URL || 'http://www.lvh.me/users/auth_token';
 const DOMAIN = process.env.DOMAIN || 'lvh.me';

@@ -2,7 +2,6 @@
 import '@babel/polyfill';
 import path from 'path';
 import crypto from 'crypto';
-import { readFileSync } from 'fs';
 
 import parseUrl from 'parseurl';
 import express from 'express';
@@ -105,7 +104,9 @@ const app = express();
 app.disable('x-powered-by');
 app.use(cookieParser());
 
-if (publicPath.match(/^\//)) {
+console.info('publicPath', publicPath);
+
+if (!isDev) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
