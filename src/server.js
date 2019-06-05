@@ -17,6 +17,7 @@ import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
 import cloneDeep from 'lodash/cloneDeep';
 import { ChunkExtractor } from '@loadable/server';
+import { readFileSync } from 'fs';
 
 import { cleanError, logWarn } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
@@ -28,6 +29,9 @@ import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 import { createApi as createBeesApi } from 'sly/services/newApi';
 import ApiProvider, { makeApiCall } from 'sly/services/newApi/ApiProvider';
+
+const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
+const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
 
 const clientConfigs = [
   {
@@ -53,9 +57,9 @@ const getErrorContent = (err) => {
 const renderHtml = ({
   serverState, initialState, content, sheet, extractorWeb,
 }) => {
-  const linkElements = extractorWeb.getLinkElements();
-  const styleElements = sheet.getStyleElement();
-  const scriptElements = extractorWeb.getScriptElements();
+  const linkElements = extractorWeb && extractorWeb.getLinkElements();
+  const styleElements = sheet && sheet.getStyleElement();
+  const scriptElements = extractorWeb && extractorWeb.getScriptElements();
 
   const state = `
     ${serverState ? `window.__SERVER_STATE__ = ${serialize(serverState)};` : ''}
@@ -104,8 +108,6 @@ const app = express();
 app.disable('x-powered-by');
 app.use(cookieParser());
 
-console.info('publicPath', publicPath);
-
 if (!isDev) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
@@ -117,7 +119,7 @@ app.use(clientConfigsMiddleware(clientConfigs));
 app.use((req, res, next) => {
   const { ssr, bundle } = req.clientConfig;
   if (!ssr) {
-    const { stats } = req.loadable;
+    const stats = JSON.parse(readFileSync(statsWeb));
     const assets = stats.entrypoints[bundle]
       .assets.map(asset => `${process.env.PUBLIC_PATH}${asset}`);
 
@@ -273,9 +275,6 @@ app.use(async (req, res, next) => {
 // render
 app.use(async (req, res, next) => {
   const { store, api } = req.clientConfig;
-
-  const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
-  const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
 
   try {
     const extractorNode = new ChunkExtractor({ statsFile: statsNode });

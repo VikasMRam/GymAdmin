@@ -91,6 +91,8 @@ const externalWidgetEntryPath = path.join(externalWidgetSourcePath, 'widget.js')
 const externalWidgetCssEntryPath = path.join(externalWidgetSourcePath, 'widget.css');
 // todo: need better approach than hardcoding assets
 const closeIconSvg = fs.readFileSync(`${externalWidgetSourcePath}/close-regular.svg`, 'utf8');
+const clientWebEntryPath = path.join(sourcePath, 'client-web.js');
+const clientNodeEntryPath = path.join(sourcePath, 'client-node.js');
 const externalEntryPath = path.join(externalSourcePath, 'apps', 'index.js');
 
 const mode = (context, { merge }) => merge({
@@ -265,7 +267,7 @@ const externalWidget = group([
   ]),
 ]);
 
-const client = target => createConfig([
+const client = (target, entries) => createConfig([
   base,
 
   setOutput({
@@ -278,7 +280,7 @@ const client = target => createConfig([
 
   when(target === 'node', [node]),
 
-  entryPoint(path.join(sourcePath, `client-${target}.js`)),
+  entryPoint(entries),
 
   externalWidget,
 
@@ -300,7 +302,12 @@ const client = target => createConfig([
 ]);
 
 module.exports = [
-  client('web'),
-  client('node'),
+  client('web', {
+    main: clientWebEntryPath,
+    external: externalEntryPath,
+  }),
+  client('node', {
+    main: clientNodeEntryPath,
+  }),
   server,
 ];
