@@ -15,6 +15,15 @@ import { assetPath } from 'sly/components/themes';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 
 import Router from 'sly/components/molecules/Router';
+import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
+
+import {
+  DASHBOARD_PATH,
+  FAMILY_DASHBOARD_FAVORITES_PATH,
+  FAMILY_DASHBOARD_PROFILE_PATH,
+  FAMILY_DASHBOARD_FAMILIES_PATH,
+  FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
+} from 'sly/constants/dashboardAppPaths';
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
@@ -34,7 +43,13 @@ const BookATourPageContainer = loadable(() => import(/* webpackChunkName: "chunk
 const PricingWizardPageContainer = loadable(() => import(/* webpackChunkName: "chunkPricingWizard" */ 'sly/containers/PricingWizardPageContainer'));
 const AgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentProfile" */ 'sly/containers/AgentProfilePageContainer'));
 const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentRegion" */ 'sly/containers/AgentRegionPageContainer'));
-const ChatBoxContainer = loadable(() => import(/* webpackChunkName: "chunkChatBox" */ 'sly/containers/ChatBoxContainer'));
+
+// Dashboard
+const DashboardHomePageContainer = loadable(() => import('sly/containers/DashboardHomePageContainer'));
+const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/containers/DashboardFavoritesPageContainer'));
+const DashboardMyProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer'));
+const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
+const DashboardAgentFamilyOverviewPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardAgentFamilyOverviewPageContainer'));
 
 setGlobalStyles();
 
@@ -76,6 +91,30 @@ export default class App extends Component {
   };
 
   static routes = [
+    {
+      path: DASHBOARD_PATH,
+      component: DashboardHomePageContainer,
+      exact: true,
+    },
+    {
+      path: FAMILY_DASHBOARD_FAVORITES_PATH,
+      component: DashboardFavoritesPageContainer,
+      exact: true,
+    },
+    {
+      path: FAMILY_DASHBOARD_PROFILE_PATH,
+      component: DashboardMyProfilePageContainer,
+      exact: true,
+    },
+    {
+      path: FAMILY_DASHBOARD_FAMILIES_PATH,
+      component: DashboardAgentFamilyOverviewPageContainer,
+      exact: true,
+    },
+    {
+      path: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
+      component: DashboardMyFamiliesDetailsPageContainer,
+    },
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
       component: CommunityDetailPageContainer,
@@ -145,11 +184,6 @@ export default class App extends Component {
       exact: true,
     },
     {
-      path: '/',
-      component: HomePageContainer,
-      exact: true,
-    },
-    {
       path: '/assisted-living',
       component: NearMePageContainer,
       exact: true,
@@ -167,6 +201,11 @@ export default class App extends Component {
     {
       path: '/users/password-reset',
       component: PasswordResetPageContainer,
+      exact: true,
+    },
+    {
+      path: '/',
+      component: HomePageContainer,
       exact: true,
     },
   ];
@@ -209,7 +248,7 @@ export default class App extends Component {
         </Helmet>
 
         <ThemeProvider theme={theme}>
-          <Router bailRegex={/^\/dashboard/}>
+          <Router requiresAuth={[/^\/dashboard/]}>
             <Switch>
               <Route
                 path="/ping"
