@@ -14,9 +14,9 @@ import addGlobalStyles from 'sly/external/apps/setGlobalStyles';
 addGlobalStyles();
 
 const CareAssessmentControllerPage = loadable(() =>
-  import(/* webpackChunkName: "chunkCareAssessmentControllerPage" */'sly/external/apps/wizards/careAssessment').then(module => module.Controller));
+  import(/* webpackChunkName: "chunkCareAssessmentControllerPage" */'sly/external/apps/wizards/careAssessment/Controller'));
 const SearchContainerPage = loadable(() =>
-  import(/* webpackChunkName: "chunkSearchContainerPage" */'sly/external/apps/search').then(module => module.Container));
+  import(/* webpackChunkName: "chunkSearchContainerPage" */'sly/external/apps/search/Container'));
 
 export default class App extends Component {
   static childContextTypes = {
@@ -41,6 +41,7 @@ export default class App extends Component {
   ];
 
   render() {
+    console.log('here');
     return (
       <>
         <Helmet>

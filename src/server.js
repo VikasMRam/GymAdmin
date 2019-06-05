@@ -119,13 +119,13 @@ app.use(clientConfigsMiddleware(clientConfigs));
 app.use((req, res, next) => {
   const { ssr, bundle } = req.clientConfig;
   if (!ssr) {
-    const stats = JSON.parse(readFileSync(statsWeb));
-    const assets = stats.entrypoints[bundle]
-      .assets.map(asset => `${process.env.PUBLIC_PATH}${asset}`);
-
+    const extractorWeb = new ChunkExtractor({
+      entrypoints: [bundle],
+      statsFile: statsWeb,
+    });
     res.send(renderHtml({
       content: '',
-      assets,
+      extractorWeb,
     }));
   } else {
     next();
