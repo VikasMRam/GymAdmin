@@ -30,10 +30,10 @@ const DropDownIcon = styled(Icon)`
 `;
 
 const Th = ({
-  children, sort, size, onDropDownIconClick,
+  children, sort, size, onDropDownIconClick, ...props
 }) => {
   return (
-    <Wrapper>
+    <Wrapper {...props} >
       <StyledDiv size={size}>
         {children}
         {sort && <SortIcon icon="arrow-up" palette="grey" flip={sort === 'desc'} />}

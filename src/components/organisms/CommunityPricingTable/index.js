@@ -3,19 +3,16 @@ import styled from 'styled-components';
 import { arrayOf, object, func } from 'prop-types';
 
 import { palette, size } from 'sly/components/themes';
-import { Hr, Block, Span } from 'sly/components/atoms';
-import { Td } from 'sly/components/molecules/Td';
-import Th from 'sly/components/molecules/Th';
-
-import CollapsibleBlock from 'sly/components/molecules/CollapsibleBlock';
+import { Block, Span } from 'sly/components/atoms';
 
 import NumberFormat from 'react-number-format';
 
 
 const StyledNumberFormat = styled(NumberFormat)`
-  font-weight: ${size('weight.medium')};
+  font-weight: ${p => size(p.weight)};
   color: ${p => palette(p.color, 'base')};
 `;
+
 const StyledTh = styled.th`
   text-align: left;
   font-weight: ${size('weight.medium')};
@@ -46,7 +43,18 @@ const Wrapper = styled.table`
 `;
 
 const StyledBlock = styled(Block)`
-  padding: ${size('spacing.medium')} ${size('spacing.xLarge')};
+   padding: ${size('spacing.xLarge')};
+`;
+
+const StyledBlockSp = styled(Block)`
+   padding-bottom: ${size('spacing.regular')};
+`;
+
+const StyledBlockNp = styled(Block)`
+   padding-top: 0px;
+   padding-bottom: ${size('spacing.xLarge')};
+   padding-left: ${size('spacing.xLarge')};
+   padding-right: ${size('spacing.xLarge')};
   
 `;
 
@@ -56,17 +64,17 @@ const CommunityPricingTable = ({ pricesList }) => {
   from = pricesList[0].value;
   return (
     <Fragment>
-      <StyledBlock size="title">
-        <Block size="body" palette="grey">Estimated monthly pricing starts at</Block>
-        <StyledNumberFormat color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> <Span size="title" palette="secondary"> per month*</Span>
-      </StyledBlock>
+      <StyledBlockNp size="title">
+        <StyledBlockSp size="body" palette="slate">Estimated monthly pricing starts at</StyledBlockSp>
+        <StyledNumberFormat weight="weight.medium" color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> per month*</Span>
+      </StyledBlockNp>
       <Wrapper>
         <StyledTh colSpan={2} color="slate" bgcolor="grey">Base Pricing (Care costs not included in price) </StyledTh>
         <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Average Monthly Price</StyledTd> </Tr>
         {pricesList.map((price) => {
           const { label, value } = price;
           return (
-            <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat color="slate" value={value} displayType="text" thousandSeparator prefix="$" />/month</StyledTd></Tr>
+            <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" />/month</StyledTd></Tr>
           );
         })}
       </Wrapper>

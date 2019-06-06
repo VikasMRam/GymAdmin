@@ -63,6 +63,7 @@ export const findPercentage = (price, maxPrice) => ((price / maxPrice) * 100);
 
 const getAveragePriceString = (priceStringOrNumber) => {
   // TODO FIXME: Return average when string contains ranges?
+  if (priceStringOrNumber )
   return priceStringOrNumber;
 };
 export const buildPriceList = (community) => {

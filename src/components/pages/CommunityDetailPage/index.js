@@ -553,7 +553,7 @@ export default class CommunityDetailPage extends Component {
                     </MainSection>
                   }
                   {floorPlans.length === 0 && pricesList.length > 0 &&
-                    <CommunityPricingTable pricesList={pricesList} price={estimatedPriceBase} />
+                  <CommunityPricingTable pricesList={pricesList} price={estimatedPriceBase} />
                   }
                   {floorPlans.length === 0 && pricesList.length === 0 &&
                     <MainSection>
