@@ -63,8 +63,21 @@ export const findPercentage = (price, maxPrice) => ((price / maxPrice) * 100);
 
 const getAveragePriceString = (priceStringOrNumber) => {
   // TODO FIXME: Return average when string contains ranges?
-  if (priceStringOrNumber )
-  return priceStringOrNumber;
+  let avgPriceS = priceStringOrNumber;
+  if (priceStringOrNumber.match(/-/)) {
+    try {
+      const comps = priceStringOrNumber.split('-').map(e => e.trim().replace(/\D/,''));
+      let sumPrice = 0;
+      comps.map((e) => {
+        sumPrice += Math.parseFloat(e);
+        return null;
+      });
+      avgPriceS = (sumPrice / comps.length).toString();
+    } catch (e) {
+      console.log('Bad price data');
+    }
+  }
+  return avgPriceS;
 };
 export const buildPriceList = (community) => {
   const priceList = [];
