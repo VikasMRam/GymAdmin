@@ -15,6 +15,12 @@ const Wrapper = styled.div`
   }
 `;
 
+const TextWrapper = styled.div`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding-right: ${size('layout.gutter')};;
+  }
+`;
+
 const HeadingBlock = styled(Block)`
   margin-bottom: ${ifProp('hasSubHeading', size('spacing.regular'), 0)};
 `;
@@ -30,10 +36,10 @@ const TextBottomSection = ({
   heading, subHeading, buttonText, onButtonClick,
 }) => (
   <Wrapper>
-    <div>
+    <TextWrapper>
       <HeadingBlock weight="medium" hasSubHeading={!!subHeading}>{heading}</HeadingBlock>
       {subHeading && <SubheadingBlock size="caption">{subHeading}</SubheadingBlock>}
-    </div>
+    </TextWrapper>
     <Button ghost onClick={onButtonClick}>{buttonText}</Button>
   </Wrapper>
 );
