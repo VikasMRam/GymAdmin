@@ -54,7 +54,7 @@ export default class AuthContainer extends Component {
 
     // FIXME: declarative to imperative conversion could potentially be done better
     if (!this.state.isOpen && authenticated.loggingIn) {
-      this.setState({ isOpen: true }, () => this.gotoJoin());
+      this.setState({ isOpen: true }, () => this.gotoLogin());
     } else if (this.state.isOpen && !authenticated.loggingIn) {
       this.setState({ isOpen: false }, () => hideModal());
     }
