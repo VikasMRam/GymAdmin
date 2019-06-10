@@ -5,7 +5,9 @@ export default class Websocket {
   reconnectionAttempts = 0;
 
   constructor() {
-    this.wInstance = new WebSocket(wsServerUrl);
+    if (!this.wInstance) {
+      this.wInstance = new WebSocket(wsServerUrl);
+    }
   }
 
   generateInterval = (k) => {
