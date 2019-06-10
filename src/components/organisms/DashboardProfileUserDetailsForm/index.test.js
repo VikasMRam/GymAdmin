@@ -16,9 +16,9 @@ describe('DashboardProfileUserDetailsForm', () => {
     expect(wrapper.find(Field).filter({ name: 'name' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'email' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'phoneNumber' })).toHaveLength(1);
-    expect(wrapper.find('TwoColumnField').filter({ name: 'lookingFor' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'lookingFor' })).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'residentName' })).toHaveLength(1);
-    expect(wrapper.find('TwoColumnField').filter({ name: 'timeToMove' })).toHaveLength(1);
+    expect(wrapper.find(Field).filter({ name: 'timeToMove' })).toHaveLength(1);
     expect(wrapper.find('StyledSearchBoxContainer')).toHaveLength(1);
     expect(wrapper.find(Field).filter({ name: 'openToNearbyAreas' })).toHaveLength(1);
   });
