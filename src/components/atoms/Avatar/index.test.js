@@ -20,6 +20,6 @@ describe('Avatar', () => {
     const div = wrapper.find('div');
     expect(div).toHaveLength(1);
     expect(div.props()).toHaveProperty('data-title', 'Fonz');
-    expect(div.text()).toEqual('F');
+    expect(div.text()).toEqual('Fo');
   });
 });
