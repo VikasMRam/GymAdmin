@@ -32,18 +32,22 @@ const monthlyBudget = [
   '5K+',
 ];
 
-const uuidAux = {
+const meta = {
   timeToMove,
   lookingFor,
   monthlyBudget,
 };
 
-const result = {
+const uuidAux = {
+  meta,
+};
+
+const status = {
   uuidAux,
 };
 
 const defaultProps = {
-  result,
+  status,
 };
 
 const wrap = (props = {}) => shallow(<DashboardProfileUserDetailsForm handleSubmit={handleSubmit} {...defaultProps} {...props} />);
