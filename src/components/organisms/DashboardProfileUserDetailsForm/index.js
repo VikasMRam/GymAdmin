@@ -13,13 +13,6 @@ import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import pad from 'sly/components/helpers/pad';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
-const TwoColumnField = styled(Field)`
-  width: ${size('mobileLayout.col2')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: initial;
-  }
-`;
 
 // TODO: Copied from FamilyDetailsForm. Need to make it generic field
 const TwoColumnWrapper = styled.div`
@@ -172,6 +165,7 @@ DashboardProfileUserDetailsForm.propTypes = {
   change: func,
   onLocationChange: func,
   initialValues: object,
+  status: object,
 };
 
 export default DashboardProfileUserDetailsForm;
