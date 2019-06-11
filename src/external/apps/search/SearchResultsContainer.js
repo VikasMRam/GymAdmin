@@ -40,12 +40,23 @@ const OrBlock = displayOnlyIn(Block, ['tablet', 'laptop']);
 
 const ButtonWrapper = textAlign(styled.div``);
 
-@prefetch('searchResources', 'getSearchResources', (req, { state, city, pageNumber }) => req({
-  state,
-  city,
-  'page-number': pageNumber,
-  'page-size': NUMBER_OF_RESULTS_PER_PAGE,
-}))
+@prefetch('searchResources', 'getSearchResources', (req, { state, city, pageNumber }) => {
+  let params = {
+    'page-number': pageNumber,
+    'page-size': NUMBER_OF_RESULTS_PER_PAGE,
+  };
+  if (state) {
+    params = { ...params, state };
+  }
+  if (city) {
+    params = { ...params, city };
+  }
+  if (!state && !city) {
+    params = { ...params, nearme: 'true' };
+  }
+
+  return req(params);
+})
 
 @withRouter
 
@@ -61,8 +72,10 @@ export default class SearchResultsContainer extends Component {
 
   render() {
     const {
-      searchResources, status, location, city, state, palette,
+      searchResources, status, location, palette,
     } = this.props;
+    let { city, state } = this.props;
+    const { meta } = status;
     let basePath = location.pathname;
     if (palette) {
       basePath += `?palette=${palette}`;
@@ -85,10 +98,16 @@ export default class SearchResultsContainer extends Component {
     const { current, total } = getPaginationData(requestMeta);
     let searchPath;
     if (total > 1) {
+      if (meta) {
+        const { geo } = meta;
+        if (geo) {
+          ({ city, state } = geo);
+        }
+      }
       const commProp = {
         address: {
           city,
-          state: getStateAbbr(state),
+          state: state ? getStateAbbr(state) : null,
         },
         propInfo: {
           typeCare: searchResources[0].typeCare,
