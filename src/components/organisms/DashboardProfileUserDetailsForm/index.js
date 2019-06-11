@@ -9,16 +9,10 @@ import { Hr, Label } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import FormSection from 'sly/components/molecules/FormSection';
 import textAlign from 'sly/components/helpers/textAlign';
+import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
 import pad from 'sly/components/helpers/pad';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
-const TwoColumnField = styled(Field)`
-  width: ${size('mobileLayout.col2')};
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: initial;
-  }
-`;
 
 // TODO: Copied from FamilyDetailsForm. Need to make it generic field
 const TwoColumnWrapper = styled.div`
@@ -62,7 +56,15 @@ class DashboardProfileUserDetailsForm extends Component {
     }
   };
   render() {
-    const { initialValues } = this.props;
+    const { initialValues, status } = this.props;
+    const { meta } = status.uuidAux;
+    const {
+      lookingFor, monthlyBudget, timeToMove,
+    } = meta;
+    const lookingForOptions = lookingFor.map(i => <option key={i} value={i}>{i}</option>);
+    const timeToMoveOptions = timeToMove.map(i => <option key={i} value={i}>{i}</option>);
+    const monthlyBudgetOptions = monthlyBudget.map(i => <option key={i} value={i}>{i}</option>);
+
     let searchingCity = '';
     if (initialValues) {
       ({ searchingCity } = initialValues);
@@ -90,21 +92,22 @@ class DashboardProfileUserDetailsForm extends Component {
           label="Phone"
           type="text"
           placeholder="925-555-5555"
+          parse={phoneParser}
+          format={phoneFormatter}
           component={ReduxField}
           wideWidth
         />
         <Hr />
-        <TwoColumnField
+        <Field
           name="lookingFor"
           label="Looking For"
           type="select"
           component={ReduxField}
           wideWidth
         >
-          <option value="mother">Mother</option>
-          <option value="father">Father</option>
-          <option value="self">Self</option>
-        </TwoColumnField>
+          <option value="">Select an option</option>
+          {lookingForOptions}
+        </Field>
         <Field
           name="residentName"
           label="Resident Name"
@@ -113,25 +116,26 @@ class DashboardProfileUserDetailsForm extends Component {
           component={ReduxField}
           wideWidth
         />
-        <TwoColumnField
+        <Field
           name="monthlyBudget"
           label="Monthly Budget"
-          type="iconInput"
-          placeholder="3,000"
-          component={ReduxField}
-          wideWidth
-        />
-        <TwoColumnField
-          name="timeToMove"
-          label="Time to Move"
           type="select"
           component={ReduxField}
           wideWidth
         >
-          <option>In a Week</option>
-          <option>In a month</option>
-          <option value="2 months">In 2 month</option>
-        </TwoColumnField>
+          <option value="">Select an option</option>
+          {monthlyBudgetOptions}
+        </Field>
+        <Field
+          name="timeToMove"
+          label="Time to move"
+          type="select"
+          component={ReduxField}
+          wideWidth
+        >
+          <option value="">Select an option</option>
+          {timeToMoveOptions}
+        </Field>
         <PaddedTwoColumnWrapper verticalCenter>
           <StyledLabel>Searching in</StyledLabel>
           <StyledSearchBoxContainer
@@ -161,6 +165,7 @@ DashboardProfileUserDetailsForm.propTypes = {
   change: func,
   onLocationChange: func,
   initialValues: object,
+  status: object,
 };
 
 export default DashboardProfileUserDetailsForm;
