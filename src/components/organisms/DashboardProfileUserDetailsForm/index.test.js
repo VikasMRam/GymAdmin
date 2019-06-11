@@ -5,9 +5,48 @@ import { Field } from 'redux-form';
 import DashboardProfileUserDetailsForm from 'sly/components/organisms/DashboardProfileUserDetailsForm';
 
 const handleSubmit = jest.fn();
-// const error = 'Blah';
+const timeToMove = [
+  'Immediately',
+  '1-3 Months',
+  '3 Months+',
+];
 
-const wrap = (props = {}) => shallow(<DashboardProfileUserDetailsForm handleSubmit={handleSubmit} {...props} />);
+const lookingFor = [
+  'Self',
+  'Parents',
+  'Mother',
+  'Father',
+  'Grandparents',
+  'Grandmother',
+  'Grandfather',
+  'Husband',
+  'Wife',
+  'Other',
+];
+
+const monthlyBudget = [
+  '<2K',
+  '2K-3K',
+  '3K-4K',
+  '4K-5K',
+  '5K+',
+];
+
+const uuidAux = {
+  timeToMove,
+  lookingFor,
+  monthlyBudget,
+};
+
+const result = {
+  uuidAux,
+};
+
+const defaultProps = {
+  result,
+};
+
+const wrap = (props = {}) => shallow(<DashboardProfileUserDetailsForm handleSubmit={handleSubmit} {...defaultProps} {...props} />);
 
 describe('DashboardProfileUserDetailsForm', () => {
   it('render DashboardProfileUserDetailsForm', () => {
