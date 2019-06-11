@@ -59,3 +59,50 @@ export const calculatePricing = (community, estimatedPrice) => {
 };
 
 export const findPercentage = (price, maxPrice) => ((price / maxPrice) * 100);
+
+
+const getAveragePriceString = (priceStringOrNumber) => {
+  // TODO FIXME: Return average when string contains ranges?
+  let avgPriceS = priceStringOrNumber;
+  if (priceStringOrNumber.match(/-/)) {
+    try {
+      const comps = priceStringOrNumber.split('-').map(e => e.trim().replace(/\D/,''));
+      let sumPrice = 0;
+      comps.map((e) => {
+        sumPrice += Math.parseFloat(e);
+        return null;
+      });
+      avgPriceS = (sumPrice / comps.length).toString();
+    } catch (e) {
+      console.log('Bad price data');
+    }
+  }
+  return avgPriceS;
+};
+export const buildPriceList = (community) => {
+  const priceList = [];
+  const { propInfo } = community;
+  const {
+    sharedSuiteRate,
+    privateSuiteRate,
+    studioApartmentRate,
+    oneBedroomApartmentRate,
+    twoBedroomApartmentRate,
+  } = propInfo;
+  if (sharedSuiteRate) {
+    priceList.push({ label: 'Shared Suite', value: getAveragePriceString(sharedSuiteRate) });
+  }
+  if (privateSuiteRate) {
+    priceList.push({ label: 'Private Suite', value: getAveragePriceString(privateSuiteRate) });
+  }
+  if (studioApartmentRate) {
+    priceList.push({ label: 'Studio Apartment', value: getAveragePriceString(studioApartmentRate) });
+  }
+  if (oneBedroomApartmentRate) {
+    priceList.push({ label: 'One Bedroom Apartment', value: getAveragePriceString(oneBedroomApartmentRate) });
+  }
+  if (twoBedroomApartmentRate) {
+    priceList.push({ label: 'Two Bedroom Apartment', value: getAveragePriceString(twoBedroomApartmentRate) });
+  }
+  return priceList;
+};
