@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { prop } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { palette as palettePropType } from 'sly/propTypes/palette';
