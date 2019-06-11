@@ -52,6 +52,7 @@ const FB_CLIENT_ID = process.env.FB_CLIENT_ID || '624602444328776';
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com';
 const MUTE_REDUX_LOGGER = process.env.MUTE_REDUX_LOGGER || false;
 const HIDE_CHATBOX = process.env.HIDE_CHATBOX || false;
+const WEBSOCKET_URL = process.env.WEBSOCKET_URL || 'wss://localhost:8888/websocket';
 
 // replacements for widgets.js
 const EXTERNAL_PATH = process.env.EXTERNAL_PATH || '/external';
@@ -70,6 +71,7 @@ console.info('Using config', JSON.stringify({
   DEV_PORT,
   API_URL,
   AUTH_URL,
+  WEBSOCKET_URL,
   DOMAIN,
   GOOGLE_MAPS_API_KEY,
   SOURCE,
@@ -151,6 +153,7 @@ const base = group([
     'process.env.GOOGLE_CLIENT_ID': GOOGLE_CLIENT_ID,
     'process.env.MUTE_REDUX_LOGGER': MUTE_REDUX_LOGGER,
     'process.env.HIDE_CHATBOX': HIDE_CHATBOX || false,
+    'process.env.WEBSOCKET_URL': WEBSOCKET_URL,
   }),
 
   match(['*.js', '!*node_modules*'], [babel()]),
