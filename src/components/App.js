@@ -187,7 +187,7 @@ export default class App extends Component {
           <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best Senior Home by comparing pricing, availability, and amenities with Seniorly!" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-          <meta content="Seniorly Inc." property="author" />
+          <meta content="Seniorly" property="author" />
           <meta content="English" property="language" />
 
           {/*
