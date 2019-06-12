@@ -10,7 +10,7 @@ import SlyEvent from 'sly/services/helpers/events';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import { USER_SAVE_INIT_STATUS } from 'sly/constants/userSave';
 import { COMMUNITY_ENTITY_TYPE } from 'sly/constants/entityTypes';
-import { NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED } from 'sly/constants/notifications';
+import { NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_SUCCESS, NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED } from 'sly/constants/notifications';
 import { community as communityPropType } from 'sly/propTypes/community';
 import { withApi, withAuth, prefetch, query } from 'sly/services/newApi';
 import { Block } from 'sly/components/atoms';
@@ -100,7 +100,7 @@ export default class SaveCommunityContainer extends Component {
   createUserSave = () => {
     const { handleModalClose } = this;
     const {
-      community, createUserSave, notifyError, createAction, match, status,
+      community, createUserSave, notifyInfo, notifyError, createAction, match, status,
     } = this.props;
     const { id } = community;
     const payload = {
@@ -129,6 +129,7 @@ export default class SaveCommunityContainer extends Component {
         this.setState({
           updatingUserSave: false,
         });
+        notifyInfo(NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_SUCCESS);
       }, () => {
         handleModalClose();
         notifyError(NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED);
@@ -138,7 +139,7 @@ export default class SaveCommunityContainer extends Component {
   updateUserSave = (status) => {
     const { handleModalClose } = this;
     const {
-      userSave, updateUserSave, notifyError, createAction, community, match,
+      userSave, updateUserSave, notifyInfo, notifyError, createAction, community, match,
     } = this.props;
     const { id } = userSave;
 
@@ -164,6 +165,7 @@ export default class SaveCommunityContainer extends Component {
         this.setState({
           updatingUserSave: false,
         });
+        notifyInfo(NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_SUCCESS);
       }, () => {
         handleModalClose();
         notifyError(NOTIFICATIONS_COMMUNITY_ADD_FAVORITE_FAILED);

@@ -68,6 +68,15 @@ const StyledImage = styled(Image)`
     }
   `}
 `;
+const TopRightWrapper = styled.span`
+  right: ${size('spacing.large')};
+  top: ${size('spacing.large')};
+  position: absolute;
+  z-index: 1;
+  Button {
+      display: block;
+    }
+`;
 
 const StyledBox = styled(Box)`
   border: 0;
@@ -164,14 +173,19 @@ const CommunityTile = ({
         />
       }
       {noGallery &&
-        <ImageWrapper>
-          <StyledImage
-            layout={layout}
-            src={imageUrl}
-            aspectRatio={layout === 'column' ? '3:2' : '16:9'}
-          />
-          {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
-        </ImageWrapper>
+        <Wrapper>
+          <ImageWrapper>
+            <StyledImage
+              layout={layout}
+              src={imageUrl}
+              aspectRatio={layout === 'column' ? '3:2' : '16:9'}
+            />
+            {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
+          </ImageWrapper>
+          <TopRightWrapper>
+            {topRightSection()}
+          </TopRightWrapper>
+        </Wrapper>
       }
       <StyledBox layout={layout} padding="large" hasImages={hasImages}>
         <StyledCommunityInfo
