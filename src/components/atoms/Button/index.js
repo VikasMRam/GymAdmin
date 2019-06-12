@@ -187,7 +187,7 @@ Button.propTypes = {
   palette: palettePropType,
   foregroundPalette: palettePropType,
   borderPalette: palettePropType,
-  kind: oneOf(['jumbo', 'regular', 'tab']),
+  kind: oneOf(['jumbo', 'regular', 'tab', 'plain']),
   selectable: bool,
   selected: bool,
   type: string,
