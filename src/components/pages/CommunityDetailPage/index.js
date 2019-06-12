@@ -544,16 +544,16 @@ export default class CommunityDetailPage extends Component {
                   title={`Pricing and Floor Plans at ${name}`}
                   id="pricing-and-floor-plans"
                 >
-                  {floorPlans.length > 0 &&
-                    <MainSection>
-                      <CommunityFloorPlansList
-                        floorPlans={floorPlans}
-                        onItemClick={openFloorPlanModal}
-                      />
-                    </MainSection>
-                  }
-                  {floorPlans.length === 0 && pricesList.length > 0 &&
+                  {pricesList.length > 0 &&
                   <CommunityPricingTable pricesList={pricesList} price={estimatedPriceBase} />
+                  }
+                  {pricesList.length === 0 && floorPlans.length > 0 &&
+                  <MainSection>
+                    <CommunityFloorPlansList
+                      floorPlans={floorPlans}
+                      onItemClick={openFloorPlanModal}
+                    />
+                  </MainSection>
                   }
                   {floorPlans.length === 0 && pricesList.length === 0 &&
                     <MainSection>
