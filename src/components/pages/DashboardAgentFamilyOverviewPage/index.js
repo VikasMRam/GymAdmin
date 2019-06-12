@@ -116,6 +116,9 @@ const DashboardAgentFamilyOverviewPage = ({
       onSearchTextKeyUp={onSearchTextKeyUp}
     />
   );
+  const prospectsLabel = tabIDLabelMap[tabIDs[0]];
+  const connectedLabel = tabIDLabelMap[tabIDs[1]];
+  const closedLabel = tabIDLabelMap[tabIDs[2]];
   const tabsViewTemplate = (view, prospectsTabLabel, connectedTabLabel, closedTabLabel) => (
     <StyledTabs activeTab={activeTab}>
       <div id={tabIDs[0]} label={prospectsTabLabel} to={FAMILY_DASHBOARD_FAMILIES_PATH} onClick={() => onTabClick(prospectsLabel)}>
@@ -140,7 +143,7 @@ const DashboardAgentFamilyOverviewPage = ({
       current,
       total,
       range: 1,
-      basePath: FAMILY_DASHBOARD_FAMILIES_PATH,
+      basePath: `${getBasePath(activeTab)}`,
       pageParam: 'page-number',
     };
     const { tableEmptyText } = tableContents;
