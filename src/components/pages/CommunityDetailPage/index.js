@@ -480,8 +480,9 @@ export default class CommunityDetailPage extends Component {
 
     const { autoHighlights, nearbyCities } = rgsAux;
 
-    // FIXME: TODO;
+
     const pricesList = buildPriceList(community);
+    const pricingTitle  = (pricesList.length === 0 && floorPlans.length > 0) ? 'Pricing and Floor Plans' : 'Pricing';
 
     return (
       <Fragment>
@@ -541,11 +542,11 @@ export default class CommunityDetailPage extends Component {
                   </TopCollapsibleSection>
                 }
                 <TopCollapsibleSection
-                  title={`Pricing and Floor Plans at ${name}`}
+                  title={`${pricingTitle} at ${name}`}
                   id="pricing-and-floor-plans"
                 >
                   {pricesList.length > 0 &&
-                  <CommunityPricingTable pricesList={pricesList} price={estimatedPriceBase} />
+                  <CommunityPricingTable name={name} pricesList={pricesList} price={estimatedPriceBase} />
                   }
                   {pricesList.length === 0 && floorPlans.length > 0 &&
                   <MainSection>

@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { arrayOf, object, func } from 'prop-types';
+import { arrayOf, object, func, string } from 'prop-types';
 
 import { palette, size } from 'sly/components/themes';
 import { Block, Span } from 'sly/components/atoms';
@@ -59,13 +59,13 @@ const StyledBlockNp = styled(Block)`
 `;
 
 
-const CommunityPricingTable = ({ pricesList }) => {
+const CommunityPricingTable = ({ pricesList, name }) => {
   let from = 0;
   from = pricesList[0].value;
   return (
     <Fragment>
       <StyledBlockNp size="title">
-        <StyledBlockSp size="body" palette="slate">Estimated monthly pricing starts at</StyledBlockSp>
+        <StyledBlockSp size="body" palette="slate">Estimated monthly pricing for ${name} starts at</StyledBlockSp>
         <StyledNumberFormat weight="weight.medium" color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> per month*</Span>
       </StyledBlockNp>
       <Wrapper>
@@ -86,6 +86,7 @@ const CommunityPricingTable = ({ pricesList }) => {
 CommunityPricingTable.propTypes = {
   pricesList: arrayOf(object).isRequired,
   price: object,
+  name: string,
   onItemClick: func,
 };
 
