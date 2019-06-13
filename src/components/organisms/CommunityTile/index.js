@@ -73,9 +73,6 @@ const TopRightWrapper = styled.span`
   top: ${size('spacing.large')};
   position: absolute;
   z-index: 1;
-  Button {
-      display: block;
-    }
 `;
 
 const StyledBox = styled(Box)`
@@ -110,6 +107,7 @@ const Wrapper = styled.div`
 
 const ImageWrapper = styled.div`
   position: relative;
+  height: 100%;
 
   // because we are passing aspectRatio prop, we have a relative position
   // in the Image so we can use here absolute
@@ -132,6 +130,7 @@ const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
   layout, showFloorPlan, palette, showDescription, imageSize, showSeeMoreButtonOnHover,
+  canFavourite,
 }) => {
   const {
     name, gallery = {}, mainImage, communitySize,
@@ -144,8 +143,8 @@ const CommunityTile = ({
   const iconPalette = isFavourite ? 'secondary' : 'white';
   const onIconClick = isFavourite ? onUnfavouriteClick : onFavouriteClick;
   const hasImages = galleryImages.length > 0 || imageUrl;
-  // one image only
-  if (galleryImages.length < 2 && !noGallery) {
+  // one image only, don't show gallery
+  if (galleryImages.length < 2) {
     noGallery = true;
   }
   if (!imageUrl || imageUrl.indexOf('maps.googleapis.com/maps/api/streetview') > -1) {
@@ -156,9 +155,9 @@ const CommunityTile = ({
     }
     imageUrl = communityDefaultImages[key];
   }
-  const topRightSection = () => (
+  const topRightSection = () => canFavourite ? (
     <IconButton transparent icon={icon} iconSize="regular" palette={iconPalette} onClick={onIconClick} />
-  );
+  ) : null;
 
   return (
     <Wrapper layout={layout} className={className} imageSize={imageSize}>
@@ -216,6 +215,7 @@ CommunityTile.propTypes = {
   onAddNoteClick: func,
   note: string,
   addNote: bool,
+  canFavourite: bool,
   isFavourite: bool,
   onFavouriteClick: func,
   onUnfavouriteClick: func,

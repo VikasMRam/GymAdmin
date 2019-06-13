@@ -2,7 +2,7 @@
 import React, { Component, createRef } from 'react';
 import styled, { css } from 'styled-components';
 import { array, shape, number, arrayOf } from 'prop-types';
-import { ifProp } from 'styled-tools';
+import { ifProp, prop } from 'styled-tools';
 
 import { size, getKey } from 'sly/components/themes';
 
@@ -11,12 +11,14 @@ const Parent = styled.div`
   visibility: ${ifProp('width', 'visible', 'hidden')};
   display: grid;
   grid-gap: ${size('spacing.xLarge')};
-  grid-template-columns: repeat(auto-fill, ${p => p.width}px);
-  ${ifProp('hasSpans', css`grid-auto-rows: ${size('spacing.nano')}}`, '')};
+  grid-template-columns: repeat(auto-fill, minmax(${p => p.width}px, 1fr));
+  ${ifProp('hasSpans', 'grid-auto-rows: 1px;', '')};
 `;
 
 const Child = styled.div`
-  ${ifProp('span', css`grid-row-end: span ${p => p.span};`, '')};
+  ${ifProp('span', css`grid-row-end: span ${prop('span')};`, '')};
+  ${ifProp('isLastItem', 'grid-row-start: 1;', '')};
+  order: ${prop('order')};
 `;
 
 export default class Masonry extends Component {
@@ -71,7 +73,7 @@ export default class Masonry extends Component {
       columnsPerRows = this.ref.current.children.length / rows;
     }
     const rowGap = this.remToPx(getKey('sizes.spacing.xLarge'));
-    const rowHeight = this.remToPx(getKey('sizes.spacing.nano'));
+    const rowHeight = 1;
     const availableWidth = this.ref.current.clientWidth - (rowGap * (columnsPerRows === 1 ? 0 : columnsPerRows));
     const columnWidth = Math.floor(availableWidth / columnsPerRows);
 
@@ -96,7 +98,7 @@ export default class Masonry extends Component {
     return (
       <Parent innerRef={this.ref} width={width} hasSpans={columnsPerRows > 1}>
         {this.props.children.map((child, i) => (
-          <Child key={i} span={rowSpans[i]}>
+          <Child key={i} order={i + 1} span={rowSpans[i]} isLastItem={i === this.props.children.length - 1}>
             {child}
           </Child>
         ))}
