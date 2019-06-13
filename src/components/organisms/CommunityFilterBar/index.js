@@ -6,7 +6,7 @@ import { ifProp } from 'styled-tools';
 import { size, palette } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 import Button from 'sly/components/atoms/Button';
-import { budgets, sizes, getFiltersApplied, getEvtHandler } from 'sly/services/helpers/search';
+import { budgets, sizes, getFiltersApplied, getEvtHandler, tocs } from 'sly/services/helpers/search';
 
 const SectionWrapper = styled.div`
   display: flex;
@@ -27,16 +27,30 @@ export const ClearAllButton = styled(Button)`
 `;
 
 const CommunityFilterBar = ({ searchParams, onParamsRemove }) => {
-  const { size, budget } = searchParams;
+  const { toc, size, budget } = searchParams;
   const matchingBudget = budget ? budgets.find(object => object.value === budget) : null;
   const budgetLabel = matchingBudget ? matchingBudget.label : null;
   const matchingSize = size ? sizes.find(object => object.value === size) : null;
   const sizeLabel = matchingSize ? matchingSize.label : null;
-
+  const actualToc = tocs.find(elem => (elem.value === toc));
   const filtersApplied = getFiltersApplied(searchParams);
 
+  const tocApplied = (toc !== 'retirement-community');
   return (
-    <SectionWrapper hasFilters={size || budget}>
+    <SectionWrapper hasFilters={tocApplied || size || budget}>
+      {tocApplied && (
+        <FilterButton
+          right
+          icon="close"
+          iconSize="small"
+          palette="slate"
+          ghost
+          transparent
+          onClick={getEvtHandler(['toc'], onParamsRemove)}
+        >
+          {actualToc.label}
+        </FilterButton>
+      )}
       {size && (
         <FilterButton
           right
