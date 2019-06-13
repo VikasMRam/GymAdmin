@@ -1,0 +1,13 @@
+{
+  "id": "01c1e9c32b9b2cd2f6d1857403585fcf",
+  "conversationID": "d75311a1e39c4b4142318a6517c36861",
+  "createdAt": "2019-04-01T12:59:31Z",
+  "data": {
+    "type": "Text",
+    "value": "It was great talking to you this morning. I'll send you some finance reasources you should read up on."
+  },
+  "medium": "Email",
+  "participantID": "19bfb4f67da4e6aa9df6a358bc7f5277",
+  "participantType": "User",
+  "updatedAt": "2019-04-01T12:59:31Z"
+}
