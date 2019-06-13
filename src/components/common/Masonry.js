@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { array, shape, number, arrayOf } from 'prop-types';
 import { ifProp, prop } from 'styled-tools';
 
-import { size, getKey } from 'sly/components/themes';
+import { size, getKey, remToPx } from 'sly/components/themes';
 
 // ref: https://medium.com/@andybarefoot/a-masonry-style-layout-using-css-grid-8c663d355ebb
 const Parent = styled.div`
@@ -54,10 +54,6 @@ export default class Masonry extends Component {
 
   ref = createRef();
 
-  remToPx = (rem) => {
-    return rem.replace('rem', '') * 16;
-  }
-
   computeWidthsAndSpans = () => {
     const { columnCounts } = this.props;
     let columnsPerRows = 0;
@@ -72,7 +68,7 @@ export default class Masonry extends Component {
       const rows = this.ref.current.children.length / half;
       columnsPerRows = this.ref.current.children.length / rows;
     }
-    const rowGap = this.remToPx(getKey('sizes.spacing.xLarge'));
+    const rowGap = remToPx(getKey('sizes.spacing.xLarge'));
     const rowHeight = 1;
     const availableWidth = this.ref.current.clientWidth - (rowGap * (columnsPerRows === 1 ? 0 : columnsPerRows));
     const columnWidth = Math.floor(availableWidth / columnsPerRows);
