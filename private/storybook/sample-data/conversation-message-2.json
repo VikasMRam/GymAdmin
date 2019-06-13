@@ -1,0 +1,13 @@
+{
+  "id": "01c1e9c32b9b2ca2f6d1857403585fcf",
+  "conversationID": "d75311a1e39c4b4142318a6517c36861",
+  "createdAt": "2019-04-01T12:59:31Z",
+  "data": {
+    "type": "Text",
+    "value": "I'll keep an eye out for your email"
+  },
+  "medium": "Email",
+  "participantID": "36017948a4d80ee177c7058d150a533b",
+  "participantType": "Client",
+  "updatedAt": "2019-04-01T12:59:31Z"
+}

@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 
 import Message from 'sly/components/molecules/Message';
 import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
-import message from 'sly/../private/storybook/sample-data/message.json';
+import message from 'sly/../private/storybook/sample-data/conversation-message-1.json';
 
 const dateString = dayjs(message.createdAt).format('h:mm A');
 const defaultProps = {

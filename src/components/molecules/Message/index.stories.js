@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import Message from 'sly/components/molecules/Message';
 import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
-import message from 'sly/../private/storybook/sample-data/message.json';
+import message from 'sly/../private/storybook/sample-data/conversation-message-1.json';
 
 storiesOf('Molecules|Message', module)
   .add('default', () => <Message client={PraneshKumar} message={message} />)
