@@ -65,7 +65,7 @@ const CommunityPricingTable = ({ pricesList, name }) => {
   return (
     <Fragment>
       <StyledBlockNp size="title">
-        <StyledBlockSp size="body" palette="slate">Estimated monthly pricing for ${name} starts at</StyledBlockSp>
+        <StyledBlockSp size="body" palette="slate">Estimated monthly pricing for {name} starts at</StyledBlockSp>
         <StyledNumberFormat weight="weight.medium" color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> per month*</Span>
       </StyledBlockNp>
       <Wrapper>

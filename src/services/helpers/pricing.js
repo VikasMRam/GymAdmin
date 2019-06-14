@@ -66,10 +66,10 @@ const getAveragePriceString = (priceStringOrNumber) => {
   let avgPriceS = priceStringOrNumber;
   if (priceStringOrNumber.match(/-/)) {
     try {
-      const comps = priceStringOrNumber.split('-').map(e => e.trim().replace(/\D/,''));
+      const comps = priceStringOrNumber.split('-').map(e => e.trim().replace(/\D|,/g, ''));
       let sumPrice = 0;
       comps.map((e) => {
-        sumPrice += Math.parseFloat(e);
+        sumPrice += parseFloat(e);
         return null;
       });
       avgPriceS = (sumPrice / comps.length).toString();
