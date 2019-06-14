@@ -72,7 +72,6 @@ const getAveragePriceString = (priceStringOrNumber) => {
         sumPrice += parseFloat(e);
         return null;
       });
-      console.log('Seeing SUM', sumPrice);
       avgPriceS = (sumPrice / comps.length).toString();
     } catch (e) {
       console.log('Bad price data');
