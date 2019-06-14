@@ -26,9 +26,9 @@ const StyledBadge = styled(Badge)`
 `;
 
 const HrWithText = ({
-  text, badgeText, palette, variation, badgeTextpalette,
+  text, badgeText, palette, variation, badgeTextpalette, className,
 }) => (
-  <Wrapper>
+  <Wrapper className={className}>
     <Hr palette={palette} variation={variation} />
     <TextBlock size="caption" weight="medium">{text}</TextBlock>
     {badgeText && <StyledBadge palette={palette} variation={variation} textPalette={badgeTextpalette}>{badgeText}</StyledBadge>}
@@ -41,6 +41,7 @@ HrWithText.propTypes = {
   variation: variationPropType,
   text: string.isRequired,
   badgeText: string,
+  className: string,
 };
 
 export default HrWithText;

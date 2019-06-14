@@ -1,12 +1,28 @@
-import { string, shape } from 'prop-types';
+import { string, number, shape, oneOf } from 'prop-types';
+
+import {
+  CONVERSATION_PARTICIPANT_TYPE_USER,
+  CONVERSATION_PARTICIPANT_TYPE_CLIENT,
+  CONVERSATION_STATUS_LIVE,
+  CONVERSATION_STATUS_ARCHIVED,
+} from 'sly/constants/conversations';
 
 export default shape({
   id: string.isRequired,
   conversationID: string.isRequired,
   participantID: string.isRequired,
-  data: shape({
-    type: string.isRequired,
-    value: string.isRequired,
-  }).isRequired,
+  participantType: oneOf([
+    CONVERSATION_PARTICIPANT_TYPE_USER,
+    CONVERSATION_PARTICIPANT_TYPE_CLIENT,
+  ]).isRequired,
+  stats: shape({
+    unreadMessageCount: number.isRequired,
+    readMessageCount: number.isRequired,
+    lastReadMessage: number.isRequired,
+  }),
+  status: oneOf([
+    CONVERSATION_STATUS_LIVE,
+    CONVERSATION_STATUS_ARCHIVED,
+  ]).isRequired,
   createdAt: string.isRequired,
 });

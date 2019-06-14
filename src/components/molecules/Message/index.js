@@ -1,11 +1,12 @@
 import React from 'react';
-import { bool } from 'prop-types';
+import { bool, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
 
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import clientPropType from 'sly/propTypes/client';
+import userPropType from 'sly/propTypes/user';
 import { size, palette } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -31,7 +32,9 @@ const StyledAvatar = styled(Avatar)`
 const TextAlignRightBlock = textAlign(Block, 'right');
 TextAlignRightBlock.displayName = 'TextAlignRightBlock';
 
-const Message = ({ message, client, dark }) => {
+const Message = ({
+  message, client, user, dark, className,
+}) => {
   let dateString = '';
   const parsedDate = dayjs(message.createdAt);
   if (!parsedDate.isValid()) {
@@ -39,7 +42,6 @@ const Message = ({ message, client, dark }) => {
   } else {
     dateString = parsedDate.format('h:mm A');
   }
-  let user;
   if (client) {
     // todo: when we support user avatars modify this
     const { name } = client.clientInfo;
@@ -49,12 +51,12 @@ const Message = ({ message, client, dark }) => {
   }
 
   return (
-    <Wrapper>
-      {client && <StyledAvatar size="small" user={user} />}
+    <Wrapper className={className}>
+      {user && <StyledAvatar size="small" user={user} />}
       <StyledBox padding="large" dark={dark}>
         <PaddedBlock size="caption">{message.data.value}</PaddedBlock>
-        {client && <Block size="tiny" palette="grey" variant="dark">{dateString}</Block>}
-        {!client && <TextAlignRightBlock size="tiny" palette="grey" variant="dark">{dateString}</TextAlignRightBlock>}
+        {user && <Block size="tiny" palette="grey" variant="dark">{dateString}</Block>}
+        {!user && <TextAlignRightBlock size="tiny" palette="grey" variant="dark">{dateString}</TextAlignRightBlock>}
       </StyledBox>
     </Wrapper>
   );
@@ -63,7 +65,9 @@ const Message = ({ message, client, dark }) => {
 Message.propTypes = {
   message: messagePropType.isRequired,
   client: clientPropType,
+  user: userPropType,
   dark: bool,
+  className: string,
 };
 
 export default Message;
