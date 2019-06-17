@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { func, object, string } from 'prop-types';
 
 import { CUSTOMER_ROLE, PROVIDER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
-import { FAMILY_DASHBOARD_FAMILIES_PATH, FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH } from 'sly/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_PATH, FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH } from 'sly/constants/dashboardAppPaths';
 import SlyEvent from 'sly/services/helpers/events';
 import AuthContainer from 'sly/containers/AuthContainer';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -54,7 +54,7 @@ const customerMenuItems = [
 
 const agentMenuItems = [
   {
-    name: 'My Families', href: FAMILY_DASHBOARD_FAMILIES_PATH, section: 1, icon: 'users',
+    name: 'My Families', href: AGENT_DASHBOARD_FAMILIES_PATH, section: 1, icon: 'users',
   },
 ];
 

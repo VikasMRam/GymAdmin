@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { CUSTOMER_ROLE, PROVIDER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
-import { FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
+import { FAMILY_DASHBOARD_FAVORITES_PATH, AGENT_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 import Role from 'sly/components/common/Role';
 
 const DashboardHomePageContainer = () => (
@@ -15,7 +15,7 @@ const DashboardHomePageContainer = () => (
       <RefreshRedirect to="/mydashboard" />
     </Role>
     <Role is={AGENT_ROLE}>
-      <Redirect to={FAMILY_DASHBOARD_FAMILIES_PATH} />
+      <Redirect to={AGENT_DASHBOARD_FAMILIES_PATH} />
     </Role>
   </Fragment>
 );

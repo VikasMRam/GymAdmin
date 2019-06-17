@@ -10,7 +10,7 @@ import TableRowCard from 'sly/components/molecules/TableRowCard';
 import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Table from 'sly/components/organisms/Table';
-import { FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 import SlyEvent from 'sly/services/helpers/events';
 
 const SmallScreenSection = styled.div`
@@ -100,12 +100,11 @@ const onTabClick = (label) => {
 
 const getBasePath = (activeTab) => {
   if (activeTab === tabIDs[1]) {
-    return `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`;
+    return `${AGENT_DASHBOARD_FAMILIES_PATH}?type=Connected`;
   } else if (activeTab === tabIDs[2]) {
-    return `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`;
-  } else {
-    return FAMILY_DASHBOARD_FAMILIES_PATH;
+    return `${AGENT_DASHBOARD_FAMILIES_PATH}?type=Closed`;
   }
+  return AGENT_DASHBOARD_FAMILIES_PATH;
 };
 
 const DashboardAgentFamilyOverviewPage = ({
@@ -121,13 +120,13 @@ const DashboardAgentFamilyOverviewPage = ({
   const closedLabel = tabIDLabelMap[tabIDs[2]];
   const tabsViewTemplate = (view, prospectsTabLabel, connectedTabLabel, closedTabLabel) => (
     <StyledTabs activeTab={activeTab}>
-      <div id={tabIDs[0]} label={prospectsTabLabel} to={FAMILY_DASHBOARD_FAMILIES_PATH} onClick={() => onTabClick(prospectsLabel)}>
+      <div id={tabIDs[0]} label={prospectsTabLabel} to={AGENT_DASHBOARD_FAMILIES_PATH} onClick={() => onTabClick(prospectsLabel)}>
         {view}
       </div>
-      <div id={tabIDs[1]} label={connectedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Connected`} onClick={() => onTabClick(connectedLabel)}>
+      <div id={tabIDs[1]} label={connectedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Connected`} onClick={() => onTabClick(connectedLabel)}>
         {view}
       </div>
-      <div id={tabIDs[2]} label={closedTabLabel} to={`${FAMILY_DASHBOARD_FAMILIES_PATH}?type=Closed`} onClick={() => onTabClick(closedLabel)}>
+      <div id={tabIDs[2]} label={closedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Closed`} onClick={() => onTabClick(closedLabel)}>
         {view}
       </div>
     </StyledTabs>

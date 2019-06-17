@@ -3,8 +3,8 @@ import styled, { css } from 'styled-components';
 import { string, func, object, arrayOf, bool } from 'prop-types';
 
 import {
-  FAMILY_DASHBOARD_FAMILIES_PATH,
-  FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
+  AGENT_DASHBOARD_FAMILIES_PATH,
+  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   SUMMARY,
   ACTIVITY,
   FAMILY_DETAILS,
@@ -306,7 +306,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       return (
         <DashboardPageTemplate activeMenuItem="My Families">
           <TextAlignCenterBlock weight="medium" size="subtitle">Family not found!</TextAlignCenterBlock>
-          <AlignCenterBackLinkWrapper>{getBackLink('Back to Prospects', FAMILY_DASHBOARD_FAMILIES_PATH)}</AlignCenterBackLinkWrapper>
+          <AlignCenterBackLinkWrapper>{getBackLink('Back to Prospects', AGENT_DASHBOARD_FAMILIES_PATH)}</AlignCenterBackLinkWrapper>
         </DashboardPageTemplate>
       );
     }
@@ -325,10 +325,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const activityCards = notes ? notes.map((a, i) =>
       <StyledFamilyActivityItem key={a.id} noBorderRadius snap={i === notes.length - 1 ? null : 'bottom'} title={a.title} description={a.body} date={a.createdAt} />) : [];
 
-    const summaryPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
-    const activityPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
-    const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
-    const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', COMMUNITIES);
+    const summaryPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
+    const activityPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
+    const familyDetailsPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
+    const communitiesPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', COMMUNITIES);
 
     let stickyFooterOptions = [];
     if (showAcceptRejectButtons) {
@@ -351,7 +351,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       ];
     }
 
-    const backLinkHref = levelGroup === 'Prospects' ? FAMILY_DASHBOARD_FAMILIES_PATH : `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=${levelGroup}`;
+    const backLinkHref = levelGroup === 'Prospects' ? AGENT_DASHBOARD_FAMILIES_PATH : `${AGENT_DASHBOARD_FAMILIES_PATH}?type=${levelGroup}`;
     const stickyFooterStageProps = {
       text: `${levelGroup} - ${stage}`,
       currentStage: level,
@@ -381,7 +381,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
           </BigScreenSummarySection>
           <SmallScreenClientNameWrapper>
-            <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+            <Link to={AGENT_DASHBOARD_FAMILIES_PATH}>
               <Icon icon="arrow-left" palette="slate" />
             </Link>
             <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>

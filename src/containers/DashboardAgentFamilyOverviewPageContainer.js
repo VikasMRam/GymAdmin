@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { withUser, prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
 import { delayedExecutor, getSearchParams } from 'sly/services/helpers/search';
 import { getStageDetails } from 'sly/services/helpers/stage';
@@ -61,7 +61,7 @@ const convertClientsToTableContents = (clients) => {
     const disabled = status === FAMILY_STATUS_ON_HOLD;
     const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
     const pausedType = disabled ? 'textIcon' : 'link';
-    const to = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
+    const to = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
     rowItems.push({
       type: pausedType,
       data: {
@@ -116,7 +116,7 @@ const convertClientsToMobileContents = (clients) => {
       rowItems.push({ type: 'doubleLine', data: { firstLine: body, secondLine: latestNoteCreatedAtStr } });
     }
     rowItems.push({ type: 'stage', data: { text: stage, currentStage: level, palette } });
-    const to = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
+    const to = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
     return {
       heading: clientName,
       onHeadingClick: () => onClientDetailTableRowCardHeadingLinkClick(clientName, to),

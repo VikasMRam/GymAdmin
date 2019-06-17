@@ -14,18 +14,19 @@ import {
   DASHBOARD_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
   FAMILY_DASHBOARD_PROFILE_PATH,
-  FAMILY_DASHBOARD_FAMILIES_PATH,
-  FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
+  AGENT_DASHBOARD_FAMILIES_PATH,
+  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
+  AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
+  FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
 } from 'sly/constants/dashboardAppPaths';
-
 import Router from 'sly/components/molecules/Router';
-
 import Error from /* webpackChunkName: "chunkError" */ 'sly/components/pages/Error';
 import ChatBoxContainer from/* webpackChunkName: "chunkChatBox" */ 'sly/containers/ChatBoxContainer';
 import DashboardFavoritesPageContainer from/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/containers/DashboardFavoritesPageContainer';
 import DashboardMyProfilePageContainer from/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer';
 import DashboardMyFamiliesDetailsPageContainer from/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer';
 import DashboardAgentFamilyOverviewPageContainer from/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardAgentFamilyOverviewPageContainer';
+import DashboardAgentMessageDetailsPageContainer from/* webpackChunkName: "chunkAgentMessageDetails" */ 'sly/containers/DashboardAgentMessageDetailsPageContainer';
 
 setGlobalStyles();
 
@@ -51,13 +52,21 @@ export default class App extends Component {
       exact: true,
     },
     {
-      path: FAMILY_DASHBOARD_FAMILIES_PATH,
+      path: AGENT_DASHBOARD_FAMILIES_PATH,
       component: DashboardAgentFamilyOverviewPageContainer,
       exact: true,
     },
     {
-      path: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
+      path: AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
       component: DashboardMyFamiliesDetailsPageContainer,
+    },
+    {
+      path: AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
+      component: DashboardAgentMessageDetailsPageContainer,
+    },
+    {
+      path: FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
+      component: DashboardAgentMessageDetailsPageContainer,
     },
   ];
 
