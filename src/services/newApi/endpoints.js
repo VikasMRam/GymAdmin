@@ -46,4 +46,11 @@ export default {
 
   createNote: { method: post, path: '/marketplace/notes' },
   getNotes: { method: get, path: '/marketplace/notes' },
+
+  getConversations: { method: get, path: '/platform/conversations' },
+  getConversation: { method: get, path: '/platform/conversations/:id' },
+
+  getConversationMessages: { method: get, path: '/platform/conversation-messages' },
+
+  getConversationParticipants: { method: get, path: '/platform/conversation-participants' },
 };
