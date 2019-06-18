@@ -6,6 +6,11 @@ export const routes = arrayOf(shape({
   component: oneOfType([
     instanceOf(Component),
     func,
+    shape({
+      render: func,
+      preload: func,
+      load: func,
+    }),
   ]).isRequired,
   exact: bool,
 }));

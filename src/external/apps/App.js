@@ -3,16 +3,20 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
+import loadable from '@loadable/component';
 
 import theme from 'sly/components/themes/default';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import { WIZARD_PATH, SEARCH_PATH } from 'sly/external/constants/paths';
 import ErrorPage from 'sly/external/apps/ErrorPage';
 import addGlobalStyles from 'sly/external/apps/setGlobalStyles';
-import CareAssessmentControllerPage from /* webpackChunkName: "chunkCareAssessmentControllerPage" */'sly/external/apps/wizards/careAssessment/Controller';
-import SearchContainerPage from /* webpackChunkName: "chunkSearchContainerPage" */'sly/external/apps/search/Container';
 
 addGlobalStyles();
+
+const CareAssessmentControllerPage = loadable(() =>
+  import(/* webpackChunkName: "chunkCareAssessmentControllerPage" */'sly/external/apps/wizards/careAssessment/Controller'));
+const SearchContainerPage = loadable(() =>
+  import(/* webpackChunkName: "chunkSearchContainerPage" */'sly/external/apps/search/Container'));
 
 export default class App extends Component {
   static childContextTypes = {

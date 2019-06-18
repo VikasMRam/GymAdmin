@@ -2,7 +2,7 @@
   "name": "sly-react",
   "version": "0.0.0",
   "private": true,
-  "main": "dist/public/server",
+  "main": "dist/server",
   "sideEffects": false,
   "scripts": {
     "start": "node .",
@@ -55,8 +55,6 @@
     "verbose": true
   },
   "devDependencies": {
-  },
-  "dependencies":  {
     "@babel/core": "^7.3.4",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-proposal-decorators": "^7.4.4",
@@ -69,6 +67,8 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
+    "@loadable/babel-plugin": "^5.10.0",
+    "@loadable/webpack-plugin": "^5.7.1",
     "@storybook/addon-actions": "5.0.11",
     "@storybook/addon-options": "5.0.11",
     "@storybook/addons": "5.0.11",
@@ -103,8 +103,12 @@
     "webpack-node-externals": "^1.7.2",
     "webpack-sort-chunks": "^0.2.0",
     "webpack-spawn-plugin": "^0.3.0",
-    "webpack-visualizer-plugin": "^0.1.11",
+    "webpack-visualizer-plugin": "^0.1.11"
+  },
+  "dependencies": {
     "@babel/polyfill": "^7.4.4",
+    "@loadable/component": "^5.10.1",
+    "@loadable/server": "^5.9.0",
     "color": "^3.1.0",
     "cookie-parser": "^1.4.3",
     "copyfiles": "^1.0.0",

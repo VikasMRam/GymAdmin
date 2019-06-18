@@ -99,34 +99,11 @@ describe('Router', () => {
     expect(global.scrollTo).toHaveBeenCalledWith(0, 0);
   });
 
-  it('should redirect when there is a 401', () => {
-    config.isServer = true;
-
-    const staticContext = {};
-    const wrapper = wrap({
-      requiresAuth: true,
-      status: {
-        user: { status: 401 },
-      },
-      location: {
-        ...location,
-        hash: '#myhash',
-      },
-      staticContext,
-    });
-
-    const redirect = wrapper.find('RefreshRedirect');
-    expect(redirect).toHaveLength(1);
-    expect(redirect.prop('to')).toEqual('/?loginRedirect=abc%3Ffoo%3Dxyz%23myhash');
-    expect(staticContext.status).toEqual(302);
-  });
-
-  it('should not change statiContext in the browser', () => {
+  it('should redirect on requiresAuth', () => {
     config.isServer = false;
 
-    const staticContext = {};
     const wrapper = wrap({
-      requiresAuth: true,
+      requiresAuth: [/abc/],
       status: {
         user: { status: 401 },
       },
@@ -134,18 +111,15 @@ describe('Router', () => {
         ...location,
         hash: '#myhash',
       },
-      staticContext,
     });
-    const redirect = wrapper.find('RefreshRedirect');
+    const redirect = wrapper.find('Redirect');
     expect(redirect).toHaveLength(1);
     expect(redirect.prop('to')).toEqual('/?loginRedirect=abc%3Ffoo%3Dxyz%23myhash');
-    expect(staticContext.status).toEqual(undefined);
   });
 
   it('should not redirect if there is user', () => {
     const children = <div>children</div>;
     const wrapper = wrap({
-      requiresAuth: true,
       status: {
         user: { status: 200 },
       },
@@ -163,7 +137,6 @@ describe('Router', () => {
   it('should not redirect if not requiresAuth', () => {
     const children = <div>children</div>;
     const wrapper = wrap({
-      requiresAuth: false,
       status: {
         user: { status: 401 },
       },
