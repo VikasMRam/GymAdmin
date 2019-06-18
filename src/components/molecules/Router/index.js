@@ -38,7 +38,7 @@ export default class Router extends Component {
 
   static defaultProps = {
     enableEvents: true,
-    requiresAuth: false,
+    requiresAuth: [],
   };
 
   componentDidMount() {
@@ -80,13 +80,13 @@ export default class Router extends Component {
 
   componentDidUpdate(prevProps) {
     const { location } = this.props;
-    const { search } = location;
-    const { search: prevSearch } = prevProps.location;
+    const { pathname, search } = location;
+    const { pathname: prevPathname, search: prevSearch } = prevProps.location;
 
     const qs = parse(search);
     const prevQs = parse(prevSearch);
 
-    if (bumpOnSearch(prevQs, qs)) {
+    if (pathname !== prevPathname || bumpOnSearch(prevQs, qs)) {
       window && window.scrollTo(0, 0);
     }
   }

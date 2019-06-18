@@ -21,7 +21,6 @@ const {
   setOutput,
   defineConstants,
   group,
-  uglify,
   sourceMaps,
   devServer,
   when,
