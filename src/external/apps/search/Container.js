@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { object, func } from 'prop-types';
+import { object } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 
-import { DEFAULT_LOCATION_CITY, DEFAULT_LOCATION_STATE } from 'sly/external/constants/search';
 import { getSearchParamFromPlacesResponse } from 'sly/services/helpers/agents';
 import { getSearchParams } from 'sly/services/helpers/search';
 import { parseURLQueryParams, objectToURLQueryParams } from 'sly/services/helpers/url';
@@ -20,13 +19,13 @@ class Container extends Component {
   static propTypes = {
     searchParams: object,
     queryParams: object,
-    history: func,
+    history: object,
   };
 
   state = {
     locationInfo: {
-      city: DEFAULT_LOCATION_CITY,
-      state: DEFAULT_LOCATION_STATE,
+      city: null,
+      state: null,
     },
   };
 

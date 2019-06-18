@@ -20,3 +20,4 @@ export Map from './Map';
 export ClampedText from './ClampedText';
 export BoxChoiceTile from './BoxChoiceTile';
 export Logo from './Logo';
+export Badge from './Badge';

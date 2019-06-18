@@ -9,7 +9,7 @@ import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
 import { getBreadCrumbsForCommunity, getCitySearchUrl } from 'sly/services/helpers/url';
 import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import SlyEvent from 'sly/services/helpers/events';
-import { calculatePricing } from 'sly/services/helpers/pricing';
+import { calculatePricing, buildPriceList } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
 import { Button } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
@@ -38,7 +38,6 @@ import MorePictures from 'sly/components/organisms/MorePictures';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
@@ -61,6 +60,7 @@ import BannerNotification from 'sly/components/molecules/BannerNotification';
 import pad from 'sly/components/helpers/pad';
 
 import CommunityInpageWizardContainer from 'sly/containers/CommunityInpageWizardContainer';
+import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 
 const BackToSearch = styled.div`
   text-align: center
@@ -480,6 +480,10 @@ export default class CommunityDetailPage extends Component {
 
     const { autoHighlights, nearbyCities } = rgsAux;
 
+
+    const pricesList = buildPriceList(community);
+    const pricingTitle  = (pricesList.length === 0 && floorPlans.length > 0) ? 'Pricing and Floor Plans' : 'Pricing';
+
     return (
       <Fragment>
         {getHelmetForCommunityPage(community, location)}
@@ -538,26 +542,32 @@ export default class CommunityDetailPage extends Component {
                   </TopCollapsibleSection>
                 }
                 <TopCollapsibleSection
-                  title={`Pricing and Floor Plans at ${name}`}
+                  title={`${pricingTitle} at ${name}`}
                   id="pricing-and-floor-plans"
                 >
+                  {pricesList.length > 0 &&
+                  <CommunityPricingTable name={name} pricesList={pricesList} price={estimatedPriceBase} />
+                  }
+                  {pricesList.length === 0 && floorPlans.length > 0 &&
                   <MainSection>
-                    {floorPlans.length > 0 &&
-                      <CommunityFloorPlansList
-                        floorPlans={floorPlans}
-                        onItemClick={openFloorPlanModal}
-                      />
-                    }
-                    {floorPlans.length === 0 &&
+                    <CommunityFloorPlansList
+                      floorPlans={floorPlans}
+                      onItemClick={openFloorPlanModal}
+                    />
+                  </MainSection>
+                  }
+                  {floorPlans.length === 0 && pricesList.length === 0 &&
+                    <MainSection>
                       <EstimatedCost
                         name={name}
                         getPricing={!isAlreadyPricingRequested ? onGCPClick : () => openAskAgentQuestionModal('pricing')}
                         typeCares={typeCares}
                         price={estimatedPriceBase}
                       />
-                    }
-                  </MainSection>
-                  {floorPlans.length > 0 &&
+                    </MainSection>
+                  }
+
+                  { (floorPlans.length > 0 || pricesList.length > 0) &&
                     <BottomSection>
                       <GetCurrentAvailabilityContainer
                         community={community}
@@ -576,7 +586,7 @@ export default class CommunityDetailPage extends Component {
                     </BottomSection>
                   }
                 </TopCollapsibleSection>
-                {floorPlans.length === 0 &&
+                {floorPlans.length === 0 && pricesList.length === 0 &&
                   <TopCollapsibleSection
                     title={`Get Availability at ${name}`}
                   >
@@ -794,13 +804,6 @@ export default class CommunityDetailPage extends Component {
               <SeoLinks title={`Top Cities Near ${name}`} links={nearbyCities} />
             </Wrapper>
           }
-          <Wrapper>
-            {(rgsAux && rgsAux.localDetails !== '') ? (
-              <Section title="Local Details" titleSize="subtitle">
-                <CommunityLocalDetails localDetails={rgsAux.localDetails} />
-              </Section>) : null
-            }
-          </Wrapper>
         </CommunityDetailPageTemplate>
         <Footer />
       </Fragment>

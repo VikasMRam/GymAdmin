@@ -21,8 +21,10 @@ import {
   DASHBOARD_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
   FAMILY_DASHBOARD_PROFILE_PATH,
-  FAMILY_DASHBOARD_FAMILIES_PATH,
-  FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
+  AGENT_DASHBOARD_FAMILIES_PATH,
+  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
+  AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
+  FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
 } from 'sly/constants/dashboardAppPaths';
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
@@ -50,6 +52,7 @@ const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkNam
 const DashboardMyProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer'));
 const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
 const DashboardAgentFamilyOverviewPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardAgentFamilyOverviewPageContainer'));
+const DashboardAgentMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentMessageDetails" */ 'sly/containers/DashboardAgentMessageDetailsPageContainer'));
 
 setGlobalStyles();
 
@@ -107,13 +110,21 @@ export default class App extends Component {
       exact: true,
     },
     {
-      path: FAMILY_DASHBOARD_FAMILIES_PATH,
+      path: AGENT_DASHBOARD_FAMILIES_PATH,
       component: DashboardAgentFamilyOverviewPageContainer,
       exact: true,
     },
     {
-      path: FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
+      path: AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
       component: DashboardMyFamiliesDetailsPageContainer,
+    },
+    {
+      path: AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
+      component: DashboardAgentMessageDetailsPageContainer,
+    },
+    {
+      path: FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
+      component: DashboardAgentMessageDetailsPageContainer,
     },
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
@@ -227,7 +238,7 @@ export default class App extends Component {
           <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best Senior Home by comparing pricing, availability, and amenities with Seniorly!" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-          <meta content="Seniorly Inc." property="author" />
+          <meta content="Seniorly" property="author" />
           <meta content="English" property="language" />
 
           {/*

@@ -6,6 +6,7 @@ import Avatar from 'sly/components/atoms/Avatar';
 const wrap = (props = {}) => shallow(<Avatar {...props} />).dive();
 
 const name = 'Fonz';
+const fullname = 'Amal Francis';
 const picture = 'https://avatars.githubusercontent.com/u/113003';
 
 describe('Avatar', () => {
@@ -19,7 +20,15 @@ describe('Avatar', () => {
     const wrapper = wrap({ user: { name } });
     const div = wrapper.find('div');
     expect(div).toHaveLength(1);
-    expect(div.props()).toHaveProperty('data-title', 'Fonz');
+    expect(div.props()).toHaveProperty('data-title', name);
     expect(div.text()).toEqual('F');
+  });
+
+  it('renders first letter of first and last name in the absence of picture', () => {
+    const wrapper = wrap({ user: { name: fullname } });
+    const div = wrapper.find('div');
+    expect(div).toHaveLength(1);
+    expect(div.props()).toHaveProperty('data-title', fullname);
+    expect(div.text()).toEqual('AF');
   });
 });

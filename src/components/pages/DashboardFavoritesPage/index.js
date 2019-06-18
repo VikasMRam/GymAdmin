@@ -145,6 +145,7 @@ const DashboardFavoritesPage = ({
     return (
       <StyledCommunityTile
         addNote
+        canFavourite
         isFavourite
         currentSlide={currentSlide}
         onSlideChange={onSlideChange}

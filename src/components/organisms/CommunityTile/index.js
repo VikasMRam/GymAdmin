@@ -68,6 +68,12 @@ const StyledImage = styled(Image)`
     }
   `}
 `;
+const TopRightWrapper = styled.span`
+  right: ${size('spacing.large')};
+  top: ${size('spacing.large')};
+  position: absolute;
+  z-index: 1;
+`;
 
 const StyledBox = styled(Box)`
   border: 0;
@@ -101,6 +107,7 @@ const Wrapper = styled.div`
 
 const ImageWrapper = styled.div`
   position: relative;
+  height: 100%;
 
   // because we are passing aspectRatio prop, we have a relative position
   // in the Image so we can use here absolute
@@ -123,6 +130,7 @@ const CommunityTile = ({
   community, actionButtons, note, addNote, onEditNoteClick, onAddNoteClick, isFavourite,
   onFavouriteClick, onUnfavouriteClick, onSlideChange, currentSlide, className, noGallery,
   layout, showFloorPlan, palette, showDescription, imageSize, showSeeMoreButtonOnHover,
+  canFavourite,
 }) => {
   const {
     name, gallery = {}, mainImage, communitySize,
@@ -135,8 +143,8 @@ const CommunityTile = ({
   const iconPalette = isFavourite ? 'secondary' : 'white';
   const onIconClick = isFavourite ? onUnfavouriteClick : onFavouriteClick;
   const hasImages = galleryImages.length > 0 || imageUrl;
-  // one image only
-  if (galleryImages.length < 2 && !noGallery) {
+  // one image only, don't show gallery
+  if (galleryImages.length < 2) {
     noGallery = true;
   }
   if (!imageUrl || imageUrl.indexOf('maps.googleapis.com/maps/api/streetview') > -1) {
@@ -147,9 +155,9 @@ const CommunityTile = ({
     }
     imageUrl = communityDefaultImages[key];
   }
-  const topRightSection = () => (
+  const topRightSection = () => canFavourite ? (
     <IconButton transparent icon={icon} iconSize="regular" palette={iconPalette} onClick={onIconClick} />
-  );
+  ) : null;
 
   return (
     <Wrapper layout={layout} className={className} imageSize={imageSize}>
@@ -164,14 +172,19 @@ const CommunityTile = ({
         />
       }
       {noGallery &&
-        <ImageWrapper>
-          <StyledImage
-            layout={layout}
-            src={imageUrl}
-            aspectRatio={layout === 'column' ? '3:2' : '16:9'}
-          />
-          {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
-        </ImageWrapper>
+        <Wrapper>
+          <ImageWrapper>
+            <StyledImage
+              layout={layout}
+              src={imageUrl}
+              aspectRatio={layout === 'column' ? '3:2' : '16:9'}
+            />
+            {showSeeMoreButtonOnHover && <Button>See More Details</Button>}
+          </ImageWrapper>
+          <TopRightWrapper>
+            {topRightSection()}
+          </TopRightWrapper>
+        </Wrapper>
       }
       <StyledBox layout={layout} padding="large" hasImages={hasImages}>
         <StyledCommunityInfo
@@ -202,6 +215,7 @@ CommunityTile.propTypes = {
   onAddNoteClick: func,
   note: string,
   addNote: bool,
+  canFavourite: bool,
   isFavourite: bool,
   onFavouriteClick: func,
   onUnfavouriteClick: func,

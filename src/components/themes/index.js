@@ -33,7 +33,6 @@ export function getKey(key) {
   return prop(key)(theme);
 }
 
-
 export function palette(...args) {
   if (args.length === 1 && typeof args[0] === 'string') {
     // eslint-disable-next-line no-param-reassign
@@ -44,4 +43,8 @@ export function palette(...args) {
     last = colorIndex[last];
   }
   return styledPalette(...[...args, last]);
+}
+
+export function remToPx(rem) {
+  return rem.replace('rem', '') * 16;
 }

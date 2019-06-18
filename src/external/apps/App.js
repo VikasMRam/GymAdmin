@@ -49,6 +49,7 @@ export default class App extends Component {
           <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
           <meta content="Seniorly Inc." property="author" />
           <meta content="English" property="language" />
+          <meta name="robots" content="noindex" />
         </Helmet>
         <ThemeProvider theme={theme}>
           <Switch>
