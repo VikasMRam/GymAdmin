@@ -25,13 +25,14 @@ import RejectFamilyContainer from 'sly/containers/RejectFamilyContainer';
 import UpdateFamilyStageFormContainer from 'sly/containers/UpdateFamilyStageFormContainer';
 import PlaceFamilyOnPauseFormContainer from 'sly/containers/PlaceFamilyOnPauseFormContainer';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
-import { Box, Block, Icon, Span, Link, Hr } from 'sly/components/atoms';
+import { Box, Block, Icon, Link, Hr } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
 // import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import PutFamilyOnPause from 'sly/components/molecules/PutFamilyOnPause';
+import BackLink from 'sly/components/molecules/BackLink';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
@@ -157,9 +158,7 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   }
 `;
 
-const BackArrorIcon = styled(Icon)`
-  margin-right: ${size('spacing.small')};
-`;
+const PaddedBackLink = pad(BackLink, 'regular');
 
 export default class DashboardMyFamiliesDetailsPage extends Component {
   static propTypes = {
@@ -237,15 +236,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     });
     const handleSubmit = data => onAddNote(data, notifyError, notifyInfo, hideModal);
 
-    showModal(
-      <AddNoteFormContainer
-        hasCancel
-        onCancelClick={hideModal}
-        heading={`Add a note on ${name}`}
-        placeholder="Add a note on why you are updating this family's stage..."
-        submitButtonText="Save note"
-        onSubmit={handleSubmit}
-      />, null, 'noPadding', false);
+    showModal(<AddNoteFormContainer
+      hasCancel
+      onCancelClick={hideModal}
+      heading={`Add a note on ${name}`}
+      placeholder="Add a note on why you are updating this family's stage..."
+      submitButtonText="Save note"
+      onSubmit={handleSubmit}
+    />, null, 'noPadding', false);
   };
 
   handlePauseClick = () => {
@@ -258,15 +256,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     if (isPaused) {
       onUnPause();
     } else {
-      showModal(
-        <PlaceFamilyOnPauseFormContainer
-          onSuccess={hideModal}
-          onCancel={hideModal}
-          notifyError={notifyError}
-          notifyInfo={notifyInfo}
-          client={client}
-          rawClient={rawClient}
-        />, null, 'noPadding', false);
+      showModal(<PlaceFamilyOnPauseFormContainer
+        onSuccess={hideModal}
+        onCancel={hideModal}
+        notifyError={notifyError}
+        notifyInfo={notifyInfo}
+        client={client}
+        rawClient={rawClient}
+      />, null, 'noPadding', false);
     }
     SlyEvent.getInstance().sendEvent({
       category: 'fdetails',
@@ -293,20 +290,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       );
     }
 
-    const getBackLink = (linkText, backLinkHref) => (
-      <Link to={backLinkHref} onClick={clickEventHandler('fdetails',linkText)}>
-        <BackLinkWrapper>
-          <BackArrorIcon icon="arrow-left" size="small" palette="primary" />
-          <Span size="caption" palette="primary">{linkText}</Span>
-        </BackLinkWrapper>
-      </Link>
-    );
-
     if (!client) {
+      const backlink = <BackLink linkText="Back to Prospects" to={AGENT_DASHBOARD_FAMILIES_PATH} onClick={clickEventHandler('fdetails', 'Back to Prospects')} />;
       return (
         <DashboardPageTemplate activeMenuItem="My Families">
           <TextAlignCenterBlock weight="medium" size="subtitle">Family not found!</TextAlignCenterBlock>
-          <AlignCenterBackLinkWrapper>{getBackLink('Back to Prospects', AGENT_DASHBOARD_FAMILIES_PATH)}</AlignCenterBackLinkWrapper>
+          <AlignCenterBackLinkWrapper>{backlink}</AlignCenterBackLinkWrapper>
         </DashboardPageTemplate>
       );
     }
@@ -357,13 +346,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       currentStage: level,
       palette,
     };
+    const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
 
     return (
       <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
         <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
           <BigScreenSummarySection>
             <Box snap="bottom">
-              {getBackLink(`Back to ${levelGroup}`, backLinkHref)}
+              {backlink}
               <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
             </Box>
             <Hr noMargin />
