@@ -28,15 +28,17 @@ const BottomButton = styled(Button)`
 const Body = styled.div`
   padding: 0 ${size('spacing.xLarge')};
   padding-bottom: ${ifProp('hasBottom', 0, size('spacing.xLarge'))};
+  padding: ${ifProp('hasNoBodyPadding', 0, null)};
 `;
 
 const FormSection = ({
-  heading, children, buttonText, error, handleSubmit, pristine, submitting, invalid,
+  heading, children, buttonText, error, handleSubmit, pristine, submitting, invalid, className,
+  hasNoBodyPadding,
 }) => (
-  <WrapperForm onSubmit={handleSubmit}>
+  <WrapperForm onSubmit={handleSubmit} className={className}>
     <HeadingBlock size="subtitle" weight="medium">{heading}</HeadingBlock>
     <Hr />
-    <Body hasBottom={buttonText}>
+    <Body hasBottom={buttonText} hasNoBodyPadding={hasNoBodyPadding}>
       {children}
       {error && <Block palette="danger">{error}</Block>}
     </Body>
@@ -50,7 +52,8 @@ const FormSection = ({
 );
 
 FormSection.propTypes = {
-  heading: string.isRequired,
+  className: string,
+  heading: node.isRequired,
   children: node.isRequired,
   buttonText: string,
   handleSubmit: func,
@@ -58,6 +61,7 @@ FormSection.propTypes = {
   submitting: bool,
   invalid: bool,
   error: string,
+  hasNoBodyPadding: bool,
 };
 
 export default FormSection;

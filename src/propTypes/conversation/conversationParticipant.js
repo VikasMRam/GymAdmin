@@ -18,11 +18,14 @@ export default shape({
   stats: shape({
     unreadMessageCount: number.isRequired,
     readMessageCount: number.isRequired,
-    lastReadMessage: number.isRequired,
+    lastReadMessageAt: string.isRequired,
   }),
   status: oneOf([
     CONVERSATION_STATUS_LIVE,
     CONVERSATION_STATUS_ARCHIVED,
   ]).isRequired,
+  participantInfo: shape({
+    name: string.isRequired,
+  }),
   createdAt: string.isRequired,
 });

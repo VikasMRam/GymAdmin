@@ -52,7 +52,7 @@ const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkNam
 const DashboardMyProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer'));
 const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
 const DashboardAgentFamilyOverviewPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardAgentFamilyOverviewPageContainer'));
-const DashboardAgentMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentMessageDetails" */ 'sly/containers/DashboardAgentMessageDetailsPageContainer'));
+const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/containers/DashboardMessageDetailsPageContainer'));
 
 setGlobalStyles();
 
@@ -120,11 +120,11 @@ export default class App extends Component {
     },
     {
       path: AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
-      component: DashboardAgentMessageDetailsPageContainer,
+      component: DashboardMessageDetailsPageContainer,
     },
     {
       path: FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
-      component: DashboardAgentMessageDetailsPageContainer,
+      component: DashboardMessageDetailsPageContainer,
     },
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,

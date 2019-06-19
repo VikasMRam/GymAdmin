@@ -2,7 +2,6 @@ import React from 'react';
 import { bool, func, string, shape, arrayOf, number } from 'prop-types';
 import styled from 'styled-components';
 
-
 import { size, palette } from 'sly/components/themes';
 import { Icon, Button } from 'sly/components/atoms';
 

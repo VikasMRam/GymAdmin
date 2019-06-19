@@ -3,13 +3,13 @@ import { shallow } from 'enzyme';
 import dayjs from 'dayjs';
 
 import Message from 'sly/components/molecules/Message';
-import PraneshKumar from 'sly/../private/storybook/sample-data/client-pranesh-kumar.json';
+import participant1 from 'sly/../private/storybook/sample-data/conversation-participant-1.json';
 import message from 'sly/../private/storybook/sample-data/conversation-message-1.json';
 
 const dateString = dayjs(message.createdAt).format('h:mm A');
 const defaultProps = {
   message,
-  client: PraneshKumar,
+  participant: participant1,
 };
 const wrap = (props = {}) => shallow(<Message {...defaultProps} {...props} />);
 
@@ -24,7 +24,7 @@ describe('Message', () => {
 
   it('renders without client', () => {
     const wrapper = wrap({
-      client: null,
+      participant: null,
     });
 
     expect(wrapper.find('StyledBox').find('TextAlignRightBlock').contains(dateString)).toBeTruthy();

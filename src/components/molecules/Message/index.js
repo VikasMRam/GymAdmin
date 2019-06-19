@@ -5,8 +5,7 @@ import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
 
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
-import clientPropType from 'sly/propTypes/client';
-import userPropType from 'sly/propTypes/user';
+import participantPropType from 'sly/propTypes/conversation/conversationParticipant';
 import { size, palette } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -33,7 +32,7 @@ const TextAlignRightBlock = textAlign(Block, 'right');
 TextAlignRightBlock.displayName = 'TextAlignRightBlock';
 
 const Message = ({
-  message, client, user, dark, className,
+  message, participant, dark, className,
 }) => {
   let dateString = '';
   const parsedDate = dayjs(message.createdAt);
@@ -42,21 +41,18 @@ const Message = ({
   } else {
     dateString = parsedDate.format('h:mm A');
   }
-  if (client) {
-    // todo: when we support user avatars modify this
-    const { name } = client.clientInfo;
-    user = {
-      name,
-    };
+  let user;
+  if (participant) {
+    ({ participantInfo: user } = participant);
   }
 
   return (
     <Wrapper className={className}>
-      {user && <StyledAvatar size="small" user={user} />}
+      {participant && <StyledAvatar size="small" user={user} />}
       <StyledBox padding="large" dark={dark}>
         <PaddedBlock size="caption">{message.data.value}</PaddedBlock>
-        {user && <Block size="tiny" palette="grey" variant="dark">{dateString}</Block>}
-        {!user && <TextAlignRightBlock size="tiny" palette="grey" variant="dark">{dateString}</TextAlignRightBlock>}
+        {participant && <Block size="tiny" palette="grey" variant="dark">{dateString}</Block>}
+        {!participant && <TextAlignRightBlock size="tiny" palette="grey" variant="dark">{dateString}</TextAlignRightBlock>}
       </StyledBox>
     </Wrapper>
   );
@@ -64,8 +60,7 @@ const Message = ({
 
 Message.propTypes = {
   message: messagePropType.isRequired,
-  client: clientPropType,
-  user: userPropType,
+  participant: participantPropType,
   dark: bool,
   className: string,
 };

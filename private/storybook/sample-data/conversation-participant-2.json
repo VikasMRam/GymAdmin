@@ -4,6 +4,9 @@
   "createdAt": "2019-04-01T11:54:46Z",
   "participantID": "36017948a4d80ee177c7058d150a533b",
   "participantType": "Client",
+  "participantInfo": {
+    "name": "Pranesh Kumar"
+  },
   "stats": null,
   "status": "Live",
   "updatedAt": "2019-04-01T11:54:46Z"
