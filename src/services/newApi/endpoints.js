@@ -51,6 +51,7 @@ export default {
   getConversation: { method: get, path: '/platform/conversations/:id' },
 
   getConversationMessages: { method: get, path: '/platform/conversation-messages' },
+  createConversationMessage: { method: post, path: '/platform/conversation-messages' },
 
   getConversationParticipants: { method: get, path: '/platform/conversation-participants' },
 };
