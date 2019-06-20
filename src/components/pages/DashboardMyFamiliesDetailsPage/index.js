@@ -334,10 +334,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     if (showAcceptRejectButtons) {
       stickyFooterOptions = [
         {
-          text: 'Accept and contact this family', icon: 'flag', iconPalette: 'slate', onClick: handleAcceptClick,
+          text: 'Accept and contact this family', icon: 'flag', palette: 'primary', iconPalette: 'slate', onClick: handleAcceptClick,
         },
         {
-          text: 'Reject', icon: 'add-note', iconPalette: 'slate', onClick: handleRejectClick, ghost: true,
+          text: 'Reject', icon: 'add-note', iconPalette: 'slate', palette: 'danger', onClick: handleRejectClick, ghost: true,
         },
       ];
     } else if (showUpdateAddNoteButtons) {

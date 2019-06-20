@@ -99,6 +99,7 @@ const optionsShape = {
   text: string,
   icon: string,
   iconPalette: string,
+  palette: string,
   onClick: func,
 };
 
@@ -125,7 +126,7 @@ const DashboardMyFamilyStickyFooter = ({
           )}
           {showAcceptRejectButtons &&
             <AcceptRejectButtonsWrapper>
-              {options.map(option => (<Button key={option.text} onClick={option.onClick} ghost={option.ghost}>{option.text}</Button>))}
+              {options.map(option => (<Button key={option.text} onClick={option.onClick} palette={option.palette} ghost={option.ghost}>{option.text}</Button>))}
             </AcceptRejectButtonsWrapper>
           }
         </FooterWrapper>
