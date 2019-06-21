@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { func } from 'prop-types';
-import { reduxForm, SubmissionError, clearSubmitErrors } from 'redux-form';
+import { reduxForm, SubmissionError, clearSubmitErrors, reset } from 'redux-form';
 
-import { withApi } from 'sly/services/newApi';
+import { query } from 'sly/services/newApi';
 import { CONVERSATION_DATA_TYPE_TEXT, CONVERSATION_MEDIUM_INAPP } from 'sly/constants/conversations';
 import { CONVERSTION_MESSAGE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import participantPropType from 'sly/propTypes/conversation/conversationParticipant';
@@ -16,17 +16,20 @@ const validate = createValidator({
   message: [required],
 });
 
+const afterSubmit = (result, dispatch) =>
+  dispatch(reset(formName));
+
 const ReduxForm = reduxForm({
   form: formName,
   validate,
+  onSubmitSuccess: afterSubmit,
 })(SendMessageForm);
 
-const mapDispatchToProps = (dispatch, { api }) => ({
-  createConversationMessage: data => dispatch(api.createConversationMessage(data)),
+const mapDispatchToProps = dispatch => ({
   clearSubmitErrors: () => dispatch(clearSubmitErrors(formName)),
 });
 
-@withApi
+@query('createConversationMessage', 'createConversationMessage')
 
 @connect(null, mapDispatchToProps)
 

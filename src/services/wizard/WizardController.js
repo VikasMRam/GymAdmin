@@ -108,7 +108,7 @@ class WizardController extends Component {
       return doSubmit();
     }
     if (onSubmit) {
-      return onSubmit(data).catch(e => {
+      return onSubmit(data).catch((e) => {
         throw new SubmissionError({ _error: e.message });
       });
     }

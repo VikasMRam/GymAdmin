@@ -51,7 +51,7 @@ const Avatar = ({ user, ...props }) =>
     <StyledImg src={user.picture} title={user.name} {...props} />
   ) : (
     <StyledDiv data-title={user.name} {...props}>
-      {user.name.split(' ').map(n => n[0]).join('')}
+      {user.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
     </StyledDiv>
   );
 
