@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { object, func } from 'prop-types';
-
+import { connect } from 'react-redux';
 
 import { community as communityPropType } from 'sly/propTypes/community';
 
 import SlyEvent from 'sly/services/helpers/events';
-
 
 import { getUserDetailsFromUAAndForm } from 'sly/services/helpers/userDetails';
 
@@ -14,18 +13,13 @@ import { query } from 'sly/services/newApi';
 import { CONSULTATION_REQUESTED } from 'sly/services/newApi/constants';
 import { REQUEST_CONSULTATION } from 'sly/services/api/actions';
 import { resourceCreateRequest } from 'sly/store/resource/actions';
-import { connectController } from 'sly/controllers';
+
 
 const eventCategory = 'ProfileWizard';
 const submit = data => resourceCreateRequest('userAction', data);
 @query('createAction', 'createUuidAction')
 
-@connectController(
-  _=>_,
-  dispatch => ({
-    submit: data => dispatch(submit(data)),
-  }),
-)
+@connect(null, { submit })
 
 class CommunityInpageWizardContainer extends Component {
   static propTypes = {
