@@ -17,11 +17,10 @@ import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
 import cloneDeep from 'lodash/cloneDeep';
 import { ChunkExtractor } from '@loadable/server';
-import { readFileSync } from 'fs';
 
 import { cleanError, logWarn } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
-import { port, host, publicPath, isDev, cookieDomain } from 'sly/config';
+import { port, host, publicPath, isDev, domain } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import apiService from 'sly/services/api';
@@ -80,7 +79,7 @@ const renderHtml = ({
 const experiments = require('sly/../experiments.json');
 
 const createSetCookie = (res, cookies) => (key, value, maxAge = 27000000) => {
-  res.cookie(key, value, { domain: cookieDomain, maxAge });
+  res.cookie(key, value, { domain, maxAge });
   cookies.push(`${key}=${value}`);
 };
 

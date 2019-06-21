@@ -25,7 +25,7 @@ const config = {
     gAnalyticsKey: 'UA-55078261-2',
     eventServerUrl: 'http://localhost:8888/events/new',
     wsServerUrl: process.env.WEBSOCKET_URL,
-    cookieDomain: process.env.DOMAIN,
+    domain: process.env.DOMAIN,
     publicPath,
     facebookPixelId: '586147298262302',
     googleTagManagerId: 'GTM-NTC7HG2',
