@@ -14,10 +14,14 @@ const validate = createValidator({
 
 const formName = 'DashboardAddPasswordForm';
 
+const afterSubmit = (result, dispatch) =>
+  dispatch(reset(formName));
+
 const ReduxForm = reduxForm({
   form: formName,
   destroyOnUnmount: false,
   validate,
+  onSubmitSuccess: afterSubmit,
 })(DashboardAddPasswordForm);
 
 @withAuth
@@ -29,7 +33,7 @@ export default class DashboardAddPasswordFormContainer extends Component {
     notifySuccess: func,
   };
 
-  handleSubmit = (values, dispatch) => {
+  handleSubmit = (values) => {
     const { setPassword, user, notifySuccess } = this.props;
     const { email } = user;
     const { newPassword, confirmPassword } = values;
@@ -45,7 +49,6 @@ export default class DashboardAddPasswordFormContainer extends Component {
           }
         })
         .then(() => {
-          dispatch(reset(formName));
           notifySuccess('Password Set Successfully');
         });
     }
