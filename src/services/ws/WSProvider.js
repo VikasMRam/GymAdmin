@@ -12,7 +12,6 @@ let _instantiated_ = false;
 export default class WSProvider extends Component {
   static propTypes = {
     children: node.isRequired,
-    wsUrl: string.isRequired,
   };
 
   pubsub = null;
@@ -23,12 +22,10 @@ export default class WSProvider extends Component {
   constructor(props) {
     super(props);
 
-    console.log('constructor')
     this.pubsub = new Pubsub();
   }
 
   setup() {
-    console.log('setting up')
     const ws = new WebSocket(NOTIFICATIONS_URI);
 
     ws.addEventListener('open', () => {
@@ -42,7 +39,12 @@ export default class WSProvider extends Component {
     });
 
     ws.addEventListener('message', (evt) => {
-      const message = JSON.parse(evt.data);
+      let message;
+      try {
+        message = JSON.parse(evt.data);
+      } catch(e) {
+        throw new Error('can\'t parse JSON');
+      }
       if (!message.type) {
         throw new Error('Socket message with no type');
       }
@@ -58,9 +60,8 @@ export default class WSProvider extends Component {
 
   onWSClose = () => {
     // eslint-disable-next-line no-console
-    console.debug('Websocket disconnected');
-
     const time = this.generateInterval(this.reconnectionAttempts);
+    console.debug(`Websocket disconnected, reconnecting in ${time}ms`);
     this.timeoutID = setTimeout(() => {
       this.reconnectionAttempts += 1;
       this.setup();

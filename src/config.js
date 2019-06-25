@@ -41,6 +41,7 @@ const config = {
     isTest: true,
     isDev: false,
     publicPath: '',
+    domain: 'localhost',
   },
 
   development: {
