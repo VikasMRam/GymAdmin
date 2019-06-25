@@ -24,7 +24,6 @@ const config = {
     gMapsApiKey: process.env.GOOGLE_MAPS_API_KEY,
     gAnalyticsKey: 'UA-55078261-2',
     eventServerUrl: 'http://localhost:8888/events/new',
-    wsServerUrl: process.env.WEBSOCKET_URL,
     domain: process.env.DOMAIN,
     publicPath,
     facebookPixelId: '586147298262302',

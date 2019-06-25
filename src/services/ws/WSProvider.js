@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { string, node } from 'prop-types';
 
-import WSContext from 'sly/services/ws/WsContext';
+import WSContext from 'sly/services/ws/WSContext';
 import Pubsub from 'sly/services/ws/pubsub';
 import { domain } from 'sly/config';
 
 const NOTIFICATIONS_URI = `ws://${domain}/v0/platform/notifications`;
 
-const pubsub = new Pubsub();
+let _instantiated_ = false;
 
 export default class WSProvider extends Component {
   static propTypes = {
@@ -15,16 +15,26 @@ export default class WSProvider extends Component {
     wsUrl: string.isRequired,
   };
 
-  state = {
-    ws: null,
-    pubsub: null,
-  };
+  pubsub = null;
+  ws = null;
+  timeoutID = null;
+  reconnectionAttempts = 0;
 
-  componentDidMount = () => {
+  constructor(props) {
+    super(props);
+
+    console.log('constructor')
+    this.pubsub = new Pubsub();
+  }
+
+  setup() {
+    console.log('setting up')
     const ws = new WebSocket(NOTIFICATIONS_URI);
 
     ws.addEventListener('open', () => {
-      console.info(`ws connected to ${NOTIFICATIONS_URI}`);
+      // eslint-disable-next-line no-console
+      console.debug(`Websocket connected to ${NOTIFICATIONS_URI}`);
+      this.reconnectionAttempts = 0;
     });
 
     ws.addEventListener('error', (error) => {
@@ -32,22 +42,54 @@ export default class WSProvider extends Component {
     });
 
     ws.addEventListener('message', (evt) => {
-      // onmessage(evt.data);
-      // let obj = JSON.parse(evt.data)
-      console.log(evt);
-      // console.log(obj)
+      const message = JSON.parse(evt.data);
+      if (!message.type) {
+        throw new Error('Socket message with no type');
+      }
+      this.pubsub.emit(message.type, message);
     });
+
+    ws.addEventListener('close', this.onWSClose);
+
+    _instantiated_ = true;
+
+    this.ws = ws;
+  }
+
+  onWSClose = () => {
+    // eslint-disable-next-line no-console
+    console.debug('Websocket disconnected');
+
+    const time = this.generateInterval(this.reconnectionAttempts);
+    this.timeoutID = setTimeout(() => {
+      this.reconnectionAttempts += 1;
+      this.setup();
+    }, time);
   };
 
-  componentWillUnmont = () => {
-    const { ws } = this.state;
+  generateInterval = (k) => {
+    return Math.min(30, ((k ** 2) - 1)) * 1000;
+  };
 
+  componentDidMount = () => {
+    if (_instantiated_) {
+      throw new Error('Websocket already instantiated');
+    }
+
+    this.setup();
+  };
+
+  componentWillUnmount = () => {
+    clearTimeout(this.timeoutID);
+    this.ws.removeEventListener('close', this.onWSClose);
+    this.ws.close(1000, 'bye');
+    this.ws = null;
   };
 
   render() {
     const { children } = this.props;
     return (
-      <WSContext.Provider>
+      <WSContext.Provider value={this.pubsub}>
         {children}
       </WSContext.Provider>
     );
