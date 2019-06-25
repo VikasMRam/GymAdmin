@@ -99,7 +99,7 @@ class FamilyDetailsForm extends Component {
       gender, timeToMove, monthlyBudget, canEditFamilyDetails,
     } = this.props;
     let preferredLocation = '';
-    if (initialValues) {
+    if (initialValues && pristine) {
       ({ preferredLocation } = initialValues);
     }
 
@@ -180,6 +180,7 @@ class FamilyDetailsForm extends Component {
           <PaddedTwoColumnWrapper verticalCenter>
             <StyledLabel>Preferred location</StyledLabel>
             <StyledSearchBoxContainer
+              clearLocationOnBlur={false}
               onLocationSearch={handleLocationChange}
               onTextChange={handleChange}
               address={preferredLocation}
