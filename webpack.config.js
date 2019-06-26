@@ -159,7 +159,7 @@ const base = group([
 
   resolveModules(sourcePath),
 
-  //addPlugins([new webpack.ProgressPlugin()]),
+  // addPlugins([new webpack.ProgressPlugin()]),
 ]);
 
 const devCORS = group([
@@ -268,8 +268,6 @@ const externalWidget = group([
 
 const client = (target, entries) => createConfig([
   base,
-
-
 
   setOutput({
     filename: '[name].[hash].js',
