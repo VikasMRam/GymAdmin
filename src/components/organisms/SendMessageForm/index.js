@@ -35,7 +35,7 @@ const SendMessageForm = ({
       <StyledField
         type="text"
         name="message"
-        placeholder={`Message ${otherParticipant.participantInfo.name.split(' ').shift()}...`}
+        placeholder={otherParticipant && `Message ${otherParticipant.participantInfo.name.split(' ').shift()}...`}
         component={ReduxField}
         hideErrors
       />

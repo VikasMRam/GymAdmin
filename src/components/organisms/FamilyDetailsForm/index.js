@@ -77,11 +77,7 @@ class FamilyDetailsForm extends Component {
     gender: arrayOf(string).isRequired,
     timeToMove: arrayOf(string).isRequired,
     monthlyBudget: arrayOf(string).isRequired,
-  };
-
-  handleChange = () => {
-    const { change } = this.props;
-    change('preferredLocation', '');
+    preferredLocation: string,
   };
 
   handleLocationChange = (value) => {
@@ -93,13 +89,13 @@ class FamilyDetailsForm extends Component {
   };
 
   render() {
-    const { handleChange, handleLocationChange } = this;
+    const { handleLocationChange } = this;
     const {
       handleSubmit, pristine, submitting, invalid, accepted, intro, initialValues, lookingFor,
       gender, timeToMove, monthlyBudget, canEditFamilyDetails,
     } = this.props;
-    let preferredLocation = '';
-    if (initialValues && pristine) {
+    let { preferredLocation } = this.props;
+    if (initialValues && !preferredLocation) {
       ({ preferredLocation } = initialValues);
     }
 
@@ -180,11 +176,16 @@ class FamilyDetailsForm extends Component {
           <PaddedTwoColumnWrapper verticalCenter>
             <StyledLabel>Preferred location</StyledLabel>
             <StyledSearchBoxContainer
+              allowOnlySelectionFromSuggestions
               clearLocationOnBlur={false}
               onLocationSearch={handleLocationChange}
-              onTextChange={handleChange}
               address={preferredLocation}
               readOnly={!canEditFamilyDetails}
+            />
+            <Field
+              name="preferredLocation"
+              type="hidden"
+              component={ReduxField}
             />
           </PaddedTwoColumnWrapper>
           <Field
