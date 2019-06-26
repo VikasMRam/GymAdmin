@@ -6,6 +6,7 @@ import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import DashboardMessageDetailsPage from 'sly/components/pages/DashboardMessageDetailsPage';
+import WSContext from 'sly/services/ws/WSContext';
 
 @prefetch('messages', 'getConversationMessages', (req, { match }) => req({
   'filter[conversationID]': match.params.id,
@@ -24,7 +25,21 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     conversation: conversationPropType,
     user: userPropType,
     status: object,
+  };
+
+  static contextType = WSContext;
+
+  componentDidMount() {
+    const pubsub = this.context;
   }
+
+  componentWillUnmount() {
+    const pubsub = this.context;
+  }
+
+  onMessage = () => {
+
+  };
 
   render() {
     const {

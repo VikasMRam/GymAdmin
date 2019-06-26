@@ -38,17 +38,22 @@ export default class WSProvider extends Component {
       throw error;
     });
 
+    // users are auto subscribed to notifications, we are interested in
+    // notifications with messages, will throw an error otherwise, for
+    // other purposes like notifying an user of a new review in a community
+    // profile, we have to allow this class to subscribe to socket rooms via
+    // the context passed down
     ws.addEventListener('message', (evt) => {
       let message;
       try {
         message = JSON.parse(evt.data);
-      } catch(e) {
+      } catch (e) {
         throw new Error('can\'t parse JSON');
       }
-      if (!message.type) {
+      if (!message.message || !message.message.type) {
         throw new Error('Socket message with no type');
       }
-      this.pubsub.emit(message.type, message);
+      this.pubsub.emit(message.message.type, message.message);
     });
 
     ws.addEventListener('close', this.onWSClose);
