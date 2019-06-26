@@ -101,7 +101,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     }
     if (stage === FAMILY_STAGE_WON) {
       const { name } = clientInfo;
-      const note = `${name} moved into ${communityName} on ${moveInDate} with Monthly Rent of ${monthlyFees} and a referral fee % from the community of ${referralAgreement}`;
+      const note = `${name} moved into ${communityName} on ${moveInDate} with a monthly rent of $${monthlyFees} and a ${referralAgreement}% referral fee % from the community of `;
       const title = 'Stage Change';
       const payload = {
         type: NOTE_RESOURCE_TYPE,
