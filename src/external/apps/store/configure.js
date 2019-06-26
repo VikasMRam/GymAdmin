@@ -13,7 +13,7 @@ const devtools =
     ? window.devToolsExtension
     : () => fn => fn;
 
-// const loggerMiddleware = createLogger();
+const loggerMiddleware = createLogger();
 
 const configureStore = (initialState, services = {}) => {
   const sagaMiddleware = createSagaMiddleware();
@@ -21,9 +21,9 @@ const configureStore = (initialState, services = {}) => {
     beesMiddleware, thunkMiddleware, sagaMiddleware,
   ];
 
-  // if (isBrowser && isDev) {
-  //   middlewares.push(loggerMiddleware);
-  // }
+  if (isBrowser && isDev) {
+    middlewares.push(loggerMiddleware);
+  }
 
   const enhancers = [
     applyMiddleware(...middlewares),
