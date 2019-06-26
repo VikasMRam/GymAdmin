@@ -6,7 +6,7 @@ import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import DashboardMessageDetailsPage from 'sly/components/pages/DashboardMessageDetailsPage';
-import WSContext from 'sly/services/ws/WSContext';
+import withWS from 'sly/services/ws/withWS';
 
 @prefetch('messages', 'getConversationMessages', (req, { match }) => req({
   'filter[conversationID]': match.params.id,
@@ -19,8 +19,11 @@ import WSContext from 'sly/services/ws/WSContext';
 
 @withUser
 
+@withWS
+
 export default class DashboardMessageDetailsPageContainer extends Component {
   static propTypes = {
+    ws: object.isRequired,
     match: object.isRequired,
     messages: arrayOf(messagePropType),
     conversation: conversationPropType,
@@ -28,21 +31,19 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     status: object,
   };
 
-  static contextType = WSContext;
-
   componentDidMount() {
-    const pubsub = this.context;
-    pubsub.on('notify.message.new', this.onMessage, { capture: true });
+    const { ws } = this.props;
+    ws.on('notify.message.new', this.onMessage, { capture: true });
   }
 
   componentWillUnmount() {
-    const pubsub = this.context;
-    pubsub.off('notify.message.new', this.onMessage);
+    const { ws } = this.props;
+    ws.off('notify.message.new', this.onMessage);
   }
 
   onMessage = (message) => {
     const { match, status } = this.props;
-    if (message.conversationId === match.params.id) {
+    if (message.payload.conversationId === match.params.id) {
       status.messages.refetch();
       // prevent more handlers to be called
       return false;
@@ -59,7 +60,6 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     const { isLoading: conversationIsLoading, hasStarted: conversationHasStarted } = status.conversation;
     const isStarted = userHasStarted && messagesHasStarted && conversationHasStarted;
     const isLoading = !isStarted || userIsLoading || messagesIsLoading || conversationIsLoading;
-
     return (
       <DashboardMessageDetailsPage
         messages={messages}
