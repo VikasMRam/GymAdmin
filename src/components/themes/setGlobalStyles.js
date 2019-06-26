@@ -62,5 +62,10 @@ export default function setGlobalStyles() {
       background-color: transparent;
     }
 
+    input[type=search]{
+      -moz-appearance: none;/* older firefox */
+      -webkit-appearance: none; /* safari, chrome, edge and ie mobile */
+      appearance: none; /* rest */
+    }
   `;
 }
