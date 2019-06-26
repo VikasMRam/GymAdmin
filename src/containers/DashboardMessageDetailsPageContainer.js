@@ -21,6 +21,7 @@ import WSContext from 'sly/services/ws/WSContext';
 
 export default class DashboardMessageDetailsPageContainer extends Component {
   static propTypes = {
+    match: object.isRequired,
     messages: arrayOf(messagePropType),
     conversation: conversationPropType,
     user: userPropType,
@@ -31,14 +32,22 @@ export default class DashboardMessageDetailsPageContainer extends Component {
 
   componentDidMount() {
     const pubsub = this.context;
+    pubsub.on('notify.message.new', this.onMessage, { capture: true });
   }
 
   componentWillUnmount() {
     const pubsub = this.context;
+    pubsub.off('notify.message.new', this.onMessage);
   }
 
-  onMessage = () => {
-
+  onMessage = (message) => {
+    const { match, status } = this.props;
+    if (message.conversationId === match.params.id) {
+      status.messages.refetch();
+      // prevent more handlers to be called
+      return false;
+    }
+    return true;
   };
 
   render() {

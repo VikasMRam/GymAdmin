@@ -10,6 +10,7 @@ describe('WSProvider', () => {
   let WSProvider;
 
   beforeEach(() => {
+    console.debug = jest.fn();
     jest.resetModules();
     WSProvider = require('./WSProvider').default;
     server = new WS('ws://localhost/v0/platform/notifications');
@@ -41,10 +42,10 @@ describe('WSProvider', () => {
     provider.pubsub.on('message', handler);
     await server.connected;
 
-    const message = { type: 'message', message: 'foo' };
+    const message = { message: { type: 'message', message: 'foo' } };
     const messageTxt = JSON.stringify(message);
     await server.send(messageTxt);
-    expect(handler).toHaveBeenCalledWith(message);
+    expect(handler).toHaveBeenCalledWith(message.message);
   });
 
   it('should reconnect on disconnection', async () => {
