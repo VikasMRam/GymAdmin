@@ -18,6 +18,7 @@ class SearchBoxContainer extends Component {
   static propTypes = {
     layout: string,
     address: string,
+    defaultAddress: string,
     location: object,
     changeAddress: func,
     setLocation: func,
@@ -26,6 +27,7 @@ class SearchBoxContainer extends Component {
     onTextChange: func,
     onLocationSearch: func,
     history: object,
+    allowOnlySelectionFromSuggestions: bool,
   };
 
   static defaultProps = {
@@ -38,6 +40,7 @@ class SearchBoxContainer extends Component {
   }
 
   componentDidMount() {
+    const { changeAddress, defaultAddress } = this.props;
     const scriptjs = require('scriptjs');
     scriptjs(
       `https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&v=3.exp&libraries=geometry,drawing,places`,
@@ -47,12 +50,24 @@ class SearchBoxContainer extends Component {
         });
       }
     );
+
+    if (defaultAddress) {
+      changeAddress(defaultAddress);
+    }
   }
   componentWillUnmount() {
     this.setState({
       isMounted: false,
     });
   }
+
+  handleBlur = () => {
+    const { addressSelected } = this;
+    const { changeAddress, defaultAddress, address } = this.props;
+    if (address && address !== addressSelected) {
+      changeAddress(defaultAddress);
+    }
+  };
 
   handleChange = (address) => {
     const { changeAddress, onTextChange } = this.props;
@@ -64,6 +79,7 @@ class SearchBoxContainer extends Component {
 
   handleSelect = (address) => {
     const { setLocation, address: value } = this.props;
+    this.addressSelected = address;
     geocodeByAddress(address)
       .then(results => results[0])
       .then((result) => {
@@ -107,13 +123,18 @@ class SearchBoxContainer extends Component {
   };
 
   render() {
+    const { handleBlur } = this;
     const {
-      layout, address, clearLocationOnBlur, ...props
+      layout, address, clearLocationOnBlur, allowOnlySelectionFromSuggestions, ...props
     } = this.props;
     const { isMounted } = this.state;
     if (!isMounted) {
       return <div />;
     }
+    if (allowOnlySelectionFromSuggestions) {
+      props.onBlur = handleBlur;
+    }
+
     if (clearLocationOnBlur) {
       return (
         <SearchBox
@@ -141,16 +162,15 @@ class SearchBoxContainer extends Component {
 }
 
 const mapStateToProps = (state, { address }) => ({
-  address: searchBoxAddress(state) || address,
+  address: searchBoxAddress(state),
+  defaultAddress: address,
   location: searchBoxLocation(state),
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    changeAddress: value => dispatch(changeAddress(value)),
-    setLocation: value => (dispatch(setLocation(value))),
-    clearLocation: () => dispatch(clearLocation()),
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  changeAddress: value => dispatch(changeAddress(value)),
+  setLocation: value => (dispatch(setLocation(value))),
+  clearLocation: () => dispatch(clearLocation()),
+});
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SearchBoxContainer));
