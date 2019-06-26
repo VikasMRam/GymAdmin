@@ -61,7 +61,7 @@ class CommunityInpageWizardContainer extends Component {
     return Promise.all([
       submit({
         action: REQUEST_CONSULTATION,
-        value: { user, propertyIds: [community.id] },
+        value: { user, propertyIds: [community.id], type: 'InpageWizard' },
       }),
       createAction({
         type: 'UUIDAction',
