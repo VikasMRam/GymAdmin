@@ -3,7 +3,8 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@1.0.1
+  node: circleci/node@1.1.0
+  awsebcli: sbc-orbs/awsebcli@0.0.3
 
 jobs:
   build:
@@ -24,6 +25,7 @@ jobs:
           cache-key: package-lock.json
           cache-version: v3
           use-strict-cache: true
+          include-branch-in-cache-key: false
           steps:
             - run:
                 name: Install deps
@@ -62,11 +64,13 @@ jobs:
               echo "Skipping Deployment since this is not a Sly Master Build"
               circleci step halt
             fi
+
       - checkout
-      - run:
-          name: Install awscli
-          command: |
-            sudo pip install awsebcli --upgrade
+
+      - awsebcli/install
+
+      - awsebcli/configure
+
       - run:
           name: Choosing EB_ENV
           command: |
