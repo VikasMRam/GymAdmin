@@ -1,4 +1,5 @@
 # CircleCI 2.1 Config Overview: https://discuss.circleci.com/t/circleci-2-1-config-overview/26057
+# Node orb: https://circleci.com/orbs/registry/orb/circleci/node
 version: 2.1
 
 orbs:
@@ -22,6 +23,7 @@ jobs:
       - node/with-cache:
           cache-key: package-lock.json
           cache-version: v3
+          use-strict-cache: true
           steps:
             - run:
                 name: Install deps
