@@ -52,6 +52,9 @@
       "<rootDir>/private/jest/shim.js",
       "<rootDir>/private/jest/setupTests.js"
     ],
+    "reporters": [
+      "jest-junit"
+    ],
     "verbose": true
   },
   "devDependencies": {
