@@ -7,61 +7,51 @@ orbs:
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9
-
-    working_directory: ~/repo
+      - image: circleci/node:8.12 # though we use 8.9 only 8.12 has npm that supports npm ci
 
     environment:
       TEST_RESULTS: /tmp/test-results
 
     steps:
-      - node/install-npm:
-          npm-version: "6.9"
-
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v2-dependencies-{{ checksum "package-lock.json" }}
-
-      - run:
-          name: Install deps
-          command: |
-            if [ ! -d node_modules ]; then
-              npm ci
-            else
-              echo "node_modules from cache exist. So skipping install."
-            fi
 
       - run:
           name: Setup dirs
           command: mkdir -p $TEST_RESULTS
 
-      - save_cache:
-          paths:
-            - node_modules
-          key: v2-dependencies-{{ checksum "package-lock.json" }}
+      - node/with-cache:
+          cache-key: package-lock.json
+          cache-version: v3
+          steps:
+            - run:
+                name: Install deps
+                command: |
+                  if [ ! -d node_modules ]; then
+                    npm ci
+                  else
+                    echo "node_modules from cache exist. So skipping install."
+                  fi
 
-      - run:
-         name: JavaScript Linter
-         command: npm run lint -- --format junit -o "$TEST_RESULTS/js-lint-results.xml"
+            - run:
+                name: JavaScript Linter
+                command: npm run lint -- --format junit -o "$TEST_RESULTS/js-lint-results.xml"
 
-      - run:
-          name: JS Test Suite
-          command: |
-            export JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml"
-            npm test -- --ci --maxWorkers=15
+            - run:
+                name: JS Test Suite
+                command: |
+                  export JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml"
+                  npm test -- --ci --maxWorkers=12
 
       - store_test_results:
           path: /tmp/test-results
+
       - store_artifacts:
           path: /tmp/test-results
 
   deploy:
     docker:
       - image: circleci/python:2.7
-    working_directory: ~/repo
+
     steps:
       - run:
           name: Check if Sly Master Repo

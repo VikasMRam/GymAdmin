@@ -53,6 +53,7 @@
       "<rootDir>/private/jest/setupTests.js"
     ],
     "reporters": [
+      "default",
       "jest-junit"
     ],
     "verbose": true
