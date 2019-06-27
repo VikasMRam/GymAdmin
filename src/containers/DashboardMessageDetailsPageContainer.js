@@ -6,6 +6,7 @@ import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import DashboardMessageDetailsPage from 'sly/components/pages/DashboardMessageDetailsPage';
+import withWS from 'sly/services/ws/withWS';
 
 @prefetch('messages', 'getConversationMessages', (req, { match }) => req({
   'filter[conversationID]': match.params.id,
@@ -18,13 +19,37 @@ import DashboardMessageDetailsPage from 'sly/components/pages/DashboardMessageDe
 
 @withUser
 
+@withWS
+
 export default class DashboardMessageDetailsPageContainer extends Component {
   static propTypes = {
+    ws: object.isRequired,
+    match: object.isRequired,
     messages: arrayOf(messagePropType),
     conversation: conversationPropType,
     user: userPropType,
     status: object,
+  };
+
+  componentDidMount() {
+    const { ws } = this.props;
+    ws.on('notify.message.new', this.onMessage, { capture: true });
   }
+
+  componentWillUnmount() {
+    const { ws } = this.props;
+    ws.off('notify.message.new', this.onMessage);
+  }
+
+  onMessage = (message) => {
+    const { match, status } = this.props;
+    if (message.payload.conversationId === match.params.id) {
+      status.messages.refetch();
+      // prevent more handlers to be called
+      return false;
+    }
+    return true;
+  };
 
   render() {
     const {
@@ -35,7 +60,6 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     const { isLoading: conversationIsLoading, hasStarted: conversationHasStarted } = status.conversation;
     const isStarted = userHasStarted && messagesHasStarted && conversationHasStarted;
     const isLoading = !isStarted || userIsLoading || messagesIsLoading || conversationIsLoading;
-
     return (
       <DashboardMessageDetailsPage
         messages={messages}
