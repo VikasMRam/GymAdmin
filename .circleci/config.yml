@@ -1,13 +1,12 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
-version: 2
+# CircleCI 2.1 Config Overview: https://discuss.circleci.com/t/circleci-2-1-config-overview/26057
+version: 2.1
+
+orbs:
+  node: circleci/node@1.0.1
 
 jobs:
   build:
     docker:
-      # specify the version you desire here
       - image: circleci/node:8.9
 
     working_directory: ~/repo
@@ -16,6 +15,9 @@ jobs:
       TEST_RESULTS: /tmp/test-results
 
     steps:
+      - node/install-npm:
+          npm-version: "6.9"
+
       - checkout
 
       # Download and cache dependencies
