@@ -27,7 +27,7 @@ jobs:
           name: Install deps
           command: |
             if [ ! -d node_modules ]; then
-              npm install
+              npm ci
             else
               echo "node_modules from cache exist. So skipping install."
             fi
