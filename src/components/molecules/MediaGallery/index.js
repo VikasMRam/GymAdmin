@@ -172,13 +172,17 @@ export default class MediaGallery extends Component {
     this.props.onSlideChange(index);
   };
 
-  nextSlide = () => {
+  nextSlide = (e) => {
+    e.preventDefault();
+
     const { currentSlide } = this.props;
     const numItems = this.allMedia.length;
     this.handleChangeIndex(currentSlide === numItems - 1 ? 0 : currentSlide + 1);
   };
 
-  prevSlide = () => {
+  prevSlide = (e) => {
+    e.preventDefault();
+
     const { currentSlide } = this.props;
     const numItems = this.allMedia.length;
     this.handleChangeIndex(currentSlide === 0 ? numItems - 1 : currentSlide - 1);
