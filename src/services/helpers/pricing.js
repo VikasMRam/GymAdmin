@@ -23,7 +23,7 @@ const getAveragePriceString = (priceStringOrNumber) => {
         sumPrice += parseFloat(e);
         return null;
       });
-      avgPriceS = (sumPrice / comps.length).toString();
+      avgPriceS = Math.round((sumPrice / comps.length)).toString();
     } catch (e) {
       console.log('Bad price data');
     }

@@ -56,7 +56,7 @@ const DashboardMessageDetailsPage = ({
     const { id } = user;
     viewingAsParticipant = conversationParticipants.find(p => p.participantID === id);
     (otherParticipant = conversationParticipants.find(p => p.participantID !== id));
-    const name = otherParticipant ? otherParticipant.participantInfo.name : '';
+    const name = otherParticipant && otherParticipant.participantInfo ? otherParticipant.participantInfo.name : '';
 
     heading = (
       <HeaderWrapper>

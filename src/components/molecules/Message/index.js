@@ -48,11 +48,11 @@ const Message = ({
 
   return (
     <Wrapper className={className}>
-      {participant && <StyledAvatar size="small" user={user} />}
+      {user && <StyledAvatar size="small" user={user} />}
       <StyledBox padding="large" dark={dark}>
         <PaddedBlock size="caption">{message.data.value}</PaddedBlock>
-        {participant && <Block size="tiny" palette="grey" variant="dark">{dateString}</Block>}
-        {!participant && <TextAlignRightBlock size="tiny" palette="grey" variant="dark">{dateString}</TextAlignRightBlock>}
+        {user && <Block size="tiny" palette="grey" variant="dark">{dateString}</Block>}
+        {!user && <TextAlignRightBlock size="tiny" palette="grey" variant="dark">{dateString}</TextAlignRightBlock>}
       </StyledBox>
     </Wrapper>
   );

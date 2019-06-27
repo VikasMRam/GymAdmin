@@ -371,7 +371,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
           </BigScreenSummarySection>
           <SmallScreenClientNameWrapper>
-            <Link to={AGENT_DASHBOARD_FAMILIES_PATH}>
+            <Link to={backLinkHref}>
               <Icon icon="arrow-left" palette="slate" />
             </Link>
             <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
