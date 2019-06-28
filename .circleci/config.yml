@@ -67,10 +67,6 @@ jobs:
 
       - checkout
 
-      - awsebcli/install
-
-      - awsebcli/configure
-
       - run:
           name: Choosing EB_ENV
           command: |
@@ -112,6 +108,10 @@ jobs:
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
             ./.circleci/push-slack-notification.sh -t "Starting deploy to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#66d3e4"
+
+      - awsebcli/install
+
+      - awsebcli/configure
 
       - run:
           name: Deploy to EB
