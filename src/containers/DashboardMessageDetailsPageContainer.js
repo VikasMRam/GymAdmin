@@ -7,6 +7,7 @@ import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import DashboardMessageDetailsPage from 'sly/components/pages/DashboardMessageDetailsPage';
 import withWS from 'sly/services/ws/withWS';
+import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 
 @prefetch('messages', 'getConversationMessages', (req, { match }) => req({
   'filter[conversationID]': match.params.id,
@@ -33,12 +34,12 @@ export default class DashboardMessageDetailsPageContainer extends Component {
 
   componentDidMount() {
     const { ws } = this.props;
-    ws.on('notify.message.new', this.onMessage, { capture: true });
+    ws.on(NOTIFY_MESSAGE_NEW, this.onMessage, { capture: true });
   }
 
   componentWillUnmount() {
     const { ws } = this.props;
-    ws.off('notify.message.new', this.onMessage);
+    ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
   }
 
   onMessage = (message) => {
