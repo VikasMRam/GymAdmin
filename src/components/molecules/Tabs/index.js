@@ -29,7 +29,6 @@ const TabWrapper = styled.div`
 
 const TabContent = styled.div`
   background-color: inherit;
-  height: 100%;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
