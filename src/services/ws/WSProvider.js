@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { string, node } from 'prop-types';
 
 import WSContext from 'sly/services/ws/WSContext';
-import Pubsub from 'sly/services/ws/pubsub';
+import Pubsub from 'sly/services/ws/Pubsub';
 import { domain } from 'sly/config';
 
 const NOTIFICATIONS_URI = `ws://${domain}/v0/platform/notifications`;
