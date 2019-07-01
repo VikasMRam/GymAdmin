@@ -26,7 +26,7 @@ class Notifications extends Component {
   };
 
   componentDidMount() {
-    const { ws } = this.props;
+    const { ws, user } = this.props;
     Object.keys(subscriptionList).forEach((key) => {
       // no capture showing a notification is indeed the last resort
       ws.on(key, this.onMessage);
@@ -47,6 +47,7 @@ class Notifications extends Component {
       message,
       ...this.props,
     });
+
     notifyInfo((
       <StyledLink to={to}>
         {message.payload.notificationMessage}
@@ -76,3 +77,5 @@ export default function Subscriptions({ children }) {
 Subscriptions.propTypes = {
   children: node.isRequired,
 };
+
+Subscriptions.WrappedComponent = Notifications.WrappedComponent;

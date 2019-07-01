@@ -8,7 +8,7 @@ const getNewMessageLink = (roleId, conversationId) => {
     case CUSTOMER_ROLE: return `${FAMILY_DASHBOARD_MESSAGES_PATH}/${conversationId}`;
     default: return '/';
   }
-}
+};
 
 export default {
   [NOTIFY_MESSAGE_NEW]: ({ message, user }) => getNewMessageLink(user.roleID, message.payload.conversationId),
