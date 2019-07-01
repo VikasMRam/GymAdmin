@@ -102,7 +102,6 @@
     "raw-loader": "^0.5.1",
     "react-test-renderer": "^16.3.2",
     "redux-mock-store": "^1.5.1",
-    "webpack": "^4.29.6",
     "webpack-blocks": "^2.0.1",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1",
@@ -177,6 +176,7 @@
     "universal-cookie": "^3.0.4",
     "url-loader": "^0.6.2",
     "uuid": "^3.2.1",
-    "validator": "^9.0.0"
+    "validator": "^9.0.0",
+    "webpack": "^4.29.6"
   }
 }
