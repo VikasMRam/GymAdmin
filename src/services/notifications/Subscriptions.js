@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { node, shape, func } from 'prop-types';
+import styled from 'styled-components';
 
 import { Link } from 'sly/components/atoms';
 import WSContext from 'sly/services/ws/WSContext';
 import NotificationController from 'sly/controllers/NotificationController';
 import withUser from 'sly/services/newApi/withUser';
 import subscriptionList from 'sly/services/notifications/subscriptionList';
+
+const StyledLink = styled(Link)`
+  display: block;
+  color: unset;
+`;
 
 @withUser
 
@@ -42,9 +48,9 @@ class Notifications extends Component {
       ...this.props,
     });
     notifyInfo((
-      <Link to={to}>
+      <StyledLink to={to}>
         {message.payload.notificationMessage}
-      </Link>
+      </StyledLink>
     ));
   };
 
