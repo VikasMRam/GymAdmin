@@ -3,7 +3,7 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@1.1.0
+  node: circleci/node@1.1.2
   awsebcli: sbc-orbs/awsebcli@0.0.3
 
 jobs:
