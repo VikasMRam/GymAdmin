@@ -135,7 +135,7 @@ const Field = ({
     name,
     value: hideValue ? null : value,
     type: getInputType(type),
-    invalid,
+    invalid: invalid && !hideErrors,
     warning,
     placeholder,
     'aria-describedby': `${name}Error`,
