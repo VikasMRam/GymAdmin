@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, node } from 'prop-types';
+import { node } from 'prop-types';
 
 import WSContext from 'sly/services/ws/WSContext';
 import Pubsub from 'sly/services/ws/pubsub';
@@ -44,6 +44,8 @@ export default class WSProvider extends Component {
     // profile, we have to allow this class to subscribe to socket rooms via
     // the context passed down
     ws.addEventListener('message', (evt) => {
+      // eslint-disable-next-line no-console
+      console.debug('Websocket got message', evt.data);
       let message;
       try {
         message = JSON.parse(evt.data);
@@ -62,16 +64,6 @@ export default class WSProvider extends Component {
 
     this.ws = ws;
   }
-
-  onWSClose = () => {
-    // eslint-disable-next-line no-console
-    const time = this.generateInterval(this.reconnectionAttempts);
-    console.debug(`Websocket disconnected, reconnecting in ${time}ms`);
-    this.timeoutID = setTimeout(() => {
-      this.reconnectionAttempts += 1;
-      this.setup();
-    }, time);
-  };
 
   generateInterval = (k) => {
     return Math.min(30, ((k ** 2) - 1)) * 1000;
@@ -92,6 +84,16 @@ export default class WSProvider extends Component {
     this.ws = null;
   };
 
+  onWSClose = () => {
+    const time = this.generateInterval(this.reconnectionAttempts);
+    // eslint-disable-next-line no-console
+    console.debug(`Websocket disconnected, reconnecting in ${time}ms`);
+    this.timeoutID = setTimeout(() => {
+      this.reconnectionAttempts += 1;
+      this.setup();
+    }, time);
+  };
+
   render() {
     const { children } = this.props;
     return (
@@ -101,4 +103,3 @@ export default class WSProvider extends Component {
     );
   }
 }
-

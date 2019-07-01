@@ -21,6 +21,16 @@ const StyledMessage = pad(styled(Message)`
   align-self: ${ifProp('isRightAligned', 'flex-end', 'flex-start')};
   margin-left: ${size('spacing.xLarge')};
   margin-right: ${size('spacing.xLarge')};
+
+  animation: fadeIn 1.5s;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `, 'large');
 StyledMessage.displayName = 'StyledMessage';
 
@@ -29,7 +39,9 @@ PaddedHrWithText.displayName = 'PaddedHrWithText';
 
 dayjs.extend(advancedFormat);
 
-const ConversationMessages = ({ messages, participants, viewingAsParticipant }) => {
+const ConversationMessages = ({
+  messages, participants, viewingAsParticipant,
+}) => {
   const today = dayjs();
   const todayDDMMYYYY = today.format('DD-MM-YYYY');
   const thisYear = dayjs().format('YYYY');
@@ -71,7 +83,8 @@ const ConversationMessages = ({ messages, participants, viewingAsParticipant }) 
   });
 
   const messageComponents = days.map((d) => {
-    const messagesInDay = messagesByDay[d];
+    let messagesInDay = messagesByDay[d];
+    messagesInDay = messagesInDay.sort((a, b) => a.createdAtDayjs.diff(b.createdAtDayjs));
     const components = messagesInDay.map((m) => {
       const isRightAligned = viewingAsParticipant.id === m.conversationParticipantID;
       const props = {
