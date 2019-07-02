@@ -43,9 +43,6 @@ export default {
   getClients: { method: get, path: '/marketplace/clients' },
   getClient: { method: get, path: '/marketplace/clients/:id' },
   updateClient: { method: patch, path: '/marketplace/clients/:id' },
-  
-  getVoiceCalls: { method: get, path: '/platform/communications/voice' },
-  getVoiceCall: { method: get, path: '/platform/communications/voice/:id' },
 
   createNote: { method: post, path: '/marketplace/notes' },
   getNotes: { method: get, path: '/marketplace/notes' },
@@ -57,4 +54,7 @@ export default {
   createConversationMessage: { method: post, path: '/platform/conversation-messages' },
 
   getConversationParticipants: { method: get, path: '/platform/conversation-participants' },
+
+  getVoiceCalls: { method: get, path: '/platform/communications/voice' },
+  getVoiceCall: { method: get, path: '/platform/communications/voice/:id' },
 };
