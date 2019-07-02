@@ -58,6 +58,7 @@ const Column = styled.aside`
 const Body = styled.main`
   background-color: ${palette('grey.background')};
   overflow: ${ifProp('bodyHasOverflow', 'auto', 'initial')};
+  height: 100%;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: ${size('spacing.xLarge')};
@@ -67,13 +68,13 @@ const Body = styled.main`
 `;
 
 const DashboardPage = styled.div`
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: grid;
     grid-template-columns: ${size('element.xxHuge')} auto;
     grid-gap: 0;

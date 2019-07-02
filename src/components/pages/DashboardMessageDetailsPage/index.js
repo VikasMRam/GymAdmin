@@ -24,7 +24,9 @@ import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import BackLink from 'sly/components/molecules/BackLink';
 import SendMessageFormContainer from 'sly/containers/SendMessageFormContainer';
 
-const TextCenterBlock = textAlign(Block);
+const TextCenterBlock = styled(textAlign(Block))`
+  height: 100%;
+`;
 
 const FullWidthTextCenterBlock = fullWidth(TextCenterBlock);
 
@@ -97,7 +99,7 @@ const DashboardMessageDetailsPage = ({
                   messages={messages}
                   participants={conversationParticipants}
                 />
-              ) : <TextCenterBlock size="caption">No messages</TextCenterBlock>)}
+              ) : <Fragment><br /><TextCenterBlock size="caption">No messages</TextCenterBlock></Fragment>)}
               <StyledSendMessageFormContainer otherParticipant={otherParticipant} />
             </Fragment>
           }
