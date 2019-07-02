@@ -3,8 +3,8 @@ import styled, { css } from 'styled-components';
 import { string, func, object, arrayOf, bool } from 'prop-types';
 
 import {
-  FAMILY_DASHBOARD_FAMILIES_PATH,
-  FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH,
+  AGENT_DASHBOARD_FAMILIES_PATH,
+  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   SUMMARY,
   ACTIVITY,
   FAMILY_DETAILS,
@@ -25,14 +25,17 @@ import RejectFamilyContainer from 'sly/containers/RejectFamilyContainer';
 import UpdateFamilyStageFormContainer from 'sly/containers/UpdateFamilyStageFormContainer';
 import PlaceFamilyOnPauseFormContainer from 'sly/containers/PlaceFamilyOnPauseFormContainer';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
-import { Box, Block, Icon, Span, Link, Hr } from 'sly/components/atoms';
+import { Box, Block, Icon, Link, Hr } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
 // import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import FamilyStage from 'sly/components/molecules/FamilyStage';
 import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import PutFamilyOnPause from 'sly/components/molecules/PutFamilyOnPause';
+import BackLink from 'sly/components/molecules/BackLink';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
+import SlyEvent from 'sly/services/helpers/events';
+import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 
 const StyledTabs = styled(Tabs)`
   background-color: ${palette('white', 'base')};
@@ -155,9 +158,7 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   }
 `;
 
-const BackArrorIcon = styled(Icon)`
-  margin-right: ${size('spacing.small')};
-`;
+const PaddedBackLink = pad(BackLink, 'regular');
 
 export default class DashboardMyFamiliesDetailsPage extends Component {
   static propTypes = {
@@ -184,6 +185,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       showModal, hideModal, notifyError, client, rawClient, refetchClient, goToFamilyDetails,
     } = this.props;
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: 'accept-lead',
+      value: '',
+    });
     showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} goToFamilyDetails={goToFamilyDetails} refetchClient={refetchClient} />, null, 'noPadding', false);
   };
 
@@ -191,6 +198,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       meta, showModal, hideModal, notifyError, notifyInfo, client, rawClient, onRejectSuccess,
     } = this.props;
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: 'reject-lead',
+      value: '',
+    });
     const { rejectReasons } = meta;
     showModal(<RejectFamilyContainer onSuccess={onRejectSuccess} reasons={rejectReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} onCancel={hideModal} />, null, 'noPadding', false);
   };
@@ -200,6 +213,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       showModal, hideModal, notifyError, client, rawClient, notifyInfo, meta, refetchClient, refetchNotes,
     } = this.props;
     const { stage, lossReasons } = meta;
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: 'update-stage',
+      value: '',
+    });
     showModal(<UpdateFamilyStageFormContainer refetchClient={refetchClient} refetchNotes={refetchNotes} onSuccess={hideModal} lossReasons={lossReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} nextAllowedStages={stage} onCancel={hideModal} />, null, 'noPadding', false);
   };
 
@@ -209,17 +228,22 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this.props;
     const { clientInfo } = client;
     const { name } = clientInfo;
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: 'add-note',
+      value: '',
+    });
     const handleSubmit = data => onAddNote(data, notifyError, notifyInfo, hideModal);
 
-    showModal(
-      <AddNoteFormContainer
-        hasCancel
-        onCancelClick={hideModal}
-        heading={`Add a note on ${name}`}
-        placeholder="Add a note on why you are updating this family's stage..."
-        submitButtonText="Save note"
-        onSubmit={handleSubmit}
-      />, null, 'noPadding', false);
+    showModal(<AddNoteFormContainer
+      hasCancel
+      onCancelClick={hideModal}
+      heading={`Add a note on ${name}`}
+      placeholder="Add a note on why you are updating this family's stage..."
+      submitButtonText="Save note"
+      onSubmit={handleSubmit}
+    />, null, 'noPadding', false);
   };
 
   handlePauseClick = () => {
@@ -232,16 +256,21 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     if (isPaused) {
       onUnPause();
     } else {
-      showModal(
-        <PlaceFamilyOnPauseFormContainer
-          onSuccess={hideModal}
-          onCancel={hideModal}
-          notifyError={notifyError}
-          notifyInfo={notifyInfo}
-          client={client}
-          rawClient={rawClient}
-        />, null, 'noPadding', false);
+      showModal(<PlaceFamilyOnPauseFormContainer
+        onSuccess={hideModal}
+        onCancel={hideModal}
+        notifyError={notifyError}
+        notifyInfo={notifyInfo}
+        client={client}
+        rawClient={rawClient}
+      />, null, 'noPadding', false);
     }
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: (isPaused ? 'true' : 'false'),
+      value: '',
+    });
   };
 
   render() {
@@ -261,20 +290,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       );
     }
 
-    const getBackLink = (linkText, backLinkHref) => (
-      <Link to={backLinkHref}>
-        <BackLinkWrapper>
-          <BackArrorIcon icon="arrow-left" size="small" palette="primary" />
-          <Span size="caption" palette="primary">{linkText}</Span>
-        </BackLinkWrapper>
-      </Link>
-    );
-
     if (!client) {
+      const backlink = <BackLink linkText="Back to Prospects" to={AGENT_DASHBOARD_FAMILIES_PATH} onClick={clickEventHandler('fdetails', 'Back to Prospects')} />;
       return (
         <DashboardPageTemplate activeMenuItem="My Families">
           <TextAlignCenterBlock weight="medium" size="subtitle">Family not found!</TextAlignCenterBlock>
-          <AlignCenterBackLinkWrapper>{getBackLink('Back to Prospects', FAMILY_DASHBOARD_FAMILIES_PATH)}</AlignCenterBackLinkWrapper>
+          <AlignCenterBackLinkWrapper>{backlink}</AlignCenterBackLinkWrapper>
         </DashboardPageTemplate>
       );
     }
@@ -293,19 +314,19 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const activityCards = notes ? notes.map((a, i) =>
       <StyledFamilyActivityItem key={a.id} noBorderRadius snap={i === notes.length - 1 ? null : 'bottom'} title={a.title} description={a.body} date={a.createdAt} />) : [];
 
-    const summaryPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
-    const activityPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id)
-    const familyDetailsPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
-    const communitiesPath = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', COMMUNITIES);
+    const summaryPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
+    const activityPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
+    const familyDetailsPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
+    const communitiesPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', COMMUNITIES);
 
     let stickyFooterOptions = [];
     if (showAcceptRejectButtons) {
       stickyFooterOptions = [
         {
-          text: 'Accept and contact this family', icon: 'flag', iconPalette: 'slate', onClick: handleAcceptClick,
+          text: 'Accept and contact this family', icon: 'flag', palette: 'primary', iconPalette: 'slate', onClick: handleAcceptClick,
         },
         {
-          text: 'Reject', icon: 'add-note', iconPalette: 'slate', onClick: handleRejectClick, ghost: true,
+          text: 'Reject', icon: 'add-note', iconPalette: 'slate', palette: 'danger', onClick: handleRejectClick, ghost: true,
         },
       ];
     } else if (showUpdateAddNoteButtons) {
@@ -319,19 +340,20 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       ];
     }
 
-    const backLinkHref = levelGroup === 'Prospects' ? FAMILY_DASHBOARD_FAMILIES_PATH : `${FAMILY_DASHBOARD_FAMILIES_PATH}?type=${levelGroup}`;
+    const backLinkHref = levelGroup === 'Prospects' ? AGENT_DASHBOARD_FAMILIES_PATH : `${AGENT_DASHBOARD_FAMILIES_PATH}?type=${levelGroup}`;
     const stickyFooterStageProps = {
       text: `${levelGroup} - ${stage}`,
       currentStage: level,
       palette,
     };
+    const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
 
     return (
       <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
         <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
           <BigScreenSummarySection>
             <Box snap="bottom">
-              {getBackLink(`Back to ${levelGroup}`, backLinkHref)}
+              {backlink}
               <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
             </Box>
             <Hr noMargin />
@@ -349,20 +371,20 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
           </BigScreenSummarySection>
           <SmallScreenClientNameWrapper>
-            <Link to={FAMILY_DASHBOARD_FAMILIES_PATH}>
+            <Link to={backLinkHref}>
               <Icon icon="arrow-left" palette="slate" />
             </Link>
             <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
           </SmallScreenClientNameWrapper>
         </div>
         <StyledTabs activeTab={currentTab}>
-          <div id={SUMMARY} label="Summary" tabStyles={hideInBigScreenStyles} to={summaryPath}>
+          <div id={SUMMARY} label="Summary" tabStyles={hideInBigScreenStyles} to={summaryPath} onClick={clickEventHandler('fdetails-tab','Summary')} target='_blank'>
             <TabWrapper>
               <SmallScreenBorderPaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
               {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
             </TabWrapper>
           </div>
-          <div id={ACTIVITY} default label="Activity" to={activityPath}>
+          <div id={ACTIVITY} default label="Activity" to={activityPath} onClick={clickEventHandler('fdetails-tab','Activity')} target='_blank'>
             <TabWrapper>
               <SmallScreenBorderDiv padding={!noteIsLoading && activityCards.length > 0 ? null : 'xLarge'}>
                 {noteIsLoading && <Block size="subtitle">Loading...</Block>}
@@ -378,7 +400,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </SmallScreenBorderDiv>
             </TabWrapper>
           </div>
-          <div id={FAMILY_DETAILS} label="Family Details" to={familyDetailsPath}>
+          <div id={FAMILY_DETAILS} label="Family Details" to={familyDetailsPath} onClick={clickEventHandler('fdetails-tab','Family Details')} target='_blank'>
             <TabWrapper>
               <FamilyDetailsTab>
                 <FamilyDetailsFormContainer
@@ -396,7 +418,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               </FamilyDetailsTab>
             </TabWrapper>
           </div>
-          <div id={COMMUNITIES} label="Communities" to={communitiesPath}>
+          <div id={COMMUNITIES} label="Communities" to={communitiesPath} onClick={clickEventHandler('fdetails-tab','Communities')} target='_blank'>
             <TabWrapper>
               <CommunitiesTab>
                 <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>

@@ -13,13 +13,19 @@ const Wrapper = styled.th`
 `;
 const StyledDiv = styled.div`
   display: flex;
-  padding: ${size('spacing.large')};
+  padding: ${size('spacing.regular')} ${size('spacing.large')};
   font-weight: ${size('weight.medium')};
   color: ${palette('grey', 'base')};
   white-space: nowrap;
+`;
+
+const Text = styled.p`
+  margin: 0;
+  padding:  ${size('spacing.regular')} 0;
   font-size: ${p => size('text', p.size)};
   line-height: ${p => size('lineHeight', p.size)};
 `;
+
 
 const SortIcon = styled(Icon)`
   margin-left: ${size('spacing.regular')};
@@ -30,12 +36,12 @@ const DropDownIcon = styled(Icon)`
 `;
 
 const Th = ({
-  children, sort, size, onDropDownIconClick,
+  children, sort, size, onDropDownIconClick, ...props
 }) => {
   return (
-    <Wrapper>
+    <Wrapper {...props} >
       <StyledDiv size={size}>
-        {children}
+        <Text size={size}>{children}</Text>
         {sort && <SortIcon icon="arrow-up" palette="grey" flip={sort === 'desc'} />}
         {onDropDownIconClick && <DropDownIcon icon="dropdown-down" palette="grey" onClick={onDropDownIconClick} />}
       </StyledDiv>

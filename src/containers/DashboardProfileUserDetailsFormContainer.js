@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { shape, object, func } from 'prop-types';
 import { reduxForm, SubmissionError } from 'redux-form';
-import { connect } from 'react-redux';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 
 import DashboardProfileUserDetailsForm from 'sly/components/organisms/DashboardProfileUserDetailsForm';
 import { createValidator, required, email, usPhone } from 'sly/services/validation/index';
 import userPropType, { uuidAux as uuidAuxProps } from 'sly/propTypes/user';
-import { withUser, query, getRelationship } from 'sly/services/newApi';
+import { withUser, query } from 'sly/services/newApi';
 
 const emailWarning = 'Enter your email so your agent can help you by answering your questions and sending recommended communities.';
 const messageObj = {
@@ -28,16 +27,17 @@ const validate = createValidator({
 });
 
 const ReduxForm = reduxForm({
-  form: 'DashboardProfileUserDetailsForm',
+  form: 'DashboardProfileUserD' +
+  'etailsForm',
   destroyOnUnmount: false,
   warn,
   validate,
 })(DashboardProfileUserDetailsForm);
 
-const convertUserToProfileFormValues = (user) => {
+const convertUserToProfileFormValues = (user, uuidAux) => {
   const result = {};
   const {
-    name, email, phoneNumber, uuidAux,
+    name, email, phoneNumber,
   } = user;
   result.name = name;
   result.email = email;
@@ -77,9 +77,6 @@ const convertUserToProfileFormValues = (user) => {
 
 
 @withUser
-@connect((state, props) => ({
-  uuidAux: getRelationship(state, props.status.user.result, 'uuidAux'),
-}))
 @query('updateUser', 'updateUser')
 @query('updateUuidAux', 'updateUuidAux')
 export default class DashboardProfileUserDetailsFormContainer extends Component {
@@ -87,6 +84,7 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
     user: userPropType,
     status: shape({
       user: object,
+      uuidAux: object,
     }),
     uuidAux: uuidAuxProps,
     updateUser: func,
@@ -96,17 +94,20 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
 
   handleSubmit = (values) => {
     const {
-      status, uuidAux: rawAux, updateUser, updateUuidAux, notifySuccess,
+      status, updateUser, updateUuidAux, notifySuccess,
     } = this.props;
-    const { user: rawUser } = status;
+    const { user: rawUser, uuidAux: rawAux } = status;
     const { result } = rawUser;
     const { id } = result;
+    const { result: uuidAuxResult } = rawAux;
+    const { id: uuidAuxID } = uuidAuxResult;
+
     const user = immutable(pick(result, ['id', 'type', 'attributes.name', 'attributes.phoneNumber']))
       .set('attributes.name', values.name)
       // .set('attributes.email', values.email)
       .set('attributes.phoneNumber', values.phoneNumber)
       .value();
-    let uuidAux = immutable(pick(rawAux, ['id', 'type', 'attributes.uuid', 'attributes.uuidInfo']))
+    let uuidAux = immutable(pick(uuidAuxResult, ['id', 'type', 'attributes.uuid', 'attributes.uuidInfo']))
       .set('attributes.uuidInfo.housingInfo.lookingFor', values.lookingFor)
       .set('attributes.uuidInfo.residentInfo.fullName', values.residentName)
       .set('attributes.uuidInfo.financialInfo.maxMonthlyBudget', values.monthlyBudget)
@@ -123,7 +124,7 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
     uuidAux = uuidAux.value();
 
     const userPromise = () => updateUser({ id }, user);
-    const uuidAuxPromise = () => updateUuidAux({ id: uuidAux.id }, uuidAux);
+    const uuidAuxPromise = () => updateUuidAux({ id: uuidAuxID }, uuidAux);
 
     return userPromise().then(uuidAuxPromise).then(notifySuccess('Details Updated Successfully'))
       .catch((error) => {
@@ -137,8 +138,8 @@ export default class DashboardProfileUserDetailsFormContainer extends Component 
       });
   };
   render() {
-    const { user, ...props } = this.props;
-    const initialValues = convertUserToProfileFormValues(user);
+    const { user, uuidAux, ...props } = this.props;
+    const initialValues = convertUserToProfileFormValues(user, uuidAux);
     return (
       <ReduxForm
         initialValues={initialValues}

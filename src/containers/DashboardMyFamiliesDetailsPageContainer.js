@@ -7,12 +7,13 @@ import { connect } from 'react-redux';
 import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import notePropType from 'sly/propTypes/note';
-import { FAMILY_DASHBOARD_FAMILIES_PATH, FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
 import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
+import SlyEvent from 'sly/services/helpers/events';
 
 @prefetch('client', 'getClient', (req, { match }) => req({
   id: match.params.id,
@@ -47,7 +48,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   onRejectSuccess = (hide) => {
     const { history } = this.props;
     hide();
-    history.push(FAMILY_DASHBOARD_FAMILIES_PATH);
+    history.push(AGENT_DASHBOARD_FAMILIES_PATH);
   };
 
   onUnPause = (notifyInfo, notifyError) => {
@@ -57,6 +58,12 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     return setStatusToActive()
       .then(invalidateClients)
       .then(() => {
+        SlyEvent.getInstance().sendEvent({
+          category: 'fdetails',
+          action: 'unpause-family',
+          label: 'submit',
+          value: '',
+        });
         notifyInfo('Family successfully unpaused');
       })
       .catch((r) => {
@@ -65,6 +72,12 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         const errorMessage = body.errors.map(e => e.title).join('. ');
         console.error(errorMessage);
         notifyError('Failed to unpause. Please try again.');
+        SlyEvent.getInstance().sendEvent({
+          category: 'fdetails',
+          action: 'unpause-family',
+          label: 'error',
+          value: '',
+        });
       });
   };
 
@@ -82,6 +95,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         body: note,
       },
     };
+
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'add-note',
+      label: 'submit',
+      value: '',
+    });
     const notePromise = () => createNote(payload);
     const getNotesPromise = () => status.notes.refetch();
 
@@ -98,6 +118,12 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
         const errorMessage = body.errors.map(e => e.title).join('. ');
         console.error(errorMessage);
         notifyError('Failed to add note. Please try again.');
+        SlyEvent.getInstance().sendEvent({
+          category: 'fdetails',
+          action: 'add-note',
+          label: 'error',
+          value: '',
+        });
       });
   };
 
@@ -115,7 +141,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   goToFamilyDetails = () => {
     const { history, client } = this.props;
     const { id } = client;
-    const path = FAMILY_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
+    const path = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
     history.push(path);
   };
 

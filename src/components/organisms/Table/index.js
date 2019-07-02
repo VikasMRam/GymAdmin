@@ -34,9 +34,9 @@ const Table = ({ headings, contents, tableEmptyText }) => {
       const { type, data } = rowItem;
       if (type === 'link') {
         const {
-          href, to, text, disabled,
+          href, to, text, disabled, onClick,
         } = data;
-        return <LinkTd key={href || to} to={to} href={href} disabled={disabled} clip>{text}</LinkTd>;
+        return <LinkTd key={href || to} to={to} href={href} disabled={disabled} onClick={onClick} clip>{text}</LinkTd>;
       } else if (type === 'text') {
         const { text, disabled } = data;
         return <TextTd key={text} disabled={disabled} clip>{text}</TextTd>;
@@ -50,9 +50,9 @@ const Table = ({ headings, contents, tableEmptyText }) => {
         return <DoubleLineTd key={firstLine} firstLine={firstLine} secondLine={secondLine} disabled={disabled} clip />;
       } else if (type === 'textIcon') {
         const {
-          href, to, text, disabled, icon, iconPalette,
+          href, to, text, disabled, icon, iconPalette, onClick,
         } = data;
-        return <TextIconTd key={href || to} to={to} href={href} disabled={disabled} icon={icon} iconPalette={iconPalette} clip>{text}</TextIconTd>;
+        return <TextIconTd key={href || to} to={to} href={href} disabled={disabled} icon={icon} iconPalette={iconPalette} onClick={onClick} clip>{text}</TextIconTd>;
       }
       return <Td key={`Td_${id}`} />;
     });

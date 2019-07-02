@@ -1,22 +1,24 @@
 /* eslint-disable react/no-array-index-key */
 import React, { Component, createRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { array, shape, number, arrayOf } from 'prop-types';
-import { ifProp } from 'styled-tools';
+import { ifProp, prop } from 'styled-tools';
 
-import { size, getKey } from 'sly/components/themes';
+import { size, getKey, remToPx } from 'sly/components/themes';
 
-// ref: https://codepen.io/LasseStilvang/pen/BrpqKx
+// ref: https://medium.com/@andybarefoot/a-masonry-style-layout-using-css-grid-8c663d355ebb
 const Parent = styled.div`
-  column-width: ${p => p.width}px;
-  column-gap: ${size('spacing.xLarge')};
   visibility: ${ifProp('width', 'visible', 'hidden')};
+  display: grid;
+  grid-gap: ${size('spacing.xLarge')};
+  grid-template-columns: repeat(auto-fill, minmax(${p => p.width}px, 1fr));
+  ${ifProp('hasSpans', 'grid-auto-rows: 1px;', '')};
 `;
 
 const Child = styled.div`
-  width: ${p => p.width}px;
-  break-inside: avoid-column;
-  margin-bottom: ${size('spacing.xLarge')};
+  ${ifProp('span', css`grid-row-end: span ${prop('span')};`, '')};
+  ${ifProp('isLastItem', 'grid-row-start: 1;', '')};
+  order: ${prop('order')};
 `;
 
 export default class Masonry extends Component {
@@ -33,23 +35,30 @@ export default class Masonry extends Component {
     columnCounts: [],
   };
 
-  state = { width: 0 };
+  state = {
+    width: 0,
+    columnsPerRows: 0,
+    rowSpans: {},
+  };
 
   componentDidMount() {
-    this.computeWidths();
-    window.addEventListener('resize', this.computeWidths);
+    this.computeWidthsAndSpans();
+    window.addEventListener('load', this.computeWidthsAndSpans);
+    window.addEventListener('resize', this.computeWidthsAndSpans);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.computeWidths);
+    window.removeEventListener('resize', this.computeWidthsAndSpans);
+    window.removeEventListener('load', this.computeWidthsAndSpans);
   }
 
   ref = createRef();
 
-  computeWidths = () => {
+  computeWidthsAndSpans = () => {
     const { columnCounts } = this.props;
     let columnsPerRows = 0;
     const i = columnCounts.find(cc => window.innerWidth >= cc.from && window.innerWidth <= cc.to);
+    const rowSpans = {};
 
     if (i) {
       columnsPerRows = i.count;
@@ -59,21 +68,33 @@ export default class Masonry extends Component {
       const rows = this.ref.current.children.length / half;
       columnsPerRows = this.ref.current.children.length / rows;
     }
-    const availableWidth = this.ref.current.clientWidth - (getKey('sizes.spacing.xLarge').replace('rem', '') * 16 * (columnsPerRows === 1 ? 0 : columnsPerRows));
+    const rowGap = remToPx(getKey('sizes.spacing.xLarge'));
+    const rowHeight = 1;
+    const availableWidth = this.ref.current.clientWidth - (rowGap * (columnsPerRows === 1 ? 0 : columnsPerRows));
     const columnWidth = Math.floor(availableWidth / columnsPerRows);
+
+    if (columnsPerRows > 1) {
+      for (let x = 0; x < this.ref.current.children.length; x++) {
+        const span = Math.ceil((this.ref.current.children[x].firstChild.clientHeight + rowGap) /
+          (rowHeight + rowGap));
+        rowSpans[x] = span;
+      }
+    }
 
     this.setState({
       width: columnWidth,
+      columnsPerRows,
+      rowSpans,
     });
   }
 
   render() {
-    const { width } = this.state;
+    const { width, rowSpans, columnsPerRows } = this.state;
 
     return (
-      <Parent innerRef={this.ref} width={width}>
+      <Parent innerRef={this.ref} width={width} hasSpans={columnsPerRows > 1}>
         {this.props.children.map((child, i) => (
-          <Child key={i} width={width}>
+          <Child key={i} order={i + 1} span={rowSpans[i]} isLastItem={i === this.props.children.length - 1}>
             {child}
           </Child>
         ))}

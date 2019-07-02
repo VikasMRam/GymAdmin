@@ -5,18 +5,22 @@ import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
 
-import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
 import { createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
 import clientPropType from 'sly/propTypes/client';
 import { query, getRelationship } from 'sly/services/newApi';
+import SlyEvent from 'sly/services/helpers/events';
+import { selectFormData } from 'sly/services/helpers/forms';
+import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
 
 const validate = createValidator({
   phone: [usPhone, dependentRequired('email', 'Either Phone or Email is required')],
   email: [email, dependentRequired('phone', 'Either Email or Phone is required')],
 });
 
+const formName = 'FamilyDetailsForm';
+
 const ReduxForm = reduxForm({
-  form: 'FamilyDetailsForm',
+  form: formName,
   validate,
 })(FamilyDetailsForm);
 
@@ -26,6 +30,7 @@ const ReduxForm = reduxForm({
 
 @connect((state, props) => ({
   uuidAux: getRelationship(state, props.rawClient, 'uuidAux'),
+  formData: selectFormData(state, formName, {}),
 }))
 
 export default class FamilyDetailsFormContainer extends Component {
@@ -37,6 +42,7 @@ export default class FamilyDetailsFormContainer extends Component {
     client: clientPropType.isRequired,
     rawClient: object,
     uuidAux: object,
+    formData: object,
   };
 
   handleSubmit = (data) => {
@@ -100,6 +106,12 @@ export default class FamilyDetailsFormContainer extends Component {
       .then(() => updateUuidAux({ id: uuidID }, newUuidAux))
       .then(() => {
         notifyInfo('Family successfully updated.');
+        SlyEvent.getInstance().sendEvent({
+          category: 'fdetails-form',
+          action: 'submit',
+          label: 'user-details',
+          value: '',
+        });
       })
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
@@ -111,7 +123,7 @@ export default class FamilyDetailsFormContainer extends Component {
   };
 
   render() {
-    const { client, ...props } = this.props;
+    const { client, formData, ...props } = this.props;
     const { clientInfo, uuidAux } = client;
     const {
       name, email, slyMessage, phoneNumber = '',
@@ -139,12 +151,14 @@ export default class FamilyDetailsFormContainer extends Component {
       timeToMove: moveTimeline,
       preferredLocation,
     };
+    ({ preferredLocation } = formData);
 
     return (
       <ReduxForm
         onSubmit={this.handleSubmit}
         initialValues={initialValues}
         intro={slyMessage}
+        preferredLocation={preferredLocation}
         {...props}
       />
     );

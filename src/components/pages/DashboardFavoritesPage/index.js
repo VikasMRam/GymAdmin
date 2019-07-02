@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { arrayOf, object, func, bool } from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import SlyEvent from 'sly/services/helpers/events';
 import { size, assetPath } from 'sly/components/themes';
@@ -46,6 +47,11 @@ const columnCounts = [
   },
 ];
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  display: block;
+`;
+
 // to prevent community tile's gallery causing overlap which prevents hover from working
 const StyledCommunityTile = shadow(styled(CommunityTile)`
   position: relative;
@@ -88,7 +94,9 @@ const DashboardFavoritesPage = ({
     const { community, id } = userSave;
     const onSlideChange = i => onGallerySlideChange(id, i);
     const currentSlide = currentGalleryImage[id];
-    const openAskAgentQuestionModal = () => {
+    const openAskAgentQuestionModal = (e) => {
+      e.preventDefault();
+
       const { addressString, name } = community;
       const [, city] = addressString.split(',');
       const { heading, placeholder, question } = generateAskAgentQuestionContents(name, city);
@@ -110,7 +118,9 @@ const DashboardFavoritesPage = ({
 
       showModal(<CommunityAskQuestionAgentFormContainer {...modalComponentProps} />);
     };
-    const openNoteModification = () => {
+    const openNoteModification = (e) => {
+      e.preventDefault();
+
       const rawUserSave = rawUserSaves[i];
       const onComplete = () => {
         hideModal();
@@ -138,24 +148,29 @@ const DashboardFavoritesPage = ({
         onClick: openAskAgentQuestionModal,
       },
     ];
-    const handleUnfavouriteClick = () => {
+    const handleUnfavouriteClick = (e) => {
+      e.preventDefault();
+
       onUnfavouriteClick(userSave.id, notifyInfo);
     };
 
     return (
-      <StyledCommunityTile
-        addNote
-        isFavourite
-        currentSlide={currentSlide}
-        onSlideChange={onSlideChange}
-        key={userSave.id}
-        community={userSave.community}
-        actionButtons={actionButtons}
-        note={userSave.info.note}
-        onAddNoteClick={openNoteModification}
-        onEditNoteClick={openNoteModification}
-        onUnfavouriteClick={handleUnfavouriteClick}
-      />
+      <StyledLink to={community.url}>
+        <StyledCommunityTile
+          addNote
+          canFavourite
+          isFavourite
+          currentSlide={currentSlide}
+          onSlideChange={onSlideChange}
+          key={userSave.id}
+          community={userSave.community}
+          actionButtons={actionButtons}
+          note={userSave.info.note}
+          onAddNoteClick={openNoteModification}
+          onEditNoteClick={openNoteModification}
+          onUnfavouriteClick={handleUnfavouriteClick}
+        />
+      </StyledLink>
     );
   }) : 'loading...';
 

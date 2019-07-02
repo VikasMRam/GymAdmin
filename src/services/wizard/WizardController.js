@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { arrayOf, any, func, number, object, bool, string } from 'prop-types';
-import { isValid, isSubmitting, reset } from 'redux-form';
+import { isValid, isSubmitting, reset, SubmissionError } from 'redux-form';
 
 import { connectController } from 'sly/controllers';
 import { selectFormData } from 'sly/services/helpers/forms';
@@ -93,7 +93,7 @@ class WizardController extends Component {
   doSubmit = (params = {}) => {
     const { onComplete, data } = this.props;
 
-    onComplete(data, ...params);
+    return onComplete(data, params);
   };
 
   handleSubmit = () => {
@@ -108,7 +108,9 @@ class WizardController extends Component {
       return doSubmit();
     }
     if (onSubmit) {
-      return onSubmit(data);
+      return onSubmit(data).catch((e) => {
+        throw new SubmissionError({ _error: e.message });
+      });
     }
     this.next();
 

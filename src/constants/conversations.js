@@ -1,0 +1,11 @@
+export const CONVERSATION_PARTICIPANT_TYPE_USER = 'User';
+
+export const CONVERSATION_PARTICIPANT_TYPE_CLIENT = 'Client';
+
+export const CONVERSATION_STATUS_LIVE = 'Live';
+
+export const CONVERSATION_STATUS_ARCHIVED = 'Archived';
+
+export const CONVERSATION_MEDIUM_INAPP = 'InApp';
+
+export const CONVERSATION_DATA_TYPE_TEXT = 'Text';

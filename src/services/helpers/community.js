@@ -8,3 +8,9 @@ export const careServiceMap = {
   'Medication Management': 'Medication Management',
   'Rehabilitation Program': 'Rehabilitation Program',
 };
+
+export const hasCCRC = (community) => {
+  const { propInfo } = community;
+  const { typeCare } = propInfo;
+  return typeCare.includes('Continuing Care Retirement Community(CCRC)');
+};

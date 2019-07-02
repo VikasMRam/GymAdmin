@@ -4,7 +4,7 @@ import { number, func, object, shape, string, bool } from 'prop-types';
 import queryString from 'query-string';
 import Cookies from 'universal-cookie';
 
-import { host, cookieDomain } from 'sly/config';
+import { host, domain } from 'sly/config';
 import { resourceCreateRequest, resourceListReadRequest } from 'sly/store/resource/actions';
 import SlyEvent from 'sly/services/helpers/events';
 import { STEP_ORDERS, DEFAULT_STEP_ORDER, STEP_INPUT_FIELD_NAMES } from 'sly/external/constants/steps';
@@ -80,7 +80,7 @@ class Controller extends Component {
         const utm = this.providedUtmParams;
         const utmStr = `utm_campaign=${utm.campaign}&utm_source=${utm.source}&utm_medium=${utm.medium}&utm_term=${utm.term}`;
         const cookies = new Cookies();
-        cookies.set('utm', utmStr, { domain: cookieDomain, path: '/', maxAge: 27000000 });
+        cookies.set('utm', utmStr, { domain, path: '/', maxAge: 27000000 });
       }
 
       if (params.pixel) {

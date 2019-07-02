@@ -28,16 +28,6 @@ html.seniorly-page-scroll-locked body {
   line-height: 1.2em;
 }
 
-.seniorly-badge-widget {
-  position: fixed;
-  right: 1.25rem;
-  bottom: 0.9375rem;
-  z-index: 9998;
-  background: #7CCDCC;
-  padding: 0.625rem;
-  color: white;
-}
-
 .seniorly-popup-widget {
   position: absolute;
   top: calc(50% + 2rem);
@@ -63,13 +53,13 @@ html.seniorly-page-scroll-locked body {
   }
 }
 
-.seniorly-close-overlay-button-widget {
+.seniorly-closeOverlayButton-widget {
   position: fixed;
   left: 1.5rem;
   top: 1rem;
 }
 
-.seniorly-close-overlay-button-widget > button {
+.seniorly-closeOverlayButton-widget > button {
   border: 0.0625rem solid transparent;
   cursor: pointer;
   background-color: transparent;
@@ -78,18 +68,22 @@ html.seniorly-page-scroll-locked body {
   outline: none;
 }
 
-.seniorly-close-overlay-button-widget > button svg {
+.seniorly-closeOverlayButton-widget > button svg {
   width: 1.5rem;
   height: 1.5rem;
   color: white;
 }
 
-.seniorly-popup-or-inline-widget {
-  border: 1px solid #c5d0d5;
+.seniorly-inline-widget {
   min-height: 30rem;
+  max-height: 56.3rem;
+}
+
+.seniorly-popup-widget, .seniorly-inline-widget {
+  border: 1px solid #c5d0d5;
   position: relative;
 }
 
-.seniorly-popup-or-inline-widget > iframe {
+.seniorly-popup-widget > iframe{
   position: absolute;
 }

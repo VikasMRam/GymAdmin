@@ -16,53 +16,34 @@ import { v4 } from 'uuid';
 import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
 import cloneDeep from 'lodash/cloneDeep';
+import { ChunkExtractor } from '@loadable/server';
 
 import { cleanError, logWarn } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
-import { port, host, publicPath, isDev, cookieDomain } from 'sly/config';
+import { port, host, publicPath, isDev, domain } from 'sly/config';
 import { configure as configureStore } from 'sly/store';
 import { resourceDetailReadRequest } from 'sly/store/resource/actions';
 import apiService from 'sly/services/api';
-import ClientApp from 'sly/components/App';
-import DashboardApp from 'sly/components/DashboardApp';
 import Html from 'sly/components/Html';
 import Error from 'sly/components/Error';
 import { createApi as createBeesApi } from 'sly/services/newApi';
 import ApiProvider, { makeApiCall } from 'sly/services/newApi/ApiProvider';
 
-const makeAppRenderer = renderedApp => ({
-  store, context, location, sheet,
-}) => {
-  const app = sheet.collectStyles((
-    <Provider store={store}>
-      <StaticRouter context={context} location={location}>
-        {renderedApp}
-      </StaticRouter>
-    </Provider>
-  ));
-  return renderToString(app);
-};
+const statsNode = path.resolve(process.cwd(), 'dist/loadable-stats-node.json');
+const statsWeb = path.resolve(process.cwd(), 'dist/loadable-stats-web.json');
 
-const renderEmptyApp = () => {
-  return { html: '', state: {} };
-};
-
-// requires compatible configuration
-const getAppRenderer = ({ bundle, api }) => {
-  switch (bundle) {
-    case 'dashboard': return makeAppRenderer((
-      <ApiProvider api={api}>
-        <DashboardApp />
-      </ApiProvider>
-    ));
-    case 'client': return makeAppRenderer((
-      <ApiProvider api={api}>
-        <ClientApp />
-      </ApiProvider>
-    ));
-    default: return renderEmptyApp;
-  }
-};
+const clientConfigs = [
+  {
+    bundle: 'external',
+    ssr: false,
+    path: '/external*',
+  },
+  {
+    bundle: 'client',
+    ssr: true,
+    path: '*',
+  },
+];
 
 const getErrorContent = (err) => {
   if (isDev) {
@@ -73,9 +54,11 @@ const getErrorContent = (err) => {
 };
 
 const renderHtml = ({
-  serverState, initialState, content, sheet, assets,
+  serverState, initialState, content, sheet, extractorWeb,
 }) => {
-  const styles = sheet ? sheet.getStyleElement() : '';
+  const linkElements = extractorWeb && extractorWeb.getLinkElements();
+  const styleElements = sheet && sheet.getStyleElement();
+  const scriptElements = extractorWeb && extractorWeb.getScriptElements();
 
   const state = `
     ${serverState ? `window.__SERVER_STATE__ = ${serialize(serverState)};` : ''}
@@ -83,10 +66,11 @@ const renderHtml = ({
   `;
 
   const props = {
-    styles,
-    assets,
     state,
     content,
+    linkElements,
+    styleElements,
+    scriptElements,
   };
   const html = <Html {...props} />;
   return `<!doctype html>\n${renderToStaticMarkup(html)}`;
@@ -95,7 +79,7 @@ const renderHtml = ({
 const experiments = require('sly/../experiments.json');
 
 const createSetCookie = (res, cookies) => (key, value, maxAge = 27000000) => {
-  res.cookie(key, value, { domain: cookieDomain, maxAge });
+  res.cookie(key, value, { domain, maxAge });
   cookies.push(`${key}=${value}`);
 };
 
@@ -123,22 +107,24 @@ const app = express();
 app.disable('x-powered-by');
 app.use(cookieParser());
 
-if (publicPath.match(/^\//)) {
+if (!isDev) {
   app.use(publicPath, express.static(path.resolve(process.cwd(), 'dist/public')));
 }
 
 // global.clientConfigs is injected by plugins in private/webpack
-app.use(clientConfigsMiddleware(global.clientConfigs));
+app.use(clientConfigsMiddleware(clientConfigs));
 
 // non ssr apps
 app.use((req, res, next) => {
-  const { ssr, assets, bundle } = req.clientConfig;
+  const { ssr, bundle } = req.clientConfig;
   if (!ssr) {
-    const renderApp = getAppRenderer(bundle);
-    const { html: content } = renderApp();
+    const extractorWeb = new ChunkExtractor({
+      entrypoints: [bundle],
+      statsFile: statsWeb,
+    });
     res.send(renderHtml({
-      content,
-      assets,
+      content: '',
+      extractorWeb,
     }));
   } else {
     next();
@@ -287,18 +273,28 @@ app.use(async (req, res, next) => {
 
 // render
 app.use(async (req, res, next) => {
-  const { assets, store } = req.clientConfig;
-  const sheet = new ServerStyleSheet();
-  const context = {};
-  const renderApp = getAppRenderer(req.clientConfig);
+  const { store, api } = req.clientConfig;
 
   try {
-    const { state: serverState, html: content } = await renderApp({
-      store,
-      context,
-      location: req.url,
-      sheet,
-    });
+    const extractorNode = new ChunkExtractor({ statsFile: statsNode });
+    const { default: ClientApp } = extractorNode.requireEntrypoint();
+
+    const extractorWeb = new ChunkExtractor({ statsFile: statsWeb });
+
+    const sheet = new ServerStyleSheet();
+    const context = {};
+
+    const app = sheet.collectStyles(extractorWeb.collectChunks((
+      <Provider store={store}>
+        <StaticRouter context={context} location={req.url}>
+          <ApiProvider api={api}>
+            <ClientApp />
+          </ApiProvider>
+        </StaticRouter>
+      </Provider>
+    )));
+
+    const { state: serverState, html: content } = await renderToString(app);
 
     if (serverState) {
       Object.values(serverState).forEach((val) => {
@@ -321,7 +317,7 @@ app.use(async (req, res, next) => {
         initialState,
         content,
         sheet,
-        assets,
+        extractorWeb,
       }));
     }
   } catch (error) {
@@ -334,7 +330,7 @@ app.use((err, req, res, next) => {
   const sheet = new ServerStyleSheet();
   const errorContent = getErrorContent(err);
   const content = renderToStaticMarkup(sheet.collectStyles(errorContent));
-  const assets = { css: [], js: [] };
+  const assets = [];
   res.status(500).send(renderHtml({ content, sheet, assets }));
   next(err);
 });

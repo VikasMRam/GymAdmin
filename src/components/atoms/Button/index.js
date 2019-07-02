@@ -8,45 +8,50 @@ import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
 
 const backgroundColor = ({
-  ghost, transparent, selectable, selected, secondary,
+  ghost, transparent, selectable, selected, secondary, disabled,
 }) => {
   if (ghost || (selectable && !selected)) {
     return palette('white', 'base');
   }
-  if (secondary) {
-    return palette('grey', 'background');
+  if (transparent) {
+    return 'transparent';
   }
-  return transparent ? 'transparent' : palette('base');
+  if (secondary) {
+    return disabled ? palette('grey', 'background') : palette('grey', 'background');
+  }
+  return disabled ? palette('primary', 'filler') : palette('primary', 'base');
 };
 
 const foregroundColor = ({
-  ghost, transparent, selectable, selected,
-  foregroundPalette, secondary,
+  ghost, transparent, selectable, selected, secondary, disabled,
 }) => {
-  if (ghost && !secondary) {
-    return palette('base');
+  if (ghost) {
+    if (secondary) {
+      return disabled ? palette('grey', 'filler') : palette('grey', 'base');
+    }
+    return disabled ? palette('primary', 'filler') : palette('base');
   }
   if (selectable && !selected) {
     return palette('slate', 'base');
   }
+  if (transparent) {
+    return 'none';
+  }
   if (secondary) {
-    foregroundPalette = 'slate';
+    return disabled ? palette('slate', 'filler') : palette('slate', 'base');
   }
-  if (ghost && secondary) {
-    foregroundPalette = 'grey';
-  }
-  return transparent ? 'none' : palette(foregroundPalette, 'base');
+  return palette('white', 'base');
 };
 
 const borderColor = ({
-  ghost, selectable, selected, secondary, borderPalette,
+  ghost, selectable, selected, secondary, borderPalette, disabled,
 }) => {
   if ((selectable && !selected) || secondary) {
     return palette('slate', 'stroke');
   }
   if (ghost) {
     if (borderPalette) {
-      return palette(borderPalette, 'stroke');
+      return disabled ? palette(borderPalette, 'filler') : palette(borderPalette, 'stroke');
     }
     return 'currentcolor';
   }
@@ -65,8 +70,8 @@ const hoverBackgroundColor = ({
 const hoverForegroundColor = ({
   ghost, selectable, selected, secondary,
 }) => {
-  if (ghost && !secondary) {
-    return palette('dark');
+  if (ghost) {
+    return secondary ? palette('grey', 'dark') : palette('dark');
   }
   return (selectable && !selected)
     ? palette('white', 'base')
@@ -93,8 +98,10 @@ const lineHeight = ({ kind }) => {
   switch (kind) {
     case 'tab':
       return size('lineHeight', 'caption');
+    case 'jumbo':
+      return size('lineHeight', 'body');
     default:
-      return 'normal';
+      return size('lineHeight', 'title');
   }
 };
 
@@ -109,7 +116,6 @@ export const styles = css`
   line-height: ${lineHeight};
   border: ${size('border.regular')} solid ${borderColor};
   cursor: ${ifProp('disabled', 'default', 'pointer')};
-  opacity: ${ifProp('disabled', 0.5, 1)};
   appearance: none;
   border-radius: ${size('border.xxLarge')};
   transition: background-color 250ms ease-out, color 250ms ease-out,
@@ -181,7 +187,7 @@ Button.propTypes = {
   palette: palettePropType,
   foregroundPalette: palettePropType,
   borderPalette: palettePropType,
-  kind: oneOf(['jumbo', 'regular', 'tab']),
+  kind: oneOf(['jumbo', 'regular', 'tab', 'plain']),
   selectable: bool,
   selected: bool,
   type: string,

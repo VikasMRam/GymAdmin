@@ -69,7 +69,7 @@ const GoogleLogo = styled(Image)`
 const baseSearchOptions = { types: ['(regions)'] };
 
 const SearchBox = ({
-  layout, value, onChange, onSelect, onSearchButtonClick, onTextboxFocus,
+  layout, value, onChange, onSelect, onSearchButtonClick, onTextboxFocus, onBlur,
   placeholder, readOnly, hasShadow, ...props
 }) => (
   <Wrapper layout={layout} {...props}>
@@ -79,7 +79,7 @@ const SearchBox = ({
           {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
           {hasShadow &&
             <ShadowedSearchTextBox
-              {...getInputProps({ placeholder })}
+              {...getInputProps({ onBlur, placeholder })}
               layout={layout}
               onFocus={onTextboxFocus}
               readOnly={readOnly}
@@ -89,7 +89,7 @@ const SearchBox = ({
           }
           {!hasShadow &&
             <SearchTextBox
-              {...getInputProps({ placeholder })}
+              {...getInputProps({ onBlur, placeholder })}
               layout={layout}
               onFocus={onTextboxFocus}
               readOnly={readOnly}
@@ -120,6 +120,7 @@ SearchBox.propTypes = {
   onSelect: func.isRequired,
   onSearchButtonClick: func.isRequired,
   onTextboxFocus: func,
+  onBlur: func,
   placeholder: string,
   readOnly: bool,
   hasShadow: bool,

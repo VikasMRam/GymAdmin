@@ -1,23 +1,35 @@
 import React from 'react';
-import { node, string } from 'prop-types';
+import { node, string, bool } from 'prop-types';
 import styled from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
-import { FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH, FAMILY_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
+import { FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH, AGENT_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 import { CUSTOMER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ModalContainer from 'sly/containers/ModalContainer';
 import DashboardMenu from 'sly/components/molecules/DashboardMenu';
+import SlyEvent from 'sly/services/helpers/events';
+
+const onMenuItemClick = (menuItem) => {
+  const { label } = menuItem;
+  const event = {
+    category: 'DashboardMenuItem',
+    action: 'click',
+    label,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
 
 const menuItems = [
   {
-    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE,
+    label: 'Favorites', icon: 'favourite-light', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAVORITES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick,
   },
   {
-    label: 'My Profile', icon: 'user', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH, role: CUSTOMER_ROLE,
+    label: 'My Profile', icon: 'settings', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick,
   },
   {
-    label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_FAMILIES_PATH, role: AGENT_ROLE,
+    label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_FAMILIES_PATH, role: AGENT_ROLE, onClick: onMenuItemClick,
   },
 ];
 
@@ -32,8 +44,10 @@ const Header = styled.div`
 
 const Column = styled.aside`
   background-color: ${palette('white.base')};
+  display:none;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: block;
     width: ${size('element.xxHuge')};
     display: inherit;
     grid-column: 1 / 2;
@@ -43,6 +57,8 @@ const Column = styled.aside`
 
 const Body = styled.main`
   background-color: ${palette('grey.background')};
+  overflow: ${ifProp('bodyHasOverflow', 'auto', 'initial')};
+  height: 100%;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: ${size('spacing.xLarge')};
@@ -52,13 +68,13 @@ const Body = styled.main`
 `;
 
 const DashboardPage = styled.div`
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: grid;
     grid-template-columns: ${size('element.xxHuge')} auto;
     grid-gap: 0;
@@ -66,7 +82,9 @@ const DashboardPage = styled.div`
   }
 `;
 
-const DashboardPageTemplate = ({ children, activeMenuItem, className }) => {
+const DashboardPageTemplate = ({
+  children, activeMenuItem, className, bodyHasOverflow,
+}) => {
   const mi = menuItems.map((mi) => {
     if (mi.label === activeMenuItem) {
       mi.active = true;
@@ -82,7 +100,7 @@ const DashboardPageTemplate = ({ children, activeMenuItem, className }) => {
     <DashboardPage className={className}>
       <Header><HeaderContainer /></Header>
       <Column><DashboardMenu menuItems={mi} /></Column>
-      <Body>{children}</Body>
+      <Body bodyHasOverflow={bodyHasOverflow}>{children}</Body>
       <ModalContainer />
     </DashboardPage>
   );
@@ -92,6 +110,7 @@ DashboardPageTemplate.propTypes = {
   children: node,
   activeMenuItem: string.isRequired,
   className: string,
+  bodyHasOverflow: bool,
 };
 
 export default DashboardPageTemplate;

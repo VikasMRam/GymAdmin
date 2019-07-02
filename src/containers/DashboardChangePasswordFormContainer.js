@@ -13,10 +13,15 @@ const validate = createValidator({
 });
 
 const formName = 'DashboardChangePasswordForm';
+
+const afterSubmit = (result, dispatch) =>
+  dispatch(reset(formName));
+
 const ReduxForm = reduxForm({
   form: formName,
   destroyOnUnmount: false,
   validate,
+  onSubmitSuccess: afterSubmit,
 })(DashboardChangePasswordForm);
 
 @withAuth
@@ -27,7 +32,7 @@ class DashboardChangePasswordFormContainer extends Component {
     notifySuccess: func,
   };
 
-  handleSubmit = (values, dispatch) => {
+  handleSubmit = (values) => {
     const { updatePassword, notifySuccess } = this.props;
 
     const { oldPassword, newPassword } = values;
@@ -43,7 +48,6 @@ class DashboardChangePasswordFormContainer extends Component {
         }
       })
       .then(() => {
-        dispatch(reset(formName));
         notifySuccess('Password Successfully Updated');
       });
   };
@@ -56,6 +60,5 @@ class DashboardChangePasswordFormContainer extends Component {
     );
   }
 }
-
 
 export default DashboardChangePasswordFormContainer;

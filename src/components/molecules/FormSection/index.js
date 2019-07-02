@@ -1,56 +1,41 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { string, node, func, bool } from 'prop-types';
-import { ifProp } from 'styled-tools';
 
-import { size, palette } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import { Block, Hr, Button } from 'sly/components/atoms';
+import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 
-const WrapperForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('border.xLarge')};
-  background-color: ${palette('white.base')};
-`;
-
-const HeadingBlock = styled(Block)`
-  padding: ${size('spacing.xLarge')};
-  padding-bottom: 0;
+const BottomWrapper = styled.div`
+  margin-left: -${size('spacing.xLarge')};
+  margin-right: -${size('spacing.xLarge')};
+  text-align: right;
 `;
 
 const BottomButton = styled(Button)`
-  margin-bottom: ${size('spacing.xLarge')};
   margin-right: ${size('spacing.xLarge')};
-  margin-left: auto;
-`;
-
-const Body = styled.div`
-  padding: 0 ${size('spacing.xLarge')};
-  padding-bottom: ${ifProp('hasBottom', 0, size('spacing.xLarge'))};
 `;
 
 const FormSection = ({
   heading, children, buttonText, error, handleSubmit, pristine, submitting, invalid,
+  hasNoBodyPadding,
 }) => (
-  <WrapperForm onSubmit={handleSubmit}>
-    <HeadingBlock size="subtitle" weight="medium">{heading}</HeadingBlock>
-    <Hr />
-    <Body hasBottom={buttonText}>
+  <form onSubmit={handleSubmit}>
+    <HeadingBoxSection heading={heading} hasNoBodyPadding={hasNoBodyPadding}>
       {children}
       {error && <Block palette="danger">{error}</Block>}
-    </Body>
-    {buttonText &&
-      <Fragment>
-        <Hr />
-        <BottomButton type="submit" kind="jumbo" disabled={invalid || pristine || submitting}>{buttonText}</BottomButton>
-      </Fragment>
+      {buttonText &&
+        <BottomWrapper>
+          <Hr />
+          <BottomButton type="submit" disabled={invalid || pristine || submitting}>{buttonText}</BottomButton>
+        </BottomWrapper>
       }
-  </WrapperForm>
+    </HeadingBoxSection>
+  </form>
 );
 
 FormSection.propTypes = {
-  heading: string.isRequired,
+  heading: node.isRequired,
   children: node.isRequired,
   buttonText: string,
   handleSubmit: func,
@@ -58,6 +43,7 @@ FormSection.propTypes = {
   submitting: bool,
   invalid: bool,
   error: string,
+  hasNoBodyPadding: bool,
 };
 
 export default FormSection;

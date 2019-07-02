@@ -1,16 +1,15 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
-version: 2
+# CircleCI 2.1 Config Overview: https://discuss.circleci.com/t/circleci-2-1-config-overview/26057
+# Node orb: https://circleci.com/orbs/registry/orb/circleci/node
+version: 2.1
+
+orbs:
+  node: circleci/node@1.1.2
+  awsebcli: sbc-orbs/awsebcli@0.0.3
 
 jobs:
   build:
     docker:
-      # specify the version you desire here
-      - image: circleci/node:8.9
-
-    working_directory: ~/repo
+      - image: circleci/node:8.12 # though we use 8.9 only 8.12 has npm that supports npm ci
 
     environment:
       TEST_RESULTS: /tmp/test-results
@@ -18,43 +17,45 @@ jobs:
     steps:
       - checkout
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package-lock.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies
-
-      - run: npm install
-
       - run:
           name: Setup dirs
           command: mkdir -p $TEST_RESULTS
 
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
+      - node/with-cache:
+          cache-key: package-lock.json
+          cache-version: v3
+          use-strict-cache: true
+          include-branch-in-cache-key: false
+          steps:
+            - run:
+                name: Install deps
+                command: |
+                  if [ ! -d node_modules ]; then
+                    npm ci
+                  else
+                    echo "node_modules from cache exist. So skipping install."
+                  fi
 
-      - run:
-         name: JavaScript Linter
-         command: npm run lint -- --format junit -o "$TEST_RESULTS/js-lint-results.xml"
+            - run:
+                name: JavaScript Linter
+                command: npm run lint -- --format junit -o "$TEST_RESULTS/js-lint-results.xml"
 
-      - run:
-          name: JS Test Suite
-          command: |
-            export JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml"
-            npm test -- --ci --testResultsProcessor="jest-junit" --maxWorkers=10
+            - run:
+                name: JS Test Suite
+                command: |
+                  export JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml"
+                  npm test -- --ci --maxWorkers=12
 
       - store_test_results:
           path: /tmp/test-results
+
       - store_artifacts:
           path: /tmp/test-results
 
   deploy:
     docker:
       - image: circleci/python:2.7
-    working_directory: ~/repo
+
     steps:
       - run:
           name: Check if Sly Master Repo
@@ -63,11 +64,9 @@ jobs:
               echo "Skipping Deployment since this is not a Sly Master Build"
               circleci step halt
             fi
+
       - checkout
-      - run:
-          name: Install awscli
-          command: |
-            sudo pip install awsebcli --upgrade
+
       - run:
           name: Choosing EB_ENV
           command: |
@@ -96,7 +95,7 @@ jobs:
               fi
               echo "export EB_ENV=$FEATURE_ENV" >> $BASH_ENV
               EB_ENV=$FEATURE_ENV
-            fi 
+            fi
 
             if [[ -z "$EB_ENV" ]]; then
               circleci step halt
@@ -109,6 +108,10 @@ jobs:
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
             ./.circleci/push-slack-notification.sh -t "Starting deploy to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#66d3e4"
+
+      - awsebcli/install
+
+      - awsebcli/configure
 
       - run:
           name: Deploy to EB

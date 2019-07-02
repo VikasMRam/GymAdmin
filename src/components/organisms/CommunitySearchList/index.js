@@ -5,13 +5,16 @@ import queryString from 'query-string';
 
 import theme from 'sly/components/themes/default';
 import { size, gridColumns, assetPath } from 'sly/components/themes';
-import SimilarCommunityTile from 'sly/components/molecules/SimilarCommunityTile';
+import { getPaginationData } from 'sly/services/helpers/pagination';
+import pad from 'sly/components/helpers/pad';
+import shadow from 'sly/components/helpers/shadow';
+import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
 import { Image, Centered, Link, Block } from 'sly/components/atoms';
-import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
 import Pagination from 'sly/components/molecules/Pagination';
 import Heading from 'sly/components/atoms/Heading';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
-import { getBreadCrumbsForLocation } from 'sly/services/helpers/url';
+import CommunityFilterBar from 'sly/components/organisms/CommunityFilterBar';
+import CommunityTile from 'sly/components/organisms/CommunityTile';
 
 const CommunityFilterBarWrapper = styled.div`
   display: none;
@@ -20,10 +23,9 @@ const CommunityFilterBarWrapper = styled.div`
     display: block;
   }
 `;
-const StyledLink = styled(Link)`
+const StyledLink = pad(styled(Link)`
   display: block;
-  margin-bottom: ${size('spacing.large')};
-`;
+`, 'xLarge');
 
 const StyledHeading = styled(Heading)`
   margin-bottom: ${size('spacing.large')};
@@ -32,21 +34,19 @@ const StyledHeading = styled(Heading)`
 const MSCColumnWrapper = styled.div`
   margin-bottom: ${size('spacing.xLarge')};
   ${gridColumns(1, size('spacing.xLarge'))};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     ${gridColumns(2, size('spacing.xLarge'))};
   }
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     ${gridColumns(3, size('spacing.xLarge'))};
   }
 `;
 
-const getPaginationData = requestMeta => ({
-  current: requestMeta['page-number'],
-  total: requestMeta['filtered-count'] / requestMeta['page-size'],
-});
+const PaddedPagination = pad(Pagination, 'small');
 
+const ShadowCommunityTile = shadow(CommunityTile);
 
 const mostSearchedCities = [
   {
@@ -96,7 +96,7 @@ const CommunitySearchList = ({
   if (communityList.length < 1) {
     mostSearchedCitiesComponents = mostSearchedCities.map(mostSearchedCity => (
       <StyledLink key={mostSearchedCity.title} to={mostSearchedCity.to}>
-        <Image src={mostSearchedCity.image}>
+        <Image src={mostSearchedCity.image} aspectRatio="4:3">
           <Centered>
             <Heading palette="white" size="subtitle" level="subtitle">{mostSearchedCity.subtitle}</Heading>
             <Block palette="white">{mostSearchedCity.title}</Block>
@@ -106,7 +106,7 @@ const CommunitySearchList = ({
     ));
     usefulInformationTilesComponents = usefulInformationTiles.map(usefulInformation => (
       <StyledLink key={usefulInformation.title} to={usefulInformation.to}>
-        <Image size="small" src={usefulInformation.image}>
+        <Image src={usefulInformation.image} aspectRatio="4:3">
           <Centered>
             <Heading size="subtitle" palette="white">{usefulInformation.title}</Heading>
           </Centered>
@@ -126,7 +126,7 @@ const CommunitySearchList = ({
         to={similarProperty.url}
         rel="noopener"
       >
-        <SimilarCommunityTile similarProperty={similarProperty} />
+        <ShadowCommunityTile community={similarProperty} layout="column" imageSize="regular" noGallery showDescription showSeeMoreButtonOnHover />
       </StyledLink>
     );
   });
@@ -171,7 +171,7 @@ const CommunitySearchList = ({
       {communityList.length > 0 &&
         <Fragment>
           {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
-          <Pagination basePath={basePath} pageParam="page-number" current={current} total={total} />
+          <PaddedPagination basePath={basePath} pageParam="page-number" current={current} total={total} />
           <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
         </Fragment>
       }

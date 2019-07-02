@@ -1,4 +1,4 @@
-const baseConfig = require('../../webpack.config');
+const baseConfig = require('../../webpack.config')[0];
 
 module.exports = async ({ config }) => {
   config.resolve.alias = baseConfig.resolve.alias;

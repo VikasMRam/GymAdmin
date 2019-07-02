@@ -18,7 +18,7 @@ const HRStyled = styled.hr`
 
   ${ifProp('fullWidth', css`
     // Hacky way to implement a Hr beyond the fixed width container
-    width: 100vw;
+    width: 98.5vw;
     margin-left: calc(-50vw + 50%);
   `)};
 `;

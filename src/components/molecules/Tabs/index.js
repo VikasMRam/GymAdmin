@@ -29,7 +29,6 @@ const TabWrapper = styled.div`
 
 const TabContent = styled.div`
   background-color: inherit;
-  height: 100%;
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
@@ -90,14 +89,14 @@ export default class Tabs extends Component {
         <TabWrapper>
           {children.map((child) => {
             const {
-              to, id, label, tabStyles,
+              to, id, label, tabStyles, onClick,
             } = child.props;
             const tab = (
               <CursorTab
                 active={activeTab === id}
                 key={id}
                 label={label}
-                onClick={() => this.onClickTabItem(id)}
+                onClick={() => { this.onClickTabItem(id); onClick ? onClick() : null; }}
                 tabStyles={tabStyles}
               />
             );

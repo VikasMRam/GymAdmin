@@ -3,7 +3,7 @@ import Measure from 'react-measure';
 import styled from 'styled-components';
 import { bool, number, string, oneOfType, oneOf, node } from 'prop-types';
 
-import { size, key, getKey } from 'sly/components/themes';
+import { size, key, getKey, remToPx } from 'sly/components/themes';
 import { Link, Icon, Block } from 'sly/components/atoms';
 import SlyEvent from 'sly/services/helpers/events';
 
@@ -80,8 +80,7 @@ export default class CollapsibleBlock extends Component {
       children, minHeight, collapsedDefault, blockClassName, ...props
     } = this.props;
     const { collapsed, maxHeight } = this.state;
-    const collapsibleMinHeight =
-      getKey(`sizes.collapsible.${minHeight}`).replace('rem', '') * 16;
+    const collapsibleMinHeight = remToPx(getKey(`sizes.collapsible.${minHeight}`));
 
     return (
       <Measure onResize={this.onResize} margin>

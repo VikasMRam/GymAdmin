@@ -8,7 +8,7 @@ const defaultProps = {
     { text: 'Contact Name' },
     { text: 'Resident Name' },
     { text: 'Stage', sort: 'asc' },
-    { text: 'Latest Note' },
+    { text: 'Latest Activity' },
     { text: 'Date Added' },
   ],
   contents: [
