@@ -49,6 +49,7 @@ const columnCounts = [
 
 const StyledLink = styled(Link)`
   text-decoration: none;
+  display: block;
 `;
 
 // to prevent community tile's gallery causing overlap which prevents hover from working

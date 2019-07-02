@@ -23,6 +23,7 @@ import {
   FAMILY_DASHBOARD_PROFILE_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
+  AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
 } from 'sly/constants/dashboardAppPaths';
@@ -52,6 +53,7 @@ const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkNam
 const DashboardMyProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer'));
 const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
 const DashboardAgentFamilyOverviewPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardAgentFamilyOverviewPageContainer'));
+const DashboardAgentMessagesContainer = loadable(() => import(/* webpackChunkName: "chunkMessagesOverview" */ 'sly/containers/DashboardAgentMessagesContainer'));
 const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/containers/DashboardMessageDetailsPageContainer'));
 
 setGlobalStyles();
@@ -115,8 +117,14 @@ export default class App extends Component {
       exact: true,
     },
     {
+      path: AGENT_DASHBOARD_MESSAGES_PATH,
+      component: DashboardAgentMessagesContainer,
+      exact: true,
+    },
+    {
       path: AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
       component: DashboardMyFamiliesDetailsPageContainer,
+      exact: true,
     },
     {
       path: AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
