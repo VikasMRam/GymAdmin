@@ -1,6 +1,7 @@
 import React from 'react';
-import { node, string } from 'prop-types';
+import { node, string, bool } from 'prop-types';
 import styled from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH, AGENT_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
@@ -56,6 +57,7 @@ const Column = styled.aside`
 
 const Body = styled.main`
   background-color: ${palette('grey.background')};
+  overflow: ${ifProp('bodyHasOverflow', 'auto', 'initial')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: ${size('spacing.xLarge')};
@@ -79,7 +81,9 @@ const DashboardPage = styled.div`
   }
 `;
 
-const DashboardPageTemplate = ({ children, activeMenuItem, className }) => {
+const DashboardPageTemplate = ({
+  children, activeMenuItem, className, bodyHasOverflow,
+}) => {
   const mi = menuItems.map((mi) => {
     if (mi.label === activeMenuItem) {
       mi.active = true;
@@ -95,7 +99,7 @@ const DashboardPageTemplate = ({ children, activeMenuItem, className }) => {
     <DashboardPage className={className}>
       <Header><HeaderContainer /></Header>
       <Column><DashboardMenu menuItems={mi} /></Column>
-      <Body>{children}</Body>
+      <Body bodyHasOverflow={bodyHasOverflow}>{children}</Body>
       <ModalContainer />
     </DashboardPage>
   );
@@ -105,6 +109,7 @@ DashboardPageTemplate.propTypes = {
   children: node,
   activeMenuItem: string.isRequired,
   className: string,
+  bodyHasOverflow: bool,
 };
 
 export default DashboardPageTemplate;
