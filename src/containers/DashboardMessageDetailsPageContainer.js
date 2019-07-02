@@ -10,7 +10,7 @@ import withWS from 'sly/services/ws/withWS';
 
 @prefetch('messages', 'getConversationMessages', (req, { match }) => req({
   'filter[conversationID]': match.params.id,
-  sort: 'created_at',
+  sort: '-created_at',
 }))
 
 @prefetch('conversation', 'getConversation', (req, { match }) => req({
@@ -51,21 +51,38 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     return true;
   };
 
+  computeIsStarted() {
+    const { status } = this.props;
+    const { hasStarted: userHasStarted } = status.user;
+    const { hasStarted: messagesHasStarted } = status.messages;
+    const { hasStarted: conversationHasStarted } = status.conversation;
+
+    return userHasStarted && messagesHasStarted && conversationHasStarted;
+  }
+
+  computeIsLoading() {
+    const { status } = this.props;
+    const { isLoading: userIsLoading } = status.user;
+    const { isLoading: messagesIsLoading } = status.messages;
+    const { isLoading: conversationIsLoading } = status.conversation;
+    const isStarted = this.computeIsStarted();
+
+    return !isStarted || userIsLoading || messagesIsLoading || conversationIsLoading;
+  }
+
   render() {
-    const {
-      messages, conversation, user, status,
-    } = this.props;
-    const { isLoading: userIsLoading, hasStarted: userHasStarted } = status.user;
-    const { isLoading: messagesIsLoading, hasStarted: messagesHasStarted } = status.messages;
-    const { isLoading: conversationIsLoading, hasStarted: conversationHasStarted } = status.conversation;
-    const isStarted = userHasStarted && messagesHasStarted && conversationHasStarted;
-    const isLoading = !isStarted || userIsLoading || messagesIsLoading || conversationIsLoading;
+    const { messages, conversation, user } = this.props;
+    const isLoading = !this.computeIsStarted() || this.computeIsLoading();
+    if (!isLoading && !this.pageLoaded) {
+      this.pageLoaded = true;
+    }
+
     return (
       <DashboardMessageDetailsPage
         messages={messages}
         conversation={conversation}
         user={user}
-        isLoading={isLoading}
+        isLoading={isLoading && !this.pageLoaded}
       />
     );
   }

@@ -97,7 +97,22 @@ const StyledInput = styled.input`
   ${styles};
 `;
 
-class Input extends Component {
+export default class Input extends Component {
+  static propTypes = {
+    type: oneOf(['search', 'textarea', 'select', 'text', 'checkbox', 'radio', 'password', 'number', 'hidden', 'date']),
+    size: oneOf(['small', 'regular', 'large', 'xLarge']),
+    onFocus: func,
+    invalid: bool,
+    readOnly: bool,
+    warning: bool,
+  };
+
+  static defaultProps = {
+    palette: 'stroke',
+    type: 'text',
+    size: 'regular',
+  };
+
   ref = React.createRef();
 
   onFocus = (...args) => {
@@ -118,20 +133,3 @@ class Input extends Component {
     return <StyledInput {...this.props} onFocus={this.onFocus} autoComplete="new-password" />;
   }
 }
-
-Input.propTypes = {
-  type: oneOf(['search', 'textarea', 'select', 'text', 'checkbox', 'radio', 'password', 'number', 'hidden', 'date']),
-  size: oneOf(['small', 'regular', 'large', 'xLarge']),
-  onFocus: func,
-  invalid: bool,
-  readOnly: bool,
-  warning: bool,
-};
-
-Input.defaultProps = {
-  palette: 'stroke',
-  type: 'text',
-  size: 'regular',
-};
-
-export default Input;
