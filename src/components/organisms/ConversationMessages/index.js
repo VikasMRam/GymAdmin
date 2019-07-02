@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { arrayOf } from 'prop-types';
+import { arrayOf, string } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
@@ -23,6 +23,10 @@ const StyledMessage = pad(styled(Message)`
   margin-left: ${size('spacing.xLarge')};
   margin-right: ${size('spacing.xLarge')};
 
+  :last-child {
+    margin-bottom: 0;
+  }
+
   animation: fadeIn 1.5s;
   @keyframes fadeIn {
     from {
@@ -42,7 +46,7 @@ dayjs.extend(advancedFormat);
 dayjs.extend(utc);
 
 const ConversationMessages = ({
-  messages, participants, viewingAsParticipant,
+  messages, participants, viewingAsParticipant, className,
 }) => {
   const today = dayjs().utc();
   const todayDDMMYYYY = today.format('DD-MM-YYYY');
@@ -109,7 +113,7 @@ const ConversationMessages = ({
   });
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       {messageComponents}
     </Wrapper>
   );
@@ -119,6 +123,7 @@ ConversationMessages.propTypes = {
   messages: arrayOf(messagePropType).isRequired,
   participants: arrayOf(participantPropType).isRequired,
   viewingAsParticipant: participantPropType.isRequired,
+  className: string,
 };
 
 export default ConversationMessages;

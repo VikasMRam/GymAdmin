@@ -24,7 +24,9 @@ import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import BackLink from 'sly/components/molecules/BackLink';
 import SendMessageFormContainer from 'sly/containers/SendMessageFormContainer';
 
-const TextCenterBlock = textAlign(Block);
+const TextCenterBlock = styled(textAlign(Block))`
+  height: 100%;
+`;
 
 const FullWidthTextCenterBlock = fullWidth(TextCenterBlock);
 
@@ -35,12 +37,21 @@ const HeaderWrapper = styled.div`
 
 const StyledHeadingBoxSection = styled(HeadingBoxSection)`
   height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledSendMessageFormContainer = pad(styled(SendMessageFormContainer)`
   margin-left: ${size('spacing.xLarge')};
   margin-right: ${size('spacing.xLarge')};
+  margin-top: ${size('spacing.xLarge')};
+  flex-grow: 0;
 `, 'large');
+
+const StyledConversationMessages = styled(ConversationMessages)`
+  flex-grow: 1;
+  overflow: auto;
+`;
 
 const DashboardMessageDetailsPage = ({
   user, conversation, isLoading, messages,
@@ -72,7 +83,7 @@ const DashboardMessageDetailsPage = ({
   }
 
   return (
-    <DashboardPageTemplate activeMenuItem="Messages">
+    <DashboardPageTemplate activeMenuItem="Messages" bodyHasOverflow>
       {/* todo: uncomment after isLoading is fixed
       !isLoading && !viewingAsParticipant && <Redirect to={DASHBOARD_PATH} /> */}
       {viewingAsParticipant &&
@@ -83,12 +94,12 @@ const DashboardMessageDetailsPage = ({
           {!isLoading &&
             <Fragment>
               {(messages.length ? (
-                <ConversationMessages
+                <StyledConversationMessages
                   viewingAsParticipant={viewingAsParticipant}
                   messages={messages}
                   participants={conversationParticipants}
                 />
-              ) : <TextCenterBlock size="caption">No messages</TextCenterBlock>)}
+              ) : <Fragment><br /><TextCenterBlock size="caption">No messages</TextCenterBlock></Fragment>)}
               <StyledSendMessageFormContainer otherParticipant={otherParticipant} />
             </Fragment>
           }
