@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { arrayOf, shape, object } from 'prop-types';
+import { arrayOf, object } from 'prop-types';
 
 import { withUser, prefetch } from 'sly/services/newApi';
+import conversationPropType from 'sly/propTypes/conversation/conversation';
 import DashboardAgentMessagesPage from 'sly/components/pages/DashboardAgentMessagesPage';
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 
@@ -13,9 +14,9 @@ import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 
 export default class DashboardAgentMessagesContainer extends Component {
   static propTypes = {
-    conversations: arrayOf(shape({})),
+    conversations: arrayOf(conversationPropType),
     status: object,
-  }
+  };
 
   render() {
     const { conversations, status } = this.props;
@@ -32,7 +33,7 @@ export default class DashboardAgentMessagesContainer extends Component {
       messages = conversations.map((conversation) => {
         const { conversationParticipants, latestMessage } = conversation;
         const { conversationParticipantID } = latestMessage;
-        const conversationParticipant = conversationParticipants.filter(conversationParticipant => conversationParticipant.id === conversationParticipantID)[0];
+        const conversationParticipant = conversationParticipants.find(conversationParticipant => conversationParticipant.id === conversationParticipantID);
         const { participantInfo } = conversationParticipant;
         const { name } = participantInfo;
         return {
