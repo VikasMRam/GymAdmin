@@ -50,7 +50,7 @@ const ConversationMessages = ({
 }) => {
   const today = dayjs().utc();
   const todayDDMMYYYY = today.format('DD-MM-YYYY');
-  const thisYear = dayjs().format('YYYY');
+  const thisYear = dayjs().utc().format('YYYY');
   const participantsById = participants.reduce((a, b) => {
     a[b.id] = b;
     return a;
@@ -87,6 +87,8 @@ const ConversationMessages = ({
     const r = aa > bb ? 1 : 0;
     return aa < bb ? -1 : r;
   });
+  const lastMessageReadAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt);
+  let newMarkerSet = false;
   const messageComponents = days.map((d) => {
     let messagesInDay = messagesByDay[d];
     messagesInDay = messagesInDay.sort((a, b) => a.createdAtDayjs.diff(b.createdAtDayjs));
@@ -104,9 +106,19 @@ const ConversationMessages = ({
 
       return <StyledMessage key={m.id} {...props} />;
     });
+    const hrProps = {
+      text: dayNames[d],
+    };
+    if (!newMarkerSet && messagesInDay[0].createdAtDayjs.isAfter(lastMessageReadAt)) {
+      hrProps.badgeText = 'New';
+      hrProps.palette = 'warning';
+      hrProps.variation = 'base';
+      newMarkerSet = true;
+    }
+
     return (
       <Fragment key={d}>
-        <PaddedHrWithText text={dayNames[d]} />
+        <PaddedHrWithText {...hrProps} />
         {components}
       </Fragment>
     );
