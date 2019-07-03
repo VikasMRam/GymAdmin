@@ -46,8 +46,8 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     const { match, status } = this.props;
     if (message.payload.conversationId === match.params.id) {
       status.messages.refetch();
-      // prevent more handlers to be called
-      return false;
+      // prevent more handlers to be called if page is visible
+      return document.hidden;
     }
     return true;
   };
