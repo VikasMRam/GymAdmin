@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { string, bool } from 'prop-types';
+import { string, bool, func } from 'prop-types';
 import dayjs from 'dayjs';
 
 import pad from 'sly/components/helpers/pad';
 import { size } from 'sly/components/themes';
-import { Box, Block, Icon } from 'sly/components/atoms';
+import cursor from 'sly/components/helpers/cursor';
+import { Box, Block, Icon, Span } from 'sly/components/atoms';
 
 const StyledBox = styled(Box)`
   display: flex;
@@ -42,8 +43,11 @@ const Date = styled(Block)`
   white-space: nowrap;
 `;
 
+const CursorSpan = cursor(Span);
+CursorSpan.displayName = 'CursorSpan';
+
 const FamilyActivityItem = ({
-  title, description, icon, date, snap, noBorderRadius, className,
+  title, description, icon, date, snap, noBorderRadius, className, onEditClick,
 }) => {
   let dateString = '';
   const parsedDate = dayjs(date);
@@ -59,7 +63,10 @@ const FamilyActivityItem = ({
       <SeconColumn>
         <StyledColumn>
           <StyledBlock size="caption">{title}</StyledBlock>
-          <Block size="caption" palette="grey">{description}</Block>
+          <Block size="caption" palette="grey">
+            {description}
+            {onEditClick && <CursorSpan palette="primary" size="caption" onClick={onEditClick}> Edit note</CursorSpan>}
+          </Block>
         </StyledColumn>
         <Date size="caption" palette="grey">{dateString}</Date>
       </SeconColumn>
@@ -75,6 +82,7 @@ FamilyActivityItem.propTypes = {
   snap: string,
   noBorderRadius: bool,
   className: string,
+  onEditClick: func,
 };
 
 FamilyActivityItem.defaultProps = {

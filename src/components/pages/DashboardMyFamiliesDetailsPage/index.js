@@ -16,7 +16,7 @@ import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client
 import notePropType from 'sly/propTypes/note';
 import { size, palette } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
-import { FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
+import { FAMILY_STATUS_ON_HOLD, NOTE_CTYPE_NOTE } from 'sly/constants/familyDetails';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
@@ -173,6 +173,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     onRejectSuccess: func,
     onUnPause: func.isRequired,
     onAddNote: func,
+    onEditNote: func,
     notes: arrayOf(notePropType),
     noteIsLoading: bool,
     clientIsLoading: bool,
@@ -246,6 +247,34 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     />, null, 'noPadding', false);
   };
 
+  handleEditNoteClick = (note) => {
+    const {
+      showModal, client, hideModal, onEditNote, notifyError, notifyInfo,
+    } = this.props;
+    const { clientInfo } = client;
+    const { name } = clientInfo;
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'launch',
+      label: 'edit-note',
+      value: note.id,
+    });
+    const handleSubmit = data => onEditNote(data, note, notifyError, notifyInfo, hideModal);
+    const initialValues = {
+      note: note.body,
+    };
+
+    showModal(<AddNoteFormContainer
+      hasCancel
+      onCancelClick={hideModal}
+      heading={`Edit note on ${name}`}
+      placeholder="Add a note on why you are updating this family's stage..."
+      submitButtonText="Save note"
+      onSubmit={handleSubmit}
+      initialValues={initialValues}
+    />, null, 'noPadding', false);
+  };
+
   handlePauseClick = () => {
     const {
       showModal, hideModal, notifyError, client, rawClient, notifyInfo, onUnPause,
@@ -276,6 +305,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
   render() {
     const {
       handleAcceptClick, handleRejectClick, handleUpdateClick, handleAddNoteClick, handlePauseClick,
+      handleEditNoteClick,
     } = this;
 
     const {
@@ -311,8 +341,21 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       level, levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails,
     } = getStageDetails(stage);
     const { name } = clientInfo;
-    const activityCards = notes ? notes.map((a, i) =>
-      <StyledFamilyActivityItem key={a.id} noBorderRadius snap={i === notes.length - 1 ? null : 'bottom'} title={a.title} description={a.body} date={a.createdAt} />) : [];
+    const activityCards = notes ? notes.map((a, i) => {
+      const props = {
+        key: a.id,
+        noBorderRadius: true,
+        snap: i === notes.length - 1 ? null : 'bottom',
+        title: a.title,
+        description: a.body,
+        date: a.createdAt,
+      };
+      if (a.cType === NOTE_CTYPE_NOTE) {
+        props.onEditClick = () => handleEditNoteClick(a);
+      }
+
+      return <StyledFamilyActivityItem {...props} />;
+    }) : [];
 
     const summaryPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
     const activityPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
