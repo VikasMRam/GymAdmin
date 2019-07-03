@@ -3,7 +3,7 @@ import { arrayOf, object } from 'prop-types';
 
 import { withUser, prefetch } from 'sly/services/newApi';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
-import DashboardAgentMessagesPage from 'sly/components/pages/DashboardAgentMessagesPage';
+import DashboardMessagesPage from 'sly/components/pages/DashboardMessagesPage';
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 
 @withUser
@@ -12,7 +12,7 @@ import RefreshRedirect from 'sly/components/common/RefreshRedirect';
   latestMessage: true,
 }))
 
-export default class DashboardAgentMessagesContainer extends Component {
+export default class DashboardMessagesContainer extends Component {
   static propTypes = {
     conversations: arrayOf(conversationPropType),
     status: object,
@@ -42,6 +42,6 @@ export default class DashboardAgentMessagesContainer extends Component {
         };
       });
     }
-    return <DashboardAgentMessagesPage messages={messages} />;
+    return <DashboardMessagesPage messages={messages} />;
   }
 }

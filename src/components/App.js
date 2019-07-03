@@ -13,10 +13,8 @@ import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
 import { assetPath } from 'sly/components/themes';
 import { routes as routesPropType } from 'sly/propTypes/routes';
-
 import Router from 'sly/components/molecules/Router';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
-
 import {
   DASHBOARD_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
@@ -26,6 +24,7 @@ import {
   AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
+  FAMILY_DASHBOARD_MESSAGES_PATH,
 } from 'sly/constants/dashboardAppPaths';
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
@@ -53,7 +52,7 @@ const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkNam
 const DashboardMyProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer'));
 const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
 const DashboardAgentFamilyOverviewPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardAgentFamilyOverviewPageContainer'));
-const DashboardAgentMessagesContainer = loadable(() => import(/* webpackChunkName: "chunkMessagesOverview" */ 'sly/containers/DashboardAgentMessagesContainer'));
+const DashboardMessagesContainer = loadable(() => import(/* webpackChunkName: "chunkMessagesOverview" */ 'sly/containers/DashboardMessagesContainer'));
 const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/containers/DashboardMessageDetailsPageContainer'));
 
 setGlobalStyles();
@@ -118,7 +117,12 @@ export default class App extends Component {
     },
     {
       path: AGENT_DASHBOARD_MESSAGES_PATH,
-      component: DashboardAgentMessagesContainer,
+      component: DashboardMessagesContainer,
+      exact: true,
+    },
+    {
+      path: FAMILY_DASHBOARD_MESSAGES_PATH,
+      component: DashboardMessagesContainer,
       exact: true,
     },
     {
@@ -129,10 +133,12 @@ export default class App extends Component {
     {
       path: AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
       component: DashboardMessageDetailsPageContainer,
+      exact: true,
     },
     {
       path: FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
       component: DashboardMessageDetailsPageContainer,
+      exact: true,
     },
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
