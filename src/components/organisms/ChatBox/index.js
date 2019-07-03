@@ -11,7 +11,7 @@ injectGlobal`
   }
   body.ChatBox-footer-reached #hbl-live-chat-wrapper .olark-launch-button {
     bottom: ${getKey('sizes.chatBox.footerReachedBottomMargin')}!important;
-  }  
+  }
   .roko-instabot-widget-button  {
     z-index: 10000!important;
     margin-bottom: ${getKey('sizes.spacing.massive')}!important;
@@ -83,7 +83,7 @@ export default class ChatBox extends Component {
               var f=d.getElementsByTagName(s)[0],j=d.createElement(s);
               j.text="apiKey: '${rokoApiKey}'";j.async=true;j.src=r;
               f.parentNode.insertBefore(j,f);
-            })('script', document, '//app.instabot.io/jsapi/v2/rokoInstabot.js');
+            })('script', document, '//widget.instabot.io/jsapi/rokoInstabot.js');
           }, 30000);
         `}}></script>
         {/* End Instabot Code */}

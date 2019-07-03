@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react';
-import { arrayOf } from 'prop-types';
+import { arrayOf, string } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
+import utc from 'dayjs/plugin/utc';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
@@ -21,6 +22,20 @@ const StyledMessage = pad(styled(Message)`
   align-self: ${ifProp('isRightAligned', 'flex-end', 'flex-start')};
   margin-left: ${size('spacing.xLarge')};
   margin-right: ${size('spacing.xLarge')};
+
+  :last-child {
+    margin-bottom: 0;
+  }
+
+  animation: fadeIn 1.5s;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `, 'large');
 StyledMessage.displayName = 'StyledMessage';
 
@@ -28,17 +43,20 @@ const PaddedHrWithText = pad(HrWithText, 'large');
 PaddedHrWithText.displayName = 'PaddedHrWithText';
 
 dayjs.extend(advancedFormat);
+dayjs.extend(utc);
 
-const ConversationMessages = ({ messages, participants, viewingAsParticipant }) => {
-  const today = dayjs();
+const ConversationMessages = ({
+  messages, participants, viewingAsParticipant, className,
+}) => {
+  const today = dayjs().utc();
   const todayDDMMYYYY = today.format('DD-MM-YYYY');
-  const thisYear = dayjs().format('YYYY');
+  const thisYear = dayjs().utc().format('YYYY');
   const participantsById = participants.reduce((a, b) => {
     a[b.id] = b;
     return a;
   }, {});
   const messagesWithDay = messages.map((m) => {
-    const parsedDate = dayjs(m.createdAt);
+    const parsedDate = dayjs(m.createdAt).utc();
     m.createdAtDayjs = parsedDate;
     m.createdAtDate = parsedDate.isValid() ? parsedDate.format('DD-MM-YYYY') : todayDDMMYYYY;
     return m;
@@ -48,7 +66,8 @@ const ConversationMessages = ({ messages, participants, viewingAsParticipant }) 
     (a[b.createdAtDate] = a[b.createdAtDate] || []).push(b);
     const latestDay = b.createdAtDayjs.isBefore(today) ? today : b.createdAtDayjs;
     const previousDay = b.createdAtDayjs.isBefore(today) ? b.createdAtDayjs : today;
-    const dayDiff = latestDay.diff(previousDay, 'day');
+    // don't take time when calculating day diff
+    const dayDiff = latestDay.startOf('day').diff(previousDay.startOf('day'), 'day');
     const createdAtYear = b.createdAtDayjs.format('YYYY');
     let dayName = 'Today';
     if (dayDiff === 1) {
@@ -69,9 +88,11 @@ const ConversationMessages = ({ messages, participants, viewingAsParticipant }) 
     const r = aa > bb ? 1 : 0;
     return aa < bb ? -1 : r;
   });
-
+  const lastMessageReadAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt);
+  let newMarkerSet = false;
   const messageComponents = days.map((d) => {
-    const messagesInDay = messagesByDay[d];
+    let messagesInDay = messagesByDay[d];
+    messagesInDay = messagesInDay.sort((a, b) => a.createdAtDayjs.diff(b.createdAtDayjs));
     const components = messagesInDay.map((m) => {
       const isRightAligned = viewingAsParticipant.id === m.conversationParticipantID;
       const props = {
@@ -86,16 +107,26 @@ const ConversationMessages = ({ messages, participants, viewingAsParticipant }) 
 
       return <StyledMessage key={m.id} {...props} />;
     });
+    const hrProps = {
+      text: dayNames[d],
+    };
+    if (!newMarkerSet && messagesInDay[0].createdAtDayjs.isAfter(lastMessageReadAt)) {
+      hrProps.badgeText = 'New';
+      hrProps.palette = 'warning';
+      hrProps.variation = 'base';
+      newMarkerSet = true;
+    }
+
     return (
       <Fragment key={d}>
-        <PaddedHrWithText text={dayNames[d]} />
+        <PaddedHrWithText {...hrProps} />
         {components}
       </Fragment>
     );
   });
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       {messageComponents}
     </Wrapper>
   );
@@ -105,6 +136,7 @@ ConversationMessages.propTypes = {
   messages: arrayOf(messagePropType).isRequired,
   participants: arrayOf(participantPropType).isRequired,
   viewingAsParticipant: participantPropType.isRequired,
+  className: string,
 };
 
 export default ConversationMessages;

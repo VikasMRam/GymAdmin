@@ -1,14 +1,15 @@
 import React from 'react';
-import { bool } from 'prop-types';
+import { bool, string } from 'prop-types';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
 
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
-import clientPropType from 'sly/propTypes/client';
 import { palette } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import { Box, Block, ClampedText } from 'sly/components/atoms';
+import Link from 'sly/components/atoms/Link/index';
+import { AGENT_DASHBOARD_MESSAGE_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 
 const StyledBox = styled(Box)`
   ${ifProp('hasUnread', css`background: ${palette('primary', 'background')}`, '')};
@@ -20,7 +21,7 @@ const TopWrapper = pad(styled.div`
 `, 'regular');
 TopWrapper.displayName = 'TopWrapper';
 
-const LatestMessage = ({ message, client, hasUnread }) => {
+const LatestMessage = ({ message, name, hasUnread }) => {
   let dateString = '';
   const parsedDate = dayjs(message.createdAt);
   if (!parsedDate.isValid()) {
@@ -32,7 +33,7 @@ const LatestMessage = ({ message, client, hasUnread }) => {
   return (
     <StyledBox noBorderRadius hasUnread={hasUnread}>
       <TopWrapper>
-        <ClampedText weight="medium" palette="primary">{client.clientInfo.name}</ClampedText>
+        <ClampedText weight="medium" palette="primary"><Link to={AGENT_DASHBOARD_MESSAGE_DETAILS_PATH.replace(':id', message.id)}>{name}</Link></ClampedText>
         <Block size="caption" palette="grey">{dateString}</Block>
       </TopWrapper>
       <ClampedText size="caption">{message.data.value}</ClampedText>
@@ -42,7 +43,7 @@ const LatestMessage = ({ message, client, hasUnread }) => {
 
 LatestMessage.propTypes = {
   message: messagePropType.isRequired,
-  client: clientPropType.isRequired,
+  name: string.isRequired,
   hasUnread: bool,
 };
 

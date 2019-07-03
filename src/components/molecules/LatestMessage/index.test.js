@@ -9,7 +9,7 @@ import message from 'sly/../private/storybook/sample-data/conversation-message-1
 const dateString = dayjs(message.createdAt).format('MM/DD/YYYY');
 const defaultProps = {
   message,
-  client: PraneshKumar,
+  name: PraneshKumar.clientInfo.name,
 };
 const wrap = (props = {}) => shallow(<LatestMessage {...defaultProps} {...props} />);
 

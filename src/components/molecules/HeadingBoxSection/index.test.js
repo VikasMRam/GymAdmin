@@ -15,6 +15,6 @@ describe('HeadingBoxSection', () => {
   it('renders', () => {
     const wrapper = wrap();
     expect(wrapper.find('HeadingBlock').contains(heading)).toBeTruthy();
-    expect(wrapper.find('Body').contains(body)).toBeTruthy();
+    expect(wrapper.contains(body)).toBeTruthy();
   });
 });
