@@ -66,7 +66,8 @@ const ConversationMessages = ({
     (a[b.createdAtDate] = a[b.createdAtDate] || []).push(b);
     const latestDay = b.createdAtDayjs.isBefore(today) ? today : b.createdAtDayjs;
     const previousDay = b.createdAtDayjs.isBefore(today) ? b.createdAtDayjs : today;
-    const dayDiff = latestDay.diff(previousDay, 'day');
+    // don't take time when calculating day diff
+    const dayDiff = latestDay.startOf('day').diff(previousDay.startOf('day'), 'day');
     const createdAtYear = b.createdAtDayjs.format('YYYY');
     let dayName = 'Today';
     if (dayDiff === 1) {
