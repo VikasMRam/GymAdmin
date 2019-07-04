@@ -50,9 +50,11 @@ export default {
 
   getConversations: { method: get, path: '/platform/conversations' },
   getConversation: { method: get, path: '/platform/conversations/:id' },
+  updateConversation: { method: patch, path: '/platform/conversations/:id' },
 
   getConversationMessages: { method: get, path: '/platform/conversation-messages' },
   createConversationMessage: { method: post, path: '/platform/conversation-messages' },
 
   getConversationParticipants: { method: get, path: '/platform/conversation-participants' },
+  updateConversationParticipant: { method: patch, path: '/platform/conversation-participants/:id' },
 };
