@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Component, Fragment, createRef } from 'react';
 import { arrayOf, bool } from 'prop-types';
 // import { Redirect } from 'react-router-dom'; todo: uncomment after isLoading is fixed
 import styled from 'styled-components';
@@ -48,72 +48,87 @@ const StyledSendMessageFormContainer = pad(styled(SendMessageFormContainer)`
   flex-grow: 0;
 `, 'large');
 
-const StyledConversationMessages = styled(ConversationMessages)`
+const MessagesWrapper = styled.div`
   flex-grow: 1;
   overflow: auto;
 `;
 
-const DashboardMessageDetailsPage = ({
-  user, conversation, isLoading, messages,
-}) => {
-  let heading = '';
-  let conversationParticipants = [];
-  let viewingAsParticipant;
-  let otherParticipant;
+export default class DashboardMessageDetailsPage extends Component {
+  static propTypes = {
+    messages: arrayOf(messagePropType),
+    conversation: conversationPropType,
+    user: userPropType,
+    isLoading: bool,
+  };
 
-  // todo: remove && conversation after isLoading is fixed
-  if (!isLoading && conversation) {
-    ({ conversationParticipants } = conversation);
-    const { id } = user;
-    viewingAsParticipant = conversationParticipants.find(p => p.participantID === id);
-    (otherParticipant = conversationParticipants.find(p => p.participantID !== id));
-    const name = otherParticipant && otherParticipant.participantInfo ? otherParticipant.participantInfo.name : '';
-
-    heading = (
-      <HeaderWrapper>
-        <Role is={CUSTOMER_ROLE}>
-          <BackLink to={FAMILY_DASHBOARD_MESSAGES_PATH} />
-        </Role>
-        <Role is={AGENT_ROLE}>
-          <BackLink to={AGENT_DASHBOARD_MESSAGES_PATH} />
-        </Role>
-        <FullWidthTextCenterBlock size="subtitle" palette="primary">{name}</FullWidthTextCenterBlock>
-      </HeaderWrapper>
-    );
+  componentDidUpdate() {
+    const { messagesRef, scrolled } = this;
+    if (messagesRef.current && !scrolled) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+      this.scrolled = true;
+    }
   }
 
-  return (
-    <DashboardPageTemplate activeMenuItem="Messages" bodyHasOverflow>
-      {/* todo: uncomment after isLoading is fixed
-      !isLoading && !viewingAsParticipant && <Redirect to={DASHBOARD_PATH} /> */}
-      {viewingAsParticipant &&
-        <StyledHeadingBoxSection heading={heading} hasNoBodyPadding>
-          {isLoading &&
-            <Block size="caption">Loading...</Block>
-          }
-          {!isLoading &&
-            <Fragment>
-              {(messages.length ? (
-                <StyledConversationMessages
-                  viewingAsParticipant={viewingAsParticipant}
-                  messages={messages}
-                  participants={conversationParticipants}
-                />
-              ) : <Fragment><br /><TextCenterBlock size="caption">No messages</TextCenterBlock></Fragment>)}
-              <StyledSendMessageFormContainer otherParticipant={otherParticipant} />
-            </Fragment>
-          }
-        </StyledHeadingBoxSection>
-      }
-    </DashboardPageTemplate>
-  );
-};
+  messagesRef = createRef();
 
-DashboardMessageDetailsPage.propTypes = {
-  messages: arrayOf(messagePropType),
-  conversation: conversationPropType,
-  user: userPropType,
-  isLoading: bool,
-};
+  render() {
+    const { messagesRef } = this;
+    const {
+      user, conversation, isLoading, messages,
+    } = this.props;
 
-export default DashboardMessageDetailsPage;
+    let heading = '';
+    let conversationParticipants = [];
+    let viewingAsParticipant;
+    let otherParticipant;
+
+    // todo: remove && conversation after isLoading is fixed
+    if (!isLoading && conversation) {
+      ({ conversationParticipants } = conversation);
+      const { id } = user;
+      viewingAsParticipant = conversationParticipants.find(p => p.participantID === id);
+      (otherParticipant = conversationParticipants.find(p => p.participantID !== id));
+      const name = otherParticipant && otherParticipant.participantInfo ? otherParticipant.participantInfo.name : '';
+
+      heading = (
+        <HeaderWrapper>
+          <Role is={CUSTOMER_ROLE}>
+            <BackLink to={FAMILY_DASHBOARD_MESSAGES_PATH} />
+          </Role>
+          <Role is={AGENT_ROLE}>
+            <BackLink to={AGENT_DASHBOARD_MESSAGES_PATH} />
+          </Role>
+          <FullWidthTextCenterBlock size="subtitle" palette="primary">{name}</FullWidthTextCenterBlock>
+        </HeaderWrapper>
+      );
+    }
+
+    return (
+      <DashboardPageTemplate activeMenuItem="Messages" bodyHasOverflow>
+        {/* todo: uncomment after isLoading is fixed
+        !isLoading && !viewingAsParticipant && <Redirect to={DASHBOARD_PATH} /> */}
+        {viewingAsParticipant &&
+          <StyledHeadingBoxSection heading={heading} hasNoBodyPadding>
+            {isLoading &&
+              <Block size="caption">Loading...</Block>
+            }
+            {!isLoading &&
+              <Fragment>
+                {(messages.length ? (
+                  <MessagesWrapper innerRef={messagesRef}>
+                    <ConversationMessages
+                      viewingAsParticipant={viewingAsParticipant}
+                      messages={messages}
+                      participants={conversationParticipants}
+                    />
+                  </MessagesWrapper>
+                ) : <Fragment><br /><TextCenterBlock size="caption">No messages</TextCenterBlock></Fragment>)}
+                <StyledSendMessageFormContainer otherParticipant={otherParticipant} />
+              </Fragment>
+            }
+          </StyledHeadingBoxSection>
+        }
+      </DashboardPageTemplate>
+    );
+  }
+}

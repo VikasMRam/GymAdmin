@@ -88,7 +88,7 @@ const ConversationMessages = ({
     const r = aa > bb ? 1 : 0;
     return aa < bb ? -1 : r;
   });
-  const lastMessageReadAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt);
+  const lastMessageReadAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
   let newMarkerSet = false;
   const messageComponents = days.map((d) => {
     let messagesInDay = messagesByDay[d];
