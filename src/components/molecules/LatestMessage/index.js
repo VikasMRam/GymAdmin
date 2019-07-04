@@ -31,13 +31,15 @@ const LatestMessage = ({ message, name, hasUnread }) => {
   }
 
   return (
-    <StyledBox noBorderRadius hasUnread={hasUnread}>
-      <TopWrapper>
-        <ClampedText weight="medium" palette="primary"><Link to={AGENT_DASHBOARD_MESSAGE_DETAILS_PATH.replace(':id', message.id)}>{name}</Link></ClampedText>
-        <Block size="caption" palette="grey">{dateString}</Block>
-      </TopWrapper>
-      <ClampedText size="caption">{message.data.value}</ClampedText>
-    </StyledBox>
+    <Link to={AGENT_DASHBOARD_MESSAGE_DETAILS_PATH.replace(':id', message.conversationID)}>
+      <StyledBox noBorderRadius hasUnread={hasUnread}>
+        <TopWrapper>
+          <ClampedText weight="medium" palette="primary">{name}</ClampedText>
+          <Block size="caption" palette="grey">{dateString}</Block>
+        </TopWrapper>
+        <ClampedText size="caption">{message.data.value}</ClampedText>
+      </StyledBox>
+    </Link>
   );
 };
 
