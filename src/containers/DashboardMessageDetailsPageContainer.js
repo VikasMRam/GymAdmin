@@ -44,7 +44,7 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     } = this.props;
     ws.on('notify.message.new', this.onMessage, { capture: true });
 
-    if (messages.length) {
+    if (messages && messages.length) {
       const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
       const { conversationParticipants } = conversation;
       const { id: userId } = user;
