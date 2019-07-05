@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { arrayOf, object } from 'prop-types';
+import { arrayOf, object, func } from 'prop-types';
+import { connect } from 'react-redux';
 
-import { withUser, prefetch } from 'sly/services/newApi';
+import { withUser, prefetch, invalidateRequests } from 'sly/services/newApi';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import DashboardMessagesPage from 'sly/components/pages/DashboardMessagesPage';
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
@@ -12,11 +13,23 @@ import RefreshRedirect from 'sly/components/common/RefreshRedirect';
   latestMessage: true,
 }))
 
+@connect(null, (dispatch, { api }) => ({
+  invalidateConversations: () => dispatch(invalidateRequests(api.getConversations)),
+}))
+
 export default class DashboardMessagesContainer extends Component {
   static propTypes = {
     conversations: arrayOf(conversationPropType),
     status: object,
+    invalidateConversations: func,
   };
+
+  componentDidMount() {
+    const { invalidateConversations } = this.props;
+    // TODO: Invalidating conversations since they dont have latestMessage populated.
+    // Need to fix backend to not to loop when fetching dependencies
+    invalidateConversations();
+  }
 
   render() {
     const { conversations, status } = this.props;
