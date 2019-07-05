@@ -31,15 +31,15 @@ const LatestMessage = ({
     dateString = parsedDate.format('MM/DD/YYYY');
   }
   return (
-    <Link to={to}>
-      <StyledBox noBorderRadius hasUnread={hasUnread}>
+    <StyledBox noBorderRadius hasUnread={hasUnread}>
+      <Link to={to}>
         <TopWrapper>
           <ClampedText weight="medium" palette="primary">{name}</ClampedText>
           <Block size="caption" palette="grey">{dateString}</Block>
         </TopWrapper>
         <ClampedText size="caption">{message.data.value}</ClampedText>
-      </StyledBox>
-    </Link>
+      </Link>
+    </StyledBox>
   );
 };
 
