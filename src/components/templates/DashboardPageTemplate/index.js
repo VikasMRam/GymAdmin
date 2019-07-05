@@ -4,7 +4,13 @@ import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
-import { FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH, AGENT_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
+import {
+  FAMILY_DASHBOARD_FAVORITES_PATH,
+  FAMILY_DASHBOARD_PROFILE_PATH,
+  AGENT_DASHBOARD_FAMILIES_PATH,
+  FAMILY_DASHBOARD_MESSAGES_PATH,
+  AGENT_DASHBOARD_MESSAGES_PATH,
+} from 'sly/constants/dashboardAppPaths';
 import { CUSTOMER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
 import HeaderContainer from 'sly/containers/HeaderContainer';
 import ModalContainer from 'sly/containers/ModalContainer';
@@ -30,6 +36,12 @@ const menuItems = [
   },
   {
     label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_FAMILIES_PATH, role: AGENT_ROLE, onClick: onMenuItemClick,
+  },
+  // {
+  //   label: 'Messages', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_MESSAGES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick,
+  // },
+  {
+    label: 'Messages', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_MESSAGES_PATH, role: AGENT_ROLE, onClick: onMenuItemClick,
   },
 ];
 
