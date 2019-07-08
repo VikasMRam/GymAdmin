@@ -22,6 +22,8 @@ import withWS from 'sly/services/ws/withWS';
 
 @query('updateConversationParticipant', 'updateConversationParticipant')
 
+@query('getConversations', 'getConversations')
+
 @withUser
 
 @withWS
@@ -35,25 +37,14 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     user: userPropType,
     status: object,
     updateConversationParticipant: func.isRequired,
+    getConversations: func.isRequired,
   };
 
   componentDidMount() {
-    const { updateLastReadMessageAt } = this;
-    const {
-      ws, messages, conversation, user,
-    } = this.props;
+    const { ws } = this.props;
     ws.on('notify.message.new', this.onMessage, { capture: true });
 
-    if (messages && messages.length) {
-      const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
-      const { conversationParticipants } = conversation;
-      const { id: userId } = user;
-      const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
-      const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
-      if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
-        setTimeout(updateLastReadMessageAt, MESSAGES_UPDATE_LAST_READ_TIMEOUT);
-      }
-    }
+    this.checkAndPatchLastReadMessageAt(MESSAGES_UPDATE_LAST_READ_TIMEOUT);
   }
 
   componentWillUnmount() {
@@ -62,14 +53,33 @@ export default class DashboardMessageDetailsPageContainer extends Component {
   }
 
   onMessage = (message) => {
-    const { match, status } = this.props;
+    const { match, status, user, getConversations } = this.props;
     if (message.payload.conversationId === match.params.id) {
       status.messages.refetch();
+      getConversations({ 'filter[participant_id]': user.id });
+      this.checkAndPatchLastReadMessageAt(0);
       // prevent more handlers to be called
       return false;
     }
     return true;
   };
+
+  checkAndPatchLastReadMessageAt = (timeout) => {
+    const { updateLastReadMessageAt } = this;
+    const {
+      messages, conversation, user,
+    } = this.props;
+    if (messages && messages.length) {
+      const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
+      const { conversationParticipants } = conversation;
+      const { id: userId } = user;
+      const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
+      const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
+      if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
+        setTimeout(updateLastReadMessageAt, timeout);
+      }
+    }
+  }
 
   updateLastReadMessageAt = () => {
     const {

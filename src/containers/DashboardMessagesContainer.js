@@ -13,7 +13,6 @@ import { AGENT_DASHBOARD_MESSAGE_DETAILS_PATH } from 'sly/constants/dashboardApp
 @withWS
 @prefetch('conversations', 'getConversations', (req, { user }) => req({
   'filter[participant_id]': user && user.id,
-  latestMessage: true,
 }))
 @query('getConversationMessages', 'getConversationMessages')
 
