@@ -40,7 +40,15 @@ const DashboardMessagesPage = ({ messages }) => {
   let messagesComponent = <EmptyMessagesWrapper>No messages</EmptyMessagesWrapper>;
   if (messages.length > 0) {
     messagesComponent = messages.map((message) => {
-      return <LatestMessage key={message.message.id} name={message.name} message={message.message} />;
+      return (
+        <LatestMessage
+          key={message.message.id}
+          name={message.name}
+          message={message.message}
+          hasUnread={message.hasUnread}
+          to={message.to}
+        />
+      );
     });
   }
   return (
