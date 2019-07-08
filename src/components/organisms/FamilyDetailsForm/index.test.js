@@ -31,11 +31,11 @@ const lookingFor = [
 ];
 
 const monthlyBudget = [
-  '<2K',
-  '2K-3K',
-  '3K-4K',
-  '4K-5K',
-  '5K+',
+  '<$2K',
+  '$2K-$3K',
+  '$3K-$4K',
+  '$4K-$5K',
+  '$5K+',
 ];
 
 const intro = 'Rhoda Goldman Plaza';

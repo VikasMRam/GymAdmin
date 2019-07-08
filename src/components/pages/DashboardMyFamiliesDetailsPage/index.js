@@ -241,7 +241,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       hasCancel
       onCancelClick={hideModal}
       heading={`Add a note on ${name}`}
-      placeholder="Add a note on why you are updating this family's stage..."
+      label="Note"
+      placeholder=""
       submitButtonText="Save note"
       onSubmit={handleSubmit}
     />, null, 'noPadding', false);
@@ -268,7 +269,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       hasCancel
       onCancelClick={hideModal}
       heading={`Edit note on ${name}`}
-      placeholder="Add a note on why you are updating this family's stage..."
+      label="Note"
+      placeholder="Edit a note."
       submitButtonText="Save note"
       onSubmit={handleSubmit}
       initialValues={initialValues}
