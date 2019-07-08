@@ -231,7 +231,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 onEditNote={onEditNote}
                 notes={notes}
                 noteIsLoading={noteIsLoading}
-                clientIsLoadig={clientIsLoading}
+                clientIsLoading={clientIsLoading}
                 goToFamilyDetails={this.goToFamilyDetails}
               />
             )}
