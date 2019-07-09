@@ -90,10 +90,13 @@ export function hasRequestStarted(request) {
 export function getRequestInfo(state, apiCall, args) {
   const request = getRawRequest(state, apiCall, args);
   const error = request && request.error ? request.error : false;
+  const hasStarted = hasRequestStarted(request);
+  const isLoading = isRequestLoading(request);
 
   return {
-    hasStarted: hasRequestStarted(request),
-    isLoading: isRequestLoading(request),
+    hasStarted,
+    isLoading,
+    hasFinished: hasStarted && !isLoading,
     hasFailed: !!error,
     result: getRequestResult(state, request),
     normalized: getRequestResult(state, request, true),

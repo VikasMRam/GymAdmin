@@ -86,28 +86,26 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     }
   };
 
-  computeIsStarted = () => {
+  getHasFinished = () => {
     const { status } = this.props;
-    const { hasStarted: userHasStarted } = status.user;
-    const { hasStarted: conversationHasStarted } = status.conversation;
+    const { hasFinished: userHasFinished } = status.user;
+    const { hasFinished: conversationHasFinished } = status.conversation;
 
-    return userHasStarted && conversationHasStarted;
-  };
-
-  computeIsLoading = () => {
-    const { status } = this.props;
-    const { isLoading: userIsLoading } = status.user;
-    const { isLoading: conversationIsLoading } = status.conversation;
-    const isStarted = this.computeIsStarted();
-
-    return !isStarted || userIsLoading || conversationIsLoading;
+    return userHasFinished && conversationHasFinished;
   };
 
   render() {
     const { onScrollTopReached } = this;
     const { conversation, user } = this.props;
     const { pageNumber } = this.state;
-    const isLoading = !this.computeIsStarted() || this.computeIsLoading();
+    const isLoading = !this.getHasFinished();
+
+    console.log(JSON.stringify({
+      conversation,
+      user,
+      isLoading,
+      pageNumber,
+    }, null, 2));
 
     return (
       <DashboardMessageDetailsPage
