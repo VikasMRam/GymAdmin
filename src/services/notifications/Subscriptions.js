@@ -53,7 +53,7 @@ class Notifications extends Component {
       ...this.props,
     });
 
-    this.sendNotification({
+    return this.sendNotification({
       to,
       message: message.payload.notificationMessage,
     });
@@ -71,10 +71,10 @@ class Notifications extends Component {
       ? 'denied'
       : 'granted';
 
-    const winNot = window.Notification
+    const notPermitted = window.Notification
       && Notification.permission !== checkPermission;
 
-    if (user && !prevProps.user && winNot) {
+    if (user && !prevProps.user && notPermitted) {
       Notification.requestPermission((permission) => {
         if (Notification.permission !== permission) {
           Notification.permission = permission;
@@ -82,13 +82,13 @@ class Notifications extends Component {
         resolve(permission);
       });
     } else {
-      resolve('denied');
+      resolve('default');
     }
   });
 
   sendNotification = ({ to, message }) => {
     const { notifyInfo } = this.props;
-    this.requestPermission(this.props, true)
+    return this.requestPermission(this.props, true)
       .then((permission) => {
         if (permission === 'granted') {
           const notification = new Notification('Seniorly', {
