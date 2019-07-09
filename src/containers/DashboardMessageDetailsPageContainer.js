@@ -33,6 +33,10 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     messages: arrayOf(conversationMessagePropType),
   };
 
+  state = {
+    pageNumber: 0,
+  };
+
   componentDidMount() {
     const { updateLastReadMessageAt } = this;
     const {
