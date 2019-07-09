@@ -31,11 +31,24 @@ const MessagesWrapper = styled.div`
   }
 `;
 
+const EmptyMessagesWrapper = styled.div`
+  padding: ${size('spacing', 'large')};
+  text-align: center;
+`;
+
 const DashboardMessagesPage = ({ messages }) => {
-  let messagesComponent = 'No messages';
+  let messagesComponent = <EmptyMessagesWrapper>No messages</EmptyMessagesWrapper>;
   if (messages.length > 0) {
     messagesComponent = messages.map((message) => {
-      return <LatestMessage key={message.message.id} name={message.name} message={message.message} />;
+      return (
+        <LatestMessage
+          key={message.message.id}
+          name={message.name}
+          message={message.message}
+          hasUnread={message.hasUnread}
+          to={message.to}
+        />
+      );
     });
   }
   return (

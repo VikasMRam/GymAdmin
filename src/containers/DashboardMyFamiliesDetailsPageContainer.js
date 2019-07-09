@@ -134,15 +134,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const {
       updateNote, status, invalidateClients,
     } = this.props;
+    const { result: rawNotes } = status.notes;
     const { id } = note;
+    const oldNote = rawNotes.find(n => n.id === id);
     const { note: newNoteBody } = data;
-    const payload = {
-      type: NOTE_RESOURCE_TYPE,
-      id,
-      attributes: {
-        body: newNoteBody,
-      },
-    };
+    const payload = immutable(pick(oldNote, ['id', 'type', 'attributes.body']))
+      .set('attributes.body', newNoteBody)
+      .value();
 
     SlyEvent.getInstance().sendEvent({
       category: 'fdetails',
