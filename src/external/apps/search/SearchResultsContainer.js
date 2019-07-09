@@ -120,7 +120,7 @@ export default class SearchResultsContainer extends Component {
       const ct = i === searchResources.length - 1 && total < 2 ?
         <StyledCommunityTile palette={palette} layout="column" showFloorPlan={false} noGallery community={sr} /> :
         <PaddedStyledCommunityTile palette={palette} layout="column" showFloorPlan={false} noGallery community={sr} />;
-      return <Link key={sr.id} href={sr.url} target="_blank">{ct}</Link>;
+      return <Link key={sr.id} href={sr.url} target="_blank" rel="nofollow">{ct}</Link>;
     });
 
     return (
@@ -138,7 +138,7 @@ export default class SearchResultsContainer extends Component {
             />
             <OrBlock>or</OrBlock>
             <ButtonWrapper>
-              <Button palette={palette} href={searchPath} target="_blank">See more on Seniorly</Button>
+              <Button palette={palette} href={searchPath} target="_blank" rel="nofollow">See more on Seniorly</Button>
             </ButtonWrapper>
           </BottomWrapper>
         }
