@@ -100,13 +100,6 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     const { pageNumber } = this.state;
     const isLoading = !this.getHasFinished();
 
-    console.log(JSON.stringify({
-      conversation,
-      user,
-      isLoading,
-      pageNumber,
-    }, null, 2));
-
     return (
       <DashboardMessageDetailsPage
         conversation={conversation}
