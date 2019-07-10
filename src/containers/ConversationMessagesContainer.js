@@ -86,8 +86,8 @@ export default class ConversationMessagesContainer extends Component {
     const { id } = conversation;
     if (message.payload.conversationId === id) {
       status.messages.refetch();
-      // prevent more handlers to be called
-      return false;
+      // prevent more handlers to be called if page is visible
+      return document.hidden;
     }
     return true;
   };
