@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import { arrayOf, object, func } from 'prop-types';
+import { object, arrayOf } from 'prop-types';
 import dayjs from 'dayjs';
 
-import { prefetch, withUser, query } from 'sly/services/newApi';
+import { prefetch, withUser } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
-import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
-import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import { MESSAGES_UPDATE_LAST_READ_TIMEOUT } from 'sly/constants/conversations';
+import conversationMessagePropType from 'sly/propTypes/conversation/conversationMessage';
 import DashboardMessageDetailsPage from 'sly/components/pages/DashboardMessageDetailsPage';
 import withWS from 'sly/services/ws/withWS';
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
+import { MESSAGES_UPDATE_LAST_READ_TIMEOUT } from 'sly/constants/conversations';
 
 @prefetch('messages', 'getConversationMessages', (req, { match }) => req({
   'filter[conversationID]': match.params.id,
@@ -21,21 +20,21 @@ import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
   id: match.params.id,
 }))
 
-@query('updateConversationParticipant', 'updateConversationParticipant')
-
 @withUser
 
 @withWS
 
 export default class DashboardMessageDetailsPageContainer extends Component {
   static propTypes = {
-    ws: object.isRequired,
-    match: object.isRequired,
-    messages: arrayOf(messagePropType),
     conversation: conversationPropType,
     user: userPropType,
     status: object,
-    updateConversationParticipant: func.isRequired,
+    ws: object,
+    messages: arrayOf(conversationMessagePropType),
+  };
+
+  state = {
+    pageNumber: 0,
   };
 
   componentDidMount() {
@@ -63,71 +62,50 @@ export default class DashboardMessageDetailsPageContainer extends Component {
   }
 
   onMessage = (message) => {
-    const { match, status } = this.props;
-    if (message.payload.conversationId === match.params.id) {
+    const { conversation, status } = this.props;
+    const { id } = conversation;
+    if (message.payload.conversationId === id) {
       status.messages.refetch();
-      // prevent more handlers to be called if page is visible
-      return document.hidden;
+      // prevent more handlers to be called
+      return false;
     }
     return true;
   };
 
-  updateLastReadMessageAt = () => {
-    const {
-      updateConversationParticipant, conversation, user,
-    } = this.props;
-    const { conversationParticipants } = conversation;
-    const { id: userId } = user;
-    const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
-    const { id } = viewingAsParticipant;
-    const payload = {
-      type: CONVERSTION_PARTICIPANT_RESOURCE_TYPE,
-      attributes: viewingAsParticipant,
-    };
-    payload.attributes.stats.unreadMessageCount = 0;
-    payload.attributes.stats.lastReadMessageAt = dayjs().utc().format();
+  onScrollTopReached = (numberOfMessages) => {
+    const { conversation } = this.props;
+    let { pageNumber } = this.state;
+    const { info } = conversation;
+    const { messageCount } = info;
 
-    return updateConversationParticipant({ id }, payload)
-      .catch((r) => {
-        // TODO: Need to set a proper way to handle server side errors
-        const { body } = r;
-        const errorMessage = body.errors.map(e => e.title).join('. ');
-        console.error(errorMessage);
+    if (numberOfMessages < messageCount) {
+      pageNumber += 1;
+      this.setState({
+        pageNumber,
       });
+    }
   };
 
-  computeIsStarted = () => {
+  getHasFinished = () => {
     const { status } = this.props;
-    const { hasStarted: userHasStarted } = status.user;
-    const { hasStarted: messagesHasStarted } = status.messages;
-    const { hasStarted: conversationHasStarted } = status.conversation;
+    const { hasFinished: userHasFinished } = status.user;
+    const { hasFinished: conversationHasFinished } = status.conversation;
 
-    return userHasStarted && messagesHasStarted && conversationHasStarted;
-  };
-
-  computeIsLoading = () => {
-    const { status } = this.props;
-    const { isLoading: userIsLoading } = status.user;
-    const { isLoading: messagesIsLoading } = status.messages;
-    const { isLoading: conversationIsLoading } = status.conversation;
-    const isStarted = this.computeIsStarted();
-
-    return !isStarted || userIsLoading || messagesIsLoading || conversationIsLoading;
+    return userHasFinished && conversationHasFinished;
   };
 
   render() {
-    const { messages, conversation, user } = this.props;
-    const isLoading = !this.computeIsStarted() || this.computeIsLoading();
-    if (!isLoading && !this.pageLoaded) {
-      this.pageLoaded = true;
-    }
+    const { conversation, user } = this.props;
+    const { pageNumber } = this.state;
+    const isLoading = !this.getHasFinished();
 
     return (
       <DashboardMessageDetailsPage
-        messages={messages}
         conversation={conversation}
         user={user}
-        isLoading={isLoading && !this.pageLoaded}
+        isLoading={isLoading}
+        pageNumber={pageNumber}
+        onScrollTopReached={this.onScrollTopReached}
       />
     );
   }
