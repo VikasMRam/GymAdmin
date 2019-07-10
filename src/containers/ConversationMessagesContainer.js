@@ -76,7 +76,9 @@ export default class ConversationMessagesContainer extends Component {
     const { ws } = this.props;
 
     ws.off('notify.message.new', this.onMessage);
-    messagesRef.current.removeEventListener('scroll', handleScroll);
+    if (messagesRef.current) {
+      messagesRef.current.removeEventListener('scroll', handleScroll);
+    }
   }
 
   onMessage = (message) => {
