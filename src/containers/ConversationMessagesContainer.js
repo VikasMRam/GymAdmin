@@ -92,7 +92,12 @@ export default class ConversationMessagesContainer extends Component {
     return true;
   };
 
-  messagesRef = createRef();
+  getHasFinished = () => {
+    const { status } = this.props;
+    const { hasFinished } = status.messages;
+
+    return hasFinished;
+  };
 
   updateLastReadMessageAt = () => {
     const {
@@ -127,15 +132,14 @@ export default class ConversationMessagesContainer extends Component {
     }
   };
 
-  render() {
-    const { messagesRef } = this;
-    const {
-      messages, status, viewingAsParticipant, participants, className,
-    } = this.props;
-    const { hasStarted } = status.messages;
-    const { isLoading } = status.messages;
+  messagesRef = createRef();
 
-    if ((hasStarted && !isLoading) || isLoading || !hasStarted || !this.pageLoaded) {
+  render() {
+    const {
+      messages, viewingAsParticipant, participants, className,
+    } = this.props;
+
+    if (!this.getHasFinished()) {
       return (
         <Fragment>
           <br />
@@ -153,12 +157,8 @@ export default class ConversationMessagesContainer extends Component {
       );
     }
 
-    if (!isLoading && !this.pageLoaded) {
-      this.pageLoaded = true;
-    }
-
     return (
-      <div ref={messagesRef} className={className}>
+      <div ref={this.messagesRef} className={className}>
         <ConversationMessages
           viewingAsParticipant={viewingAsParticipant}
           messages={messages}

@@ -95,7 +95,6 @@ export default class DashboardMessageDetailsPageContainer extends Component {
   };
 
   render() {
-    const { onScrollTopReached } = this;
     const { conversation, user } = this.props;
     const { pageNumber } = this.state;
     const isLoading = !this.getHasFinished();
@@ -106,7 +105,7 @@ export default class DashboardMessageDetailsPageContainer extends Component {
         user={user}
         isLoading={isLoading}
         pageNumber={pageNumber}
-        onScrollTopReached={onScrollTopReached}
+        onScrollTopReached={this.onScrollTopReached}
       />
     );
   }
