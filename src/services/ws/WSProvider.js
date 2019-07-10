@@ -5,7 +5,9 @@ import WSContext from 'sly/services/ws/WSContext';
 import Pubsub from 'sly/services/ws/Pubsub';
 import { domain } from 'sly/config';
 
-const NOTIFICATIONS_URI = `ws://${domain}/v0/platform/notifications`;
+const wsDomain = domain === 'localhost' ? domain : `www.${domain}`;
+
+const NOTIFICATIONS_URI = `ws://${wsDomain}/v0/platform/notifications`;
 
 let _instantiated_ = false;
 
