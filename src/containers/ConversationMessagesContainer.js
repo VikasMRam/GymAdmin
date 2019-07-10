@@ -9,6 +9,7 @@ import conversationPropType from 'sly/propTypes/conversation/conversation';
 import conversationParticipantPropType from 'sly/propTypes/conversation/conversationParticipant';
 import { MESSAGES_UPDATE_LAST_READ_TIMEOUT } from 'sly/constants/conversations';
 import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
+import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import withWS from 'sly/services/ws/withWS';
 import textAlign from 'sly/components/helpers/textAlign';
 import fullHeight from 'sly/components/helpers/fullHeight';
@@ -51,7 +52,7 @@ export default class ConversationMessagesContainer extends Component {
       ws, messages, conversation, user,
     } = this.props;
 
-    ws.on('notify.message.new', this.onMessage, { capture: true });
+    ws.on(NOTIFY_MESSAGE_NEW, this.onMessage, { capture: true });
 
     if (messages && messages.length) {
       const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
@@ -75,7 +76,7 @@ export default class ConversationMessagesContainer extends Component {
     const { handleScroll, messagesRef } = this;
     const { ws } = this.props;
 
-    ws.off('notify.message.new', this.onMessage);
+    ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
     if (messagesRef.current) {
       messagesRef.current.removeEventListener('scroll', handleScroll);
     }
