@@ -14,6 +14,7 @@ import { ApiProvider, createApi } from 'sly/services/newApi';
 import configureStore from 'sly/store/configure';
 import api from 'sly/services/api';
 import WSProvider from 'sly/services/ws/WSProvider';
+import NotificationSubscriptions from 'sly/services/notifications/Subscriptions';
 
 const serverState = window.__SERVER_STATE__;
 const initialState = window.__INITIAL_STATE__;
@@ -26,9 +27,11 @@ const renderApp = () => (
     <ServerStateProvider state={serverState}>
       <ApiProvider api={beesApi}>
         <Provider store={store}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+          <NotificationSubscriptions>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </NotificationSubscriptions>
         </Provider>
       </ApiProvider>
     </ServerStateProvider>

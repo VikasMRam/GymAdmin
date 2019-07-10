@@ -7,7 +7,7 @@ import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormT
 import ReduxField from 'sly/components/organisms/ReduxField';
 
 const AddNoteForm = ({
-  submitting, handleSubmit, error, onCancelClick, hasCancel, heading, submitButtonText, cancelButtonText, placeholder, ...props
+  submitting, handleSubmit, error, onCancelClick, hasCancel, heading, submitButtonText, cancelButtonText, placeholder, label, ...props
 }) => (
   <ThreeSectionFormTemplate
     {...props}
@@ -23,7 +23,7 @@ const AddNoteForm = ({
       type="textarea"
       rows={3}
       name="note"
-      label="Add a note (optional)"
+      label={label}
       placeholder={placeholder}
       component={ReduxField}
     />
@@ -40,12 +40,14 @@ AddNoteForm.propTypes = {
   heading: string,
   submitButtonText: string.isRequired,
   cancelButtonText: string.isRequired,
+  label: string,
   placeholder: string,
 };
 
 AddNoteForm.defaultProps = {
+  label: 'Add a note (optional)',
   submitButtonText: 'Save Note',
-  cancelButtonText: 'Dismiss',
+  cancelButtonText: 'Cancel',
 };
 
 export default AddNoteForm;

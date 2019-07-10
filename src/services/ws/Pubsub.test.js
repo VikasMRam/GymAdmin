@@ -1,4 +1,4 @@
-import Pubsub from './pubsub';
+import Pubsub from './Pubsub';
 
 describe('Pubsub', () => {
   let pubsub;

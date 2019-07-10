@@ -21,7 +21,6 @@ export const getStageDetails = (stageName) => {
         levelGroup = s;
         if (stageArr.length - 1 === idx) {
           palette = 'danger';
-          level = TOTAL_STAGES_COUNT;
         }
         if (idx === 0 && i === 0) {
           showAcceptRejectButtons = true;
