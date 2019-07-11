@@ -33,9 +33,9 @@ const CommunityDetails = ({
         </StyledArticle>
       )}
       {(!communityDescription && rgsAuxDescription &&
-        <Paragraph
-          dangerouslySetInnerHTML={{ __html: rgsAuxDescription }}
-        />
+        <StyledArticle>
+          <div dangerouslySetInnerHTML={{ __html: rgsAuxDescription }} />
+        </StyledArticle>
       )}
       {(!communityDescription && !rgsAuxDescription && 'No details are available')}
       {ownerExperience && (
