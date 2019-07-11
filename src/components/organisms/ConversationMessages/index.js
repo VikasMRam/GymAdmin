@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { arrayOf, string } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
@@ -45,85 +45,65 @@ PaddedHrWithText.displayName = 'PaddedHrWithText';
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
 
+const today = dayjs().utc();
+const thisYear = dayjs().utc().format('YYYY');
+
+const getDateText = (date) => {
+  date = dayjs(date).utc();
+  const createdAtYear = date.format('YYYY');
+
+  switch (date.startOf('day').diff(today.startOf('day'), 'day')) {
+    case 0: return 'Today';
+    case 1: return 'Yesterday';
+    default:
+      if (createdAtYear !== thisYear) {
+        return date.format('dddd, MMMM Do');
+      }
+      return date.format('dddd, MMMM Do');
+  }
+};
+const isSameDay = (a, b) => a.substr(0, 10) === b.substr(0, 10);
+const isAfter = (a, b) => dayjs(a).utc().isAfter(dayjs(b).utc());
+
 const ConversationMessages = ({
   messages, participants, viewingAsParticipant, className,
 }) => {
-  const today = dayjs().utc();
-  const todayDDMMYYYY = today.format('DD-MM-YYYY');
-  const thisYear = dayjs().utc().format('YYYY');
+  const lastMessageReadAt = viewingAsParticipant.stats.lastReadMessageAt;
   const participantsById = participants.reduce((a, b) => {
     a[b.id] = b;
     return a;
   }, {});
-  const messagesWithDay = messages.map((m) => {
-    const parsedDate = dayjs(m.createdAt).utc();
-    m.createdAtDayjs = parsedDate;
-    m.createdAtDate = parsedDate.isValid() ? parsedDate.format('DD-MM-YYYY') : todayDDMMYYYY;
-    return m;
-  });
-  const dayNames = {};
-  const messagesByDay = messagesWithDay.reduce((a, b) => {
-    (a[b.createdAtDate] = a[b.createdAtDate] || []).push(b);
-    const latestDay = b.createdAtDayjs.isBefore(today) ? today : b.createdAtDayjs;
-    const previousDay = b.createdAtDayjs.isBefore(today) ? b.createdAtDayjs : today;
-    // don't take time when calculating day diff
-    const dayDiff = latestDay.startOf('day').diff(previousDay.startOf('day'), 'day');
-    const createdAtYear = b.createdAtDayjs.format('YYYY');
-    let dayName = 'Today';
-    if (dayDiff === 1) {
-      dayName = 'Yesterday';
-    } else if (dayDiff !== 0) {
-      dayName = b.createdAtDayjs.format('dddd, MMMM Do');
-      if (createdAtYear !== thisYear) {
-        dayName += `, ${createdAtYear}`;
-      }
-    }
-    dayNames[b.createdAtDate] = dayName;
-    return a;
-  }, {});
-  let days = Object.keys(messagesByDay);
-  days = days.sort((a, b) => {
-    const aa = a.split('-').reverse().join();
-    const bb = b.split('-').reverse().join();
-    const r = aa > bb ? 1 : 0;
-    return aa < bb ? -1 : r;
-  });
-  const lastMessageReadAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
-  let newMarkerSet = false;
-  const messageComponents = days.map((d) => {
-    let messagesInDay = messagesByDay[d];
-    messagesInDay = messagesInDay.sort((a, b) => a.createdAtDayjs.diff(b.createdAtDayjs));
-    const components = messagesInDay.map((m) => {
-      const isRightAligned = viewingAsParticipant.id === m.conversationParticipantID;
-      const props = {
-        message: m,
-        isRightAligned,
-        dark: isRightAligned,
+  const messageComponents = [];
+  let prevMessage = null;
+  messages.forEach((message) => {
+    if (prevMessage && !isSameDay(prevMessage.createdAt, message.createdAt)) {
+      const dayName = getDateText(message.createdAt);
+      const hrProps = {
+        text: dayName,
       };
-      if (!isRightAligned) {
-        const participant = participantsById[m.conversationParticipantID];
-        props.participant = participant;
+      if (isAfter(message.createdAt, lastMessageReadAt)) {
+        hrProps.badgeText = 'New';
+        hrProps.palette = 'warning';
+        hrProps.variation = 'base';
       }
 
-      return <StyledMessage key={m.id} {...props} />;
-    });
-    const hrProps = {
-      text: dayNames[d],
+      messageComponents.push(<PaddedHrWithText key={`hr-${message.id}`} {...hrProps} />);
+    }
+    const isRightAligned = viewingAsParticipant.id === message.conversationParticipantID;
+    const props = {
+      message,
+      isRightAligned,
+      dark: isRightAligned,
     };
-    if (!newMarkerSet && messagesInDay[0].createdAtDayjs.isAfter(lastMessageReadAt)) {
-      hrProps.badgeText = 'New';
-      hrProps.palette = 'warning';
-      hrProps.variation = 'base';
-      newMarkerSet = true;
+    if (!isRightAligned) {
+      const participant = participantsById[message.conversationParticipantID];
+      props.participant = participant;
     }
 
-    return (
-      <Fragment key={d}>
-        <PaddedHrWithText {...hrProps} />
-        {components}
-      </Fragment>
-    );
+    messageComponents.push(<StyledMessage key={message.id} {...props} />);
+    prevMessage = message;
   });
+  messageComponents.reverse();
 
   return (
     <Wrapper className={className}>

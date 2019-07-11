@@ -19,24 +19,6 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     status: object,
   };
 
-  state = {
-    pageNumber: 0,
-  };
-
-  onScrollTopReached = (numberOfMessages) => {
-    const { conversation } = this.props;
-    let { pageNumber } = this.state;
-    const { info } = conversation;
-    const { messageCount } = info;
-
-    if (numberOfMessages < messageCount) {
-      pageNumber += 1;
-      this.setState({
-        pageNumber,
-      });
-    }
-  };
-
   getHasFinished = () => {
     const { status } = this.props;
     const { hasFinished: userHasFinished } = status.user;
@@ -47,7 +29,6 @@ export default class DashboardMessageDetailsPageContainer extends Component {
 
   render() {
     const { conversation, user } = this.props;
-    const { pageNumber } = this.state;
     const isLoading = !this.getHasFinished();
 
     return (
@@ -55,8 +36,6 @@ export default class DashboardMessageDetailsPageContainer extends Component {
         conversation={conversation}
         user={user}
         isLoading={isLoading}
-        pageNumber={pageNumber}
-        onScrollTopReached={this.onScrollTopReached}
       />
     );
   }
