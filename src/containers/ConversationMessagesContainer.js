@@ -112,6 +112,34 @@ export default class ConversationMessagesContainer extends Component {
     return true;
   };
 
+  onNewMessagesLoaded = (resp) => {
+    const { messages } = this.state;
+    const result = resp.body.data.reduce((acc, item) => {
+      if (!acc[item.type]) {
+        acc[item.type] = {};
+      }
+      acc[item.type][item.id] = item;
+      return acc;
+    }, {});
+    let allMessages = messages;
+    let newMessages = [];
+    const lastDate = dayjs(allMessages[0].createdAt).utc();
+
+    resp.body.data.forEach((elem) => {
+      const elemDayjs = dayjs(elem.createdAt).utc();
+      if (elemDayjs.isAfter(lastDate)) {
+        newMessages.push(elem);
+      }
+    });
+    newMessages = newMessages.map(elem => build(result, elem.type, elem.id));
+    allMessages = [...allMessages, ...newMessages];
+
+    this.setState({
+      messages: allMessages,
+      loadingMore: false,
+    });
+  };
+
   getHasFinished = () => {
     const { status } = this.props;
     const { hasFinished } = status.messages;
@@ -160,32 +188,7 @@ export default class ConversationMessagesContainer extends Component {
         'filter[conversationID]': id,
         sort: '-created_at',
         'page-number': this.pageNumber,
-      }).then((resp) => {
-        const result = resp.body.data.reduce((acc, item) => {
-          if (!acc[item.type]) {
-            acc[item.type] = {};
-          }
-          acc[item.type][item.id] = item;
-          return acc;
-        }, {});
-        let allMessages = messages;
-        let newMessages = [];
-        const lastDate = dayjs(allMessages[0].createdAt).utc();
-
-        resp.body.data.forEach((elem) => {
-          const elemDayjs = dayjs(elem.createdAt).utc();
-          if (elemDayjs.isAfter(lastDate)) {
-            newMessages.push(elem);
-          }
-        });
-        newMessages = newMessages.map(elem => build(result, elem.type, elem.id));
-        allMessages = [...allMessages, ...newMessages];
-
-        this.setState({
-          messages: allMessages,
-          loadingMore: false,
-        });
-      });
+      }).then(this.onNewMessagesLoaded);
     }
   };
 

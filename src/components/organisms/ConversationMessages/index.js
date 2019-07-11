@@ -57,13 +57,14 @@ const getDateText = (date) => {
     case 1: return 'Yesterday';
     default:
       if (createdAtYear !== thisYear) {
-        return date.format('dddd, MMMM Do');
+        return `${date.format('dddd, MMMM Do')}, ${createdAtYear}`;
       }
       return date.format('dddd, MMMM Do');
   }
 };
 const isSameDay = (a, b) => a.substr(0, 10) === b.substr(0, 10);
 const isAfter = (a, b) => dayjs(a).utc().isAfter(dayjs(b).utc());
+const isBefore = (a, b) => dayjs(a).utc().isBefore(dayjs(b).utc());
 
 const ConversationMessages = ({
   messages, participants, viewingAsParticipant, className,
@@ -75,8 +76,13 @@ const ConversationMessages = ({
   }, {});
   const messageComponents = [];
   let prevMessage = null;
+  messages = messages.sort((a, b) => {
+    const r = isBefore(a.createdAt, b.createdAt) ? -1 : 0;
+    return isAfter(a.createdAt, b.createdAt) ? 1 : r;
+  });
   messages.forEach((message) => {
-    if (prevMessage && !isSameDay(prevMessage.createdAt, message.createdAt)) {
+    if ((prevMessage && !isSameDay(prevMessage.createdAt, message.createdAt)) ||
+      !prevMessage) {
       const dayName = getDateText(message.createdAt);
       const hrProps = {
         text: dayName,
@@ -103,7 +109,6 @@ const ConversationMessages = ({
     messageComponents.push(<StyledMessage key={message.id} {...props} />);
     prevMessage = message;
   });
-  messageComponents.reverse();
 
   return (
     <Wrapper className={className}>
