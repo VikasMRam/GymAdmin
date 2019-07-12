@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { bool, number, func } from 'prop-types';
+import { bool, number } from 'prop-types';
 // import { Redirect } from 'react-router-dom'; todo: uncomment after isLoading is fixed
 import styled from 'styled-components';
 
@@ -52,7 +52,7 @@ const StyledConversationMessagesContainer = styled(ConversationMessagesContainer
 `;
 
 const DashboardMessageDetailsPage = ({
-  user, conversation, isLoading, pageNumber, onScrollTopReached,
+  user, conversation, isLoading,
 }) => {
   let heading = '';
   let conversationParticipants = [];
@@ -95,8 +95,6 @@ const DashboardMessageDetailsPage = ({
                 conversation={conversation}
                 viewingAsParticipant={viewingAsParticipant}
                 participants={conversationParticipants}
-                pageNumber={pageNumber}
-                onScrollTopReached={onScrollTopReached}
               />
               <StyledSendMessageFormContainer otherParticipant={otherParticipant} />
             </Fragment>
@@ -112,7 +110,6 @@ DashboardMessageDetailsPage.propTypes = {
   user: userPropType,
   isLoading: bool,
   pageNumber: number,
-  onScrollTopReached: func,
 };
 
 export default DashboardMessageDetailsPage;

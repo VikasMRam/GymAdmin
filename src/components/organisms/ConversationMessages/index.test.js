@@ -20,14 +20,6 @@ const messages = [
   message5,
 ];
 
-const orderedMessages = [
-  message5,
-  message1,
-  message2,
-  message3,
-  message4,
-];
-
 const participants = [
   participant1,
   participant2,
@@ -40,8 +32,8 @@ const participantProfiles = [
 
 const dateHrs = [
   'Tuesday, May 1st, 2018',
-  'Monday, April 1st',
   'Wednesday, May 1st',
+  'Monday, April 1st',
 ];
 
 const defaultProps = {
@@ -60,7 +52,7 @@ describe('ConversationMessages', () => {
 
     expect(renderedMessages).toHaveLength(messages.length);
     renderedMessages.forEach((m, i) => {
-      expect(m.prop('message').id).toBe(orderedMessages[i].id);
+      expect(m.prop('message').id).toBe(messages[messages.length - 1 - i].id);
     });
     expect(renderedHrs).toHaveLength(dateHrs.length);
     renderedHrs.forEach((hr, i) => {
