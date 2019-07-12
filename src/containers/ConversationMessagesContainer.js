@@ -60,44 +60,49 @@ export default class ConversationMessagesContainer extends Component {
 
   state = {
     messages: null,
+    pageNumber: 0,
     loadingMore: false,
   };
 
   componentDidMount() {
-    const {
-      updateLastReadMessageAt, handleScroll, messagesRef, scrolled,
-    } = this;
-    const {
-      ws, messages, conversation, user,
-    } = this.props;
+    const { messagesRef, scrolled } = this;
+    const { ws, messages } = this.props;
 
     ws.on(NOTIFY_MESSAGE_NEW, this.onMessage, { capture: true });
 
     if (messages && messages.length) {
-      const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
-      const { conversationParticipants } = conversation;
-      const { id: userId } = user;
-      const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
-      const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
-      if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
-        setTimeout(updateLastReadMessageAt, MESSAGES_UPDATE_LAST_READ_TIMEOUT);
-      }
-
       if (messagesRef.current && !scrolled) {
-        messagesRef.current.addEventListener('scroll', handleScroll);
+        messagesRef.current.addEventListener('scroll', this.handleScroll);
         messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
         this.scrolled = true;
       }
     }
   }
 
+  componentDidUpdate() {
+    if (!this.timeoutInst) {
+      const {
+        messages, conversation, user,
+      } = this.props;
+      const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
+      const { conversationParticipants } = conversation;
+      const { id: userId } = user;
+      const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
+      const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
+
+      if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
+        this.timeoutInst = setTimeout(this.updateLastReadMessageAt, MESSAGES_UPDATE_LAST_READ_TIMEOUT);
+      }
+    }
+  }
+
   componentWillUnmount() {
-    const { handleScroll, messagesRef } = this;
+    const { messagesRef } = this;
     const { ws } = this.props;
 
     ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
     if (messagesRef.current) {
-      messagesRef.current.removeEventListener('scroll', handleScroll);
+      messagesRef.current.removeEventListener('scroll', this.handleScroll);
     }
   }
 
@@ -113,7 +118,7 @@ export default class ConversationMessagesContainer extends Component {
   };
 
   onNewMessagesLoaded = (resp) => {
-    const { messages } = this.state;
+    const { messages, pageNumber } = this.state;
     const result = resp.body.data.reduce((acc, item) => {
       if (!acc[item.type]) {
         acc[item.type] = {};
@@ -137,6 +142,7 @@ export default class ConversationMessagesContainer extends Component {
     this.setState({
       messages: allMessages,
       loadingMore: false,
+      pageNumber: pageNumber + 1,
     });
   };
 
@@ -146,8 +152,6 @@ export default class ConversationMessagesContainer extends Component {
 
     return hasFinished;
   };
-
-  pageNumber = 0;
 
   updateLastReadMessageAt = () => {
     const {
@@ -175,7 +179,7 @@ export default class ConversationMessagesContainer extends Component {
 
   handleScroll = () => {
     const { conversation, getConversationMessages } = this.props;
-    const { messages } = this.state;
+    const { messages, pageNumber } = this.state;
     const { info, id } = conversation;
     const { messageCount } = info;
 
@@ -183,11 +187,10 @@ export default class ConversationMessagesContainer extends Component {
       this.setState({
         loadingMore: true,
       });
-      this.pageNumber++;
       getConversationMessages({
         'filter[conversationID]': id,
         sort: '-created_at',
-        'page-number': this.pageNumber,
+        'page-number': pageNumber + 1,
       }).then(this.onNewMessagesLoaded);
     }
   };
