@@ -3,15 +3,18 @@ import { shallow } from 'enzyme';
 import WS from 'jest-websocket-mock';
 
 const wait = time => new Promise(resolve => setTimeout(resolve, time));
+const user = {};
 
 describe('WSProvider', () => {
   let server;
   let WSProvider;
 
+  const wrap = (props = {}) => shallow(<WSProvider {...props}><div>children</div></WSProvider>);
+
   beforeEach(() => {
     console.debug = jest.fn();
     jest.resetModules();
-    WSProvider = require('./WSProvider').default;
+    WSProvider = require('./WSProvider').default.WrappedComponent;
     server = new WS('ws://localhost/v0/platform/notifications');
   });
 
@@ -19,16 +22,31 @@ describe('WSProvider', () => {
     WS.clean();
   });
 
-  it('should connect on mount (only once)', async () => {
-    shallow(<WSProvider><div>children</div></WSProvider>);
+  it('should not connect when there is not user', async () => {
+    const proto = WebSocket.prototype;
+    global.WebSocket = jest.fn(WebSocket);
+    WebSocket.prototype = proto;
+    shallow(<WSProvider user={null}><div>children</div></WSProvider>);
+    expect(WebSocket).not.toHaveBeenCalled();
+    shallow(<WSProvider user={{}}><div>children</div></WSProvider>);
+    expect(WebSocket).toHaveBeenCalled();
+  });
+
+  it('should be able to throw', async () => {
+    wrap();
     await server.connected;
     expect(() => server.error()).toThrow();
-    expect(() => shallow(<WSProvider><div>children</div></WSProvider>)).toThrow('already instantiated');
+  });
+
+  it('should connect on mount (only once)', async () => {
+    wrap({ user });
+    await server.connected;
+    expect(() => wrap({ user })).toThrow('already instantiated');
   });
 
   it('should throw on blank message type', async () => {
     const handler = jest.fn();
-    const provider = shallow(<WSProvider> <div>children</div> </WSProvider>).instance();
+    const provider = wrap({ user }).instance();
     provider.pubsub.on('message', handler);
     await server.connected;
     expect(() => server.send('faulty')).toThrow('can\'t parse JSON');
@@ -37,7 +55,7 @@ describe('WSProvider', () => {
 
   it('should receive message to which we subscribe', async () => {
     const handler = jest.fn();
-    const provider = shallow(<WSProvider><div>children</div></WSProvider>).instance();
+    const provider = wrap({ user }).instance();
     provider.pubsub.on('message', handler);
     await server.connected;
 
@@ -49,8 +67,7 @@ describe('WSProvider', () => {
 
   it('should reconnect on disconnection', async () => {
     WSProvider.prototype.setup = jest.fn(WSProvider.prototype.setup);
-    const provider = shallow(<WSProvider><div>children</div></WSProvider>).instance();
-
+    const provider = wrap({ user }).instance();
     await server.connected;
     await server.close({ wasClean: true });
     await wait(1);
