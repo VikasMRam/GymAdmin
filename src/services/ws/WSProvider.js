@@ -3,11 +3,7 @@ import { node } from 'prop-types';
 
 import WSContext from 'sly/services/ws/WSContext';
 import Pubsub from 'sly/services/ws/Pubsub';
-import { domain } from 'sly/config';
-
-const wsDomain = domain === 'localhost' ? domain : `www.${domain}`;
-
-const NOTIFICATIONS_URI = `ws://${wsDomain}/v0/platform/notifications`;
+import { apiUrl } from 'sly/config';
 
 let _instantiated_ = false;
 
@@ -23,16 +19,17 @@ export default class WSProvider extends Component {
 
   constructor(props) {
     super(props);
-
     this.pubsub = new Pubsub();
   }
 
   setup() {
-    const ws = new WebSocket(NOTIFICATIONS_URI);
+    const wsUrl = apiUrl.replace(/^http/, 'ws');
+    const wsUri = `${wsUrl}/platform/notifications`;
+    const ws = new WebSocket(wsUri);
 
     ws.addEventListener('open', () => {
       // eslint-disable-next-line no-console
-      console.debug(`Websocket connected to ${NOTIFICATIONS_URI}`);
+      console.debug(`Websocket connected to ${wsUri}`);
       this.reconnectionAttempts = 0;
     });
 
