@@ -16,6 +16,7 @@ import { routes as routesPropType } from 'sly/propTypes/routes';
 
 import Router from 'sly/components/molecules/Router';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
+import DashboardCallDetailsPageContainer from 'sly/containers/DashboardCallDetailsPageContainer'
 
 import {
   DASHBOARD_PATH,
@@ -26,7 +27,10 @@ import {
   AGENT_DASHBOARD_MESSAGES_PATH,
   AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
+  ADMIN_DASHBOARD_CALLS_PATH,
+  ADMIN_DASHBOARD_CALL_DETAILS_PATH,
 } from 'sly/constants/dashboardAppPaths';
+
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
@@ -55,7 +59,8 @@ const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpack
 const DashboardAgentFamilyOverviewPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardAgentFamilyOverviewPageContainer'));
 const DashboardAgentMessagesContainer = loadable(() => import(/* webpackChunkName: "chunkMessagesOverview" */ 'sly/containers/DashboardAgentMessagesContainer'));
 const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/containers/DashboardMessageDetailsPageContainer'));
-
+const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallsOverview" */ 'sly/containers/DashboardCallsIndexPageContainer'));
+// const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
 setGlobalStyles();
 
 const careTypes = [
@@ -133,6 +138,15 @@ export default class App extends Component {
     {
       path: FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
       component: DashboardMessageDetailsPageContainer,
+    },
+    {
+      path: ADMIN_DASHBOARD_CALLS_PATH,
+      component: DashboardCallsIndexPageContainer,
+      exact: true,
+    },
+    {
+      path: ADMIN_DASHBOARD_CALL_DETAILS_PATH,
+      component: DashboardCallDetailsPageContainer,
     },
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,

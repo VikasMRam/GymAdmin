@@ -15,7 +15,7 @@ const TableWrapper = styled.div`
   margin-bottom: ${size('spacing.large')};
 `;
 
-const DashboardCallsIndexPage = ({tableContents}) => {
+const DashboardCallsIndexPage = ({ tableContents }) => {
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
       <Fragment>

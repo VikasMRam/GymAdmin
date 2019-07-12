@@ -1,5 +1,5 @@
 import React, { Fragment, Component } from 'react';
-import { string } from 'prop-types';
+import { string, object } from 'prop-types';
 import { prefetch, query } from 'sly/services/newApi';
 import AgentSummary from 'sly/components/molecules/AgentSummary';
 
@@ -14,6 +14,7 @@ import AgentSummary from 'sly/components/molecules/AgentSummary';
 export default class DashboardCallDetailsAgentInfoContainer extends Component {
   static propTypes = {
     callNumber: string,
+    commynities: object,
   };
   render() {
     const { communities, callNumber } = this.props;

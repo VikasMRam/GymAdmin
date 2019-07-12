@@ -3,7 +3,7 @@ import { arrayOf, object } from 'prop-types';
 
 import { prefetch } from 'sly/services/newApi';
 import voiceCallsPropType from 'sly/propTypes/calls';
-import { ADMIN_DASHBOARD_CALLS_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
+import { ADMIN_DASHBOARD_CALL_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 import DashboardCallsIndexPage from 'sly/components/pages/DashboardCallsIndexPage';
 
 const ADMIN_CALLS_OVERVIEW_TABLE_HEADINGS = [
@@ -24,7 +24,7 @@ const convertCallsToTableContents = (voiceCalls) => {
       assignedToName = name;
     }
     const rowItems = [];
-    rowItems.push({ type: 'link', data: { text: fromNumber, href: ADMIN_DASHBOARD_CALLS_DETAILS_PATH.replace(':id', id) } });
+    rowItems.push({ type: 'link', data: { text: fromNumber, href: ADMIN_DASHBOARD_CALL_DETAILS_PATH.replace(':id', id) } });
     rowItems.push({ type: 'text', data: { text: toNumber } });
     rowItems.push({ type: 'text', data: { text: status } });
     rowItems.push({ type: 'text', data: { text: assignedToName } });
