@@ -118,7 +118,8 @@ export default class ConversationMessagesContainer extends Component {
   };
 
   onNewMessagesLoaded = (resp) => {
-    const { messages, pageNumber } = this.state;
+    const { pageNumber } = this.state;
+    let messages = [...this.state.messages];
     const result = resp.body.data.reduce((acc, item) => {
       if (!acc[item.type]) {
         acc[item.type] = {};
@@ -126,21 +127,16 @@ export default class ConversationMessagesContainer extends Component {
       acc[item.type][item.id] = item;
       return acc;
     }, {});
-    let allMessages = messages;
-    let newMessages = [];
-    const lastDate = dayjs(allMessages[0].createdAt).utc();
-
-    resp.body.data.forEach((elem) => {
-      const elemDayjs = dayjs(elem.createdAt).utc();
-      if (elemDayjs.isAfter(lastDate)) {
-        newMessages.push(elem);
+    const ids = messages.map(({ id }) => id);
+    messages = resp.body.data.reduce((acc, elem) => {
+      if (!ids.includes(elem.id)) {
+        acc.push(build(result, elem.type, elem.id));
       }
-    });
-    newMessages = newMessages.map(elem => build(result, elem.type, elem.id));
-    allMessages = [...allMessages, ...newMessages];
+      return acc;
+    }, messages);
 
     this.setState({
-      messages: allMessages,
+      messages,
       loadingMore: false,
       pageNumber: pageNumber + 1,
     });
