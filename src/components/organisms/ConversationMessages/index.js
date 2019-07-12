@@ -64,7 +64,6 @@ const getDateText = (date) => {
 };
 const isSameDay = (a, b) => a.substr(0, 10) === b.substr(0, 10);
 const isAfter = (a, b) => dayjs(a).utc().isAfter(dayjs(b).utc());
-const isBefore = (a, b) => dayjs(a).utc().isBefore(dayjs(b).utc());
 
 const ConversationMessages = ({
   messages, participants, viewingAsParticipant, className,
@@ -76,11 +75,9 @@ const ConversationMessages = ({
   }, {});
   const messageComponents = [];
   let prevMessage = null;
-  messages = messages.sort((a, b) => {
-    const r = isBefore(a.createdAt, b.createdAt) ? -1 : 0;
-    return isAfter(a.createdAt, b.createdAt) ? 1 : r;
-  });
-  messages.forEach((message) => {
+
+  for (let i = messages.length - 1; i >= 0; --i) {
+    const message = messages[i];
     if ((prevMessage && !isSameDay(prevMessage.createdAt, message.createdAt)) ||
       !prevMessage) {
       const dayName = getDateText(message.createdAt);
@@ -108,7 +105,7 @@ const ConversationMessages = ({
 
     messageComponents.push(<StyledMessage key={message.id} {...props} />);
     prevMessage = message;
-  });
+  }
 
   return (
     <Wrapper className={className}>
