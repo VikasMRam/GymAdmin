@@ -2,7 +2,9 @@ import React, { Component, Fragment, createRef } from 'react';
 import { arrayOf, object, func, string } from 'prop-types';
 import dayjs from 'dayjs';
 import build from 'redux-object';
+import styled from 'styled-components';
 
+import { size } from 'sly/components/themes';
 import { prefetch, withUser, query } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
@@ -14,20 +16,54 @@ import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import withWS from 'sly/services/ws/withWS';
 import textAlign from 'sly/components/helpers/textAlign';
 import fullHeight from 'sly/components/helpers/fullHeight';
-import { Block } from 'sly/components/atoms';
+import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
+import { Block, Button } from 'sly/components/atoms';
 import ConversationMessages from 'sly/components/organisms/ConversationMessages';
+import BannerNotification from 'sly/components/molecules/BannerNotification';
+import IconButton from 'sly/components/molecules/IconButton';
 
 const TextCenterBlock = textAlign(Block);
 const FullHeightTextCenterBlock = fullHeight(TextCenterBlock);
 
+const SmallScreen = displayOnlyIn(styled(Block)`
+  > * {
+    display: flex;
+    align-items: center;
+  }
+`, ['mobile']);
+
+const BigScreen = displayOnlyIn(styled(Block)`
+  width: 100%;
+
+  > * {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+`, ['tablet', 'laptop']);
+
+const Wrapper = styled.div`
+  margin: ${size('spacing.large')};
+  position: sticky;
+  top: ${size('spacing.large')};
+  z-index: 1;
+`;
+
+const StyledButton = styled(Button)`
+  padding: 0;
+`;
+
 @prefetch('messages', 'getConversationMessages', (req, { conversation }) => req({
   'filter[conversationID]': conversation.id,
   sort: '-created_at',
+  'page-size': 1000, // todo: remove after api fix
 }))
 
 @query('getConversationMessages', 'getConversationMessages')
 
 @query('updateConversationParticipant', 'updateConversationParticipant')
+
+@query('getConversations', 'getConversations')
 
 @withWS
 
@@ -44,17 +80,19 @@ export default class ConversationMessagesContainer extends Component {
     participants: arrayOf(conversationParticipantPropType),
     updateConversationParticipant: func.isRequired,
     getConversationMessages: func.isRequired,
+    getConversations: func.isRequired,
     className: string,
   };
 
   static getDerivedStateFromProps(props, state) {
     const { messages } = state;
 
-    if (!messages) {
+    if (!messages || props.messages.length !== messages.length) {
       return {
         messages: props.messages,
       };
     }
+
     return null;
   }
 
@@ -80,37 +118,31 @@ export default class ConversationMessagesContainer extends Component {
   }
 
   componentDidUpdate() {
-    if (!this.timeoutInst) {
-      const {
-        messages, conversation, user,
-      } = this.props;
-      const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
-      const { conversationParticipants } = conversation;
-      const { id: userId } = user;
-      const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
-      const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
-
-      if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
-        this.timeoutInst = setTimeout(this.updateLastReadMessageAt, MESSAGES_UPDATE_LAST_READ_TIMEOUT);
-      }
-    }
+    this.checkAndPatchLastReadMessage(MESSAGES_UPDATE_LAST_READ_TIMEOUT);
   }
 
   componentWillUnmount() {
-    const { messagesRef } = this;
+    // const { messagesRef } = this;
     const { ws } = this.props;
 
     ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
-    if (messagesRef.current) {
+    /* if (messagesRef.current) {
       messagesRef.current.removeEventListener('scroll', this.handleScroll);
-    }
+    } */
   }
 
   onMessage = (message) => {
-    const { conversation, status } = this.props;
+    const {
+      conversation, status, getConversations, user,
+    } = this.props;
     const { id } = conversation;
     if (message.payload.conversationId === id) {
       status.messages.refetch();
+      getConversations({ 'filter[participant_id]': user.id });
+      // Patch last read message immediately if the user is active on that conversation
+      if (document.hidden) {
+        this.checkAndPatchLastReadMessage(0);
+      }
       // prevent more handlers to be called if page is visible
       return document.hidden;
     }
@@ -148,6 +180,25 @@ export default class ConversationMessagesContainer extends Component {
 
     return hasFinished;
   };
+
+  checkAndPatchLastReadMessage(timeout) {
+    if (!this.timeoutInst) {
+      const {
+        messages = [], conversation, user,
+      } = this.props;
+      if (messages.length) {
+        const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
+        const { conversationParticipants } = conversation;
+        const { id: userId } = user;
+        const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
+        const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
+
+        if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
+          this.timeoutInst = setTimeout(this.updateLastReadMessageAt, timeout);
+        }
+      }
+    }
+  }
 
   updateLastReadMessageAt = () => {
     const {
@@ -199,7 +250,7 @@ export default class ConversationMessagesContainer extends Component {
     } = this.props;
     const { messages, loadingMore } = this.state;
 
-    if (!this.getHasFinished()) {
+    if (!this.getHasFinished() && !this.alreadyLoaded) {
       return (
         <Fragment>
           <br />
@@ -217,8 +268,31 @@ export default class ConversationMessagesContainer extends Component {
       );
     }
 
+    this.alreadyLoaded = true;
+    const unreadMessagesNumber = viewingAsParticipant.stats.unreadMessageCount > 12 ? `${viewingAsParticipant.stats.unreadMessageCount}+` : viewingAsParticipant.stats.unreadMessageCount;
+    const lastReadMessageFormattedDate = dayjs(viewingAsParticipant.stats.lastReadMessageAt).format('hh:mm A on MMMM Do');
+
     return (
       <div ref={this.messagesRef} className={className}>
+        {viewingAsParticipant.stats.unreadMessageCount > 0 &&
+          <Wrapper>
+            <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={this.updateLastReadMessageAt}>
+              <SmallScreen weight="medium" size="caption">
+                <div>
+                  <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent />
+                  {unreadMessagesNumber} unread messages
+                </div>
+              </SmallScreen>
+              <BigScreen weight="medium" size="caption">
+                <div>
+                  <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent>Jump</IconButton>
+                  {unreadMessagesNumber} new messages since {lastReadMessageFormattedDate}
+                  <StyledButton size="caption" palette="slate" transparent onClick={this.updateLastReadMessageAt}>Mark as read</StyledButton>
+                </div>
+              </BigScreen>
+            </BannerNotification>
+          </Wrapper>
+        }
         {loadingMore &&
           <Fragment>
             <br />

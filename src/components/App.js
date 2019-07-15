@@ -5,6 +5,9 @@ import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
 import smoothscroll from 'smoothscroll-polyfill';
 import loadable from '@loadable/component';
+import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import utc from 'dayjs/plugin/utc';
 
 // https://github.com/diegohaz/arc/wiki/Styling
 
@@ -56,6 +59,9 @@ const DashboardMessagesContainer = loadable(() => import(/* webpackChunkName: "c
 const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/containers/DashboardMessageDetailsPageContainer'));
 
 setGlobalStyles();
+
+dayjs.extend(advancedFormat);
+dayjs.extend(utc);
 
 const careTypes = [
   'retirement-community',
