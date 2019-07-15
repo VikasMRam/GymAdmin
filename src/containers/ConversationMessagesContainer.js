@@ -56,6 +56,7 @@ const StyledButton = styled(Button)`
 @prefetch('messages', 'getConversationMessages', (req, { conversation }) => req({
   'filter[conversationID]': conversation.id,
   sort: '-created_at',
+  'page-size': 1000, // todo: remove after api fix
 }))
 
 @query('getConversationMessages', 'getConversationMessages')
@@ -86,15 +87,9 @@ export default class ConversationMessagesContainer extends Component {
   static getDerivedStateFromProps(props, state) {
     const { messages } = state;
 
-    if (!messages) {
+    if (!messages || props.messages.length !== messages.length) {
       return {
         messages: props.messages,
-      };
-    }
-    // has changed
-    if (props.messages.length !== state.messages.length) {
-      return {
-        messages: [...messages, ...props.messages],
       };
     }
 
@@ -284,7 +279,6 @@ export default class ConversationMessagesContainer extends Component {
                 <div>
                   <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent />
                   {unreadMessagesNumber} unread messages
-                  <IconButton icon="close" size="caption" palette="slate" kind="plain" transparent />
                 </div>
               </SmallScreen>
               <BigScreen weight="medium" size="caption">
