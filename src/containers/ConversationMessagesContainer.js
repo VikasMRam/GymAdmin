@@ -2,7 +2,9 @@ import React, { Component, Fragment, createRef } from 'react';
 import { arrayOf, object, func, string } from 'prop-types';
 import dayjs from 'dayjs';
 import build from 'redux-object';
+import styled from 'styled-components';
 
+import { size } from 'sly/components/themes';
 import { prefetch, withUser, query } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
@@ -14,11 +16,38 @@ import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import withWS from 'sly/services/ws/withWS';
 import textAlign from 'sly/components/helpers/textAlign';
 import fullHeight from 'sly/components/helpers/fullHeight';
-import { Block } from 'sly/components/atoms';
+import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
+import { Block, Button } from 'sly/components/atoms';
 import ConversationMessages from 'sly/components/organisms/ConversationMessages';
+import BannerNotification from 'sly/components/molecules/BannerNotification';
+import IconButton from 'sly/components/molecules/IconButton';
 
 const TextCenterBlock = textAlign(Block);
 const FullHeightTextCenterBlock = fullHeight(TextCenterBlock);
+
+const SmallScreen = displayOnlyIn(styled(Block)`
+  > * {
+    display: flex;
+    align-items: center;
+  }
+`, ['mobile']);
+
+const BigScreen = displayOnlyIn(styled(Block)`
+  width: 100%;
+
+  > * {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+`, ['tablet', 'laptop']);
+
+const Wrapper = styled.div`
+  margin: ${size('spacing.large')};
+  position: sticky;
+  top: ${size('spacing.large')};
+  z-index: 1;
+`;
 
 @prefetch('messages', 'getConversationMessages', (req, { conversation }) => req({
   'filter[conversationID]': conversation.id,
@@ -55,6 +84,13 @@ export default class ConversationMessagesContainer extends Component {
         messages: props.messages,
       };
     }
+    // has changed
+    if (props.messages.length !== state.messages.length) {
+      return {
+        messages: [...messages, ...props.messages],
+      };
+    }
+
     return null;
   }
 
@@ -199,7 +235,7 @@ export default class ConversationMessagesContainer extends Component {
     } = this.props;
     const { messages, loadingMore } = this.state;
 
-    if (!this.getHasFinished()) {
+    if (!this.getHasFinished() && !this.alreadyLoaded) {
       return (
         <Fragment>
           <br />
@@ -217,8 +253,32 @@ export default class ConversationMessagesContainer extends Component {
       );
     }
 
+    this.alreadyLoaded = true;
+    const unreadMessagesNumber = viewingAsParticipant.stats.unreadMessageCount > 12 ? `${viewingAsParticipant.stats.unreadMessageCount}+` : viewingAsParticipant.stats.unreadMessageCount;
+    const lastReadMessageFormattedDate = dayjs(viewingAsParticipant.stats.lastReadMessageAt).format('hh:mm A on MMMM Do');
+
     return (
       <div ref={this.messagesRef} className={className}>
+        {viewingAsParticipant.stats.unreadMessageCount > 0 &&
+          <Wrapper>
+            <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={this.updateLastReadMessageAt}>
+              <SmallScreen weight="medium" size="caption">
+                <div>
+                  <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent />
+                  {unreadMessagesNumber} unread messages
+                  <IconButton icon="close" size="caption" palette="slate" kind="plain" transparent />
+                </div>
+              </SmallScreen>
+              <BigScreen weight="medium" size="caption">
+                <div>
+                  <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent>Jump</IconButton>
+                  {unreadMessagesNumber} new messages since {lastReadMessageFormattedDate}
+                  <Button size="caption" palette="slate" transparent onClick={this.updateLastReadMessageAt}>Mark as read</Button>
+                </div>
+              </BigScreen>
+            </BannerNotification>
+          </Wrapper>
+        }
         {loadingMore &&
           <Fragment>
             <br />
