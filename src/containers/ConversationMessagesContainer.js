@@ -184,16 +184,18 @@ export default class ConversationMessagesContainer extends Component {
   checkAndPatchLastReadMessage(timeout) {
     if (!this.timeoutInst) {
       const {
-        messages, conversation, user,
+        messages = [], conversation, user,
       } = this.props;
-      const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
-      const { conversationParticipants } = conversation;
-      const { id: userId } = user;
-      const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
-      const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
+      if (messages.length) {
+        const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
+        const { conversationParticipants } = conversation;
+        const { id: userId } = user;
+        const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
+        const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
 
-      if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
-        this.timeoutInst = setTimeout(this.updateLastReadMessageAt, timeout);
+        if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
+          this.timeoutInst = setTimeout(this.updateLastReadMessageAt, timeout);
+        }
       }
     }
   }
