@@ -49,6 +49,10 @@ const Wrapper = styled.div`
   z-index: 1;
 `;
 
+const StyledButton = styled(Button)`
+  padding: 0;
+`;
+
 @prefetch('messages', 'getConversationMessages', (req, { conversation }) => req({
   'filter[conversationID]': conversation.id,
   sort: '-created_at',
@@ -273,7 +277,7 @@ export default class ConversationMessagesContainer extends Component {
                 <div>
                   <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent>Jump</IconButton>
                   {unreadMessagesNumber} new messages since {lastReadMessageFormattedDate}
-                  <Button size="caption" palette="slate" transparent onClick={this.updateLastReadMessageAt}>Mark as read</Button>
+                  <StyledButton size="caption" palette="slate" transparent onClick={this.updateLastReadMessageAt}>Mark as read</StyledButton>
                 </div>
               </BigScreen>
             </BannerNotification>
