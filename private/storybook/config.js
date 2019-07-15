@@ -15,8 +15,8 @@ const store = configureStore({}, { api: api.create() });
 const req = require.context('sly/components', true, /.stories.js$/);
 
 function configureStorybook() {
-  req.keys().forEach(filename => req(filename));
   setGlobalStyles();
+  req.keys().forEach(filename => req(filename));
   Modal.setAppElement('#root');
 }
 
