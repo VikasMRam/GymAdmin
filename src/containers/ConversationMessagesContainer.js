@@ -29,6 +29,8 @@ const FullHeightTextCenterBlock = fullHeight(TextCenterBlock);
 
 @query('updateConversationParticipant', 'updateConversationParticipant')
 
+@query('getConversations', 'getConversations')
+
 @withWS
 
 @withUser
@@ -44,6 +46,7 @@ export default class ConversationMessagesContainer extends Component {
     participants: arrayOf(conversationParticipantPropType),
     updateConversationParticipant: func.isRequired,
     getConversationMessages: func.isRequired,
+    getConversations: func.isRequired,
     className: string,
   };
 
@@ -80,20 +83,7 @@ export default class ConversationMessagesContainer extends Component {
   }
 
   componentDidUpdate() {
-    if (!this.timeoutInst) {
-      const {
-        messages, conversation, user,
-      } = this.props;
-      const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
-      const { conversationParticipants } = conversation;
-      const { id: userId } = user;
-      const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
-      const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
-
-      if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
-        this.timeoutInst = setTimeout(this.updateLastReadMessageAt, MESSAGES_UPDATE_LAST_READ_TIMEOUT);
-      }
-    }
+    this.checkAndPatchLastReadMessage(MESSAGES_UPDATE_LAST_READ_TIMEOUT);
   }
 
   componentWillUnmount() {
@@ -107,10 +97,17 @@ export default class ConversationMessagesContainer extends Component {
   }
 
   onMessage = (message) => {
-    const { conversation, status } = this.props;
+    const {
+      conversation, status, getConversations, user,
+    } = this.props;
     const { id } = conversation;
     if (message.payload.conversationId === id) {
       status.messages.refetch();
+      getConversations({ 'filter[participant_id]': user.id });
+      // Patch last read message immediately if the user is active on that conversation
+      if (document.hidden) {
+        this.checkAndPatchLastReadMessage(0);
+      }
       // prevent more handlers to be called if page is visible
       return document.hidden;
     }
@@ -148,6 +145,23 @@ export default class ConversationMessagesContainer extends Component {
 
     return hasFinished;
   };
+
+  checkAndPatchLastReadMessage(timeout) {
+    if (!this.timeoutInst) {
+      const {
+        messages, conversation, user,
+      } = this.props;
+      const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
+      const { conversationParticipants } = conversation;
+      const { id: userId } = user;
+      const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
+      const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
+
+      if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
+        this.timeoutInst = setTimeout(this.updateLastReadMessageAt, timeout);
+      }
+    }
+  }
 
   updateLastReadMessageAt = () => {
     const {
