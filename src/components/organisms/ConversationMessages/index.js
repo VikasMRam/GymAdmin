@@ -1,5 +1,5 @@
 import React from 'react';
-import { arrayOf, string } from 'prop-types';
+import { arrayOf, string, object } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
@@ -114,6 +114,7 @@ ConversationMessages.propTypes = {
   participants: arrayOf(participantPropType).isRequired,
   viewingAsParticipant: participantPropType.isRequired,
   className: string,
+  newMessageRef: object,
 };
 
 export default ConversationMessages;
