@@ -19,8 +19,9 @@ export const getStageDetails = (stageName) => {
       if (i !== -1) {
         level = i + 1;
         levelGroup = s;
-        if (stageArr.length - 1 === idx) {
+        if (stageArr.length - 1 === idx) { // when stage is LOST
           palette = 'danger';
+          level = TOTAL_STAGES_COUNT;
         }
         if (idx === 0 && i === 0) {
           showAcceptRejectButtons = true;
@@ -30,7 +31,7 @@ export const getStageDetails = (stageName) => {
             showPauseButton = true;
           }
         }
-        if (idx === 2 && i === 0) { // whens stage is WON
+        if (idx === 2 && i === 0) { // when stage is WON
           palette = 'green';
         }
       }
