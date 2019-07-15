@@ -65,12 +65,16 @@ describe('WSProvider', () => {
     expect(handler).toHaveBeenCalledWith(message.message);
   });
 
-  it('should reconnect on disconnection', async () => {
+  it('should reconnect on disconnection', () => {
+    jest.useFakeTimers();
     WSProvider.prototype.setup = jest.fn(WSProvider.prototype.setup);
     const provider = wrap({ user }).instance();
-    await server.connected;
-    await server.close({ wasClean: true });
-    await wait(1);
+    jest.advanceTimersByTime(1);
+
+    expect(() => {
+      server.close();
+      jest.advanceTimersByTime(1);
+    }).toThrow();
 
     expect(provider.setup).toHaveBeenCalledTimes(3);
   });
