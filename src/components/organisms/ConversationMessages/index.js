@@ -2,8 +2,6 @@ import React from 'react';
 import { arrayOf, string } from 'prop-types';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
-import utc from 'dayjs/plugin/utc';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
@@ -41,9 +39,6 @@ StyledMessage.displayName = 'StyledMessage';
 
 const PaddedHrWithText = pad(HrWithText, 'large');
 PaddedHrWithText.displayName = 'PaddedHrWithText';
-
-dayjs.extend(advancedFormat);
-dayjs.extend(utc);
 
 const today = dayjs().utc();
 const thisYear = dayjs().utc().format('YYYY');
