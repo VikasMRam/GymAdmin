@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
-import { node } from 'prop-types';
+import { node, oneOfType, exact } from 'prop-types';
 
 import WSContext from 'sly/services/ws/WSContext';
 import Pubsub from 'sly/services/ws/Pubsub';
 import { apiUrl } from 'sly/config';
+import withUser from 'sly/services/newApi/withUser';
+import userPropType from 'sly/propTypes/user';
 
 let _instantiated_ = false;
 
+@withUser
+
 export default class WSProvider extends Component {
   static propTypes = {
+    user: userPropType,
     children: node.isRequired,
   };
 
@@ -23,6 +28,9 @@ export default class WSProvider extends Component {
   }
 
   setup() {
+    // we import user just to be able to bail when we are not logged in
+    if (!this.props.user) return;
+
     const wsUrl = apiUrl.replace(/^http/, 'ws');
     const wsUri = `${wsUrl}/platform/notifications`;
     const ws = new WebSocket(wsUri);
@@ -76,14 +84,31 @@ export default class WSProvider extends Component {
     this.setup();
   };
 
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.user && !this.props.user) {
+      // user logged out
+      this.doDestroyWSConnection();
+    }
+    if (!prevProps.user && this.props.user) {
+      // user logged in
+      this.setup();
+    }
+  };
+
   componentWillUnmount = () => {
+    this.doDestroyWSConnection();
+  };
+
+  doDestroyWSConnection = () => {
     clearTimeout(this.timeoutID);
     this.ws.removeEventListener('close', this.onWSClose);
     this.ws.close(1000, 'bye');
     this.ws = null;
+    _instantiated_ = false;
   };
 
   onWSClose = () => {
+    // repeat connection
     const time = this.generateInterval(this.reconnectionAttempts);
     // eslint-disable-next-line no-console
     console.debug(`Websocket disconnected, reconnecting in ${time}ms`);

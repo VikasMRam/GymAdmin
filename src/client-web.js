@@ -23,19 +23,19 @@ const store = configureStore(initialState, { api: api.create() });
 const beesApi = createApi();
 
 const renderApp = () => (
-  <WSProvider>
-    <ServerStateProvider state={serverState}>
-      <ApiProvider api={beesApi}>
-        <Provider store={store}>
+  <ServerStateProvider state={serverState}>
+    <ApiProvider api={beesApi}>
+      <Provider store={store}>
+        <WSProvider>
           <NotificationSubscriptions>
             <BrowserRouter>
               <App />
             </BrowserRouter>
           </NotificationSubscriptions>
-        </Provider>
-      </ApiProvider>
-    </ServerStateProvider>
-  </WSProvider>
+        </WSProvider>
+      </Provider>
+    </ApiProvider>
+  </ServerStateProvider>
 );
 
 const root = document.getElementById('app');
