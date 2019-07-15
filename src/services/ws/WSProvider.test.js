@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import WS from 'jest-websocket-mock';
-import WSContext from 'sly/services/ws/WSContext';
 
 const wait = time => new Promise(resolve => setTimeout(resolve, time));
 

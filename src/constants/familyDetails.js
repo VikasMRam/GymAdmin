@@ -31,6 +31,8 @@ export const STAGE_CLIENT_TYPE_MAP = {
 
 export const NOTE_COMMENTABLE_TYPE_CLIENT = 'Client';
 
+export const NOTE_CTYPE_NOTE = 'note';
+
 export const DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS = [
   'Other',
 ];

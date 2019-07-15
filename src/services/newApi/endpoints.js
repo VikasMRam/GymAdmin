@@ -46,15 +46,19 @@ export default {
 
   createNote: { method: post, path: '/marketplace/notes' },
   getNotes: { method: get, path: '/marketplace/notes' },
+  updateNote: { method: patch, path: '/marketplace/notes/:id' },
 
   getConversations: { method: get, path: '/platform/conversations' },
   getConversation: { method: get, path: '/platform/conversations/:id' },
+  updateConversation: { method: patch, path: '/platform/conversations/:id' },
 
   getConversationMessages: { method: get, path: '/platform/conversation-messages' },
   createConversationMessage: { method: post, path: '/platform/conversation-messages' },
 
   getConversationParticipants: { method: get, path: '/platform/conversation-participants' },
+  updateConversationParticipant: { method: patch, path: '/platform/conversation-participants/:id' },
 
   getVoiceCalls: { method: get, path: '/platform/communications/voice' },
   getVoiceCall: { method: get, path: '/platform/communications/voice/:id' },
+
 };

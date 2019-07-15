@@ -14,8 +14,14 @@ const noPaddingLayouts = ['noPadding', 'wizard'];
 injectGlobal`
   body.ReactModal__Body--open {
     overflow: hidden;
-    position: fixed;
     width: 100%;
+  }
+
+  // safari only fix
+  @media screen and (-webkit-min-device-pixel-ratio:0) {
+    ::i-block-chrome, body.ReactModal__Body--open {
+      position: fixed;
+    }
   }
 `;
 

@@ -42,6 +42,7 @@ const config = {
     isDev: false,
     publicPath: '',
     domain: 'localhost',
+    apiUrl: 'http://localhost/v0',
   },
 
   development: {

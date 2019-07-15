@@ -10,7 +10,7 @@ import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 
 const Wrapper = styled.div`
   padding: ${size('spacing', 'xLarge')};
-  
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding: 0;
   }
@@ -31,11 +31,24 @@ const MessagesWrapper = styled.div`
   }
 `;
 
-const DashboardAgentMessagesPage = ({ messages }) => {
-  let messagesComponent = 'No messages';
+const EmptyMessagesWrapper = styled.div`
+  padding: ${size('spacing', 'large')};
+  text-align: center;
+`;
+
+const DashboardMessagesPage = ({ messages }) => {
+  let messagesComponent = <EmptyMessagesWrapper>No messages</EmptyMessagesWrapper>;
   if (messages.length > 0) {
     messagesComponent = messages.map((message) => {
-      return <LatestMessage key={message.message.id} name={message.name} message={message.message} />;
+      return (
+        <LatestMessage
+          key={message.message.id}
+          name={message.name}
+          message={message.message}
+          hasUnread={message.hasUnread}
+          to={message.to}
+        />
+      );
     });
   }
   return (
@@ -52,7 +65,7 @@ const DashboardAgentMessagesPage = ({ messages }) => {
   );
 };
 
-DashboardAgentMessagesPage.propTypes = {
+DashboardMessagesPage.propTypes = {
   messages: arrayOf(shape({
     message: messagePropType.isRequired,
     name: string.isRequired,
@@ -60,4 +73,4 @@ DashboardAgentMessagesPage.propTypes = {
   })),
 };
 
-export default DashboardAgentMessagesPage;
+export default DashboardMessagesPage;

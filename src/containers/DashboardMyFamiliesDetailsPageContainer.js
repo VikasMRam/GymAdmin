@@ -27,6 +27,8 @@ import SlyEvent from 'sly/services/helpers/events';
 
 @query('createNote', 'createNote')
 
+@query('updateNote', 'updateNote')
+
 @connect(null, (dispatch, { api }) => ({
   invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
 }))
@@ -41,6 +43,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     history: object,
     updateClient: func.isRequired,
     createNote: func.isRequired,
+    updateNote: func.isRequired,
     notes: arrayOf(notePropType),
     invalidateClients: func,
   };
@@ -127,6 +130,49 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
       });
   };
 
+  onEditNote = (data, note, notifyError, notifyInfo, hideModal) => {
+    const {
+      updateNote, status, invalidateClients,
+    } = this.props;
+    const { result: rawNotes } = status.notes;
+    const { id } = note;
+    const oldNote = rawNotes.find(n => n.id === id);
+    const { note: newNoteBody } = data;
+    const payload = immutable(pick(oldNote, ['id', 'type', 'attributes.body']))
+      .set('attributes.body', newNoteBody)
+      .value();
+
+    SlyEvent.getInstance().sendEvent({
+      category: 'fdetails',
+      action: 'edit-note',
+      label: 'submit',
+      value: id,
+    });
+    const notePromise = () => updateNote({ id }, payload);
+    const getNotesPromise = () => status.notes.refetch();
+
+    return notePromise()
+      .then(getNotesPromise)
+      .then(invalidateClients)
+      .then(() => {
+        hideModal();
+        notifyInfo('Note successfully edited');
+      })
+      .catch((r) => {
+        // TODO: Need to set a proper way to handle server side errors
+        const { body } = r;
+        const errorMessage = body.errors.map(e => e.title).join('. ');
+        console.error(errorMessage);
+        notifyError('Failed to edit note. Please try again.');
+        SlyEvent.getInstance().sendEvent({
+          category: 'fdetails',
+          action: 'edit-note',
+          label: 'error',
+          value: id,
+        });
+      });
+  };
+
   setStatusToActive = () => {
     const { updateClient, client, status } = this.props;
     const { id } = client;
@@ -146,7 +192,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   render() {
-    const { onRejectSuccess, onUnPause, onAddNote } = this;
+    const {
+      onRejectSuccess, onUnPause, onAddNote, onEditNote,
+    } = this;
 
     const {
       client, match, status, notes,
@@ -178,9 +226,10 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 refetchNotes={status.notes.refetch}
                 onUnPause={() => onUnPause(notifyInfo, notifyError)}
                 onAddNote={onAddNote}
+                onEditNote={onEditNote}
                 notes={notes}
                 noteIsLoading={noteIsLoading}
-                clientIsLoadig={clientIsLoading}
+                clientIsLoading={clientIsLoading}
                 goToFamilyDetails={this.goToFamilyDetails}
               />
             )}
