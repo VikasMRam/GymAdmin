@@ -61,7 +61,7 @@ const isSameDay = (a, b) => a.substr(0, 10) === b.substr(0, 10);
 const isAfter = (a, b) => dayjs(a).utc().isAfter(dayjs(b).utc());
 
 const ConversationMessages = ({
-  messages, participants, viewingAsParticipant, className,
+  messages, participants, viewingAsParticipant, className, newMessageRef,
 }) => {
   const lastMessageReadAt = viewingAsParticipant.stats.lastReadMessageAt;
   const participantsById = participants.reduce((a, b) => {
@@ -83,6 +83,7 @@ const ConversationMessages = ({
         hrProps.badgeText = 'New';
         hrProps.palette = 'warning';
         hrProps.variation = 'base';
+        hrProps.hrRef = newMessageRef;
       }
 
       messageComponents.push(<PaddedHrWithText key={`hr-${message.id}`} {...hrProps} />);
