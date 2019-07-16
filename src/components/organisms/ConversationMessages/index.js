@@ -8,6 +8,7 @@ import { size } from 'sly/components/themes';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import participantPropType from 'sly/propTypes/conversation/conversationParticipant';
 import pad from 'sly/components/helpers/pad';
+import { isAfter, isSameDay } from 'sly/services/helpers/date';
 import HrWithText from 'sly/components/molecules/HrWithText';
 import Message from 'sly/components/molecules/Message';
 
@@ -57,8 +58,6 @@ const getDateText = (date) => {
       return date.format('dddd, MMMM Do');
   }
 };
-const isSameDay = (a, b) => a.substr(0, 10) === b.substr(0, 10);
-const isAfter = (a, b) => dayjs(a).utc().isAfter(dayjs(b).utc());
 
 const ConversationMessages = ({
   messages, participants, viewingAsParticipant, className, newMessageRef,
