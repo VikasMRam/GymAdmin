@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export const formatDate = (dateString) => {
   const date = new Date(dateString);
   const locale = 'en-us';
@@ -23,3 +25,7 @@ export const dateFormatter = (value) => {
   }
   return `${onlyNums.slice(0, 4)}-${onlyNums.slice(4, 6)}-${onlyNums.slice(6, 8)}`;
 };
+
+export const isAfter = (a, b) => dayjs(a).utc().isAfter(dayjs(b).utc());
+
+export const isSameDay = (a, b) => a.substr(0, 10) === b.substr(0, 10);
