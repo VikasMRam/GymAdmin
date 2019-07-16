@@ -1,5 +1,5 @@
 import React from 'react';
-import { string } from 'prop-types';
+import { string, object } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -26,9 +26,9 @@ const StyledBadge = styled(Badge)`
 `;
 
 const HrWithText = ({
-  text, badgeText, palette, variation, badgeTextpalette, className,
+  text, badgeText, palette, variation, badgeTextpalette, className, hrRef,
 }) => (
-  <Wrapper className={className}>
+  <Wrapper className={className} innerRef={hrRef}>
     <Hr palette={palette} variation={variation} />
     <TextBlock size="caption" weight="medium">{text}</TextBlock>
     {badgeText && <StyledBadge palette={palette} variation={variation} textPalette={badgeTextpalette}>{badgeText}</StyledBadge>}
@@ -42,6 +42,7 @@ HrWithText.propTypes = {
   text: string.isRequired,
   badgeText: string,
   className: string,
+  hrRef: object,
 };
 
 export default HrWithText;

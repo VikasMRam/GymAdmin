@@ -17,10 +17,14 @@ import withWS from 'sly/services/ws/withWS';
 import textAlign from 'sly/components/helpers/textAlign';
 import fullHeight from 'sly/components/helpers/fullHeight';
 import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
+import SlyEvent from 'sly/services/helpers/events';
+import { isAfter } from 'sly/services/helpers/date';
 import { Block, Button } from 'sly/components/atoms';
 import ConversationMessages from 'sly/components/organisms/ConversationMessages';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import IconButton from 'sly/components/molecules/IconButton';
+
+const categoryName = 'conversation-messages';
 
 const TextCenterBlock = textAlign(Block);
 const FullHeightTextCenterBlock = fullHeight(TextCenterBlock);
@@ -140,7 +144,7 @@ export default class ConversationMessagesContainer extends Component {
       status.messages.refetch();
       getConversations({ 'filter[participant_id]': user.id });
       // Patch last read message immediately if the user is active on that conversation
-      if (document.hidden) {
+      if (!document.hidden) {
         this.checkAndPatchLastReadMessage(0);
       }
       // prevent more handlers to be called if page is visible
@@ -242,7 +246,36 @@ export default class ConversationMessagesContainer extends Component {
     }
   };
 
+  scrollToNewMessages = () => {
+    if (this.newMessageRef.current) {
+      const { messages } = this.state;
+      const { viewingAsParticipant } = this.props;
+      const lastMessageReadAt = viewingAsParticipant.stats.lastReadMessageAt;
+      const firstUnreadMessage = [...messages].reverse().find(m => isAfter(m.createdAt, lastMessageReadAt));
+      const event = {
+        action: 'jump-to-new-messages',
+        category: categoryName,
+        label: firstUnreadMessage.id,
+      };
+      SlyEvent.getInstance().sendEvent(event);
+      this.newMessageRef.current.scrollIntoView(true);
+    }
+  };
+
+  handleMarkAsRead = () => {
+    const { conversation } = this.props;
+    const { id } = conversation;
+    const event = {
+      action: 'mark-as-read',
+      category: categoryName,
+      label: id,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+    this.updateLastReadMessageAt();
+  };
+
   messagesRef = createRef();
+  newMessageRef = createRef();
 
   render() {
     const {
@@ -276,7 +309,7 @@ export default class ConversationMessagesContainer extends Component {
       <div ref={this.messagesRef} className={className}>
         {viewingAsParticipant.stats.unreadMessageCount > 0 &&
           <Wrapper>
-            <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={this.updateLastReadMessageAt}>
+            <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={this.handleMarkAsRead}>
               <SmallScreen weight="medium" size="caption">
                 <div>
                   <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent />
@@ -285,9 +318,9 @@ export default class ConversationMessagesContainer extends Component {
               </SmallScreen>
               <BigScreen weight="medium" size="caption">
                 <div>
-                  <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent>Jump</IconButton>
+                  <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent onClick={this.scrollToNewMessages}>Jump</IconButton>
                   {unreadMessagesNumber} new messages since {lastReadMessageFormattedDate}
-                  <StyledButton size="caption" palette="slate" transparent onClick={this.updateLastReadMessageAt}>Mark as read</StyledButton>
+                  <StyledButton size="caption" palette="slate" transparent onClick={this.handleMarkAsRead}>Mark as read</StyledButton>
                 </div>
               </BigScreen>
             </BannerNotification>
@@ -304,6 +337,7 @@ export default class ConversationMessagesContainer extends Component {
           viewingAsParticipant={viewingAsParticipant}
           messages={messages}
           participants={participants}
+          newMessageRef={this.newMessageRef}
         />
       </div>
     );
