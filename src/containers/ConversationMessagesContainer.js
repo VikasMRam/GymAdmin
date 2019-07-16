@@ -140,7 +140,7 @@ export default class ConversationMessagesContainer extends Component {
       status.messages.refetch();
       getConversations({ 'filter[participant_id]': user.id });
       // Patch last read message immediately if the user is active on that conversation
-      if (document.hidden) {
+      if (!document.hidden) {
         this.checkAndPatchLastReadMessage(0);
       }
       // prevent more handlers to be called if page is visible
@@ -242,7 +242,14 @@ export default class ConversationMessagesContainer extends Component {
     }
   };
 
+  scrollToNewMessages = () => {
+    if (this.newMessageRef.current) {
+      this.newMessageRef.current.scrollIntoView(true);
+    }
+  };
+
   messagesRef = createRef();
+  newMessageRef = createRef();
 
   render() {
     const {
@@ -285,7 +292,7 @@ export default class ConversationMessagesContainer extends Component {
               </SmallScreen>
               <BigScreen weight="medium" size="caption">
                 <div>
-                  <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent>Jump</IconButton>
+                  <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent onClick={this.scrollToNewMessages}>Jump</IconButton>
                   {unreadMessagesNumber} new messages since {lastReadMessageFormattedDate}
                   <StyledButton size="caption" palette="slate" transparent onClick={this.updateLastReadMessageAt}>Mark as read</StyledButton>
                 </div>
@@ -304,6 +311,7 @@ export default class ConversationMessagesContainer extends Component {
           viewingAsParticipant={viewingAsParticipant}
           messages={messages}
           participants={participants}
+          newMessageRef={this.newMessageRef}
         />
       </div>
     );
