@@ -101,7 +101,6 @@ class DashboardAdminFamilyDetailsForm extends Component {
           label="Contact name"
           type="text"
           component={ReduxField}
-          wideWidth
         />
         <Field
           name="phone"
@@ -109,28 +108,24 @@ class DashboardAdminFamilyDetailsForm extends Component {
           parse={phoneParser}
           format={phoneFormatter}
           component={ReduxField}
-          wideWidth
         />
         <Field
           name="email"
           label="Email"
           type="email"
           component={ReduxField}
-          wideWidth
         />
         <Field
           name="residentName"
           label="Resident name"
           type="text"
           component={ReduxField}
-          wideWidth
         />
         <Field
           name="lookingFor"
           label="Looking for"
           type="select"
           component={ReduxField}
-          wideWidth
         >
           {lookingForOptions}
         </Field>
@@ -139,7 +134,6 @@ class DashboardAdminFamilyDetailsForm extends Component {
           label="Gender"
           type="select"
           component={ReduxField}
-          wideWidth
         >
           {femaleOptions}
         </Field>
@@ -157,7 +151,6 @@ class DashboardAdminFamilyDetailsForm extends Component {
           label="Monthly budget"
           type="select"
           component={ReduxField}
-          wideWidth
         >
           {monthlyBudgetOptions}
         </Field>
@@ -166,7 +159,6 @@ class DashboardAdminFamilyDetailsForm extends Component {
           label="Time to move"
           type="select"
           component={ReduxField}
-          wideWidth
         >
           {timeToMoveOptions}
         </Field>
@@ -174,14 +166,14 @@ class DashboardAdminFamilyDetailsForm extends Component {
           <StyledLabel>Seniorly introduction</StyledLabel>
           <IntroInfo size="caption">{intro}</IntroInfo>
         </TwoColumnWrapper>
-        {accepted &&
+
         <Fragment>
           <Hr />
           <StyledButton type="submit" disabled={submitting}>
             Save changes
           </StyledButton>
         </Fragment>
-        }
+
       </Form>
     );
   }

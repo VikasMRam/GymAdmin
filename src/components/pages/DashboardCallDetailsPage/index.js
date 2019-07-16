@@ -7,6 +7,7 @@ import { createValidator, required, usPhone } from 'sly/services/validation';
 import { reduxForm } from 'redux-form';
 import { object } from 'prop-types';
 
+import voiceCallPropType from 'sly/propTypes/calls';
 
 import { palette, size } from 'sly/components/themes';
 import { Hr } from 'sly/components/atoms';
@@ -65,10 +66,10 @@ const BigScreenSummarySection = styled.section`
 export default class DashboardCallDetailsPage extends Component {
   static propTypes = {
     meta: object,
-    voiceCall: object,
+    voiceCall: voiceCallPropType.isRequired,
   }
   render() {
-    const { voiceCall, meta } = this;
+    const { voiceCall, meta } = this.props;
     console.log('Seeing voice vall here',voiceCall);
     if (!voiceCall) {
       return (
@@ -80,7 +81,7 @@ export default class DashboardCallDetailsPage extends Component {
     return (
       <Fragment>
         <DashboardTwoColumnTemplate>
-          <FamilyDetailsTab><ReduxForm {...meta} /></FamilyDetailsTab>
+          <ReduxForm {...meta} />
           <StyledTabs activeTab="fDetails">
             <DetailsTab id="fDetails" label="FIrst">
               Some Details
