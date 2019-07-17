@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { arrayOf, shape, string, bool } from 'prop-types';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import { Heading } from 'sly/components/atoms';
+import { Heading, Box } from 'sly/components/atoms';
 import LatestMessage from 'sly/components/molecules/LatestMessage';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 
@@ -24,8 +25,11 @@ const HeadingWrapper = styled.div`
   border-top-right-radius: ${size('border.xLarge')};
 `;
 
-const MessagesWrapper = styled.div`
+const MessagesWrapper = styled(Box)`
   background-color: ${palette('white', 'base')};
+  padding: ${ifProp('hasMessages', 0, null)};
+  border: ${ifProp('hasMessages', 0, null)};
+
   > * {
     border-top: 0;
   }
@@ -36,28 +40,30 @@ const EmptyMessagesWrapper = styled.div`
   text-align: center;
 `;
 
-const DashboardMessagesPage = ({ messages }) => {
+const DashboardMessagesPage = ({ messages, isLoading }) => {
   let messagesComponent = <EmptyMessagesWrapper>No messages</EmptyMessagesWrapper>;
-  if (messages.length > 0) {
-    messagesComponent = messages.map((message) => {
-      return (
-        <LatestMessage
-          key={message.message.id}
-          name={message.name}
-          message={message.message}
-          hasUnread={message.hasUnread}
-          to={message.to}
-        />
-      );
-    });
+  if (isLoading) {
+    messagesComponent = <EmptyMessagesWrapper>Loading...</EmptyMessagesWrapper>;
   }
+  if (messages.length > 0) {
+    messagesComponent = messages.map(message => (
+      <LatestMessage
+        key={message.message.id}
+        name={message.name}
+        message={message.message}
+        hasUnread={message.hasUnread}
+        to={message.to}
+      />
+    ));
+  }
+
   return (
     <DashboardPageTemplate activeMenuItem="Messages">
       <Wrapper>
         <HeadingWrapper>
           <Heading size="subtitle">Messages</Heading>
         </HeadingWrapper>
-        <MessagesWrapper>
+        <MessagesWrapper snap="top" hasMessages={messages.length > 0}>
           {messagesComponent}
         </MessagesWrapper>
       </Wrapper>
@@ -71,6 +77,7 @@ DashboardMessagesPage.propTypes = {
     name: string.isRequired,
     hasUnread: bool,
   })),
+  isLoading: bool,
 };
 
 export default DashboardMessagesPage;

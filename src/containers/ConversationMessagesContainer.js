@@ -188,9 +188,9 @@ export default class ConversationMessagesContainer extends Component {
   checkAndPatchLastReadMessage(timeout) {
     if (!this.timeoutInst) {
       const {
-        messages = [], conversation, user,
+        messages, conversation, user,
       } = this.props;
-      if (messages.length) {
+      if (messages && messages.length) {
         const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
         const { conversationParticipants } = conversation;
         const { id: userId } = user;
