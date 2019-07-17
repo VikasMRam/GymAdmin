@@ -22,7 +22,7 @@ export default class DashboardMessagesContainer extends Component {
     conversations: arrayOf(conversationPropType),
     status: object,
     getConversationMessages: func,
-    ws: object.isRequired,
+    ws: object,
     user: userPropType,
   };
 
@@ -53,13 +53,12 @@ export default class DashboardMessagesContainer extends Component {
     let messages = [];
     const { conversations: conversationsStatus } = status;
     const {
-      isLoading, hasStarted, error: conversationsError,
+      hasFinished, error: conversationsError,
     } = conversationsStatus;
     if (conversationsError) {
       return <RefreshRedirect to="/" />;
     }
-    const isPageLoading = !hasStarted || isLoading;
-    if (!isPageLoading) {
+    if (hasFinished) {
       messages = conversations
         .filter(conversation => !!conversation.latestMessage)
         .map((conversation) => {
@@ -78,6 +77,6 @@ export default class DashboardMessagesContainer extends Component {
           };
         });
     }
-    return <DashboardMessagesPage messages={messages} />;
+    return <DashboardMessagesPage messages={messages} isLoading={!hasFinished} />;
   }
 }
