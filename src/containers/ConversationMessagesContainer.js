@@ -107,31 +107,33 @@ export default class ConversationMessagesContainer extends Component {
   };
 
   componentDidMount() {
-    const { messagesRef, scrolled } = this;
-    const { ws, messages } = this.props;
+    const { ws } = this.props;
 
     ws.on(NOTIFY_MESSAGE_NEW, this.onMessage, { capture: true });
+  }
 
-    if (messages && messages.length) {
-      if (messagesRef.current && !scrolled) {
-        messagesRef.current.addEventListener('scroll', this.handleScroll);
-        messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+  componentDidUpdate() {
+    const { messages } = this.state;
+
+    this.checkAndPatchLastReadMessage(MESSAGES_UPDATE_LAST_READ_TIMEOUT);
+    if (messages && messages.length && this.messagesRef.current) {
+      if (!this.scrolled) {
+        this.messagesRef.current.addEventListener('scroll', this.handleScroll);
+        this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight;
         this.scrolled = true;
+      } else if (this.wasScrollAtBottom) {
+        // on new message if scroll position is at bottom keep scrolling
+        this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight;
       }
     }
   }
 
-  componentDidUpdate() {
-    this.checkAndPatchLastReadMessage(MESSAGES_UPDATE_LAST_READ_TIMEOUT);
-  }
-
   componentWillUnmount() {
-    // const { messagesRef } = this;
     const { ws } = this.props;
 
     ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
     /* if (messagesRef.current) {
-      messagesRef.current.removeEventListener('scroll', this.handleScroll);
+      this.messagesRef.current.removeEventListener('scroll', this.handleScroll);
     } */
   }
 
@@ -185,6 +187,9 @@ export default class ConversationMessagesContainer extends Component {
     return hasFinished;
   };
 
+  isScrollAtBottom = () => this.messagesRef.current && (this.messagesRef.current.scrollHeight -
+    this.messagesRef.current.scrollTop === this.messagesRef.current.clientHeight);
+
   checkAndPatchLastReadMessage(timeout) {
     if (!this.timeoutInst) {
       const {
@@ -234,6 +239,7 @@ export default class ConversationMessagesContainer extends Component {
     const { info, id } = conversation;
     const { messageCount } = info;
 
+    this.wasScrollAtBottom = this.isScrollAtBottom();
     if (this.messagesRef.current && !this.messagesRef.current.scrollTop && messages.length < messageCount) {
       this.setState({
         loadingMore: true,
