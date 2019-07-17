@@ -12,12 +12,14 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const IconWrapper = styled.div`
+export const IconWrapper = styled.div`
   margin-right: ${p => p.borderless ? size('spacing', p.iconRightMarginSpacing) : size('spacing.large')};
   padding: calc(${size('spacing.regular')} - ${size('border.regular')});
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('grey', 'filler')};
   border-radius: ${size('border.xxLarge')};
 `;
+
+IconWrapper.displayName = 'IconWrapper';
 
 const IconItem = ({
   icon, iconSize, iconPalette, iconVariation, size, children, borderless,
@@ -30,7 +32,7 @@ const IconItem = ({
       <IconWrapper borderless={borderless} iconRightMarginSpacing={iconRightMarginSpacing}>
         <Icon icon={icon} size={defIconSize} palette={iconPalette} variation={iconVariation} />
       </IconWrapper>
-      <Block palette={textPalette} variation={textVariation}>{children}</Block>
+      <Block palette={textPalette} variation={textVariation} size={size}>{children}</Block>
     </Wrapper>
   );
 };
