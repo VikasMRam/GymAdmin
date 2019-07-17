@@ -156,11 +156,12 @@ const DashboardAgentFamilyOverviewPage = ({
     }
     emptyTextComponent = <EmptyTextWrapper><Block palette="grey">{tableEmptyText}</Block></EmptyTextWrapper>;
   }
+  const loadingMessage = <EmptyTextWrapper>Loading...</EmptyTextWrapper>;
   const bigScreenView = (
     <Fragment>
-      {tableHeaderButtons}
       {!isPageLoading && (
         <Fragment>
+          {tableHeaderButtons}
           <TableSectionWrapper>
             <TableWrapper>
               <Table {...tableContents} />
@@ -172,25 +173,27 @@ const DashboardAgentFamilyOverviewPage = ({
           <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
         </Fragment>
       )}
-      {isPageLoading && 'Loading...'}
+      {isPageLoading && loadingMessage}
     </Fragment>
   );
   const smallScreenView = (
     <Fragment>
-      {tableHeaderButtons}
       {!isPageLoading && (
-        <TableRowCardsWrapper>
-          {mobileContents.length > 0 && (
-            <Fragment>
-              <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
-              {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
-              {paginationComponent}
-            </Fragment>
-          )}
-          {mobileContents.length === 0 && emptyTextComponent}
-        </TableRowCardsWrapper>
+        <Fragment>
+          {tableHeaderButtons}
+          <TableRowCardsWrapper>
+            {mobileContents.length > 0 && (
+              <Fragment>
+                <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
+                {mobileContents.map(content => <TableRowCardWrapper key={content.id}><TableRowCard {...content} /></TableRowCardWrapper>)}
+                {paginationComponent}
+              </Fragment>
+            )}
+            {mobileContents.length === 0 && emptyTextComponent}
+          </TableRowCardsWrapper>
+        </Fragment>
       )}
-      {isPageLoading && 'Loading...'}
+      {isPageLoading && loadingMessage}
     </Fragment>
   );
 
