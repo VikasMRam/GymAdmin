@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
-import { bool } from 'prop-types';
+import { bool, func } from 'prop-types';
 
-import { size, palette } from 'sly/components/themes';
+import { size, palette, columnWidth } from 'sly/components/themes';
 import { adminAgentPropType } from 'sly/propTypes/agent';
-import { Heading, Badge } from 'sly/components/atoms';
+import { Heading, Badge, Button } from 'sly/components/atoms';
 import Block from 'sly/components/atoms/Block';
 import Icon from 'sly/components/atoms/Icon';
 
@@ -34,8 +34,13 @@ const StyledBadge = styled(Badge)`
 
 const AgentInfoWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    column-count: 2;
-    column-gap: ${size('spacing.xLarge')};
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -${size('spacing.xLarge')};
+    > * {
+      width: ${columnWidth(2, size('spacing.xLarge'))};
+      margin-right: ${size('spacing.xLarge')};
+    }
    }
 `;
 
@@ -59,12 +64,26 @@ const agentPropsMap = {
 
 export default class DashboardAdminAgentTile extends Component {
   static propTypes = {
+    notifyError: func.isRequired,
+    notifyInfo: func.isRequired,
     agent: adminAgentPropType.isRequired,
     isRecommended: bool.isRequired,
   };
 
   static defaultProps = {
     isRecommended: false,
+  };
+
+  copyToClipboard = () => {
+    const { agent, notifyError, notifyInfo } = this.props;
+    const { slyPhone } = agent.info;
+    if (navigator && navigator.clipboard) {
+      navigator.clipboard.writeText(slyPhone)
+        .then(() => notifyInfo(`Phone number ${slyPhone} copied to clipboard!`))
+        .catch(() => notifyError(`Could not copy ${slyPhone} to clipboard!`));
+    } else {
+      notifyError(`Copy ${slyPhone} to clipboard unsupported!`);
+    }
   };
 
   render() {
@@ -81,16 +100,17 @@ export default class DashboardAdminAgentTile extends Component {
           {Object.entries(agentPropsMap)
             .map(([key, icon]) => (
               <IconItem>
-                <StyledIcon icon={icon} size="caption" />
+                <StyledIcon icon={icon} size="small" />
                 <StyledBlock>{agent.info[key]}</StyledBlock>
               </IconItem>
             ))
           }
         </AgentInfoWrapper>
         <IconItem>
-          <StyledIcon icon="note" size="caption" />
+          <StyledIcon icon="note" size="small" />
           <StyledBlock>{agent.info.adminNote}</StyledBlock>
         </IconItem>
+        <Button onClick={this.copyToClipboard}>WT: {agent.info.slyPhone}</Button>
       </Fragment>
     );
   }
