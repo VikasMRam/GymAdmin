@@ -192,7 +192,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       label: 'accept-lead',
       value: '',
     });
-    showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} goToFamilyDetails={goToFamilyDetails} />, null, 'noPadding', false);
+    showModal((
+      <AcceptAndContactFamilyContainer
+        notifyError={notifyError}
+        client={client}
+        rawClient={rawClient}
+        onCancel={hideModal}
+        goToFamilyDetails={goToFamilyDetails}
+      />), null, 'noPadding', false);
   };
 
   handleRejectClick = () => {

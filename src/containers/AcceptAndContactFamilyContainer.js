@@ -28,14 +28,13 @@ class AcceptAndContactFamilyContainer extends Component {
 
   handleUpdateStage = (contactType, next) => {
     const {
-      updateClient, client, rawClient, notifyError, refetchClient,
+      updateClient, client, rawClient, notifyError,
     } = this.props;
     const { id } = client;
     const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
     const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.stage']))
       .set('attributes.stage', contactStatus)
       .value();
-    const clientPromise = () => refetchClient();
 
     return updateClient({ id }, newClient)
       .then(() => {
@@ -44,7 +43,6 @@ class AcceptAndContactFamilyContainer extends Component {
         });
         next();
       })
-      .then(clientPromise)
       .catch((r) => {
         // TODO: Need to set a proper way to handle server side errors
         const { body } = r;
