@@ -58,7 +58,7 @@ class AcceptAndContactFamilyContainer extends Component {
     const { onCancel, goToFamilyDetails } = this.props;
     withPreventDefault(onCancel);
     goToFamilyDetails();
-  }
+  };
 
   render() {
     const { handleUpdateStage } = this;

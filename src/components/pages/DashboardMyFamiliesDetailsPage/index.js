@@ -314,13 +314,14 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading,
     } = this.props;
 
-    if (clientIsLoading) {
+    if (clientIsLoading && !this.pageLoaded) {
       return (
         <DashboardTwoColumnTemplate activeMenuItem="My Families">
           Loading...
         </DashboardTwoColumnTemplate>
       );
     }
+    this.pageLoaded = true;
 
     if (!client) {
       const backlink = <BackLink linkText="Back to Prospects" to={AGENT_DASHBOARD_FAMILIES_PATH} onClick={clickEventHandler('fdetails', 'Back to Prospects')} />;
