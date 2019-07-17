@@ -184,7 +184,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
   handleAcceptClick = () => {
     const {
-      showModal, hideModal, notifyError, client, rawClient, refetchClient, goToFamilyDetails,
+      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails,
     } = this.props;
     SlyEvent.getInstance().sendEvent({
       category: 'fdetails',
@@ -192,7 +192,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       label: 'accept-lead',
       value: '',
     });
-    showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} goToFamilyDetails={goToFamilyDetails} refetchClient={refetchClient} />, null, 'noPadding', false);
+    showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} goToFamilyDetails={goToFamilyDetails} />, null, 'noPadding', false);
   };
 
   handleRejectClick = () => {
@@ -316,9 +316,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     if (clientIsLoading) {
       return (
-        <DashboardTwoColumnTemplate activeMenuItem="My Families">
+        <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
           Loading...
-        </DashboardTwoColumnTemplate>
+        </StyledDashboardTwoColumnTemplate>
       );
     }
 

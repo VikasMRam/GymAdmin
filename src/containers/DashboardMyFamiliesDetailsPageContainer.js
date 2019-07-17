@@ -187,7 +187,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   goToFamilyDetails = () => {
     const { history, client } = this.props;
     const { id } = client;
-    const path = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
+    const path = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab', FAMILY_DETAILS);
     history.push(path);
   };
 
@@ -201,8 +201,8 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     } = this.props;
 
     const { result: rawClient, meta } = status.client;
-    const { isLoading: clientIsLoading } = status.client;
-    const { isLoading: noteIsLoading } = status.notes;
+    const { hasFinished: clientHasFinished } = status.client;
+    const { hasFinished: noteHasFinished } = status.notes;
 
     return (
       <NotificationController>
@@ -228,8 +228,8 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 onAddNote={onAddNote}
                 onEditNote={onEditNote}
                 notes={notes}
-                noteIsLoading={noteIsLoading}
-                clientIsLoading={clientIsLoading}
+                noteIsLoading={!noteHasFinished}
+                clientIsLoading={!clientHasFinished}
                 goToFamilyDetails={this.goToFamilyDetails}
               />
             )}
