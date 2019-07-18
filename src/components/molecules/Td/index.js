@@ -236,3 +236,5 @@ TextIconTd.propTypes = {
   borderless: bool,
   clip: bool,
 };
+
+export const Tr = 'tr';

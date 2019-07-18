@@ -5,28 +5,25 @@ import { arrayOf, object, string, bool, func } from 'prop-types';
 import { size, palette } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
-import Block from 'sly/components/atoms/Block';
-import TableRowCard from 'sly/components/molecules/TableRowCard';
+import { Block, Table } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
-import Table from 'sly/components/organisms/Table';
+import clientPropType from 'sly/propTypes/client';
 import { AGENT_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 import SlyEvent from 'sly/services/helpers/events';
+import Th from 'sly/components/molecules/Th';
+import ClientRowCard from 'sly/components/organisms/ClientRowCard';
+
+const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
+  { text: 'Contact Name' },
+  { text: 'Resident Name' },
+  { text: 'Stage' },
+  { text: 'Latest Activity' },
+  { text: 'Date Added' },
+];
 
 const BigScreenSection = styled.div`
-  display: none;
-
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: block;
-    background-color: ${palette('white.base')};
-  }
-`;
-
-const TableRowCardsWrapper = styled.div`
-  padding: ${size('spacing.large')};
-  background-color: ${palette('grey.background')};
-  border-top: ${size('border.regular')} 0 solid ${palette('grey', 'filler')};
-  border-bottom: ${size('border.regular')} solid ${palette('grey', 'filler')};
+  background-color: ${palette('white.base')};
 `;
 
 const FamiliesCountStatusBlock = styled(Block)`
@@ -34,17 +31,8 @@ const FamiliesCountStatusBlock = styled(Block)`
   margin-left: ${size('spacing.large')};
 `;
 
-const TableRowCardWrapper = styled.div`
-  margin-bottom: ${size('spacing.large')};
-  background-color: ${palette('white.base')};
-`;
-
 const TableSectionWrapper = styled.div`
   overflow: auto;
-`;
-
-const TableWrapper = styled.div`
-  margin-bottom: ${size('spacing.large')};
 `;
 
 const BigScreenPaginationWrapper = styled.div`
@@ -99,7 +87,7 @@ const getBasePath = (activeTab) => {
 };
 
 const DashboardAgentFamilyOverviewPage = ({
-  tableContents, pagination, paginationString, activeTab, showPagination, onSearchTextKeyUp, isPageLoading,
+  clients, onClientClick, pagination, paginationString, activeTab, showPagination, onSearchTextKeyUp, isPageLoading,
 }) => {
   const tableHeaderButtons = (
     <TableHeaderButtons
@@ -140,31 +128,40 @@ const DashboardAgentFamilyOverviewPage = ({
           <div id={tabIDs[1]} label={connectedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Connected`} onClick={() => onTabClick(connectedLabel)} />
           <div id={tabIDs[2]} label={closedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Closed`} onClick={() => onTabClick(closedLabel)} />
         </StyledTabs>
-        <Fragment>
-          {tableHeaderButtons}
-          {!isPageLoading && (
-            <Fragment>
-              <TableSectionWrapper>
-                <TableWrapper>
-                  <Table {...tableContents} />
-                </TableWrapper>
-              </TableSectionWrapper>
-              <BigScreenPaginationWrapper>
-                {paginationComponent}
-              </BigScreenPaginationWrapper>
-              <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
-            </Fragment>
-          )}
-          {isPageLoading && 'Loading...'}
-        </Fragment>
+
+        {tableHeaderButtons}
+
+        {!isPageLoading && (
+          <Fragment>
+            <TableSectionWrapper>
+              <Table>
+                <thead>
+                  {AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS
+                    .map(({ text }) => <Th>{text}</Th>)
+                  }
+                </thead>
+                <tbody>
+                  {clients.map(client => (
+                    <ClientRowCard client={client} onClientClick={onClientClick} />
+                  ))}
+                </tbody>
+              </Table>
+            </TableSectionWrapper>
+            <BigScreenPaginationWrapper>
+              {paginationComponent}
+            </BigScreenPaginationWrapper>
+            <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
+          </Fragment>
+        )}
+        {isPageLoading && 'Loading...'}
       </BigScreenSection>
     </DashboardPageTemplate>
   );
 };
 
 DashboardAgentFamilyOverviewPage.propTypes = {
-  mobileContents: arrayOf(object),
-  tableContents: object,
+  clients: arrayOf(clientPropType),
+  onClientClick: func.isRequired,
   pagination: object,
   paginationString: string,
   activeTab: string,

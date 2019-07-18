@@ -1,26 +1,14 @@
-import qs from 'querystring';
-
 import React, { Component } from 'react';
+import qs from 'querystring';
 import { arrayOf, object } from 'prop-types';
-import dayjs from 'dayjs';
 
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { withUser, prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
 import { delayedExecutor, getSearchParams } from 'sly/services/helpers/search';
-import { getStageDetails } from 'sly/services/helpers/stage';
 import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP, FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
 import SlyEvent from 'sly/services/helpers/events';
-
-const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
-  { text: 'Contact Name' },
-  { text: 'Resident Name' },
-  { text: 'Stage' },
-  { text: 'Latest Activity' },
-  { text: 'Date Added' },
-];
 
 const onClientDetailTableRowLinkClick = (clientName, to) => {
   const event = {
@@ -30,73 +18,6 @@ const onClientDetailTableRowLinkClick = (clientName, to) => {
     value: to,
   };
   SlyEvent.getInstance().sendEvent(event);
-};
-
-const onClientDetailTableRowCardHeadingLinkClick = (clientName, to) => {
-  const event = {
-    category: 'TableRowCard',
-    action: 'click',
-    label: clientName,
-    value: to,
-  };
-  SlyEvent.getInstance().sendEvent(event);
-};
-
-const convertClientsToTableContents = (clients) => {
-  const contents = clients.map((client) => {
-    const {
-      id, clientInfo, uuidAux, stage, status, createdAt, notes,
-    } = client;
-    const { level, palette } = getStageDetails(stage);
-    const { name: clientName } = clientInfo;
-    const { uuidInfo } = uuidAux;
-    let residentName = '';
-    if (uuidInfo) {
-      const { residentInfo } = uuidInfo;
-      const { fullName } = residentInfo;
-      residentName = fullName;
-    }
-    const createdAtStr = dayjs(createdAt).format('MM/DD/YYYY');
-    const rowItems = [];
-    const disabled = status === FAMILY_STATUS_ON_HOLD;
-    const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
-    const pausedType = disabled ? 'textIcon' : 'link';
-    const to = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
-    rowItems.push({
-      type: pausedType,
-      data: {
-        text: clientName,
-        to,
-        onClick: () => onClientDetailTableRowLinkClick(clientName, to),
-        ...pausedTd,
-      },
-    });
-    rowItems.push({ type: 'text', data: { text: residentName, disabled } });
-    rowItems.push({
-      type: 'stage',
-      data: {
-        text: stage, currentStage: level, palette, disabled,
-      },
-    });
-    if (notes.length > 0) {
-      const latestNote = notes[0];
-      const { body, createdAt } = latestNote;
-      const latestNoteCreatedAtStr = dayjs(createdAt).format('MM/DD/YYYY');
-      rowItems.push({ type: 'doubleLine', data: { firstLine: body, secondLine: latestNoteCreatedAtStr, disabled } });
-    } else {
-      rowItems.push({ type: 'text', data: { text: '', disabled } });
-    }
-    rowItems.push({ type: 'text', data: { text: createdAtStr, disabled } });
-    return {
-      id,
-      rowItems,
-    };
-  });
-  return {
-    headings: AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS,
-    contents,
-    tableEmptyText: "It looks like you don't have any families that match the filters you've set.",
-  };
 };
 
 const getPaginationData = requestMeta => ({
@@ -187,7 +108,6 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
         />
       );
     }
-    const tableContents = convertClientsToTableContents(clients);
     const pagination = getPaginationData(clientsMeta);
     const {
       current, size, filteredCount,
@@ -200,7 +120,8 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const showPagination = filteredCount > size;
     return (
       <DashboardAgentFamilyOverviewPage
-        tableContents={tableContents}
+        clients={clients}
+        onClientDetailTableRowLinkClick={onClientDetailTableRowLinkClick}
         pagination={pagination}
         paginationString={paginationString}
         showPagination={showPagination}
