@@ -193,17 +193,16 @@ export default class ConversationMessagesContainer extends Component {
   checkAndPatchLastReadMessage(timeout) {
     if (!this.timeoutInst) {
       const {
-        messages, conversation, user,
+        messages, viewingAsParticipant,
       } = this.props;
       if (messages && messages.length) {
         const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
-        const { conversationParticipants } = conversation;
-        const { id: userId } = user;
-        const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
-        const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
+        if (viewingAsParticipant) {
+          const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
 
-        if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
-          this.timeoutInst = setTimeout(this.updateLastReadMessageAt, timeout);
+          if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
+            this.timeoutInst = setTimeout(this.updateLastReadMessageAt, timeout);
+          }
         }
       }
     }
@@ -211,26 +210,26 @@ export default class ConversationMessagesContainer extends Component {
 
   updateLastReadMessageAt = () => {
     const {
-      updateConversationParticipant, conversation, user,
+      updateConversationParticipant, viewingAsParticipant,
     } = this.props;
-    const { conversationParticipants } = conversation;
-    const { id: userId } = user;
-    const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
-    const { id } = viewingAsParticipant;
-    const payload = {
-      type: CONVERSTION_PARTICIPANT_RESOURCE_TYPE,
-      attributes: viewingAsParticipant,
-    };
-    payload.attributes.stats.unreadMessageCount = 0;
-    payload.attributes.stats.lastReadMessageAt = dayjs().utc().format();
+    if (viewingAsParticipant) {
+      const { id } = viewingAsParticipant;
+      const payload = {
+        type: CONVERSTION_PARTICIPANT_RESOURCE_TYPE,
+        attributes: viewingAsParticipant,
+      };
+      payload.attributes.stats.unreadMessageCount = 0;
+      payload.attributes.stats.lastReadMessageAt = dayjs().utc().format();
 
-    return updateConversationParticipant({ id }, payload)
-      .catch((r) => {
-        // TODO: Need to set a proper way to handle server side errors
-        const { body } = r;
-        const errorMessage = body.errors.map(e => e.title).join('. ');
-        console.error(errorMessage);
-      });
+      return updateConversationParticipant({ id }, payload)
+        .catch((r) => {
+          // TODO: Need to set a proper way to handle server side errors
+          const { body } = r;
+          const errorMessage = body.errors.map(e => e.title).join('. ');
+          console.error(errorMessage);
+        });
+    }
+    return null;
   };
 
   handleScroll = () => {
@@ -256,15 +255,17 @@ export default class ConversationMessagesContainer extends Component {
     if (this.newMessageRef.current) {
       const { messages } = this.state;
       const { viewingAsParticipant } = this.props;
-      const lastMessageReadAt = viewingAsParticipant.stats.lastReadMessageAt;
-      const firstUnreadMessage = [...messages].reverse().find(m => isAfter(m.createdAt, lastMessageReadAt));
-      const event = {
-        action: 'jump-to-new-messages',
-        category: categoryName,
-        label: firstUnreadMessage.id,
-      };
-      SlyEvent.getInstance().sendEvent(event);
-      this.newMessageRef.current.scrollIntoView(true);
+      if (viewingAsParticipant) {
+        const lastMessageReadAt = viewingAsParticipant.stats.lastReadMessageAt;
+        const firstUnreadMessage = [...messages].reverse().find(m => isAfter(m.createdAt, lastMessageReadAt));
+        const event = {
+          action: 'jump-to-new-messages',
+          category: categoryName,
+          label: firstUnreadMessage.id,
+        };
+        SlyEvent.getInstance().sendEvent(event);
+        this.newMessageRef.current.scrollIntoView(true);
+      }
     }
   };
 
@@ -308,12 +309,13 @@ export default class ConversationMessagesContainer extends Component {
     }
 
     this.alreadyLoaded = true;
-    const unreadMessagesNumber = viewingAsParticipant.stats.unreadMessageCount > 12 ? `${viewingAsParticipant.stats.unreadMessageCount}+` : viewingAsParticipant.stats.unreadMessageCount;
-    const lastReadMessageFormattedDate = dayjs(viewingAsParticipant.stats.lastReadMessageAt).format('hh:mm A on MMMM Do');
+    const viewingAsParticipantUnreadMessageCount = viewingAsParticipant ? viewingAsParticipant.stats.unreadMessageCount : 0;
+    const unreadMessagesNumber = viewingAsParticipantUnreadMessageCount > 12 ? `${viewingAsParticipantUnreadMessageCount}+` : viewingAsParticipantUnreadMessageCount;
+    const lastReadMessageFormattedDate = dayjs(viewingAsParticipantUnreadMessageCount).format('hh:mm A on MMMM Do');
 
     return (
       <div ref={this.messagesRef} className={className}>
-        {viewingAsParticipant.stats.unreadMessageCount > 0 &&
+        {viewingAsParticipantUnreadMessageCount > 0 &&
           <Wrapper>
             <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={this.handleMarkAsRead}>
               <SmallScreen weight="medium" size="caption">

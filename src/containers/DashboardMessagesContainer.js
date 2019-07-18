@@ -12,9 +12,7 @@ import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 
 @withUser
 @withWS
-@prefetch('conversations', 'getConversations', (req, { user }) => req({
-  'filter[participant_id]': user && user.id,
-}))
+@prefetch('conversations', 'getConversations')
 @query('getConversationMessages', 'getConversationMessages')
 
 export default class DashboardMessagesContainer extends Component {
@@ -68,7 +66,12 @@ export default class DashboardMessagesContainer extends Component {
           const conversationParticipant = conversationParticipants.find(conversationParticipant => conversationParticipant.id === conversationParticipantID);
           const { participantInfo } = conversationParticipant;
           const { name } = participantInfo;
-          const hasUnread = userParticipant.stats ? userParticipant.stats.unreadMessageCount > 0 : false;
+          let hasUnread = false;
+          if (userParticipant == null) {
+            hasUnread = true;
+          } else {
+            hasUnread = userParticipant.stats ? userParticipant.stats.unreadMessageCount > 0 : false;
+          }
           return {
             name,
             message: latestMessage,
