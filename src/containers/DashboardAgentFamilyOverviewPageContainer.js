@@ -99,36 +99,6 @@ const convertClientsToTableContents = (clients) => {
   };
 };
 
-const convertClientsToMobileContents = (clients) => {
-  const contents = clients.map((client) => {
-    const {
-      id, clientInfo, stage, status, notes,
-    } = client;
-    const { level, palette } = getStageDetails(stage);
-    const { name: clientName } = clientInfo;
-    const rowItems = [];
-    const disabled = status === FAMILY_STATUS_ON_HOLD;
-    const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
-    if (notes.length > 0) {
-      const latestNote = notes[0];
-      const { body, createdAt } = latestNote;
-      const latestNoteCreatedAtStr = dayjs(createdAt).format('MM/DD/YYYY');
-      rowItems.push({ type: 'doubleLine', data: { firstLine: body, secondLine: latestNoteCreatedAtStr } });
-    }
-    rowItems.push({ type: 'stage', data: { text: stage, currentStage: level, palette } });
-    const to = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
-    return {
-      heading: clientName,
-      onHeadingClick: () => onClientDetailTableRowCardHeadingLinkClick(clientName, to),
-      to,
-      id,
-      rowItems,
-      ...pausedTd,
-    };
-  });
-  return contents;
-};
-
 const getPaginationData = requestMeta => ({
   current: requestMeta['page-number'],
   size: requestMeta['page-size'],
@@ -218,7 +188,6 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
       );
     }
     const tableContents = convertClientsToTableContents(clients);
-    const mobileContents = convertClientsToMobileContents(clients);
     const pagination = getPaginationData(clientsMeta);
     const {
       current, size, filteredCount,
@@ -231,7 +200,6 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const showPagination = filteredCount > size;
     return (
       <DashboardAgentFamilyOverviewPage
-        mobileContents={mobileContents}
         tableContents={tableContents}
         pagination={pagination}
         paginationString={paginationString}

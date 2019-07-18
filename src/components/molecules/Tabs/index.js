@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { instanceOf, string } from 'prop-types';
+import { instanceOf, string, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -50,6 +50,11 @@ export default class Tabs extends Component {
     children: instanceOf(Array).isRequired,
     activeTab: string,
     className: string,
+    tabsOnly: bool.isRequired,
+  };
+
+  static defaultProps = {
+    tabsOnly: false,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -81,7 +86,7 @@ export default class Tabs extends Component {
   };
 
   render() {
-    const { children, className } = this.props;
+    const { children, className, tabsOnly } = this.props;
     const { activeTab } = this.state;
 
     return (
@@ -110,7 +115,7 @@ export default class Tabs extends Component {
         </TabWrapper>
 
         <TabContent>
-          {children.map((child) => {
+          {!tabsOnly && children.map((child) => {
             if (child.props.id !== activeTab) return undefined;
             return child.props.children;
           })}
