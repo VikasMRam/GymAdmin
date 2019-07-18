@@ -62,32 +62,46 @@ const getDateText = (date) => {
 const ConversationMessages = ({
   messages, participants, viewingAsParticipant, className, newMessageRef,
 }) => {
+  const lastMessageReadAt = viewingAsParticipant && viewingAsParticipant.stats.lastReadMessageAt;
   const participantsById = participants.reduce((a, b) => {
     a[b.id] = b;
     return a;
   }, {});
   const messageComponents = [];
   let prevMessage = null;
+  let newAddedForDay = false;
 
   for (let i = messages.length - 1; i >= 0; --i) {
     const message = messages[i];
+    const nextMessage = messages[i - 1];
     if ((prevMessage && !isSameDay(prevMessage.createdAt, message.createdAt)) ||
       !prevMessage) {
       const dayName = getDateText(message.createdAt);
       const hrProps = {
         text: dayName,
       };
-      if (viewingAsParticipant) {
-        const lastMessageReadAt = viewingAsParticipant.stats.lastReadMessageAt;
-        if (isAfter(message.createdAt, lastMessageReadAt)) {
-          hrProps.badgeText = 'New';
-          hrProps.palette = 'warning';
-          hrProps.variation = 'base';
-          hrProps.hrRef = newMessageRef;
-        }
+
+      if (lastMessageReadAt && isAfter(message.createdAt, lastMessageReadAt) && nextMessage &&
+        isAfter(nextMessage.createdAt, lastMessageReadAt)) {
+        hrProps.badgeText = 'New';
+        hrProps.palette = 'warning';
+        hrProps.variation = 'base';
+        hrProps.hrRef = newMessageRef;
+        newAddedForDay = true;
       }
       messageComponents.push(<PaddedHrWithText key={`hr-${message.id}`} {...hrProps} />);
     }
+    if (lastMessageReadAt && !newAddedForDay && isAfter(message.createdAt, lastMessageReadAt)) {
+      const hrProps = {
+        badgeText: 'New',
+        palette: 'warning',
+        variation: 'base',
+        hrRef: newMessageRef,
+      };
+
+      messageComponents.push(<PaddedHrWithText key={`new-message-hr-${message.id}`} {...hrProps} />);
+    }
+
     const isRightAligned = viewingAsParticipant ? viewingAsParticipant.id === message.conversationParticipantID : false;
     const props = {
       message,
