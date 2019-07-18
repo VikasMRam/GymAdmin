@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { node } from 'prop-types';
 
-import { TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd, DoubleLineDiv } from 'src/components/atoms/Table';
+import { TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd, DoubleLineDiv } from 'sly/components/atoms/Table';
 
 const TdWrapper = ({ children }) => (
   <table>

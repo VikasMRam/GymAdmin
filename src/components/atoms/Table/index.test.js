@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Td, TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd, DoubleLineDiv, StageDiv } from 'src/components/atoms/Table';
+import { Td, TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd, DoubleLineDiv, StageDiv } from 'sly/components/atoms/Table';
 
 const wrap = (props = {}) => shallow(<Td {...props} />);
 const textTdWrap = (props = {}) => shallow(<TextTd {...props} />);
