@@ -69,24 +69,39 @@ const ConversationMessages = ({
   }, {});
   const messageComponents = [];
   let prevMessage = null;
+  let newAddedForDay = false;
 
   for (let i = messages.length - 1; i >= 0; --i) {
     const message = messages[i];
+    const nextMessage = messages[i - 1];
     if ((prevMessage && !isSameDay(prevMessage.createdAt, message.createdAt)) ||
       !prevMessage) {
       const dayName = getDateText(message.createdAt);
       const hrProps = {
         text: dayName,
       };
-      if (isAfter(message.createdAt, lastMessageReadAt)) {
+      if (isAfter(message.createdAt, lastMessageReadAt) || (!nextMessage &&
+        !isAfter(nextMessage.createdAt, lastMessageReadAt))) {
         hrProps.badgeText = 'New';
         hrProps.palette = 'warning';
         hrProps.variation = 'base';
         hrProps.hrRef = newMessageRef;
+        newAddedForDay = true;
       }
 
       messageComponents.push(<PaddedHrWithText key={`hr-${message.id}`} {...hrProps} />);
     }
+    if (!newAddedForDay && isAfter(message.createdAt, lastMessageReadAt)) {
+      const hrProps = {
+        badgeText: 'New',
+        palette: 'warning',
+        variation: 'base',
+        hrRef: newMessageRef,
+      };
+
+      messageComponents.push(<PaddedHrWithText key={`new-message-hr-${message.id}`} {...hrProps} />);
+    }
+
     const isRightAligned = viewingAsParticipant.id === message.conversationParticipantID;
     const props = {
       message,
