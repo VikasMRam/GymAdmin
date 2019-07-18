@@ -7,7 +7,7 @@ import { withUser, prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgentFamilyOverviewPage';
 import { delayedExecutor, getSearchParams } from 'sly/services/helpers/search';
-import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP, FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
+import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP } from 'sly/constants/familyDetails';
 import SlyEvent from 'sly/services/helpers/events';
 
 const onClientDetailTableRowLinkClick = (clientName, to) => {

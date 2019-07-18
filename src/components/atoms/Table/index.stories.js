@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 import { node } from 'prop-types';
 
-import { TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd, DoubleLineDiv } from 'sly/components/molecules/Td';
+import { TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd, DoubleLineDiv } from 'src/components/atoms/Table';
 
 const TdWrapper = ({ children }) => (
   <table>
@@ -37,7 +37,7 @@ FixedWidthTdWrapper.propTypes = {
   children: node,
 };
 
-storiesOf('Molecules|Td', module)
+storiesOf('Molecules|Table', module)
   .add('default', () => (
     <TdWrapper><TextTd>Kendrick Chaimberlain</TextTd></TdWrapper>
   ))

@@ -5,7 +5,7 @@ import { arrayOf, object, string, bool, func } from 'prop-types';
 import { size, palette } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
-import { Block, Table } from 'sly/components/atoms';
+import { Block, Table, THead, TBody } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import clientPropType from 'sly/propTypes/client';
@@ -135,16 +135,16 @@ const DashboardAgentFamilyOverviewPage = ({
           <Fragment>
             <TableSectionWrapper>
               <Table>
-                <thead>
+                <THead>
                   {AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS
                     .map(({ text }) => <Th>{text}</Th>)
                   }
-                </thead>
-                <tbody>
+                </THead>
+                <TBody>
                   {clients.map(client => (
                     <ClientRowCard client={client} onClientClick={onClientClick} />
                   ))}
-                </tbody>
+                </TBody>
               </Table>
             </TableSectionWrapper>
             <BigScreenPaginationWrapper>

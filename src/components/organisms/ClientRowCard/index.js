@@ -9,7 +9,7 @@ import {
   TextIconTd,
   TextTd,
   Tr,
-} from 'sly/components/molecules/Td';
+} from 'sly/components/atoms/Table';
 import Stage from 'sly/components/atoms/Stage';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import { FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';

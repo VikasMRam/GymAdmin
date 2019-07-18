@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Td, TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd, DoubleLineDiv, StageDiv } from 'sly/components/molecules/Td';
+import { Td, TextTd, LinkTd, StageTd, DoubleLineTd, TextIconTd, DoubleLineDiv, StageDiv } from 'src/components/atoms/Table';
 
 const wrap = (props = {}) => shallow(<Td {...props} />);
 const textTdWrap = (props = {}) => shallow(<TextTd {...props} />);
@@ -12,12 +12,12 @@ const textIconTdWrap = (props = {}) => shallow(<TextIconTd {...props} />);
 const doubleLineDivWrap = (props = {}) => shallow(<DoubleLineDiv {...props} />);
 const stageDivWrap = (props = {}) => shallow(<StageDiv {...props} />);
 
-it('renders Td', () => {
+it('renders Table', () => {
   const wrapper = wrap({ children: 'test' });
   expect(wrapper.contains('test')).toBe(true);
 });
 
-it('renders Td disabled', () => {
+it('renders Table disabled', () => {
   const wrapper = wrap({ children: 'test', disabled: true });
   expect(wrapper.contains('test')).toBe(true);
   expect(wrapper.find('TdWrapper').prop('disabled')).toBeTruthy();

@@ -5,7 +5,7 @@ import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
-import { Td, StageDiv, DoubleLineDiv } from 'sly/components/molecules/Td';
+import { Td, StageDiv, DoubleLineDiv } from 'sly/components/atoms/Table';
 import Hr from 'sly/components/atoms/Hr';
 import Icon from 'sly/components/atoms/Icon';
 
