@@ -69,7 +69,7 @@ const ConversationMessages = ({
   }, {});
   const messageComponents = [];
   let prevMessage = null;
-  let newAddedForDay = false;
+  let addedNewMarker = false;
 
   for (let i = messages.length - 1; i >= 0; --i) {
     const message = messages[i];
@@ -80,24 +80,25 @@ const ConversationMessages = ({
       const hrProps = {
         text: dayName,
       };
-      if (isAfter(message.createdAt, lastMessageReadAt) && nextMessage &&
-        isAfter(nextMessage.createdAt, lastMessageReadAt)) {
+      if (isAfter(message.createdAt, lastMessageReadAt) && ((nextMessage &&
+        isAfter(nextMessage.createdAt, lastMessageReadAt)) || messages.length === 1)) {
         hrProps.badgeText = 'New';
         hrProps.palette = 'warning';
         hrProps.variation = 'base';
         hrProps.hrRef = newMessageRef;
-        newAddedForDay = true;
+        addedNewMarker = true;
       }
 
       messageComponents.push(<PaddedHrWithText key={`hr-${message.id}`} {...hrProps} />);
     }
-    if (!newAddedForDay && isAfter(message.createdAt, lastMessageReadAt)) {
+    if (!addedNewMarker && isAfter(message.createdAt, lastMessageReadAt)) {
       const hrProps = {
         badgeText: 'New',
         palette: 'warning',
         variation: 'base',
         hrRef: newMessageRef,
       };
+      addedNewMarker = true;
 
       messageComponents.push(<PaddedHrWithText key={`new-message-hr-${message.id}`} {...hrProps} />);
     }
