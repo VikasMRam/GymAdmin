@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import { matchPath, Link as RRLink } from 'react-router-dom';
 import { string, bool } from 'prop-types';
-import { ifNotProp } from 'styled-tools';
+import { ifNotProp, ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { palette as palettePropType } from 'sly/propTypes/palette';
@@ -35,7 +35,10 @@ export const styles = css`
   }
   font-size: ${getSize('text')};
   line-height: ${getSize('lineHeight')};
-  font-weight: ${p => size('weight', p.weight)};
+  
+  ${ifProp('weight', css`
+    font-weight: ${p => size('weight', p.weight)};
+  `)}
 `;
 
 export const Anchor = styled.a`
@@ -59,7 +62,6 @@ export default class Link extends Component {
     palette: 'primary',
     variation: 'base',
     size: 'body',
-    weight: 'regular',
   };
 
   static contextTypes = {

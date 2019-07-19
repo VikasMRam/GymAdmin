@@ -22,8 +22,10 @@ const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Date Added' },
 ];
 
-const BigScreenSection = styled.div`
-  background-color: ${palette('white.base')};
+const Section = styled.section`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    background-color: ${palette('white.base')};
+  }
 `;
 
 const FamiliesCountStatusBlock = styled(Block)`
@@ -31,7 +33,7 @@ const FamiliesCountStatusBlock = styled(Block)`
   margin-left: ${size('spacing.large')};
 `;
 
-const TableSectionWrapper = styled.div`
+const StyledTable = styled(Table)`
   overflow: auto;
 `;
 
@@ -122,7 +124,7 @@ const DashboardAgentFamilyOverviewPage = ({
 
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
-      <BigScreenSection>
+      <Section>
         <StyledTabs activeTab={activeTab} tabsOnly>
           <div id={tabIDs[0]} label={prospectsTabLabel} to={AGENT_DASHBOARD_FAMILIES_PATH} onClick={() => onTabClick(prospectsLabel)} />
           <div id={tabIDs[1]} label={connectedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Connected`} onClick={() => onTabClick(connectedLabel)} />
@@ -133,20 +135,18 @@ const DashboardAgentFamilyOverviewPage = ({
 
         {!isPageLoading && (
           <Fragment>
-            <TableSectionWrapper>
-              <Table>
-                <THead>
-                  {AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS
-                    .map(({ text }) => <Th>{text}</Th>)
-                  }
-                </THead>
-                <TBody>
-                  {clients.map(client => (
-                    <ClientRowCard client={client} onClientClick={onClientClick} />
-                  ))}
-                </TBody>
-              </Table>
-            </TableSectionWrapper>
+            <StyledTable>
+              <THead>
+                {AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS
+                  .map(({ text }) => <Th>{text}</Th>)
+                }
+              </THead>
+              <TBody>
+                {clients.map(client => (
+                  <ClientRowCard client={client} onClientClick={onClientClick} />
+                ))}
+              </TBody>
+            </StyledTable>
             <BigScreenPaginationWrapper>
               {paginationComponent}
             </BigScreenPaginationWrapper>
@@ -154,7 +154,7 @@ const DashboardAgentFamilyOverviewPage = ({
           </Fragment>
         )}
         {isPageLoading && 'Loading...'}
-      </BigScreenSection>
+      </Section>
     </DashboardPageTemplate>
   );
 };

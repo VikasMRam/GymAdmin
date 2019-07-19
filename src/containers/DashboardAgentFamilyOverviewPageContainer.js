@@ -10,7 +10,7 @@ import { delayedExecutor, getSearchParams } from 'sly/services/helpers/search';
 import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP } from 'sly/constants/familyDetails';
 import SlyEvent from 'sly/services/helpers/events';
 
-const onClientDetailTableRowLinkClick = (clientName, to) => {
+const onClientClick = (clientName, to) => {
   const event = {
     category: 'TableRow',
     action: 'click',
@@ -121,7 +121,7 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     return (
       <DashboardAgentFamilyOverviewPage
         clients={clients}
-        onClientDetailTableRowLinkClick={onClientDetailTableRowLinkClick}
+        onClientClick={onClientClick}
         pagination={pagination}
         paginationString={paginationString}
         showPagination={showPagination}

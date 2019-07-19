@@ -38,7 +38,13 @@ export const THead = styled.thead`
   }
 `;
 
-export const TBody = 'tbody';
+export const TBody = styled.tbody`
+  display: block;
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: table-row-group; 
+  }
+`;
 
 export const Tr = styled.tr`
   display: block;
@@ -51,7 +57,7 @@ export const Tr = styled.tr`
 const disabledWrapperStyles = css`
   background-color: ${palette('white', 'base')};
   ${ifProp('disabled', css`
-  background-color: ${palette('grey', 'background')};
+    background-color: ${palette('grey', 'background')};
   `)}
 `;
 
@@ -68,6 +74,7 @@ export const Td = styled.td`
   display: block;
   
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: table-cell;
     max-width: ${size('layout.col3')};
     ${ifNotProp('borderless', css`
       padding: ${size('spacing.regular')} ${size('spacing.large')};
@@ -121,7 +128,6 @@ const TextIconChildrenSpan = styled(Link)`
 const DoubleLineBlock = styled(Block)`
   ${disabledStyles}
   display: block;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
@@ -130,8 +136,8 @@ const DoubleLineBlock = styled(Block)`
 export const TextTd = ({
   children, disabled, borderless, ...props
 }) => (
-  <Td disabled={disabled} borderless={borderless}>
-    <TextChildrenBlock size="caption" disabled={disabled} {...props}>
+  <Td disabled={disabled} borderless={borderless} {...props}>
+    <TextChildrenBlock size="caption" disabled={disabled}>
       {children}
     </TextChildrenBlock>
   </Td>
@@ -146,11 +152,11 @@ TextTd.propTypes = {
 export const DoubleLineTd = ({
   firstLine, secondLine, disabled, borderless, ...props
 }) => (
-  <Td disabled={disabled} borderless={borderless}>
-    <DoubleLineBlock size="caption" disabled={disabled} {...props}>
+  <Td disabled={disabled} borderless={borderless} {...props}>
+    <DoubleLineBlock size="caption" disabled={disabled}>
       {firstLine}
     </DoubleLineBlock>
-    <DoubleLineBlock size="tiny" palette="grey" disabled={disabled} {...props}>
+    <DoubleLineBlock size="tiny" palette="grey" disabled={disabled}>
       {secondLine}
     </DoubleLineBlock>
   </Td>
@@ -164,26 +170,27 @@ DoubleLineTd.propTypes = {
 };
 
 export const LinkTd = ({
-  children, disabled, borderless, ...props
+  to, children, disabled, borderless, ...props
 }) => (
-  <Td disabled={disabled} borderless={borderless}>
-    <LinkChildrenSpan size="caption" disabled={disabled} {...props}>
+  <Td disabled={disabled} borderless={borderless} {...props}>
+    <LinkChildrenSpan to={to} size="caption" disabled={disabled}>
       {children}
     </LinkChildrenSpan>
   </Td>
 );
 
 LinkTd.propTypes = {
+  to: string.isRequired,
   children: string.isRequired,
   disabled: bool,
   borderless: bool,
 };
 
 export const TextIconTd = ({
-  children, icon, iconPalette, disabled, borderless, ...props
+  to, children, icon, iconPalette, disabled, borderless, ...props
 }) => (
-  <Td disabled={disabled} kind="textIcon" borderless={borderless}>
-    <TextIconChildrenSpan size="caption" disabled={disabled} {...props}>
+  <Td disabled={disabled} kind="textIcon" borderless={borderless} {...props}>
+    <TextIconChildrenSpan to={to} size="caption" disabled={disabled}>
       {children}
     </TextIconChildrenSpan>
     <Icon icon={icon} palette={iconPalette} />
@@ -191,6 +198,7 @@ export const TextIconTd = ({
 );
 
 TextIconTd.propTypes = {
+  to: string.isRequired,
   children: string.isRequired,
   icon: string.isRequired,
   iconPalette: string,
