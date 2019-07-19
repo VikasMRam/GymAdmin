@@ -132,9 +132,9 @@ export default class ConversationMessagesContainer extends Component {
     const { ws } = this.props;
 
     ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
-    /* if (messagesRef.current) {
+    if (this.messagesRef.current) {
       this.messagesRef.current.removeEventListener('scroll', this.handleScroll);
-    } */
+    }
   }
 
   onMessage = (message) => {
@@ -190,7 +190,7 @@ export default class ConversationMessagesContainer extends Component {
   isScrollAtBottom = () => this.messagesRef.current && (this.messagesRef.current.scrollHeight -
     this.messagesRef.current.scrollTop === this.messagesRef.current.clientHeight);
 
-  checkAndPatchLastReadMessage(timeout) {
+  checkAndPatchLastReadMessage = (timeout) => {
     if (!this.timeoutInst) {
       const {
         messages, conversation, user,
@@ -207,7 +207,7 @@ export default class ConversationMessagesContainer extends Component {
         }
       }
     }
-  }
+  };
 
   updateLastReadMessageAt = () => {
     const {
