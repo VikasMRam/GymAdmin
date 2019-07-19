@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import styled, { css } from 'styled-components';
 import { string, func, object, arrayOf, bool } from 'prop-types';
+import { generatePath } from 'react-router';
 
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
@@ -366,10 +367,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       return <StyledFamilyActivityItem {...props} />;
     }) : [];
 
-    const summaryPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
-    const activityPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
-    const familyDetailsPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
-    const communitiesPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', COMMUNITIES);
+    const summaryPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: SUMMARY });
+    const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id });
+    const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS });
+    const communitiesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: COMMUNITIES });
 
     let stickyFooterOptions = [];
     if (showAcceptRejectButtons) {
