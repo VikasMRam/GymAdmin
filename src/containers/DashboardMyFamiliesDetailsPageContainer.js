@@ -187,7 +187,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   goToFamilyDetails = () => {
     const { history, client } = this.props;
     const { id } = client;
-    const path = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab', FAMILY_DETAILS);
+    const path = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
     history.push(path);
   };
 
