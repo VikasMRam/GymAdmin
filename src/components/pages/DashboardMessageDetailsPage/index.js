@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
 import { bool, number } from 'prop-types';
-// import { Redirect } from 'react-router-dom'; todo: uncomment after isLoading is fixed
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import {
   AGENT_DASHBOARD_MESSAGES_PATH,
   FAMILY_DASHBOARD_MESSAGES_PATH,
-//  DASHBOARD_PATH, todo: uncomment after isLoading is fixed
+  DASHBOARD_PATH,
 } from 'sly/constants/dashboardAppPaths';
 import { CUSTOMER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
@@ -59,8 +59,7 @@ const DashboardMessageDetailsPage = ({
   let viewingAsParticipant;
   let otherParticipant;
 
-  // todo: remove && conversation after isLoading is fixed
-  if (!isLoading && conversation) {
+  if (!isLoading) {
     ({ conversationParticipants } = conversation);
     const { id } = user;
     viewingAsParticipant = conversationParticipants.find(p => p.participantID === id);
@@ -82,25 +81,25 @@ const DashboardMessageDetailsPage = ({
 
   return (
     <DashboardPageTemplate activeMenuItem="Messages" bodyHasOverflow>
-      {/* todo: uncomment after isLoading is fixed
-      !isLoading && !conversation && <Redirect to={DASHBOARD_PATH} /> */}
-      {conversation &&
-        <StyledHeadingBoxSection heading={heading} hasNoBodyPadding>
-          {isLoading &&
-            <Block size="caption">Loading...</Block>
-          }
-          {!isLoading &&
-            <Fragment>
-              <StyledConversationMessagesContainer
-                conversation={conversation}
-                viewingAsParticipant={viewingAsParticipant}
-                participants={conversationParticipants}
-              />
-              <StyledSendMessageFormContainer otherParticipant={otherParticipant} />
-            </Fragment>
-          }
-        </StyledHeadingBoxSection>
-      }
+      {!isLoading && !conversation && <Redirect to={DASHBOARD_PATH} />}
+      <StyledHeadingBoxSection heading={heading} hasNoBodyPadding>
+        {isLoading &&
+          <Fragment>
+            <br />
+            <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
+          </Fragment>
+        }
+        {!isLoading &&
+          <Fragment>
+            <StyledConversationMessagesContainer
+              conversation={conversation}
+              viewingAsParticipant={viewingAsParticipant}
+              participants={conversationParticipants}
+            />
+            <StyledSendMessageFormContainer otherParticipant={otherParticipant} />
+          </Fragment>
+        }
+      </StyledHeadingBoxSection>
     </DashboardPageTemplate>
   );
 };
