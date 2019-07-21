@@ -33,7 +33,10 @@ export const styles = css`
   &:focus {
     outline: none;
   }
-  font-size: ${getSize('text')};
+  ${ifProp('size', css`
+    font-size: ${getSize('text')};
+  `)};
+  
   line-height: ${getSize('lineHeight')};
   
   ${ifProp('weight', css`
@@ -61,7 +64,6 @@ export default class Link extends Component {
   static defaultProps = {
     palette: 'primary',
     variation: 'base',
-    size: 'body',
   };
 
   static contextTypes = {

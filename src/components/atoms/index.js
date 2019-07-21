@@ -13,6 +13,7 @@ export Label from './Label';
 export Link from './Link';
 export Paragraph from './Paragraph';
 export Span from './Span';
+export Stage from './Stage';
 export Tag from './Tag';
 export * from './Table';
 export Thumbnail from './Thumbnail';
