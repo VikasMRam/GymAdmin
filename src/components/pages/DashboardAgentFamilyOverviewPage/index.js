@@ -23,7 +23,9 @@ const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
 ];
 
 const Section = styled.section`
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+  background-color: ${palette('grey.background')};
+  
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     background-color: ${palette('white.base')};
   }
 `;
@@ -35,6 +37,7 @@ const FamiliesCountStatusBlock = styled(Block)`
 
 const StyledTable = styled(Table)`
   overflow: auto;
+  width: 100%;
   font-size: ${size('text.caption')};
 `;
 
@@ -125,13 +128,13 @@ const DashboardAgentFamilyOverviewPage = ({
 
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
-      <Section>
-        <StyledTabs activeTab={activeTab} tabsOnly>
-          <div id={tabIDs[0]} label={prospectsTabLabel} to={AGENT_DASHBOARD_FAMILIES_PATH} onClick={() => onTabClick(prospectsLabel)} />
-          <div id={tabIDs[1]} label={connectedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Connected`} onClick={() => onTabClick(connectedLabel)} />
-          <div id={tabIDs[2]} label={closedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Closed`} onClick={() => onTabClick(closedLabel)} />
-        </StyledTabs>
+      <StyledTabs activeTab={activeTab} tabsOnly>
+        <div id={tabIDs[0]} label={prospectsTabLabel} to={AGENT_DASHBOARD_FAMILIES_PATH} onClick={() => onTabClick(prospectsLabel)} />
+        <div id={tabIDs[1]} label={connectedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Connected`} onClick={() => onTabClick(connectedLabel)} />
+        <div id={tabIDs[2]} label={closedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Closed`} onClick={() => onTabClick(closedLabel)} />
+      </StyledTabs>
 
+      <Section>
         {tableHeaderButtons}
 
         {!isPageLoading && (

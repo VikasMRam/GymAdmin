@@ -10,6 +10,7 @@ import {
   Link,
   Icon,
   Stage,
+  Hr,
 } from 'sly/components/atoms';
 
 import {
@@ -64,7 +65,12 @@ const NameCell = mobileOnly(StyledNameCell, css`
 
 const ResidentCell = mobileOnly(TextTd, css`display: none`);
 
-const StageCell = mobileOnly(Td, css`order: 3;`);
+const StageCell = mobileOnly(Td, css`
+  order: 3;
+  border-top: ${size('border.regular')} solid ${palette('grey.filler')};
+  margin: ${size('spacing.large')} -${size('spacing.large')} 0 -${size('spacing.large')};
+  padding: ${size('spacing.regular')} ${size('spacing.large')} 0;
+`);
 
 const NoteCell = mobileOnly(({ disabled, note, ...props }) => (
   <Fragment>
@@ -75,7 +81,14 @@ const NoteCell = mobileOnly(({ disabled, note, ...props }) => (
       <TextTd disabled={disabled} {...props} />
     )}
   </Fragment>
-), css`${ifNotProp('note', css`display: none;`)}`);
+), css`
+  ${ifNotProp('note', css`display: none;`)}
+  
+  & > ${Block} + ${Block} {
+    margin-top: ${size('spacing.small')}; 
+  }
+    
+`);
 
 const DateAddedCell = mobileOnly(TextTd, css`display: none`);
 

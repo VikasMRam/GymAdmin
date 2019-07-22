@@ -9,6 +9,7 @@ import Block from 'sly/components/atoms/Block';
 
 export const Table = styled.table`
   display: block;
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: table;
     
@@ -31,6 +32,7 @@ export const Table = styled.table`
 
 export const THead = styled.thead`
   display: none;
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: table-header-group;
   }
@@ -38,6 +40,7 @@ export const THead = styled.thead`
 
 export const TBody = styled.tbody`
   display: block;
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: table-row-group; 
   }
@@ -45,6 +48,7 @@ export const TBody = styled.tbody`
 
 export const Tr = styled.tr`
   display: block;
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: table-row; 
   }
@@ -52,6 +56,7 @@ export const Tr = styled.tr`
 
 export const Td = styled.td`
   display: block;
+  
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: table-cell;
     max-width: ${size('layout.col3')};
@@ -79,6 +84,7 @@ const TextBlock = styled(Block)`
   overflow: hidden;
   width: 100%;
   text-overflow: ellipsis;
+  margin: ${size('spacing.tiny')};
 `;
 
 TextBlock.propTypes = {
