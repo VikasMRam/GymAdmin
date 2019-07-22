@@ -3,6 +3,7 @@ import qs from 'querystring';
 import React, { Component } from 'react';
 import { arrayOf, object } from 'prop-types';
 import dayjs from 'dayjs';
+import { generatePath } from 'react-router';
 
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { withUser, prefetch } from 'sly/services/newApi';
@@ -61,7 +62,7 @@ const convertClientsToTableContents = (clients) => {
     const disabled = status === FAMILY_STATUS_ON_HOLD;
     const pausedTd = disabled ? { disabled, icon: 'pause', iconPalette: 'danger' } : {};
     const pausedType = disabled ? 'textIcon' : 'link';
-    const to = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
+    const to = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id });
     rowItems.push({
       type: pausedType,
       data: {
@@ -116,7 +117,7 @@ const convertClientsToMobileContents = (clients) => {
       rowItems.push({ type: 'doubleLine', data: { firstLine: body, secondLine: latestNoteCreatedAtStr } });
     }
     rowItems.push({ type: 'stage', data: { text: stage, currentStage: level, palette } });
-    const to = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
+    const to = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: SUMMARY });
     return {
       heading: clientName,
       onHeadingClick: () => onClientDetailTableRowCardHeadingLinkClick(clientName, to),

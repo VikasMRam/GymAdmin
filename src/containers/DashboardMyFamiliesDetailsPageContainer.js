@@ -3,6 +3,7 @@ import { object, func, arrayOf } from 'prop-types';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
+import { generatePath } from 'react-router';
 
 import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
@@ -187,7 +188,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   goToFamilyDetails = () => {
     const { history, client } = this.props;
     const { id } = client;
-    const path = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab', FAMILY_DETAILS);
+    const path = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS });
     history.push(path);
   };
 
