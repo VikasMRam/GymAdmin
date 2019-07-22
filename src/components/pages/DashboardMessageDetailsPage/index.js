@@ -103,7 +103,7 @@ const DashboardMessageDetailsPage = ({
               viewingAsParticipant={viewingAsParticipant}
               participants={conversationParticipants}
             />
-            <StyledSendMessageFormContainer otherParticipant={otherParticipant} />
+            <StyledSendMessageFormContainer otherParticipant={otherParticipant} viewingAsParticipant={viewingAsParticipant} />
           </Fragment>
         }
       </StyledHeadingBoxSection>

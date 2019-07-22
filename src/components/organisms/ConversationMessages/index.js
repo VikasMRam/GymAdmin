@@ -62,7 +62,7 @@ const getDateText = (date) => {
 const ConversationMessages = ({
   messages, participants, viewingAsParticipant, className, newMessageRef,
 }) => {
-  const lastMessageReadAt = viewingAsParticipant.stats.lastReadMessageAt;
+  const lastMessageReadAt = viewingAsParticipant && viewingAsParticipant.stats.lastReadMessageAt;
   const participantsById = participants.reduce((a, b) => {
     a[b.id] = b;
     return a;
@@ -88,10 +88,9 @@ const ConversationMessages = ({
         hrProps.hrRef = newMessageRef;
         addedNewMarker = true;
       }
-
       messageComponents.push(<PaddedHrWithText key={`hr-${message.id}`} {...hrProps} />);
     }
-    if (!addedNewMarker && isAfter(message.createdAt, lastMessageReadAt)) {
+    if (lastMessageReadAt && !addedNewMarker && isAfter(message.createdAt, lastMessageReadAt)) {
       const hrProps = {
         badgeText: 'New',
         palette: 'warning',
@@ -103,7 +102,7 @@ const ConversationMessages = ({
       messageComponents.push(<PaddedHrWithText key={`new-message-hr-${message.id}`} {...hrProps} />);
     }
 
-    const isRightAligned = viewingAsParticipant.id === message.conversationParticipantID;
+    const isRightAligned = viewingAsParticipant ? viewingAsParticipant.id === message.conversationParticipantID : false;
     const props = {
       message,
       isRightAligned,
@@ -128,7 +127,7 @@ const ConversationMessages = ({
 ConversationMessages.propTypes = {
   messages: arrayOf(messagePropType).isRequired,
   participants: arrayOf(participantPropType).isRequired,
-  viewingAsParticipant: participantPropType.isRequired,
+  viewingAsParticipant: participantPropType,
   className: string,
   newMessageRef: object,
 };
