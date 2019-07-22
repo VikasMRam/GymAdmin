@@ -148,8 +148,9 @@ export default class ConversationMessagesContainer extends Component {
       status.messages.refetch();
       getConversations({ 'filter[participant_id]': user.id });
       // Patch last read message immediately if the user is active on that conversation
-      if (!document.hidden) {
-        this.checkAndPatchLastReadMessage(0);
+      // if scroll at bottom
+      if (!document.hidden && this.wasScrollAtBottom) {
+        this.updateLastReadMessageAt();
       }
       // prevent more handlers to be called if page is visible
       return document.hidden;
@@ -249,6 +250,9 @@ export default class ConversationMessagesContainer extends Component {
         sort: '-created_at',
         'page-number': pageNumber + 1,
       }).then(this.onNewMessagesLoaded);
+    }
+    if (this.wasScrollAtBottom) {
+      this.timeoutInst = this.checkAndPatchLastReadMessage(0);
     }
   };
 
