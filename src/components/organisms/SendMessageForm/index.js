@@ -28,7 +28,7 @@ const BigScreenButton = displayOnlyIn(Button, ['tablet', 'laptop']);
 BigScreenButton.displayName = 'BigScreenButton';
 
 const SendMessageForm = ({
-  error, otherParticipant, className, handleSubmit, pristine, submitting, invalid,
+  error, otherParticipant, className, handleSubmit, pristine, submitting, invalid, viewingAsParticipant,
 }) => (
   <form onSubmit={handleSubmit} className={className}>
     <TwoColumWrapper>
@@ -38,6 +38,7 @@ const SendMessageForm = ({
         placeholder={otherParticipant && otherParticipant.participantInfo && `Message ${otherParticipant.participantInfo.name.split(' ').shift()}...`}
         component={ReduxField}
         hideErrors
+        disabled={!viewingAsParticipant}
       />
       <BigScreenButton type="submit" disabled={invalid || pristine || submitting}>Send message</BigScreenButton>
       <SmallScreenButton type="submit" icon="send" disabled={invalid || pristine || submitting} />
@@ -54,6 +55,7 @@ SendMessageForm.propTypes = {
   submitting: bool,
   pristine: bool,
   invalid: bool,
+  viewingAsParticipant: participantPropType,
 };
 
 export default SendMessageForm;

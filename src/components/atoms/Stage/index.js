@@ -5,6 +5,7 @@ import { prop, ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { Block } from 'sly/components/atoms';
+import { getStageDetails } from 'sly/services/helpers/stage';
 
 const TextBlock = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
@@ -24,8 +25,9 @@ const Indicators = styled.span`
 `;
 
 const Stage = ({
-  text, totalStage, currentStage, palette, className,
+  stage, totalStage, className,
 }) => {
+  const { level: currentStage, palette } = getStageDetails(stage);
   const indicators = [];
   for (let i = 0; i < totalStage; i += 1) {
     let indicatorPalette = null;
@@ -38,14 +40,14 @@ const Stage = ({
   }
   return (
     <div className={className}>
-      <TextBlock size="caption">{text}</TextBlock>
+      <TextBlock size="caption">{stage}</TextBlock>
       <Indicators>{indicators}</Indicators>
     </div>
   );
 };
 
 Stage.propTypes = {
-  text: string.isRequired,
+  stage: string.isRequired,
   currentStage: number.isRequired,
   totalStage: number,
   palette: string,

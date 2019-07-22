@@ -11,7 +11,7 @@ const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
 const Block = styled.div`
-  ${ifProp('color', css`color: ${getColor}`)};
+  ${ifProp('palette', css`color: ${getColor}`)};
   font-size: ${getSize('text')};
   line-height: ${getSize('lineHeight')};
   font-weight: ${p => size('weight', p.weight)};

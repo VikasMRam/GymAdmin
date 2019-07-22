@@ -35,6 +35,7 @@ const FamiliesCountStatusBlock = styled(Block)`
 
 const StyledTable = styled(Table)`
   overflow: auto;
+  font-size: ${size('text.caption')};
 `;
 
 const BigScreenPaginationWrapper = styled.div`

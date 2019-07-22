@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
 import { func } from 'prop-types';
+import { ifProp, ifNotProp } from 'styled-tools';
+import { generatePath } from 'react-router';
 
 import {
   Block,
@@ -17,13 +19,11 @@ import {
   Tr,
 } from 'sly/components/atoms/Table';
 
-import { getStageDetails } from 'sly/services/helpers/stage';
 import { FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 import clientPropType from 'sly/propTypes/client';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import { size, palette } from 'sly/components/themes';
-import { ifNotProp } from 'styled-tools';
 
 const Wrapper = mobileOnly(Tr, css`
   display: flex;
@@ -36,29 +36,37 @@ const Wrapper = mobileOnly(Tr, css`
   
   background: ${palette('white', 'base')};
   margin: ${size('spacing.large')};
+  
+  ${ifProp('disabled', css`
+    background-color: ${palette('grey', 'background')};
+    color: ${palette('slate', 'filler')};
+  `)}
 `);
 
-const NameCell = mobileOnly(({ disabled, client, ...props }) => (
+const genFamilyDetailsPath = id => generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id });
+const StyledNameCell = styled(({ disabled, client, ...props }) => (
   <Td disabled={disabled} {...props}>
-    <Link to={AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', client.id)} {...props}>
+    <Link to={genFamilyDetailsPath(client.id)} {...props}>
       {client.clientInfo.name}
-      {disabled && <Icon icon="pause" palette="danger" />}
+      {disabled && <Icon icon="pause" palette="danger" size="caption" />}
     </Link>
   </Td>
-), css`
-  font-weight: ${size('weight.medium')};
-  Icon {
-    margin-left: ${size('spacing.large')}; 
+))`
+  ${Icon} {
+    margin-left: ${size('spacing.small')}; 
   } 
+`;
+
+const NameCell = mobileOnly(StyledNameCell, css`
+  margin-bottom: ${size('spacing.regular')};
+  font-weight: ${size('weight.medium')};
 `);
 
 const ResidentCell = mobileOnly(TextTd, css`display: none`);
 
-const StageCell = styled(Td)`
-  order: 3; 
-`;
+const StageCell = mobileOnly(Td, css`order: 3;`);
 
-const NoteCell = styled(({ disabled, note, ...props }) => (
+const NoteCell = mobileOnly(({ disabled, note, ...props }) => (
   <Fragment>
     {note && (
       <DoubleLineTd firstLine={note.body} secondLine={dayjs(note.createdAt).format('MM/DD/YYYY')} disabled={disabled} {...props} />
@@ -67,12 +75,7 @@ const NoteCell = styled(({ disabled, note, ...props }) => (
       <TextTd disabled={disabled} {...props} />
     )}
   </Fragment>
-))`
-  ${ifNotProp('note', css`display: none;`)}
-  @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    display: table-cell; 
-  } 
-`;
+), css`${ifNotProp('note', css`display: none;`)}`);
 
 const DateAddedCell = mobileOnly(TextTd, css`display: none`);
 
@@ -80,7 +83,6 @@ const ClientRowCard = ({ client, onClientClick }) => {
   const {
     clientInfo, uuidAux, stage, status, createdAt, notes,
   } = client;
-  const { level, palette } = getStageDetails(stage);
   const { uuidInfo } = uuidAux;
   let residentName = '';
   if (uuidInfo) {
@@ -93,11 +95,11 @@ const ClientRowCard = ({ client, onClientClick }) => {
   const lastNote = notes[0];
 
   return (
-    <Wrapper>
+    <Wrapper disabled={disabled}>
       <NameCell disabled={disabled} client={client} onClick={() => onClientClick(clientInfo.name, to)} />
       <ResidentCell disabled={disabled}>{residentName}</ResidentCell>
       <StageCell disabled={disabled}>
-        <Stage text={stage} currentStage={level} />
+        <Stage stage={stage} />
       </StageCell>
       <NoteCell note={lastNote} disabled={disabled} />
       <DateAddedCell disabled={disabled}>{createdAtStr}</DateAddedCell>

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { node, bool, string } from 'prop-types';
-import { switchProp, ifProp } from 'styled-tools';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
@@ -55,7 +55,6 @@ export const Td = styled.td`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: table-cell;
     max-width: ${size('layout.col3')};
-    font-size: ${size('text.caption')};
     line-height: ${size('lineHeight.caption')};
     
     padding: ${size('spacing.regular')} ${size('spacing.large')};
@@ -83,11 +82,7 @@ const TextBlock = styled(Block)`
 `;
 
 TextBlock.propTypes = {
-  size: string.isRequired,
-};
-
-TextBlock.defaultProps = {
-  size: 'caption',
+  size: string,
 };
 
 const LinkBlock = styled(Link)`
@@ -146,4 +141,3 @@ LinkTd.propTypes = {
   disabled: bool,
   borderless: bool,
 };
-

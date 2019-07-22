@@ -115,7 +115,9 @@ export default class ConversationMessagesContainer extends Component {
   componentDidUpdate() {
     const { messages } = this.state;
 
-    this.checkAndPatchLastReadMessage(MESSAGES_UPDATE_LAST_READ_TIMEOUT);
+    if (!this.timeoutInst) {
+      this.timeoutInst = this.checkAndPatchLastReadMessage(MESSAGES_UPDATE_LAST_READ_TIMEOUT);
+    }
     if (messages && messages.length && this.messagesRef.current) {
       if (!this.scrolled) {
         this.messagesRef.current.addEventListener('scroll', this.handleScroll);
@@ -132,9 +134,9 @@ export default class ConversationMessagesContainer extends Component {
     const { ws } = this.props;
 
     ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
-    /* if (messagesRef.current) {
+    if (this.messagesRef.current) {
       this.messagesRef.current.removeEventListener('scroll', this.handleScroll);
-    } */
+    }
   }
 
   onMessage = (message) => {
@@ -143,11 +145,13 @@ export default class ConversationMessagesContainer extends Component {
     } = this.props;
     const { id } = conversation;
     if (message.payload.conversationId === id) {
+      this.gotNewMessage = true;
       status.messages.refetch();
       getConversations({ 'filter[participant_id]': user.id });
       // Patch last read message immediately if the user is active on that conversation
-      if (!document.hidden) {
-        this.checkAndPatchLastReadMessage(0);
+      // if scroll at bottom
+      if (!document.hidden && this.wasScrollAtBottom) {
+        this.updateLastReadMessageAt();
       }
       // prevent more handlers to be called if page is visible
       return document.hidden;
@@ -190,47 +194,45 @@ export default class ConversationMessagesContainer extends Component {
   isScrollAtBottom = () => this.messagesRef.current && (this.messagesRef.current.scrollHeight -
     this.messagesRef.current.scrollTop === this.messagesRef.current.clientHeight);
 
-  checkAndPatchLastReadMessage(timeout) {
-    if (!this.timeoutInst) {
-      const {
-        messages, conversation, user,
-      } = this.props;
-      if (messages && messages.length) {
-        const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
-        const { conversationParticipants } = conversation;
-        const { id: userId } = user;
-        const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
+  checkAndPatchLastReadMessage = (timeout) => {
+    const {
+      messages, viewingAsParticipant,
+    } = this.props;
+    if (messages && messages.length) {
+      const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
+      if (viewingAsParticipant) {
         const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
 
         if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
-          this.timeoutInst = setTimeout(this.updateLastReadMessageAt, timeout);
+          return setTimeout(this.updateLastReadMessageAt, timeout);
         }
       }
     }
-  }
+    return null;
+  };
 
   updateLastReadMessageAt = () => {
     const {
-      updateConversationParticipant, conversation, user,
+      updateConversationParticipant, viewingAsParticipant,
     } = this.props;
-    const { conversationParticipants } = conversation;
-    const { id: userId } = user;
-    const viewingAsParticipant = conversationParticipants.find(p => p.participantID === userId);
-    const { id } = viewingAsParticipant;
-    const payload = {
-      type: CONVERSTION_PARTICIPANT_RESOURCE_TYPE,
-      attributes: viewingAsParticipant,
-    };
-    payload.attributes.stats.unreadMessageCount = 0;
-    payload.attributes.stats.lastReadMessageAt = dayjs().utc().format();
+    if (viewingAsParticipant) {
+      const { id } = viewingAsParticipant;
+      const payload = {
+        type: CONVERSTION_PARTICIPANT_RESOURCE_TYPE,
+        attributes: viewingAsParticipant,
+      };
+      payload.attributes.stats.unreadMessageCount = 0;
+      payload.attributes.stats.lastReadMessageAt = dayjs().utc().format();
 
-    return updateConversationParticipant({ id }, payload)
-      .catch((r) => {
-        // TODO: Need to set a proper way to handle server side errors
-        const { body } = r;
-        const errorMessage = body.errors.map(e => e.title).join('. ');
-        console.error(errorMessage);
-      });
+      return updateConversationParticipant({ id }, payload)
+        .catch((r) => {
+          // TODO: Need to set a proper way to handle server side errors
+          const { body } = r;
+          const errorMessage = body.errors.map(e => e.title).join('. ');
+          console.error(errorMessage);
+        });
+    }
+    return null;
   };
 
   handleScroll = () => {
@@ -250,21 +252,27 @@ export default class ConversationMessagesContainer extends Component {
         'page-number': pageNumber + 1,
       }).then(this.onNewMessagesLoaded);
     }
+    if (this.gotNewMessage && this.wasScrollAtBottom) {
+      this.timeoutInst = this.checkAndPatchLastReadMessage(0);
+      this.gotNewMessage = false;
+    }
   };
 
   scrollToNewMessages = () => {
     if (this.newMessageRef.current) {
       const { messages } = this.state;
       const { viewingAsParticipant } = this.props;
-      const lastMessageReadAt = viewingAsParticipant.stats.lastReadMessageAt;
-      const firstUnreadMessage = [...messages].reverse().find(m => isAfter(m.createdAt, lastMessageReadAt));
-      const event = {
-        action: 'jump-to-new-messages',
-        category: categoryName,
-        label: firstUnreadMessage.id,
-      };
-      SlyEvent.getInstance().sendEvent(event);
-      this.newMessageRef.current.scrollIntoView(true);
+      if (viewingAsParticipant) {
+        const lastMessageReadAt = viewingAsParticipant.stats.lastReadMessageAt;
+        const firstUnreadMessage = [...messages].reverse().find(m => isAfter(m.createdAt, lastMessageReadAt));
+        const event = {
+          action: 'jump-to-new-messages',
+          category: categoryName,
+          label: firstUnreadMessage.id,
+        };
+        SlyEvent.getInstance().sendEvent(event);
+        this.newMessageRef.current.scrollIntoView(true);
+      }
     }
   };
 
@@ -308,12 +316,13 @@ export default class ConversationMessagesContainer extends Component {
     }
 
     this.alreadyLoaded = true;
-    const unreadMessagesNumber = viewingAsParticipant.stats.unreadMessageCount > 12 ? `${viewingAsParticipant.stats.unreadMessageCount}+` : viewingAsParticipant.stats.unreadMessageCount;
-    const lastReadMessageFormattedDate = dayjs(viewingAsParticipant.stats.lastReadMessageAt).format('hh:mm A on MMMM Do');
+    const viewingAsParticipantUnreadMessageCount = viewingAsParticipant ? viewingAsParticipant.stats.unreadMessageCount : 0;
+    const unreadMessagesNumber = viewingAsParticipantUnreadMessageCount > 12 ? `${viewingAsParticipantUnreadMessageCount}+` : viewingAsParticipantUnreadMessageCount;
+    const lastReadMessageFormattedDate = dayjs(viewingAsParticipantUnreadMessageCount).format('hh:mm A on MMMM Do');
 
     return (
       <div ref={this.messagesRef} className={className}>
-        {viewingAsParticipant.stats.unreadMessageCount > 0 &&
+        {viewingAsParticipantUnreadMessageCount > 0 &&
           <Wrapper>
             <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={this.handleMarkAsRead}>
               <SmallScreen weight="medium" size="caption">
