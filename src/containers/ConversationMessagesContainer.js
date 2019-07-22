@@ -115,7 +115,9 @@ export default class ConversationMessagesContainer extends Component {
   componentDidUpdate() {
     const { messages } = this.state;
 
-    this.checkAndPatchLastReadMessage(MESSAGES_UPDATE_LAST_READ_TIMEOUT);
+    if (!this.timeoutInst) {
+      this.timeoutInst = this.checkAndPatchLastReadMessage(MESSAGES_UPDATE_LAST_READ_TIMEOUT);
+    }
     if (messages && messages.length && this.messagesRef.current) {
       if (!this.scrolled) {
         this.messagesRef.current.addEventListener('scroll', this.handleScroll);
@@ -191,21 +193,20 @@ export default class ConversationMessagesContainer extends Component {
     this.messagesRef.current.scrollTop === this.messagesRef.current.clientHeight);
 
   checkAndPatchLastReadMessage = (timeout) => {
-    if (!this.timeoutInst) {
-      const {
-        messages, viewingAsParticipant,
-      } = this.props;
-      if (messages && messages.length) {
-        const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
-        if (viewingAsParticipant) {
-          const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
+    const {
+      messages, viewingAsParticipant,
+    } = this.props;
+    if (messages && messages.length) {
+      const parsedLastestMessageCreatedAt = dayjs(messages[0].createdAt).utc();
+      if (viewingAsParticipant) {
+        const parsedViewedCreatedAt = dayjs(viewingAsParticipant.stats.lastReadMessageAt).utc();
 
-          if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
-            this.timeoutInst = setTimeout(this.updateLastReadMessageAt, timeout);
-          }
+        if (parsedLastestMessageCreatedAt.isAfter(parsedViewedCreatedAt)) {
+          return setTimeout(this.updateLastReadMessageAt, timeout);
         }
       }
     }
+    return null;
   };
 
   updateLastReadMessageAt = () => {
