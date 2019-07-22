@@ -145,6 +145,7 @@ export default class ConversationMessagesContainer extends Component {
     } = this.props;
     const { id } = conversation;
     if (message.payload.conversationId === id) {
+      this.gotNewMessage = true;
       status.messages.refetch();
       getConversations({ 'filter[participant_id]': user.id });
       // Patch last read message immediately if the user is active on that conversation
@@ -251,8 +252,9 @@ export default class ConversationMessagesContainer extends Component {
         'page-number': pageNumber + 1,
       }).then(this.onNewMessagesLoaded);
     }
-    if (this.wasScrollAtBottom) {
+    if (this.gotNewMessage && this.wasScrollAtBottom) {
       this.timeoutInst = this.checkAndPatchLastReadMessage(0);
+      this.gotNewMessage = false;
     }
   };
 
