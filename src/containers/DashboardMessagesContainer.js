@@ -13,7 +13,9 @@ import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 
 @withUser
 @withWS
-@prefetch('conversations', 'getConversations')
+@prefetch('conversations', 'getConversations', (req, { user }) => req({
+  'filter[participant_id]': user && user.id,
+}))
 @query('getConversationMessages', 'getConversationMessages')
 
 export default class DashboardMessagesContainer extends Component {
