@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { string, func, bool, array, any } from 'prop-types';
+import { string, func, bool, oneOf, any } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -17,19 +17,21 @@ const Wrapper = styled.li`
   ${p => p.active && css`
     border-bottom: ${size('border', 'xxLarge')} solid ${palette('slate', 'base')};
   `}
-
-  ${p => p.tabStyles}
 `;
 
 export default class Tab extends Component {
   static propTypes = {
     to: string,
+    type: oneOf(['tab', 'menu']),
     target: string,
     active: bool.isRequired,
     children: any.isRequired,
     onClick: func.isRequired,
     className: string,
-    tabStyles: array,
+  };
+
+  static defaultProps = {
+    type: 'tab',
   };
 
   render() {
@@ -41,7 +43,6 @@ export default class Tab extends Component {
         active,
         children,
         className,
-        tabStyles,
       },
     } = this;
 
@@ -62,7 +63,6 @@ export default class Tab extends Component {
         onClick={onClick}
         active={active}
         className={className}
-        tabStyles={tabStyles}
       >
         {to && <Link target={target} to={to}>{content}</Link>}
         {!to && content}

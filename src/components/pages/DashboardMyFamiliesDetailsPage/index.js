@@ -452,16 +452,16 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           </div>
           <div>
             <StyledTabs activeTab={currentTab}>
-              <MobileTab id={SUMMARY} to={summaryPath} onClick={clickEventHandler('fdetails-tab','Summary')} target="_blank">
+              <MobileTab id={SUMMARY} to={summaryPath} onClick={clickEventHandler('fdetails-tab','Summary')}>
                 Summary
               </MobileTab>
-              <Tab id={ACTIVITY} default to={activityPath} onClick={clickEventHandler('fdetails-tab','Activity')} target="_blank">
+              <Tab id={ACTIVITY} default to={activityPath} onClick={clickEventHandler('fdetails-tab','Activity')}>
                 Activity
               </Tab>
-              <Tab id={FAMILY_DETAILS} to={familyDetailsPath} onClick={clickEventHandler('fdetails-tab','Family Details')} target="_blank">
+              <Tab id={FAMILY_DETAILS} to={familyDetailsPath} onClick={clickEventHandler('fdetails-tab','Family Details')}>
                 Family Details
               </Tab>
-              <Tab id={COMMUNITIES} to={communitiesPath} onClick={clickEventHandler('fdetails-tab', 'Communities')} target="_blank">
+              <Tab id={COMMUNITIES} to={communitiesPath} onClick={clickEventHandler('fdetails-tab', 'Communities')}>
                 Communities
               </Tab>
             </StyledTabs>
