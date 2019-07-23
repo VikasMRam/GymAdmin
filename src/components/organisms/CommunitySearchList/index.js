@@ -126,7 +126,7 @@ const CommunitySearchList = ({
         to={similarProperty.url}
         rel="noopener"
       >
-        <ShadowCommunityTile community={similarProperty} layout="column" imageSize="regular" noGallery showDescription showSeeMoreButtonOnHover />
+        <ShadowCommunityTile community={similarProperty} layout="column" imageSize="small" noGallery showDescription showSeeMoreButtonOnHover />
       </StyledLink>
     );
   });
