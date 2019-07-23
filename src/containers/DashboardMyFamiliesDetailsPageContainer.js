@@ -16,6 +16,8 @@ import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
 import SlyEvent from 'sly/services/helpers/events';
 
+@withUser
+
 @prefetch('client', 'getClient', (req, { match }) => req({
   id: match.params.id,
 }))
@@ -34,7 +36,9 @@ import SlyEvent from 'sly/services/helpers/events';
   invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
 }))
 
-@withUser
+@prefetch('conversations', 'getConversations', (req, { user }) => req({
+  'filter[participantID]': user && user.id,
+}))
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
@@ -185,6 +189,14 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     return updateClient({ id }, newClient);
   };
 
+  getHasConversationFinished = () => {
+    const { status } = this.props;
+    const { hasFinished: userHasFinished } = status.user;
+    const { hasFinished: conversationsHasFinished } = status.conversations;
+
+    return userHasFinished && conversationsHasFinished;
+  };
+
   goToFamilyDetails = () => {
     const { history, client } = this.props;
     const { id } = client;
@@ -198,13 +210,17 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     } = this;
 
     const {
-      client, match, status, notes,
+      client, match, status, notes, user, conversations,
     } = this.props;
 
     const { result: rawClient, meta } = status.client;
     const { hasFinished: clientHasFinished } = status.client;
     const { hasFinished: noteHasFinished } = status.notes;
-
+    const hasConversationFinished = this.getHasConversationFinished();
+    let conversation = null;
+    if (hasConversationFinished) {
+      [conversation] = conversations;
+    }
     return (
       <NotificationController>
         {({ notifyError, notifyInfo }) => (
@@ -232,6 +248,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 noteIsLoading={!noteHasFinished}
                 clientIsLoading={!clientHasFinished}
                 goToFamilyDetails={this.goToFamilyDetails}
+                user={user}
+                conversation={conversation}
+                hasConversationFinished={hasConversationFinished}
               />
             )}
           </ModalController>

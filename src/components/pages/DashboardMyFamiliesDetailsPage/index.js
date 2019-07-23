@@ -10,6 +10,7 @@ import {
   ACTIVITY,
   FAMILY_DETAILS,
   COMMUNITIES,
+  MESSAGES,
 } from 'sly/constants/dashboardAppPaths';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -37,6 +38,10 @@ import BackLink from 'sly/components/molecules/BackLink';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
+import fullWidth from 'sly/components/helpers/fullWidth';
+import fullHeight from 'sly/components/helpers/fullHeight';
+import SendMessageFormContainer from 'sly/containers/SendMessageFormContainer';
+import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
 
 const StyledTabs = styled(Tabs)`
   background-color: ${palette('white', 'base')};
@@ -157,6 +162,21 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-bottom: 0;
   }
+`;
+
+const TextCenterBlock = fullHeight(textAlign(Block));
+const FullWidthTextCenterBlock = fullWidth(TextCenterBlock);
+
+const StyledSendMessageFormContainer = pad(styled(SendMessageFormContainer)`
+  margin-left: ${size('spacing.xLarge')};
+  margin-right: ${size('spacing.xLarge')};
+  margin-top: ${size('spacing.xLarge')};
+  flex-grow: 0;
+`, 'large');
+
+const StyledConversationMessagesContainer = styled(ConversationMessagesContainer)`
+  flex-grow: 1;
+  overflow: auto;
 `;
 
 const PaddedBackLink = pad(BackLink, 'regular');
@@ -319,8 +339,19 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished,
     } = this.props;
+
+    let conversationParticipants = [];
+    let viewingAsParticipant;
+    let otherParticipant;
+
+    if (hasConversationFinished && conversation) {
+      ({ conversationParticipants } = conversation);
+      const { id } = user;
+      viewingAsParticipant = conversationParticipants.find(p => p.participantID === id);
+      (otherParticipant = conversationParticipants.find(p => p.participantID !== id));
+    }
 
     if (clientIsLoading) {
       return (
@@ -371,6 +402,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id });
     const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS });
     const communitiesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: COMMUNITIES });
+    const messagesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: MESSAGES });
 
     let stickyFooterOptions = [];
     if (showAcceptRejectButtons) {
@@ -469,6 +501,34 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   timeToMove={timeToMove}
                 />
               </FamilyDetailsTab>
+            </TabWrapper>
+          </div>
+          <div id={MESSAGES} default label="Messages" to={messagesPath} onClick={clickEventHandler('fdetails-tab','Messages')} target='_blank'>
+            <TabWrapper>
+              <div>
+                {!hasConversationFinished &&
+                  <Fragment>
+                    <br />
+                    <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
+                  </Fragment>
+                }
+                {!conversation &&
+                  <Fragment>
+                    <br />
+                    <FullWidthTextCenterBlock size="caption"> No Conversation found...</FullWidthTextCenterBlock>
+                  </Fragment>
+                }
+                {hasConversationFinished && conversation &&
+                  <Fragment>
+                    <StyledConversationMessagesContainer
+                      conversation={conversation}
+                      viewingAsParticipant={viewingAsParticipant}
+                      participants={conversationParticipants}
+                    />
+                    <StyledSendMessageFormContainer otherParticipant={otherParticipant} viewingAsParticipant={viewingAsParticipant} />
+                  </Fragment>
+                }
+              </div>
             </TabWrapper>
           </div>
           <div id={COMMUNITIES} label="Communities" to={communitiesPath} onClick={clickEventHandler('fdetails-tab','Communities')} target='_blank'>
