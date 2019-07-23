@@ -8,7 +8,12 @@ import { generatePath } from 'react-router';
 import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
 import notePropType from 'sly/propTypes/note';
-import { AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
+import {
+  AGENT_DASHBOARD_FAMILIES_PATH,
+  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
+  FAMILY_DETAILS,
+  ACTIVITY,
+} from 'sly/constants/dashboardAppPaths';
 import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -218,7 +223,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 notifyInfo={notifyInfo}
                 client={client}
                 rawClient={rawClient}
-                currentTab={match.params.tab}
+                currentTab={match.params.tab || ACTIVITY}
                 showModal={show}
                 hideModal={hide}
                 meta={meta}

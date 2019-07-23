@@ -23,7 +23,8 @@ const Wrapper = styled.li`
 
 export default class Tab extends Component {
   static propTypes = {
-    to: string.isRequired,
+    to: string,
+    target: string,
     active: bool.isRequired,
     children: any.isRequired,
     onClick: func.isRequired,
@@ -36,6 +37,7 @@ export default class Tab extends Component {
       props: {
         onClick,
         to,
+        target,
         active,
         children,
         className,
@@ -62,7 +64,7 @@ export default class Tab extends Component {
         className={className}
         tabStyles={tabStyles}
       >
-        {to && <Link to={to}>{content}</Link>}
+        {to && <Link target={target} to={to}>{content}</Link>}
         {!to && content}
       </Wrapper>
     );

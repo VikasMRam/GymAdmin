@@ -37,12 +37,11 @@ import BackLink from 'sly/components/molecules/BackLink';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
+import Tab from 'sly/components/molecules/Tab';
 
 const StyledTabs = styled(Tabs)`
   background-color: ${palette('white', 'base')};
-  > :first-child {
-    text-transform: uppercase;
-  }
+  text-transform: uppercase;
 `;
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
@@ -66,8 +65,9 @@ const SmallScreenBorder = css`
 `;
 
 const CommunitiesTab = styled.div`
-  ${SmallScreenBorder}
+  ${SmallScreenBorder};
   padding: ${size('spacing.xxxLarge')} 0;
+  
   > * {
     width: ${size('layout.col4')};
     margin-left: auto;
@@ -78,6 +78,15 @@ const CommunitiesTab = styled.div`
     width: ${size('layout.col4')};
     margin-left: auto;
     margin-right: auto;
+  }
+`;
+
+const TabContent = styled.div`
+  background-color: inherit;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
+    border-top: 0;
   }
 `;
 
@@ -96,7 +105,7 @@ const StyledFamilyActivityItem = styled(FamilyActivityItem)`
 `;
 
 const FamilyDetailsTab = styled.div`
-  ${SmallScreenBorder}
+  ${SmallScreenBorder};
   padding: ${size('spacing.xLarge')};
 `;
 
@@ -118,7 +127,7 @@ const TabWrapper = styled.div`
   }
 `;
 
-const hideInBigScreenStyles = css`
+const MobileTab = styled(Tab)`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }
@@ -153,9 +162,17 @@ const SmallScreenClientNameBlock = styled(Block)`
 
 const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   margin-bottom: ${size('element.xxxLarge')};
-
+  
+  main {
+    padding: 0;
+  }
+    
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-bottom: 0;
+    
+    main {
+      padding: ${size('spacing.xLarge')};
+    }
   }
 `;
 
@@ -404,90 +421,105 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
 
     return (
-      <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
-        <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
-          <BigScreenSummarySection>
-            <Box snap="bottom">
-              {backlink}
-              <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
-            </Box>
-            <Hr noMargin />
-            <FamilyStage
-              noBorderRadius
-              snap="top"
-              stageText={stage}
-              onAcceptClick={handleAcceptClick}
-              onRejectClick={handleRejectClick}
-              onUpdateClick={handleUpdateClick}
-              onAddNoteClick={handleAddNoteClick}
-            />
-            {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
-            {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
-            {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
-          </BigScreenSummarySection>
-          <SmallScreenClientNameWrapper>
-            <Link to={backLinkHref}>
-              <Icon icon="arrow-left" palette="slate" />
-            </Link>
-            <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
-          </SmallScreenClientNameWrapper>
-        </div>
-        <StyledTabs activeTab={currentTab}>
-          <div id={SUMMARY} label="Summary" tabStyles={hideInBigScreenStyles} to={summaryPath} onClick={clickEventHandler('fdetails-tab','Summary')} target='_blank'>
-            <TabWrapper>
-              <SmallScreenBorderPaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
+      <Fragment>
+        <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
+          <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
+            <BigScreenSummarySection>
+              <Box snap="bottom">
+                {backlink}
+                <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
+              </Box>
+              <Hr noMargin />
+              <FamilyStage
+                noBorderRadius
+                snap="top"
+                stageText={stage}
+                onAcceptClick={handleAcceptClick}
+                onRejectClick={handleRejectClick}
+                onUpdateClick={handleUpdateClick}
+                onAddNoteClick={handleAddNoteClick}
+              />
+              {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
+              {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
               {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
-            </TabWrapper>
+            </BigScreenSummarySection>
+            <SmallScreenClientNameWrapper>
+              <Link to={backLinkHref}>
+                <Icon icon="arrow-left" palette="slate" />
+              </Link>
+              <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
+            </SmallScreenClientNameWrapper>
           </div>
-          <div id={ACTIVITY} default label="Activity" to={activityPath} onClick={clickEventHandler('fdetails-tab','Activity')} target='_blank'>
+          <div>
+            <StyledTabs activeTab={currentTab}>
+              <MobileTab id={SUMMARY} to={summaryPath} onClick={clickEventHandler('fdetails-tab','Summary')} target="_blank">
+                Summary
+              </MobileTab>
+              <Tab id={ACTIVITY} default to={activityPath} onClick={clickEventHandler('fdetails-tab','Activity')} target="_blank">
+                Activity
+              </Tab>
+              <Tab id={FAMILY_DETAILS} to={familyDetailsPath} onClick={clickEventHandler('fdetails-tab','Family Details')} target="_blank">
+                Family Details
+              </Tab>
+              <Tab id={COMMUNITIES} to={communitiesPath} onClick={clickEventHandler('fdetails-tab', 'Communities')} target="_blank">
+                Communities
+              </Tab>
+            </StyledTabs>
             <TabWrapper>
-              <SmallScreenBorderDiv padding={!noteIsLoading && activityCards.length > 0 ? null : 'xLarge'}>
-                {noteIsLoading && <Block size="subtitle">Loading...</Block>}
-                {!noteIsLoading && activityCards.length === 0 &&
+              {currentTab === SUMMARY && (
+                <Fragment>
+                  <SmallScreenBorderPaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
+                  {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
+                </Fragment>
+              )}
+
+              {currentTab === ACTIVITY && (
+                <SmallScreenBorderDiv padding={!noteIsLoading && activityCards.length > 0 ? null : 'xLarge'}>
+                  {noteIsLoading && <Block size="subtitle">Loading...</Block>}
+                  {!noteIsLoading && activityCards.length === 0 &&
                   <TextAlignCenterBlock>There are no activities.</TextAlignCenterBlock>
-                }
-                {!noteIsLoading && activityCards.length > 0 &&
+                  }
+                  {!noteIsLoading && activityCards.length > 0 &&
                   <Fragment>
                     {/* <TableHeaderButtons hasColumnsButton={false} /> */}
                     {activityCards}
                   </Fragment>
-                }
-              </SmallScreenBorderDiv>
+                  }
+                </SmallScreenBorderDiv>
+              )}
+
+              {currentTab === FAMILY_DETAILS && (
+                <FamilyDetailsTab>
+                  <FamilyDetailsFormContainer
+                    client={client}
+                    rawClient={rawClient}
+                    notifyInfo={notifyInfo}
+                    notifyError={notifyError}
+                    accepted={!showAcceptRejectButtons}
+                    canEditFamilyDetails={canEditFamilyDetails}
+                    gender={gender}
+                    lookingFor={lookingFor}
+                    monthlyBudget={monthlyBudget}
+                    timeToMove={timeToMove}
+                  />
+                </FamilyDetailsTab>
+              )}
+
+              {currentTab === COMMUNITIES && (
+                <CommunitiesTab>
+                  <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
+                  <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
+                </CommunitiesTab>
+              )}
             </TabWrapper>
           </div>
-          <div id={FAMILY_DETAILS} label="Family Details" to={familyDetailsPath} onClick={clickEventHandler('fdetails-tab','Family Details')} target='_blank'>
-            <TabWrapper>
-              <FamilyDetailsTab>
-                <FamilyDetailsFormContainer
-                  client={client}
-                  rawClient={rawClient}
-                  notifyInfo={notifyInfo}
-                  notifyError={notifyError}
-                  accepted={!showAcceptRejectButtons}
-                  canEditFamilyDetails={canEditFamilyDetails}
-                  gender={gender}
-                  lookingFor={lookingFor}
-                  monthlyBudget={monthlyBudget}
-                  timeToMove={timeToMove}
-                />
-              </FamilyDetailsTab>
-            </TabWrapper>
-          </div>
-          <div id={COMMUNITIES} label="Communities" to={communitiesPath} onClick={clickEventHandler('fdetails-tab','Communities')} target='_blank'>
-            <TabWrapper>
-              <CommunitiesTab>
-                <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
-                <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
-              </CommunitiesTab>
-            </TabWrapper>
-          </div>
-        </StyledTabs>
-        <DashboardMyFamilyStickyFooterContainer
-          options={stickyFooterOptions}
-          stageProps={stickyFooterStageProps}
-          showAcceptRejectButtons={showAcceptRejectButtons}
-        />
-      </StyledDashboardTwoColumnTemplate>
+          <DashboardMyFamilyStickyFooterContainer
+            options={stickyFooterOptions}
+            stageProps={stickyFooterStageProps}
+            showAcceptRejectButtons={showAcceptRejectButtons}
+          />
+        </StyledDashboardTwoColumnTemplate>
+      </Fragment>
     );
   }
 }

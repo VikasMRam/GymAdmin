@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
 
-const TabWrapper = styled.div`
+const Wrapper = styled.div`
   border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
   border-left: 0;
   border-right: 0;
@@ -18,15 +18,6 @@ const TabWrapper = styled.div`
     border-top-left-radius: ${size('border.xxLarge')};
     border-top-right-radius: ${size('border.xxLarge')};
     border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
-  }
-`;
-
-const TabContent = styled.div`
-  background-color: inherit;
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
-    border-top: 0;
   }
 `;
 
@@ -78,30 +69,23 @@ export default class Tabs extends Component {
   onClickTabItem = (id, callback) => this.setState({ activeTab: id }, callback);
 
   render() {
-    const { children, className, tabsOnly } = this.props;
+    const { children, ...props } = this.props;
     const { activeTab } = this.state;
 
     return (
-      <div className={className}>
-        <TabWrapper>
-          {children.map((child) => {
-            const {
-              id, onClick,
-            } = child.props;
-            return React.cloneElement(child, {
-              active: activeTab === id,
-              onClick: e => this.onClickTabItem(id, () => onClick(e)),
-            });
-          })}
-        </TabWrapper>
-
-        <TabContent>
-          {!tabsOnly && children.map((child) => {
-            if (child.props.id !== activeTab) return undefined;
-            return child.props.children;
-          })}
-        </TabContent>
-      </div>
+      <Wrapper {...props}>
+        {children.map((child) => {
+          const {
+            id, onClick,
+          } = child.props;
+          return React.cloneElement(child, {
+            active: activeTab === id,
+            onClick: child.props.to
+              ? onClick
+              : e => this.onClickTabItem(id, () => onClick(e)),
+          });
+        })}
+      </Wrapper>
     );
   }
 }
