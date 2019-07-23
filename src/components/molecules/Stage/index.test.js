@@ -1,14 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Stage from 'sly/components/atoms/Stage';
+import Stage from 'sly/components/molecules/Stage';
 
-const defaultProps = {
-  text: 'New',
-  currentStage: 2,
-};
+const stage = 'New';
 
-const wrap = (props = {}) => shallow(<Stage {...defaultProps} {...props} />);
+const wrap = (props = {}) => shallow(<Stage stage={stage} {...props} />);
 
 describe('Stage', () => {
   it('does not renders children when passed in', () => {

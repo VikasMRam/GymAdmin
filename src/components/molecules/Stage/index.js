@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { prop, ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
-import { Block } from 'sly/components/atoms';
+import Block from 'sly/components/atoms/Block';
 import { getStageDetails } from 'sly/services/helpers/stage';
 
 const TextBlock = styled(Block)`
@@ -48,7 +48,6 @@ const Stage = ({
 
 Stage.propTypes = {
   stage: string.isRequired,
-  currentStage: number.isRequired,
   totalStage: number,
   palette: string,
   className: string,

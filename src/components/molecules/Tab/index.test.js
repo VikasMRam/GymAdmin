@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Tab from 'src/components/molecules/Tab';
+import Tab from 'sly/components/molecules/Tab';
 
 const onClick = jest.fn();
 const defaultProp = {
@@ -11,18 +11,18 @@ const wrap = (props = {}) => shallow(<Tab {...defaultProp} {...props} />);
 
 
 describe('Tab', () => {
-  it('does not renders children when passed in', () => {
+  it('renders children when passed in', () => {
     const wrapper = wrap({ children: 'test' });
-    expect(wrapper.contains('test')).toBe(false);
+    expect(wrapper.contains('test')).toBe(true);
   });
 
   it('renders active tab', () => {
-    const wrapper = wrap({ active: true, label: 'Foo' });
+    const wrapper = wrap({ active: true, children: 'Foo' });
     expect(wrapper.contains('Foo')).toBe(true);
   });
 
   it('handles onClick', () => {
-    const wrapper = wrap({ });
+    const wrapper = wrap({ children: 'Blah' });
     wrapper.simulate('click');
     expect(onClick).toHaveBeenCalled();
   });

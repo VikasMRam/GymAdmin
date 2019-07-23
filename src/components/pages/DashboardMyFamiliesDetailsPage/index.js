@@ -413,11 +413,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     const backLinkHref = levelGroup === 'Prospects' ? AGENT_DASHBOARD_FAMILIES_PATH : `${AGENT_DASHBOARD_FAMILIES_PATH}?type=${levelGroup}`;
-    const stickyFooterStageProps = {
-      text: `${levelGroup} - ${stage}`,
-      currentStage: level,
-      palette,
-    };
     const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
 
     return (
@@ -515,7 +510,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           </div>
           <DashboardMyFamilyStickyFooterContainer
             options={stickyFooterOptions}
-            stageProps={stickyFooterStageProps}
+            stage={stage}
             showAcceptRejectButtons={showAcceptRejectButtons}
           />
         </StyledDashboardTwoColumnTemplate>

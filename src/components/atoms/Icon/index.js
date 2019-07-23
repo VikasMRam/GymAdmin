@@ -11,19 +11,7 @@ import { size, palette, key } from 'sly/components/themes';
 const fontSize = props => size('icon', props.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
-const Icon = styled(({ icon, size, ...props }) => {
-  let svg;
-  try {
-    svg = require(`!raw-loader!./icons/${icon}-${size}.svg`);
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error('Icon not found:', `${icon}-${size}`);
-    svg = '<span>x</span>';
-  }
-  return (
-    <span size={size} {...props} dangerouslySetInnerHTML={{ __html: svg }} />
-  );
-})`
+const Wrapper = styled.span`
   display: inline-block;
   vertical-align: top;
   font-size: ${fontSize};
@@ -41,7 +29,19 @@ const Icon = styled(({ icon, size, ...props }) => {
   }
 `;
 
-Icon.displayName = 'Icon';
+const Icon = ({ icon, size, ...props }) => {
+  let svg;
+  try {
+    svg = require(`!raw-loader!./icons/${icon}-${size}.svg`);
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('Icon not found:', `${icon}-${size}`);
+    svg = '<span>x</span>';
+  }
+  return (
+    <Wrapper size={size} {...props} dangerouslySetInnerHTML={{ __html: svg }} />
+  );
+};
 
 Icon.propTypes = {
   icon: string.isRequired,
