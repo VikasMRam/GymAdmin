@@ -97,7 +97,7 @@ export default class CommunityInfo extends Component {
         </Heading>
       </Link>
     );
-  }
+  };
 
   renderRate = ({ estimated, startingRate }) => estimated ? (
     this.renderEstimatedRate(startingRate)
@@ -119,7 +119,7 @@ export default class CommunityInfo extends Component {
       community, inverted, showFloorPlan, ...props
     } = this.props;
     const {
-      name, webViewInfo, floorPlanString, propInfo, propRatings,
+      webViewInfo, floorPlanString, propInfo, propRatings,
       address, addressString,
     } = community;
     let { numReviews, typeCare = [] } = community;
