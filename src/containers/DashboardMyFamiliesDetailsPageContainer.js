@@ -36,8 +36,9 @@ import SlyEvent from 'sly/services/helpers/events';
   invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
 }))
 
-@prefetch('conversations', 'getConversations', (req, { user }) => req({
-  'filter[participantID]': user && user.id,
+@prefetch('conversations', 'getConversations', (req, { match }) => req({
+  'filter[participantID]': match.params.id,
+  'filter[participantType]': 'Client',
 }))
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
@@ -218,7 +219,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const { hasFinished: noteHasFinished } = status.notes;
     const hasConversationFinished = this.getHasConversationFinished();
     let conversation = null;
-    if (hasConversationFinished) {
+    if (hasConversationFinished && conversations) {
       [conversation] = conversations;
     }
     return (

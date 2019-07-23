@@ -40,8 +40,9 @@ import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import fullHeight from 'sly/components/helpers/fullHeight';
-import SendMessageFormContainer from 'sly/containers/SendMessageFormContainer';
 import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
+import userPropType from 'sly/propTypes/user';
+import conversationPropType from 'sly/propTypes/conversation/conversation';
 
 const StyledTabs = styled(Tabs)`
   background-color: ${palette('white', 'base')};
@@ -167,18 +168,6 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
 const TextCenterBlock = fullHeight(textAlign(Block));
 const FullWidthTextCenterBlock = fullWidth(TextCenterBlock);
 
-const StyledSendMessageFormContainer = pad(styled(SendMessageFormContainer)`
-  margin-left: ${size('spacing.xLarge')};
-  margin-right: ${size('spacing.xLarge')};
-  margin-top: ${size('spacing.xLarge')};
-  flex-grow: 0;
-`, 'large');
-
-const StyledConversationMessagesContainer = styled(ConversationMessagesContainer)`
-  flex-grow: 1;
-  overflow: auto;
-`;
-
 const PaddedBackLink = pad(BackLink, 'regular');
 
 export default class DashboardMyFamiliesDetailsPage extends Component {
@@ -201,6 +190,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     refetchClient: func.isRequired,
     refetchNotes: func.isRequired,
     goToFamilyDetails: func,
+    hasConversationFinished: bool,
+    conversation: conversationPropType,
+    user: userPropType.isRequired,
   };
 
   handleAcceptClick = () => {
@@ -344,13 +336,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     let conversationParticipants = [];
     let viewingAsParticipant;
-    let otherParticipant;
 
     if (hasConversationFinished && conversation) {
       ({ conversationParticipants } = conversation);
       const { id } = user;
       viewingAsParticipant = conversationParticipants.find(p => p.participantID === id);
-      (otherParticipant = conversationParticipants.find(p => p.participantID !== id));
     }
 
     if (clientIsLoading) {
@@ -520,12 +510,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                 }
                 {hasConversationFinished && conversation &&
                   <Fragment>
-                    <StyledConversationMessagesContainer
+                    <ConversationMessagesContainer
                       conversation={conversation}
                       viewingAsParticipant={viewingAsParticipant}
                       participants={conversationParticipants}
+                      sendMessageFormPlaceholder={`Message ${name}...`}
                     />
-                    <StyledSendMessageFormContainer otherParticipant={otherParticipant} viewingAsParticipant={viewingAsParticipant} />
                   </Fragment>
                 }
               </div>
