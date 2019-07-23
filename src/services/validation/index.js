@@ -5,7 +5,7 @@ import isURL from 'validator/lib/isURL';
 import isMobilePhone from 'validator/lib/isMobilePhone';
 import isFloat from 'validator/lib/isFloat';
 
-const isEmpty = value => value === undefined || value === null || value === '';
+const isEmpty = value => value === undefined || value === null || value.trim() === '';
 const join = rules => (value, data) =>
   rules.map((rule) => {
     const result = rule(value, data);
