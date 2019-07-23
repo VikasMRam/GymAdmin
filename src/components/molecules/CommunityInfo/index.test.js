@@ -98,5 +98,4 @@ describe('CommunityInfo', () => {
     const wrapper = wrap({ community: newRhodaGoldmanPlaza });
     verifyData(wrapper, newRhodaGoldmanPlaza);
   });
-
 });
