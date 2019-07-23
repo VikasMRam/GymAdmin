@@ -24,8 +24,10 @@ const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
 
 const Section = styled.section`
   background-color: ${palette('grey.background')};
+  padding: ${size('spacing.large')};
   
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: 0;
     background-color: ${palette('white.base')};
   }
 `;
@@ -33,12 +35,6 @@ const Section = styled.section`
 const FamiliesCountStatusBlock = styled(Block)`
   margin-bottom: ${size('spacing.large')};
   margin-left: ${size('spacing.large')};
-`;
-
-const StyledTable = styled(Table)`
-  overflow: auto;
-  width: 100%;
-  font-size: ${size('text.caption')};
 `;
 
 const BigScreenPaginationWrapper = styled.div`
@@ -95,11 +91,6 @@ const getBasePath = (activeTab) => {
 const DashboardAgentFamilyOverviewPage = ({
   clients, onClientClick, pagination, paginationString, activeTab, showPagination, onSearchTextKeyUp, isPageLoading,
 }) => {
-  const tableHeaderButtons = (
-    <TableHeaderButtons
-      onSearchTextKeyUp={onSearchTextKeyUp}
-    />
-  );
   const prospectsLabel = tabIDLabelMap[tabIDs[0]];
   const connectedLabel = tabIDLabelMap[tabIDs[1]];
   const closedLabel = tabIDLabelMap[tabIDs[2]];
@@ -134,12 +125,12 @@ const DashboardAgentFamilyOverviewPage = ({
         <div id={tabIDs[2]} label={closedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Closed`} onClick={() => onTabClick(closedLabel)} />
       </StyledTabs>
 
-      <Section>
-        {tableHeaderButtons}
+      <TableHeaderButtons onSearchTextKeyUp={onSearchTextKeyUp} />
 
+      <Section>
         {!isPageLoading && (
           <Fragment>
-            <StyledTable>
+            <Table>
               <THead>
                 {AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS
                   .map(({ text }) => <Th>{text}</Th>)
@@ -150,7 +141,7 @@ const DashboardAgentFamilyOverviewPage = ({
                   <ClientRowCard client={client} onClientClick={onClientClick} />
                 ))}
               </TBody>
-            </StyledTable>
+            </Table>
             <BigScreenPaginationWrapper>
               {paginationComponent}
             </BigScreenPaginationWrapper>

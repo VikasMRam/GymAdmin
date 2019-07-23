@@ -1,14 +1,25 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { string, func } from 'prop-types';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import Input from 'sly/components/atoms/Input';
 import IconButton from 'sly/components/molecules/IconButton';
 
+const border = css`${size('border.regular')} solid ${palette('slate.stroke')}`;
 const Wrappper = styled.div`
   display: flex;
   padding: ${size('spacing.large')};
+  border-top: ${border};
+  border-bottom: ${border};
+  background-color: ${palette('white.base')};
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    border-top: none;
+    border-bottom: none;
+    border-left: ${border};
+    border-right: ${border};
+  }
 `;
 
 // const SearchButton = styled(IconButton)`

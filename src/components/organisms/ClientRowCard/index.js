@@ -36,7 +36,8 @@ const Wrapper = mobileOnly(Tr, css`
   padding: ${size('spacing.large')};
   
   background: ${palette('white', 'base')};
-  margin: ${size('spacing.large')};
+  
+  margin-bottom: ${size('spacing.large')};
   
   ${ifProp('disabled', css`
     background-color: ${palette('grey', 'background')};

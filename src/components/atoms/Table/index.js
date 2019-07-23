@@ -1,34 +1,64 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { node, bool, string } from 'prop-types';
+import { node, bool, string, arrayOf, oneOfType } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import Link from 'sly/components/atoms/Link';
 import Block from 'sly/components/atoms/Block';
 
-export const Table = styled.table`
+const TableWrapper = styled.div`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+    border-top: none;
+    border-bottom: none;
+    overflow-x: auto;
+  }
+`;
+
+const StyledTable = styled.table`
   display: block;
   
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: table;
     
+    border: none;
+    
+    font-size: ${size('text.caption')};
+    
     border-collapse: collapse;
     width: 100%;
     position: relative;
-    margin-bottom: ${size('spacing.large')};
     
     td, th {
       white-space: nowrap;
+      border-right: none;
     }
-
-    th:first-child, td:first-child {
+    th:first-child, td:first-child { 
       left: 0;
       position: sticky;
       top: auto;
+      border-left: none;
+      box-shadow: 1px 0px 0px 0px ${palette('slate.stroke')};
     }
   }
 `;
+
+export const Table = ({ children, className, ...props }) => (
+  <TableWrapper className={className}>
+    <StyledTable {...props}>
+      {children}
+    </StyledTable>
+  </TableWrapper>
+);
+
+Table.propTypes = {
+  children: oneOfType([
+    arrayOf(node),
+    node,
+  ]).isRequired,
+  className: string,
+};
 
 export const THead = styled.thead`
   display: none;
