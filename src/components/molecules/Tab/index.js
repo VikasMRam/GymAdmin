@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { string, func, bool, array } from 'prop-types';
+import { string, func, bool, array, any } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
 import Span from 'sly/components/atoms/Span';
+import Link from 'sly/components/atoms/Link';
 
 const Wrapper = styled.li`
+  cursor: pointer;
   display: inline-block;
   list-style: none;
   padding-bottom: calc(${size('spacing.large')} - ${size('border.xxLarge')});
@@ -19,26 +21,23 @@ const Wrapper = styled.li`
   ${p => p.tabStyles}
 `;
 
-class Tab extends Component {
+export default class Tab extends Component {
   static propTypes = {
+    to: string.isRequired,
     active: bool.isRequired,
-    label: string.isRequired,
+    children: any.isRequired,
     onClick: func.isRequired,
     className: string,
     tabStyles: array,
   };
 
-  onClick = () => {
-    const { label, onClick } = this.props;
-    onClick(label);
-  }
-
   render() {
     const {
-      onClick,
       props: {
+        onClick,
+        to,
         active,
-        label,
+        children,
         className,
         tabStyles,
       },
@@ -50,6 +49,12 @@ class Tab extends Component {
       spanPalette = 'slate';
       spanVariation = 'base';
     }
+    const content = (
+      <Span weight="bold" size="tiny" palette={spanPalette} variation={spanVariation}>
+        {children}
+      </Span>
+    );
+
     return (
       <Wrapper
         onClick={onClick}
@@ -57,10 +62,9 @@ class Tab extends Component {
         className={className}
         tabStyles={tabStyles}
       >
-        <Span weight="bold" size="tiny" palette={spanPalette} variation={spanVariation}>{label}</Span>
+        {to && <Link to={to}>{content}</Link>}
+        {!to && content}
       </Wrapper>
     );
   }
 }
-
-export default Tab;

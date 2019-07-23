@@ -3,12 +3,6 @@ import { instanceOf, string, bool } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
-import { Link } from 'sly/components/atoms';
-import Tab from 'sly/components/atoms/Tab';
-import cursor from 'sly/components/helpers/cursor';
-
-const CursorTab = cursor(Tab);
-CursorTab.displayName = 'CursorTab';
 
 const TabWrapper = styled.div`
   border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
@@ -81,9 +75,7 @@ export default class Tabs extends Component {
     };
   }
 
-  onClickTabItem = (id) => {
-    this.setState({ activeTab: id });
-  };
+  onClickTabItem = (id, callback) => this.setState({ activeTab: id }, callback);
 
   render() {
     const { children, className, tabsOnly } = this.props;
@@ -94,23 +86,12 @@ export default class Tabs extends Component {
         <TabWrapper>
           {children.map((child) => {
             const {
-              to, id, label, tabStyles, onClick,
+              id, onClick,
             } = child.props;
-            const tab = (
-              <CursorTab
-                active={activeTab === id}
-                key={id}
-                label={label}
-                onClick={() => { this.onClickTabItem(id); onClick ? onClick() : null; }}
-                tabStyles={tabStyles}
-              />
-            );
-
-            if (to) {
-              return <Link key={id} to={to}>{tab}</Link>;
-            }
-
-            return tab;
+            return React.cloneElement(child, {
+              active: activeTab === id,
+              onClick: e => this.onClickTabItem(id, () => onClick(e)),
+            });
           })}
         </TabWrapper>
 

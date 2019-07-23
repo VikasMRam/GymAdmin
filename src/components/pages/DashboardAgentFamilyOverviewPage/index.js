@@ -8,6 +8,7 @@ import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import { Block, Table, THead, TBody } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
+import Tab from 'sly/components/molecules/Tab';
 import clientPropType from 'sly/propTypes/client';
 import { AGENT_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 import SlyEvent from 'sly/services/helpers/events';
@@ -48,18 +49,6 @@ const EmptyTextWrapper = styled.div`
   margin: ${size('spacing.xxxLarge')} ${size('spacing.xxLarge')};
   height: 100vh;
   text-align: center;
-`;
-
-const StyledTabs = styled(Tabs)`
-  > *:nth-child(1) {
-    border-top: 0;
-  }
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    > *:nth-child(1) {
-      border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-    }
-  }
 `;
 
 const tabIDLabelMap = {
@@ -119,11 +108,17 @@ const DashboardAgentFamilyOverviewPage = ({
 
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
-      <StyledTabs activeTab={activeTab} tabsOnly>
-        <div id={tabIDs[0]} label={prospectsTabLabel} to={AGENT_DASHBOARD_FAMILIES_PATH} onClick={() => onTabClick(prospectsLabel)} />
-        <div id={tabIDs[1]} label={connectedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Connected`} onClick={() => onTabClick(connectedLabel)} />
-        <div id={tabIDs[2]} label={closedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Closed`} onClick={() => onTabClick(closedLabel)} />
-      </StyledTabs>
+      <Tabs activeTab={activeTab} tabsOnly>
+        <Tab id={tabIDs[0]} to={AGENT_DASHBOARD_FAMILIES_PATH} onClick={() => onTabClick(prospectsLabel)}>
+          {prospectsTabLabel}
+        </Tab>
+        <Tab id={tabIDs[1]} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Connected`} onClick={() => onTabClick(connectedLabel)}>
+          {connectedTabLabel}
+        </Tab>
+        <Tab id={tabIDs[2]} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Closed`} onClick={() => onTabClick(closedLabel)}>
+          {closedTabLabel}
+        </Tab>
+      </Tabs>
 
       <TableHeaderButtons onSearchTextKeyUp={onSearchTextKeyUp} />
 

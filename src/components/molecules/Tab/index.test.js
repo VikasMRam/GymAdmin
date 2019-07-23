@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Tab from 'sly/components/atoms/Tab';
+import Tab from 'src/components/molecules/Tab';
 
 const onClick = jest.fn();
 const defaultProp = {
