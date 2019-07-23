@@ -10,12 +10,11 @@ const validate = createValidator({
 
 const ReduxForm = reduxForm({
   form: 'AddNoteForm',
-  validate,
   // required to refresh when initialValues change. Ref: https://redux-form.com/6.7.0/examples/initializefromstate/
   enableReinitialize: true,
   keepDirtyOnReinitialize: false,
 })(AddNoteForm);
 
-const AddNoteFormContainer = props => <ReduxForm {...props} />;
+const AddNoteFormContainer = props => props.noteRequired ? <ReduxForm {...props} validate={validate} /> : <ReduxForm {...props} />;
 
 export default AddNoteFormContainer;
