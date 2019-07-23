@@ -11,6 +11,7 @@ import { getHelmetForCommunityPage } from 'sly/services/helpers/html_headers';
 import SlyEvent from 'sly/services/helpers/events';
 import { calculatePricing, buildPriceList } from 'sly/services/helpers/pricing';
 import { generateAskAgentQuestionContents } from 'sly/services/helpers/agents';
+import pad from 'sly/components/helpers/pad';
 import { Button } from 'sly/components/atoms';
 import SeoLinks from 'sly/components/organisms/SeoLinks';
 import {
@@ -57,8 +58,6 @@ import ShareCommunityFormContainer from 'sly/containers/ShareCommunityFormContai
 import HowSlyWorksVideo from 'sly/components/organisms/HowSlyWorksVideo';
 import CommunityAddRatingFormContainer from 'sly/containers/CommunityAddRatingFormContainer';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
-import pad from 'sly/components/helpers/pad';
-
 import CommunityInpageWizardContainer from 'sly/containers/CommunityInpageWizardContainer';
 import CommunityPricingTable from 'sly/components/organisms/CommunityPricingTable';
 
@@ -68,7 +67,7 @@ const BackToSearch = styled.div`
 
 const StyledCommunitySummary = styled(CommunitySummary)`
   margin-bottom: ${size('spacing.xLarge')};
-  margin-top: -${size('spacing.xLarge')};
+  margin-top: ${size('spacing.xLarge')};
   position: relative;
   background: ${palette('white', 'base')};
   z-index: 1;
