@@ -16,12 +16,13 @@ const StyledBlock = styled(Block)`
 `;
 
 const AcceptAndContactFamilyForm = ({
-  onCallClick, onEmailClick, onCancelClick,
+  onCallClick, onEmailClick, onMessageClick, onCancelClick,
 }) => (
   <ThreeSectionFormTemplate hasCancel heading="Accept and contact this family" onCancelClick={onCancelClick}>
     <StyledBlock size="caption">Select how you would like to reach this family:</StyledBlock>
     {onCallClick && <StyledIconButton icon="phone" ghost transparent onClick={onCallClick}>Call</StyledIconButton>}
-    {onEmailClick && <IconButton icon="email" ghost transparent onClick={onEmailClick}>Email</IconButton>}
+    {onEmailClick && <StyledIconButton icon="email" ghost transparent onClick={onEmailClick}>Email</StyledIconButton>}
+    {onMessageClick && <IconButton icon="message" ghost transparent onClick={onMessageClick}>Message</IconButton>}
     {!onCallClick && !onEmailClick && <Block size="caption">No contact info available!</Block>}
   </ThreeSectionFormTemplate>
 );
@@ -29,6 +30,7 @@ const AcceptAndContactFamilyForm = ({
 AcceptAndContactFamilyForm.propTypes = {
   onCallClick: func,
   onEmailClick: func,
+  onMessageClick: func,
   onCancelClick: func,
 };
 

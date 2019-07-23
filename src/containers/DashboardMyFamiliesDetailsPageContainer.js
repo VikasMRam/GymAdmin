@@ -6,9 +6,11 @@ import { connect } from 'react-redux';
 import { generatePath } from 'react-router';
 
 import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
+import userPropType from 'sly/propTypes/user';
+import conversationPropType from 'sly/propTypes/conversation/conversation';
 import clientPropType from 'sly/propTypes/client';
 import notePropType from 'sly/propTypes/note';
-import { AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
+import { AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS, MESSAGES } from 'sly/constants/dashboardAppPaths';
 import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import NotificationController from 'sly/controllers/NotificationController';
@@ -43,7 +45,9 @@ import SlyEvent from 'sly/services/helpers/events';
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
+    user: userPropType.isRequired,
     client: clientPropType,
+    conversations: arrayOf(conversationPropType),
     match: object,
     status: object,
     history: object,
@@ -205,6 +209,18 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     history.push(path);
   };
 
+  goToMessagesTab = () => {
+    const { history, client } = this.props;
+    const { id } = client;
+    const path = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: MESSAGES });
+    history.push(path);
+  };
+
+  refetchConversations = () => {
+    const { status } = this.props;
+    status.conversations.refetch();
+  }
+
   render() {
     const {
       onRejectSuccess, onUnPause, onAddNote, onEditNote,
@@ -249,6 +265,8 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 noteIsLoading={!noteHasFinished}
                 clientIsLoading={!clientHasFinished}
                 goToFamilyDetails={this.goToFamilyDetails}
+                goToMessagesTab={this.goToMessagesTab}
+                refetchConversations={this.refetchConversations}
                 user={user}
                 conversation={conversation}
                 hasConversationFinished={hasConversationFinished}

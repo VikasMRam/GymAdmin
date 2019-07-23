@@ -190,6 +190,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     refetchClient: func.isRequired,
     refetchNotes: func.isRequired,
     goToFamilyDetails: func,
+    goToMessagesTab: func,
+    refetchConversations: func,
     hasConversationFinished: bool,
     conversation: conversationPropType,
     user: userPropType.isRequired,
@@ -197,7 +199,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
   handleAcceptClick = () => {
     const {
-      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails,
+      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails, goToMessagesTab, refetchConversations,
     } = this.props;
     SlyEvent.getInstance().sendEvent({
       category: 'fdetails',
@@ -212,6 +214,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         rawClient={rawClient}
         onCancel={hideModal}
         goToFamilyDetails={goToFamilyDetails}
+        goToMessagesTab={goToMessagesTab}
+        refetchConversations={refetchConversations}
       />), null, 'noPadding', false);
   };
 
