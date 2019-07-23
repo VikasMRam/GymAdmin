@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { string, func, bool, oneOf, any } from 'prop-types';
 import styled, { css } from 'styled-components';
 
@@ -19,54 +19,50 @@ const Wrapper = styled.li`
   `}
 `;
 
-export default class Tab extends Component {
-  static propTypes = {
-    to: string,
-    type: oneOf(['tab', 'menu']),
-    target: string,
-    active: bool.isRequired,
-    children: any.isRequired,
-    onClick: func.isRequired,
-    className: string,
-  };
-
-  static defaultProps = {
-    type: 'tab',
-  };
-
-  render() {
-    const {
-      props: {
-        onClick,
-        to,
-        target,
-        active,
-        children,
-        className,
-      },
-    } = this;
-
-    let spanPalette = 'slate';
-    let spanVariation = 'filler';
-    if (active) {
-      spanPalette = 'slate';
-      spanVariation = 'base';
-    }
-    const content = (
-      <Span weight="bold" size="tiny" palette={spanPalette} variation={spanVariation}>
-        {children}
-      </Span>
-    );
-
-    return (
-      <Wrapper
-        onClick={onClick}
-        active={active}
-        className={className}
-      >
-        {to && <Link target={target} to={to}>{content}</Link>}
-        {!to && content}
-      </Wrapper>
-    );
+const Tab = ({
+  onClick,
+  to,
+  target,
+  active,
+  children,
+  className,
+}) => {
+  let spanPalette = 'slate';
+  let spanVariation = 'filler';
+  if (active) {
+    spanPalette = 'slate';
+    spanVariation = 'base';
   }
-}
+  const content = (
+    <Span weight="bold" size="tiny" palette={spanPalette} variation={spanVariation}>
+      {children}
+    </Span>
+  );
+
+  return (
+    <Wrapper
+      onClick={onClick}
+      active={active}
+      className={className}
+    >
+      {to && <Link target={target} to={to}>{content}</Link>}
+      {!to && content}
+    </Wrapper>
+  );
+};
+
+Tab.propTypes = {
+  to: string,
+  type: oneOf(['tab', 'menu']),
+  target: string,
+  active: bool.isRequired,
+  children: any.isRequired,
+  onClick: func.isRequired,
+  className: string,
+};
+
+Tab.defaultProps = {
+  type: 'tab',
+};
+
+export default Tab;

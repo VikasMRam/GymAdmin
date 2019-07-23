@@ -2,19 +2,18 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import Tabs from 'sly/components/molecules/Tabs';
-import Tab from 'sly/components/molecules/Tab';
 
 const wrap = (props = {}) => shallow(<Tabs {...props} />);
 const children = [
   (
-    <div id="Gator" key="Gator" onClick={jest.fn()}>
+    <button id="Gator" key="Gator" onClick={jest.fn()}>
       Gator
-    </div>
+    </button>
   ),
   (
-    <div id="Croc" key="Croc" onClick={jest.fn()}>
+    <button id="Croc" key="Croc" onClick={jest.fn()}>
       Croc
-    </div>
+    </button>
   ),
 ];
 
@@ -23,11 +22,11 @@ describe('Tabs', () => {
     const wrapper = wrap({ children });
 
     wrapper.setProps({ activeTab: 'Croc' });
-    const secondTab = wrapper.find('div').at(1);
+    const secondTab = wrapper.find('button').at(1);
     expect(secondTab.prop('active')).toBe(true);
 
-    const firstTab = wrapper.find('div').at(0);
+    const firstTab = wrapper.find('button').at(0);
     firstTab.simulate('click');
-    expect(wrapper.find('div').at(0).prop('active')).toBe(true);
+    expect(wrapper.find('button').at(0).prop('active')).toBe(true);
   });
 });
