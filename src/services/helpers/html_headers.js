@@ -126,10 +126,10 @@ export const getHelmetForSearchPage = ({
   }
   const locationStr = city ? `${titleize(city)}, ${getStateAbbr(state)}` : `${titleize(state)}`;
   const numResultsStr = (listSize && listSize > 5) ? `${listSize}` : 'Best';
-  const title = `${numResultsStr} Best ${actualToc.seoLabel} in ${locationStr} `;
+  const title = `${numResultsStr} ${actualToc.seoLabel} in ${locationStr} `;
   let description = `${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, pricing, reviews & local senior care advice for ${locationStr} ${actualToc.label} communities`;
   if (city) {
-    description = `Get pricing & read reviews for ${numResultsStr} best ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, photos & talk to local ${titleize(city)} senior living experts.`;
+    description = `Get pricing & read reviews for ${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, photos & talk to local ${titleize(city)} senior living experts.`;
   }
   const canonicalUrl = `${host}${url.pathname}`;
   const ld = {};

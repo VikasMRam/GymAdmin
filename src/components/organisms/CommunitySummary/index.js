@@ -2,15 +2,13 @@ import React, { Fragment } from 'react';
 import { object, bool, func, string } from 'prop-types';
 import NumberFormat from 'react-number-format';
 import styled from 'styled-components';
-import ReactTooltip from 'react-tooltip';
 
-import { size, palette } from 'sly/components/themes';
+import { size } from 'sly/components/themes';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { Link, Box, Heading, Hr, Icon } from 'sly/components/atoms';
+import { Link, Box, Heading, Hr } from 'sly/components/atoms';
 import IconButton from 'sly/components/molecules/IconButton';
 import CommunityPricingAndRating from 'sly/components/molecules/CommunityPricingAndRating';
 import { USER_SAVE_DELETE_STATUS } from 'sly/constants/userSave';
-import { isServer } from 'sly/config';
 
 const Address = styled(Heading)`
   margin-bottom: ${size('spacing.xLarge')};
@@ -42,24 +40,6 @@ const StyledIconButton = styled(IconButton)`
   margin-right: ${size('spacing.regular')};
 `;
 
-const StyledIcon = styled(Icon)`
-  margin-left: ${size('spacing.small')};
-  vertical-align: text-top;
-`;
-
-const TooltipContent = styled(ReactTooltip)`
-  padding: ${size('spacing.regular')};
-  color: ${palette('white', 'base')} !important;
-  background-color: ${palette('slate', 'base')} !important;
-  border-radius: ${size('spacing.tiny')};
-  font-size: ${size('text.caption')};
-
-  &.place-top {
-    &:after {
-      border-top-color: ${palette('slate', 'base')} !important;
-    }
-  }
-`;
 const CommunitySummary = ({
   community, innerRef, isAdmin, onConciergeNumberClicked, className,
   onFavouriteClick, userSave, onShareClick,
@@ -114,12 +94,6 @@ const CommunitySummary = ({
                   displayType="text"
                 />
               </Link>
-              <StyledIcon palette="slate" variation="filler" icon="help" size="small" data-tip data-for="phone" />
-              {!isServer &&
-                <TooltipContent id="phone" place="top" effect="solid" multiline>
-                  This phone number will connect you to the concierge team at Seniorly.
-                </TooltipContent>
-              }
             </Fragment>
           }
         </div>

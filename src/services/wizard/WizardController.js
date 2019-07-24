@@ -57,6 +57,7 @@ class WizardController extends Component {
 
   goto = (step) => {
     const { set, progressPath, currentStep } = this.props;
+
     // first step will already be present
     if (currentStep > 2) {
       progressPath.push(currentStep);

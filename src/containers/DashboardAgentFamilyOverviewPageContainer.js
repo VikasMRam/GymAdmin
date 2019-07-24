@@ -144,30 +144,21 @@ const getPageParams = ({ match, location }) => {
   const typeStages = FAMILY_STAGE_ORDERED[type];
   const clientType = STAGE_CLIENT_TYPE_MAP[type];
   const clientName = searchParams.name;
-  const { organization, provider, providerType } = searchParams;
   return {
     pageNumber: searchParams['page-number'],
     type,
     typeStages,
     clientType,
     clientName,
-    organization,
-    providerType,
-    provider,
   };
 };
 
 // TODO: Fix Latest Note and Date Added column after api impl is done
 @prefetch('clients', 'getClients', (getClients, { match, location }) => {
-  const {
-    clientType, pageNumber, clientName, organization, providerType, provider,
-  } = getPageParams({ match, location });
+  const { clientType, pageNumber, clientName } = getPageParams({ match, location });
   const filters = {
     'filter[client_type]': clientType,
     'filter[name]': clientName,
-    'filter[organization]': organization,
-    'filter[provider_type]': providerType,
-    'filter[provider]': provider,
     'page-number': pageNumber,
   };
   return getClients(filters);
@@ -187,15 +178,10 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
   handleSearchTextKeyUp = (event) => {
     const { value } = event.target;
     const { match, location, history } = this.props;
-    const {
-      type, pageNumber, organization, providerType, provider,
-    } = getPageParams({ match, location });
+    const { type, pageNumber } = getPageParams({ match, location });
     const filters = {
       type,
       name: value,
-      organization,
-      providerType,
-      provider,
     };
     if (pageNumber) {
       filters.pageNumber = pageNumber;
@@ -218,7 +204,9 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const {
       isLoading, hasStarted, meta: clientsMeta, error: clientsError,
     } = clientsStatus;
-
+    // const [error] = errors;
+    // console.log(clients);
+    // console.log(clientsStatus);
     if (clientsError) {
       return <RefreshRedirect to="/" />;
     }
@@ -227,7 +215,6 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
       return (
         <DashboardAgentFamilyOverviewPage
           isPageLoading={isPageLoading}
-          params={params}
         />
       );
     }
@@ -252,7 +239,6 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
         showPagination={showPagination}
         activeTab={type}
         onSearchTextKeyUp={this.handleSearchTextKeyUp}
-        params={params}
       />
     );
   }

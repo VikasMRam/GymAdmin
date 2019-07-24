@@ -85,9 +85,6 @@ const searchParamsWhitelist = [
   'region',
   'type',
   'name',
-  'organization',
-  'provider',
-  'providerType',
 ];
 
 export const tocs = [

@@ -2,15 +2,13 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, bool, string, func, number, shape, oneOf } from 'prop-types';
 import { ifProp } from 'styled-tools';
-import Dotdotdot from 'react-dotdotdot';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
-import { size, assetPath, getKey, palette } from 'sly/components/themes';
+import { size, assetPath, getKey } from 'sly/components/themes';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import cursor from 'sly/components/helpers/cursor';
-import pad from 'sly/components/helpers/pad';
 import { COLUMN_LAYOUT_IMAGE_WIDTH } from 'sly/constants/communityTile';
-import { Box, Button, Hr, Span, Image, Block } from 'sly/components/atoms';
+import { Box, Button, Hr, Span, Image } from 'sly/components/atoms';
 import { community as communityPropType } from 'sly/propTypes/community';
 import CommunityInfo from 'sly/components/molecules/CommunityInfo';
 import MediaGallery from 'sly/components/molecules/MediaGallery';
@@ -122,16 +120,6 @@ const ImageWrapper = styled.div`
   }
 `;
 
-const Description = styled.div`
-  border-top: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  padding: ${size('padding.regular')};
-  ${p => p.layout === 'column' && css`
-    @media screen and (min-width: ${size('breakpoint.tablet')}) {
-      grid-column:1 /span 2;
-    }
-  `}
-`;
-
 const buildActionButtons = actionButtons => actionButtons.map(({ text, ghost, onClick }) => (
   <FullWidthButton onClick={onClick} ghost={ghost} key={text}>
     {text}
@@ -145,7 +133,7 @@ const CommunityTile = ({
   canFavourite,
 }) => {
   const {
-    name, gallery = {}, mainImage, communitySize, description,
+    name, gallery = {}, mainImage, communitySize,
   } = community;
   let { imageUrl } = community;
   imageUrl = imageUrl || mainImage;
@@ -171,7 +159,6 @@ const CommunityTile = ({
     <IconButton transparent icon={icon} iconSize="regular" palette={iconPalette} onClick={onIconClick} />
   ) : null;
 
-  const hasDescription = description && (description !== '');
   return (
     <Wrapper layout={layout} className={className} imageSize={imageSize}>
       {!noGallery &&
@@ -205,6 +192,7 @@ const CommunityTile = ({
           community={community}
           showFloorPlan={showFloorPlan}
           marginBottom={!!actionButtons.length}
+          showDescription={showDescription}
         />
         {buildActionButtons(actionButtons)}
         {(note || addNote) && <Hr />}
@@ -212,15 +200,6 @@ const CommunityTile = ({
         {note && <CursorSpan palette="primary" size="caption" onClick={onEditNoteClick}> Edit note</CursorSpan>}
         {!note && addNote && <AddNote palette="primary" size="caption" onClick={onAddNoteClick}>Add a note</AddNote>}
       </StyledBox>
-      {showDescription && hasDescription &&
-      <Description layout={layout}>
-        <Block palette="grey" size="caption">
-          <Dotdotdot clamp={4}>
-            {description}
-          </Dotdotdot>
-        </Block>
-      </Description>
-      }
     </Wrapper>
   );
 };
