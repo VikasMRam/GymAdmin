@@ -1,5 +1,3 @@
-import qs from 'querystring';
-
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
@@ -100,37 +98,17 @@ const onTabClick = (label) => {
   SlyEvent.getInstance().sendEvent(event);
 };
 
-const getBasePath = (tab, params) => {
-  const {
-    organization, provider, providerType,
-  } = params;
-  const filters = {};
-
-  if (tab === tabIDs[1]) {
-    filters.type = 'Connected';
-  } else if (tab === tabIDs[2]) {
-    filters.type = 'Closed';
+const getBasePath = (activeTab) => {
+  if (activeTab === tabIDs[1]) {
+    return `${AGENT_DASHBOARD_FAMILIES_PATH}?type=Connected`;
+  } else if (activeTab === tabIDs[2]) {
+    return `${AGENT_DASHBOARD_FAMILIES_PATH}?type=Closed`;
   }
-
-  if (organization) {
-    filters.organization = organization;
-  }
-
-  if (provider) {
-    filters.provider = provider;
-  }
-
-  if (providerType) {
-    filters.providerType = providerType;
-  }
-
-  const filterQs = qs.stringify(filters);
-
-  return filterQs !== '' ? `${AGENT_DASHBOARD_FAMILIES_PATH}?${filterQs}` : AGENT_DASHBOARD_FAMILIES_PATH;
+  return AGENT_DASHBOARD_FAMILIES_PATH;
 };
 
 const DashboardAgentFamilyOverviewPage = ({
-  mobileContents, tableContents, pagination, paginationString, activeTab, showPagination, onSearchTextKeyUp, isPageLoading, params,
+  mobileContents, tableContents, pagination, paginationString, activeTab, showPagination, onSearchTextKeyUp, isPageLoading,
 }) => {
   const tableHeaderButtons = (
     <TableHeaderButtons
@@ -142,13 +120,13 @@ const DashboardAgentFamilyOverviewPage = ({
   const closedLabel = tabIDLabelMap[tabIDs[2]];
   const tabsViewTemplate = (view, prospectsTabLabel, connectedTabLabel, closedTabLabel) => (
     <StyledTabs activeTab={activeTab}>
-      <div id={tabIDs[0]} label={prospectsTabLabel} to={getBasePath(tabIDs[0], params)} onClick={() => onTabClick(prospectsLabel)}>
+      <div id={tabIDs[0]} label={prospectsTabLabel} to={AGENT_DASHBOARD_FAMILIES_PATH} onClick={() => onTabClick(prospectsLabel)}>
         {view}
       </div>
-      <div id={tabIDs[1]} label={connectedTabLabel} to={getBasePath(tabIDs[1], params)} onClick={() => onTabClick(connectedLabel)}>
+      <div id={tabIDs[1]} label={connectedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Connected`} onClick={() => onTabClick(connectedLabel)}>
         {view}
       </div>
-      <div id={tabIDs[2]} label={closedTabLabel} to={getBasePath(tabIDs[2], params)} onClick={() => onTabClick(closedLabel)}>
+      <div id={tabIDs[2]} label={closedTabLabel} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Closed`} onClick={() => onTabClick(closedLabel)}>
         {view}
       </div>
     </StyledTabs>
@@ -164,7 +142,7 @@ const DashboardAgentFamilyOverviewPage = ({
       current,
       total,
       range: 1,
-      basePath: `${getBasePath(activeTab, params)}`,
+      basePath: `${getBasePath(activeTab)}`,
       pageParam: 'page-number',
     };
     const { tableEmptyText } = tableContents;
@@ -241,7 +219,6 @@ DashboardAgentFamilyOverviewPage.propTypes = {
   searchTextValue: string,
   onSearchTextKeyUp: func,
   isPageLoading: bool,
-  params: object,
 };
 
 DashboardAgentFamilyOverviewPage.defaultProps = {

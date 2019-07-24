@@ -2,12 +2,13 @@ import React, { Fragment, Component } from 'react';
 import { bool } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
+import Dotdotdot from 'react-dotdotdot';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size } from 'sly/components/themes';
 import { formatRating } from 'sly/services/helpers/rating';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { Link, Block, Icon, Heading, ClampedText, Span } from 'sly/components/atoms';
+import { Block, Icon, ClampedText, Span } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
 
 const Wrapper = styled.div`
@@ -47,7 +48,7 @@ const RatingValue = styled.div`
 
 const Name = styled(ClampedText)`
   line-height: ${size('text.title')};
-  margin-bottom: 0;
+  margin-bottom: ${size('spacing.small')};
 `;
 
 const Info = styled(ClampedText)`
@@ -59,6 +60,7 @@ export default class CommunityInfo extends Component {
     community: communityPropType,
     inverted: bool,
     showFloorPlan: bool,
+    showDescription: bool,
     palette: palettePropType,
   };
 
@@ -88,17 +90,6 @@ export default class CommunityInfo extends Component {
     ) : null;
   };
 
-  renderName = (community, inverted) => {
-    const { name, url } = community;
-    return (
-      <Link href={url}>
-        <Heading level="subtitle" size="subtitle">
-          <Name size="subtitle" weight="medium" title={name} palette={inverted ? 'white' : 'slate'}>{name}</Name>
-        </Heading>
-      </Link>
-    );
-  };
-
   renderRate = ({ estimated, startingRate }) => estimated ? (
     this.renderEstimatedRate(startingRate)
   ) : (
@@ -116,16 +107,20 @@ export default class CommunityInfo extends Component {
 
   render() {
     const {
-      community, inverted, showFloorPlan, ...props
+      community, inverted, showFloorPlan, showDescription, ...props
     } = this.props;
     const {
-      webViewInfo, floorPlanString, propInfo, propRatings,
+      name, webViewInfo, floorPlanString, propInfo, propRatings,
       address, addressString,
     } = community;
+    let { description } = community;
     let { numReviews, typeCare = [] } = community;
     let { reviewsValue } = community;
     if (propInfo) {
       ({ typeCare } = propInfo);
+      if (!description) {
+        ({ communityDescription: description } = propInfo);
+      }
     }
     let floorPlanComponent = null;
     let livingTypeComponent = null;
@@ -196,7 +191,7 @@ export default class CommunityInfo extends Component {
 
     return (
       <Wrapper {...props}>
-        {this.renderName(community, inverted)}
+        <Name size="subtitle" weight="medium" title={name} palette={inverted ? 'white' : 'slate'}>{name}</Name>
         <TopWrapper>
           {this.renderRate(community)}
           {this.renderReviews(reviewsValue)}
@@ -207,6 +202,13 @@ export default class CommunityInfo extends Component {
         {addressComponent}
         {livingTypeComponent}
         {floorPlanComponent}
+        {showDescription &&
+          <Block palette={inverted ? 'white' : 'grey'} size="caption">
+            <Dotdotdot clamp={2}>
+              {description}
+            </Dotdotdot>
+          </Block>
+        }
       </Wrapper>
     );
   }
