@@ -10,14 +10,14 @@ import { query, getRelationship, invalidateRequests } from 'sly/services/newApi'
 import clientPropType from 'sly/propTypes/client';
 import { FAMILY_STATUS_ACTIVE, FAMILY_STATUS_ON_HOLD, NOTE_COMMENTABLE_TYPE_CLIENT, FAMILY_STAGE_WON } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import { createValidator, required, mmDdYyyyy, float } from 'sly/services/validation';
+import { createValidator, required, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageForm';
 import SlyEvent from 'sly/services/helpers/events';
 
 const validate = createValidator({
   stage: [required],
-  moveInDate: [required, mmDdYyyyy],
+  moveInDate: [required],
   communityName: [required],
   monthlyFees: [required, float],
   referralAgreement: [required, float],
@@ -123,9 +123,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       .set('attributes.stage', stage);
     if (moveInDate) {
       let moveInDateFormatted;
-      const dateParts = moveInDate.split('-');
-      const moveInDateObj = Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2]);
-      const parsedDate = dayjs(moveInDateObj);
+      const parsedDate = dayjs(moveInDate);
       if (parsedDate.isValid()) {
         moveInDateFormatted = parsedDate.format('YYYY-MM-DDTHH:mm:ss[Z]');
       } else {
@@ -197,7 +195,6 @@ export default class UpdateFamilyStageFormContainer extends Component {
           value: '',
         });
         notifyError('Failed to update stage. Please try again.');
-
       });
   };
 

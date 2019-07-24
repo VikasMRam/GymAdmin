@@ -12,7 +12,6 @@ import {
   PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
 } from 'sly/constants/familyDetails';
 import pad from 'sly/components/helpers/pad';
-import { dateFormatter } from 'sly/services/helpers/date';
 import { Block, Span, Label } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
@@ -129,8 +128,8 @@ export default class UpdateFamilyStageForm extends Component {
             label={<span>Move-In date<Span palette="danger">*</Span></span>}
             type="date"
             placeholder="mm/dd/yyyy"
-            format={dateFormatter}
             component={ReduxField}
+            dateFormat="MM/dd/yyyy"
           />
         }
         {nextStage === FAMILY_STAGE_WON &&
