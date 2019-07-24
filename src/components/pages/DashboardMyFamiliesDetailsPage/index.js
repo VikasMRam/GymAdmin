@@ -263,6 +263,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     showModal(<AddNoteFormContainer
       hasCancel
+      noteRequired
       onCancelClick={hideModal}
       heading={`Add a note on ${name}`}
       label="Note"
@@ -291,6 +292,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     showModal(<AddNoteFormContainer
       hasCancel
+      noteRequired
       onCancelClick={hideModal}
       heading={`Edit note on ${name}`}
       label="Note"

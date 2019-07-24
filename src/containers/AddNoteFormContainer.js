@@ -1,7 +1,12 @@
 import React from 'react';
 import { reduxForm } from 'redux-form';
 
+import { createValidator, required } from 'sly/services/validation';
 import AddNoteForm from 'sly/components/organisms/AddNoteForm';
+
+const validate = createValidator({
+  note: [required],
+});
 
 const ReduxForm = reduxForm({
   form: 'AddNoteForm',
@@ -10,6 +15,6 @@ const ReduxForm = reduxForm({
   keepDirtyOnReinitialize: false,
 })(AddNoteForm);
 
-const AddNoteFormContainer = props => <ReduxForm {...props} />;
+const AddNoteFormContainer = props => props.noteRequired ? <ReduxForm {...props} validate={validate} /> : <ReduxForm {...props} />;
 
 export default AddNoteFormContainer;
