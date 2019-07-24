@@ -9,7 +9,6 @@ import {
   Block,
   Link,
   Icon,
-  Stage,
   Hr,
 } from 'sly/components/atoms';
 
@@ -20,6 +19,7 @@ import {
   Tr,
 } from 'sly/components/atoms/Table';
 
+import Stage from 'sly/components/molecules/Stage';
 import { FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
 import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
 import clientPropType from 'sly/propTypes/client';
