@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
+import qs from 'querystring';
 
 import { size, palette } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
@@ -68,17 +69,37 @@ const onTabClick = (label) => {
   SlyEvent.getInstance().sendEvent(event);
 };
 
-const getBasePath = (activeTab) => {
-  if (activeTab === tabIDs[1]) {
-    return `${AGENT_DASHBOARD_FAMILIES_PATH}?type=Connected`;
-  } else if (activeTab === tabIDs[2]) {
-    return `${AGENT_DASHBOARD_FAMILIES_PATH}?type=Closed`;
+const getBasePath = (tab, params) => {
+  const {
+    organization, provider, providerType,
+  } = params;
+  const filters = {};
+
+  if (tab === tabIDs[1]) {
+    filters.type = 'Connected';
+  } else if (tab === tabIDs[2]) {
+    filters.type = 'Closed';
   }
-  return AGENT_DASHBOARD_FAMILIES_PATH;
+
+  if (organization) {
+    filters.organization = organization;
+  }
+
+  if (provider) {
+    filters.provider = provider;
+  }
+
+  if (providerType) {
+    filters.providerType = providerType;
+  }
+
+  const filterQs = qs.stringify(filters);
+
+  return filterQs !== '' ? `${AGENT_DASHBOARD_FAMILIES_PATH}?${filterQs}` : AGENT_DASHBOARD_FAMILIES_PATH;
 };
 
 const DashboardAgentFamilyOverviewPage = ({
-  clients, onClientClick, pagination, paginationString, activeTab, showPagination, onSearchTextKeyUp, isPageLoading,
+  clients, onClientClick, pagination, paginationString, activeTab, showPagination, onSearchTextKeyUp, isPageLoading, params,
 }) => {
   const prospectsLabel = tabIDLabelMap[tabIDs[0]];
   const connectedLabel = tabIDLabelMap[tabIDs[1]];
@@ -93,7 +114,7 @@ const DashboardAgentFamilyOverviewPage = ({
       current,
       total,
       range: 1,
-      basePath: `${getBasePath(activeTab)}`,
+      basePath: `${getBasePath(activeTab, params)}`,
       pageParam: 'page-number',
     };
     paginationComponent = (showPagination && <Pagination {...paginationParams} />);
@@ -109,13 +130,13 @@ const DashboardAgentFamilyOverviewPage = ({
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
       <Tabs activeTab={activeTab} tabsOnly>
-        <Tab id={tabIDs[0]} to={AGENT_DASHBOARD_FAMILIES_PATH} onClick={() => onTabClick(prospectsLabel)}>
+        <Tab id={tabIDs[0]} to={getBasePath(tabIDs[0], params)} onClick={() => onTabClick(prospectsLabel)}>
           {prospectsTabLabel}
         </Tab>
-        <Tab id={tabIDs[1]} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Connected`} onClick={() => onTabClick(connectedLabel)}>
+        <Tab id={tabIDs[1]} to={getBasePath(tabIDs[1], params)} onClick={() => onTabClick(connectedLabel)}>
           {connectedTabLabel}
         </Tab>
-        <Tab id={tabIDs[2]} to={`${AGENT_DASHBOARD_FAMILIES_PATH}?type=Closed`} onClick={() => onTabClick(closedLabel)}>
+        <Tab id={tabIDs[2]} to={getBasePath(tabIDs[2], params)} onClick={() => onTabClick(closedLabel)}>
           {closedTabLabel}
         </Tab>
       </Tabs>
