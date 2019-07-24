@@ -20,13 +20,26 @@ const onClientClick = (clientName, to) => {
   SlyEvent.getInstance().sendEvent(event);
 };
 
-const getPaginationData = requestMeta => ({
-  current: requestMeta['page-number'],
-  size: requestMeta['page-size'],
-  total: requestMeta.filtered_count / requestMeta['page-size'],
-  totalCount: requestMeta.total_count,
-  filteredCount: requestMeta.filtered_count,
-});
+const getPaginationData = ({ result, meta }) => {
+  const count = result.length;
+  const current = meta['page-number'];
+  const size = meta['page-size'];
+  const start = (current * size) + 1;
+  const end = (current * size) + count;
+  const paginationRangeString = count > 0 ? `${start}-${end} of` : '';
+  const filteredCount = meta.filtered_count;
+  const text = `Showing ${paginationRangeString} ${filteredCount} families`;
+  const show = filteredCount > size;
+  return ({
+    current,
+    size,
+    total: meta.filtered_count / meta['page-size'],
+    totalCount: meta.total_count,
+    filteredCount,
+    text,
+    show,
+  });
+};
 
 const getPageParams = ({ match, location }) => {
   const searchParams = getSearchParams(match, location);
@@ -106,7 +119,7 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const { type } = params;
     const { clients: clientsStatus } = status;
     const {
-      isLoading, hasStarted, meta: clientsMeta, error: clientsError,
+      isLoading, hasStarted, error: clientsError,
     } = clientsStatus;
 
     if (clientsError) {
@@ -121,23 +134,12 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
         />
       );
     }
-    const pagination = getPaginationData(clientsMeta);
-    const {
-      current, size, filteredCount,
-    } = pagination;
-    const count = clients.length;
-    const start = (current * size) + 1;
-    const end = (current * size) + count;
-    const paginationRangeString = count > 0 ? `${start}-${end} of` : '';
-    const paginationString = `Showing ${paginationRangeString} ${filteredCount} families`;
-    const showPagination = filteredCount > size;
+    const pagination = getPaginationData(clientsStatus);
     return (
       <DashboardAgentFamilyOverviewPage
         clients={clients}
         onClientClick={onClientClick}
         pagination={pagination}
-        paginationString={paginationString}
-        showPagination={showPagination}
         activeTab={type}
         onSearchTextKeyUp={this.handleSearchTextKeyUp}
         params={params}

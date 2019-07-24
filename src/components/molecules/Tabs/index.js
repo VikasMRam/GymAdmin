@@ -5,19 +5,19 @@ import styled from 'styled-components';
 import { size, palette } from 'sly/components/themes';
 
 const Wrapper = styled.div`
-  border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
-  border-left: 0;
-  border-right: 0;
+  border-bottom: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
   padding: ${size('spacing.large')};
   padding-bottom: 0;
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+  background: ${palette('white.base')};
+  text-transform: uppercase;
+  
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
     border-top-left-radius: ${size('border.xxLarge')};
     border-top-right-radius: ${size('border.xxLarge')};
-    border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
   }
 `;
 

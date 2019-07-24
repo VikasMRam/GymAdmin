@@ -10,7 +10,6 @@ const border = css`${size('border.regular')} solid ${palette('slate.stroke')}`;
 const Wrappper = styled.div`
   display: flex;
   padding: ${size('spacing.large')};
-  border-top: ${border};
   border-bottom: ${border};
   background-color: ${palette('white.base')};
   

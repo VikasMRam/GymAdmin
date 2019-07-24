@@ -45,11 +45,6 @@ import ConversationMessagesContainer from 'sly/containers/ConversationMessagesCo
 import userPropType from 'sly/propTypes/user';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 
-const StyledTabs = styled(Tabs)`
-  background-color: ${palette('white', 'base')};
-  text-transform: uppercase;
-`;
-
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
 const BackLinkWrapper = pad(styled.div`
@@ -471,7 +466,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           </SmallScreenClientNameWrapper>
         </div>
         <div>
-          <StyledTabs activeTab={currentTab}>
+          <Tabs activeTab={currentTab}>
             <MobileTab id={SUMMARY} to={summaryPath} onClick={clickEventHandler('fdetails-tab', 'Summary')}>
               Summary
             </MobileTab>
@@ -487,7 +482,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             <Tab id={MESSAGES} default to={messagesPath} onClick={clickEventHandler('fdetails-tab', 'Messages')}>
               Messages
             </Tab>
-          </StyledTabs>
+          </Tabs>
           <TabWrapper>
             {currentTab === SUMMARY && (
               <Fragment>

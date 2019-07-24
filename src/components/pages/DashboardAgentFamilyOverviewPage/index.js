@@ -31,25 +31,26 @@ const Section = styled.section`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: 0;
     background-color: ${palette('white.base')};
+    border: ${size('border.regular')} solid ${palette('slate.stroke')};
+    border-bottom-left-radius: ${size('border.xxLarge')};
+    border-bottom-right-radius: ${size('border.xxLarge')};
+    border-top: 0;
   }
+`;
+
+const StyledTable = styled(Table)`
+  border-right: 0;
+  border-left: 0;
+`;
+
+const StyledPagination = styled(Pagination)`
+  padding: ${size('spacing.large')}; 
+  justify-content: center;
 `;
 
 const FamiliesCountStatusBlock = styled(Block)`
   margin-bottom: ${size('spacing.large')};
   margin-left: ${size('spacing.large')};
-`;
-
-const BigScreenPaginationWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
-const EmptyTextWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: ${size('spacing.xxxLarge')} ${size('spacing.xxLarge')};
-  height: 100vh;
-  text-align: center;
 `;
 
 const tabIDLabelMap = {
@@ -99,7 +100,7 @@ const getBasePath = (tab, params) => {
 };
 
 const DashboardAgentFamilyOverviewPage = ({
-  clients, onClientClick, pagination, paginationString, activeTab, showPagination, onSearchTextKeyUp, isPageLoading, params,
+  clients, onClientClick, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params,
 }) => {
   const prospectsLabel = tabIDLabelMap[tabIDs[0]];
   const connectedLabel = tabIDLabelMap[tabIDs[1]];
@@ -107,23 +108,13 @@ const DashboardAgentFamilyOverviewPage = ({
   let prospectsTabLabel = tabIDLabelMap[tabIDs[0]];
   let connectedTabLabel = tabIDLabelMap[tabIDs[1]];
   let closedTabLabel = tabIDLabelMap[tabIDs[2]];
-  let paginationComponent = null;
   if (!isPageLoading) {
-    const { current, total, filteredCount } = pagination;
-    const paginationParams = {
-      current,
-      total,
-      range: 1,
-      basePath: `${getBasePath(activeTab, params)}`,
-      pageParam: 'page-number',
-    };
-    paginationComponent = (showPagination && <Pagination {...paginationParams} />);
     if (activeTab === tabIDs[0]) {
-      prospectsTabLabel += ` (${filteredCount})`;
+      prospectsTabLabel += ` (${pagination.filteredCount})`;
     } else if (activeTab === tabIDs[1]) {
-      connectedTabLabel += ` (${filteredCount})`;
+      connectedTabLabel += ` (${pagination.filteredCount})`;
     } else if (activeTab === tabIDs[2]) {
-      closedTabLabel += ` (${filteredCount})`;
+      closedTabLabel += ` (${pagination.filteredCount})`;
     }
   }
 
@@ -146,7 +137,7 @@ const DashboardAgentFamilyOverviewPage = ({
       <Section>
         {!isPageLoading && (
           <Fragment>
-            <Table>
+            <StyledTable>
               <THead>
                 {AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS
                   .map(({ text }) => <Th>{text}</Th>)
@@ -157,15 +148,26 @@ const DashboardAgentFamilyOverviewPage = ({
                   <ClientRowCard client={client} onClientClick={onClientClick} />
                 ))}
               </TBody>
-            </Table>
-            <BigScreenPaginationWrapper>
-              {paginationComponent}
-            </BigScreenPaginationWrapper>
-            <FamiliesCountStatusBlock size="caption">{paginationString}</FamiliesCountStatusBlock>
+            </StyledTable>
+            {pagination.show && (
+              <StyledPagination
+                current={pagination.current}
+                total={pagination.total}
+                range={1}
+                basePath={getBasePath(activeTab, params)}
+                pageParam="page-number"
+              />
+            )}
           </Fragment>
         )}
         {isPageLoading && 'Loading...'}
       </Section>
+
+      {!isPageLoading && (
+        <FamiliesCountStatusBlock size="caption">
+          {pagination.text}
+        </FamiliesCountStatusBlock>
+      )}
     </DashboardPageTemplate>
   );
 };
