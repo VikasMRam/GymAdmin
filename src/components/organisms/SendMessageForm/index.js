@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import { size } from 'sly/components/themes';
 import { Block, Button } from 'sly/components/atoms';
-import participantPropType from 'sly/propTypes/conversation/conversationParticipant';
 import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
 import IconButton from 'sly/components/molecules/IconButton';
 import ReduxField from 'sly/components/organisms/ReduxField';
@@ -28,17 +27,17 @@ const BigScreenButton = displayOnlyIn(Button, ['tablet', 'laptop']);
 BigScreenButton.displayName = 'BigScreenButton';
 
 const SendMessageForm = ({
-  error, otherParticipant, className, handleSubmit, pristine, submitting, invalid, viewingAsParticipant,
+  error, placeholder, className, handleSubmit, pristine, submitting, invalid, disabled,
 }) => (
   <form onSubmit={handleSubmit} className={className}>
     <TwoColumWrapper>
       <StyledField
         type="text"
         name="message"
-        placeholder={otherParticipant && otherParticipant.participantInfo && `Message ${otherParticipant.participantInfo.name.split(' ').shift()}...`}
+        placeholder={placeholder}
         component={ReduxField}
         hideErrors
-        disabled={!viewingAsParticipant}
+        disabled={disabled}
       />
       <BigScreenButton type="submit" disabled={invalid || pristine || submitting}>Send message</BigScreenButton>
       <SmallScreenButton type="submit" icon="send" disabled={invalid || pristine || submitting} />
@@ -51,11 +50,11 @@ SendMessageForm.propTypes = {
   handleSubmit: func.isRequired,
   error: string,
   className: string,
-  otherParticipant: participantPropType.isRequired,
+  placeholder: string,
   submitting: bool,
   pristine: bool,
   invalid: bool,
-  viewingAsParticipant: participantPropType,
+  disabled: bool,
 };
 
 export default SendMessageForm;

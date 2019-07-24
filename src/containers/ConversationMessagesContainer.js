@@ -1,10 +1,10 @@
 import React, { Component, Fragment, createRef } from 'react';
-import { arrayOf, object, func, string } from 'prop-types';
+import { arrayOf, object, func, string, node } from 'prop-types';
 import dayjs from 'dayjs';
 import build from 'redux-object';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import { prefetch, withUser, query } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
@@ -18,11 +18,13 @@ import textAlign from 'sly/components/helpers/textAlign';
 import fullHeight from 'sly/components/helpers/fullHeight';
 import displayOnlyIn from 'sly/components/helpers/displayOnlyIn';
 import SlyEvent from 'sly/services/helpers/events';
+import pad from 'sly/components/helpers/pad';
 import { isAfter } from 'sly/services/helpers/date';
 import { Block, Button } from 'sly/components/atoms';
 import ConversationMessages from 'sly/components/organisms/ConversationMessages';
 import BannerNotification from 'sly/components/molecules/BannerNotification';
 import IconButton from 'sly/components/molecules/IconButton';
+import SendMessageFormContainer from 'sly/containers/SendMessageFormContainer';
 
 const categoryName = 'conversation-messages';
 
@@ -46,6 +48,13 @@ const BigScreen = displayOnlyIn(styled(Block)`
   }
 `, ['tablet', 'laptop']);
 
+const ContainerWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: ${palette('white.base')};
+`;
+
 const Wrapper = styled.div`
   margin: ${size('spacing.large')};
   position: sticky;
@@ -56,6 +65,19 @@ const Wrapper = styled.div`
 const StyledButton = styled(Button)`
   padding: 0;
 `;
+
+const MessagesWrapper = styled.div`
+  flex-grow: 1;
+  overflow: auto;
+`;
+
+const StyledSendMessageFormContainer = pad(styled(SendMessageFormContainer)`
+  margin-left: ${size('spacing.xLarge')};
+  margin-right: ${size('spacing.xLarge')};
+  margin-top: ${size('spacing.xLarge')};
+  flex-grow: 0;
+`, 'large');
+
 
 @prefetch('messages', 'getConversationMessages', (req, { conversation }) => req({
   'filter[conversationID]': conversation.id,
@@ -85,6 +107,8 @@ export default class ConversationMessagesContainer extends Component {
     updateConversationParticipant: func.isRequired,
     getConversationMessages: func.isRequired,
     getConversations: func.isRequired,
+    sendMessageFormPlaceholder: string,
+    headingBoxSection: node,
     className: string,
   };
 
@@ -118,25 +142,25 @@ export default class ConversationMessagesContainer extends Component {
     if (!this.timeoutInst) {
       this.timeoutInst = this.checkAndPatchLastReadMessage(MESSAGES_UPDATE_LAST_READ_TIMEOUT);
     }
-    if (messages && messages.length && this.messagesRef.current) {
-      if (!this.scrolled) {
-        this.messagesRef.current.addEventListener('scroll', this.handleScroll);
-        this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight;
-        this.scrolled = true;
-      } else if (this.wasScrollAtBottom) {
-        // on new message if scroll position is at bottom keep scrolling
-        this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight;
-      }
-    }
+    // if (messages && messages.length && this.messagesRef.current) {
+    //   if (!this.scrolled) {
+    //     this.messagesRef.current.addEventListener('scroll', this.handleScroll);
+    //     this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight;
+    //     this.scrolled = true;
+    //   } else if (this.wasScrollAtBottom) {
+    //     // on new message if scroll position is at bottom keep scrolling
+    //     this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight;
+    //   }
+    // }
   }
 
   componentWillUnmount() {
     const { ws } = this.props;
 
     ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
-    if (this.messagesRef.current) {
-      this.messagesRef.current.removeEventListener('scroll', this.handleScroll);
-    }
+    // if (this.messagesRef.current) {
+    //   this.messagesRef.current.removeEventListener('scroll', this.handleScroll);
+    // }
   }
 
   onMessage = (message) => {
@@ -293,8 +317,9 @@ export default class ConversationMessagesContainer extends Component {
 
   render() {
     const {
-      viewingAsParticipant, participants, className,
+      conversation, viewingAsParticipant, participants, className, sendMessageFormPlaceholder, headingBoxSection,
     } = this.props;
+    const { id } = conversation;
     const { messages, loadingMore } = this.state;
 
     if (!this.getHasFinished() && !this.alreadyLoaded) {
@@ -321,40 +346,44 @@ export default class ConversationMessagesContainer extends Component {
     const lastReadMessageFormattedDate = dayjs(viewingAsParticipantUnreadMessageCount).format('hh:mm A on MMMM Do');
 
     return (
-      <div ref={this.messagesRef} className={className}>
-        {viewingAsParticipantUnreadMessageCount > 0 &&
-          <Wrapper>
-            <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={this.handleMarkAsRead}>
-              <SmallScreen weight="medium" size="caption">
-                <div>
-                  <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent />
-                  {unreadMessagesNumber} unread messages
-                </div>
-              </SmallScreen>
-              <BigScreen weight="medium" size="caption">
-                <div>
-                  <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent onClick={this.scrollToNewMessages}>Jump</IconButton>
-                  {unreadMessagesNumber} new messages since {lastReadMessageFormattedDate}
-                  <StyledButton size="caption" palette="slate" transparent onClick={this.handleMarkAsRead}>Mark as read</StyledButton>
-                </div>
-              </BigScreen>
-            </BannerNotification>
-          </Wrapper>
-        }
-        {loadingMore &&
-          <Fragment>
-            <br />
-            <TextCenterBlock size="caption">Loading more messages...</TextCenterBlock>
-            <br />
-          </Fragment>
-        }
-        <ConversationMessages
-          viewingAsParticipant={viewingAsParticipant}
-          messages={messages}
-          participants={participants}
-          newMessageRef={this.newMessageRef}
-        />
-      </div>
+      <ContainerWrapper ref={this.messagesRef} className={className}>
+        {headingBoxSection}
+        <MessagesWrapper>
+          {viewingAsParticipantUnreadMessageCount > 0 &&
+            <Wrapper>
+              <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={this.handleMarkAsRead}>
+                <SmallScreen weight="medium" size="caption">
+                  <div>
+                    <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent />
+                    {unreadMessagesNumber} unread messages
+                  </div>
+                </SmallScreen>
+                <BigScreen weight="medium" size="caption">
+                  <div>
+                    <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent onClick={this.scrollToNewMessages}>Jump</IconButton>
+                    {unreadMessagesNumber} new messages since {lastReadMessageFormattedDate}
+                    <StyledButton size="caption" palette="slate" transparent onClick={this.handleMarkAsRead}>Mark as read</StyledButton>
+                  </div>
+                </BigScreen>
+              </BannerNotification>
+            </Wrapper>
+          }
+          {loadingMore &&
+            <Fragment>
+              <br />
+              <TextCenterBlock size="caption">Loading more messages...</TextCenterBlock>
+              <br />
+            </Fragment>
+          }
+          <ConversationMessages
+            viewingAsParticipant={viewingAsParticipant}
+            messages={messages}
+            participants={participants}
+            newMessageRef={this.newMessageRef}
+          />
+        </MessagesWrapper>
+        <StyledSendMessageFormContainer conversationId={id} placeholder={sendMessageFormPlaceholder} disabled={!viewingAsParticipant} />
+      </ContainerWrapper>
     );
   }
 }

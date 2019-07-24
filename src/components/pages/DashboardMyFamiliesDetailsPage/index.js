@@ -10,6 +10,7 @@ import {
   ACTIVITY,
   FAMILY_DETAILS,
   COMMUNITIES,
+  MESSAGES,
 } from 'sly/constants/dashboardAppPaths';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -38,6 +39,11 @@ import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFa
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
 import Tab from 'sly/components/molecules/Tab';
+import fullWidth from 'sly/components/helpers/fullWidth';
+import fullHeight from 'sly/components/helpers/fullHeight';
+import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
+import userPropType from 'sly/propTypes/user';
+import conversationPropType from 'sly/propTypes/conversation/conversation';
 
 const StyledTabs = styled(Tabs)`
   background-color: ${palette('white', 'base')};
@@ -176,6 +182,9 @@ const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   }
 `;
 
+const TextCenterBlock = fullHeight(textAlign(Block));
+const FullWidthTextCenterBlock = fullWidth(TextCenterBlock);
+
 const PaddedBackLink = pad(BackLink, 'regular');
 
 export default class DashboardMyFamiliesDetailsPage extends Component {
@@ -198,11 +207,16 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     refetchClient: func.isRequired,
     refetchNotes: func.isRequired,
     goToFamilyDetails: func,
+    goToMessagesTab: func,
+    refetchConversations: func,
+    hasConversationFinished: bool,
+    conversation: conversationPropType,
+    user: userPropType.isRequired,
   };
 
   handleAcceptClick = () => {
     const {
-      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails,
+      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails, goToMessagesTab, refetchConversations,
     } = this.props;
     SlyEvent.getInstance().sendEvent({
       category: 'fdetails',
@@ -217,6 +231,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         rawClient={rawClient}
         onCancel={hideModal}
         goToFamilyDetails={goToFamilyDetails}
+        goToMessagesTab={goToMessagesTab}
+        refetchConversations={refetchConversations}
       />), null, 'noPadding', false);
   };
 
@@ -338,8 +354,17 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished,
     } = this.props;
+
+    let conversationParticipants = [];
+    let viewingAsParticipant;
+
+    if (hasConversationFinished && conversation) {
+      ({ conversationParticipants } = conversation);
+      const { id } = user;
+      viewingAsParticipant = conversationParticipants.find(p => p.participantID === id);
+    }
 
     if (clientIsLoading) {
       return (
@@ -367,7 +392,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
     const {
-      level, levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails,
+      levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails,
     } = getStageDetails(stage);
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) => {
@@ -390,6 +415,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id });
     const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS });
     const communitiesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: COMMUNITIES });
+    const messagesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: MESSAGES });
 
     let stickyFooterOptions = [];
     if (showAcceptRejectButtons) {
@@ -416,105 +442,133 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
 
     return (
-      <Fragment>
-        <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
-          <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
-            <BigScreenSummarySection>
-              <Box snap="bottom">
-                {backlink}
-                <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
-              </Box>
-              <Hr noMargin />
-              <FamilyStage
-                noBorderRadius
-                snap="top"
-                stageText={stage}
-                onAcceptClick={handleAcceptClick}
-                onRejectClick={handleRejectClick}
-                onUpdateClick={handleUpdateClick}
-                onAddNoteClick={handleAddNoteClick}
-              />
-              {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
-              {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
-              {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
-            </BigScreenSummarySection>
-            <SmallScreenClientNameWrapper>
-              <Link to={backLinkHref}>
-                <Icon icon="arrow-left" palette="slate" />
-              </Link>
-              <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
-            </SmallScreenClientNameWrapper>
-          </div>
-          <div>
-            <StyledTabs activeTab={currentTab}>
-              <MobileTab id={SUMMARY} to={summaryPath} onClick={clickEventHandler('fdetails-tab','Summary')}>
-                Summary
-              </MobileTab>
-              <Tab id={ACTIVITY} default to={activityPath} onClick={clickEventHandler('fdetails-tab','Activity')}>
-                Activity
-              </Tab>
-              <Tab id={FAMILY_DETAILS} to={familyDetailsPath} onClick={clickEventHandler('fdetails-tab','Family Details')}>
-                Family Details
-              </Tab>
-              <Tab id={COMMUNITIES} to={communitiesPath} onClick={clickEventHandler('fdetails-tab', 'Communities')}>
-                Communities
-              </Tab>
-            </StyledTabs>
-            <TabWrapper>
-              {currentTab === SUMMARY && (
+      <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
+        <div> {/* DashboardTwoColumnTemplate should have only 2 children as this is a two column template */}
+          <BigScreenSummarySection>
+            <Box snap="bottom">
+              {backlink}
+              <Block weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" />}</Block>
+            </Box>
+            <Hr noMargin />
+            <FamilyStage
+              noBorderRadius
+              snap="top"
+              stageText={stage}
+              onAcceptClick={handleAcceptClick}
+              onRejectClick={handleRejectClick}
+              onUpdateClick={handleUpdateClick}
+              onAddNoteClick={handleAddNoteClick}
+            />
+            {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
+            {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
+            {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
+          </BigScreenSummarySection>
+          <SmallScreenClientNameWrapper>
+            <Link to={backLinkHref}>
+              <Icon icon="arrow-left" palette="slate" />
+            </Link>
+            <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
+          </SmallScreenClientNameWrapper>
+        </div>
+        <div>
+          <StyledTabs activeTab={currentTab}>
+            <MobileTab id={SUMMARY} to={summaryPath} onClick={clickEventHandler('fdetails-tab', 'Summary')}>
+              Summary
+            </MobileTab>
+            <Tab id={ACTIVITY} default to={activityPath} onClick={clickEventHandler('fdetails-tab', 'Activity')}>
+              Activity
+            </Tab>
+            <Tab id={FAMILY_DETAILS} to={familyDetailsPath} onClick={clickEventHandler('fdetails-tab', 'Family Details')}>
+              Family Details
+            </Tab>
+            <Tab id={COMMUNITIES} to={communitiesPath} onClick={clickEventHandler('fdetails-tab', 'Communities')}>
+              Communities
+            </Tab>
+            <Tab id={MESSAGES} default to={messagesPath} onClick={clickEventHandler('fdetails-tab', 'Messages')}>
+              Messages
+            </Tab>
+          </StyledTabs>
+          <TabWrapper>
+            {currentTab === SUMMARY && (
+              <Fragment>
+                <SmallScreenBorderPaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
+                {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
+              </Fragment>
+            )}
+
+            {currentTab === ACTIVITY && (
+              <SmallScreenBorderDiv padding={!noteIsLoading && activityCards.length > 0 ? null : 'xLarge'}>
+                {noteIsLoading && <Block size="subtitle">Loading...</Block>}
+                {!noteIsLoading && activityCards.length === 0 &&
+                <TextAlignCenterBlock>There are no activities.</TextAlignCenterBlock>
+                }
+                {!noteIsLoading && activityCards.length > 0 &&
                 <Fragment>
-                  <SmallScreenBorderPaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
-                  {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
+                  {/* <TableHeaderButtons hasColumnsButton={false} /> */}
+                  {activityCards}
                 </Fragment>
-              )}
+                }
+              </SmallScreenBorderDiv>
+            )}
 
-              {currentTab === ACTIVITY && (
-                <SmallScreenBorderDiv padding={!noteIsLoading && activityCards.length > 0 ? null : 'xLarge'}>
-                  {noteIsLoading && <Block size="subtitle">Loading...</Block>}
-                  {!noteIsLoading && activityCards.length === 0 &&
-                  <TextAlignCenterBlock>There are no activities.</TextAlignCenterBlock>
-                  }
-                  {!noteIsLoading && activityCards.length > 0 &&
-                  <Fragment>
-                    {/* <TableHeaderButtons hasColumnsButton={false} /> */}
-                    {activityCards}
-                  </Fragment>
-                  }
-                </SmallScreenBorderDiv>
-              )}
+            {currentTab === FAMILY_DETAILS && (
+              <FamilyDetailsTab>
+                <FamilyDetailsFormContainer
+                  client={client}
+                  rawClient={rawClient}
+                  notifyInfo={notifyInfo}
+                  notifyError={notifyError}
+                  accepted={!showAcceptRejectButtons}
+                  canEditFamilyDetails={canEditFamilyDetails}
+                  gender={gender}
+                  lookingFor={lookingFor}
+                  monthlyBudget={monthlyBudget}
+                  timeToMove={timeToMove}
+                />
+              </FamilyDetailsTab>
+            )}
 
-              {currentTab === FAMILY_DETAILS && (
-                <FamilyDetailsTab>
-                  <FamilyDetailsFormContainer
-                    client={client}
-                    rawClient={rawClient}
-                    notifyInfo={notifyInfo}
-                    notifyError={notifyError}
-                    accepted={!showAcceptRejectButtons}
-                    canEditFamilyDetails={canEditFamilyDetails}
-                    gender={gender}
-                    lookingFor={lookingFor}
-                    monthlyBudget={monthlyBudget}
-                    timeToMove={timeToMove}
+            {currentTab === COMMUNITIES && (
+              <CommunitiesTab>
+                <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
+                <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
+              </CommunitiesTab>
+            )}
+
+            {currentTab === MESSAGES && (
+              <div>
+                {!hasConversationFinished &&
+                <Fragment>
+                  <br />
+                  <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
+                </Fragment>
+                }
+                {!conversation &&
+                <Fragment>
+                  <br />
+                  <FullWidthTextCenterBlock size="caption"> No Conversation found...</FullWidthTextCenterBlock>
+                </Fragment>
+                }
+                {hasConversationFinished && conversation &&
+                <Fragment>
+                  <ConversationMessagesContainer
+                    conversation={conversation}
+                    viewingAsParticipant={viewingAsParticipant}
+                    participants={conversationParticipants}
+                    sendMessageFormPlaceholder={`Message ${name}...`}
                   />
-                </FamilyDetailsTab>
-              )}
-
-              {currentTab === COMMUNITIES && (
-                <CommunitiesTab>
-                  <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
-                  <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
-                </CommunitiesTab>
-              )}
-            </TabWrapper>
-          </div>
-          <DashboardMyFamilyStickyFooterContainer
-            options={stickyFooterOptions}
-            stage={stage}
-            showAcceptRejectButtons={showAcceptRejectButtons}
-          />
-        </StyledDashboardTwoColumnTemplate>
-      </Fragment>
+                </Fragment>
+                }
+              </div>
+            )}
+          </TabWrapper>
+        </div>
+        <DashboardMyFamilyStickyFooterContainer
+          options={stickyFooterOptions}
+          stage={stage}
+          showAcceptRejectButtons={showAcceptRejectButtons}
+        />
+      </StyledDashboardTwoColumnTemplate>
     );
   }
 }
