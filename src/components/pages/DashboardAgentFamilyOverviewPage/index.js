@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
 import qs from 'querystring';
 
@@ -15,6 +15,7 @@ import { AGENT_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
 import SlyEvent from 'sly/services/helpers/events';
 import Th from 'sly/components/molecules/Th';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
+import mobileOnly from 'sly/components/helpers/mobileOnly';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
@@ -43,10 +44,14 @@ const StyledTable = styled(Table)`
   border-left: 0;
 `;
 
-const StyledPagination = styled(Pagination)`
+const CenteredPagination = styled(Pagination)`
   padding: ${size('spacing.large')}; 
   justify-content: center;
 `;
+
+const StyledPagination = mobileOnly(CenteredPagination, css`
+  position: sticky; 
+`);
 
 const FamiliesCountStatusBlock = styled(Block)`
   margin-bottom: ${size('spacing.large')};
