@@ -4,9 +4,7 @@ import { bool, func } from 'prop-types';
 
 import { size, palette, columnWidth } from 'sly/components/themes';
 import { adminAgentPropType } from 'sly/propTypes/agent';
-import { Heading, Badge, Button } from 'sly/components/atoms';
-import Block from 'sly/components/atoms/Block';
-import Icon from 'sly/components/atoms/Icon';
+import { Heading, Badge, Button, Box, Block, Icon } from 'sly/components/atoms';
 
 const Header = styled.div`
   display: flex;

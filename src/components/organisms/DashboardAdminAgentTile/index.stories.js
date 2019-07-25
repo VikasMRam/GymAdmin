@@ -25,7 +25,7 @@ const wrap = (props={}) => (
   </Wrapper>
 );
 
-storiesOf('Organisms|DashboardAgentAdminTile', module)
+storiesOf('Organisms|DashboardAdminAgentTile', module)
   .add('default', () => wrap())
   .add('recommended', () => wrap({ isRecommended: true }));
 
