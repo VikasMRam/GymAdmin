@@ -8,7 +8,7 @@ import { size } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
 import { TOTAL_STAGES_COUNT } from 'sly/constants/familyDetails';
 import { Box, Heading, Button } from 'sly/components/atoms';
-import Stage from 'sly/components/atoms/Stage';
+import Stage from 'sly/components/molecules/Stage';
 
 const ColumWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.mobile')}) {

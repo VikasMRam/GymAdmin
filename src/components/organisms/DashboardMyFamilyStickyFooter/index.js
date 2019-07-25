@@ -4,7 +4,7 @@ import { arrayOf, shape, bool, string, func, number } from 'prop-types';
 import { ifNotProp } from 'styled-tools';
 
 import StickyFooter from 'sly/components/atoms/StickyFooter/index';
-import Stage from 'sly/components/atoms/Stage/index';
+import Stage from 'sly/components/molecules/Stage/index';
 import Button from 'sly/components/atoms/Button/index';
 import IconItem from 'sly/components/molecules/IconItem/index';
 import Icon from 'sly/components/atoms/Icon/index';
@@ -109,7 +109,7 @@ OptionsList.propTypes = {
 };
 
 const DashboardMyFamilyStickyFooter = ({
-  stageProps, showOptions, options, onOptionsClick, showAcceptRejectButtons,
+  stage, showOptions, options, onOptionsClick, showAcceptRejectButtons,
 }) => {
   return (
     <StickyFooter>
@@ -117,7 +117,7 @@ const DashboardMyFamilyStickyFooter = ({
         <FooterWrapper showAcceptRejectButtons={showAcceptRejectButtons}>
           {!showAcceptRejectButtons && (
             <Fragment>
-              <Stage {...stageProps} />
+              <Stage stage={stage} />
               <OptionsButton onClick={onOptionsClick} >...</OptionsButton>
               <RightSideButtons>
                 {options.slice(0).reverse().map(option => (<Button key={option.text} onClick={option.onClick} ghost={option.ghost}>{option.text}</Button>))}
@@ -139,11 +139,7 @@ const DashboardMyFamilyStickyFooter = ({
 DashboardMyFamilyStickyFooter.propTypes = {
   showOptions: bool,
   options: arrayOf(shape(optionsShape)).isRequired,
-  stageProps: shape({
-    text: string,
-    currentStage: number,
-    palette: string,
-  }).isRequired,
+  stage: string.isRequired,
   onOptionsClick: func,
   showAcceptRejectButtons: bool,
 };

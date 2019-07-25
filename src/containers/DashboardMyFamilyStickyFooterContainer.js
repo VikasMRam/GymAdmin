@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { object, arrayOf, shape, bool } from 'prop-types';
+import { string, arrayOf, shape, bool } from 'prop-types';
 
 import DashboardMyFamilyStickyFooter from 'sly/components/organisms/DashboardMyFamilyStickyFooter/index';
 
 class DashboardMyFamilyStickyFooterContainer extends Component {
   static propTypes = {
-    stageProps: object,
+    stage: string,
     options: arrayOf(shape({})),
     showAcceptRejectButtons: bool,
   };
@@ -20,10 +20,10 @@ class DashboardMyFamilyStickyFooterContainer extends Component {
   }
   render() {
     const { showOptions } = this.state;
-    const { stageProps, options, showAcceptRejectButtons } = this.props;
+    const { stage, options, showAcceptRejectButtons } = this.props;
     return (
       <DashboardMyFamilyStickyFooter
-        stageProps={stageProps}
+        stage={stage}
         options={options}
         showOptions={showOptions}
         showAcceptRejectButtons={showAcceptRejectButtons}

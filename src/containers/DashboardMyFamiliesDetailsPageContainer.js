@@ -6,15 +6,25 @@ import { connect } from 'react-redux';
 import { generatePath } from 'react-router';
 
 import { withUser, prefetch, query, invalidateRequests } from 'sly/services/newApi';
+import userPropType from 'sly/propTypes/user';
+import conversationPropType from 'sly/propTypes/conversation/conversation';
 import clientPropType from 'sly/propTypes/client';
 import notePropType from 'sly/propTypes/note';
-import { AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, FAMILY_DETAILS } from 'sly/constants/dashboardAppPaths';
+import {
+  AGENT_DASHBOARD_FAMILIES_PATH,
+  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
+  FAMILY_DETAILS,
+  ACTIVITY,
+  MESSAGES,
+} from 'sly/constants/dashboardAppPaths';
 import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
 import SlyEvent from 'sly/services/helpers/events';
+
+@withUser
 
 @prefetch('client', 'getClient', (req, { match }) => req({
   id: match.params.id,
@@ -34,11 +44,16 @@ import SlyEvent from 'sly/services/helpers/events';
   invalidateClients: () => dispatch(invalidateRequests(api.getClients)),
 }))
 
-@withUser
+@prefetch('conversations', 'getConversations', (req, { match }) => req({
+  'filter[participantID]': match.params.id,
+  'filter[participantType]': 'Client',
+}))
 
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
+    user: userPropType.isRequired,
     client: clientPropType,
+    conversations: arrayOf(conversationPropType),
     match: object,
     status: object,
     history: object,
@@ -185,6 +200,14 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     return updateClient({ id }, newClient);
   };
 
+  getHasConversationFinished = () => {
+    const { status } = this.props;
+    const { hasFinished: userHasFinished } = status.user;
+    const { hasFinished: conversationsHasFinished } = status.conversations;
+
+    return userHasFinished && conversationsHasFinished;
+  };
+
   goToFamilyDetails = () => {
     const { history, client } = this.props;
     const { id } = client;
@@ -192,19 +215,35 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     history.push(path);
   };
 
+  goToMessagesTab = () => {
+    const { history, client } = this.props;
+    const { id } = client;
+    const path = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: MESSAGES });
+    history.push(path);
+  };
+
+  refetchConversations = () => {
+    const { status } = this.props;
+    status.conversations.refetch();
+  }
+
   render() {
     const {
       onRejectSuccess, onUnPause, onAddNote, onEditNote,
     } = this;
 
     const {
-      client, match, status, notes,
+      client, match, status, notes, user, conversations,
     } = this.props;
 
     const { result: rawClient, meta } = status.client;
     const { hasFinished: clientHasFinished } = status.client;
     const { hasFinished: noteHasFinished } = status.notes;
-
+    const hasConversationFinished = this.getHasConversationFinished();
+    let conversation = null;
+    if (hasConversationFinished && conversations) {
+      [conversation] = conversations;
+    }
     return (
       <NotificationController>
         {({ notifyError, notifyInfo }) => (
@@ -218,7 +257,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 notifyInfo={notifyInfo}
                 client={client}
                 rawClient={rawClient}
-                currentTab={match.params.tab}
+                currentTab={match.params.tab || ACTIVITY}
                 showModal={show}
                 hideModal={hide}
                 meta={meta}
@@ -232,6 +271,11 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
                 noteIsLoading={!noteHasFinished}
                 clientIsLoading={!clientHasFinished}
                 goToFamilyDetails={this.goToFamilyDetails}
+                goToMessagesTab={this.goToMessagesTab}
+                refetchConversations={this.refetchConversations}
+                user={user}
+                conversation={conversation}
+                hasConversationFinished={hasConversationFinished}
               />
             )}
           </ModalController>

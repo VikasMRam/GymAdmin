@@ -1,4 +1,3 @@
-import React from 'react';
 import { bool } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
@@ -10,7 +9,7 @@ import { palette as palettePropType } from 'sly/propTypes/palette';
 const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
-const HRStyled = styled.hr`
+const Hr = styled.hr`
   border: 0;
   padding: 0;
   margin: ${ifProp('noMargin', 0, getSize('spacing'))} 0;
@@ -22,8 +21,6 @@ const HRStyled = styled.hr`
     margin-left: calc(-50vw + 50%);
   `)};
 `;
-
-const Hr = props => <HRStyled {...props} />;
 
 Hr.propTypes = {
   palette: palettePropType,
