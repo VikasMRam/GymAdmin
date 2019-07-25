@@ -117,7 +117,9 @@ const TabWrapper = styled.div`
   > * {
     background-color: ${palette('white', 'base')};
   }
-
+  @media screen and (max-width: ${size('breakpoint.mobile')}) {
+    margin-bottom: ${size('dashboard.actionFooterBottomMargin')};
+  }
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: ${size('spacing.xLarge')};
   }
