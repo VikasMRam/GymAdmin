@@ -4,16 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cypress run",
-    "lint": "eslint cypress"
+    "test": "cypress run"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^3.4.0",
-    "eslint": "^6.1.0",
-    "eslint-config-airbnb": "^17.1.1",
-    "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-plugin-import": "^2.18.2"
+    "cypress": "^3.4.0"
   }
 }

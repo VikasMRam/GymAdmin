@@ -205,13 +205,6 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-          name: Lint
-          command: |
-            source ~/.bashrc
-            nvm use 8
-            npm run lint
-
-      - run:
           name: Curl www.teamseniorly.com
           command: curl www.teamseniorly.com
 
