@@ -267,7 +267,7 @@ workflows:
             - build
       - test:
           requires:
-            deploy
+            - deploy
   build-staging:
     jobs:
       - build:
