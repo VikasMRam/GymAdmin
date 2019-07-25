@@ -139,6 +139,120 @@ jobs:
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
             ./.circleci/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#ed5c5c"
+  test:
+    machine: true
+    # docker:
+    #   - image: circleci/node:8.9-browsers
+
+    working_directory: ~/repo
+
+    environment:
+      TEST_RESULTS: /tmp/test-results
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: Installing Node.js
+          command: |
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+            source ~/.bashrc
+            nvm install 8
+            node -v
+            npm -v
+
+      - run:
+          name: Installing OpenVPN Client
+          command: sudo apt-get install openvpn
+
+      # The PEMs and credentials are set in OPENVPN context and are echoed into files
+      - run:
+          name: Creating OpenVPN Client Credential file
+          command: |
+            echo -e "$OPENVPN_USERNAME\n$OPENVPN_PASSWORD" >> openVPN_cred.txt
+            echo -e "$OPENVPN_CA" >> ca.pem
+            echo -e "$OPENVPN_CERT" >> cert.pem
+            echo -e "$OPENVPN_KEY" >> key.pem
+            echo -e "$OPENVPN_TLS_AUTH" >> tls_auth.pem
+
+      # PEMs should be escaped like explained here https://discuss.circleci.com/t/issues-storing-firebase-keys-as-environment-variable/6197/6
+      - run:
+          name: Creating OpenVPN Tunnel
+          command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
+
+      - run:
+          name: npm install
+          command: |
+            source ~/.bashrc
+            nvm use 8
+            npm install
+
+      - run:
+          name: Setup dirs
+          command: mkdir -p $TEST_RESULTS
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: Lint
+          command: |
+            source ~/.bashrc
+            nvm use 8
+            npm run lint
+
+      - run:
+          name: Curl www.teamseniorly.com
+          command: curl www.teamseniorly.com
+
+      - run:
+          name: "JS Test Suite"
+          command: |
+            source ~/.bashrc
+            nvm use 8
+            export JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml"
+            BLUEBIRD_DEBUG=1 npm test -- --ci --maxWorkers=10 2>&1 | tee test_output
+
+      - run:
+          name: Closing OpenVPN Tunnel
+          command: sudo killall openvpn
+
+      # TODO: remove once circle ci starts supporting customizable notifications in workflows
+      - run:
+          name: Send tests success notification
+          command: |
+            if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
+              export TEST_OUTPUT=$(cat test_output)
+              ./.circleci/push-slack-notification.sh -t "smoke tests success" \
+                -tl "$CIRCLE_BUILD_URL" -m "$TEST_OUTPUT" -c "#42c88a"
+            fi
+      - run:
+          name: Send tests failed notification
+          when: on_fail
+          command: |
+            if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
+              export DESC_MSG=$(cat test_output)
+              if [ -z "$DESC_MSG" ]; then
+                DESC_MSG="failed before running tests"
+              fi
+              ./.circleci/push-slack-notification.sh -t "smoke tests failed" \
+                -tl "$CIRCLE_BUILD_URL" -m "<!channel> $DESC_MSG" -c "#ed5c5c"
+            fi
+
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+
 
 workflows:
   version: 2
