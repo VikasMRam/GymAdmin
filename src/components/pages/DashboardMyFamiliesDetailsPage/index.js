@@ -43,6 +43,9 @@ const StyledTabs = styled(Tabs)`
   > :first-child {
     text-transform: uppercase;
   }
+  @media screen and (max-width: ${size('breakpoint.mobile')}) {
+    margin-bottom: ${size('dashboard.actionFooterBottomMargin')}
+  }
 `;
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
