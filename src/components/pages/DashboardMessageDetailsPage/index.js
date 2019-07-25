@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { generatePath } from 'react-router';
 import styled from 'styled-components';
 
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import {
   AGENT_DASHBOARD_MESSAGES_PATH,
   FAMILY_DASHBOARD_MESSAGES_PATH,
@@ -19,12 +19,10 @@ import Role from 'sly/components/common/Role';
 import textAlign from 'sly/components/helpers/textAlign';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import fullHeight from 'sly/components/helpers/fullHeight';
-import pad from 'sly/components/helpers/pad';
 import { Block, Link } from 'sly/components/atoms';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import HeadingBoxSection from 'sly/components/molecules/HeadingBoxSection';
 import BackLink from 'sly/components/molecules/BackLink';
-import SendMessageFormContainer from 'sly/containers/SendMessageFormContainer';
 import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
 
 const TextCenterBlock = fullHeight(textAlign(Block));
@@ -36,31 +34,19 @@ const HeaderWrapper = styled.div`
   align-items: center;
 `;
 
-const StyledHeadingBoxSection = styled(HeadingBoxSection)`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const StyledSendMessageFormContainer = pad(styled(SendMessageFormContainer)`
-  margin-left: ${size('spacing.xLarge')};
-  margin-right: ${size('spacing.xLarge')};
-  margin-top: ${size('spacing.xLarge')};
-  flex-grow: 0;
-`, 'large');
-
 const StyledConversationMessagesContainer = styled(ConversationMessagesContainer)`
-  flex-grow: 1;
-  overflow: auto;
+  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  border-radius: ${size('border.xLarge')};  
 `;
 
 const DashboardMessageDetailsPage = ({
   user, conversation, isLoading,
 }) => {
-  let heading = '';
+  let headingBoxSection = '';
   let conversationParticipants = [];
   let viewingAsParticipant;
   let otherParticipant;
+  let sendMessageFormPlaceholder = '';
 
   if (!isLoading) {
     ({ conversationParticipants } = conversation);
@@ -69,8 +55,9 @@ const DashboardMessageDetailsPage = ({
     (otherParticipant = conversationParticipants.find(p => p.participantID !== id));
     const name = otherParticipant && otherParticipant.participantInfo ? otherParticipant.participantInfo.name : '';
     const otherParticipantIsClient = otherParticipant.participantType === CONVERSATION_PARTICIPANT_TYPE_CLIENT;
+    sendMessageFormPlaceholder = otherParticipant && otherParticipant.participantInfo && `Message ${otherParticipant.participantInfo.name.split(' ').shift()}...`;
 
-    heading = (
+    const heading = (
       <HeaderWrapper>
         <Role is={CUSTOMER_ROLE}>
           <BackLink to={FAMILY_DASHBOARD_MESSAGES_PATH} />
@@ -84,29 +71,32 @@ const DashboardMessageDetailsPage = ({
         </FullWidthTextCenterBlock>
       </HeaderWrapper>
     );
+
+    headingBoxSection = (
+      <HeadingBoxSection heading={heading} hasNoBodyPadding hasNoBorder />
+    );
   }
 
   return (
     <DashboardPageTemplate activeMenuItem="Messages" bodyHasOverflow>
       {!isLoading && !conversation && <Redirect to={DASHBOARD_PATH} />}
-      <StyledHeadingBoxSection heading={heading} hasNoBodyPadding>
-        {isLoading &&
-          <Fragment>
-            <br />
-            <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
-          </Fragment>
-        }
-        {!isLoading &&
-          <Fragment>
-            <StyledConversationMessagesContainer
-              conversation={conversation}
-              viewingAsParticipant={viewingAsParticipant}
-              participants={conversationParticipants}
-            />
-            <StyledSendMessageFormContainer otherParticipant={otherParticipant} viewingAsParticipant={viewingAsParticipant} />
-          </Fragment>
-        }
-      </StyledHeadingBoxSection>
+      {isLoading &&
+        <Fragment>
+          <br />
+          <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
+        </Fragment>
+      }
+      {!isLoading &&
+        <Fragment>
+          <StyledConversationMessagesContainer
+            conversation={conversation}
+            viewingAsParticipant={viewingAsParticipant}
+            participants={conversationParticipants}
+            headingBoxSection={headingBoxSection}
+            sendMessageFormPlaceholder={sendMessageFormPlaceholder}
+          />
+        </Fragment>
+      }
     </DashboardPageTemplate>
   );
 };

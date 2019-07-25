@@ -1,17 +1,15 @@
 import React from 'react';
-import { string, number, bool } from 'prop-types';
-import styled, { css } from 'styled-components';
+import { string, number } from 'prop-types';
+import styled from 'styled-components';
 import { prop, ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
-import { Block } from 'sly/components/atoms';
+import Block from 'sly/components/atoms/Block';
+import { getStageDetails } from 'sly/services/helpers/stage';
 
 const TextBlock = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
   white-space: nowrap;
-  ${ifProp('disabled', css`
-    color: ${palette('slate', 'filler')};
-  `)}
 `;
 
 const Indicator = styled.span`
@@ -27,8 +25,9 @@ const Indicators = styled.span`
 `;
 
 const Stage = ({
-  text, totalStage, currentStage, palette, disabled, className,
+  stage, totalStage, className,
 }) => {
+  const { level: currentStage, palette } = getStageDetails(stage);
   const indicators = [];
   for (let i = 0; i < totalStage; i += 1) {
     let indicatorPalette = null;
@@ -41,18 +40,16 @@ const Stage = ({
   }
   return (
     <div className={className}>
-      <TextBlock size="caption" disabled={disabled}>{text}</TextBlock>
+      <TextBlock size="caption">{stage}</TextBlock>
       <Indicators>{indicators}</Indicators>
     </div>
   );
 };
 
 Stage.propTypes = {
-  text: string.isRequired,
-  currentStage: number.isRequired,
+  stage: string.isRequired,
   totalStage: number,
   palette: string,
-  disabled: bool,
   className: string,
 };
 

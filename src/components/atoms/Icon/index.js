@@ -29,7 +29,7 @@ const Wrapper = styled.span`
   }
 `;
 
-const Icon = ({ icon, size, ...props }) => {
+const Icon = styled(({ icon, size, ...props }) => {
   let svg;
   try {
     svg = require(`!raw-loader!./icons/${icon}-${size}.svg`);
@@ -41,7 +41,10 @@ const Icon = ({ icon, size, ...props }) => {
   return (
     <Wrapper size={size} {...props} dangerouslySetInnerHTML={{ __html: svg }} />
   );
-};
+})`
+`;
+
+Icon.displayName = 'Icon';
 
 Icon.propTypes = {
   icon: string.isRequired,

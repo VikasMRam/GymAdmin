@@ -14,6 +14,7 @@ export Link from './Link';
 export Paragraph from './Paragraph';
 export Span from './Span';
 export Tag from './Tag';
+export * from './Table';
 export Thumbnail from './Thumbnail';
 export TileImage from './TileImage';
 export Map from './Map';

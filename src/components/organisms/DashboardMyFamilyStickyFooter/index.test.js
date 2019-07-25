@@ -14,13 +14,9 @@ const options = [
   },
 ];
 
-const stageProps = {
-  text: 'Connected - Discussing Options',
-  currentStage: 1,
-};
+const stage = 'Discussing Options';
 
-
-const wrap = (props = {}) => shallow(<DashboardMyFamilyStickyFooter options={options} stageProps={stageProps} {...props} />);
+const wrap = (props = {}) => shallow(<DashboardMyFamilyStickyFooter options={options} stage={stage} {...props} />);
 
 describe('DashboardMyFamilyStickyFooter', () => {
   it('render DashboardMyFamilyStickyFooter', () => {

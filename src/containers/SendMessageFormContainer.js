@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { func } from 'prop-types';
+import { func, string } from 'prop-types';
 import { reduxForm, SubmissionError, clearSubmitErrors, reset } from 'redux-form';
 
 import { query } from 'sly/services/newApi';
 import { CONVERSATION_DATA_TYPE_TEXT, CONVERSATION_MEDIUM_INAPP } from 'sly/constants/conversations';
 import { CONVERSTION_MESSAGE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
-import participantPropType from 'sly/propTypes/conversation/conversationParticipant';
 import SendMessageForm from 'sly/components/organisms/SendMessageForm';
 import { createValidator, required } from 'sly/services/validation';
 
@@ -38,17 +37,16 @@ export default class SendMessageFormContainer extends Component {
     createConversationMessage: func,
     onSuccess: func,
     clearSubmitErrors: func,
-    otherParticipant: participantPropType.isRequired,
+    conversationId: string.isRequired,
   };
 
   handleOnSubmit = (formData) => {
     const {
-      otherParticipant,
+      conversationId,
       createConversationMessage,
       clearSubmitErrors,
       onSuccess,
     } = this.props;
-    const { conversationID } = otherParticipant;
     const data = {
       type: CONVERSATION_DATA_TYPE_TEXT,
       value: formData.message,
@@ -57,7 +55,7 @@ export default class SendMessageFormContainer extends Component {
       type: CONVERSTION_MESSAGE_RESOURCE_TYPE,
       attributes: {
         data,
-        conversationID,
+        conversationID: conversationId,
         medium: CONVERSATION_MEDIUM_INAPP,
       },
     };
