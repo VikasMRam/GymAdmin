@@ -144,13 +144,14 @@ jobs:
     # docker:
     #   - image: circleci/node:8.9-browsers
 
-    working_directory: ~/repo
+    working_directory: ~/repo/e2e
 
     environment:
       TEST_RESULTS: /tmp/test-results
 
     steps:
-      - checkout
+      - checkout:
+          path: ~/repo
 
       # Download and cache dependencies
       - restore_cache:
@@ -219,7 +220,7 @@ jobs:
           command: |
             source ~/.bashrc
             nvm use 8
-            export JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml"
+            export MOCHA_FILE="$TEST_RESULTS/junit/js-test-results.xml"
             BLUEBIRD_DEBUG=1 npm test -- --ci --maxWorkers=10 2>&1 | tee test_output
 
       - run:
@@ -232,7 +233,7 @@ jobs:
           command: |
             if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
               export TEST_OUTPUT=$(cat test_output)
-              ./.circleci/push-slack-notification.sh -t "smoke tests success" \
+              ../.circleci/push-slack-notification.sh -t "smoke tests success" \
                 -tl "$CIRCLE_BUILD_URL" -m "$TEST_OUTPUT" -c "#42c88a"
             fi
       - run:
@@ -244,7 +245,7 @@ jobs:
               if [ -z "$DESC_MSG" ]; then
                 DESC_MSG="failed before running tests"
               fi
-              ./.circleci/push-slack-notification.sh -t "smoke tests failed" \
+              ../.circleci/push-slack-notification.sh -t "smoke tests failed" \
                 -tl "$CIRCLE_BUILD_URL" -m "<!channel> $DESC_MSG" -c "#ed5c5c"
             fi
 
@@ -264,6 +265,9 @@ workflows:
           context: ReactDev
           requires:
             - build
+      - test:
+          requires:
+            deploy
   build-staging:
     jobs:
       - build:
