@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="11.688" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2019-07-25T17:14:03" tests="0" failures="0" time="0">
+  </testsuite>
+  <testsuite name="Marketplace Home Page" timestamp="2019-07-25T17:14:03" tests="1" failures="0" time="11.688">
+    <testcase name="Marketplace Home Page AutoComplete City Search" time="11.688" classname="AutoComplete City Search">
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -214,7 +214,7 @@ jobs:
             source ~/.bashrc
             nvm use 8
             export MOCHA_FILE="$TEST_RESULTS/junit/js-test-results.xml"
-            BLUEBIRD_DEBUG=1 npm test -- --ci --maxWorkers=10 2>&1 | tee test_output
+            BLUEBIRD_DEBUG=1 npm test 2>&1 | tee test_output
 
       - run:
           name: Closing OpenVPN Tunnel
