@@ -266,6 +266,7 @@ workflows:
           requires:
             - build
       - test:
+          context: OPENVPN
           requires:
             - deploy
   build-staging:
