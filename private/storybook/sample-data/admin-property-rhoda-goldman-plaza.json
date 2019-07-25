@@ -1,0 +1,1026 @@
+{
+  "id": "rhoda-goldman-plaza",
+  "createdAt": "2015-04-10T22:38:59Z",
+  "mainImage":
+  "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_sd.jpg",
+  "name": "Rhoda Goldman Plaza",
+  "phoneNumber": "123456789",
+  "numReviews": 9,
+  "webViewInfo": {
+    "ctaText": "Get Pricing.",
+    "firstLineValue": "Assisted Living, Memory Care, Respite Care",
+    "secondLineValue": "Suite, Studio, One Bedroom"
+  },
+  "adminInfo": {
+    "typeCare": ["Assisted Living", "Memory Care"],
+    "slyUrl" : "https://www.seniorly.com/assisted-living/california/san-francisco/rhoda-goldman-plaza",
+    "hasContract": true,
+    "communityPhone": "6508889999",
+    "externalUrl": "https://www.rhodagoldmanplaza.com",
+    "pricingString": "1 BR - $5660, 2BR - $6550",
+    "size" :"Large",
+    "adminNote": "Great community for memory care"
+  },
+  "agents": [
+    {
+      "id": "sarah-ordover-grass-valley",
+      "aggregateRating": {
+        "ratingValue": 0,
+        "numRatings": 0
+      },
+      "communities": null,
+      "info": {
+        "bio": "More stuff",
+        "chosenReview": "What more ",
+        "citiesServed": [
+          "Alameda",
+          "Castro Valley",
+          "Fremont",
+          "Hayward",
+          "Livermore",
+          "Newark",
+          "Pleasanton",
+          "San Leandro",
+          "San Lorenzo",
+          "Sunol",
+          "Berkeley",
+          "Emeryville",
+          "Oakland",
+          "Piedmont",
+          "Albany",
+          "Dublin",
+          "Union City"
+        ],
+        "displayName": "Sarah village grass valley",
+        "profileImageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/c199f63a3fc23f72bdd63578c0d8ab0a/EskatonVillageGrassValley_sd.jpg",
+        "recentFamiliesHelped": 5,
+        "lastFiveDayLeadCount": 5,
+        "slyScore":87,
+        "slyPhone":"+13122182900",
+        "adminNote":"This is a long admin note",
+        "slyCellPhone": "+13122182900",
+        "slyWorkPhone": "+13122182900",
+        "parentCompany": "Assisted Living Locators"
+      },
+      "name": "Sarah Ordover",
+      "status": 2,
+      "address": {
+        "city": "Grass Valley",
+        "county": "",
+        "latitude": 39.2411154,
+        "line1": "625 Eskaton Circle",
+        "line2": "",
+        "longitude": -121.0478757,
+        "state": "CA",
+        "zip": "95945",
+        "id": "d763212ea1b506675121b531f0c1c374"
+      }
+    },
+    {
+      "id": "sarah-ordover-grass-valley",
+      "aggregateRating": {
+        "ratingValue": 0,
+        "numRatings": 0
+      },
+      "communities": null,
+      "info": {
+        "bio": "More stuff",
+        "chosenReview": "What more ",
+        "citiesServed": [
+          "Alameda",
+          "Castro Valley",
+          "Fremont",
+          "Hayward",
+          "Livermore",
+          "Newark",
+          "Pleasanton",
+          "San Leandro",
+          "San Lorenzo",
+          "Sunol",
+          "Berkeley",
+          "Emeryville",
+          "Oakland",
+          "Piedmont",
+          "Albany",
+          "Dublin",
+          "Union City"
+        ],
+        "displayName": "Linda village grass valley",
+        "profileImageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/c199f63a3fc23f72bdd63578c0d8ab0a/EskatonVillageGrassValley_sd.jpg",
+        "recentFamiliesHelped": 5,
+        "lastFiveDayLeadCount": 5,
+        "slyScore":87,
+        "slyPhone":"+13122182900",
+        "adminNote":"This is a long admin note",
+        "slyCellPhone": "+13122182900",
+        "slyWorkPhone": "+13122182900",
+        "parentCompany": "Assisted Living Locators"
+      },
+      "name": "Linda Ordover",
+      "status": 2,
+      "address": {
+        "city": "Grass Valley",
+        "county": "",
+        "latitude": 39.2411154,
+        "line1": "625 Eskaton Circle",
+        "line2": "",
+        "longitude": -121.0478757,
+        "state": "CA",
+        "zip": "95945",
+        "id": "d763212ea1b506675121b531f0c1c374"
+      }
+    },
+    {
+      "id": "sarah-ordover-grass-valley",
+      "aggregateRating": {
+        "ratingValue": 0,
+        "numRatings": 0
+      },
+      "communities": null,
+      "info": {
+        "bio": "More stuff",
+        "chosenReview": "What more ",
+        "citiesServed": [
+          "Alameda",
+          "Castro Valley",
+          "Fremont",
+          "Hayward",
+          "Livermore",
+          "Newark",
+          "Pleasanton",
+          "San Leandro",
+          "San Lorenzo",
+          "Sunol",
+          "Berkeley",
+          "Emeryville",
+          "Oakland",
+          "Piedmont",
+          "Albany",
+          "Dublin",
+          "Union City"
+        ],
+        "displayName": "Linda village grass valley",
+        "profileImageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/c199f63a3fc23f72bdd63578c0d8ab0a/EskatonVillageGrassValley_sd.jpg",
+        "recentFamiliesHelped": 5,
+        "lastFiveDayLeadCount": 5,
+        "slyScore":87,
+        "slyPhone":"+13122182900",
+        "adminNote":"This is a long admin note",
+        "slyCellPhone": "+13122182900",
+        "slyWorkPhone": "+13122182900",
+        "parentCompany": "Assisted Living Locators"
+      },
+      "name": "Linda Ordover 2",
+      "status": 2,
+      "address": {
+        "city": "Grass Valley",
+        "county": "",
+        "latitude": 39.2411154,
+        "line1": "625 Eskaton Circle",
+        "line2": "",
+        "longitude": -121.0478757,
+        "state": "CA",
+        "zip": "95945",
+        "id": "d763212ea1b506675121b531f0c1c374"
+      }
+    },
+    {
+      "id": "sarah-ordover-grass-valley",
+      "aggregateRating": {
+        "ratingValue": 0,
+        "numRatings": 0
+      },
+      "communities": null,
+      "info": {
+        "bio": "More stuff",
+        "chosenReview": "What more ",
+        "citiesServed": [
+          "Alameda",
+          "Castro Valley",
+          "Fremont",
+          "Hayward",
+          "Livermore",
+          "Newark",
+          "Pleasanton",
+          "San Leandro",
+          "San Lorenzo",
+          "Sunol",
+          "Berkeley",
+          "Emeryville",
+          "Oakland",
+          "Piedmont",
+          "Albany",
+          "Dublin",
+          "Union City"
+        ],
+        "displayName": "Linda village grass valley",
+        "profileImageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/c199f63a3fc23f72bdd63578c0d8ab0a/EskatonVillageGrassValley_sd.jpg",
+        "recentFamiliesHelped": 5,
+        "lastFiveDayLeadCount": 5,
+        "slyScore":87,
+        "slyPhone":"+13122182900",
+        "adminNote":"This is a long admin note",
+        "slyCellPhone": "+13122182900",
+        "slyWorkPhone": "+13122182900",
+        "parentCompany": "Assisted Living Locators"
+      },
+      "name": "Linda Ordover 4",
+      "status": 2,
+      "address": {
+        "city": "Grass Valley",
+        "county": "",
+        "latitude": 39.2411154,
+        "line1": "625 Eskaton Circle",
+        "line2": "",
+        "longitude": -121.0478757,
+        "state": "CA",
+        "zip": "95945",
+        "id": "d763212ea1b506675121b531f0c1c374"
+      }
+    }
+
+  ],
+  "propInfo": {
+    "ownerImage": [
+      {
+        "name": "len and tablet.jpg",
+        "hd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%2520and%2520tablet_hd.jpg",
+        "sd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%2520and%2520tablet_sd.jpg"
+      }
+    ],
+    "ownerExprience":
+    "Sunrise Senior Living’s unique resident-centered services are delivered by a team trained to enable freedom of choice, encourage independence, preserve dignity, and protect the privacy of each resident. This approach enables us to continue championing quality of life for all seniors — it’s been our mission since 1981, and it’s what has made Sunrise Senior Living the premier provider of senior living services.",
+    "ratesText": "$6,027",
+    "licenseNumber": "385600125",
+    "ownerName": "Scott Street Senior Housing",
+    "ownerYears": "2000",
+    "languages": ["English"],
+    "languagesOther": "Mandarin",
+    "communitySpace": ["Dining Room", "Restaurant Style Dining"],
+    "communitySpaceOther": "Café",
+    "personalSpace": [
+      "2-Bedroom Apartments",
+      "1-Bedroom Apartments",
+      "Kitchenettes",
+      "Private Bathrooms",
+      "Internet",
+      "Cable",
+      "Wifi"
+    ],
+    "typeCare": ["Assisted Living", "Memory Care"],
+    "careServices": [
+      "Activities of Daily Living Assistance",
+      "Meal Preparation and Service",
+      "Coordination with Health Care Providers",
+      "Medication Management",
+      "Transportation to Doctors Appointments",
+      "Transportation Arrangement",
+      "24-Hour Call System",
+      "Respite Program",
+      "Diabetes Diet",
+      "Diabetes Care",
+      "Parkinsons Care",
+      "Mild Cognitive Impairment",
+      "Hospice Waiver",
+      "Dementia Waiver"
+    ],
+    "nonCareServices": [
+      "Housekeeping & Linen Services",
+      "Scheduled Transportation (non-medical related)",
+      "Fitness Programs",
+      "Continuing Learning Programs",
+      "Resident-Run Activities",
+      "Community-Sponsored Activities"
+    ],
+    "staffDescription":
+    "Our Department of Health Services is headed by a Registered Nurse. Our care staff is made up of LVN's, Med Tech's and CNA's and is located in offices on each residential floor. We have a dedicated Memory Care Floor called the Terrace, where all needed levels of care are included. In assisted living we offer Medication Management, Dressing and Bathing, Escort/Transfer service and Toileting or Incontinence Care. We also have a Hospice Care Waiver.",
+    "communityDescription":
+    "Dine in our elegant and sunny dining room or light-filled cafe, enjoy our large outdoor patio, exercise in our Fitness Center or pamper yourself in our Hair Salon. Relax or read the newspaper in our living room/library. Catch our exercise classes, lectures and discussions, concerts, outings, art classes, games, shopping trips and daily movies. Walk or use our shuttle for doctor visits; we are very close to many renowned medical offices and facilities. Life at Rhoda Goldman Plaza awaits.",
+    "residentFaith": ["Jewish"],
+    "residentLanguages": ["English"],
+    "managementCompany":
+    "Scott Street Senior Housing, a Non-Profit Organization",
+    "parentCompany": "Not Applicable",
+    "websiteUrl": "www.rgplaza.org",
+    "capacity": "195",
+    "minAge": "60 unless care needed due to condition or illness",
+    "secured": "Yes",
+    "communitySize": "51 +",
+    "communityFee": "$4,950",
+    "communityPhone": "4152956030",
+    "ccrcFee": "N/A",
+    "snfDailyRate": "N/A",
+    "alPrivateRate": "$6,027",
+    "alSharedRate": "N/A",
+    "mcPrivateRate": "$8,066",
+    "mcSharedRate": "N/A",
+    "privateSuiteRate": "N/A",
+    "studioApartmentRate": "$6,027",
+    "oneBedroomApartmentRate": "$6,824",
+    "twoBedroomApartmentRate": "$8,868",
+    "alCareRate": "$475",
+    "mcCareRate": "Included",
+    "serviceHighlights": [
+      "End of life care",
+      "Lifelong learning",
+      "Community operated transportation"
+    ],
+    "communityHighlights": [
+      "Cultural",
+      "Alzheimer’s / Dementia",
+      "Outdoor space"
+    ],
+    "admin": ["Visited By Seniorly"],
+    "respiteAllowed": {
+      "checked": true,
+      "minlength": 14,
+      "label": "Respite Care"
+    },
+    "caringUrl":
+    "https://www.caring.com/local/assisted-living-facilities-in-san-francisco-california/rhoda-goldman-plaza",
+    "senioradvisorsUrl":
+    "https://www.senioradvisor.com/local/rhoda-goldman-plaza-san-francisco-ca",
+    "yelpUrl": "http://www.yelp.com/biz/rhoda-goldman-plaza-san-francisco"
+  },
+  "propRatings": {
+    "hasWebReviews": true,
+    "hasSlyReviews": false,
+    "ratingsArray": [
+      {
+        "name": "Yelp",
+        "numReviews": 9,
+        "reviewsUrl":
+        "http://www.yelp.com/biz/rhoda-goldman-plaza-san-francisco",
+        "avgRating": 3.22
+      },
+      {
+        "name": "Caring.com",
+        "numReviews": 13,
+        "reviewsUrl":
+        "https://www.caring.com/local/assisted-living-facilities-in-san-francisco-california/rhoda-goldman-plaza",
+        "avgRating": 4.23
+      },
+      {
+        "name": "Facebook",
+        "numReviews": 11,
+        "reviewsUrl":
+        "https://www.facebook.com/Rhoda-Goldman-Plaza-170692986357988/",
+        "avgRating": 4.5
+      },
+      {
+        "name": "SeniorAdvisor.com",
+        "numReviews": 4,
+        "reviewsUrl":
+        "https://www.senioradvisor.com/local/rhoda-goldman-plaza-san-francisco-ca",
+        "avgRating": 4.13
+      }
+    ],
+    "reviewsValue": 4.0540543,
+    "numReviews": 37
+  },
+  "slyPhoneNumber": "",
+  "slyScore": 96.4873417721519,
+  "startingRate": 6027,
+  "status": 2,
+  "updatedAt": "2018-04-20T08:25:56Z",
+  "url": "/assisted-living/california/san-francisco/rhoda-goldman-plaza",
+  "address": {
+    "id": "2707e29ff183af005487e959a086dea0",
+    "city": "San Francisco",
+    "county": "San Francisco",
+    "latitude": 37.78479069999999,
+    "line1": "2180 Post Street",
+    "line2": "",
+    "longitude": -122.4376589,
+    "state": "CA",
+    "zip": "94115"
+  },
+  "communityListings": [],
+  "contacts": [],
+  "floorPlans": [
+    {
+      "id": "99600d1796edf82c16392b8487739716",
+      "createdAt": "2015-10-10T23:46:34Z",
+      "info": {
+        "title": "Beautiful, quiet private studio available now!",
+        "description":
+        "This is a lovely unfurnished apartment in a boutique style community.  Kitchenettes are provided in all of our rooms. It has a large private bathroom with a shower. It has a large closet and 300 Sq. Ft. to bring your twin or full size bed, and several other pieces that will fit nicely to furnish your new home.",
+        "roomType": "Studio",
+        "shareType": "Private",
+        "accessibility": "Ambulatory or Non Ambulatory",
+        "bathroom": "Private",
+        "gender": "Male or Female",
+        "price": 5100,
+        "priceType": "Monthly Rate"
+      },
+      "updatedAt": "2018-04-12T08:40:12Z"
+    },
+    {
+      "id": "67baff78347f90c16577feb6fc018b72",
+      "createdAt": "2015-10-10T23:48:48Z",
+      "info": {
+        "title": "Beautiful, quiet private studio available now!",
+        "description":
+        "This is a lovely unfurnished apartment in a boutique style community.  Kitchenettes are provided in all of our rooms. It has a large private bathroom with a shower. It has a large closet and 300 Sq. Ft. to bring your twin or full size bed, and several other pieces that will fit nicely to furnish your new home.",
+        "roomType": "Studio",
+        "shareType": "Private",
+        "accessibility": "Ambulatory or Non Ambulatory",
+        "bathroom": "Private",
+        "gender": "Male or Female",
+        "price": 5100,
+        "priceType": "Monthly Rate"
+      },
+      "updatedAt": "2018-04-12T08:40:12Z"
+    },
+    {
+      "id": "0a3d9e0e9c4adbf1483150e6a5a54ffe",
+      "createdAt": "2015-10-10T23:52:00Z",
+      "info": {
+        "title": "Beautiful, quiet private one bedroom available now!",
+        "description":
+        "This is a lovely unfurnished apartment in a boutique style community.  Kitchenettes are provided in all of our rooms. It has a large private bathroom with a shower.  It has 2 semi private living spaces so you can either share with a companion or have a bedroom and a living room area.  It has 2 closets  and provides 410 Sq. Ft. for you to bring up to a queen size bed, and several other pieces that will fit nicely to furnish your new home.",
+        "roomType": "One Bedroom",
+        "shareType": "Private",
+        "accessibility": "Ambulatory or Non Ambulatory",
+        "bathroom": "Private",
+        "gender": "Male or Female",
+        "price": 5700,
+        "priceType": "Monthly Rate"
+      },
+      "updatedAt": "2018-04-12T08:40:12Z"
+    },
+    {
+      "id": "a287c90cfae6cd5427d0f5bfbfa9fda6",
+      "createdAt": "2015-10-11T00:10:09Z",
+      "info": {
+        "image":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/c12040412664de0a0c9443dc952ba53b/63047_SunriseofSanMateo_SanMateo_CA_AptBed_sd.jpg",
+        "title":
+        "Private studio open in our lovely memory care neighborhood now!",
+        "description":
+        "This is a private studio that has 300 Sq. Ft. of space.  It is very bright and has a nice view in a quiet residential neighborhood.",
+        "roomType": "Studio",
+        "shareType": "Private",
+        "accessibility": "Ambulatory or Non Ambulatory",
+        "bathroom": "Private",
+        "gender": "Male or Female",
+        "price": 5070,
+        "priceType": "Monthly Rate"
+      },
+      "updatedAt": "2018-04-12T08:40:12Z"
+    },
+    {
+      "id": "14e8482d03dce18522160b8d2520bb65",
+      "createdAt": "2015-10-11T00:00:22Z",
+      "info": {
+        "title": "Beautiful, quiet private studio available now!",
+        "description":
+        "This is a lovely unfurnished apartment in our boutique style community.  Kitchenettes are provided in all of our rooms. It has a large shared bathroom with a shower.  It has a shared kitchenette area and It has a private bedroom with a door to close for privacy.",
+        "roomType": "Two Bedroom",
+        "shareType": "Shared",
+        "accessibility": "Ambulatory or Non Ambulatory",
+        "bathroom": "Shared",
+        "gender": "Female",
+        "price": 5100,
+        "priceShared": 3900,
+        "priceType": "Monthly Rate"
+      },
+      "updatedAt": "2018-04-12T08:40:12Z"
+    },
+    {
+      "id": "6af36a82804687edc00fed8df64eee73",
+      "createdAt": "2015-10-11T00:05:54Z",
+      "info": {
+        "image":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/c12040412664de0a0c9443dc952ba53b/63047_SunriseofSanMateo_SanMateo_CA_AptBed_sd.jpg",
+        "title":
+        "Shared, bright Studio Apartment with 2 windows available now!",
+        "description":
+        "This is a corner room has 325 Sq. Ft. of shared space.  The room is very bright as it has windows on 2 sides.  The bathroom will also be shared.  Roommate is very quiet and kind female.",
+        "roomType": "Studio",
+        "shareType": "Shared",
+        "accessibility": "Ambulatory or Non Ambulatory",
+        "bathroom": "Shared",
+        "gender": "Female",
+        "priceShared": 3300,
+        "priceType": "Monthly Rate"
+      },
+      "updatedAt": "2018-04-12T08:40:12Z"
+    }
+  ],
+  "gallery": {
+    "id": "c3e2a85523a03b2c3f9bbf1af19d21e9",
+    "createdAt": "2015-04-10T22:38:59Z",
+    "updatedAt": "2018-04-20T06:58:07Z",
+    "images": [
+      {
+        "id": "ddb49929f3915891cb67da8ad0ea663e",
+        "hd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_hd.jpg",
+        "name": "RGP-June-2014.jpg",
+        "path": "dbede7dcc263e098e3705e818b5ff463/RGP-June-2014.jpg",
+        "processed": 2,
+        "sd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_sd.jpg",
+        "thumb":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014_thumb.jpg",
+        "url":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/RGP-June-2014.jpg",
+        "gallery": null
+      },
+      {
+        "id": "7c580d1d286425f89fb2f6c5ab0b0cc0",
+        "hd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20_hd.jpg",
+        "name": "building pics jan 2014-20.jpg",
+        "path":
+        "dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20.jpg",
+        "processed": 2,
+        "sd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20_sd.jpg",
+        "thumb":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20_thumb.jpg",
+        "url":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/dbede7dcc263e098e3705e818b5ff463/building%20pics%20jan%202014-20.jpg",
+        "gallery": null
+      },
+      {
+        "id": "3d9e64e069d3663c15975da4d8ca26e9",
+        "hd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/library%20lounge_hd.jpg",
+        "name": "library lounge.jpg",
+        "path": "9e98a8d1b8d59941d725a30737861441/library%20lounge.jpg",
+        "processed": 2,
+        "sd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/library%20lounge_sd.jpg",
+        "thumb":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/library%20lounge_thumb.jpg",
+        "url":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/library%20lounge.jpg",
+        "gallery": null
+      },
+      {
+        "id": "150be9bb1e1f913ec41513371d8f7c42",
+        "hd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/lobby_hd.jpg",
+        "name": "lobby.jpg",
+        "path": "9e98a8d1b8d59941d725a30737861441/lobby.jpg",
+        "processed": 2,
+        "sd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/lobby_sd.jpg",
+        "thumb":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/lobby_thumb.jpg",
+        "url":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/lobby.jpg",
+        "gallery": null
+      },
+      {
+        "id": "c493987e7802d43deeae8f2ed9add01a",
+        "hd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4_hd.jpg",
+        "name": "front of RGP building-4.jpg",
+        "path":
+        "9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4.jpg",
+        "processed": 2,
+        "sd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4_sd.jpg",
+        "thumb":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4_thumb.jpg",
+        "url":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/front%20of%20RGP%20building-4.jpg",
+        "gallery": null
+      },
+      {
+        "id": "937deb3f62eb131533742644942b8326",
+        "hd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/3rd%20floor%20terrace_hd.jpg",
+        "name": "3rd floor terrace.jpg",
+        "path": "9e98a8d1b8d59941d725a30737861441/3rd%20floor%20terrace.jpg",
+        "processed": 2,
+        "sd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/3rd%20floor%20terrace_sd.jpg",
+        "thumb":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/3rd%20floor%20terrace_thumb.jpg",
+        "url":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/3rd%20floor%20terrace.jpg",
+        "gallery": null
+      },
+      {
+        "id": "3c699269c0ad5aa75c6a9f9d6648bb1e",
+        "hd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/art%20class%204_hd.jpg",
+        "name": "art class 4.jpg",
+        "path": "9e98a8d1b8d59941d725a30737861441/art%20class%204.jpg",
+        "processed": 2,
+        "sd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/art%20class%204_sd.jpg",
+        "thumb":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/art%20class%204_thumb.jpg",
+        "url":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/art%20class%204.jpg",
+        "gallery": null
+      },
+      {
+        "id": "92da4333049c4d6ccec8d7662a3934f2",
+        "hd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/exercise%20class%202_hd.jpg",
+        "name": "exercise class 2.jpg",
+        "path": "9e98a8d1b8d59941d725a30737861441/exercise%20class%202.jpg",
+        "processed": 2,
+        "sd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/exercise%20class%202_sd.jpg",
+        "thumb":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/exercise%20class%202_thumb.jpg",
+        "url":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/exercise%20class%202.jpg",
+        "gallery": null
+      },
+      {
+        "id": "b3865885185f4673196ba407c878d165",
+        "hd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_hd.jpg",
+        "name": "RGP-June-2014_hd2.jpg",
+        "path": "a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2.jpg",
+        "processed": 2,
+        "sd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_sd.jpg",
+        "thumb":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2_thumb.jpg",
+        "url":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/a634ab75e610e745ced00211580c5d54/RGP-June-2014_hd2.jpg",
+        "gallery": null
+      },
+      {
+        "id": "15ff69c320cecba709e11eecd49da166",
+        "hd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%20and%20tablet_hd.jpg",
+        "name": "len and tablet.jpg",
+        "path": "9e98a8d1b8d59941d725a30737861441/len%20and%20tablet.jpg",
+        "processed": 2,
+        "sd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%20and%20tablet_sd.jpg",
+        "thumb":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%20and%20tablet_thumb.jpg",
+        "url":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9e98a8d1b8d59941d725a30737861441/len%20and%20tablet.jpg",
+        "gallery": null
+      },
+      {
+        "id": "8cfa9d337d817e35320950e4f7f1e9f9",
+        "hd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602_hd.jpg",
+        "name": "RhodaGoldmanDSC_0602.jpg",
+        "path": "808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602.jpg",
+        "processed": 2,
+        "sd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602_sd.jpg",
+        "thumb":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602_thumb.jpg",
+        "url":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/808fee62b0416a9c53d3cca531b5e9e6/RhodaGoldmanDSC_0602.jpg",
+        "gallery": null
+      },
+      {
+        "id": "efce94280a1b9c3d4562b33188242c58",
+        "hd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1_hd.jpg",
+        "name": "Rhoda_Goldman_Plaza_header-1.jpg",
+        "path":
+        "f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1.jpg",
+        "processed": 2,
+        "sd":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1_sd.jpg",
+        "thumb":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1_thumb.jpg",
+        "url":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/f10e11c98bbfee1cf7a228670a05b97c/Rhoda_Goldman_Plaza_header-1.jpg",
+        "gallery": null
+      }
+    ]
+  },
+  "questions":[
+    {
+      "id":"851",
+      "contentData":"What is the one time entrance community fee?",
+      "contentOwnerId":8,
+      "contentOwnerType":"GuestUser",
+      "createdAt":"2017-04-06T20:02:18Z",
+      "creator":"Guest User",
+      "parentId":0,
+      "taglist":"community profile, rhoda-goldman-plaza",
+      "title":"What is the one time entrance community fee?",
+      "type":"Question",
+      "updatedAt":"2018-04-15T19:32:23Z",
+      "votes":171,
+      "contents":[
+        {
+          "id":"852",
+          "contentData":"The one- time Community Fee is $4,950.",
+          "contentOwnerId":194,
+          "contentOwnerType":"User",
+          "createdAt":"2017-04-07T02:19:28Z",
+          "creator":"Marlena Del Hierro",
+          "parentId":851,
+          "taglist":"",
+          "title":"What is the one time entrance community fee? answer",
+          "type":"Answer",
+          "updatedAt":"2017-04-07T02:19:28Z",
+          "votes":0,
+          "contents":[
+
+          ]
+        }
+      ]
+    },
+    {
+      "id":"668",
+      "contentData":"Can Rhoda Goldman Plaza accept a resident with memory care needs?",
+      "contentOwnerId":1,
+      "contentOwnerType":"GuestUser",
+      "createdAt":"2016-10-25T04:35:13Z",
+      "creator":"Guest User",
+      "parentId":0,
+      "taglist":"community profile,rhoda-goldman-plaza",
+      "title":"Can Rhoda Goldman Plaza accept a resident with memory care needs?",
+      "type":"Question",
+      "updatedAt":"2018-04-15T23:33:31Z",
+      "votes":196,
+      "contents":[
+        {
+          "id":"838",
+          "contentData":"Yes, Rhoda Goldman Plaza has a memory care wing.",
+          "contentOwnerId":17,
+          "contentOwnerType":"User",
+          "createdAt":"2017-03-08T18:39:54Z",
+          "creator":"Seniorly Concierge Team",
+          "parentId":668,
+          "taglist":"",
+          "title":"Can Rhoda Goldman Plaza accept a resident with memory care needs? answer",
+          "type":"Answer",
+          "updatedAt":"2017-03-08T18:39:54Z",
+          "votes":0,
+          "contents":[
+
+          ]
+        }
+      ]
+    },
+    {
+      "id":"667",
+      "contentData":"Does Rhoda Goldman Plaza provide meals to residents in assisted living?",
+      "contentOwnerId":1,
+      "contentOwnerType":"GuestUser",
+      "createdAt":"2016-09-02T04:35:13Z",
+      "creator":"Guest User",
+      "parentId":0,
+      "taglist":"community profile,rhoda-goldman-plaza",
+      "title":"Does Rhoda Goldman Plaza provide meals to residents in assisted living?",
+      "type":"Question",
+      "updatedAt":"2018-04-17T02:59:36Z",
+      "votes":195,
+      "contents":[
+        {
+          "id":"840",
+          "contentData":"Yes they do!",
+          "contentOwnerId":17,
+          "contentOwnerType":"User",
+          "createdAt":"2017-03-08T18:40:32Z",
+          "creator":"Seniorly Concierge Team",
+          "parentId":667,
+          "taglist":"",
+          "title":"Does Rhoda Goldman Plaza provide meals to residents in assisted living? answer",
+          "type":"Answer",
+          "updatedAt":"2017-03-08T18:40:32Z",
+          "votes":0,
+          "contents":[
+
+          ]
+        },
+        {
+          "id":"1085",
+          "contentData":"Yes, Rhoda Goldman Plaza provides meals to residents in assisted living.",
+          "contentOwnerId":177,
+          "contentOwnerType":"User",
+          "createdAt":"2018-01-23T07:32:05Z",
+          "creator":"Jared Calinisan",
+          "parentId":667,
+          "taglist":"",
+          "title":"Does Rhoda Goldman Plaza provide meals to residents in assisted living? answer",
+          "type":"Answer",
+          "updatedAt":"2018-01-23T07:32:05Z",
+          "votes":0,
+          "contents":[
+
+          ]
+        }
+      ]
+    },
+    {
+      "id":"669",
+      "contentData":"Do the apartments at Rhoda Goldman Plaza have their own private bathrooms?",
+      "contentOwnerId":1,
+      "contentOwnerType":"GuestUser",
+      "createdAt":"2016-09-10T04:35:13Z",
+      "creator":"Guest User",
+      "parentId":0,
+      "taglist":"community profile,rhoda-goldman-plaza",
+      "title":"Do the apartments at Rhoda Goldman Plaza have their own private bathrooms?",
+      "type":"Question",
+      "updatedAt":"2018-04-17T06:54:21Z",
+      "votes":244,
+      "contents":[
+        {
+          "id":"839",
+          "contentData":"Yes, RGP has apartments with private bathrooms\n",
+          "contentOwnerId":17,
+          "contentOwnerType":"User",
+          "createdAt":"2017-03-08T18:40:19Z",
+          "creator":"Seniorly Concierge Team",
+          "parentId":669,
+          "taglist":"",
+          "title":"Do the apartments at Rhoda Goldman Plaza have their own private bathrooms? answer",
+          "type":"Answer",
+          "updatedAt":"2017-03-08T18:40:19Z",
+          "votes":0,
+          "contents":[
+
+          ]
+        }
+      ]
+    },
+    {
+      "id":"828",
+      "contentData":"are the rental fees per person?  i.e. double for a married couple?",
+      "contentOwnerId":2549,
+      "contentOwnerType":"User",
+      "createdAt":"2017-02-08T22:48:30Z",
+      "creator":"Marvin Friedman",
+      "parentId":0,
+      "taglist":"community profile, rhoda-goldman-plaza",
+      "title":"are the rental fees per person?  i.e. double for a",
+      "type":"Question",
+      "updatedAt":"2017-02-09T00:40:27Z",
+      "votes":5,
+      "contents":[
+
+      ]
+    }
+  ],
+  "organization": {
+    "id": "bee877af68c08ce8502fcee0da9567f4",
+    "createdAt": "2014-08-07T22:48:57Z",
+    "name": "Seniorly",
+    "updatedAt": "2015-05-21T23:51:57Z",
+    "users": []
+  },
+  "reviews": [
+    {
+      "id": "762b7f6b596ea519be9b7e3d95581b79",
+      "author": "Pranesh",
+      "comments": "Best Senior Living Community Ever seen",
+      "published": true,
+      "value": 5,
+      "createdAt": "2018-04-12T04:55:38Z",
+      "updatedAt": "2018-04-12T04:55:38Z"
+    },
+    {
+      "id": "762b7f6b596ea519be9b7e3d95581b79",
+      "author": "Amal",
+      "comments": "Worst Senior Living Community Ever seen",
+      "published": true,
+      "value": 1,
+      "createdAt": "2018-04-12T04:55:38Z",
+      "updatedAt": "2018-04-12T04:55:38Z"
+    },
+    {
+      "id": "762b7f6b596ea519be9b7e3d95581b79",
+      "author": "Francis",
+      "comments": "meh",
+      "published": true,
+      "value": 1.5,
+      "createdAt": "2018-04-12T04:55:38Z",
+      "updatedAt": "2018-04-12T04:55:38Z"
+    }
+  ],
+  "rgsAux": {
+    "id": "ea96683a131d1a159ea13fb9a217fd76",
+    "amenityScore": "3.4",
+    "estimatedPrice": {
+      "providedAverage": 7046,
+      "estimatedAverage": 0,
+      "cityAverage": 1000,
+      "stateAverage": 4000,
+      "nationalAverage": 3628,
+      "homeCareMAverage": 2000,
+      "homeCareHAverage": 1500,
+      "adultDayAverage": 2500
+    },
+    "communityDescription": "",
+    "localDetails": "<p><strong>Local Health: </strong>The nearest hospital is Marc M. Zare, MD: Advanced Laparoscopic Surgery, which is located within 8 miles from Friendship House. There are 19 other hospitals within 8 miles of the community. There are also 20 doctors' offices, 20 dentists, and 20 other related places including  and .<br><strong>Local Wellness: </strong>Residents living at Friendship House can enjoy easy access to 20 nearby beauty salons like Face It Beautiful! Skin Care. There area also 20 spas within a 8 mile radius of the community. For those residents that are a bit more active and enjoy staying in shape, The Club at Los Gatos is located just 4.653948709025562 miles.There are also 20 other gyms nearby including 24 Hour Fitness. <br><strong>Local Amenities: </strong>Friendship House is located near many local amenities like Kings Court, Campbell and Hooters. There are 20 cafes and 20 restaurants within a 5-mile radius of the community. There are also 20 supermarkets and 20 shopping malls nearby. <br><strong>Local Spirituality: </strong> There are 20 nearby places of worship for residents living at Friendship House. WestGate Church | South Hills Campus is the closest Church.</p>"
+  },
+  "similarProperties": [
+    {
+      "id": "agesong-laguna-grove-care",
+      "imageUrl":
+      "https://d1qiigpe5txw4q.cloudfront.net/uploads/611f19f5754d9debbc6c7e16a64ba2d0/AgeSong_Laguna_Grove_Care_new-2_sd.jpg",
+      "name": "AgeSong Laguna Grove Care",
+      "reviewsValue": 4,
+      "numReviews": 9,
+      "latitude": 37.7768864,
+      "longitude": -122.4266889,
+      "description": "AgeSong is the best",
+      "startingRate": 4050,
+      "webViewInfo": {
+        "firstLineValue": "Assisted Living",
+        "secondLineValue": "Suite, Studio"
+      },
+      "url":
+      "/assisted-living/california/san-francisco/agesong-laguna-grove-care"
+    },
+    {
+      "id": "san-francisco-towers",
+      "addressString": "1661 Pine Street, San Francisco, CA",
+      "description": "Episcopal Senior Communities cultivates and builds healthy communities with a continuum of residential and innovative aging services that actively pro",
+      "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/a799dd595c60fc62d36764139d97a91a/SFT_OneBedroom_01_sd.jpg",
+      "latitude": 37.7891395,
+      "longitude": -122.4229189,
+      "name": "San Francisco Towers",
+      "numReviews": 0,
+      "resourceType": "Community",
+      "reviewsValue": 0,
+      "startingRate": 3760,
+      "url": "/independent-living/california/san-francisco/san-francisco-towers-san-francisco",
+      "webViewInfo": {
+        "firstLineValue": "Assisted Living",
+        "secondLineValue": "Suite, Studio"
+      }
+    },
+    {
+      "id": "agesong-hayes-valley",
+      "addressString": "601 Laguna Street, San Francisco, CA",
+      "description": "",
+      "imageUrl": "https://d1qiigpe5txw4q.cloudfront.net/uploads/141602fe313edce1fa5db4d06ebbe835/5D3_1588_sd.jpg",
+      "latitude": 37.7768864,
+      "longitude": -122.4266889,
+      "name": "Village At Hayes Valley",
+      "numReviews": 0,
+      "resourceType": "Community",
+      "reviewsValue": 0,
+      "startingRate": 4050,
+      "url": "/assisted-living/california/san-francisco/agesong-hayes-valley-care",
+      "webViewInfo": {
+        "firstLineValue": "Assisted Living",
+        "secondLineValue": "Suite, Studio"
+      }
+    }
+  ],
+  "twilioNumber": {
+    "areaCode": 415,
+    "cityId": 2597,
+    "createdAt": "2017-03-15T18:39:24Z",
+    "numbers": [4152639703],
+    "updatedAt": "2017-03-15T18:39:24Z",
+    "id": "sdkfmsdk"
+  },
+  "user": {
+    "id": "a2c9987ae9a50a52a199145df1061b10",
+    "admin": true,
+    "createdAt": "2015-11-21T01:20:30Z",
+    "email": "sushanth@seniorly.com",
+    "name": "Sushanth Sly",
+    "roleId": 2,
+    "updatedAt": "2018-03-20T19:21:10Z",
+    "addressOmitempty": null,
+    "contact": null,
+    "organization": {
+      "id": "bee877af68c08ce8502fcee0da9567f4",
+      "createdAt": "2014-08-07T22:48:57Z",
+      "name": "Seniorly",
+      "updatedAt": "2015-05-21T23:51:57Z",
+      "users": []
+    },
+    "phoneNumber": "4152639703"
+  },
+  "videoGallery": {
+    "id": "ffb714b0df795bd3ee310aafb7274a8e",
+    "createdAt": "2015-04-10T22:38:59Z",
+    "updatedAt": "2018-04-20T06:58:07Z",
+    "videos": [
+      {
+        "id": "46ea0ede80941d3126e32c2d64d1153d",
+        "name": "AgeSong_LagunaGroveCare",
+        "path":
+        "f3c47f7a-7eea-4777-af86-d57c95310efc/AgeSong_LagunaGroveCare_Lowres_04_29_2015.mp4",
+        "processed": 2,
+        "thumbUrl":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9391fed0-9486-44f5-9da2-56ff33434bb1/BuenaVistaManorHouse_nojoke1.1_thump.png",
+        "url":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9391fed0-9486-44f5-9da2-56ff33434bb1/BuenaVistaManorHouse_nojoke1.1.mp4",
+        "webmUrl":
+        "https://d1qiigpe5txw4q.cloudfront.net/uploads/9391fed0-9486-44f5-9da2-56ff33434bb1/BuenaVistaManorHouse_nojoke1.1.webm"
+      }
+    ]
+  }
+}
