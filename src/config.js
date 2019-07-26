@@ -49,13 +49,11 @@ const config = {
     muteReduxLogger: process.env.MUTE_REDUX_LOGGER,
     hideChatbox: process.env.HIDE_CHATBOX,
     enableExperimentsDebugger: false,
-    gMapsApiKey: 'AIzaSyALxJg-oMW7SvkQ27KFTuWjTLedXcAhrZE',
   },
 
   staging: {
     isDev: false,
     eventServerUrl: 'http://event.myseniorly.com/events/new',
-    gMapsApiKey: 'AIzaSyALxJg-oMW7SvkQ27KFTuWjTLedXcAhrZE',
     facebookAppId: '614862451969442',
     googleAppId: '522248695659-ces03d2ptbgegiusk0c6v8j9abc7pdbf.apps.googleusercontent.com',
   },
