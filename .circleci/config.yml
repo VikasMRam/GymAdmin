@@ -74,7 +74,7 @@ jobs:
 #              circleci step halt
 #            fi
 
-      - attach_to_workspace:
+      - attach_workspace:
           at: ~
 
       - run:
@@ -163,7 +163,7 @@ jobs:
       TEST_RESULTS: /tmp/test-results
 
     steps:
-      - attach_to_workspace:
+      - attach_workspace:
           at: ~
 
       # Download and cache dependencies
