@@ -10,7 +10,7 @@ jobs:
     docker:
       - image: circleci/node:8.12 # though we use 8.9 only 8.12 has npm that supports npm ci
 
-    working_directory: ~/project
+    working_directory: /home/circleci/project
 
     environment:
       TEST_RESULTS: /tmp/test-results
@@ -63,7 +63,7 @@ jobs:
     docker:
       - image: circleci/python:2.7
 
-    working_directory: ~/project
+    working_directory: /home/circleci/project
 
     steps:
 #      - run:
@@ -75,7 +75,7 @@ jobs:
 #            fi
 
       - attach_workspace:
-          at: ~
+          at: /home/circleci
 
       - run:
           name: Install awscli
