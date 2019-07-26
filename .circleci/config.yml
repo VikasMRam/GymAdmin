@@ -67,6 +67,11 @@ jobs:
       - checkout
 
       - run:
+          name: Install awscli
+          command: |
+            sudo pip install awsebcli --upgrade
+
+      - run:
           name: Choosing EB_ENV
           command: |
             export LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
@@ -107,11 +112,6 @@ jobs:
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
             ./.circleci/push-slack-notification.sh -t "Starting deploy to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#66d3e4"
-
-      - run:
-          name: Install awscli
-          command: |
-            sudo pip install awsebcli --upgrade
 
       - run:
           name: Deploy to EB
