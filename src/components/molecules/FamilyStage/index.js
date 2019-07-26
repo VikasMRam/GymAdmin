@@ -35,7 +35,7 @@ const FamilyStage = ({
   stageText, onAcceptClick, onRejectClick, snap, noBorderRadius, onAddNoteClick, onUpdateClick,
 }) => {
   const {
-    level, levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, disableAddNoteButton, disableUpdateButton,
+    levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, disableAddNoteButton, disableUpdateButton,
   } = getStageDetails(stageText);
   let text = 'Unknown';
   if (levelGroup) {
@@ -45,7 +45,7 @@ const FamilyStage = ({
   return (
     <Box snap={snap} noBorderRadius={noBorderRadius}>
       <PaddedHeading size="body">Stage</PaddedHeading>
-      <PaddedStage text={text} currentStage={level} totalStage={TOTAL_STAGES_COUNT} palette={palette} />
+      <PaddedStage stage={text} totalStage={TOTAL_STAGES_COUNT} palette={palette} />
       {showAcceptRejectButtons && <MarginBottomFullWidthButton onClick={onAcceptClick}>Accept and contact this family</MarginBottomFullWidthButton>}
       {showAcceptRejectButtons && <FullWidthButton onClick={onRejectClick} palette="danger" ghost>Reject</FullWidthButton>}
       {showUpdateAddNoteButtons && <MarginBottomFullWidthButton onClick={onUpdateClick} disabled={disableUpdateButton}>Update stage</MarginBottomFullWidthButton>}
