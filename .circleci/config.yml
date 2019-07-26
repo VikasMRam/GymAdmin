@@ -55,7 +55,7 @@ jobs:
           path: /tmp/test-results
 
       - persist_to_workspace:
-          root: ~
+          root: /home/circleci
           paths:
             - project
 
@@ -164,7 +164,7 @@ jobs:
 
     steps:
       - attach_workspace:
-          at: ~
+          at: /home/circleci
 
       # Download and cache dependencies
       - restore_cache:
