@@ -3,6 +3,7 @@ import { object, func, bool } from 'prop-types';
 import { SubmissionError } from 'redux-form';
 import produce from 'immer';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import { size } from 'sly/components/themes';
 import { query } from 'sly/services/newApi';
@@ -11,11 +12,19 @@ import { community as communityPropType } from 'sly/propTypes/community';
 import AddNoteFormContainer from 'sly/containers/AddNoteFormContainer';
 import ConfirmationDialog from 'sly/components/molecules/ConfirmationDialog';
 
+const formName = 'AddOrEditNoteForm';
+
 const StyledConfirmationDialog = styled(ConfirmationDialog)`
   padding: ${size('spacing.xxLarge')};
 `;
 
+const mapStateToProps = state => ({
+  formState: state.form && state.form[formName] ? state.form[formName].values : {},
+});
+
 @query('updateUserSave', 'updateUserSave')
+
+@connect(mapStateToProps)
 
 class AddOrEditNoteForSavedCommunityContainer extends Component {
   static propTypes = {
@@ -28,6 +37,7 @@ class AddOrEditNoteForSavedCommunityContainer extends Component {
     userSave: object,
     isEditMode: bool,
     initialValues: object,
+    formState: object,
   };
 
   handleSubmitSaveCommunityForm = (data) => {
@@ -52,13 +62,14 @@ class AddOrEditNoteForSavedCommunityContainer extends Component {
   render() {
     const { handleSubmitSaveCommunityForm } = this;
     const {
-      community, onCancel, isEditMode, initialValues,
+      community, onCancel, isEditMode, initialValues, formState,
     } = this.props;
     const { name } = community;
+    const hasChanged = initialValues.note !== formState.note;
 
     return (
       <WizardController
-        formName="AddOrEditNoteForm"
+        formName={formName}
       >
         {({
           data, next, previous, ...props
@@ -71,15 +82,16 @@ class AddOrEditNoteForSavedCommunityContainer extends Component {
               onSubmit={data => handleSubmitSaveCommunityForm(data)}
               heading={`${isEditMode ? 'Edit' : 'Add'} note about ${name}`}
               hasCancel
-              onCancelClick={next}
+              onCancelClick={hasChanged ? next : onCancel}
               destroyOnUnmount={false}
+              keepDirtyOnReinitialize
               initialValues={initialValues}
             />
             <WizardStep
               component={StyledConfirmationDialog}
               name="Discard"
               heading="Discard Note"
-              description="You can’t undo this, and you'll lose any unsaved changes."
+              description="You can't undo this, and you'll lose any unsaved changes."
               confirmButtonText="Yes, Discard"
               onCancelClick={previous}
               onConfirmClick={onCancel}
