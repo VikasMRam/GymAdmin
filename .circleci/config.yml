@@ -10,11 +10,14 @@ jobs:
     docker:
       - image: circleci/node:8.12 # though we use 8.9 only 8.12 has npm that supports npm ci
 
+    working_directory: ~/project
+
     environment:
       TEST_RESULTS: /tmp/test-results
 
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
 
       - run:
           name: Setup dirs
@@ -51,9 +54,16 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
 
+      - persist_to_workspace:
+          root: ~
+          paths:
+            - project
+
   deploy:
     docker:
       - image: circleci/python:2.7
+
+    working_directory: ~/project
 
     steps:
 #      - run:
@@ -64,7 +74,8 @@ jobs:
 #              circleci step halt
 #            fi
 
-      - checkout
+      - attach_to_workspace:
+          at: ~
 
       - run:
           name: Install awscli
@@ -140,19 +151,20 @@ jobs:
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
             ./.circleci/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#ed5c5c"
+
   test:
     machine: true
     # docker:
     #   - image: circleci/node:8.9-browsers
 
-    working_directory: ~/repo/e2e
+    working_directory: ~/project/e2e
 
     environment:
       TEST_RESULTS: /tmp/test-results
 
     steps:
-      - checkout:
-          path: ~/repo
+      - attach_to_workspace:
+          at: ~
 
       # Download and cache dependencies
       - restore_cache:
