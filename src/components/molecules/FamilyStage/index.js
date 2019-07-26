@@ -45,7 +45,7 @@ const FamilyStage = ({
   return (
     <Box snap={snap} noBorderRadius={noBorderRadius}>
       <PaddedHeading size="body">Stage</PaddedHeading>
-      <PaddedStage stage={text} totalStage={TOTAL_STAGES_COUNT} palette={palette} />
+      <PaddedStage stage={stageText} stageLabel={text} totalStage={TOTAL_STAGES_COUNT} palette={palette} />
       {showAcceptRejectButtons && <MarginBottomFullWidthButton onClick={onAcceptClick}>Accept and contact this family</MarginBottomFullWidthButton>}
       {showAcceptRejectButtons && <FullWidthButton onClick={onRejectClick} palette="danger" ghost>Reject</FullWidthButton>}
       {showUpdateAddNoteButtons && <MarginBottomFullWidthButton onClick={onUpdateClick} disabled={disableUpdateButton}>Update stage</MarginBottomFullWidthButton>}

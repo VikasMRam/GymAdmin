@@ -68,7 +68,7 @@ const SmallScreenBorder = css`
 const CommunitiesTab = styled.div`
   ${SmallScreenBorder};
   padding: ${size('spacing.xxxLarge')} 0;
-  
+
   > * {
     width: ${size('layout.col4')};
     margin-left: auto;
@@ -165,14 +165,14 @@ const SmallScreenClientNameBlock = styled(Block)`
 
 const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   margin-bottom: ${size('element.xxxLarge')};
-  
+
   main {
     padding: 0;
   }
-    
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-bottom: 0;
-    
+
     main {
       padding: ${size('spacing.xLarge')};
     }
@@ -353,6 +353,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished,
     } = this.props;
+    const { admin } = user;
 
     let conversationParticipants = [];
     let viewingAsParticipant;
@@ -515,8 +516,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   rawClient={rawClient}
                   notifyInfo={notifyInfo}
                   notifyError={notifyError}
-                  accepted={!showAcceptRejectButtons}
-                  canEditFamilyDetails={canEditFamilyDetails}
+                  accepted={!showAcceptRejectButtons || admin}
+                  canEditFamilyDetails={canEditFamilyDetails || admin}
                   gender={gender}
                   lookingFor={lookingFor}
                   monthlyBudget={monthlyBudget}
