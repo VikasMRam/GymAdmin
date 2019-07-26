@@ -13,25 +13,20 @@ export default class DashboardCallDetailsPageContainer extends Component {
     id: string,
     voiceCall: object,
   };
-  render(){
+
+  state = {
+    communityFilter: {},
+  };
+
+  render() {
     const { voiceCall } = this.props;
-    const meta = { lookingFor: [], gender: ['Female', 'Male'], timeToMove:['1+ Months'], monthlyBudget:[] };
-    // const {
-    //   voiceCall, status,
-    // } = this.props;
-
-    // const { voiceCalls: voiceCallStatus } = status;
-    // const { isLoading, error: voiceCallsError } = voiceCallStatus;
-
-    // if (isLoading) {
-    //   return <div>Loading...</div>;
-    // }
-    // if (voiceCallsError) {
-    //   return <div>Error Loading voice calls</div>;
-    // }
-
+    const { communityFilter } = this.state;
+    const meta = {
+      lookingFor: [], gender: ['Female', 'Male'], timeToMove: ['1+ Months'], monthlyBudget: [],
+    };
+    // const communityFilter = { phone: voiceCall.toNumber };
     return (
-      <DashboardCallDetailsPage meta={meta} voiceCall={voiceCall} />
+      <DashboardCallDetailsPage meta={meta} voiceCall={voiceCall} communityFilter={communityFilter} />
     );
   }
 }

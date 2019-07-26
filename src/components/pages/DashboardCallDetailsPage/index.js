@@ -1,23 +1,15 @@
 import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
-
-
-
 import { createValidator, required, usPhone } from 'sly/services/validation';
 import { reduxForm } from 'redux-form';
-import { object } from 'prop-types';
-
+import { object, string, shape } from 'prop-types';
 import voiceCallPropType from 'sly/propTypes/calls';
-
 import { palette, size } from 'sly/components/themes';
-import { Hr } from 'sly/components/atoms';
+import { Hr, Box } from 'sly/components/atoms';
 import Tabs from 'sly/components/molecules/Tabs';
-
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import DashboardAdminFamilyDetailsForm from 'sly/components/organisms/DashboardAdminFamilyDetailsForm';
-
-import DashboardCallDetailsAgentInfoContainer from 'sly/containers/DashboardCallDetailsAgentInfoContainer';
-import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
+import DashboardAdminSearchContainer from 'sly/containers/DashboardAdminSearchContainer';
 
 const validate = createValidator({
   name: [required],
@@ -67,10 +59,14 @@ export default class DashboardCallDetailsPage extends Component {
   static propTypes = {
     meta: object,
     voiceCall: voiceCallPropType.isRequired,
+    communityFilter: shape({
+      phone: string,
+      name: string,
+      zip: string,
+    }),
   }
   render() {
-    const { voiceCall, meta } = this.props;
-    console.log('Seeing voice vall here',voiceCall);
+    const { voiceCall, communityFilter, meta } = this.props;
     if (!voiceCall) {
       return (
         <DashboardTwoColumnTemplate activeMenuItem="My Families">
@@ -78,16 +74,19 @@ export default class DashboardCallDetailsPage extends Component {
         </DashboardTwoColumnTemplate>
       );
     }
+    // const voiceFilter = { twilioNumber: voiceCall.toNumber };
     return (
       <Fragment>
         <DashboardTwoColumnTemplate>
-          <ReduxForm {...meta} />
+          <Box><ReduxForm {...meta} /></Box>
           <StyledTabs activeTab="fDetails">
             <DetailsTab id="fDetails" label="FIrst">
               Some Details
             </DetailsTab>
-            <div id="searchTab" label="Search"><SearchBoxContainer> </SearchBoxContainer></div>
-            <div id= "callDetails" label="Third">{voiceCall.toNumber} </div>
+            <div id="searchTab" label="Search">
+              <DashboardAdminSearchContainer filter={communityFilter} />
+            </div>
+
           </StyledTabs>
         </DashboardTwoColumnTemplate>
       </Fragment>
