@@ -14,6 +14,7 @@ import utc from 'dayjs/plugin/utc';
 import { hideChatbox } from 'sly/config';
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
+import setDatepickerStyles from 'sly/components/themes/datepickerStyles';
 import { assetPath } from 'sly/components/themes';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Router from 'sly/components/molecules/Router';
@@ -59,6 +60,7 @@ const DashboardMessagesContainer = loadable(() => import(/* webpackChunkName: "c
 const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/containers/DashboardMessageDetailsPageContainer'));
 
 setGlobalStyles();
+setDatepickerStyles();
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
