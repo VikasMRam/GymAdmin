@@ -54,7 +54,7 @@ const StyledBlock = styled(Block)`
 `;
 
 const agentPropsMap = {
-  parentCompany: 'menu',
+  parentCompany: 'families',
   slyCellPhone: 'phone',
   slyWorkPhone: 'phone',
   lastFiveDayLeadCount: 'loyalty',
