@@ -36,6 +36,15 @@ jobs:
                   fi
 
             - run:
+                name: Packages security audit
+                command: |
+                  if [[ -n "$CI_PULL_REQUEST" && -n $(npm audit | grep -E "(High | Critical)" -B3 -A10) ]]; then
+                    exit 1
+                  else
+                    echo "Not a commit build skipping audit"
+                  fi
+
+            - run:
                 name: JavaScript Linter
                 command: npm run lint -- --format junit -o "$TEST_RESULTS/js-lint-results.xml"
 
