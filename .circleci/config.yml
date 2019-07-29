@@ -38,8 +38,11 @@ jobs:
             - run:
                 name: Packages security audit
                 command: |
-                  if [[ -n "$CI_PULL_REQUEST" && -n $(npm audit | grep -E "(High | Critical)" -B3 -A10) ]]; then
-                    exit 1
+                  if [[ -z "$CI_PULL_REQUEST" ]]; then
+                    echo "Doing audit..."
+                    if [[ -n $(npm audit | grep -E "(High | Critical)" -B3 -A10) ]]; then
+                      exit 1
+                    fi
                   else
                     echo "Not a commit build skipping audit"
                   fi
