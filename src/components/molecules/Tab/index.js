@@ -63,6 +63,7 @@ Tab.propTypes = {
 
 Tab.defaultProps = {
   type: 'tab',
+  active: false,
 };
 
 export default Tab;

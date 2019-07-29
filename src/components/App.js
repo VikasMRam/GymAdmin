@@ -285,7 +285,7 @@ export default class App extends Component {
             <Switch>
               <Route
                 path="/ping"
-                render={() => (<h1> pong </h1>)}
+                render={() => <h1>pong</h1>}
                 exact
               />
               <Route
