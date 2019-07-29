@@ -5,12 +5,8 @@ import isURL from 'validator/lib/isURL';
 import isMobilePhone from 'validator/lib/isMobilePhone';
 import isFloat from 'validator/lib/isFloat';
 
-<<<<<<< Updated upstream
 const isEmpty = value => value === undefined || value === null ||
   (value && value.trim ? value.trim() === '' : value === '');
-=======
-const isEmpty = value => value === undefined || value === null || ((value === 'string') && (value.trim() === ''));
->>>>>>> Stashed changes
 const join = rules => (value, data) =>
   rules.map((rule) => {
     const result = rule(value, data);
