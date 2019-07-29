@@ -171,12 +171,12 @@
     "validator": "^9.0.0",
     "webpack": "^4.29.6",
     "webpack-blocks": "^2.0.1",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1",
     "webpack-merge-and-include-globally": "^2.1.16",
     "webpack-node-externals": "^1.7.2",
     "webpack-sort-chunks": "^0.2.0",
-    "webpack-spawn-plugin": "^0.3.0",
-    "webpack-visualizer-plugin": "^0.1.11"
+    "webpack-spawn-plugin": "^0.3.0"
   }
 }
