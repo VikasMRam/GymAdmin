@@ -81,6 +81,7 @@ export default class UpdateFamilyStageForm extends Component {
     });
     const lossReasonOptions = lossReasons.map(reason => <option key={reason} value={reason}>{reason}</option>);
     const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
+    const stageChanged = currentStage !== nextStage;
     const StageField = stageGroupChanged ? Field : PaddedField;
 
     return (
@@ -102,12 +103,12 @@ export default class UpdateFamilyStageForm extends Component {
           <option value="" disabled>Select a stage</option>
           {options}
         </StageField>
-        {stageGroupChanged && !isPaused &&
+        {stageGroupChanged && (!isPaused || (isPaused && stageChanged)) &&
           <Warning size="caption">
             Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.
           </Warning>
         }
-        {currentStage !== nextStage && isPaused &&
+        {stageChanged && !stageGroupChanged && isPaused &&
           <Warning size="caption">
             Updating this family&apos;s stage will remove them from being <strong>Paused</strong>.
           </Warning>
