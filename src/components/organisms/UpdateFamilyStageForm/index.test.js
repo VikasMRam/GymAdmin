@@ -79,10 +79,37 @@ describe('UpdateFamilyStageForm', () => {
     expect(warning.contains(groups[1])).toBeTruthy();
   });
 
-  it('renders with warning when paused', () => {
+  it('renders with correct warning when paused and moving to stage in same group', () => {
     const wrapper = wrap({
       currentStageGroup: groups[0],
-      nextStageGroup: groups[1],
+      nextStageGroup: groups[0],
+      currentStage: optionValues[0],
+      nextStage: optionValues[1],
+      isPaused: true,
+    });
+    const field = wrapper.find('Field');
+    const paddedField = wrapper.find('PaddedField');
+    const warning = wrapper.find('Warning');
+
+    expect(wrapper.find('Field').find({ name: 'note' })).toHaveLength(1);
+    expect(wrapper.find('Field').find({ name: 'lossReason' })).toHaveLength(0);
+    expect(wrapper.find('Field').find({ name: 'lostDescription' })).toHaveLength(0);
+    expect(field).toHaveLength(1);
+    expect(paddedField).toHaveLength(1);
+    const options = paddedField.at(0).find('option').slice(1); // first option is for placeholder
+    expect(options).toHaveLength(optionsLen);
+    options.forEach((o, i) => {
+      expect(o.text()).toBe(optionValues[i]);
+    });
+    expect(warning).toHaveLength(1);
+    expect(warning.dive().dive().dive().text()
+      .includes('Paused')).toBeTruthy();
+  });
+
+  it('renders with correct warning when paused and moving to stage in different group', () => {
+    const wrapper = wrap({
+      currentStageGroup: groups[0],
+      nextStageGroup: groups[2],
       currentStage: optionValues[0],
       nextStage: optionValues[4],
       isPaused: true,
@@ -100,7 +127,8 @@ describe('UpdateFamilyStageForm', () => {
       expect(o.text()).toBe(optionValues[i]);
     });
     expect(warning).toHaveLength(1);
-    expect(warning.contains('Paused')).toBeTruthy();
+    expect(warning.dive().dive().dive().text()
+      .includes(`Updating to this stage will move this family from ${groups[0]} to ${groups[2]}.`)).toBeTruthy();
   });
 
   it('renders won stage fields', () => {
