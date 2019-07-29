@@ -113,12 +113,10 @@ const FamilyDetailsTab = styled.div`
 const TabWrapper = styled.div`
   padding: ${size('spacing.large')};
   background-color: ${palette('grey', 'background')};
+  margin-bottom: ${size('dashboard.actionFooterBottomMargin')};
 
   > * {
     background-color: ${palette('white', 'base')};
-  }
-  @media screen and (max-width: ${size('breakpoint.mobile')}) {
-    margin-bottom: ${size('dashboard.actionFooterBottomMargin')};
   }
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: ${size('spacing.xLarge')};
@@ -127,6 +125,7 @@ const TabWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     background-color: ${palette('white', 'base')};
     padding: 0;
+    margin-bottom: 0;
   }
 `;
 
