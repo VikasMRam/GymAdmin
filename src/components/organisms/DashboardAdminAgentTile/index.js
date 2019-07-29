@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import { bool, func } from 'prop-types';
+import { prop } from 'styled-tools';
 
 import { size, palette, columnWidth } from 'sly/components/themes';
 import { adminAgentPropType } from 'sly/propTypes/agent';
@@ -30,10 +31,14 @@ const StyledBadge = styled(Badge)`
   text-transform: uppercase;
 `;
 
+const lineHeight = p => size('lineHeight', p.size);
+const textSize = p => size('text', p.size);
+
 const AgentInfoWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
-    flex-wrap: wrap;
+    flex-flow: column wrap;
+    height: calc(${textSize} * ${lineHeight} * ${prop('rows')});
     margin-right: -${size('spacing.xLarge')};
     > * {
       width: ${columnWidth(2, size('spacing.xLarge'))};
@@ -48,9 +53,6 @@ const IconItem = styled.div`
 
 const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.regular')};
-`;
-const StyledBlock = styled(Block)`
-  font-size:${size('text.caption')};
 `;
 
 const agentPropsMap = {
@@ -86,7 +88,7 @@ export default class DashboardAdminAgentTile extends Component {
 
   render() {
     const { agent, isRecommended } = this.props;
-
+    const infoRowsNumber = Math.ceil(Object.keys(agentPropsMap).length / 2);
     return (
       <Fragment>
         <Header>
@@ -94,19 +96,19 @@ export default class DashboardAdminAgentTile extends Component {
           <Heading level="subtitle"> { agent.name } </Heading>
           {isRecommended && <StyledBadge textPalette="white">Recommended</StyledBadge> }
         </Header>
-        <AgentInfoWrapper>
+        <AgentInfoWrapper size="caption" rows={infoRowsNumber}>
           {Object.entries(agentPropsMap)
             .map(([key, icon]) => (
               <IconItem>
                 <StyledIcon icon={icon} size="small" />
-                <StyledBlock>{agent.info[key]}</StyledBlock>
+                <Block size="caption">{agent.info[key]}</Block>
               </IconItem>
             ))
           }
         </AgentInfoWrapper>
         <IconItem>
           <StyledIcon icon="note" size="small" />
-          <StyledBlock>{agent.info.adminNote}</StyledBlock>
+          <Block size="caption">{agent.info.adminNote}</Block>
         </IconItem>
         <Button onClick={this.copyToClipboard}>WT: {agent.info.slyPhone}</Button>
       </Fragment>
