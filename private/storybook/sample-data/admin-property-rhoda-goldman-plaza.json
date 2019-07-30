@@ -11,16 +11,7 @@
     "firstLineValue": "Assisted Living, Memory Care, Respite Care",
     "secondLineValue": "Suite, Studio, One Bedroom"
   },
-  "adminInfo": {
-    "typeCare": ["Assisted Living", "Memory Care"],
-    "slyUrl" : "https://www.seniorly.com/assisted-living/california/san-francisco/rhoda-goldman-plaza",
-    "hasContract": true,
-    "communityPhone": "6508889999",
-    "externalUrl": "https://www.rhodagoldmanplaza.com",
-    "pricingString": "1 BR - $5660, 2BR - $6550",
-    "size" :"Large",
-    "adminNote": "Great community for memory care"
-  },
+
   "agents": [
     {
       "id": "sarah-ordover-grass-valley",
@@ -241,6 +232,11 @@
 
   ],
   "propInfo": {
+    "hasContract": true,
+    "adminNote": "Great community for memory care",
+    "admin": ["Visited By Seniorly"],
+    "pricingString": "Suite - $4500,\n Studio - $5000,\n One Bedroom - $6000",
+    "lastViewedAt":"",
     "ownerImage": [
       {
         "name": "len and tablet.jpg",
@@ -332,7 +328,7 @@
       "Alzheimer’s / Dementia",
       "Outdoor space"
     ],
-    "admin": ["Visited By Seniorly"],
+
     "respiteAllowed": {
       "checked": true,
       "minlength": 14,

@@ -5,18 +5,28 @@ import { size } from 'sly/components/themes';
 
 import { Box,  Button } from 'sly/components/atoms';
 
-import Field from 'sly/components/molecules/Field';
+
+import ReduxField from 'sly/components/organisms/ReduxField';
+import { reduxForm, Field } from 'redux-form';
 
 
+const CommunitySearchForm = ({ handleSubmit }) => {
+  return (
+    <form onSubmit={handleSubmit} name="CommunitySearchForm" >
+      <Field name="name" label="Name" type="text" component={ReduxField} />
+      <Field name="zip" label="ZipCode" type="text" component={ReduxField} />
+      <Button type="submit"> Search </Button>
+    </form>
+  );
+};
 
-
-const Form = styled.form``;
-Form.displayName = 'Form';
-
-const StyledField = styled(Field)`
-  display: inline-flex;
-  margin-right: ${size('spacing.xLarge')}
-`;
+const ReduxForm = reduxForm({
+  form: 'CommunitySearchForm',
+  destroyOnUnmount: false,
+  // required to refresh when initialValues change. Ref: https://redux-form.com/6.7.0/examples/initializefromstate/
+  enableReinitialize: true,
+  keepDirtyOnReinitialize: true,
+})(CommunitySearchForm);
 
 export default class DashboardCommunitySearchBox extends Component {
   static propTypes = {
@@ -28,11 +38,7 @@ export default class DashboardCommunitySearchBox extends Component {
     const { handleSubmit } = this.props;
     return (
       <Box>
-        <Form onSubmit={handleSubmit}>
-          <StyledField name="name" label={"Name"}/>
-          <StyledField name="zip" label={"ZipCode"}/>
-          <Button type="submit"> Search</Button>
-        </Form>
+        <ReduxForm onSubmit={handleSubmit} />
       </Box>
     );
   }

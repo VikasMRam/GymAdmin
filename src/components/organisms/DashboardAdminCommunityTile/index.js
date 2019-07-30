@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { bool, func } from 'prop-types';
 import { parseDate, durationInS } from 'sly/services/helpers/date';
 import { phoneFormatter } from 'sly/services/helpers/phone';
+import { buildPriceList } from 'sly/services/helpers/pricing';
 import { size, palette, columnWidth } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { Heading, Badge, Link, Block, Icon, Box } from 'sly/components/atoms';
@@ -53,11 +54,6 @@ const StyledBlock = styled(Block)`
   font-size:${size('text.caption')};
 `;
 
-const communityPropsMap = {
-  typeCare: 'menu',
-  communityPhone: 'phone',
-  size: 'phone',
-};
 
 const getLastViewedSAgo = (lastViewedAt) => {
   try {
@@ -68,6 +64,10 @@ const getLastViewedSAgo = (lastViewedAt) => {
     console.log(e);
   }
   return -1;
+};
+
+const buildPriceDisplay = (community) => {
+  buildPriceList(community).map(e => `${e.label}-${e.value}`).join('\n');
 };
 
 export default class DashboardAdminCommunityTile extends Component {
@@ -82,8 +82,8 @@ export default class DashboardAdminCommunityTile extends Component {
 
   render() {
     const { community } = this.props;
-    const { adminInfo } = community;
-    const { hasContract, lastViewedAt } = adminInfo;
+    const { propInfo } = community;
+    const { hasContract, lastViewedAt } = propInfo;
 
     const lastViewedSecondsAgo = getLastViewedSAgo(lastViewedAt);
 
@@ -95,37 +95,34 @@ export default class DashboardAdminCommunityTile extends Component {
           {lastViewedSecondsAgo > -1 && <StyledBadge textPalette="grey" ><Icon icon="note" size="small" /> Last Viewed: {lastViewedSecondsAgo} s ago</StyledBadge> }
         </Header>
         <CommunityInfoWrapper>
-          {Object.entries(communityPropsMap)
-            .map(([key, icon]) => (
-              <IconItem key={key}>
-                <StyledIcon icon={icon} size="small" />
-                <StyledBlock>{adminInfo[key]}</StyledBlock>
-              </IconItem>
-            ))
-          }
           <IconItem>
             <StyledIcon icon="phone" size="small" />
-            <StyledBlock>{phoneFormatter(adminInfo.communityPhone)}</StyledBlock>
+            <StyledBlock>{phoneFormatter(propInfo.communityPhone)}</StyledBlock>
           </IconItem>
           <IconItem>
-            <StyledIcon icon="medical" size="small" />
-            <StyledBlock>{adminInfo.typeCare.join(', ')}</StyledBlock>
+            <StyledIcon icon="hospital" size="small" />
+            <StyledBlock>{propInfo.typeCare.join(', ')}</StyledBlock>
           </IconItem>
-          {['slyUrl', 'externalUrl'].map(key => (
-            <IconItem key={key}>
-              <StyledIcon icon="link" size="small" />
-              <StyledLink href={adminInfo[key]}>{adminInfo[key]}</StyledLink>
-            </IconItem>
-            ))
-          }
           <IconItem>
-            <StyledIcon icon="medical" size="small" />
-            <StyledBlock>{adminInfo.pricingString}</StyledBlock>
+            <StyledIcon icon="house" size="small" />
+            <StyledBlock>{propInfo.communitySize}</StyledBlock>
+          </IconItem>
+          <IconItem>
+            <StyledIcon icon="link" size="small" />
+            <StyledLink href={community.url}>{community.url}</StyledLink>
+          </IconItem>
+          <IconItem>
+            <StyledIcon icon="link" size="small" />
+            <StyledLink href={propInfo.websiteUrl}>{propInfo.websiteUrl}</StyledLink>
+          </IconItem>
+          <IconItem>
+            <StyledIcon icon="dollar" size="small" />
+            <StyledBlock>{buildPriceDisplay(community)}</StyledBlock>
           </IconItem>
         </CommunityInfoWrapper>
         <IconItem>
           <StyledIcon icon="note" size="small" />
-          <StyledBlock>{adminInfo.adminNote}</StyledBlock>
+          <StyledBlock>{propInfo.adminNote}</StyledBlock>
         </IconItem>
       </Fragment>
     );

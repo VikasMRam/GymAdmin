@@ -47,7 +47,7 @@ const Icon = ({ icon, size, ...props }) => {
       forcedSize = true;
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.error('Icon not found:', `${icon}-${size}`);
+      // console.error('Icon not found:', `${icon}-${size}`);
       svg = '<span>x</span>';
     }
   }

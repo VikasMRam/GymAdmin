@@ -21,17 +21,17 @@ const wrap = (props = {}) => (
 
 storiesOf('Organisms|DashboardAdminCommunityTile', module)
   .add('default', () => {
-    community.adminInfo.hasContract = false;
-    community.adminInfo.lastViewedAt = null;
+    community.propInfo.hasContract = false;
+    community.propInfo.lastViewedAt = null;
     return wrap({ community });
   })
   .add('hasContract', () => {
-    community.adminInfo.hasContract = true;
+    community.propInfo.hasContract = true;
     return wrap({ community });
   })
   .add('lastSeen', () => {
-    community.adminInfo.hasContract = true;
-    community.adminInfo.lastViewedAt = (new Date()).toISOString();
+    community.propInfo.hasContract = true;
+    community.propInfo.lastViewedAt = (new Date()).toISOString();
     return wrap({ community });
   });
 

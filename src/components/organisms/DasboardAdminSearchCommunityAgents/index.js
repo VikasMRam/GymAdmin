@@ -6,16 +6,16 @@ import DashboardAdminCommunityAgentList from 'sly/components/organisms/Dashboard
 
 export default class DashboardAdminSearchCommunityAgents extends Component {
   static propTypes = {
-    handleSubmit: func.isRequired,
+    handleCommunitySearch: func.isRequired,
     communities: arrayOf(adminCommunityPropType),
   };
 
   render() {
-    const { handleSubmit, communities } = this.props;
+    const { handleCommunitySearch, communities } = this.props;
     return (
       <Fragment>
-        <DashboardCommunitySearchBox handleSubmit={handleSubmit} />
-        <DashboardAdminCommunityAgentList communitiesWithAgents={communities} />
+        <DashboardCommunitySearchBox handleSubmit={handleCommunitySearch} />
+        <DashboardAdminCommunityAgentList communitiesWithAgents={communities || []} />
       </Fragment>
     );
   }

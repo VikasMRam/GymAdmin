@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
 import { createValidator, required, usPhone } from 'sly/services/validation';
 import { reduxForm } from 'redux-form';
-import { object, string, shape } from 'prop-types';
+import { object, string, shape, func } from 'prop-types';
 import voiceCallPropType from 'sly/propTypes/calls';
 import { palette, size } from 'sly/components/themes';
 import { Hr, Box } from 'sly/components/atoms';
@@ -59,14 +59,17 @@ export default class DashboardCallDetailsPage extends Component {
   static propTypes = {
     meta: object,
     voiceCall: voiceCallPropType.isRequired,
-    communityFilter: shape({
+    query: shape({
       phone: string,
       name: string,
       zip: string,
     }),
-  }
+    handleCommunitySearch: func.isRequired,
+  };
+
   render() {
-    const { voiceCall, communityFilter, meta } = this.props;
+    const { voiceCall, query, meta, handleCommunitySearch } = this.props;
+
     if (!voiceCall) {
       return (
         <DashboardTwoColumnTemplate activeMenuItem="My Families">
@@ -79,15 +82,7 @@ export default class DashboardCallDetailsPage extends Component {
       <Fragment>
         <DashboardTwoColumnTemplate>
           <Box><ReduxForm {...meta} /></Box>
-          <StyledTabs activeTab="fDetails">
-            <DetailsTab id="fDetails" label="FIrst">
-              Some Details
-            </DetailsTab>
-            <div id="searchTab" label="Search">
-              <DashboardAdminSearchContainer filter={communityFilter} />
-            </div>
-
-          </StyledTabs>
+          <DashboardAdminSearchContainer query={query} handleCommunitySearch={handleCommunitySearch} />
         </DashboardTwoColumnTemplate>
       </Fragment>
     );

@@ -20,16 +20,14 @@ export const propRatings = shape({
 
 export const propInfo = shape({
   typeCare: arrayOf(string),
+  slyUrl: string.isRequired,
+  websiteUrl: string.isRequired,
 });
 
-export const adminInfo = shape({
-  typeCare: arrayOf(string),
-  slyUrl: string.isRequired,
-  externalUrl: string,
+export const adminPropInfo = shape({
+  propInfo,
   adminNote: string,
-  size: string,
-  communityPhone: string,
-  pricingString: string,
+  admin: arrayOf(string),
   hasContract: bool,
   lastViewedAt: string,
 });
@@ -39,7 +37,7 @@ export const adminCommunityPropType = shape({
   id: string,
   address,
   name: string.isRequired,
-  adminInfo,
+  propInfo: adminPropInfo,
 });
 
 export const community = shape({

@@ -15,18 +15,31 @@ export default class DashboardCallDetailsPageContainer extends Component {
   };
 
   state = {
-    communityFilter: {},
+    name: null,
+    zip: null,
+  };
+
+  handleCommunitySearch = ({ name, zip }) => {
+    console.log("this is called, all the way from parent", name,zip);
+    this.setState({ name, zip });
   };
 
   render() {
     const { voiceCall } = this.props;
-    const { communityFilter } = this.state;
+    if (!voiceCall) {
+      return <div>Loading...</div>;
+    }
+
+    const { name, zip } = this.state;
+
+    const query = (!name && !zip) ? ({ phone: voiceCall.toNumber }) : ({ name, zip });
+
     const meta = {
       lookingFor: [], gender: ['Female', 'Male'], timeToMove: ['1+ Months'], monthlyBudget: [],
     };
-    // const communityFilter = { phone: voiceCall.toNumber };
+
     return (
-      <DashboardCallDetailsPage meta={meta} voiceCall={voiceCall} communityFilter={communityFilter} />
+      <DashboardCallDetailsPage meta={meta} voiceCall={voiceCall} query={query} handleCommunitySearch={this.handleCommunitySearch} />
     );
   }
 }

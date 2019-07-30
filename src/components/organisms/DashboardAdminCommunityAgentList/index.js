@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { bool } from 'prop-types';
+import { bool, arrayOf } from 'prop-types';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { Box, Link, Hr } from 'sly/components/atoms';
 import DashboardAdminCommunityTile from 'sly/components/organisms/DashboardAdminCommunityTile';
@@ -8,7 +8,7 @@ import DashboardAdminAgentTile from 'sly/components/organisms/DashboardAdminAgen
 
 export default class DashboardAdminCommunityAgentList extends Component {
   static propTypes = {
-    communitiesWithAgents: adminCommunityPropType.isRequired,
+    communitiesWithAgents: arrayOf(adminCommunityPropType).isRequired,
   };
 
   state = {
