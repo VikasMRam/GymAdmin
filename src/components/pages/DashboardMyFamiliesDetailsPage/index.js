@@ -1,6 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import styled, { css } from 'styled-components';
 import { string, func, object, arrayOf, bool } from 'prop-types';
+import { generatePath } from 'react-router';
 
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
@@ -9,6 +10,7 @@ import {
   ACTIVITY,
   FAMILY_DETAILS,
   COMMUNITIES,
+  MESSAGES,
 } from 'sly/constants/dashboardAppPaths';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -36,13 +38,12 @@ import BackLink from 'sly/components/molecules/BackLink';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
-
-const StyledTabs = styled(Tabs)`
-  background-color: ${palette('white', 'base')};
-  > :first-child {
-    text-transform: uppercase;
-  }
-`;
+import Tab from 'sly/components/molecules/Tab';
+import fullWidth from 'sly/components/helpers/fullWidth';
+import fullHeight from 'sly/components/helpers/fullHeight';
+import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
+import userPropType from 'sly/propTypes/user';
+import conversationPropType from 'sly/propTypes/conversation/conversation';
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -65,8 +66,9 @@ const SmallScreenBorder = css`
 `;
 
 const CommunitiesTab = styled.div`
-  ${SmallScreenBorder}
+  ${SmallScreenBorder};
   padding: ${size('spacing.xxxLarge')} 0;
+
   > * {
     width: ${size('layout.col4')};
     margin-left: auto;
@@ -77,6 +79,15 @@ const CommunitiesTab = styled.div`
     width: ${size('layout.col4')};
     margin-left: auto;
     margin-right: auto;
+  }
+`;
+
+const TabContent = styled.div`
+  background-color: inherit;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
+    border-top: 0;
   }
 `;
 
@@ -95,18 +106,18 @@ const StyledFamilyActivityItem = styled(FamilyActivityItem)`
 `;
 
 const FamilyDetailsTab = styled.div`
-  ${SmallScreenBorder}
+  ${SmallScreenBorder};
   padding: ${size('spacing.xLarge')};
 `;
 
 const TabWrapper = styled.div`
   padding: ${size('spacing.large')};
   background-color: ${palette('grey', 'background')};
+  margin-bottom: ${size('dashboard.actionFooterBottomMargin')};
 
   > * {
     background-color: ${palette('white', 'base')};
   }
-
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: ${size('spacing.xLarge')};
   }
@@ -114,10 +125,11 @@ const TabWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     background-color: ${palette('white', 'base')};
     padding: 0;
+    margin-bottom: 0;
   }
 `;
 
-const hideInBigScreenStyles = css`
+const MobileTab = styled(Tab)`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: none;
   }
@@ -153,10 +165,21 @@ const SmallScreenClientNameBlock = styled(Block)`
 const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   margin-bottom: ${size('element.xxxLarge')};
 
+  main {
+    padding: 0;
+  }
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-bottom: 0;
+
+    main {
+      padding: ${size('spacing.xLarge')};
+    }
   }
 `;
+
+const TextCenterBlock = fullHeight(textAlign(Block));
+const FullWidthTextCenterBlock = fullWidth(TextCenterBlock);
 
 const PaddedBackLink = pad(BackLink, 'regular');
 
@@ -180,11 +203,16 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     refetchClient: func.isRequired,
     refetchNotes: func.isRequired,
     goToFamilyDetails: func,
+    goToMessagesTab: func,
+    refetchConversations: func,
+    hasConversationFinished: bool,
+    conversation: conversationPropType,
+    user: userPropType.isRequired,
   };
 
   handleAcceptClick = () => {
     const {
-      showModal, hideModal, notifyError, client, rawClient, refetchClient, goToFamilyDetails,
+      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails, goToMessagesTab, refetchConversations,
     } = this.props;
     SlyEvent.getInstance().sendEvent({
       category: 'fdetails',
@@ -192,7 +220,16 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       label: 'accept-lead',
       value: '',
     });
-    showModal(<AcceptAndContactFamilyContainer notifyError={notifyError} client={client} rawClient={rawClient} onCancel={hideModal} goToFamilyDetails={goToFamilyDetails} refetchClient={refetchClient} />, null, 'noPadding', false);
+    showModal((
+      <AcceptAndContactFamilyContainer
+        notifyError={notifyError}
+        client={client}
+        rawClient={rawClient}
+        onCancel={hideModal}
+        goToFamilyDetails={goToFamilyDetails}
+        goToMessagesTab={goToMessagesTab}
+        refetchConversations={refetchConversations}
+      />), null, 'noPadding', false);
   };
 
   handleRejectClick = () => {
@@ -239,6 +276,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     showModal(<AddNoteFormContainer
       hasCancel
+      noteRequired
       onCancelClick={hideModal}
       heading={`Add a note on ${name}`}
       label="Note"
@@ -267,6 +305,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
     showModal(<AddNoteFormContainer
       hasCancel
+      noteRequired
       onCancelClick={hideModal}
       heading={`Edit note on ${name}`}
       label="Note"
@@ -311,14 +350,24 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished,
     } = this.props;
+    const { admin } = user;
+
+    let conversationParticipants = [];
+    let viewingAsParticipant;
+
+    if (hasConversationFinished && conversation) {
+      ({ conversationParticipants } = conversation);
+      const { id } = user;
+      viewingAsParticipant = conversationParticipants.find(p => p.participantID === id);
+    }
 
     if (clientIsLoading) {
       return (
-        <DashboardTwoColumnTemplate activeMenuItem="My Families">
+        <StyledDashboardTwoColumnTemplate activeMenuItem="My Families">
           Loading...
-        </DashboardTwoColumnTemplate>
+        </StyledDashboardTwoColumnTemplate>
       );
     }
 
@@ -340,7 +389,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
     const {
-      level, levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails,
+      levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails,
     } = getStageDetails(stage);
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) => {
@@ -359,10 +408,11 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       return <StyledFamilyActivityItem {...props} />;
     }) : [];
 
-    const summaryPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', SUMMARY);
-    const activityPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id/:tab?', id);
-    const familyDetailsPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', FAMILY_DETAILS);
-    const communitiesPath = AGENT_DASHBOARD_FAMILIES_DETAILS_PATH.replace(':id', id).replace(':tab?', COMMUNITIES);
+    const summaryPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: SUMMARY });
+    const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id });
+    const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS });
+    const communitiesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: COMMUNITIES });
+    const messagesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: MESSAGES });
 
     let stickyFooterOptions = [];
     if (showAcceptRejectButtons) {
@@ -386,11 +436,6 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     const backLinkHref = levelGroup === 'Prospects' ? AGENT_DASHBOARD_FAMILIES_PATH : `${AGENT_DASHBOARD_FAMILIES_PATH}?type=${levelGroup}`;
-    const stickyFooterStageProps = {
-      text: `${levelGroup} - ${stage}`,
-      currentStage: level,
-      palette,
-    };
     const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
 
     return (
@@ -422,59 +467,102 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
           </SmallScreenClientNameWrapper>
         </div>
-        <StyledTabs activeTab={currentTab}>
-          <div id={SUMMARY} label="Summary" tabStyles={hideInBigScreenStyles} to={summaryPath} onClick={clickEventHandler('fdetails-tab','Summary')} target='_blank'>
-            <TabWrapper>
-              <SmallScreenBorderPaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
-              {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
-            </TabWrapper>
-          </div>
-          <div id={ACTIVITY} default label="Activity" to={activityPath} onClick={clickEventHandler('fdetails-tab','Activity')} target='_blank'>
-            <TabWrapper>
+        <div>
+          <Tabs activeTab={currentTab}>
+            <MobileTab id={SUMMARY} to={summaryPath} onClick={clickEventHandler('fdetails-tab', 'Summary')}>
+              Summary
+            </MobileTab>
+            <Tab id={ACTIVITY} default to={activityPath} onClick={clickEventHandler('fdetails-tab', 'Activity')}>
+              Activity
+            </Tab>
+            <Tab id={FAMILY_DETAILS} to={familyDetailsPath} onClick={clickEventHandler('fdetails-tab', 'Family Details')}>
+              Family Details
+            </Tab>
+            <Tab id={COMMUNITIES} to={communitiesPath} onClick={clickEventHandler('fdetails-tab', 'Communities')}>
+              Communities
+            </Tab>
+            <Tab id={MESSAGES} default to={messagesPath} onClick={clickEventHandler('fdetails-tab', 'Messages')}>
+              Messages
+            </Tab>
+          </Tabs>
+          <TabWrapper>
+            {currentTab === SUMMARY && (
+              <Fragment>
+                <SmallScreenBorderPaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
+                {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
+              </Fragment>
+            )}
+
+            {currentTab === ACTIVITY && (
               <SmallScreenBorderDiv padding={!noteIsLoading && activityCards.length > 0 ? null : 'xLarge'}>
                 {noteIsLoading && <Block size="subtitle">Loading...</Block>}
                 {!noteIsLoading && activityCards.length === 0 &&
-                  <TextAlignCenterBlock>There are no activities.</TextAlignCenterBlock>
+                <TextAlignCenterBlock>There are no activities.</TextAlignCenterBlock>
                 }
                 {!noteIsLoading && activityCards.length > 0 &&
-                  <Fragment>
-                    {/* <TableHeaderButtons hasColumnsButton={false} /> */}
-                    {activityCards}
-                  </Fragment>
+                <Fragment>
+                  {/* <TableHeaderButtons hasColumnsButton={false} /> */}
+                  {activityCards}
+                </Fragment>
                 }
               </SmallScreenBorderDiv>
-            </TabWrapper>
-          </div>
-          <div id={FAMILY_DETAILS} label="Family Details" to={familyDetailsPath} onClick={clickEventHandler('fdetails-tab','Family Details')} target='_blank'>
-            <TabWrapper>
+            )}
+
+            {currentTab === FAMILY_DETAILS && (
               <FamilyDetailsTab>
                 <FamilyDetailsFormContainer
                   client={client}
                   rawClient={rawClient}
                   notifyInfo={notifyInfo}
                   notifyError={notifyError}
-                  accepted={!showAcceptRejectButtons}
-                  canEditFamilyDetails={canEditFamilyDetails}
+                  accepted={!showAcceptRejectButtons || admin}
+                  canEditFamilyDetails={canEditFamilyDetails || admin}
                   gender={gender}
                   lookingFor={lookingFor}
                   monthlyBudget={monthlyBudget}
                   timeToMove={timeToMove}
                 />
               </FamilyDetailsTab>
-            </TabWrapper>
-          </div>
-          <div id={COMMUNITIES} label="Communities" to={communitiesPath} onClick={clickEventHandler('fdetails-tab','Communities')} target='_blank'>
-            <TabWrapper>
+            )}
+
+            {currentTab === COMMUNITIES && (
               <CommunitiesTab>
                 <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
                 <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
               </CommunitiesTab>
-            </TabWrapper>
-          </div>
-        </StyledTabs>
+            )}
+
+            {currentTab === MESSAGES && (
+              <div>
+                {!hasConversationFinished &&
+                <Fragment>
+                  <br />
+                  <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
+                </Fragment>
+                }
+                {!conversation &&
+                <Fragment>
+                  <br />
+                  <FullWidthTextCenterBlock size="caption"> No Conversation found...</FullWidthTextCenterBlock>
+                </Fragment>
+                }
+                {hasConversationFinished && conversation &&
+                <Fragment>
+                  <ConversationMessagesContainer
+                    conversation={conversation}
+                    viewingAsParticipant={viewingAsParticipant}
+                    participants={conversationParticipants}
+                    sendMessageFormPlaceholder={`Message ${name}...`}
+                  />
+                </Fragment>
+                }
+              </div>
+            )}
+          </TabWrapper>
+        </div>
         <DashboardMyFamilyStickyFooterContainer
           options={stickyFooterOptions}
-          stageProps={stickyFooterStageProps}
+          stage={stage}
           showAcceptRejectButtons={showAcceptRejectButtons}
         />
       </StyledDashboardTwoColumnTemplate>

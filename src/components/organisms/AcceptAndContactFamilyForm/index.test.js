@@ -16,7 +16,7 @@ describe('AcceptAndContactFamilyForm', () => {
     const onCallClick = jest.fn();
     const wrapper = wrap({ onCallClick });
 
-    wrapper.find('ThreeSectionFormTemplate').find('StyledIconButton').simulate('click');
+    wrapper.find('ThreeSectionFormTemplate').find('[icon="phone"]').simulate('click');
     expect(onCallClick).toHaveBeenCalled();
   });
 
@@ -24,7 +24,15 @@ describe('AcceptAndContactFamilyForm', () => {
     const onEmailClick = jest.fn();
     const wrapper = wrap({ onEmailClick });
 
-    wrapper.find('ThreeSectionFormTemplate').find('IconButton').simulate('click');
+    wrapper.find('ThreeSectionFormTemplate').find('[icon="email"]').simulate('click');
     expect(onEmailClick).toHaveBeenCalled();
+  });
+
+  it('onMessageClick is called', () => {
+    const onMessageClick = jest.fn();
+    const wrapper = wrap({ onMessageClick });
+
+    wrapper.find('ThreeSectionFormTemplate').find('[icon="message"]').simulate('click');
+    expect(onMessageClick).toHaveBeenCalled();
   });
 });

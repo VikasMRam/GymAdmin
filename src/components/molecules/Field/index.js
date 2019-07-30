@@ -1,5 +1,6 @@
 import React from 'react';
-import { string, bool, oneOf, number, oneOfType, node, array } from 'prop-types';
+import DatePicker from 'react-datepicker';
+import { string, bool, oneOf, number, oneOfType, node, array, object } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
@@ -36,6 +37,8 @@ const getInputComponent = (type) => {
       return DateChoice;
     case 'iconInput':
       return IconInput;
+    case 'date':
+      return DatePicker;
     default:
       return Input;
   }
@@ -144,6 +147,11 @@ const Field = ({
   const InputComponent = getInputComponent(type);
   const renderInputFirst = type === 'checkbox' || type === 'radio';
   const valueLength = inputProps.value ? inputProps.value.length : 0;
+  if (type === 'date') {
+    inputProps.selected = inputProps.value;
+    inputProps.placeholderText = inputProps.placeholder;
+    inputProps.customInput = <Input />;
+  }
 
   return (
     <Wrapper className={className} wideWidth={wideWidth} row={renderInputFirst}>
@@ -184,6 +192,7 @@ Field.propTypes = {
     number,
     array,
     bool,
+    object,
   ]),
   className: string,
   invalid: bool,

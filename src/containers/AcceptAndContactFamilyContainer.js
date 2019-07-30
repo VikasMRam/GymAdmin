@@ -10,8 +10,11 @@ import { withPreventDefault } from 'sly/services/helpers/forms';
 import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
 import AcceptAndContactFamilyForm from 'sly/components/organisms/AcceptAndContactFamilyForm';
 import AcceptFamilyContactDetails from 'sly/components/organisms/AcceptFamilyContactDetails';
+import { CONVERSTION_RESOURCE_TYPE, CONVERSTION_PARTICIPANT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 
 @query('updateClient', 'updateClient')
+@query('createConversation', 'createConversation')
+@query('createConversationParticipant', 'createConversationParticipant')
 
 class AcceptAndContactFamilyContainer extends Component {
   static propTypes = {
@@ -22,35 +25,32 @@ class AcceptAndContactFamilyContainer extends Component {
     updateClient: func,
     refetchClient: func,
     goToFamilyDetails: func,
+    goToMessagesTab: func,
+    refetchConversations: func,
+    createConversation: func,
+    createConversationParticipant: func,
   };
 
   state = { contactType: null };
 
-  handleUpdateStage = (contactType, next) => {
+  handleUpdateStage = (contactType) => {
     const {
-      updateClient, client, rawClient, notifyError, refetchClient,
+      updateClient, client, rawClient,
     } = this.props;
     const { id } = client;
     const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
     const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.stage']))
       .set('attributes.stage', contactStatus)
       .value();
-    const clientPromise = () => refetchClient();
 
     return updateClient({ id }, newClient)
       .then(() => {
         this.setState({
           contactType,
         });
-        next();
       })
-      .then(clientPromise)
       .catch((r) => {
-        // TODO: Need to set a proper way to handle server side errors
-        const { body } = r;
-        const errorMessage = body.errors.map(e => e.title).join('. ');
-        console.error(errorMessage);
-        notifyError('Failed to update stage. Please try again.');
+        this.handleError(r, 'Failed to update stage. Please try again.');
       });
   };
 
@@ -58,10 +58,65 @@ class AcceptAndContactFamilyContainer extends Component {
     const { onCancel, goToFamilyDetails } = this.props;
     withPreventDefault(onCancel);
     goToFamilyDetails();
+  };
+
+  initiateConversation = () => {
+    const {
+      client, createConversation, createConversationParticipant,
+    } = this.props;
+    const conversationPayload = {
+      type: CONVERSTION_RESOURCE_TYPE,
+      attributes: {
+        info: {
+          messageCount: 0,
+        },
+      },
+    };
+    return createConversation(conversationPayload)
+      .then(({ body }) => {
+        const { data } = body;
+        const { id: conversationId } = data;
+        const { id: clientId } = client;
+        const participantPayload = {
+          type: CONVERSTION_PARTICIPANT_RESOURCE_TYPE,
+          attributes: {
+            conversationID: conversationId,
+            participantID: clientId,
+            participantType: 'Client',
+          },
+        };
+        return createConversationParticipant(participantPayload);
+      })
+      .catch((r) => {
+        this.handleError(r, 'Failed to create conversation. Please try again.');
+      });
+  }
+
+  handleError = (r, message) => {
+    const { notifyError } = this.props;
+    // TODO: Need to set a proper way to handle server side errors
+    const { body } = r;
+    const errorMessage = body.errors.map(e => e.title).join('. ');
+    console.error(errorMessage);
+    notifyError(message);
+  }
+
+  handleCallOrEmailClick = (contactType, next) => {
+    this.handleUpdateStage(contactType)
+      .then(() => next());
+  }
+
+  handleMessageClick = (contactType) => {
+    const { onCancel, refetchConversations, goToMessagesTab } = this.props;
+    this.handleUpdateStage(contactType)
+      .then(this.initiateConversation)
+      .then(() => refetchConversations())
+      .then(() => onCancel())
+      .then(() => goToMessagesTab());
   }
 
   render() {
-    const { handleUpdateStage } = this;
+    const { handleCallOrEmailClick, handleMessageClick, handleAcceptFamilySubmit } = this;
     const { onCancel, client } = this.props;
     const { clientInfo } = client;
     const { email, phoneNumber } = clientInfo;
@@ -81,13 +136,14 @@ class AcceptAndContactFamilyContainer extends Component {
               component={AcceptAndContactFamilyForm}
               name="Contact"
               onCancelClick={onCancel}
-              onCallClick={phoneNumber ? () => handleUpdateStage('phone', next) : null}
-              onEmailClick={email ? () => handleUpdateStage('email', next) : null}
+              onCallClick={phoneNumber ? () => handleCallOrEmailClick('phone', next) : null}
+              onEmailClick={email ? () => handleCallOrEmailClick('email', next) : null}
+              onMessageClick={() => handleMessageClick(null)}
             />
             <WizardStep
               component={AcceptFamilyContactDetails}
               name="Details"
-              handleSubmit={this.handleAcceptFamilySubmit}
+              handleSubmit={handleAcceptFamilySubmit}
               label={contactType === 'phone' ? 'Phone number' : 'Email'}
               detail={detail}
             />

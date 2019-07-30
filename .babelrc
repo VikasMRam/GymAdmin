@@ -6,12 +6,8 @@
     "@babel/preset-react",
   ],
   "plugins": [
-    // Stage 0
-    // "@babel/plugin-proposal-function-bind",
-
     // Stage 1
     "@babel/plugin-proposal-export-default-from",
-    // "@babel/plugin-proposal-logical-assignment-operators",
     ["@babel/plugin-proposal-optional-chaining", { "loose": false }],
     ["@babel/plugin-proposal-pipeline-operator", { "proposal": "minimal" }],
     ["@babel/plugin-proposal-nullish-coalescing-operator", { "loose": false }],
@@ -33,7 +29,6 @@
     "development": {
       "plugins": [
         "react-hot-loader/babel",
-        // "transform-es2015-modules-commonjs",
         ["styled-components", {
           "minify": false
         }]

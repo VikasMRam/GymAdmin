@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { arrayOf, object, func } from 'prop-types';
+import { generatePath } from 'react-router';
 
 import { withUser, prefetch, query } from 'sly/services/newApi';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
@@ -22,7 +23,7 @@ export default class DashboardMessagesContainer extends Component {
     conversations: arrayOf(conversationPropType),
     status: object,
     getConversationMessages: func,
-    ws: object.isRequired,
+    ws: object,
     user: userPropType,
   };
 
@@ -53,13 +54,12 @@ export default class DashboardMessagesContainer extends Component {
     let messages = [];
     const { conversations: conversationsStatus } = status;
     const {
-      isLoading, hasStarted, error: conversationsError,
+      hasFinished, error: conversationsError,
     } = conversationsStatus;
     if (conversationsError) {
       return <RefreshRedirect to="/" />;
     }
-    const isPageLoading = !hasStarted || isLoading;
-    if (!isPageLoading) {
+    if (hasFinished) {
       messages = conversations
         .filter(conversation => !!conversation.latestMessage)
         .map((conversation) => {
@@ -69,15 +69,21 @@ export default class DashboardMessagesContainer extends Component {
           const conversationParticipant = conversationParticipants.find(conversationParticipant => conversationParticipant.id === conversationParticipantID);
           const { participantInfo } = conversationParticipant;
           const { name } = participantInfo;
-          const hasUnread = userParticipant.stats ? userParticipant.stats.unreadMessageCount > 0 : false;
+          let hasUnread = false;
+          if (userParticipant == null) {
+            hasUnread = true;
+          } else {
+            hasUnread = userParticipant.stats ? userParticipant.stats.unreadMessageCount > 0 : false;
+          }
+          const to = generatePath(AGENT_DASHBOARD_MESSAGE_DETAILS_PATH, { id: conversation.id });
           return {
             name,
             message: latestMessage,
             hasUnread,
-            to: AGENT_DASHBOARD_MESSAGE_DETAILS_PATH.replace(':id', conversation.id),
+            to,
           };
         });
     }
-    return <DashboardMessagesPage messages={messages} />;
+    return <DashboardMessagesPage messages={messages} isLoading={!hasFinished} />;
   }
 }

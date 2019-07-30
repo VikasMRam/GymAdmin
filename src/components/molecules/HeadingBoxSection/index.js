@@ -7,8 +7,8 @@ import { size, palette } from 'sly/components/themes';
 import { Block, Hr } from 'sly/components/atoms';
 
 const StyledSection = styled.section`
-  border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
-  border-radius: ${size('border.xLarge')};
+  border: ${size('border.regular')} ${ifProp('hasNoBorder', 'none', 'solid')} ${palette('slate', 'stroke')};
+  border-radius: ${ifProp('hasNoBorder', null, size('border.xLarge'))};
   background-color: ${palette('white.base')};
   padding: ${size('spacing.xLarge')};
   padding-left: ${ifProp('hasNoBodyPadding', 0, null)};
@@ -28,9 +28,9 @@ const StyledHr = styled(Hr)`
 `;
 
 const HeadingBoxSection = ({
-  heading, children, className, hasNoBodyPadding,
+  heading, children, className, hasNoBodyPadding, hasNoBorder,
 }) => (
-  <StyledSection className={className} hasNoBodyPadding={hasNoBodyPadding}>
+  <StyledSection className={className} hasNoBodyPadding={hasNoBodyPadding} hasNoBorder={hasNoBorder}>
     <div>
       <HeadingBlock size="subtitle" weight="medium" hasNoBodyPadding={hasNoBodyPadding}>{heading}</HeadingBlock>
       <StyledHr hasNoBodyPadding={hasNoBodyPadding} />
@@ -44,6 +44,7 @@ HeadingBoxSection.propTypes = {
   heading: node.isRequired,
   children: node.isRequired,
   hasNoBodyPadding: bool,
+  hasNoBorder: bool,
 };
 
 export default HeadingBoxSection;

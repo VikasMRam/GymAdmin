@@ -14,6 +14,7 @@ import utc from 'dayjs/plugin/utc';
 import { hideChatbox } from 'sly/config';
 import theme from 'sly/components/themes/default';
 import setGlobalStyles from 'sly/components/themes/setGlobalStyles';
+import setDatepickerStyles from 'sly/components/themes/datepickerStyles';
 import { assetPath } from 'sly/components/themes';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Router from 'sly/components/molecules/Router';
@@ -64,6 +65,7 @@ const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChu
 const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallsOverview" */ 'sly/containers/DashboardCallsIndexPageContainer'));
 const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
 setGlobalStyles();
+setDatepickerStyles();
 
 dayjs.extend(advancedFormat);
 dayjs.extend(utc);
@@ -297,7 +299,7 @@ export default class App extends Component {
             <Switch>
               <Route
                 path="/ping"
-                render={() => (<h1> pong </h1>)}
+                render={() => <h1>pong</h1>}
                 exact
               />
               <Route

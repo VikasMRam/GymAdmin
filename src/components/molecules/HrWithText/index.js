@@ -30,7 +30,7 @@ const HrWithText = ({
 }) => (
   <Wrapper className={className} innerRef={hrRef}>
     <Hr palette={palette} variation={variation} />
-    <TextBlock size="caption" weight="medium">{text}</TextBlock>
+    {text && <TextBlock size="caption" weight="medium">{text}</TextBlock>}
     {badgeText && <StyledBadge palette={palette} variation={variation} textPalette={badgeTextpalette}>{badgeText}</StyledBadge>}
   </Wrapper>
 );
@@ -39,7 +39,7 @@ HrWithText.propTypes = {
   palette: palettePropType,
   badgeTextpalette: palettePropType,
   variation: variationPropType,
-  text: string.isRequired,
+  text: string,
   badgeText: string,
   className: string,
   hrRef: object,

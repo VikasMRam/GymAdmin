@@ -68,12 +68,15 @@ const Column = styled.aside`
 `;
 
 const Body = styled.main`
-  background-color: ${palette('grey.background')};
   overflow: ${ifProp('bodyHasOverflow', 'auto', 'initial')};
   height: 100%;
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    background-color: ${palette('grey.background')};
     padding: ${size('spacing.xLarge')};
+  }
+    
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     grid-column: 2 / 2;
     grid-row: 2 / 2;
   }

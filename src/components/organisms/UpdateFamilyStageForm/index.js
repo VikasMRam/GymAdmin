@@ -12,7 +12,6 @@ import {
   PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS,
 } from 'sly/constants/familyDetails';
 import pad from 'sly/components/helpers/pad';
-import { dateFormatter } from 'sly/services/helpers/date';
 import { Block, Span, Label } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
@@ -82,6 +81,7 @@ export default class UpdateFamilyStageForm extends Component {
     });
     const lossReasonOptions = lossReasons.map(reason => <option key={reason} value={reason}>{reason}</option>);
     const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
+    const stageChanged = currentStage !== nextStage;
     const StageField = stageGroupChanged ? Field : PaddedField;
 
     return (
@@ -103,12 +103,12 @@ export default class UpdateFamilyStageForm extends Component {
           <option value="" disabled>Select a stage</option>
           {options}
         </StageField>
-        {stageGroupChanged && !isPaused &&
+        {stageGroupChanged && (!isPaused || (isPaused && stageChanged)) &&
           <Warning size="caption">
             Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.
           </Warning>
         }
-        {currentStage !== nextStage && isPaused &&
+        {stageChanged && !stageGroupChanged && isPaused &&
           <Warning size="caption">
             Updating this family&apos;s stage will remove them from being <strong>Paused</strong>.
           </Warning>
@@ -129,8 +129,8 @@ export default class UpdateFamilyStageForm extends Component {
             label={<span>Move-In date<Span palette="danger">*</Span></span>}
             type="date"
             placeholder="mm/dd/yyyy"
-            format={dateFormatter}
             component={ReduxField}
+            dateFormat="MM/dd/yyyy"
           />
         }
         {nextStage === FAMILY_STAGE_WON &&

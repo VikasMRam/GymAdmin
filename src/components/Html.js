@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
-import { googleTagManagerId, isProd, googleAppId, version } from 'sly/config';
+import { googleTagManagerId, isProd, googleAppId, version, publicPath } from 'sly/config';
 
 const Html = ({
   linkElements, styleElements, scriptElements, state, content,
@@ -23,9 +23,11 @@ const Html = ({
           Google Platform Library
         */}
         <meta name="google-signin-client_id" content={googleAppId} />
-
-        {linkElements}
+        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2`} as="font" />
+        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-regular-webfont.woff2`} as="font" />
+        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-light-webfont.woff2`} as="font" />
         {styleElements}
+        {linkElements}
         {helmet.link.toComponent()}
       </head>
       <body {...bodyAttrs}>

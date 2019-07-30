@@ -1,5 +1,6 @@
 import { oneOf } from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { getKey, size, palette } from 'sly/components/themes';
 import { variation as variationPropType } from 'sly/propTypes/variation';
@@ -10,7 +11,7 @@ const getSize = type => p => size(type, p.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
 
 const Block = styled.div`
-  color: ${getColor};
+  ${ifProp('palette', css`color: ${getColor}`)};
   font-size: ${getSize('text')};
   line-height: ${getSize('lineHeight')};
   font-weight: ${p => size('weight', p.weight)};
@@ -26,7 +27,6 @@ Block.propTypes = {
 Block.defaultProps = {
   palette: 'slate',
   variation: 'base',
-  size: 'body',
   weight: 'regular',
 };
 
