@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import qs from 'querystring';
+import qs from 'query-string';
 import { arrayOf, object } from 'prop-types';
 
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
