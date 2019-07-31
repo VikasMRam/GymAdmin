@@ -8,7 +8,7 @@ import { size, palette, key } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 
 const closeButtonOutsideLayouts = ['gallery', 'fullScreen'];
-const noPaddingLayouts = ['noPadding', 'wizard'];
+const noPaddingLayouts = ['noPadding', 'wizard', 'bottomDrawer'];
 
 // https://www.drupal.org/project/drupal/issues/2707291#comment-12797758
 injectGlobal`
@@ -36,6 +36,7 @@ const ModalBox = styled(ReactModal)`
     transform: translate(-50%, -50%);
     ${switchProp('layout', {
     sidebar: css`transform: translate(0%, 0%);`,
+    bottomDrawer: css`transform: translate(-50%, 0%);`,
   })};
   }
   &[class*='before-close'] > article {
@@ -121,6 +122,11 @@ const ModalContext = styled.article`
       overflow: hidden;
       height: 90%;
     `,
+    bottomDrawer: css`
+      width: 100%!important;
+      bottom: 0;
+      top: auto;
+    `,
   })}
 `;
 
@@ -192,7 +198,7 @@ const Modal = ({
 };
 
 Modal.propTypes = {
-  layout: oneOf(['default', 'fullScreen', 'gallery', 'sidebar', 'wizard', 'searchBox', 'noPadding']).isRequired,
+  layout: oneOf(['default', 'fullScreen', 'gallery', 'sidebar', 'wizard', 'searchBox', 'noPadding', 'bottomDrawer']).isRequired,
   children: node,
   closeable: bool,
   onClose: func.isRequired,

@@ -13,16 +13,16 @@ const options = [
     text: 'Add Note', icon: 'add-note', iconPalette: 'slate', onClick: onItem2Click, ghost: true,
   },
 ];
-
 const stage = 'Discussing Options';
 
 const wrap = (props = {}) => shallow(<DashboardMyFamilyStickyFooter options={options} stage={stage} {...props} />);
 
 describe('DashboardMyFamilyStickyFooter', () => {
   it('render DashboardMyFamilyStickyFooter', () => {
-    const wrapper = wrap({ });
+    const wrapper = wrap();
     expect(wrapper.find('OptionsList')).toHaveLength(0);
   });
+
   it('render DashboardMyFamilyStickyFooter optionsList', () => {
     const wrapper = wrap({ showOptions: true });
     expect(wrapper.find('OptionsList')).toHaveLength(1);
