@@ -30,6 +30,9 @@ const getPaginationData = ({ result, meta }) => {
   const filteredCount = meta.filtered_count;
   const text = `Showing ${paginationRangeString} ${filteredCount} families`;
   const show = filteredCount > size;
+  const prospectingCount = meta.prospecting_count;
+  const connectedCount = meta.connected_count;
+  const closedCount = meta.closed_count;
   return ({
     current,
     size,
@@ -38,6 +41,9 @@ const getPaginationData = ({ result, meta }) => {
     filteredCount,
     text,
     show,
+    prospectingCount,
+    connectedCount,
+    closedCount,
   });
 };
 
