@@ -2,5 +2,6 @@
   "reporter": "junit",
   "reporterOptions": {
     "toConsole": true
-  }
+  },
+  "baseUrl": "http://test.teamseniorly.com"
 }

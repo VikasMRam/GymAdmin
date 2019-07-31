@@ -5,6 +5,45 @@ version: 2.1
 orbs:
   node: circleci/node@1.1.2
 
+commands:
+  select_env:
+    description: Select ENV
+    steps:
+      - run:
+          name: Set up environment
+          command: |
+            if [[ -n "$CIRCLE_TAG ]]; then
+              export VERSION=$CIRCLE_TAG
+            else
+              export LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+              export LATEST_COMMIT=$(git rev-parse --short HEAD)
+              export NUMBER_OF_COMMITS=$(git rev-list --count HEAD ^$LATEST_TAG)
+              export VERSION=$(git for-each-ref --format="%(refname:short)-$NUMBER_OF_COMMITS-$LATEST_COMMIT" --sort=-authordate --count=1 refs/tags)
+            fi
+
+            echo "export VERSION=$CIRCLE_TAG" >> $BASH_ENV
+
+            if [[ -n "$CIRCLE_TAG" ]]; then
+              echo "export EB_ENV=slyreact-staging" >> $BASH_ENV
+              echo "export CYPRESS_baseUrl=http://www.myseniorly.com" >> $BASH_ENV
+            elif [[ -n "$CIRCLE_PR_NUMBER" ]]; then
+              echo "export EB_ENV=slyreact-test" >> $BASH_ENV
+              echo "export CYPRESS_baseUrl=http://test.teamseniorly.com" >> $BASH_ENV
+            elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
+              echo "export EB_ENV=slyreact-development" >> $BASH_ENV
+              echo "export CYPRESS_baseUrl=http://www.teamseniorly.com" >> $BASH_ENV
+            fi
+
+            source $BASH_ENV
+
+            echo "VERSION=$VERSION"
+            echo "EB_ENV=$EB_ENV"
+            echo "CYPRESS_baseUrl=$CYPRESS_baseUrl"
+
+            if [[ -z "$EB_ENV" ]]; then
+              circleci step halt
+            fi
+
 jobs:
   build:
     docker:
@@ -58,6 +97,7 @@ jobs:
           root: /home/circleci
           paths:
             - project
+            - .cache
 
   deploy:
     docker:
@@ -66,13 +106,13 @@ jobs:
     working_directory: /home/circleci/project
 
     steps:
-      - run:
-          name: Check if Sly Master Repo
-          command: |
-            if [[ -z "$CIRCLE_PR_NUMBER" && $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
-              echo "Skipping Deployment since this is not a Sly Master Build"
-              circleci step halt
-            fi
+#      - run:
+#          name: Check if Sly Master Repo or a PR
+#          command: |
+#            if [[ -z "$CIRCLE_PR_NUMBER" && $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
+#              echo "Skipping Deployment since this is not a Sly Master Build"
+#              circleci step halt
+#            fi
 
       - attach_workspace:
           at: /home/circleci
@@ -82,40 +122,7 @@ jobs:
           command: |
             sudo pip install awsebcli --upgrade
 
-      - run:
-          name: Choosing EB_ENV
-          command: |
-            export LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
-            export LATEST_COMMIT=$(git rev-parse --short HEAD)
-            export NUMBER_OF_COMMITS=$(git rev-list --count HEAD ^$LATEST_TAG)
-            git for-each-ref --format="%(refname:short)-$NUMBER_OF_COMMITS-$LATEST_COMMIT" --sort=-authordate --count=1 refs/tags > ./VERSION
-            cat ./VERSION
-            git add ./VERSION
-
-            if [[ -n "$CIRCLE_TAG" ]]; then
-              echo $CIRCLE_TAG > ./VERSION
-              cat ./VERSION
-              git add ./VERSION
-              echo "export EB_ENV=slyreact-staging" >> $BASH_ENV
-            elif [[ -n "$CIRCLE_PR_NUMBER" ]]; then
-              echo "export EB_ENV=slyreact-test" >> $BASH_ENV
-            elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
-              echo "export EB_ENV=slyreact-development" >> $BASH_ENV
-            else
-              FEATURE_ENV=$(eb list | grep -w "$CIRCLE_BRANCH" || true)
-              if [[ "$FEATURE_ENV" = "slyreact-prod" || "$FEATURE_ENV" = "slyreact-staging" ]]; then
-                echo "Tried to deploy to restricted env"
-                echo $FEATURE_ENV
-                return -1
-              fi
-              echo "export EB_ENV=$FEATURE_ENV" >> $BASH_ENV
-            fi
-
-            source $BASH_ENV
-
-            if [[ -z "$EB_ENV" ]]; then
-              circleci step halt
-            fi
+      - select_env
 
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
       - run:
@@ -206,8 +213,7 @@ jobs:
           command: |
             source ~/.bashrc
             nvm use 8
-            npm install
-            npx cypress install
+            npm ci
 
       - run:
           name: Setup dirs
@@ -219,8 +225,8 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-          name: Curl www.teamseniorly.com
-          command: curl www.teamseniorly.com
+          name: Curl test.teamseniorly.com
+          command: curl test.teamseniorly.com
 
       - run:
           name: "JS Test Suite"
