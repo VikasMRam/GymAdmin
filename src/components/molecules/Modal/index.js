@@ -8,6 +8,7 @@ import { size, palette, key } from 'sly/components/themes';
 import IconButton from 'sly/components/molecules/IconButton';
 
 const closeButtonOutsideLayouts = ['gallery', 'fullScreen'];
+const bottomCloseButtonLayouts = ['bottomDrawer'];
 const noPaddingLayouts = ['noPadding', 'wizard', 'bottomDrawer'];
 
 // https://www.drupal.org/project/drupal/issues/2707291#comment-12797758
@@ -156,6 +157,11 @@ ${switchProp('layout', {
   })}
 `;
 
+const BottomIconClose = styled.div`
+  float: right;
+  margin: ${size('spacing.large')};
+`;
+
 const Modal = ({
   children, closeable, layout, onClose, ...props
 }) => {
@@ -178,20 +184,25 @@ const Modal = ({
       onClose={onClose}
       {...props}
     >
-      {(closeable && closeButtonOutsideLayouts.includes(layout)) && (
+      {(closeable && closeButtonOutsideLayouts.includes(layout) && !bottomCloseButtonLayouts.includes(layout)) && (
         <Head layout={layout}>
-          {closeable && iconClose('white')}
+          {iconClose('white')}
         </Head>
       )}
       <ModalContext layout={layout}>
-        {(closeable && !closeButtonOutsideLayouts.includes(layout)) && (
+        {(closeable && !closeButtonOutsideLayouts.includes(layout) && !bottomCloseButtonLayouts.includes(layout)) && (
           <Head layout={layout}>
-            {closeable && iconClose()}
+            {iconClose()}
           </Head>
         )}
         <Body noPadding={noPadding} layout={layout}>
           {children}
         </Body>
+        {closeable && bottomCloseButtonLayouts.includes(layout) &&
+          <BottomIconClose>
+            {iconClose()}
+          </BottomIconClose>
+        }
       </ModalContext>
     </StyledReactModal>
   );

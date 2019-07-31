@@ -14,7 +14,8 @@ const options = [
 ];
 
 const stageProps = {
-  stage: 'Connected - Discussing Options',
+  stage: 'Discussing Options',
+  stageLabel: 'Connected - Discussing Options',
   onOptionsClick: action('onOptionsClick'),
 };
 

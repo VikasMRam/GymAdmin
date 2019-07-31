@@ -8,7 +8,8 @@ import DashboardMyFamilyStickyFooter from 'sly/components/organisms/DashboardMyF
 class DashboardMyFamilyStickyFooterContainer extends Component {
   static propTypes = {
     stage: string,
-    options: arrayOf(object).isRequired,
+    stageLabel: string,
+    options: arrayOf(object),
     showAcceptRejectButtons: bool,
   };
 
@@ -18,17 +19,19 @@ class DashboardMyFamilyStickyFooterContainer extends Component {
   };
 
   render() {
-    const { stage, options, showAcceptRejectButtons } = this.props;
+    const {
+      stage, stageLabel, options, showAcceptRejectButtons,
+    } = this.props;
 
     return (
       <ModalController>
         {({ show }) => (
           <DashboardMyFamilyStickyFooter
             stage={stage}
+            stageLabel={stageLabel}
             options={options}
             showAcceptRejectButtons={showAcceptRejectButtons}
             onOptionsClick={() => this.handleOptionsClick(show)}
-            onBlur={this.handleOnBlur}
           />
         )}
       </ModalController>

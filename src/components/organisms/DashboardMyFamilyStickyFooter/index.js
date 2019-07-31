@@ -60,8 +60,9 @@ const AcceptRejectButtonsWrapper = styled.div`
 
 export default class DashboardMyFamilyStickyFooter extends Component {
   static propTypes = {
-    options: arrayOf(shape(object)).isRequired,
+    options: arrayOf(shape(object)),
     stage: string.isRequired,
+    stageLabel: string,
     onOptionsClick: func,
     showAcceptRejectButtons: bool,
     onBlur: func,
@@ -94,7 +95,7 @@ export default class DashboardMyFamilyStickyFooter extends Component {
 
   render() {
     const {
-      stage, options, onOptionsClick, showAcceptRejectButtons,
+      stage, options, onOptionsClick, showAcceptRejectButtons, stageLabel,
     } = this.props;
 
     return (
@@ -102,7 +103,7 @@ export default class DashboardMyFamilyStickyFooter extends Component {
         <FooterWrapper showAcceptRejectButtons={showAcceptRejectButtons}>
           {!showAcceptRejectButtons &&
             <Fragment>
-              <Stage stage={stage} />
+              <Stage stage={stage} stageLabel={stageLabel} />
               <OptionsButton onClick={onOptionsClick} >...</OptionsButton>
               <RightSideButtons>
                 {options.slice(0).reverse().map(option => <Button key={option.text} onClick={option.onClick} ghost={option.ghost}>{option.text}</Button>)}

@@ -4,49 +4,40 @@ import { arrayOf, shape, string, func } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import cursor from 'sly/components/helpers/cursor';
-import pad from 'sly/components/helpers/pad';
-import { Icon } from 'sly/components/atoms';
+import { Hr } from 'sly/components/atoms';
 import IconItem from 'sly/components/molecules/IconItem';
 
-const OptionsWrapper = pad(styled.div``, 'large');
+const getMarginRight = p => p.borderless ? size('spacing', p.iconRightMarginSpacing) : size('spacing.large');
 
 const OptionItemWrapper = cursor(styled.div`
-  margin: ${size('spacing.regular')};
+  margin: ${size('spacing.large')} 0;
+  padding-left: ${size('spacing.regular')};
 `);
 OptionItemWrapper.displayName = 'OptionItemWrapper';
 
-const ClearIconWrapper = styled.div`
-  display: flex;
-  margin-right: ${size('spacing.large')};
+const StyledHr = styled(Hr)`
+  margin-left: calc(${size('border.regular')} + ${size('spacing.regular')} + ${getMarginRight} + ${size('icon.regular')});
+  margin-bottom: 0;
+  margin-top: 0;
 `;
 
-const ClearIcon = cursor(styled(Icon)`
-  margin-left: auto;
-`);
-ClearIcon.displayName = 'ClearIcon';
+const StyledIconItem = styled(IconItem)`
+  margin-bottom: ${size('spacing.large')};
+`;
 
-const OptionsList = ({ options, onCloseClick, ...props }) => (
+const OptionsList = ({ options, ...props }) => (
   <div {...props}>
-    <OptionsWrapper>
-      {options.map(option => (
-        <OptionItemWrapper
-          key={option.text}
-          onClick={(e) => {
-            if (onCloseClick) {
-              onCloseClick();
-            }
-            option.onClick(e);
-          }}
-        >
-          <IconItem hasBottomBorder icon={option.icon} iconPalette={option.iconPalette} iconRightMarginSpacing="large">
-            {option.text}
-          </IconItem>
-        </OptionItemWrapper>
-      ))}
-    </OptionsWrapper>
-    <ClearIconWrapper>
-      <ClearIcon icon="clear" palette="slate" onClick={onCloseClick} />
-    </ClearIconWrapper>
+    {options.map(option => (
+      <OptionItemWrapper
+        key={option.text}
+        onClick={option.onClick}
+      >
+        <StyledIconItem hasBottomBorder icon={option.icon} iconPalette={option.iconPalette} iconRightMarginSpacing="large">
+          {option.text}
+        </StyledIconItem>
+        <StyledHr iconRightMarginSpacing="large" />
+      </OptionItemWrapper>
+    ))}
   </div>
 );
 
@@ -60,7 +51,6 @@ const optionsShape = {
 
 OptionsList.propTypes = {
   options: arrayOf(shape(optionsShape)),
-  onCloseClick: func,
 };
 
 export default OptionsList;

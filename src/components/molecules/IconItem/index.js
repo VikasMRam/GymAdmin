@@ -1,12 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { string, node, bool } from 'prop-types';
 import styled from 'styled-components';
-import { prop } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { variation as variationPropType } from 'sly/propTypes/variation';
-import { Icon, Block, Hr } from 'sly/components/atoms';
+import { Icon, Block } from 'sly/components/atoms';
 
 const getMarginRight = p => p.borderless ? size('spacing', p.iconRightMarginSpacing) : size('spacing.large');
 
@@ -22,28 +21,19 @@ const IconWrapper = styled.div`
   border-radius: ${size('border.xxLarge')};
 `;
 
-const StyledHr = styled(Hr)`
-  margin-left: calc(${size('border.regular')} + ${size('spacing.regular')} + ${getMarginRight} + ${props => size('icon', prop('iconSize', 'regular')(props))(props)});
-  margin-bottom: 0;
-  margin-top: ${size('spacing.regular')};
-`;
-
 const IconItem = ({
   icon, iconSize, iconPalette, iconVariation, size, children, borderless,
-  textPalette, textVariation, iconRightMarginSpacing, hasBottomBorder,
+  textPalette, textVariation, iconRightMarginSpacing, className,
 }) => {
   const defIconSize = iconSize || size;
 
   return (
-    <Fragment>
-      <Wrapper>
-        <IconWrapper borderless={borderless} iconRightMarginSpacing={iconRightMarginSpacing}>
-          <Icon icon={icon} size={defIconSize} palette={iconPalette} variation={iconVariation} />
-        </IconWrapper>
-        <Block palette={textPalette} variation={textVariation}>{children}</Block>
-      </Wrapper>
-      {hasBottomBorder && <StyledHr iconRightMarginSpacing={iconRightMarginSpacing} iconSize={defIconSize} />}
-    </Fragment>
+    <Wrapper className={className}>
+      <IconWrapper borderless={borderless} iconRightMarginSpacing={iconRightMarginSpacing}>
+        <Icon icon={icon} size={defIconSize} palette={iconPalette} variation={iconVariation} />
+      </IconWrapper>
+      <Block palette={textPalette} variation={textVariation}>{children}</Block>
+    </Wrapper>
   );
 };
 
@@ -58,7 +48,7 @@ IconItem.propTypes = {
   textPalette: palettePropType,
   textVariation: variationPropType,
   iconRightMarginSpacing: string,
-  hasBottomBorder: bool,
+  className: string,
 };
 
 IconItem.defaultProps = {
