@@ -12,7 +12,7 @@ commands:
       - run:
           name: Set up environment
           command: |
-            if [[ -n "$CIRCLE_TAG ]]; then
+            if [[ -n "$CIRCLE_TAG" ]]; then
               export VERSION=$CIRCLE_TAG
             else
               export LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
@@ -21,7 +21,7 @@ commands:
               export VERSION=$(git for-each-ref --format="%(refname:short)-$NUMBER_OF_COMMITS-$LATEST_COMMIT" --sort=-authordate --count=1 refs/tags)
             fi
 
-            echo "export VERSION=$CIRCLE_TAG" >> $BASH_ENV
+            echo "export VERSION=$VERSION" >> $BASH_ENV
 
             if [[ -n "$CIRCLE_TAG" ]]; then
               echo "export EB_ENV=slyreact-staging" >> $BASH_ENV
@@ -32,7 +32,19 @@ commands:
             elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
               echo "export EB_ENV=slyreact-development" >> $BASH_ENV
               echo "export CYPRESS_baseUrl=http://www.teamseniorly.com" >> $BASH_ENV
+            else
+              export FEATURE_ENV=$(eb list | grep -w "$CIRCLE_BRANCH")
+              if [[ "$FEATURE_ENV" == "slyreact-prod" || "$FEATURE_ENV" == "slyreact-staging" ]]; then
+                echo "Tried to deploy to restricted env $FEATURE_ENV"
+                return 1
+              fi
+
+              if [[ -n "$FEATURE_ENV" ]]; then
+                echo "export EB_ENV=$FEATURE_ENV" >> $BASH_ENV
+                echo "export CYPRESS_baseUrl=http://$FEATURE_ENV.teamseniorly.com" >> $BASH_ENV
+              fi
             fi
+
 
             source $BASH_ENV
 
@@ -117,12 +129,12 @@ jobs:
       - attach_workspace:
           at: /home/circleci
 
+      - select_env
+
       - run:
           name: Install awscli
           command: |
             sudo pip install awsebcli --upgrade
-
-      - select_env
 
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
       - run:
