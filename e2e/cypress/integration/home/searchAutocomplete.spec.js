@@ -1,6 +1,6 @@
 describe('Marketplace Home Page', () => {
   it('AutoComplete City Search', () => {
-    cy.visit('http://www.teamseniorly.com');
+    cy.visit('/');
 
     cy.contains('Find a Home to Love');
 

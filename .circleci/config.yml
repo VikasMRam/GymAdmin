@@ -147,10 +147,9 @@ jobs:
       - run:
           name: Deploy to EB
           command: |
-            export V=$(cat ./VERSION)
             echo "Deploying to $EB_ENV"
             eb use $EB_ENV
-            export DEPLOY_FAILED=$(eb deploy $EB_ENV --timeout 30 -v --staged -l $V | tee /dev/tty | grep -c "ERROR")
+            export DEPLOY_FAILED=$(eb deploy $EB_ENV --timeout 30 -v --staged -l $VERSION | tee /dev/tty | grep -c "ERROR")
 
             if [ "$DEPLOY_FAILED" -gt 0 ]; then
               exit 1
@@ -171,10 +170,12 @@ jobs:
             ./.circleci/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#ed5c5c"
 
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - .cache
   test:
     machine: true
-    # docker:
-    #   - image: circleci/node:8.9-browsers
 
     working_directory: ~/project/e2e
 
@@ -184,6 +185,8 @@ jobs:
     steps:
       - attach_workspace:
           at: /home/circleci
+
+      - select_env
 
       # Download and cache dependencies
       - restore_cache:
@@ -261,6 +264,7 @@ jobs:
               ../.circleci/push-slack-notification.sh -t "smoke tests success" \
                 -tl "$CIRCLE_BUILD_URL" -m "$TEST_OUTPUT" -c "#42c88a"
             fi
+
       - run:
           name: Send tests failed notification
           when: on_fail
@@ -276,12 +280,14 @@ jobs:
 
       - store_test_results:
           path: /tmp/test-results
+
       - store_artifacts:
           path: /tmp/test-results
 
 
 workflows:
   version: 2
+
   build-development:
     jobs:
       # run build (unit tests, linting, quality checks etc etc) for PRs
@@ -294,6 +300,7 @@ workflows:
           context: OPENVPN
           requires:
             - deploy
+
   build-staging:
     jobs:
       - build:
