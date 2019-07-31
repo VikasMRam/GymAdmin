@@ -66,13 +66,13 @@ jobs:
     working_directory: /home/circleci/project
 
     steps:
-#      - run:
-#          name: Check if Sly Master Repo
-#          command: |
-#            if [[ $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
-#              echo "Skipping Deployment since this is not a Sly Master Build"
-#              circleci step halt
-#            fi
+      - run:
+          name: Check if Sly Master Repo
+          command: |
+            if [[ -z "$CIRCLE_PR_NUMBER" && $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
+              echo "Skipping Deployment since this is not a Sly Master Build"
+              circleci step halt
+            fi
 
       - attach_workspace:
           at: /home/circleci
