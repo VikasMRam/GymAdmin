@@ -1,9 +1,8 @@
-import React, { Component, Fragment, createRef } from 'react';
+import React, { Fragment } from 'react';
 import styled, { css } from 'styled-components';
-import { arrayOf, shape, bool, string, func, object } from 'prop-types';
+import { arrayOf, bool, string, func, object } from 'prop-types';
 import { ifNotProp } from 'styled-tools';
 
-import { isBrowser } from 'sly/config';
 import { size } from 'sly/components/themes';
 import { Button, StickyFooter } from 'sly/components/atoms';
 import Stage from 'sly/components/molecules/Stage';
@@ -58,65 +57,35 @@ const AcceptRejectButtonsWrapper = styled.div`
   }
 `;
 
-export default class DashboardMyFamilyStickyFooter extends Component {
-  static propTypes = {
-    options: arrayOf(shape(object)),
-    stage: string.isRequired,
-    stageLabel: string,
-    onOptionsClick: func,
-    showAcceptRejectButtons: bool,
-    onBlur: func,
-  };
+const DashboardMyFamilyStickyFooter = ({
+  stage, options, onOptionsClick, showAcceptRejectButtons, stageLabel,
+}) => (
+  <StickyFooter>
+    <FooterWrapper showAcceptRejectButtons={showAcceptRejectButtons}>
+      {!showAcceptRejectButtons &&
+        <Fragment>
+          <Stage stage={stage} stageLabel={stageLabel} />
+          <OptionsButton onClick={onOptionsClick} >...</OptionsButton>
+          <RightSideButtons>
+            {[...options].reverse().map(option => <Button key={option.text} onClick={option.onClick} ghost={option.ghost}>{option.text}</Button>)}
+          </RightSideButtons>
+        </Fragment>
+      }
+      {showAcceptRejectButtons &&
+        <AcceptRejectButtonsWrapper>
+          {options.map(option => <Button key={option.text} onClick={option.onClick} palette={option.palette} ghost={option.ghost}>{option.text}</Button>)}
+        </AcceptRejectButtonsWrapper>
+      }
+    </FooterWrapper>
+  </StickyFooter>
+);
 
-  componentWillMount() {
-    if (isBrowser) {
-      document.addEventListener('mousedown', this.handleClick, false);
-    }
-  }
+DashboardMyFamilyStickyFooter.propTypes = {
+  options: arrayOf(object),
+  stage: string.isRequired,
+  stageLabel: string,
+  onOptionsClick: func,
+  showAcceptRejectButtons: bool,
+};
 
-  componentWillUnmount() {
-    if (isBrowser) {
-      document.removeEventListener('mousedown', this.handleClick, false);
-    }
-  }
-
-  wrapperRef = createRef();
-
-  handleClick = (e) => {
-    if (this.wrapperRef.current.contains(e.target)) {
-      return;
-    }
-
-    const { onBlur } = this.props;
-    if (onBlur) {
-      onBlur(e);
-    }
-  };
-
-  render() {
-    const {
-      stage, options, onOptionsClick, showAcceptRejectButtons, stageLabel,
-    } = this.props;
-
-    return (
-      <StickyFooter innerRef={this.wrapperRef}>
-        <FooterWrapper showAcceptRejectButtons={showAcceptRejectButtons}>
-          {!showAcceptRejectButtons &&
-            <Fragment>
-              <Stage stage={stage} stageLabel={stageLabel} />
-              <OptionsButton onClick={onOptionsClick} >...</OptionsButton>
-              <RightSideButtons>
-                {options.slice(0).reverse().map(option => <Button key={option.text} onClick={option.onClick} ghost={option.ghost}>{option.text}</Button>)}
-              </RightSideButtons>
-            </Fragment>
-          }
-          {showAcceptRejectButtons &&
-            <AcceptRejectButtonsWrapper>
-              {options.map(option => <Button key={option.text} onClick={option.onClick} palette={option.palette} ghost={option.ghost}>{option.text}</Button>)}
-            </AcceptRejectButtonsWrapper>
-          }
-        </FooterWrapper>
-      </StickyFooter>
-    );
-  }
-}
+export default DashboardMyFamilyStickyFooter;
