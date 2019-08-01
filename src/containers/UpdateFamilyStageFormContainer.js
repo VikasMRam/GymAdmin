@@ -8,7 +8,7 @@ import dayjs from 'dayjs';
 
 import { query, getRelationship, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { FAMILY_STATUS_ACTIVE, FAMILY_STATUS_ON_HOLD, NOTE_COMMENTABLE_TYPE_CLIENT, FAMILY_STAGE_WON } from 'sly/constants/familyDetails';
+import { FAMILY_STATUS_ACTIVE, FAMILY_STATUS_ON_HOLD, NOTE_COMMENTABLE_TYPE_CLIENT, FAMILY_STAGE_WON, FAMILY_STAGE_LOST } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required, float } from 'sly/services/validation';
 import { getStageDetails } from 'sly/services/helpers/stage';
@@ -79,7 +79,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       updateClient, client, rawClient, notifyError, notifyInfo, onSuccess, createNote,
       updateUuidAux, uuidAux, refetchClient, refetchNotes, invalidateClients,
     } = this.props;
-    const { id, clientInfo } = client;
+    const { id, clientInfo, stage: previousStage } = client;
     const {
       stage, note, moveInDate, communityName, monthlyFees, referralAgreement, lossReason, lostDescription,
       preferredLocation,
@@ -99,10 +99,19 @@ export default class UpdateFamilyStageFormContainer extends Component {
       notePromise = () => createNote(payload);
       getNotesPromise = () => refetchNotes();
     }
-    if (stage === FAMILY_STAGE_WON) {
+    if (stage === FAMILY_STAGE_WON || stage === FAMILY_STAGE_LOST) {
       const { name } = clientInfo;
-      const note = `${name} moved into ${communityName} on ${moveInDate} with a monthly rent of $${monthlyFees} and a ${referralAgreement}% referral fee % from the community of `;
+      let note = `${name} moved into ${communityName} on ${moveInDate} with a monthly rent of $${monthlyFees} and a ${referralAgreement}% referral fee % from the community of `;
       const title = 'Stage Change';
+      if (stage === FAMILY_STAGE_LOST) {
+        let reason = lossReason;
+        if (lostDescription) {
+          reason = lostDescription;
+        } else if (preferredLocation) {
+          reason = `${lossReason}. Preferred in: ${preferredLocation}`;
+        }
+        note = `Stage changed from ${previousStage} to ${stage}. Lost Reason: ${reason}`;
+      }
       const payload = {
         type: NOTE_RESOURCE_TYPE,
         attributes: {
