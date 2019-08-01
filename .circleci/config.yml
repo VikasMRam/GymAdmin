@@ -187,7 +187,7 @@ jobs:
           at: /home/circleci
 
       - node/install:
-          node-version: 8.12.0
+          node-version: v8.16.0
           install-yarn: false
 
       - run:
