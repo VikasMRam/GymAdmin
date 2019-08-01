@@ -118,13 +118,10 @@ const DashboardAgentFamilyOverviewPage = ({
   let connectedTabLabel = tabIDLabelMap[tabIDs[1]];
   let closedTabLabel = tabIDLabelMap[tabIDs[2]];
   if (!isPageLoading) {
-    if (activeTab === tabIDs[0]) {
-      prospectsTabLabel += ` (${pagination.filteredCount})`;
-    } else if (activeTab === tabIDs[1]) {
-      connectedTabLabel += ` (${pagination.filteredCount})`;
-    } else if (activeTab === tabIDs[2]) {
-      closedTabLabel += ` (${pagination.filteredCount})`;
-    }
+    const { prospectingCount, connectedCount, closedCount } = pagination;
+    prospectsTabLabel += ` (${prospectingCount})`;
+    connectedTabLabel += ` (${connectedCount})`;
+    closedTabLabel += ` (${closedCount})`;
   }
 
   return (
