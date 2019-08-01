@@ -174,8 +174,8 @@ jobs:
     steps:
       - select_env
 
-#      - node/install:
-#          node-version: 8.12
+      - node/install:
+          node-version: 8.12
 
       - run:
           name: Installing OpenVPN Client
@@ -196,8 +196,35 @@ jobs:
           name: Creating OpenVPN Tunnel
           command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
 
-      - cypress/run:
-          working_directory: e2e
+      - restore_cache:
+          keys:
+            - cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+      - run:
+          name: Check if package-lock.json exists
+          command: |
+            if [ ! -e ./package-lock.json ]; then
+              echo "The Cypress orb uses 'npm ci' to install 'node_modules', which requires a 'package-lock.json'."
+              echo "A 'package-lock.json' file was not found. Please run 'npm install' in your project,"
+              echo "and commit 'package-lock.json' to your repo."
+              exit 1
+            fi
+
+      - run:
+          name: Npm CI
+          command: npm ci
+
+      - run:
+          command: npx cypress verify
+
+      - save_cache:
+          key: cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+
+      - run:
+          name: Run Cypress tests
+          command: npx cypress run
 
       - run:
           name: Closing OpenVPN Tunnel
