@@ -100,6 +100,12 @@ jobs:
                   export JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml"
                   npm test -- --ci --maxWorkers=12
 
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - project
+            - .cache
+
       - store_test_results:
           path: /tmp/test-results
 
@@ -122,6 +128,9 @@ jobs:
 #            fi
 
       - select_env
+
+      - attach_workspace:
+          at: /home/circleci
 
       - run:
           name: Install awscli
@@ -173,6 +182,9 @@ jobs:
 
     steps:
       - select_env
+
+      - attach_workspace:
+          at: /home/circleci
 
       - node/install:
           node-version: "8.12"
