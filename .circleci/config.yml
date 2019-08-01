@@ -187,7 +187,8 @@ jobs:
           at: /home/circleci
 
       - node/install:
-          node-version: v8.12.0
+          node-version: 8.12.0
+          install-yarn: false
 
       - run:
           name: Installing OpenVPN Client
