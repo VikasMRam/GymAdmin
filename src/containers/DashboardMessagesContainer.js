@@ -15,6 +15,7 @@ import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 @withWS
 @prefetch('conversations', 'getConversations', (req, { user }) => req({
   'filter[participant_id]': user && user.id,
+  'filter[participant_type]': 'User',
 }))
 @query('getConversationMessages', 'getConversationMessages')
 
