@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import qs from 'querystring';
+import qs from 'query-string';
 import { arrayOf, object } from 'prop-types';
 
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
@@ -30,6 +30,9 @@ const getPaginationData = ({ result, meta }) => {
   const filteredCount = meta.filtered_count;
   const text = `Showing ${paginationRangeString} ${filteredCount} families`;
   const show = filteredCount > size;
+  const prospectingCount = meta.prospecting_count;
+  const connectedCount = meta.connected_count;
+  const closedCount = meta.closed_count;
   return ({
     current,
     size,
@@ -38,6 +41,9 @@ const getPaginationData = ({ result, meta }) => {
     filteredCount,
     text,
     show,
+    prospectingCount,
+    connectedCount,
+    closedCount,
   });
 };
 

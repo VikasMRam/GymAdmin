@@ -133,13 +133,14 @@ const CommunitySearchPage = ({
   const TopContent = () => {
     if (geoGuide && geoGuide.guideContent) {
       const gg = geoGuide.guideContent;
-      if (gg.autoDescription) {
+      if (gg.autoDescription || gg.manualDescription) {
         return (
           <Fragment>
             <StyledHeading level="hero" size="title">
               {listSize} {tocLabel} near {city}
             </StyledHeading>
-            <LegacyContent dangerouslySetInnerHTML={{ __html: gg.autoDescription }} />
+            { gg.manualDescription && <LegacyContent dangerouslySetInnerHTML={{ __html: gg.manualDescription}} />}
+            {!gg.manualDescription && <LegacyContent dangerouslySetInnerHTML={{ __html: gg.autoDescription }} />}
           </Fragment>
         );
       }
@@ -213,7 +214,7 @@ const CommunitySearchPage = ({
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       {getHelmetForSearchPage({
-        ...searchParams, url: location, communityList, listSize,
+        ...searchParams, url: location, communityList, listSize, geoGuide,
       })}
       <CommunitySearchPageTemplate
         column={columnContent}

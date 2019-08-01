@@ -99,9 +99,15 @@ export default class UpdateFamilyStageFormContainer extends Component {
       notePromise = () => createNote(payload);
       getNotesPromise = () => refetchNotes();
     }
+
     if (stage === FAMILY_STAGE_WON || stage === FAMILY_STAGE_LOST) {
       const { name } = clientInfo;
-      let note = `${name} moved into ${communityName} on ${moveInDate} with a monthly rent of $${monthlyFees} and a ${referralAgreement}% referral fee % from the community of `;
+      let moveInDateFormatted = moveInDate;
+      const parsedDate = dayjs(moveInDate);
+      if (parsedDate.isValid()) {
+        moveInDateFormatted = parsedDate.format('MM/DD/YYYY');
+      }
+      let note = `${name} moved into ${communityName} on ${moveInDateFormatted} with a monthly rent of $${monthlyFees} and a ${referralAgreement}% referral fee % from the community of `;
       const title = 'Stage Change';
       if (stage === FAMILY_STAGE_LOST) {
         let reason = lossReason;
