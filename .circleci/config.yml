@@ -170,10 +170,6 @@ jobs:
             ./.circleci/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#ed5c5c"
 
-      - persist_to_workspace:
-          root: /home/circleci
-          paths:
-            - .cache
   test:
     machine: true
 
