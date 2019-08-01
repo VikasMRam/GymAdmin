@@ -3,6 +3,7 @@
 version: 2.1
 
 orbs:
+  node: circleci/node@1.1.2
   cypress: cypress-io/cypress@1
 
 commands:
@@ -105,12 +106,6 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
 
-      - persist_to_workspace:
-          root: /home/circleci
-          paths:
-            - project
-            - .cache
-
   deploy:
     docker:
       - image: circleci/python:2.7
@@ -125,9 +120,6 @@ jobs:
 #              echo "Skipping Deployment since this is not a Sly Master Build"
 #              circleci step halt
 #            fi
-
-      - attach_workspace:
-          at: /home/circleci
 
       - select_env
 
@@ -182,6 +174,9 @@ jobs:
     steps:
       - select_env
 
+#      - node/install:
+#          node-version: 8.12
+
       - run:
           name: Installing OpenVPN Client
           command: sudo apt-get install openvpn
@@ -230,6 +225,12 @@ jobs:
               ../.circleci/push-slack-notification.sh -t "smoke tests failed" \
                 -tl "$CIRCLE_BUILD_URL" -m "<!channel> $DESC_MSG" -c "#ed5c5c"
             fi
+
+      - store_test_results:
+          path: /tmp/test-results
+
+      - store_artifacts:
+          path: /tmp/test-results
 
 workflows:
   version: 2
