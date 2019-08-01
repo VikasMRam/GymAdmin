@@ -177,6 +177,7 @@ jobs:
 
     environment:
       TEST_RESULTS: /tmp/test-results
+      CYPRESS_reporter: junit
 
     steps:
       - attach_workspace:
@@ -224,6 +225,7 @@ jobs:
           command: |
             source ~/.bashrc
             nvm use 8
+            echo "Using $CYPRESS_baseUrl, with $CYPRESS_reporter reporter"
             npm ci
 
       - run:
@@ -236,8 +238,8 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       - run:
-          name: Curl test.teamseniorly.com
-          command: curl test.teamseniorly.com
+          name: Curl test environment
+          command: curl "$CYPRESS_baseUrl"
 
       - run:
           name: "JS Test Suite"

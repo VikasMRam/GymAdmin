@@ -13,7 +13,8 @@
     "__DEBUG__": true,
     "__COVERAGE__": true,
     "__BASENAME__": true,
-    "cy": true
+    "cy": true,
+    "Cypress": true
   },
   "settings": {
     "import/resolver": {

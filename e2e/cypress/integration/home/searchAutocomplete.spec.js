@@ -1,7 +1,7 @@
 describe('Marketplace Home Page', () => {
   it('AutoComplete City Search', () => {
     // eslint-disable-next-line no-console
-    console.log('print config', cy.config());
+    console.log('print config', Cypress.config());
 
     cy.visit('/');
 
