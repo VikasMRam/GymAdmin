@@ -3,7 +3,7 @@
 version: 2.1
 
 orbs:
-  node: circleci/node@1.1.2
+  cypress: cypress-io/cypress@1
 
 commands:
   select_env:
@@ -180,26 +180,7 @@ jobs:
       CYPRESS_reporter: junit
 
     steps:
-      - attach_workspace:
-          at: /home/circleci
-
       - select_env
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run:
-          name: Installing Node.js
-          command: |
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
-            source ~/.bashrc
-            nvm install 8
-            node -v
-            npm -v
 
       - run:
           name: Installing OpenVPN Client
@@ -220,34 +201,8 @@ jobs:
           name: Creating OpenVPN Tunnel
           command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
 
-      - run:
-          name: npm install
-          command: |
-            source ~/.bashrc
-            nvm use 8
-            echo "Using $CYPRESS_baseUrl, with $CYPRESS_reporter reporter"
-            npm ci
-
-      - run:
-          name: Setup dirs
-          command: mkdir -p $TEST_RESULTS
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
-      - run:
-          name: Curl test environment
-          command: curl "$CYPRESS_baseUrl"
-
-      - run:
-          name: "JS Test Suite"
-          command: |
-            source ~/.bashrc
-            nvm use 8
-            export MOCHA_FILE="$TEST_RESULTS/junit/js-test-results.xml"
-            BLUEBIRD_DEBUG=1 npm test 2>&1 | tee test_output
+      - cypress/run:
+          working_directory: e2e
 
       - run:
           name: Closing OpenVPN Tunnel
@@ -275,13 +230,6 @@ jobs:
               ../.circleci/push-slack-notification.sh -t "smoke tests failed" \
                 -tl "$CIRCLE_BUILD_URL" -m "<!channel> $DESC_MSG" -c "#ed5c5c"
             fi
-
-      - store_test_results:
-          path: /tmp/test-results
-
-      - store_artifacts:
-          path: /tmp/test-results
-
 
 workflows:
   version: 2
