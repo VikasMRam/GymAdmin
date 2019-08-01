@@ -237,7 +237,9 @@ jobs:
 
       - run:
           name: Run Cypress tests
-          command: npx cypress run
+          command: |
+            echo "Running cypress using $CYPRESS_baseUrl"
+            npx cypress run
 
       - run:
           name: Closing OpenVPN Tunnel
