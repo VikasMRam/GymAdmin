@@ -1,5 +1,7 @@
 describe('Marketplace Home Page', () => {
   it('AutoComplete City Search', () => {
+    console.log('print config', cy.config())
+
     cy.visit('/');
 
     cy.contains('Find a Home to Love');
