@@ -147,7 +147,7 @@ jobs:
       - run:
           name: Deploy to EB
           command: |
-            echo "Deploying to $EB_ENV"
+            echo "Deploying $VERSION to $EB_ENV"
             eb use $EB_ENV
             export DEPLOY_FAILED=$(eb deploy $EB_ENV --timeout 30 -v --staged -l $VERSION | tee /dev/tty | grep -c "ERROR")
 
