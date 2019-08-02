@@ -6,11 +6,6 @@ orbs:
   node: circleci/node@1.1.2
   cypress: cypress-io/cypress@1
 
-commands:
-  select_env:
-    description: Select ENV
-    steps:
-
 jobs:
   build:
     docker:
