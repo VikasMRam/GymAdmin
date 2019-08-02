@@ -10,52 +10,6 @@ commands:
   select_env:
     description: Select ENV
     steps:
-      - run:
-          name: Set up environment
-          command: |
-            if [[ -n "$CIRCLE_TAG" ]]; then
-              export VERSION=$CIRCLE_TAG
-            else
-              export LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
-              export LATEST_COMMIT=$(git rev-parse --short HEAD)
-              export NUMBER_OF_COMMITS=$(git rev-list --count HEAD ^$LATEST_TAG)
-              export VERSION=$(git for-each-ref --format="%(refname:short)-$NUMBER_OF_COMMITS-$LATEST_COMMIT" --sort=-authordate --count=1 refs/tags)
-            fi
-
-            echo "export VERSION=$VERSION" >> $BASH_ENV
-
-            if [[ -n "$CIRCLE_TAG" ]]; then
-              echo "export EB_ENV=slyreact-staging" >> $BASH_ENV
-              echo "export CYPRESS_baseUrl=http://www.myseniorly.com" >> $BASH_ENV
-            elif [[ -n "$CIRCLE_PR_NUMBER" ]]; then
-              echo "export EB_ENV=slyreact-test" >> $BASH_ENV
-              echo "export CYPRESS_baseUrl=http://test.teamseniorly.com" >> $BASH_ENV
-            elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
-              echo "export EB_ENV=slyreact-development" >> $BASH_ENV
-              echo "export CYPRESS_baseUrl=http://www.teamseniorly.com" >> $BASH_ENV
-            else
-              export FEATURE_ENV=$(eb list | grep -w "$CIRCLE_BRANCH")
-              if [[ "$FEATURE_ENV" == "slyreact-prod" || "$FEATURE_ENV" == "slyreact-staging" ]]; then
-                echo "Tried to deploy to restricted env $FEATURE_ENV"
-                return 1
-              fi
-
-              if [[ -n "$FEATURE_ENV" ]]; then
-                echo "export EB_ENV=$FEATURE_ENV" >> $BASH_ENV
-                echo "export CYPRESS_baseUrl=http://$FEATURE_ENV.teamseniorly.com" >> $BASH_ENV
-              fi
-            fi
-
-
-            source $BASH_ENV
-
-            echo "VERSION=$VERSION"
-            echo "EB_ENV=$EB_ENV"
-            echo "CYPRESS_baseUrl=$CYPRESS_baseUrl"
-
-            if [[ -z "$EB_ENV" ]]; then
-              circleci step halt
-            fi
 
 jobs:
   build:
@@ -127,8 +81,6 @@ jobs:
 #              circleci step halt
 #            fi
 
-      - select_env
-
       - attach_workspace:
           at: /home/circleci
 
@@ -136,6 +88,54 @@ jobs:
           name: Install awscli
           command: |
             sudo pip install awsebcli --upgrade
+
+      - run:
+          name: Set up environment
+          command: |
+            if [[ -n "$CIRCLE_TAG" ]]; then
+              export VERSION=$CIRCLE_TAG
+            else
+              export LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+              export LATEST_COMMIT=$(git rev-parse --short HEAD)
+              export NUMBER_OF_COMMITS=$(git rev-list --count HEAD ^$LATEST_TAG)
+              export VERSION=$(git for-each-ref --format="%(refname:short)-$NUMBER_OF_COMMITS-$LATEST_COMMIT" --sort=-authordate --count=1 refs/tags)
+            fi
+
+            echo "export VERSION=$VERSION" >> new_env_vars
+
+            if [[ -n "$CIRCLE_TAG" ]]; then
+              echo "export EB_ENV=slyreact-staging" >> new_env_vars
+              echo "export CYPRESS_baseUrl=http://www.myseniorly.com" >> new_env_vars
+            elif [[ -n "$CIRCLE_PR_NUMBER" ]]; then
+              echo "export EB_ENV=slyreact-test" >> new_env_vars
+              echo "export CYPRESS_baseUrl=http://test.teamseniorly.com" >> new_env_vars
+            elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
+              echo "export EB_ENV=slyreact-development" >> new_env_vars
+              echo "export CYPRESS_baseUrl=http://www.teamseniorly.com" >> new_env_vars
+            else
+              export FEATURE_ENV=$(eb list | grep -w "$CIRCLE_BRANCH")
+              if [[ "$FEATURE_ENV" == "slyreact-prod" || "$FEATURE_ENV" == "slyreact-staging" ]]; then
+                echo "Tried to deploy to restricted env $FEATURE_ENV"
+                return 1
+              fi
+
+              if [[ -n "$FEATURE_ENV" ]]; then
+                echo "export EB_ENV=$FEATURE_ENV" >> new_env_vars
+                echo "export CYPRESS_baseUrl=http://$FEATURE_ENV.teamseniorly.com" >> new_env_vars
+              fi
+            fi
+
+
+            source new_env_vars
+
+            echo "VERSION=$VERSION"
+            echo "EB_ENV=$EB_ENV"
+            echo "CYPRESS_baseUrl=$CYPRESS_baseUrl"
+
+            if [[ -z "$EB_ENV" ]]; then
+              circleci step halt
+            fi
+
 
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
       - run:
@@ -171,6 +171,11 @@ jobs:
             ./.circleci/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#ed5c5c"
 
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - new_env_vars
+
   test:
     machine: true
 
@@ -181,10 +186,10 @@ jobs:
       CYPRESS_reporter: junit
 
     steps:
-      - select_env
-
       - attach_workspace:
           at: /home/circleci
+
+      - run: cat /home/circleci/new_env_vars >> $BASH_ENV
 
       - node/install:
           node-version: 8.16.0
@@ -212,16 +217,6 @@ jobs:
       - restore_cache:
           keys:
             - cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-      - run:
-          name: Check if package-lock.json exists
-          command: |
-            if [ ! -e ./package-lock.json ]; then
-              echo "The Cypress orb uses 'npm ci' to install 'node_modules', which requires a 'package-lock.json'."
-              echo "A 'package-lock.json' file was not found. Please run 'npm install' in your project,"
-              echo "and commit 'package-lock.json' to your repo."
-              exit 1
-            fi
-
       - run:
           name: Npm CI
           command: npm ci
