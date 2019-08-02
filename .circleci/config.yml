@@ -121,7 +121,8 @@ jobs:
             fi
 
 
-            source new_env_vars
+            cat new_env_vars >> $BASH_ENV
+            source $BASH_ENV
 
             echo "VERSION=$VERSION"
             echo "EB_ENV=$EB_ENV"
@@ -145,7 +146,7 @@ jobs:
           command: |
             echo "Deploying $VERSION to $EB_ENV"
             eb use $EB_ENV
-            export DEPLOY_FAILED=$(eb deploy $EB_ENV --timeout 30 -v --staged -l $VERSION | tee /dev/tty | grep -c "ERROR")
+            export DEPLOY_FAILED=$(eb deploy $EB_ENV --timeout 60 -v --staged -l $VERSION | tee /dev/tty | grep -c "ERROR")
 
             if [ "$DEPLOY_FAILED" -gt 0 ]; then
               exit 1
