@@ -157,14 +157,14 @@ jobs:
           name: Send deploy success notification
           command: |
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            ./.circleci/push-slack-notification.sh -t "Successfully deployed to $EB_ENV" \
+            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY./.circleci/push-slack-notification.sh -t "Successfully deployed to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#42c88a"
       - run:
           name: Send deploy failed notification
           when: on_fail
           command: |
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            ./.circleci/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
+            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY ./.circleci/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#ed5c5c"
 
       - persist_to_workspace:
@@ -242,7 +242,7 @@ jobs:
           command: |
             if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
               export TEST_OUTPUT=$(cat test_output)
-              ../.circleci/push-slack-notification.sh -t "smoke tests success" \
+              SLACK_NOTIFICATION_API_KEY=$SLACK_TEST_NOTIFICATION_API_KEY ../.circleci/push-slack-notification.sh -t "smoke tests success" \
                 -tl "$CIRCLE_BUILD_URL" -m "$TEST_OUTPUT" -c "#42c88a"
             fi
 
@@ -255,7 +255,7 @@ jobs:
               if [ -z "$DESC_MSG" ]; then
                 DESC_MSG="failed before running tests"
               fi
-              ../.circleci/push-slack-notification.sh -t "smoke tests failed" \
+              SLACK_NOTIFICATION_API_KEY=$SLACK_TEST_NOTIFICATION_API_KEY ../.circleci/push-slack-notification.sh -t "smoke tests failed" \
                 -tl "$CIRCLE_BUILD_URL" -m "<!channel> $DESC_MSG" -c "#ed5c5c"
             fi
 
