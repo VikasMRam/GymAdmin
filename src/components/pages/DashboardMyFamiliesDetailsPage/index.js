@@ -350,7 +350,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, onUnPause,
     } = this.props;
     const { admin } = user;
 
@@ -464,7 +464,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             <Link to={backLinkHref}>
               <Icon icon="arrow-left" palette="slate" />
             </Link>
-            <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
+            <SmallScreenClientNameBlock weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" onClick={onUnPause} />}</SmallScreenClientNameBlock>
           </SmallScreenClientNameWrapper>
         </div>
         <div>
