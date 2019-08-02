@@ -138,7 +138,7 @@ jobs:
           name: Send deploy start notification
           command: |
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            ./.circleci/push-slack-notification.sh -t "Starting deploy to $EB_ENV" \
+            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY ./.circleci/push-slack-notification.sh -t "Starting deploy to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#66d3e4"
 
       - run:
@@ -157,7 +157,7 @@ jobs:
           name: Send deploy success notification
           command: |
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY./.circleci/push-slack-notification.sh -t "Successfully deployed to $EB_ENV" \
+            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY ./.circleci/push-slack-notification.sh -t "Successfully deployed to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#42c88a"
       - run:
           name: Send deploy failed notification

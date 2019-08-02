@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -z $SLACK_NOTIFICATION_API_KEY ]; then
-  echo "Missing Slack API key. Tip: Configure SLACK_DEPLOY_NOTIFICATION_API_KEY env variable"
+  echo "Missing Slack API key. Tip: Configure SLACK_NOTIFICATION_API_KEY env variable"
   exit 1
 fi
 
