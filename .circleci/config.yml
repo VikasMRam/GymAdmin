@@ -280,12 +280,11 @@ jobs:
 workflows:
   version: 2
 
-  build-development:
+  build:
     jobs:
       # run build (unit tests, linting, quality checks etc etc) for PRs
       - build
       - deploy:
-          context: ReactDev
           requires:
             - build
       - test:
@@ -293,20 +292,20 @@ workflows:
           requires:
             - deploy
 
-  build-staging:
-    jobs:
-      - build:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v.*/
-      - deploy:
-          context: ReactStaging
-          requires:
-            - build
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v.*/
+#  build-staging:
+#    jobs:
+#      - build:
+#          filters:
+#            branches:
+#              ignore: /.*/
+#            tags:
+#              only: /^v.*/
+#      - deploy:
+#          context: ReactStaging
+#          requires:
+#            - build
+#          filters:
+#            branches:
+#              ignore: /.*/
+#            tags:
+#              only: /^v.*/
