@@ -231,6 +231,9 @@ export default class UpdateFamilyStageFormContainer extends Component {
       this.nextStage = getStageDetails(nextStage);
       ({ levelGroup: nextStageGroup } = this.nextStage);
     }
+    const initialValues = {
+      stage,
+    };
 
     return (
       <ReduxForm
@@ -244,6 +247,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
         lossReasons={lossReasons}
         currentLossReason={currentLossReason}
         isPaused={isPaused}
+        initialValues={initialValues}
       />
     );
   }

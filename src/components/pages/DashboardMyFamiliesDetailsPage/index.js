@@ -250,13 +250,16 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       showModal, hideModal, notifyError, client, rawClient, notifyInfo, meta, refetchClient, refetchNotes,
     } = this.props;
+    const { stage: clientStage } = client;
     const { stage, lossReasons } = meta;
+
     SlyEvent.getInstance().sendEvent({
       category: 'fdetails',
       action: 'launch',
       label: 'update-stage',
       value: '',
     });
+    stage.push(clientStage);
     showModal(<UpdateFamilyStageFormContainer refetchClient={refetchClient} refetchNotes={refetchNotes} onSuccess={hideModal} lossReasons={lossReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} nextAllowedStages={stage} onCancel={hideModal} />, null, 'noPadding', false);
   };
 
