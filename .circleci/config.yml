@@ -11,7 +11,7 @@ jobs:
     docker:
       - image: circleci/node:8.12 # though we use 8.9 only 8.12 has npm that supports npm ci
 
-    working_directory: /home/circleci/project
+    working_directory: ~/project
 
     environment:
       TEST_RESULTS: /tmp/test-results
@@ -50,7 +50,7 @@ jobs:
                   npm test -- --ci --maxWorkers=12
 
       - persist_to_workspace:
-          root: /home/circleci
+          root: ~
           paths:
             - project
             - .cache
@@ -65,7 +65,7 @@ jobs:
     docker:
       - image: circleci/python:2.7
 
-    working_directory: /home/circleci/project
+    working_directory: ~/project
 
     steps:
 #      - run:
@@ -77,7 +77,7 @@ jobs:
 #            fi
 
       - attach_workspace:
-          at: /home/circleci
+          at: ~
 
       - run:
           name: Install awscli
@@ -96,17 +96,17 @@ jobs:
               export VERSION=$(git for-each-ref --format="%(refname:short)-$NUMBER_OF_COMMITS-$LATEST_COMMIT" --sort=-authordate --count=1 refs/tags)
             fi
 
-            echo "export VERSION=$VERSION" >> new_env_vars
+            echo "export VERSION=$VERSION" >> ~/new_env_vars
 
             if [[ -n "$CIRCLE_TAG" ]]; then
-              echo "export EB_ENV=slyreact-staging" >> new_env_vars
-              echo "export CYPRESS_baseUrl=http://www.myseniorly.com" >> new_env_vars
+              echo "export EB_ENV=slyreact-staging" >> ~/new_env_vars
+              echo "export CYPRESS_baseUrl=http://www.myseniorly.com" >> ~/new_env_vars
             elif [[ -n "$CIRCLE_PR_NUMBER" ]]; then
-              echo "export EB_ENV=slyreact-test" >> new_env_vars
-              echo "export CYPRESS_baseUrl=http://test.teamseniorly.com" >> new_env_vars
+              echo "export EB_ENV=slyreact-test" >> ~/new_env_vars
+              echo "export CYPRESS_baseUrl=http://test.teamseniorly.com" >> ~/new_env_vars
             elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
-              echo "export EB_ENV=slyreact-development" >> new_env_vars
-              echo "export CYPRESS_baseUrl=http://www.teamseniorly.com" >> new_env_vars
+              echo "export EB_ENV=slyreact-development" >> ~/new_env_vars
+              echo "export CYPRESS_baseUrl=http://www.teamseniorly.com" >> ~/new_env_vars
             else
               export FEATURE_ENV=$(eb list | grep -w "$CIRCLE_BRANCH")
               if [[ "$FEATURE_ENV" == "slyreact-prod" || "$FEATURE_ENV" == "slyreact-staging" ]]; then
@@ -115,13 +115,13 @@ jobs:
               fi
 
               if [[ -n "$FEATURE_ENV" ]]; then
-                echo "export EB_ENV=$FEATURE_ENV" >> new_env_vars
-                echo "export CYPRESS_baseUrl=http://$FEATURE_ENV.teamseniorly.com" >> new_env_vars
+                echo "export EB_ENV=$FEATURE_ENV" >> ~/new_env_vars
+                echo "export CYPRESS_baseUrl=http://$FEATURE_ENV.teamseniorly.com" >> ~/new_env_vars
               fi
             fi
 
 
-            cat new_env_vars >> $BASH_ENV
+            cat ~/new_env_vars >> $BASH_ENV
             source $BASH_ENV
 
             echo "VERSION=$VERSION"
@@ -168,7 +168,7 @@ jobs:
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#ed5c5c"
 
       - persist_to_workspace:
-          root: /home/circleci
+          root: ~
           paths:
             - new_env_vars
 
@@ -183,9 +183,9 @@ jobs:
 
     steps:
       - attach_workspace:
-          at: /home/circleci
+          at: ~
 
-      - run: cat /home/circleci/new_env_vars >> $BASH_ENV
+      - run: cat ~/new_env_vars >> $BASH_ENV
 
       - node/install:
           node-version: 8.16.0
