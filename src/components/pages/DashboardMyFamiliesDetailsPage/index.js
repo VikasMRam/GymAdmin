@@ -35,6 +35,7 @@ import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import PutFamilyOnPause from 'sly/components/molecules/PutFamilyOnPause';
 import BackLink from 'sly/components/molecules/BackLink';
+import IconButton from 'sly/components/molecules/IconButton';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
@@ -157,9 +158,13 @@ const SmallScreenClientNameWrapper = styled.div`
   }
 `;
 
-const SmallScreenClientNameBlock = styled(Block)`
-  width: 100%;
-  text-align: center;
+const SmallScreenClientButtonWrapper = styled.div`
+  margin: 0 auto;
+`;
+
+const SmallScreenClientNameDiv = styled.div`
+  display: flex;
+  align-items: end;
 `;
 
 const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
@@ -464,7 +469,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             <Link to={backLinkHref}>
               <Icon icon="arrow-left" palette="slate" />
             </Link>
-            <SmallScreenClientNameBlock weight="medium" size="subtitle">{name} {isPaused && <Icon icon="pause" size="caption" palette="danger" onClick={onUnPause} />}</SmallScreenClientNameBlock>
+            <SmallScreenClientButtonWrapper>
+              <SmallScreenClientNameDiv>
+                <Block weight="medium" size="subtitle">{name}</Block>
+                {isPaused && <IconButton transparent icon="pause" size="caption" palette="danger" onClick={onUnPause} />}
+              </SmallScreenClientNameDiv>
+            </SmallScreenClientButtonWrapper>
           </SmallScreenClientNameWrapper>
         </div>
         <div>
