@@ -17,6 +17,12 @@ const ReduxField = ({
     const oldBlur = fieldProps.onBlur;
     fieldProps.onBlur = () => oldBlur(null, true);
   }
+  if (fieldProps.type === 'select-new') {
+    const oldChange = fieldProps.onChange;
+    fieldProps.onChange = v => oldChange(v.value);
+    fieldProps.onBlur = _ => _;
+  }
+
   return <Field {...fieldProps} />;
 };
 

@@ -67,18 +67,22 @@ export default class UpdateFamilyStageForm extends Component {
     const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
 
     const options = Object.keys(NEW_FAMILY_STAGE_ORDERED).map((sg, ig) => {
-      let stages = NEW_FAMILY_STAGE_ORDERED[sg].map((s, i) => nextAllowedStages.indexOf(s) !== -1 && <option disabled={ig === 0 && i === 0} key={s} value={s}>{s}</option>);
+      let stages = NEW_FAMILY_STAGE_ORDERED[sg].map((s, i) => nextAllowedStages.indexOf(s) !== -1 && {
+        value: s,
+        label: s,
+        isDisabled: s === currentStage || (ig === 0 && i === 0),
+      });
       stages = stages.filter(s => s);
 
       if (stages.length) {
-        return (
-          <optgroup label={sg} key={sg}>
-            {stages}
-          </optgroup>
-        );
+        return {
+          label: sg,
+          options: stages,
+        };
       }
       return null;
-    });
+    }).filter(s => s);
+
     const lossReasonOptions = lossReasons.map(reason => <option key={reason} value={reason}>{reason}</option>);
     const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
     const stageChanged = currentStage !== nextStage;
@@ -97,12 +101,10 @@ export default class UpdateFamilyStageForm extends Component {
         <StageField
           name="stage"
           label="Stage"
-          type="select"
+          type="select-new"
           component={ReduxField}
-        >
-          <option value="" disabled>Select a stage</option>
-          {options}
-        </StageField>
+          options={options}
+        />
         {stageGroupChanged && (!isPaused || (isPaused && stageChanged)) &&
           <Warning size="caption">
             Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.

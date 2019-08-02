@@ -239,6 +239,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       <ReduxForm
         {...this.props}
         currentStageGroup={levelGroup}
+        currentStage={stage}
         nextStageGroup={nextStageGroup}
         nextStage={nextStage}
         name={name}

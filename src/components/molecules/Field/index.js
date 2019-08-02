@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import { string, bool, oneOf, number, oneOfType, node, array, object } from 'prop-types';
 import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
+import Select from 'react-select';
 
 import { size } from 'sly/components/themes';
 import { Label, Input, Icon, Block } from 'sly/components/atoms';
@@ -39,6 +40,8 @@ const getInputComponent = (type) => {
       return IconInput;
     case 'date':
       return DatePicker;
+    case 'select-new':
+      return Select;
     default:
       return Input;
   }
@@ -151,6 +154,15 @@ const Field = ({
     inputProps.selected = inputProps.value;
     inputProps.placeholderText = inputProps.placeholder;
     inputProps.customInput = <Input />;
+  } else if (type === 'select-new') {
+    const reducer = (accumulator, currentValue) => accumulator.push(currentValue.options ? currentValue.options : currentValue) && accumulator;
+    const values = inputProps.options.reduce(reducer, []);
+    const falttenedValues = values.reduce((a, b) => a.concat(b), []);
+    const match = falttenedValues.find(v => v.value === inputProps.value);
+    if (match) {
+      inputProps.value = match;
+    }
+    inputProps.defaultValue = inputProps.value;
   }
 
   return (
@@ -205,6 +217,7 @@ Field.propTypes = {
   type: oneOf([
     'textarea',
     'select',
+    'select-new',
     'communitychoice',
     'singlechoice',
     'multiplechoice',
