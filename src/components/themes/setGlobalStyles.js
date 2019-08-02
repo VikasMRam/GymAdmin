@@ -1,8 +1,8 @@
 import { injectGlobal } from 'styled-components';
+
 import styles from './default';
 
 import { publicPath } from 'sly/config';
-import { getKey } from 'sly/components/themes';
 
 const baseColor = styles.palette.slate.base;
 

@@ -4,5 +4,5 @@ import { storiesOf } from '@storybook/react';
 import Stage from 'sly/components/molecules/Stage';
 
 storiesOf('Atoms|Stage', module)
-  .add('default', () => <Stage text="New" currentStage={2} />)
-  .add('danger palette', () => <Stage text="New" currentStage={2} palette="danger" />);
+  .add('default', () => <Stage stage="New" />)
+  .add('danger palette', () => <Stage stage="New" palette="danger" />);

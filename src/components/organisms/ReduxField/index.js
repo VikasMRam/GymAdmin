@@ -13,6 +13,10 @@ const ReduxField = ({
     message: meta.error || meta.warning || message,
     warning: !!meta.warning || warning,
   };
+  if (fieldProps.type === 'date') {
+    const oldBlur = fieldProps.onBlur;
+    fieldProps.onBlur = () => oldBlur(null, true);
+  }
   return <Field {...fieldProps} />;
 };
 

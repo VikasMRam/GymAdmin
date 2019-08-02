@@ -35,6 +35,7 @@ import FamilySummary from 'sly/components/molecules/FamilySummary';
 import FamilyActivityItem from 'sly/components/molecules/FamilyActivityItem';
 import PutFamilyOnPause from 'sly/components/molecules/PutFamilyOnPause';
 import BackLink from 'sly/components/molecules/BackLink';
+import IconButton from 'sly/components/molecules/IconButton';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
@@ -68,7 +69,7 @@ const SmallScreenBorder = css`
 const CommunitiesTab = styled.div`
   ${SmallScreenBorder};
   padding: ${size('spacing.xxxLarge')} 0;
-  
+
   > * {
     width: ${size('layout.col4')};
     margin-left: auto;
@@ -113,11 +114,11 @@ const FamilyDetailsTab = styled.div`
 const TabWrapper = styled.div`
   padding: ${size('spacing.large')};
   background-color: ${palette('grey', 'background')};
+  margin-bottom: ${size('dashboard.actionFooterBottomMargin')};
 
   > * {
     background-color: ${palette('white', 'base')};
   }
-
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: ${size('spacing.xLarge')};
   }
@@ -125,6 +126,7 @@ const TabWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     background-color: ${palette('white', 'base')};
     padding: 0;
+    margin-bottom: 0;
   }
 `;
 
@@ -156,21 +158,25 @@ const SmallScreenClientNameWrapper = styled.div`
   }
 `;
 
-const SmallScreenClientNameBlock = styled(Block)`
-  width: 100%;
-  text-align: center;
+const SmallScreenClientButtonWrapper = styled.div`
+  margin: 0 auto;
+`;
+
+const SmallScreenClientNameDiv = styled.div`
+  display: flex;
+  align-items: end;
 `;
 
 const StyledDashboardTwoColumnTemplate = styled(DashboardTwoColumnTemplate)`
   margin-bottom: ${size('element.xxxLarge')};
-  
+
   main {
     padding: 0;
   }
-    
+
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     margin-bottom: 0;
-    
+
     main {
       padding: ${size('spacing.xLarge')};
     }
@@ -249,13 +255,16 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       showModal, hideModal, notifyError, client, rawClient, notifyInfo, meta, refetchClient, refetchNotes,
     } = this.props;
+    const { stage: clientStage } = client;
     const { stage, lossReasons } = meta;
+
     SlyEvent.getInstance().sendEvent({
       category: 'fdetails',
       action: 'launch',
       label: 'update-stage',
       value: '',
     });
+    stage.push(clientStage);
     showModal(<UpdateFamilyStageFormContainer refetchClient={refetchClient} refetchNotes={refetchNotes} onSuccess={hideModal} lossReasons={lossReasons} notifyError={notifyError} notifyInfo={notifyInfo} client={client} rawClient={rawClient} nextAllowedStages={stage} onCancel={hideModal} />, null, 'noPadding', false);
   };
 
@@ -349,8 +358,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, onUnPause,
     } = this.props;
+    const { admin } = user;
 
     let conversationParticipants = [];
     let viewingAsParticipant;
@@ -462,7 +472,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             <Link to={backLinkHref}>
               <Icon icon="arrow-left" palette="slate" />
             </Link>
-            <SmallScreenClientNameBlock weight="medium" size="subtitle">{name}</SmallScreenClientNameBlock>
+            <SmallScreenClientButtonWrapper>
+              <SmallScreenClientNameDiv>
+                <Block weight="medium" size="subtitle">{name}</Block>
+                {isPaused && <IconButton transparent icon="pause" size="caption" palette="danger" onClick={onUnPause} />}
+              </SmallScreenClientNameDiv>
+            </SmallScreenClientButtonWrapper>
           </SmallScreenClientNameWrapper>
         </div>
         <div>
@@ -513,8 +528,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   rawClient={rawClient}
                   notifyInfo={notifyInfo}
                   notifyError={notifyError}
-                  accepted={!showAcceptRejectButtons}
-                  canEditFamilyDetails={canEditFamilyDetails}
+                  accepted={!showAcceptRejectButtons || admin}
+                  canEditFamilyDetails={canEditFamilyDetails || admin}
                   gender={gender}
                   lookingFor={lookingFor}
                   monthlyBudget={monthlyBudget}

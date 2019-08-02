@@ -25,7 +25,7 @@ const Indicators = styled.span`
 `;
 
 const Stage = ({
-  stage, totalStage, className,
+  stage, stageLabel, totalStage, className,
 }) => {
   const { level: currentStage, palette } = getStageDetails(stage);
   const indicators = [];
@@ -40,7 +40,7 @@ const Stage = ({
   }
   return (
     <div className={className}>
-      <TextBlock size="caption">{stage}</TextBlock>
+      <TextBlock size="caption">{stageLabel || stage}</TextBlock>
       <Indicators>{indicators}</Indicators>
     </div>
   );
@@ -48,6 +48,7 @@ const Stage = ({
 
 Stage.propTypes = {
   stage: string.isRequired,
+  stageLabel: string,
   totalStage: number,
   palette: string,
   className: string,

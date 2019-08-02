@@ -7,7 +7,7 @@ const LoadablePlugin = require('@loadable/webpack-plugin');
 const UglifyJs = require('uglify-es');
 const cssmin = require('cssmin');
 const nodeExternals = require('webpack-node-externals');
-// const Visualizer = require('webpack-visualizer-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const SpawnPlugin = require('webpack-spawn-plugin');
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 const webpack = require('webpack');
@@ -281,6 +281,15 @@ const client = (target, entries) => createConfig([
   when(target === 'node', [node]),
 
   entryPoint(entries),
+
+  when(isDev || isStaging, [
+    addPlugins([
+      new BundleAnalyzerPlugin({
+        openAnalyzer: false,
+        analyzerPort: 0,
+      }),
+    ]),
+  ]),
 
   externalWidget,
 

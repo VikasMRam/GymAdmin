@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
-import qs from 'querystring';
+import qs from 'query-string';
 
 import { size, palette } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
@@ -77,7 +77,7 @@ const onTabClick = (label) => {
 
 const getBasePath = (tab, params) => {
   const {
-    organization, provider, providerType,
+    clientName, organization, provider, providerType,
   } = params;
   const filters = {};
 
@@ -85,6 +85,10 @@ const getBasePath = (tab, params) => {
     filters.type = 'Connected';
   } else if (tab === tabIDs[2]) {
     filters.type = 'Closed';
+  }
+
+  if (clientName) {
+    filters.name = clientName;
   }
 
   if (organization) {
@@ -114,13 +118,10 @@ const DashboardAgentFamilyOverviewPage = ({
   let connectedTabLabel = tabIDLabelMap[tabIDs[1]];
   let closedTabLabel = tabIDLabelMap[tabIDs[2]];
   if (!isPageLoading) {
-    if (activeTab === tabIDs[0]) {
-      prospectsTabLabel += ` (${pagination.filteredCount})`;
-    } else if (activeTab === tabIDs[1]) {
-      connectedTabLabel += ` (${pagination.filteredCount})`;
-    } else if (activeTab === tabIDs[2]) {
-      closedTabLabel += ` (${pagination.filteredCount})`;
-    }
+    const { prospectingCount, connectedCount, closedCount } = pagination;
+    prospectsTabLabel += ` (${prospectingCount})`;
+    connectedTabLabel += ` (${connectedCount})`;
+    closedTabLabel += ` (${closedCount})`;
   }
 
   return (

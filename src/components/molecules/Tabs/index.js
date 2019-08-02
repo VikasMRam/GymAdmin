@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   overflow-y: hidden;
   background: ${palette('white.base')};
   text-transform: uppercase;
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
     border-top-left-radius: ${size('border.xxLarge')};
@@ -79,6 +79,7 @@ export default class Tabs extends Component {
             id, onClick,
           } = child.props;
           return React.cloneElement(child, {
+            key: id,
             active: activeTab === id,
             onClick: child.props.to
               ? onClick
