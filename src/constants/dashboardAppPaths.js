@@ -19,6 +19,6 @@ export const FAMILY_DETAILS = 'family-details';
 export const COMMUNITIES = 'communities';
 
 export const ADMIN_DASHBOARD_CALLS_PATH = `${ADMIN_DASHBOARD_PATH}/calls`;
-export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/:id`;
+export const ADMIN_DASHBOARD_CALL_DETAILS_PATH = `${ADMIN_DASHBOARD_CALLS_PATH}/:id/:tab?`;
 
 export const MESSAGES = 'messages';

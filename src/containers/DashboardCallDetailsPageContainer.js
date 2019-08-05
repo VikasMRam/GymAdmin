@@ -1,12 +1,17 @@
 import React, { Fragment, Component } from 'react';
 import { string, object } from 'prop-types';
 import { prefetch, query } from 'sly/services/newApi';
+import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'constants/dashboardAppPaths.js';
 import DashboardCallDetailsPage from 'sly/components/pages/DashboardCallDetailsPage';
+import { ADMIN_DASHBOARD_CALL_DETAILS_PATH, COMMUNITIES } from 'sly/constants/dashboardAppPaths';
+import NotificationController from 'sly/controllers/NotificationController';
+import { generatePath } from 'react-router';
 
 
 @prefetch('voiceCall', 'getVoiceCall', (req, { match }) => req({
   id: match.params.id,
 }))
+
 
 export default class DashboardCallDetailsPageContainer extends Component {
   static propTypes = {
@@ -20,8 +25,14 @@ export default class DashboardCallDetailsPageContainer extends Component {
   };
 
   handleCommunitySearch = ({ name, zip }) => {
-    console.log("this is called, all the way from parent", name,zip);
     this.setState({ name, zip });
+  };
+
+  handleNewClientSubmit = (data) => {
+    console.log('Seeing data here',data);
+    const { history } = this.props;
+    const clientPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: data.id });
+    history.push(clientPath);
   };
 
   render() {
@@ -35,11 +46,18 @@ export default class DashboardCallDetailsPageContainer extends Component {
     const query = (!name && !zip) ? ({ phone: voiceCall.toNumber }) : ({ name, zip });
 
     const meta = {
-      lookingFor: [], gender: ['Female', 'Male'], timeToMove: ['1+ Months'], monthlyBudget: [],
+      referralSource: ['Direct Call', 'Online'], lookingFor: ['Father', 'Mother'], gender: ['Female', 'Male'], timeToMove: ['Now','1+ Months', '3+ Months'], monthlyBudget: ['Under $2000', '$2k-$3k', '$3k-$4k', '$4k+'],
     };
 
     return (
-      <DashboardCallDetailsPage meta={meta} voiceCall={voiceCall} query={query} handleCommunitySearch={this.handleCommunitySearch} />
+      <NotificationController>
+        { ({
+        notifyInfo,
+        notifyError,
+        }) => (
+          <DashboardCallDetailsPage notifyInfo={notifyInfo} notifyError={notifyError} postCreateClient={this.handleNewClientSubmit} meta={meta} voiceCall={voiceCall} query={query} handleCommunitySearch={this.handleCommunitySearch} />
+        )}
+      </NotificationController>
     );
   }
 }

@@ -12,6 +12,7 @@ export default {
 
   getUuidAux: { method: get, path: '/platform/uuid-auxes/:id' },
   updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },
+  createUuidAux: { method: post, path: '/platform/uuid-auxes' },
 
   createUserShare: { method: post, path: '/platform/user-shares' },
 
@@ -43,6 +44,7 @@ export default {
   getClients: { method: get, path: '/marketplace/clients' },
   getClient: { method: get, path: '/marketplace/clients/:id' },
   updateClient: { method: patch, path: '/marketplace/clients/:id' },
+  createClient: { method: post, path: '/marketplace/clients' },
 
   createNote: { method: post, path: '/marketplace/notes' },
   getNotes: { method: get, path: '/marketplace/notes' },

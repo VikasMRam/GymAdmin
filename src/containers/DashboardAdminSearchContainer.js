@@ -9,20 +9,26 @@ import DashboardAdminSearchCommunityAgents from 'sly/components/organisms/Dasboa
   Object.entries(query).forEach(([k, v]) => {
     modQ[`filter[${k}]`] = v;
   });
-  return req({ ...modQ });
+  return req({ ...modQ, include: 'agents' });
 })
 
 export default class DashboardAdminSearchContainer extends Component {
   static propTypes = {
     communities: arrayOf(adminCommunityPropType),
     handleCommunitySearch: func.isRequired,
+    notifyInfo: func.isRequired,
+    notifyError: func.isRequired,
   };
 
   render() {
-    const { communities, handleCommunitySearch } = this.props;
+    const {
+      communities, handleCommunitySearch, notifyInfo, notifyError
+    } = this.props;
     return (<DashboardAdminSearchCommunityAgents
       handleCommunitySearch={handleCommunitySearch}
       communities={communities}
+      notifyInfo={notifyInfo}
+      notifyError={notifyError}
     />);
   }
 }
