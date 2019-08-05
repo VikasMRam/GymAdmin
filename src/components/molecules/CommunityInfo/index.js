@@ -2,13 +2,12 @@ import React, { Fragment, Component } from 'react';
 import { bool } from 'prop-types';
 import styled from 'styled-components';
 import NumberFormat from 'react-number-format';
-import Dotdotdot from 'react-dotdotdot';
 
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { size } from 'sly/components/themes';
 import { formatRating } from 'sly/services/helpers/rating';
 import { community as communityPropType } from 'sly/propTypes/community';
-import { Block, Icon, ClampedText, Span } from 'sly/components/atoms';
+import { Link, Block, Icon, Heading, ClampedText, Span } from 'sly/components/atoms';
 import Rating from 'sly/components/molecules/Rating';
 
 const Wrapper = styled.div`
@@ -48,7 +47,7 @@ const RatingValue = styled.div`
 
 const Name = styled(ClampedText)`
   line-height: ${size('text.title')};
-  margin-bottom: ${size('spacing.small')};
+  margin-bottom: 0;
 `;
 
 const Info = styled(ClampedText)`
@@ -104,6 +103,17 @@ export default class CommunityInfo extends Component {
       {reviewsValue > 0 && <Rating value={reviewsValue} palette="warning" size="small" />}
     </RatingWrapper>
   );
+
+  renderName = (community, inverted) => {
+    const { name, url } = community;
+    return (
+      <Link href={url}>
+        <Heading level="subtitle" size="subtitle">
+          <Name size="subtitle" weight="medium" title={name} palette={inverted ? 'white' : 'slate'}>{name}</Name>
+        </Heading>
+      </Link>
+    );
+  }
 
   render() {
     const {
@@ -191,7 +201,7 @@ export default class CommunityInfo extends Component {
 
     return (
       <Wrapper {...props}>
-        <Name size="subtitle" weight="medium" title={name} palette={inverted ? 'white' : 'slate'}>{name}</Name>
+        {this.renderName(community, inverted)}
         <TopWrapper>
           {this.renderRate(community)}
           {this.renderReviews(reviewsValue)}
@@ -204,9 +214,7 @@ export default class CommunityInfo extends Component {
         {floorPlanComponent}
         {showDescription &&
           <Block palette={inverted ? 'white' : 'grey'} size="caption">
-            <Dotdotdot clamp={2}>
-              {description}
-            </Dotdotdot>
+            {description}
           </Block>
         }
       </Wrapper>
