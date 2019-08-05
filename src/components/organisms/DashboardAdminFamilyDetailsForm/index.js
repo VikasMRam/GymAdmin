@@ -3,16 +3,17 @@ import { func, bool, string, object, arrayOf } from 'prop-types';
 import { Field } from 'redux-form';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
-
 import { size, columnWidth } from 'sly/components/themes';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
 import { phoneParser, phoneFormatter } from 'sly/services/helpers/phone';
-import { Block, Button, Hr, Label } from 'sly/components/atoms';
+import { Block, Button, Hr, Label, Heading } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import SearchBoxContainer from 'sly/containers/SearchBoxContainer';
 
-const StyledButton = pad(Button, 'regular');
+const PadButton = pad(Button, 'regular');
+
+const StyledButton = textAlign(PadButton, 'right');
 StyledButton.displayName = 'StyledButton';
 const Form = textAlign(styled.form``, 'right');
 Form.displayName = 'Form';
@@ -54,8 +55,6 @@ class DashboardAdminFamilyDetailsForm extends Component {
   static propTypes = {
     handleSubmit: func.isRequired,
     submitting: bool,
-    accepted: bool,
-    intro: string,
     change: func,
     onLocationChange: func,
     initialValues: object,
@@ -63,6 +62,7 @@ class DashboardAdminFamilyDetailsForm extends Component {
     gender: arrayOf(string).isRequired,
     timeToMove: arrayOf(string).isRequired,
     monthlyBudget: arrayOf(string).isRequired,
+    referralSource: arrayOf(string).isRequired,
   };
 
   handleChange = () => {
@@ -72,7 +72,7 @@ class DashboardAdminFamilyDetailsForm extends Component {
 
   handleLocationChange = (value) => {
     const { change, onLocationChange } = this.props;
-    change('preferredLocation', value);
+    change('preferredLocation', value.formatted_address);
     if (onLocationChange) {
       onLocationChange(value);
     }
@@ -81,7 +81,7 @@ class DashboardAdminFamilyDetailsForm extends Component {
   render() {
     const { handleChange, handleLocationChange } = this;
     const {
-      handleSubmit, submitting, accepted, intro, initialValues, lookingFor,
+      handleSubmit, submitting, initialValues, lookingFor, referralSource,
       gender, timeToMove, monthlyBudget,
     } = this.props;
     let preferredLocation = '';
@@ -93,88 +93,106 @@ class DashboardAdminFamilyDetailsForm extends Component {
     const femaleOptions = gender.map(i => <option key={i} value={i}>{i}</option>);
     const timeToMoveOptions = timeToMove.map(i => <option key={i} value={i}>{i}</option>);
     const monthlyBudgetOptions = monthlyBudget.map(i => <option key={i} value={i}>{i}</option>);
+    const referralSourceOptions = referralSource.map(i => <option key={i} value={i}>{i}</option>);
 
     return (
-      <Form onSubmit={handleSubmit}>
-        <Field
-          name="name"
-          label="Contact name"
-          type="text"
-          component={ReduxField}
-        />
-        <Field
-          name="phone"
-          label="Phone"
-          parse={phoneParser}
-          format={phoneFormatter}
-          component={ReduxField}
-        />
-        <Field
-          name="email"
-          label="Email"
-          type="email"
-          component={ReduxField}
-        />
-        <Field
-          name="residentName"
-          label="Resident name"
-          type="text"
-          component={ReduxField}
-        />
-        <Field
-          name="lookingFor"
-          label="Looking for"
-          type="select"
-          component={ReduxField}
-        >
-          {lookingForOptions}
-        </Field>
-        <Field
-          name="gender"
-          label="Gender"
-          type="select"
-          component={ReduxField}
-        >
-          {femaleOptions}
-        </Field>
-        <PaddedTwoColumnWrapper verticalCenter>
-          <StyledLabel>Preferred location</StyledLabel>
-          <StyledSearchBoxContainer
-            layout="boxWithoutButton"
-            onLocationSearch={handleLocationChange}
-            onTextChange={handleChange}
-            address={preferredLocation}
-          />
-        </PaddedTwoColumnWrapper>
-        <Field
-          name="budget"
-          label="Monthly budget"
-          type="select"
-          component={ReduxField}
-        >
-          {monthlyBudgetOptions}
-        </Field>
-        <Field
-          name="timeToMove"
-          label="Time to move"
-          type="select"
-          component={ReduxField}
-        >
-          {timeToMoveOptions}
-        </Field>
-        <TwoColumnWrapper>
-          <StyledLabel>Seniorly introduction</StyledLabel>
-          <IntroInfo size="caption">{intro}</IntroInfo>
-        </TwoColumnWrapper>
+      <div>
 
-        <Fragment>
+        <Form onSubmit={handleSubmit}>
+          <TwoColumnWrapper>
+            <div>
+              {initialValues && initialValues.name && <Heading level="subtitle">{initialValues.name}</Heading>}
+            </div>
+            <StyledButton type="submit" disabled={submitting}>
+              Save
+            </StyledButton>
+          </TwoColumnWrapper>
           <Hr />
-          <StyledButton type="submit" disabled={submitting}>
-            Save changes
-          </StyledButton>
-        </Fragment>
+          <Field
+            name="name"
+            label="Contact name"
+            type="text"
+            component={ReduxField}
+          />
+          <Field
+            name="phone"
+            label="Phone"
+            parse={phoneParser}
+            format={phoneFormatter}
+            component={ReduxField}
+          />
+          <Field
+            name="email"
+            label="Email"
+            type="email"
+            component={ReduxField}
+          />
+          <Field
+            name="residentName"
+            label="Resident name"
+            type="text"
+            component={ReduxField}
+          />
+          <PaddedTwoColumnWrapper verticalCenter>
+            <StyledLabel>Preferred location</StyledLabel>
+            <StyledSearchBoxContainer
+              layout="boxWithoutButton"
+              onLocationSearch={handleLocationChange}
+              onTextChange={handleChange}
+              address={preferredLocation}
+            />
+          </PaddedTwoColumnWrapper>
+          <Field
+            name="referralSource"
+            label="Referral Source"
+            type="select"
+            component={ReduxField}
+          >
+            {referralSourceOptions}
+          </Field>
+          <Field
+            name="lookingFor"
+            label="Looking for"
+            type="select"
+            component={ReduxField}
+          >
+            {lookingForOptions}
+          </Field>
+          <Field
+            name="gender"
+            label="Gender"
+            type="select"
+            component={ReduxField}
+          >
+            {femaleOptions}
+          </Field>
+          <Field
+            name="budget"
+            label="Monthly budget"
+            type="select"
+            component={ReduxField}
+          >
+            {monthlyBudgetOptions}
+          </Field>
+          <Field
+            name="timeToMove"
+            label="Time to move"
+            type="select"
+            component={ReduxField}
+          >
+            {timeToMoveOptions}
+          </Field>
+          <TwoColumnWrapper>
+            <Field
+              name="introMessage"
+              label="Message"
+              type="textarea"
+              component={ReduxField}
+            />
+          </TwoColumnWrapper>
 
-      </Form>
+        </Form>
+      </div>
     );
   }
 }

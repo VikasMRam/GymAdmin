@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import { bool, func } from 'prop-types';
+import { prop } from 'styled-tools';
 import { parseDate, durationInS } from 'sly/services/helpers/date';
 import { phoneFormatter } from 'sly/services/helpers/phone';
 import { buildPriceList } from 'sly/services/helpers/pricing';
 import { size, palette, columnWidth } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { Heading, Badge, Link, Block, Icon, Box } from 'sly/components/atoms';
+
 
 const Header = styled.div`
   display: flex;
@@ -21,11 +23,14 @@ const StyledBadge = styled(Badge)`
   color: ${palette('white', 'base')};
   text-transform: uppercase;
 `;
+const lineHeight = p => size('lineHeight', p.size);
+const textSize = p => size('text', p.size);
 
 const CommunityInfoWrapper = styled.div`
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
-    flex-wrap: wrap;
+    flex-flow: column wrap;
+    height: calc(${textSize} * ${lineHeight} * ${prop('rows')});
     margin-right: -${size('spacing.xLarge')};
     > * {
       width: ${columnWidth(2, size('spacing.xLarge'))};

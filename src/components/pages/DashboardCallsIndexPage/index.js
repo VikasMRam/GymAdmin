@@ -4,7 +4,7 @@ import { object } from 'prop-types';
 
 import { size } from 'sly/components/themes';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
-import Table from 'sly/components/organisms/Table';
+import { Table } from 'sly/components/atoms';
 
 
 const TableSectionWrapper = styled.div`
