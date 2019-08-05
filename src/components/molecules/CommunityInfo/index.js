@@ -120,7 +120,7 @@ export default class CommunityInfo extends Component {
       community, inverted, showFloorPlan, showDescription, ...props
     } = this.props;
     const {
-      name, webViewInfo, floorPlanString, propInfo, propRatings,
+      webViewInfo, floorPlanString, propInfo, propRatings,
       address, addressString,
     } = community;
     let { description } = community;
