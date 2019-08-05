@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 import Select from 'react-select';
 
-import { size } from 'sly/components/themes';
+import { size, getKey } from 'sly/components/themes';
 import { Label, Input, Icon, Block } from 'sly/components/atoms';
 import textAlign from 'sly/components/helpers/textAlign';
 // leave as it is: cyclic dependency
@@ -118,6 +118,52 @@ const CharCount = styled(textAlign(Block, 'right'))`
 `;
 CharCount.displayName = 'CharCount';
 
+const selectStyles = {
+  control: (provided, state) => ({
+    ...provided,
+    borderColor: state.isFocused ? getKey('palette.primary.base') : getKey('palette.slate.stroke'),
+    borderBottomLeftRadius: state.isFocused ? 0 : provided.borderRadiusBottomLeft,
+    borderBottomRightRadius: state.isFocused ? 0 : provided.borderRadiusBottomRight,
+    boxShadow: 'none',
+    padding: getKey('sizes.spacing.small'),
+  }),
+  indicatorSeparator: () => ({
+    display: 'none',
+  }),
+  singleValue: provided => ({
+    ...provided,
+    padding: 0,
+    fontSize: getKey('sizes.text.caption'),
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    fontSize: getKey('sizes.text.caption'),
+    paddingLeft: getKey('sizes.spacing.xxxLarge'),
+    background: state.isSelected ? 'transparent' : provided.background,
+    color: state.isSelected ? getKey('palette.primary.base') : provided.color,
+    fontWeight: state.isSelected ? getKey('sizes.weight.medium') : provided.fontWeight,
+  }),
+  groupHeading: provided => ({
+    ...provided,
+    color: getKey('palette.grey.base'),
+    fontWeight: getKey('sizes.weight.bold'),
+  }),
+  menu: provided => ({
+    ...provided,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+    top: `calc(${provided.top} - ${getKey('sizes.spacing.regular')})`,
+  }),
+};
+
+const selectTheme = theme => ({
+  ...theme,
+  colors: {
+    ...theme.colors,
+    primary: getKey('palette.primary.base'),
+  },
+});
+
 const Field = ({
   message,
   name,
@@ -163,6 +209,9 @@ const Field = ({
       inputProps.value = match;
     }
     inputProps.defaultValue = inputProps.value;
+    inputProps.styles = selectStyles;
+    inputProps.theme = selectTheme;
+    inputProps.blurInputOnSelect = true;
   }
 
   return (
