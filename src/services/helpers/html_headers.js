@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { host } from 'sly/config';
 import { tocs } from 'sly/services/helpers/search';
 import { titleize } from 'sly/services/helpers/strings';
-import { getStateAbbr} from 'sly/services/helpers/url';
+import { getStateAbbr } from 'sly/services/helpers/url';
 
 
 const stringifyReplacer = (k, v) => {
@@ -65,9 +65,9 @@ const getSDForCommunity = ({
 };
 
 const getSDForSearchResource = ({
-                             name, url, addressString, latitude, longitude, imageUrl,
-                                  reviewsValue, numReviews, startingRate,
-                           }) => {
+  name, url, addressString, latitude, longitude, imageUrl,
+  reviewsValue, numReviews, startingRate,
+}) => {
   const ld = {};
   ld['@context'] = 'http://schema.org';
   ld['@type'] = 'LodgingBusiness';
@@ -76,11 +76,11 @@ const getSDForSearchResource = ({
 
   const addressLd = {};
   addressLd['@type'] = 'PostalAddress';
-  let [streetAddress, city, state] = addressString.split(',');
+  const [streetAddress, city, state] = addressString.split(',');
   addressLd.streetAddress = streetAddress;
   addressLd.addressLocality = city;
   addressLd.addressRegion = state;
-  addressLd.addressCountry ='US';
+  addressLd.addressCountry = 'US';
   ld.address = addressLd;
 
   const geo = {};
@@ -113,7 +113,7 @@ const getSDForSearchResource = ({
 };
 
 export const getHelmetForSearchPage = ({
-  url, city, state, toc, latitude, longitude, listSize, communityList
+  url, city, state, toc, latitude, longitude, listSize, communityList, geoGuide,
 }) => {
   let actualToc = tocs.find(elem => (elem.value === toc));
   if (typeof actualToc === 'undefined') {
@@ -124,13 +124,16 @@ export const getHelmetForSearchPage = ({
       seoLabel: 'Retirement Communities',
     };
   }
+
+
   const locationStr = city ? `${titleize(city)}, ${getStateAbbr(state)}` : `${titleize(state)}`;
   const numResultsStr = (listSize && listSize > 5) ? `${listSize}` : 'Best';
-  const title = `${numResultsStr} ${actualToc.seoLabel} in ${locationStr} `;
-  let description = `${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, pricing, reviews & local senior care advice for ${locationStr} ${actualToc.label} communities`;
-  if (city) {
-    description = `Get pricing & read reviews for ${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, photos & talk to local ${titleize(city)} senior living experts.`;
-  }
+  const title = geoGuide.seoTitle || `${numResultsStr} Best ${actualToc.seoLabel} in ${locationStr} `;
+
+  const description = geoGuide.seoDescription ||
+    (city ? `Get pricing & read reviews for ${numResultsStr} best ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, photos & talk to local ${titleize(city)} senior living experts.` :
+      `${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, pricing, reviews & local senior care advice for ${locationStr} ${actualToc.label} communities`);
+
   const canonicalUrl = `${host}${url.pathname}`;
   const ld = {};
   ld['@context'] = 'http://schema.org';
@@ -193,14 +196,15 @@ export const getHelmetForCommunityPage = (community, location) => {
   const {
     line1, city, state, country, zip, latitude, longitude,
   } = address;
-  const { websiteUrl } = propInfo;
+  const { websiteUrl, websiteTitle, websiteMetaDescription } = propInfo;
   const { numReviews, reviewsValue } = propRatings;
+
 
   const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
   const canonicalUrl = `${host}${pathname}`;
 
   let toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
-  if (typeof toc === 'undefined'){
+  if (typeof toc === 'undefined') {
     toc = {
       label: 'Retirement',
       value: 'retirement-community',
@@ -208,11 +212,11 @@ export const getHelmetForCommunityPage = (community, location) => {
     };
   }
 
-  const title = (ratesProvided ? `${name} - Price starting at $${startingRate.toLocaleString()}/mo` : `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`);
+  const title = websiteTitle || ((ratesProvided ? `${name} - Price starting at $${startingRate.toLocaleString()}/mo` : `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`));
 
   const article = ((toc.label === 'Assisted Living ' || toc.label === 'Memory Care') ? 'an' : 'a');
 
-  const description = `${name} is ${article} ${toc.label} community located at ${address.line1} in ${titleize(address.city)}, ${titleize(address.state)}. See pricing, photos & reviews on Seniorly.com!`;
+  const description = websiteMetaDescription || `${name} is ${article} ${toc.label} community located at ${address.line1} in ${titleize(address.city)}, ${titleize(address.state)}. See pricing, photos & reviews on Seniorly.com!`;
 
   let imageUrl = null;
   if (gallery.images && gallery.images.length > 0) {
@@ -281,7 +285,7 @@ export const getHelmetForCommunityPage = (community, location) => {
     if (startingRate > 0) {
       result.itemReviewed.priceRange = `From $${startingRate.toLocaleString()} per month`;
     }
-    return (<script key={`helmet_critic-review_${criticReview.author+name}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
+    return (<script key={`helmet_critic-review_${criticReview.author + name}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
 
   const getQAAnswerLDObj = (answer, question) => {
@@ -322,7 +326,7 @@ export const getHelmetForCommunityPage = (community, location) => {
         suggestedAnswer: suggestedAnswer.length > 0 ? suggestedAnswer : undefined,
       },
     };
-    return (<script key={`helmet_question_${question.creator+question.createdAt}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
+    return (<script key={`helmet_question_${question.creator + question.createdAt}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
   // TODO Add Image and Video and structured data.
   return (
@@ -352,7 +356,7 @@ export const getHelmetForCommunityPage = (community, location) => {
   );
 };
 
-export const getHelmetForAgentsPage = ({location}) => {
+export const getHelmetForAgentsPage = ({ location }) => {
   const { pathname } = location;
   const description = 'Talk to our senior living advisors and partner agents at Seniorly. Connect with a local senior living advisor for personalized senior housing support!';
   const canonicalUrl = `${host}${pathname}`;
@@ -373,10 +377,10 @@ export const getHelmetForPartnersPage = () => {
   );
 };
 
-export const getHelmetForAgentProfilePage = ({agent, location}) => {
+export const getHelmetForAgentProfilePage = ({ agent, location }) => {
   const { pathname } = location;
   const { info } = agent;
-  const {displayName, citiesServed} = info;
+  const { displayName, citiesServed } = info;
   const firstName = displayName.split(' ')[0];
   const firstThreeCities = citiesServed.slice(3).join(', ');
   const description = `Talk to expert senior living advisor ${info.displayName}. ${firstName} helps families find senior housing in ${firstThreeCities}& more locations!`;
@@ -391,7 +395,7 @@ export const getHelmetForAgentProfilePage = ({agent, location}) => {
   );
 };
 
-export const getHelmetForAgentsRegionPage = ({locationName, location}) => {
+export const getHelmetForAgentsRegionPage = ({ locationName, location }) => {
   const { pathname } = location;
   const description = `Talk to local senior living advisors and partner agents in the ${locationName} region. Find a ${locationName} senior living advisor for personalized support!`;
   const title = `${locationName} Senior Living Advisors | Seniorly Partner Agents`;

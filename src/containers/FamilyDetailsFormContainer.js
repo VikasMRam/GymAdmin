@@ -9,7 +9,7 @@ import { createValidator, email, usPhone, dependentRequired } from 'sly/services
 import clientPropType from 'sly/propTypes/client';
 import { query, getRelationship } from 'sly/services/newApi';
 import SlyEvent from 'sly/services/helpers/events';
-import { selectFormData } from 'sly/services/helpers/forms';
+import { selectFormData, trimFormData } from 'sly/services/helpers/forms';
 import FamilyDetailsForm from 'sly/components/organisms/FamilyDetailsForm';
 
 const validate = createValidator({
@@ -51,6 +51,7 @@ export default class FamilyDetailsFormContainer extends Component {
     } = this.props;
     const { id } = client;
     const { id: uuidID } = uuidAux;
+    trimFormData(data);
     const {
       name,
       email,
