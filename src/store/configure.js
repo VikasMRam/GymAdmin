@@ -25,7 +25,7 @@ export default function (initialState, services = {}) {
     beesMiddleware, entitiesMiddleware, thunkMiddleware, sagaThunkMiddleware, sagaMiddleware,
   ];
 
-  if (isBrowser && isDev && !muteReduxLogger) {
+  if (isBrowser && !muteReduxLogger) {
     middlewares.push(loggerMiddleware);
   }
 

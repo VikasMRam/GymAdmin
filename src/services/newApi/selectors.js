@@ -1,32 +1,38 @@
 import build from 'redux-object';
+import { createSelector, createSelectorCreator, defaultMemoize } from 'reselect';
 
-function getRawRequest(state, apiCall, args) {
-  if (!state.bees.requests) {
+const getRequests = ({ bees }) => bees.requests;
+const getEntities = ({ bees }) => bees.entities;
+
+function getRawRequest(requests, apiCall, args) {
+  if (!requests) {
     return null;
   }
 
-  if (!state.bees.requests[apiCall]) {
+  if (!requests[apiCall]) {
     return null;
   }
 
-  return state.bees.requests[apiCall][JSON.stringify(args)];
+  return requests[apiCall][args];
 }
 
-export function getEntity(state, handle, isNormalized) {
+export function getEntity(entities, handle, isNormalized) {
   if (!handle) {
     return null;
   }
 
-  if (!state.bees.entities) {
+  if (!entities) {
     return null;
   }
 
-  if (!state.bees.entities[handle.type]) {
+  if (!entities[handle.type]) {
     return null;
   }
 
-  return isNormalized ? build(state.bees.entities, handle.type, handle.id, { eager: true }) : state.bees.entities[handle.type][handle.id];
+  return isNormalized ? build(entities, handle.type, handle.id, { eager: true }) : entities[handle.type][handle.id];
 }
+
+// TODO: memoize fully from scratch as it's applied externaly
 
 export function getRelationship(state, entity, relationshipName) {
   if (!entity) {
@@ -43,24 +49,26 @@ export function getRelationship(state, entity, relationshipName) {
 
   const { data } = entity.relationships[relationshipName];
 
+  const entities = getEntities(state);
+
   if (Array.isArray(data)) {
-    return data.map(handle => getEntity(state, handle));
+    return data.map(handle => getEntity(entities, handle));
   }
 
-  return getEntity(state, data);
+  return getEntity(entities, data);
 }
 
 
-export function getRequestResult(state, request, isNormalized) {
+export function getRequestResult(entities, request, isNormalized) {
   if (!request || !request.response) {
     return null;
   }
 
   if (Array.isArray(request.response)) {
-    return request.response.map(handle => getEntity(state, handle, isNormalized));
+    return request.response.map(handle => getEntity(entities, handle, isNormalized));
   }
 
-  return getEntity(state, request.response, isNormalized);
+  return getEntity(entities, request.response, isNormalized);
 }
 
 export function getRequestHeaders(request) {
@@ -88,7 +96,11 @@ export function hasRequestStarted(request) {
 }
 
 export function getRequestInfo(state, apiCall, args) {
-  const request = getRawRequest(state, apiCall, args);
+  const argsKey = JSON.stringify(args);
+  const requests = getRequests(state);
+  const entities = getEntities(state);
+
+  const request = getRawRequest(requests, apiCall, argsKey);
   const error = request && request.error ? request.error : false;
   const hasStarted = hasRequestStarted(request);
   const isLoading = isRequestLoading(request);
@@ -98,11 +110,58 @@ export function getRequestInfo(state, apiCall, args) {
     isLoading,
     hasFinished: hasStarted && !isLoading,
     hasFailed: !!error,
-    result: getRequestResult(state, request),
-    normalized: getRequestResult(state, request, true),
+    result: getRequestResult(entities, request),
+    normalized: getRequestResult(entities, request, true),
     headers: getRequestHeaders(request),
     meta: getRequestMeta(request),
     status: request && request.status,
     error,
+  };
+}
+
+// MEMOIZATION
+
+const getCall = (_, { call }) => call;
+const getArgs = (_, { args }) => JSON.stringify(args);
+const compareTwoSets = (a, b) => {
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return !a.some((x, i) => x === b[i]);
+  } else {
+    return a === b;
+  }
+};
+
+// state, apiCall, args
+export function createMemoizedRequestInfoSelector() {
+  const requestSelector = createSelector(getRequests, getCall, getArgs, getRawRequest);
+  let lastRequest = null;
+  let lastResult = null;
+
+  // we reference arguments instead of spreading them for performance reasons
+  return function (state, params = {}) {
+    const request = requestSelector(state, params);
+
+    if (!compareTwoSets(request, lastRequest)) {
+      const error = request && request.error ? request.error : false;
+      const hasStarted = hasRequestStarted(request);
+      const isLoading = isRequestLoading(request);
+      const entities = getEntities(state);
+
+      lastRequest = request;
+      lastResult = {
+        hasStarted,
+        isLoading,
+        hasFinished: hasStarted && !isLoading,
+        hasFailed: !!error,
+        result: getRequestResult(entities, request),
+        normalized: getRequestResult(entities, request, true),
+        headers: getRequestHeaders(request),
+        meta: getRequestMeta(request),
+        status: request && request.status,
+        error,
+      };
+    }
+
+    return lastResult;
   };
 }
