@@ -98,10 +98,4 @@ describe('CommunityInfo', () => {
     const wrapper = wrap({ community: newRhodaGoldmanPlaza });
     verifyData(wrapper, newRhodaGoldmanPlaza);
   });
-
-  it('renders without showDescription', () => {
-    const wrapper = wrap({ community: RhodaGoldmanPlaza, showDescription: true });
-    verifyData(wrapper, RhodaGoldmanPlaza);
-    expect(wrapper.find('Block').last().find('Dotdotdot')).toHaveLength(1);
-  });
 });
