@@ -576,6 +576,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         <DashboardMyFamilyStickyFooterContainer
           options={stickyFooterOptions}
           stage={stage}
+          stageLabel={`${levelGroup} - ${stage}`}
           showAcceptRejectButtons={showAcceptRejectButtons}
         />
       </StyledDashboardTwoColumnTemplate>

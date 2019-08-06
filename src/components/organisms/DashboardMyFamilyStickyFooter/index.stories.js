@@ -14,13 +14,12 @@ const options = [
 ];
 
 const stageProps = {
-  text: 'Connected - Discussing Options',
-  currentStage: 1,
+  stage: 'Discussing Options',
+  stageLabel: 'Connected - Discussing Options',
+  onOptionsClick: action('onOptionsClick'),
 };
 
 storiesOf('Organisms|DashboardMyFamilyStickyFooter', module)
   .add('default', () => (
-    <DashboardMyFamilyStickyFooter options={options} stageProps={stageProps} />
-  )).add('options List', () => (
-    <DashboardMyFamilyStickyFooter options={options} stageProps={stageProps} showOptions />
+    <DashboardMyFamilyStickyFooter options={options} {...stageProps} />
   ));

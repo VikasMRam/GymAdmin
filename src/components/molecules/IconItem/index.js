@@ -7,13 +7,15 @@ import { palette as palettePropType } from 'sly/propTypes/palette';
 import { variation as variationPropType } from 'sly/propTypes/variation';
 import { Icon, Block } from 'sly/components/atoms';
 
+const getMarginRight = p => p.borderless ? size('spacing', p.iconRightMarginSpacing) : size('spacing.large');
+
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
 `;
 
 const IconWrapper = styled.div`
-  margin-right: ${p => p.borderless ? size('spacing', p.iconRightMarginSpacing) : size('spacing.large')};
+  margin-right: ${getMarginRight};
   padding: calc(${size('spacing.regular')} - ${size('border.regular')});
   border: ${p => (p.borderless ? 0 : size('border.regular'))} solid ${palette('grey', 'filler')};
   border-radius: ${size('border.xxLarge')};
@@ -21,12 +23,12 @@ const IconWrapper = styled.div`
 
 const IconItem = ({
   icon, iconSize, iconPalette, iconVariation, size, children, borderless,
-  textPalette, textVariation, iconRightMarginSpacing,
+  textPalette, textVariation, iconRightMarginSpacing, className,
 }) => {
   const defIconSize = iconSize || size;
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <IconWrapper borderless={borderless} iconRightMarginSpacing={iconRightMarginSpacing}>
         <Icon icon={icon} size={defIconSize} palette={iconPalette} variation={iconVariation} />
       </IconWrapper>
@@ -46,6 +48,7 @@ IconItem.propTypes = {
   textPalette: palettePropType,
   textVariation: variationPropType,
   iconRightMarginSpacing: string,
+  className: string,
 };
 
 IconItem.defaultProps = {
