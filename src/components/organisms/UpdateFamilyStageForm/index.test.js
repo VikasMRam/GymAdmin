@@ -12,9 +12,6 @@ import UpdateFamilyStageForm from 'sly/components/organisms/UpdateFamilyStageFor
 
 const name = 'test';
 const groups = Object.keys(FAMILY_STAGE_ORDERED);
-const optionsLen =
-  groups.map(sg => FAMILY_STAGE_ORDERED[sg].length)
-    .reduce((sum, x) => sum + x);
 const optionValues =
   groups
     .map(sg => FAMILY_STAGE_ORDERED[sg])
@@ -39,6 +36,16 @@ const defaultValues = {
 };
 const wrap = (props = {}) => shallow(<UpdateFamilyStageForm {...defaultValues} {...props} />);
 
+const verifyOptions = (options) => {
+  expect(options).toHaveLength(groups.length);
+  options.forEach((o, i) => {
+    expect(o.label).toBe(groups[i]);
+    o.options.forEach((o, j) => {
+      expect(o.value).toBe(FAMILY_STAGE_ORDERED[groups[i]][j]);
+    });
+  });
+};
+
 describe('UpdateFamilyStageForm', () => {
   it('renders', () => {
     const wrapper = wrap();
@@ -48,11 +55,8 @@ describe('UpdateFamilyStageForm', () => {
     expect(wrapper.find('Field').find({ name: 'lossReason' })).toHaveLength(0);
     expect(wrapper.find('Field').find({ name: 'lostDescription' })).toHaveLength(0);
     expect(field).toHaveLength(1);
-    const options = field.find('option').slice(1); // first option is for placeholder
-    expect(options).toHaveLength(optionsLen);
-    options.forEach((o, i) => {
-      expect(o.text()).toBe(optionValues[i]);
-    });
+    const options = field.prop('options');
+    verifyOptions(options);
     expect(wrapper.find('Field')).toHaveLength(1);
     expect(wrapper.find('Warning')).toHaveLength(0);
   });
@@ -69,11 +73,8 @@ describe('UpdateFamilyStageForm', () => {
     expect(wrapper.find('Field').find({ name: 'lossReason' })).toHaveLength(0);
     expect(wrapper.find('Field').find({ name: 'lostDescription' })).toHaveLength(0);
     expect(field).toHaveLength(2);
-    const options = field.at(0).find('option').slice(1); // first option is for placeholder
-    expect(options).toHaveLength(optionsLen);
-    options.forEach((o, i) => {
-      expect(o.text()).toBe(optionValues[i]);
-    });
+    const options = field.at(0).prop('options');
+    verifyOptions(options);
     expect(warning).toHaveLength(1);
     expect(warning.contains(groups[0])).toBeTruthy();
     expect(warning.contains(groups[1])).toBeTruthy();
@@ -96,11 +97,8 @@ describe('UpdateFamilyStageForm', () => {
     expect(wrapper.find('Field').find({ name: 'lostDescription' })).toHaveLength(0);
     expect(field).toHaveLength(1);
     expect(paddedField).toHaveLength(1);
-    const options = paddedField.at(0).find('option').slice(1); // first option is for placeholder
-    expect(options).toHaveLength(optionsLen);
-    options.forEach((o, i) => {
-      expect(o.text()).toBe(optionValues[i]);
-    });
+    const options = paddedField.at(0).prop('options');
+    verifyOptions(options);
     expect(warning).toHaveLength(1);
     expect(warning.dive().dive().dive().text()
       .includes('Paused')).toBeTruthy();
@@ -121,11 +119,8 @@ describe('UpdateFamilyStageForm', () => {
     expect(wrapper.find('Field').find({ name: 'lossReason' })).toHaveLength(0);
     expect(wrapper.find('Field').find({ name: 'lostDescription' })).toHaveLength(0);
     expect(field).toHaveLength(2);
-    const options = field.at(0).find('option').slice(1); // first option is for placeholder
-    expect(options).toHaveLength(optionsLen);
-    options.forEach((o, i) => {
-      expect(o.text()).toBe(optionValues[i]);
-    });
+    const options = field.at(0).prop('options');
+    verifyOptions(options);
     expect(warning).toHaveLength(1);
     expect(warning.dive().dive().dive().text()
       .includes(`Updating to this stage will move this family from ${groups[0]} to ${groups[2]}.`)).toBeTruthy();
