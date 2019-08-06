@@ -39,7 +39,7 @@ const getInputComponent = (type) => {
       return IconInput;
     case 'date':
       return DatePicker;
-    case 'select-new':
+    case 'select':
       return Select;
     default:
       return Input;
@@ -207,7 +207,6 @@ Field.propTypes = {
   type: oneOf([
     'textarea',
     'select',
-    'select-new',
     'communitychoice',
     'singlechoice',
     'multiplechoice',

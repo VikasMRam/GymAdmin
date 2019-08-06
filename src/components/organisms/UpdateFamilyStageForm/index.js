@@ -83,7 +83,7 @@ export default class UpdateFamilyStageForm extends Component {
       return null;
     }).filter(s => s);
 
-    const lossReasonOptions = lossReasons.map(reason => <option key={reason} value={reason}>{reason}</option>);
+    const lossReasonOptions = lossReasons.map(reason => ({ value: reason, label: reason }));
     const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
     const stageChanged = currentStage !== nextStage;
     const StageField = stageGroupChanged ? Field : PaddedField;
@@ -101,7 +101,8 @@ export default class UpdateFamilyStageForm extends Component {
         <StageField
           name="stage"
           label="Stage"
-          type="select-new"
+          type="select"
+          placeholder="Select a stage"
           component={ReduxField}
           options={options}
         />
@@ -165,11 +166,10 @@ export default class UpdateFamilyStageForm extends Component {
             name="lossReason"
             label={<span>Loss reason<Span palette="danger">*</Span></span>}
             type="select"
+            placeholder="Select a reason"
             component={ReduxField}
-          >
-            <option value="" disabled>Select a reason</option>
-            {lossReasonOptions}
-          </Field>
+            options={lossReasonOptions}
+          />
         }
         {nextStage === FAMILY_STAGE_LOST && DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
           <Field

@@ -74,7 +74,7 @@ const StyledHr = styled(Hr)`
 
 const getSortHandler = (origFn) => {
   return (uiEvt) => {
-    const changedParams = { sort: uiEvt.target.value };
+    const changedParams = { sort: uiEvt.value };
     origFn({ origUiEvt: uiEvt, changedParams });
   };
 };
@@ -112,6 +112,13 @@ export const ClearAllButton = styled(Button)`
     display: none;
   }
 `;
+
+const sortOptions = [
+  { label: 'Distance', value: 'distance' },
+  { label: 'Price: Low to High', value: 'price-l-h' },
+  { label: 'Price: High to Low', value: 'price-h-l' },
+  { label: 'Relevance', value: 'relevance' },
+];
 
 const CommunityFilterList = ({
   toggleMap,
@@ -178,21 +185,9 @@ const CommunityFilterList = ({
           name="Sort"
           type="select"
           value={sort}
+          options={sortOptions}
           onChange={getSortHandler(onFieldChange)}
-        >
-          <option value="distance">
-            Distance
-          </option>
-          <option value="price-l-h">
-            Price: Low to High
-          </option>
-          <option value="price-h-l">
-            Price: High to Low
-          </option>
-          <option value="relevance">
-            Relevance
-          </option>
-        </Field>
+        />
       </CollapsibleSection>
       {filtersApplied.length > 0 && (
         <ClearAllButton
