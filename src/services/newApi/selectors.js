@@ -123,12 +123,12 @@ export function getRequestInfo(state, apiCall, args) {
 
 const getCall = (_, { call }) => call;
 const getArgs = (_, { args }) => JSON.stringify(args);
-const compareTwoSets = (a, b) => {
+export const twoSetsAreEqual = (a, b) => {
   if (Array.isArray(a) && Array.isArray(b)) {
-    return !a.some((x, i) => x === b[i]);
-  } else {
-    return a === b;
+    return !a.some((x, i) => x !== b[i]);
   }
+
+  return a === b;
 };
 
 // state, apiCall, args
@@ -137,11 +137,10 @@ export function createMemoizedRequestInfoSelector() {
   let lastRequest = null;
   let lastResult = null;
 
-  // we reference arguments instead of spreading them for performance reasons
   return function (state, params = {}) {
     const request = requestSelector(state, params);
 
-    if (!compareTwoSets(request, lastRequest)) {
+    if (request === null || !twoSetsAreEqual(request, lastRequest)) {
       const error = request && request.error ? request.error : false;
       const hasStarted = hasRequestStarted(request);
       const isLoading = isRequestLoading(request);

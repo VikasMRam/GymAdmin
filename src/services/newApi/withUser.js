@@ -19,19 +19,7 @@ export default function withUser(InnerComponent) {
   const makeMapStateToProps = () => {
     return (state) => {
       const userRequestInfo = getMemoizedUserRequestInfo(state, { call: 'getUser', args: [{ id: 'me' }] });
-      // const userRequestInfo = props.userRequestInfo || getRequestInfo(
-      //   state,
-      //   'getUser',
-      //   [{ id: 'me' }],
-      // );
-
       const uuidAuxRequestInfo = getMemoizedUuidAuxRequestInfo(state, { call: 'getUser', args: [{ id: 'me' }] });
-      // const uuidAuxRequestInfo = props.uuidAuxRequestInfo || getRequestInfo(
-      //   state,
-      //   'getUuidAux',
-      //   [{ id: 'me' }],
-      // );
-
       return {
         userRequestInfo,
         uuidAuxRequestInfo,
@@ -50,7 +38,7 @@ export default function withUser(InnerComponent) {
 
   @connect(makeMapStateToProps, mapDispatchToActions)
 
-  class Wrapper extends React.PureComponent {
+  class Wrapper extends React.Component {
     static displayName = `withUser(${getDisplayName(InnerComponent)})`;
 
     static WrappedComponent = InnerComponent;
@@ -64,6 +52,11 @@ export default function withUser(InnerComponent) {
       status: object,
       done: func,
     };
+
+    shouldComponentUpdate = nextProps => [
+      'userRequestInfo',
+      'uuidAuxRequestInfo',
+    ].some(key => nextProps[key] !== this.props[key]);
 
     // props fetch bound to dispatch
     fetchUser = () => {
@@ -124,10 +117,5 @@ export default function withUser(InnerComponent) {
 
   hoistNonReactStatic(Wrapper, InnerComponent);
 
-  return class WrapperWrapper extends React.Component {
-    render() {
-      console.info(`*** ${getDisplayName(InnerComponent)}`);
-      return <Wrapper {...this.props} />;
-    }
-  };
+  return Wrapper;
 }

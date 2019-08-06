@@ -111,7 +111,7 @@ const mapStateToProps = (state, {
 
 @connect(mapStateToProps, mapDispatchToProps)
 
-export default class CommunityDetailPageContainer extends Component {
+export default class CommunityDetailPageContainer extends React.PureComponent {
   static propTypes = {
     set: func,
     status: object,

@@ -481,7 +481,7 @@ export default class CommunityDetailPage extends Component {
 
 
     const pricesList = buildPriceList(community);
-    const pricingTitle  = (pricesList.length === 0 && floorPlans.length > 0) ? 'Pricing and Floor Plans' : 'Pricing';
+    const pricingTitle = (pricesList.length === 0 && floorPlans.length > 0) ? 'Pricing and Floor Plans' : 'Pricing';
 
     return (
       <Fragment>

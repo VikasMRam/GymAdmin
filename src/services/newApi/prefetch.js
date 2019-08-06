@@ -5,7 +5,8 @@ import { withDone } from 'sly/components/common/fetchState';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { isServer } from 'sly/config';
-import { withApi, getRequestInfo } from 'sly/services/newApi';
+import { withApi } from 'sly/services/newApi';
+import { createMemoizedRequestInfoSelector } from 'sly/services/newApi/selectors';
 
 const defaultDispatcher = call => call();
 
@@ -17,21 +18,24 @@ function getDisplayName(WrappedComponent) {
 
 export default function prefetch(propName, apiCall, dispatcher = defaultDispatcher) {
   return (InnerComponent) => {
+    const getMemoizedRequestInfo = createMemoizedRequestInfoSelector();
     const mapStateToProps = (state, props) => {
       const argumentsAbsorber = (...args) => args;
 
+      // to be able to pass requestInfo for tests
       if (props[`${propName}RequestInfo`]) {
         return {
           requestInfo: props[`${propName}RequestInfo`],
         };
       }
 
+      const requestInfo = getMemoizedRequestInfo(
+        state,
+        { call: apiCall, args: dispatcher(argumentsAbsorber, props) },
+      );
+
       return {
-        requestInfo: getRequestInfo(
-          state,
-          apiCall,
-          dispatcher(argumentsAbsorber, props),
-        ),
+        requestInfo,
       };
     };
 
