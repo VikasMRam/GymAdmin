@@ -88,7 +88,7 @@ const usefulInformationTiles = [
 ];
 
 const CommunitySearchList = ({
-  communityList, requestMeta, searchParams, onAdTileClick, location, ...props
+  communityList, requestMeta, searchParams, onAdTileClick, onCommunityClick, location, ...props
 }) => {
   let mostSearchedCitiesComponents = null;
   let usefulInformationTilesComponents = null;
@@ -115,7 +115,7 @@ const CommunitySearchList = ({
     ));
   }
 
-  const components = communityList.map((similarProperty) => {
+  const components = communityList.map((similarProperty, index) => {
     const target = global.innerWidth && global.innerWidth >= parseInt(theme.sizes.breakpoint.laptop, 10)
       ? `community_profile_${similarProperty.id}`
       : '_self';
@@ -125,6 +125,8 @@ const CommunitySearchList = ({
         key={similarProperty.id}
         to={similarProperty.url}
         rel="noopener"
+        onClick={() => onCommunityClick(index, similarProperty.id)}
+
       >
         <ShadowCommunityTile community={similarProperty} layout="column" imageSize="regular" noGallery showDescription showSeeMoreButtonOnHover />
       </StyledLink>
@@ -186,6 +188,7 @@ CommunitySearchList.propTypes = {
   onAdTileClick: func.isRequired,
   communityList: arrayOf(object).isRequired,
   location: object.isRequired,
+  onCommunityClick: func.isRequired,
 };
 
 export default CommunitySearchList;
