@@ -1,8 +1,12 @@
 import React from 'react';
-import Select from 'react-select';
-import { string, arrayOf, object } from 'prop-types';
+import Select, { components } from 'react-select';
+import { string, arrayOf, object, bool } from 'prop-types';
+import styled from 'styled-components';
 
-import { getKey } from 'sly/components/themes';
+import { getKey, size } from 'sly/components/themes';
+import Icon from 'sly/components/atoms/Icon';
+
+const { Option } = components;
 
 const styles = {
   control: (provided, state) => ({
@@ -24,7 +28,7 @@ const styles = {
   option: (provided, state) => ({
     ...provided,
     fontSize: getKey('sizes.text.caption'),
-    paddingLeft: getKey('sizes.spacing.xxxLarge'),
+    paddingLeft: state.isSelected ? `calc(${getKey('sizes.spacing.large')} + ${getKey('sizes.spacing.small')})` : getKey('sizes.spacing.xxxLarge'),
     background: state.isSelected ? 'transparent' : provided.background,
     color: state.isSelected ? getKey('palette.primary.base') : provided.color,
     fontWeight: state.isSelected ? getKey('sizes.weight.medium') : provided.fontWeight,
@@ -50,7 +54,23 @@ const theme = theme => ({
   },
 });
 
+const StyledIcon = styled(Icon)`
+  margin-right: ${size('spacing.regular')};
+`;
+
 Select.displayName = 'Select';
+
+const IconOption = props => (
+  <Option {...props}>
+    {props.isSelected && <StyledIcon icon="check" size="small" palette="primary" />}
+    {props.data.label}
+  </Option>
+);
+
+IconOption.propTypes = {
+  data: object,
+  isSelected: bool,
+};
 
 const SelectComponent = ({ value, options, ...props }) => {
   const reducer = (accumulator, currentValue) => accumulator.push(currentValue.options ? currentValue.options : currentValue) && accumulator;
@@ -61,7 +81,17 @@ const SelectComponent = ({ value, options, ...props }) => {
     value = match;
   }
 
-  return <Select options={options} defaultValue={value} styles={styles} theme={theme} blurInputOnSelect {...props} />;
+  return (
+    <Select
+      options={options}
+      defaultValue={value}
+      styles={styles}
+      theme={theme}
+      components={{ Option: IconOption }}
+      blurInputOnSelect
+      {...props}
+    />
+  );
 };
 
 SelectComponent.propTypes = {
