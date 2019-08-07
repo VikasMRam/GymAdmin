@@ -29,7 +29,6 @@ export default class DashboardCallDetailsPageContainer extends Component {
   };
 
   handleNewClientSubmit = (data) => {
-    console.log('Seeing data here',data);
     const { history } = this.props;
     const clientPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: data.id });
     history.push(clientPath);

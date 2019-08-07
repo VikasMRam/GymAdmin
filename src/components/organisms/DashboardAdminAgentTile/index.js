@@ -57,9 +57,9 @@ const StyledIcon = styled(Icon)`
 
 const agentPropsMap = {
   parentCompany: 'families',
-  slyCellPhone: 'phone',
-  slyWorkPhone: 'phone',
-  lastFiveDayLeadCount: 'loyalty',
+  cellPhone: 'phone',
+  workPhone: 'phone',
+  last5DayLeadCount: 'loyalty',
 };
 
 export default class DashboardAdminAgentTile extends Component {
@@ -108,7 +108,7 @@ export default class DashboardAdminAgentTile extends Component {
         </AgentInfoWrapper>
         <IconItem>
           <StyledIcon icon="note" size="small" />
-          <Block size="caption">{agent.info.adminNote}</Block>
+          <Block size="caption">{agent.info.adminNotes}</Block>
         </IconItem>
         <Button onClick={this.copyToClipboard}>WT: {agent.info.slyPhone}</Button>
       </Fragment>

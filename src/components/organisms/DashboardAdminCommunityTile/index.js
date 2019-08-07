@@ -75,6 +75,11 @@ const buildPriceDisplay = (community) => {
   buildPriceList(community).map(e => `${e.label}-${e.value}`).join('\n');
 };
 
+const buildAddressDisplay = (community) => {
+  const { address } = community;
+  return `${address.line1}, ${address.city}, ${address.zip}, ${address.state}`;
+}
+
 export default class DashboardAdminCommunityTile extends Component {
   static propTypes = {
     community: adminCommunityPropType.isRequired,
@@ -100,6 +105,10 @@ export default class DashboardAdminCommunityTile extends Component {
           {lastViewedSecondsAgo > -1 && <StyledBadge textPalette="grey" ><Icon icon="note" size="small" /> Last Viewed: {lastViewedSecondsAgo} s ago</StyledBadge> }
         </Header>
         <CommunityInfoWrapper>
+          <IconItem>
+            <StyledIcon icon="link" size="small" />
+            <StyledBlock>{buildAddressDisplay(community)}</StyledBlock>
+          </IconItem>
           <IconItem>
             <StyledIcon icon="phone" size="small" />
             <StyledBlock>{phoneFormatter(propInfo.communityPhone)}</StyledBlock>

@@ -1,7 +1,5 @@
 import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
-import { createValidator, required, usPhone } from 'sly/services/validation';
-import { reduxForm } from 'redux-form';
 import { object, string, shape, func } from 'prop-types';
 import voiceCallPropType from 'sly/propTypes/calls';
 import { palette, size } from 'sly/components/themes';

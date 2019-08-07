@@ -9,14 +9,21 @@ import { Box,  Button } from 'sly/components/atoms';
 import ReduxField from 'sly/components/organisms/ReduxField';
 import { reduxForm, Field } from 'redux-form';
 
+const Form = styled.form`
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+  align-items: center;
+  
+`;
 
 const CommunitySearchForm = ({ handleSubmit }) => {
   return (
-    <form onSubmit={handleSubmit} name="CommunitySearchForm" >
+    <Form onSubmit={handleSubmit} name="CommunitySearchForm" >
       <Field name="name" label="Name" type="text" component={ReduxField} />
       <Field name="zip" label="ZipCode" type="text" component={ReduxField} />
       <Button type="submit"> Search </Button>
-    </form>
+    </Form>
   );
 };
 

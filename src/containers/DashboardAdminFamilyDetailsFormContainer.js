@@ -114,9 +114,9 @@ export default class DashboardFamilyDetailsFormContainer extends Component {
           label: 'user-details',
           value: '',
         });
-        // if (postCreateClient) {
-        //   postCreateClient(body.data);
-        // }
+        if (postCreateClient) {
+          postCreateClient(body.data);
+        }
       })
       .catch((r) => {
         const { body } = r;
