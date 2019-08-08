@@ -421,7 +421,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }) : [];
 
     const summaryPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: SUMMARY });
-    const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id });
+    const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: ACTIVITY });
     const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS });
     const communitiesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: COMMUNITIES });
     const messagesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: MESSAGES });
@@ -489,7 +489,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             <MobileTab id={SUMMARY} to={summaryPath} onClick={clickEventHandler('fdetails-tab', 'Summary')}>
               Summary
             </MobileTab>
-            <Tab id={ACTIVITY} default to={activityPath} onClick={clickEventHandler('fdetails-tab', 'Activity')}>
+            <Tab id={ACTIVITY} to={activityPath} onClick={clickEventHandler('fdetails-tab', 'Activity')}>
               Activity
             </Tab>
             <Tab id={FAMILY_DETAILS} to={familyDetailsPath} onClick={clickEventHandler('fdetails-tab', 'Family Details')}>
