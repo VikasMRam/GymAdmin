@@ -60,6 +60,7 @@ const AlignCenterBackLinkWrapper = BackLinkWrapper.extend`
 
 const SmallScreenBorder = css`
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
+  border-radius: ${size('spacing.small')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     border: 0;
@@ -83,15 +84,6 @@ const CommunitiesTab = styled.div`
   }
 `;
 
-const TabContent = styled.div`
-  background-color: inherit;
-
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    border: ${size('border', 'regular')} solid ${palette('slate', 'stroke')};
-    border-top: 0;
-  }
-`;
-
 const SmallScreenBorderDiv = styled.div`
   ${SmallScreenBorder}
   ${p => p.padding && css`padding: ${size('spacing', p.padding)};`}
@@ -104,6 +96,12 @@ const SmallScreenBorderPaddedFamilySummary = PaddedFamilySummary.extend`
 const StyledFamilyActivityItem = styled(FamilyActivityItem)`
   border-right: 0;
   border-left: 0;
+  &:first-child {
+    border-top: 0;
+  }
+  &:last-child {
+    border-bottom: 0;
+  }
 `;
 
 const FamilyDetailsTab = styled.div`
@@ -111,10 +109,11 @@ const FamilyDetailsTab = styled.div`
   padding: ${size('spacing.xLarge')};
 `;
 
-const TabWrapper = styled.div`
+const TabWrapper = styled(Box)`
   padding: ${size('spacing.large')};
   background-color: ${palette('grey', 'background')};
   margin-bottom: ${size('dashboard.actionFooterBottomMargin')};
+  border-width: 0;
 
   > * {
     background-color: ${palette('white', 'base')};
@@ -127,6 +126,11 @@ const TabWrapper = styled.div`
     background-color: ${palette('white', 'base')};
     padding: 0;
     margin-bottom: 0;
+    border-width: ${size('border.regular')};
+
+    > * {
+      background-color: transparent;
+    }
   }
 `;
 
@@ -498,10 +502,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               Messages
             </Tab>
           </Tabs>
-          <TabWrapper>
+          <TabWrapper snap="top">
             {currentTab === SUMMARY && (
               <Fragment>
-                <SmallScreenBorderPaddedFamilySummary snap="top" client={client} to={familyDetailsPath} noHeading />
+                <SmallScreenBorderPaddedFamilySummary client={client} to={familyDetailsPath} noHeading />
                 {showPauseButton && <PutFamilyOnPause isPaused={isPaused} onTogglePause={handlePauseClick} />}
               </Fragment>
             )}
@@ -546,30 +550,28 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             )}
 
             {currentTab === MESSAGES && (
-              <div>
+              <SmallScreenBorderDiv>
                 {!hasConversationFinished &&
-                <Fragment>
-                  <br />
-                  <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
-                </Fragment>
+                  <Fragment>
+                    <br />
+                    <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
+                  </Fragment>
                 }
                 {!conversation &&
-                <Fragment>
-                  <br />
-                  <FullWidthTextCenterBlock size="caption"> No Conversation found...</FullWidthTextCenterBlock>
-                </Fragment>
+                  <Fragment>
+                    <br />
+                    <FullWidthTextCenterBlock size="caption"> No Conversation found...</FullWidthTextCenterBlock>
+                  </Fragment>
                 }
                 {hasConversationFinished && conversation &&
-                <Fragment>
                   <ConversationMessagesContainer
                     conversation={conversation}
                     viewingAsParticipant={viewingAsParticipant}
                     participants={conversationParticipants}
                     sendMessageFormPlaceholder={`Message ${name}...`}
                   />
-                </Fragment>
                 }
-              </div>
+              </SmallScreenBorderDiv>
             )}
           </TabWrapper>
         </div>

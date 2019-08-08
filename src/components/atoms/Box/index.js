@@ -9,7 +9,7 @@ import { spacing as spacingPropType } from 'sly/propTypes/spacing';
 const padding = ({ padding }) => size('spacing', padding);
 
 const Box = styled.div`
-  border: ${size('spacing.nano')} solid ${palette('stroke')};
+  border: ${size('border.regular')} solid ${palette('stroke')};
   border-radius: ${ifProp('noBorderRadius', 0, size('spacing.small'))};
   padding: ${padding};
 
