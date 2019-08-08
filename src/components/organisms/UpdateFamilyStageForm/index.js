@@ -119,7 +119,6 @@ export default class UpdateFamilyStageForm extends Component {
             rows={3}
             name="note"
             label="Add a note"
-            placeholder="Add a note on why you are updating this family's stage..."
             component={ReduxField}
           />
         }
