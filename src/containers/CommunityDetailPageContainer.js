@@ -217,6 +217,13 @@ export default class CommunityDetailPageContainer extends Component {
     SlyEvent.getInstance().sendEvent(event);
   };
 
+  handleSimilarCommunitiesClick = (index, to) => {
+    const event = {
+      action: 'click', category: 'similarCommunity', label: index.toString(), value: to,
+    };
+    SlyEvent.getInstance().sendEvent(event);
+  };
+
   handleToggleHowSlyWorksVideoPlaying = () => {
     const { community } = this.props;
     const { isHowSlyWorksVideoPlaying } = this.state;
@@ -503,6 +510,7 @@ export default class CommunityDetailPageContainer extends Component {
                 onConciergeNumberClicked={this.handleConciergeNumberClick}
                 onLiveChatClicked={this.handleLiveChatClick}
                 onReceptionNumberClicked={this.handleReceptionNumberClick}
+                onSimilarCommunitiesClick={this.handleSimilarCommunitiesClick}
                 userSave={userSaveOfCommunity}
                 searchParams={searchParams}
                 setQueryParams={setQueryParams}
