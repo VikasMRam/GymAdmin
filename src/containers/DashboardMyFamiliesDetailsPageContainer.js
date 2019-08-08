@@ -14,8 +14,8 @@ import {
   AGENT_DASHBOARD_FAMILIES_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   FAMILY_DETAILS,
-  ACTIVITY,
-  MESSAGES,
+  SUMMARY,
+  MESSAGES, ACTIVITY,
 } from 'sly/constants/dashboardAppPaths';
 import { FAMILY_STATUS_ACTIVE, NOTE_COMMENTABLE_TYPE_CLIENT } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
@@ -23,6 +23,8 @@ import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
 import SlyEvent from 'sly/services/helpers/events';
+import withBreakpoint from 'sly/components/helpers/breakpoint';
+import { isBrowser } from 'sly/config';
 
 @withUser
 
@@ -49,6 +51,8 @@ import SlyEvent from 'sly/services/helpers/events';
   'filter[participantType]': 'Client',
 }))
 
+@withBreakpoint
+
 export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   static propTypes = {
     user: userPropType.isRequired,
@@ -57,12 +61,25 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     match: object,
     status: object,
     history: object,
+    breakpoint: object,
     updateClient: func.isRequired,
     createNote: func.isRequired,
     updateNote: func.isRequired,
     notes: arrayOf(notePropType),
     invalidateClients: func,
   };
+
+  componentDidMount() {
+    const { breakpoint, match, history, client } = this.props;
+    const currentTab = match.params.tab || SUMMARY;
+    if (isBrowser && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
+      const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, {
+        id: client.id,
+        tab: ACTIVITY,
+      });
+      history.push(activityPath);
+    }
+  }
 
   onRejectSuccess = (hide) => {
     const { history } = this.props;
@@ -233,7 +250,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     } = this;
 
     const {
-      client, match, status, notes, user, conversations,
+      client, match, status, notes, user, conversations, breakpoint,
     } = this.props;
 
     const { result: rawClient, meta } = status.client;
@@ -244,20 +261,18 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     if (hasConversationFinished && conversations) {
       [conversation] = conversations;
     }
+
     return (
       <NotificationController>
         {({ notifyError, notifyInfo }) => (
           <ModalController>
-            {({
-              show,
-              hide,
-            }) => (
+            {({ show, hide }) => (
               <DashboardMyFamiliesDetailsPage
                 notifyError={notifyError}
                 notifyInfo={notifyInfo}
                 client={client}
                 rawClient={rawClient}
-                currentTab={match.params.tab || ACTIVITY}
+                currentTab={match.params.tab || SUMMARY}
                 showModal={show}
                 hideModal={hide}
                 meta={meta}
