@@ -1,12 +1,13 @@
 import React from 'react';
 import Select, { components } from 'react-select';
-import { string, arrayOf, object, bool } from 'prop-types';
+import { string, arrayOf, object, bool, node } from 'prop-types';
 import styled from 'styled-components';
 
 import { getKey, size } from 'sly/components/themes';
 import Icon from 'sly/components/atoms/Icon';
+import Hr from 'sly/components/atoms/Hr';
 
-const { Option } = components;
+const { Option, Group } = components;
 
 const styles = {
   control: (provided, state) => ({
@@ -58,6 +59,11 @@ const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.regular')};
 `;
 
+const StyledHr = styled(Hr)`
+  margin-top: ${size('spacing.regular')};
+  margin-bottom: 0;
+`;
+
 Select.displayName = 'Select';
 
 const IconOption = props => (
@@ -70,6 +76,23 @@ const IconOption = props => (
 IconOption.propTypes = {
   data: object,
   isSelected: bool,
+};
+
+const GroupSection = (props) => {
+  const lastGroupLabel = props.selectProps.options.map(v => v.label).pop();
+
+  return (
+    <Group {...props}>
+      {props.children}
+      {props.label !== lastGroupLabel && <StyledHr />}
+    </Group>
+  );
+};
+
+GroupSection.propTypes = {
+  children: node,
+  selectProps: object,
+  label: string,
 };
 
 const SelectComponent = ({ value, options, ...props }) => {
@@ -87,7 +110,7 @@ const SelectComponent = ({ value, options, ...props }) => {
       defaultValue={value}
       styles={styles}
       theme={theme}
-      components={{ Option: IconOption }}
+      components={{ Option: IconOption, Group: GroupSection }}
       blurInputOnSelect
       {...props}
     />

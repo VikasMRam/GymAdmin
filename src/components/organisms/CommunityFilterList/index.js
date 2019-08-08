@@ -4,6 +4,7 @@ import { object, func, bool } from 'prop-types';
 import { ifProp } from 'styled-tools';
 
 import { size, assetPath, palette } from 'sly/components/themes';
+import pad from 'sly/components/helpers/pad';
 import CollapsibleSection from 'sly/components/molecules/CollapsibleSection';
 import Field from 'sly/components/molecules/Field';
 import Radio from 'sly/components/molecules/Radio';
@@ -18,33 +19,29 @@ import {
   getEvtHandler,
 } from 'sly/services/helpers/search';
 
-const StyledWrapper = styled.div`
-  padding-top: ${size('spacing.large')};
-
+const StyledWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     width: ${size('layout.col4')};
   }
-`;
+`);
 
 const StyledBox = styled(Box)`
   padding: ${size('spacing.large')};
   width: ${size('layout.col3')};
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = pad(styled(Link)`
   display: flex;
-  margin-bottom: ${size('spacing.regular')};
   color: ${palette('slate', 'base')};
 
   span {
     margin-right: ${size('spacing.small')};
   }
-`;
+`, 'regular');
 
-const ImageButtonWrapper = styled.div`
+const ImageButtonWrapper = pad(styled.div`
   position: relative;
   text-align: center;
-  margin-bottom: ${size('spacing.large')};
 
   img {
     width: 100%;
@@ -62,15 +59,13 @@ const ImageButtonWrapper = styled.div`
       transform: translate(-50%, -50%);
     }
   `)};
-`;
+`, 'large');
 
 const StyledImage = styled(Image)`
   max-width: 100%;
 `;
 
-const StyledHr = styled(Hr)`
-  margin-bottom: ${size('spacing.regular')};
-`;
+const StyledHr = pad(Hr, 'regular');
 
 const getSortHandler = (origFn) => {
   return (uiEvt) => {
