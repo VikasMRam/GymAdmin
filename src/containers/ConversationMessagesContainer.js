@@ -80,8 +80,7 @@ const StyledSendMessageFormContainer = pad(styled(SendMessageFormContainer)`
 
 
 @prefetch('messages', 'getConversationMessages', (req, { conversation }) => req({
-  // FIXME: Hack to load messages with empty array when conversation is not present between the client & agent
-  'filter[conversationID]': conversation ? conversation.id : 'abc',
+  'filter[conversationID]': conversation && conversation.id,
   sort: '-created_at',
   'page-size': 1000, // todo: remove after api fix
 }))
