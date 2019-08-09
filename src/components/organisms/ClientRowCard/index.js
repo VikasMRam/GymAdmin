@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import dayjs from 'dayjs';
-import { func } from 'prop-types';
+import { func, object } from 'prop-types';
 import { ifProp, ifNotProp } from 'styled-tools';
 import { generatePath } from 'react-router';
 
@@ -21,7 +21,7 @@ import {
 
 import Stage from 'sly/components/molecules/Stage';
 import { FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
-import { AGENT_DASHBOARD_FAMILIES_DETAILS_PATH } from 'sly/constants/dashboardAppPaths';
+import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
 import clientPropType from 'sly/propTypes/client';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import { size, palette } from 'sly/components/themes';
@@ -45,15 +45,16 @@ const Wrapper = mobileOnly(Tr, css`
   `)}
 `);
 
-const genFamilyDetailsPath = id => generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id });
-const StyledNameCell = styled(({ disabled, client, ...props }) => (
-  <Td disabled={disabled} {...props}>
-    <Link to={genFamilyDetailsPath(client.id)} {...props}>
-      {client.clientInfo.name}
-      {disabled && <Icon icon="pause" palette="danger" size="caption" />}
-    </Link>
-  </Td>
-))`
+const StyledNameCell = styled(({ disabled, client, to, ...props }) => {
+  return (
+    <Td disabled={disabled} {...props}>
+      <Link to={to} {...props}>
+        {client.clientInfo.name}
+        {disabled && <Icon icon="pause" palette="danger" size="caption" />}
+      </Link>
+    </Td>
+  );
+})`
   ${Icon} {
     margin-left: ${size('spacing.small')}; 
   } 
@@ -93,7 +94,8 @@ const NoteCell = mobileOnly(({ disabled, note, ...props }) => (
 
 const DateAddedCell = mobileOnly(TextTd, css`display: none`);
 
-const ClientRowCard = ({ client, onClientClick }) => {
+const genFamilyDetailsPath = (id, tab) => generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab });
+const ClientRowCard = ({ client, onClientClick, defaultTab }) => {
   const {
     clientInfo, uuidAux, stage, status, createdAt, notes,
   } = client;
@@ -107,10 +109,11 @@ const ClientRowCard = ({ client, onClientClick }) => {
   const createdAtStr = dayjs(createdAt).format('MM/DD/YYYY');
   const disabled = status === FAMILY_STATUS_ON_HOLD;
   const lastNote = notes[0];
+  const to = genFamilyDetailsPath(client.id, defaultTab);
 
   return (
     <Wrapper disabled={disabled}>
-      <NameCell disabled={disabled} client={client} onClick={() => onClientClick(clientInfo.name, to)} />
+      <NameCell disabled={disabled} to={to} client={client} onClick={() => onClientClick(clientInfo.name, to)} />
       <ResidentCell disabled={disabled}>{residentName}</ResidentCell>
       <StageCell disabled={disabled}>
         <Stage stage={stage} />
@@ -122,6 +125,7 @@ const ClientRowCard = ({ client, onClientClick }) => {
 };
 
 ClientRowCard.propTypes = {
+  breakpoint: object,
   client: clientPropType.isRequired,
   onClientClick: func.isRequired,
 };

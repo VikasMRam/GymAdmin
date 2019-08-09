@@ -282,14 +282,14 @@ const client = (target, entries) => createConfig([
 
   entryPoint(entries),
 
-//  when(isDev || isStaging, [
-//    addPlugins([
-//      new BundleAnalyzerPlugin({
-//        openAnalyzer: false,
-//        analyzerPort: 0,
-//      }),
-//    ]),
-//  ]),
+  // when(isDev || isStaging, [
+  //   addPlugins([
+  //     new BundleAnalyzerPlugin({
+  //       openAnalyzer: false,
+  //       analyzerPort: 0,
+  //     }),
+  //   ]),
+  // ]),
 
   externalWidget,
 

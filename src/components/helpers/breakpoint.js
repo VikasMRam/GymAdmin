@@ -65,16 +65,16 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 
+// I've come to the realisation that putting Breakpoint in the context is a bad idea beacause only
+// a web client should be aware of it, so we have to move it to a singleton to be accessed directly
+// from the views.
+// - Fonz.
 export default function withBreakpoint(ChildComponent) {
   class WithBreakpoint extends Component {
     static displayName = `withBreakpoint(${getDisplayName(ChildComponent)})`;
     static WrappedComponent = ChildComponent;
 
-    render = () => {
-      return (
-        <ChildComponent breakpoint={breakpoint} {...this.props} />
-      );
-    }
+    render = () => <ChildComponent breakpoint={breakpoint} {...this.props} />;
   }
 
   hoistNonReactStatic(WithBreakpoint, ChildComponent);
