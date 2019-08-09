@@ -27,6 +27,11 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     return userHasFinished && conversationHasFinished;
   };
 
+  refetchConversation = () => {
+    const { status } = this.props;
+    status.conversation.refetch();
+  }
+
   render() {
     const { conversation, user } = this.props;
     const isLoading = !this.getHasFinished();
@@ -36,6 +41,7 @@ export default class DashboardMessageDetailsPageContainer extends Component {
         conversation={conversation}
         user={user}
         isLoading={isLoading}
+        refetchConversation={this.refetchConversation}
       />
     );
   }

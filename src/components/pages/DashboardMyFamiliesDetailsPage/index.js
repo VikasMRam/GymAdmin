@@ -45,6 +45,7 @@ import fullHeight from 'sly/components/helpers/fullHeight';
 import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
 import userPropType from 'sly/propTypes/user';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
+import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -358,7 +359,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, onUnPause,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, onUnPause, refetchConversations,
     } = this.props;
     const { admin } = user;
 
@@ -553,19 +554,16 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                   <FullWidthTextCenterBlock size="caption">Loading...</FullWidthTextCenterBlock>
                 </Fragment>
                 }
-                {!conversation &&
-                <Fragment>
-                  <br />
-                  <FullWidthTextCenterBlock size="caption"> No Conversation found...</FullWidthTextCenterBlock>
-                </Fragment>
-                }
-                {hasConversationFinished && conversation &&
+                {hasConversationFinished &&
                 <Fragment>
                   <ConversationMessagesContainer
                     conversation={conversation}
                     viewingAsParticipant={viewingAsParticipant}
                     participants={conversationParticipants}
                     sendMessageFormPlaceholder={`Message ${name}...`}
+                    otherParticipantId={id}
+                    otherParticipantType={CONVERSATION_PARTICIPANT_TYPE_CLIENT}
+                    refetchConversation={refetchConversations}
                   />
                 </Fragment>
                 }
