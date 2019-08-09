@@ -44,6 +44,7 @@ export default class SendMessageFormContainer extends Component {
     createConversationParticipant: func,
     createConversationMessage: func,
     onSuccess: func,
+    onCreateConversationSuccess: func,
     clearSubmitErrors: func,
   };
 
@@ -57,6 +58,7 @@ export default class SendMessageFormContainer extends Component {
       createConversationMessage,
       clearSubmitErrors,
       onSuccess,
+      onCreateConversationSuccess,
     } = this.props;
     if (conversation) {
       const { id: conversationId } = conversation;
@@ -114,7 +116,11 @@ export default class SendMessageFormContainer extends Component {
                 },
               },
             };
-            return createConversationMessage(messagePayload).then(onSuccess);
+            return createConversationMessage(messagePayload).then(() => {
+              if (onCreateConversationSuccess) {
+                onCreateConversationSuccess();
+              }
+            });
           });
         })
         .catch(() => {

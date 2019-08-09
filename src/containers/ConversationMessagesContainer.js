@@ -113,7 +113,7 @@ export default class ConversationMessagesContainer extends Component {
     className: string,
     otherParticipantId: string,
     otherParticipantType: string,
-    refetchConversation: func.isRequired,
+    onCreateConversationSuccess: func,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -170,14 +170,15 @@ export default class ConversationMessagesContainer extends Component {
 
   onMessage = (message) => {
     const {
-      conversation, status, refetchConversation,
+      conversation, status, getConversations, user,
     } = this.props;
     if (conversation) {
       const { id } = conversation;
       if (message.payload.conversationId === id) {
         this.gotNewMessage = true;
         status.messages.refetch();
-        refetchConversation();
+        // We need to fetch conversation when a new message appears as it contains total message
+        getConversations({ 'filter[participant_id]': user.id, 'filter[participant_type]': 'User' });
         // Patch last read message immediately if the user is active on that conversation
         // if scroll at bottom
         if (!document.hidden && this.wasScrollAtBottom) {
@@ -327,7 +328,7 @@ export default class ConversationMessagesContainer extends Component {
 
   render() {
     const {
-      conversation, otherParticipantId, otherParticipantType, viewingAsParticipant, participants, className, sendMessageFormPlaceholder, headingBoxSection, refetchConversation,
+      conversation, otherParticipantId, otherParticipantType, viewingAsParticipant, participants, className, sendMessageFormPlaceholder, headingBoxSection, onCreateConversationSuccess,
     } = this.props;
     const { messages, loadingMore } = this.state;
 
@@ -400,7 +401,7 @@ export default class ConversationMessagesContainer extends Component {
           otherParticipantType={otherParticipantType}
           placeholder={sendMessageFormPlaceholder}
           disabled={!(otherParticipantId && otherParticipantType) && !viewingAsParticipant}
-          onSuccess={refetchConversation}
+          onCreateConversationSuccess={onCreateConversationSuccess}
         />
       </ContainerWrapper>
     );

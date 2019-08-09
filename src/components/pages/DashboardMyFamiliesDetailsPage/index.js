@@ -566,7 +566,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                     sendMessageFormPlaceholder={`Message ${name}...`}
                     otherParticipantId={id}
                     otherParticipantType={CONVERSATION_PARTICIPANT_TYPE_CLIENT}
-                    refetchConversation={refetchConversations}
+                    onCreateConversationSuccess={refetchConversations}
                   />
                 }
               </SmallScreenBorderDiv>
