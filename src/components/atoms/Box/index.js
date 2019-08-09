@@ -5,13 +5,17 @@ import { ifProp, switchProp } from 'styled-tools';
 import { size, palette } from 'sly/components/themes';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { spacing as spacingPropType } from 'sly/propTypes/spacing';
+import { text as textPropType } from 'sly/propTypes/text';
 
 const padding = ({ padding }) => size('spacing', padding);
+
+const fontSize = ({ size: sizeProp }) => size('text', sizeProp);
 
 const Box = styled.div`
   border: ${size('border.regular')} solid ${palette('stroke')};
   border-radius: ${ifProp('noBorderRadius', 0, size('spacing.small'))};
   padding: ${padding};
+  font-size: ${fontSize};
 
   ${switchProp('snap', {
     top: css`
@@ -32,12 +36,14 @@ Box.propTypes = {
   padding: spacingPropType,
   snap: oneOf(['none', 'top', 'bottom']),
   noBorderRadius: bool,
+  size: textPropType,
 };
 
 Box.defaultProps = {
   palette: 'slate',
   padding: 'xLarge',
   snap: 'none',
+  size: 'body',
 };
 
 export default Box;
