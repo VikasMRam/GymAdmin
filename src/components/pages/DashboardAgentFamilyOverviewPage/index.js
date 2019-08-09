@@ -9,7 +9,7 @@ import pad from 'sly/components/helpers/pad';
 import SlyEvent from 'sly/services/helpers/events';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
-import { Box, Table, THead, TBody } from 'sly/components/atoms';
+import { Box, Table, THead, TBody, Tr } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Tab from 'sly/components/molecules/Tab';
@@ -52,7 +52,7 @@ const CenteredPagination = styled(Pagination)`
 const StyledPagination = styled(mobileOnly(CenteredPagination, css`
   position: sticky;
 `))`
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
     border-bottom: ${size('border.regular')} solid ${palette('slate.stroke')};
   }
 `;
@@ -151,13 +151,15 @@ const DashboardAgentFamilyOverviewPage = ({
           <Fragment>
             <StyledTable>
               <THead>
-                {AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS
-                  .map(({ text }) => <Th>{text}</Th>)
-                }
+                <Tr>
+                  {AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS
+                    .map(({ text }) => <Th key={text}>{text}</Th>)
+                  }
+                </Tr>
               </THead>
               <TBody>
                 {clients.map(client => (
-                  <ClientRowCard client={client} onClientClick={onClientClick} />
+                  <ClientRowCard key={client.id} client={client} onClientClick={onClientClick} />
                 ))}
               </TBody>
             </StyledTable>
