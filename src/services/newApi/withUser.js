@@ -4,8 +4,7 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import { object, func } from 'prop-types';
 import get from 'lodash/get';
 
-import { query, withApi, getRequestInfo } from 'sly/services/newApi';
-import { createMemoizedRequestInfoSelector } from 'sly/services/newApi/selectors';
+import { query, withApi, createMemoizedRequestInfoSelector } from 'sly/services/newApi';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -38,7 +37,7 @@ export default function withUser(InnerComponent) {
 
   @connect(makeMapStateToProps, mapDispatchToActions)
 
-  class Wrapper extends React.Component {
+  class Wrapper extends React.PureComponent {
     static displayName = `withUser(${getDisplayName(InnerComponent)})`;
 
     static WrappedComponent = InnerComponent;
@@ -52,11 +51,6 @@ export default function withUser(InnerComponent) {
       status: object,
       done: func,
     };
-
-    shouldComponentUpdate = nextProps => [
-      'userRequestInfo',
-      'uuidAuxRequestInfo',
-    ].some(key => nextProps[key] !== this.props[key]);
 
     // props fetch bound to dispatch
     fetchUser = () => {

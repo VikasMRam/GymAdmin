@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger */
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
@@ -97,10 +97,11 @@ const TempHowItWorks = ({ ...props }) => (
   />
 );
 
-export default class App extends Component {
+export default class App extends PureComponent {
   static childContextTypes = {
     routes: routesPropType,
   };
+
 
   static routes = [
     {

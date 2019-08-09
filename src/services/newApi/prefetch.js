@@ -52,7 +52,7 @@ export default function prefetch(propName, apiCall, dispatcher = defaultDispatch
 
     @connect(mapStateToProps, mapDispatchToActions)
 
-    class Wrapper extends React.Component {
+    class Wrapper extends React.PureComponent {
       static displayName = `prefetch(${getDisplayName(InnerComponent)}, ${propName})`;
 
       static WrappedComponent = InnerComponent;

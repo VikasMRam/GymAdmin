@@ -16,6 +16,11 @@ import api from 'sly/services/api';
 import WSProvider from 'sly/services/ws/WSProvider';
 import NotificationSubscriptions from 'sly/services/notifications/Subscriptions';
 
+if (process.env.NODE_ENV === 'development') {
+  const whyDidYouRender = require('@welldone-software/why-did-you-render');
+  whyDidYouRender(React);
+}
+
 const serverState = window.__SERVER_STATE__;
 const initialState = window.__INITIAL_STATE__;
 const store = configureStore(initialState, { api: api.create() });

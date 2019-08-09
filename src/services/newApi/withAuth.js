@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import { object, func } from 'prop-types';
@@ -30,7 +30,7 @@ export default function withAuth(InnerComponent) {
 
   @connect(mapStateToProps, mapDispatchToProps)
 
-  class Wrapper extends Component {
+  class Wrapper extends PureComponent {
     static displayName = `withAuth(${getDisplayName(InnerComponent)})`;
 
     static propTypes = {
@@ -45,10 +45,6 @@ export default function withAuth(InnerComponent) {
     };
 
     static WrappedComponent = InnerComponent;
-
-    shouldComponentUpdate(nextProps) {
-      return this.props.authenticated !== nextProps.authenticated;
-    }
 
     createOrUpdateUser = (data) => {
       const { user, updateUser, status } = this.props;

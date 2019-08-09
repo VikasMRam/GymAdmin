@@ -19,6 +19,7 @@ export {
   getRequestHeaders,
   getRequestMeta,
   getRequestInfo,
+  createMemoizedRequestInfoSelector,
 } from './selectors';
 
 export ApiProvider from './ApiProvider';
