@@ -158,6 +158,7 @@ export default class CommunityDetailPage extends Component {
     onConciergeNumberClicked: func,
     onLiveChatClicked: func,
     onReceptionNumberClicked: func,
+    onSimilarCommunitiesClick: func,
     userSave: object,
     searchParams: object,
     setQueryParams: func,
@@ -377,6 +378,7 @@ export default class CommunityDetailPage extends Component {
       onMediaGallerySlideChange,
       onMediaGalleryToggleFullscreen,
       onBackToSearchClicked,
+      onSimilarCommunitiesClick,
       user,
       onReviewLinkClicked,
       userSave,
@@ -546,7 +548,7 @@ export default class CommunityDetailPage extends Component {
                 {showSimilarEarlier &&
                   <TopCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                     <MainSection>
-                      <SimilarCommunities similarProperties={similarProperties} />
+                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} />
                       <BackToSearch>
                         <Button
                           ghost
@@ -772,7 +774,7 @@ export default class CommunityDetailPage extends Component {
                 {!showSimilarEarlier &&
                   <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
                     <MainSection>
-                      <SimilarCommunities similarProperties={similarProperties} />
+                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} />
                       <BackToSearch>
                         <Button
                           ghost

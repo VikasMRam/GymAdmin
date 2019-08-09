@@ -301,7 +301,7 @@ export default class App extends Component {
             </Switch>
           </Router>
         </ThemeProvider>
-        {!hideChatbox && <ChatBoxContainer />}
+        {/* {!hideChatbox && <ChatBoxContainer />} */}
       </Fragment>
     );
   }

@@ -4,18 +4,19 @@ import { arrayOf, object, string, bool, func } from 'prop-types';
 import qs from 'query-string';
 
 import { size, palette } from 'sly/components/themes';
+import mobileOnly from 'sly/components/helpers/mobileOnly';
+import pad from 'sly/components/helpers/pad';
+import SlyEvent from 'sly/services/helpers/events';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
-import { Block, Table, THead, TBody } from 'sly/components/atoms';
+import { Box, Table, THead, TBody } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Tab from 'sly/components/molecules/Tab';
 import clientPropType from 'sly/propTypes/client';
 import { AGENT_DASHBOARD_FAMILIES_PATH } from 'sly/constants/dashboardAppPaths';
-import SlyEvent from 'sly/services/helpers/events';
 import Th from 'sly/components/molecules/Th';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
-import mobileOnly from 'sly/components/helpers/mobileOnly';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
@@ -28,14 +29,13 @@ const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
 const Section = styled.section`
   background-color: ${palette('grey.background')};
   padding: ${size('spacing.large')};
-  
+
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
     padding: 0;
     background-color: ${palette('white.base')};
     border: ${size('border.regular')} solid ${palette('slate.stroke')};
-    border-bottom-left-radius: ${size('border.xxLarge')};
-    border-bottom-right-radius: ${size('border.xxLarge')};
     border-top: 0;
+    border-bottom: 0;
   }
 `;
 
@@ -45,18 +45,24 @@ const StyledTable = styled(Table)`
 `;
 
 const CenteredPagination = styled(Pagination)`
-  padding: ${size('spacing.large')}; 
+  padding: ${size('spacing.large')};
   justify-content: center;
 `;
 
-const StyledPagination = mobileOnly(CenteredPagination, css`
-  position: sticky; 
-`);
-
-const FamiliesCountStatusBlock = styled(Block)`
-  margin-bottom: ${size('spacing.large')};
-  margin-left: ${size('spacing.large')};
+const StyledPagination = styled(mobileOnly(CenteredPagination, css`
+  position: sticky;
+`))`
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    border-bottom: ${size('border.regular')} solid ${palette('slate.stroke')};
+  }
 `;
+
+const FamiliesCountStatusBlock = pad(styled(Box)`
+  border-radius: 0;
+  padding-left: ${size('spacing.regular')};
+  padding-left: ${size('spacing.large')};
+  background-color: ${palette('white.base')};
+`, 'large');
 
 const tabIDLabelMap = {
   Prospects: 'PROSPECTS',
@@ -170,7 +176,7 @@ const DashboardAgentFamilyOverviewPage = ({
       </Section>
 
       {!isPageLoading && (
-        <FamiliesCountStatusBlock size="caption">
+        <FamiliesCountStatusBlock padding="regular" size="caption" snap="top">
           {pagination.text}
         </FamiliesCountStatusBlock>
       )}

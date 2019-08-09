@@ -1,8 +1,10 @@
-import { oneOf, string } from 'prop-types';
-import styled, { css } from 'styled-components';
-import { switchProp } from 'styled-tools';
+import { string } from 'prop-types';
+import styled from 'styled-components';
 
-import { size, getKey, palette } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
+import { text as textPropType } from 'sly/propTypes/text';
+import { palette as palettePropType } from 'sly/propTypes/palette';
+import { weight as weightPropType } from 'sly/propTypes/weight';
 
 const textSize = ({ size: sizeProp }) => size('text', sizeProp);
 
@@ -13,16 +15,13 @@ const ClampedText = styled.div`
   text-overflow: ellipsis;
   font-size: ${textSize};
   color: ${palette('base')};
-  ${switchProp('weight', {
-    medium: css`font-weight: 500;`,
-    bold: css`font-weight: bold;`,
-  })};
+  font-weight: ${p => size('weight', p.weight)};
 `;
 
 ClampedText.propTypes = {
-  size: oneOf(Object.keys(getKey('sizes.text'))),
-  palette: oneOf(Object.keys(getKey('palette'))),
-  weight: oneOf(['regular', 'medium', 'bold']),
+  size: textPropType,
+  palette: palettePropType,
+  weight: weightPropType,
   title: string,
 };
 
