@@ -1,3 +1,4 @@
+/* eslint-disable react/self-closing-comp */
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object, arrayOf, func } from 'prop-types';
@@ -170,6 +171,8 @@ const CommunitySearchList = ({
           <BreadCrumb items={getBreadCrumbsForLocation(searchParams)} />
         </Fragment>
       }
+      {/* TODO: shadow causing issues with pagination */}
+      <div></div>
       {communityList.length > 0 &&
         <Fragment>
           {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
