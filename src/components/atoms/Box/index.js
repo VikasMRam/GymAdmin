@@ -5,7 +5,7 @@ import { ifProp, switchProp } from 'styled-tools';
 import { size, palette } from 'sly/components/themes';
 import { palette as palettePropType } from 'sly/propTypes/palette';
 import { spacing as spacingPropType } from 'sly/propTypes/spacing';
-import { element as elementPropType } from 'sly/propTypes/element';
+import { text as textPropType } from 'sly/propTypes/text';
 
 const padding = ({ padding }) => size('spacing', padding);
 
@@ -36,7 +36,7 @@ Box.propTypes = {
   padding: spacingPropType,
   snap: oneOf(['none', 'top', 'bottom']),
   noBorderRadius: bool,
-  size: elementPropType,
+  size: textPropType,
 };
 
 Box.defaultProps = {
