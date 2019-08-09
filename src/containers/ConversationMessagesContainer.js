@@ -10,7 +10,7 @@ import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import conversationParticipantPropType from 'sly/propTypes/conversation/conversationParticipant';
-import { MESSAGES_UPDATE_LAST_READ_TIMEOUT } from 'sly/constants/conversations';
+import { MESSAGES_UPDATE_LAST_READ_TIMEOUT, CONVERSATION_PARTICIPANT_TYPE_USER } from 'sly/constants/conversations';
 import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import withWS from 'sly/services/ws/withWS';
@@ -117,12 +117,10 @@ export default class ConversationMessagesContainer extends Component {
 
   static getDerivedStateFromProps(props, state) {
     const { messages } = state;
-    if (props.messages) {
-      if (!messages || props.messages.length !== messages.length) {
-        return {
-          messages: props.messages,
-        };
-      }
+    if (!messages || (props.messages && props.messages.length !== messages.length)) {
+      return {
+        messages: props.messages,
+      };
     }
 
     return null;
@@ -177,7 +175,7 @@ export default class ConversationMessagesContainer extends Component {
         this.gotNewMessage = true;
         status.messages.refetch();
         // We need to fetch conversation when a new message appears as it contains total message
-        getConversations({ 'filter[participant_id]': user.id, 'filter[participant_type]': 'User' });
+        getConversations({ 'filter[participant_id]': user.id, 'filter[participant_type]': CONVERSATION_PARTICIPANT_TYPE_USER });
         // Patch last read message immediately if the user is active on that conversation
         // if scroll at bottom
         if (!document.hidden && this.wasScrollAtBottom) {
@@ -348,51 +346,49 @@ export default class ConversationMessagesContainer extends Component {
     return (
       <ContainerWrapper className={className}>
         {headingBoxSection}
-        <MessagesWrapper>
-          <div ref={this.messagesRef}>
-            {!messages && (
-              <Fragment>
-                <br />
-                <FullHeightTextCenterBlock size="caption">No messages</FullHeightTextCenterBlock>
-              </Fragment>
-            )}
-            {messages && messages.length > 0 && (
-              <Fragment>
-                {viewingAsParticipantUnreadMessageCount > 0 &&
-                  <Wrapper >
-                    <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={this.handleMarkAsRead}>
-                      <SmallScreen weight="medium" size="caption">
-                        <div>
-                          <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent />
-                          {unreadMessagesNumber} unread messages
-                        </div>
-                      </SmallScreen>
-                      <BigScreen weight="medium" size="caption">
-                        <div>
-                          <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent onClick={this.scrollToNewMessages}>Jump</IconButton>
-                          {unreadMessagesNumber} new messages since {lastReadMessageFormattedDate}
-                          <StyledButton size="caption" palette="slate" transparent onClick={this.handleMarkAsRead}>Mark as read</StyledButton>
-                        </div>
-                      </BigScreen>
-                    </BannerNotification>
-                  </Wrapper>
-                }
-                {loadingMore &&
-                  <Fragment>
-                    <br />
-                    <TextCenterBlock size="caption">Loading more messages...</TextCenterBlock>
-                    <br />
-                  </Fragment>
-                }
-                <ConversationMessages
-                  viewingAsParticipant={viewingAsParticipant}
-                  messages={messages}
-                  participants={participants}
-                  newMessageRef={this.newMessageRef}
-                />
-              </Fragment>
-            )}
-          </div>
+        <MessagesWrapper innerRef={this.messagesRef}>
+          {!messages.length && (
+            <Fragment>
+              <br />
+              <FullHeightTextCenterBlock size="caption">No messages</FullHeightTextCenterBlock>
+            </Fragment>
+          )}
+          {messages && messages.length > 0 && (
+            <Fragment>
+              {viewingAsParticipantUnreadMessageCount > 0 &&
+                <Wrapper >
+                  <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={this.handleMarkAsRead}>
+                    <SmallScreen weight="medium" size="caption">
+                      <div>
+                        <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent />
+                        {unreadMessagesNumber} unread messages
+                      </div>
+                    </SmallScreen>
+                    <BigScreen weight="medium" size="caption">
+                      <div>
+                        <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent onClick={this.scrollToNewMessages}>Jump</IconButton>
+                        {unreadMessagesNumber} new messages since {lastReadMessageFormattedDate}
+                        <StyledButton size="caption" palette="slate" transparent onClick={this.handleMarkAsRead}>Mark as read</StyledButton>
+                      </div>
+                    </BigScreen>
+                  </BannerNotification>
+                </Wrapper>
+              }
+              {loadingMore &&
+                <Fragment>
+                  <br />
+                  <TextCenterBlock size="caption">Loading more messages...</TextCenterBlock>
+                  <br />
+                </Fragment>
+              }
+              <ConversationMessages
+                viewingAsParticipant={viewingAsParticipant}
+                messages={messages}
+                participants={participants}
+                newMessageRef={this.newMessageRef}
+              />
+            </Fragment>
+          )}
         </MessagesWrapper>
         <StyledSendMessageFormContainer
           conversation={conversation}

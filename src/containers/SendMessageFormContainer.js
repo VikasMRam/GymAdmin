@@ -116,11 +116,7 @@ export default class SendMessageFormContainer extends Component {
                 },
               },
             };
-            return createConversationMessage(messagePayload).then(() => {
-              if (onCreateConversationSuccess) {
-                onCreateConversationSuccess();
-              }
-            });
+            return createConversationMessage(messagePayload).then(onCreateConversationSuccess);
           });
         })
         .catch(() => {
