@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { bool, number } from 'prop-types';
+import { bool, number, func } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { generatePath } from 'react-router';
 import styled from 'styled-components';
@@ -40,7 +40,7 @@ const StyledConversationMessagesContainer = styled(ConversationMessagesContainer
 `;
 
 const DashboardMessageDetailsPage = ({
-  user, conversation, isLoading,
+  user, conversation, isLoading, refetchConversation,
 }) => {
   let headingBoxSection = '';
   let conversationParticipants = [];
@@ -94,6 +94,7 @@ const DashboardMessageDetailsPage = ({
             participants={conversationParticipants}
             headingBoxSection={headingBoxSection}
             sendMessageFormPlaceholder={sendMessageFormPlaceholder}
+            refetchConversation={refetchConversation}
           />
         </Fragment>
       }
@@ -106,6 +107,7 @@ DashboardMessageDetailsPage.propTypes = {
   user: userPropType,
   isLoading: bool,
   pageNumber: number,
+  refetchConversation: func,
 };
 
 export default DashboardMessageDetailsPage;

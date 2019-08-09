@@ -10,11 +10,8 @@ import { withPreventDefault } from 'sly/services/helpers/forms';
 import { FAMILY_STAGE_ORDERED } from 'sly/constants/familyDetails';
 import AcceptAndContactFamilyForm from 'sly/components/organisms/AcceptAndContactFamilyForm';
 import AcceptFamilyContactDetails from 'sly/components/organisms/AcceptFamilyContactDetails';
-import { CONVERSTION_RESOURCE_TYPE, CONVERSTION_PARTICIPANT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 
 @query('updateClient', 'updateClient')
-@query('createConversation', 'createConversation')
-@query('createConversationParticipant', 'createConversationParticipant')
 
 class AcceptAndContactFamilyContainer extends Component {
   static propTypes = {
@@ -27,8 +24,6 @@ class AcceptAndContactFamilyContainer extends Component {
     goToFamilyDetails: func,
     goToMessagesTab: func,
     refetchConversations: func,
-    createConversation: func,
-    createConversationParticipant: func,
   };
 
   state = { contactType: null };
@@ -60,38 +55,6 @@ class AcceptAndContactFamilyContainer extends Component {
     goToFamilyDetails();
   };
 
-  initiateConversation = () => {
-    const {
-      client, createConversation, createConversationParticipant,
-    } = this.props;
-    const conversationPayload = {
-      type: CONVERSTION_RESOURCE_TYPE,
-      attributes: {
-        info: {
-          messageCount: 0,
-        },
-      },
-    };
-    return createConversation(conversationPayload)
-      .then(({ body }) => {
-        const { data } = body;
-        const { id: conversationId } = data;
-        const { id: clientId } = client;
-        const participantPayload = {
-          type: CONVERSTION_PARTICIPANT_RESOURCE_TYPE,
-          attributes: {
-            conversationID: conversationId,
-            participantID: clientId,
-            participantType: 'Client',
-          },
-        };
-        return createConversationParticipant(participantPayload);
-      })
-      .catch((r) => {
-        this.handleError(r, 'Failed to create conversation. Please try again.');
-      });
-  }
-
   handleError = (r, message) => {
     const { notifyError } = this.props;
     // TODO: Need to set a proper way to handle server side errors
@@ -109,7 +72,6 @@ class AcceptAndContactFamilyContainer extends Component {
   handleMessageClick = (contactType) => {
     const { onCancel, refetchConversations, goToMessagesTab } = this.props;
     this.handleUpdateStage(contactType)
-      .then(this.initiateConversation)
       .then(() => refetchConversations())
       .then(() => onCancel())
       .then(() => goToMessagesTab());

@@ -23,6 +23,7 @@ import NotificationController from 'sly/controllers/NotificationController';
 import ModalController from 'sly/controllers/ModalController';
 import DashboardMyFamiliesDetailsPage from 'sly/components/pages/DashboardMyFamiliesDetailsPage';
 import SlyEvent from 'sly/services/helpers/events';
+import { CONVERSATION_PARTICIPANT_TYPE_CLIENT, CONVERSATION_PARTICIPANT_TYPE_USER } from 'sly/constants/conversations';
 import withBreakpoint from 'sly/components/helpers/breakpoint';
 import { isBrowser } from 'sly/config';
 
@@ -47,8 +48,8 @@ import { isBrowser } from 'sly/config';
 }))
 
 @prefetch('conversations', 'getConversations', (req, { match }) => req({
-  'filter[participantID]': match.params.id,
-  'filter[participantType]': 'Client',
+  'filter[participant_id]': match.params.id,
+  'filter[participant_type]': CONVERSATION_PARTICIPANT_TYPE_CLIENT,
 }))
 
 @withBreakpoint
@@ -259,7 +260,13 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     const hasConversationFinished = this.getHasConversationFinished();
     let conversation = null;
     if (hasConversationFinished && conversations) {
-      [conversation] = conversations;
+      conversations.forEach((conv) => {
+        conv.conversationParticipants.forEach((participant) => {
+          if (participant.participantID === user.id && participant.participantType === CONVERSATION_PARTICIPANT_TYPE_USER) {
+            conversation = conv;
+          }
+        });
+      });
     }
 
     return (
