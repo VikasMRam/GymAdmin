@@ -10,7 +10,7 @@ import userPropType from 'sly/propTypes/user';
 import messagePropType from 'sly/propTypes/conversation/conversationMessage';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import conversationParticipantPropType from 'sly/propTypes/conversation/conversationParticipant';
-import { MESSAGES_UPDATE_LAST_READ_TIMEOUT } from 'sly/constants/conversations';
+import { MESSAGES_UPDATE_LAST_READ_TIMEOUT, CONVERSATION_PARTICIPANT_TYPE_USER } from 'sly/constants/conversations';
 import { CONVERSTION_PARTICIPANT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
 import withWS from 'sly/services/ws/withWS';
@@ -80,7 +80,7 @@ const StyledSendMessageFormContainer = pad(styled(SendMessageFormContainer)`
 
 
 @prefetch('messages', 'getConversationMessages', (req, { conversation }) => req({
-  'filter[conversationID]': conversation.id,
+  'filter[conversationID]': conversation && conversation.id,
   sort: '-created_at',
   'page-size': 1000, // todo: remove after api fix
 }))
@@ -99,7 +99,7 @@ export default class ConversationMessagesContainer extends Component {
   static propTypes = {
     ws: object,
     messages: arrayOf(messagePropType),
-    conversation: conversationPropType.isRequired,
+    conversation: conversationPropType,
     user: userPropType,
     status: object,
     viewingAsParticipant: conversationParticipantPropType,
@@ -110,12 +110,14 @@ export default class ConversationMessagesContainer extends Component {
     sendMessageFormPlaceholder: string,
     headingBoxSection: node,
     className: string,
+    otherParticipantId: string,
+    otherParticipantType: string,
+    onCreateConversationSuccess: func,
   };
 
   static getDerivedStateFromProps(props, state) {
     const { messages } = state;
-
-    if (!messages || props.messages.length !== messages.length) {
+    if (!messages || (props.messages && props.messages.length !== messages.length)) {
       return {
         messages: props.messages,
       };
@@ -142,43 +144,47 @@ export default class ConversationMessagesContainer extends Component {
     if (!this.timeoutInst) {
       this.timeoutInst = this.checkAndPatchLastReadMessage(MESSAGES_UPDATE_LAST_READ_TIMEOUT);
     }
-    // if (messages && messages.length && this.messagesRef.current) {
-    //   if (!this.scrolled) {
-    //     this.messagesRef.current.addEventListener('scroll', this.handleScroll);
-    //     this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight;
-    //     this.scrolled = true;
-    //   } else if (this.wasScrollAtBottom) {
-    //     // on new message if scroll position is at bottom keep scrolling
-    //     this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight;
-    //   }
-    // }
+    if (messages && messages.length && this.messagesRef.current) {
+      if (!this.scrolled) {
+        this.messagesRef.current.addEventListener('scroll', this.handleScroll);
+        this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight;
+        this.scrolled = true;
+      } else if (this.wasScrollAtBottom) {
+        // on new message if scroll position is at bottom keep scrolling
+        this.messagesRef.current.scrollTop = this.messagesRef.current.scrollHeight;
+      }
+    }
   }
 
   componentWillUnmount() {
     const { ws } = this.props;
 
     ws.off(NOTIFY_MESSAGE_NEW, this.onMessage);
-    // if (this.messagesRef.current) {
-    //   this.messagesRef.current.removeEventListener('scroll', this.handleScroll);
-    // }
+    if (this.messagesRef.current) {
+      this.messagesRef.current.removeEventListener('scroll', this.handleScroll);
+    }
   }
 
   onMessage = (message) => {
     const {
       conversation, status, getConversations, user,
     } = this.props;
-    const { id } = conversation;
-    if (message.payload.conversationId === id) {
-      this.gotNewMessage = true;
-      status.messages.refetch();
-      getConversations({ 'filter[participant_id]': user.id });
-      // Patch last read message immediately if the user is active on that conversation
-      // if scroll at bottom
-      if (!document.hidden && this.wasScrollAtBottom) {
-        this.updateLastReadMessageAt();
+    if (conversation) {
+      const { id } = conversation;
+      if (message.payload.conversationId === id) {
+        this.gotNewMessage = true;
+        status.messages.refetch();
+        // We need to fetch conversation when a new message appears as it contains total message
+        getConversations({ 'filter[participant_id]': user.id, 'filter[participant_type]': CONVERSATION_PARTICIPANT_TYPE_USER });
+        // Patch last read message immediately if the user is active on that conversation
+        // if scroll at bottom
+        if (!document.hidden && this.wasScrollAtBottom) {
+          this.updateLastReadMessageAt();
+        }
+        // prevent more handlers to be called if page is visible
+        return document.hidden;
       }
-      // prevent more handlers to be called if page is visible
-      return document.hidden;
+      return true;
     }
     return true;
   };
@@ -261,24 +267,26 @@ export default class ConversationMessagesContainer extends Component {
 
   handleScroll = () => {
     const { conversation, getConversationMessages } = this.props;
-    const { messages, pageNumber } = this.state;
-    const { info, id } = conversation;
-    const { messageCount } = info;
+    if (conversation) {
+      const { messages, pageNumber } = this.state;
+      const { info, id } = conversation;
+      const { messageCount } = info;
 
-    this.wasScrollAtBottom = this.isScrollAtBottom();
-    if (this.messagesRef.current && !this.messagesRef.current.scrollTop && messages.length < messageCount) {
-      this.setState({
-        loadingMore: true,
-      });
-      getConversationMessages({
-        'filter[conversationID]': id,
-        sort: '-created_at',
-        'page-number': pageNumber + 1,
-      }).then(this.onNewMessagesLoaded);
-    }
-    if (this.gotNewMessage && this.wasScrollAtBottom) {
-      this.timeoutInst = this.checkAndPatchLastReadMessage(0);
-      this.gotNewMessage = false;
+      this.wasScrollAtBottom = this.isScrollAtBottom();
+      if (this.messagesRef.current && !this.messagesRef.current.scrollTop && messages && (messages.length < messageCount)) {
+        this.setState({
+          loadingMore: true,
+        });
+        getConversationMessages({
+          'filter[conversationID]': id,
+          sort: '-created_at',
+          'page-number': pageNumber + 1,
+        }).then(this.onNewMessagesLoaded);
+      }
+      if (this.gotNewMessage && this.wasScrollAtBottom) {
+        this.timeoutInst = this.checkAndPatchLastReadMessage(0);
+        this.gotNewMessage = false;
+      }
     }
   };
 
@@ -317,9 +325,8 @@ export default class ConversationMessagesContainer extends Component {
 
   render() {
     const {
-      conversation, viewingAsParticipant, participants, className, sendMessageFormPlaceholder, headingBoxSection,
+      conversation, otherParticipantId, otherParticipantType, viewingAsParticipant, participants, className, sendMessageFormPlaceholder, headingBoxSection, onCreateConversationSuccess,
     } = this.props;
-    const { id } = conversation;
     const { messages, loadingMore } = this.state;
 
     if (!this.getHasFinished() && !this.alreadyLoaded) {
@@ -331,58 +338,66 @@ export default class ConversationMessagesContainer extends Component {
       );
     }
 
-    if (!messages.length) {
-      return (
-        <Fragment>
-          <br />
-          <FullHeightTextCenterBlock size="caption">No messages</FullHeightTextCenterBlock>
-        </Fragment>
-      );
-    }
-
     this.alreadyLoaded = true;
     const viewingAsParticipantUnreadMessageCount = viewingAsParticipant ? viewingAsParticipant.stats.unreadMessageCount : 0;
     const unreadMessagesNumber = viewingAsParticipantUnreadMessageCount > 12 ? `${viewingAsParticipantUnreadMessageCount}+` : viewingAsParticipantUnreadMessageCount;
     const lastReadMessageFormattedDate = dayjs(viewingAsParticipantUnreadMessageCount).format('hh:mm A on MMMM Do');
 
     return (
-      <ContainerWrapper ref={this.messagesRef} className={className}>
+      <ContainerWrapper className={className}>
         {headingBoxSection}
-        <MessagesWrapper>
-          {viewingAsParticipantUnreadMessageCount > 0 &&
-            <Wrapper>
-              <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={this.handleMarkAsRead}>
-                <SmallScreen weight="medium" size="caption">
-                  <div>
-                    <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent />
-                    {unreadMessagesNumber} unread messages
-                  </div>
-                </SmallScreen>
-                <BigScreen weight="medium" size="caption">
-                  <div>
-                    <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent onClick={this.scrollToNewMessages}>Jump</IconButton>
-                    {unreadMessagesNumber} new messages since {lastReadMessageFormattedDate}
-                    <StyledButton size="caption" palette="slate" transparent onClick={this.handleMarkAsRead}>Mark as read</StyledButton>
-                  </div>
-                </BigScreen>
-              </BannerNotification>
-            </Wrapper>
-          }
-          {loadingMore &&
+        <MessagesWrapper innerRef={this.messagesRef}>
+          {!messages.length && (
             <Fragment>
               <br />
-              <TextCenterBlock size="caption">Loading more messages...</TextCenterBlock>
-              <br />
+              <FullHeightTextCenterBlock size="caption">No messages</FullHeightTextCenterBlock>
             </Fragment>
-          }
-          <ConversationMessages
-            viewingAsParticipant={viewingAsParticipant}
-            messages={messages}
-            participants={participants}
-            newMessageRef={this.newMessageRef}
-          />
+          )}
+          {messages && messages.length > 0 && (
+            <Fragment>
+              {viewingAsParticipantUnreadMessageCount > 0 &&
+                <Wrapper >
+                  <BannerNotification hasBorderRadius palette="warning" padding="small" onCloseClick={this.handleMarkAsRead}>
+                    <SmallScreen weight="medium" size="caption">
+                      <div>
+                        <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent />
+                        {unreadMessagesNumber} unread messages
+                      </div>
+                    </SmallScreen>
+                    <BigScreen weight="medium" size="caption">
+                      <div>
+                        <IconButton icon="arrow-up" size="caption" palette="slate" kind="plain" transparent onClick={this.scrollToNewMessages}>Jump</IconButton>
+                        {unreadMessagesNumber} new messages since {lastReadMessageFormattedDate}
+                        <StyledButton size="caption" palette="slate" transparent onClick={this.handleMarkAsRead}>Mark as read</StyledButton>
+                      </div>
+                    </BigScreen>
+                  </BannerNotification>
+                </Wrapper>
+              }
+              {loadingMore &&
+                <Fragment>
+                  <br />
+                  <TextCenterBlock size="caption">Loading more messages...</TextCenterBlock>
+                  <br />
+                </Fragment>
+              }
+              <ConversationMessages
+                viewingAsParticipant={viewingAsParticipant}
+                messages={messages}
+                participants={participants}
+                newMessageRef={this.newMessageRef}
+              />
+            </Fragment>
+          )}
         </MessagesWrapper>
-        <StyledSendMessageFormContainer conversationId={id} placeholder={sendMessageFormPlaceholder} disabled={!viewingAsParticipant} />
+        <StyledSendMessageFormContainer
+          conversation={conversation}
+          otherParticipantId={otherParticipantId}
+          otherParticipantType={otherParticipantType}
+          placeholder={sendMessageFormPlaceholder}
+          disabled={!(otherParticipantId && otherParticipantType) && !viewingAsParticipant}
+          onCreateConversationSuccess={onCreateConversationSuccess}
+        />
       </ContainerWrapper>
     );
   }

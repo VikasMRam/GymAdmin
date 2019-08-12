@@ -58,6 +58,10 @@ const LegacyContent = pad(styled.div`
       outline: none;
     }
   }
+  display: none;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: block;
+  }
 `, 'large');
 
 const ApplyFilterButton = styled(Button)`

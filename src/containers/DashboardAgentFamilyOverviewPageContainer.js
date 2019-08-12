@@ -9,6 +9,7 @@ import DashboardAgentFamilyOverviewPage from 'sly/components/pages/DashboardAgen
 import { delayedExecutor, getSearchParams } from 'sly/services/helpers/search';
 import { FAMILY_STAGE_ORDERED, STAGE_CLIENT_TYPE_MAP } from 'sly/constants/familyDetails';
 import SlyEvent from 'sly/services/helpers/events';
+import withBreakpoint from 'sly/components/helpers/breakpoint';
 
 const onClientClick = (clientName, to) => {
   const event = {
@@ -84,6 +85,8 @@ const getPageParams = ({ match, location }) => {
 
 @withUser
 
+@withBreakpoint
+
 export default class DashboardAgentFamilyOverviewPageContainer extends Component {
   static propTypes = {
     clients: arrayOf(clientPropType),
@@ -91,7 +94,8 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     match: object,
     location: object,
     history: object,
-  }
+    breakpoint: object,
+  };
 
   handleSearchTextKeyUp = (event) => {
     const { value } = event.target;
@@ -118,7 +122,7 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
 
   render() {
     const {
-      clients, status, match, location,
+      clients, status, match, location, breakpoint,
     } = this.props;
 
     const params = getPageParams({ match, location });
@@ -136,6 +140,7 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
       return (
         <DashboardAgentFamilyOverviewPage
           isPageLoading={isPageLoading}
+          breakpoint={breakpoint}
           params={params}
         />
       );
@@ -147,6 +152,7 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
         onClientClick={onClientClick}
         pagination={pagination}
         activeTab={type}
+        breakpoint={breakpoint}
         onSearchTextKeyUp={this.handleSearchTextKeyUp}
         params={params}
       />
