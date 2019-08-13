@@ -17,6 +17,8 @@ import cookieParser from 'cookie-parser';
 import pathToRegexp from 'path-to-regexp';
 import cloneDeep from 'lodash/cloneDeep';
 import { ChunkExtractor } from '@loadable/server';
+import { CacheProvider } from '@emotion/core';
+import createEmotionCache from '@emotion/cache';
 
 import { cleanError, logWarn } from 'sly/services/helpers/logging';
 import { removeQueryParamFromURL } from 'sly/services/helpers/url';
@@ -285,13 +287,15 @@ app.use(async (req, res, next) => {
     const context = {};
 
     const app = sheet.collectStyles(extractorWeb.collectChunks((
-      <Provider store={store}>
-        <StaticRouter context={context} location={req.url}>
-          <ApiProvider api={api}>
-            <ClientApp />
-          </ApiProvider>
-        </StaticRouter>
-      </Provider>
+      <CacheProvider value={createEmotionCache()}>
+        <Provider store={store}>
+          <StaticRouter context={context} location={req.url}>
+            <ApiProvider api={api}>
+              <ClientApp />
+            </ApiProvider>
+          </StaticRouter>
+        </Provider>
+      </CacheProvider>
     )));
 
     const { state: serverState, html: content } = await renderToString(app);
