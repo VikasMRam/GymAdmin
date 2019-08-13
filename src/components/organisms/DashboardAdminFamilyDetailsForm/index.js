@@ -147,41 +147,36 @@ class DashboardAdminFamilyDetailsForm extends Component {
             label="Referral Source"
             type="select"
             component={ReduxField}
-          >
-            {referralSourceOptions}
-          </Field>
+            options={referralSourceOptions}
+          />
           <Field
             name="lookingFor"
             label="Looking for"
             type="select"
             component={ReduxField}
-          >
-            {lookingForOptions}
-          </Field>
+            options={lookingForOptions}
+          />
           <Field
             name="gender"
             label="Gender"
             type="select"
             component={ReduxField}
-          >
-            {femaleOptions}
-          </Field>
+            options={femaleOptions}
+          />
           <Field
             name="budget"
             label="Monthly budget"
             type="select"
             component={ReduxField}
-          >
-            {monthlyBudgetOptions}
-          </Field>
+            options={monthlyBudgetOptions}
+          />
           <Field
             name="timeToMove"
             label="Time to move"
             type="select"
             component={ReduxField}
-          >
-            {timeToMoveOptions}
-          </Field>
+            options={timeToMoveOptions}
+          />
           <TwoColumnWrapper>
             <Field
               name="introMessage"

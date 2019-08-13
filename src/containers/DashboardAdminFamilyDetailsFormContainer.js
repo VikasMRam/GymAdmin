@@ -4,7 +4,7 @@ import { object, func } from 'prop-types';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
-import { createValidator, email, usPhone, dependentRequired } from 'sly/services/validation';
+import { createValidator, email, usPhone, dependentRequired, required } from 'sly/services/validation';
 import clientPropType from 'sly/propTypes/client';
 import { query, getRelationship } from 'sly/services/newApi';
 import SlyEvent from 'sly/services/helpers/events';
@@ -15,6 +15,7 @@ import { newClient } from 'sly/constants/payloads/client';
 const validate = createValidator({
   phone: [usPhone, dependentRequired('email', 'Either Phone or Email is required')],
   email: [email, dependentRequired('phone', 'Either Email or Phone is required')],
+  referralSource: required,
 });
 
 const formName = 'DashboardAdminFamilyDetailsForm';
