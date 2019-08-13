@@ -22,9 +22,9 @@ const defaultProps = {
 const wrap = (props = {}) => shallow(<RejectFamilyForm {...defaultProps} {...props} />);
 
 const verifyOptions = (options) => {
-  expect(options).toHaveLength(reasons.length + 1);
-  options.slice(1).forEach((o, i) => {
-    expect(o.text()).toBe(reasons[i]);
+  expect(options).toHaveLength(reasons.length);
+  options.forEach((o, i) => {
+    expect(o.value).toBe(reasons[i]);
   });
 };
 
@@ -34,7 +34,7 @@ describe('RejectFamilyForm', () => {
     const field = wrapper.find('Field');
 
     expect(field).toHaveLength(1);
-    const options = field.find('option');
+    const options = field.prop('options');
     verifyOptions(options);
   });
 
@@ -43,7 +43,7 @@ describe('RejectFamilyForm', () => {
     const field = wrapper.find('Field');
 
     expect(field).toHaveLength(2);
-    const options = field.at(0).find('option');
+    const options = field.at(0).prop('options');
     verifyOptions(options);
     expect(field.find({ name: 'description' })).toHaveLength(1);
   });
@@ -53,7 +53,7 @@ describe('RejectFamilyForm', () => {
     const field = wrapper.find('Field');
 
     expect(field).toHaveLength(2);
-    const options = field.at(0).find('option');
+    const options = field.at(0).prop('options');
     verifyOptions(options);
     expect(field.find({ name: 'preferredLocation' })).toHaveLength(1);
   });

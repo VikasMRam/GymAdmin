@@ -5,6 +5,7 @@ import { prefetch, withUser } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import DashboardMessageDetailsPage from 'sly/components/pages/DashboardMessageDetailsPage';
+import withBreakpoint from 'sly/components/helpers/breakpoint';
 
 @prefetch('conversation', 'getConversation', (req, { match }) => req({
   id: match.params.id,
@@ -12,11 +13,14 @@ import DashboardMessageDetailsPage from 'sly/components/pages/DashboardMessageDe
 
 @withUser
 
+@withBreakpoint
+
 export default class DashboardMessageDetailsPageContainer extends Component {
   static propTypes = {
     conversation: conversationPropType,
     user: userPropType,
     status: object,
+    breakpoint: object,
   };
 
   getHasFinished = () => {
@@ -27,15 +31,22 @@ export default class DashboardMessageDetailsPageContainer extends Component {
     return userHasFinished && conversationHasFinished;
   };
 
+  refetchConversation = () => {
+    const { status } = this.props;
+    status.conversation.refetch();
+  };
+
   render() {
-    const { conversation, user } = this.props;
+    const { conversation, user, breakpoint } = this.props;
     const isLoading = !this.getHasFinished();
 
     return (
       <DashboardMessageDetailsPage
+        breakpoint={breakpoint}
         conversation={conversation}
         user={user}
         isLoading={isLoading}
+        refetchConversation={this.refetchConversation}
       />
     );
   }

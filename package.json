@@ -28,7 +28,7 @@
     "test": "npm run env:test -- jest",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
-    "lint": "eslint src/external src/components/common src/components/helpers src/components/atoms src/components/molecules src/constants src/propTypes private webpack.config.js",
+    "lint": "eslint src/external src/components/common src/components/helpers src/components/atoms src/components/molecules src/constants src/propTypes private webpack.config.js e2e",
     "format": "prettier-eslint --write",
     "format-all": "npm run format -- \"src/**/*.js\"",
     "storybook": "start-storybook -s ./public -p 9001 -c private/storybook"
@@ -39,7 +39,8 @@
       "node_modules"
     ],
     "testPathIgnorePatterns": [
-      "/node_modules/"
+      "/node_modules/",
+      "/e2e"
     ],
     "moduleNameMapper": {
       "^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/private/jest/fileMock.js",
@@ -73,6 +74,7 @@
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
+    "@emotion/core": "^10.0.15",
     "@loadable/babel-plugin": "^5.10.0",
     "@loadable/component": "^5.10.1",
     "@loadable/server": "^5.9.0",
@@ -142,6 +144,7 @@
     "react-router-config": "^4.4.0-beta.6",
     "react-router-dom": "^4.1.1",
     "react-router-server": "^4.2.1",
+    "react-select": "^3.0.4",
     "react-stickynode": "^1.4.1",
     "react-swipeable-views": "^0.12.13",
     "react-test-renderer": "^16.3.2",

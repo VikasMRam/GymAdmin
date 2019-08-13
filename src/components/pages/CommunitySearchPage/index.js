@@ -58,6 +58,10 @@ const LegacyContent = pad(styled.div`
       outline: none;
     }
   }
+  display: none;
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: block;
+  }
 `, 'large');
 
 const ApplyFilterButton = styled(Button)`
@@ -80,6 +84,7 @@ const CommunitySearchPage = ({
   location,
   onAdTileClick,
   isFetchingResults,
+  onCommunityClick,
   showModal,
   hideModal,
 }) => {
@@ -190,6 +195,7 @@ const CommunitySearchPage = ({
             onAdTileClick={onAdTileClick}
             isFetchingResults={isFetchingResults}
             location={location}
+            onCommunityClick={onCommunityClick}
           />
           {additionalDivs}
         </Fragment>
@@ -206,6 +212,7 @@ const CommunitySearchPage = ({
         onAdTileClick={onAdTileClick}
         isFetchingResults={isFetchingResults}
         location={location}
+        onCommunityClick={onCommunityClick}
       />
     );
   };
@@ -270,6 +277,7 @@ CommunitySearchPage.propTypes = {
   searchParams: object,
   onAdTileClick: func,
   isFetchingResults: bool,
+  onClientClick: func,
   showModal: func,
   hideModal: func,
 };

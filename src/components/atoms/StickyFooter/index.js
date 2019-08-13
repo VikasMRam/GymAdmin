@@ -16,7 +16,6 @@ const FullWrapper = styled.div`
   border: ${size('border.regular')} solid ${palette('slate', 'stroke')};
   z-index: ${key('zIndexes.stickySections')};
   padding: ${getSize('spacing')};
-  box-shadow: 0 -${size('border.xxLarge')} ${size('spacing.regular')} ${palette('slate', 'stroke')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: ${ifProp('showInBigScreen', 'block', 'none')};

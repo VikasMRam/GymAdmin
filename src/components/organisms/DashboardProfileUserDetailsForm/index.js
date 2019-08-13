@@ -61,9 +61,9 @@ class DashboardProfileUserDetailsForm extends Component {
     const {
       lookingFor, monthlyBudget, timeToMove,
     } = meta;
-    const lookingForOptions = lookingFor.map(i => <option key={i} value={i}>{i}</option>);
-    const timeToMoveOptions = timeToMove.map(i => <option key={i} value={i}>{i}</option>);
-    const monthlyBudgetOptions = monthlyBudget.map(i => <option key={i} value={i}>{i}</option>);
+    const lookingForOptions = lookingFor.map(i => ({ label: i, value: i }));
+    const timeToMoveOptions = timeToMove.map(i => ({ label: i, value: i }));
+    const monthlyBudgetOptions = monthlyBudget.map(i => ({ label: i, value: i }));
 
     let searchingCity = '';
     if (initialValues) {
@@ -102,12 +102,11 @@ class DashboardProfileUserDetailsForm extends Component {
           name="lookingFor"
           label="Looking For"
           type="select"
+          placeholder="Select an option"
           component={ReduxField}
+          options={lookingForOptions}
           wideWidth
-        >
-          <option value="">Select an option</option>
-          {lookingForOptions}
-        </Field>
+        />
         <Field
           name="residentName"
           label="Resident Name"
@@ -120,22 +119,20 @@ class DashboardProfileUserDetailsForm extends Component {
           name="monthlyBudget"
           label="Monthly Budget"
           type="select"
+          placeholder="Select an option"
           component={ReduxField}
+          options={monthlyBudgetOptions}
           wideWidth
-        >
-          <option value="">Select an option</option>
-          {monthlyBudgetOptions}
-        </Field>
+        />
         <Field
           name="timeToMove"
           label="Time to move"
           type="select"
+          placeholder="Select an option"
           component={ReduxField}
+          options={timeToMoveOptions}
           wideWidth
-        >
-          <option value="">Select an option</option>
-          {timeToMoveOptions}
-        </Field>
+        />
         <PaddedTwoColumnWrapper verticalCenter>
           <StyledLabel>Searching in</StyledLabel>
           <StyledSearchBoxContainer
