@@ -1,42 +1,43 @@
 import React, { Component } from 'react';
 import { arrayOf, func } from 'prop-types';
 
-import { reduxForm } from 'redux-form';
-
-import { createValidator, required } from 'sly/services/validation';
-
 import filterPropType from 'sly/propTypes/datatableFilter';
 import datatablePropType from 'sly/propTypes/datatable';
+import IconButton from 'sly/components/molecules/IconButton';
+import Field from 'sly/components/molecules/Field';
 
-const Row = 'div';
+const Row = 'form';
 
-export class DatatableFilterRow extends Component {
+export default class DatatableFilterRowForm extends Component {
   static propTypes = {
+    onRemove: func,
     onChange: func,
     filter: filterPropType,
     filters: arrayOf(filterPropType),
     datatable: datatablePropType,
   };
 
-  state = {
-    field: null,
-    operator: null,
-    value: null,
+  onFieldChange = ({ value }, { name }) => {
+    const { filter, onChange } = this.props;
+    onChange(filter, { [name]: value });
   };
 
   render() {
-    const { filters, filter, datatable } = this.props;
+    const { onRemove, filter, datatable } = this.props;
     return (
       <Row>
+        <IconButton onClick={() => onRemove(filter)} icon="clear" />
 
+        <Field
+          name="column"
+          value={filter.column}
+          type="select"
+          onChange={this.onFieldChange}
+          options={datatable.columns}
+        />
       </Row>
     );
   }
 }
 
 
-const validate = createValidator({
-  note: [required],
-});
-
-export default reduxForm()(AddNoteForm);
