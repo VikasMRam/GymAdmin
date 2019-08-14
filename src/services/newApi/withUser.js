@@ -16,9 +16,18 @@ const getMemoizedUserRequestInfo = createMemoizedRequestInfoSelector();
 const getMemoizedUuidAuxRequestInfo = createMemoizedRequestInfoSelector();
 export default function withUser(InnerComponent) {
   const makeMapStateToProps = () => {
-    return (state) => {
-      const userRequestInfo = getMemoizedUserRequestInfo(state, { call: 'getUser', args: [{ id: 'me' }] });
-      const uuidAuxRequestInfo = getMemoizedUuidAuxRequestInfo(state, { call: 'getUser', args: [{ id: 'me' }] });
+    return (state, props) => {
+      // let this rescue this from props to bypass store for testing porpuses
+      const userRequestInfo = props.userRequestInfo || getMemoizedUserRequestInfo(
+        state,
+        { call: 'getUser', args: [{ id: 'me' }] }
+      );
+
+      const uuidAuxRequestInfo = props.uuidAuxRequestInfo || getMemoizedUuidAuxRequestInfo(
+        state,
+        { call: 'getUuidAux', args: [{ id: 'me' }] }
+      );
+
       return {
         userRequestInfo,
         uuidAuxRequestInfo,
