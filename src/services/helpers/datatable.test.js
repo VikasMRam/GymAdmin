@@ -1,4 +1,4 @@
-import { parseQuerystringFilters, makeQuerystringFilters } from '.';
+import { parseQuerystringFilters, makeQuerystringFilters } from './datatable';
 
 describe('datatables helpers', () => {
   it('should parse querystring params into filterState object', () => {
@@ -50,4 +50,22 @@ describe('datatables helpers', () => {
       exp: 'or',
     });
   });
+
+  it('should ignore empty filters', () => {
+    const filterState = {
+      filters: [{
+      }, {
+        column: 'email',
+      }, {
+        column: 'name',
+        operator: 'cs',
+      }],
+      logicalOperator: 'or',
+    };
+
+    const qsObject = makeQuerystringFilters(filterState);
+    expect(qsObject).toEqual({
+      exp: 'or',
+    });
+  })
 });

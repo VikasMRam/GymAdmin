@@ -1,7 +1,15 @@
 
+export const noValueOperators = ['em', 'nem'];
+
+
 export const makeQuerystringFilters = (filterState) => {
   const qsObject = {};
   filterState.filters.forEach((filter) => {
+    if (!filter.column
+        || !filter.operator
+        || (!filter.value && !noValueOperators.includes(filter.operator))
+    ) return;
+
     const key = `filters[${filter.column}]`;
     const value = `${filter.operator}${filter.value ? `:${filter.value}` : ''}`;
     qsObject[key] = value;

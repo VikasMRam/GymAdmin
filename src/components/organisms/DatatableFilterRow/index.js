@@ -6,6 +6,7 @@ import filterPropType from 'sly/propTypes/datatableFilter';
 import datatablePropType from 'sly/propTypes/datatable';
 import IconButton from 'sly/components/molecules/IconButton';
 import Field from 'sly/components/molecules/Field';
+import { noValueOperators } from 'sly/services/helpers/datatable'
 
 const Row = 'form';
 
@@ -33,8 +34,6 @@ const operatorNames = {
   or: 'Or',
 };
 
-const noValue = ['em', 'nem'];
-
 const getValuesFor = (filter, name) => {
   switch (name) {
     case 'column': return {};
@@ -50,10 +49,10 @@ const Where = styled.div`
 export default class DatatableFilterRowForm extends Component {
   static propTypes = {
     index: number.isRequired,
+    onFilterChange: func.isRequired,
     logicalOperator: oneOf(['and', 'or']),
     onLogicalOperatorChange: func,
     onRemove: func.isRequired,
-    onChange: func.isRequired,
     filter: filterPropType.isRequired,
     datatable: datatablePropType.isRequired,
   };
@@ -75,9 +74,14 @@ export default class DatatableFilterRowForm extends Component {
   };
 
   onValueChange = (name, value) => {
-    const { filter, onChange } = this.props;
+    const { filter, onFilterChange } = this.props;
     const values = getValuesFor(filter, name);
-    onChange(filter, { ...values, [name]: value });
+    onFilterChange(filter, { ...values, [name]: value });
+  };
+
+  getColumns = () => {
+    const { datatable } = this.props;
+    return datatable.columns.filter(column => column.isFilterable);
   };
 
   getOperatorsFor = column => this.state.columns[column]
@@ -113,7 +117,6 @@ export default class DatatableFilterRowForm extends Component {
     const {
       onRemove,
       filter,
-      datatable,
       onLogicalOperatorChange,
       logicalOperator,
       index,
@@ -149,7 +152,7 @@ export default class DatatableFilterRowForm extends Component {
           value={filter.column}
           type="select"
           onChange={this.onSelectChange}
-          options={datatable.columns}
+          options={this.getColumns()}
         />
 
         {filter.column && (
@@ -162,7 +165,7 @@ export default class DatatableFilterRowForm extends Component {
           />
         )}
 
-        {filter.operator && !noValue.includes(filter.operator) && (
+        {filter.operator && !noValueOperators.includes(filter.operator) && (
           <Field
             name="value"
             onChange={this.onDateChange}

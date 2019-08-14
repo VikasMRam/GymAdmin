@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
+import { stringify } from 'query-string';
 
 import DatatableFilters from '.';
 
 import datatableClient from 'sly/../private/storybook/sample-data/datatable-client.json';
+import { makeQuerystringFilters } from 'sly/services/helpers/datatable';
 
 class Container extends Component {
   state = {
@@ -21,11 +23,14 @@ class Container extends Component {
 
   render() {
     return (
-      <DatatableFilters
-        datatable={datatableClient}
-        onChange={this.onChange}
-        filterState={this.state}
-      />
+      <Fragment>
+        <pre>?{decodeURIComponent(stringify(makeQuerystringFilters(this.state)))}</pre>
+        <DatatableFilters
+          datatable={datatableClient}
+          onChange={this.onChange}
+          filterState={this.state}
+        />
+      </Fragment>
     );
   }
 }
