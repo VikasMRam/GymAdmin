@@ -1,5 +1,5 @@
 import build from 'redux-object';
-import { createSelector, createSelectorCreator, defaultMemoize } from 'reselect';
+import { createSelector } from 'reselect';
 
 const getRequests = ({ bees }) => bees.requests;
 const getEntities = ({ bees }) => bees.entities;
