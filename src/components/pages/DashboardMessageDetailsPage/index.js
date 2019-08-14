@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { bool, number } from 'prop-types';
+import { bool, number, func, object } from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { generatePath } from 'react-router';
 import styled from 'styled-components';
@@ -9,7 +9,7 @@ import {
   AGENT_DASHBOARD_MESSAGES_PATH,
   FAMILY_DASHBOARD_MESSAGES_PATH,
   DASHBOARD_PATH,
-  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
+  AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, ACTIVITY,
 } from 'sly/constants/dashboardAppPaths';
 import { CUSTOMER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
 import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
@@ -40,7 +40,7 @@ const StyledConversationMessagesContainer = styled(ConversationMessagesContainer
 `;
 
 const DashboardMessageDetailsPage = ({
-  user, conversation, isLoading,
+  user, conversation, isLoading, refetchConversation, breakpoint,
 }) => {
   let headingBoxSection = '';
   let conversationParticipants = [];
@@ -56,6 +56,7 @@ const DashboardMessageDetailsPage = ({
     const name = otherParticipant && otherParticipant.participantInfo ? otherParticipant.participantInfo.name : '';
     const otherParticipantIsClient = otherParticipant.participantType === CONVERSATION_PARTICIPANT_TYPE_CLIENT;
     sendMessageFormPlaceholder = otherParticipant && otherParticipant.participantInfo && `Message ${otherParticipant.participantInfo.name.split(' ').shift()}...`;
+    const tab = breakpoint.atLeastLaptop() ? ACTIVITY : undefined;
 
     const heading = (
       <HeaderWrapper>
@@ -66,8 +67,10 @@ const DashboardMessageDetailsPage = ({
           <BackLink to={AGENT_DASHBOARD_MESSAGES_PATH} />
         </Role>
         <FullWidthTextCenterBlock size="subtitle" palette={otherParticipantIsClient && 'primary'}>
-          {otherParticipantIsClient ?
-            <Link size="subtitle" to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: otherParticipant.participantID })}>{name}</Link> : name}
+          {otherParticipantIsClient
+            ? <Link size="subtitle" to={generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id: otherParticipant.participantID, tab })}>{name}</Link>
+            : name
+          }
         </FullWidthTextCenterBlock>
       </HeaderWrapper>
     );
@@ -94,6 +97,7 @@ const DashboardMessageDetailsPage = ({
             participants={conversationParticipants}
             headingBoxSection={headingBoxSection}
             sendMessageFormPlaceholder={sendMessageFormPlaceholder}
+            refetchConversation={refetchConversation}
           />
         </Fragment>
       }
@@ -102,10 +106,12 @@ const DashboardMessageDetailsPage = ({
 };
 
 DashboardMessageDetailsPage.propTypes = {
+  breakpoint: object,
   conversation: conversationPropType,
   user: userPropType,
   isLoading: bool,
   pageNumber: number,
+  refetchConversation: func,
 };
 
 export default DashboardMessageDetailsPage;

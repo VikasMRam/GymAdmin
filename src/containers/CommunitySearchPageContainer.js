@@ -21,6 +21,16 @@ import { prefetch } from 'sly/services/newApi';
 import { withProps } from 'sly/services/helpers/hocs';
 
 
+const onCommunityClick = (position, to) => {
+  const event = {
+    category: 'SearchPage',
+    action: 'communityClick',
+    label: position.toString(),
+    value: to,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
+
 @withProps(({ match, location }) => ({
   searchParams: getSearchParams(match, location),
 }))
@@ -141,6 +151,7 @@ export default class CommunitySearchPageContainer extends PureComponent {
             location={location}
             onAdTileClick={this.handleOnAdTileClick}
             isFetchingResults={isFetchingResults}
+            onCommunityClick={onCommunityClick}
             showModal={show}
             hideModal={hide}
           />

@@ -1,0 +1,194 @@
+{
+  "id": "client",
+  "columns": [
+    {
+      "label": "Contact Name",
+      "value": "clientinfo.Name",
+      "type": {
+        "name": "Text",
+        "allowedExpressions": [
+          "eq",
+          "ne",
+          "em",
+          "nem",
+          "cs",
+          "ncs"
+        ]
+      },
+      "typeInfo": null,
+      "isFilterable": true,
+      "isSortable": true
+    },
+    {
+      "label": "Resident Name",
+      "value": "uuidAux.residentInfo.fullName",
+      "type": {
+        "name": "Text",
+        "allowedExpressions": [
+          "eq",
+          "ne",
+          "em",
+          "nem",
+          "cs",
+          "ncs"
+        ]
+      },
+      "typeInfo": null,
+      "isFilterable": true,
+      "isSortable": true
+    },
+    {
+      "label": "Stage",
+      "value": "client.Stage",
+      "type": {
+        "name": "Multi Select Static List",
+        "allowedExpressions": [
+          "in",
+          "nin",
+          "em",
+          "nem"
+        ]
+      },
+      "typeInfo": {
+        "list": [
+          "New",
+          "1st Contact Attempt",
+          "2nd Contact Attempt",
+          "3rd+ Contact Attempt",
+          "Discussing Options",
+          "Active Tours",
+          "Post Tours",
+          "Family Chose My Referral",
+          "Won",
+          "Lost",
+          "Rejected"
+        ]
+      },
+      "isFilterable": true,
+      "isSortable": true
+    },
+    {
+      "label": "Latest Activity",
+      "value": "client.notes",
+      "type": {
+        "name": "Text",
+        "allowedExpressions": [
+          "eq",
+          "ne",
+          "em",
+          "nem",
+          "cs",
+          "ncs"
+        ]
+      },
+      "typeInfo": null,
+      "isFilterable": false,
+      "isSortable": false
+    },
+    {
+      "label": "Date Added",
+      "value": "createdAt",
+      "type": {
+        "name": "DateTime",
+        "allowedExpressions": [
+          "isb",
+          "isa",
+          "is",
+          "isw",
+          "em",
+          "nem"
+        ]
+      },
+      "typeInfo": null,
+      "isFilterable": true,
+      "isSortable": true
+    },
+    {
+      "label": "Date Updated",
+      "value": "updatedAt",
+      "type": {
+        "name": "DateTime",
+        "allowedExpressions": [
+          "isb",
+          "isa",
+          "is",
+          "isw",
+          "em",
+          "nem"
+        ]
+      },
+      "typeInfo": null,
+      "isFilterable": true,
+      "isSortable": true
+    },
+    {
+      "label": "Status",
+      "value": "client.Status",
+      "type": {
+        "name": "Multi Select Static List",
+        "allowedExpressions": [
+          "in",
+          "nin",
+          "em",
+          "nem"
+        ]
+      },
+      "typeInfo": {
+        "list": [
+          "Active",
+          "On Pause",
+          "Archived",
+          "Deleted"
+        ]
+      },
+      "isFilterable": true,
+      "isSortable": true
+    },
+    {
+      "label": "Phone Number",
+      "value": "clientinfo.phoneNumber",
+      "type": {
+        "name": "Text",
+        "allowedExpressions": [
+          "eq",
+          "ne",
+          "em",
+          "nem",
+          "cs",
+          "ncs"
+        ]
+      },
+      "typeInfo": {
+        "validation": [
+          "Phone Number"
+        ]
+      },
+      "isFilterable": true,
+      "isSortable": true
+    },
+    {
+      "label": "Email",
+      "value": "clientinfo.Email",
+      "type": {
+        "name": "Text",
+        "allowedExpressions": [
+          "eq",
+          "ne",
+          "em",
+          "nem",
+          "cs",
+          "ncs"
+        ]
+      },
+      "typeInfo": {
+        "validation": [
+          "Email"
+        ]
+      },
+      "isFilterable": true,
+      "isSortable": true
+    }
+  ],
+  "createdAt": "2019-08-12T19:55:59Z",
+  "updatedAt": "2019-08-12T19:55:59Z"
+}

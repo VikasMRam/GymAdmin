@@ -4,17 +4,21 @@ version: 2.1
 
 orbs:
   node: circleci/node@1.1.2
+  cypress: cypress-io/cypress@1
 
 jobs:
   build:
     docker:
       - image: circleci/node:8.12 # though we use 8.9 only 8.12 has npm that supports npm ci
 
+    working_directory: ~/project
+
     environment:
       TEST_RESULTS: /tmp/test-results
 
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
 
       - run:
           name: Setup dirs
@@ -57,6 +61,12 @@ jobs:
                   export JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml"
                   npm test -- --ci --maxWorkers=12
 
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - project
+            - .cache
+
       - store_test_results:
           path: /tmp/test-results
 
@@ -67,58 +77,19 @@ jobs:
     docker:
       - image: circleci/python:2.7
 
+    working_directory: ~/project
+
     steps:
-      - run:
-          name: Check if Sly Master Repo
-          command: |
-            if [[ $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
-              echo "Skipping Deployment since this is not a Sly Master Build"
-              circleci step halt
-            fi
+#      - run:
+#          name: Check if Sly Master Repo or a PR
+#          command: |
+#            if [[ -z "$CIRCLE_PR_NUMBER" && $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
+#              echo "Skipping Deployment since this is not a Sly Master Build"
+#              circleci step halt
+#            fi
 
-      - checkout
-
-      - run:
-          name: Choosing EB_ENV
-          command: |
-            export LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
-            export LATEST_COMMIT=$(git rev-parse --short HEAD)
-            export NUMBER_OF_COMMITS=$(git rev-list --count HEAD ^$LATEST_TAG)
-            git for-each-ref --format="%(refname:short)-$NUMBER_OF_COMMITS-$LATEST_COMMIT" --sort=-authordate --count=1 refs/tags > ./VERSION
-            cat ./VERSION
-            git add ./VERSION
-
-            if [[ -n "$CIRCLE_TAG" ]]; then
-              echo $CIRCLE_TAG > ./VERSION
-              cat ./VERSION
-              git add ./VERSION
-              echo "export EB_ENV=slyreact-staging" >> $BASH_ENV
-              EB_ENV=slyreact-staging
-            elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
-              echo "export EB_ENV=slyreact-development" >> $BASH_ENV
-              EB_ENV=slyreact-development
-            else
-              FEATURE_ENV=$(eb list | grep -w "$CIRCLE_BRANCH" || true)
-              if [[ "$FEATURE_ENV" = "slyreact-prod" || "$FEATURE_ENV" = "slyreact-staging" ]]; then
-                echo "Tried to deploy to restricted env"
-                echo $FEATURE_ENV
-                return -1
-              fi
-              echo "export EB_ENV=$FEATURE_ENV" >> $BASH_ENV
-              EB_ENV=$FEATURE_ENV
-            fi
-
-            if [[ -z "$EB_ENV" ]]; then
-              circleci step halt
-            fi
-
-      # TODO: remove once circle ci starts supporting customizable notifications in workflows
-      - run:
-          name: Send deploy start notification
-          command: |
-            export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            ./.circleci/push-slack-notification.sh -t "Starting deploy to $EB_ENV" \
-              -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#66d3e4"
+      - attach_workspace:
+          at: /home/circleci
 
       - run:
           name: Install awscli
@@ -126,12 +97,68 @@ jobs:
             sudo pip install awsebcli --upgrade
 
       - run:
+          name: Set up environment
+          command: |
+            if [[ -n "$CIRCLE_TAG" ]]; then
+              export VERSION=$CIRCLE_TAG
+            else
+              export LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+              export LATEST_COMMIT=$(git rev-parse --short HEAD)
+              export NUMBER_OF_COMMITS=$(git rev-list --count HEAD ^$LATEST_TAG)
+              export VERSION=$(git for-each-ref --format="%(refname:short)-$NUMBER_OF_COMMITS-$LATEST_COMMIT" --sort=-authordate --count=1 refs/tags)
+            fi
+
+            echo "export VERSION=$VERSION" >> ~/new_env_vars
+
+            if [[ -n "$CIRCLE_TAG" ]]; then
+              echo "export EB_ENV=slyreact-staging" >> ~/new_env_vars
+              echo "export CYPRESS_baseUrl=http://www.myseniorly.com" >> ~/new_env_vars
+            elif [[ -n "$CIRCLE_PR_NUMBER" ]]; then
+              echo "export EB_ENV=slyreact-test" >> ~/new_env_vars
+              echo "export CYPRESS_baseUrl=http://test.teamseniorly.com" >> ~/new_env_vars
+            elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
+              echo "export EB_ENV=slyreact-development" >> ~/new_env_vars
+              echo "export CYPRESS_baseUrl=http://www.teamseniorly.com" >> ~/new_env_vars
+            else
+              export FEATURE_ENV=$(eb list | grep -w "$CIRCLE_BRANCH")
+              if [[ "$FEATURE_ENV" == "slyreact-prod" || "$FEATURE_ENV" == "slyreact-staging" ]]; then
+                echo "Tried to deploy to restricted env $FEATURE_ENV"
+                return 1
+              fi
+
+              if [[ -n "$FEATURE_ENV" ]]; then
+                echo "export EB_ENV=$FEATURE_ENV" >> ~/new_env_vars
+                echo "export CYPRESS_baseUrl=http://$FEATURE_ENV.teamseniorly.com" >> ~/new_env_vars
+              fi
+            fi
+
+
+            cat ~/new_env_vars >> $BASH_ENV
+            source $BASH_ENV
+
+            echo "VERSION=$VERSION"
+            echo "EB_ENV=$EB_ENV"
+            echo "CYPRESS_baseUrl=$CYPRESS_baseUrl"
+
+            if [[ -z "$EB_ENV" ]]; then
+              circleci step halt
+            fi
+
+
+      # TODO: remove once circle ci starts supporting customizable notifications in workflows
+      - run:
+          name: Send deploy start notification
+          command: |
+            export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
+            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY ./.circleci/push-slack-notification.sh -t "Starting deploy to $EB_ENV" \
+              -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#66d3e4"
+
+      - run:
           name: Deploy to EB
           command: |
-            export V=$(cat ./VERSION)
-            echo "Deploying to $EB_ENV"
+            echo "Deploying $VERSION to $EB_ENV"
             eb use $EB_ENV
-            export DEPLOY_FAILED=$(eb deploy $EB_ENV --timeout 30 -v --staged -l $V | tee /dev/tty | grep -c "ERROR")
+            export DEPLOY_FAILED=$(eb deploy $EB_ENV --timeout 60 -v --staged -l $VERSION | tee /dev/tty | grep -c "ERROR")
 
             if [ "$DEPLOY_FAILED" -gt 0 ]; then
               exit 1
@@ -142,40 +169,143 @@ jobs:
           name: Send deploy success notification
           command: |
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            ./.circleci/push-slack-notification.sh -t "Successfully deployed to $EB_ENV" \
+            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY ./.circleci/push-slack-notification.sh -t "Successfully deployed to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#42c88a"
       - run:
           name: Send deploy failed notification
           when: on_fail
           command: |
             export DESC_MSG=$(./.circleci/generate-deploy-status-message.sh)
-            ./.circleci/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
+            SLACK_NOTIFICATION_API_KEY=$SLACK_DEPLOY_NOTIFICATION_API_KEY ./.circleci/push-slack-notification.sh -t "Failed deploying to $EB_ENV" \
               -tl "$CIRCLE_BUILD_URL" -m "$DESC_MSG" -c "#ed5c5c"
+
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - new_env_vars
+
+  test:
+    machine: true
+
+    working_directory: ~/project/e2e
+
+    environment:
+      TEST_RESULTS: /tmp/test-results
+      CYPRESS_reporter: junit
+
+    steps:
+      - attach_workspace:
+          at: /home/circleci
+
+      - run: cat ~/new_env_vars >> $BASH_ENV
+
+      - node/install:
+          node-version: 8.16.0
+          install-yarn: false
+
+      - run:
+          name: Installing OpenVPN Client
+          command: sudo apt-get install openvpn
+
+      # The PEMs and credentials are set in OPENVPN context and are echoed into files
+      - run:
+          name: Creating OpenVPN Client Credential file
+          command: |
+            echo -e "$OPENVPN_USERNAME\n$OPENVPN_PASSWORD" >> openVPN_cred.txt
+            echo -e "$OPENVPN_CA" >> ca.pem
+            echo -e "$OPENVPN_CERT" >> cert.pem
+            echo -e "$OPENVPN_KEY" >> key.pem
+            echo -e "$OPENVPN_TLS_AUTH" >> tls_auth.pem
+
+      # PEMs should be escaped like explained here https://discuss.circleci.com/t/issues-storing-firebase-keys-as-environment-variable/6197/6
+      - run:
+          name: Creating OpenVPN Tunnel
+          command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
+
+      - restore_cache:
+          keys:
+            - cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+      - run:
+          name: Npm CI
+          command: npm ci
+
+      - run:
+          command: npx cypress verify
+
+      - save_cache:
+          key: cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+
+      - run:
+          name: Run Cypress tests
+          command: |
+            echo "Running cypress using $CYPRESS_baseUrl"
+            npx cypress run
+
+      - run:
+          name: Closing OpenVPN Tunnel
+          command: sudo killall openvpn
+
+      # TODO: remove once circle ci starts supporting customizable notifications in workflows
+      - run:
+          name: Send tests success notification
+          command: |
+            if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
+              export TEST_OUTPUT=$(cat test_output)
+              SLACK_NOTIFICATION_API_KEY=$SLACK_TEST_NOTIFICATION_API_KEY ../.circleci/push-slack-notification.sh -t "smoke tests success" \
+                -tl "$CIRCLE_BUILD_URL" -m "$TEST_OUTPUT" -c "#42c88a"
+            fi
+
+      - run:
+          name: Send tests failed notification
+          when: on_fail
+          command: |
+            if [ -z "$CIRCLE_PULL_REQUEST" ] && [ "$CIRCLE_BRANCH" == "master" ]; then
+              export DESC_MSG=$(cat test_output)
+              if [ -z "$DESC_MSG" ]; then
+                DESC_MSG="failed before running tests"
+              fi
+              SLACK_NOTIFICATION_API_KEY=$SLACK_TEST_NOTIFICATION_API_KEY ../.circleci/push-slack-notification.sh -t "smoke tests failed" \
+                -tl "$CIRCLE_BUILD_URL" -m "<!channel> $DESC_MSG" -c "#ed5c5c"
+            fi
+
+      - store_test_results:
+          path: /tmp/test-results
+
+      - store_artifacts:
+          path: /tmp/test-results
 
 workflows:
   version: 2
-  build-development:
+
+  build:
     jobs:
       # run build (unit tests, linting, quality checks etc etc) for PRs
       - build
       - deploy:
-          context: ReactDev
           requires:
             - build
-  build-staging:
-    jobs:
-      - build:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v.*/
-      - deploy:
-          context: ReactStaging
+      - test:
+          context: OPENVPN
           requires:
-            - build
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v.*/
+            - deploy
+
+#  build-staging:
+#    jobs:
+#      - build:
+#          filters:
+#            branches:
+#              ignore: /.*/
+#            tags:
+#              only: /^v.*/
+#      - deploy:
+#          context: ReactStaging
+#          requires:
+#            - build
+#          filters:
+#            branches:
+#              ignore: /.*/
+#            tags:
+#              only: /^v.*/

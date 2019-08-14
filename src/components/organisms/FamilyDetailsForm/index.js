@@ -99,10 +99,10 @@ class FamilyDetailsForm extends Component {
       ({ preferredLocation } = initialValues);
     }
 
-    const lookingForOptions = lookingFor.map(i => <option key={i} value={i}>{i}</option>);
-    const femaleOptions = gender.map(i => <option key={i} value={i}>{i}</option>);
-    const timeToMoveOptions = timeToMove.map(i => <option key={i} value={i}>{i}</option>);
-    const monthlyBudgetOptions = monthlyBudget.map(i => <option key={i} value={i}>{i}</option>);
+    const lookingForOptions = lookingFor.map(i => ({ label: i, value: i }));
+    const femaleOptions = gender.map(i => ({ label: i, value: i }));
+    const timeToMoveOptions = timeToMove.map(i => ({ label: i, value: i }));
+    const monthlyBudgetOptions = monthlyBudget.map(i => ({ label: i, value: i }));
 
     return (
       <div>
@@ -155,24 +155,22 @@ class FamilyDetailsForm extends Component {
             name="lookingFor"
             label="Looking for"
             type="select"
+            placeholder="Select an option"
             disabled={!canEditFamilyDetails}
             component={ReduxField}
+            options={lookingForOptions}
             wideWidth
-          >
-            <option value="">Select an option</option>
-            {lookingForOptions}
-          </Field>
+          />
           <Field
             name="gender"
             label="Gender"
             type="select"
+            placeholder="Select an option"
             disabled={!canEditFamilyDetails}
             component={ReduxField}
+            options={femaleOptions}
             wideWidth
-          >
-            <option value="">Select an option</option>
-            {femaleOptions}
-          </Field>
+          />
           <PaddedTwoColumnWrapper verticalCenter>
             <StyledLabel>Preferred location</StyledLabel>
             <StyledSearchBoxContainer
@@ -192,24 +190,22 @@ class FamilyDetailsForm extends Component {
             name="budget"
             label="Monthly budget"
             type="select"
+            placeholder="Select an option"
             disabled={!canEditFamilyDetails}
             component={ReduxField}
+            options={monthlyBudgetOptions}
             wideWidth
-          >
-            <option value="">Select an option</option>
-            {monthlyBudgetOptions}
-          </Field>
+          />
           <Field
             name="timeToMove"
             label="Time to move"
             type="select"
+            placeholder="Select an option"
             disabled={!canEditFamilyDetails}
             component={ReduxField}
+            options={timeToMoveOptions}
             wideWidth
-          >
-            <option value="">Select an option</option>
-            {timeToMoveOptions}
-          </Field>
+          />
           <TwoColumnWrapper>
             <StyledLabel>Seniorly introduction</StyledLabel>
             <IntroInfo size="caption">{intro}</IntroInfo>

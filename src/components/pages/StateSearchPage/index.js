@@ -163,7 +163,7 @@ const StateSearchPage = ({
     <Fragment>
       {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
       {getHelmetForSearchPage({
-        ...searchParams, url: location, communityList, listSize,
+        ...searchParams, url: location, communityList, listSize, geoGuide,
         })}
       <CommunitySearchPageTemplate
         column={stateSeachFilterList()}

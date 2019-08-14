@@ -12,7 +12,9 @@
     "__PROD__": true,
     "__DEBUG__": true,
     "__COVERAGE__": true,
-    "__BASENAME__": true
+    "__BASENAME__": true,
+    "cy": true,
+    "Cypress": true
   },
   "settings": {
     "import/resolver": {

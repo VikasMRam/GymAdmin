@@ -39,7 +39,7 @@ const StyledTable = styled.table`
       position: sticky;
       top: auto;
       border-left: none;
-      box-shadow: 1px 0px 0px 0px ${palette('slate.stroke')};
+      box-shadow: 4px 0px 0px 0px ${palette('slate.base')}19;
     }
   }
 `;

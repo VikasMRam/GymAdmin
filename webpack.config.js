@@ -7,7 +7,7 @@ const LoadablePlugin = require('@loadable/webpack-plugin');
 const UglifyJs = require('uglify-es');
 const cssmin = require('cssmin');
 const nodeExternals = require('webpack-node-externals');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const SpawnPlugin = require('webpack-spawn-plugin');
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 const webpack = require('webpack');
@@ -29,7 +29,7 @@ const {
 } = require('webpack-blocks');
 
 // defaults to dev env, otherwise specify with env vars
-const { STORYBOOK_GIT_BRANCH, GOOGLE_MAPS_API_KEY } = process.env;
+const { STORYBOOK_GIT_BRANCH } = process.env;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const SLY_ENV = process.env.SLY_ENV || 'development';
 const GA_ENV = process.env.GA_ENV || 'development';
@@ -43,6 +43,7 @@ const DOMAIN = process.env.DOMAIN || 'lvh.me';
 const VERSION = fs.existsSync('./VERSION') ? fs.readFileSync('./VERSION', 'utf8').trim() : '';
 const SOURCE = process.env.SOURCE || 'src';
 const FB_CLIENT_ID = process.env.FB_CLIENT_ID || '624602444328776';
+const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY || 'AIzaSyALxJg-oMW7SvkQ27KFTuWjTLedXcAhrZE';
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '522248695659-f0b3obj2ggorooclkfnt2fsfpo14urti.apps.googleusercontent.com';
 const MUTE_REDUX_LOGGER = process.env.MUTE_REDUX_LOGGER || false;
 const HIDE_CHATBOX = process.env.HIDE_CHATBOX || false;
@@ -281,14 +282,14 @@ const client = (target, entries) => createConfig([
 
   entryPoint(entries),
 
-  when(isDev || isStaging, [
-    addPlugins([
-      new BundleAnalyzerPlugin({
-        openAnalyzer: false,
-        analyzerPort: 0,
-      }),
-    ]),
-  ]),
+  // when(isDev || isStaging, [
+  //   addPlugins([
+  //     new BundleAnalyzerPlugin({
+  //       openAnalyzer: false,
+  //       analyzerPort: 0,
+  //     }),
+  //   ]),
+  // ]),
 
   externalWidget,
 

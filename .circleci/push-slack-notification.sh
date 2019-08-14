@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ -z $SLACK_DEPLOY_NOTIFICATION_API_KEY ]; then
-  echo "Missing Slack API key. Tip: Configure SLACK_DEPLOY_NOTIFICATION_API_KEY env variable"
+if [ -z $SLACK_NOTIFICATION_API_KEY ]; then
+  echo "Missing Slack API key. Tip: Configure SLACK_NOTIFICATION_API_KEY env variable"
   exit 1
 fi
 
@@ -46,4 +46,4 @@ JSON_PAYLOAD=$(printf "$JSON_PAYLOAD_TMPL" "$TEXT_COLOR" "$MSG_TITLE" "$MSG_TITL
 
 curl -X POST -H 'Content-type: application/json' \
   --data "$JSON_PAYLOAD" --fail \
-  "https://hooks.slack.com/services/$SLACK_DEPLOY_NOTIFICATION_API_KEY"
+  "https://hooks.slack.com/services/$SLACK_NOTIFICATION_API_KEY"

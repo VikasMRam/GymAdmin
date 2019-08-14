@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { object, arrayOf } from 'prop-types';
+import { object, arrayOf, func } from 'prop-types';
 
 import border from 'sly/components/helpers/border';
 import borderRadius from 'sly/components/helpers/borderRadius';
@@ -14,9 +14,9 @@ const PaddedLink = pad(styled(Link)`
 
 const ShadowCommunityTile = borderRadius(border(CommunityTile, 'regular', 'grey', 'stroke'));
 
-const SimilarCommunity = ({ similarProperties }) => {
-  const components = similarProperties.map(similarProperty => (
-    <PaddedLink key={similarProperty.id} to={similarProperty.url}>
+const SimilarCommunity = ({ similarProperties, onSimilarCommunityClick }) => {
+  const components = similarProperties.map((similarProperty, index) => (
+    <PaddedLink key={similarProperty.id} to={similarProperty.url} onClick={() => onSimilarCommunityClick(index, similarProperty.id)}>
       <ShadowCommunityTile community={similarProperty} layout="column" imageSize="regular" noGallery showDescription showSeeMoreButtonOnHover />
     </PaddedLink>
   ));
@@ -25,6 +25,7 @@ const SimilarCommunity = ({ similarProperties }) => {
 
 SimilarCommunity.propTypes = {
   similarProperties: arrayOf(object).isRequired,
+  onSimilarCommunityClick: func.isRequired,
 };
 
 export default SimilarCommunity;
