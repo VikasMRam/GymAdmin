@@ -158,6 +158,7 @@ export default class CommunityDetailPage extends Component {
     onConciergeNumberClicked: func,
     onLiveChatClicked: func,
     onReceptionNumberClicked: func,
+    onSimilarCommunitiesClick: func,
     userSave: object,
     searchParams: object,
     setQueryParams: func,
@@ -251,7 +252,7 @@ export default class CommunityDetailPage extends Component {
     const {
       id, name, questions,
     } = community;
-    let questionToAnswer = questions.find(q => q.type === question.type && q.id === question.id);
+    const questionToAnswer = questions.find(q => q.type === question.type && q.id === question.id);
     // if (!questionToAnswer) {
     //   questionToAnswer = communityFaQs.find(communityFaQ => communityFaQ.type === question.type && communityFaQ.id === question.id);
     // }
@@ -377,6 +378,7 @@ export default class CommunityDetailPage extends Component {
       onMediaGallerySlideChange,
       onMediaGalleryToggleFullscreen,
       onBackToSearchClicked,
+      onSimilarCommunitiesClick,
       user,
       onReviewLinkClicked,
       userSave,
@@ -483,6 +485,9 @@ export default class CommunityDetailPage extends Component {
     const pricesList = buildPriceList(community);
     const pricingTitle = (pricesList.length === 0 && floorPlans.length > 0) ? 'Pricing and Floor Plans' : 'Pricing';
 
+    const showSimilarEarlier = pricesList.length === 0 && floorPlans.length > 0 && address.city === 'Sacramento' && address.state === 'CA' &&
+      (!communityDescription || communityDescription === '') ;
+
     return (
       <Fragment>
         {getHelmetForCommunityPage(community, location)}
@@ -537,6 +542,22 @@ export default class CommunityDetailPage extends Component {
                           <IconItem icon="check" iconPalette="secondary" borderless={false}>{item}</IconItem>
                         </IconItemWrapper>))
                       }
+                    </MainSection>
+                  </TopCollapsibleSection>
+                }
+                {showSimilarEarlier &&
+                  <TopCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
+                    <MainSection>
+                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} />
+                      <BackToSearch>
+                        <Button
+                          ghost
+                          onClick={onBackToSearchClicked}
+                          href={getCitySearchUrl({ propInfo, address })}
+                        >
+                          Communities In {address.city}
+                        </Button>
+                      </BackToSearch>
                     </MainSection>
                   </TopCollapsibleSection>
                 }
@@ -750,20 +771,22 @@ export default class CommunityDetailPage extends Component {
                   url="/providers/housing"
                   urlText="Simply claim your profile by clicking here"
                 />
-                <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
-                  <MainSection>
-                    <SimilarCommunities similarProperties={similarProperties} />
-                    <BackToSearch>
-                      <Button
-                        ghost
-                        onClick={onBackToSearchClicked}
-                        href={getCitySearchUrl({ propInfo, address })}
-                      >
-                        Communities In {address.city}
-                      </Button>
-                    </BackToSearch>
-                  </MainSection>
-                </BottomCollapsibleSection>
+                {!showSimilarEarlier &&
+                  <BottomCollapsibleSection title={`Similar ${typeOfCare} Communities`} id="sticky-sidebar-boundary">
+                    <MainSection>
+                      <SimilarCommunities similarProperties={similarProperties} onSimilarCommunityClick={onSimilarCommunitiesClick} />
+                      <BackToSearch>
+                        <Button
+                          ghost
+                          onClick={onBackToSearchClicked}
+                          href={getCitySearchUrl({ propInfo, address })}
+                        >
+                          Communities In {address.city}
+                        </Button>
+                      </BackToSearch>
+                    </MainSection>
+                  </BottomCollapsibleSection>
+                }
                 <CommunityStickyFooter
                   isAlreadyTourScheduled={isAlreadyTourScheduled}
                   isAlreadyPricingRequested={isAlreadyPricingRequested}
