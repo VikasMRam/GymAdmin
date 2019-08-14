@@ -59,7 +59,8 @@ export default class DatatableFilterRowForm extends Component {
 
   state = {
     columns: this.props.datatable.columns.reduce((acc, column) => {
-      acc[column.value] = column;
+      if (!column.paramKey) return acc;
+      acc[column.paramKey] = column;
       return acc;
     }, {}),
   };
@@ -81,7 +82,10 @@ export default class DatatableFilterRowForm extends Component {
 
   getColumns = () => {
     const { datatable } = this.props;
-    return datatable.columns.filter(column => column.isFilterable);
+    return datatable.columns.filter(column => column.isFilterable).map(({ label, paramKey }) => ({
+      label,
+      value: paramKey,
+    }));
   };
 
   getOperatorsFor = column => this.state.columns[column]
