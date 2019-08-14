@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { func, arrayOf } from 'prop-types';
+import { func, shape, arrayOf, oneOf } from 'prop-types';
 
 import datatableProptype from 'sly/propTypes/datatable';
 import filterProptype from 'sly/propTypes/datatableFilter';
@@ -11,38 +11,54 @@ const Wrapper = 'div';
 export default class DatatableFilters extends Component {
   static propTypes = {
     onChange: func,
-    filters: arrayOf(filterProptype).isRequired,
+    filterState: shape({
+      logicalOperator: oneOf(['and', 'or']),
+      filters: arrayOf(filterProptype),
+    }).isRequired,
     datatable: datatableProptype,
   };
 
   addFilter = () => {
-    const { filters, onChange } = this.props;
-    onChange([...filters, {}]);
+    const { filterState, onChange } = this.props;
+    const { filters, logicalOperator } = filterState;
+    onChange({ filters: [...filters, {}], logicalOperator });
   };
 
   onFilterChange = (filter, newFilter) => {
-    const { filters, onChange } = this.props;
+    const { filterState, onChange } = this.props;
+    const { filters, logicalOperator } = filterState;
     const index = filters.indexOf(filter);
-    onChange([...filters.slice(0, index), newFilter, ...filters.slice(index + 1)]);
+    onChange({ filters: [...filters.slice(0, index), newFilter, ...filters.slice(index + 1)], logicalOperator });
   };
 
   onFilterRemove = (filter) => {
-    const { filters, onChange } = this.props;
+    const { onChange, filterState } = this.props;
+    const { filters, logicalOperator } = filterState;
     const index = filters.indexOf(filter);
     const next = [...filters.slice(0, index), ...filters.slice(index + 1)];
-    onChange(next);
+    onChange({ filters: next, logicalOperator });
+  };
+
+  onLogicalOperatorChange = (logicalOperator) => {
+    const { onChange, filterState } = this.props;
+    const { filters } = filterState;
+    onChange({ filters, logicalOperator });
   };
 
   render() {
-    const { filters, datatable } = this.props;
+    const { filterState, datatable } = this.props;
+    const { filters, logicalOperator } = filterState;
     return (
       <Wrapper>
         {filters.map((filter, i) => (
+          /* eslint-disable react/no-array-index-key */
           <DatatableFilterRow
             key={`${filter.column || i}_${i}`}
-            onChange={this.onFilterChange}
+            index={i}
+            onFilterChange={this.onFilterChange}
             onRemove={this.onFilterRemove}
-            filters={filters}
+            onLogicalOperatorChange={this.onLogicalOperatorChange}
+            logicalOperator={logicalOperator}
             filter={filter}
             datatable={datatable}
           />

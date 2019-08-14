@@ -9,24 +9,22 @@ import datatableClient from 'sly/../private/storybook/sample-data/datatable-clie
 class Container extends Component {
   state = {
     filters: [],
+    logicalOperator: 'and',
   };
 
-  onChange = (filters) => {
+  onChange = (state) => {
     const { onChange } = this.props;
 
-    onChange(filters);
-    this.setState({
-      filters,
-    });
+    onChange(state);
+    this.setState(state);
   };
 
   render() {
-    const { filters } = this.state;
     return (
       <DatatableFilters
         datatable={datatableClient}
         onChange={this.onChange}
-        filters={filters}
+        filterState={this.state}
       />
     );
   }

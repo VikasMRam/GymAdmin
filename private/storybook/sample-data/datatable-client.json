@@ -3,7 +3,8 @@
   "columns": [
     {
       "label": "Contact Name",
-      "value": "clientinfo.Name",
+      "value": "clientInfo.Name",
+      "paramKey": "name",
       "type": {
         "name": "Text",
         "allowedExpressions": [
@@ -22,6 +23,7 @@
     {
       "label": "Resident Name",
       "value": "uuidAux.residentInfo.fullName",
+      "paramKey": "resident",
       "type": {
         "name": "Text",
         "allowedExpressions": [
@@ -38,10 +40,57 @@
       "isSortable": true
     },
     {
-      "label": "Stage",
-      "value": "client.Stage",
+      "label": "Phone Number",
+      "value": "clientinfo.phoneNumber",
+      "paramKey": "phone",
       "type": {
-        "name": "Multi Select Static List",
+        "name": "Text",
+        "allowedExpressions": [
+          "eq",
+          "ne",
+          "em",
+          "nem",
+          "cs",
+          "ncs"
+        ]
+      },
+      "typeInfo": {
+        "validation": [
+          "Phone Number"
+        ]
+      },
+      "isFilterable": true,
+      "isSortable": true
+    },
+    {
+      "label": "Email",
+      "value": "clientinfo.Email",
+      "paramKey": "email",
+      "type": {
+        "name": "Text",
+        "allowedExpressions": [
+          "eq",
+          "ne",
+          "em",
+          "nem",
+          "cs",
+          "ncs"
+        ]
+      },
+      "typeInfo": {
+        "validation": [
+          "Email"
+        ]
+      },
+      "isFilterable": true,
+      "isSortable": true
+    },
+    {
+      "label": "Stage",
+      "value": "stage",
+      "paramKey": "stage",
+      "type": {
+        "name": "MultiSelectStaticList",
         "allowedExpressions": [
           "in",
           "nin",
@@ -69,7 +118,8 @@
     },
     {
       "label": "Latest Activity",
-      "value": "client.notes",
+      "value": "notes",
+      "paramKey": "notes",
       "type": {
         "name": "Text",
         "allowedExpressions": [
@@ -88,13 +138,14 @@
     {
       "label": "Date Added",
       "value": "createdAt",
+      "paramKey": "created",
       "type": {
         "name": "DateTime",
         "allowedExpressions": [
-          "isb",
-          "isa",
+          "bef",
+          "aft",
           "is",
-          "isw",
+          "bet",
           "em",
           "nem"
         ]
@@ -106,85 +157,19 @@
     {
       "label": "Date Updated",
       "value": "updatedAt",
+      "paramKey": "updated",
       "type": {
         "name": "DateTime",
         "allowedExpressions": [
-          "isb",
-          "isa",
+          "bef",
+          "aft",
           "is",
-          "isw",
+          "bet",
           "em",
           "nem"
         ]
       },
       "typeInfo": null,
-      "isFilterable": true,
-      "isSortable": true
-    },
-    {
-      "label": "Status",
-      "value": "client.Status",
-      "type": {
-        "name": "Multi Select Static List",
-        "allowedExpressions": [
-          "in",
-          "nin",
-          "em",
-          "nem"
-        ]
-      },
-      "typeInfo": {
-        "list": [
-          "Active",
-          "On Pause",
-          "Archived",
-          "Deleted"
-        ]
-      },
-      "isFilterable": true,
-      "isSortable": true
-    },
-    {
-      "label": "Phone Number",
-      "value": "clientinfo.phoneNumber",
-      "type": {
-        "name": "Text",
-        "allowedExpressions": [
-          "eq",
-          "ne",
-          "em",
-          "nem",
-          "cs",
-          "ncs"
-        ]
-      },
-      "typeInfo": {
-        "validation": [
-          "Phone Number"
-        ]
-      },
-      "isFilterable": true,
-      "isSortable": true
-    },
-    {
-      "label": "Email",
-      "value": "clientinfo.Email",
-      "type": {
-        "name": "Text",
-        "allowedExpressions": [
-          "eq",
-          "ne",
-          "em",
-          "nem",
-          "cs",
-          "ncs"
-        ]
-      },
-      "typeInfo": {
-        "validation": [
-          "Email"
-        ]
-      },
       "isFilterable": true,
       "isSortable": true
     }
