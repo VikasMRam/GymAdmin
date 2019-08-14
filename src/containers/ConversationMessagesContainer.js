@@ -119,6 +119,10 @@ export default class ConversationMessagesContainer extends Component {
     onCreateConversationSuccess: func,
   };
 
+  static defaultProps = {
+    messages: [],
+  }
+
   static getDerivedStateFromProps(props, state) {
     const { messages } = state;
     if (!messages || (props.messages && props.messages.length !== messages.length)) {
@@ -355,7 +359,7 @@ export default class ConversationMessagesContainer extends Component {
       <ContainerWrapper className={className}>
         {headingBoxSection}
         <MessagesWrapper innerRef={this.messagesRef}>
-          {!(messages && messages.length === 0) && (
+          {!messages.length && (
             <Fragment>
               <br />
               <FullHeightTextCenterBlock size="caption">No messages</FullHeightTextCenterBlock>
