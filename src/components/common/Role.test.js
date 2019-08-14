@@ -6,7 +6,7 @@ import thunkMiddleware from 'redux-thunk';
 import Role from 'sly/components/common/Role';
 
 const mockStore = configureStore([thunkMiddleware]);
-const wrap = (props = {}, children) => shallow(
+const wrap = (props = {}, children) => shallow((
   <Role
     store={mockStore({ bees: { requests: {} } })}
     api={{}}
@@ -14,7 +14,7 @@ const wrap = (props = {}, children) => shallow(
   >
     {children}
   </Role>
-);
+));
 
 const makeUserRequestInfo = roleID => ({
   hasStarted: true,
