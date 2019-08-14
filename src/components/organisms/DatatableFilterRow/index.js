@@ -110,8 +110,15 @@ export default class DatatableFilterRowForm extends Component {
   };
 
   render() {
-    const { onRemove, filter, datatable, onLogicalOperatorChange, logicalOperator, index } = this.props;
-    console.log('logicalOperator', logicalOperator);
+    const {
+      onRemove,
+      filter,
+      datatable,
+      onLogicalOperatorChange,
+      logicalOperator,
+      index,
+    } = this.props;
+
     return (
       <Row>
         <IconButton onClick={() => onRemove(filter)} icon="clear" />
