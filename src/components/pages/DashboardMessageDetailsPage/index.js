@@ -11,7 +11,7 @@ import {
   DASHBOARD_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, ACTIVITY,
 } from 'sly/constants/dashboardAppPaths';
-import { CUSTOMER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
+import { CUSTOMER_ROLE, AGENT_ND_ROLE } from 'sly/constants/roles';
 import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
 import userPropType from 'sly/propTypes/user';
@@ -63,7 +63,7 @@ const DashboardMessageDetailsPage = ({
         <Role is={CUSTOMER_ROLE}>
           <BackLink to={FAMILY_DASHBOARD_MESSAGES_PATH} />
         </Role>
-        <Role is={AGENT_ROLE}>
+        <Role is={AGENT_ND_ROLE}>
           <BackLink to={AGENT_DASHBOARD_MESSAGES_PATH} />
         </Role>
         <FullWidthTextCenterBlock size="subtitle" palette={otherParticipantIsClient && 'primary'}>
