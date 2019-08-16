@@ -63,7 +63,7 @@ export default class DatatableFilters extends Component {
             datatable={datatable}
           />
         ))}
-        <Button ghost transparent onClick={this.addFilter}>Add filter</Button>
+        <Button transparent onClick={this.addFilter}>Add filter</Button>
       </Wrapper>
     );
   }

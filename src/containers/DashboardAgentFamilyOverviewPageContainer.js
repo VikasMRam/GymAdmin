@@ -80,6 +80,7 @@ const getPageParams = ({ match, location }) => {
     'filter[provider]': provider,
     'page-number': pageNumber,
   };
+  console.log(filters)
   return getClients(filters);
 })
 
@@ -133,7 +134,7 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     } = clientsStatus;
 
     if (clientsError) {
-      return <RefreshRedirect to="/" />;
+      throw new Error(JSON.stringify(clientsError));
     }
     const isPageLoading = !hasStarted || isLoading;
     if (isPageLoading) {

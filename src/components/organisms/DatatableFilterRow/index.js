@@ -6,7 +6,7 @@ import filterPropType from 'sly/propTypes/datatableFilter';
 import datatablePropType from 'sly/propTypes/datatable';
 import IconButton from 'sly/components/molecules/IconButton';
 import Field from 'sly/components/molecules/Field';
-import { noValueOperators } from 'sly/services/helpers/datatable'
+import { noValueOperators } from 'sly/services/helpers/datatable';
 
 const Row = 'form';
 
