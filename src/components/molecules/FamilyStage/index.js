@@ -9,7 +9,8 @@ import { getStageDetails } from 'sly/services/helpers/stage';
 import { TOTAL_STAGES_COUNT } from 'sly/constants/familyDetails';
 import { Box, Heading, Button } from 'sly/components/atoms';
 import Stage from 'sly/components/molecules/Stage';
-
+import userPropType from 'sly/propTypes/user';
+import { userHasAdminRole } from 'sly/services/helpers/role';
 const ColumWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
     display: grid;
@@ -32,11 +33,15 @@ const MarginBottomFullWidthButton = pad(FullWidthButton, 'regular');
 MarginBottomFullWidthButton.displayName = 'MarginBottomFullWidthButton';
 
 const FamilyStage = ({
-  stageText, onAcceptClick, onRejectClick, snap, noBorderRadius, onAddNoteClick, onUpdateClick,
+  stageText, onAcceptClick, onRejectClick, snap, noBorderRadius, onAddNoteClick, onUpdateClick, user,
 }) => {
-  const {
+  let {
     levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, disableAddNoteButton, disableUpdateButton,
   } = getStageDetails(stageText);
+
+  if (userHasAdminRole(user)) {
+    [showAcceptRejectButtons, showUpdateAddNoteButtons, disableAddNoteButton, disableUpdateButton] = [false, true, false, false];
+  }
   let text = 'Unknown';
   if (levelGroup) {
     text = `${levelGroup} - ${stageText}`;
@@ -62,6 +67,7 @@ FamilyStage.propTypes = {
   onAddNoteClick: func,
   snap: string,
   noBorderRadius: bool,
+  user: userPropType,
 };
 
 export default FamilyStage;

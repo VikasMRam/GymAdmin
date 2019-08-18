@@ -40,6 +40,7 @@ import IconButton from 'sly/components/molecules/IconButton';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
+import { userHasAdminRole } from 'sly/services/helpers/role';
 import Tab from 'sly/components/molecules/Tab';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import fullHeight from 'sly/components/helpers/fullHeight';
@@ -49,6 +50,7 @@ import conversationPropType from 'sly/propTypes/conversation/conversation';
 import Role from 'sly/components/common/Role';
 import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 import { AGENT_ND_ROLE,PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -452,9 +454,13 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       id, clientInfo, stage, status,
     } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
-    const {
+    let {
       levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails,
-    } = getStageDetails(stage, user);
+    } = getStageDetails(stage);
+    // Override based on role
+    if (userHasAdminRole(user)) {
+      [showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails] = [false, true, true, true];
+    }
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) => {
       const props = {
