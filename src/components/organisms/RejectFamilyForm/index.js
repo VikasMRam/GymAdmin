@@ -78,7 +78,7 @@ export default class RejectFamilyForm extends Component {
               type="hidden"
               component={ReduxField}
             />
-            <Label><span>Preferred location<Span palette="danger">*</Span></span></Label>
+            <Label><span>Family&#39;s preferred location<Span palette="danger">*</Span></span></Label>
             <SearchBoxContainer
               onLocationSearch={handleLocationChange}
               onTextChange={handleChange}

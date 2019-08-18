@@ -125,7 +125,7 @@ export const getHelmetForSearchPage = ({
     };
   }
 
-  const { guideContent } = geoGuide;
+  const guideContent = geoGuide.guideContent || {};
   const { seoTitle, seoDescription } = guideContent;
 
   const locationStr = city ? `${titleize(city)}, ${getStateAbbr(state)}` : `${titleize(state)}`;

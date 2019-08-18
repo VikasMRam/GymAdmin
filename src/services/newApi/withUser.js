@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import { object, func } from 'prop-types';
 import get from 'lodash/get';
 
-import { query, withApi, getRequestInfo, getEntity, getRelationship } from 'sly/services/newApi';
+import { query, withApi, createMemoizedRequestInfoSelector } from 'sly/services/newApi';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName
@@ -12,23 +12,26 @@ function getDisplayName(WrappedComponent) {
     || 'Component';
 }
 
+const getMemoizedUserRequestInfo = createMemoizedRequestInfoSelector();
+const getMemoizedUuidAuxRequestInfo = createMemoizedRequestInfoSelector();
 export default function withUser(InnerComponent) {
-  const mapStateToProps = (state, props) => {
-    const userRequestInfo = props.userRequestInfo || getRequestInfo(
-      state,
-      'getUser',
-      [{ id: 'me' }],
-    );
+  const makeMapStateToProps = () => {
+    return (state, props) => {
+      // let this rescue this from props to bypass store for testing porpuses
+      const userRequestInfo = props.userRequestInfo || getMemoizedUserRequestInfo(
+        state,
+        { call: 'getUser', args: [{ id: 'me' }] }
+      );
 
-    const uuidAuxRequestInfo = props.uuidAuxRequestInfo || getRequestInfo(
-      state,
-      'getUuidAux',
-      [{ id: 'me' }],
-    );
+      const uuidAuxRequestInfo = props.uuidAuxRequestInfo || getMemoizedUuidAuxRequestInfo(
+        state,
+        { call: 'getUuidAux', args: [{ id: 'me' }] }
+      );
 
-    return {
-      userRequestInfo,
-      uuidAuxRequestInfo,
+      return {
+        userRequestInfo,
+        uuidAuxRequestInfo,
+      };
     };
   };
 
@@ -41,9 +44,9 @@ export default function withUser(InnerComponent) {
 
   @query('updateUser', 'updateUser')
 
-  @connect(mapStateToProps, mapDispatchToActions)
+  @connect(makeMapStateToProps, mapDispatchToActions)
 
-  class Wrapper extends React.Component {
+  class Wrapper extends React.PureComponent {
     static displayName = `withUser(${getDisplayName(InnerComponent)})`;
 
     static WrappedComponent = InnerComponent;

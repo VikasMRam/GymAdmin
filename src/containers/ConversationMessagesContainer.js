@@ -3,6 +3,7 @@ import { arrayOf, object, func, string, node } from 'prop-types';
 import dayjs from 'dayjs';
 import build from 'redux-object';
 import styled from 'styled-components';
+import { branch } from 'recompose';
 
 import { size, palette } from 'sly/components/themes';
 import { prefetch, withUser, query } from 'sly/services/newApi';
@@ -79,11 +80,14 @@ const StyledSendMessageFormContainer = pad(styled(SendMessageFormContainer)`
 `, 'large');
 
 
-@prefetch('messages', 'getConversationMessages', (req, { conversation }) => req({
-  'filter[conversationID]': conversation && conversation.id,
-  sort: '-created_at',
-  'page-size': 1000, // todo: remove after api fix
-}))
+@branch(
+  props => props.conversation,
+  prefetch('messages', 'getConversationMessages', (req, { conversation }) => req({
+    'filter[conversationID]': conversation.id,
+    sort: '-created_at',
+    'page-size': 1000, // todo: remove after api fix
+  }))
+)
 
 @query('getConversationMessages', 'getConversationMessages')
 
@@ -114,6 +118,10 @@ export default class ConversationMessagesContainer extends Component {
     otherParticipantType: string,
     onCreateConversationSuccess: func,
   };
+
+  static defaultProps = {
+    messages: [],
+  }
 
   static getDerivedStateFromProps(props, state) {
     const { messages } = state;
@@ -216,6 +224,10 @@ export default class ConversationMessagesContainer extends Component {
 
   getHasFinished = () => {
     const { status } = this.props;
+    // Returning true if we dont load messages as conversation is not present
+    if (!status.messages) {
+      return true;
+    }
     const { hasFinished } = status.messages;
 
     return hasFinished;

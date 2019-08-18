@@ -49,6 +49,18 @@ const DashboardMessageDetailsPage = ({
   let sendMessageFormPlaceholder = '';
 
   if (!isLoading) {
+    if (!conversation) {
+      return (
+        <Fragment>
+          <Role is={CUSTOMER_ROLE}>
+            <Redirect to={FAMILY_DASHBOARD_MESSAGES_PATH} />;
+          </Role>
+          <Role is={AGENT_ROLE}>
+            <Redirect to={AGENT_DASHBOARD_MESSAGES_PATH} />;
+          </Role>
+        </Fragment>
+      );
+    }
     ({ conversationParticipants } = conversation);
     const { id } = user;
     viewingAsParticipant = conversationParticipants.find(p => p.participantID === id);

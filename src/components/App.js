@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger */
-import React, { Component, Fragment } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import Helmet from 'react-helmet';
@@ -56,7 +56,7 @@ const AgentProfilePageContainer = loadable(() => import(/* webpackChunkName: "ch
 const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentRegion" */ 'sly/containers/AgentRegionPageContainer'));
 
 // Dashboard
-const DashboardHomePageContainer = loadable(() => import('sly/containers/DashboardHomePageContainer'));
+const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/containers/DashboardHomePageContainer'));
 const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/containers/DashboardFavoritesPageContainer'));
 const DashboardMyProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer'));
 const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
@@ -104,10 +104,11 @@ const TempHowItWorks = ({ ...props }) => (
   />
 );
 
-export default class App extends Component {
+export default class App extends PureComponent {
   static childContextTypes = {
     routes: routesPropType,
   };
+
 
   static routes = [
     {
