@@ -13,5 +13,6 @@ storiesOf('Atoms|Icon', module)
   .add('star clip', () => <Icon icon="star-clip" size="large" />)
   .add('chevron small', () => <Icon icon="chevron" size="small" />)
   .add('chevron regular (default)', () => <Icon icon="chevron" />)
+  .add('chevron left', () => <Icon icon="chevron" rotate={1} />)
   .add('chevron large', () => <Icon icon="chevron" size="large" palette="slate" />)
   .add('chevron large flip', () => <Icon flip icon="chevron" size="large" palette="slate" />);

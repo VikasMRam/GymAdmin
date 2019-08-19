@@ -61,10 +61,10 @@ const JoinSlyButtons = ({
   <section>
     <StyledHeading>{heading}</StyledHeading>
     <FacebookButton onClick={onContinueWithFacebookClicked}>
-      <Icon icon="facebook" size="regular" /> Continue with Facebook
+      <Icon icon="facebook-f" /> Continue with Facebook
     </FacebookButton>
     <GoogleButton transparent onClick={onContinueWithGoogleClicked} error={socialLoginError}>
-      <Icon icon="google" size="regular" /> Continue with Google
+      <Icon icon="google" /> Continue with Google
     </GoogleButton>
     {socialLoginError && <SocialLoginError palette="danger">{socialLoginError}</SocialLoginError>}
     <StyledHr />
