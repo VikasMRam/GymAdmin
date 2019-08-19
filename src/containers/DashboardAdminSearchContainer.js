@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { query, prefetch } from 'sly/services/newApi';
 import { arrayOf, func } from 'prop-types';
 import { adminCommunityPropType } from 'sly/propTypes/community';
-import DashboardAdminSearchCommunityAgents from 'sly/components/organisms/DasboardAdminSearchCommunityAgents';
+import DashboardAdminSearchCommunityAgents from 'sly/components/organisms/DashboardAdminSearchCommunityAgents';
 
 @prefetch('communities', 'getCommunities', (req, { query }) => {
   const modQ = {};

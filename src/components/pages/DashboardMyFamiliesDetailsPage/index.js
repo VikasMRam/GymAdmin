@@ -50,6 +50,7 @@ import conversationPropType from 'sly/propTypes/conversation/conversation';
 import Role from 'sly/components/common/Role';
 import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 import { AGENT_ND_ROLE,PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
 
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
@@ -418,6 +419,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, onUnPause, refetchConversations,
     } = this.props;
+    console.log('Current Tab!',currentTab);
     const { admin } = user;
 
     let conversationParticipants = [];
@@ -586,16 +588,24 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
             {currentTab === COMMUNITIES && (
               <CommunitiesTab>
-                <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
-                <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
+                <ReferralSearchContainer
+                  notifyError={notifyError}
+                  notifyInfo={notifyInfo}
+                  parentClient={client}
+                  referralMode="Community"
+                />
               </CommunitiesTab>
             )}
 
             {currentTab === PARTNER_AGENTS && (
               <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
                 <CommunitiesTab>
-                  <TextAlignCenterBlock size="subtitle" weight="medium">This AGENTS feature is coming soon!</TextAlignCenterBlock>
-                  <TextAlignCenterBlock palette="grey">You will be able to SEND REFERRALS TO AGENTS </TextAlignCenterBlock>
+                  <ReferralSearchContainer
+                    notifyError={notifyError}
+                    notifyInfo={notifyInfo}
+                    parentClient={client}
+                    referralMode="Agent"
+                  />
                 </CommunitiesTab>
               </Role>
             )}

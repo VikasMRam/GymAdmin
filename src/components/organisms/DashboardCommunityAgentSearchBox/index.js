@@ -17,7 +17,7 @@ const Form = styled.form`
   
 `;
 
-const CommunitySearchForm = ({ handleSubmit }) => {
+const CommunityAgentSearchForm = ({ handleSubmit }) => {
   return (
     <Form onSubmit={handleSubmit} name="CommunitySearchForm" >
       <Field name="name" label="Name" type="text" component={ReduxField} />
@@ -28,14 +28,14 @@ const CommunitySearchForm = ({ handleSubmit }) => {
 };
 
 const ReduxForm = reduxForm({
-  form: 'CommunitySearchForm',
+  form: 'CommunityAgentSearchForm',
   destroyOnUnmount: false,
   // required to refresh when initialValues change. Ref: https://redux-form.com/6.7.0/examples/initializefromstate/
   enableReinitialize: true,
   keepDirtyOnReinitialize: true,
-})(CommunitySearchForm);
+})(CommunityAgentSearchForm);
 
-export default class DashboardCommunitySearchBox extends Component {
+export default class DashboardCommunityAgentSearchBox extends Component {
   static propTypes = {
     handleSubmit: func.isRequired,
   };

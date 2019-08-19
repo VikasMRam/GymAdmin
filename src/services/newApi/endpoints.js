@@ -34,6 +34,8 @@ export default {
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
   getCommunities: { method: get, path: '/marketplace/communities' },
 
+  getAgents: { method: get, path: '/marketplace/agents' },
+
   getSearchResources: { method: get, path: '/platform/search-resources' },
   getGeoGuides: { method: get, path: '/platform/geo-guides' },
 
@@ -63,6 +65,8 @@ export default {
   updateConversationParticipant: { method: patch, path: '/platform/conversation-participants/:id' },
 
   getVoiceCalls: { method: get, path: '/platform/communications/voice' },
-  getVoiceCall: { method: get, path: '/platform/communications/voice/:id' },
+  getVoiceCall: { method: get, path: '/platform/communications/voice/:id'},
+
+  getTasks: { method: get, path: '/platform/tasks'},
 
 };

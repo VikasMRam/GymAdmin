@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-import DashboardCommunitySearchBox from 'sly/components/organisms/DashboardCommunitySearchBox';
+import DashboardCommunityAgentSearchBox from 'sly/components/organisms/DashboardCommunityAgentSearchBox';
 import { reduxForm } from 'redux-form';
 
 
@@ -15,7 +15,7 @@ const onNameZipChange = action('onNameZipChange');
 
 const DashboardCommunitySearchBoxContainer = reduxForm({
   form: 'DashboardCommunitySearchBox',
-})(DashboardCommunitySearchBox);
+})(DashboardCommunityAgentSearchBox);
 
 const wrap = (props = {}) => (
   <Wrapper>

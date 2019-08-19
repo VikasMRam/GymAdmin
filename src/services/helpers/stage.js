@@ -1,5 +1,4 @@
 import { FAMILY_STAGE_ORDERED, TOTAL_STAGES_COUNT, FAMILY_STAGE_NEW, FAMILY_STAGE_REJECTED } from 'sly/constants/familyDetails';
-import { userHasAdminRole } from 'sly/services/helpers/role';
 
 const stageArr = Object.keys(FAMILY_STAGE_ORDERED);
 
@@ -53,8 +52,4 @@ export const getStageDetails = (stageName) => {
     showRejectOption,
     canEditFamilyDetails,
   };
-};
-
-export const getAllowedStageLevels = (stageName, user) => {
-
 };

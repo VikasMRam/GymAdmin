@@ -70,3 +70,13 @@ export const newUuidAux = {
     },
   },
 };
+
+export const newProvider = {
+  data: {
+    id: null,
+    type: 'Provider',
+    attributes: {
+      entityType: 'Community',
+    },
+  },
+}

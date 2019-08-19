@@ -47,29 +47,9 @@ const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.regular')};
 `;
 
-const StyledLink = styled(Link)`
-  margin-right: ${size('spacing.regular')};
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  
-`;
-
 const StyledBlock = styled(Block)`
   font-size:${size('text.caption')};
 `;
-
-
-const getLastViewedSAgo = (lastViewedAt) => {
-  try {
-    const now = new Date();
-    const lastViewedDate = parseDate(lastViewedAt);
-    return durationInS(lastViewedDate, parseDate(now.toISOString()));
-  } catch (e) {
-    console.log(e);
-  }
-  return -1;
-};
 
 const buildPriceDisplay = (community) => {
   buildPriceList(community).map(e => `${e.label}-${e.value}`).join('\n');
@@ -83,6 +63,7 @@ const buildAddressDisplay = (community) => {
 export default class DashboardAdminReferralCommunityTile extends Component {
   static propTypes = {
     community: adminCommunityPropType.isRequired,
+    sendReferral: func,
   };
 
   static defaultProps = {
@@ -91,18 +72,15 @@ export default class DashboardAdminReferralCommunityTile extends Component {
 
 
   render() {
-    const { community } = this.props;
+    const { community, sendReferral } = this.props;
     const { propInfo } = community;
-    const { hasContract, lastViewedAt } = propInfo;
-
-    const lastViewedSecondsAgo = getLastViewedSAgo(lastViewedAt);
+    const { hasContract } = propInfo;
 
     return (
       <Fragment>
         <Header>
           <Heading level="subtitle"> { community.name } </Heading>
           {hasContract && <StyledBadge textPalette="green"><Icon icon="note" size="small" />Has Contract</StyledBadge> }
-          {lastViewedSecondsAgo > -1 && <StyledBadge textPalette="grey" ><Icon icon="note" size="small" /> Last Viewed: {lastViewedSecondsAgo} s ago</StyledBadge> }
         </Header>
         <CommunityInfoWrapper>
           <IconItem>
@@ -122,23 +100,11 @@ export default class DashboardAdminReferralCommunityTile extends Component {
             <StyledBlock>{propInfo.communitySize}</StyledBlock>
           </IconItem>
           <IconItem>
-            <StyledIcon icon="link" size="small" />
-            <StyledLink href={community.url}>{community.url}</StyledLink>
-          </IconItem>
-          <IconItem>
-            <StyledIcon icon="link" size="small" />
-            <StyledLink href={propInfo.websiteUrl}>{propInfo.websiteUrl}</StyledLink>
-          </IconItem>
-          <IconItem>
             <StyledIcon icon="dollar" size="small" />
             <StyledBlock>{buildPriceDisplay(community)}</StyledBlock>
           </IconItem>
         </CommunityInfoWrapper>
-        <IconItem>
-          <StyledIcon icon="note" size="small" />
-          <StyledBlock>{propInfo.adminNote}</StyledBlock>
-        </IconItem>
-        <Button onClick={this.copyToClipboard}>Send Referral</Button>
+        <Button onClick={sendReferral}>Send Referral</Button>
       </Fragment>
     );
   }
