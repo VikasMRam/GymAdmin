@@ -110,7 +110,7 @@ const getBasePath = (tab, params) => {
 };
 
 const TasksOverviewPage = ({
-                                            clients, onClientClick, onAddNewClient, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params, breakpoint,
+                                            tasks, onClientClick, onAddNewTask, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params, breakpoint,
                                           }) => {
   const prospectsLabel = tabIDLabelMap[tabIDs[0]];
   const connectedLabel = tabIDLabelMap[tabIDs[1]];
@@ -140,7 +140,7 @@ const TasksOverviewPage = ({
         </Tab>
       </Tabs>
 
-      <TableHeaderButtons onSearchTextKeyUp={onSearchTextKeyUp} onAddNewButtonClick={onAddNewClient} modelName="Client" />
+      <TableHeaderButtons onSearchTextKeyUp={onSearchTextKeyUp} onAddNewButtonClick={onAddNewTask} modelName="Task" />
 
       <Section>
         {!isPageLoading && (
@@ -154,9 +154,9 @@ const TasksOverviewPage = ({
               </Tr>
               </THead>
               <TBody>
-              {tasks.map(task => (
-                <div><div> {task.title}/div><div> {task.title}</div><div> {task.title}</div></div>
-              ))}
+               {tasks.map(task => (
+                <div><div> {task.title}</div><div> {task.title}</div><div> {task.title}</div></div>
+               ))}
               </TBody>
             </StyledTable>
             {pagination.show && (
