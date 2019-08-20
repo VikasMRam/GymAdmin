@@ -38,7 +38,7 @@ describe('Pagination', () => {
     const wrapper = wrap({ ...small, current: 0 });
     const nextButton = wrapper.childAt(5);
     const nextIcon = nextButton.dive().dive().find(Icon);
-    expect(nextIcon.prop('flip')).toEqual(true);
+    expect(nextIcon.prop('rotate')).toEqual(-1);
     expect(nextButton.prop('to')).toEqual('/test?page-number=1');
   });
 
@@ -46,7 +46,7 @@ describe('Pagination', () => {
     const wrapper = wrap({ ...small, current: 4 });
     const prevButton = wrapper.childAt(0);
     const prevIcon = prevButton.dive().dive().find(Icon);
-    expect(prevIcon.prop('flip')).toEqual(false);
+    expect(prevIcon.prop('rotate')).toEqual(1);
     expect(prevButton.prop('to')).toEqual('/test?page-number=3');
   });
 
@@ -56,13 +56,13 @@ describe('Pagination', () => {
 
     const prevButton = wrapper.childAt(0);
     const prevIcon = prevButton.dive().dive().find(Icon);
-    expect(prevIcon.prop('flip')).toEqual(false);
+    expect(prevIcon.prop('rotate')).toEqual(1);
     expect(prevButton.prop('to')).toEqual('/test?page-number=2');
 
 
     const nextButton = wrapper.childAt(6);
     const nextIcon = nextButton.dive().dive().find(Icon);
-    expect(nextIcon.prop('flip')).toEqual(true);
+    expect(nextIcon.prop('rotate')).toEqual(-1);
     expect(nextButton.prop('to')).toEqual('/test?page-number=4');
   });
 
