@@ -290,7 +290,8 @@ export default class MediaGallery extends Component {
           {this.allMedia.length > 1 &&
             <PrevSlide
               className="media-carousel-control-prev"
-              icon="chevron-left"
+              icon="chevron"
+              rotate={1}
               size="xLarge"
               palette="white"
               onClick={this.prevSlide}
@@ -314,7 +315,8 @@ export default class MediaGallery extends Component {
           {this.allMedia.length > 1 &&
             <NextSlide
               className="media-carousel-control-next"
-              icon="chevron-right"
+              icon="chevron"
+              rotate={-1}
               size="xLarge"
               palette="white"
               onClick={this.nextSlide}

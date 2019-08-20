@@ -10,6 +10,7 @@ import { size, palette, key } from 'sly/components/themes';
 
 const fontSize = props => size('icon', props.size);
 const getColor = ({ palette: paletteProp, variation }) => palette(paletteProp, variation);
+const getTransform = ({ rotate, flip }) => `transform: rotate(${rotate * 90}deg)${flip ? ' scaleX(-1) scaleY(-1)' : ''}`;
 
 const Wrapper = styled.span`
   display: inline-block;
@@ -19,7 +20,8 @@ const Wrapper = styled.span`
   // sizes relative to set font-size
   width: ${fontSize};
   height: ${fontSize};
-  ${ifProp('flip', 'transform: rotate(180deg)', '')};
+  ${ifProp('flip', 'transform: scaleY(-1)')};
+  ${getTransform};
   transition: transform ${key('transitions.fast')};
   & > svg {
     font-size: ${fontSize};
@@ -32,10 +34,10 @@ const Wrapper = styled.span`
 const Icon = styled(({ icon, size, ...props }) => {
   let svg;
   try {
-    svg = require(`!raw-loader!./icons/${icon}-${size}.svg`);
+    svg = require(`!raw-loader!./icons/${icon}-regular.svg`);
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.error('Icon not found:', `${icon}-${size}`);
+    console.error('Icon not found:', `${icon}-regular`);
     svg = '<span>x</span>';
   }
   return (
@@ -54,10 +56,12 @@ Icon.propTypes = {
   variation: variationPropType,
   stroke: string,
   flip: bool,
+  rotate: number,
 };
 
 Icon.defaultProps = {
   flip: false,
+  rotate: 0,
   size: 'regular',
   palette: 'secondary',
   variation: 'base',
