@@ -194,18 +194,18 @@ jobs:
       CYPRESS_reporter: junit
 
     steps:
-      - attach_workspace:
-          at: /home/circleci
-
-      - run: cat ~/new_env_vars >> $BASH_ENV
-
+      - checkout:
+          path: ~/project
+      
       - node/install:
           node-version: 8.16.0
           install-yarn: false
 
       - run:
-          name: Installing OpenVPN Client
-          command: sudo apt-get install openvpn
+          name: Installing OpenVPN Client and HAproxy
+          command: |
+            sudo apt-get update
+            sudo apt-get install openvpn haproxy
 
       # The PEMs and credentials are set in OPENVPN context and are echoed into files
       - run:
@@ -224,7 +224,8 @@ jobs:
 
       - restore_cache:
           keys:
-            - cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+            - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+
       - run:
           name: Npm CI
           command: npm ci
@@ -232,17 +233,45 @@ jobs:
       - run:
           command: npx cypress verify
 
+      - run:
+          name: NPM Install
+          command: npm install
+          working_directory: ~/project
+
       - save_cache:
-          key: cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+          key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - ~/.npm
             - ~/.cache
+            - ~/project/node_modules
+            - ~/project/e2e/node_modules
+
+      - run:
+          name: Running HAProxy
+          command: sudo haproxy -f haproxy.conf
+          background: true
+
+      - run:
+          name: Curl whether API is accessible
+          command: curl http://www.lvh.me/v0/ping
+
+      - run:
+          name: NPM run
+          command: npm run dev
+          working_directory: ~/project
+          background: true
+
+      - run: npm install wait-on
+
+      - run:
+          name: Waiting for Local React to be up and running
+          command: ./node_modules/.bin/wait-on http://localhost:8000
 
       - run:
           name: Run Cypress tests
           command: |
-            echo "Running cypress using $CYPRESS_baseUrl"
-            npx cypress run
+            echo "Running cypress"
+            npx cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress-test-output.xml,toConsole=true"
 
       - run:
           name: Closing OpenVPN Tunnel
@@ -284,13 +313,10 @@ workflows:
     jobs:
       # run build (unit tests, linting, quality checks etc etc) for PRs
       - build
-      - deploy:
-          requires:
-            - build
       - test:
           context: OPENVPN
           requires:
-            - deploy
+            - build
 
 #  build-staging:
 #    jobs:
