@@ -227,16 +227,24 @@ jobs:
             - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
 
       - run:
-          name: Npm CI
-          command: npm ci
+          name: Install deps
+          command: |
+            if [ ! -d node_modules ]; then
+              npm ci
+            else
+              echo "node_modules from cache exist. So skipping install."
+            fi
 
       - run:
           command: npx cypress verify
 
       - run:
-          name: NPM Install
-          command: npm install
+          name: NPM Install and Run in Background
+          command: |
+            npm install
+            npm run dev
           working_directory: ~/project
+          background: true
 
       - save_cache:
           key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
@@ -254,12 +262,6 @@ jobs:
       - run:
           name: Curl whether API is accessible
           command: curl http://www.lvh.me/v0/ping
-
-      - run:
-          name: NPM run
-          command: npm run dev
-          working_directory: ~/project
-          background: true
 
       - run:
           name: Waiting for Local React to be up and running
