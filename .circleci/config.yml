@@ -261,11 +261,9 @@ jobs:
           working_directory: ~/project
           background: true
 
-      - run: npm install wait-on
-
       - run:
           name: Waiting for Local React to be up and running
-          command: ./node_modules/.bin/wait-on http://localhost:8000
+          command: npx wait-on http://localhost:8000
 
       - run:
           name: Run Cypress tests
