@@ -184,7 +184,7 @@ jobs:
           paths:
             - new_env_vars
 
-  test:
+  e2e:
     machine: true
 
     working_directory: ~/project/e2e
@@ -314,10 +314,8 @@ workflows:
     jobs:
       # run build (unit tests, linting, quality checks etc etc) for PRs
       - build
-      - test:
+      - e2e:
           context: OPENVPN
-          requires:
-            - build
 
 #  build-staging:
 #    jobs:
