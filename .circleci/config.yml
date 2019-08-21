@@ -201,27 +201,6 @@ jobs:
           node-version: 8.16.0
           install-yarn: false
 
-      - run:
-          name: Installing OpenVPN Client and HAproxy
-          command: |
-            sudo apt-get update
-            sudo apt-get install openvpn haproxy
-
-      # The PEMs and credentials are set in OPENVPN context and are echoed into files
-      - run:
-          name: Creating OpenVPN Client Credential file
-          command: |
-            echo -e "$OPENVPN_USERNAME\n$OPENVPN_PASSWORD" >> openVPN_cred.txt
-            echo -e "$OPENVPN_CA" >> ca.pem
-            echo -e "$OPENVPN_CERT" >> cert.pem
-            echo -e "$OPENVPN_KEY" >> key.pem
-            echo -e "$OPENVPN_TLS_AUTH" >> tls_auth.pem
-
-      # PEMs should be escaped like explained here https://discuss.circleci.com/t/issues-storing-firebase-keys-as-environment-variable/6197/6
-      - run:
-          name: Creating OpenVPN Tunnel
-          command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
-
       - restore_cache:
           keys:
             - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
@@ -246,13 +225,27 @@ jobs:
           working_directory: ~/project
           background: true
 
-      - save_cache:
-          key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
-          paths:
-            - ~/.npm
-            - ~/.cache
-            - ~/project/node_modules
-            - ~/project/e2e/node_modules
+      - run:
+          name: Installing OpenVPN Client and HAproxy
+          command: |
+            sudo apt-get update
+            sudo apt-get install openvpn haproxy
+
+      # The PEMs and credentials are set in OPENVPN context and are echoed into files
+      - run:
+          name: Creating OpenVPN Client Credential file
+          command: |
+            echo -e "$OPENVPN_USERNAME\n$OPENVPN_PASSWORD" >> openVPN_cred.txt
+            echo -e "$OPENVPN_CA" >> ca.pem
+            echo -e "$OPENVPN_CERT" >> cert.pem
+            echo -e "$OPENVPN_KEY" >> key.pem
+            echo -e "$OPENVPN_TLS_AUTH" >> tls_auth.pem
+
+      # PEMs should be escaped like explained here https://discuss.circleci.com/t/issues-storing-firebase-keys-as-environment-variable/6197/6
+      - run:
+          name: Creating OpenVPN Tunnel
+          command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
+
 
       - run:
           name: Running HAProxy
@@ -266,6 +259,14 @@ jobs:
       - run:
           name: Waiting for Local React to be up and running
           command: npx wait-on http://localhost:8000
+
+      - save_cache:
+          key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+          paths:
+            - ~/.npm
+            - ~/.cache
+            - ~/project/node_modules
+            - ~/project/e2e/node_modules
 
       - run:
           name: Run Cypress tests
