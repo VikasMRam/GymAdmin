@@ -1,5 +1,5 @@
 {
-  "id": "client",
+  "id": "clients",
   "columns": [
     {
       "label": "Contact Name",
@@ -119,7 +119,7 @@
     {
       "label": "Latest Activity",
       "value": "notes",
-      "paramKey": "notes",
+      "paramKey": "",
       "type": {
         "name": "Text",
         "allowedExpressions": [
@@ -173,7 +173,5 @@
       "isFilterable": true,
       "isSortable": true
     }
-  ],
-  "createdAt": "2019-08-12T19:55:59Z",
-  "updatedAt": "2019-08-12T19:55:59Z"
+  ]
 }

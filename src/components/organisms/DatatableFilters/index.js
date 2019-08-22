@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import { func, shape, arrayOf, oneOf } from 'prop-types';
+import { css } from 'styled-components';
 
+import { size } from 'sly/components/themes';
+import mobileOnly from 'sly/components/helpers/mobileOnly';
 import datatableProptype from 'sly/propTypes/datatable';
 import filterProptype from 'sly/propTypes/datatableFilter';
 import DatatableFilterRow from 'sly/components/organisms/DatatableFilterRow';
-import Button from 'sly/components/atoms/Button';
+import ButtonLink from 'sly/components/molecules/ButtonLink';
 
-const Wrapper = 'div';
+const Wrapper = mobileOnly('div', css`
+
+`, css`
+  display: table;
+  width: 100%; 
+  
+  border-collapse: separate;
+  border-spacing: ${size('spacing.regular')};
+`);
 
 export default class DatatableFilters extends Component {
   static propTypes = {
@@ -63,7 +74,14 @@ export default class DatatableFilters extends Component {
             datatable={datatable}
           />
         ))}
-        <Button transparent onClick={this.addFilter}>Add filter</Button>
+        <ButtonLink
+          icon="add"
+          palette="slate"
+          size="caption"
+          onClick={this.addFilter}
+        >
+          Add filter
+        </ButtonLink>
       </Wrapper>
     );
   }

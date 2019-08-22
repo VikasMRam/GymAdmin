@@ -9,8 +9,19 @@ import datatableClient from 'sly/../private/storybook/sample-data/datatable-clie
 import { makeQuerystringFilters } from 'sly/services/helpers/datatable';
 
 class Container extends Component {
+  // state = {
+  //   filters: [],
+  //   logicalOperator: 'and',
+  // };
+
   state = {
-    filters: [],
+    filters: [{
+      column: 'name',
+      operator: 'eq',
+      value: 'adsf',
+    }, {
+
+    }],
     logicalOperator: 'and',
   };
 
@@ -18,6 +29,7 @@ class Container extends Component {
     const { onChange } = this.props;
 
     onChange(state);
+    console.log('state', state);
     this.setState(state);
   };
 
