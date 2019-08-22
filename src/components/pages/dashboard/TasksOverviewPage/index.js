@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, object, string, bool, func } from 'prop-types';
 import qs from 'query-string';
-
 import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import pad from 'sly/components/helpers/pad';
@@ -16,7 +15,6 @@ import Tab from 'sly/components/molecules/Tab';
 import clientPropType from 'sly/propTypes/client';
 import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_FAMILIES_NEW_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
 import Th from 'sly/components/molecules/Th';
-import ClientRowCard from 'sly/components/organisms/ClientRowCard';
 
 
 const TASK_TABLE_HEADINGS = [
@@ -69,7 +67,7 @@ const tabIDs = Object.keys(tabIDLabelMap);
 
 const onTabClick = (label) => {
   const event = {
-    category: 'AgentDashboardFamilyOverviewTab',
+    category: 'AgentDashboardFamilyDetailsTaskTab',
     action: 'click',
     label,
   };
@@ -81,53 +79,23 @@ const getBasePath = (tab, params) => {
     clientName, organization, provider, providerType,
   } = params;
   const filters = {};
-
-  if (tab === tabIDs[1]) {
-    filters.type = 'Connected';
-  } else if (tab === tabIDs[2]) {
-    filters.type = 'Closed';
-  }
-
-  if (clientName) {
-    filters.name = clientName;
-  }
-
-  if (organization) {
-    filters.organization = organization;
-  }
-
-  if (provider) {
-    filters.provider = provider;
-  }
-
-  if (providerType) {
-    filters.providerType = providerType;
-  }
-
   const filterQs = qs.stringify(filters);
-
   return filterQs !== '' ? `${AGENT_DASHBOARD_FAMILIES_PATH}?${filterQs}` : AGENT_DASHBOARD_FAMILIES_PATH;
 };
 
 const TasksOverviewPage = ({
-                                            tasks, onClientClick, onAddNewTask, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params, breakpoint,
-                                          }) => {
+  tasks, onClientClick, onAddNewTask, pagination, activeTab, onSearchTextKeyUp, isPageLoading,
+}) => {
   const prospectsLabel = tabIDLabelMap[tabIDs[0]];
   const connectedLabel = tabIDLabelMap[tabIDs[1]];
   const closedLabel = tabIDLabelMap[tabIDs[2]];
   let prospectsTabLabel = tabIDLabelMap[tabIDs[0]];
   let connectedTabLabel = tabIDLabelMap[tabIDs[1]];
   let closedTabLabel = tabIDLabelMap[tabIDs[2]];
-  if (!isPageLoading) {
-    const { prospectingCount, connectedCount, closedCount } = pagination;
-    prospectsTabLabel += ` (${prospectingCount})`;
-    connectedTabLabel += ` (${connectedCount})`;
-    closedTabLabel += ` (${closedCount})`;
-  }
-
-  const defaultTab = breakpoint.atLeastLaptop() ? ACTIVITY : SUMMARY;
+  let params = {}
+  const defaultTab = SUMMARY;
   return (
-    <DashboardPageTemplate activeMenuItem="Upcoming">
+    <div activeMenuItem="Upcoming">
       <Tabs activeTab={activeTab} tabsOnly>
         <Tab id={tabIDs[0]} to={getBasePath(tabIDs[0], params)} onClick={() => onTabClick(prospectsLabel)}>
           {prospectsTabLabel}
@@ -147,33 +115,33 @@ const TasksOverviewPage = ({
           <Fragment>
             <StyledTable>
               <THead>
-              <Tr>
-                {TASK_TABLE_HEADINGS
+                <Tr>
+                  {TASK_TABLE_HEADINGS
                   .map(({ text }) => <Th key={text}>{text}</Th>)
                 }
-              </Tr>
+                </Tr>
               </THead>
               <TBody>
-               {tasks.map(task => (
-                <div><div> {task.title}</div><div> {task.title}</div><div> {task.title}</div></div>
+                {tasks.map(task => (
+                  <div><div> {task.title}</div><div> {task.title}</div><div> {task.title}</div></div>
                ))}
               </TBody>
             </StyledTable>
-            {pagination.show && (
-              <StyledPagination
-                current={pagination.current}
-                total={pagination.total}
-                range={1}
-                basePath={getBasePath(activeTab, params)}
-                pageParam="page-number"
-              />
-            )}
+            {/*{pagination.show && (*/}
+              {/*<StyledPagination*/}
+                {/*current={pagination.current}*/}
+                {/*total={pagination.total}*/}
+                {/*range={1}*/}
+                {/*basePath={getBasePath(activeTab, params)}*/}
+                {/*pageParam="page-number"*/}
+              {/*/>*/}
+            {/*)}*/}
           </Fragment>
         )}
         {isPageLoading && 'Loading...'}
       </Section>
 
-    </DashboardPageTemplate>
+    </div>
   );
 };
 
@@ -190,6 +158,7 @@ TasksOverviewPage.propTypes = {
   onSearchTextKeyUp: func,
   isPageLoading: bool,
   params: object,
+  tasks: arrayOf(object),
 };
 
 TasksOverviewPage.defaultProps = {

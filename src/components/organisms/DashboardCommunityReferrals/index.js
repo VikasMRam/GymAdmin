@@ -16,7 +16,7 @@ export default class DashboardCommunityReferrals extends Component {
 
   render() {
     const { handleCommunitySearch, communities, sendReferral } = this.props;
-    console.log('Seeingc ommunities',communities);
+    console.log('Seeing communities',communities);
     const commList = (communities || []).map((e, idx) => <Box key={e.name}><DashboardAdminReferralCommunityTile community={e} sendReferral={sendReferral} /></Box>);
     return (
       <Fragment>

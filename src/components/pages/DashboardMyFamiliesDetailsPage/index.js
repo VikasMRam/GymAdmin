@@ -51,6 +51,7 @@ import Role from 'sly/components/common/Role';
 import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
 import { AGENT_ND_ROLE,PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
+import EntityTasksContainer from 'sly/containers/dashboard/EntityTasksContainer';
 
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
@@ -613,8 +614,10 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             {currentTab === TASKS && (
               <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
                 <CommunitiesTab>
-                  <TextAlignCenterBlock size="subtitle" weight="medium">This TASK feature is coming soon!</TextAlignCenterBlock>
-                  <TextAlignCenterBlock palette="grey">You will be able to ADD TASKS your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
+                  <EntityTasksContainer
+                    entityId={client.id}
+                    entityType="Client"
+                  />
                 </CommunitiesTab>
               </Role>
 
