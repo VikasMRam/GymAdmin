@@ -72,7 +72,7 @@ const AdTile = ({
   return (
     <Wrapper onClick={onClick} borderless={borderless}>
       <AdImage >
-        <StyledIcon icon="seniorly-white" size="xxLarge" />
+        <StyledIcon icon="logo" palette="white" size="xxLarge" />
       </AdImage>
       <AdInfo>
         {title && <AdInfoHeader>{title}</AdInfoHeader>}

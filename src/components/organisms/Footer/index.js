@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import config from 'sly/config';
 import { size, palette } from 'sly/components/themes';
 import { Icon, Link, Hr } from 'sly/components/atoms';
+import Block from 'sly/components/atoms/Block';
 
 const FooterWrapper = styled.footer`
   background-color: ${palette('slate', 'base')};
@@ -34,18 +35,13 @@ const FooterTopWrapper = styled.div`
 
 const SeniorlyWhiteIcon = styled(Icon)`
   margin-bottom: ${size('spacing.small')};
-  display:flex;
 
   @media screen and (min-width: ${size('breakpoint.tablet')}) {
-    width: 100%;
     > svg {
       margin: 0 auto;
     }
   }
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
-    width: unset;
-  }
 `;
 
 const GroupDiv = styled.div`
@@ -75,6 +71,9 @@ const GroupHeading = styled.div`
 
 const GroupItem = styled(Link)`
   display: block;
+  > * {
+    color: ${palette('white', 'base')};
+  }
   color: ${palette('white', 'base')};
   font-size: ${size('spacing.large')};
   text-decoration: none;
@@ -211,8 +210,8 @@ const Footer = () => {
       <FooterTopWrapper>
         <GroupDiv>
           <GroupItem to="/">
-            <SeniorlyWhiteIcon icon="seniorly-white" size="xxLarge" />
-            Find a Home to Love
+            <SeniorlyWhiteIcon icon="logo" palette="white" size="xxLarge" />
+            <Block>Find a Home to Love</Block>
           </GroupItem>
         </GroupDiv>
         {groupComponents}

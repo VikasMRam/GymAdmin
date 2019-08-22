@@ -28,8 +28,8 @@ const ChevronLink = styled(({ flip, ...props }) => (
     {...props}
   >
     <Icon
-      flip={flip}
-      icon="chevron-left"
+      rotate={flip ? -1 : 1}
+      icon="chevron"
       size="small"
       palette="slate"
     />
