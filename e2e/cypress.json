@@ -3,5 +3,6 @@
   "reporter": "junit",
   "reporterOptions": {
     "toConsole": true
-  }
+  },
+  "projectId": "slye2e"
 }

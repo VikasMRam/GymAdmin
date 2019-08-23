@@ -271,7 +271,7 @@ jobs:
           name: Run Cypress tests
           command: |
             echo "Running cypress"
-            npx cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress-test-output.xml,toConsole=true"
+            npx cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress-test-output.xml,toConsole=true" --group 2x-chrome --browser chrome --parallel
 
       - run:
           name: Closing OpenVPN Tunnel
