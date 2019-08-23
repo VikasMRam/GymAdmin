@@ -17,7 +17,7 @@ function inputValuesAndAssert(cy) {
   cy.get('button').contains('Get Availability').click();
 
   const data = {
-    communitySlug, name, phoneNumber, typeOfRoom, typeOfCare, medicaid,
+    communitySlug, name, phoneNumber, typeOfRoom, typeOfCare, medicaid, email,
   };
 
   doCustomPricingFlow(cy, data);
