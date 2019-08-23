@@ -33,6 +33,18 @@ function inputValuesAndAssert(cy) {
 }
 
 describe('Marketplace Profile Page', () => {
+  it('tests Get Availability Flow for Assisited Living Community in Mobile', () => {
+    cy.viewport('iphone-6');
+
+    inputValuesAndAssert(cy);
+  });
+
+  it('tests Get Availability Flow for Assisited Living Community in Tablet', () => {
+    cy.viewport('ipad-2');
+
+    inputValuesAndAssert(cy);
+  });
+
   it('tests Get Availability Flow for Assisited Living Community in Laptop', () => {
     cy.viewport('macbook-13');
 
