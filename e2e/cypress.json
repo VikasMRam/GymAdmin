@@ -4,5 +4,6 @@
   "reporterOptions": {
     "toConsole": true
   },
-  "projectId": "slye2e"
+  "projectId": "slye2e",
+  "parallelism": 2
 }
