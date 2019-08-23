@@ -231,8 +231,7 @@ export const getHelmetForCommunityPage = (community, location) => {
 
   const ld = getSDForCommunity({ ...community });
 
-  const criticReviews = reviews.filter(review => review.isCriticReview === true);
-  const criticReviewsJsonLDs = criticReviews.map((criticReview) => {
+  const criticReviewsJsonLDs = reviews && reviews.filter(review => review.isCriticReview === true).map((criticReview) => {
     const result = {
       '@context': 'https://schema.org',
       '@type': 'Review',
@@ -282,12 +281,13 @@ export const getHelmetForCommunityPage = (community, location) => {
         ratingValue: criticReview.value,
       },
     };
-    // logic copied from getSDForCommunity
+      // logic copied from getSDForCommunity
     if (startingRate > 0) {
       result.itemReviewed.priceRange = `From $${startingRate.toLocaleString()} per month`;
     }
     return (<script key={`helmet_critic-review_${criticReview.author + name}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
+
 
   const getQAAnswerLDObj = (answer, question) => {
     return {
@@ -304,7 +304,7 @@ export const getHelmetForCommunityPage = (community, location) => {
   };
 
   // TODO: Check whether we want to filter out questions without answers
-  const qaPageLdObjs = questions.filter(question => question.contents.length > 0).map((question) => {
+  const qaPageLdObjs = questions && questions.filter(question => question.contents.length > 0).map((question) => {
     const answers = question.contents.slice();
     const firstAnswer = answers.shift();
     const acceptedAnswer = getQAAnswerLDObj(firstAnswer, question);
@@ -329,6 +329,7 @@ export const getHelmetForCommunityPage = (community, location) => {
     };
     return (<script key={`helmet_question_${question.creator + question.createdAt}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
+
   // TODO Add Image and Video and structured data.
   return (
     <Helmet>
