@@ -1,5 +1,5 @@
-import { doCustomPricingFlow } from './helpers/customPricing';
-import { assertUserActionsForGetAvailability } from './helpers/userActions';
+import { doCustomPricingFlow } from './../../helpers/customPricing';
+import { assertUserActionsForGetAvailability } from './../../helpers/userActions';
 
 function inputValuesAndAssert(cy) {
   const communitySlug = 'buena-vista-manor-house';
