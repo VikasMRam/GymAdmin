@@ -206,6 +206,14 @@ jobs:
             - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
 
       - run:
+          name: NPM Install and Run Local SlyReact in Background
+          command: |
+            npm install
+            npm run staging
+          working_directory: ~/project
+          background: true
+
+      - run:
           name: Install deps
           command: |
             if [ ! -d node_modules ]; then
@@ -216,14 +224,6 @@ jobs:
 
       - run:
           command: npx cypress verify
-
-      - run:
-          name: NPM Install and Run in Background
-          command: |
-            npm install
-            npm run staging
-          working_directory: ~/project
-          background: true
 
       - run:
           name: Installing OpenVPN Client and HAproxy
@@ -246,19 +246,18 @@ jobs:
           name: Creating OpenVPN Tunnel
           command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
 
-
       - run:
           name: Running HAProxy
           command: sudo haproxy -f haproxy.conf
           background: true
 
       - run:
-          name: Curl whether API is accessible
-          command: curl http://www.lvh.me/v0/ping
-
-      - run:
           name: Waiting for Local React to be up and running
           command: npx wait-on http://localhost:8000
+
+      - run:
+          name: Curl whether API is accessible
+          command: curl http://www.lvh.me/v0/ping
 
       - save_cache:
           key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
