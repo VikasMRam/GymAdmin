@@ -30,7 +30,7 @@ class AcceptAndContactFamilyContainer extends Component {
 
   handleUpdateStage = (contactType) => {
     const {
-      updateClient, client, rawClient,
+      updateClient, client, rawClient, refetchClient,
     } = this.props;
     const { id } = client;
     const [, contactStatus] = FAMILY_STAGE_ORDERED.Prospects;
@@ -39,6 +39,7 @@ class AcceptAndContactFamilyContainer extends Component {
       .value();
 
     return updateClient({ id }, newClient)
+      .then(() => refetchClient())
       .then(() => {
         this.setState({
           contactType,
