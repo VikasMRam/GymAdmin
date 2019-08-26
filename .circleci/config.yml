@@ -113,9 +113,9 @@ jobs:
             if [[ -n "$CIRCLE_TAG" ]]; then
               echo "export EB_ENV=slyreact-staging" >> ~/new_env_vars
               echo "export CYPRESS_baseUrl=http://www.myseniorly.com" >> ~/new_env_vars
-            elif [[ -n "$CIRCLE_PR_NUMBER" ]]; then
-              echo "export EB_ENV=slyreact-test" >> ~/new_env_vars
-              echo "export CYPRESS_baseUrl=http://test.teamseniorly.com" >> ~/new_env_vars
+            # elif [[ -n "$CIRCLE_PR_NUMBER" ]]; then
+            #   echo "export EB_ENV=slyreact-test" >> ~/new_env_vars
+            #   echo "export CYPRESS_baseUrl=http://test.teamseniorly.com" >> ~/new_env_vars
             elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
               echo "export EB_ENV=slyreact-development" >> ~/new_env_vars
               echo "export CYPRESS_baseUrl=http://www.teamseniorly.com" >> ~/new_env_vars
@@ -316,6 +316,11 @@ workflows:
       - build
       - e2e:
           context: OPENVPN
+      - deploy:
+          requires:
+            - build
+            - e2e
+
 
 #  build-staging:
 #    jobs:
