@@ -89,7 +89,13 @@ jobs:
             fi
 
       - checkout:
-          path: ~/project 
+          path: ~/project
+
+      - run:
+          name: Install awscli
+          command: |
+            sudo pip install awsebcli --upgrade
+
       - run:
           name: Set up environment
           command: |
@@ -137,11 +143,6 @@ jobs:
             if [[ -z "$EB_ENV" ]]; then
               circleci step halt
             fi
-
-      - run:
-          name: Install awscli
-          command: |
-            sudo pip install awsebcli --upgrade
 
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
       - run:
