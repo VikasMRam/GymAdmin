@@ -81,21 +81,15 @@ jobs:
 
     steps:
       - run:
-          name: Check if Sly Master Repo or a PR
+          name: Check if Sly Master Repo
           command: |
             if [[ $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
               echo "Skipping Deployment since this is not a Sly Master Build"
               circleci step halt
             fi
 
-      - attach_workspace:
-          at: /home/circleci
-
-      - run:
-          name: Install awscli
-          command: |
-            sudo pip install awsebcli --upgrade
-
+      - checkout:
+          path: ~/project 
       - run:
           name: Set up environment
           command: |
@@ -144,6 +138,10 @@ jobs:
               circleci step halt
             fi
 
+      - run:
+          name: Install awscli
+          command: |
+            sudo pip install awsebcli --upgrade
 
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
       - run:
