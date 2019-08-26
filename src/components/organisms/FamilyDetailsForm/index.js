@@ -91,7 +91,7 @@ class FamilyDetailsForm extends Component {
   render() {
     const { handleLocationChange } = this;
     const {
-      handleSubmit, pristine, submitting, invalid, accepted, intro, initialValues, lookingFor,
+      handleSubmit, submitting, invalid, accepted, intro, initialValues, lookingFor,
       gender, timeToMove, monthlyBudget, canEditFamilyDetails,
     } = this.props;
     let { preferredLocation } = this.props;
@@ -213,7 +213,7 @@ class FamilyDetailsForm extends Component {
           {accepted &&
             <Fragment>
               <Hr />
-              <StyledButton type="submit" disabled={invalid || pristine || submitting}>
+              <StyledButton type="submit" disabled={invalid || submitting}>
                 Save changes
               </StyledButton>
             </Fragment>
