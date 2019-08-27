@@ -4,7 +4,7 @@ import { func, string } from 'prop-types';
 import { reduxForm, SubmissionError, clearSubmitErrors, reset } from 'redux-form';
 
 import { query } from 'sly/services/newApi';
-import { CONVERSATION_DATA_TYPE_TEXT, CONVERSATION_MEDIUM_INAPP } from 'sly/constants/conversations';
+import { CONVERSATION_DATA_TYPE_TEXT, CONVERSATION_MEDIUM_INAPP, CONVERSATION_MEDIUM_SMS, CONVERSATION_MEDIUM_EMAIL } from 'sly/constants/conversations';
 import { CONVERSTION_RESOURCE_TYPE, CONVERSTION_PARTICIPANT_RESOURCE_TYPE, CONVERSTION_MESSAGE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import SendMessageForm from 'sly/components/organisms/SendMessageForm';
 import { createValidator, required } from 'sly/services/validation';
@@ -72,6 +72,7 @@ export default class SendMessageFormContainer extends Component {
           data,
           conversationID: conversationId,
           medium: CONVERSATION_MEDIUM_INAPP,
+          sendingMedium: [CONVERSATION_MEDIUM_INAPP, CONVERSATION_MEDIUM_SMS, CONVERSATION_MEDIUM_EMAIL],
         },
       };
 

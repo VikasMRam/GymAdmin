@@ -8,6 +8,10 @@ export const CONVERSATION_STATUS_ARCHIVED = 'Archived';
 
 export const CONVERSATION_MEDIUM_INAPP = 'InApp';
 
+export const CONVERSATION_MEDIUM_SMS = 'Sms';
+
+export const CONVERSATION_MEDIUM_EMAIL = 'Email';
+
 export const CONVERSATION_DATA_TYPE_TEXT = 'Text';
 
 export const MESSAGES_UPDATE_LAST_READ_TIMEOUT = 10000;
