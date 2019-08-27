@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
