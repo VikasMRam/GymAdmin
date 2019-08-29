@@ -59,4 +59,6 @@ export default {
   getConversationParticipants: { method: get, path: '/platform/conversation-participants' },
   createConversationParticipant: { method: post, path: '/platform/conversation-participants' },
   updateConversationParticipant: { method: patch, path: '/platform/conversation-participants/:id' },
+
+  getTasks: { method: get, path: '/platform/tasks' },
 };
