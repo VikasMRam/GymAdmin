@@ -588,14 +588,12 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             )}
 
             {currentTab === COMMUNITIES && (
-              <CommunitiesTab>
-                <ReferralSearchContainer
-                  notifyError={notifyError}
-                  notifyInfo={notifyInfo}
-                  parentClient={client}
-                  referralMode="Community"
-                />
-              </CommunitiesTab>
+              <ReferralSearchContainer
+                notifyError={notifyError}
+                notifyInfo={notifyInfo}
+                parentClient={client}
+                referralMode="Community"
+              />
             )}
 
             {currentTab === PARTNER_AGENTS && (

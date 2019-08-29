@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import { query, prefetch, getRequestInfo } from 'sly/services/newApi';
-import { arrayOf, func, oneOf } from 'prop-types';
-import { adminCommunityPropType } from 'sly/propTypes/community';
-import { adminAgentPropType } from 'sly/propTypes/agent';
-import  clientPropType from 'sly/propTypes/client';
-import { newProvider } from 'sly/constants/payloads/client';
-import DashboardCommunityReferrals from 'sly/components/organisms/DashboardCommunityReferrals';
-import DashboardAgentReferrals from 'sly/components/organisms/DashboardAgentReferrals';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { connect } from 'react-redux';
+import normalize from 'json-api-normalizer';
+import { arrayOf, func, oneOf } from 'prop-types';
+
+import { query, prefetch, getRequestInfo } from 'sly/services/newApi';
+import { adminCommunityPropType } from 'sly/propTypes/community';
+import { adminAgentPropType } from 'sly/propTypes/agent';
+import clientPropType from 'sly/propTypes/client';
+import { newProvider } from 'sly/constants/payloads/client';
+import DashboardCommunityReferrals from 'sly/components/organisms/DashboardCommunityReferrals';
+import DashboardCommunityReferralSearch from 'sly/components/organisms/DashboardCommunityReferralSearch';
+import DashboardAgentReferrals from 'sly/components/organisms/DashboardAgentReferrals';
+import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 
 const mapStateToProps = state => ({
   customTestState: 'ReferralSearchContainer',
@@ -71,7 +75,7 @@ export default class ReferralSearchContainer extends Component {
       console.log('Seeing these communities ', data);
 
       return this.setState({
-        communities: data,
+        communities: normalize(r.body),
       });
     });
   };
@@ -81,7 +85,7 @@ export default class ReferralSearchContainer extends Component {
 
     return getAgents(filters).then((r) => {
       const { data } = r.body;
-      console.log('Seeing these agents ',data);
+      console.log('Seeing these agents ', data);
       this.setState({
         agents: data,
       });
@@ -123,11 +127,45 @@ export default class ReferralSearchContainer extends Component {
     //          handleCommunitySearch={this.doCommunitySearch}
     //          sendReferral={this.sendReferral} /> ;
     if (referralMode === 'Community') {
-      return (<DashboardCommunityReferrals
-        communities={communities}
-        handleCommunitySearch={this.doCommunitySearch}
-        sendReferral={this.sendReferral}
-      />);
+      return (
+        <WizardController
+          // formName="SendCommunityReferral"
+          // onComplete={data => onComplete(data, openConfirmationModal)}
+          // onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
+        >
+          {({
+            data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
+          }) => {
+            // let formHeading = 'See your estimated pricing in your next step. We need your information to connect you to our partner agent. We do not share your information with anyone else.';
+            // let formSubheading = null;
+            // if (data.interest) {
+            //   const contactFormHeadingObj = contactFormHeadingMap[data.interest];
+            //   formHeading = contactFormHeadingObj.heading;
+            //   formSubheading = contactFormHeadingObj.subheading;
+            // }
+
+            return (
+              <WizardSteps currentStep={currentStep} {...props}>
+                <WizardStep
+                  component={DashboardCommunityReferrals}
+                  nextStep={onSubmit}
+                  name="DashboardCommunityReferrals"
+                  communities={communities}
+                  handleCommunitySearch={this.doCommunitySearch}
+                  sendNewReferral={this.sendReferral}
+                />
+                <WizardStep
+                  component={DashboardCommunityReferralSearch}
+                  nextStep={onSubmit}
+                  name="DashboardCommunityReferralSearch"
+                  communities={communities}
+                  handleCommunitySearch={this.doCommunitySearch}
+                />
+              </WizardSteps>
+            );
+          }}
+        </WizardController>
+      );
     }
 
     return (<DashboardAgentReferrals

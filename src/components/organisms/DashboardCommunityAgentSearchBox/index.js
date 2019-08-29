@@ -1,27 +1,21 @@
 import React, { Component, Fragment } from 'react';
 import { bool,func } from 'prop-types';
 import styled from 'styled-components';
+
 import { size } from 'sly/components/themes';
-
 import { Box,  Button } from 'sly/components/atoms';
-
-
 import ReduxField from 'sly/components/organisms/ReduxField';
 import { reduxForm, Field } from 'redux-form';
 
 const Form = styled.form`
   display: flex;
-  flex-direction: row;
-  flex-flow: row wrap;
   align-items: center;
-  
 `;
 
 const CommunityAgentSearchForm = ({ handleSubmit }) => {
   return (
     <Form onSubmit={handleSubmit} name="CommunitySearchForm" >
-      <Field name="name" label="Name" type="text" component={ReduxField} />
-      <Field name="zip" label="ZipCode" type="text" component={ReduxField} />
+      <Field name="name" label="Choose a Community" type="text" wideWidth component={ReduxField} />
       <Button type="submit"> Search </Button>
     </Form>
   );
