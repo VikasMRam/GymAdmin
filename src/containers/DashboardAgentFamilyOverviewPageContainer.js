@@ -74,7 +74,7 @@ const getPageParams = ({ match, location }) => {
   } = getPageParams({ match, location });
   const filters = {
     'filter[client_type]': clientType,
-    'filter[name]': clientName,
+    'filter[name]': `cs:${clientName}`, // FIXME: Arbit use of filter
     'filter[organization]': organization,
     'filter[provider_type]': providerType,
     'filter[provider]': provider,
