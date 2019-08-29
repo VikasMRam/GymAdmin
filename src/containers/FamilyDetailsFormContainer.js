@@ -81,7 +81,7 @@ export default class FamilyDetailsFormContainer extends Component {
     if (phone) {
       newClient.set('attributes.clientInfo.phoneNumber', phone);
     }
-    newClient = newClient.value();
+
     let newUuidAux = immutable(pick(uuidAux, ['id', 'type', 'attributes.uuidInfo', 'attributes.uuid']));
     if (residentName) {
       newUuidAux.set('attributes.uuidInfo.residentInfo.fullName', residentName);
@@ -103,8 +103,10 @@ export default class FamilyDetailsFormContainer extends Component {
     }
     newUuidAux = newUuidAux.value();
 
+    newClient.set('relationships.uuidAux.data', newUuidAux);
+    newClient = newClient.value();
     return updateClient({ id }, newClient)
-      .then(() => updateUuidAux({ id: uuidID }, newUuidAux))
+      // .then(() => updateUuidAux({ id: uuidID }, newUuidAux))
       .then(() => {
         notifyInfo('Family successfully updated.');
         SlyEvent.getInstance().sendEvent({
