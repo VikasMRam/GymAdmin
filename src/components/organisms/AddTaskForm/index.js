@@ -48,7 +48,7 @@ const AddTaskForm = ({
         disabled
       />
       <Field
-        name="stage"
+        name="owner"
         label="Assigned to"
         type="select"
         component={ReduxField}

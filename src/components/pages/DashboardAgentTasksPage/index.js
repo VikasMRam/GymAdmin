@@ -125,7 +125,7 @@ const getBasePath = (tab, params) => {
 
 const DashboardAgentTasksPage = ({
   tasks, onTaskClick, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params,
-  showModal, meta,
+  showModal, hideModal, meta,
 }) => {
   const dueTodayLabel = tabIDLabelMap[tabIDs[0]];
   const overdueLabel = tabIDLabelMap[tabIDs[1]];
@@ -151,7 +151,8 @@ const DashboardAgentTasksPage = ({
     completedTabLabel += ` (${completedCount})`;
 
     const { priorities, statuses } = meta;
-    handleAddTaskClick = () => showModal(<AddOrEditTaskFormContainer priorities={priorities} statuses={statuses} />, null, 'noPadding', false);
+    handleAddTaskClick = () =>
+      showModal(<AddOrEditTaskFormContainer priorities={priorities} statuses={statuses} onCancel={hideModal} />, null, 'noPadding', false);
   }
 
   const beforeTabHeader = (
@@ -232,6 +233,7 @@ DashboardAgentTasksPage.propTypes = {
   isPageLoading: bool,
   params: object,
   showModal: func,
+  hideModal: func,
   meta: object,
 };
 
