@@ -33,9 +33,7 @@ const Stage = ({
   if (stageType === 'family') {
     ({ level: currentStage, palette } = getStageDetails(stage));
   } else {
-    ({
-      level: currentStage, palette, totalStage, stageLabel,
-    } = getTaskStatusDetails(stage));
+    ({ level: currentStage, palette, totalStage } = getTaskStatusDetails(stage));
   }
 
   const indicators = [];

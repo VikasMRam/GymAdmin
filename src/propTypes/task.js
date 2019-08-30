@@ -4,7 +4,7 @@ import user from './user';
 
 import {
   TASK_STATUS_DELETED,
-  TASK_STATUS_INITED,
+  TASK_STATUS_NOT_STARTED,
   TASK_STATUS_IN_PROGRESS,
   TASK_STATUS_COMPLETED,
   TASK_PRIORITY_LOW,
@@ -22,7 +22,7 @@ export default shape({
   ]),
   status: oneOf([
     TASK_STATUS_DELETED,
-    TASK_STATUS_INITED,
+    TASK_STATUS_NOT_STARTED,
     TASK_STATUS_IN_PROGRESS,
     TASK_STATUS_COMPLETED,
   ]).isRequired,

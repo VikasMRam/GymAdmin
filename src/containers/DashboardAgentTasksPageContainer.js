@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import qs from 'query-string';
 import { arrayOf, object } from 'prop-types';
 
-import RefreshRedirect from 'sly/components/common/RefreshRedirect';
-import { withUser, prefetch } from 'sly/services/newApi';
 import taskPropType from 'sly/propTypes/task';
-import DashboardAgentTasksPage from 'sly/components/pages/DashboardAgentTasksPage';
+import { withUser, prefetch } from 'sly/services/newApi';
 import { delayedExecutor, getSearchParams } from 'sly/services/helpers/search';
+import DashboardAgentTasksPage from 'sly/components/pages/DashboardAgentTasksPage';
+import ModalController from 'sly/controllers/ModalController';
+import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 
 const getPaginationData = ({ result, meta }) => {
   const count = result.length;
@@ -99,31 +100,35 @@ export default class DashboardAgentTasksPageContainer extends Component {
     const params = getPageParams({ match, location });
     const { type } = params;
     const { tasks: tasksStatus } = status;
-    const {
-      isLoading, hasStarted, error: tasksError,
-    } = tasksStatus;
+    const { hasFinished, error: tasksError, meta } = tasksStatus;
 
     if (tasksError) {
       return <RefreshRedirect to="/" />;
     }
-    const isPageLoading = !hasStarted || isLoading;
-    if (isPageLoading) {
+    if (!hasFinished) {
       return (
         <DashboardAgentTasksPage
-          isPageLoading={isPageLoading}
+          isPageLoading={!hasFinished}
           params={params}
         />
       );
     }
     const pagination = getPaginationData(tasksStatus);
     return (
-      <DashboardAgentTasksPage
-        tasks={tasks}
-        pagination={pagination}
-        activeTab={type}
-        onSearchTextKeyUp={this.handleSearchTextKeyUp}
-        params={params}
-      />
+      <ModalController>
+        {({ show, hide }) => (
+          <DashboardAgentTasksPage
+            tasks={tasks}
+            pagination={pagination}
+            activeTab={type}
+            onSearchTextKeyUp={this.handleSearchTextKeyUp}
+            params={params}
+            showModal={show}
+            hideModal={hide}
+            meta={meta}
+          />
+        )}
+      </ModalController>
     );
   }
 }

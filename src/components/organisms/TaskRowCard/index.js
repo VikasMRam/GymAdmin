@@ -8,7 +8,6 @@ import taskPropType from 'sly/propTypes/task';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import pad from 'sly/components/helpers/pad';
 import borderRadius from 'sly/components/helpers/borderRadius';
-import { TASK_PRIORITY_LABEL_MAP } from 'sly/constants/tasks';
 import { Link } from 'sly/components/atoms';
 import { Td, Tr } from 'sly/components/atoms/Table';
 import Stage from 'sly/components/molecules/Stage';
@@ -112,7 +111,7 @@ const TaskRowCard = ({ task, onTaskClick }) => {
       </StageCell>
       <PriorityCell>
         <span>Priority</span>
-        <span>{TASK_PRIORITY_LABEL_MAP[priority]}</span>
+        <span>{priority}</span>
       </PriorityCell>
       <AssignedToCell>
         <span>Assigned to</span>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { instanceOf, string, bool } from 'prop-types';
+import { instanceOf, string, bool, node } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -36,6 +36,7 @@ export default class Tabs extends Component {
     activeTab: string,
     className: string,
     tabsOnly: bool.isRequired,
+    beforeHeader: node,
   };
 
   static defaultProps = {
@@ -69,11 +70,12 @@ export default class Tabs extends Component {
   onClickTabItem = (id, callback) => this.setState({ activeTab: id }, callback);
 
   render() {
-    const { children, ...props } = this.props;
+    const { children, beforeHeader, ...props } = this.props;
     const { activeTab } = this.state;
 
     return (
       <Wrapper {...props}>
+        {beforeHeader}
         {children.map((child) => {
           const {
             id, onClick,

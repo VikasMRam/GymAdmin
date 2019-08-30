@@ -9,7 +9,8 @@ import pad from 'sly/components/helpers/pad';
 import SlyEvent from 'sly/services/helpers/events';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
-import { Box, Table, THead, TBody, Tr } from 'sly/components/atoms';
+import { Box, Table, THead, TBody, Tr, Heading } from 'sly/components/atoms';
+import IconButton from 'sly/components/molecules/IconButton';
 import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Tab from 'sly/components/molecules/Tab';
@@ -17,6 +18,7 @@ import taskPropType from 'sly/propTypes/task';
 import { AGENT_DASHBOARD_TASKS_PATH } from 'sly/constants/dashboardAppPaths';
 import Th from 'sly/components/molecules/Th';
 import TaskRowCard from 'sly/components/organisms/TaskRowCard';
+import AddOrEditTaskFormContainer from 'sly/containers/AddOrEditTaskFormContainer';
 
 const TABLE_HEADINGS = [
   { text: 'Task' },
@@ -65,6 +67,17 @@ const FamiliesCountStatusBlock = pad(styled(Box)`
   background-color: ${palette('white.base')};
 `, 'large');
 
+const TwoColumn = pad(styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: capitalize;
+
+  ${Heading} {
+    margin-bottom: 0;
+  }
+`);
+
 const tabIDLabelMap = {
   DueToday: 'DUE TODAY',
   Overdue: 'OVERDUE',
@@ -112,6 +125,7 @@ const getBasePath = (tab, params) => {
 
 const DashboardAgentTasksPage = ({
   tasks, onTaskClick, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params,
+  showModal, meta,
 }) => {
   const dueTodayLabel = tabIDLabelMap[tabIDs[0]];
   const overdueLabel = tabIDLabelMap[tabIDs[1]];
@@ -123,6 +137,7 @@ const DashboardAgentTasksPage = ({
   let upcomingTabLabel = tabIDLabelMap[tabIDs[2]];
   let completedTabLabel = tabIDLabelMap[tabIDs[3]];
 
+  let handleAddTaskClick;
   if (!isPageLoading) {
     const {
       dueTodayCount,
@@ -134,11 +149,23 @@ const DashboardAgentTasksPage = ({
     overdueTabLabel += ` (${overdueCount})`;
     upcomingTabLabel += ` (${upcomingCount})`;
     completedTabLabel += ` (${completedCount})`;
+
+    const { priorities, statuses } = meta;
+    handleAddTaskClick = () => showModal(<AddOrEditTaskFormContainer priorities={priorities} statuses={statuses} />, null, 'noPadding', false);
   }
+
+  const beforeTabHeader = (
+    <TwoColumn>
+      <Heading level="subtitle">Tasks</Heading>
+      <IconButton icon="plus" hideTextInMobile onClick={handleAddTaskClick}>
+        Add task
+      </IconButton>
+    </TwoColumn>
+  );
 
   return (
     <DashboardPageTemplate activeMenuItem="Tasks">
-      <Tabs activeTab={activeTab} tabsOnly>
+      <Tabs activeTab={activeTab} tabsOnly beforeHeader={beforeTabHeader}>
         <Tab id={tabIDs[0]} to={getBasePath(tabIDs[0], params)} onClick={() => onTabClick(dueTodayLabel)}>
           {dueTodayTabLabel}
         </Tab>
@@ -204,6 +231,8 @@ DashboardAgentTasksPage.propTypes = {
   onSearchTextKeyUp: func,
   isPageLoading: bool,
   params: object,
+  showModal: func,
+  meta: object,
 };
 
 export default DashboardAgentTasksPage;
