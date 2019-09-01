@@ -8,6 +8,7 @@ import { size, palette } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { Heading, Badge, Block, Icon, Hr } from 'sly/components/atoms';
 import Stage from 'sly/components/molecules/Stage/index';
+import cursor from 'sly/components/helpers/cursor';
 
 const Wrapper = styled.div`
   border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
@@ -43,6 +44,10 @@ const BottomSection = styled.div`
   padding-top: 0;
 `;
 
+const ActionSection = cursor(styled.div`
+  text-align: center;
+`);
+
 const badgeColor = ({ textPalette }) => palette(textPalette, 'base');
 const StyledBadge = styled(Badge)`
   background-color: ${badgeColor};
@@ -62,14 +67,14 @@ const getReferralSentTimeText = (date) => {
 
 // FIXME: Click works only after passing onClick as prop. Need to check why we need to pass onClick
 const DashboardAdminReferralCommunityTile = ({
-  className, community, referralSentAt, stage, onClick,
+  className, community, referralSentAt, stage, onClick, actionText, actionClick,
 }) => {
   const { propInfo } = community;
   const { hasContract } = propInfo;
 
   return (
-    <Wrapper className={className} onClick={onClick}>
-      <TopSection stage={stage}>
+    <Wrapper className={className}>
+      <TopSection stage={stage} onClick={onClick}>
         <HeaderSection>
           <CommunityName size="body">{community.name}</CommunityName>
           {hasContract && <StyledBadge textPalette="green"><Icon icon="circle-tick" palette="white" />Has Contract</StyledBadge> }
@@ -85,6 +90,14 @@ const DashboardAdminReferralCommunityTile = ({
           </BottomSection>
         </Fragment>
       )}
+      {actionText && actionClick && (
+        <ActionSection onClick={actionClick}>
+          <Hr palette="grey" size="large" />
+          <BottomSection>
+            <Block palette="primary" size="caption">{actionText}</Block>
+          </BottomSection>
+        </ActionSection>
+      )}
     </Wrapper>
   );
 };
@@ -95,6 +108,8 @@ DashboardAdminReferralCommunityTile.propTypes = {
   referralSentAt: string,
   stage: string,
   onClick: func,
+  actionText: string,
+  actionClick: func,
 };
 
 export default DashboardAdminReferralCommunityTile;

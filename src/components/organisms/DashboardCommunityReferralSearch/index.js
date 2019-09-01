@@ -24,15 +24,17 @@ const StyledDashboardAdminReferralCommunityTile = cursor(styled(DashboardAdminRe
   }
 `);
 
-const DashboardCommunityReferralSearch = ({ communities, handleCommunitySearch, nextStep }) => (
+const DashboardCommunityReferralSearch = ({
+  communities, handleCommunitySearch, setSelectedCommunity, onSubmit,
+}) => (
   <Wrapper>
     <SendReferralTitleBlock size="subtitle">Send referral to a community</SendReferralTitleBlock>
     <DashboardCommunityAgentSearchBox handleSubmit={handleCommunitySearch} />
     {communities && communities.length > 0 && (
       <Fragment>
         <Hr size="large" />
-        <Block>Showing {communities.length}</Block>
-        {communities.map(e => <StyledDashboardAdminReferralCommunityTile key={e.name} community={e} onClick={() => nextStep({ community: e })} />)}
+        <Block>Showing {communities.length} communities</Block>
+        {communities.map(e => <StyledDashboardAdminReferralCommunityTile key={e.name} community={e} onClick={() => { setSelectedCommunity(e); onSubmit(); }} />)}
       </Fragment>
     )}
   </Wrapper>
@@ -40,9 +42,10 @@ const DashboardCommunityReferralSearch = ({ communities, handleCommunitySearch, 
 
 DashboardCommunityReferralSearch.propTypes = {
   handleCommunitySearch: func.isRequired,
-  sendReferral: func.isRequired,
+  setSelectedCommunity: func,
+  sendReferral: func,
   handleSubmit: func,
-  nextStep: func,
+  onSubmit: func,
   communities: arrayOf(adminCommunityPropType),
 };
 

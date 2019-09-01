@@ -13,6 +13,7 @@ import DashboardCommunityReferrals from 'sly/components/organisms/DashboardCommu
 import DashboardCommunityReferralSearch from 'sly/components/organisms/DashboardCommunityReferralSearch';
 import DashboardAgentReferrals from 'sly/components/organisms/DashboardAgentReferrals';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
+import DashboardCommunityReferralContactDetailsContainer from 'sly/containers/DashboardCommunityReferralContactDetailsContainer';
 
 const normJsonApi = (resp) => {
   const { data, included } = resp.body;
@@ -50,6 +51,7 @@ export default class ReferralSearchContainer extends Component {
     notifyError: func,
     notifyInfo: func,
     communities: arrayOf(adminCommunityPropType),
+    selectedCommunity: adminCommunityPropType,
     agents: arrayOf(adminAgentPropType),
     referralMode: oneOf(['Agent', 'Community']),
     parentClient: clientPropType.isRequired,
@@ -63,10 +65,26 @@ export default class ReferralSearchContainer extends Component {
   state = {
     communities: [],
     agents: [],
+    selectedCommunity: null,
   };
 
-  onCommunitySendReferralComplete = (values) => {
-    console.log('onCommunitySendReferralComplete', values);
+  onCommunitySendReferralComplete = () => {
+    const { selectedCommunity } = this.state;
+    const partner = {
+      id: selectedCommunity.id,
+      type: 'Community',
+    };
+    this.sendReferral(partner);
+  }
+
+  getSelectedCommunity = () => {
+    const { selectedCommunity } = this.state;
+    return selectedCommunity;
+  }
+
+  setSelectedCommunity = (selectedCommunity) => {
+    this.setState({ selectedCommunity });
+    return selectedCommunity;
   }
 
   doCommunitySearch = ({ name, zip }) => {
@@ -111,7 +129,7 @@ export default class ReferralSearchContainer extends Component {
     newBareClient.set('relationships.provider', {});
     const newChildClient = newBareClient.value();
     console.log('This is the body of the reques', newChildClient);
-    createClient(newChildClient).then((r) => {
+    return createClient(newChildClient).then((r) => {
       console.log('Saw response r', r);
       notifyInfo('Sent referrral successfully');
     }, (e) => {
@@ -136,29 +154,18 @@ export default class ReferralSearchContainer extends Component {
     if (referralMode === 'Community') {
       return (
         <WizardController
-          // formName="SendCommunityReferral"
+          formName="SendCommunityReferral"
           onComplete={data => this.onCommunitySendReferralComplete(data)}
           // onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
         >
           {({
             data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
           }) => {
-            console.log('isFinalStep', isFinalStep);
-            console.log('data', data);
-            console.log('currentStep', currentStep);
-            // let formHeading = 'See your estimated pricing in your next step. We need your information to connect you to our partner agent. We do not share your information with anyone else.';
-            // let formSubheading = null;
-            // if (data.interest) {
-            //   const contactFormHeadingObj = contactFormHeadingMap[data.interest];
-            //   formHeading = contactFormHeadingObj.heading;
-            //   formSubheading = contactFormHeadingObj.subheading;
-            // }
-
             return (
               <WizardSteps currentStep={currentStep} {...props}>
                 <WizardStep
                   component={DashboardCommunityReferrals}
-                  nextStep={onSubmit}
+                  onSubmit={onSubmit}
                   name="DashboardCommunityReferrals"
                   communities={communities}
                   handleCommunitySearch={this.doCommunitySearch}
@@ -166,10 +173,17 @@ export default class ReferralSearchContainer extends Component {
                 />
                 <WizardStep
                   component={DashboardCommunityReferralSearch}
-                  nextStep={onSubmit}
+                  onSubmit={onSubmit}
                   name="DashboardCommunityReferralSearch"
                   communities={communities}
                   handleCommunitySearch={this.doCommunitySearch}
+                  setSelectedCommunity={this.setSelectedCommunity}
+                />
+                <WizardStep
+                  component={DashboardCommunityReferralContactDetailsContainer}
+                  onSubmit={onSubmit}
+                  name="DashboardCommunityReferralContactDetailsContainer"
+                  community={this.getSelectedCommunity()}
                 />
               </WizardSteps>
             );

@@ -17,7 +17,7 @@ const EmptyWrapper = styled.div`
 const NoReferralBlock = pad(Block);
 
 const DashboardCommunityReferrals = ({
-  handleCommunitySearch, communities, sendReferral, nextStep,
+  handleCommunitySearch, communities, sendReferral, onSubmit,
 }) => {
   if (communities.length > 0) {
     const commList = communities.map(e => <DashboardAdminReferralCommunityTile key={e.name} community={e} sendReferral={sendReferral} />);
@@ -32,7 +32,7 @@ const DashboardCommunityReferrals = ({
   return (
     <EmptyWrapper>
       <NoReferralBlock>You haven’t sent any referrals to any communities yet.</NoReferralBlock>
-      <Button onClick={() => nextStep()}>Send a new referral</Button>
+      <Button onClick={() => onSubmit()}>Send a new referral</Button>
     </EmptyWrapper>
   );
 };
@@ -40,7 +40,7 @@ const DashboardCommunityReferrals = ({
 DashboardCommunityReferrals.propTypes = {
   handleCommunitySearch: func,
   sendReferral: func,
-  nextStep: func,
+  onSubmit: func,
   communities: arrayOf(adminCommunityPropType),
 };
 
