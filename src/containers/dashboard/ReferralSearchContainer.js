@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
-import { connect } from 'react-redux';
-import normalize from 'json-api-normalizer';
 import { arrayOf, func, oneOf } from 'prop-types';
+import build from 'redux-object';
 
-import { query, prefetch, getRequestInfo } from 'sly/services/newApi';
+import { query } from 'sly/services/newApi';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import clientPropType from 'sly/propTypes/client';
@@ -15,33 +14,36 @@ import DashboardCommunityReferralSearch from 'sly/components/organisms/Dashboard
 import DashboardAgentReferrals from 'sly/components/organisms/DashboardAgentReferrals';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 
-const mapStateToProps = state => ({
-  customTestState: 'ReferralSearchContainer',
-});
-
-const normJsonApi = (data) => {
-
-  // if( data instanceof Array) {
-  //   var entities = [];
-  //   data.forEach()
-  // }
-  // let entity = {};
-  return {};
-
+const normJsonApi = (resp) => {
+  const { data, included } = resp.body;
+  let normalizedResult = [];
+  let result = data.reduce((acc, item) => {
+    if (!acc[item.type]) {
+      acc[item.type] = {};
+    }
+    acc[item.type][item.id] = item;
+    return acc;
+  }, {});
+  result = included.reduce((acc, item) => {
+    if (!acc[item.type]) {
+      acc[item.type] = {};
+    }
+    acc[item.type][item.id] = item;
+    return acc;
+  }, result);
+  const ids = normalizedResult.map(({ id }) => id);
+  normalizedResult = data.reduce((acc, elem) => {
+    if (!ids.includes(elem.id)) {
+      acc.push(build(result, elem.type, elem.id, { eager: true }));
+    }
+    return acc;
+  }, normalizedResult);
+  return normalizedResult;
 };
 
 @query('getCommunities', 'getCommunities')
-// @prefetch('communities', 'getCommunities', (req, { filters }) => {
-//   const modQ = {};
-//   Object.entries(filters).forEach(([k, v]) => {
-//     modQ[`filter[${k}]`] = v;
-//   });
-//   return req({ ...modQ, include: 'agents' });
-// })
 @query('getAgents', 'getAgents')
 @query('createClient', 'createClient')
-
-@connect(mapStateToProps)
 
 export default class ReferralSearchContainer extends Component {
   static propTypes = {
@@ -63,6 +65,10 @@ export default class ReferralSearchContainer extends Component {
     agents: [],
   };
 
+  onCommunitySendReferralComplete = (values) => {
+    console.log('onCommunitySendReferralComplete', values);
+  }
+
   doCommunitySearch = ({ name, zip }) => {
     const { getCommunities } = this.props;
     const filters = {
@@ -70,12 +76,11 @@ export default class ReferralSearchContainer extends Component {
       'filter[zip]': zip,
     };
 
-    return getCommunities(filters).then((r) => {
-      const { data } = r.body;
-      console.log('Seeing these communities ', data);
-
+    return getCommunities(filters).then((resp) => {
+      const communities = normJsonApi(resp);
+      console.log('Seeing these communities ', communities);
       return this.setState({
-        communities: normalize(r.body),
+        communities,
       });
     });
   };
@@ -93,7 +98,9 @@ export default class ReferralSearchContainer extends Component {
   };
 
   sendReferral = (partner) => {
-    const { createClient, parentClient, notifyInfo, notifyError } = this.props;
+    const {
+      createClient, parentClient, notifyInfo, notifyError,
+    } = this.props;
     console.log('Going to send referral for', parentClient.name);
     const newBareClient = immutable(pick(parentClient, ['id', 'type', 'attributes.clientInfo', 'attributes.uuid', 'relationships']));
     // newBareClient.set('id', null);
@@ -107,7 +114,7 @@ export default class ReferralSearchContainer extends Component {
     createClient(newChildClient).then((r) => {
       console.log('Saw response r', r);
       notifyInfo('Sent referrral successfully');
-    }, (e)=> {
+    }, (e) => {
       console.log('Saw error, e', e);
       notifyError('Error sending referral, contact support');
     });
@@ -130,12 +137,15 @@ export default class ReferralSearchContainer extends Component {
       return (
         <WizardController
           // formName="SendCommunityReferral"
-          // onComplete={data => onComplete(data, openConfirmationModal)}
+          onComplete={data => this.onCommunitySendReferralComplete(data)}
           // onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
         >
           {({
             data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
           }) => {
+            console.log('isFinalStep', isFinalStep);
+            console.log('data', data);
+            console.log('currentStep', currentStep);
             // let formHeading = 'See your estimated pricing in your next step. We need your information to connect you to our partner agent. We do not share your information with anyone else.';
             // let formSubheading = null;
             // if (data.interest) {

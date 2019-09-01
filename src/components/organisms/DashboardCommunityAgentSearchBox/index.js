@@ -1,24 +1,33 @@
-import React, { Component, Fragment } from 'react';
-import { bool,func } from 'prop-types';
+import React from 'react';
+import { func } from 'prop-types';
 import styled from 'styled-components';
+import { reduxForm, Field } from 'redux-form';
 
 import { size } from 'sly/components/themes';
-import { Box,  Button } from 'sly/components/atoms';
+import IconButton from 'sly/components/molecules/IconButton';
 import ReduxField from 'sly/components/organisms/ReduxField';
-import { reduxForm, Field } from 'redux-form';
 
 const Form = styled.form`
   display: flex;
   align-items: center;
 `;
 
+const CommunityTextBox = styled(Field)`
+  margin-right: ${size('spacing.regular')};
+  flex-grow: 2;
+`;
+
 const CommunityAgentSearchForm = ({ handleSubmit }) => {
   return (
     <Form onSubmit={handleSubmit} name="CommunitySearchForm" >
-      <Field name="name" label="Choose a Community" type="text" wideWidth component={ReduxField} />
-      <Button type="submit"> Search </Button>
+      <CommunityTextBox name="name" label="Find a community" type="text" placeholder="Search by zip code or community name" component={ReduxField} />
+      <IconButton type="submit" icon="search" />
     </Form>
   );
+};
+
+CommunityAgentSearchForm.propTypes = {
+  handleSubmit: func.isRequired,
 };
 
 const ReduxForm = reduxForm({
@@ -29,18 +38,10 @@ const ReduxForm = reduxForm({
   keepDirtyOnReinitialize: true,
 })(CommunityAgentSearchForm);
 
-export default class DashboardCommunityAgentSearchBox extends Component {
-  static propTypes = {
-    handleSubmit: func.isRequired,
-  };
+const DashboardCommunityAgentSearchBox = ({ handleSubmit }) => <ReduxForm onSubmit={handleSubmit} />;
 
-  // TODO : Notify Error and Info are not present
-  render() {
-    const { handleSubmit } = this.props;
-    return (
-      <Box>
-        <ReduxForm onSubmit={handleSubmit} />
-      </Box>
-    );
-  }
-}
+DashboardCommunityAgentSearchBox.propTypes = {
+  handleSubmit: func.isRequired,
+};
+
+export default DashboardCommunityAgentSearchBox;

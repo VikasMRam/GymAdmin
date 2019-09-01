@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { string } from 'prop-types';
+import { string, func } from 'prop-types';
 import dayjs from 'dayjs';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
@@ -34,7 +35,7 @@ const ReferralSentTime = styled(Block)`
 
 const TopSection = styled.div`
   padding: ${size('spacing.large')};
-  padding-bottom: 0;
+  padding-bottom: ${ifProp('stage', 0)};
 `;
 
 const BottomSection = styled.div`
@@ -59,13 +60,16 @@ const getReferralSentTimeText = (date) => {
   return date.format('M/D/YY, h:mmA');
 };
 
-const DashboardAdminReferralCommunityTile = ({ community, referralSentAt }) => {
+// FIXME: Click works only after passing onClick as prop. Need to check why we need to pass onClick
+const DashboardAdminReferralCommunityTile = ({
+  className, community, referralSentAt, stage, onClick,
+}) => {
   const { propInfo } = community;
   const { hasContract } = propInfo;
 
   return (
-    <Wrapper>
-      <TopSection>
+    <Wrapper className={className} onClick={onClick}>
+      <TopSection stage={stage}>
         <HeaderSection>
           <CommunityName size="body">{community.name}</CommunityName>
           {hasContract && <StyledBadge textPalette="green"><Icon icon="circle-tick" palette="white" />Has Contract</StyledBadge> }
@@ -73,17 +77,24 @@ const DashboardAdminReferralCommunityTile = ({ community, referralSentAt }) => {
         <CommunityAddressBlock palette="grey" variation="dark" size="caption">{buildAddressDisplay(community)}</CommunityAddressBlock>
         {referralSentAt && <ReferralSentTime palette="grey" variation="dark" size="tiny">Sent on {getReferralSentTimeText(referralSentAt)}</ReferralSentTime>}
       </TopSection>
-      <Hr palette="grey" size="large" />
-      <BottomSection>
-        <Stage stage="New" />
-      </BottomSection>
+      {stage && (
+        <Fragment>
+          <Hr palette="grey" size="large" />
+          <BottomSection>
+            <Stage stage="New" />
+          </BottomSection>
+        </Fragment>
+      )}
     </Wrapper>
   );
 };
 
 DashboardAdminReferralCommunityTile.propTypes = {
+  className: string,
   community: adminCommunityPropType.isRequired,
   referralSentAt: string,
+  stage: string,
+  onClick: func,
 };
 
 export default DashboardAdminReferralCommunityTile;
