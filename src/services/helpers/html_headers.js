@@ -129,7 +129,7 @@ export const getHelmetForSearchPage = ({
   const { seoTitle, seoDescription } = guideContent;
 
   const locationStr = city ? `${titleize(city)}, ${getStateAbbr(state)}` : `${titleize(state)}`;
-  const numResultsStr = (listSize && listSize > 5) ? `${listSize}` : 'Best';
+  const numResultsStr = (listSize && listSize < 15) ? `THE BEST ${listSize}` : 'THE BEST 15';
   const title = seoTitle || `${numResultsStr} ${actualToc.seoLabel} in ${locationStr} `;
 
   const description = seoDescription || (city ? `Get pricing & read reviews for ${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, photos & talk to local ${titleize(city)} senior living experts.` :
