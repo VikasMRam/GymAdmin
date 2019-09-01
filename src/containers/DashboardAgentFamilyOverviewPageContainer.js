@@ -72,9 +72,11 @@ const getPageParams = ({ match, location }) => {
   const {
     clientType, pageNumber, clientName, organization, providerType, provider,
   } = getPageParams({ match, location });
+  const fClientName = clientName ? `cs:${clientName}` : undefined;
+
   const filters = {
     'filter[client_type]': clientType,
-    'filter[name]': clientName,
+    'filter[name]': fClientName, // FIXME: Arbit use of filter
     'filter[organization]': organization,
     'filter[provider_type]': providerType,
     'filter[provider]': provider,
