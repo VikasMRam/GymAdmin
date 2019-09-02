@@ -6,10 +6,11 @@ import qs from 'query-string';
 import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import pad from 'sly/components/helpers/pad';
+import textAlign from 'sly/components/helpers/textAlign';
 import SlyEvent from 'sly/services/helpers/events';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
-import { Box, Table, THead, TBody, Tr, Heading } from 'sly/components/atoms';
+import { Box, Table, THead, TBody, Tr, Td, Heading, Block } from 'sly/components/atoms';
 import IconButton from 'sly/components/molecules/IconButton';
 import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
@@ -78,6 +79,11 @@ const TwoColumn = pad(styled.div`
   }
 `);
 
+const NoResultMessage = styled(textAlign(Block))`
+  padding-top: ${size('spacing.xxxLarge')};
+  padding-bottom: ${size('spacing.xxxLarge')};
+`;
+
 const tabIDLabelMap = {
   DueToday: 'DUE TODAY',
   Overdue: 'OVERDUE',
@@ -96,11 +102,10 @@ const onTabClick = (label) => {
   SlyEvent.getInstance().sendEvent(event);
 };
 
-const getBasePath = (tab, params) => {
-  const {
-    clientName, organization,
-  } = params;
-  const filters = {};
+const getBasePath = (tab) => {
+  const filters = {
+    type: tabIDs[0],
+  };
 
   if (tab === tabIDs[1]) {
     filters.type = 'Overdue';
@@ -110,21 +115,13 @@ const getBasePath = (tab, params) => {
     filters.type = 'Completed';
   }
 
-  if (clientName) {
-    filters.name = clientName;
-  }
-
-  if (organization) {
-    filters.organization = organization;
-  }
-
   const filterQs = qs.stringify(filters);
 
   return filterQs !== '' ? `${AGENT_DASHBOARD_TASKS_PATH}?${filterQs}` : AGENT_DASHBOARD_TASKS_PATH;
 };
 
 const DashboardAgentTasksPage = ({
-  tasks, onTaskClick, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params,
+  tasks, onTaskClick, pagination, activeTab, onSearchTextKeyUp, isPageLoading,
   showModal, hideModal, meta,
 }) => {
   const dueTodayLabel = tabIDLabelMap[tabIDs[0]];
@@ -163,20 +160,28 @@ const DashboardAgentTasksPage = ({
       </IconButton>
     </TwoColumn>
   );
+  let noResultMessage = 'Nice! You are on top of all your tasks for today';
+  if (activeTab === tabIDs[1]) {
+    noResultMessage = 'Nice! You are on top of all your overdue tasks';
+  } else if (activeTab === tabIDs[2]) {
+    noResultMessage = 'Nice! You are on top of all your upcoming tasks';
+  } else if (activeTab === tabIDs[3]) {
+    noResultMessage = 'Nice! You are on top of all your completed tasks';
+  }
 
   return (
     <DashboardPageTemplate activeMenuItem="Tasks">
       <Tabs activeTab={activeTab} tabsOnly beforeHeader={beforeTabHeader}>
-        <Tab id={tabIDs[0]} to={getBasePath(tabIDs[0], params)} onClick={() => onTabClick(dueTodayLabel)}>
+        <Tab id={tabIDs[0]} to={getBasePath(tabIDs[0])} onClick={() => onTabClick(dueTodayLabel)}>
           {dueTodayTabLabel}
         </Tab>
-        <Tab id={tabIDs[1]} to={getBasePath(tabIDs[1], params)} onClick={() => onTabClick(overdueLabel)}>
+        <Tab id={tabIDs[1]} to={getBasePath(tabIDs[1])} onClick={() => onTabClick(overdueLabel)}>
           {overdueTabLabel}
         </Tab>
-        <Tab id={tabIDs[2]} to={getBasePath(tabIDs[2], params)} onClick={() => onTabClick(upcomingLabel)}>
+        <Tab id={tabIDs[2]} to={getBasePath(tabIDs[2])} onClick={() => onTabClick(upcomingLabel)}>
           {upcomingTabLabel}
         </Tab>
-        <Tab id={tabIDs[3]} to={getBasePath(tabIDs[3], params)} onClick={() => onTabClick(completedLabel)}>
+        <Tab id={tabIDs[3]} to={getBasePath(tabIDs[3])} onClick={() => onTabClick(completedLabel)}>
           {completedTabLabel}
         </Tab>
       </Tabs>
@@ -196,6 +201,13 @@ const DashboardAgentTasksPage = ({
                 {tasks.map(task => (
                   <TaskRowCard key={task.id} task={task} onTaskClick={onTaskClick} />
                 ))}
+                {tasks.length === 0 &&
+                  <Tr>
+                    <Td colSpan={TABLE_HEADINGS.length}>
+                      <NoResultMessage>{noResultMessage}</NoResultMessage>
+                    </Td>
+                  </Tr>
+                }
               </TBody>
             </StyledTable>
             {pagination.show && (
@@ -203,7 +215,7 @@ const DashboardAgentTasksPage = ({
                 current={pagination.current}
                 total={pagination.total}
                 range={1}
-                basePath={getBasePath(activeTab, params)}
+                basePath={getBasePath(activeTab)}
                 pageParam="page-number"
               />
             )}
@@ -212,11 +224,11 @@ const DashboardAgentTasksPage = ({
         {isPageLoading && 'Loading...'}
       </Section>
 
-      {!isPageLoading && (
+      {!isPageLoading && tasks.length > 0 &&
         <FamiliesCountStatusBlock padding="regular" size="caption" snap="top">
           {pagination.text}
         </FamiliesCountStatusBlock>
-      )}
+      }
     </DashboardPageTemplate>
   );
 };
@@ -231,7 +243,6 @@ DashboardAgentTasksPage.propTypes = {
   searchTextValue: string,
   onSearchTextKeyUp: func,
   isPageLoading: bool,
-  params: object,
   showModal: func,
   hideModal: func,
   meta: object,

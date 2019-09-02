@@ -10,6 +10,7 @@ import {
   TASK_PRIORITY_LOW,
   TASK_PRIORITY_MED,
   TASK_PRIORITY_HIGH,
+  TASK_PRIORITY_URGENT,
 } from 'sly/constants/tasks';
 
 export default shape({
@@ -19,6 +20,7 @@ export default shape({
     TASK_PRIORITY_LOW,
     TASK_PRIORITY_MED,
     TASK_PRIORITY_HIGH,
+    TASK_PRIORITY_URGENT,
   ]),
   status: oneOf([
     TASK_STATUS_DELETED,

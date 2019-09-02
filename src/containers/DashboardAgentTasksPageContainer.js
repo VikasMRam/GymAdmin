@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import qs from 'query-string';
 import { arrayOf, object } from 'prop-types';
+import dayjs from 'dayjs';
 
 import taskPropType from 'sly/propTypes/task';
 import { withUser, prefetch } from 'sly/services/newApi';
 import { delayedExecutor, getSearchParams } from 'sly/services/helpers/search';
+import { TASK_STATUS_NOT_STARTED_CODE, TASK_STATUS_IN_PROGRESS_CODE } from 'sly/constants/tasks';
 import DashboardAgentTasksPage from 'sly/components/pages/DashboardAgentTasksPage';
 import ModalController from 'sly/controllers/ModalController';
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
@@ -20,7 +22,7 @@ const getPaginationData = ({ result, meta }) => {
   const text = `Showing ${paginationRangeString} ${filteredCount} tasks`;
   const show = filteredCount > size;
   const dueTodayCount = meta.due_today_count;
-  const overdueCount = meta.overdue_count;
+  const overdueCount = meta.over_due_count;
   const upcomingCount = meta.upcoming_count;
   const completedCount = meta.completed_count;
 
@@ -41,25 +43,38 @@ const getPaginationData = ({ result, meta }) => {
 
 const getPageParams = ({ match, location }) => {
   const searchParams = getSearchParams(match, location);
-  const clientName = searchParams.name;
-  const { organization } = searchParams;
+  const type = searchParams.type || 'DueToday';
+  let date;
+  let status = `in:${TASK_STATUS_NOT_STARTED_CODE},${TASK_STATUS_IN_PROGRESS_CODE}`;
+  if (type === 'DueToday') {
+    date = dayjs().format('YYYY-MM-DD');
+  } else if (type === 'Overdue') {
+    date = `lt:${dayjs().format('YYYY-MM-DD')}`;
+  } else if (type === 'Upcoming') {
+    date = `gt:${dayjs().format('YYYY-MM-DD')}`;
+  }
+  if (type === 'Completed') {
+    status = '20';
+  }
 
   return {
+    status,
+    date,
+    type,
     pageNumber: searchParams['page-number'],
-    clientName,
-    organization,
   };
 };
 
 @prefetch('tasks', 'getTasks', (getClients, { match, location }) => {
-  const {
-    pageNumber, clientName, organization,
-  } = getPageParams({ match, location });
+  const { pageNumber, date, status } = getPageParams({ match, location });
   const filters = {
-    'filter[name]': clientName,
-    'filter[organization]': organization,
+    'filter[status]': status,
     'page-number': pageNumber,
   };
+  if (date) {
+    filters['filter[dueDate]'] = date;
+  }
+
   return getClients(filters);
 })
 
@@ -109,7 +124,6 @@ export default class DashboardAgentTasksPageContainer extends Component {
       return (
         <DashboardAgentTasksPage
           isPageLoading={!hasFinished}
-          params={params}
         />
       );
     }
@@ -122,7 +136,6 @@ export default class DashboardAgentTasksPageContainer extends Component {
             pagination={pagination}
             activeTab={type}
             onSearchTextKeyUp={this.handleSearchTextKeyUp}
-            params={params}
             showModal={show}
             hideModal={hide}
             meta={meta}
