@@ -39,7 +39,8 @@ export default class RejectFamilyForm extends Component {
     const {
       handleSubmit, onCancel, reasons, currentReason, ...props
     } = this.props;
-    const reasonsOptions = reasons.map(r => ({ value: r, label: r }));
+    // const reasonsOptions = reasons.map(r => ({ value: r, label: r }));
+    const reasonsOptions = reasons.map(i => <option key={i} value={i}>{i}</option>);
 
     return (
       <ThreeSectionFormTemplate
@@ -57,8 +58,9 @@ export default class RejectFamilyForm extends Component {
           type="select"
           placeholder="Select rejection reason"
           component={ReduxField}
-          options={reasonsOptions}
-        />
+        >
+          {reasonsOptions}
+        </Field>
         {DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentReason) &&
           <Field
             showCharacterCount

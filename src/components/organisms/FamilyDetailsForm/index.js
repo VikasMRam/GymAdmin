@@ -104,10 +104,10 @@ class FamilyDetailsForm extends Component {
     // const timeToMoveOptions = timeToMove.map(i => ({ label: i, value: i }));
     // const monthlyBudgetOptions = monthlyBudget.map(i => ({ label: i, value: i }));
 
-    const lookingForOptions = lookingFor.map(i => <option value={i}>{i}</option>);
-    const femaleOptions = gender.map(i => <option value={i}>{i}</option>);
-    const timeToMoveOptions = timeToMove.map(i => <option value={i}>{i}</option>);
-    const monthlyBudgetOptions = monthlyBudget.map(i => <option value={i}>{i}</option>);
+    const lookingForOptions = lookingFor.map(i => <option key={i} value={i}>{i}</option>);
+    const femaleOptions = gender.map(i => <option key={i} value={i}>{i}</option>);
+    const timeToMoveOptions = timeToMove.map(i => <option key={i} value={i}>{i}</option>);
+    const monthlyBudgetOptions = monthlyBudget.map(i => <option key={i} value={i}>{i}</option>);
 
     return (
       <div>
