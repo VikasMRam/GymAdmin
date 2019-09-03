@@ -99,10 +99,15 @@ class FamilyDetailsForm extends Component {
       ({ preferredLocation } = initialValues);
     }
 
-    const lookingForOptions = lookingFor.map(i => ({ label: i, value: i }));
-    const femaleOptions = gender.map(i => ({ label: i, value: i }));
-    const timeToMoveOptions = timeToMove.map(i => ({ label: i, value: i }));
-    const monthlyBudgetOptions = monthlyBudget.map(i => ({ label: i, value: i }));
+    // const lookingForOptions = lookingFor.map(i => ({ label: i, value: i }));
+    // const femaleOptions = gender.map(i => ({ label: i, value: i }));
+    // const timeToMoveOptions = timeToMove.map(i => ({ label: i, value: i }));
+    // const monthlyBudgetOptions = monthlyBudget.map(i => ({ label: i, value: i }));
+
+    const lookingForOptions = lookingFor.map(i => <option value={i}>{i}</option>);
+    const femaleOptions = gender.map(i => <option value={i}>{i}</option>);
+    const timeToMoveOptions = timeToMove.map(i => <option value={i}>{i}</option>);
+    const monthlyBudgetOptions = monthlyBudget.map(i => <option value={i}>{i}</option>);
 
     return (
       <div>
@@ -158,9 +163,10 @@ class FamilyDetailsForm extends Component {
             placeholder="Select an option"
             disabled={!canEditFamilyDetails}
             component={ReduxField}
-            options={lookingForOptions}
             wideWidth
-          />
+          >
+            {lookingForOptions}
+          </Field>
           <Field
             name="gender"
             label="Gender"
@@ -168,9 +174,10 @@ class FamilyDetailsForm extends Component {
             placeholder="Select an option"
             disabled={!canEditFamilyDetails}
             component={ReduxField}
-            options={femaleOptions}
             wideWidth
-          />
+          >
+            {femaleOptions}
+          </Field>
           <PaddedTwoColumnWrapper verticalCenter>
             <StyledLabel>Preferred location</StyledLabel>
             <StyledSearchBoxContainer
@@ -193,9 +200,10 @@ class FamilyDetailsForm extends Component {
             placeholder="Select an option"
             disabled={!canEditFamilyDetails}
             component={ReduxField}
-            options={monthlyBudgetOptions}
             wideWidth
-          />
+          >
+            {monthlyBudgetOptions}
+          </Field>
           <Field
             name="timeToMove"
             label="Time to move"
@@ -203,9 +211,10 @@ class FamilyDetailsForm extends Component {
             placeholder="Select an option"
             disabled={!canEditFamilyDetails}
             component={ReduxField}
-            options={timeToMoveOptions}
             wideWidth
-          />
+          >
+            {timeToMoveOptions}
+          </Field>
           <TwoColumnWrapper>
             <StyledLabel>Seniorly introduction</StyledLabel>
             <IntroInfo size="caption">{intro}</IntroInfo>
