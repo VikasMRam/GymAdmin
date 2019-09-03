@@ -11,6 +11,7 @@ import { Box, Heading, Button } from 'sly/components/atoms';
 import Stage from 'sly/components/molecules/Stage';
 import userPropType from 'sly/propTypes/user';
 import { userHasAdminRole } from 'sly/services/helpers/role';
+
 const ColumWrapper = pad(styled.div`
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
     display: grid;
@@ -35,9 +36,15 @@ MarginBottomFullWidthButton.displayName = 'MarginBottomFullWidthButton';
 const FamilyStage = ({
   stageText, onAcceptClick, onRejectClick, snap, noBorderRadius, onAddNoteClick, onUpdateClick, user,
 }) => {
+  const stageDetails = getStageDetails(stageText);
+
   let {
-    levelGroup, palette, showAcceptRejectButtons, showUpdateAddNoteButtons, disableAddNoteButton, disableUpdateButton,
-  } = getStageDetails(stageText);
+    showAcceptRejectButtons, showUpdateAddNoteButtons, disableAddNoteButton, disableUpdateButton,
+  } = stageDetails;
+
+  const {
+    levelGroup, palette,
+  } = stageDetails;
 
   if (userHasAdminRole(user)) {
     [showAcceptRejectButtons, showUpdateAddNoteButtons, disableAddNoteButton, disableUpdateButton] = [false, true, false, false];
