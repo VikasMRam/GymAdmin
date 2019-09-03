@@ -67,23 +67,19 @@ export default class UpdateFamilyStageForm extends Component {
     const NEW_FAMILY_STAGE_ORDERED = { ...FAMILY_STAGE_ORDERED };
 
     const options = Object.keys(NEW_FAMILY_STAGE_ORDERED).map((sg, ig) => {
-      let stages = NEW_FAMILY_STAGE_ORDERED[sg].map((s, i) => nextAllowedStages.indexOf(s) !== -1 && {
-        value: s,
-        label: s,
-        isDisabled: s === currentStage || (ig === 0 && i === 0),
-      });
+      let stages = NEW_FAMILY_STAGE_ORDERED[sg].map((s, i) => nextAllowedStages.indexOf(s) !== -1 && <option disabled={ig === 0 && i === 0} key={s} value={s}>{s}</option>);
       stages = stages.filter(s => s);
 
       if (stages.length) {
-        return {
-          label: sg,
-          options: stages,
-        };
+        return (
+          <optgroup label={sg} key={sg}>
+            {stages}
+          </optgroup>
+        );
       }
       return null;
-    }).filter(s => s);
-
-    const lossReasonOptions = lossReasons.map(reason => ({ value: reason, label: reason }));
+    });
+    const lossReasonOptions = lossReasons.map(reason => <option key={reason} value={reason}>{reason}</option>);
     const stageGroupChanged = nextStageGroup && currentStageGroup !== nextStageGroup;
     const stageChanged = currentStage !== nextStage;
     const StageField = stageGroupChanged ? Field : PaddedField;
@@ -102,10 +98,11 @@ export default class UpdateFamilyStageForm extends Component {
           name="stage"
           label="Stage"
           type="select"
-          placeholder="Select a stage"
           component={ReduxField}
-          options={options}
-        />
+        >
+          <option value="" disabled>Select a stage</option>
+          {options}
+        </StageField>
         {stageGroupChanged && (!isPaused || (isPaused && stageChanged)) &&
           <Warning size="caption">
             Updating to this stage will move this family from <strong>{currentStageGroup}</strong> to <strong>{nextStageGroup}</strong>.
@@ -122,6 +119,7 @@ export default class UpdateFamilyStageForm extends Component {
             rows={3}
             name="note"
             label="Add a note"
+            placeholder="Add a note on why you are updating this family's stage..."
             component={ReduxField}
           />
         }
@@ -165,10 +163,11 @@ export default class UpdateFamilyStageForm extends Component {
             name="lossReason"
             label={<span>Loss reason<Span palette="danger">*</Span></span>}
             type="select"
-            placeholder="Select a reason"
             component={ReduxField}
-            options={lossReasonOptions}
-          />
+          >
+            <option value="" disabled>Select a reason</option>
+            {lossReasonOptions}
+          </Field>
         }
         {nextStage === FAMILY_STAGE_LOST && DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentLossReason) &&
           <Field

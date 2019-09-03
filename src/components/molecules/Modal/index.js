@@ -66,6 +66,11 @@ const StyledReactModal = styled(({ className, ...props }) => (
     opacity: 0;
   }
 `;
+/*
+  Moved out the following on 3/9/2019
+  // overflow: auto;
+  // max-height: calc(100% - ${size('spacing.small')});
+ */
 
 const ModalContext = styled.article`
   background-color: ${palette('white', 'base')};
@@ -76,8 +81,6 @@ const ModalContext = styled.article`
   left: 50%;
   right: auto;
   bottom: auto;
-  overflow: auto;
-  max-height: calc(100% - ${size('spacing.small')});
   border-radius: ${size('spacing.small')};
   width: calc(100% - ${size('spacing.xxLarge')});
   @media screen and (min-width: ${size('breakpoint.mobile')}) {

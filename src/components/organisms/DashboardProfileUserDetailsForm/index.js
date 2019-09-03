@@ -61,9 +61,13 @@ class DashboardProfileUserDetailsForm extends Component {
     const {
       lookingFor, monthlyBudget, timeToMove,
     } = meta;
-    const lookingForOptions = lookingFor.map(i => ({ label: i, value: i }));
-    const timeToMoveOptions = timeToMove.map(i => ({ label: i, value: i }));
-    const monthlyBudgetOptions = monthlyBudget.map(i => ({ label: i, value: i }));
+    // const lookingForOptions = lookingFor.map(i => ({ label: i, value: i }));
+    // const timeToMoveOptions = timeToMove.map(i => ({ label: i, value: i }));
+    // const monthlyBudgetOptions = monthlyBudget.map(i => ({ label: i, value: i }));
+
+    const lookingForOptions = lookingFor.map(i => <option key={i} value={i}>{i}</option>);
+    const timeToMoveOptions = timeToMove.map(i => <option key={i} value={i}>{i}</option>);
+    const monthlyBudgetOptions = monthlyBudget.map(i => <option key={i} value={i}>{i}</option>);
 
     let searchingCity = '';
     if (initialValues) {
@@ -106,7 +110,9 @@ class DashboardProfileUserDetailsForm extends Component {
           component={ReduxField}
           options={lookingForOptions}
           wideWidth
-        />
+        >
+          {lookingForOptions}
+        </Field>
         <Field
           name="residentName"
           label="Resident Name"
@@ -121,18 +127,20 @@ class DashboardProfileUserDetailsForm extends Component {
           type="select"
           placeholder="Select an option"
           component={ReduxField}
-          options={monthlyBudgetOptions}
           wideWidth
-        />
+        >
+          {monthlyBudgetOptions}
+        </Field>
         <Field
           name="timeToMove"
           label="Time to move"
           type="select"
           placeholder="Select an option"
           component={ReduxField}
-          options={timeToMoveOptions}
           wideWidth
-        />
+        >
+          {timeToMoveOptions}
+        </Field>
         <PaddedTwoColumnWrapper verticalCenter>
           <StyledLabel>Searching in</StyledLabel>
           <StyledSearchBoxContainer
