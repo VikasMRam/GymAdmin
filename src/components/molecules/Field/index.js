@@ -40,7 +40,7 @@ const getInputComponent = (type) => {
     case 'date':
       return DatePicker;
     case 'select':
-      return Select;
+      return Input;
     default:
       return Input;
   }
