@@ -4,6 +4,7 @@ import { reduxForm } from 'redux-form';
 
 import { prefetch, withUser, query } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
+import taskPropType from 'sly/propTypes/task';
 import { createValidator, required } from 'sly/services/validation';
 import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import AddTaskForm from 'sly/components/organisms/AddTaskForm';
@@ -26,6 +27,8 @@ const ReduxForm = reduxForm({
 
 @query('createTask', 'createTask')
 
+@query('updateTask', 'updateTask')
+
 @withUser
 
 export default class AddOrEditTaskFormContainer extends Component {
@@ -38,6 +41,8 @@ export default class AddOrEditTaskFormContainer extends Component {
     createTask: func,
     notifyInfo: func,
     onSuccess: func,
+    updateTask: func,
+    task: taskPropType,
   };
 
   handleAddTask = (data) => {

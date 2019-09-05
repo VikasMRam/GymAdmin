@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, string, arrayOf } from 'prop-types';
+import { func, string, arrayOf, object } from 'prop-types';
 import { Field } from 'redux-form';
 
 import userPropType from 'sly/propTypes/user';
@@ -7,7 +7,7 @@ import ReduxField from 'sly/components/organisms/ReduxField';
 import ThreeSectionFormTemplate from 'sly/components/molecules/ThreeSectionFormTemplate';
 
 const AddTaskForm = ({
-  handleSubmit, onCancel, assignedTos, statuses, priorities, ...props
+  handleSubmit, onCancel, assignedTos, statuses, priorities, heading, initialValues, ...props
 }) => {
   const assignedTosOptions = assignedTos.map(at => ({ value: at.id, label: at.name }));
   const statusesOptions = statuses.map(s => ({ value: s, label: s }));
@@ -20,7 +20,7 @@ const AddTaskForm = ({
       onCancelClick={onCancel}
       hasSubmit
       onSubmit={handleSubmit}
-      heading="Add Task"
+      heading={heading}
       submitButtonText="Add Task"
     >
       <Field
@@ -85,6 +85,12 @@ AddTaskForm.propTypes = {
   priorities: arrayOf(string).isRequired,
   statuses: arrayOf(string).isRequired,
   assignedTos: arrayOf(userPropType).isRequired,
+  heading: string.isRequired,
+  initialValues: object,
+};
+
+AddTaskForm.defaultProps = {
+  heading: 'Add Task',
 };
 
 export default AddTaskForm;
