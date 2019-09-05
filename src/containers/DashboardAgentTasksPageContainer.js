@@ -9,6 +9,7 @@ import { delayedExecutor, getSearchParams } from 'sly/services/helpers/search';
 import { TASK_STATUS_NOT_STARTED_CODE, TASK_STATUS_IN_PROGRESS_CODE } from 'sly/constants/tasks';
 import DashboardAgentTasksPage from 'sly/components/pages/DashboardAgentTasksPage';
 import ModalController from 'sly/controllers/ModalController';
+import NotificationController from 'sly/controllers/NotificationController';
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 
 const getPaginationData = ({ result, meta }) => {
@@ -92,14 +93,19 @@ export default class DashboardAgentTasksPageContainer extends Component {
   handleSearchTextKeyUp = (event) => {
     const { value } = event.target;
     const { match, location, history } = this.props;
-    const { pageNumber, organization } = getPageParams({ match, location });
+    const {
+      pageNumber, date, status, type,
+    } = getPageParams({ match, location });
     const filters = {
       name: value,
-      organization,
+      'filter[status]': status,
+      pageNumber,
+      type,
     };
-    if (pageNumber) {
-      filters.pageNumber = pageNumber;
+    if (date) {
+      filters['filter[dueDate]'] = date;
     }
+
     this.sendQuery(history, qs.stringify(filters));
   };
 
@@ -129,19 +135,25 @@ export default class DashboardAgentTasksPageContainer extends Component {
     }
     const pagination = getPaginationData(tasksStatus);
     return (
-      <ModalController>
-        {({ show, hide }) => (
-          <DashboardAgentTasksPage
-            tasks={tasks}
-            pagination={pagination}
-            activeTab={type}
-            onSearchTextKeyUp={this.handleSearchTextKeyUp}
-            showModal={show}
-            hideModal={hide}
-            meta={meta}
-          />
+      <NotificationController>
+        {({ notifyError, notifyInfo }) => (
+          <ModalController>
+            {({ show, hide }) => (
+              <DashboardAgentTasksPage
+                tasks={tasks}
+                pagination={pagination}
+                activeTab={type}
+                onSearchTextKeyUp={this.handleSearchTextKeyUp}
+                showModal={show}
+                hideModal={hide}
+                meta={meta}
+                notifyError={notifyError}
+                notifyInfo={notifyInfo}
+              />
+            )}
+          </ModalController>
         )}
-      </ModalController>
+      </NotificationController>
     );
   }
 }

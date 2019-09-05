@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { arrayOf, string, object } from 'prop-types';
+import { arrayOf, string, object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
-import { prefetch, withUser } from 'sly/services/newApi';
+import { prefetch, withUser, query } from 'sly/services/newApi';
 import userPropType from 'sly/propTypes/user';
 import { createValidator, required } from 'sly/services/validation';
+import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import AddTaskForm from 'sly/components/organisms/AddTaskForm';
 
 const validate = createValidator({
@@ -23,6 +24,8 @@ const ReduxForm = reduxForm({
 
 @prefetch('users', 'getUsers')
 
+@query('createTask', 'createTask')
+
 @withUser
 
 export default class AddOrEditTaskFormContainer extends Component {
@@ -32,9 +35,43 @@ export default class AddOrEditTaskFormContainer extends Component {
     priorities: arrayOf(string).isRequired,
     statuses: arrayOf(string).isRequired,
     status: object,
+    createTask: func,
+    notifyInfo: func,
+    onSuccess: func,
   };
 
   handleAddTask = (data) => {
+    const {
+      createTask, notifyInfo, user, onSuccess,
+    } = this.props;
+    const payload = {
+      type: TASK_RESOURCE_TYPE,
+      attributes: {
+        ...data,
+      },
+      relationships: {
+        creator: {
+          data: {
+            type: USER_RESOURCE_TYPE,
+            id: user.id,
+          },
+        },
+        owner: {
+          data: {
+            type: USER_RESOURCE_TYPE,
+            id: data.owner,
+          },
+        },
+      },
+    };
+
+    createTask(payload)
+      .then(() => {
+        notifyInfo('New task successfully created');
+        if (onSuccess) {
+          onSuccess();
+        }
+      });
   };
 
   render() {

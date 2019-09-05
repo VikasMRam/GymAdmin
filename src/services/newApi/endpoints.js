@@ -63,4 +63,5 @@ export default {
   updateConversationParticipant: { method: patch, path: '/platform/conversation-participants/:id' },
 
   getTasks: { method: get, path: '/platform/tasks' },
+  createTask: { method: post, path: '/platform/tasks' },
 };
