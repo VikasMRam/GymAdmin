@@ -164,7 +164,7 @@ const Header = ({
   menuOpen, onMenuIconClick, onLocationSearch, headerItems, menuItems, onMenuItemClick, onHeaderBlur, className, smallScreenMenuItems,
 }) => {
   const headerItemComponents = headerItems.map(item => item.isButton ? (
-    <Button onClick={item.onClick}>
+    <Button onClick={item.onClick} key={item.name}>
       {item.name}
     </Button>
   ) : (

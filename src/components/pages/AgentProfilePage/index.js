@@ -154,7 +154,7 @@ class AgentProfilePage extends Component {
             </Fragment>
           }
 
-          {reviews.length > 0 &&
+          {reviews && reviews.length > 0 &&
             <StyledSection title={`${firstName}'s reviews`} >
               <EntityReviews
                 reviewsValue={ratingValue}

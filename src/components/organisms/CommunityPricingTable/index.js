@@ -69,14 +69,20 @@ const CommunityPricingTable = ({ pricesList, name }) => {
         <StyledNumberFormat weight="weight.medium" color="secondary" value={from} displayType="text" thousandSeparator prefix="$" /> <Span weight="medium" size="title" palette="secondary"> per month*</Span>
       </StyledBlockNp>
       <Wrapper>
-        <StyledTh colSpan={2} color="slate" bgcolor="grey">Base Pricing (Care costs not included in price) </StyledTh>
-        <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Average Monthly Price</StyledTd> </Tr>
-        {pricesList.map((price) => {
-          const { label, value } = price;
-          return (
-            <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" />/month</StyledTd></Tr>
-          );
-        })}
+        <thead>
+          <tr>
+            <StyledTh colSpan={2} color="slate" bgcolor="grey">Base Pricing (Care costs not included in price) </StyledTh>
+          </tr>
+        </thead>
+        <tbody>
+          <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Average Monthly Price</StyledTd> </Tr>
+          {pricesList.map((price) => {
+            const { label, value } = price;
+            return (
+              <Tr key={label} color="slate" bgcolor="white"> <StyledTd>{label}</StyledTd><StyledTd><StyledNumberFormat weight="weight.regular" color="slate" value={value} displayType="text" thousandSeparator prefix="$" />/month</StyledTd></Tr>
+            );
+          })}
+        </tbody>
       </Wrapper>
       <StyledBlock size="caption" palette="grey">*Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.</StyledBlock>
     </Fragment>

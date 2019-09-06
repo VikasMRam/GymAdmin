@@ -1,6 +1,7 @@
 {
+  "baseUrl": "http://www.lvh.me",
+  "reporter": "junit",
   "reporterOptions": {
     "toConsole": true
-  },
-  "baseUrl": "http://test.teamseniorly.com"
+  }
 }

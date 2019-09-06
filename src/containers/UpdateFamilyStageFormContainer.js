@@ -109,7 +109,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
       if (parsedDate.isValid()) {
         moveInDateFormatted = parsedDate.format('MM/DD/YYYY');
       }
-      let note = `${name} moved into ${communityName} on ${moveInDateFormatted} with a monthly rent of $${monthlyFees} and a ${referralAgreement}% referral fee % from the community of `;
+      let note = `${name} moved into ${communityName} on ${moveInDateFormatted} with a monthly rent of $${monthlyFees} and a referral fee of ${referralAgreement}% referral fee `;
       const title = 'Stage Change';
       if (stage === FAMILY_STAGE_LOST) {
         let reason = lossReason;

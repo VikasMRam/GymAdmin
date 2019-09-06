@@ -108,12 +108,14 @@ const SelectComponent = ({ value, options, ...props }) => {
     <Select
       options={options}
       defaultValue={value}
+      isSearchable={false}
       styles={styles}
       theme={theme}
       components={{ Option: IconOption, Group: GroupSection }}
       blurInputOnSelect
       {...props}
     />
+
   );
 };
 

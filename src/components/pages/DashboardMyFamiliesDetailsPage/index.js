@@ -277,7 +277,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
 
   handleAcceptClick = () => {
     const {
-      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails, goToMessagesTab, refetchConversations,
+      showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails, goToMessagesTab, refetchConversations, refetchClient,
     } = this.props;
     SlyEvent.getInstance().sendEvent({
       category: 'fdetails',
@@ -294,6 +294,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         goToFamilyDetails={goToFamilyDetails}
         goToMessagesTab={goToMessagesTab}
         refetchConversations={refetchConversations}
+        refetchClient={refetchClient}
       />), null, 'noPadding', false);
   };
 
