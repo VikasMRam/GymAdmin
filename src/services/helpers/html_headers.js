@@ -201,7 +201,7 @@ export const getHelmetForCommunityPage = (community, location) => {
   const { numReviews, reviewsValue } = propRatings;
 
 
-  const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
+  // const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
   const canonicalUrl = `${host}${pathname}`;
 
   let toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
@@ -213,7 +213,7 @@ export const getHelmetForCommunityPage = (community, location) => {
     };
   }
 
-  const title = websiteTitle || ((ratesProvided ? `${name} - Price starting at $${startingRate.toLocaleString()}/mo` : `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`));
+  const title = websiteTitle || `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`;
 
   const article = ((toc.label === 'Assisted Living ' || toc.label === 'Memory Care') ? 'an' : 'a');
 
