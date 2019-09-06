@@ -53,7 +53,7 @@ const isStaging = SLY_ENV === 'staging';
 
 // replacements for widgets.js
 const EXTERNAL_PATH = process.env.EXTERNAL_PATH || '/external';
-const EXTERNAL_ASSET_URL = `${PUBLIC_PATH}external`;
+const EXTERNAL_ASSET_URL = `${PUBLIC_PATH}/external`;
 const EXTERNAL_URL = `${HOST}${EXTERNAL_PATH}`;
 const EXTERNAL_DEFAULT_WIDGET_TYPE = 'wizards/caw';
 
