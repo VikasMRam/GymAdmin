@@ -62,6 +62,7 @@ export default class ReferralSearchContainer extends Component {
   static defaultProps = {
     referralMode: 'Community',
   };
+
   state = {
     communities: [],
     agents: [],
@@ -87,12 +88,16 @@ export default class ReferralSearchContainer extends Component {
     return selectedCommunity;
   }
 
-  doCommunitySearch = ({ name, zip }) => {
+  zipRe = new RegExp(/^\d{5}(-\d{4})?$/);
+  doCommunitySearch = ({ nameOrZip }) => {
     const { getCommunities } = this.props;
-    const filters = {
-      'filter[name]': name,
-      'filter[zip]': zip,
-    };
+    // Based on regex matching use name or zip
+    const filters = {};
+    if (nameOrZip.match(this.zipRe)) {
+      filters['filter[zip]'] = nameOrZip;
+    } else {
+      filters['filter[name]'] = nameOrZip;
+    }
 
     return getCommunities(filters).then((resp) => {
       const communities = normJsonApi(resp);
