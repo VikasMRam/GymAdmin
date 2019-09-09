@@ -122,6 +122,7 @@ const Select = ({ textSize, value, options, async, ...props }) => {
         classNamePrefix="react-select"
         options={options}
         defaultValue={value}
+        isSearchable={false}
         theme={theme}
         components={{ Option: IconOption, Group: GroupSection }}
         blurInputOnSelect

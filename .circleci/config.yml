@@ -61,11 +61,11 @@ jobs:
                   export JEST_JUNIT_OUTPUT="$TEST_RESULTS/junit/js-test-results.xml"
                   npm test -- --ci --maxWorkers=12
 
-      - persist_to_workspace:
-          root: /home/circleci
-          paths:
-            - project
-            - .cache
+      # - persist_to_workspace:
+      #     root: /home/circleci
+      #     paths:
+      #       - project
+      #       - .cache
 
       - store_test_results:
           path: /tmp/test-results
@@ -80,16 +80,16 @@ jobs:
     working_directory: ~/project
 
     steps:
-#      - run:
-#          name: Check if Sly Master Repo or a PR
-#          command: |
-#            if [[ -z "$CIRCLE_PR_NUMBER" && $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
-#              echo "Skipping Deployment since this is not a Sly Master Build"
-#              circleci step halt
-#            fi
+      - run:
+          name: Check if Sly Master Repo
+          command: |
+            if [[ $CIRCLE_PROJECT_USERNAME != "seniorly" ]]; then
+              echo "Skipping Deployment since this is not a Sly Master Build"
+              circleci step halt
+            fi
 
-      - attach_workspace:
-          at: /home/circleci
+      - checkout:
+          path: ~/project
 
       - run:
           name: Install awscli
@@ -113,9 +113,9 @@ jobs:
             if [[ -n "$CIRCLE_TAG" ]]; then
               echo "export EB_ENV=slyreact-staging" >> ~/new_env_vars
               echo "export CYPRESS_baseUrl=http://www.myseniorly.com" >> ~/new_env_vars
-            elif [[ -n "$CIRCLE_PR_NUMBER" ]]; then
-              echo "export EB_ENV=slyreact-test" >> ~/new_env_vars
-              echo "export CYPRESS_baseUrl=http://test.teamseniorly.com" >> ~/new_env_vars
+            # elif [[ -n "$CIRCLE_PR_NUMBER" ]]; then
+            #   echo "export EB_ENV=slyreact-test" >> ~/new_env_vars
+            #   echo "export CYPRESS_baseUrl=http://test.teamseniorly.com" >> ~/new_env_vars
             elif [[ "$CIRCLE_BRANCH" = "master" ]]; then
               echo "export EB_ENV=slyreact-development" >> ~/new_env_vars
               echo "export CYPRESS_baseUrl=http://www.teamseniorly.com" >> ~/new_env_vars
@@ -143,7 +143,6 @@ jobs:
             if [[ -z "$EB_ENV" ]]; then
               circleci step halt
             fi
-
 
       # TODO: remove once circle ci starts supporting customizable notifications in workflows
       - run:
@@ -184,7 +183,7 @@ jobs:
           paths:
             - new_env_vars
 
-  test:
+  e2e:
     machine: true
 
     working_directory: ~/project/e2e
@@ -194,18 +193,42 @@ jobs:
       CYPRESS_reporter: junit
 
     steps:
-      - attach_workspace:
-          at: /home/circleci
-
-      - run: cat ~/new_env_vars >> $BASH_ENV
-
+      - checkout:
+          path: ~/project
+      
       - node/install:
           node-version: 8.16.0
           install-yarn: false
 
+      - restore_cache:
+          keys:
+            - cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+
       - run:
-          name: Installing OpenVPN Client
-          command: sudo apt-get install openvpn
+          name: NPM Install and Run Local SlyReact in Background
+          command: |
+            npm install
+            npm run staging
+          working_directory: ~/project
+          background: true
+
+      - run:
+          name: Install deps
+          command: |
+            if [ ! -d node_modules ]; then
+              npm ci
+            else
+              echo "node_modules from cache exist. So skipping install."
+            fi
+
+      - run:
+          command: npx cypress verify
+
+      - run:
+          name: Installing OpenVPN Client and HAproxy
+          command: |
+            sudo apt-get update
+            sudo apt-get install openvpn haproxy
 
       # The PEMs and credentials are set in OPENVPN context and are echoed into files
       - run:
@@ -222,27 +245,32 @@ jobs:
           name: Creating OpenVPN Tunnel
           command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
 
-      - restore_cache:
-          keys:
-            - cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
       - run:
-          name: Npm CI
-          command: npm ci
+          name: Running HAProxy
+          command: sudo haproxy -f haproxy.conf
+          background: true
 
       - run:
-          command: npx cypress verify
+          name: Waiting for Local React to be up and running
+          command: npx wait-on http://localhost:8000
+
+      - run:
+          name: Curl whether API is accessible
+          command: curl http://www.lvh.me/v0/ping
 
       - save_cache:
-          key: cache-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
+          key: cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - ~/.npm
             - ~/.cache
+            - ~/project/node_modules
+            - ~/project/e2e/node_modules
 
       - run:
           name: Run Cypress tests
           command: |
-            echo "Running cypress using $CYPRESS_baseUrl"
-            npx cypress run
+            echo "Running cypress"
+            npx cypress run --reporter junit --reporter-options "mochaFile=$TEST_RESULTS/cypress-test-output.xml,toConsole=true" --spec "cypress/integration/**/*"
 
       - run:
           name: Closing OpenVPN Tunnel
@@ -276,6 +304,10 @@ jobs:
 
       - store_artifacts:
           path: /tmp/test-results
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
 
 workflows:
   version: 2
@@ -284,13 +316,13 @@ workflows:
     jobs:
       # run build (unit tests, linting, quality checks etc etc) for PRs
       - build
+      - e2e:
+          context: OPENVPN
       - deploy:
           requires:
             - build
-      - test:
-          context: OPENVPN
-          requires:
-            - deploy
+            - e2e
+
 
 #  build-staging:
 #    jobs:

@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 import { ifProp } from 'styled-tools';
 
 import { size } from 'sly/components/themes';
-import { Label, Input, Icon, Block, Select } from 'sly/components/atoms';
+import { Label, Input, Icon, Block /* Select */ } from 'sly/components/atoms';
 import textAlign from 'sly/components/helpers/textAlign';
 // leave as it is: cyclic dependency
 import MultipleChoice from 'sly/components/molecules/MultipleChoice';
@@ -40,7 +40,7 @@ const getInputComponent = (type) => {
     case 'date':
       return DatePicker;
     case 'select':
-      return Select;
+      return Input;
     default:
       return Input;
   }

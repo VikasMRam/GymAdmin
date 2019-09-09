@@ -91,7 +91,7 @@ class FamilyDetailsForm extends Component {
   render() {
     const { handleLocationChange } = this;
     const {
-      handleSubmit, pristine, submitting, invalid, accepted, intro, initialValues, lookingFor,
+      handleSubmit, submitting, invalid, accepted, intro, initialValues, lookingFor,
       gender, timeToMove, monthlyBudget, canEditFamilyDetails,
     } = this.props;
     let { preferredLocation } = this.props;
@@ -99,10 +99,15 @@ class FamilyDetailsForm extends Component {
       ({ preferredLocation } = initialValues);
     }
 
-    const lookingForOptions = lookingFor.map(i => ({ label: i, value: i }));
-    const femaleOptions = gender.map(i => ({ label: i, value: i }));
-    const timeToMoveOptions = timeToMove.map(i => ({ label: i, value: i }));
-    const monthlyBudgetOptions = monthlyBudget.map(i => ({ label: i, value: i }));
+    // const lookingForOptions = lookingFor.map(i => ({ label: i, value: i }));
+    // const femaleOptions = gender.map(i => ({ label: i, value: i }));
+    // const timeToMoveOptions = timeToMove.map(i => ({ label: i, value: i }));
+    // const monthlyBudgetOptions = monthlyBudget.map(i => ({ label: i, value: i }));
+
+    const lookingForOptions = lookingFor.map(i => <option key={i} value={i}>{i}</option>);
+    const femaleOptions = gender.map(i => <option key={i} value={i}>{i}</option>);
+    const timeToMoveOptions = timeToMove.map(i => <option key={i} value={i}>{i}</option>);
+    const monthlyBudgetOptions = monthlyBudget.map(i => <option key={i} value={i}>{i}</option>);
 
     return (
       <div>
@@ -158,9 +163,11 @@ class FamilyDetailsForm extends Component {
             placeholder="Select an option"
             disabled={!canEditFamilyDetails}
             component={ReduxField}
-            options={lookingForOptions}
             wideWidth
-          />
+          >
+            <option value="" disabled>Select</option>
+            {lookingForOptions}
+          </Field>
           <Field
             name="gender"
             label="Gender"
@@ -168,9 +175,11 @@ class FamilyDetailsForm extends Component {
             placeholder="Select an option"
             disabled={!canEditFamilyDetails}
             component={ReduxField}
-            options={femaleOptions}
             wideWidth
-          />
+          >
+            <option value="" disabled>Select</option>
+            {femaleOptions}
+          </Field>
           <PaddedTwoColumnWrapper verticalCenter>
             <StyledLabel>Preferred location</StyledLabel>
             <StyledSearchBoxContainer
@@ -193,9 +202,11 @@ class FamilyDetailsForm extends Component {
             placeholder="Select an option"
             disabled={!canEditFamilyDetails}
             component={ReduxField}
-            options={monthlyBudgetOptions}
             wideWidth
-          />
+          >
+            <option value="" disabled>Select</option>
+            {monthlyBudgetOptions}
+          </Field>
           <Field
             name="timeToMove"
             label="Time to move"
@@ -203,9 +214,11 @@ class FamilyDetailsForm extends Component {
             placeholder="Select an option"
             disabled={!canEditFamilyDetails}
             component={ReduxField}
-            options={timeToMoveOptions}
             wideWidth
-          />
+          >
+            <option value="" disabled>Select</option>
+            {timeToMoveOptions}
+          </Field>
           <TwoColumnWrapper>
             <StyledLabel>Seniorly introduction</StyledLabel>
             <IntroInfo size="caption">{intro}</IntroInfo>
@@ -213,7 +226,7 @@ class FamilyDetailsForm extends Component {
           {accepted &&
             <Fragment>
               <Hr />
-              <StyledButton type="submit" disabled={invalid || pristine || submitting}>
+              <StyledButton type="submit" disabled={invalid || submitting}>
                 Save changes
               </StyledButton>
             </Fragment>

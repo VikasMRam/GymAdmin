@@ -129,7 +129,7 @@ export const getHelmetForSearchPage = ({
   const { seoTitle, seoDescription } = guideContent;
 
   const locationStr = city ? `${titleize(city)}, ${getStateAbbr(state)}` : `${titleize(state)}`;
-  const numResultsStr = (listSize && listSize > 5) ? `${listSize}` : 'Best';
+  const numResultsStr = (listSize && listSize < 15) ? `THE BEST ${listSize}` : 'THE BEST 15';
   const title = seoTitle || `${numResultsStr} ${actualToc.seoLabel} in ${locationStr} `;
 
   const description = seoDescription || (city ? `Get pricing & read reviews for ${numResultsStr} ${actualToc.seoLabel} in ${locationStr}. Find detailed property information, photos & talk to local ${titleize(city)} senior living experts.` :
@@ -201,7 +201,7 @@ export const getHelmetForCommunityPage = (community, location) => {
   const { numReviews, reviewsValue } = propRatings;
 
 
-  const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
+  // const ratesProvided = (rates && rates === 'Provided' && startingRate > 0);
   const canonicalUrl = `${host}${pathname}`;
 
   let toc = tocs.find(elem => (elem.label === propInfo.typeCare[0]));
@@ -213,7 +213,7 @@ export const getHelmetForCommunityPage = (community, location) => {
     };
   }
 
-  const title = websiteTitle || ((ratesProvided ? `${name} - Price starting at $${startingRate.toLocaleString()}/mo` : `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`));
+  const title = websiteTitle || `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`;
 
   const article = ((toc.label === 'Assisted Living ' || toc.label === 'Memory Care') ? 'an' : 'a');
 
@@ -231,8 +231,7 @@ export const getHelmetForCommunityPage = (community, location) => {
 
   const ld = getSDForCommunity({ ...community });
 
-  const criticReviews = reviews.filter(review => review.isCriticReview === true);
-  const criticReviewsJsonLDs = criticReviews.map((criticReview) => {
+  const criticReviewsJsonLDs = reviews && reviews.filter(review => review.isCriticReview === true).map((criticReview) => {
     const result = {
       '@context': 'https://schema.org',
       '@type': 'Review',
@@ -282,12 +281,13 @@ export const getHelmetForCommunityPage = (community, location) => {
         ratingValue: criticReview.value,
       },
     };
-    // logic copied from getSDForCommunity
+      // logic copied from getSDForCommunity
     if (startingRate > 0) {
       result.itemReviewed.priceRange = `From $${startingRate.toLocaleString()} per month`;
     }
     return (<script key={`helmet_critic-review_${criticReview.author + name}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
+
 
   const getQAAnswerLDObj = (answer, question) => {
     return {
@@ -304,7 +304,7 @@ export const getHelmetForCommunityPage = (community, location) => {
   };
 
   // TODO: Check whether we want to filter out questions without answers
-  const qaPageLdObjs = questions.filter(question => question.contents.length > 0).map((question) => {
+  const qaPageLdObjs = questions && questions.filter(question => question.contents.length > 0).map((question) => {
     const answers = question.contents.slice();
     const firstAnswer = answers.shift();
     const acceptedAnswer = getQAAnswerLDObj(firstAnswer, question);
@@ -329,6 +329,7 @@ export const getHelmetForCommunityPage = (community, location) => {
     };
     return (<script key={`helmet_question_${question.creator + question.createdAt}`} type="application/ld+json">{`${JSON.stringify(result, stringifyReplacer)}`}</script>);
   });
+
   // TODO Add Image and Video and structured data.
   return (
     <Helmet>
