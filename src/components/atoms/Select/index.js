@@ -1,51 +1,57 @@
 import React from 'react';
-import Select, { components } from 'react-select';
+import SyncSelect, { components } from 'react-select';
+import AsyncSelect from 'react-select/async';
 import { string, arrayOf, object, bool, node } from 'prop-types';
 import styled from 'styled-components';
 
-import { getKey, size } from 'sly/components/themes';
+import { getKey, size, palette } from 'sly/components/themes';
 import Icon from 'sly/components/atoms/Icon';
 import Hr from 'sly/components/atoms/Hr';
 
 const { Option, Group } = components;
 
-const styles = {
-  control: (provided, state) => ({
-    ...provided,
-    borderColor: state.isFocused ? getKey('palette.primary.base') : getKey('palette.slate.stroke'),
-    borderBottomLeftRadius: state.isFocused ? 0 : provided.borderRadiusBottomLeft,
-    borderBottomRightRadius: state.isFocused ? 0 : provided.borderRadiusBottomRight,
-    boxShadow: 'none',
-    padding: getKey('sizes.spacing.small'),
-  }),
-  indicatorSeparator: () => ({
-    display: 'none',
-  }),
-  singleValue: provided => ({
-    ...provided,
-    padding: 0,
-    fontSize: getKey('sizes.text.caption'),
-  }),
-  option: (provided, state) => ({
-    ...provided,
-    fontSize: getKey('sizes.text.caption'),
-    paddingLeft: state.isSelected ? `calc(${getKey('sizes.spacing.large')} + ${getKey('sizes.spacing.small')})` : getKey('sizes.spacing.xxxLarge'),
-    background: state.isSelected ? 'transparent' : provided.background,
-    color: state.isSelected ? getKey('palette.primary.base') : provided.color,
-    fontWeight: state.isSelected ? getKey('sizes.weight.medium') : provided.fontWeight,
-  }),
-  groupHeading: provided => ({
-    ...provided,
-    color: getKey('palette.grey.base'),
-    fontWeight: getKey('sizes.weight.bold'),
-  }),
-  menu: provided => ({
-    ...provided,
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 0,
-    top: `calc(${provided.top} - ${getKey('sizes.spacing.regular')})`,
-  }),
-};
+const Wrapper = styled.div`
+  .react-select-container {
+    ${({ textSize }) => `font-size: ${size('text', textSize)}`};
+  }
+
+  .react-select__control {
+    padding: -2px;
+    border-color: ${palette('slate.stroke')};
+    box-shadow: none;
+    &--menu-is-open {
+      border-color: ${palette('primary.base')};
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+  
+  .react-select__indicator-separator {
+    display: none;
+  }  
+  
+  .react-select__option {
+    padding-left: ${size('spacing.xxxLarge')}; 
+    background: transparent;
+    &--is-selected {
+      color: ${palette('primary.base')};
+      font-weight: ${size('weight.medium')};
+      padding-left: calc(${size('spacing.large')} + ${size('spacing.small')});
+    }
+  }
+  
+  .react-select__group-heading {
+    color: ${palette('secondary', 'base')};
+    font-weight: ${size('weight.bold')};
+  }
+  
+  .react-select__menu {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    top: 100%;
+    margin-top: 0px;
+  } 
+`;
 
 const theme = theme => ({
   ...theme,
@@ -64,7 +70,8 @@ const StyledHr = styled(Hr)`
   margin-bottom: 0;
 `;
 
-Select.displayName = 'Select';
+SyncSelect.displayName = 'Select';
+AsyncSelect.displayName = 'AsyncSelect';
 
 const IconOption = props => (
   <Option {...props}>
@@ -95,7 +102,7 @@ GroupSection.propTypes = {
   label: string,
 };
 
-const SelectComponent = ({ value, options, ...props }) => {
+const Select = ({ textSize, value, options, async, ...props }) => {
   const reducer = (accumulator, currentValue) => accumulator.push(currentValue.options ? currentValue.options : currentValue) && accumulator;
   const values = options.reduce(reducer, []);
   const flattenedValues = values.reduce((a, b) => a.concat(b), []);
@@ -104,22 +111,35 @@ const SelectComponent = ({ value, options, ...props }) => {
     value = match;
   }
 
+  const SelectComponent = async
+    ? AsyncSelect
+    : Select;
+
   return (
-    <Select
-      options={options}
-      defaultValue={value}
-      styles={styles}
-      theme={theme}
-      components={{ Option: IconOption, Group: GroupSection }}
-      blurInputOnSelect
-      {...props}
-    />
+    <Wrapper textSize={textSize}>
+      <SelectComponent
+        className="react-select-container"
+        classNamePrefix="react-select"
+        options={options}
+        defaultValue={value}
+        theme={theme}
+        components={{ Option: IconOption, Group: GroupSection }}
+        blurInputOnSelect
+        {...props}
+      />
+    </Wrapper>
   );
 };
 
-SelectComponent.propTypes = {
+Select.propTypes = {
+  async: bool,
   value: string,
+  textSize: string,
   options: arrayOf(object).isRequired,
 };
 
-export default SelectComponent;
+Select.defaultProps = {
+  async: false,
+};
+
+export default Select;

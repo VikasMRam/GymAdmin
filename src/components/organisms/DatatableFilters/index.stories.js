@@ -19,9 +19,9 @@ class Container extends Component {
       column: 'name',
       operator: 'eq',
       value: 'adsf',
-    }, {
-
-    }],
+    },
+    // {},
+    ],
     logicalOperator: 'and',
   };
 

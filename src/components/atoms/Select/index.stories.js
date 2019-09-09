@@ -1,5 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
+import styled from 'styled-components';
 
 import Select from 'sly/components/atoms/Select';
 
@@ -27,6 +28,22 @@ const groupedOptions = [
   },
 ];
 
+const Wrapper = styled.div`
+  padding: 10px;
+`;
+
 storiesOf('Atoms|Select', module)
-  .add('default', () => <Select options={options} />)
-  .add('with groups', () => <Select options={groupedOptions} />);
+  .add('default', () => (
+    <Wrapper>
+      <Select options={options} />
+    </Wrapper>
+  ))
+  .add('with groups', () => (
+    <Wrapper>
+      <Select options={groupedOptions}
+        size="small"
+        isMulti={true}
+        menuIsOpen={true}
+      />
+    </Wrapper>
+  ));

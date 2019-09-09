@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { func, shape, arrayOf, oneOf } from 'prop-types';
 import { css } from 'styled-components';
 
+import { Box } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import datatableProptype from 'sly/propTypes/datatable';
@@ -9,8 +10,8 @@ import filterProptype from 'sly/propTypes/datatableFilter';
 import DatatableFilterRow from 'sly/components/organisms/DatatableFilterRow';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
 
-const Wrapper = mobileOnly('div', css`
-
+const Wrapper = mobileOnly(Box, css`
+ 
 `, css`
   display: table;
   width: 100%; 

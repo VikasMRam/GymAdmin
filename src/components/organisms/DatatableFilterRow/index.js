@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { func, number, oneOf } from 'prop-types';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import filterPropType from 'sly/propTypes/datatableFilter';
 import datatablePropType from 'sly/propTypes/datatable';
@@ -9,6 +9,7 @@ import ButtonLink from 'sly/components/molecules/ButtonLink';
 import Field from 'sly/components/molecules/Field';
 import { noValueOperators } from 'sly/services/helpers/datatable';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
+import { size } from 'sly/components/themes';
 
 const SELECT = 'MultiSelectStaticList';
 const DATE_TIME = 'DateTime';
@@ -42,15 +43,20 @@ const getValuesFor = (filter, name) => {
   }
 };
 
-const Row = mobileOnly('div', css` 
+const Row = styled(mobileOnly('div', css` 
   display: flex;
   flex-wrap: wrap;
+  > * {
+    margin: 0 ${size('spacing.regular')} ${size('spacing.regular')} 0; 
+  }
 `, css`
   display: table-row; 
   > * {
     display: table-cell;
   }
-`);
+`))`
+  font-size: ${size('text.caption')};
+`;
 
 const CloseButton = mobileOnly(ButtonLink, css`
   flex-grow: 0;
@@ -60,12 +66,24 @@ const CloseButton = mobileOnly(ButtonLink, css`
 `);
 
 const Where = mobileOnly('div', css`
-  flex-grow: 0;
+  flex-grow: 0.5;
+  padding: 0 ${size('spacing.large')};
+  height: ${size('element.small')};
+  line-height: ${size('element.small')};
 `, css`
   
 `);
 
-const GrowField = mobileOnly(Field, css`
+const SmallField = styled(Field)`
+`;
+
+const WhereField = mobileOnly(SmallField, css`
+  flex-grow: 0.5; 
+`, css`
+
+`);
+
+const GrowField = mobileOnly(SmallField, css`
   flex-grow: 1;
 `, css`
 
@@ -75,12 +93,19 @@ const ConditionCell = mobileOnly('div', css`
   display: flex;
   flex-basis: 100%;
   order: 2;
+  > * {
+    margin-right: ${size('spacing.regular')};
+    flex-grow: 1;
+  }
 `, css`
 
 `);
 
 const Condition = mobileOnly('div', css`
-
+  display: flex;
+  > * {
+    flex-grow: 1;
+  }
 `, css`
   display: flex;
 `);
@@ -169,28 +194,26 @@ export default class DatatableFilterRow extends Component {
       <Row>
         <CloseButton onClick={() => onRemove(filter)} icon="close" />
 
-        <Where>
-          {index === 0 && (
-            <Span>Where</Span>
-          )}
+        {index === 0 && (
+          <Where>Where</Where>
+        )}
 
-          {index === 1 && (
-            <Field
-              name="logicalOperator"
-              type="select"
-              value={logicalOperator}
-              onChange={({ value }) => onLogicalOperatorChange(value)}
-              options={[
-                { label: 'And', value: 'and' },
-                { label: 'Or', value: 'or' },
-              ]}
-            />
-          )}
+        {index === 1 && (
+          <WhereField
+            name="logicalOperator"
+            type="select"
+            value={logicalOperator}
+            onChange={({ value }) => onLogicalOperatorChange(value)}
+            options={[
+              { label: 'And', value: 'and' },
+              { label: 'Or', value: 'or' },
+            ]}
+          />
+        )}
 
-          {index !== 0 && index !== 1 && (
-            <Span>{operatorNames[logicalOperator]}</Span>
-          )}
-        </Where>
+        {index !== 0 && index !== 1 && (
+          <Where>{operatorNames[logicalOperator]}</Where>
+        )}
 
         <GrowField
           name="column"
@@ -201,25 +224,24 @@ export default class DatatableFilterRow extends Component {
         />
 
         <ConditionCell>
-          <Condition>
-            {filter.column && (
-              <Field
-                name="operator"
-                value={filter.operator}
-                type="select"
-                onChange={this.onSelectChange}
-                options={this.getOperatorsFor(filter.column)}
-              />
-            )}
+          {filter.column && (
+            <GrowField
+              name="operator"
+              value={filter.operator}
+              type="select"
+              onChange={this.onSelectChange}
+              options={this.getOperatorsFor(filter.column)}
+            />
+          )}
 
-            {filter.operator && !noValueOperators.includes(filter.operator) && (
-              <Field
-                name="value"
-                onChange={this.onDateChange}
-                {...this.getValuePropsFor(filter)}
-              />
-            )}
-          </Condition>
+          {filter.operator && !noValueOperators.includes(filter.operator) && (
+            <GrowField
+              name="value"
+              onChange={this.onDateChange}
+              size="small"
+              {...this.getValuePropsFor(filter)}
+            />
+          )}
         </ConditionCell>
       </Row>
     );

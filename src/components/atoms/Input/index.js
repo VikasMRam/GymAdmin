@@ -38,7 +38,7 @@ const styles = css`
   font-size: ${size('text', 'caption')};
   // todo: non standard padding. remove afterwards if added to theme
   padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')});
-  height: ${ifProp({ type: 'textarea' }, size('element.huge'), 'auto')};
+  height: ${ifProp({ type: 'textarea' }, size('element.huge'), ({ size: sizeProp }) => size('element', sizeProp))};
   color: ${color};
   background-color: ${backgroundColor};
   border: ${size('border.regular')} solid ${borderColor};
