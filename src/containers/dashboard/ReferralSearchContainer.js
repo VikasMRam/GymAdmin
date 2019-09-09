@@ -75,8 +75,9 @@ export default class ReferralSearchContainer extends Component {
       id: selectedCommunity.id,
       type: 'Community',
     };
-    this.sendReferral(partner);
-  }
+    return this.sendReferral(partner);
+    //TODO: GET NEW CLIENT and reload
+  };
 
   getSelectedCommunity = () => {
     const { selectedCommunity } = this.state;
@@ -126,16 +127,15 @@ export default class ReferralSearchContainer extends Component {
     } = this.props;
     console.log('Going to send referral for', parentClient.name);
     const newBareClient = immutable(pick(parentClient, ['id', 'type', 'attributes.clientInfo', 'attributes.uuid', 'relationships']));
-    // newBareClient.set('id', null);
+    newBareClient.set('id', null);
+    newBareClient.set('type', 'Client');
     newBareClient.set('attributes.parentID', parentClient.id);
     const provider = immutable(pick, newProvider, ['id', 'type', 'attributes']);
     provider.set('id', partner.id);
     provider.set('attributes.entityType', partner.type);
-    newBareClient.set('relationships.provider', {});
+    newBareClient.set('relationships.provider', provider.value());
     const newChildClient = newBareClient.value();
-    console.log('This is the body of the reques', newChildClient);
     return createClient(newChildClient).then((r) => {
-      console.log('Saw response r', r);
       notifyInfo('Sent referrral successfully');
     }, (e) => {
       console.log('Saw error, e', e);
@@ -161,6 +161,7 @@ export default class ReferralSearchContainer extends Component {
         <WizardController
           formName="SendCommunityReferral"
           onComplete={data => this.onCommunitySendReferralComplete(data)}
+          // todo: final step return to first step
           // onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
         >
           {({

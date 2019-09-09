@@ -45,7 +45,7 @@ const menuItems = [
     label: 'Messages', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_MESSAGES_PATH, role: AGENT_ND_ROLE, onClick: onMenuItemClick,
   },
   {
-    label: 'Calls', icon: 'phpne', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick,
+    label: 'Calls', icon: 'phone', iconSize: 'regular', palette: 'slate', variation: 'filler', href: ADMIN_DASHBOARD_CALLS_PATH, role: PLATFORM_ADMIN_ROLE, onClick: onMenuItemClick,
   },
 ];
 
