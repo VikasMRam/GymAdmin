@@ -7,6 +7,8 @@ export default {
   updateUser: { method: patch, path: '/platform/users/:id' },
   updateContact: { method: patch, path: '/platforms/contacts/:id' },
 
+  getUsers: { method: get, path: '/platform/users' },
+
   getUuidActions: { method: get, path: '/platform/uuid-actions' },
   createUuidAction: { method: post, path: '/platform/uuid-actions' },
 
@@ -59,4 +61,7 @@ export default {
   getConversationParticipants: { method: get, path: '/platform/conversation-participants' },
   createConversationParticipant: { method: post, path: '/platform/conversation-participants' },
   updateConversationParticipant: { method: patch, path: '/platform/conversation-participants/:id' },
+
+  getTasks: { method: get, path: '/platform/tasks' },
+  createTask: { method: post, path: '/platform/tasks' },
 };
