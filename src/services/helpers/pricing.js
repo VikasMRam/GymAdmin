@@ -34,7 +34,7 @@ const getAveragePriceString = (priceStringOrNumber) => {
 
 export const buildPriceList = (community) => {
   const priceList = [];
-  const { propInfo } = community;
+  const { propInfo, startingRate } = community;
   const {
     sharedSuiteRate,
     privateSuiteRate,
@@ -43,6 +43,9 @@ export const buildPriceList = (community) => {
     twoBedroomApartmentRate,
   } = propInfo;
   try {
+    if (startingRate) {
+      priceList.push({ label: 'Inquire for room type', value: startingRate });
+    }
     if (sharedSuiteRate && !sharedSuiteRate.match(/[A-Za-z]+/)) {
       priceList.push({ label: 'Shared Suite', value: getAveragePriceString(sharedSuiteRate) });
     }
