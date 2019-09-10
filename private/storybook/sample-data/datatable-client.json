@@ -142,9 +142,11 @@
       "type": {
         "name": "DateTime",
         "allowedExpressions": [
-          "bef",
-          "aft",
-          "is",
+          "gt",
+          "lt",
+          "ge",
+          "le",
+          "eq",
           "bet",
           "em",
           "nem"
@@ -161,9 +163,11 @@
       "type": {
         "name": "DateTime",
         "allowedExpressions": [
-          "bef",
-          "aft",
-          "is",
+          "gt",
+          "lt",
+          "ge",
+          "le",
+          "eq",
           "bet",
           "em",
           "nem"
