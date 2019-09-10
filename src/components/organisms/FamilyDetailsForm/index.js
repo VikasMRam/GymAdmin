@@ -165,6 +165,7 @@ class FamilyDetailsForm extends Component {
             component={ReduxField}
             wideWidth
           >
+            <option value="" disabled>Select</option>
             {lookingForOptions}
           </Field>
           <Field
@@ -176,6 +177,7 @@ class FamilyDetailsForm extends Component {
             component={ReduxField}
             wideWidth
           >
+            <option value="" disabled>Select</option>
             {femaleOptions}
           </Field>
           <PaddedTwoColumnWrapper verticalCenter>
@@ -202,6 +204,7 @@ class FamilyDetailsForm extends Component {
             component={ReduxField}
             wideWidth
           >
+            <option value="" disabled>Select</option>
             {monthlyBudgetOptions}
           </Field>
           <Field
@@ -213,6 +216,7 @@ class FamilyDetailsForm extends Component {
             component={ReduxField}
             wideWidth
           >
+            <option value="" disabled>Select</option>
             {timeToMoveOptions}
           </Field>
           <TwoColumnWrapper>

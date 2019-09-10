@@ -1,11 +1,12 @@
 import React from 'react';
-import { string, number } from 'prop-types';
+import { string, number, oneOf, oneOfType } from 'prop-types';
 import styled from 'styled-components';
 import { prop, ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import Block from 'sly/components/atoms/Block';
 import { getStageDetails } from 'sly/services/helpers/stage';
+import { getTaskStatusDetails } from 'sly/services/helpers/task';
 
 const TextBlock = styled(Block)`
   margin-bottom: ${size('spacing.regular')};
@@ -25,9 +26,16 @@ const Indicators = styled.span`
 `;
 
 const Stage = ({
-  stage, stageLabel, totalStage, className,
+  stage, stageLabel, totalStage, className, stageType,
 }) => {
-  const { level: currentStage, palette } = getStageDetails(stage);
+  let currentStage;
+  let palette;
+  if (stageType === 'family') {
+    ({ level: currentStage, palette } = getStageDetails(stage));
+  } else {
+    ({ level: currentStage, palette, totalStage } = getTaskStatusDetails(stage));
+  }
+
   const indicators = [];
   for (let i = 0; i < totalStage; i += 1) {
     let indicatorPalette = null;
@@ -47,16 +55,16 @@ const Stage = ({
 };
 
 Stage.propTypes = {
-  stage: string.isRequired,
+  stage: oneOfType([string, number]).isRequired,
   stageLabel: string,
   totalStage: number,
-  palette: string,
   className: string,
+  stageType: oneOf(['family', 'task']),
 };
 
 Stage.defaultProps = {
   totalStage: 5,
-  palette: 'primary',
+  stageType: 'family',
 };
 
 export default Stage;

@@ -59,6 +59,7 @@ export default class RejectFamilyForm extends Component {
           placeholder="Select rejection reason"
           component={ReduxField}
         >
+          <option value="" disabled>Select</option>
           {reasonsOptions}
         </Field>
         {DESCRIPTION_REQUIRED_CLOSED_STAGE_REASONS.includes(currentReason) &&

@@ -28,6 +28,7 @@ import {
   AGENT_DASHBOARD_FAMILIES_NEW_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   AGENT_DASHBOARD_MESSAGES_PATH,
+  AGENT_DASHBOARD_TASKS_PATH,
   AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGES_PATH,
@@ -59,6 +60,7 @@ const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chu
 const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/containers/DashboardHomePageContainer'));
 const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/containers/DashboardFavoritesPageContainer'));
 const DashboardMyProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer'));
+
 const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
 const DashboardAgentFamilyOverviewPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardAgentFamilyOverviewPageContainer'));
 const DashboardFamiliesNewPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardFamiliesNewPageContainer'));
@@ -66,6 +68,8 @@ const DashboardMessagesContainer = loadable(() => import(/* webpackChunkName: "c
 const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/containers/DashboardMessageDetailsPageContainer'));
 const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallsOverview" */ 'sly/containers/DashboardCallsIndexPageContainer'));
 const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
+const DashboardAgentTasksPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/containers/DashboardAgentTasksPageContainer'));
+
 setGlobalStyles();
 setDatepickerStyles();
 
@@ -109,7 +113,6 @@ export default class App extends Component {
     routes: routesPropType,
   };
 
-
   static routes = [
     {
       path: DASHBOARD_PATH,
@@ -134,6 +137,11 @@ export default class App extends Component {
     {
       path: AGENT_DASHBOARD_MESSAGES_PATH,
       component: DashboardMessagesContainer,
+      exact: true,
+    },
+    {
+      path: AGENT_DASHBOARD_TASKS_PATH,
+      component: DashboardAgentTasksPageContainer,
       exact: true,
     },
     {
