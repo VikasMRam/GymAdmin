@@ -19,17 +19,23 @@ import { assetPath } from 'sly/components/themes';
 import { routes as routesPropType } from 'sly/propTypes/routes';
 import Router from 'sly/components/molecules/Router';
 import ChatBoxContainer from 'sly/containers/ChatBoxContainer';
+
 import {
   DASHBOARD_PATH,
   FAMILY_DASHBOARD_FAVORITES_PATH,
   FAMILY_DASHBOARD_PROFILE_PATH,
   AGENT_DASHBOARD_FAMILIES_PATH,
+  AGENT_DASHBOARD_FAMILIES_NEW_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
   AGENT_DASHBOARD_MESSAGES_PATH,
+  AGENT_DASHBOARD_TASKS_PATH,
   AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
   FAMILY_DASHBOARD_MESSAGES_PATH,
+  ADMIN_DASHBOARD_CALLS_PATH,
+  ADMIN_DASHBOARD_CALL_DETAILS_PATH,
 } from 'sly/constants/dashboardAppPaths';
+
 
 const Error = loadable(() => import(/* webpackChunkName: "chunkError" */ 'sly/components/pages/Error'));
 const OurHistoryPage = loadable(() => import(/* webpackChunkName: "chunkOurHistory" */'sly/components/pages/OurHistoryPage'));
@@ -54,10 +60,15 @@ const AgentRegionPageContainer = loadable(() => import(/* webpackChunkName: "chu
 const DashboardHomePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardHomePage" */ 'sly/containers/DashboardHomePageContainer'));
 const DashboardFavoritesPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardFavorites" */ 'sly/containers/DashboardFavoritesPageContainer'));
 const DashboardMyProfilePageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardMyProfile" */ 'sly/containers/DashboardMyProfilePageContainer'));
+
 const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
 const DashboardAgentFamilyOverviewPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardAgentFamilyOverviewPageContainer'));
+const DashboardFamiliesNewPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardFamiliesNewPageContainer'));
 const DashboardMessagesContainer = loadable(() => import(/* webpackChunkName: "chunkMessagesOverview" */ 'sly/containers/DashboardMessagesContainer'));
 const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/containers/DashboardMessageDetailsPageContainer'));
+const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallsOverview" */ 'sly/containers/DashboardCallsIndexPageContainer'));
+const DashboardCallDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallDetails" */ 'sly/containers/DashboardCallDetailsPageContainer'));
+const DashboardAgentTasksPageContainer = loadable(() => import(/* webpackChunkName: "chunkDashboardAgentTasks" */ 'sly/containers/DashboardAgentTasksPageContainer'));
 
 setGlobalStyles();
 setDatepickerStyles();
@@ -102,7 +113,6 @@ export default class App extends Component {
     routes: routesPropType,
   };
 
-
   static routes = [
     {
       path: DASHBOARD_PATH,
@@ -130,8 +140,18 @@ export default class App extends Component {
       exact: true,
     },
     {
+      path: AGENT_DASHBOARD_TASKS_PATH,
+      component: DashboardAgentTasksPageContainer,
+      exact: true,
+    },
+    {
       path: FAMILY_DASHBOARD_MESSAGES_PATH,
       component: DashboardMessagesContainer,
+      exact: true,
+    },
+    {
+      path: AGENT_DASHBOARD_FAMILIES_NEW_PATH,
+      component: DashboardFamiliesNewPageContainer,
       exact: true,
     },
     {
@@ -148,6 +168,15 @@ export default class App extends Component {
       path: FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
       component: DashboardMessageDetailsPageContainer,
       exact: true,
+    },
+    {
+      path: ADMIN_DASHBOARD_CALLS_PATH,
+      component: DashboardCallsIndexPageContainer,
+      exact: true,
+    },
+    {
+      path: ADMIN_DASHBOARD_CALL_DETAILS_PATH,
+      component: DashboardCallDetailsPageContainer,
     },
     {
       path: `/:toc(${careTypes})/:state/:city/:communitySlug`,

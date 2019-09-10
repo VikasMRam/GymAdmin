@@ -199,6 +199,7 @@ export default class ConversationMessagesContainer extends Component {
 
   onNewMessagesLoaded = (resp) => {
     const { pageNumber } = this.state;
+    // TODO: utilize logic from helper.
     let messages = [...this.state.messages];
     const result = resp.body.data.reduce((acc, item) => {
       if (!acc[item.type]) {

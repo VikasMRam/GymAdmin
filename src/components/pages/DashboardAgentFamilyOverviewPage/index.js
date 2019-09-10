@@ -14,9 +14,10 @@ import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Tab from 'sly/components/molecules/Tab';
 import clientPropType from 'sly/propTypes/client';
-import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
+import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_FAMILIES_NEW_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
 import Th from 'sly/components/molecules/Th';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
+
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
@@ -115,7 +116,7 @@ const getBasePath = (tab, params) => {
 };
 
 const DashboardAgentFamilyOverviewPage = ({
-  clients, onClientClick, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params, breakpoint,
+  clients, onClientClick, onAddNewClient, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params, breakpoint,
 }) => {
   const prospectsLabel = tabIDLabelMap[tabIDs[0]];
   const connectedLabel = tabIDLabelMap[tabIDs[1]];
@@ -129,6 +130,7 @@ const DashboardAgentFamilyOverviewPage = ({
     connectedTabLabel += ` (${connectedCount})`;
     closedTabLabel += ` (${closedCount})`;
   }
+
   const defaultTab = breakpoint.atLeastLaptop() ? ACTIVITY : SUMMARY;
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
@@ -144,7 +146,7 @@ const DashboardAgentFamilyOverviewPage = ({
         </Tab>
       </Tabs>
 
-      <TableHeaderButtons onSearchTextKeyUp={onSearchTextKeyUp} />
+      <TableHeaderButtons onSearchTextKeyUp={onSearchTextKeyUp} onAddNewButtonClick={onAddNewClient} modelName="Client" />
 
       <Section>
         {!isPageLoading && (
@@ -189,6 +191,7 @@ const DashboardAgentFamilyOverviewPage = ({
 DashboardAgentFamilyOverviewPage.propTypes = {
   clients: arrayOf(clientPropType),
   onClientClick: func.isRequired,
+  onAddNewClient: func,
   pagination: object,
   breakpoint: object,
   paginationString: string,

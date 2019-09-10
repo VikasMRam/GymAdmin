@@ -1,9 +1,12 @@
 import {
   string,
   number,
+  bool,
   shape,
   arrayOf,
 } from 'prop-types';
+
+import address from './address';
 
 export const webViewInfo = shape({
   firstLineValue: string.isRequired,
@@ -17,6 +20,24 @@ export const propRatings = shape({
 
 export const propInfo = shape({
   typeCare: arrayOf(string),
+  slyUrl: string.isRequired,
+  websiteUrl: string.isRequired,
+});
+
+export const adminPropInfo = shape({
+  propInfo,
+  adminNote: string,
+  admin: arrayOf(string),
+  hasContract: bool,
+  lastViewedAt: string,
+});
+
+
+export const adminCommunityPropType = shape({
+  id: string,
+  address,
+  name: string.isRequired,
+  propInfo: adminPropInfo,
 });
 
 export const community = shape({
