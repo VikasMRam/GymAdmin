@@ -13,6 +13,7 @@ export const getStageDetails = (stageName) => {
   let showPauseButton = false;
   const showRejectOption = stageName === FAMILY_STAGE_NEW;
 
+  // +100 For Readability. FIXME @amal
   stageArr.forEach((s, idx) => {
     if (level === -1) {
       const i = FAMILY_STAGE_ORDERED[s].findIndex(t => t === stageName);

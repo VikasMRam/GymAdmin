@@ -36,6 +36,7 @@ const config = {
     olarkSiteId: '9319-500-10-7635',
     muteReduxLogger: true,
     hideChatbox: false,
+    loadAutoComplete: !process.env.OFFLINE_MODE,
   },
 
   test: {
@@ -50,6 +51,7 @@ const config = {
     muteReduxLogger: process.env.MUTE_REDUX_LOGGER,
     hideChatbox: process.env.HIDE_CHATBOX,
     enableExperimentsDebugger: false,
+    loadAutoComplete: !process.env.OFFLINE_MODE,
   },
 
   staging: {

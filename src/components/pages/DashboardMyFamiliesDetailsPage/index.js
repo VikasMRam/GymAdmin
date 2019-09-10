@@ -2,7 +2,6 @@ import React, { Fragment, Component } from 'react';
 import styled, { css } from 'styled-components';
 import { string, func, object, arrayOf, bool } from 'prop-types';
 import { generatePath } from 'react-router';
-
 import {
   AGENT_DASHBOARD_FAMILIES_PATH,
   AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
@@ -10,7 +9,9 @@ import {
   ACTIVITY,
   FAMILY_DETAILS,
   COMMUNITIES,
+  PARTNER_AGENTS,
   MESSAGES,
+  TASKS,
 } from 'sly/constants/dashboardAppPaths';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -39,13 +40,19 @@ import IconButton from 'sly/components/molecules/IconButton';
 import DashboardMyFamilyStickyFooterContainer from 'sly/containers/DashboardMyFamilyStickyFooterContainer';
 import SlyEvent from 'sly/services/helpers/events';
 import { clickEventHandler } from 'sly/services/helpers/eventHandlers';
+import { userHasAdminRole } from 'sly/services/helpers/role';
 import Tab from 'sly/components/molecules/Tab';
 import fullWidth from 'sly/components/helpers/fullWidth';
 import fullHeight from 'sly/components/helpers/fullHeight';
 import ConversationMessagesContainer from 'sly/containers/ConversationMessagesContainer';
 import userPropType from 'sly/propTypes/user';
 import conversationPropType from 'sly/propTypes/conversation/conversation';
+import Role from 'sly/components/common/Role';
 import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversations';
+import { AGENT_ND_ROLE,PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
+import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
+import EntityTasksContainer from 'sly/containers/dashboard/EntityTasksContainer';
+
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -220,6 +227,54 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     user: userPropType.isRequired,
   };
 
+  getTabsForUser = () => {
+    const {
+      client, user,
+    } = this.props;
+    const { roleID } = user;
+    const { id } = client;
+    const summaryPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: SUMMARY });
+    const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: ACTIVITY });
+    const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS });
+    const communitiesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: COMMUNITIES });
+    const agentsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: PARTNER_AGENTS }); // Only for Admin
+    const tasksPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: TASKS }); // Only for Admin
+    const messagesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: MESSAGES });
+    const summaryTab = (
+      <MobileTab id={SUMMARY} to={summaryPath} onClick={clickEventHandler('fdetails-tab', 'Summary')}>
+        Summary
+      </MobileTab>
+    );
+
+    const genTab = ({ id, to, label }) => {
+      return (
+        <Tab id={id} to={to} onClick={clickEventHandler('fdetails-tab', label)}>
+          {label}
+        </Tab>
+      );
+    };
+    const agentTabList = [
+      { id: ACTIVITY, to: activityPath, label: 'Activity' },
+      { id: FAMILY_DETAILS, to: familyDetailsPath, label: 'Family Details' },
+      { id: COMMUNITIES, to: communitiesPath, label: 'Communities' },
+      { id: MESSAGES, to: messagesPath, label: 'Messages' },
+    ];
+    const adminTabList = [
+      ...agentTabList,
+      { id: PARTNER_AGENTS, to: agentsPath, label: 'Agents' },
+      { id: TASKS, to: tasksPath, label: 'Tasks' },
+    ];
+    // TODO: CHANGE TO HAS ROLE INSTEAD OF IS ROLE...
+    switch (roleID) {
+      case AGENT_ND_ROLE:
+        return [summaryTab].concat(agentTabList.map(e => genTab(e)));
+      case PLATFORM_ADMIN_ROLE:
+        return [summaryTab].concat(adminTabList.map(e => genTab(e)));
+      default:
+        return [];
+    }
+  };
+
   handleAcceptClick = () => {
     const {
       showModal, hideModal, notifyError, client, rawClient, goToFamilyDetails, goToMessagesTab, refetchConversations, refetchClient,
@@ -366,6 +421,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, onUnPause, refetchConversations,
     } = this.props;
+    console.log('Current Tab!',currentTab);
     const { admin } = user;
 
     let conversationParticipants = [];
@@ -402,9 +458,13 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       id, clientInfo, stage, status,
     } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
-    const {
+    let {
       levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails,
     } = getStageDetails(stage);
+    // Override based on role
+    if (userHasAdminRole(user)) {
+      [showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails] = [false, true, true, true];
+    }
     const { name } = clientInfo;
     const activityCards = notes ? notes.map((a, i) => {
       const props = {
@@ -422,11 +482,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       return <StyledFamilyActivityItem {...props} />;
     }) : [];
 
-    const summaryPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: SUMMARY });
-    const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: ACTIVITY });
+
     const familyDetailsPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: FAMILY_DETAILS });
-    const communitiesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: COMMUNITIES });
-    const messagesPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab: MESSAGES });
 
     let stickyFooterOptions = [];
     if (showAcceptRejectButtons) {
@@ -469,6 +526,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
               onRejectClick={handleRejectClick}
               onUpdateClick={handleUpdateClick}
               onAddNoteClick={handleAddNoteClick}
+              user={user}
             />
             {showAcceptRejectButtons && <FamilySummary snap="top" client={client} to={familyDetailsPath} />}
             {!showAcceptRejectButtons && <PaddedFamilySummary snap="top" client={client} to={familyDetailsPath} />}
@@ -488,21 +546,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
         </div>
         <div>
           <Tabs activeTab={currentTab}>
-            <MobileTab id={SUMMARY} to={summaryPath} onClick={clickEventHandler('fdetails-tab', 'Summary')}>
-              Summary
-            </MobileTab>
-            <Tab id={ACTIVITY} to={activityPath} onClick={clickEventHandler('fdetails-tab', 'Activity')}>
-              Activity
-            </Tab>
-            <Tab id={FAMILY_DETAILS} to={familyDetailsPath} onClick={clickEventHandler('fdetails-tab', 'Family Details')}>
-              Family Details
-            </Tab>
-            <Tab id={COMMUNITIES} to={communitiesPath} onClick={clickEventHandler('fdetails-tab', 'Communities')}>
-              Communities
-            </Tab>
-            <Tab id={MESSAGES} default to={messagesPath} onClick={clickEventHandler('fdetails-tab', 'Messages')}>
-              Messages
-            </Tab>
+            {this.getTabsForUser()}
           </Tabs>
           <TabWrapper snap="top">
             {currentTab === SUMMARY && (
@@ -545,10 +589,37 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
             )}
 
             {currentTab === COMMUNITIES && (
-              <CommunitiesTab>
-                <TextAlignCenterBlock size="subtitle" weight="medium">This feature is coming soon!</TextAlignCenterBlock>
-                <TextAlignCenterBlock palette="grey">You will be able to view your family’s favorite communities list, add communities you recommend to their list, and send referrals to communities.</TextAlignCenterBlock>
-              </CommunitiesTab>
+              <ReferralSearchContainer
+                notifyError={notifyError}
+                notifyInfo={notifyInfo}
+                parentClient={client}
+                referralMode="Community"
+              />
+            )}
+
+            {currentTab === PARTNER_AGENTS && (
+              <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
+                <CommunitiesTab>
+                  <ReferralSearchContainer
+                    notifyError={notifyError}
+                    notifyInfo={notifyInfo}
+                    parentClient={client}
+                    referralMode="Agent"
+                  />
+                </CommunitiesTab>
+              </Role>
+            )}
+
+            {currentTab === TASKS && (
+              <Role className="agentTab" is={PLATFORM_ADMIN_ROLE}>
+                <CommunitiesTab>
+                  <EntityTasksContainer
+                    entityId={client.id}
+                    entityType="Client"
+                  />
+                </CommunitiesTab>
+              </Role>
+
             )}
 
             {currentTab === MESSAGES && (
@@ -579,6 +650,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
           stage={stage}
           stageLabel={`${levelGroup} - ${stage}`}
           showAcceptRejectButtons={showAcceptRejectButtons}
+          user={user}
         />
       </StyledDashboardTwoColumnTemplate>
     );

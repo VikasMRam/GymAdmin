@@ -14,6 +14,7 @@ export default {
 
   getUuidAux: { method: get, path: '/platform/uuid-auxes/:id' },
   updateUuidAux: { method: patch, path: '/platform/uuid-auxes/:id' },
+  createUuidAux: { method: post, path: '/platform/uuid-auxes' },
 
   createUserShare: { method: post, path: '/platform/user-shares' },
 
@@ -35,6 +36,8 @@ export default {
   getCommunity: { method: get, path: '/marketplace/communities/:id' },
   getCommunities: { method: get, path: '/marketplace/communities' },
 
+  getAgents: { method: get, path: '/marketplace/agents' },
+
   getSearchResources: { method: get, path: '/platform/search-resources' },
   getGeoGuides: { method: get, path: '/platform/geo-guides' },
 
@@ -45,6 +48,7 @@ export default {
   getClients: { method: get, path: '/marketplace/clients' },
   getClient: { method: get, path: '/marketplace/clients/:id' },
   updateClient: { method: patch, path: '/marketplace/clients/:id' },
+  createClient: { method: post, path: '/marketplace/clients' },
 
   createNote: { method: post, path: '/marketplace/notes' },
   getNotes: { method: get, path: '/marketplace/notes' },
@@ -61,6 +65,9 @@ export default {
   getConversationParticipants: { method: get, path: '/platform/conversation-participants' },
   createConversationParticipant: { method: post, path: '/platform/conversation-participants' },
   updateConversationParticipant: { method: patch, path: '/platform/conversation-participants/:id' },
+
+  getVoiceCalls: { method: get, path: '/platform/communications/voice' },
+  getVoiceCall: { method: get, path: '/platform/communications/voice/:id'},
 
   getTasks: { method: get, path: '/platform/tasks' },
   createTask: { method: post, path: '/platform/tasks' },

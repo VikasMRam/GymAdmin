@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { geocodeByAddress } from 'react-places-autocomplete';
 import { withRouter } from 'react-router-dom';
 
-import { gMapsApiKey } from 'sly/config';
+import { gMapsApiKey, loadAutoComplete } from 'sly/config';
 import { changeAddress, setLocation, clearLocation } from 'sly/store/actions';
 import { searchBoxAddress, searchBoxLocation } from 'sly/store/selectors';
 import {
@@ -42,18 +42,21 @@ class SearchBoxContainer extends Component {
   componentDidMount() {
     const { changeAddress, defaultAddress } = this.props;
     const scriptjs = require('scriptjs');
-    scriptjs(
-      `https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&v=3.exp&libraries=geometry,drawing,places`,
-      () => {
-        this.setState({
-          isMounted: true,
-        });
-      }
-    );
+    if (loadAutoComplete) {
+      scriptjs(
+        `https://maps.googleapis.com/maps/api/js?key=${gMapsApiKey}&v=3.exp&libraries=geometry,drawing,places`,
+        () => {
+          this.setState({
+            isMounted: true,
+          });
+        }
+      );
 
-    if (defaultAddress) {
-      changeAddress(defaultAddress);
+      if (defaultAddress) {
+        changeAddress(defaultAddress);
+      }
     }
+
   }
   componentWillUnmount() {
     this.setState({
