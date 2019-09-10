@@ -163,7 +163,7 @@ export default class DatatableFilterRow extends Component {
     const { type, typeInfo } = this.state.columns[column];
     switch (type.name) {
       case SELECT: return {
-        type: 'select',
+        type: 'choice',
         value,
         options: typeInfo.list.map(value => ({ label: value, value })),
         onChange: this.onSelectChange,
@@ -201,7 +201,7 @@ export default class DatatableFilterRow extends Component {
         {index === 1 && (
           <WhereField
             name="logicalOperator"
-            type="select"
+            type="choice"
             value={logicalOperator}
             onChange={({ value }) => onLogicalOperatorChange(value)}
             options={[
@@ -218,7 +218,7 @@ export default class DatatableFilterRow extends Component {
         <GrowField
           name="column"
           value={filter.column}
-          type="select"
+          type="choice"
           onChange={this.onSelectChange}
           options={this.getColumns()}
         />
@@ -228,7 +228,7 @@ export default class DatatableFilterRow extends Component {
             <GrowField
               name="operator"
               value={filter.operator}
-              type="select"
+              type="choice"
               onChange={this.onSelectChange}
               options={this.getOperatorsFor(filter.column)}
             />

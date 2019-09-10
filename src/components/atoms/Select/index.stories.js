@@ -2,7 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 
-import Select from 'sly/components/atoms/Select';
+import Field from 'sly/components/molecules/Field';
 
 const options = [
   { value: 'chocolate', label: 'Chocolate' },
@@ -35,12 +35,12 @@ const Wrapper = styled.div`
 storiesOf('Atoms|Select', module)
   .add('default', () => (
     <Wrapper>
-      <Select options={options} />
+      <Field type="choice" options={options} />
     </Wrapper>
   ))
   .add('with groups', () => (
     <Wrapper>
-      <Select options={groupedOptions}
+      <Field type="choice" options={groupedOptions}
         size="small"
         isMulti={true}
         menuIsOpen={true}
