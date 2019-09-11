@@ -71,4 +71,6 @@ export default {
 
   getTasks: { method: get, path: '/platform/tasks' },
   createTask: { method: post, path: '/platform/tasks' },
+
+  getDatatable: { method: get, path: '/meta-data/datatables/:id' },
 };

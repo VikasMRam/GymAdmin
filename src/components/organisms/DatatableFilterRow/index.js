@@ -4,36 +4,14 @@ import styled, { css } from 'styled-components';
 
 import filterPropType from 'sly/propTypes/datatableFilter';
 import datatablePropType from 'sly/propTypes/datatable';
-import { Span } from 'sly/components/atoms';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
 import Field from 'sly/components/molecules/Field';
-import { noValueOperators } from 'sly/services/helpers/datatable';
+import { noValueOperators, operatorNames } from 'sly/services/helpers/datatable';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import { size } from 'sly/components/themes';
 
 const SELECT = 'MultiSelectStaticList';
 const DATE_TIME = 'DateTime';
-
-const operatorNames = {
-  eq: 'equal',
-  ne: 'not equal',
-  gt: 'greater than',
-  lt: 'less than',
-  ge: 'greater than equal',
-  le: 'less than equal',
-  in: 'in',
-  nin: 'not in',
-  bef: 'before',
-  aft: 'after',
-  is: 'is',
-  bet: 'between',
-  em: 'empty',
-  nem: 'not empty',
-  cs: 'contains',
-  ncs: 'not contains',
-  and: 'And',
-  or: 'Or',
-};
 
 const getValuesFor = (filter, name) => {
   switch (name) {

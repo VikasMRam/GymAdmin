@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { string, func } from 'prop-types';
+import { object, string, func } from 'prop-types';
 
 import { size, palette } from 'sly/components/themes';
 import Input from 'sly/components/atoms/Input';
@@ -64,30 +64,35 @@ const ColumnsButton = styled(IconButton)`
   }
 `;
 
+const isFilterable = datatable => datatable && datatable.columns.some(column => column.isFilterable);
 const TableHeaderButtons = ({
-  onColumnButtonClick, onAddNewButtonClick, onSortButtonClick, onFilterButtonClick, onSearchTextKeyUp, className, modelName,
-}) => (
-  <Wrappper className={className}>
-    {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
-    <AddNewButton icon="search" onClick={onAddNewButtonClick}>Add {modelName}</AddNewButton>
-    <SearchTextInput type="search" placeholder="Type to filter by name" onKeyUp={onSearchTextKeyUp} />
-    <RightSideButtons>
-      {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
-      {onFilterButtonClick && <FilterButton onClick={onFilterButtonClick} icon="filter" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Filter</FilterButton>}
-      {onColumnButtonClick &&
+  onColumnButtonClick, onAddNewButtonClick, onSortButtonClick, onSearchTextKeyUp, datatable, className, modelName,
+}) => {
+  const [showFilter, setShowFilter] = useState(false);
+  return (
+    <Wrappper className={className}>
+      {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
+      <AddNewButton icon="search" onClick={onAddNewButtonClick}>Add {modelName}</AddNewButton>
+      <SearchTextInput type="search" placeholder="Type to filter by name" onKeyUp={onSearchTextKeyUp} />
+      <RightSideButtons>
+        {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
+        {isFilterable(datatable) && <FilterButton onClick={() => setShowFilter(!showFilter)} icon="filter" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Filter</FilterButton>}
+        {onColumnButtonClick &&
         <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>
-      }
-    </RightSideButtons>
-  </Wrappper>
-);
+        }
+      </RightSideButtons>
+      {showFilter && <DatatableFiltersContainer />}
+    </Wrappper>
+  );
+}
 
 TableHeaderButtons.propTypes = {
+  datatable: object,
   onColumnButtonClick: func,
   className: string,
   modelName: string,
   onAddNewButtonClick: func,
   onSortButtonClick: func,
-  onFilterButtonClick: func,
   onSearchTextKeyUp: func,
 };
 

@@ -251,7 +251,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     } = this;
 
     const {
-      client, match, status, notes, user, conversations, breakpoint,
+      client, match, status, notes, user, conversations,
     } = this.props;
 
     const { result: rawClient, meta } = status.client;

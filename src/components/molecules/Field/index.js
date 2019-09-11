@@ -209,6 +209,7 @@ Field.propTypes = {
   type: oneOf([
     'textarea',
     'select',
+    'choice', // react-select
     'communitychoice',
     'singlechoice',
     'multiplechoice',

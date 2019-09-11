@@ -130,11 +130,6 @@ export default class App extends Component {
       exact: true,
     },
     {
-      path: AGENT_DASHBOARD_FAMILIES_PATH,
-      component: DashboardAgentFamilyOverviewPageContainer,
-      exact: true,
-    },
-    {
       path: AGENT_DASHBOARD_MESSAGES_PATH,
       component: DashboardMessagesContainer,
       exact: true,
@@ -147,6 +142,11 @@ export default class App extends Component {
     {
       path: FAMILY_DASHBOARD_MESSAGES_PATH,
       component: DashboardMessagesContainer,
+      exact: true,
+    },
+    {
+      path: AGENT_DASHBOARD_FAMILIES_PATH,
+      component: DashboardAgentFamilyOverviewPageContainer,
       exact: true,
     },
     {

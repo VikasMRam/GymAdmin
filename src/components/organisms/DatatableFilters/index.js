@@ -10,15 +10,18 @@ import filterProptype from 'sly/propTypes/datatableFilter';
 import DatatableFilterRow from 'sly/components/organisms/DatatableFilterRow';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
 
-const Wrapper = mobileOnly(Box, css`
+const Wrapper = mobileOnly(Box,
+  css`
  
-`, css`
-  display: table;
-  width: 100%; 
-  
-  border-collapse: separate;
-  border-spacing: ${size('spacing.regular')};
-`);
+  `,
+  css`
+    display: table;
+    width: 100%; 
+    
+    border-collapse: separate;
+    border-spacing: ${size('spacing.regular')};
+  `
+);
 
 export default class DatatableFilters extends Component {
   static propTypes = {
