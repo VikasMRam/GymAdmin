@@ -6,24 +6,36 @@ import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
-import { Heading, Badge, Block, Icon, Hr } from 'sly/components/atoms';
-import Stage from 'sly/components/molecules/Stage/index';
-import cursor from 'sly/components/helpers/cursor';
+import { Heading, Badge, Block, Icon, Hr, Span } from 'sly/components/atoms';
+import Stage from 'sly/components/molecules/Stage';
+// import cursor from 'sly/components/helpers/cursor';
+import Button from 'sly/components/atoms/Button/index';
 
 const Wrapper = styled.div`
   border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
   border-radius: ${size('border.xLarge')};
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    display: flex;
+  }
 `;
 
 const HeaderSection = styled.div`
-  display: flex;
-  align-items: center;
-  align-items: flex-start;
-  margin-bottom: ${size('spacing.small')};
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    display: flex;
+    align-items: center;
+    align-items: flex-start;
+    margin-bottom: ${size('spacing.small')};
+  }
 `;
 
 const CommunityName = styled(Heading)`
   margin-right: ${size('spacing.regular')};
+  margin-bottom: ${size('spacing.small')};
+
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    order: 1;
+  }
 `;
 
 const CommunityAddressBlock = styled(Block)`
@@ -36,23 +48,38 @@ const ReferralSentTime = styled(Block)`
 
 const TopSection = styled.div`
   padding: ${size('spacing.large')};
-  padding-bottom: ${ifProp('stage', 0)};
+  padding-bottom: ${ifProp('isBottomSectionPresent', 0)};
 `;
 
 const BottomSection = styled.div`
   padding: ${size('spacing.large')};
   padding-top: 0;
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+    margin-left: auto;
+    padding-top: ${size('spacing.large')};
+  }
 `;
 
-const ActionSection = cursor(styled.div`
-  text-align: center;
-`);
+// const ActionSection = cursor(styled.div`
+//   text-align: center;
+// `);
 
 const badgeColor = ({ textPalette }) => palette(textPalette, 'base');
 const StyledBadge = styled(Badge)`
   background-color: ${badgeColor};
-  color: ${palette('white', 'base')};
-  text-transform: uppercase;
+  border-radius: ${size('spacing.small')};
+  margin-bottom: ${size('spacing.small')};
+
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    order: 2;
+  }
+`;
+
+const StyledIcon = styled(Icon)`
+  margin-right: ${size('spacing.small')};
+  margin-top: ${size('spacing.tiny')};
+  margin-bottom: ${size('spacing.tiny')};
 `;
 
 const buildAddressDisplay = (community) => {
@@ -71,17 +98,27 @@ const DashboardAdminReferralCommunityTile = ({
 }) => {
   const { propInfo } = community;
   const { hasContract } = propInfo;
+  const isBottomSectionPresent = !!(stage || referralSentAt || (actionText && actionClick));
 
   return (
     <Wrapper className={className}>
-      <TopSection stage={stage} onClick={onClick}>
+      <TopSection isBottomSectionPresent={isBottomSectionPresent} onClick={onClick}>
         <HeaderSection>
-          <CommunityName size="body">{community.name}</CommunityName>
-          {hasContract && <StyledBadge textPalette="green"><Icon icon="circle-tick" palette="white" />Has Contract</StyledBadge> }
+          {hasContract && <StyledBadge textPalette="green"><StyledIcon icon="checkmark-circle" palette="white" size="small" /><Span palette="white" size="tiny">Has Contract</Span></StyledBadge> }
+          <CommunityName size="body" palette="primary">{community.name}</CommunityName>
         </HeaderSection>
         <CommunityAddressBlock palette="grey" variation="dark" size="caption">{buildAddressDisplay(community)}</CommunityAddressBlock>
-        {referralSentAt && <ReferralSentTime palette="grey" variation="dark" size="tiny">Sent on {getReferralSentTimeText(referralSentAt)}</ReferralSentTime>}
       </TopSection>
+      {referralSentAt && (
+        <BottomSection>
+          <ReferralSentTime palette="grey" variation="dark" size="tiny">Sent on {getReferralSentTimeText(referralSentAt)}</ReferralSentTime>
+        </BottomSection>
+      )}
+      {actionText && actionClick && (
+        <BottomSection>
+          <Button palette="primary" size="caption" ghost onClick={actionClick}>{actionText}</Button>
+        </BottomSection>
+      )}
       {stage && (
         <Fragment>
           <Hr palette="grey" size="large" />
@@ -90,14 +127,14 @@ const DashboardAdminReferralCommunityTile = ({
           </BottomSection>
         </Fragment>
       )}
-      {actionText && actionClick && (
+      {/* {actionText && actionClick && (
         <ActionSection onClick={actionClick}>
           <Hr palette="grey" size="large" />
           <BottomSection>
             <Block palette="primary" size="caption">{actionText}</Block>
           </BottomSection>
         </ActionSection>
-      )}
+      )} */}
     </Wrapper>
   );
 };
