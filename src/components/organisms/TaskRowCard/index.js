@@ -91,9 +91,9 @@ PriorityCell.displayName = 'PriorityCell';
 
 const TaskRowCard = ({ task, onTaskClick }) => {
   const {
-    due_date, status, owner, creator, priority,
+    dueDate, status, owner, creator, priority,
   } = task;
-  const dueDateStr = dayjs(due_date).format('MM/DD/YYYY, hh:mmA');
+  const dueDateStr = dayjs(dueDate).format('MM/DD/YYYY, hh:mmA');
 
   return (
     <Wrapper>

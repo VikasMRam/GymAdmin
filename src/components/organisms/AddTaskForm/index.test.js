@@ -28,7 +28,7 @@ describe('AddTaskForm', () => {
     const ownerField = wrapper.find('Field').find({ name: 'owner' });
 
     expect(wrapper.find('Field').find({ name: 'title' })).toHaveLength(1);
-    expect(wrapper.find('Field').find({ name: 'due_date' })).toHaveLength(1);
+    expect(wrapper.find('Field').find({ name: 'dueDate' })).toHaveLength(1);
     expect(wrapper.find('Field').find({ name: 'creator' })).toHaveLength(1);
     expect(ownerField).toHaveLength(1);
     expect(ownerField.prop('options').map(o => o.value)).toEqual(assignedTos.map(a => a.id));

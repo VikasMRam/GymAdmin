@@ -11,7 +11,7 @@ import AddTaskForm from 'sly/components/organisms/AddTaskForm';
 
 const validate = createValidator({
   title: [required],
-  due_date: [required],
+  dueDate: [required],
   creator: [required],
   stage: [required],
   status: [required],
@@ -81,7 +81,7 @@ export default class AddOrEditTaskFormContainer extends Component {
 
   render() {
     const {
-      statuses, priorities, users, status, user,
+      statuses, priorities, users, status, user, task = {},
     } = this.props;
     const { users: usersStatus, user: userStatus } = status;
     const { hasFinished: usersHasFinished } = usersStatus;
@@ -92,7 +92,11 @@ export default class AddOrEditTaskFormContainer extends Component {
     }
     const initialValues = {
       creator: user.name,
+      ...task,
     };
+    if (task && task.dueDate) {
+      initialValues.dueDate = new Date(task.dueDate);
+    }
 
     return (
       <ReduxForm
@@ -102,6 +106,7 @@ export default class AddOrEditTaskFormContainer extends Component {
         assignedTos={users}
         onSubmit={this.handleAddTask}
         initialValues={initialValues}
+        heading={task && task.title}
       />
     );
   }
