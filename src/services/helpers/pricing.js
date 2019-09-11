@@ -43,9 +43,6 @@ export const buildPriceList = (community) => {
     twoBedroomApartmentRate,
   } = propInfo;
   try {
-    if (startingRate) {
-      priceList.push({ label: 'Inquire for room type', value: startingRate });
-    }
     if (sharedSuiteRate && !sharedSuiteRate.match(/[A-Za-z]+/)) {
       priceList.push({ label: 'Shared Suite', value: getAveragePriceString(sharedSuiteRate) });
     }
@@ -60,6 +57,9 @@ export const buildPriceList = (community) => {
     }
     if (twoBedroomApartmentRate && !twoBedroomApartmentRate.match(/[A-Za-z]+/)) {
       priceList.push({ label: 'Two Bedroom Apartment', value: getAveragePriceString(twoBedroomApartmentRate) });
+    }
+    if (startingRate && priceList.length > 0) {
+      priceList.push({ label: 'Inquire for room type', value: startingRate });
     }
   } catch (e) {
     console.log('Non numeric prices');
