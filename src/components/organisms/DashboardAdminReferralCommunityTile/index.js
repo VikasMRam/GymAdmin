@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
 import dayjs from 'dayjs';
-import { ifProp } from 'styled-tools';
+import { ifProp, prop } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
@@ -11,13 +11,21 @@ import Stage from 'sly/components/molecules/Stage';
 // import cursor from 'sly/components/helpers/cursor';
 import Button from 'sly/components/atoms/Button/index';
 
+const getTitlePalette = variant => p => palette(p.titlePalette, variant);
+
 const Wrapper = styled.div`
   border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
   border-radius: ${size('border.xLarge')};
+  background-color: ${ifProp('title', getTitlePalette('stroke'))};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: flex;
   }
+`;
+
+const TitleSection = styled.div`
+  padding: calc(${size('spacing.small')} + ${size('spacing.tiny')}) ${size('spacing.regular')};
+  background-color: ${getTitlePalette('base')};
 `;
 
 const HeaderSection = styled.div`
@@ -70,6 +78,7 @@ const StyledBadge = styled(Badge)`
   background-color: ${badgeColor};
   border-radius: ${size('spacing.small')};
   margin-bottom: ${size('spacing.small')};
+  padding-top: ${size('spacing.small')};
 
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
     order: 2;
@@ -78,8 +87,6 @@ const StyledBadge = styled(Badge)`
 
 const StyledIcon = styled(Icon)`
   margin-right: ${size('spacing.small')};
-  margin-top: ${size('spacing.tiny')};
-  margin-bottom: ${size('spacing.tiny')};
 `;
 
 const buildAddressDisplay = (community) => {
@@ -94,59 +101,69 @@ const getReferralSentTimeText = (date) => {
 
 // FIXME: Click works only after passing onClick as prop. Need to check why we need to pass onClick
 const DashboardAdminReferralCommunityTile = ({
-  className, community, referralSentAt, stage, onClick, actionText, actionClick,
+  className, title, titlePalette, community, referralSentAt, stage, onClick, actionText, actionClick,
 }) => {
   const { propInfo } = community;
   const { hasContract } = propInfo;
   const isBottomSectionPresent = !!(stage || referralSentAt || (actionText && actionClick));
 
   return (
-    <Wrapper className={className}>
-      <TopSection isBottomSectionPresent={isBottomSectionPresent} onClick={onClick}>
-        <HeaderSection>
-          {hasContract && <StyledBadge textPalette="green"><StyledIcon icon="checkmark-circle" palette="white" size="small" /><Span palette="white" size="tiny">Has Contract</Span></StyledBadge> }
-          <CommunityName size="body" palette="primary">{community.name}</CommunityName>
-        </HeaderSection>
-        <CommunityAddressBlock palette="grey" variation="dark" size="caption">{buildAddressDisplay(community)}</CommunityAddressBlock>
-      </TopSection>
-      {referralSentAt && (
-        <BottomSection>
-          <ReferralSentTime palette="grey" variation="dark" size="tiny">Sent on {getReferralSentTimeText(referralSentAt)}</ReferralSentTime>
-        </BottomSection>
-      )}
-      {actionText && actionClick && (
-        <BottomSection>
-          <Button palette="primary" size="caption" ghost onClick={actionClick}>{actionText}</Button>
-        </BottomSection>
-      )}
-      {stage && (
-        <Fragment>
-          <Hr palette="grey" size="large" />
+    <Fragment>
+      {/* FIXME: Title should be of 10px according to the design */}
+      {title && <TitleSection titlePalette={titlePalette}><Span weight="bold" size="tiny" palette="white">{title}</Span></TitleSection>}
+      <Wrapper className={className} title={title} titlePalette={titlePalette}>
+        <TopSection isBottomSectionPresent={isBottomSectionPresent} onClick={onClick}>
+          <HeaderSection>
+            {hasContract && <StyledBadge textPalette="green"><StyledIcon icon="checkmark-circle" palette="white" size="small" /><Span palette="white" size="tiny">Has Contract</Span></StyledBadge> }
+            <CommunityName size="body" palette="primary">{community.name}</CommunityName>
+          </HeaderSection>
+          <CommunityAddressBlock palette="grey" variation="dark" size="caption">{buildAddressDisplay(community)}</CommunityAddressBlock>
+        </TopSection>
+        {referralSentAt && (
           <BottomSection>
-            <Stage stage="New" />
+            <ReferralSentTime palette="grey" variation="dark" size="tiny">Sent on {getReferralSentTimeText(referralSentAt)}</ReferralSentTime>
           </BottomSection>
-        </Fragment>
-      )}
-      {/* {actionText && actionClick && (
-        <ActionSection onClick={actionClick}>
-          <Hr palette="grey" size="large" />
+        )}
+        {actionText && actionClick && (
           <BottomSection>
-            <Block palette="primary" size="caption">{actionText}</Block>
+            <Button palette="primary" size="caption" ghost onClick={actionClick}>{actionText}</Button>
           </BottomSection>
-        </ActionSection>
-      )} */}
-    </Wrapper>
+        )}
+        {stage && (
+          <Fragment>
+            <Hr palette="grey" size="large" />
+            <BottomSection>
+              <Stage stage="New" />
+            </BottomSection>
+          </Fragment>
+        )}
+        {/* {actionText && actionClick && (
+          <ActionSection onClick={actionClick}>
+            <Hr palette="grey" size="large" />
+            <BottomSection>
+              <Block palette="primary" size="caption">{actionText}</Block>
+            </BottomSection>
+          </ActionSection>
+        )} */}
+      </Wrapper>
+    </Fragment>
   );
 };
 
 DashboardAdminReferralCommunityTile.propTypes = {
   className: string,
+  title: string,
+  titlePalette: string,
   community: adminCommunityPropType.isRequired,
   referralSentAt: string,
   stage: string,
   onClick: func,
   actionText: string,
   actionClick: func,
+};
+
+DashboardAdminReferralCommunityTile.defaultProps = {
+  titlePalette: 'warning',
 };
 
 export default DashboardAdminReferralCommunityTile;

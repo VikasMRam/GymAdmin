@@ -27,5 +27,14 @@ storiesOf('Organisms|DashboardAdminReferralCommunityTile', module)
     const actionText = 'Change Community';
     const actionClick = action(actionText);
     return wrap({ community, actionText, actionClick });
+  })
+  .add('with actionText and actionClick and title', () => {
+    community.propInfo.hasContract = true;
+    const actionText = 'Change Community';
+    const actionClick = action(actionText);
+    const title = 'FAMILY INTERESTED IN COMMUNITY';
+    return wrap({
+      community, actionText, actionClick, title,
+    });
   });
 
