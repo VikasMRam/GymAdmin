@@ -84,7 +84,6 @@ const getPageParams = ({ match, location }) => {
     'filter[provider]': provider,
     'page-number': pageNumber,
   };
-  console.log(filters)
   return getClients(filters);
 })
 
@@ -150,12 +149,11 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
     const isPageLoading = !hasStarted || isLoading;
     return (
       <Datatable id="clients">
-        {({ datatable, filterState, onChange }) => (isPageLoading
+        {datatable => (isPageLoading
           ? <DashboardAgentFamilyOverviewPage
             isPageLoading={isPageLoading}
             breakpoint={breakpoint}
             datatable={datatable}
-            filterState={filterState}
             params={params}
           />
           : <DashboardAgentFamilyOverviewPage
@@ -167,8 +165,6 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
             onSearchTextKeyUp={this.handleSearchTextKeyUp}
             onAddNewClient={this.addClient}
             datatable={datatable}
-            filterState={filterState}
-            onDatatableChange={onChange}
             params={params}
           />
         )}

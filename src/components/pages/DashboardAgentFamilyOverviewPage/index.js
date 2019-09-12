@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled, { css } from 'styled-components';
-import { arrayOf, object, string, bool, func } from 'prop-types';
+import { arrayOf, shape, object, string, bool, func } from 'prop-types';
 import qs from 'query-string';
 
 import { size, palette } from 'sly/components/themes';
@@ -119,7 +119,7 @@ const getBasePath = (tab, params) => {
 
 const DashboardAgentFamilyOverviewPage = ({
   clients, onClientClick, onAddNewClient, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params, breakpoint,
-  datatable, filterState,
+  datatable,
 }) => {
   const prospectsLabel = tabIDLabelMap[tabIDs[0]];
   const connectedLabel = tabIDLabelMap[tabIDs[1]];
@@ -151,7 +151,6 @@ const DashboardAgentFamilyOverviewPage = ({
 
       <TableHeaderButtons
         datatable={datatable}
-        filterState={filterState}
         onSearchTextKeyUp={onSearchTextKeyUp}
         onAddNewButtonClick={onAddNewClient}
         modelName="Client"
@@ -198,8 +197,11 @@ const DashboardAgentFamilyOverviewPage = ({
 };
 
 DashboardAgentFamilyOverviewPage.propTypes = {
-  datatable: datatableProptype,
-  filterState: filterStateProptype,
+  datatable: shape({
+    datatable: datatableProptype,
+    filterState: filterStateProptype,
+    onChange: func,
+  }),
   clients: arrayOf(clientPropType),
   onClientClick: func.isRequired,
   onAddNewClient: func,
