@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import qs from 'query-string';
 import { arrayOf, object } from 'prop-types';
+
+import { Datatable } from 'sly/services/datatable';
 import RefreshRedirect from 'sly/components/common/RefreshRedirect';
 import { withUser, prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
@@ -146,27 +148,31 @@ export default class DashboardAgentFamilyOverviewPageContainer extends Component
       throw new Error(JSON.stringify(clientsError));
     }
     const isPageLoading = !hasStarted || isLoading;
-    if (isPageLoading) {
-      return (
-        <DashboardAgentFamilyOverviewPage
-          isPageLoading={isPageLoading}
-          breakpoint={breakpoint}
-          params={params}
-        />
-      );
-    }
-    const pagination = getPaginationData(clientsStatus);
     return (
-      <DashboardAgentFamilyOverviewPage
-        clients={clients}
-        onClientClick={onClientClick}
-        pagination={pagination}
-        activeTab={type}
-        breakpoint={breakpoint}
-        onSearchTextKeyUp={this.handleSearchTextKeyUp}
-        onAddNewClient={this.addClient}
-        params={params}
-      />
+      <Datatable id="clients">
+        {({ datatable, filterState, onChange }) => (isPageLoading
+          ? <DashboardAgentFamilyOverviewPage
+            isPageLoading={isPageLoading}
+            breakpoint={breakpoint}
+            datatable={datatable}
+            filterState={filterState}
+            params={params}
+          />
+          : <DashboardAgentFamilyOverviewPage
+            clients={clients}
+            onClientClick={onClientClick}
+            pagination={getPaginationData(clientsStatus)}
+            activeTab={type}
+            breakpoint={breakpoint}
+            onSearchTextKeyUp={this.handleSearchTextKeyUp}
+            onAddNewClient={this.addClient}
+            datatable={datatable}
+            filterState={filterState}
+            onDatatableChange={onChange}
+            params={params}
+          />
+        )}
+      </Datatable>
     );
   }
 }

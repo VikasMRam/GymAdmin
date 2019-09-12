@@ -5,6 +5,9 @@ import { object, string, func } from 'prop-types';
 import { size, palette } from 'sly/components/themes';
 import Input from 'sly/components/atoms/Input';
 import IconButton from 'sly/components/molecules/IconButton';
+import datatableProptype from 'sly/propTypes/datatable';
+import filterStateProptype from 'sly/propTypes/filterState';
+import DatatableFilters from 'sly/components/organisms/DatatableFilters';
 
 const border = css`${size('border.regular')} solid ${palette('slate.stroke')}`;
 const Wrappper = styled.div`
@@ -65,8 +68,9 @@ const ColumnsButton = styled(IconButton)`
 `;
 
 const isFilterable = datatable => datatable && datatable.columns.some(column => column.isFilterable);
+
 const TableHeaderButtons = ({
-  onColumnButtonClick, onAddNewButtonClick, onSortButtonClick, onSearchTextKeyUp, datatable, className, modelName,
+  onColumnButtonClick, onAddNewButtonClick, onSortButtonClick, onSearchTextKeyUp, datatable, filterState, className, modelName,
 }) => {
   const [showFilter, setShowFilter] = useState(false);
   return (
@@ -77,17 +81,16 @@ const TableHeaderButtons = ({
       <RightSideButtons>
         {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
         {isFilterable(datatable) && <FilterButton onClick={() => setShowFilter(!showFilter)} icon="filter" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Filter</FilterButton>}
-        {onColumnButtonClick &&
-        <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>
-        }
+        {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
       </RightSideButtons>
-      {showFilter && <DatatableFiltersContainer />}
+      {showFilter && <DatatableFilters datatable={datatable} filterState={filterState} />}
     </Wrappper>
   );
 }
 
 TableHeaderButtons.propTypes = {
-  datatable: object,
+  datatable: datatableProptype,
+  filterState: filterStateProptype,
   onColumnButtonClick: func,
   className: string,
   modelName: string,

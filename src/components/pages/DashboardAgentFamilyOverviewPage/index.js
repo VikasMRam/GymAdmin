@@ -17,6 +17,8 @@ import clientPropType from 'sly/propTypes/client';
 import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_FAMILIES_NEW_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
 import Th from 'sly/components/molecules/Th';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
+import filterStateProptype from 'sly/propTypes/filterState';
+import datatableProptype from 'sly/propTypes/datatable';
 
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
@@ -117,6 +119,7 @@ const getBasePath = (tab, params) => {
 
 const DashboardAgentFamilyOverviewPage = ({
   clients, onClientClick, onAddNewClient, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params, breakpoint,
+  datatable, filterState,
 }) => {
   const prospectsLabel = tabIDLabelMap[tabIDs[0]];
   const connectedLabel = tabIDLabelMap[tabIDs[1]];
@@ -146,7 +149,13 @@ const DashboardAgentFamilyOverviewPage = ({
         </Tab>
       </Tabs>
 
-      <TableHeaderButtons onSearchTextKeyUp={onSearchTextKeyUp} onAddNewButtonClick={onAddNewClient} modelName="Client" />
+      <TableHeaderButtons
+        datatable={datatable}
+        filterState={filterState}
+        onSearchTextKeyUp={onSearchTextKeyUp}
+        onAddNewButtonClick={onAddNewClient}
+        modelName="Client"
+      />
 
       <Section>
         {!isPageLoading && (
@@ -189,6 +198,8 @@ const DashboardAgentFamilyOverviewPage = ({
 };
 
 DashboardAgentFamilyOverviewPage.propTypes = {
+  datatable: datatableProptype,
+  filterState: filterStateProptype,
   clients: arrayOf(clientPropType),
   onClientClick: func.isRequired,
   onAddNewClient: func,

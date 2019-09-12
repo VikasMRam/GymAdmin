@@ -6,7 +6,7 @@ import { Box } from 'sly/components/atoms';
 import { size } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import datatableProptype from 'sly/propTypes/datatable';
-import filterProptype from 'sly/propTypes/datatableFilter';
+import filterStateProptype from 'sly/propTypes/filterState';
 import DatatableFilterRow from 'sly/components/organisms/DatatableFilterRow';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
 
@@ -26,10 +26,7 @@ const Wrapper = mobileOnly(Box,
 export default class DatatableFilters extends Component {
   static propTypes = {
     onChange: func,
-    filterState: shape({
-      logicalOperator: oneOf(['and', 'or']),
-      filters: arrayOf(filterProptype),
-    }).isRequired,
+    filterState: filterStateProptype,
     datatable: datatableProptype,
   };
 
