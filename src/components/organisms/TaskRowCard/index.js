@@ -91,7 +91,7 @@ PriorityCell.displayName = 'PriorityCell';
 
 const TaskRowCard = ({ task, onTaskClick }) => {
   const {
-    dueDate, status, owner, creator, priority,
+    dueDate, status, owner, relatedEntities, priority,
   } = task;
   const dueDateStr = dayjs(dueDate).format('MM/DD/YYYY, hh:mmA');
 
@@ -100,7 +100,7 @@ const TaskRowCard = ({ task, onTaskClick }) => {
       <NameCell task={task} onClick={() => onTaskClick(task)} />
       <RelatedToCell>
         <span>Related to</span>
-        <span>{creator.name}</span>
+        <span>{relatedEntities && relatedEntities[0] && relatedEntities[0].id}</span>
       </RelatedToCell>
       <DueDateCell>
         <span>Due date</span>
@@ -115,7 +115,7 @@ const TaskRowCard = ({ task, onTaskClick }) => {
       </PriorityCell>
       <AssignedToCell>
         <span>Assigned to</span>
-        <span>{owner.name}</span>
+        <span>{owner && owner.name}</span>
       </AssignedToCell>
     </Wrapper>
   );

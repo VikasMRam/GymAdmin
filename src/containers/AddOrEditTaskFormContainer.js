@@ -44,9 +44,9 @@ export default class AddOrEditTaskFormContainer extends Component {
     task: taskPropType,
   };
 
-  handleAddTask = (data) => {
+  handleSubmitTask = (data) => {
     const {
-      createTask, notifyInfo, onSuccess, client,
+      createTask, updateTask, notifyInfo, onSuccess, client, task,
     } = this.props;
     const payload = {
       type: TASK_RESOURCE_TYPE,
@@ -62,7 +62,7 @@ export default class AddOrEditTaskFormContainer extends Component {
         },
       },
     };
-    if (data.relatedTo) {
+    if (!task && data.relatedTo) {
       payload.relationships.relatedEntities = {
         data: [
           {
@@ -73,9 +73,20 @@ export default class AddOrEditTaskFormContainer extends Component {
       };
     }
 
-    createTask(payload)
+    let taskApiCall;
+    if (task) {
+      taskApiCall = updateTask({ id: task.id }, payload);
+    } else {
+      taskApiCall = createTask(payload);
+    }
+
+    taskApiCall
       .then(() => {
-        notifyInfo('New task successfully created');
+        if (task) {
+          notifyInfo('Task successfully updated');
+        } else {
+          notifyInfo('New task successfully created');
+        }
         if (onSuccess) {
           onSuccess();
         }
@@ -84,7 +95,7 @@ export default class AddOrEditTaskFormContainer extends Component {
 
   render() {
     const {
-      statuses, priorities, users, status, task = {}, client,
+      statuses, priorities, users, status, task, client,
     } = this.props;
     const { users: usersStatus } = status;
     const { hasFinished: usersHasFinished } = usersStatus;
@@ -92,14 +103,38 @@ export default class AddOrEditTaskFormContainer extends Component {
     if (isPageLoading) {
       return null;
     }
-    const initialValues = {
-      ...task,
-    };
+    const initialValues = {};
     if (client) {
       initialValues.relatedTo = client.name;
     }
-    if (task && task.dueDate) {
-      initialValues.dueDate = new Date(task.dueDate);
+    if (task) {
+      if (task.title) {
+        initialValues.title = task.title;
+      }
+      if (task.relatedEntities) {
+        initialValues.relatedTo = task.relatedEntities[0].id;
+      }
+      if (task.dueDate) {
+        initialValues.dueDate = new Date(task.dueDate);
+      }
+      if (task.owner) {
+        initialValues.owner = task.owner.id;
+      }
+      if (task.status) {
+        initialValues.status = task.status;
+      }
+      if (task.priority) {
+        initialValues.priority = task.priority;
+      }
+      if (task.description) {
+        initialValues.description = task.description;
+      }
+      if (task.created_at) {
+        initialValues.created_at = task.created_at;
+      }
+      if (task.creator) {
+        initialValues.creator = task.creator;
+      }
     }
 
     return (
@@ -108,7 +143,7 @@ export default class AddOrEditTaskFormContainer extends Component {
         statuses={statuses}
         priorities={priorities}
         assignedTos={users}
-        onSubmit={this.handleAddTask}
+        onSubmit={this.handleSubmitTask}
         initialValues={initialValues}
         heading={task && task.title}
       />

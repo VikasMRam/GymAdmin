@@ -44,7 +44,7 @@ const ThreeSectionFormTemplate = ({
       {!hasCancel && <div />}
       <ActionButtonsWrapper>
         {hasSubmit && <Button ghost={extraActionButtonsAfterSubmit.length > 0} type="submit" disabled={invalid || pristine || submitting}>{submitButtonText}</Button>}
-        {extraActionButtonsAfterSubmit.map(b => <Button disabled={submitting} onClick={b.onClick}>{b.text}</Button>)}
+        {extraActionButtonsAfterSubmit.map(b => <Button key={b.text} disabled={submitting} onClick={b.onClick}>{b.text}</Button>)}
       </ActionButtonsWrapper>
     </Bottom>
   </form>

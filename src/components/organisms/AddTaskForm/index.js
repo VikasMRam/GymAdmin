@@ -24,9 +24,9 @@ const AddTaskForm = ({
   const prioritiesOptions = priorities.map(s => ({ value: s, label: s }));
   todo: enable after react select is enabled
   */
-  const assignedTosOptions = assignedTos.map(at => <option value={at.id}>{at.name}</option>);
-  const statusesOptions = statuses.map(s => <option value={s}>{s}</option>);
-  const prioritiesOptions = priorities.map(s => <option value={s}>{s}</option>);
+  const assignedTosOptions = assignedTos.map(at => <option key={at.id} value={at.id}>{at.name}</option>);
+  const statusesOptions = statuses.map(s => <option key={s} value={s}>{s}</option>);
+  const prioritiesOptions = priorities.map(s => <option key={s} value={s}>{s}</option>);
   let dateString;
   const isEditMode = initialValues && initialValues.created_at;
   if (initialValues && initialValues.created_at) {
