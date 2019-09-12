@@ -1,4 +1,4 @@
-import { parseQuerystringFilters, makeQuerystringFilters } from './datatable';
+import { parseQuerystringFilters, makeQuerystringFilters } from './helpers';
 
 describe('datatables helpers', () => {
   it('should parse querystring params into filterState object', () => {

@@ -6,7 +6,7 @@ import filterPropType from 'sly/propTypes/datatableFilter';
 import datatablePropType from 'sly/propTypes/datatable';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
 import Field from 'sly/components/molecules/Field';
-import { noValueOperators, operatorNames } from 'sly/services/helpers/datatable';
+import { noValueOperators, operatorNames } from 'sly/services/datatable/helpers';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import { size } from 'sly/components/themes';
 

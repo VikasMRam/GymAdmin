@@ -7,7 +7,7 @@ import DatatableFilters from 'sly/components/organisms/DatatableFilters';
 
 @prefetch('datatable', 'getDatatables', (req, { datatableId }) => req({ id: datatableId }))
 
-export default class DatatableFiltersContainer extends React.Component {
+export default class DatatableController extends React.Component {
   propTypes = {
     datatable: datatableProptype,
   };

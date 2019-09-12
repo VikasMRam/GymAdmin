@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import DatatableFilters from '.';
 
 import datatableClient from 'sly/../private/storybook/sample-data/datatable-client.json';
-import { makeQuerystringFilters, parseQuerystringFilters, simpleQSParse } from 'sly/services/helpers/datatable';
+import { makeQuerystringFilters, parseQuerystringFilters, simpleQSParse } from 'sly/services/datatable/helpers';
 
 const StyledInput = styled.input`
   width: 100%;
