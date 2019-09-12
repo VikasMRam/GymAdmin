@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { arrayOf, string, object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
-import { prefetch, withUser, query } from 'sly/services/newApi';
+import { prefetch, query } from 'sly/services/newApi';
+import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
 import taskPropType from 'sly/propTypes/task';
 import { createValidator, required } from 'sly/services/validation';
-import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
+import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE, CLIENT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import AddTaskForm from 'sly/components/organisms/AddTaskForm';
 
 const validate = createValidator({
@@ -29,12 +30,10 @@ const ReduxForm = reduxForm({
 
 @query('updateTask', 'updateTask')
 
-@withUser
-
 export default class AddOrEditTaskFormContainer extends Component {
   static propTypes = {
     users: arrayOf(userPropType),
-    user: userPropType,
+    client: clientPropType,
     priorities: arrayOf(string).isRequired,
     statuses: arrayOf(string).isRequired,
     status: object,
@@ -47,7 +46,7 @@ export default class AddOrEditTaskFormContainer extends Component {
 
   handleAddTask = (data) => {
     const {
-      createTask, notifyInfo, user, onSuccess,
+      createTask, notifyInfo, onSuccess, client,
     } = this.props;
     const payload = {
       type: TASK_RESOURCE_TYPE,
@@ -55,12 +54,6 @@ export default class AddOrEditTaskFormContainer extends Component {
         ...data,
       },
       relationships: {
-        creator: {
-          data: {
-            type: USER_RESOURCE_TYPE,
-            id: user.id,
-          },
-        },
         owner: {
           data: {
             type: USER_RESOURCE_TYPE,
@@ -69,6 +62,16 @@ export default class AddOrEditTaskFormContainer extends Component {
         },
       },
     };
+    if (data.relatedTo) {
+      payload.relationships.relatedEntities = {
+        data: [
+          {
+            type: client ? CLIENT_RESOURCE_TYPE : USER_RESOURCE_TYPE,
+            id: data.relatedTo,
+          },
+        ],
+      };
+    }
 
     createTask(payload)
       .then(() => {
@@ -81,19 +84,20 @@ export default class AddOrEditTaskFormContainer extends Component {
 
   render() {
     const {
-      statuses, priorities, users, status, user, task = {},
+      statuses, priorities, users, status, task = {}, client,
     } = this.props;
-    const { users: usersStatus, user: userStatus } = status;
+    const { users: usersStatus } = status;
     const { hasFinished: usersHasFinished } = usersStatus;
-    const { hasFinished: userHasFinished } = userStatus;
-    const isPageLoading = !usersHasFinished || !userHasFinished;
+    const isPageLoading = !usersHasFinished;
     if (isPageLoading) {
       return null;
     }
     const initialValues = {
-      creator: user.name,
       ...task,
     };
+    if (client) {
+      initialValues.relatedTo = client.name;
+    }
     if (task && task.dueDate) {
       initialValues.dueDate = new Date(task.dueDate);
     }

@@ -19,9 +19,14 @@ const StyledTable = styled.table`
 const AddTaskForm = ({
   handleSubmit, onCancel, assignedTos, statuses, priorities, heading, initialValues, ...props
 }) => {
-  const assignedTosOptions = assignedTos.map(at => ({ value: at.id, label: at.name }));
+  /* const assignedTosOptions = assignedTos.map(at => ({ value: at.id, label: at.name }));
   const statusesOptions = statuses.map(s => ({ value: s, label: s }));
   const prioritiesOptions = priorities.map(s => ({ value: s, label: s }));
+  todo: enable after react select is enabled
+  */
+  const assignedTosOptions = assignedTos.map(at => <option value={at.id}>{at.name}</option>);
+  const statusesOptions = statuses.map(s => <option value={s}>{s}</option>);
+  const prioritiesOptions = priorities.map(s => <option value={s}>{s}</option>);
   let dateString;
   const isEditMode = initialValues && initialValues.created_at;
   if (initialValues && initialValues.created_at) {
@@ -61,36 +66,40 @@ const AddTaskForm = ({
         component={ReduxField}
         dateFormat="MM/dd/yyyy"
       />
-      {/* todo: disable temporarily */}
-      <Field
-        name="creator"
-        label="Related to"
-        type="text"
-        placeholder="Begin typing..."
-        component={ReduxField}
-        disabled
-      />
+      {initialValues && initialValues.relatedTo &&
+        <Field
+          name="relatedTo"
+          label="Related to"
+          type="text"
+          placeholder="Begin typing..."
+          component={ReduxField}
+          disabled
+        />
+      }
       <Field
         name="owner"
         label="Assigned to"
         type="select"
         component={ReduxField}
-        options={assignedTosOptions}
-      />
+      >
+        {assignedTosOptions}
+      </Field>
       <Field
         name="status"
         label="Status"
         type="select"
         component={ReduxField}
-        options={statusesOptions}
-      />
+      >
+        {statusesOptions}
+      </Field>
       <Field
         name="priority"
         label="Priority"
         type="select"
         component={ReduxField}
-        options={prioritiesOptions}
-      />
+      >
+        {prioritiesOptions}
+      </Field>
       <Field
         type="textarea"
         rows={3}
