@@ -30,5 +30,11 @@
     "roleID": 2,
     "updatedAt": "2017-11-27T18:46:08Z",
     "uuid": "808003d5-18a1-4930-92b9-beacd4eb992e"
-  }
+  },
+  "relatedEntities": [
+    {
+      "type": "SlyEntity",
+      "id": "rhoda-goldman-plaza"
+    }
+  ]
 }
