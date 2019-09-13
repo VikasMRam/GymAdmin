@@ -1,27 +1,28 @@
 import React, { Component } from 'react';
 import { func, shape, arrayOf, oneOf } from 'prop-types';
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { Box } from 'sly/components/atoms';
-import { size } from 'sly/components/themes';
+import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import datatableProptype from 'sly/propTypes/datatable';
 import filterStateProptype from 'sly/propTypes/filterState';
 import DatatableFilterRow from 'sly/components/organisms/DatatableFilterRow';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
 
-const Wrapper = mobileOnly(Box,
+const Wrapper = styled(mobileOnly(Box,
   css`
  
   `,
   css`
     display: table;
-    width: 100%; 
-    
+    width: ${size('layout.col7')};
     border-collapse: separate;
     border-spacing: ${size('spacing.regular')};
   `
-);
+))`
+  background: ${palette('white.base')};
+`;
 
 export default class DatatableFilters extends Component {
   static propTypes = {

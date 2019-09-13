@@ -8,6 +8,8 @@ import IconButton from 'sly/components/molecules/IconButton';
 import datatableProptype from 'sly/propTypes/datatable';
 import filterStateProptype from 'sly/propTypes/filterState';
 import DatatableFilters from 'sly/components/organisms/DatatableFilters';
+import PopoverPortal from 'sly/components/molecules/PopoverPortal';
+import { AGENT_DASHBOARD_FAMILIES_NEW_PATH } from 'sly/constants/dashboardAppPaths';
 
 const border = css`${size('border.regular')} solid ${palette('slate.stroke')}`;
 const Wrappper = styled.div`
@@ -41,11 +43,6 @@ const SearchTextInput = styled(Input)`
   }
 `;
 
-const RightSideButtons = styled.div`
-  margin-left: auto;
-  display: flex;
-`;
-
 const AddNewButton = styled(IconButton)`
   margin-right: ${size('spacing.regular')};
 `;
@@ -70,20 +67,36 @@ const ColumnsButton = styled(IconButton)`
 const isFilterable = datatable => datatable && datatable.columns.some(column => column.isFilterable);
 
 const TableHeaderButtons = ({
-  onColumnButtonClick, onAddNewButtonClick, onSortButtonClick, onSearchTextKeyUp, datatable, className, modelName,
+  onColumnButtonClick, onSortButtonClick, onSearchTextKeyUp, datatable, className, modelName,
 }) => {
-  const showFilter = true;
+  const filterButton = (
+    <FilterButton
+      icon="filter"
+      ghost
+      borderPalette="slate"
+      palette="slate"
+      iconPalette="slate"
+      hideTextInMobile
+    >
+      Filter
+    </FilterButton>
+  );
   return (
     <Wrappper className={className}>
       {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
-      <AddNewButton icon="search" onClick={onAddNewButtonClick}>Add {modelName}</AddNewButton>
+      <AddNewButton icon="search" to={AGENT_DASHBOARD_FAMILIES_NEW_PATH}>Add {modelName}</AddNewButton>
       <SearchTextInput type="search" placeholder="Type to filter by name" onKeyUp={onSearchTextKeyUp} />
-      <RightSideButtons>
-        {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
-        {isFilterable(datatable.datatable) && <FilterButton onClick={() => setShowFilter(!showFilter)} icon="filter" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Filter</FilterButton>}
-        {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
-      </RightSideButtons>
-      {showFilter && <DatatableFilters datatable={datatable.datatable} filterState={datatable.filterState} onChange={datatable.onChange} />}
+      {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
+      {isFilterable(datatable.datatable) && (
+        <PopoverPortal button={filterButton}>
+          <DatatableFilters
+            datatable={datatable.datatable}
+            filterState={datatable.filterState}
+            onChange={datatable.onChange}
+          />
+        </PopoverPortal>
+      )}
+      {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
     </Wrappper>
   );
 }
@@ -97,7 +110,6 @@ TableHeaderButtons.propTypes = {
   onColumnButtonClick: func,
   className: string,
   modelName: string,
-  onAddNewButtonClick: func,
   onSortButtonClick: func,
   onSearchTextKeyUp: func,
 };

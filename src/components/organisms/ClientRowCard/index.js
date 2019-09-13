@@ -25,6 +25,7 @@ import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/co
 import clientPropType from 'sly/propTypes/client';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import { size, palette } from 'sly/components/themes';
+import SlyEvent from 'sly/services/helpers/events';
 
 const Wrapper = mobileOnly(Tr, css`
   display: flex;
@@ -94,8 +95,18 @@ const NoteCell = mobileOnly(({ disabled, note, ...props }) => (
 
 const DateAddedCell = mobileOnly(TextTd, css`display: none`);
 
-const genFamilyDetailsPath = (id, tab) => generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, tab });
-const ClientRowCard = ({ client, onClientClick, defaultTab }) => {
+const onClientClick = (clientName, to) => {
+  const event = {
+    category: 'TableRow',
+    action: 'click',
+    label: clientName,
+    value: to,
+  };
+  SlyEvent.getInstance().sendEvent(event);
+};
+
+const genFamilyDetailsPath = (id, extraPathParams = {}) => generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, ...extraPathParams });
+const ClientRowCard = ({ client, extraPathParams }) => {
   const {
     clientInfo, uuidAux, stage, status, createdAt, notes,
   } = client;
@@ -109,7 +120,7 @@ const ClientRowCard = ({ client, onClientClick, defaultTab }) => {
   const createdAtStr = dayjs(createdAt).format('MM/DD/YYYY');
   const disabled = status === FAMILY_STATUS_ON_HOLD;
   const lastNote = notes[0];
-  const to = genFamilyDetailsPath(client.id, defaultTab);
+  const to = genFamilyDetailsPath(client.id, extraPathParams);
 
   return (
     <Wrapper disabled={disabled}>
@@ -127,6 +138,7 @@ const ClientRowCard = ({ client, onClientClick, defaultTab }) => {
 ClientRowCard.propTypes = {
   breakpoint: object,
   client: clientPropType.isRequired,
+  extraPathParams: object,
   onClientClick: func.isRequired,
 };
 

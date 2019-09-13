@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { func } from 'prop-types';
+import { func, object } from 'prop-types';
 
 import { prefetch } from 'sly/services/newApi';
 import datatableProptype from 'sly/propTypes/datatable';
@@ -10,6 +10,8 @@ export default class Datatable extends Component {
   static propTypes = {
     children: func,
     datatable: datatableProptype,
+    sectionFilters: object,
+    status: object,
   };
 
   state = {
@@ -23,10 +25,12 @@ export default class Datatable extends Component {
 
 
   render() {
-    const { datatable } = this.props;
+    const { datatable, status, sectionFilters } = this.props;
     return this.props.children({
       datatable,
+      isLoading: !status.hasFinished,
       filterState: this.state,
+      sectionFilters,
       onChange: this.onChange,
     });
   }
