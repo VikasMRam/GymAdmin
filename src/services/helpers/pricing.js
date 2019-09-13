@@ -34,7 +34,7 @@ const getAveragePriceString = (priceStringOrNumber) => {
 
 export const buildPriceList = (community) => {
   const priceList = [];
-  const { propInfo } = community;
+  const { propInfo, startingRate } = community;
   const {
     sharedSuiteRate,
     privateSuiteRate,
@@ -57,6 +57,9 @@ export const buildPriceList = (community) => {
     }
     if (twoBedroomApartmentRate && !twoBedroomApartmentRate.match(/[A-Za-z]+/)) {
       priceList.push({ label: 'Two Bedroom Apartment', value: getAveragePriceString(twoBedroomApartmentRate) });
+    }
+    if (startingRate && priceList.length > 0) {
+      priceList.push({ label: 'Inquire for room type', value: startingRate });
     }
   } catch (e) {
     console.log('Non numeric prices');
