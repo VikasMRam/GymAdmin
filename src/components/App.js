@@ -286,8 +286,8 @@ export default class App extends Component {
       <Fragment>
         {/* TODO: replace with <> </> after upgrading to babel 7 & when eslint adds support for jsx fragments */}
         <Helmet titleTemplate="%s | Seniorly">
-          <title>Find Local Senior Housing & Senior Care Services</title>
-          <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best Senior Home by comparing pricing, availability, and amenities with Seniorly!" />
+          <title>Find The Best Senior Living Options Near You</title>
+          <meta name="description" content="Local senior housing and senior care services for your loved ones. Find the best senior living home by comparing pricing, availability, and amenities with Seniorly!" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
           <meta content="Seniorly" property="author" />
@@ -326,7 +326,7 @@ export default class App extends Component {
                   />
                 )}
               />
-              {App.routes.map(({ component: Component, ...route }) => <Route key={route.path} component={props => <Component {...props} />} {...route} />)}
+              {App.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
             </Switch>
           </Router>
