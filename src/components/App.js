@@ -108,173 +108,175 @@ const TempHowItWorks = ({ ...props }) => (
   />
 );
 
+const routes = [
+  {
+    path: DASHBOARD_PATH,
+    component: DashboardHomePageContainer,
+    exact: true,
+  },
+  {
+    path: FAMILY_DASHBOARD_FAVORITES_PATH,
+    component: DashboardFavoritesPageContainer,
+    exact: true,
+  },
+  {
+    path: FAMILY_DASHBOARD_PROFILE_PATH,
+    component: DashboardMyProfilePageContainer,
+    exact: true,
+  },
+  {
+    path: AGENT_DASHBOARD_FAMILIES_PATH,
+    component: DashboardAgentFamilyOverviewPage,
+    exact: true,
+  },
+  {
+    path: AGENT_DASHBOARD_MESSAGES_PATH,
+    component: DashboardMessagesContainer,
+    exact: true,
+  },
+  {
+    path: AGENT_DASHBOARD_TASKS_PATH,
+    component: DashboardAgentTasksPageContainer,
+    exact: true,
+  },
+  {
+    path: FAMILY_DASHBOARD_MESSAGES_PATH,
+    component: DashboardMessagesContainer,
+    exact: true,
+  },
+  {
+    path: AGENT_DASHBOARD_FAMILIES_NEW_PATH,
+    component: DashboardFamiliesNewPageContainer,
+    exact: true,
+  },
+  {
+    path: AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
+    component: DashboardMyFamiliesDetailsPageContainer,
+    exact: true,
+  },
+  {
+    path: AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
+    component: DashboardMessageDetailsPageContainer,
+    exact: true,
+  },
+  {
+    path: FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
+    component: DashboardMessageDetailsPageContainer,
+    exact: true,
+  },
+  {
+    path: ADMIN_DASHBOARD_CALLS_PATH,
+    component: DashboardCallsIndexPageContainer,
+    exact: true,
+  },
+  {
+    path: ADMIN_DASHBOARD_CALL_DETAILS_PATH,
+    component: DashboardCallDetailsPageContainer,
+  },
+  {
+    path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
+    component: CommunityDetailPageContainer,
+    exact: true,
+  },
+  {
+    path: `/:toc(${careTypes})/:state/:city`,
+    component: CommunitySearchPageContainer,
+    exact: true,
+  },
+  {
+    path: `/:toc(${careTypes})/:state`,
+    component: StateSearchPageContainer,
+  },
+  {
+    path: '/agents',
+    component: AgentsPageContainer,
+    exact: true,
+  },
+  {
+    path: '/agents/partners',
+    component: PartnersPage,
+    exact: true,
+  },
+  {
+    path: '/agents/:region/:city/:agentSlug',
+    component: AgentProfilePageContainer,
+    exact: true,
+  },
+  {
+    path: '/agents/:region/:city/',
+    component: AgentRegionPageContainer,
+    exact: true,
+  },
+  {
+    path: '/agents/:region',
+    component: AgentRegionPageContainer,
+    exact: true,
+  },
+  {
+    path: `/how-it-works/:type(${howItWorksTypes})`,
+    component: HowItWorksDetailPageContainer,
+  },
+  {
+    path: '/how-it-works',
+    component: TempHowItWorks,
+    exact: true,
+  },
+  {
+    path: '/book-a-tour/:communitySlug',
+    component: BookATourPageContainer,
+    exact: true,
+  },
+  {
+    path: '/custom-pricing/:communitySlug',
+    component: PricingWizardPageContainer,
+    exact: true,
+  },
+  {
+    path: '/about/:member?',
+    component: OurHistoryPage,
+    exact: true,
+  },
+  {
+    path: `/:promo(${promoTypes})`,
+    component: PromoPageContainer,
+    exact: true,
+  },
+  {
+    path: '/assisted-living',
+    component: NearMePageContainer,
+    exact: true,
+  },
+  {
+    path: `/:legalPage(${legalPages})`,
+    component: LegalPolicyPage,
+    exact: true,
+  },
+  {
+    path: '/:entity/:entitySlug/approve',
+    component: EntityApprovalContainer,
+    exact: true,
+  },
+  {
+    path: '/users/password-reset',
+    component: PasswordResetPageContainer,
+    exact: true,
+  },
+  {
+    path: '/',
+    component: HomePageContainer,
+    exact: true,
+  },
+];
+
+const routeComponents = routes.map(({ component: Component, ...route }) => <Route key={route.path} component={props => <Component {...props} />} {...route} />);
+
 export default class App extends Component {
   static childContextTypes = {
     routes: routesPropType,
   };
 
-  static routes = [
-    {
-      path: DASHBOARD_PATH,
-      component: DashboardHomePageContainer,
-      exact: true,
-    },
-    {
-      path: FAMILY_DASHBOARD_FAVORITES_PATH,
-      component: DashboardFavoritesPageContainer,
-      exact: true,
-    },
-    {
-      path: FAMILY_DASHBOARD_PROFILE_PATH,
-      component: DashboardMyProfilePageContainer,
-      exact: true,
-    },
-    {
-      path: AGENT_DASHBOARD_MESSAGES_PATH,
-      component: DashboardMessagesContainer,
-      exact: true,
-    },
-    {
-      path: AGENT_DASHBOARD_TASKS_PATH,
-      component: DashboardAgentTasksPageContainer,
-      exact: true,
-    },
-    {
-      path: FAMILY_DASHBOARD_MESSAGES_PATH,
-      component: DashboardMessagesContainer,
-      exact: true,
-    },
-    {
-      path: AGENT_DASHBOARD_FAMILIES_PATH,
-      component: DashboardAgentFamilyOverviewPage,
-      exact: true,
-    },
-    {
-      path: AGENT_DASHBOARD_FAMILIES_NEW_PATH,
-      component: DashboardFamiliesNewPageContainer,
-      exact: true,
-    },
-    {
-      path: AGENT_DASHBOARD_FAMILIES_DETAILS_PATH,
-      component: DashboardMyFamiliesDetailsPageContainer,
-      exact: true,
-    },
-    {
-      path: AGENT_DASHBOARD_MESSAGE_DETAILS_PATH,
-      component: DashboardMessageDetailsPageContainer,
-      exact: true,
-    },
-    {
-      path: FAMILY_DASHBOARD_MESSAGE_DETAILS_PATH,
-      component: DashboardMessageDetailsPageContainer,
-      exact: true,
-    },
-    {
-      path: ADMIN_DASHBOARD_CALLS_PATH,
-      component: DashboardCallsIndexPageContainer,
-      exact: true,
-    },
-    {
-      path: ADMIN_DASHBOARD_CALL_DETAILS_PATH,
-      component: DashboardCallDetailsPageContainer,
-    },
-    {
-      path: `/:toc(${careTypes})/:state/:city/:communitySlug`,
-      component: CommunityDetailPageContainer,
-      exact: true,
-    },
-    {
-      path: `/:toc(${careTypes})/:state/:city`,
-      component: CommunitySearchPageContainer,
-      exact: true,
-    },
-    {
-      path: `/:toc(${careTypes})/:state`,
-      component: StateSearchPageContainer,
-    },
-    {
-      path: '/agents',
-      component: AgentsPageContainer,
-      exact: true,
-    },
-    {
-      path: '/agents/partners',
-      component: PartnersPage,
-      exact: true,
-    },
-    {
-      path: '/agents/:region/:city/:agentSlug',
-      component: AgentProfilePageContainer,
-      exact: true,
-    },
-    {
-      path: '/agents/:region/:city/',
-      component: AgentRegionPageContainer,
-      exact: true,
-    },
-    {
-      path: '/agents/:region',
-      component: AgentRegionPageContainer,
-      exact: true,
-    },
-    {
-      path: `/how-it-works/:type(${howItWorksTypes})`,
-      component: HowItWorksDetailPageContainer,
-    },
-    {
-      path: '/how-it-works',
-      component: TempHowItWorks,
-      exact: true,
-    },
-    {
-      path: '/book-a-tour/:communitySlug',
-      component: BookATourPageContainer,
-      exact: true,
-    },
-    {
-      path: '/custom-pricing/:communitySlug',
-      component: PricingWizardPageContainer,
-      exact: true,
-    },
-    {
-      path: '/about/:member?',
-      component: OurHistoryPage,
-      exact: true,
-    },
-    {
-      path: `/:promo(${promoTypes})`,
-      component: PromoPageContainer,
-      exact: true,
-    },
-    {
-      path: '/assisted-living',
-      component: NearMePageContainer,
-      exact: true,
-    },
-    {
-      path: `/:legalPage(${legalPages})`,
-      component: LegalPolicyPage,
-      exact: true,
-    },
-    {
-      path: '/:entity/:entitySlug/approve',
-      component: EntityApprovalContainer,
-      exact: true,
-    },
-    {
-      path: '/users/password-reset',
-      component: PasswordResetPageContainer,
-      exact: true,
-    },
-    {
-      path: '/',
-      component: HomePageContainer,
-      exact: true,
-    },
-  ];
-
   getChildContext = () => ({
-    routes: App.routes,
+    routes: routes,
   });
 
   componentDidMount() {
@@ -326,7 +328,7 @@ export default class App extends Component {
                   />
                 )}
               />
-              {App.routes.map(route => <Route key={route.path} {...route} />)}
+              {routeComponents}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
             </Switch>
           </Router>
