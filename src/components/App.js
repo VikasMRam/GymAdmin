@@ -297,7 +297,7 @@ export default class App extends Component {
                   />
                 )}
               />
-              {App.routes.map(({ component: Component, ...route }) => <Route key={route.path} component={props => <Component {...props} />} {...route} />)}
+              {App.routes.map(route => <Route key={route.path} {...route} />)}
               <Route render={routeProps => <Error {...routeProps} errorCode={404} />} />
             </Switch>
           </Router>
