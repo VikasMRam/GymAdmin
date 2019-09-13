@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { object } from 'prop-types';
+import Helmet from 'react-helmet';
 
 import { size, assetPath, palette } from 'sly/components/themes';
 import { Heading, Block, Image, Icon, Hr } from 'sly/components/atoms';
@@ -127,6 +128,11 @@ const OurHistoryPage = ({ match, history }) => {
   );
   const description = (
     <Fragment>
+      <Helmet>
+        <title>Over 30,000 Senior Living Options Near You</title>
+        <meta name="description" content="Seniorly provides pricing, availability, photos, amenities and more for assisted living, memory care, Alzheimer's care, home care, board and care homes, residential care homes, independent living and other senior living care types." />
+
+      </Helmet>
       <BabyArthurImage
         src={assetPath('images/how-it-works/baby-arthur.png')}
         alt="Baby Arthur"
