@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
-import { arrayOf, func, oneOf } from 'prop-types';
+import { arrayOf, func, oneOf, object } from 'prop-types';
 import build from 'redux-object';
 
 import { query } from 'sly/services/newApi';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import clientPropType from 'sly/propTypes/client';
-import { newProvider } from 'sly/constants/payloads/client';
+import { newProvider, newParentClient } from 'sly/constants/payloads/client';
 import DashboardCommunityReferrals from 'sly/components/organisms/DashboardCommunityReferrals';
 import DashboardCommunityReferralSearch from 'sly/components/organisms/DashboardCommunityReferralSearch';
 import DashboardAgentReferrals from 'sly/components/organisms/DashboardAgentReferrals';
@@ -55,6 +55,7 @@ export default class ReferralSearchContainer extends Component {
     agents: arrayOf(adminAgentPropType),
     referralMode: oneOf(['Agent', 'Community']),
     parentClient: clientPropType.isRequired,
+    parentRawClient: object,
     getAgents: func,
     getCommunities: func,
     createClient: func,
@@ -123,19 +124,20 @@ export default class ReferralSearchContainer extends Component {
 
   sendReferral = (partner) => {
     const {
-      createClient, parentClient, notifyInfo, notifyError,
+      createClient, parentRawClient, notifyInfo, notifyError,
     } = this.props;
-    console.log('Going to send referral for', parentClient.name);
-    const newBareClient = immutable(pick(parentClient, ['id', 'type', 'attributes.clientInfo', 'attributes.uuid', 'relationships']));
+    const newBareClient = immutable(pick(parentRawClient, ['id', 'type', 'attributes.clientInfo', 'attributes.uuid', 'relationships']));
     newBareClient.set('id', null);
-    newBareClient.set('type', 'Client');
-    newBareClient.set('attributes.parentID', parentClient.id);
     const provider = immutable(pick, newProvider, ['id', 'type', 'attributes']);
     provider.set('id', partner.id);
     provider.set('attributes.entityType', partner.type);
     newBareClient.set('relationships.provider', provider.value());
+    const parent = immutable(pick, newParentClient, ['id', 'type', 'attributes']);
+    parent.set('id', parentRawClient.id);
+    parent.set('type', 'Client');
+    newBareClient.set('relationships.parent', { data: parent.value() });
     const newChildClient = newBareClient.value();
-    return createClient(newChildClient).then((r) => {
+    return createClient(newChildClient).then(() => {
       notifyInfo('Sent referrral successfully');
     }, (e) => {
       console.log('Saw error, e', e);
@@ -145,10 +147,10 @@ export default class ReferralSearchContainer extends Component {
 
   render() {
     const {
-      referralMode,
+      referralMode, parentClient,
     } = this.props;
+    const { communitiesInterested } = parentClient;
     const { communities, agents } = this.state;
-    console.log('This state is changing', communities);
     // FIXME: @fonz, how does dynamic component choosing look? How do we choose properties , can we do
     // const modeCompMap = { 'Community': DashboardCommunityReferrals, 'Agent': DashboardAgentReferrals };
     // const ModeComp = modeCompMap[referralMode];
@@ -173,7 +175,7 @@ export default class ReferralSearchContainer extends Component {
                   component={DashboardCommunityReferrals}
                   onSubmit={onSubmit}
                   name="DashboardCommunityReferrals"
-                  communities={communities}
+                  communitiesInterested={communitiesInterested}
                   handleCommunitySearch={this.doCommunitySearch}
                   sendNewReferral={this.sendReferral}
                 />

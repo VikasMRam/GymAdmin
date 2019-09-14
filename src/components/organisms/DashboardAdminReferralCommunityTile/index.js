@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, func } from 'prop-types';
 import dayjs from 'dayjs';
-import { ifProp, prop } from 'styled-tools';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
@@ -15,8 +15,13 @@ const getTitlePalette = variant => p => palette(p.titlePalette, variant);
 
 const Wrapper = styled.div`
   border: ${size('border.regular')} solid ${palette('grey', 'stroke')};
-  border-radius: ${size('border.xLarge')};
+  border-radius: ${size('border.xxLarge')};
+`;
+
+const SectionsWrapper = styled.div`
   background-color: ${ifProp('title', getTitlePalette('stroke'))};
+  border-bottom-left-radius: ${size('border.xxLarge')};
+  border-bottom-right-radius: ${size('border.xxLarge')};
 
   @media screen and (min-width: ${size('breakpoint.laptop')}) {
     display: flex;
@@ -26,6 +31,8 @@ const Wrapper = styled.div`
 const TitleSection = styled.div`
   padding: calc(${size('spacing.small')} + ${size('spacing.tiny')}) ${size('spacing.regular')};
   background-color: ${getTitlePalette('base')};
+  border-top-left-radius: ${size('border.xxLarge')};
+  border-top-right-radius: ${size('border.xxLarge')};
 `;
 
 const HeaderSection = styled.div`
@@ -108,11 +115,11 @@ const DashboardAdminReferralCommunityTile = ({
   const isBottomSectionPresent = !!(stage || referralSentAt || (actionText && actionClick));
 
   return (
-    <Fragment>
+    <Wrapper className={className} onClick={onClick}>
       {/* FIXME: Title should be of 10px according to the design */}
       {title && <TitleSection titlePalette={titlePalette}><Span weight="bold" size="tiny" palette="white">{title}</Span></TitleSection>}
-      <Wrapper className={className} title={title} titlePalette={titlePalette}>
-        <TopSection isBottomSectionPresent={isBottomSectionPresent} onClick={onClick}>
+      <SectionsWrapper title={title} titlePalette={titlePalette}>
+        <TopSection isBottomSectionPresent={isBottomSectionPresent}>
           <HeaderSection>
             {hasContract && <StyledBadge textPalette="green"><StyledIcon icon="checkmark-circle" palette="white" size="small" /><Span palette="white" size="tiny">Has Contract</Span></StyledBadge> }
             <CommunityName size="body" palette="primary">{community.name}</CommunityName>
@@ -145,8 +152,8 @@ const DashboardAdminReferralCommunityTile = ({
             </BottomSection>
           </ActionSection>
         )} */}
-      </Wrapper>
-    </Fragment>
+      </SectionsWrapper>
+    </Wrapper>
   );
 };
 
