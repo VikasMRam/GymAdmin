@@ -5,7 +5,6 @@ import { object, string, func, shape } from 'prop-types';
 import { size, palette } from 'sly/components/themes';
 import Input from 'sly/components/atoms/Input';
 import IconButton from 'sly/components/molecules/IconButton';
-import datatableProptype from 'sly/propTypes/datatable';
 import filterStateProptype from 'sly/propTypes/filterState';
 import DatatableFilters from 'sly/components/organisms/DatatableFilters';
 import PopoverPortal from 'sly/components/molecules/PopoverPortal';
@@ -87,13 +86,9 @@ const TableHeaderButtons = ({
       <AddNewButton icon="search" to={AGENT_DASHBOARD_FAMILIES_NEW_PATH}>Add {modelName}</AddNewButton>
       <SearchTextInput type="search" placeholder="Type to filter by name" onKeyUp={onSearchTextKeyUp} />
       {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
-      {isFilterable(datatable.datatable) && (
+      {isFilterable(datatable) && (
         <PopoverPortal button={filterButton}>
-          <DatatableFilters
-            datatable={datatable.datatable}
-            filterState={datatable.filterState}
-            onChange={datatable.onChange}
-          />
+          <DatatableFilters datatable={datatable} />
         </PopoverPortal>
       )}
       {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
@@ -102,11 +97,6 @@ const TableHeaderButtons = ({
 }
 
 TableHeaderButtons.propTypes = {
-  datatable: shape({
-    datatable: datatableProptype,
-    filterState: filterStateProptype,
-    onChange: func,
-  }),
   onColumnButtonClick: func,
   className: string,
   modelName: string,

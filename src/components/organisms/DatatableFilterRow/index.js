@@ -3,7 +3,7 @@ import { func, number, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import filterPropType from 'sly/propTypes/datatableFilter';
-import datatablePropType from 'sly/propTypes/datatable';
+import datatableColumnsPropType from 'sly/propTypes/datatableColumns';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
 import Field from 'sly/components/molecules/Field';
 import { noValueOperators, operatorNames } from 'sly/services/datatable/helpers';
@@ -92,15 +92,15 @@ export default class DatatableFilterRow extends Component {
   static propTypes = {
     index: number.isRequired,
     onFilterChange: func.isRequired,
-    logicalOperator: oneOf(['and', 'or']),
+    onFilterRemove: func.isRequired,
     onLogicalOperatorChange: func,
-    onRemove: func.isRequired,
+    logicalOperator: oneOf(['and', 'or']),
     filter: filterPropType.isRequired,
-    datatable: datatablePropType.isRequired,
+    columns: datatableColumnsPropType.isRequired,
   };
 
   state = {
-    columns: this.props.datatable.columns.reduce((acc, column) => {
+    columns: this.props.columns.reduce((acc, column) => {
       if (!column.paramKey) return acc;
       acc[column.paramKey] = column;
       return acc;
@@ -123,8 +123,8 @@ export default class DatatableFilterRow extends Component {
   };
 
   getColumns = () => {
-    const { datatable } = this.props;
-    return datatable.columns.filter(column => column.isFilterable).map(({ label, paramKey }) => ({
+    const { columns } = this.props;
+    return columns.filter(column => column.isFilterable).map(({ label, paramKey }) => ({
       label,
       value: paramKey,
     }));
@@ -161,7 +161,7 @@ export default class DatatableFilterRow extends Component {
 
   render() {
     const {
-      onRemove,
+      onFilterRemove,
       filter,
       onLogicalOperatorChange,
       logicalOperator,
@@ -170,7 +170,7 @@ export default class DatatableFilterRow extends Component {
 
     return (
       <Row>
-        <CloseButton onClick={() => onRemove(filter)} icon="close" />
+        <CloseButton onClick={() => onFilterRemove(filter)} icon="close" />
 
         {index === 0 && (
           <Where>Where</Where>

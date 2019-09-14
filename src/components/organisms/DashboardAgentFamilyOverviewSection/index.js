@@ -7,7 +7,6 @@ import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import pad from 'sly/components/helpers/pad';
 import SlyEvent from 'sly/services/helpers/events';
-import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
 import { Box, Table, THead, TBody, Tr } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
@@ -18,7 +17,6 @@ import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_FAMILIES_NEW_P
 import Th from 'sly/components/molecules/Th';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
 import filterStateProptype from 'sly/propTypes/filterState';
-import datatableProptype from 'sly/propTypes/datatable';
 
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
@@ -196,11 +194,7 @@ const DashboardAgentFamilyOverviewSection = ({
 };
 
 DashboardAgentFamilyOverviewSection.propTypes = {
-  datatable: shape({
-    datatable: datatableProptype,
-    filterState: filterStateProptype,
-    onChange: func,
-  }),
+  datatable: object,
   clients: arrayOf(clientPropType),
   pagination: object,
   breakpoint: object,

@@ -54,11 +54,6 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
     breakpoint: object,
   };
 
-  constructor(props) {
-    super(props);
-    console.log('greated again')
-  }
-
   handleSearchTextKeyUp = (event) => {
     const { value } = event.target;
     const { pageParams } = this.props;

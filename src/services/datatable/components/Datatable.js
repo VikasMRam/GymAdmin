@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import { func, object } from 'prop-types';
+import { func, object, shape } from 'prop-types';
 
 import { prefetch } from 'sly/services/newApi';
-import datatableProptype from 'sly/propTypes/datatable';
+import datatableColumnsProptype from 'sly/propTypes/datatableColumns';
 import { makeQuerystringFilters } from 'sly/services/datatable/helpers';
 
 @prefetch('datatable', 'getDatatable', (req, { id }) => req({ id }))
@@ -10,7 +10,9 @@ import { makeQuerystringFilters } from 'sly/services/datatable/helpers';
 export default class Datatable extends Component {
   static propTypes = {
     children: func,
-    datatable: datatableProptype,
+    datatable: shape({
+        columns: datatableColumnsProptype
+    }),
     sectionFilters: object,
     status: object,
   };
@@ -20,18 +22,44 @@ export default class Datatable extends Component {
     logicalOperator: 'and',
   };
 
-  onChange = (filterState) => {
-    this.setState(filterState);
+  addFilter = () => {
+    const { filters, logicalOperator } = this.state;
+    this.setState({ filters: [...filters, {}], logicalOperator });
+  };
+
+  onFilterChange = (filter, newFilter) => {
+    const { filters, logicalOperator } = this.state;
+    const index = filters.indexOf(filter);
+    this.setState({ filters: [...filters.slice(0, index), newFilter, ...filters.slice(index + 1)], logicalOperator });
+  };
+
+  onFilterRemove = (filter) => {
+    const { filters, logicalOperator } = this.state;
+    const index = filters.indexOf(filter);
+    const next = [...filters.slice(0, index), ...filters.slice(index + 1)];
+    this.setState({ filters: next, logicalOperator });
+  };
+
+  onLogicalOperatorChange = (logicalOperator) => {
+    const { filters } = this.state;
+    this.setState({ filters, logicalOperator });
   };
 
   render() {
     const { datatable, status, sectionFilters } = this.props;
+    const { addFilter, onFilterChange, onFilterRemove, onLogicalOperatorChange } = this;
+    const columns = datatable
+      ? datatable.columns
+      : [];
     return this.props.children({
-      datatable,
+      addFilter,
+      onFilterChange,
+      onFilterRemove,
+      onLogicalOperatorChange,
+      columns,
       hasFinished: status.datatable.hasFinished,
       filterState: this.state,
       query: makeQuerystringFilters(this.state, sectionFilters),
-      onChange: this.onChange,
     });
   }
 }
