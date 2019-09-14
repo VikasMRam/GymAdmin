@@ -106,7 +106,11 @@ const onClientClick = (clientName, to) => {
 };
 
 const genFamilyDetailsPath = (id, extraPathParams = {}) => generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, { id, ...extraPathParams });
-const ClientRowCard = ({ client, extraPathParams }) => {
+const ClientRowCard = ({ client, breakpoint }) => {
+  const tab = breakpoint.atLeastLaptop()
+    ? ACTIVITY
+    : SUMMARY;
+
   const {
     clientInfo, uuidAux, stage, status, createdAt, notes,
   } = client;
@@ -120,7 +124,7 @@ const ClientRowCard = ({ client, extraPathParams }) => {
   const createdAtStr = dayjs(createdAt).format('MM/DD/YYYY');
   const disabled = status === FAMILY_STATUS_ON_HOLD;
   const lastNote = notes[0];
-  const to = genFamilyDetailsPath(client.id, extraPathParams);
+  const to = genFamilyDetailsPath(client.id, { tab });
 
   return (
     <Wrapper disabled={disabled}>
@@ -138,7 +142,6 @@ const ClientRowCard = ({ client, extraPathParams }) => {
 ClientRowCard.propTypes = {
   breakpoint: object,
   client: clientPropType.isRequired,
-  extraPathParams: object,
   onClientClick: func.isRequired,
 };
 

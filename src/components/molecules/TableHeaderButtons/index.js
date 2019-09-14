@@ -66,7 +66,7 @@ const ColumnsButton = styled(IconButton)`
 const isFilterable = datatable => datatable && datatable.columns.some(column => column.isFilterable);
 
 const TableHeaderButtons = ({
-  onColumnButtonClick, onSortButtonClick, onSearchTextKeyUp, datatable, className, modelName,
+  onColumnButtonClick, onSortButtonClick, datatable, className, modelName,
 }) => {
   const filterButton = (
     <FilterButton
@@ -84,7 +84,12 @@ const TableHeaderButtons = ({
     <Wrappper className={className}>
       {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
       <AddNewButton icon="search" to={AGENT_DASHBOARD_FAMILIES_NEW_PATH}>Add {modelName}</AddNewButton>
-      <SearchTextInput type="search" placeholder="Type to filter by name" onKeyUp={onSearchTextKeyUp} />
+      <SearchTextInput
+        type="search"
+        placeholder="Type to filter by name"
+        value={(datatable.getFilter('name', 'cs') || {}).value}
+        onChange={({ target }) => datatable.doSearch('name', 'cs', target.value)}
+      />
       {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
       {isFilterable(datatable) && (
         <PopoverPortal button={filterButton}>

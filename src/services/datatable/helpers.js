@@ -83,7 +83,7 @@ export const parseQuerystringFilters = (qsText) => {
   };
 
   Object.entries(qs).forEach(([key, queryValue]) => {
-    const filterMatch = key.match(/^filters\[(.*)\]/);
+    const filterMatch = key.match(/^filter\[(.*)\]/);
     if (filterMatch) {
       const [_, column] = filterMatch;
       const [operator, value] = queryValue.split(':');

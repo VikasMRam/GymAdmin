@@ -1,20 +1,22 @@
 import { Component } from 'react';
-import { func, object, shape } from 'prop-types';
+import { func, object, string, shape, bool } from 'prop-types';
+import { withRouter } from 'react-router';
 
 import { prefetch } from 'sly/services/newApi';
 import datatableColumnsProptype from 'sly/propTypes/datatableColumns';
-import { makeQuerystringFilters } from 'sly/services/datatable/helpers';
+import { makeQuerystringFilters, parseQuerystringFilters, simpleQStringify } from 'sly/services/datatable/helpers';
 
 @prefetch('datatable', 'getDatatable', (req, { id }) => req({ id }))
+
+@withRouter
 
 export default class Datatable extends Component {
   static propTypes = {
     children: func,
-    datatable: shape({
-        columns: datatableColumnsProptype
-    }),
+    datatable: shape({ columns: datatableColumnsProptype }),
     sectionFilters: object,
     status: object,
+    location: shape({ search: string }),
   };
 
   state = {
@@ -22,15 +24,48 @@ export default class Datatable extends Component {
     logicalOperator: 'and',
   };
 
-  addFilter = () => {
+  doSearch = (column, operator, value) => {
+    const filter = this.getFilter(column, operator);
+    console.log('filter', column, operator, value, this.state.filters, filter)
+    if (filter) {
+      if (value === '') {
+        this.onFilterRemove(filter);
+      } else {
+        this.onFilterChange(filter, {
+          ...filter,
+          value,
+        });
+      }
+    } else {
+      this.addFilter({
+        column,
+        operator,
+        value,
+      });
+    }
+  };
+
+  getFilter = (column, operator) => {
+    const { filters } = this.state;
+    return filters.find(({ column: columnName, operator: operatorName }) => column === columnName && operator === operatorName);
+  };
+
+  addFilter = (newFilter = {}) => {
     const { filters, logicalOperator } = this.state;
-    this.setState({ filters: [...filters, {}], logicalOperator });
+    this.setState({ filters: [...filters, newFilter], logicalOperator });
   };
 
   onFilterChange = (filter, newFilter) => {
     const { filters, logicalOperator } = this.state;
     const index = filters.indexOf(filter);
-    this.setState({ filters: [...filters.slice(0, index), newFilter, ...filters.slice(index + 1)], logicalOperator });
+    this.setState({
+      filters: [
+        ...filters.slice(0, index),
+        newFilter,
+        ...filters.slice(index + 1),
+      ],
+      logicalOperator,
+    });
   };
 
   onFilterRemove = (filter) => {
@@ -47,15 +82,27 @@ export default class Datatable extends Component {
 
   render() {
     const { datatable, status, sectionFilters } = this.props;
-    const { addFilter, onFilterChange, onFilterRemove, onLogicalOperatorChange } = this;
-    const columns = datatable
-      ? datatable.columns
-      : [];
-    return this.props.children({
+
+    const {
       addFilter,
+      doSearch,
       onFilterChange,
       onFilterRemove,
       onLogicalOperatorChange,
+      getFilter,
+    } = this;
+
+    const columns = datatable
+      ? datatable.columns
+      : [];
+
+    return this.props.children({
+      addFilter,
+      doSearch,
+      onFilterChange,
+      onFilterRemove,
+      onLogicalOperatorChange,
+      getFilter,
       columns,
       hasFinished: status.datatable.hasFinished,
       filterState: this.state,

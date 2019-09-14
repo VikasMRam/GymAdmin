@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import qs from 'query-string';
 import { arrayOf, object } from 'prop-types';
-import debounce from 'lodash/debounce';
 
 import { prefetch } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
@@ -10,7 +8,7 @@ import DashboardAgentFamilyOverviewSection from 'sly/components/organisms/Dashbo
 import { withRouter } from 'react-router';
 
 const getPaginationData = ({ result, meta }) => {
-  if (!result) return null;
+  if (!result) return {};
 
   const count = result.length;
   const current = meta['page-number'];
@@ -52,26 +50,12 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
     location: object,
     history: object,
     breakpoint: object,
+    datatable: object,
   };
-
-  handleSearchTextKeyUp = (event) => {
-    const { value } = event.target;
-    const { pageParams } = this.props;
-    const search = `?${qs.stringify({
-      ...pageParams,
-      name: value,
-    })}`;
-    this.navigate(search);
-  };
-
-  navigate = debounce((search) => {
-    const { history } = this.props;
-    history.push({ search });
-  }, 200);
 
   render() {
     const {
-      clients, status, breakpoint, pageParams, datatable,
+      clients, status, breakpoint, datatable, match, location,
     } = this.props;
 
     const { error, hasFinished } = status.clients;
@@ -80,16 +64,18 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
       throw new Error(JSON.stringify(error));
     }
 
+    const { pathName, search } = location;
+
     return (
       <DashboardAgentFamilyOverviewSection
         isPageLoading={!hasFinished || !datatable.hasFinished}
         clients={clients}
         pagination={getPaginationData(status.clients)}
-        activeTab={pageParams.type}
+        activeTab={match.params.clientType}
         breakpoint={breakpoint}
         onSearchTextKeyUp={this.handleSearchTextKeyUp}
         datatable={datatable}
-        params={pageParams}
+        basePath={`${pathName}${search}`}
       />
     );
   }

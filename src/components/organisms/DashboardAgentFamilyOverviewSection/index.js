@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import styled, { css } from 'styled-components';
 import { arrayOf, shape, object, string, bool, func } from 'prop-types';
-import qs from 'query-string';
+import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
@@ -13,11 +13,15 @@ import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Tab from 'sly/components/molecules/Tab';
 import clientPropType from 'sly/propTypes/client';
-import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_FAMILIES_NEW_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
+import {
+  ACTIVITY,
+  AGENT_DASHBOARD_FAMILIES_PATH,
+  AGENT_DASHBOARD_FAMILIES_NEW_PATH,
+  SUMMARY,
+  PROSPECTING, CONNECTED, CLOSED,
+} from 'sly/constants/dashboardAppPaths';
 import Th from 'sly/components/molecules/Th';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
-import filterStateProptype from 'sly/propTypes/filterState';
-
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
@@ -65,13 +69,11 @@ const FamiliesCountStatusBlock = pad(styled(Box)`
   background-color: ${palette('white.base')};
 `, 'large');
 
-const tabIDLabelMap = {
-  Prospects: 'PROSPECTS',
-  Connected: 'CONNECTED',
-  Closed: 'CLOSED',
+const TabMap = {
+  Prospects: PROSPECTING,
+  Connected: CONNECTED,
+  Closed: CLOSED,
 };
-
-const tabIDs = Object.keys(tabIDLabelMap);
 
 const onTabClick = (label) => {
   const event = {
@@ -82,69 +84,30 @@ const onTabClick = (label) => {
   SlyEvent.getInstance().sendEvent(event);
 };
 
-const getBasePath = (tab, params) => {
-  const {
-    clientName, organization, provider, providerType,
-  } = params;
-  const filters = {};
-
-  if (tab === tabIDs[1]) {
-    filters.type = 'Connected';
-  } else if (tab === tabIDs[2]) {
-    filters.type = 'Closed';
-  }
-
-  if (clientName) {
-    filters.name = clientName;
-  }
-
-  if (organization) {
-    filters.organization = organization;
-  }
-
-  if (provider) {
-    filters.provider = provider;
-  }
-
-  if (providerType) {
-    filters.providerType = providerType;
-  }
-
-  const filterQs = qs.stringify(filters);
-
-  return filterQs !== '' ? `${AGENT_DASHBOARD_FAMILIES_PATH}?${filterQs}` : AGENT_DASHBOARD_FAMILIES_PATH;
-};
+const getBasePath = clientType => generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType });
 
 const DashboardAgentFamilyOverviewSection = ({
-  clients, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params, breakpoint,
+  clients,
+  pagination,
+  activeTab,
+  onSearchTextKeyUp,
+  isPageLoading,
+  basePath,
+  breakpoint,
   datatable,
 }) => {
-  const prospectsLabel = tabIDLabelMap[tabIDs[0]];
-  const connectedLabel = tabIDLabelMap[tabIDs[1]];
-  const closedLabel = tabIDLabelMap[tabIDs[2]];
-  let prospectsTabLabel = tabIDLabelMap[tabIDs[0]];
-  let connectedTabLabel = tabIDLabelMap[tabIDs[1]];
-  let closedTabLabel = tabIDLabelMap[tabIDs[2]];
-  if (!isPageLoading) {
-    const { prospectingCount, connectedCount, closedCount } = pagination;
-    prospectsTabLabel += ` (${prospectingCount})`;
-    connectedTabLabel += ` (${connectedCount})`;
-    closedTabLabel += ` (${closedCount})`;
-  }
-
-  const defaultTab = breakpoint.atLeastLaptop() ? ACTIVITY : SUMMARY;
   return (
     <Fragment>
       <Tabs activeTab={activeTab} tabsOnly>
-        <Tab id={tabIDs[0]} to={getBasePath(tabIDs[0], params)} onClick={() => onTabClick(prospectsLabel)}>
-          {prospectsTabLabel}
-        </Tab>
-        <Tab id={tabIDs[1]} to={getBasePath(tabIDs[1], params)} onClick={() => onTabClick(connectedLabel)}>
-          {connectedTabLabel}
-        </Tab>
-        <Tab id={tabIDs[2]} to={getBasePath(tabIDs[2], params)} onClick={() => onTabClick(closedLabel)}>
-          {closedTabLabel}
-        </Tab>
+        {Object.entries(TabMap).map(([name, key]) => (
+          <Tab
+            id={key}
+            to={getBasePath(key)}
+            onClick={() => onTabClick(name)}
+          >
+            {`${name} (${pagination[`${key}Count`] || '0'})`}
+          </Tab>
+        ))}
       </Tabs>
 
       <TableHeaderButtons
@@ -166,7 +129,7 @@ const DashboardAgentFamilyOverviewSection = ({
               </THead>
               <TBody>
                 {clients.map(client => (
-                  <ClientRowCard key={client.id} client={client} extraPathParams={{ tab: defaultTab }} />
+                  <ClientRowCard key={client.id} client={client} breakpoint={breakpoint} />
                 ))}
               </TBody>
             </StyledTable>
@@ -175,7 +138,7 @@ const DashboardAgentFamilyOverviewSection = ({
                 current={pagination.current}
                 total={pagination.total}
                 range={1}
-                basePath={getBasePath(activeTab, params)}
+                basePath={basePath}
                 pageParam="page-number"
               />
             )}
@@ -204,7 +167,7 @@ DashboardAgentFamilyOverviewSection.propTypes = {
   searchTextValue: string,
   onSearchTextKeyUp: func,
   isPageLoading: bool,
-  params: object,
+  basePath: string,
 };
 
 DashboardAgentFamilyOverviewSection.defaultProps = {
