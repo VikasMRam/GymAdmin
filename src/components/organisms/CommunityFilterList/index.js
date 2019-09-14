@@ -69,7 +69,8 @@ const StyledHr = pad(Hr, 'regular');
 
 const getSortHandler = (origFn) => {
   return (uiEvt) => {
-    const changedParams = { sort: uiEvt.value };
+    // todo uncomment after enabling react select const changedParams = { sort: uiEvt.value };
+    const changedParams = { sort: uiEvt.target.value };
     origFn({ origUiEvt: uiEvt, changedParams });
   };
 };
@@ -180,9 +181,11 @@ const CommunityFilterList = ({
           name="Sort"
           type="select"
           value={sort}
-          options={sortOptions}
+          // options={sortOptions} todo pass as option after enabling react select
           onChange={getSortHandler(onFieldChange)}
-        />
+        >
+          {sortOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+        </Field>
       </CollapsibleSection>
       {filtersApplied.length > 0 && (
         <ClearAllButton
