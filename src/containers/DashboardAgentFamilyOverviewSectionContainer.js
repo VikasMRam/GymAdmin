@@ -54,15 +54,24 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
     breakpoint: object,
   };
 
-  handleSearchTextKeyUp = debounce((event) => {
+  constructor(props) {
+    super(props);
+    console.log('greated again')
+  }
+
+  handleSearchTextKeyUp = (event) => {
     const { value } = event.target;
-    const { history, pageParams } = this.props;
-    history.push({
-      search: `?${qs.stringify({
-        ...pageParams,
-        name: value,
-      })}`,
-    });
+    const { pageParams } = this.props;
+    const search = `?${qs.stringify({
+      ...pageParams,
+      name: value,
+    })}`;
+    this.navigate(search);
+  };
+
+  navigate = debounce((search) => {
+    const { history } = this.props;
+    history.push({ search });
   }, 200);
 
   render() {
