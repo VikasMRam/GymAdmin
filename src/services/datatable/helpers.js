@@ -47,15 +47,15 @@ export const simpleQStringify = (object) => {
   return `?${Object.entries(object).map(([key, value]) => `${key}=${value}`).join('&')}`;
 };
 
-export const makeQuerystringFilters = (filterState) => {
-  const qsObject = {};
+export const makeQuerystringFilters = (filterState, sectionFilters = {}) => {
+  const qsObject = { ...sectionFilters };
   filterState.filters.forEach((filter) => {
     if (!filter.column
         || !filter.operator
         || (!filter.value && !noValueOperators.includes(filter.operator))
     ) return;
 
-    const key = `filters[${filter.column}]`;
+    const key = `filter[${filter.column}]`;
     const filterValue = makeFilterValue(filter.value);
     const value = `${filter.operator}${filterValue ? `:${filterValue}` : ''}`;
     qsObject[key] = value;
@@ -63,7 +63,7 @@ export const makeQuerystringFilters = (filterState) => {
   if (filterState.logicalOperator) {
     qsObject.exp = filterState.logicalOperator;
   }
-  return simpleQStringify(qsObject);
+  return qsObject;
 };
 
 export const simpleQSParse = (qs) => {

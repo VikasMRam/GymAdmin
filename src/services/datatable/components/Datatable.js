@@ -3,6 +3,7 @@ import { func, object } from 'prop-types';
 
 import { prefetch } from 'sly/services/newApi';
 import datatableProptype from 'sly/propTypes/datatable';
+import { makeQuerystringFilters } from 'sly/services/datatable/helpers';
 
 @prefetch('datatable', 'getDatatable', (req, { id }) => req({ id }))
 
@@ -23,14 +24,13 @@ export default class Datatable extends Component {
     this.setState(filterState);
   };
 
-
   render() {
     const { datatable, status, sectionFilters } = this.props;
     return this.props.children({
       datatable,
-      isLoading: !status.hasFinished,
+      hasFinished: status.datatable.hasFinished,
       filterState: this.state,
-      sectionFilters,
+      query: makeQuerystringFilters(this.state, sectionFilters),
       onChange: this.onChange,
     });
   }

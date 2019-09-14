@@ -40,10 +40,7 @@ const getPaginationData = ({ result, meta }) => {
 
 @withRouter
 
-@prefetch('clients', 'getClients', (req, { datatable }) => req({
-  ...datatable.filterState,
-  ...datatable.sectionFilters,
-}))
+@prefetch('clients', 'getClients', (req, { datatable }) => req(datatable.query))
 
 @withBreakpoint
 
@@ -73,22 +70,18 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
       clients, status, breakpoint, pageParams, datatable,
     } = this.props;
 
-    const { type } = pageParams;
-    const { clients: clientsStatus } = status;
-    const {
-      hasFinished, error: clientsError,
-    } = clientsStatus;
+    const { error, hasFinished } = status.clients;
 
-    if (clientsError) {
-      throw new Error(JSON.stringify(clientsError));
+    if (error) {
+      throw new Error(JSON.stringify(error));
     }
 
     return (
       <DashboardAgentFamilyOverviewSection
-        isPageLoading={!hasFinished || datatable.isLoading}
+        isPageLoading={!hasFinished || !datatable.hasFinished}
         clients={clients}
-        pagination={getPaginationData(clientsStatus)}
-        activeTab={type}
+        pagination={getPaginationData(status.clients)}
+        activeTab={pageParams.type}
         breakpoint={breakpoint}
         onSearchTextKeyUp={this.handleSearchTextKeyUp}
         datatable={datatable}
