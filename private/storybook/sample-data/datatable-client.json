@@ -176,6 +176,107 @@
       "typeInfo": null,
       "isFilterable": true,
       "isSortable": true
+    },
+    {
+      "label": "Status",
+      "value": "status",
+      "paramKey": "status",
+      "type": {
+        "name": "MultiSelectStaticList",
+        "allowedExpressions": [
+          "in",
+          "nin",
+          "em",
+          "nem"
+        ]
+      },
+      "typeInfo": {
+        "list": [
+          "Active",
+          "On Pause",
+          "Long Term",
+          "Archived",
+          "Deleted"
+        ]
+      },
+      "isFilterable": true,
+      "isSortable": true
+    },
+    {
+      "label": "Organization",
+      "value": "organization.name",
+      "paramKey": "organization",
+      "type": {
+        "name": "MultiSelectDynamicList",
+        "allowedExpressions": [
+          "in",
+          "nin",
+          "em",
+          "nem"
+        ]
+      },
+      "typeInfo": {
+        "api": "/v0/platform/organizations?filter[name]="
+      },
+      "isFilterable": true,
+      "isSortable": true
+    },
+    {
+      "label": "Agency",
+      "value": "organization.name",
+      "paramKey": "agent",
+      "type": {
+        "name": "MultiSelectDynamicList",
+        "allowedExpressions": [
+          "in",
+          "nin",
+          "em",
+          "nem"
+        ]
+      },
+      "typeInfo": {
+        "api": "/v0/marketplace/agents?fields=name&filter[name]="
+      },
+      "isFilterable": true,
+      "isSortable": true
+    },
+    {
+      "label": "Community",
+      "value": "organization.name",
+      "paramKey": "community",
+      "type": {
+        "name": "MultiSelectDynamicList",
+        "allowedExpressions": [
+          "in",
+          "nin",
+          "em",
+          "nem"
+        ]
+      },
+      "typeInfo": {
+        "api": "/v0/marketplace/communities?fields=name&filter[name]="
+      },
+      "isFilterable": true,
+      "isSortable": true
+    },
+    {
+      "label": "Assigned To",
+      "value": "admin.name",
+      "paramKey": "assigned",
+      "type": {
+        "name": "MultiSelectDynamicList",
+        "allowedExpressions": [
+          "in",
+          "nin",
+          "em",
+          "nem"
+        ]
+      },
+      "typeInfo": {
+        "api": "/v0/platform/users?fields=name&filter[name]="
+      },
+      "isFilterable": true,
+      "isSortable": true
     }
   ]
 }
