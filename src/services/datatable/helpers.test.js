@@ -2,7 +2,7 @@ import { parseQuerystringFilters, makeQuerystringFilters } from './helpers';
 
 describe('datatables helpers', () => {
   it('should parse querystring params into filterState object', () => {
-    const qs = '?filters[admin]=eq:true&filters[name]=cs:test&filters[email]=nem&exp=or';
+    const qs = '?filter[admin]=eq:true&filter[name]=cs:test&filter[email]=nem&exp=or';
     const filterState = parseQuerystringFilters(qs);
     expect(filterState).toStrictEqual({
       filters: [{
@@ -22,7 +22,7 @@ describe('datatables helpers', () => {
   });
 
   it('should parse querystring with array of values', () => {
-    const qs = '?filters[state]=nin:1st Contact Attempt,2nd Contact Attempt';
+    const qs = '?filter[state]=nin:1st Contact Attempt,2nd Contact Attempt';
     const filterState = parseQuerystringFilters(qs);
     expect(filterState).toStrictEqual({
       filters: [{
@@ -55,7 +55,12 @@ describe('datatables helpers', () => {
     };
 
     const qsObject = makeQuerystringFilters(filterState);
-    expect(qsObject).toEqual('?filters[admin]=eq:true&filters[email]=nem&filters[name]=cs:test&exp=or');
+    expect(qsObject).toEqual({
+      'filter[admin]': 'eq:true',
+      'filter[email]': 'nem',
+      'filter[name]': 'cs:test',
+      exp: 'or',
+    });
   });
 
   it('should ignore empty filters', () => {
@@ -71,6 +76,6 @@ describe('datatables helpers', () => {
     };
 
     const qsObject = makeQuerystringFilters(filterState);
-    expect(qsObject).toEqual('?exp=or');
+    expect(qsObject).toEqual({ exp: 'or' });
   })
 });

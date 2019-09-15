@@ -26,7 +26,6 @@ export default class Datatable extends Component {
 
   doSearch = (column, operator, value) => {
     const filter = this.getFilter(column, operator);
-    console.log('filter', column, operator, value, this.state.filters, filter)
     if (filter) {
       if (value === '') {
         this.onFilterRemove(filter);
@@ -103,6 +102,7 @@ export default class Datatable extends Component {
       onFilterRemove,
       onLogicalOperatorChange,
       getFilter,
+
       columns,
       hasFinished: status.datatable.hasFinished,
       filterState: this.state,
