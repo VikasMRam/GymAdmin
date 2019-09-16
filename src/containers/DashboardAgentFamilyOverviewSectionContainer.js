@@ -38,24 +38,23 @@ const getPaginationData = ({ result, meta }) => {
 
 @withRouter
 
-@prefetch('clients', 'getClients', (req, { datatable }) => req(datatable.query))
-
 @withBreakpoint
+
+@prefetch('clients', 'getClients', (req, { datatable }) => req(datatable.query))
 
 export default class DashboardAgentFamilyOverviewSectionContainer extends Component {
   static propTypes = {
     clients: arrayOf(clientPropType),
     status: object,
-    match: object,
-    location: object,
     history: object,
     breakpoint: object,
     datatable: object,
+    match: object,
   };
 
   render() {
     const {
-      clients, status, breakpoint, datatable, match, location,
+      clients, status, breakpoint, datatable, match,
     } = this.props;
 
     const { error, hasFinished } = status.clients;
@@ -63,8 +62,6 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
     if (error) {
       throw new Error(JSON.stringify(error));
     }
-
-    const { pathName, search } = location;
 
     return (
       <DashboardAgentFamilyOverviewSection
@@ -75,7 +72,6 @@ export default class DashboardAgentFamilyOverviewSectionContainer extends Compon
         breakpoint={breakpoint}
         onSearchTextKeyUp={this.handleSearchTextKeyUp}
         datatable={datatable}
-        basePath={`${pathName}${search}`}
       />
     );
   }

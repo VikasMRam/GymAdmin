@@ -138,7 +138,7 @@ const DashboardAgentFamilyOverviewSection = ({
                 current={pagination.current}
                 total={pagination.total}
                 range={1}
-                basePath={basePath}
+                basePath={datatable.basePath}
                 pageParam="page-number"
               />
             )}

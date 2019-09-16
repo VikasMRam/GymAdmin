@@ -48,19 +48,20 @@ export const simpleQStringify = (object) => {
 };
 
 export const makeQuerystringFilters = (filterState, sectionFilters = {}) => {
-  const qsObject = { ...sectionFilters };
-  filterState.filters.forEach((filter) => {
-    if (!filter.column
-        || !filter.operator
-        || (!filter.value && !noValueOperators.includes(filter.operator))
-    ) return;
+  const filters = filterState.filters.filter(filter => filter.column
+        && filter.operator
+        && (filter.value || noValueOperators.includes(filter.operator)));
 
+  const qsObject = { ...sectionFilters };
+
+  filters.forEach((filter) => {
     const key = `filter[${filter.column}]`;
     const filterValue = makeFilterValue(filter.value);
     const value = `${filter.operator}${filterValue ? `:${filterValue}` : ''}`;
     qsObject[key] = value;
   });
-  if (filterState.logicalOperator) {
+
+  if (filters.length > 1 && filterState.logicalOperator) {
     qsObject.exp = filterState.logicalOperator;
   }
   return qsObject;
