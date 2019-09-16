@@ -1,5 +1,5 @@
 import React from 'react';
-import { func, node, string, bool } from 'prop-types';
+import { func, node, string, bool, arrayOf, shape } from 'prop-types';
 import styled from 'styled-components';
 
 import { size, palette } from 'sly/components/themes';
@@ -23,9 +23,15 @@ const Bottom = styled.div`
   justify-content: space-between;
 `;
 
+const ActionButtonsWrapper = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: ${size('spacing.large')};
+`;
+
 const ThreeSectionFormTemplate = ({
   onCancelClick, submitButtonText, cancelButtonText, children, heading, hasCancel, hasSubmit, onSubmit,
-  pristine, submitting, invalid,
+  pristine, submitting, invalid, extraActionButtonsAfterSubmit,
 }) => (
   <form onSubmit={onSubmit}>
     <StyledHeading size="subtitle">{heading}</StyledHeading>
@@ -36,7 +42,10 @@ const ThreeSectionFormTemplate = ({
     <Bottom>
       {hasCancel && <Button secondary onClick={onCancelClick}>{cancelButtonText}</Button>}
       {!hasCancel && <div />}
-      {hasSubmit && <Button type="submit" disabled={invalid || pristine || submitting}>{submitButtonText}</Button>}
+      <ActionButtonsWrapper>
+        {hasSubmit && <Button ghost={extraActionButtonsAfterSubmit.length > 0} type="submit" disabled={invalid || pristine || submitting}>{submitButtonText}</Button>}
+        {extraActionButtonsAfterSubmit.map(b => <Button key={b.text} disabled={submitting} onClick={b.onClick}>{b.text}</Button>)}
+      </ActionButtonsWrapper>
     </Bottom>
   </form>
 );
@@ -53,11 +62,16 @@ ThreeSectionFormTemplate.propTypes = {
   pristine: bool,
   submitting: bool,
   invalid: bool,
+  extraActionButtonsAfterSubmit: arrayOf(shape({
+    onClick: func,
+    text: string.isRequired,
+  })),
 };
 
 ThreeSectionFormTemplate.defaultProps = {
   submitButtonText: 'Submit',
   cancelButtonText: 'Cancel',
+  extraActionButtonsAfterSubmit: [],
 };
 
 export default ThreeSectionFormTemplate;

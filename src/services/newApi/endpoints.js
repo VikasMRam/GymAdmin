@@ -67,8 +67,9 @@ export default {
   updateConversationParticipant: { method: patch, path: '/platform/conversation-participants/:id' },
 
   getVoiceCalls: { method: get, path: '/platform/communications/voice' },
-  getVoiceCall: { method: get, path: '/platform/communications/voice/:id'},
+  getVoiceCall: { method: get, path: '/platform/communications/voice/:id' },
 
   getTasks: { method: get, path: '/platform/tasks' },
   createTask: { method: post, path: '/platform/tasks' },
+  updateTask: { method: patch, path: '/platform/tasks/:id' },
 };
