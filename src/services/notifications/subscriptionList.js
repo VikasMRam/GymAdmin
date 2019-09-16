@@ -1,10 +1,10 @@
 import { NOTIFY_MESSAGE_NEW } from 'sly/constants/notifications';
-import { AGENT_ROLE, CUSTOMER_ROLE } from 'sly/constants/roles';
+import { AGENT_ND_ROLE, CUSTOMER_ROLE } from 'sly/constants/roles';
 import { AGENT_DASHBOARD_MESSAGES_PATH, FAMILY_DASHBOARD_MESSAGES_PATH } from 'sly/constants/dashboardAppPaths';
 
 const getNewMessageLink = (roleId, conversationId) => {
   switch (roleId) {
-    case AGENT_ROLE: return `${AGENT_DASHBOARD_MESSAGES_PATH}/${conversationId}`;
+    case AGENT_ND_ROLE: return `${AGENT_DASHBOARD_MESSAGES_PATH}/${conversationId}`;
     case CUSTOMER_ROLE: return `${FAMILY_DASHBOARD_MESSAGES_PATH}/${conversationId}`;
     default: return '/';
   }

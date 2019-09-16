@@ -1,0 +1,107 @@
+import React, { Component, Fragment } from 'react';
+import styled from 'styled-components';
+import { bool, func } from 'prop-types';
+import { prop } from 'styled-tools';
+
+import { size, palette, columnWidth } from 'sly/components/themes';
+import { adminAgentPropType } from 'sly/propTypes/agent';
+import { Heading, Badge, Button, Box, Block, Icon } from 'sly/components/atoms';
+
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  > * { 
+    margin-right: ${size('spacing.regular')};
+  }
+`;
+
+const SlyScore = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: ${palette('grey', 'filler')};
+  border-radius: ${size('spacing.small')};
+  font-weight: ${size('weight.bold')};
+  height: ${size('element.regular')};
+  width: ${size('element.regular')};
+  margin-right: ${size('spacing.large')};
+`;
+
+const StyledBadge = styled(Badge)`
+  text-transform: uppercase;
+`;
+
+const lineHeight = p => size('lineHeight', p.size);
+const textSize = p => size('text', p.size);
+
+const AgentInfoWrapper = styled.div`
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    display: flex;
+    flex-flow: column wrap;
+    height: calc(${textSize} * ${lineHeight} * ${prop('rows')});
+    margin-right: -${size('spacing.xLarge')};
+    > * {
+      width: ${columnWidth(2, size('spacing.xLarge'))};
+      margin-right: ${size('spacing.xLarge')};
+    }
+   }
+`;
+
+const IconItem = styled.div`
+  display: flex;
+`;
+
+const StyledIcon = styled(Icon)`
+  margin-right: ${size('spacing.regular')};
+`;
+
+const agentPropsMap = {
+  parentCompany: 'families',
+  cellPhone: 'phone',
+  workPhone: 'phone',
+  last5DayLeadCount: 'loyalty',
+};
+
+export default class DashboardAdminReferralAgentTile extends Component {
+  static propTypes = {
+    notifyError: func.isRequired,
+    notifyInfo: func.isRequired,
+    agent: adminAgentPropType.isRequired,
+    isRecommended: bool.isRequired,
+    sendReferral: func.isRequired,
+  };
+
+  static defaultProps = {
+    isRecommended: false,
+  };
+
+
+  render() {
+    const { agent, isRecommended, sendReferral } = this.props;
+    const infoRowsNumber = Math.ceil(Object.keys(agentPropsMap).length / 2);
+    return (
+      <Fragment>
+        <Header>
+          <SlyScore>{agent.info.slyScore}</SlyScore>
+          <Heading level="subtitle"> { agent.name } </Heading>
+          {isRecommended && <StyledBadge textPalette="white">Recommended</StyledBadge> }
+        </Header>
+        <AgentInfoWrapper size="caption" rows={infoRowsNumber}>
+          {Object.entries(agentPropsMap)
+            .map(([key, icon]) => (
+              <IconItem>
+                <StyledIcon icon={icon} size="small" />
+                <Block size="caption">{agent.info[key]}</Block>
+              </IconItem>
+            ))
+          }
+        </AgentInfoWrapper>
+        <IconItem>
+          <StyledIcon icon="note" size="small" />
+          <Block size="caption">{agent.info.adminNotes}</Block>
+        </IconItem>
+        <Button onClick={sendReferral}>Send Referral</Button>
+      </Fragment>
+    );
+  }
+}

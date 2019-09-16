@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { func, object, string } from 'prop-types';
 
-import { CUSTOMER_ROLE, PROVIDER_ROLE, AGENT_ROLE } from 'sly/constants/roles';
+import { CUSTOMER_ROLE, PROVIDER_OD_ROLE, AGENT_ND_ROLE } from 'sly/constants/roles';
 import { AGENT_DASHBOARD_FAMILIES_PATH, FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH } from 'sly/constants/dashboardAppPaths';
 import SlyEvent from 'sly/services/helpers/events';
 import AuthContainer from 'sly/containers/AuthContainer';
@@ -36,7 +36,7 @@ const defaultMenuItems = (user) => {
   if (user) {
     const { roleID } = user;
     /* eslint-disable-next-line no-bitwise */
-    if (roleID & PROVIDER_ROLE) {
+    if (roleID & PROVIDER_OD_ROLE) {
       menuItems.unshift({ name: 'Dashboard', href: '/mydashboard', section: 2 });
     }
   }
@@ -67,7 +67,7 @@ const loggedInMenuItems = (user) => {
       roleBasedItems = customerMenuItems;
     }
     /* eslint-disable-next-line no-bitwise */
-    if (roleID & AGENT_ROLE) {
+    if (roleID & AGENT_ND_ROLE) {
       roleBasedItems = agentMenuItems;
     }
     roleBasedItems = [...roleBasedItems, { name: 'Log Out', section: 3 }];

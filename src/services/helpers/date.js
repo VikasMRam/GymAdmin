@@ -26,6 +26,12 @@ export const dateFormatter = (value) => {
   return `${onlyNums.slice(0, 4)}-${onlyNums.slice(4, 6)}-${onlyNums.slice(6, 8)}`;
 };
 
+export const parseDate = (dateString) => {
+  return dayjs(dateString);
+};
+
+export const durationInS = (startDayjs, endDayjs) => startDayjs.diff(endDayjs, 'second');
+
 export const isAfter = (a, b) => dayjs(a).utc().isAfter(dayjs(b).utc());
 
 export const isSameDay = (a, b) => a.substr(0, 10) === b.substr(0, 10);

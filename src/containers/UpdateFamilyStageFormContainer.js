@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import dayjs from 'dayjs';
 
 import { query, getRelationship, invalidateRequests } from 'sly/services/newApi';
-import clientPropType from 'sly/propTypes/client';
+import clientPropType  from 'sly/propTypes/client';
+import  userPropType   from 'sly/propTypes/user';
 import { FAMILY_STATUS_ACTIVE, FAMILY_STATUS_ON_HOLD, NOTE_COMMENTABLE_TYPE_CLIENT, FAMILY_STAGE_WON, FAMILY_STAGE_LOST } from 'sly/constants/familyDetails';
 import { NOTE_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import { createValidator, required, float } from 'sly/services/validation';
@@ -68,6 +69,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     refetchClient: func.isRequired,
     refetchNotes: func.isRequired,
     invalidateClients: func,
+    user: userPropType,
   };
 
   currentStage = {};
@@ -77,7 +79,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
     const { currentStage, nextStage } = this;
     const {
       updateClient, client, rawClient, notifyError, notifyInfo, onSuccess, createNote,
-      updateUuidAux, uuidAux, refetchClient, refetchNotes, invalidateClients,
+      updateUuidAux, uuidAux, refetchClient, refetchNotes, invalidateClients, user,
     } = this.props;
     const { id, clientInfo, stage: previousStage } = client;
     const {
@@ -215,7 +217,7 @@ export default class UpdateFamilyStageFormContainer extends Component {
 
   render() {
     const { handleUpdateStage } = this;
-    const { client, formState, lossReasons } = this.props;
+    const { client, formState, lossReasons, user } = this.props;
     const { clientInfo, stage, status } = client;
     const isPaused = status === FAMILY_STATUS_ON_HOLD;
     const { name } = clientInfo;
@@ -225,10 +227,10 @@ export default class UpdateFamilyStageFormContainer extends Component {
     let nextStage;
     let currentLossReason;
     if (formState) {
-      this.currentStage = getStageDetails(stage);
+      this.currentStage = getStageDetails(stage, user);
       ({ levelGroup, showRejectOption } = this.currentStage);
       ({ stage: nextStage, lossReason: currentLossReason } = formState);
-      this.nextStage = getStageDetails(nextStage);
+      this.nextStage = getStageDetails(nextStage, user);
       ({ levelGroup: nextStageGroup } = this.nextStage);
     }
     const initialValues = {
