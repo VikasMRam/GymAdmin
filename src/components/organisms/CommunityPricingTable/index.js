@@ -71,11 +71,11 @@ const CommunityPricingTable = ({ pricesList, name }) => {
       <Wrapper>
         <thead>
           <tr>
-            <StyledTh colSpan={2} color="slate" bgcolor="grey">Base Pricing (Care costs not included in price) </StyledTh>
+            <StyledTh colSpan={2} color="slate" bgcolor="grey">Base Cost (Care costs not included) </StyledTh>
           </tr>
         </thead>
         <tbody>
-          <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Average Monthly Price</StyledTd> </Tr>
+          <Tr color="grey" bgcolor="white"><StyledTd>Type</StyledTd><StyledTd>Average Monthly Cost</StyledTd> </Tr>
           {pricesList.map((price) => {
             const { label, value } = price;
             return (
@@ -84,7 +84,7 @@ const CommunityPricingTable = ({ pricesList, name }) => {
           })}
         </tbody>
       </Wrapper>
-      <StyledBlock size="caption" palette="grey">*Seniorly’s estimated monthly pricing is based on the local average pricing of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.</StyledBlock>
+      <StyledBlock size="caption" palette="grey">*Seniorly’s estimated monthly cost is based on the local average cost of other communities in the area and what typical communities of the same size offer in services. Please verify all information prior to making a decision. Seniorly is not responsible for any errors regarding the information displayed on this website.</StyledBlock>
     </Fragment>
   );
 };
