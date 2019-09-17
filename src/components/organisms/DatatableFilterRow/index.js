@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { func, number, oneOf } from 'prop-types';
 import styled, { css } from 'styled-components';
+import dayjs from 'dayjs';
 
 import filterPropType from 'sly/propTypes/datatableFilter';
 import datatableColumnsPropType from 'sly/propTypes/datatableColumns';
@@ -148,8 +149,8 @@ export default class DatatableFilterRow extends Component {
       };
       case DATE_TIME: return {
         type: 'date',
-        onChange: value => this.onValueChange('value', value),
-        value,
+        value: value ? dayjs(value, 'YYYY-MM-DD').toDate() : new Date(),
+        onChange: value => this.onValueChange('value', dayjs(value).format('YYYY-MM-DD')),
       };
       default: return {
         type: 'text',
@@ -214,8 +215,7 @@ export default class DatatableFilterRow extends Component {
 
           {filter.operator && !noValueOperators.includes(filter.operator) && (
             <GrowField
-              name="value"
-              onChange={this.onDateChange}
+              name={filter.column}
               size="small"
               {...this.getValuePropsFor(filter)}
             />
