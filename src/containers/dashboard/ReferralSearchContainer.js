@@ -170,7 +170,7 @@ export default class ReferralSearchContainer extends Component {
           // onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
         >
           {({
-            data, onSubmit, isFinalStep, submitEnabled, next, previous, currentStep, ...props
+            data, onSubmit, isFinalStep, submitEnabled, next, previous, goto, currentStep, ...props
           }) => {
             return (
               <WizardSteps currentStep={currentStep} {...props}>
@@ -181,6 +181,7 @@ export default class ReferralSearchContainer extends Component {
                   communitiesInterested={communitiesInterested}
                   handleCommunitySearch={this.doCommunitySearch}
                   sendNewReferral={this.sendReferral}
+                  setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto(3); }}
                 />
                 <WizardStep
                   component={DashboardCommunityReferralSearch}
@@ -188,7 +189,7 @@ export default class ReferralSearchContainer extends Component {
                   name="DashboardCommunityReferralSearch"
                   communities={communities}
                   handleCommunitySearch={this.doCommunitySearch}
-                  setSelectedCommunity={this.setSelectedCommunity}
+                  setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto(3); }}
                 />
                 <WizardStep
                   component={DashboardCommunityReferralContactDetailsContainer}
