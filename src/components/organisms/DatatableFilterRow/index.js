@@ -149,7 +149,9 @@ export default class DatatableFilterRow extends Component {
       };
       case DATE_TIME: return {
         type: 'date',
-        value: value ? dayjs(value, 'YYYY-MM-DD').toDate() : new Date(),
+        value: value
+          ? dayjs(value, 'YYYY-MM-DD').toDate()
+          : new Date(),
         onChange: value => this.onValueChange('value', dayjs(value).format('YYYY-MM-DD')),
       };
       default: return {
@@ -215,7 +217,7 @@ export default class DatatableFilterRow extends Component {
 
           {filter.operator && !noValueOperators.includes(filter.operator) && (
             <GrowField
-              name={filter.column}
+              name="value"
               size="small"
               {...this.getValuePropsFor(filter)}
             />
