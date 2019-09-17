@@ -19,7 +19,7 @@ const CommunitiesWrapper = styled.div`
 `;
 
 const SendNewReferralButton = styled(Button)`
-
+  margin-left: auto;
 `;
 
 const StyledDashboardAdminReferralCommunityTile = pad(DashboardAdminReferralCommunityTile);

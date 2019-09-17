@@ -130,8 +130,11 @@ export default class ReferralSearchContainer extends Component {
     newBareClient.set('id', null);
     const provider = immutable(pick, newProvider, ['id', 'type', 'attributes']);
     provider.set('id', partner.id);
-    provider.set('attributes.entityType', partner.type);
-    newBareClient.set('relationships.provider', provider.value());
+    provider.set('type', 'Provider');
+    // FIXME: Set entityType from the partner object
+    // provider.set('attributes.entityType', partner.type);
+    provider.set('attributes.entityType', 'Property');
+    newBareClient.set('relationships.provider', { data: provider.value() });
     const parent = immutable(pick, newParentClient, ['id', 'type', 'attributes']);
     parent.set('id', parentRawClient.id);
     parent.set('type', 'Client');
@@ -167,7 +170,7 @@ export default class ReferralSearchContainer extends Component {
           // onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
         >
           {({
-            data, onSubmit, isFinalStep, submitEnabled, next, currentStep, ...props
+            data, onSubmit, isFinalStep, submitEnabled, next, previous, currentStep, ...props
           }) => {
             return (
               <WizardSteps currentStep={currentStep} {...props}>
@@ -190,6 +193,7 @@ export default class ReferralSearchContainer extends Component {
                 <WizardStep
                   component={DashboardCommunityReferralContactDetailsContainer}
                   onSubmit={onSubmit}
+                  onChangeCommunity={previous}
                   name="DashboardCommunityReferralContactDetailsContainer"
                   community={this.getSelectedCommunity()}
                 />
