@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
+import Helmet from 'react-helmet';
 
 import { size, palette } from 'sly/components/themes';
 import { Icon, Hr, Heading, Block, Link, Image } from 'sly/components/atoms';
@@ -172,6 +173,11 @@ const CityTileWrapper = styled(Link)`
 const HowItWorksPage = () => {
   const intro = (
     <Fragment>
+      <Helmet>
+        <title>Search Senior Living Communities Near You</title>
+        <meta name="description" content="With Seniorly you can find pricing, availability, amenities and more for over 30,000 senior living communities nationwide. Connect with your local senior living expert who can personalize your senior care search." />
+
+      </Helmet>
       <IntroText>
         Seniorly is committed to connecting our aging citizens with a home to love.
         We achieve this through a personalized experience built on industry expertise and powerful technology.

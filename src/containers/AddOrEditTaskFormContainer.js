@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import { arrayOf, string, object, func } from 'prop-types';
 import { reduxForm } from 'redux-form';
 
-import { prefetch, withUser, query } from 'sly/services/newApi';
+import { prefetch, query } from 'sly/services/newApi';
+import clientPropType from 'sly/propTypes/client';
 import userPropType from 'sly/propTypes/user';
+import taskPropType from 'sly/propTypes/task';
 import { createValidator, required } from 'sly/services/validation';
-import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
+import { TASK_RESOURCE_TYPE, USER_RESOURCE_TYPE, CLIENT_RESOURCE_TYPE } from 'sly/constants/resourceTypes';
 import AddTaskForm from 'sly/components/organisms/AddTaskForm';
 
 const validate = createValidator({
   title: [required],
-  due_date: [required],
+  dueDate: [required],
   creator: [required],
   stage: [required],
   status: [required],
@@ -26,23 +28,25 @@ const ReduxForm = reduxForm({
 
 @query('createTask', 'createTask')
 
-@withUser
+@query('updateTask', 'updateTask')
 
 export default class AddOrEditTaskFormContainer extends Component {
   static propTypes = {
     users: arrayOf(userPropType),
-    user: userPropType,
+    client: clientPropType,
     priorities: arrayOf(string).isRequired,
     statuses: arrayOf(string).isRequired,
     status: object,
     createTask: func,
     notifyInfo: func,
     onSuccess: func,
+    updateTask: func,
+    task: taskPropType,
   };
 
-  handleAddTask = (data) => {
+  handleSubmitTask = (data) => {
     const {
-      createTask, notifyInfo, user, onSuccess,
+      createTask, updateTask, notifyInfo, onSuccess, client, task,
     } = this.props;
     const payload = {
       type: TASK_RESOURCE_TYPE,
@@ -50,12 +54,6 @@ export default class AddOrEditTaskFormContainer extends Component {
         ...data,
       },
       relationships: {
-        creator: {
-          data: {
-            type: USER_RESOURCE_TYPE,
-            id: user.id,
-          },
-        },
         owner: {
           data: {
             type: USER_RESOURCE_TYPE,
@@ -64,10 +62,31 @@ export default class AddOrEditTaskFormContainer extends Component {
         },
       },
     };
+    if (!task && data.relatedTo) {
+      payload.relationships.relatedEntities = {
+        data: [
+          {
+            type: client ? CLIENT_RESOURCE_TYPE : USER_RESOURCE_TYPE,
+            id: data.relatedTo,
+          },
+        ],
+      };
+    }
 
-    createTask(payload)
+    let taskApiCall;
+    if (task) {
+      taskApiCall = updateTask({ id: task.id }, payload);
+    } else {
+      taskApiCall = createTask(payload);
+    }
+
+    taskApiCall
       .then(() => {
-        notifyInfo('New task successfully created');
+        if (task) {
+          notifyInfo('Task successfully updated');
+        } else {
+          notifyInfo('New task successfully created');
+        }
         if (onSuccess) {
           onSuccess();
         }
@@ -76,18 +95,47 @@ export default class AddOrEditTaskFormContainer extends Component {
 
   render() {
     const {
-      statuses, priorities, users, status, user,
+      statuses, priorities, users, status, task, client,
     } = this.props;
-    const { users: usersStatus, user: userStatus } = status;
+    const { users: usersStatus } = status;
     const { hasFinished: usersHasFinished } = usersStatus;
-    const { hasFinished: userHasFinished } = userStatus;
-    const isPageLoading = !usersHasFinished || !userHasFinished;
+    const isPageLoading = !usersHasFinished;
     if (isPageLoading) {
       return null;
     }
-    const initialValues = {
-      creator: user.name,
-    };
+    const initialValues = {};
+    if (client) {
+      initialValues.relatedTo = client.name;
+    }
+    if (task) {
+      if (task.title) {
+        initialValues.title = task.title;
+      }
+      if (task.relatedEntities) {
+        initialValues.relatedTo = task.relatedEntities[0].id;
+      }
+      if (task.dueDate) {
+        initialValues.dueDate = new Date(task.dueDate);
+      }
+      if (task.owner) {
+        initialValues.owner = task.owner.id;
+      }
+      if (task.status) {
+        initialValues.status = task.status;
+      }
+      if (task.priority) {
+        initialValues.priority = task.priority;
+      }
+      if (task.description) {
+        initialValues.description = task.description;
+      }
+      if (task.created_at) {
+        initialValues.created_at = task.created_at;
+      }
+      if (task.creator) {
+        initialValues.creator = task.creator;
+      }
+    }
 
     return (
       <ReduxForm
@@ -95,8 +143,9 @@ export default class AddOrEditTaskFormContainer extends Component {
         statuses={statuses}
         priorities={priorities}
         assignedTos={users}
-        onSubmit={this.handleAddTask}
+        onSubmit={this.handleSubmitTask}
         initialValues={initialValues}
+        heading={task && task.title}
       />
     );
   }
