@@ -152,7 +152,7 @@ export default class ReferralSearchContainer extends Component {
     const {
       referralMode, parentClient,
     } = this.props;
-    const { communitiesInterested } = parentClient;
+    const { communitiesInterested, children: childrenClients } = parentClient;
     const { communities, agents } = this.state;
     // FIXME: @fonz, how does dynamic component choosing look? How do we choose properties , can we do
     // const modeCompMap = { 'Community': DashboardCommunityReferrals, 'Agent': DashboardAgentReferrals };
@@ -179,6 +179,7 @@ export default class ReferralSearchContainer extends Component {
                   onSubmit={onSubmit}
                   name="DashboardCommunityReferrals"
                   communitiesInterested={communitiesInterested}
+                  childrenClients={childrenClients}
                   handleCommunitySearch={this.doCommunitySearch}
                   sendNewReferral={this.sendReferral}
                   setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto(3); }}

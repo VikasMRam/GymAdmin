@@ -25,7 +25,7 @@ const SendNewReferralButton = styled(Button)`
 const StyledDashboardAdminReferralCommunityTile = pad(DashboardAdminReferralCommunityTile);
 
 const DashboardCommunityReferrals = ({
-  handleCommunitySearch, communitiesInterested, onSubmit, setSelectedCommunity,
+  handleCommunitySearch, communitiesInterested, childrenClients, onSubmit, setSelectedCommunity,
 }) => {
   // if (communities.length > 0) {
   //   const commList = communities.map(e => <DashboardAdminReferralCommunityTile key={e.name} community={e} sendReferral={sendReferral} />);
@@ -52,6 +52,7 @@ const DashboardCommunityReferrals = ({
       </TopWrapper>
       <CommunitiesWrapper>
         {communitiesInterested.map(e => <StyledDashboardAdminReferralCommunityTile key={e.name} community={e} title={title} actionText="Send Referral" actionClick={() => setSelectedCommunity(e)} />)}
+        {childrenClients.map(e => <StyledDashboardAdminReferralCommunityTile key={e.name} community={e.provider} stage={e.stage} referralSentAt={e.createdAt} />)}
       </CommunitiesWrapper>
     </Fragment>
   );
@@ -62,6 +63,7 @@ DashboardCommunityReferrals.propTypes = {
   setSelectedCommunity: func,
   onSubmit: func,
   communitiesInterested: arrayOf(adminCommunityPropType),
+  childrenClients: arrayOf(adminCommunityPropType),
 };
 
 export default DashboardCommunityReferrals;

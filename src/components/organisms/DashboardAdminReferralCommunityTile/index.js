@@ -111,7 +111,7 @@ const DashboardAdminReferralCommunityTile = ({
   className, title, titlePalette, community, referralSentAt, stage, onClick, actionText, actionClick,
 }) => {
   const { propInfo } = community;
-  const { hasContract } = propInfo;
+  const hasContract = propInfo ? propInfo.hasContract : false;
   const isBottomSectionPresent = !!(stage || referralSentAt || (actionText && actionClick));
 
   return (
@@ -140,7 +140,7 @@ const DashboardAdminReferralCommunityTile = ({
           <Fragment>
             <Hr palette="grey" size="large" />
             <BottomSection>
-              <Stage stage="New" />
+              <Stage stage={stage} />
             </BottomSection>
           </Fragment>
         )}
