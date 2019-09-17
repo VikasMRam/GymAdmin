@@ -82,6 +82,7 @@ const AddTaskForm = ({
         type="select"
         component={ReduxField}
       >
+        <option>Select an option</option>
         {assignedTosOptions}
       </Field>
       <Field
@@ -90,6 +91,7 @@ const AddTaskForm = ({
         type="select"
         component={ReduxField}
       >
+        <option>Select an option</option>
         {statusesOptions}
       </Field>
       <Field
@@ -98,6 +100,7 @@ const AddTaskForm = ({
         type="select"
         component={ReduxField}
       >
+        <option>Select an option</option>
         {prioritiesOptions}
       </Field>
       <Field

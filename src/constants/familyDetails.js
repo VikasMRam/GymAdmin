@@ -41,3 +41,14 @@ export const PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS = [
   'Outside territory',
   'Outside of territory',
 ];
+
+export const SOURCE_OPTIONS = [
+  'Online',
+  'Direct Call',
+  'Voicemail',
+  'Bot',
+  'Question',
+  'LiveChat',
+  'Partner',
+  'Other',
+];
