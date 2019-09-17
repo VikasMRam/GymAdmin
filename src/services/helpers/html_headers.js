@@ -215,7 +215,7 @@ export const getHelmetForCommunityPage = (community, location) => {
 
   const title = websiteTitle || `${name} - Pricing, Photos and Floor Plans in ${titleize(address.city)}, ${titleize(address.state)}`;
 
-  const article = ((toc.label === 'Assisted Living ' || toc.label === 'Memory Care') ? 'an' : 'a');
+  const article = ((toc.label === 'Assisted Living' || toc.label === 'Independent Living') ? 'an' : 'a');
 
   const description = websiteMetaDescription || `${name} is ${article} ${toc.label} community located at ${address.line1} in ${titleize(address.city)}, ${titleize(address.state)}. See pricing, photos & reviews on Seniorly.com!`;
 
