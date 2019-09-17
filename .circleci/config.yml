@@ -208,7 +208,7 @@ jobs:
           name: NPM Install and Run Local SlyReact in Background
           command: |
             npm install
-            npm run staging
+            npm run dev
           working_directory: ~/project
           background: true
 
@@ -230,6 +230,11 @@ jobs:
             sudo apt-get update
             sudo apt-get install openvpn haproxy
 
+      - run:
+          name: Running HAProxy
+          command: sudo haproxy -f haproxy.conf
+          background: true
+
       # The PEMs and credentials are set in OPENVPN context and are echoed into files
       - run:
           name: Creating OpenVPN Client Credential file
@@ -244,11 +249,6 @@ jobs:
       - run:
           name: Creating OpenVPN Tunnel
           command: sudo openvpn --config circleci.ovpn --auth-user-pass openVPN_cred.txt --ca ca.pem --cert cert.pem --key key.pem --tls-auth tls_auth.pem --daemon
-
-      - run:
-          name: Running HAProxy
-          command: sudo haproxy -f haproxy.conf
-          background: true
 
       - run:
           name: Waiting for Local React to be up and running
