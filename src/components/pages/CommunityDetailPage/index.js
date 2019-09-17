@@ -39,6 +39,7 @@ import MorePictures from 'sly/components/organisms/MorePictures';
 import CommunitySummary from 'sly/components/organisms/CommunitySummary';
 import CommunityQuestionAnswers from 'sly/components/organisms/CommunityQuestionAnswers';
 import BreadCrumb from 'sly/components/molecules/BreadCrumb';
+import CommunityLocalDetails from 'sly/components/organisms/CommunityLocalDetails';
 import CommunityAskQuestionAgentFormContainer from 'sly/containers/CommunityAskQuestionAgentFormContainer';
 import ConciergeContainer from 'sly/containers/ConciergeContainer';
 import OfferNotification from 'sly/components/molecules/OfferNotification';
@@ -824,6 +825,15 @@ export default class CommunityDetailPage extends Component {
           {(nearbyCities && nearbyCities.length > 0) &&
             <Wrapper>
               <SeoLinks title={`Top Cities Near ${name}`} links={nearbyCities} />
+            </Wrapper>
+          }
+          {(address.state === 'NY' || address.state === 'FL' || address.state === 'TX') &&
+            <Wrapper>
+              {(rgsAux ) ? (
+                <Section title="Local Details" titleSize="subtitle">
+                  <CommunityLocalDetails localDetails={rgsAux.localDetails} />
+                </Section>) : null
+              }
             </Wrapper>
           }
         </CommunityDetailPageTemplate>
