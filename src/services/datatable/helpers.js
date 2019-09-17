@@ -71,9 +71,9 @@ export const makeQuerystringFilters = (filterState, sectionFilters = {}, strict 
 export const simpleQSParse = (qs) => {
   return qs.replace(/^\?/, '').split('&').reduce((acc, pair) => {
     const [key, value] = pair.split('=');
-    acc[key] = value;
+    acc.push({ key, value });
     return acc;
-  }, {});
+  }, []);
 };
 
 export const parseQuerystringFilters = (qsText) => {
@@ -84,7 +84,7 @@ export const parseQuerystringFilters = (qsText) => {
     logicalOperator: 'and',
   };
 
-  Object.entries(qs).forEach(([key, queryValue]) => {
+  qs.forEach(({ key, value: queryValue }) => {
     const filterMatch = key.match(/^filter\[(.*)\]/);
     if (filterMatch) {
       const [_, column] = filterMatch;

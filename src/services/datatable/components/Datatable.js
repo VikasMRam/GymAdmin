@@ -26,7 +26,6 @@ export default class Datatable extends Component {
     const { location } = this.props;
     if (prevProps.location.search !== location.search) {
       const state = parseQuerystringFilters(location.search);
-      console.log('newState', state)
       this.setState(state);
     }
   }
