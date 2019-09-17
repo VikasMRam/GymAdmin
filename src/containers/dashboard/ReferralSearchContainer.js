@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import immutable from 'object-path-immutable';
 import pick from 'lodash/pick';
 import { arrayOf, func, oneOf } from 'prop-types';
-import build from 'redux-object';
 
-import { query } from 'sly/services/newApi';
+import { normalizeResponse, query } from 'sly/services/newApi';
 import { adminCommunityPropType } from 'sly/propTypes/community';
 import { adminAgentPropType } from 'sly/propTypes/agent';
 import clientPropType from 'sly/propTypes/client';
@@ -14,33 +13,6 @@ import DashboardCommunityReferralSearch from 'sly/components/organisms/Dashboard
 import DashboardAgentReferrals from 'sly/components/organisms/DashboardAgentReferrals';
 import { WizardController, WizardStep, WizardSteps } from 'sly/services/wizard';
 import DashboardCommunityReferralContactDetailsContainer from 'sly/containers/DashboardCommunityReferralContactDetailsContainer';
-
-const normJsonApi = (resp) => {
-  const { data, included } = resp.body;
-  let normalizedResult = [];
-  let result = data.reduce((acc, item) => {
-    if (!acc[item.type]) {
-      acc[item.type] = {};
-    }
-    acc[item.type][item.id] = item;
-    return acc;
-  }, {});
-  result = included.reduce((acc, item) => {
-    if (!acc[item.type]) {
-      acc[item.type] = {};
-    }
-    acc[item.type][item.id] = item;
-    return acc;
-  }, result);
-  const ids = normalizedResult.map(({ id }) => id);
-  normalizedResult = data.reduce((acc, elem) => {
-    if (!ids.includes(elem.id)) {
-      acc.push(build(result, elem.type, elem.id, { eager: true }));
-    }
-    return acc;
-  }, normalizedResult);
-  return normalizedResult;
-};
 
 @query('getCommunities', 'getCommunities')
 @query('getAgents', 'getAgents')
@@ -59,6 +31,7 @@ export default class ReferralSearchContainer extends Component {
     getCommunities: func,
     createClient: func,
   };
+
   static defaultProps = {
     referralMode: 'Community',
   };
@@ -76,18 +49,17 @@ export default class ReferralSearchContainer extends Component {
       type: 'Community',
     };
     return this.sendReferral(partner);
-    //TODO: GET NEW CLIENT and reload
   };
 
   getSelectedCommunity = () => {
     const { selectedCommunity } = this.state;
     return selectedCommunity;
-  }
+  };
 
   setSelectedCommunity = (selectedCommunity) => {
     this.setState({ selectedCommunity });
     return selectedCommunity;
-  }
+  };
 
   zipRe = new RegExp(/^\d{5}(-\d{4})?$/);
   doCommunitySearch = ({ nameOrZip }) => {
@@ -101,7 +73,7 @@ export default class ReferralSearchContainer extends Component {
     }
 
     return getCommunities(filters).then((resp) => {
-      const communities = normJsonApi(resp);
+      const communities = normalizeResponse(resp);
       console.log('Seeing these communities ', communities);
       return this.setState({
         communities,

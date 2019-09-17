@@ -103,17 +103,20 @@ GroupSection.propTypes = {
 };
 
 const Select = ({ textSize, value, options, async, ...props }) => {
-  const reducer = (accumulator, currentValue) => accumulator.push(currentValue.options ? currentValue.options : currentValue) && accumulator;
-  const values = options.reduce(reducer, []);
-  const flattenedValues = values.reduce((a, b) => a.concat(b), []);
-  const match = flattenedValues.find(v => v.value === value);
-  if (match) {
-    value = match;
-  }
+  let SelectComponent;
+  let extraProps;
 
-  const SelectComponent = async
-    ? AsyncSelect
-    : SyncSelect;
+  if (async) {
+    SelectComponent = AsyncSelect;
+    extraProps = {};
+  } else {
+    SelectComponent = SyncSelect;
+    extraProps = {};
+  }
+  // const reducer = (accumulator, currentValue) => accumulator.push(currentValue.options ? currentValue.options : currentValue) && accumulator;
+  // const values = options.reduce(reducer, []);
+  // const flattenedValues = values.reduce((a, b) => a.concat(b), []);
+  // value = flattenedValues.find(v => v.value === value) || value;
 
   return (
     <Wrapper textSize={textSize}>
@@ -125,6 +128,7 @@ const Select = ({ textSize, value, options, async, ...props }) => {
         theme={theme}
         components={{ Option: IconOption, Group: GroupSection }}
         blurInputOnSelect
+        {...extraProps}
         {...props}
       />
     </Wrapper>
