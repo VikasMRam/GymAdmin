@@ -47,10 +47,10 @@ export const simpleQStringify = (object) => {
   return `?${Object.entries(object).map(([key, value]) => `${key}=${value}`).join('&')}`;
 };
 
-export const makeQuerystringFilters = (filterState, sectionFilters = {}) => {
+export const makeQuerystringFilters = (filterState, sectionFilters = {}, strict = false) => {
   const filters = filterState.filters.filter(filter => filter.column
-        && filter.operator
-        && (filter.value || noValueOperators.includes(filter.operator)));
+        && (!strict || (strict && filter.operator))
+        && (!strict || ((strict && filter.value) || (strict && noValueOperators.includes(filter.operator)))));
 
   const qsObject = { ...sectionFilters };
 

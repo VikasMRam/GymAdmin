@@ -87,7 +87,7 @@ const TableHeaderButtons = ({
       <SearchTextInput
         type="search"
         placeholder="Type to filter by name"
-        value={(datatable.getFilter('name', 'cs') || {}).value}
+        value={(datatable.getFilter('name', 'cs') || {}).value || ''}
         onChange={({ target }) => datatable.doSearch('name', 'cs', target.value)}
       />
       {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}

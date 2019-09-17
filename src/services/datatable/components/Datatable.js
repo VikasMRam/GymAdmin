@@ -25,7 +25,9 @@ export default class Datatable extends Component {
   componentDidUpdate(prevProps) {
     const { location } = this.props;
     if (prevProps.location.search !== location.search) {
-      this.setState(parseQuerystringFilters(location.search));
+      const state = parseQuerystringFilters(location.search);
+      console.log('newState', state)
+      this.setState(state);
     }
   }
 
@@ -51,7 +53,11 @@ export default class Datatable extends Component {
 
   getFilter = (column, operator) => {
     const { filters } = this.state;
-    return filters.find(({ column: columnName, operator: operatorName }) => column === columnName && operator === operatorName);
+    const filter = filters.find(({
+      column: columnName,
+      operator: operatorName,
+    }) => column === columnName && operator === operatorName);
+    return filter;
   };
 
   addFilter = (newFilter = {}) => {
@@ -78,7 +84,11 @@ export default class Datatable extends Component {
       'page-number': 0,
     };
 
-    this.setFilters(state);
+    if (filter.value !== newFilter.value) {
+      this.setFilters(state);
+    } else {
+      this.setState(state);
+    }
   };
 
   onFilterRemove = (filter) => {
@@ -99,7 +109,6 @@ export default class Datatable extends Component {
       ? simpleQStringify(makeQuerystringFilters(state))
       : '';
     history.push(`${location.pathname}${qs}`);
-    this.setState(state);
   };
 
   render() {
@@ -123,7 +132,7 @@ export default class Datatable extends Component {
       ? datatable.columns
       : [];
 
-    const query = makeQuerystringFilters(this.state, sectionFilters);
+    const query = makeQuerystringFilters(this.state, sectionFilters, true);
     const basePath = `${location.pathname}${simpleQStringify(makeQuerystringFilters(this.state))}`;
 
     return this.props.children({
