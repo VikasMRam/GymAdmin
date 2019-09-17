@@ -829,7 +829,7 @@ export default class CommunityDetailPage extends Component {
           }
           {(address.state === 'NY' || address.state === 'FL' || address.state === 'TX') &&
             <Wrapper>
-              {(rgsAux ) ? (
+              {(rgsAux && rgsAux.localDetails !== '') ? (
                 <Section title="Local Details" titleSize="subtitle">
                   <CommunityLocalDetails localDetails={rgsAux.localDetails} />
                 </Section>) : null
