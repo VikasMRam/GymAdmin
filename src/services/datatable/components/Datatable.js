@@ -84,11 +84,7 @@ export default class Datatable extends Component {
       'page-number': 0,
     };
 
-    if (filter.value !== newFilter.value) {
-      this.setFilters(state);
-    } else {
-      this.setState(state);
-    }
+    this.setFilters(state);
   };
 
   onFilterRemove = (filter) => {

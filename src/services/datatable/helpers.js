@@ -57,7 +57,7 @@ export const makeQuerystringFilters = (filterState, sectionFilters = {}, strict 
   filters.forEach((filter) => {
     const key = `filter[${filter.column}]`;
     const filterValue = makeFilterValue(filter.value);
-    const value = `${filter.operator}${filterValue ? `:${filterValue}` : ''}`;
+    const value = `${filter.operator || ''}${filterValue ? `:${filterValue}` : ''}`;
     qsObject[key] = value;
   });
 
