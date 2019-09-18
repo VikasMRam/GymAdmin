@@ -70,13 +70,15 @@ export default class ReferralSearchContainer extends Component {
     selectedCommunity: null,
   };
 
-  onCommunitySendReferralComplete = () => {
+  onCommunitySendReferralComplete = (data, { reset }) => {
     const { selectedCommunity } = this.state;
     const partner = {
       id: selectedCommunity.id,
       type: 'Community',
     };
-    return this.sendReferral(partner);
+    return this.sendReferral(partner)
+      .then(reset)
+      .then(() => this.setSelectedCommunity(null));
     //TODO: GET NEW CLIENT and reload
   };
 
@@ -165,7 +167,7 @@ export default class ReferralSearchContainer extends Component {
       return (
         <WizardController
           formName="SendCommunityReferral"
-          onComplete={data => this.onCommunitySendReferralComplete(data)}
+          onComplete={(data, { reset }) => this.onCommunitySendReferralComplete(data, { reset })}
           // todo: final step return to first step
           // onStepChange={params => handleStepChange({ ...params, openConfirmationModal })}
         >

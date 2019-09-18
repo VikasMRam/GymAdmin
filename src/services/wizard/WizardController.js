@@ -37,9 +37,7 @@ class WizardController extends Component {
   }
 
   componentWillUnmount() {
-    const { resetForm, resetController } = this.props;
-    resetForm();
-    resetController();
+    this.reset();
   }
 
   setStepsSize = (stepSize) => {
@@ -50,6 +48,12 @@ class WizardController extends Component {
     });
   }
 
+  reset = () => {
+    const { resetForm, resetController } = this.props;
+    resetForm();
+    resetController();
+  }
+
   isFinalStep = () => {
     const { currentStep, stepSize } = this.props;
     return currentStep === stepSize;
@@ -57,8 +61,8 @@ class WizardController extends Component {
 
   goto = (step) => {
     const { set, progressPath, currentStep } = this.props;
-    // first step will already be present
-    if (currentStep > 2) {
+    // Checking if we had already visited the step
+    if (progressPath.indexOf(currentStep) === -1) {
       progressPath.push(currentStep);
     }
     set({
@@ -91,7 +95,11 @@ class WizardController extends Component {
 
   doSubmit = (params = {}) => {
     const { onComplete, data } = this.props;
-
+    const { reset } = this;
+    params = {
+      ...params,
+      reset,
+    };
     return onComplete(data, params);
   };
 
@@ -131,7 +139,7 @@ class WizardController extends Component {
   render() {
     const {
       formOptions, next, previous, goto, handleSubmit, setStepsSize,
-      isFinalStep,
+      isFinalStep, reset,
     } = this;
     const {
       children, currentStep, data, submitEnabled,
@@ -148,6 +156,7 @@ class WizardController extends Component {
       formOptions,
       data,
       submitEnabled,
+      reset,
     });
   }
 }
