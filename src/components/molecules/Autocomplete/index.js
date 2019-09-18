@@ -9,7 +9,7 @@ export default class Autocomplete extends Component {
     column: object.isRequired,
   };
 
-  getValue = (item) => {
+  getValues = items => items.map((item) => {
     const { column } = this.props;
     const keyArray = column.value.split('.').slice(1);
     const label = keyArray.reduce((assoc, key) => assoc[key], item);
@@ -17,17 +17,14 @@ export default class Autocomplete extends Component {
       value: item.id,
       label,
     };
-  };
+  });
 
   loadOptions = (inputValue) => {
     const { column } = this.props;
     return fetch(`${column.typeInfo.api}${inputValue}`)
       .then(r => r.json())
       .then(normalizeResponse)
-      .then((result) => {
-        const options = result.map(this.getValue);
-        return options;
-      })
+      .then(this.getValues)
       .catch(e => console.log(e));
   };
 
