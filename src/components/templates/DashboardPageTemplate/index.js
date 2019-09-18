@@ -2,6 +2,7 @@ import React from 'react';
 import { node, string, bool } from 'prop-types';
 import styled from 'styled-components';
 import { ifProp } from 'styled-tools';
+import { generatePath } from 'react-router';
 
 import { size, palette } from 'sly/components/themes';
 import {
@@ -36,7 +37,7 @@ const menuItems = [
     label: 'My Profile', icon: 'settings', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_PROFILE_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick,
   },
   {
-    label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: AGENT_DASHBOARD_FAMILIES_PATH, role: AGENT_ND_ROLE, onClick: onMenuItemClick,
+    label: 'My Families', icon: 'users', iconSize: 'regular', palette: 'slate', variation: 'filler', href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), role: AGENT_ND_ROLE, onClick: onMenuItemClick,
   },
   {
     label: 'Messages_', icon: 'message', iconSize: 'regular', palette: 'slate', variation: 'filler', href: FAMILY_DASHBOARD_MESSAGES_PATH, role: CUSTOMER_ROLE, onClick: onMenuItemClick,

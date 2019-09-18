@@ -1,7 +1,15 @@
 import build from 'redux-object';
 
 export const normalizeResponse = ({ data, included }) => {
-  const result = [...data, ...included].reduce((acc, item) => {
+  if (!data) return data;
+
+  const resultEntities = Array.isArray(data)
+    ? data
+    : [data];
+
+  const entities = [...data, ...included];
+
+  const result = entities.reduce((acc, item) => {
     if (!acc[item.type]) {
       acc[item.type] = {};
     }
@@ -9,6 +17,12 @@ export const normalizeResponse = ({ data, included }) => {
     return acc;
   }, {});
 
-  return data.map(elem => build(result, elem.type, elem.id, { eager: true }));
+  const buildElem = elem => build(result, elem.type, elem.id, { eager: true });
+
+  if (Array.isArray(data)) {
+    return resultEntities.map(buildElem);
+  }
+
+  return buildElem(data);
 };
 

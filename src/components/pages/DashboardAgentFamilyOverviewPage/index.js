@@ -31,7 +31,6 @@ const DashboardAgentFamilyOverviewPage = ({ match, location }) => {
     <DashboardPageTemplate activeMenuItem="My Families">
       <Datatable
         id="clients"
-        path={AGENT_DASHBOARD_FAMILIES_PATH}
         sectionFilters={sectionFilters}
         filters={filters}
       >

@@ -85,7 +85,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   onRejectSuccess = (hide) => {
     const { history } = this.props;
     hide();
-    history.push(AGENT_DASHBOARD_FAMILIES_PATH);
+    history.push(generatePath(AGENT_DASHBOARD_FAMILIES_PATH));
   };
 
   onUnPause = (notifyInfo, notifyError) => {

@@ -11,7 +11,7 @@ import {
   COMMUNITIES,
   PARTNER_AGENTS,
   MESSAGES,
-  TASKS,
+  TASKS, PROSPECTING, CONNECTED, CLOSED,
 } from 'sly/constants/dashboardAppPaths';
 import pad from 'sly/components/helpers/pad';
 import textAlign from 'sly/components/helpers/textAlign';
@@ -52,7 +52,6 @@ import { CONVERSATION_PARTICIPANT_TYPE_CLIENT } from 'sly/constants/conversation
 import { AGENT_ND_ROLE,PLATFORM_ADMIN_ROLE } from 'sly/constants/roles';
 import ReferralSearchContainer from 'sly/containers/dashboard/ReferralSearchContainer';
 import EntityTasksContainer from 'sly/containers/dashboard/EntityTasksContainer';
-
 
 const PaddedFamilySummary = pad(FamilySummary, 'xLarge');
 
@@ -199,6 +198,12 @@ const TextCenterBlock = fullHeight(textAlign(Block));
 const FullWidthTextCenterBlock = fullWidth(TextCenterBlock);
 
 const PaddedBackLink = pad(BackLink, 'regular');
+
+const TabMap = {
+  Prospects: PROSPECTING,
+  Connected: CONNECTED,
+  Closed: CLOSED,
+};
 
 export default class DashboardMyFamiliesDetailsPage extends Component {
   static propTypes = {
@@ -442,7 +447,9 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     }
 
     if (!client) {
-      const backlink = <BackLink linkText="Back to Prospects" to={AGENT_DASHBOARD_FAMILIES_PATH} onClick={clickEventHandler('fdetails', 'Back to Prospects')} />;
+
+      const prospectingUrl = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: PROSPECTING });
+      const backlink = <BackLink linkText="Back to Prospects" to={prospectingUrl} onClick={clickEventHandler('fdetails', 'Back to Prospects')} />;
       return (
         <DashboardPageTemplate activeMenuItem="My Families">
           <TextAlignCenterBlock weight="medium" size="subtitle">Family not found!</TextAlignCenterBlock>
@@ -506,7 +513,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       ];
     }
 
-    const backLinkHref = levelGroup === 'Prospects' ? AGENT_DASHBOARD_FAMILIES_PATH : `${AGENT_DASHBOARD_FAMILIES_PATH}?type=${levelGroup}`;
+    const backLinkHref = generatePath(AGENT_DASHBOARD_FAMILIES_PATH, { clientType: TabMap[levelGroup] });
     const backlink = <PaddedBackLink linkText={`Back to ${levelGroup}`} to={backLinkHref} onClick={clickEventHandler('fdetails', `Back to ${levelGroup}`)} />;
 
     return (

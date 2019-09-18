@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { func, object, string } from 'prop-types';
+import { generatePath } from 'react-router';
 
 import { CUSTOMER_ROLE, PROVIDER_OD_ROLE, AGENT_ND_ROLE } from 'sly/constants/roles';
 import { AGENT_DASHBOARD_FAMILIES_PATH, FAMILY_DASHBOARD_FAVORITES_PATH, FAMILY_DASHBOARD_PROFILE_PATH } from 'sly/constants/dashboardAppPaths';
@@ -54,7 +55,7 @@ const customerMenuItems = [
 
 const agentMenuItems = [
   {
-    name: 'My Families', href: AGENT_DASHBOARD_FAMILIES_PATH, section: 1, icon: 'users',
+    name: 'My Families', href: generatePath(AGENT_DASHBOARD_FAMILIES_PATH), section: 1, icon: 'users',
   },
 ];
 
