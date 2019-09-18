@@ -1,8 +1,6 @@
 import build from 'redux-object';
 
-export const normalizeResponse = (resp) => {
-  const { data, included } = resp.body;
-
+export const normalizeResponse = ({ data, included }) => {
   const result = [...data, ...included].reduce((acc, item) => {
     if (!acc[item.type]) {
       acc[item.type] = {};

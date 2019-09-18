@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { string, number, shape, arrayOf, func, bool } from 'prop-types';
 import styled from 'styled-components';
 import { Marker, InfoWindow, OverlayView } from 'react-google-maps';
+import debounce from 'lodash/debounce';
 
 import { isServer } from 'sly/config';
 import { size, palette } from 'sly/components/themes';
@@ -10,7 +11,7 @@ import Map from 'sly/components/atoms/Map';
 import MapTile from 'sly/components/molecules/MapTile';
 import GreenMarker from 'sly/../public/icons/greenmarker.png';
 import RedMarker from 'sly/../public/icons/redmarker.png';
-import { delayedExecutor, getRadiusFromMapBounds } from 'sly/services/helpers/search';
+import { getRadiusFromMapBounds } from 'sly/services/helpers/search';
 
 const MapContainerElement = styled.div`
   width: 100%;
@@ -122,7 +123,7 @@ class SearchMap extends Component {
     });
   };
 
-  onBoundsChange = delayedExecutor(() => {
+  onBoundsChange = debounce(() => {
     // Do something if this is checked
     if (this.state.redoSearchOnMove) {
       const { onParamsChange, searchParams } = this.props;
@@ -149,7 +150,7 @@ class SearchMap extends Component {
         }
       }
     }
-  }, 'mapBoundsChange') ;
+  }, 200) ;
 
   render() {
     const { latitude, longitude, communityList } = this.props;

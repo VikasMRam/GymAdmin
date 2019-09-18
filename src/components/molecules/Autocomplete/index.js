@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { string, object } from 'prop-types';
+import { object } from 'prop-types';
 
 import { Select } from 'sly/components/atoms';
 import { normalizeResponse } from 'sly/services/newApi';
 
 export default class Autocomplete extends Component {
   static propTypes = {
-    basePath: string,
     column: object.isRequired,
   };
 
@@ -21,10 +20,15 @@ export default class Autocomplete extends Component {
   };
 
   loadOptions = (inputValue) => {
-    const { column, basePath } = this.props;
-    return fetch(`${basePath || ''}${column.typeInfo.api}${inputValue}`)
+    const { column } = this.props;
+    return fetch(`${column.typeInfo.api}${inputValue}`)
+      .then(r => r.json())
       .then(normalizeResponse)
-      .then(result => result.map(this.getValue));
+      .then((result) => {
+        const options = result.map(this.getValue);
+        return options;
+      })
+      .catch(e => console.log(e));
   };
 
   render() {

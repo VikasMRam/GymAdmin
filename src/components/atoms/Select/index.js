@@ -102,21 +102,21 @@ GroupSection.propTypes = {
   label: string,
 };
 
-const Select = ({ textSize, value, options, async, ...props }) => {
-  let SelectComponent;
-  let extraProps;
-
-  if (async) {
-    SelectComponent = AsyncSelect;
-    extraProps = {};
-  } else {
-    SelectComponent = SyncSelect;
-    extraProps = {};
-  }
-  // const reducer = (accumulator, currentValue) => accumulator.push(currentValue.options ? currentValue.options : currentValue) && accumulator;
-  // const values = options.reduce(reducer, []);
-  // const flattenedValues = values.reduce((a, b) => a.concat(b), []);
-  // value = flattenedValues.find(v => v.value === value) || value;
+const Select = ({
+  textSize,
+  value,
+  options,
+  async,
+  loadOptions,
+  ...props,
+}) => {
+  const SelectComponent = async
+    ? AsyncSelect
+    : SyncSelect;
+  const reducer = (accumulator, currentValue) => accumulator.push(currentValue.options ? currentValue.options : currentValue) && accumulator;
+  const values = options.reduce(reducer, []);
+  const flattenedValues = values.reduce((a, b) => a.concat(b), []);
+  value = flattenedValues.find(v => v.value === value) || value;
 
   return (
     <Wrapper textSize={textSize}>
@@ -124,16 +124,18 @@ const Select = ({ textSize, value, options, async, ...props }) => {
         className="react-select-container"
         classNamePrefix="react-select"
         options={options}
+        loadOptions={loadOptions}
         defaultValue={value}
         theme={theme}
         components={{ Option: IconOption, Group: GroupSection }}
         blurInputOnSelect
-        {...extraProps}
         {...props}
       />
     </Wrapper>
   );
 };
+
+// v6hEox4BtF
 
 Select.propTypes = {
   async: bool,
@@ -144,6 +146,7 @@ Select.propTypes = {
 
 Select.defaultProps = {
   async: false,
+  options: [],
 };
 
 export default Select;
