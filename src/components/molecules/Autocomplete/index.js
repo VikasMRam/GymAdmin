@@ -32,10 +32,12 @@ export default class Autocomplete extends Component {
   };
 
   render() {
+    const { column, ...props } = this.props;
     return (
       <Select
         async
         loadOptions={this.loadOptions}
+        {...props}
       />
     );
   }

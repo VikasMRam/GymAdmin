@@ -73,8 +73,7 @@ export default class ReferralSearchContainer extends Component {
     }
 
     return getCommunities(filters).then((resp) => {
-      const communities = normalizeResponse(resp);
-      console.log('Seeing these communities ', communities);
+      const communities = normalizeResponse(resp.body);
       return this.setState({
         communities,
       });
