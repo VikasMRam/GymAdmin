@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import { string, func } from 'prop-types';
+import { string, func, bool } from 'prop-types';
 import dayjs from 'dayjs';
 import { ifProp } from 'styled-tools';
 
@@ -19,6 +19,7 @@ const Wrapper = styled.div`
 `;
 
 const SectionsWrapper = styled.div`
+  background-color: ${ifProp('disabled', palette('grey', 'background'))};
   background-color: ${ifProp('title', getTitlePalette('stroke'))};
   border-bottom-left-radius: ${size('border.xxLarge')};
   border-bottom-right-radius: ${size('border.xxLarge')};
@@ -108,29 +109,25 @@ const getReferralSentTimeText = (date) => {
 
 // FIXME: Click works only after passing onClick as prop. Need to check why we need to pass onClick
 const DashboardAdminReferralCommunityTile = ({
-  className, title, titlePalette, community, referralSentAt, stage, onClick, actionText, actionClick,
+  className, title, titlePalette, community, referralSentAt, stage, disabled, onClick, actionText, actionClick,
 }) => {
-  const { propInfo } = community;
-  const hasContract = propInfo ? propInfo.hasContract : false;
+  const { rgsAux } = community;
+  const hasContract = rgsAux && rgsAux.rgsInfo && rgsAux.rgsInfo.contract_info ? rgsAux.rgsInfo.contract_info.hasContract : false;
   const isBottomSectionPresent = !!(stage || referralSentAt || (actionText && actionClick));
 
   return (
     <Wrapper className={className} onClick={onClick}>
       {/* FIXME: Title should be of 10px according to the design */}
       {title && <TitleSection titlePalette={titlePalette}><Span weight="bold" size="tiny" palette="white">{title}</Span></TitleSection>}
-      <SectionsWrapper title={title} titlePalette={titlePalette}>
+      <SectionsWrapper title={title} titlePalette={titlePalette} disabled={disabled}>
         <TopSection isBottomSectionPresent={isBottomSectionPresent}>
           <HeaderSection>
-            {hasContract && <StyledBadge textPalette="green"><StyledIcon icon="checkmark-circle" palette="white" size="small" /><Span palette="white" size="tiny">Has Contract</Span></StyledBadge> }
+            {hasContract && <StyledBadge textPalette="green"><StyledIcon icon="checkmark-circle" palette="white" size="small" /><Span palette="white" size="tiny">HAS CONTRACT</Span></StyledBadge> }
             <CommunityName size="body" palette="primary">{community.name}</CommunityName>
           </HeaderSection>
           <CommunityAddressBlock palette="grey" variation="dark" size="caption">{buildAddressDisplay(community)}</CommunityAddressBlock>
+          {referralSentAt && <ReferralSentTime palette="grey" variation="dark" size="tiny">Sent on {getReferralSentTimeText(referralSentAt)}</ReferralSentTime>}
         </TopSection>
-        {referralSentAt && (
-          <BottomSection>
-            <ReferralSentTime palette="grey" variation="dark" size="tiny">Sent on {getReferralSentTimeText(referralSentAt)}</ReferralSentTime>
-          </BottomSection>
-        )}
         {actionText && actionClick && (
           <BottomSection>
             <Button palette="primary" size="caption" ghost onClick={actionClick}>{actionText}</Button>
@@ -164,6 +161,7 @@ DashboardAdminReferralCommunityTile.propTypes = {
   community: adminCommunityPropType.isRequired,
   referralSentAt: string,
   stage: string,
+  disabled: bool,
   onClick: func,
   actionText: string,
   actionClick: func,

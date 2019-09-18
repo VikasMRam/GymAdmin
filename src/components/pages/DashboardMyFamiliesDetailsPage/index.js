@@ -419,9 +419,8 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     } = this;
 
     const {
-      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, onUnPause, refetchConversations,
+      client, currentTab, meta, notifyInfo, notifyError, rawClient, notes, noteIsLoading, clientIsLoading, user, conversation, hasConversationFinished, onUnPause, refetchConversations, refetchClient,
     } = this.props;
-    console.log('Current Tab!',currentTab);
     const { admin } = user;
 
     let conversationParticipants = [];
@@ -594,6 +593,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
                 notifyInfo={notifyInfo}
                 parentClient={client}
                 parentRawClient={rawClient}
+                refetchClient={refetchClient}
                 referralMode="Community"
               />
             )}

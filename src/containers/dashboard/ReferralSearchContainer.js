@@ -59,6 +59,7 @@ export default class ReferralSearchContainer extends Component {
     getAgents: func,
     getCommunities: func,
     createClient: func,
+    refetchClient: func,
   };
   static defaultProps = {
     referralMode: 'Community',
@@ -71,6 +72,7 @@ export default class ReferralSearchContainer extends Component {
   };
 
   onCommunitySendReferralComplete = (data, { reset }) => {
+    const { refetchClient } = this.props;
     const { selectedCommunity } = this.state;
     const partner = {
       id: selectedCommunity.id,
@@ -78,8 +80,8 @@ export default class ReferralSearchContainer extends Component {
     };
     return this.sendReferral(partner)
       .then(reset)
-      .then(() => this.setSelectedCommunity(null));
-    //TODO: GET NEW CLIENT and reload
+      .then(() => this.setSelectedCommunity(null))
+      .then(() => refetchClient());
   };
 
   getSelectedCommunity = () => {
@@ -105,7 +107,6 @@ export default class ReferralSearchContainer extends Component {
 
     return getCommunities(filters).then((resp) => {
       const communities = normJsonApi(resp);
-      console.log('Seeing these communities ', communities);
       return this.setState({
         communities,
       });
@@ -156,6 +157,14 @@ export default class ReferralSearchContainer extends Component {
     } = this.props;
     const { communitiesInterested, children: childrenClients } = parentClient;
     const { communities, agents } = this.state;
+    const communitiesInterestedIdsMap = communitiesInterested.reduce((accumulator, community) => {
+      accumulator[community.id] = community;
+      return accumulator;
+    }, {});
+    const childrenClientCommunityIdsMap = childrenClients.reduce((accumulator, client) => {
+      accumulator[client.provider.id] = client;
+      return accumulator;
+    }, {});
     // FIXME: @fonz, how does dynamic component choosing look? How do we choose properties , can we do
     // const modeCompMap = { 'Community': DashboardCommunityReferrals, 'Agent': DashboardAgentReferrals };
     // const ModeComp = modeCompMap[referralMode];
@@ -181,7 +190,9 @@ export default class ReferralSearchContainer extends Component {
                   onSubmit={onSubmit}
                   name="DashboardCommunityReferrals"
                   communitiesInterested={communitiesInterested}
+                  communitiesInterestedIdsMap={communitiesInterestedIdsMap}
                   childrenClients={childrenClients}
+                  childrenClientCommunityIdsMap={childrenClientCommunityIdsMap}
                   handleCommunitySearch={this.doCommunitySearch}
                   sendNewReferral={this.sendReferral}
                   setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto(3); }}
@@ -191,6 +202,8 @@ export default class ReferralSearchContainer extends Component {
                   onSubmit={onSubmit}
                   name="DashboardCommunityReferralSearch"
                   communities={communities}
+                  childrenClients={childrenClients}
+                  childrenClientCommunityIdsMap={childrenClientCommunityIdsMap}
                   handleCommunitySearch={this.doCommunitySearch}
                   setSelectedCommunity={(c) => { this.setSelectedCommunity(c); goto(3); }}
                 />
