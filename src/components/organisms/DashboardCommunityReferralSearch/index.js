@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { func, arrayOf, object } from 'prop-types';
 import styled from 'styled-components';
+import { ifProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { Block, Hr } from 'sly/components/atoms';
@@ -21,6 +22,7 @@ const StyledDashboardAdminReferralCommunityTile = styled(DashboardAdminReferralC
 
   &:hover {
     box-shadow: 0 ${size('spacing.tiny')} ${size('spacing.small')} ${palette('grey', 'stroke')};
+    box-shadow: ${ifProp('disabled', 'none')};
   }
 `;
 
