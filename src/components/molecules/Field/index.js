@@ -16,6 +16,7 @@ import DateChoice from 'sly/components/molecules/DateChoice';
 import BoxChoice from 'sly/components/molecules/BoxChoice';
 import IconInput from 'sly/components/molecules/IconInput';
 import InputMessage from 'sly/components/molecules/InputMessage';
+import Autocomplete from 'sly/components/molecules/Autocomplete';
 
 const textTypeInputs = ['email', 'iconInput'];
 const getInputType = type => textTypeInputs.includes(type) ? 'text' : type;
@@ -43,6 +44,8 @@ const getInputComponent = (type) => {
       return Input;
     case 'choice':
       return Select;
+    case 'autocomplete':
+      return Autocomplete;
     default:
       return Input;
   }

@@ -7,10 +7,11 @@ import filterPropType from 'sly/propTypes/datatableFilter';
 import datatableColumnsPropType from 'sly/propTypes/datatableColumns';
 import ButtonLink from 'sly/components/molecules/ButtonLink';
 import Field from 'sly/components/molecules/Field';
-import { noValueOperators, operatorNames } from 'sly/services/datatable/helpers';
+import { noValueOperators, listValueOperators, operatorNames } from 'sly/services/datatable/helpers';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
 import { size } from 'sly/components/themes';
 
+const AUTOCOMPLETE = 'MultiSelectDynamicList';
 const SELECT = 'MultiSelectStaticList';
 const DATE_TIME = 'DateTime';
 
@@ -108,8 +109,12 @@ export default class DatatableFilterRow extends Component {
     }, {}),
   };
 
-  onSelectChange = ({ value }, { name }) => {
-    this.onValueChange(name, value);
+  onSelectChange = (values, { name }) => {
+    if (Array.isArray(values)) {
+      this.onValueChange(name, values.map(({ value }) => value));
+      return;
+    }
+    this.onValueChange(name, values.value);
   };
 
   onFieldChange = (event) => {
@@ -138,13 +143,20 @@ export default class DatatableFilterRow extends Component {
       value: op,
     }));
 
-  getValuePropsFor = ({ column, value }) => {
+  getValuePropsFor = ({ column, value, operator }) => {
     const { type, typeInfo } = this.state.columns[column];
     switch (type.name) {
       case SELECT: return {
         type: 'choice',
         value,
+        isMulti: listValueOperators.includes(operator),
         options: typeInfo.list.map(value => ({ label: value, value })),
+        onChange: this.onSelectChange,
+      };
+      case AUTOCOMPLETE: return {
+        type: 'autocomplete',
+        value,
+        isMulti: listValueOperators.includes(operator),
         onChange: this.onSelectChange,
       };
       case DATE_TIME: return {
@@ -170,6 +182,8 @@ export default class DatatableFilterRow extends Component {
       logicalOperator,
       index,
     } = this.props;
+
+    const { columns } = this.state;
 
     return (
       <Row>
@@ -204,7 +218,7 @@ export default class DatatableFilterRow extends Component {
           options={this.getColumns()}
         />
 
-        <ConditionCell>
+        {/*<ConditionCell>*/}
           {filter.column && (
             <GrowField
               name="operator"
@@ -219,10 +233,11 @@ export default class DatatableFilterRow extends Component {
             <GrowField
               name="value"
               size="small"
+              column={columns[filter.column]}
               {...this.getValuePropsFor(filter)}
             />
           )}
-        </ConditionCell>
+        {/*</ConditionCell>*/}
       </Row>
     );
   }

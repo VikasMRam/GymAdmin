@@ -99,7 +99,7 @@ const TableHeaderButtons = ({
       {onColumnButtonClick && <ColumnsButton onClick={onColumnButtonClick} icon="column" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Columns</ColumnsButton>}
     </Wrappper>
   );
-}
+};
 
 TableHeaderButtons.propTypes = {
   onColumnButtonClick: func,

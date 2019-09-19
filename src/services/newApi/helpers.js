@@ -1,6 +1,6 @@
 import build from 'redux-object';
 
-export const normalizeResponse = ({ data, included }) => {
+export const normalizeResponse = ({ data, included = []}) => {
   if (!data) return data;
 
   const resultEntities = Array.isArray(data)
