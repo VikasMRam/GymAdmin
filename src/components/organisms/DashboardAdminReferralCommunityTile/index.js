@@ -49,7 +49,7 @@ const HeaderSection = styled.div`
 const CommunityName = styled(Heading)`
   margin-right: ${size('spacing.regular')};
   margin-bottom: ${size('spacing.small')};
-  white-space: nowrap
+  white-space: nowrap;
 
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
     order: 1;
@@ -57,7 +57,7 @@ const CommunityName = styled(Heading)`
 `;
 
 const IconBadgeSpan = styled(Span)`
-  white-space: nowrap
+  white-space: nowrap;
 `;
 
 const CommunityAddressBlock = styled(Block)`
@@ -111,6 +111,7 @@ const StyledBadge = styled(Badge)`
   border-radius: ${size('spacing.small')};
   margin-bottom: ${size('spacing.small')};
   padding-top: ${size('spacing.small')};
+  white-space: nowrap;
 
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
     order: 2;
