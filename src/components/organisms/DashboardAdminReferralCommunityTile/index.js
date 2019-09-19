@@ -2,11 +2,11 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { string, func, bool } from 'prop-types';
 import dayjs from 'dayjs';
-import { ifProp } from 'styled-tools';
+import { ifProp, ifNotProp } from 'styled-tools';
 
 import { size, palette } from 'sly/components/themes';
 import { adminCommunityPropType } from 'sly/propTypes/community';
-import { Heading, Badge, Block, Icon, Hr, Span } from 'sly/components/atoms';
+import { Heading, Badge, Block, Icon, Span } from 'sly/components/atoms';
 import Stage from 'sly/components/molecules/Stage';
 // import cursor from 'sly/components/helpers/cursor';
 import Button from 'sly/components/atoms/Button/index';
@@ -21,10 +21,11 @@ const Wrapper = styled.div`
 const SectionsWrapper = styled.div`
   background-color: ${ifProp('disabled', palette('grey', 'background'))};
   background-color: ${ifProp('title', getTitlePalette('stroke'))};
-  border-bottom-left-radius: ${size('border.xxLarge')};
-  border-bottom-right-radius: ${size('border.xxLarge')};
+  border-bottom-left-radius: ${ifNotProp('isBottomSectionPresent', size('border.xxLarge'))};
+  border-bottom-right-radius: ${ifNotProp('isBottomSectionPresent', size('border.xxLarge'))};
+  border-bottom: 1px ${ifProp('isBottomSectionPresent', 'solid', 'none')} ${palette('slate', 'stroke')};
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
     display: flex;
   }
 `;
@@ -48,10 +49,15 @@ const HeaderSection = styled.div`
 const CommunityName = styled(Heading)`
   margin-right: ${size('spacing.regular')};
   margin-bottom: ${size('spacing.small')};
+  white-space: nowrap
 
   @media screen and (min-width: ${size('breakpoint.mobile')}) {
     order: 1;
   }
+`;
+
+const IconBadgeSpan = styled(Span)`
+  white-space: nowrap
 `;
 
 const CommunityAddressBlock = styled(Block)`
@@ -64,16 +70,34 @@ const ReferralSentTime = styled(Block)`
 
 const TopSection = styled.div`
   padding: ${size('spacing.large')};
-  padding-bottom: ${ifProp('isBottomSectionPresent', 0)};
+  padding-bottom: ${ifProp('isFloatingSectionPresent', 0)};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: ${size('spacing.xLarge')};
+  }
 `;
 
-const BottomSection = styled.div`
+const FloatingSection = styled.div`
   padding: ${size('spacing.large')};
   padding-top: 0;
 
-  @media screen and (min-width: ${size('breakpoint.laptop')}) {
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
     margin-left: auto;
+    padding: ${size('spacing.xLarge')};
+  }
+
+  @media screen and (min-width: ${size('breakpoint.laptop')}) {
     padding-top: ${size('spacing.large')};
+  }
+`;
+
+const BottomSection = styled.div`
+  background-color: ${ifProp('disabled', palette('grey', 'background'))};
+  background-color: ${ifProp('title', getTitlePalette('stroke'))};
+  padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')}) ${size('spacing.large')};
+
+  @media screen and (min-width: ${size('breakpoint.tablet')}) {
+    padding: calc(${size('spacing', 'regular')} + ${size('spacing', 'small')}) ${size('spacing.xLarge')};
   }
 `;
 
@@ -113,43 +137,38 @@ const DashboardAdminReferralCommunityTile = ({
 }) => {
   const { rgsAux } = community;
   const hasContract = rgsAux && rgsAux.rgsInfo && rgsAux.rgsInfo.contract_info ? rgsAux.rgsInfo.contract_info.hasContract : false;
-  const isBottomSectionPresent = !!(stage || referralSentAt || (actionText && actionClick));
-
+  const isBottomSectionPresent = !!stage;
+  const isFloatingSectionPresent = !!(referralSentAt || (actionText && actionClick));
   return (
     <Wrapper className={className} onClick={onClick}>
       {/* FIXME: Title should be of 10px according to the design */}
       {title && <TitleSection titlePalette={titlePalette}><Span weight="bold" size="tiny" palette="white">{title}</Span></TitleSection>}
-      <SectionsWrapper title={title} titlePalette={titlePalette} disabled={disabled}>
-        <TopSection isBottomSectionPresent={isBottomSectionPresent}>
+      <SectionsWrapper title={title} titlePalette={titlePalette} disabled={disabled} isBottomSectionPresent={isBottomSectionPresent}>
+        <TopSection isFloatingSectionPresent={isFloatingSectionPresent}>
           <HeaderSection>
-            {hasContract && <StyledBadge textPalette="green"><StyledIcon icon="checkmark-circle" palette="white" size="small" /><Span palette="white" size="tiny">HAS CONTRACT</Span></StyledBadge> }
+            {hasContract && <StyledBadge textPalette="green"><StyledIcon icon="checkmark-circle" palette="white" size="small" /><IconBadgeSpan palette="white" size="tiny">HAS CONTRACT</IconBadgeSpan></StyledBadge> }
             <CommunityName size="body" palette="primary">{community.name}</CommunityName>
           </HeaderSection>
           <CommunityAddressBlock palette="grey" variation="dark" size="caption">{buildAddressDisplay(community)}</CommunityAddressBlock>
-          {referralSentAt && <ReferralSentTime palette="grey" variation="dark" size="tiny">Sent on {getReferralSentTimeText(referralSentAt)}</ReferralSentTime>}
         </TopSection>
         {actionText && actionClick && (
-          <BottomSection>
+          <FloatingSection>
             <Button palette="primary" size="caption" ghost onClick={actionClick}>{actionText}</Button>
-          </BottomSection>
+          </FloatingSection>
         )}
-        {stage && (
-          <Fragment>
-            <Hr palette="grey" size="large" />
-            <BottomSection>
-              <Stage stage={stage} />
-            </BottomSection>
-          </Fragment>
+        {referralSentAt && (
+          <FloatingSection>
+            <ReferralSentTime palette="grey" variation="dark" size="tiny">Sent on {getReferralSentTimeText(referralSentAt)}</ReferralSentTime>
+          </FloatingSection>
         )}
-        {/* {actionText && actionClick && (
-          <ActionSection onClick={actionClick}>
-            <Hr palette="grey" size="large" />
-            <BottomSection>
-              <Block palette="primary" size="caption">{actionText}</Block>
-            </BottomSection>
-          </ActionSection>
-        )} */}
       </SectionsWrapper>
+      {stage && (
+        <Fragment>
+          <BottomSection title={title} titlePalette={titlePalette} disabled={disabled} >
+            <Stage stage={stage} />
+          </BottomSection>
+        </Fragment>
+      )}
     </Wrapper>
   );
 };

@@ -17,6 +17,11 @@ storiesOf('Organisms|DashboardAdminReferralCommunityTile', module)
     community.rgsAux.rgsInfo.contract_info.hasContract = true;
     return wrap({ community });
   })
+  .add('hasContract and stage', () => {
+    community.rgsAux.rgsInfo.contract_info.hasContract = true;
+    const stage = 'New';
+    return wrap({ community, stage });
+  })
   .add('with referralSentAt', () => {
     community.rgsAux.rgsInfo.contract_info.hasContract = true;
     const referralSentAt = (new Date()).toISOString();
@@ -41,6 +46,14 @@ storiesOf('Organisms|DashboardAdminReferralCommunityTile', module)
     const title = 'FAMILY INTERESTED IN COMMUNITY';
     return wrap({
       community, actionText, actionClick, title,
+    });
+  })
+  .add('with title and stage', () => {
+    community.rgsAux.rgsInfo.contract_info.hasContract = true;
+    const title = 'FAMILY INTERESTED IN COMMUNITY';
+    const stage = 'New';
+    return wrap({
+      community, title, stage,
     });
   });
 
