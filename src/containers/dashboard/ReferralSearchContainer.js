@@ -221,10 +221,25 @@ export default class ReferralSearchContainer extends Component {
       );
     }
 
-    return (<DashboardAgentReferrals
-      agents={agents}
-      handleAgentSearch={this.doAgentSearch}
-      sendReferral={this.sendReferral}
-    />);
+    return (
+      <WizardController
+        formName="SendAgentReferral"
+      >
+        {({
+          data, onSubmit, isFinalStep, submitEnabled, next, previous, goto, currentStep, ...props
+        }) => {
+          return (
+            <WizardSteps currentStep={currentStep} {...props}>
+              <WizardStep
+                component={DashboardAgentReferrals}
+                onSubmit={onSubmit}
+                name="DashboardAgentReferrals"
+                agents={agents}
+              />
+            </WizardSteps>
+          );
+        }}
+      </WizardController>
+    );
   }
 }

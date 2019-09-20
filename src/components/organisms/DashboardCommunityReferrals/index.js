@@ -10,8 +10,13 @@ import pad from 'sly/components/helpers/pad';
 
 const TopWrapper = styled.div`
   display: flex;
+  align-items: center;
   padding: ${size('spacing.xLarge')} ${size('spacing.large')};
   border-bottom: ${size('border.regular')} solid ${palette('grey', 'stroke')};
+
+  @media screen and (min-width: ${size('breakpoint.mobile')}) {
+    padding: ${size('spacing.xLarge')};
+  }
 `;
 
 const CommunitiesWrapper = styled.div`
