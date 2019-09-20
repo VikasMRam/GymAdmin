@@ -72,6 +72,7 @@ export default class Datatable extends Component {
   };
 
   onFilterChange = (filter, newFilter) => {
+    console.log('filter/newFilter', filter, newFilter)
     const { filters, logicalOperator } = this.state;
     const index = filters.indexOf(filter);
 

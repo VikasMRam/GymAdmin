@@ -23,6 +23,14 @@ const getValuesFor = (filter, name) => {
   }
 };
 
+const valueAndOptionsForSelect = (value, list) => {
+  const options = list.map(value => ({ label: value, value }));
+  return {
+    value: value && options.filter(({ value: ov }) => value.includes(ov)),
+    options,
+  };
+};
+
 const Row = styled(mobileOnly('div', css` 
   display: flex;
   flex-wrap: wrap;
@@ -109,12 +117,13 @@ export default class DatatableFilterRow extends Component {
     }, {}),
   };
 
-  onSelectChange = (values, { name }) => {
-    if (Array.isArray(values)) {
-      this.onValueChange(name, values.map(({ value }) => value));
-      return;
+  onSelectChange = (value, { name }) => {
+    if (Array.isArray(value)) {
+      value = value.map(({ value }) => value);
+    } else if (value && typeof values === 'object') {
+      value = value.value;
     }
-    this.onValueChange(name, values.value);
+    this.onValueChange(name, value);
   };
 
   onFieldChange = (event) => {
@@ -148,10 +157,9 @@ export default class DatatableFilterRow extends Component {
     switch (type.name) {
       case SELECT: return {
         type: 'choice',
-        value,
         isMulti: listValueOperators.includes(operator),
-        options: typeInfo.list.map(value => ({ label: value, value })),
         onChange: this.onSelectChange,
+        ...valueAndOptionsForSelect(value, typeInfo.list),
       };
       case AUTOCOMPLETE: return {
         type: 'autocomplete',

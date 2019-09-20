@@ -33,7 +33,7 @@ const getValue = (singleValue) => {
   if (singleValue instanceof Date) {
     return singleValue.toISOString();
   }
-  return singleValue;
+  return encodeURIComponent(singleValue);
 };
 
 const makeFilterValue = (value) => {
@@ -88,7 +88,10 @@ export const parseQuerystringFilters = (qsText) => {
     const filterMatch = key.match(/^filter\[(.*)\]/);
     if (filterMatch) {
       const [_, column] = filterMatch;
-      const [operator, value] = queryValue.split(':');
+      const [operator, rawValue] = queryValue.split(':');
+      const value = rawValue
+        ? decodeURIComponent(rawValue)
+        : undefined;
       const filter = { column, operator };
       if (value) {
         if (listValueOperators.includes(operator)) {
