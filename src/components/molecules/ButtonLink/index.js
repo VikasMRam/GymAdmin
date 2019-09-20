@@ -18,14 +18,13 @@ const ButtonLink = ({ icon, palette, size, children, ...props }) => (
 
 ButtonLink.propTypes = {
   palette: string.isRequired,
-  size: string.isRequired,
+  size: string,
   icon: string,
   children: any,
 };
 
 ButtonLink.defaultProps = {
   palette: 'secondary',
-  size: 'regular',
 };
 
 export default ButtonLink;

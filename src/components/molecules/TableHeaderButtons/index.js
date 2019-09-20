@@ -93,7 +93,7 @@ const TableHeaderButtons = ({
       />
       {onSortButtonClick && <SortButton onClick={onSortButtonClick} icon="sort" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile>Sort</SortButton>}
       {isFilterable(datatable) && (
-        <PopoverPortal button={filterButton}>
+        <PopoverPortal title="Filters" button={filterButton}>
           <DatatableFilters datatable={datatable} />
         </PopoverPortal>
       )}
