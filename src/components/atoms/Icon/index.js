@@ -25,6 +25,7 @@ const Wrapper = styled.span`
   transition: transform ${key('transitions.fast')};
   & > svg {
     font-size: ${fontSize};
+    width: ${fontSize};
     display: block;
     fill: currentColor;
     stroke: ${prop('stroke', 'none')};
