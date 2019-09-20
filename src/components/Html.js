@@ -23,9 +23,9 @@ const Html = ({
           Google Platform Library
         */}
         <meta name="google-signin-client_id" content={googleAppId} />
-        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2`} as="font" />
-        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-regular-webfont.woff2`} as="font" />
-        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-light-webfont.woff2`} as="font" />
+        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-medium-TEMP-REPLACEME-webfont.woff2`} as="font" crossOrigin="anonymous" />
+        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-regular-webfont.woff2`} as="font" crossOrigin="anonymous" />
+        <link rel="preload" href={`${publicPath}/fonts/azo/azosans-light-webfont.woff2`} as="font" crossOrigin="anonymous" />
         {styleElements}
         {linkElements}
         {helmet.link.toComponent()}

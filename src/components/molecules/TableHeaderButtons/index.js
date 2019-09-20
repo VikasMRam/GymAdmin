@@ -80,6 +80,7 @@ const TableHeaderButtons = ({
       Filter
     </FilterButton>
   );
+
   return (
     <Wrappper className={className}>
       {/* <SearchButton icon="search" ghost borderPalette="slate" palette="slate" iconPalette="slate" hideTextInMobile /> */}
@@ -102,6 +103,7 @@ const TableHeaderButtons = ({
 };
 
 TableHeaderButtons.propTypes = {
+  datatable: object,
   onColumnButtonClick: func,
   className: string,
   modelName: string,

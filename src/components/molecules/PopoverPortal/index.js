@@ -20,7 +20,7 @@ export default class PopoverPortal extends Component {
     children: element,
   };
   state = {
-    isOpen: true,
+    isOpen: false,
   };
 
   onClick = () => this.setState({ isOpen: !this.state.isOpen });

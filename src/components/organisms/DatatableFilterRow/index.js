@@ -127,11 +127,6 @@ export default class DatatableFilterRow extends Component {
     this.onValueChange(name, value);
   };
 
-  onFieldChange = (event) => {
-    const { name, value } = event.target;
-    this.onValueChange(name, value);
-  };
-
   onValueChange = (name, value) => {
     const { filter, onFilterChange } = this.props;
     const values = getValuesFor(filter, name);
@@ -159,26 +154,24 @@ export default class DatatableFilterRow extends Component {
       case SELECT: return {
         type: 'choice',
         isMulti: listValueOperators.includes(operator),
-        onChange: this.onSelectChange,
+        onChange: option => this.onSelectChange(option, { name: 'value' }),
         ...valueAndOptionsForSelect(value, typeInfo.list),
       };
       case AUTOCOMPLETE: return {
         type: 'autocomplete',
         value,
         isMulti: listValueOperators.includes(operator),
-        onChange: this.onSelectChange,
+        onChange: option => this.onSelectChange(option, { name: 'value' }),
       };
       case DATE_TIME: return {
         type: 'date',
-        value: value
-          ? dayjs(value, 'YYYY-MM-DD').toDate()
-          : new Date(),
+        value: value && dayjs(value, 'YYYY-MM-DD').toDate(),
         onChange: value => this.onValueChange('value', dayjs(value).format('YYYY-MM-DD')),
       };
       default: return {
         type: 'text',
         value: value || '',
-        onChange: this.onFieldChange,
+        onChange: ({ target: { value } }) => this.onValueChange('value', value),
       };
     }
   };
@@ -240,7 +233,7 @@ export default class DatatableFilterRow extends Component {
 
           {filter.operator && !noValueOperators.includes(filter.operator) && (
             <GrowField
-              name="value"
+              name={`${filter.column}:${filter.operator}`}
               size="small"
               column={columns[filter.column]}
               {...this.getValuePropsFor(filter)}
