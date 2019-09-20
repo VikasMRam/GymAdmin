@@ -19,7 +19,7 @@ import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client
 import notePropType from 'sly/propTypes/note';
 import { size, palette } from 'sly/components/themes';
 import { getStageDetails } from 'sly/services/helpers/stage';
-import { FAMILY_STATUS_ON_HOLD, NOTE_CTYPE_NOTE } from 'sly/constants/familyDetails';
+import { FAMILY_STATUS_ON_PAUSE, NOTE_CTYPE_NOTE } from 'sly/constants/familyDetails';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import DashboardTwoColumnTemplate from 'sly/components/templates/DashboardTwoColumnTemplate';
 import FamilyDetailsFormContainer from 'sly/containers/FamilyDetailsFormContainer';
@@ -390,7 +390,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
       showModal, hideModal, notifyError, client, rawClient, notifyInfo, onUnPause,
     } = this.props;
     const { status } = client;
-    const isPaused = status === FAMILY_STATUS_ON_HOLD;
+    const isPaused = status === FAMILY_STATUS_ON_PAUSE;
 
     if (isPaused) {
       onUnPause();
@@ -457,7 +457,7 @@ export default class DashboardMyFamiliesDetailsPage extends Component {
     const {
       id, clientInfo, stage, status,
     } = client;
-    const isPaused = status === FAMILY_STATUS_ON_HOLD;
+    const isPaused = status === FAMILY_STATUS_ON_PAUSE;
     let {
       levelGroup, showAcceptRejectButtons, showUpdateAddNoteButtons, showPauseButton, canEditFamilyDetails,
     } = getStageDetails(stage);

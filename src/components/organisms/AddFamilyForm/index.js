@@ -87,6 +87,12 @@ export default class AddFamilyForm extends Component {
           format={phoneFormatter}
           component={ReduxField}
         />
+        <Field
+          name="email"
+          label="Email"
+          type="email"
+          component={ReduxField}
+        />
         <PaddedTwoColumnWrapper>
           <StyledLabel>Preferred location</StyledLabel>
           <StyledSearchBoxContainer
