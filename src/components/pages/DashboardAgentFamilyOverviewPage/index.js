@@ -9,15 +9,16 @@ import pad from 'sly/components/helpers/pad';
 import SlyEvent from 'sly/services/helpers/events';
 import DashboardPageTemplate from 'sly/components/templates/DashboardPageTemplate';
 import TableHeaderButtons from 'sly/components/molecules/TableHeaderButtons';
-import { Box, Table, THead, TBody, Tr } from 'sly/components/atoms';
+import { Box, Table, THead, TBody, Tr, Heading } from 'sly/components/atoms';
 import Pagination from 'sly/components/molecules/Pagination';
 import Tabs from 'sly/components/molecules/Tabs';
 import Tab from 'sly/components/molecules/Tab';
-import clientPropType from 'sly/propTypes/client';
-import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_PATH, AGENT_DASHBOARD_FAMILIES_NEW_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
+import clientPropType, { meta as clientMetaPropType } from 'sly/propTypes/client';
+import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
 import Th from 'sly/components/molecules/Th';
+import IconButton from 'sly/components/molecules/IconButton';
 import ClientRowCard from 'sly/components/organisms/ClientRowCard';
-
+import AddFamilyFormContainer from 'sly/containers/dashboard/AddFamilyFormContainer';
 
 const AGENT_FAMILY_OVERVIEW_TABLE_HEADINGS = [
   { text: 'Contact Name' },
@@ -64,6 +65,17 @@ const FamiliesCountStatusBlock = pad(styled(Box)`
   padding-left: ${size('spacing.large')};
   background-color: ${palette('white.base')};
 `, 'large');
+
+const TwoColumn = pad(styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: capitalize;
+
+  ${Heading} {
+    margin-bottom: 0;
+  }
+`);
 
 const tabIDLabelMap = {
   Prospects: 'PROSPECTS',
@@ -116,7 +128,8 @@ const getBasePath = (tab, params) => {
 };
 
 const DashboardAgentFamilyOverviewPage = ({
-  clients, onClientClick, onAddNewClient, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params, breakpoint,
+  clients, onClientClick, pagination, activeTab, onSearchTextKeyUp, isPageLoading, params, breakpoint, showModal,
+  meta, hideModal,
 }) => {
   const prospectsLabel = tabIDLabelMap[tabIDs[0]];
   const connectedLabel = tabIDLabelMap[tabIDs[1]];
@@ -124,17 +137,30 @@ const DashboardAgentFamilyOverviewPage = ({
   let prospectsTabLabel = tabIDLabelMap[tabIDs[0]];
   let connectedTabLabel = tabIDLabelMap[tabIDs[1]];
   let closedTabLabel = tabIDLabelMap[tabIDs[2]];
+  let handleAddFamilyClick;
   if (!isPageLoading) {
     const { prospectingCount, connectedCount, closedCount } = pagination;
     prospectsTabLabel += ` (${prospectingCount})`;
     connectedTabLabel += ` (${connectedCount})`;
     closedTabLabel += ` (${closedCount})`;
+    const { lookingFor, timeToMove } = meta;
+    handleAddFamilyClick = () =>
+      showModal(<AddFamilyFormContainer lookingFor={lookingFor} timeToMove={timeToMove} onCancel={hideModal} />, null, 'noPadding', false);
   }
 
   const defaultTab = breakpoint.atLeastLaptop() ? ACTIVITY : SUMMARY;
+  const beforeTabHeader = (
+    <TwoColumn>
+      <Heading level="subtitle">My Families</Heading>
+      <IconButton icon="user-add" onClick={handleAddFamilyClick} hideTextInMobile>
+        Add family
+      </IconButton>
+    </TwoColumn>
+  );
+
   return (
     <DashboardPageTemplate activeMenuItem="My Families">
-      <Tabs activeTab={activeTab} tabsOnly>
+      <Tabs activeTab={activeTab} beforeHeader={beforeTabHeader} tabsOnly>
         <Tab id={tabIDs[0]} to={getBasePath(tabIDs[0], params)} onClick={() => onTabClick(prospectsLabel)}>
           {prospectsTabLabel}
         </Tab>
@@ -146,7 +172,7 @@ const DashboardAgentFamilyOverviewPage = ({
         </Tab>
       </Tabs>
 
-      <TableHeaderButtons onSearchTextKeyUp={onSearchTextKeyUp} onAddNewButtonClick={onAddNewClient} modelName="Client" />
+      <TableHeaderButtons onSearchTextKeyUp={onSearchTextKeyUp} />
 
       <Section>
         {!isPageLoading && (
@@ -191,7 +217,7 @@ const DashboardAgentFamilyOverviewPage = ({
 DashboardAgentFamilyOverviewPage.propTypes = {
   clients: arrayOf(clientPropType),
   onClientClick: func.isRequired,
-  onAddNewClient: func,
+  meta: clientMetaPropType,
   pagination: object,
   breakpoint: object,
   paginationString: string,
@@ -201,6 +227,8 @@ DashboardAgentFamilyOverviewPage.propTypes = {
   onSearchTextKeyUp: func,
   isPageLoading: bool,
   params: object,
+  showModal: func.isRequired,
+  hideModal: func.isRequired,
 };
 
 DashboardAgentFamilyOverviewPage.defaultProps = {
