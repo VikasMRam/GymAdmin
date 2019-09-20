@@ -142,7 +142,6 @@ const ClientRowCard = ({ client, breakpoint }) => {
 ClientRowCard.propTypes = {
   breakpoint: object,
   client: clientPropType.isRequired,
-  onClientClick: func.isRequired,
 };
 
 export default ClientRowCard;

@@ -13,7 +13,7 @@ const fadeIn = keyframes`
   100% { display: block; opacity: 1; }
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled(({ noPadding, padRight, ...props }) => <Button {...props} />)`
   ${ifProp('noPadding', css`padding: 0;`)}
   ${ifProp(
     'collapsed',
@@ -41,7 +41,7 @@ const StyledButton = styled(Button)`
   )};
 `;
 
-const StyledIcon = styled(Icon)`
+const StyledIcon = styled(({ padRight, ...props }) => <Icon {...props} />)`
   margin-right: ${ifProp('padRight', size('spacing.regular'), 0)};
   ${ifProp('hideTextInMobile', css`
     margin-right: 0;
@@ -64,9 +64,9 @@ const Text = styled.span`
 `;
 
 const IconButton = ({
-  icon, iconSize, transparent, fill, children, hideTextInMobile, ...props
+  icon, iconSize, transparent, fill, children, hideTextInMobile, iconPalette, ...props
 }) => {
-  const { right, palette, iconPalette } = props;
+  const { right, palette } = props;
   const iconElement = (
     <StyledIcon
       icon={icon}
@@ -80,7 +80,6 @@ const IconButton = ({
 
   return (
     <StyledButton
-      hasText={!!children}
       transparent={transparent}
       padRight={!!children && !right}
       noPadding={transparent && !children}

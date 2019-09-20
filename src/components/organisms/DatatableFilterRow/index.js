@@ -117,11 +117,12 @@ export default class DatatableFilterRow extends Component {
     }, {}),
   };
 
-  onSelectChange = (value, { name }) => {
-    if (Array.isArray(value)) {
-      value = value.map(({ value }) => value);
-    } else if (value && typeof values === 'object') {
-      value = value.value;
+  onSelectChange = (option, { name }) => {
+    let value = null;
+    if (Array.isArray(option)) {
+      value = option.map(({ value }) => value);
+    } else if (option && typeof option === 'object') {
+      value = option.value;
     }
     this.onValueChange(name, value);
   };

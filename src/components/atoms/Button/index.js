@@ -154,7 +154,7 @@ export const styles = css`
 `;
 
 const StyledLink = styled(({
-  disabled, transparent, palette, height, theme, ...props
+  disabled, transparent, foregroundPalette, palette, height, theme, ...props
 }) => (
   <Link {...props} />
 ))`

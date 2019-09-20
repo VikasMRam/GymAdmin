@@ -102,6 +102,7 @@ const DashboardAgentFamilyOverviewSection = ({
         {Object.entries(TabMap).map(([name, key]) => (
           <Tab
             id={key}
+            key={key}
             to={getBasePath(key)}
             onClick={() => onTabClick(name)}
           >
