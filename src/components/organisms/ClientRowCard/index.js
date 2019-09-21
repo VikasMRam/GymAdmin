@@ -20,7 +20,7 @@ import {
 } from 'sly/components/atoms/Table';
 
 import Stage from 'sly/components/molecules/Stage';
-import { FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
+import { FAMILY_STATUS_ON_PAUSE } from 'sly/constants/familyDetails';
 import { ACTIVITY, AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, SUMMARY } from 'sly/constants/dashboardAppPaths';
 import clientPropType from 'sly/propTypes/client';
 import mobileOnly from 'sly/components/helpers/mobileOnly';
@@ -28,17 +28,17 @@ import { size, palette } from 'sly/components/themes';
 
 const Wrapper = mobileOnly(Tr, css`
   display: flex;
-  
+
   flex-direction: column;
-  
+
   border: ${size('spacing.nano')} solid ${palette('slate', 'stroke')};
   border-radius: ${size('spacing.small')};
   padding: ${size('spacing.large')};
-  
+
   background: ${palette('white', 'base')};
-  
+
   margin-bottom: ${size('spacing.large')};
-  
+
   ${ifProp('disabled', css`
     background-color: ${palette('grey', 'background')};
     color: ${palette('slate', 'filler')};
@@ -56,8 +56,8 @@ const StyledNameCell = styled(({ disabled, client, to, ...props }) => {
   );
 })`
   ${Icon} {
-    margin-left: ${size('spacing.small')}; 
-  } 
+    margin-left: ${size('spacing.small')};
+  }
 `;
 
 const NameCell = mobileOnly(StyledNameCell, css`
@@ -85,11 +85,11 @@ const NoteCell = mobileOnly(({ disabled, note, ...props }) => (
   </Fragment>
 ), css`
   ${ifNotProp('note', css`display: none;`)}
-  
+
   & > ${Block} + ${Block} {
-    margin-top: ${size('spacing.small')}; 
+    margin-top: ${size('spacing.small')};
   }
-    
+
 `);
 
 const DateAddedCell = mobileOnly(TextTd, css`display: none`);
@@ -107,7 +107,7 @@ const ClientRowCard = ({ client, onClientClick, defaultTab }) => {
     residentName = fullName;
   }
   const createdAtStr = dayjs(createdAt).format('MM/DD/YYYY');
-  const disabled = status === FAMILY_STATUS_ON_HOLD;
+  const disabled = status === FAMILY_STATUS_ON_PAUSE;
   const lastNote = notes[0];
   const to = genFamilyDetailsPath(client.id, defaultTab);
 

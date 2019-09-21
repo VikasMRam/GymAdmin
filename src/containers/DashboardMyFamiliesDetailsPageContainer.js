@@ -71,7 +71,9 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
   };
 
   componentDidMount() {
-    const { breakpoint, match, history, client } = this.props;
+    const {
+      breakpoint, match, history, client,
+    } = this.props;
     const currentTab = match.params.tab || SUMMARY;
     if (isBrowser && currentTab === SUMMARY && breakpoint.atLeastLaptop()) {
       const activityPath = generatePath(AGENT_DASHBOARD_FAMILIES_DETAILS_PATH, {
@@ -251,7 +253,7 @@ export default class DashboardMyFamiliesDetailsPageContainer extends Component {
     } = this;
 
     const {
-      client, match, status, notes, user, conversations, breakpoint,
+      client, match, status, notes, user, conversations,
     } = this.props;
 
     const { result: rawClient, meta } = status.client;

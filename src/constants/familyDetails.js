@@ -19,8 +19,9 @@ export const FAMILY_STAGE_ORDERED = {
 export const TOTAL_STAGES_COUNT = 5;
 
 export const FAMILY_STATUS_ACTIVE = 'Active';
-export const FAMILY_STATUS_ON_HOLD = 'On Pause';
+export const FAMILY_STATUS_ON_PAUSE = 'On Pause';
 export const FAMILY_STATUS_ARCHIVED = 'Archived';
+export const FAMILY_STATUS_LONG_TERM = 'Long Term';
 export const FAMILY_STATUS_DELETED = 'Deleted';
 
 export const STAGE_CLIENT_TYPE_MAP = {
@@ -41,3 +42,24 @@ export const PREFERRED_LOCATION_REQUIRED_CLOSED_STAGE_REASONS = [
   'Outside territory',
   'Outside of territory',
 ];
+
+export const SOURCE_OPTIONS = [
+  'Online',
+  'Direct Call',
+  'Voicemail',
+  'Bot',
+  'Question',
+  'LiveChat',
+  'Partner',
+  'Other',
+];
+
+export const STATUS_PALETTE_MAP = {};
+STATUS_PALETTE_MAP[FAMILY_STATUS_ACTIVE] = 'green';
+STATUS_PALETTE_MAP[FAMILY_STATUS_ARCHIVED] = 'gray';
+
+export const STATUS_ICON_MAP = {};
+STATUS_ICON_MAP[FAMILY_STATUS_ACTIVE] = 'active';
+STATUS_ICON_MAP[FAMILY_STATUS_ARCHIVED] = 'archived';
+STATUS_ICON_MAP[FAMILY_STATUS_LONG_TERM] = 'hourglass';
+STATUS_ICON_MAP[FAMILY_STATUS_ON_PAUSE] = 'pause';

@@ -63,7 +63,6 @@ const DashboardMyProfilePageContainer = loadable(() => import(/* webpackChunkNam
 
 const DashboardMyFamiliesDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMyFamilies" */ 'sly/containers/DashboardMyFamiliesDetailsPageContainer'));
 const DashboardAgentFamilyOverviewPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardAgentFamilyOverviewPageContainer'));
-const DashboardFamiliesNewPageContainer = loadable(() => import(/* webpackChunkName: "chunkAgentFamilyOverview" */ 'sly/containers/DashboardFamiliesNewPageContainer'));
 const DashboardMessagesContainer = loadable(() => import(/* webpackChunkName: "chunkMessagesOverview" */ 'sly/containers/DashboardMessagesContainer'));
 const DashboardMessageDetailsPageContainer = loadable(() => import(/* webpackChunkName: "chunkMessageDetails" */ 'sly/containers/DashboardMessageDetailsPageContainer'));
 const DashboardCallsIndexPageContainer = loadable(() => import(/* webpackChunkName: "chunkAdminCallsOverview" */ 'sly/containers/DashboardCallsIndexPageContainer'));
@@ -142,11 +141,6 @@ const routes = [
   {
     path: FAMILY_DASHBOARD_MESSAGES_PATH,
     component: DashboardMessagesContainer,
-    exact: true,
-  },
-  {
-    path: AGENT_DASHBOARD_FAMILIES_NEW_PATH,
-    component: DashboardFamiliesNewPageContainer,
     exact: true,
   },
   {

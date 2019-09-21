@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import { query, invalidateRequests } from 'sly/services/newApi';
 import clientPropType from 'sly/propTypes/client';
-import { FAMILY_STATUS_ON_HOLD } from 'sly/constants/familyDetails';
+import { FAMILY_STATUS_ON_PAUSE } from 'sly/constants/familyDetails';
 import {
   createValidator,
   required,
@@ -48,7 +48,7 @@ class PlaceFamilyOnPauseFormContainer extends Component {
     const { id } = client;
     const { reason } = data;
     const newClient = immutable(pick(rawClient, ['id', 'type', 'attributes.status', 'attributes.clientInfo']))
-      .set('attributes.status', FAMILY_STATUS_ON_HOLD)
+      .set('attributes.status', FAMILY_STATUS_ON_PAUSE)
       .set('attributes.clientInfo.onHoldReason', reason)
       .value();
 
